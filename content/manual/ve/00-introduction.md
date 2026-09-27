@@ -1,35 +1,41 @@
 # Mathomo
 
-Bugu ino ndi nyendedzi ya u shuma nga zwanḓa ya **permaculture** (vhulimi ha tshoṱhe vhu tevhelaho mupo), ya vhalimi vhaṱuku na vhalimi vha mudini kha Tshipembe tsha Afrika. Yo thoma u ṅwalwa sa bugu ya ngudo ya permaculture ya maḓuvha maṱanu. Ni nga i shumisa khathihi na ngudo, kana ni nga i shumisa ni noṱhe.
+Vhalimi vhaṱuku vho pfumaho a si kanzhi vhe vha vha na mavu manzhi. Ndi vhane mavu avho a vha shumela: mavu a farelaho maḓi, miri i ṋeaho zwiḽiwa na murunzi, na zwifuwo zwi nontshisaho mavu.
 
-Ndivho ndi u ni thusa u thoma lwendo lwaṋu lwa permaculture. Bugu ino i ni funza zwa mutheo zwa u pulana nga permaculture na nḓila ya u dzudzanya ngade kana bulasi yaṋu, uri mushumo na zwiko zwaṋu zwi swike kule. I dovha ya amba nga ha u fhaṱa mavu, u kuvhanganya maḓi, zwipuka, miri na u lwisana na zwikukumi nga nḓila ya mupo. Nḓila nnzhi dza idzi ni nga dzi shumisa zwino-zwino u khwinisa u nona ha mavu na khaṋo ya ngade yaṋu.
+Ndi zwone zwine **permaculture** (vhulimi ha tshoṱhe vhu tevhelaho mupo) ya zwi ṋea mulimi wa Tshipembe tsha Afrika. Mvula yashu a i fulufhedzei, magomelelo a khou lapfa, nahone mbeu, manyoro na mishonga zwine ra zwi renga zwi a ḓura. Permaculture i fhindula nga pulane: ri sedza nḓila ine mupo wa shuma ngayo, ra kona u pulana bulasi uri maḓi, mavu, zwimela na zwifuwo zwi thusane, ri tshi shumisa vhunzhi ha zwine zwa vha hone kale kha mavu.
 
-Nḓila nnzhi dzi shumisa zwine na vha nazwo kale kha mavu aṋu, ngauralo dzi thusa u fhungudza tshelede ine na i shumisa u renga mbeu, manyoro na khemikhali. Arali na lima zwinzhi u fhira zwine muṱa waṋu wa zwi ṱoḓa, bugu ino i na mihumbulo ya u rengisa zwo salaho (surplus) kana ya u zwi engedzela ndeme.
+Bill Mollison, muṅwe wa vhathomi vha permaculture, o zwi amba nga u leluwa: "Tshanduko khulwane ine ra fanela u i ita ndi u bva kha u shumisa u ya kha u bveledza, naho zwi nga vha nga zwiṱuku, kha ngade dzashu."
 
-Ri fulufhela uri ni ḓo takalela bugu ino, nahone i ḓo ni ṱuṱuwedza kha lwendo lwaṋu lwa u ya kha u ḓalelwa.
+**Musi ni tshi fhedza uyu mathomo ni ḓo kona u:**
 
-> **Ḓivhani:** "Tshanduko khulwane ine ra fanela u i ita ndi u bva kha u shumisa fhedzi u ya kha u bveledza, naho zwi nga vha nga zwiṱuku, kha ngade dzashu." — Bill Mollison, muṅwe wa vhathomi vha permaculture.
+- Amba uri ndi ngani permaculture i tshi tea bulasi ṱhukhu ya Tshipembe tsha Afrika
+- Wana ndima ya mushumo une wa vha phanḓa haṋu
+- Ḓivha hune na nga ṱoḓa ipfi ḽiswa hone
+
+## Bugu ino ndi ya nnyi
+
+Ndi ya vhalimi vhaṱuku na vhalimi vha midini kha Tshipembe tsha Afrika, na vhaeletshedzi, vhagudi na vhashumi vha fhethu vhane vha shuma navho. Ni ṱoḓa tshipiḓa tsha mavu, naho tshi tshiṱuku, na u funa u thoma.
 
 ## Hune bugu ino ya bva hone
 
-Bugu ino yo kuvhanganywa nga Rory Clark. Yo thoma u ṅwalwa sa *The Permaculture Gardening Handbook* kha ngudo ya permaculture ya thandela ya Reducing Vulnerability from Climate Change (RVCC), ye ya vha i tshi tshimbidzwa nga UNDP na Muvhuso wa Lesotho nga 2020–2021. Zwino yo sedzuluswa, ya vusuludzwa nahone ya lugiselwa Afrika Tshipembe na Tshipembe tsha Afrika tshoṱhe.
+Rory Clark ndi ene o kuvhanganyaho bugu ino. Yo thoma sa *The Permaculture Gardening Handbook* ya ngudo ya thandela ya Reducing Vulnerability from Climate Change (RVCC), ye ya vha i tshi tshimbidzwa nga UNDP na Muvhuso wa Lesotho nga 2020 na 2021. U bva ipapo yo sedzuluswa nahone ya lugiselwa Afrika Tshipembe.
 
-Zwiṅwe zwipiḓa zwa bugu ino zwo dzhiiwa kha bugu ya African Conservation Trust (ACT) *Introduction to Permaculture and Homestead Gardening* (2014). Zwo shumiswa nahone zwa shandukiswa nga thendelo.
+Zwiṅwe zwipiḓa zwo dzhiiwa, nga thendelo, kha bugu ya African Conservation Trust *Introduction to Permaculture and Homestead Gardening* (2014).
 
 ## Nḓila ya u shumisa bugu ino
 
-- **Vhalani ndima nthihi nga tshifhinga.** Ndima iṅwe na iṅwe i a ḓiimela. Thomani nga Ndima ya 1 (Permaculture ndi mini?) na Ndima ya 2 (U pulana bulasi yaṋu). Dzi ṱalutshedza mihumbulo ine ndima dziṅwe dza fhaṱela khayo.
-- **Lingani tshithu tshithihi, ni kone u ya kha tshi tevhelaho.** Nangani nḓila nthihi ine na nga i ita kha ino khalaṅwaha, sa mulundu wa **compost** (malaṱwa a zwimela o vholaho a nontshisaho mavu) kana ndima yo fukedzwaho nga **mulch** (tshifukedzi tsha mahatsi o omaho kana maṱari). Sedzani uri i shuma hani phanḓa ha u engedza zwiṅwe.
-- **Ṱoḓani mabokisi.** Mabokisi o swaywaho nga **Tsireledzo** a ni sevhedza nga ha khombo dza vhukuma kha vhathu, zwipuka kana mupo. Ni a vhale tshifhinga tshoṱhe. Mabokisi o swaywaho nga **Tsevhedzo** kana **Ḓivhani** a ṋea thuso ya u engedza.
-- **Sedzani "Zwithu zwa ndeme".** Ndima iṅwe na iṅwe i fhela nga mutevhe mupfufhi wa mihumbulo mihulwane. U shumiseni u dovholola, kana u ṱalutshedza vhaṅwe ndima yeneyo.
-- **Lugiselani fhethu haṋu.** Tshipembe tsha Afrika tshi na mitsho minzhi. Vhunzhi ha vhukati ha Afrika Tshipembe vhu wana mvula nga tshilimo nahone vhu na vhuria vhu rotholaho vhu omaho, lunzhi hu na tshando (frost) kha Highveld. Kapa Vhukovhela (Western Cape) i wana vhunzhi ha mvula yayo nga vhuria. Shandukisani zwifhinga zwa u zwala u ya nga tshifhinga tshaṋu tsha mvula, nahone ni vhudzise vhalimi vha henefho na vhaeletshedzi vha zwa vhulimi uri ndi zwifhio zwine zwa shuma fhethu haṋu.
-- **Humbulani uri ḓuvha ḽi devhula.** Kha Tshipembe tsha Afrika ḓuvha ḽi tshimbila nga tshipiḓa tsha devhula tsha ṱaḓulu. Fhethu ho sendamaho na mavhondo zwo lavhelesaho devhula zwi dudela vhukuma nahone zwi wana ḓuvha ḽinzhi; zwo lavhelesaho tshipembe zwi a rothola nahone zwi na murunzi munzhi.
-- **Nangani dziṅwe nyambo arali ni tshi dzi ṱoḓa.** Bugu ino i dovha ya wanala nga isiZulu, Sesotho, Tshivenḓa na Xitsonga. Idzi phindulelo ndi zwiṅwalwa zwa u thoma zwine zwa kha ḓi sedzuluswa nga vhathu vha ambaho nyambo idzo zwavhuḓi, ngauralo vhambedzani na Luisimane arali tshiṅwe tshithu tshi songo pfala.
+1. **Thomani nga mihumbulo.** Ndima ya 1 i ṱalutshedza permaculture na maitele ayo a fumi na mavhili. Ndima ya 2 na ya 3 dzi sumbedza nḓila ya u pulana bulasi yaṋu hu tshi sedzwa ḓuvha, muya, maḓi na mulilo.
+2. **Nga murahu yani kha mushumo.** Ndima ya 4 u swika kha ya 11 dzi amba nga zwiliṅwa, zwifuwo, miri, maḓi, mavu, mupo, zwikukumi na nnḓu. Ndima iṅwe na iṅwe i a ḓiimela nahone i fhela nga mushumo wa "Lingani".
+3. **Lingani tshithu tshithihi nga tshifhinga.** Tshi sedzeni tshi tshi shuma phanḓa ha u engedza tshi tevhelaho.
+4. **Shumisani Ṱhalutshedzo ya maipfi.** Maipfi a thekhinikhi a ngaho swale na mulch a ṱalutshedzwa musi a tshi thoma u vhonala, na oṱhe fhethu huthihi kha Ṱhalutshedzo ya maipfi i re magumoni.
+5. **Wanani zwiṅwalwa magumoni.** Zwiṅwalwa nga ha mulayo na nga ha u tsireledza vhathu na zwifuwo zwo kuvhanganywa fhethu huthihi murahu ha bugu.
+
+Bugu ino i dovha ya wanala nga isiZulu, Sesotho na Tshivenḓa, sa zwiṅwalwa zwa u thoma zwine zwa kha ḓi sedzuluswa nga vhathu vha ambaho nyambo idzo zwavhuḓi. Arali tshiṅwe tshithu tshi songo pfala, vhambedzani na Luisimane.
 
 ## Zwithu zwa ndeme
 
-- Bugu ino ndi nyendedzi ya u shuma nga zwanḓa, i tevhelaho maga, ya permaculture ya vhalimi vhaṱuku vha Tshipembe tsha Afrika.
-- Yo kuvhanganywa nga Rory Clark, nahone zwiṅwe zwipiḓa zwayo zwo dzhiiwa, nga thendelo, kha *Introduction to Permaculture and Homestead Gardening* (2014) ya African Conservation Trust.
-- Thomani nga zwiṱuku: vhalani ndima nthihi, lingani nḓila nthihi, sedzani, ni kone u fhaṱa khayo.
-- Vhalani mabokisi a **Tsireledzo** tshifhinga tshoṱhe.
-- Lugiselani zwifhinga na nḓila kha tshifhinga tshaṋu tsha mvula na maimo a fhethu haṋu.
+- Permaculture i fhaṱa bulasi i ni ṋeaho zwiḽiwa kha zwifhinga zwi konḓaho, nga pulane, hu si nga zwithu zwi rengiwaho.
+- Thomani nga Ndima ya 1 u swika kha ya 3, nga murahu ni ye kha ndima ine na i ṱoḓa.
+- Maipfi maswa a kha Ṱhalutshedzo ya maipfi; zwiṅwalwa nga ha mulayo na tsireledzo zwi magumoni.
+
+Thomani hune na ima hone. Ndima ya 1 i thoma nga mihumbulo ine ya fara zwoṱhe zwi tshi ṱangana.

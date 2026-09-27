@@ -1,312 +1,207 @@
 # U pulana nga sector
 
-U pulana nga **sector** (maanḓa a bvaho nnḓa ha mavu aṋu) zwi amba nga ha maanḓa a bvaho nnḓa ha mavu aṋu (ḓuvha, muya, mulilo, maḓi) ane a fhira nga mavuni aṋu kana a a kwama. A ni koni u langa maanḓa aya, fhedzi ni nga a pulanela.
+Mavu aṋu a si tshiṱangadzime. Muya, mulilo, ḓuvha, maḓi na muya u rotholaho zwoṱhe zwi swika zwi tshi bva nnḓa ha lufhenḓe lwaṋu, nahone zwi ḓo bvela phanḓa zwi tshi swika tshifhinga tshilapfu nga murahu ha musi no ṱavha muri waṋu wa u thoma. A ni nga zwi thivhela. Ni nga nanga hune zwa ṱangana na bulasi yaṋu hone, na zwine zwa ḓo vha zwo ima henefho musi zwi tshi swika.
 
-Maanḓa mahulwane ane na fanela u a pulanela ndi:
+Mulimi ane a ḓivha hune muya u fhisaho wa bva hone u ṱavha windbreak fhethu ho teaho lwa u thoma. Mulimi ane a sa ḓivhe, u i ṱavha luvhili.
 
-- mulilo,
-- muya,
-- ḓuvha, na nḓila ine u tsa haḽo ha shanduka ngayo vhukati ha vhuria na tshilimo,
-- u elela ha maḓi, hu tshi katelwa mandindi,
-- tshando (frost) na muya u rothaho,
-- mbonalo yavhuḓi na mbonalo yo vhifhaho,
-- nḓila dza zwipuka zwa ḓaka (wildlife corridors) — nḓila dzine zwipuka zwa dzi shumisa u fhira mavuni,
-- phosho na mafhuri.
+**Musi ni tshi fhedza ino ndima ni ḓo kona u:**
+
+- Wana devhula ya vhukuma nga khamphasi, ḓuvha ḽi tshi bva kana murunzi wa masiari
+- Ola mmapa wa sector wa maanḓa ane a pfuka mavu aṋu
+- Vhea dzi-windbreak, dzi-firebreak na zwithivheli zwitala hune muya na mulilo zwa anzela u bva hone
+- Shumisa u tsa ha ḓuvha na u elela ha muya u rotholaho u vhea ndima, miri na nnḓu
+- Vhala mutsho waṋu, ni nange zwimela na tsireledzo zwi u teaho
 
 ## U ola mmapa wa sector
 
-Mmapa wa sector u sumbedza thungo ine maanḓa maṅwe na maṅwe a bva khayo. Maanḓa maṅwe na maṅwe a olwa sa tshipiḓa tsha tshitendeledzi, sa tshipiḓa tsha khekhe, tsho livha kha nnḓu kana ngade yaṋu.
+**Sector** (maanḓa a bvaho nnḓa) ndi maanḓa kana nungo zwine zwa ḓa kha mavu aṋu zwi tshi bva nnḓa: ḓuvha, muya, mulilo, maḓi na mandindi, tshando (frost) na muya u rotholaho, mbonalo yavhuḓi na yo vhifhaho, nḓila dza zwipuka zwa ḓaka, phosho na mafhuri.
 
-1. Dzhiani mmapa waṋu wa fhethu (sedzani ndima ya 2) ni swaye vhukati ha mudi kana ngade yaṋu.
-2. Swayani devhula ya vhukuma (true north) kha mmapa.
-3. Kha maanḓa maṅwe na maṅwe, olani tshipiḓa tshi bvaho kha thungo ine a bva khayo. Sa tsumbo, olani muya u fhisaho wo omaho wa vhuria sa tshipiḓa tshi bvaho devhula-vhukovhela.
-4. Ṅwalani khalaṅwaha tsini na tshipiḓa tshiṅwe na tshiṅwe, ngauri maanḓa manzhi a shanduka u ya nga khalaṅwaha.
+Mmapa wa sector u ola maanḓa aṅwe na aṅwe sa tshipiḓa tshi ngaho tshipiḓa tsha phai, tshi tshi livha kha hayani haṋu tshi tshi bva thungo ine maanḓa a bva khayo.
 
-Nga murahu, kha maanḓa maṅwe na maṅwe, dzhiani phetho ya uri ni ṱoḓa u a ṱanganedza, u a thivhela kana u a livhisa. Fhethu hu fhisaho ni nga ṱoḓa u tendela muya u rothaho zwiṱuku u dzhena nnḓuni. Kha huṅwe fhethu ni nga ṱoḓa u thivhela muya u rothaho u vhavhaho. U pulana nga sector zwi ni thusa u vhea **dzi-windbreak** (mitalo ya miri na zwiṱaka i fhungudzaho muya) na **dzi-firebreak** (mitalo ya mavu o kunakiswaho i thivhelaho mulilo), u sia mbonalo yavhuḓi yo vulea na u shumisa zwavhuḓi ḓuvha ḽa vhuria.
+1. Dzhiani mmapa waṋu wa fhethu (ndima ya 2) ni swaye vhukati ha hayani haṋu kana ngade yaṋu.
+2. Swayani devhula ya vhukuma.
+3. Kha maanḓa aṅwe na aṅwe, olani tshipiḓa tshi bvaho thungo ine a bva khayo. Muya u fhisaho, wo omaho wa vhuria u nga vha tshipiḓa tshi bvaho devhula-vhukovhela.
+4. Ṅwalani khalaṅwaha tsini ha tshipiḓa tshiṅwe na tshiṅwe. Maanḓa manzhi a shanduka na khalaṅwaha.
+
+Nga murahu nangani, kha maanḓa aṅwe na aṅwe, arali ni tshi ḓo a ṱanganedza, a thivhela kana a livhisa. Muya u rotholaho wa tshilimo ni u litsha u dzhena nnḓuni; muya u rotholaho wa vhuria ni a u thivhela. Mmapa u sumbedza hune **windbreak** (mutalo wa miri kana zwiṱaka u ongolowisaho muya) na **firebreak** (tshipiḓa tsha mavu tshi si na tshithu tshine tsha nga swa) dza fanela u vha hone, mbonalo dzine dza fanela u dzula dzo vulea, na hune ḓuvha ḽa vhuria ḽa wela hone.
 
 ## U wana devhula
 
-Ni fanela u ḓivha devhula, tshipembe, vhubvaḓuvha na vhukovhela phanḓa ha u ola sector iṅwe na iṅwe kha mmapa. Hu na nḓila tharu dzo leluwaho dza u dzi wana.
+Sector iṅwe na iṅwe i ḓitika nga devhula. Hedzi ndi nḓila tharu dzi leluwaho dza u i wana.
 
 ### Nga khamphasi
 
-Ṋalo ya khamphasi i sumba devhula ya maginethe (magnetic north), hu si devhula ya vhukuma. Afrika Tshipembe devhula ya maginethe i vhukovhela ha devhula ya vhukuma nga khona dza 20 u swika 28. Sa tsumbo, nga 2025 phambano yo vha i tsini na khona dza 21 ngei Johannesburg, dza 27 ngei Cape Town na dza 28 ngei Durban. Ngauralo devhula ya vhukuma i zwiṱuku kha tshanḓa tsha u ḽa (vhubvaḓuvha) ha hune ṋalo ya sumba hone. Maappo manzhi a khamphasi kha founu a nga ni sumbedza devhula ya vhukuma.
+Khamphasi i sumbedza devhula ya maginethe, hu si devhula ya vhukuma. Kha Afrika Tshipembe, devhula ya maginethe i vhukovhela ha devhula ya vhukuma nga khona dza 20 u swika kha 28: nga 2025 dzi ḓo nga 21 ngei Johannesburg, 27 ngei Kapa na 28 ngei Durban. Ngauralo devhula ya vhukuma i tshanḓa tsha u ḽa (vhubvaḓuvha) ha tshisumbi tsha khamphasi zwiṱuku. Apuḽikesheni nnzhi dza khamphasi dza lutingo dzi ni sumbedza devhula ya vhukuma.
 
 ### Nga ḓuvha ḽi tshi bva
 
-Ḓuvha ḽi bva vhubvaḓuvha nahone ḽi kovhela vhukovhela. Imani no lavhelesa ḓuvha ḽi tshi bva: devhula i kha tshanḓa tsha monde, tshipembe tshi kha tshanḓa tsha u ḽa nahone vhukovhela vhu murahu haṋu.
-
-Fhedzi fhethu hune ḓuvha ḽa bvela hone hu shanduka vhukuma nga ṅwaha. Ḽi bva vhubvaḓuvha-vhukuma fhedzi tsini na ḓuvha ḽa 21 Ṱhafamuhwe (March) na ḽa 23 Khubvumedzi (September). Afrika Tshipembe, vhukati ha tshilimo (Nyendavhusiku, December) ḽi bva tsini na khona dza 26 u swika 29 tshipembe ha vhubvaḓuvha. Vhukati ha vhuria (Fulwi, June) ḽi bva tsini na khona dza 26 u swika 29 devhula ha vhubvaḓuvha.
+Lavhelesani ḓuvha ḽi tshi bva: devhula i tshanḓa tshaṋu tsha u ṱhoha, tshipembe tshanḓa tsha u ḽa. Fhedzi hune ḓuvha ḽa bva hone hu a shanduka. Ḽi bva vhubvaḓuvha tsha vhukuma fhedzi tsini na 21 Ṱhafamuhwe (March) na 23 Khubvumedzi (September). Nga Nyendavhusiku (December) ḽi bva tshipembe ha vhubvaḓuvha nga khona dza 26 u swika kha 29, nahone nga Fulwi (June) ḽi bva devhula ha vhubvaḓuvha nga khona dza 26 u swika kha 29.
 
 ### Nga murunzi waṋu wa masiari
 
-Vhukati ha ḓuvha, ḓuvha ḽi kha devhula hu ṱoḓa u vha kha Tshipembe tsha Afrika tshoṱhe. Nga tshenetsho tshifhinga murunzi waṋu u sumba tshipembe. Tshifhinga tsha vhukati ha ḓuvha tshi wela vhukati ha 11:45 na 13:00 kha dziwatshi dza Afrika Tshipembe, nahone tshi lenga zwiṅwe musi ni tshi ya vhukovhela. Hune zwa fhambana hone fhedzi ndi devhula-devhula ha Limpopo vhukati ha tshilimo, hune ḓuvha ḽa masiari ḽa nga vha zwiṱuku tshipembe.
+Nga masiari ḓuvha ḽi devhula kha hu ḓo nga Tshipembe tsha Afrika tshoṱhe, ngauralo murunzi waṋu u sumbedza tshipembe. Masiari nga ḓuvha a wela vhukati ha 11:45 na 13:00 kha tshifhinga tsha wotshi, nga u lenga vhukovhela. Ndi fhedzi devhula kule ha Limpopo vhukati ha tshilimo hune ḽa nga vha tshipembe zwiṱuku.
 
-> **Tsevhedzo:** Musi no no wana devhula, i swayeni ngadeni nga tombo ḽo pendiwaho kana danda uri ni dzule ni tshi humbula.
+> **Tsevhedzo:** Musi no no wana devhula, i swayeni ngadeni nga tombo ḽo pendwaho kana danda, ni ḓo sa tsha fanela u i ṱoḓa hafhu.
 
 ## Muya
 
-Muya ndi muya u tshimbilaho u bva fhethu hu re na mutsindo muhulwane wa muya u ya fhethu hu re na mutsindo muṱuku. Ḓuvha ḽi dudedza mavu, lwanzhe na matombo nga nḓila dzo fhambanaho. Muya u dudelaho u gonya nṱha nahone muya u rothaho u tsa fhasi, nahone hezwi zwi vhumba phambano dza mutsindo dzine dza ita muya.
+Ḓuvha ḽi dudedza mavu, lwanzhe na matombo nga nḓila i sa linganaho. Muya u dudelaho u a gonya, muya u rotholaho u a tsa, nahone muya u gidima u bva kha tsikeledzo ya nṱha u ya kha ya fhasi. Ndi zwone muya.
 
-Muya u nga tshinyadza bulasi yaṋu. U nga:
-
-- omisa mavu na zwimela,
-- vuna zwiliṅwa na miri,
-- tshinyadza zwifhaṱo,
-- hwala **topsoil** (mavu a nṱha a re na zwiḽiwa zwa zwimela),
-- phaḓaladza mililo nga u ṱavhanya.
-
-Muya u nga dovha wa thusa. U nga pomba maḓi nga tshigayo tsha muya (windmill) na u bveledza mudagasi nga tharabaini ya muya (wind turbine). Muya u rothaho zwiṱuku u nga rothisa nnḓu yaṋu nga tshilimo. Zwiṅwe zwimela, sa mavhele na mahatsi manzhi, zwi ḓitika nga muya u hwala mupfumbu wazwo (pollen).
+Muya u omisa mavu na zwimela, u kwasha zwiliṅwa na miri, u fhefhedza **topsoil** (tshiṱaṱo tsha nṱha tsha mavu tshi re swifhala tshi re na vhutshilo) nahone u phaḓaladza mulilo. U dovha wa pompa maḓi, wa rotholisa nnḓu nga tshilimo nahone wa hwala mupfumbu wa mavhele.
 
 ### Miya ya Tshipembe tsha Afrika
 
-Miya i hwala mufhiso wayo na u thapha kana u oma hayo. Gudani miya ya vhupo haṋu na khalaṅwaha ine muya muṅwe na muṅwe wa vhuhela ngayo.
-
 | Muya | Ngafhi | Lini | Zwine wa ita |
 |---|---|---|---|
-| Muya wa berg (berg wind) | Lwanzhe na mitsheto ya thavha (escarpment) ya Kapa Vhukovhela, Kapa Tshipembe na Kapa Vhubvaḓuvha na KwaZulu-Natal | Nga maanḓa nga vhuria, kanzhi ḓuvha kana maḓuvha mavhili phanḓa ha tshipiḓa tsha muya u rothaho (cold front) | Muya u fhisaho wo omaho vhukuma u vhuhaho u bva vhukati ha shango u tsela lwanzhe. Khombo khulwane vhukuma ya mulilo. |
-| Miya ya tshipiḓa tsha muya u rothaho | Kapa Vhukovhela nga maanḓa, nga murahu shango ḽoṱhe | Vhuria | Miya ya maanḓa ya devhula-vhukovhela i ḓisa mvula Kapa Vhukovhela. Musi tshipiḓa tsha muya u rothaho tsho no fhira, miya i rothaho ya tshipembe i ḓisa tshando vhukati ha shango na gwamba kha thavha ndapfu. |
-| Muya wa tshipembe-vhubvaḓuvha ("Cape Doctor") | Cape Town na tshipembe-vhukovhela ha Kapa | Tshilimo | Muya wa maanḓa wo omaho u vhuhaho nga maanḓa, u omisaho mavu, u tshinyadzaho zwiliṅwa nahone u phaḓaladzaho mililo. |
-| Miya ya Ṱhangule (August winds) | Highveld na vhukati ha shango | Magumoni a vhuria na mathomoni a ṱhaṱula | Miya yo omaho i vhuhaho nga maanḓa, kanzhi i bva vhukovhela kana devhula-vhukovhela, nṱha ha ḓaka ḽa mupo (veld) ḽo omaho. Mafhuri na khombo khulwane vhukuma ya mulilo. |
-| Miya i rothaho ya lwanzhe | Lwanzhe lwa vhukovhela, tsini na mukulo wa lwanzhe u rothaho wa Benguela | Ṅwaha woṱhe | Muya u rothaho une wa nga ḓisa gomelelo ḽa khuḓa (fog). |
+| Muya wa berg (berg wind) | Lwanzheni na kha mitsheto ya thavha (escarpment) ya Kapa Vhukovhela, Kapa Tshipembe, Kapa Vhubvaḓuvha na KwaZulu-Natal | Nga maanḓa nga vhuria, kanzhi ḓuvha ḽithihi kana mavhili phanḓa ha tshipiḓa tsha muya u rothaho (cold front) | Muya u fhisaho, wo omesaho u bvaho vhukati ha shango u ya lwanzheni. Khombo ya mulilo ya nṱhesa. |
+| Miya ya cold front | Kapa Vhukovhela nga maanḓa, nga murahu shango ḽoṱhe | Vhuria | Miya ya devhula-vhukovhela i ḓisa mvula Kapa Vhukovhela. Murahu ha cold front, miya ya tshipembe i rotholaho i ḓisa tshando vhukati ha shango na gwamba (snow) fhethu ha nṱha. |
+| Muya wa tshipembe-vhubvaḓuvha ("Cape Doctor") | Kapa na tshipembe-vhukovhela ha Kapa | Tshilimo | Muya wa maanḓa, wo omaho, u vhuvhaho nga dzipfufho, u omisaho mavu, u tshinyadzaho zwiliṅwa nahone u phaḓaladzaho mulilo. |
+| Miya ya Ṱhangule (August) | Highveld na vhukati ha shango | Magumo a vhuria na mathomo a ṱhaṱula | Miya yo omaho, i vhuvhaho nga dzipfufho kha ḓaka ḽo omaho. Mafhuri na khombo ya mulilo ya nṱhesa. |
 
-Zwipiḓa zwa muya u rothaho (cold fronts) ndi miya ya maanḓa i re na mvula (storm systems) i bvaho lwanzheni thungo ya tshipembe-vhukovhela. A zwi thomi thavhani, fhedzi zwi ḓisa gwamba (snow) ḽinzhi fhethu ha nṱha sa Drakensberg, mavu a nṱha a Lesotho na thavha dza Kapa.
+### Wanani thungo dza miya yaṋu mihulwane
 
-### Wanani thungo khulwane dza muya waṋu
-
-1. Sedzani lwa ṅwaha. Sedzani miri yo kotamaho, vhutsi, mafhuri na zwiambaro zwo aniwaho kha lutambo.
-2. Vhewani tshisumbi tsha muya (wind vane) kana windsock (tshiṱumba tsha lwambaro kha danda). Zwi sumbedza thungo ya muya nahone zwi ni ṋea muhumbulo wa maanḓa awo.
-3. Vhudzisani vhahura na vhathu vhahulwane uri ndi miya ifhio i vhifhaho vhukuma, na uri i vhuhela lini.
-4. Ṋeani muya muṅwe na muṅwe dzina u ya nga thungo ine wa bva khayo. Muya wa devhula-vhukovhela u vhuhela u bva devhula-vhukovhela.
-5. Olani muya muṅwe na muṅwe wa ndeme kha mmapa waṋu wa sector, na khalaṅwaha yawo.
-6. Ṱavhani dzi-windbreak dzo pfuka nḓila ya miya i tshinyadzaho (sedzani ndima ya 6).
+1. Sedzani lwa ṅwaha: miri yo sendamaho, vhutsi, mafhuri, zwiambaro zwo aniwaho.
+2. Vhewani tshisumbi tsha muya kana windsock, thumba ya lappi kha danda.
+3. Vhudzisani vhalala vha tsini uri ndi miya ifhio i vhifhaho vhukuma, na uri i ḓa lini.
+4. Ṋeani muya muṅwe na muṅwe dzina u ya nga hune wa bva hone: muya wa devhula-vhukovhela u vhuvha u tshi bva devhula-vhukovhela.
+5. Olani muṅwe na muṅwe kha mmapa waṋu wa sector na khalaṅwaha yawo, ni ṱavhe dzi-windbreak ni tshi pfuka miya i tshinyadzaho (ndima ya 6).
 
 ## Mulilo
 
-### Mulilo kha mavu a Tshipembe tsha Afrika
+Mavu a mahatsi, savanna na fynbos zwi ṱoḓa mulilo nga zwifhinga zwo teaho. Fhedzi mulilo wa ḓaka u sa langeiho u vhulaya vhathu na zwifuwo, nahone u fhisa madambaya, zwiliṅwa, nnḓu na mafhenḓe.
 
-Mavu a mahatsi (grassland), savanna na fynbos zwo ḓowela mulilo. Zwi ṱoḓa mulilo nga zwifhinga zwo teaho uri zwi dzule zwi na mutakalo. Fhedzi mililo ya ḓaka i sa langwi i nga vhulaha vhathu na zwifuwo, ya fhisa madambaya, zwiliṅwa, nnḓu, lufhenḓe na miri. Vhutsi vhu tshinyadza mutakalo, nahone u fhisa zwi bvisa gesi dzine dza fhisa ḽifhasi (greenhouse gases).
-
-Khalaṅwaha ya mililo i ya nga hune na dzula hone:
-
-- **Fhethu hune mvula ya na nga tshilimo** (vhunzhi ha Afrika Tshipembe, na Lesotho, Eswatini na Zimbabwe): mililo i itea nga maanḓa nga miṅwedzi yo omaho u bva tsini na Shundunthule (May) u swika Tshimedzi (October). Magumoni a vhuria na mathomoni a ṱhaṱula, phanḓa ha mvula dza u thoma, ndi tshifhinga tsha khombo vhukuma.
-- **Kapa Vhukovhela hune mvula ya na nga vhuria:** mililo i itea nga maanḓa nga tshilimo tshi fhisaho tsho omaho, u bva tsini na Nyendavhusiku (December) u swika Ṱhafamuhwe (March).
-- **Kapa Tshipembe na KwaZulu-Natal:** maḓuvha a muya wa berg nga vhuria a nga ḓisa khombo khulwane vhukuma ya mulilo nga u ṱavhanya.
-
-Musi mutsho u tshi ṱavha u fhisa na u oma, vhaṱhoḓisisi vha lavhelela maḓuvha manzhi a khombo khulwane ya mulilo Afrika Tshipembe.
+Kha fhethu hune mvula ya na nga tshilimo, khalaṅwaha ya mulilo i bva hu ḓo nga Shundunthule (May) u swika Tshimedzi (October), i vhifha vhukuma magumoni a vhuria na mathomo a ṱhaṱula phanḓa ha mvula. Kha Kapa Vhukovhela hune mvula ya na nga vhuria, i bva hu ḓo nga Nyendavhusiku (December) u swika Ṱhafamuhwe (March). Kha Kapa Tshipembe na KwaZulu-Natal, maḓuvha a muya wa berg nga vhuria a ḓisa khombo ya mulilo ya nṱhesa nga u ṱavhanya.
 
 ### Nḓila ine mulilo wa tshimbila ngayo
 
-- Mulilo u nga bva kha thungo iṅwe na iṅwe, fhedzi fhethu hunzhi kanzhi u bva kha thungo nthihi khulwane. Iyi ndi sector yaṋu ya mulilo. Kanzhi ndi thungo ya miya i fhisaho yo omaho. Vhudzisani vhahura vhaṋu na Dzangano ḽa u Thivhela Mulilo (Fire Protection Association) ḽa vhupo haṋu.
-- Mulilo u gonya thavha nga u ṱavhanya vhukuma u fhira musi u tshi tsa. Humbulani nga ha mutshiṋa (match): musi wo farwa u tshi livha fhasi, u swa nga u ṱavhanya vhukuma. Mulayo wa u tou lavhelesa u ḓivhiwaho ndi wa uri u ṱavhanya ha mulilo hu engedzea kavhili kha khona iṅwe na iṅwe dza 10 dza u sendama u ya nṱha. Kha u sendama ha khona dza 20, mulilo u nga phaḓalala nga u ṱavhanya lwa tsini na luṋa u fhira kha mavu o eḓanaho.
-- Ngauralo nnḓu i re nṱha ha fhethu ho sendamaho vhukuma hu re na hatsi i khomboni khulwane. Vheani zwa u ḓitsireledza kha mulilo thungo ya fhasi na kha thungo ine mililo kanzhi ya bva khayo.
+Mulilo u nga ḓa u tshi bva thungo iṅwe na iṅwe, fhedzi kha vhunzhi ha mavu u ḓa nga maanḓa u tshi bva thungo nthihi: sector yaṋu ya mulilo. Kanzhi ndi thungo ya muya u fhisaho, wo omaho, nahone vhahura vhaṋu vha i ḓivha.
 
-Musi ni tshi pulana u itela mulilo, tsireledzani zwithu zwa ndeme vhukuma u thoma: vhathu na nnḓu, nga murahu zwifuwo, dzisheḓe, **fodder** (zwiḽiwa zwa zwifuwo) yo vhulungwaho na **food forest** (ḓaka ḽa zwiḽiwa).
+Mulilo u gonya thavha nga u ṱavhanya vhukuma u fhira musi u tshi tsa. Farani lutanda lwa matshisi lu tshi swa lwo livhiswa fhasi ni sedze ḽilangwa ḽi tshi gonya. Mulayo u ḓivhiwaho ndi uri u ṱavhanya ha mulilo hu a vhuedzedzwa kavhili kha khona dziṅwe na dziṅwe dza 10 dza u sendama u ya nṱha, ngauralo kha u sendama ha khona dza 20 u phaḓalala nga u ṱavhanya lu ṋa u fhira kha mavu o lingaho. Nnḓu i re nṱha ha fhethu ho sendamesaho ho ḓalaho mahatsi i khombo khulwane. Vhewani tsireledzo yaṋu fhasi ha thavha, na kha sector ya mulilo.
+
+Tsireledzani vhathu na nnḓu u thoma, nga murahu zwifuwo, sheḓe, zwiḽiwa zwa zwifuwo zwo vhulungwaho na miri ya mitshelo.
 
 ### Nḓila dza u fhungudza khombo ya mulilo
 
-1. **Fhungudzani zwine zwa swa.** Kha sector ya mulilo na u mona na zwifhaṱo, hatsi i dzule yo pfufhi, ni kuvhanganye maṱari o omaho nahone ni bvise khuni dzo faho. Vhulungani khuni, mahatsi a zwifuwo na mahatsi a u fulela kule na nnḓu.
-2. **Itani dzi-firebreak.** Firebreak ndi lutenga lwa mavu lwo kunakiswaho zwithu zwoṱhe zwine zwa nga swa. Badi, mavu o limiwaho, madamu na zwidziva zwi nga dovha zwa shuma sa dzi-firebreak. Sedzani tshipiḓa tsha mulayo afho fhasi.
-3. **Ṱavhani zwimela zwitala zwi konḓelelaho mulilo.** A hu na tshimela tshi sa swi, fhedzi zwimela zwi re na maṱari o nonaho a re na maḓi, a re na mapfura kana vhuḽo (resin) zwiṱuku zwi swa nga u ongolowa. Tsumbo dzavhuḓi dza Afrika Tshipembe ndi zwikhopha (aloes), spekboom (*Portulacaria afra*), *Cotyledon*, vygies (*Delosperma* na zwimela zwa lushaka lwayo), sour fig (*Carpobrotus edulis*), bietou (*Osteospermum moniliferum*) na num-num (tshaka dza *Carissa*). Khethani zwine zwa tea mutsho waṋu, ngauri zwiṅwe, sa spekboom, a zwi funi tshando tshihulwane.
-4. **Vheani miri i swaho nga u leluwa kule na zwifhaṱo.** Phaini, miri ya ngamu (gum trees) na wattle zwi na mapfura kana vhuḽo nahone zwi swa nga maanḓa. Zwinzhi zwazwo ndi zwimela zwa **invasive species** (zwimela zwi phaḓaladzeaho zwi tshinyadzaho) zwo ṅwalwaho.
-5. **Dzulani no lugisa maḓi.** Vhani na thanngi ya maḓi, phaiphi kana zwipfafadzi tsini na nnḓu, na zwirwa zwa u dzima mulilo (fire beaters) kana tshipfafadzi tsha u hwala nga muṱana (knapsack sprayer).
-6. **Ṋeani tshithu tshithihi mishumo minzhi (stacking functions).** Ngade ya tsini ha nnḓu kana ngade ya miri ya mitshelo i sheledzwaho u mona na nnḓu i shuma sa lutenga lutala lwa u tsireledza. Mutalo wa zwimela zwi konḓelelaho mulilo u nga dovha wa shuma sa windbreak. Vhudzisani Dzangano ḽaṋu ḽa u Thivhela Mulilo arali u tshi dzhiiwa sa firebreak yo teaho nga mulayo.
-
-### Mulayo: National Veld and Forest Fire Act (101 of 1998)
-
-Mulayo uyu (mulayo wa lushaka wa mililo ya ḓaka) u shuma kha vhaṋe vha mavu Afrika Tshipembe. Arali ni tshi lima kha mavu a tshitshavha kana a u hira, vhudzisani muṋe wa mavu, khoro ya sialala kana Dzangano ḽa u Thivhela Mulilo ḽa vhupo haṋu uri ndi nnyi ane a vha na vhuḓifhinduleli.
-
-- **Dzi-firebreak.** Arali mulilo wa ḓaka u tshi nga thoma, wa swa kana wa phaḓalala u bva mavuni aṋu, ni fanela u lugisa na u ṱhogomela firebreak kha thungo yaṋu ya mukano na muhura muṅwe na muṅwe. Vhahura vha nga tendelana u vhea firebreak huṅwe fhethu.
-- **Zwine firebreak ya fanela u vha zwone.** I fanela u vha i re i phaphaḓaho nahone i re ndapfu lwo linganaho uri i vhe na tshikhala tsho linganaho tsha u thivhela mulilo. A i fanela u ita uri mavu a khukhulwe. I fanela u vha i si na zwithu zwinzhi zwine zwa nga hwala mulilo wa tshi fhira. Mulayo a u vhei vhuphaphaḓi vhuthihi vhu sa shanduki, ngauralo vhudzisani Dzangano ḽaṋu ḽa u Thivhela Mulilo uri ndi vhuphaphaḓi vhufhio vhu ḓoweleaho kha vhupo haṋu.
-- **U fhisa firebreak.** Lingedzani u tendelana na vhahura vhaṋu nga ha ḓuvha. Arali ni sa koni u tendelana, ṋeani vhahura vhaṋu na Dzangano ḽa u Thivhela Mulilo nḓivhadzo yo ṅwalwaho ya maḓuvha a 14 nga u ṱukusa. Fhisani fhedzi musi khombo ya mulilo i tshi zwi tendela.
-- **Tsevhedzo dza khombo ya mulilo.** Tshumelo ya Mutsho ya Afrika Tshipembe (South African Weather Service) i bvisa zwikalo zwa khombo ya mulilo. Musi khombo ya mulilo yo ṱaniwa sa i re nṱha kana i re nṱha vhukuma kha vhupo haṋu, ndi vhutshinyi u vhasa kana u shumisa mulilo nnḓa.
-- **Dzulani no lugela u lwa na mulilo.** Ni fanela u vha na zwishumiswa, zwiambaro zwa u ḓitsireledza na vhathu vho gudiswaho vha ṱoḓeaho u dzima mulilo. Musi ni siho, vhathu vha re na vhuḓifhinduleli vha fanela u vha tsini u lwa na mulilo na u sevhedza vhahura vhaṋu na Dzangano ḽa u Thivhela Mulilo.
-- **Madzangano a u Thivhela Mulilo.** Aya ndi zwigwada zwa vhaṋe vha mavu vhane vha shuma vhoṱhe u thivhela na u lwa na mililo ya ḓaka. Ndi vhuṱali u ṱanganela khao. Arali mulilo wa phaḓalala u bva mavuni aṋu nahone muṅwe a ni hwesa mulandu khothe, khothe i humbula uri no vha no sa ṱhogomela, nga nnḓa ha musi ni tshi sumbedza zwiṅwe. Uyu muhumbulo a u shumi kha miraḓo ya Dzangano ḽa u Thivhela Mulilo.
-
-> **Tsireledzo:** Ni songo vhuya na fhisa firebreak ni noṱhe, nga ḓuvha ḽi fhisaho kana ḽi re na muya, kana musi khombo ya mulilo i nṱha. Vhani na vhathu vho linganaho, maḓi na zwirwa zwa u dzima mulilo zwo lugaho. Thomani nga u wana vhugudisi kha Dzangano ḽaṋu ḽa u Thivhela Mulilo kana kha mbekanyamushumo ya Working on Fire.
+1. **Fhungudzani zwine zwa nga swa.** Kha sector ya mulilo na u mona zwifhaṱo, dzulani ni tshi fhungudza mahatsi, ni kunakise maṱari o omaho na khuni dzo faho. Vhulungani khuni, hatsi ho omiswaho na mahatsi a u fulela kule na nnḓu.
+2. **Itani dzi-firebreak.** Kunakisani tshipiḓa tsha zwithu zwoṱhe zwine zwa nga swa. Bada, mavu o gwiwaho na madamu zwi shuma sa dzi-firebreak. Fhisani firebreak fhedzi nga ḓuvha ḽi rotholaho, ḽi si na muya, musi khombo ya mulilo i fhasi, ni songo vha noṱhe, nahone ni na vhathu vho linganaho, maḓi na zwirwa zwa u dzima mulilo (fire beaters) zwa u u fara.
+3. **Ṱavhani zwimela zwitala zwi swaho zwiṱuku-zwiṱuku.** A hu na tshimela tshi sa swi, fhedzi maṱari a re na nama, o nowaho, a re na mapfura maṱuku a swa zwiṱuku-zwiṱuku: zwikhopha (aloes), spekboom (*Portulacaria afra*, i sa funi tshando tsha maanḓa), *Cotyledon*, vygies (*Delosperma*), sour fig (*Carpobrotus edulis*), bietou (*Osteospermum moniliferum*) na num-num (*Carissa*).
+4. **Vhewani miri i re na mapfura kule na zwifhaṱo.** Phaini, mikalipitasi na wattle zwi swa nga maanḓa.
+5. **Dzulani no lugisela maḓi**: thanngi na phaiphi tsini na nnḓu, na zwirwa zwa u dzima mulilo kana tshipfafadzi tsha u hwala nga murahu.
+6. **Ṋeani tshithu tshithihi mishumo minzhi.** Ngade kana ngade ya miri ya mitshelo i sheledzwaho u mona nnḓu ndi tshithivheli tshitala, nahone mutalo wa zwimela zwi swaho zwiṱuku-zwiṱuku u ongolowisa muya khathihi na mulilo.
 
 ## Tshedza tsha ḓuvha
 
-Zwimela zwi ṱoḓa tshedza tsha ḓuvha uri zwi aluwe. Vhunzhi ha miroho na mitshelo zwi ṱoḓa ḓuvha ḽi zwi rovhaho zwo livhana (direct sun) lwa awara dza 6 nga u ṱukusa nga ḓuvha. Ḓuvha ḽa matsheloni ndi ḽa ndeme nga maanḓa. Fhethu hu fhisaho vhukuma, murunzi muṱuku nga masiari u a thusa.
+Vhunzhi ha miroho na mitshelo zwi ṱoḓa tshedza tsha ḓuvha tsho livhaho lwa awara dza rathi nga ḓuvha, nahone ḓuvha ḽa matsheloni ndi ḽa ndeme vhukuma. Fhedzi mavu a si na tshifukedzi kha ḓuvha ḽi fhisaho a a oma, nahone vhutshilo haṋo vhu a tambula: zwivhungu zwa mavu zwi ya fhasi kana zwa fa. Dzulani no fukedza mavu nga **mulch** (tshiṱaṱo tsha mahatsi o omaho, maṱari kana mahatsi a thoro) kana nga zwimela, ni ṋee matamati na phiriphiri murunzi wa masiari kha fhethu ho fhisesaho.
 
-Zwimela zwi nga dovha zwa wana ḓuvha ḽinzhi lu fhiraho. Maṱari na mitshelo, sa tsumbo matamati (tomatoes) na pepere (peppers), zwi nga swa nga ḓuvha. Mavu a si na tshifukedzi (bare soil) kha ḓuvha ḽa maanḓa a fhisa vhukuma nahone a oma, zwine zwa tshinyadza zwitshili zwa mavuni. Zwivhungu zwa mavu (earthworms) zwi dzhena fhasi vhukuma kana zwa fa. Fukedzani mavu nga **mulch** (tshifukedzi tsha mahatsi o omaho kana maṱari) kana zwimela, nahone ni shumise lwambaro lwa murunzi (shade cloth) kana zwimela zwilapfu hune ḓuvha ḽa fhisa nga maanḓa vhukuma.
+### U tsa ha ḓuvha
 
-### U tsa ha ḓuvha (sun angles)
+Afrika Tshipembe ḽi vhukati ha khona dza 22 na 35 tshipembe ha Ikweitha (Equator). Nga masiari ḓuvha ḽi devhula: nṱha nga tshilimo, fhasi nga vhuria, ngauralo mirunzi ya vhuria i lapfa vhukuma.
 
-Afrika Tshipembe i vhukati ha khona dza 22 na 35 tshipembe ha Ikweitha (Equator). Nga masiari ḓuvha ḽi devhula. Ḽi nṱha vhukuma ṱaḓulu nga tshilimo nahone ḽi fhasi nga vhuria, ngauralo mirunzi ya vhuria i lapfa vhukuma.
-
-| Fhethu | Vhuimo ha ḓuvha nga masiari vhukati ha vhuria (21 Fulwi, June) | Vhuimo ha ḓuvha nga masiari vhukati ha tshilimo (21 Nyendavhusiku, December) | Murunzi wa masiari wa luvhondo lwa 2 m vhukati ha vhuria |
+| Fhethu | Vhulapfu ha ḓuvha ḽa masiari, vhukati ha vhuria (21 Fulwi) | Vhulapfu ha ḓuvha ḽa masiari, vhukati ha tshilimo (21 Nyendavhusiku) | Murunzi wa masiari wa luvhondo lwa 2 m, vhukati ha vhuria |
 |---|---|---|---|
-| Polokwane (24° S) | 43° | ḽi tsini na u vha nṱha ha ṱhoho | tsini na 2.2 m |
-| Johannesburg (26° S) | 40° | 87° | tsini na 2.4 m |
-| Durban (30° S) | 37° | 84° | tsini na 2.7 m |
-| Cape Town (34° S) | 33° | 80° | tsini na 3.1 m |
+| Polokwane (24° S) | 43° | hu ḓo nga nṱha-nṱha ha ṱhoho | hu ḓo nga 2.2 m |
+| Johannesburg (26° S) | 40° | 87° | hu ḓo nga 2.4 m |
+| Durban (30° S) | 37° | 84° | hu ḓo nga 2.7 m |
+| Kapa (34° S) | 33° | 80° | hu ḓo nga 3.1 m |
 
-Nga matsheloni na nga madekwana, mirunzi i lapfa vhukuma u fhira ya masiari i re afho nṱha. Nga vhuria, ndima ya ngade (garden bed) i re thungo ya tshipembe ya tshifhaṱo kana ya muri mulapfu i wana ḓuvha ḽiṱuku. Vheani miri milapfu na zwifhaṱo thungo ya tshipembe ya ngade yaṋu, na zwimela zwipfufhi thungo ya devhula.
+Nga vhuria ndima i re thungo ya tshipembe ya tshifhaṱo kana muri muhulwane i wana ḓuvha ḽiṱuku. Ngauralo vhewani miri mirapfu na zwifhaṱo thungo ya tshipembe ya ngade, na zwimela zwipfufhi thungo ya devhula.
 
 ### U shumisa ḓuvha
 
-- **Miri na zwimela zwi gonyaho zwi laṱaho maṱari nga vhuria (deciduous)** zwi a laṱa maṱari nga vhuria. Zwi ṱavheni thungo ya devhula ya nnḓu uri zwi ṋee murunzi nga tshilimo na ḓuvha nga vhuria. Tsumbo ndi mivhini (grape vines), feiye (figs), white stinkwood (*Celtis africana*) na wild pear (*Dombeya rotundifolia*).
-- **Thermal mass** (zwithu zwi vhulungaho mufhiso). Biriki, matombo, mavu na maḓi zwi vhulunga mufhiso nga ḓuvha nahone zwa u bvisa nga vhusiku. Zwi vheeni hune ḓuvha ḽa vhuria ḽa nga zwi swikela hone, sa tsumbo murahu ha mafasiṱere o lavhelesaho devhula.
-- **Mutombo u bvelaho nnḓa (roof overhang).** Thungo ya devhula ya nnḓu, itani uri mutombo u bvele nnḓa (eave) lwo linganaho u ṋea mafasiṱere murunzi kha ḓuvha ḽa tshilimo ḽi re nṱha, fhedzi lu si lulapfu lwa u thivhela ḓuvha ḽa vhuria ḽi re fhasi u vhonela nnḓuni.
-- **Mafasiṱere o lavhelesaho vhukovhela** a dzhenisa ḓuvha ḽi fhisaho ḽa masiari. Fhethu hu fhisaho, a iteni maṱuku kana ni a ṋee murunzi.
+- **Miri na mivhino zwi laṱaho maṱari nga vhuria** (deciduous). Zwi ṱavheni devhula ha nnḓu u itela murunzi wa tshilimo na ḓuvha ḽa vhuria: mivhino ya mafhiri a gerepe, mikuyu, white stinkwood (*Celtis africana*) na wild pear (*Dombeya rotundifolia*).
+- **Thermal mass** (zwithu zwi vhulungaho mufhiso) ndi zwithu zwi lemaho, zwi ngaho zwitina, matombo, mavu kana maḓi, zwine zwa mona mufhiso nga ḓuvha zwa u vhuisa nga vhusiku. I vheeni hune ḓuvha ḽa vhuria ḽa i swikela, sa murahu ha mafasiṱere o lavhelesaho devhula.
+- **Mutombo u fhiraho luvhondo.** Itani uri mutombo wa thungo ya devhula u fhire luvhondo nga u lingana u ṋea mafasiṱere murunzi kha ḓuvha ḽa nṱha ḽa tshilimo, fhedzi u pfufhi nga u lingana uri ḓuvha ḽa fhasi ḽa vhuria ḽi dzhene.
 
 ## Mutsho
 
-Mutsho (climate) ndi maimo a ḓuvha a vhukati a fhethu lwa miṅwaha minzhi: ḓuvha, mvula, gomo (mist), tshando (frost), gwamba (snow), muya na mufhiso. Mutsho ndi tshone tshithu tshihulwane tshi langaho zwimela na zwipuka zwine na nga zwi vha nazwo.
+Mutsho ndi maimo a ḓuvha a fhethu nga tshikalo kha miṅwaha minzhi. U fhira zwoṱhe, ndi wone u tibaho zwine na nga zwi lima.
 
-### Mutsho wa Afrika Tshipembe
+Afrika Tshipembe ḽo oma. Ḽi wana mvula ya hu ḓo nga 464 mm nga ṅwaha nga tshikalo, musi tshikalo tsha ḽifhasi tshi hu ḓo nga 860 mm, nahone ḽi a oma zwiṱuku-zwiṱuku u bva vhubvaḓuvha u ya vhukovhela. Vhunzhi ha shango, na Lesotho, Eswatini na Zimbabwe, vhu wana **mvula ya tshilimo**, nga maanḓa u bva hu ḓo nga Lara (November) u swika Ṱhafamuhwe (March), na vhuria ho omaho. Tshipembe-vhukovhela ha Kapa Vhukovhela vhu wana **mvula ya vhuria**, nga maanḓa u bva hu ḓo nga Shundunthule (May) u swika Ṱhangule (August), na tshilimo tshi fhisaho, tsho omaho. Lwanzhe lwa tshipembe lwa Kapa lu wana mvula ṅwaha woṱhe. Vhuimo ha nṱha ndi ha ndeme u fana na fhethu: Highveld i na tshando vhuria vhuṅwe na vhuṅwe, musi lwanzhe lwa KwaZulu-Natal na Lowveld zwi tshi ḓo nga zwi si na tshando.
 
-- Afrika Tshipembe ndi shango ḽo omaho. Mvula ya vhukati ndi tsini na 464 mm nga ṅwaha, musi mvula ya vhukati ya ḽifhasi ḽoṱhe i tsini na 860 mm. Kanzhi, mvula i a fhungudzea u bva vhubvaḓuvha u ya vhukovhela.
-- **Vhupo ha mvula ya tshilimo:** vhunzhi ha shango, hu tshi katelwa Highveld, Lowveld, Free State, KwaZulu-Natal na vhukati ha Kapa Vhubvaḓuvha, na Lesotho, Eswatini na Zimbabwe. Mvula i na nga maanḓa u bva tsini na Ḽara (November) u swika Ṱhafamuhwe (March), kanzhi i tshi ḓa na maḓumo (thunderstorms). Vhuria vhu a oma, nahone vhukati ha shango vhu a rotha hu na tshando.
-- **Vhupo ha mvula ya vhuria:** tshipiḓa tsha tshipembe-vhukovhela tsha Kapa Vhukovhela. Mvula i na nga maanḓa u bva tsini na Shundunthule (May) u swika Ṱhangule (August), i tshi ḓiswa nga zwipiḓa zwa muya u rothaho. Tshilimo tshi a fhisa, tsho oma nahone tshi na muya.
-- **Mvula ya ṅwaha woṱhe:** lwanzhe lwa tshipembe lwa Kapa, vhubvaḓuvha ha Cape Agulhas.
-- **Vhulapfu nṱha ha lwanzhe ndi ha ndeme.** Highveld i na tshando vhuria vhuṅwe na vhuṅwe. Drakensberg na mavu a nṱha a Lesotho zwi wana gwamba na tshando tshihulwane. Lwanzhe lwa KwaZulu-Natal na Lowveld zwi a dudela nahone hu ṱoḓa u vha hu si na tshando.
+Gudani mutsho waṋu: musi mvula dza u thoma dzi tshi ḓa, na musi tshando tsha u thoma na tsha u fhedza tshi tshi wa.
 
-> **Ḓivhani:** Tsumbo ya Lesotho. Mavu a fhasi a Lesotho a nga fhisa u fhira 30 °C nga tshilimo, fhedzi nga vhusiku ha vhuria mufhiso u tsa fhasi vhukuma ha 0 °C. Gwamba ḽi a ḓowelea kha mavu a nṱha a re nṱha ha 2,000 m.
+> **Tsevhedzo:** Farani tshikalo tsha mvula (rain gauge) na themometha, ni ṅwale mvula na mufhiso wa fhasi-fhasi ḓuvha ḽiṅwe na ḽiṅwe. Nga miṅwaha mishoni ni ḓo ḓivha mutsho waṋu u fhira mmapa muṅwe na muṅwe.
 
-Gudani mutsho waṋu. Mvula dza u thoma kanzhi dzi na lini? Tshando tsha u thoma na tsha u fhedza tshi wela lini? Hu a fhisa nahone ho oma, kana hu na gomo nahone ho thapha? Phindulo idzi dzi ḓo ni thusa u khetha uri ni ṱavhe miri ifhio ya mitshelo, na uri ni ṱavhe miroho ifhio, ngafhi na lini.
+### Dzi-microclimate
 
-> **Tsevhedzo:** Vhani na tshikalo tsha mvula (rain gauge) tsho leluwaho na themometha, nahone ni ṅwale mvula na mufhiso wa fhasi-fhasi ḓuvha ḽiṅwe na ḽiṅwe. Nga murahu ha miṅwaha i si gathi ni ḓo ḓivha mutsho waṋu zwavhuḓi u fhira mmapa muṅwe na muṅwe.
+**Microclimate** (mutsho wa fhethu huṱuku) ndi fhethu huṱuku hune mutsho waho wa fhambana na wa mavu a u mona. Iṅwe na iṅwe i ni konisa u lima tshiṅwe tshine na vha na sa kone u tshi lima kale. Dzi wanani nga u sedza hune tshando tsha lala tshifhinga tshilapfu hone na hune zwimela zwa vha na maluvha nga u ṱavhanya hone. Fhethu ha fhasi vhukati ha thavha (valley floors) na mabommbi a milambo zwi a rothola. Khona dzi re murahu ha maanḓa dzi a dudela nahone a dzi na muya: vhewani matamati tsini na luvhondo lwo lavhelesaho devhula.
 
-### Microclimate
+U ita dzi-microclimate dzi dudelaho kha fhethu ho rotholaho:
 
-**Microclimate** (mutsho wa fhethu huṱuku) ndi fhethu huṱuku hu re na mutsho wo fhambanaho na wa fhethu ho hu monaho. U sendama ha mavu, thungo ine fhethu ha lavhelesa khayo (aspect), vhudzulo kha thavha, maḓi, maluvhondo, miri na matombo zwoṱhe zwi vhumba dzi-microclimate. Ni nga dovha na ita dziṅwe ntswa. Dzi-microclimate dzo fhambanaho dzi ni tendela u lima zwimela zwo fhambanaho zwinzhi.
+- **Fhaṱani kha lutenga lu dudelaho (thermal belt).** Nga vhusiku vhu si na makole na muya, muya u rotholaho u elela u tshi tsa sa maḓi wa kuvhangana fhethu ha fhasi hu vhidzwaho **dzi-frost pocket** (milindi ya tshando). Lutenga lu re vhukati ha u sendama lu dzula lu tshi dudela. Vhewani nnḓu na zwiliṅwa zwi sa konḓeleli tshando henefho.
+- **Ṱavhani miri nṱha ha thavha.** Mutalo wa miri nṱha ha nnḓu u ongolowisa na u shandukisa nḓila ya muya u rotholaho u elelaho fhasi nga vhusiku.
+- **Shumisani maḓi.** Naho tshidziva tshiṱuku kana thanngi tsini na nnḓu zwi linganyisa mufhiso.
+- **Livhisani nnḓu devhula**, ni vhee mulundu wa **compost** (malaṱwa a zwimela a khou vhola) ngomu ha thanele ya plastiki u itela u dudela ha vhuria.
 
-Ni wana dzi-microclimate nga u sedza na nga u lingedza. Sedzani hune tshando tsha thoma u wela hone, hune tsha thoma u fhela hone, na hune zwimela zwa thoma u bvisa maluvha hone. Tsumbo:
+### Mitsho i dudelaho, ya vhukati na yo omaho
 
-- **Fhethu ha fhasi na fhasi vhukati ha thavha (valley floors)** hu kuvhanganya muya u rothaho nga vhusiku nahone hu wana tshando tshihulwane.
-- **Tsini ha milambo (river banks)** hu na maḓi-maḓi nahone hu a rotha, kanzhi hu na tshando.
-- **Khona dzo tsireledzwaho** murahu ha maluvhondo na lufhenḓe dzi a dudela nahone dzo tsireledzwa kha muya.
+**Fhethu hu dudelaho**, hu ngaho Lowveld, lwanzhe lwa KwaZulu-Natal na mikovha i fhisaho ya Limpopo, hu na tshando tshiṱuku kana hu si na tshone. Limani avokhado, miomva, mango, litchi, phopho (papaya), macadamia na miri ya lushaka lwa namuni.
 
-Ṱavhani zwimela zwi funaho ḓuvha sa matamati tsini na luvhondo lwo lavhelesaho devhula (thungo ya ḓuvha). Luvhondo lu zwi dudedza nahone lwa zwi tsireledza zwiṱuku kha tshando.
+**Fhethu ha mutsho wa vhukati** hu na tshilimo tshi dudelaho na vhuria vhu rotholaho, kanzhi vhu na tshando. Miri minzhi ya mitshelo i laṱaho maṱari nga vhuria i ṱoḓa mahalwa a vhuria, a vhidzwaho "chill", uri i vhe na maluvha na mitshelo zwavhuḓi; kha fhethu hu dudelaho nangani tshaka dzi ṱoḓaho mahalwa maṱuku (low-chill). Limani apula, phera, pulamu, mapitshi, apurikhoto, alimondi, mikuyu, gerepe, pomegranate, persimmon, black mulberry na pecan.
 
-Nḓila dza u ita dzi-microclimate dzavhuḓi fhethu hu rothaho:
+**Fhethu ho omaho**, hu ngaho Karoo na vhunzhi ha Kapa Devhula, hu wana mvula i re fhasi vhukuma ha 500 mm nga ṅwaha, nahone zwiṅwe zwipiḓa zwi wana i re fhasi ha 200 mm. Mafhi, mhuṱa na nawa dza sialala (cowpeas) zwi ita zwavhuḓi u fhira mavhele henefha.
 
-- **Fhaṱani kha lutenga lu dudelaho (thermal belt).** Nga vhusiku ho vhonalaho hu si na muya, muya u rothaho u elela u tsa fhasi sa maḓi nahone u kuvhangana fhasi vhukati ha thavha. Fhethu uho ho rothaho hu vhidzwa **dzi-frost pocket** (milindi ya tshando). Lutenga lwa vhukati ha u sendama lu dzula lu tshi dudela. Ulu ndi lutenga lu dudelaho. Fhaṱani nnḓu yaṋu nahone ni ṱavhe zwiliṅwa zwi sa konḓeleli tshando henefho, hu si fhasi vhukati ha thavha.
-- **Ṱavhani miri nṱha ha nnḓu.** Mutalo wa miri nṱha ha nnḓu u ongolowisa nahone u livhisa thungo iṅwe muya u rothaho u elelaho u tsa nga vhusiku.
-- **Shumisani maḓi.** Naho tshidziva tshiṱuku kana thanngi tsini na nnḓu zwi thusa u linganisa mufhiso.
-- **Lavhelesisani nnḓu devhula** uri dzi wane ḓuvha ḽa vhuria.
-- **Shumisani zwimela zwi laṱaho maṱari nga vhuria** u wana murunzi nga tshilimo na ḓuvha nga vhuria.
-- **Shumisani mufhiso wa compost.** Mulundu wa **compost** (zwithu zwo vholaho zwi nontshisaho mavu) ngomu ha thanele ya plastiki u bvisa mufhiso nga vhuria.
-- **Shumisani zwimela u rothisa.** Nga tshilimo, zwimela zwi rothisa muya u zwi monaho nga murunzi wazwo na maḓi ane zwa a bvisa.
+## Maḓi kha mavu aṋu
 
-### Mufhiso na tshaka dza mutsho
+Hydrology ndi ṱhalutshedzo ya maḓi kha mavu aṋu. Phanḓa ha u pulana, wanani uri ndi maḓi afhio ane na nga a shumisa (milambo, zwisima zwa mupo, zwisima zwa u bowa, pompi), khalaṅwaha yaṋu ya mvula na mvula ya ṅwaha, uri mavu aṋu a bvisa na u fara maḓi zwavhuḓi hani, uri mitombo yaṋu i nga fara mvula ingafhani, na zwine climate change ya nga zwi ita kha mvula yaṋu.
 
-Mufhiso u elwa nga themometha nga digirii dza Celsius (°C). Maḓi a ita aisi (ice) nga 0 °C. Khethani zwimela zwaṋu na khalaṅwaha dza u ṱavha zwi tshi tea mufhiso na lushaka lwa mutsho waṋu.
+Thomani nga mutombo. Mvula ya 1 mm kha mitha ya tshikwea ya 1 i ṋea maḓi a litha 1. Mutombo wa mitha dza tshikwea dza 50 kha fhethu hune mvula ya 500 mm ya na nga ṅwaha u nga fara u swika litha dza 25,000 nga ṅwaha, hu tshi bviswa zwiṅwe zwine zwa xela.
 
-Hu na nḓila dza tshiofisi dza u khethekanya mitsho, sa sisiteme ya Köppen–Geiger. Kha bugu ino ri shumisa zwigwada zwiraru zwo leluwaho.
-
-### Mitsho i dudelaho (tropiki na subtropiki)
-
-Mutsho wa tropiki wa vhukuma ndi une naho ṅwedzi u rothaho vhukuma wa vha na mufhiso wa vhukati wa 18 °C kana u fhira. Ndi fhethu hu si gathi fhedzi Afrika Tshipembe hune ha vha tropiki vhukuma. Vhupo ha subtropiki vhu dudelaho, sa Lowveld, lwanzhe lwa KwaZulu-Natal na fhethu ha fhasi hu fhisaho vhukati ha thavha dza Limpopo (hot valleys), a hu na tshando kana hu na tshando tshiṱuku fhedzi. Hu tea mitshelo i ṱoḓaho tshilimo tshilapfu tshi fhisaho.
-
-Tsumbo: avokhado, muomva (banana), mango, litshi (litchi), phopho (papaya, paw-paw), makhadamia (macadamia), kofi, custard apple na miri ya lushaka lwa namuni (citrus: namuni, naartjie, ḽemone). Miri ya lushaka lwa namuni i dovha ya mela zwavhuḓi fhethu hunzhi hu re na vhuria vhu sa rothi nga maanḓa.
-
-> **Ḓivhani:** Mugwavha (guava), purple granadilla (*Passiflora edulis*) na tree tomato (*Solanum betaceum*) ndi zwimela zwa invasive species zwo ṅwalwaho nga fhasi ha NEMBA (2020) kha mavunḓu manzhi, hu tshi katelwa KwaZulu-Natal, Kapa Vhubvaḓuvha, Limpopo na Mpumalanga. White mulberry (*Morus alba*) yo ṅwalwa Afrika Tshipembe hoṱhe. Sedzani milayo ya vunḓu ḽaṋu phanḓa ha u zwi ṱavha. Black mulberry (*Morus nigra*) a yo ngo ṅwalwa.
-
-### Mitsho ya vhukati (temperate)
-
-Mitsho ya vhukati (temperate) i na tshilimo tshi dudelaho na vhuria vhu rothaho, kanzhi hu na tshando. Zwimela zwi konḓelelaho tshando zwi fhira vhuria zwi songo tshinyala.
-
-Miri minzhi ya mitshelo i laṱaho maṱari nga vhuria i bva fhethu hu re na vhuria vhu rothaho. I ṱoḓa tshifhinga tsha mahalwa a vhuria (chill) uri i bvise maluvha na mitshelo zwavhuḓi. Fhethu hu dudelaho, khethani tshaka dzi ṱoḓaho mahalwa maṱuku (low-chill varieties).
-
-Tsumbo: apula (apple), pere (pear), pulamu (plum), phitshisi (peach), apurikhoto (apricot), alimondi (almond), feiye (fig), mivhini (grape), pomegranate, persimmon, kiwi fruit, pecan nut (i ṱoḓaho maḓi manzhi), sitiroberi (strawberry) na blueberry.
-
-Miroho ya khalaṅwaha i rothaho sa khabishi, kale, bitiruthu (beetroot), phizi na broad beans a i ṱoḓi tshando. I limeni nga miṅwedzi i rothaho ya ṅwaha.
-
-Zwiliṅwa zwa khalaṅwaha i dudelaho sa meloni (melons), phuri, nawa na mavhele zwi mela nga miṅwedzi i dudelaho hu ṱoḓa u vha fhethu hoṱhe.
-
-### Mitsho yo omaho na yo omaho zwiṱuku (arid na semi-arid)
-
-Fhethu ho omaho (arid) hu wana mvula i sa swikiho 250 mm nga ṅwaha. Fhethu ho omaho zwiṱuku (semi-arid) hu wana tsini na 250 u swika 500 mm. Vhunzhi ha Kapa Devhula (Northern Cape) na Karoo ho oma kana ho oma zwiṱuku. Kha fhethu uhu, na kha vhunzhi ha Afrika Tshipembe, maḓi manzhi a nga fhufha ṅwaha muṅwe na muṅwe u fhira ane a wa sa mvula. Zwiliṅwa zwi konḓelelaho gomelelo sa mafhi (sorghum), mhuṱa (pearl millet) na nawa (cowpeas) zwi bvelela zwavhuḓi fhano u fhira mavhele.
-
-Naho mutsho waṋu wo ita hani, khethani zwimela zwi u teaho. Ngauralo a ni nga ḓo xelelwa nga tshifhinga na tshelede kha zwimela zwi sa koni u aluwa zwavhuḓi.
-
-## Maḓi a fhethu (hydrology)
-
-Hydrology ndi ngudo ya maḓi a re kha mavu aṋu: hune a bva hone, nḓila ine a tshimbila ngayo na nḓila ine a kwama ngayo zwi tshilaho. Musi ni tshi pulana mavu aṋu, ṱoḓisisani:
-
-- zwiko zwa maḓi zwine na nga zwi shumisa: mikulo, zwisima zwa mupo (springs), zwisima zwo gwiwaho (boreholes) na dzithepe,
-- mvula ya vhupo haṋu: khalaṅwaha ya mvula na mvula ya vhukati nga ṅwaha,
-- uri mavu aṋu a elelisa maḓi zwavhuḓi hani na uri a nga fara maḓi manzhi hani,
-- uri ni nga kuvhanganya maḓi manzhi hani kha mitombo na kha zwiṅwe zwiṱaha zwi konḓaho (hard surfaces),
-- zwine **climate change** (tshanduko ya mutsho nga tshifhinga tshilapfu) ya lavhelelwa u zwi ita kha mvula ya vhupo haṋu.
-
-U wana uri mutombo u nga kuvhanganya maḓi mangana: mvula ya 1 mm kha mitha ya skwea (square metre) 1 ya mutombo i ṋea maḓi a litha 1. Sa tsumbo, mutombo wa mitha ya skwea 50 fhethu hune mvula ya vha 500 mm nga ṅwaha u nga kuvhanganya u swika litha dza 25,000 nga ṅwaha, hu tshi bviswa maḓi a xelaho.
-
-Mafhungo aya a ni thusa u vhea mikano ya zwine na nga zwi lima. A dovha a ni thusa u khetha nḓila dzavhuḓi dza u kuvhanganya na u vhulunga maḓi, na zwimela na zwipuka zwo teaho. Tshimela tshiṅwe na tshiṅwe na tshipuka tshiṅwe na tshiṅwe zwi na ṱhoḓea dzazwo dza maḓi, nahone ni fanela u dzi fusha uri ni wane khaṋo yavhuḓi.
-
-> **Ḓivhani:** Nga fhasi ha National Water Act (36 of 1998) (mulayo wa lushaka wa maḓi), ni nga dzhia maḓi ni si na laisentsi u itela u shumiswa hayani ho linganaho na ngade ṱhukhu i si ya bindu, u ṋea maḓi zwifuwo (fhedzi hu si feedlot) zwine zwa fula mavuni aṋu, na u kuvhanganya maḓi a mvula kha mutombo waṋu. U shumisa maḓi manzhi u fhira aya, sa tsumbo u sheledza zwa bindu kana damu kha mulambo, zwi nga ṱoḓa u ṅwaliswa kana laisentsi. Vhudzisani Muhasho wa Maḓi na Vhukunakunaki (Department of Water and Sanitation).
+Izwi zwivhalo zwi vhea mikano ya zwine mavu aṋu a nga zwi bveledza.
 
 ## Tshando
 
-Tshando (frost) tshi a ḓowelea nga vhuria kha vhunzhi ha vhukati ha Afrika Tshipembe: Highveld, Free State, Karoo, vhukati ha Kapa Vhubvaḓuvha na ha KwaZulu-Natal (midlands), na Lesotho. Tshi dovha tsha vha hone kha fhethu ha fhasi hu rothaho vhukati ha thavha kha huṅwe fhethu. Vhunzhi ha fhethu ha tsini na lwanzhe na Lowveld hu wana tshando tshiṱuku kana a hu tshi wani.
+Tshando tshi ḓa vhuria vhuṅwe na vhuṅwe kha vhunzhi ha vhukati ha shango: Highveld, Free State, Karoo, vhukati ha Kapa Vhubvaḓuvha na KwaZulu-Natal, na Lesotho. Tshi dovha tsha wela kha mikovha i rotholaho kha huṅwe fhethu. Vhunzhi ha lwanzhe na Lowveld zwi wana tshiṱuku kana a zwi tshi wani.
 
-### Nḓila ine tshando tsha vhumbea ngayo
+Nga vhusiku vhu si na makole na muya, mavu na zwimela zwi xelelwa nga mufhiso wazwo u ya ṱaḓulu zwa rothola u fhira muya. Mufhufho wa maḓi u a ṱuka nṱha hazwo wa vha aisi tshena: tshando tshitshena (white frost). Muya u rotholaho u a tsa wa kuvhangana, ngauralo tshando tshi vhifha vhukuma fhethu ha fhasi. Musi muya wo omesa, zwimela zwi nga ṱuka hu si na aisi na luthihi. Hoyu ndi **tshando tshitswu** (black frost), nahone a tshi ṋei tsevhedzo: nga ḓuvha ḽi tevhelaho maṱari na thanda zwi a swifhala zwa fa.
 
-Tshando tshi vhumbea nga vhusiku ho vhonalaho (clear), hu si na muya nahone hu rothaho. Mavu na zwimela zwi xelelwa nga mufhiso wazwo u ya ṱaḓulu ḽi songo fukedzwaho nga makole, nahone zwa rotha u fhira muya. Mutsi wa maḓi (water vapour) u vha aisi kha zwone sa zwikristala zwitshena zwa aisi. Itshi ndi tshando tshitshena (white frost). Muya u rothaho u elela u tsa fhasi nahone u kuvhangana fhethu ha fhasi, ngauralo kanzhi tshando tshi vha tshihulwane henefho.
+Tshando tshi nga thivhela muri muṱuku wa mitshelo u aluwa lwa miṅwaha. Lugiselani phanḓa ha vhuria.
 
-Tshando tshi nga tshinyadza nga maanḓa zwipiḓa zwa zwimela. Tshi nga thivhela miri miṱuku ya mitshelo u aluwa lwa miṅwaha. Uri tshando tshi rwa ngade yaṋu nga maanḓa hani zwi ya nga vhulapfu haṋu nṱha ha lwanzhe, uri ni kule hani thungo ya tshipembe, vhudzulo haṋu kha u sendama ha mavu, na uri ni tsini hani na maḓi manzhi.
-
-### Tshando tshitswu (black frost)
-
-Musi muya wo oma vhukuma, zwimela zwi nga rotha u swika zwa ita aisi ngomu (freeze) hu si na aisi tshena i vhumbeaho. Hezwi zwi vhidzwa tshando tshitswu (black frost). A hu na tsevhedzo tshena. Nga ḓuvha ḽi tevhelaho maṱari na zwikwara (stems) zwi a swiswa nahone zwa fa. Vhunzhi ha zwimela zwi sa konḓeleli tshando a zwi nga ḓo fhola, fhedzi zwimela zwi konḓelelaho tshando zwi a tshila.
-
-### U tsireledza zwimela kha tshando
-
-Tsireledzani zwimela zwaṋu phanḓa ha musi vhuria vhu tshi thoma. Zwi khwine u ṱavhanya u fhira u lenga.
-
-1. **Fukedzani zwimela nga vhusiku ha tshando** nga lwambaro lwa tshando (frost cloth), dzishiṱi dza kale (old sheets) kana mahatsi o omaho (straw or dry grass). Zwifukedzi zwi swikaho fhasi mavuni zwi vhulunga mufhiso munzhi wa mavu. Zwi bviseni nga matsheloni.
-2. **Tsireledzani ngade.** Tshithivhela-muya kana lufhenḓe lwa zwimela (living fence) u mona na ngade zwi thivhela muya u rothaho. Siani vhukhala thungo ya fhasi uri muya u rothaho u kone u elela u bva nahone u songo farelwa ngadeni.
-3. **Livhisani muya u rothaho u mona na ngade.** Ṱavhani lufhenḓe lwa zwimela lwa tshivhumbeo tsha U (horseshoe) thungo ya nṱha, lwo vulea thungo ya fhasi.
-4. **Itani fhethu ha u fara ḓuvha (sun traps).** Luvhondo lwo lavhelesaho devhula, ṱhanga ya mavu kana lufhenḓe lwa zwimela lwo kotamaho zwi fara ḓuvha nahone zwa vhulunga muya u dudelaho.
-5. **Vhulungani mufhiso.** Matombo, biriki kana migomo ya maḓi (drums) u mona na zwimela zwi vhulunga mufhiso nga ḓuvha nahone zwa u bvisa nga vhusiku.
-6. **Ṱavhani miri ya u ṱhogomela (nurse trees).** **Canopy** (maṱavhi a nṱha a miri) i si nnzhi ya miri ya u thoma (pioneer trees) i sa tshili tshifhinga tshilapfu i tsireledza miri miṱuku ya mitshelo na zwiṅwe zwimela zwi sa konḓeleli tshando kha tshando.
-7. **Fukedzani mavu nga vhuṱali.** Mulch i tsireledza midzi na zwitshili zwa mavuni nga vhuria. Fhedzi mulch i dovha ya thivhela mavu u bvisa mufhiso wo vhulungwaho nga vhusiku, ngauralo zwimela zwipfufhi vhukuma zwi sa konḓeleli tshando zwi nga wana tshando tshinzhi nṱha ha mulch nnzhi. Kha ndima dza ngade dzine tshando tsha wela kanzhi, sheledzani mavu ḓuvha ḽi re phanḓa ha vhusiku ha tshando, ngauri mavu o thaphaho a vhulunga mufhiso munzhi.
-8. **Shumisani dzi-guild** (zwigwada zwa zwimela). Zwimela zwi limiwaho zwoṱhe zwi a tsireledzana (sedzani ndima ya 6).
+1. **Fukedzani zwimela nga vhusiku vhu re na tshando** nga lappi ya tshando (frost cloth), mashela a kale kana mahatsi a thoro, zwi tshi swika mavuni. Bvisani zwifukedzi nga matsheloni.
+2. **Tsireledzani ngade** nga windbreak kana lufhenḓe lwa zwimela, fhedzi ni sie tshikhala thungo ya fhasi uri muya u rotholaho u kone u bva nṱhani ha u kuvhangana.
+3. **Livhisani muya u rotholaho u mona ngade** nga lufhenḓe lwa zwimela lwo vhumbwaho sa tshisumbe tsha bere thungo ya nṱha, lwo vulea thungo ya fhasi.
+4. **Itani fhethu ha u fara ḓuvha (sun traps).** Luvhondo lwo lavhelesaho devhula kana lufhenḓe lwa zwimela lwo kotamaho zwi fara muya u dudelaho, nahone matombo kana migomo ya maḓi u mona zwimela zwi vhulunga mufhiso wa ḓuvha.
+5. **Ṱavhani miri ya u ṱhogomela (nurse trees).** **Canopy** (mutombo wa maṱari) u si wa maanḓa wa miri ya u thoma i tshilaho tshifhinga tshipfufhi u tsireledza miri miṱuku ya mitshelo.
+6. **Fukedzani nga mulch nga vhuronwane.** Mulch i tsireledza midzi, fhedzi i thivhela mavu u bvisa mufhiso waṋo nga vhusiku, ngauralo zwimela zwipfufhesa zwi nga wana tshando tshinzhi nṱha ha mulch yo ongaho. Kha ndima dzine dza wela nga tshando, sheledzani mavu ḓuvha ḽi re phanḓa ha vhusiku vhu re na tshando: mavu o nowaho a vhulunga mufhiso munzhi.
+7. **Shumisani dzi-guild.** **Guild** (tshigwada tsha zwimela) ndi zwimela zwi limiwaho khathihi u thusana, na u lwa na tshando (ndima ya 6).
 
 ## Climate change
 
-Climate change ndi tshanduko ya tshifhinga tshilapfu ya mivhumbeleo ya maimo a ḓuvha (weather), kha vhupo vhuthihi kana ḽifhasi ḽoṱhe. I ḓisa mufhiso wa nṱha, tshanduko kha mvula, maimo a ḓuvha a vhuvhi vhukuma (extreme weather) na maḓi maṱuku. Hezwi zwi nga tshinyadza mavu, zwa fhungudza khaṋo dza bulasi nahone zwa ḓisa nḓala na ṱhahelelo ya maḓi. Ndi iṅwe ya khombo khulwane kha vhulimi ṋamusi.
+**Climate change** (tshanduko ya tshifhinga tshilapfu kha mutsho) ndi tshanduko ya tshifhinga tshilapfu kha mivhumbeleo ya mutsho, i itiwaho nga maanḓa nga zwiito zwa vhathu: mufhiso munzhi, mvula i shandukaho, mutsho u sa langeiho na maḓi maṱuku.
 
-### Zwine zwa khou itea Tshipembe tsha Afrika
+Tshipembe tsha Afrika tshi khou dudela nga u ṱavhanya u fhira tshikalo tsha ḽifhasi, zwiṅwe zwipiḓa zwa vhukati ha shango nga u ṱavhanya lu ḓo nga luvhili. Maḓuvha a mufhiso wa nṱhesa a khou anda, nahone hu lavhelelwa magomelelo manzhi na maḓuvha manzhi a khombo ya mulilo. Climate change yo ita uri gomelelo ḽa Kapa ḽa 2015 u swika 2017 ḽi vhe na tshikhala tshi ḓo nga lu raru tsha u itea.
 
-- Tshipembe tsha Afrika tshi khou dudela nga u ṱavhanya u fhira tshikalo tsha vhukati tsha ḽifhasi. Zwipiḓa zwiṅwe zwa vhukati ha Afrika Tshipembe zwo dudela nga u ṱavhanya lwa tsini na kavhili u fhira tshikalo tsha vhukati tsha ḽifhasi.
-- Maḓuvha a fhisaho vhukuma na maḓuvha manzhi a mufhiso muhulwane (heatwaves) zwo engedzea, nahone vhusiku vhu rothaho ho fhungudzea. Vhaṱhoḓisisi vha lavhelela uri hezwi zwi ḓo bvela phanḓa.
-- Magomelelo a tshinyadzaho zwiliṅwa na ḓaka ḽa mupo a lavhelelwa u engedzea kha tshipembe tsha Afrika musi ḽifhasi ḽi tshi khou dudela.
-- Climate change yo ita uri gomelelo ḽa Cape Town ḽa 2015 u swika 2017 ḽi konadzee lwa tsini na kavhiraru u fhira.
-- Maḓuvha manzhi a khombo khulwane ya mulilo a a lavhelelwa.
+### U pulanela mutsho u shandukaho
 
-### U pulana u itela mutsho u shandukaho
+A ri tsha nga fulufhela ṅwaha wa tshikalo. Ngauralo ri pulanela ṅwaha u vhifhaho, ra fhaṱa **u konḓelela** (resilience): maanḓa a u ṱanganedza khakhathi na u vusuluwa.
 
-Kha permaculture ri pulanela maimo a ḓuvha a shandukaho na khombo (disasters). Nḓila dza u fhaṱa u konḓelela (resilience):
+1. Ṱavhani zwiliṅwa zwinzhi zwo fhambanaho, uri u kundelwa huthihi hu songo ni tshinyadza.
+2. Nangani zwimela zwo khwaṱhaho, zwi tshi katela zwa **indigenous** (sialala, zwi melaho fhano nga mupo), na **dzi-perennial** (zwimela zwi tshilaho khalaṅwaha nnzhi).
+3. Fuwani tshaka dza henefho dzo khwaṱhaho: khuhu dza sialala, mbudzi na kholomo dza Nguni.
+4. Ṱavhani dzi-windbreak ni vhulunge maḓi u fhungudza mutsho wa maanḓa.
+5. Dzulani no fukedza mavu nga zwiliṅwa zwa u fukedza (cover crops) na mulch, ni thuse mvula u dzhena nga **dzi-swale** (migero yo linganaho yo gwiwaho i tshi pfuka fhethu ho sendamaho).
+6. Vhulungani zwo salaho zwaṋu. Zwi omiseni, zwi vhulungeni nga vhinega nnzhi, kana ni ite jamu na chutney. U vhulunga mabodeloni hayani zwiḽiwa zwi si na asidi nnzhi zwi ngaho nawa, phuri kana nama hu si na nḓila yo lingwaho zwi nga ḓisa botulism, u tshinyala ha zwiḽiwa zwi vhulahaho.
+7. Vhulungani mbeu yaṋu, uri i ḓowele mavu aṋu, ni i kovhele nga banngi ya mbeu ya tshitshavha.
+8. Pfukisani zwifuwo zwi fulaho kanzhi, ni ṋee ḓaka ḽa mupo tshifhinga tsha u awela.
+9. Fhaṱani kule na fhethu hune mandindi a swika hone. Dzulani no lugisela dzi-firebreak na maḓi, ni vhulunge zwiḽiwa, mbeu na fodder (zwiḽiwa zwa zwifuwo) u itela zwifhinga zwi konḓaho.
 
-- Ṱavhani zwiliṅwa zwinzhi zwo fhambanaho, uri u kundelwa ha tshiliṅwa tshithihi zwi si ni tshinyadze.
-- Khethani zwimela zwi konaho u konḓelela maimo o fhambanaho, hu tshi katelwa zwimela zwa sialala.
-- Limani **dzi-perennial** (zwimela zwi tshilaho miṅwaha minzhi): miri, zwiṱaka na zwiṅwe zwimela zwi tshilaho khalaṅwaha nnzhi.
-- Fuwani tshaka dza zwifuwo dza fhano dzi konḓelelaho, sa khuhu dza sialala, mbudzi na kholomo dza Nguni.
-- Ṱavhani dzi-windbreak nahone ni vhulunge maḓi u fhungudza maanḓa a maimo a ḓuvha a vhuvhi vhukuma.
-- Dzulani no fukedza mavu nga zwiliṅwa zwa u fukedza (cover crops) na mulch.
-- Thusani mvula uri i dzhene mavuni nga **dzi-swale** (migero ya u fara maḓi a mvula), mulch na **groundcover** (zwimela zwi fukedzaho mavu).
-- Vhulungani zwiḽiwa zwo salaho (surplus) nga u omisa, nga u ita pickle (u vhulunga nga vhinega), na nga u ita jamu na chutney.
-- Vhulungani mbeu dzaṋu uri dzi ḓowele maimo a fhano, nahone ni kovhelane mbeu nga bannga ya mbeu ya tshitshavha (community seed bank).
-- Shumisani u fulisa ho pulanwaho (planned grazing): pfukisani zwifuwo kanzhi nahone ni ṋee ḓaka ḽa mupo tshifhinga tsha u awela na u vusulusea.
+## Lingani
 
-> **Tsireledzo:** U vhulunga hayani zwiḽiwa zwi si na asidi nnzhi sa nawa, phuri, miṅwe miroho kana nama kha mabodelo (bottling) zwi nga ḓisa botulism, vhulwadze vhu vhulahaho vhu bvaho kha zwiḽiwa zwo tshinyalaho (food poisoning), arali hu sa shumiswi nḓila yo lingwaho. Vhulungani miroho nga vhinega yo linganaho (pickle), itani jamu nga mitshelo, kana ni omise zwiḽiwa zwaṋu. Tevhelani ndaela (recipe) yo lingwaho.
+Olani mmapa waṋu wa u thoma wa sector ino vhege.
 
-Khombo sa mandindi, magomelelo, mililo, miya mihulwane i re na mvula (severe storms) na dzisaikhiloni dza tropiki (tropical cyclones) zwi nga tshinyadza thundu na u vhulaha zwifuwo na vhathu. Climate change i khou ita uri zwiṅwe zwazwo, nga maanḓa maḓuvha manzhi a mufhiso muhulwane, magomelelo na maimo a ḓuvha a ḓisaho mulilo (fire weather), zwi itee kanzhi kana zwi vhe zwihulwane Tshipembe tsha Afrika. Zwi pulaneleni: ni songo fhaṱa kha fhethu hune mandindi a swika hone (flood plains), dzulani no lugisa dzi-firebreak na maḓi, nahone ni vhulunge zwiḽiwa, mbeu na fodder ya tshifhinga tshi konḓaho.
+1. Nga ḓuvha ḽi si na makole, imisani lutanda lwo luga fhethu ho vuleaho. Tsini na masiari, musi murunzi walwo u mupfufhi-pfufhi, murunzi u sumbedza tshipembe.
+2. Olani hayani haṋu, ngade na mukano kha bammbiri, na mutsevho wa devhula.
+3. Tshimbilani mavu. Ṅwalani hune miya ya maanḓa vhukuma ya bva hone, hune mililo ya kale ya bva hone, hune maḓi a dzhena hone nga murahu ha mvula, na hune tshando tsha lala tshifhinga tshilapfu hone.
+4. Olani maanḓa aṅwe na aṅwe sa tshipiḓa tshi livhaho hayani haṋu, na khalaṅwaha yayo.
+5. Vhudzisani muhura mulala nga ha muya na mulilo zwi vhifhesaho zwine a zwi humbula, ni zwi engedze.
+6. Dzhielelani nga tshitendeledzi maanḓa ane a ni vhilaedza vhukuma. Ndi hone hune windbreak, firebreak kana lufhenḓe lwa zwimela lwaṋu lwa u thoma lu ḓo ya hone.
 
 ## Zwithu zwa ndeme
 
-- Mmapa wa sector u sumbedza thungo ya maanḓa a bvaho nnḓa sa mulilo, muya, ḓuvha, maḓi, tshando, mbonalo na phosho.
-- Wanani devhula ya vhukuma: Afrika Tshipembe khamphasi i sumba tsini na khona dza 20 u swika 28 vhukovhela ha devhula ya vhukuma, nahone ḓuvha ḽa masiari ḽi devhula.
-- Gudani miya ya vhupo haṋu: muya wa berg, zwipiḓa zwa muya u rothaho, muya wa tshipembe-vhubvaḓuvha wa Kapa na miya ya Ṱhangule zwoṱhe zwi ḓisa mulilo kana mahalwa.
-- Khalaṅwaha ya mililo ndi vhuria na ṱhaṱula kha vhupo ha mvula ya tshilimo, na tshilimo Kapa Vhukovhela.
-- Mulilo u gonya thavha nga u ṱavhanya vhukuma; vheani zwa u ḓitsireledza kha mulilo thungo ya fhasi na kha sector ya mulilo.
-- Nga mulayo, vhaṋe vha mavu vha fanela u ṱhogomela dzi-firebreak, u ṋea nḓivhadzo ya maḓuvha a 14 phanḓa ha u dzi fhisa, na u sa fhisa musi khombo ya mulilo i nṱha. Ṱanganelani Dzangano ḽaṋu ḽa u Thivhela Mulilo.
-- Ḓuvha ḽa vhuria ḽi fhasi thungo ya devhula; siani thungo ya devhula ya ndima dza ngade na ya nnḓu yo vulea uri ḽi dzhene.
-- Vhunzhi ha Afrika Tshipembe hu wana mvula ya tshilimo; Kapa Vhukovhela i wana mvula ya vhuria; shango ḽoṱhe ḽo oma.
-- Muya u rothaho u kuvhangana fhethu ha fhasi; fhaṱani nahone ni ṱavhe zwiliṅwa zwi sa konḓeleli tshando kha lutenga lu dudelaho.
-- Sedzani NEMBA phanḓa ha u ṱavha mugwavha, granadilla, tree tomato kana mulberry.
-- Tshipembe tsha Afrika tshi khou dudela nga u ṱavhanya; pulanelani mufhiso, gomelelo na mulilo nga u fhambana ha zwimela, dzi-perennial, u fukedza mavu, na u vhulunga maḓi na mbeu.
+- Mmapa wa sector u sumbedza hune ḓuvha, muya, mulilo, maḓi, tshando, mbonalo na phosho zwa bva hone, uri ni kone u ṱanganedza, u thivhela kana u livhisa tshiṅwe na tshiṅwe.
+- Khamphasi kha Afrika Tshipembe i sumbedza vhukovhela ha devhula ya vhukuma nga khona dza 20 u swika kha 28; ḓuvha ḽa masiari ḽi devhula.
+- Mulilo u gonya thavha nga u ṱavhanya: vhewani tsireledzo ya mulilo fhasi ha thavha na kha sector ya mulilo.
+- Ḓuvha ḽa fhasi ḽa vhuria ḽi bva devhula, nahone muya u rotholaho u kuvhangana fhethu ha fhasi. Pulanani ndima, miri na nnḓu hu tshi sedzwa zwoṱhe.
+- Tshipembe tsha Afrika tshi khou dudela nga u ṱavhanya. Zwi fhinduleni nga u fhambana, dzi-perennial, mavu o fukedzwaho, maḓi o vhulungwaho na mbeu yo vhulungwaho.
+
+Tshimbilani mavu aṋu khalaṅwaha iṅwe na iṅwe no fara mmapa zwanḓani. Khalaṅwaha iṅwe na iṅwe i ḓo engedza tshipiḓa tshine na vha na sa tshi vhone.

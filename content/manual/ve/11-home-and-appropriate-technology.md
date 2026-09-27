@@ -1,229 +1,173 @@
 # Nnḓu i dzulaho hu tshi ya: Zone 0 na appropriate technology
 
-## Nnḓu ndi Zone 0
+Bulasi iṅwe na iṅwe i na vhukati, nahone ndi khishi. Ndi hone hune mafura, maḓi na vhunzhi ha tshelede zwa ya hone. Muṱa u nga lima zwiḽiwa zwinzhi fhedzi wa kha ḓi shaya maanḓa: u renga parafini, u hwala khuni lwa awara, u dzula swiswini musi muḓagasi u tshi dzima.
 
-U swika zwino ro sedza nḓila ya u lima zwiḽiwa na u wana zwiṅwe zwine ra zwi ṱoḓa nga nḓila i dzulaho hu tshi ya. Zwino ri swika vhukati ha pulane: nnḓu yone ine. Kha **permaculture** (vhulimi ha tshoṱhe vhu tevhelaho mupo) nnḓu i vhidzwa **Zone 0** (tshipiḓa tsha bulasi tshine na tshi dalela tshifhinga tshoṱhe).
+Hayani ndi hone hune permaculture ya lifha nga u ṱavhanya vhukuma. Litha iṅwe na iṅwe ya mvula yo farwaho, khuni iṅwe na iṅwe yo vhulungwaho na awara iṅwe na iṅwe ya ḓuvha ḽa mahala yo shumiswaho ndi tshelede i dzulaho kha muṱa.
 
-Humbulani nnḓu:
+**Musi ni tshi fhedza ino ndima ni ḓo kona u:**
 
-- yo fhaṱwaho nga zwishumiswa zwa henefho, sa vumba ḽa tsini kana mapulanga a bvaho kha ḓaka ḽiṱuku ḽa miri ḽa henefho, zwine zwa nga shandukiswa musi zwo tshinyala
-- yo pulanelwaho mutsho waṋu, uri i dzule i na mufhiso nga vhuria nahone i tshi rothola nga tshilimo, hu sa ṱoḓei maanḓa manzhi a u i dudedza kana u i rotholedza
-- ine ya ḓiitela mudagasi wo kunaho nga phanele dza ḓuvha, uri mabone a dzule o tshi funga musi mudagasi wa gridi wo dzima
-- ine ya ita gesi ya u bika nga manyaga a zwifuwo kha **biogas digester** (tshibveledzi tsha biogas)
-- ine ya kuvhanganya maḓi a mvula kha dzithanngi na zwidziva, hu na maḓi o vhulungwaho o linganaho u swika tshifhinga tsha gomelelo tsho fhela arali a tshi shumiswa nga vhuronwane
-- ine ya shumisa dziṅwe thekhinolodzhi nnzhi dzi leluwaho u fhungudza mbadelo, u fara maanḓa a mahala na u konḓelela zwifhinga zwi konḓaho na **climate change** (tshanduko ya mutsho nga tshifhinga tshilapfu)
+- Ṱalutshedza uri Zone 0 na appropriate technology zwi amba mini
+- Pulana nḓila ya u ita uri nnḓu i dudele nga vhuria na u rothola nga tshilimo nga ḓuvha
+- Nanga tshishumiswa tsha ḓuvha tsho teaho tsha tshedza, maḓi a u dudela, u bika na u omisa zwiḽiwa
+- Bika nga mafura maṱuku nga wonder bag na rocket stove
+- Ṱalutshedza nḓila ine biogas digester ya shandukisa ngayo manyaga a vha gesi ya u bika
 
-A zwi ṱoḓei uri ni ite zwoṱhe hezwi nga tshifhinga tshithihi. Tshiṱepe tshiṅwe na tshiṅwe tshiṱuku tshi vhulunga masheleni nahone tshi ita uri muṱa u tsireledzee.
+## Hayani ndi Zone 0
 
-## Appropriate technology
+Kha permaculture ri pulana mavu nga **dzi-zone** (zwipiḓa zwo kovhiwaho nga u ya nga uri ri dalela tshipiḓa tshiṅwe na tshiṅwe lunzhi hani). Nnḓu ndi **Zone 0**, vhukati ha pulane.
 
-**Appropriate technology** (thekhinolodzhi yo teaho) i amba zwishumiswa na mitshini zwi leluwaho, zwiṱuku, zwine:
+Humbulani nnḓu ine:
 
-- zwa tendelana na vhathu vhane vha zwi shumisa na mvelele yavho
-- zwa nga fhaṱwa, zwa shumiswa nahone zwa lugiswa nga vhukoni na zwishumiswa zwa henefho
-- zwa fusha ṱhoḓea dza ndeme sa maanḓa, maḓi, zwiḽiwa na u laṱa malaṱwa
+- ya fhaṱwa nga zwishumiswa zwa henefho, zwi ngaho vumba na mapulanga zwi bvaho tsini, zwine zwa nga shandukiswa musi zwo no fhela
+- ya dzula i tshi dudela nga vhuria na u rothola nga tshilimo hu si na u dudedza kana u rotholisa hunzhi
+- ya ḓiitela muḓagasi wayo nga ḓuvha, uri tshedza tshi dzule tshi hone musi muḓagasi wa muvhuso u tshi dzima
+- ya bika nga gesi yo itwaho nga manyaga a zwifuwo
+- ya fara maḓi a mvula kha dzithanngi na zwidziva, o linganaho u i pfukisa khalaṅwaha yo omaho arali a shumiswa nga vhuronwane
 
-Thekhinolodzhi dzi re kha ndima ino dzo shumiswa zwavhuḓi nga miṱa minzhi ya Tshipembe tsha Afrika. Dziṅwe ni nga dzi ita nga noṱhe. Dziṅwe dzi ṱoḓa u vhea masheleni maṱuku. Dzoṱhe dzi thusa u fhaṱa mudi u dzulaho hu tshi ya, nahone nga tshifhinga dzi a ḓibadela nga masheleni ane dza a vhulunga.
+Zwishumiswa zwi itaho uri izwi zwi konadzee zwi vhidzwa **appropriate technology** (thekhinolodzhi yo teaho): zwishumiswa na nḓila zwi leluwaho, zwi sa ḓuri, zwine vhathu vha henefho vha nga zwi fhaṱa, vha zwi shumisa nahone vha zwi lugisa vhone vhaṋe. Zwi shuma nga zwikili na zwishumiswa zwa henefho nahone zwi swikela ṱhoḓea dza mutheo dza maanḓa, maḓi, zwiḽiwa na malaṱwa. Zwiṅwe ni nga zwi ita ino vhege; zwiṅwe zwi ṱoḓa u vhewa ha tshelede ṱhukhu. Zwoṱhe zwi ḓibadela nga tshifhinga.
 
-## Pulanani nnḓu u ya nga ḓuvha
+A ni ṱoḓi u zwi ita zwoṱhe nga tshifhinga tshithihi. Lwendo luṅwe na luṅwe lu vhulunga tshelede nahone lu ita uri muṱa u tsireledzee.
 
-Kha Tshipembe tsha Afrika ḓuvha ḽi kha **devhula**. Ḽi nṱha vhukuma kha ṱaḓulu nga tshilimo nahone ḽi fhasi nga vhuria. Nnḓu yo pulanwaho zwavhuḓi i shumisa hezwi:
+## Pulanani nnḓu hu tshi sedzwa ḓuvha
 
-- Vheani dzirumu khulwane dza u dzula na mafasiṱere manzhi kha thungo ya devhula, uri ḓuvha ḽa vhuria ḽi dudedzaho ḽi dzhene.
-- Fhaṱani mutombo u fhirelaho nnḓa ha luvhondo (eaves) kana pergola (tshifhaṱo tsha zwiṱanda tshi ṋeaho murunzi) nṱha ha mafasiṱere a devhula. Zwi thivhela ḓuvha ḽa nṱha ḽa tshilimo, fhedzi zwa tendela ḓuvha ḽa fhasi ḽa vhuria ḽi tshi dzhena.
-- Mafasiṱere a thungo ya vhukovhela a vhe maṱuku, ngauri ḓuvha ḽa masiari nga tshilimo ḽi fhisa nnḓu vhukuma.
-- Zwishumiswa zwi lemelaho sa matombo, zwitina, vumba na fhasi ha khonkhiri zwi vhulunga mufhiso wa ḓuvha nahone zwa u bvisa nga vhusiku. Hezwi zwi vhidzwa **thermal mass** (zwithu zwi vhulungaho mufhiso).
-- Siḽingi i re na tshithivheli tsha mufhiso (insulation) i vhulunga mufhiso ngomu nga vhuria nahone ya u thivhela nga tshilimo.
-- Ṱavhani miri i laṱaho maṱari nga vhuria (deciduous trees) kana zwimela zwi gonyaho kha thungo ya devhula na ya vhukovhela, uri zwi ṋee murunzi nga tshilimo nahone zwi tendele ḓuvha ḽi tshi pfuka nga vhuria.
+Kha Tshipembe tsha Afrika ḓuvha ḽi devhula. Ḽi tshimbila nṱha nga tshilimo na fhasi nga vhuria. Nnḓu ine ya shuma nazwo i a ḓidudedza na u ḓirotholisa mahala.
 
-## Maanḓa a vusuluwaho
+1. Vhewani nnḓu dza u dzula khadzo na vhunzhi ha mafasiṱere thungo ya devhula, u dzhenisa ḓuvha ḽa vhuria.
+2. Fhaṱani mutombo u fhiraho luvhondo (eaves) kana pergola nṱha ha mafasiṱere a devhula. Zwi thivhela ḓuvha ḽa nṱha ḽa tshilimo nahone zwa dzhenisa ḓuvha ḽa fhasi ḽa vhuria.
+3. Itani mafasiṱere a vhukovhela a vhe maṱuku. Ḓuvha ḽa masiari ḽa tshilimo ḽi dudedza nnḓu nga maanḓa.
+4. Shumisani zwithu zwi lemaho, zwi ngaho matombo, zwitina, vumba kana fhasi ha khonkhriti, hune ḓuvha ḽa vhuria ḽa wela hone. Iyi **thermal mass** (zwithu zwi vhulungaho mufhiso) i mona mufhiso nga ḓuvha ya u vhuisa nga vhusiku.
+5. Vhewani siḽini i re na insulation. I fara mufhiso ngomu nga vhuria nahone ya u thivhela nga tshilimo.
+6. Ṱavhani miri kana mivhino i laṱaho maṱari nga vhuria thungo ya devhula na ya vhukovhela. Zwi ita murunzi nga tshilimo nahone zwa litsha ḓuvha ḽi tshi pfuka nga vhuria.
 
-Maanḓa a vusuluwaho (renewable energy), kana maanḓa o kunaho, a bva kha zwiko zwa mupo zwine zwa dzula zwi tshi vusuluwa, sa tshedza tsha ḓuvha, muya na maḓi a elelaho.
-
-Malasha o fhambana. Ndi tshiko tshi sa vusuluwi: musi o swa, o fhela, nahone ḓuvha ḽiṅwe a ḓo fhela zwoṱhe. Vhunzhi ha mudagasi wa Afrika Tshipembe u kha ḓi bva kha zwiṱitshi zwa mudagasi zwi swisaho malasha. U swisa malasha zwi tshinyadza muya une ra u fema, zwi thusa u vhumba mvula ya asidi (acid rain) nahone zwi bvisa khaboni dayokisaidi (carbon dioxide) nnzhi vhukuma, ine ya ḓisa climate change.
-
-Tshaka khulwane dza maanḓa a vusuluwaho ndi:
-
-- maanḓa a ḓuvha (a bva kha ḓuvha)
-- maanḓa a maḓi (hydropower, a bva kha maḓi a elelaho)
-- maanḓa a muya
-- **biomass** (maanḓa a bvaho kha zwimela na malaṱwa a zwipuka, sa khuni na biogas)
+Arali ni tshi khou fhaṱa, ṱhogomelani izwi zwithu tshitina tsha u thoma tshi sa athu u vhewa. Kha nnḓu ye ya vha hone kale, thomani nga siḽini.
 
 ## Maanḓa a ḓuvha
 
-Vhathu vho shumisa maanḓa a ḓuvha u bika, u dudedza na u aluwisa zwiliṅwa lwa zwigidi zwa miṅwaha. Tshedza tsha ḓuvha tshine tsha swika kha Ḽifhasi tshi hulu vhukuma: awara nthihi ya tshedza tsha ḓuvha i hwala maanḓa a tshi ṱoḓa u lingana na ane ḽifhasi ḽoṱhe ḽa a shumisa nga ṅwaha. Tshipembe tsha Afrika tshi na tshedza tsha ḓuvha tshi re tshavhuḓi vhukuma kha ḽifhasi.
+Maanḓa a vusuluwaho a ḓivhuedzedza: ḓuvha, muya, maḓi a elelaho na **biomass** (zwithu zwa zwimela na zwipuka, zwi ngaho khuni na manyaga). Malasha a a ḓivhuedzedzi: musi o no swa, a fhela. Malasha o kha ḓi ita hu ḓo nga 83% ya muḓagasi wa Afrika Tshipembe nga 2024, nahone u a fhisa hu tshikafhadza muya nahone hu ḓisa climate change (tshanduko ya tshifhinga tshilapfu kha mutsho).
 
-Mitengo ya phanele dza ḓuvha yo dovha ya tsela fhasi vhukuma. Zwino phanele dzi ḓura u si swike 1% ya mutengo wadzo nga miṅwaha ya vho-1970. Kha zwiṱitshi zwiswa zwa mudagasi, ḓuvha zwino ndi iṅwe ya nḓila dzi sa ḓuri vhukuma dza u bveledza mudagasi.
+Ḓuvha ndi maanḓa a vusuluwaho ane ri a kovhela roṱhe. Nga awara nthihi, tshedza tsha ḓuvha tshi swikaho kha ḽifhasi tshi hwala maanḓa a ḓo nga a linganaho ane ḽifhasi ḽoṱhe ḽa a shumisa nga ṅwaha. Tshipembe tsha Afrika tshi wana tshiṅwe tsha tshedza tsha ḓuvha tsha maanḓa vhukuma ḽifhasini, nahone phanele dza ḓuvha zwino dzi ḓura fhasi ha 1% ya zwe dza vha dzi tshi ḓura ngazwo miṅwahani ya vho-1970.
 
-### Phanele dza ḓuvha dza mudagasi (PV)
+### Phanele dza ḓuvha
 
-Phanele dza ḓuvha, dzine dza dovha dza vhidzwa phanele dza photovoltaic kana PV, dzi itwa nga zwithu sa silikhoni (silicon) zwine zwa shandukisa tshedza tsha ḓuvha tsha vha mudagasi.
+Phanele dza ḓuvha, dzine dza dovha dza vhidzwa phanele dza PV, dzi shandukisa tshedza tsha ḓuvha tsha vha muḓagasi. Dzibetheri dzi u vhulungela vhusiku.
 
-Nḓila ya u wana zwinzhi kha phanele:
+1. Dzi vheeni hune hu si na tshithu tshi dzi itaho murunzi vhukati ha hu ḓo nga 9 nga matsheloni na 3 nga masiari.
+2. Dzi livhiseni devhula.
+3. Dzi sendamiseni nga khona i ḓo nga i linganaho latitude yaṋu: hu ḓo nga khona dza 26 ngei Johannesburg, khona dza 34 ngei Kapa.
+4. Phumulani mafhuri na manyaga a zwiṋoni.
 
-1. Dzi vheeni kha mutombo kana kha furemu hune hu si na tshithu tshi dzi ṋeaho murunzi u bva nga 9 a.m. u swika nga 3 p.m.
-2. Kha Tshipembe tsha Afrika, dzi lavhelesiseni **devhula**.
-3. Dzi sendamiseni nga angele i linganaho na latitude yaṋu (vhuimo haṋu u bva kha ekhweita). Kha vhunzhi ha Afrika Tshipembe hezwi ndi tsini na 25 u swika 35 digiri.
-4. Dzi dzuleni dzo kuna. Lurole na manyaga a zwiṋoni zwi fhungudza maanḓa ane dza a bveledza.
+Kiti ṱhukhu i tshimbidza tshedza tsha LED, i ḓadza lutingo nahone i lidza radio. Sisiteme khulwane i tshimbidza firiji, TV kana khomphyutha. I ṱoḓa **inverter**, ine ya shandukisa muḓagasi wa DC wa phanele wa vha wa AC une vhunzhi ha zwishumiswa zwa u shumisa.
 
-Mudagasi u nga vhulungwa kha dzibethiri u itela u shumiswa nga vhusiku.
+Vhulungelani muḓagasi wa ḓuvha tshedza, lutingo, firiji na TV. Magiza, dziketele, zwidudedzi na zwiṱofu zwi ḽa maanḓa manzhi, nahone u zwi tshimbidza nga phanele zwi ṱoḓa sisiteme khulwane, i ḓuraho. Dudedzani maḓi ni bike nga zwishumiswa zwi re fhasi.
 
-**Sisiteme ṱhukhu** dzi funga mabone a LED, dzi ḓadza maanḓa a luṱingo (cellphone) nahone dzi shumisa radio. A dzi ḓuri nahone dzi a leluwa u vhewa.
+### Giza ḽa ḓuvha
 
-**Sisiteme khulwane** dzi nga shumisa furiji, TV kana khomphyutha. Phanele dza ḓuvha dzi bveledza mudagasi wa DC (direct current), fhedzi vhunzhi ha zwishumiswa zwa hayani zwi shumisa mudagasi wa AC (alternating current), ngauralo sisiteme khulwane i ṱoḓa inverter (tshishandukisi) u shandukisa DC i vha AC.
+Kha nnḓu nnzhi dza Afrika Tshipembe giza ndi ḽone ḽi shumisaho muḓagasi munzhi: tsedzuluso ya Eskom yo wana uri ḽi shumisa hu ḓo nga 39% ya muḓagasi wa muṱa wa tshikalo. **Giza ḽa ḓuvha** (solar geyser) ḽi dudedza maḓi kha tshikuvhanganyi tsha phanele dzo lingaho kana dzithubu dza gilasi kha mutombo nahone ḽa a vhulunga kha thanngi yo fukedzwaho nga insulation. Kha ḽi leluwesaho, maḓi a dudelaho a gonya a ya thanngini nga oṱhe, ngauralo thanngi i fanela u vha nṱha ha tshikuvhanganyi.
 
-Shumisani mudagasi wa ḓuvha nga vhuṱali. Magiza a mudagasi, dziketele, zwidudedzi na zwiṱofu zwa mudagasi zwi shumisa maanḓa manzhi, ngauralo u zwi shumisa nga ḓuvha zwi ṱoḓa sisiteme khulwane nahone i ḓuraho. Zwi a leluwa u vhulungela mudagasi wa ḓuvha mabone, furiji, luṱingo, khomphyutha na TV, nahone ni dudedze maḓi na u bika nga dziṅwe thekhinolodzhi dzo kunaho: magiza a ḓuvha, heat pump, biogas, zwibikisi zwa ḓuvha, **dzi-wonder bag** (mikhwama ya u vhulunga mufhiso) na **dzi-rocket stove** (zwiṱofu zwa rokhethe).
+- Livhisani tshikuvhanganyi devhula ni tshi sendamise sa phanele ya ḓuvha.
+- Hune ha vha na tshando, hune ha vha vhunzhi ha vhukati ha shango ho gonyaho, shumisani giza ḽa **indirect**. Ḽi dudedza maḓi a sa ṱuki (antifreeze) kha tshikuvhanganyi nṱhani ha maḓi. Giza ḽa direct ḽi nga ṱuka ḽa thuthuba (explode).
+- Vhewani tshipiḓa tsha muḓagasi tsha thikhedzo kha tshilangi tsha tshifhinga, uri tshi shume fhedzi musi ḓuvha ḽi sa ngo ita mushumo.
 
-> **Tsireledzo:** Tshithu tshiṅwe na tshiṅwe tshihulwane u fhira khithi ya mabone ine ya dzheniswa kha sokhethe fhedzi tshi fanela u vhewa nga muthu wa mudagasi (electrician) o gudelaho, ane a fanela u ni ṋea Certificate of Compliance (ṱhanziela ya uri mushumo wo tevhela milayo). Sisiteme yo ṱumanywaho na gridi ya masipala kana ya Eskom i fanela u tendelwa nahone ya ṅwaliswa nga masipala waṋu kana nga Eskom i sa athu thoma u shuma. Dzibethiri dzi vhulunga maanḓa manzhi: dzi vheeni fhethu ho omaho, hu re na muya u dzhenaho, kule na vhana. Dzibethiri dza lead-acid dzi bvisa gesi i swaho musi dzi tshi ḓadzwa maanḓa, ngauralo ni songo vhuya na daha kana u ita zwiṱhaṱhu zwa mulilo (sparks) tsini hadzo. Rengani dzibethiri dza lithium fhedzi arali dzi na sisiteme ya u langa bethiri (battery management system) yo teaho yo dzhenaho ngomu.
-
-### Giza ḽa ḓuvha (solar geyser)
-
-Giza ḽa ḓuvha (solar water heater) ḽi shumisa ḓuvha u dudedza maḓi. Maḓi kana tshiṅwe tshithu tshi elelaho zwi dudedzwa kha tshikuvhanganyi (collector) tshi re kha mutombo — phanele dzo lalaho kana thumbu dza gilasi — nahone zwa ya kha thanngi ya u vhulunga yo fukedzwaho uri i si xelelwe nga mufhiso. Kha sisiteme dzi leluwaho maḓi a dudelaho a gonya a dzhena thangini nga oṱhe, ngauralo thanngi i fanela u vha nṱha ha tshikuvhanganyi. Dziṅwe sisiteme dzi shumisa phombo ṱhukhu.
-
-- Sa phanele dza ḓuvha, tshikuvhanganyi tshi fanela u lavhelesa devhula nahone tshi sendamiswe uri tshi fare ḓuvha ḽinzhi nga hune zwa konadzea.
-- Fhethu hune ha vha na tshando (frost), zwine zwa vha vhunzhi ha vhupo ha nṱha ha vhukati ha shango (inland plateau), shumisani sisiteme ya indirect (closed-loop). I dudedza tshi elelaho tshi sa shanduki aisi (antifreeze) kha tshikuvhanganyi, hu si maḓi. Sisiteme ya direct, ine maḓi a hayani a elela nga kha tshikuvhanganyi, i nga shanduka aisi ya phasuka fhethu ha tshando.
-- Vhunzhi ha magiza a ḓuvha a na elementi ya mudagasi ya u thusa nga maḓuvha a makole. I vheeni kha thaimara (timer) uri i ḓi funga fhedzi musi i tshi ṱoḓea.
-
-Kha miṱa minzhi ya Afrika Tshipembe, u dudedza maḓi ndi tshipiḓa tshihulwanesa tsha mbadelo ya mudagasi: ṱhoḓisiso dzi sumbedza uri giza ḽi shumisa tsini na 35 u swika 40% ya mudagasi wa muṱa wa vhukati. Ngauralo giza ḽa ḓuvha ḽi nga vhulunga masheleni manzhi kana mafura, nahone ndi u vhea masheleni hu re na mbuelo.
-
-> **Tsireledzo:** Maḓi a bvaho kha giza ḽa ḓuvha a nga fhisa u swika a tshi swa muthu, zwihuluhulu nga maḓuvha a re na ḓuvha ḽinzhi. Humbelani muvhei uri a vhee vhalufu ya u ṱanganya maḓi (mixing kana tempering valve). Shumisani phuramu (plumber) o gudelaho ane a tevhela tshitandadi tsha Afrika Tshipembe tsha u vhea magiza a ḓuvha (SANS 10106).
-
-> **Tsevhedzo:** Tshiḽaho tsha maḓi tsho pendwaho nga muvhala mutswu tsho siwaho ḓuvhani nga matsheloni tshi ḓo ni ṋea maḓi a dudelaho a u ṱamba nga masiari, ni sa badeli tshithu.
+> **Tsevhedzo:** Mugomo kana bodelo ḽo pendwaho nga u swifhala ḽo ḓalaho maḓi ḽo vhewaho ḓuvhani nga matsheloni ḽi ṋea maḓi a dudelaho a u ṱamba nga masiari, mahala.
 
 ### Tshibikisi tsha ḓuvha
 
-Tshibikisi tsha ḓuvha (solar cooker) tshi shumisa maanḓa a ḓuvha u dudedza na u bika zwiḽiwa. Hu na tshaka tharu khulwane:
+**Tshibikisi tsha ḓuvha** (solar cooker) tshi bika nga tshedza tsha ḓuvha fhedzi, nahone a tshi ḓuri tshithu u tshi shumisa.
 
-- **Tshibikisi tsha bokisi (box cooker):** bokisi ḽo fukedzwaho uri ḽi si xelelwe nga mufhiso, ḽi re mutswu ngomu, ḽi na tshifukedzo tsha gilasi kana tsha plastiki i vhonalelaho. Ḽi fara mufhiso sa goloi yo valwaho yo imaho ḓuvhani. Kanzhi ḽi swika tsini na 100 u swika 150 °C, zwine zwa lingana u bika na u beika, nga zwiṱuku-zwiṱuku.
-- **Tshibikisi tsha phanele (panel cooker):** phanele dzi penyaho dzi vhonisa tshedza tsha ḓuvha kha khali (pot) ntswu i re ngomu ha mukhwama u vhonalelaho. A tshi ḓuri nahone tshi a leluwa u tshi ita.
-- **Tshibikisi tsha parabolic (parabolic cooker):** ndilo yo kombamaho ya zwivhoni (mirrors) i livhisa tshedza tsha ḓuvha kha khali, sa lensi ya u hulisa (magnifying glass). Tshi fhisa vhukuma (u fhira 250 °C) nahone tshi bika nga u ṱavhanya, fhedzi tshi fanela u livhiswa kanzhi u tevhela ḓuvha.
+- **Tshibikisi tsha bokisi:** bokisi ḽo fukedzwaho nga insulation, ḽitswu ngomu, ḽi re na tshivhalo tsha gilasi kana plastiki i vhonalelaho. Ḽi fara mufhiso sa goloi yo valwaho ḓuvhani nahone ḽi swika hu ḓo nga 100 u swika 150 °C, zwo linganaho u bika na u baka, zwiṱuku-zwiṱuku.
+- **Tshibikisi tsha phanele:** phanele dzi penyaho dzi vhuisa tshedza tsha ḓuvha kha khali ntswu i re ngomu ha mukhwama u vhonalelaho. Tshi a leluwa u tshi ita nahone a tshi ḓuri.
+- **Tshibikisi tsha parabolic:** ndilo ḽo kotamaho ḽa zwivhoni ḽi kuvhanganya tshedza tsha ḓuvha kha khali. Tshi swika nṱha ha 250 °C nahone tshi bika nga u ṱavhanya, fhedzi tshi fanela u monwa kanzhi u tevhela ḓuvha.
 
-Zwibikisi zwinzhi zwa ḓuvha a zwi ḓuri nahone zwi a leluwa; zwi nga rengiwa kana zwa itwa hayani. Musi ni na tshithihi, a tshi shumisi mafura nahone a hu na mbadelo ya u tshi shumisa.
-
-Tsevhedzo dza u bika nga ḓuvha:
-
-1. Bikani vhukati ha ḓuvha, tsini na u bva nga 10 a.m. u swika nga 3 p.m.
-2. Shumisani khali ntswu dzo ondaho (thin) dzi re na zwifukedzo zwi valaho zwavhuḓi.
-3. Livhisani tshibikisi kha ḓuvha nga awara iṅwe na iṅwe kana hu tshi fhira.
-4. Ṋeani tshifhinga tshilapfu u fhira musi ni tshi bika kha tshiṱofu.
-
-> **Tsireledzo:** Zwibikisi zwa parabolic zwi kuvhanganya tshedza tsha ḓuvha fhethu huthihi hu fhisaho vhukuma. Ni songo vhuya na sedza ngomu ha tshivhonisi, nahone ambarani magilasi a ḓuvha (sunglasses) musi ni tshi tshi shumisa. Vhana vha dzule kule, nahone mahatsi o omaho na bammbiri zwi dzule kule na fhethu hune tshedza tsha kuvhangana hone. Shumisani magilavu a u fara zwithu zwi fhisaho: khali na zwifukedzo zwi a fhisa vhukuma.
-
-> **Tsireledzo:** Zwiḽiwa zwo bikwaho kha tshibikisi tsha ḓuvha zwi fanela u fhisa zwavhuḓi (u fhira 60 °C, nahone nama na nawa zwi fanela u vhibva zwavhuḓi). Ni songo sia nama i songo bikwaho kha tshibikisi nga ḓuvha ḽa makole kana nga masiari a madekwana, musi tshi tshi dudela fhedzi. Arali ḓuvha ḽa ṱuwa, fhedzisani u bika kha tshiṱofu.
+1. Bikani vhukati ha hu ḓo nga 10 nga matsheloni na 3 nga masiari.
+2. Shumisani khali ṱhukhu, ntswu dzi re na zwivhalo zwi valaho zwavhuḓi.
+3. Monisani tshibikisi tshi livhane na ḓuvha nga murahu ha awara nthihi.
+4. Ṋeani tshifhinga tshilapfu u fhira kha tshiṱofu. Arali ḓuvha ḽa ṱuwa nama kana nawa zwi sa athu u vhibva zwavhuḓi, zwi fhedziseni kha tshiṱofu.
 
 ## U omisa zwiḽiwa nga ḓuvha
 
-U omisa zwi vhulunga mitshelo, miroho na thoro u itela miṅwedzi ine zwiḽiwa zwiswa zwa vha zwi si gathi. Zwi shuma ngauri zwitshili zwa u vunda (mould) na bakitheria zwine zwa tshinyadza zwiḽiwa a zwi koni u aluwa hu si na maḓi.
+Tshilimo tshi ṋea zwinzhi u fhira zwine muṱa wa nga zwi ḽa; vhuria vhu ṋea zwiṱuku. U omisa hu pfukisa zwo salaho. Zwi a shuma ngauri khowa na zwitshili zwi tshinyadzaho zwiḽiwa a zwi nga aluwi hu si na maḓi.
 
-### U omisa nga ḓuvha
+### U omisa ḓuvhani
 
-U omisa nga ḓuvha ndi nḓila i sa ḓuri na i leluwaho vhukuma. Vheani mitshelo kana miroho yo ṱhanyiwaho ḓuvhani fhethu ho kunaho lwa maḓuvha manzhi a fhisaho, o omaho.
+U omisa ḓuvhani ho vuleaho ndi nḓila i sa ḓuresi, fhedzi i a lenga: zwiḽiwa zwi nga vha na khowa zwi sa athu u oma, nahone nzhinzhi, mafhuri na ṱomboni zwa zwi swikela. Zwi iteni zwavhuḓi:
 
-Thaidzo dza u omisa nga ḓuvha ho vuleaho ndi uri:
-
-- zwi dzhia tshifhinga tshilapfu, nahone zwiḽiwa zwi nga vunda zwi sa athu u oma
-- nzhinzhi, zwiṅwe zwikukumi, zwiṋoni, zwipuka, lurole na zwitshili zwi ḓisaho malwadze (germs) zwi nga swikela zwiḽiwa
-- mvula kana ṱhoni zwi nga dovha zwa zwi nokisa
-
-Ngauralo kanzhi zwiḽiwa a zwi vhi zwavhuḓi, nahone zwi nga vha zwi songo kuna. Ni nga ita uri u omisa nga ḓuvha zwi tsireledzee:
-
-1. Shumisani zwiḽiwa zwiswa, zwo kunaho, zwavhuḓi fhedzi. Zwi ṱanzweni, na zwanḓa zwaṋu, u thoma.
-2. Ṱhanyani zwiḽiwa zwipiḓa zwo ondaho, zwi linganaho.
-3. Zwi omiseni kha rakhi yo gonyiswaho kana kha zwiḽaho zwa u omisa (trays), hu si fhasi mavuni.
-4. Zwi fukedzeni nga nethe kana lukanda lwo kunaho u thivhela zwikukumi.
-5. Zwi dzhenisini nnḓuni nga vhusiku kana ni zwi fukedze zwavhuḓi, uri ṱhoni i si zwi nokise.
-6. Pendulani zwipiḓa luthihi kana luvhili nga ḓuvha.
+1. Shumisani zwibveledzwa zwiswa, zwo kunaho. Zwi ṱanzweni, na zwanḓa zwaṋu.
+2. Zwi remeni zwiṱukana zwiṱuku, zwo linganaho.
+3. Zwi omiseni kha zwiimo kana tireyi zwo gonyiswaho, hu si mavuni.
+4. Zwi fukedzeni nga neṱe yo kunaho u thivhela nzhinzhi.
+5. Zwi dzheniseni nga vhusiku, kana ni zwi fukedze u thivhela ṱomboni.
+6. Pendelani zwiṱukana luthihi kana luvhili nga ḓuvha.
 
 ### Solar dryer
 
-**Solar dryer** (tshiomisi tsha ḓuvha) i omisa nga u ṱavhanya nahone zwo kuna u fhira u omisa nga ḓuvha ho vuleaho. I nga itwa hayani nga zwishumiswa zwi leluwaho kana ya rengiwa nga mutengo wo linganaho. I nga vha i leluwaho, sa furemu ya bokisi ya zwiṱanda yo fukedzwaho nga plastiki i vhonalelaho, kana ya khwaṱha, sa furemu ya tshisimbi yo fukedzwaho nga plastiki i vhonalelaho kana gilasi, i re na zwiḽaho zwa nethe ya murunzi (shade cloth) kana nethe ya tshisimbi.
+**Solar dryer** (tshiomisi tsha ḓuvha) tshi ṱavhanya nahone tsho kuna u fhira. Tshi nga leluwa sa bokisi ḽa pulanga ḽi re na tshivhalo tsha plastiki i vhonalelaho na tireyi dza neṱe kana neṱe ya murunzi, kana tsha khwaṱha sa furemu ya tsimbi i re na gilasi. Zwiomisi zwi litshaho muya u dudelaho u tshi pfuka tireyi zwi shuma nga u ṱavhanya, ngauri muya u tshimbilaho u hwala maḓi.
 
-Dziṅwe dzi-solar dryer dzi fhirisa muya u dudelaho nga kha zwiḽaho. Dziṅwe ndi bokisi ḽi fhisaho ḽi si na muya munzhi u tshimbilaho. U tshimbila ha muya zwi a thusa: muya u bvisa mutsiko wa maḓi (moisture).
+Zwiḽiwa zwo oma zwavhuḓi musi:
 
-Zwiḽiwa zwo oma zwo linganaho lini?
+- **mitshelo** i tshi nga lukanda nahone i kotama i si na fhethu ho nowaho musi i tshi kamiwa
+- **miroho** i tshi kwashea nga u leluwa nahone i vunḓea kana ya lidza
+- **mavhele, nawa na nḓuhu** zwo khwaṱha nahone zwi tshi lidza, zwo omiswa zwa vha fhasi ha hu ḓo nga 13% ya maḓi nga maḓuvha mavhili kana mararu nga murahu ha khaṋo
 
-- **Mitshelo** i fanela u pfala sa lukanda nahone i kombame hu si na fhethu ho nokaho musi ni tshi i kwasha.
-- **Miroho** i fanela u vha yo omesesa kana yo khwaṱha, nahone i tshi vhuna kana i tshi ita phosho.
-- **Mavhele, nawa na nḓuhu** zwi fanela u omiswa nga u ṱavhanya musi zwo kaṋwa, u swika maḓi a re ngomu a tshi vha fhasi ha 13%. Thoro i fanela u vha yo khwaṱha nahone i tshi ita phosho, nahone i songo dzula yo noka u fhira maḓuvha mavhili kana mararu.
+Omisani thoro na nḓuhu nga u ṱavhanya, ni laṱe dzine dza vha na khowa, dzo shandukaho muvhala kana dzo sukumaho. Khowa kha thoro yo nowaho i ita **aflatoxin**, tshivhulahi tsha tshivhindi tshine u bika ha sa tshi fhelise. Vhulungani zwiḽiwa zwo omiswaho kha zwiṱoḓelo zwo kunaho, zwi valaho zwavhuḓi fhethu ho rotholaho, hu re na swiswi, ni laṱe zwoṱhe zwi nukhaho sa khowa.
 
-Vhulungani zwiḽiwa zwo omiswaho kha zwiḽaho zwo kunaho, zwi valaho zwavhuḓi hu sa dzheni muya, fhethu hu rotholaho, hu re na swiswi. Zwi sedzeni kanzhi. Laṱani tshiṅwe na tshiṅwe tshi nukhaho u vunda kana tshi re na zwitshili zwa u vunda.
-
-> **Tsireledzo:** Zwitshili zwa u vunda kha mavhele na nḓuhu zwo nokaho zwi nga bveledza aflatoxin, tshivhulahi tshi tshinyadzaho tshivhindi nahone tshi nga ḓisa khentsa. U bika a zwi tshi fhelisi. Omisani thoro na nḓuhu nga u ṱavhanya, zwi vhulungeni zwo oma, nahone ni laṱe thoro na nḓuhu zwo vundaho, zwo shandukaho muvhala kana zwo ṱhoṱhoḓalaho. Ni songo ḽisa zwifuwo thoro yo vundaho.
-
-> **Tsevhedzo:** U nwela mitshelo yo ṱhanyiwaho kha maḓi a ḽimuni o ṱanganywaho na maḓi phanḓa ha u i omisa zwi thusa uri i dzule na muvhala wayo. U nwela miroho kha maḓi a vhilaho lwa tshifhinga tshiṱuku (blanching) phanḓa ha u i omisa zwi thusa uri i vhulungee zwavhuḓi. Nama na khovhe zwi ṱoḓa muṅo na nḓila dzo khetheaho; tevhelani ṱhalutshedzo yo lingwaho.
+U nwedza zwiṱukana zwa mitshelo kha maḓi a lamuni na maḓi zwi fara muvhala wazwo. U blanch miroho (u i nwedza nga u ṱavhanya kha maḓi a vhilaho) zwi i thusa u dzula tshifhinga tshilapfu.
 
 ## U bika nga u vhulunga mufhiso: wonder bag
 
-Wonder bag, kana tshibikisi tshi vhulungaho mufhiso (heat-retention cooker), ndi mukhwama kana bokisi ḽo fukedzwaho uri ḽi si xelelwe nga mufhiso, ḽine ḽa ita uri khali i fhisaho i dzule i tshi fhisa lwa awara nnzhi. Tshi ḓivhalesaho ndi Wonderbag, tsho sikwaho Afrika Tshipembe. Ni nga dovha na ḓiitela "bokisi ḽa mahatsi" (hay box) nga bokisi kana basikete yo ḓadzwaho nga mahatsi o omaho, dzinguvho dza kale kana mitsamelo.
+Khali ya tshidzimba na nawa i nga vhila zwiṱuku lwa awara, nahone awara iṅwe na iṅwe i fhisa khuni, gesi kana parafini. Tshibikisi tshi vhulungaho mufhiso tshi litsha khali i tshi fhedzisa u bika nga mufhiso wayo.
 
-Zwi shuma nga heyi nḓila: ni vhilisa zwiḽiwa kha tshiṱofu, nga murahu ni dzhenisa khali, yo fukedzwa nga tshifukedzo tshayo, nga u ṱavhanya ngomu ha mukhwama nahone na u vala. Mufhiso wo fariwaho ngomu u bvela phanḓa u bika zwiḽiwa zwiṱuku-zwiṱuku lwa awara nnzhi, hu sa ṱoḓei mafura a u engedza. Zwi nga vhulunga khuni, gesi, parafini kana mudagasi zwinzhi, nahone musi ho swiswa mafura maṱuku, na vhutsi nnḓuni vhu a fhungudzea.
+**Wonder bag** (mukhwama wa u fhedzisa u bika) ndi mukhwama wo fukedzwaho nga insulation une wa ita uri khali i vhilaho i dzule i tshi fhisa lwa awara. Wonderbag yo bveledzwa Afrika Tshipembe nga 2008; bokisi ḽa mahatsi ḽo itwaho hayani, ḽo ḓadzwaho nga mahatsi o omaho kana magumbeze a kale, ḽi shuma nga nḓila i fanaho. Mafura maṱuku o swaho a amba tshelede ṱhukhu yo shumiswaho na vhutsi vhuṱuku nnḓuni.
 
-Nḓila ya u u shumisa:
-
-1. Vhilisani zwiḽiwa zwavhuḓi nahone ni zwi litshe zwi tshi vhila zwiṱuku lwa mimunithi i si gathi. Nawa, samp (mavhele o ṱhuyiwaho) na nama i konḓaho zwi ṱoḓa u vhila tshifhinga tshilapfu u thoma.
-2. Siani tshifukedzo khalini nahone ni dzhenise khali mukhwamani nga u ṱavhanya.
-3. Shumisani khali i dzhenaho zwavhuḓi mukhwamani nahone yo ḓala. Khali yo ḓalaho i dzula na mufhiso lwa tshifhinga tshilapfu u fhira ine ya vha yo ḓala nga hafu.
-4. Ni songo vula mukhwama u sedza zwiḽiwa musi zwi tshi khou bikwa. Tshifhinga tshiṅwe na tshiṅwe tshine na u vula, mufhiso u a bva.
-5. Musi ni tshi bvisa zwiḽiwa, zwi fanela u vha zwi tshi kha ḓi fhisa vhukuma, zwi tshi bvisa muya wa maḓi (steam). Arali zwo rothola zwa dudela fhedzi, zwi vhiliseni hafhu phanḓa ha u zwi ḽa.
-
-> **Tsireledzo:** Zwiḽiwa zwi fanela u dzula zwi fhira 60 °C tshifhinga tshoṱhe zwi tshi kha mukhwama. Zwitshili zwi ḓisaho vhulwadze ha u ḽa zwiḽiwa zwo tshinyalaho (food poisoning) zwi aluwa nga u ṱavhanya vhukati ha 5 °C na 60 °C. Ni songo vhuya na dzhenisa zwiḽiwa zwo dudelaho fhedzi mukhwamani, nahone ni songo sia zwiḽiwa mukhwamani vhusiku hoṱhe uri ni zwi ḽe nga matshelo.
-
-> **Tsireledzo:** Nawa khulu tswuku (red kidney beans) na dziṅwe nawa dzo omaho dzi na tshivhulahi tsha mupo tshine tsha fheliswa fhedzi nga u vhilisa zwavhuḓi. Nwedzani nawa dzo omaho maḓini (soak), nga murahu ni dzi vhilise nga maanḓa lwa mimunithi i si fhasi ha 10 phanḓa ha u dzi dzhenisa mukhwamani. Mufhiso muṱuku hu songo thoma u vhilisa nga maanḓa u nga ita uri tshivhulahi tshi engedzee maanḓa.
+1. Vhilisani zwiḽiwa zwavhuḓi ni zwi litshe zwi vhile zwiṱuku lwa mimunithi mi si gathi. Tshidzimba, nawa na nama yo khwaṱhaho zwi ṱoḓa u vhila tshifhinga tshilapfu. Nwedzani nawa dzo omaho, nga murahu ni dzi vhilise nga maanḓa lwa mimunithi i si ṱhukhu ha 10 dzi sa athu u dzheniswa mukhwamani.
+2. Tshivhalo tshi tshi kha khali, isani khali nga u ṱavhanya mukhwamani ni u vale.
+3. Shumisani khali i tshi dzhena zwavhuḓi nahone yo ḓala. Khali yo ḓalaho i fara mufhiso tshifhinga tshilapfu.
+4. Ni songo vula mukhwama u sedza. U sedza huṅwe na huṅwe hu bvisa mufhiso.
+5. Ḽani zwiḽiwa zwi tshi kha ḓi fhisa zwi tshi bva mufhufho. Arali zwo no vha u dudela zwiṱuku, zwi vhiliseni hafhu u thoma. Ni songo vhuya na sia zwiḽiwa mukhwamani vhusiku vhuṱhe.
 
 ## Dzi-rocket stove
 
-Rocket stove ndi tshiṱofu tshi shumisaho khuni dzi si nngana: tshi swisa zwiṱanda zwiṱuku nga nḓila i sa xedzi maanḓa. Mulilo u swa ngomu ha tshimini yo fukedzwaho uri i si xelelwe nga mufhiso, i re na tshivhumbeo tsha L. Hezwi zwi ita uri mulilo u fhise vhukuma nahone u swe wo kuna, nahone zwi rumela mufhiso nga u livha nṱha kha khali.
+Khuni dzi a lema u hwala nahone dzi lenga u mela hafhu. Nahone vhutsi vhu a vhulaha. Dzangano ḽa Mutakalo ḽa Ḽifhasi (World Health Organization) ḽi humbulela uri vhathu vha hu ḓo nga bilioni dza 2.1 vha bika nga mililo yo vuleaho kana zwiṱofu zwi leluwaho zwi fhisaho khuni, vhulongo, malaṱwa a zwiliṅwa, malasha kana parafini. Vhutsi nnḓuni dzavho ho ḓisa lufu lwa vhathu vha hu ḓo nga milioni dza 2.9 nga 2021. Vhafumakadzi na vhana vhaṱuku, vhane vha fhedza tshifhinga tshinzhi tsini na mulilo, ndi vhone vhane vha tambula vhukuma.
 
-Ṱhoḓisiso dzo itwaho vhathuni dzo wana uri dzi-rocket stove dzi shumisa khuni dzi re fhasi nga tsini na 30 u swika 50% u fhira u bika kha mulilo wo vuleaho wa matombo mararu (three-stone fire), nahone dzi bvisa vhutsi na khaboni monokisaidi (carbon monoxide) zwi re fhasi vhukuma.
+**Rocket stove** (tshiṱofu tshi shumisaho khuni dzi si nngana) i fhisa zwiṱavhi zwiṱuku kha tshimini tshipfufhi, tsho fukedzwaho nga insulation, tsho vhumbwaho sa L. Mulilo u fhisa nga maanḓa nahone wo kuna, nahone mufhiso u gonya nga u livha khalini. Ndingo dza fhethu dzo wana uri dzi-rocket stove dzi shumisa khuni dzi fhungudzeaho nga hu ḓo nga 30 u swika 50% u fhira mulilo wo vuleaho wa matombo mararu, na vhutsi vhuṱuku vhukuma na carbon monoxide ṱhukhu. Dziṅwe dzi a hwalea; dziṅwe dzi fhaṱwa nnḓuni, dzi na tshimini.
 
-Hezwi ndi zwa ndeme kha mutakalo. Dzangano ḽa Mutakalo ḽa Ḽifhasi (World Health Organization) ḽi anganya uri vhathu vha tsini na bilioni dza 2.1, zwine zwa vha tsini na kota ya vhathu vhoṱhe vha ḽifhasi, vha bika kha mulilo wo vuleaho kana kha zwiṱofu zwi leluwaho zwi swisaho khuni, vhulongo, malaṱwa a zwiliṅwa, malasha kana parafini. Vhutsi vhu re nnḓuni dzavho ho anganywa u vha ho vhulaha vhathu vha tsini na milioni dza 2.9 nga 2021. Vhafumakadzi na vhana vhaṱuku, vhane vha fhedza tshifhinga tshinzhi tsini ha mulilo, ndi vhone vha tambulaho vhukuma.
+1. Fhisani khuni dzo omaho. Khuni dzo nowaho dzi ita vhutsi nahone dzi ṋea mufhiso muṱuku.
+2. Dzhenisani zwiṱavhi zwiṱuku zwi si gathi nga tshifhinga ni zwi sundedze musi zwi tshi swa.
+3. Itani uri tshikhala tsha muya fhasi ha zwiṱavhi tshi dzule tsho vulea.
+4. Vhewani khali yo dzula zwavhuḓi, hu na tshikhala tshiṱuku tsha uri gesi dzi fhisaho dzi elele dzi tshi i mona.
+5. Bikani nnḓa kana kha khishi i re na tshimini.
 
-Dzi-rocket stove dzi na saizi nnzhi. Nnzhi dzi a hwalea. Dziṅwe dzi fhaṱelwa ngomu ha khishi, sa tshiṱofu tsha misi yoṱhe, dzi na tshimini ya u bvisela vhutsi nnḓa.
-
-Nḓila ya u shumisa rocket stove zwavhuḓi:
-
-1. Shumisani khuni dzo omaho. Khuni dzo nokaho dzi bvisa vhutsi nahone dzi ṋea mufhiso muṱuku.
-2. Dzhenisani zwiṱanda zwiṱuku zwi si gathi nga tshifhinga, ni zwi sundele ngomu musi zwi tshi khou swa.
-3. Fhethu ha u dzhena ha muya nga fhasi ha zwiṱanda hu dzule ho vulea.
-4. Vheani khali nṱha ha tshiṱofu yo dzula zwavhuḓi, hu na tshikhala tshiṱuku uri gesi dzi fhisaho dzi kone u elela u mona nayo.
-
-> **Tsireledzo:** Rocket stove yo kuna u fhira mulilo wo vuleaho, fhedzi i kha ḓi bvisa vhutsi na khaboni monokisaidi, gesi ine a ni koni u i vhona kana u i nukhelela nahone i vhulaha. Bikani nnḓa kana kha khishi ine muya wa dzhena zwavhuḓi, i re na tshimini. Ni songo vhuya na dzhenisa tshiṱofu tshi swaho, mbawula (brazier, imbawula) kana mulilo wa malasha kha rumu yo valwaho u i dudedza, zwihuluhulu nga vhusiku. Vhuria vhuṅwe na vhuṅwe Afrika Tshipembe vhathu vha fa vho eḓela nga nḓila iyi.
-
-> **Tsireledzo:** Vheani tshiṱofu fhethu ho khwaṱhaho, ho eḓanaho, kule na vhana, mahatsi na tshithu tshiṅwe na tshiṅwe tshi nga swa. Ni songo vhuya na shumisa phethiroli u vhasa mulilo. Vhulungani parafini kha tshiḽaho tsho ṅwalwaho zwavhuḓi tshi re na tshifukedzo tshine vhana vha sa kone u tshi vula, ni songo vhuya na i vhea kha bodelo ḽa zwinwiwa (cooldrink) kana ḽa mafhi. U mila parafini ndi tshiitisi tshihulwanesa tsha vhana vhaṱuku u ḽa tshivhulahi nga tshiwo (accidental poisoning) Afrika Tshipembe.
+Rocket stove i kha ḓi ita **carbon monoxide** (khaboni monokisaidi), gesi ine na sa kone u i vhona kana u i nukhelela. Ni songo vhuya na dzhenisa tshiṱofu tshi tshi swa, mbawula (brazier, imbawula) kana mulilo wa malasha kha nnḓu yo valwaho u dudela.
 
 ## Dzi-biogas digester
 
-Biogas ndi gesi ya u swisa ine ya itwa musi bakitheria dzi tshi vhodza malaṱwa a mupo, sa manyaga a zwifuwo, malaṱwa a vhathu kana zwiḽiwa zwo salaho, kha thanngi yo valwaho hu si na muya. Nḓila ine ya itea hu si na okisidzheni (oxygen) i vhidzwa anaerobic. Thanngi i vhidzwa biogas digester.
+Manyaga ndi mafura na manyoro nga tshifhinga tshithihi, arali ra a fara zwavhuḓi. **Biogas** (gesi i itwaho nga manyaga) ndi gesi ya mafura i itwaho musi bakitheria dzi tshi pwasha manyaga, zwo salaho zwa zwiḽiwa kana malaṱwa a thoilethe kha thanngi yo valwaho zwavhuḓi i si na muya. Thanngi ndi **biogas digester** (thanngi yo valwaho ine manyaga a vhola khayo a bvisa gesi). Biogas i na hu ḓo nga 50 u swika 70% ya metheni, tshipiḓa tshi swaho. Vhunzhi ha zwo salaho ndi carbon dioxide, na haiḓirodzheni salfaidi ṱhukhu, ine ya nukha sa makumba o vholaho. Kha muṱa, u i shumisa havhuḓi vhukuma ndi u bika. Maḓi a bvaho, a vhidzwaho **slurry** (maḓi a manyaga), ndi manyoro avhuḓi.
 
-Kanzhi biogas i na metheni (methane) ya tsini na 50 u swika 70%, ine ya vha gesi ine ya swa. Vhunzhi ha yo salaho ndi khaboni dayokisaidi, na gesi dziṅwe dzi si nnzhi, hu tshi katelwa haiḓirodzheni salfaidi (hydrogen sulphide), ine ya nukha sa makumba o vholaho.
+Ni nga renga digester kana na i fhaṱa nga dzithanngi, phaiphi na zwiṱumanyi zwa vhengele ḽa hardware. I fanela u vala zwavhuḓi hu si na muya u dzhenaho na luthihi.
 
-Biogas digester i shandukisa malaṱwa a vha maanḓa. Gesi i nga shumiswa u bika, u funga mabone, kana, kha sisiteme khulwane, u bveledza mudagasi. Kha muṱa, u bika ndi nḓila i thusaho vhukuma ya u i shumisa. Tshi elelaho tshine tsha bva kha biogas digester, tshine tsha vhidzwa **slurry** kana digestate (maḓi a manyaga), ndi manyoro avhuḓi.
+1. I ṋeeni manyaga maswa a kholomo, nguluvhe kana khuhu o ṱanganywaho na maḓi a ḓo nga a linganaho, na zwo salaho zwa miroho zwo ṱhukhulwaho.
+2. Ni songo dzhenisa zwithu zwa thanda, mahatsi a thoro, marambo, plastiki, tshisibe, bleach na dziṅwe khemikhali. Khemikhali dzi vhulaha bakitheria.
+3. I ṋeeni zwiṱuku ḓuvha ḽiṅwe na ḽiṅwe nṱhani ha zwinzhi nga tshifhinga tshithihi. Muṱa kanzhi u ṱoḓa vhulongo vhuswa ha kholomo kana nguluvhe dzi si gathi ḓuvha ḽiṅwe na ḽiṅwe.
+4. I itani i dzule i tshi dudela. Bakitheria dzi shuma zwavhuḓi vhukuma kha hu ḓo nga 30 u swika 38 °C nahone dzi ita gesi ṱhukhu vhukuma fhasi ha hu ḓo nga 15 °C. Kha Highveld na Lesotho, i vhulungeni mavuni, i fukedzeni nga insulation kana ni vhee thanele ṱhukhu ya plastiki nṱha hayo.
+5. Lingani zwiṱumanyi arali zwi tshi bvisa gesi nga maḓi a sopho, hune mavhuvhu a sumbedza hune gesi ya bva hone. Vhewani mililo kule na digester na phaiphi, bikani kha khishi i re na muya munzhi, ni vale pompi ya gesi nga murahu ha u bika.
+6. Fukedzani milindi ya u dzhenisa na ya u bvisa. Ni songo vhuya na dzhena kha digester kana mulindi, naho zwo shumba: gesi dzi re ngomu dzi nga vhulaha.
+7. Litshani slurry i ime kana ni i ite compost lwa vhege dzi si gathi. Nga murahu i vheeni kha miri ya mitshelo na zwiliṅwa zwine na zwi bika, ni songo vhuya na i vhea kha muroho une na u ḽa u songo bikwa.
 
-Dzi-biogas digester dzi nga rengiwa dzo no itwa, kana dza fhaṱwa nga zwishumiswa zwi wanalaho vhengeleni ḽa zwishumiswa zwa u fhaṱa (hardware store), sa dzithanngi dza plastiki, phaiphi na zwiṱumanyi zwadzo (fittings). Dzi fanela u vala zwavhuḓi lwa tshoṱhe, hu sa dzheni kana u bva muya.
+## Lingani
 
-### Zwine na fanela u ṋea biogas digester
+Itani bokisi ḽa mahatsi ni bike ngaḽo ino vhege.
 
-- **Zwavhuḓi:** manyaga maswa a kholomo, a nguluvhe kana a khuhu, o ṱanganywaho na maḓi a linganaho nao; malaṱwa a miroho na a zwiḽiwa o ṱhanyiwaho zwiṱuku; malaṱwa a thoilethe kha biogas digester yo itelwaho zwenezwo.
-- **Ni songo shumisa:** zwithu zwa thanda, mahatsi o omaho (straw), marambo, plastiki, tshisibe, bleach, zwivhulahi zwa zwitshili (disinfectants) na dziṅwe khemikhali. Khemikhali dzi vhulaha bakitheria dzine dza bveledza gesi.
-
-Ṋeani zwiṱuku ḓuvha ḽiṅwe na ḽiṅwe, hu si zwinzhi nga tshifhinga tshithihi. Sa tsumbo i songo lavhelesesaho, manyaga a kholomo nthihi a ḓuvha ḽithihi a ṋea gesi i linganaho u bika lwa tsini na awara nthihi kha tshiswiso tshithihi (burner). Kanzhi muṱa u ṱoḓa manyaga a kholomo kana nguluvhe nnzhi, a kuvhanganywaho ḓuvha ḽiṅwe na ḽiṅwe.
-
-Bakitheria dzi shuma zwavhuḓi vhukuma musi biogas digester i tshi dudela, tsini na 30 u swika 38 °C. Fhasi ha tsini na 15 °C dzi bveledza gesi ṱhukhu vhukuma. Fhethu hune vhuria ha vha vhu rothaho, sa Highveld na Lesotho, dzhenisani biogas digester mavuni kana ni i fukedze uri i si xelelwe nga mufhiso, kana ni i fukedze nga nnḓu ṱhukhu ya zwimela ya plastiki (greenhouse), uri i dzule i tshi dudela.
-
-> **Tsireledzo:** Biogas i a swa nahone i nga thuthuba (explode). Metheni yo ṱanganaho na muya i a thuthuba musi gesi i tshi vha vhukati ha 5 na 15% ya muya. Ni songo vhuya na daha kana u vhasa mulilo tsini na biogas digester, mukhwama wa gesi kana phaiphi. Ṱolani arali gesi i tshi khou bva (leak) nga maḓi a tshisibe (mavhuvhu a sumbedza hune gesi ya khou bva hone), ni songo vhuya na shumisa mulilo. Metheni i gonya nahone i kuvhangana nga fhasi ha mitombo, ngauralo shumisani zwishumiswa zwa biogas fhedzi kha khishi ine muya wa dzhena zwavhuḓi, nahone ni dzime gesi kha thepe musi no fhedza u bika.
-
-> **Tsireledzo:** Ni songo vhuya na dzhena ngomu ha biogas digester, mukwita kana thanngi, naho hu si na tshithu ngomu. Hu nga vha na haiḓirodzheni salfaidi, gesi ine ya vhulaha, na khaboni dayokisaidi, ine ya sia hu si na muya wa u fema. Vhathu vho fa vha tshi lingedza u tshidza vhaṅwe. Fukedzani mikwita ya u dzhenisa na ya u bvisa nahone ni thivhele vhana uri vha si ye tsini nayo.
-
-> **Tsireledzo:** Slurry i kha ḓi vha na zwitshili zwi ḓisaho malwadze, zwihuluhulu arali yo bva kha malaṱwa a vhathu kana a nguluvhe. I iteni **compost** (zwithu zwo vholaho zwi nontshisaho mavu) kana ni i litshe i ime lwa vhege dzi si gathi phanḓa ha u i shumisa. I shumiseni kha miri ya mitshelo, mavhele na zwiliṅwa zwine zwa bikwa. Ni songo i shela kha miroho ya maṱari kana zwiṅwe zwiliṅwa zwi ḽiwaho zwi songo bikwa. Ambarani magilavu nahone ni ṱanzwe zwanḓa musi no i fara.
+1. Wanani bokisi, kireiṱi, ṱhundu kana bakede ḽa kale ḽihulwane lune ḽa nga fara khali yaṋu hu na tshikhala tsha vhuphara ha tshanḓa u mona hoṱhe.
+2. Fukedzani fhasi nga mahatsi o omaho manzhi, magumbeze a kale, mitsamelo kana zwipiḓa zwa foam.
+3. Imisani khali ngomu ni ṱanganye zwithu zwi fanaho zwavhuḓi u mona thungo. Bvisani khali, ni sie tshisiku.
+4. Itani mutsamelo muhulu wa zwithu zwi fanaho u itela nṱha.
+5. Bikani tshithu tshine kanzhi tsha vhila tshifhinga tshilapfu, tshi ngaho tshidzimba na nawa. Tshi vhiliseni, tshi litsheni tshi vhile zwiṱuku lwa mimunithi mi si gathi, vhewani khali i re na tshivhalo kha tshisiku ni i fukedze nga mutsamelo.
+6. I litsheni lwa awara dzi si gathi ni sa i vuli. Ṅwalani uri zwo dzhia tshifhinga tshingafhani na uri no shumisa mafura mangafhani ni tshi vhambedza na nḓila ya misi yoṱhe.
 
 ## Zwithu zwa ndeme
 
-- Nnḓu ndi Zone 0, vhukati ha pulane ya permaculture.
-- Appropriate technology i a leluwa, a i ḓuri, nahone i nga fhaṱwa na u lugiswa nga vhukoni ha henefho.
-- Pulanani nnḓu u ya nga ḓuvha: kha Tshipembe tsha Afrika, mafasiṱere mahulwane na phanele dza ḓuvha zwi lavhelesa devhula.
-- Shumisani mudagasi wa ḓuvha kha mabone, luṱingo na furiji. Dudedzani maḓi na u bika nga magiza a ḓuvha, biogas, zwibikisi zwa ḓuvha, dzi-wonder bag na dzi-rocket stove.
-- Phanele dza ḓuvha na sisiteme dzo ṱumanywaho na gridi zwi fanela u vhewa nga muthu wa mudagasi o gudelaho nahone zwa ṅwaliswa hune zwa ṱoḓea. Fhethu ha tshando, shumisani giza ḽa ḓuvha ḽa indirect.
-- Omisani zwiḽiwa nga u ṱavhanya, zwo kuna nahone hu si fhasi mavuni. Omisani mavhele na nḓuhu nga u ṱavhanya nahone ni laṱe thoro yo vundaho.
-- Kha wonder bag, vhilisani zwiḽiwa u thoma nahone zwi dzule zwi fhira 60 °C. Vhilisani nawa dzo omaho nga maanḓa lwa mimunithi ya 10 u thoma.
-- Dzi-rocket stove dzi vhulunga khuni nahone dzi fhungudza vhutsi, fhedzi ni songo vhuya na swisa mulilo muṅwe na muṅwe kha rumu yo valwaho.
-- Biogas i nga thuthuba nahone mikwita yayo i nga vhulaha: hu songo vha na mulilo, ṱolani u bva ha gesi nga maḓi a tshisibe, ni songo vhuya na dzhena ngomu ha biogas digester, nahone ni songo shumisa slurry kha miroho i ḽiwaho i songo bikwa.
+- Hayani ndi Zone 0. Appropriate technology ndi zwishumiswa zwi leluwaho zwine na nga zwi fhaṱa na u zwi lugisa nga eṋe.
+- Livhisani nnḓu na phanele dza ḓuvha devhula, ni shumise thermal mass na mutombo u fhiraho luvhondo u fara ḓuvha ḽa vhuria na u thivhela ḓuvha ḽa tshilimo.
+- Vhulungelani muḓagasi wa ḓuvha tshedza, lutingo na firiji. Dudedzani maḓi ni bike nga giza ḽa ḓuvha, tshibikisi tsha ḓuvha, wonder bag, rocket stove kana biogas.
+- Omisani zwiḽiwa nga u ṱavhanya, zwo kuna nahone kule na mavu.
+
+Thomani nga tshishumiswa tshithihi uyu ṅwedzi. Musi mulundu wa khuni u tshi fhela nga u lenga, ni ḓo ḓivha uri ni fhaṱe tshifhio nga murahu.
