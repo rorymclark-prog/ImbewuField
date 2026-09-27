@@ -42,7 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 September 2026', sha: 'dc434017', changes: [
+  { when: '27 September 2026', sha: 'fde0423b', changes: [
+    'Soil Health lesson 1 shows six Tshivenda soil-concept drafts beside English.',
+    'Soil Health lesson 1 pairs five Sesotho soil-life drafts with English.',
+    'Vegetables & Staple Crops lesson 2 pairs four Xitsonga concept sentences with English.',
+  ], tour: [
+    { title: 'Check the Tshivenda Soil Health concepts', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 1. The jar exercise, diagnosis advice, key points and quizzes remain in English beside the six marked concept drafts.' },
+    { title: 'Check the Sesotho Soil Health draft', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1. Compare the five marked soil-life sentences with the English source; jar, water and treatment guidance remains English.' },
+    { title: 'Check the succession-planting draft', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Choose Xitsonga and open lesson 2. Sowing schedules, the full separate-sowings/no-guarantee claim, crop-specific guidance, key points and quizzes remain English.' },
+  ] },
+  { when: '27 September 2026', sha: 'd21b20fe', changes: [
     'Food Forest lessons 2 and 3 pair four Tshivenda concept sentences with English.',
     'Vegetables & Staple Crops lesson 3 shows a short Xitsonga concept draft.',
   ], tour: [

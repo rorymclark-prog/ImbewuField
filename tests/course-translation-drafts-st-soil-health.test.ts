@@ -83,7 +83,6 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
 
   assert.deepEqual(holds, [
     'lessons[0] soil-health-l1.infographicAlt',
-    'lessons[0] soil-health-l1.body',
     'lessons[0] soil-health-l1.quiz[0].question',
     'lessons[0] soil-health-l1.quiz[0].options[1]',
     'lessons[0] soil-health-l1.quiz[0].rationale',
@@ -113,4 +112,31 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     'the visible draft must keep the whole compost procedure exact English until its sanitation wording is reviewed');
   assert.equal(presentation.content.keyPoints[1], compostLesson.keyPoints[1],
     'the visible summary must retain the exact sanitation claim until its Sesotho wording is reviewed');
+});
+
+test('Soil L1 drafts only the soil-life introduction while jar conclusions and treatment cautions stay English', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'soil-health')!.lessons[0];
+  const draft = SESOTHO_SOIL_HEALTH_DRAFT.lessons[0];
+  const english = source.body.split('\n\n');
+  const localized = draft.body.sesothoDraft.split('\n\n');
+
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  assert.equal(localized.length, english.length);
+  assert.equal(english.slice(0, 3).join(' ').match(/[.!?](?:\s|$)/g)?.length, 5,
+    'the selected introduction must remain five conceptual sentences');
+  for (let index = 0; index < 3; index++) {
+    assert.notEqual(localized[index], english[index], `paragraph ${index} must show a Sesotho draft`);
+  }
+  assert.deepEqual(localized.slice(3), english.slice(3),
+    'jar procedure, interpretation limits, water advice and remedies need exact English');
+
+  const shown = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.sesothoDraft);
+  assert.deepEqual(shown.content.quiz.map(question => question.correct), source.quiz.map(question => question.correct),
+    'body localization must not change the answer mapping');
+  const changedSource = { ...source, body: `${source.body}\n\nNew advice requires review.` };
+  assert.equal(resolveLearnerLessonPresentation(changedSource, 'st').status, 'english-fallback',
+    'a changed English source must invalidate the old draft before it reaches a learner');
 });
