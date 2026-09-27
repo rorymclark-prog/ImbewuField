@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -69,6 +70,9 @@ Month-by-month key activities tied to the actual rainfall pattern (${d.rainfall.
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/ai-insights');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/ai-insights', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
   let data: LocationData;
   try {
     data = await req.json();
@@ -81,8 +85,8 @@ export async function POST(req: NextRequest) {
   }
   const prompt = buildPrompt(data);
 
-  const stream = await client.messages.stream({
-    model: 'claude-sonnet-4-6',
+  const stream = await ai.messages.stream({
+    model: AI_MODELS.main,
     max_tokens: 2048,
     messages: [{ role: 'user', content: prompt }],
   });

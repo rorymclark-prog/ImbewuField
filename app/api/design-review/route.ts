@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/design-review');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/design-review', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
   const { layoutText, siteText, language }: {
     layoutText: string;
     siteText?: string;
@@ -40,8 +44,8 @@ The first three things to peg out or move on the ground.
 
 Be direct and concrete. This is a real plan a facilitator will act on.${langLine}`;
 
-  const stream = await client.messages.stream({
-    model: 'claude-sonnet-4-6',
+  const stream = await ai.messages.stream({
+    model: AI_MODELS.main,
     max_tokens: 1600,
     messages: [{ role: 'user', content: prompt }],
   });

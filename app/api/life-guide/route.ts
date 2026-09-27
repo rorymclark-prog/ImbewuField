@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -97,6 +98,9 @@ const TOOL_SCHEMA: Anthropic.Tool = {
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/life-guide');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/life-guide', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
   const { locationData }: { locationData: LocationData } = await req.json();
   if (!locationData?.biome) return NextResponse.json({ error: 'No location data' }, { status: 400 });
 
@@ -107,8 +111,8 @@ ${Math.abs(locationData.lat).toFixed(2)}°S ${locationData.lon.toFixed(2)}°E ·
 Keep all responses concise — names and short phrases only, no long descriptions. If a BRU zone is given, treat it as soft local-climate context only — never restate its rainfall, only the mm figure already given above.`;
 
   try {
-    const response = await client.messages.create({
-      model: 'claude-sonnet-4-6',
+    const response = await ai.messages.create({
+      model: AI_MODELS.main,
       max_tokens: 1200,
       tools: [TOOL_SCHEMA],
       tool_choice: { type: 'tool', name: 'life_guide' },

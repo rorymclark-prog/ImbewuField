@@ -55,6 +55,32 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   assert.equal(pairedDraftLanguageLabel('xh'), null);
 });
 
+test('regional Introduction orientation and ethics frames hold uncertain farming and design claims in English', () => {
+  for (const lang of ['ve', 'ts']) {
+    const packet = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    const drafted = slides.flatMap((slide: any) => slide.target.body
+      .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+      .filter(Boolean));
+    assert.deepEqual(drafted, ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1']);
+    assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
+      .map((slide: any) => slide.n), lang === 've' ? [2, 4, 5, 6] : [2, 3, 4, 5, 6]);
+    for (const p of [0, 2, 3]) assert.equal(slides[1].target.body[p].status, 'english-hold',
+      `slide 2 ${lang}: the spade, land-work contrast and work question need a local check`);
+    for (const part of slides[2].target.body.slice(1)) assert.equal(part.status, 'english-hold',
+      `slide 3 ${lang}: ethics, principles, zones and sectors must remain English`);
+    for (const n of [4, 5, 6]) {
+      assert.ok(slides[n - 1].target.body.slice(1).every((part: any) => part.status === 'english-hold'),
+        `slide ${n} ${lang}: examples, care advice and reflection questions must remain English`);
+    }
+    for (const n of [7, 8]) {
+      assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+        `slide ${n} ${lang}: work, zones, water and permission claims must remain English`);
+    }
+  }
+});
+
 test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its current English narration', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/food-forest.ts.paired-draft.json', 'utf8'));
@@ -184,6 +210,26 @@ test('Tshivenda staples media holds quantities and crop claims beside two existi
   }
   assert.equal(slides[11].target.body[3].status, 'english-hold');
   assert.equal(slides[13].target.body[3].status, 'english-hold');
+});
+
+test('the next regional Study frames keep safety and business advice as exact English holds', () => {
+  const cases = [
+    { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '8:1', '8:4', '9:1'], held: ['8:2', '8:3', '8:5', '8:6'] },
+    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '3:4'], held: ['1:1', '2:3', '18:1'] },
+    { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '2:1'], held: ['1:3', '4:1', '4:2'] },
+  ] as const;
+  for (const { moduleId, lang, drafted, held } of cases) {
+    const source = englishSlideRecords(readFileSync(`docs/narration/${moduleId}.en.md`, 'utf8'));
+    const packet = JSON.parse(readFileSync(`docs/narration/${moduleId}.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
+      .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+      .filter(Boolean)), drafted, `${lang} ${moduleId} must show only reviewed draft fields`);
+    for (const item of held) {
+      const [n, p] = item.split(':').map(Number);
+      assert.equal(slides[n - 1].target.body[p - 1].status, 'english-hold', `${lang} ${moduleId} ${item} keeps the exact source`);
+    }
+  }
 });
 
 test('a changed source sentence or heading blocks the entire paired draft', () => {

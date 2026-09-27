@@ -9,6 +9,7 @@ import type { SiteSurvey } from '@/lib/site-survey';
 import { surveyToPrompt } from '@/lib/site-survey';
 import { deriveSolar, isValidEarthLatitude } from '@/lib/solar';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
 import type { DesignLayer } from '@/lib/design-studio';
 import type { PhasePlan } from '@/lib/phasing';
@@ -39,7 +40,7 @@ import {
   normaliseSiteAnalysisImages,
   siteImagesPromptBlock,
 } from '@/lib/report-site-images';
-import { logAiUsage, totalCost, type AiCost } from '@/lib/ai-cost';
+import { costOf, totalCost, type AiCost } from '@/lib/ai-cost';
 import {
   groundPhotosPromptBlock,
   normaliseGroundPhotos,
@@ -137,6 +138,11 @@ function drySeasonMonthIndices(drySeason: string, pattern: string): number[] {
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/generate-report');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/generate-report', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
+  // The model this report really runs on — the cheap one once the allowance is spent.
+  const reportModel = ai.model(AI_MODELS.main);
   let body: {
     locationData: LocationData;
     photoAnalysis?: string;
@@ -691,8 +697,8 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const runBatch = async (batchSections: string[], idx: number): Promise<void> => {
     try {
       for (let attempt = 0; attempt < 2; attempt += 1) {
-        const msg = await client.messages.create({
-          model: 'claude-sonnet-4-6',
+        const msg = await ai.messages.create({
+          model: AI_MODELS.main,
           max_tokens: perBatchTokens,
           // THE ANTI-INVENTION RULE, and why it is a system prompt rather than another
           // paragraph in the user message: sections are generated in independent parallel
@@ -719,7 +725,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
           signal: AbortSignal.timeout(240_000),
         });
         batchCosts.push(
-          logAiUsage('generate-report', 'claude-sonnet-4-6', msg.usage, `batch ${idx + 1}/${batches.length}${attempt ? ' retry' : ''}`),
+          costOf(reportModel, msg.usage),
         );
         const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
         if (listedPlantMentions(text).length > 0) continue;
@@ -857,6 +863,6 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   });
 
   return new Response(readable, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Report-Provider': 'Anthropic', 'X-Report-Model': 'claude-sonnet-4-6' },
+    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Report-Provider': 'Anthropic', 'X-Report-Model': reportModel },
   });
 }

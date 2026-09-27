@@ -42,13 +42,41 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 September 2026', sha: 'c77f173', changes: [
+  { when: '27 September 2026', sha: 'bc1dcee', changes: [
     'Sowing months now follow your winter cold: frost-free farms get winter tomatoes.',
     'Very cold farms no longer get a light-frost calendar.',
     'Auto-suggest can stagger sowings of one crop, so beds stay fuller.',
   ], tour: [
     { title: 'Re-run auto-suggest', where: 'Crop plan → Auto-suggest', href: '/facilitator/crops',
       detail: 'Open your crop plan and run auto-suggest again. The climate line under the plan says which calendar your site uses; plans already saved are not changed until you accept a new suggestion.' },
+  ] },
+  { when: '27 September 2026', sha: '3a3c87ad', changes: [
+    'Introduction adds Tshivenda and Xitsonga draft orientation slides beside English.',
+  ], tour: [
+    { title: 'Read the next Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga and compare slides 2 and 3 with the exact English source. Technical design and farming wording still appears in English where the draft is uncertain; regional narration is not yet available.' },
+  ] },
+  { when: '27 September 2026', sha: '3fe77759', changes: [
+    'Introduction now has Tshivenda and Xitsonga draft ethics slides beside English.',
+  ], tour: [
+    { title: 'Compare the ethics drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga and open slides 1, 4, 5 and 6. These are unreviewed AI drafts paired with exact English. Other slides fall back to English; neither language has narration yet. Choose English source audio to listen.' },
+  ] },
+  { when: '27 September 2026', sha: 'c1cc99a3', changes: [
+    'More regional Study drafts now appear beside English.',
+  ], tour: [
+    { title: 'Compare the new Study drafts', where: 'Study → Vegetables & Staples, Market Gardening or Soil Health', href: '/student',
+      detail: 'Choose Sesotho for Vegetables slides 1, 2, 8 and 9; Tshivenda for Market slides 2 and 3; or Xitsonga for Soil slides 1 and 2. These are unreviewed AI drafts beside exact English. Other slides and narration remain English.' },
+  ] },
+  { when: '27 September 2026', sha: 'c77f1739', changes: [
+    'Each person now has a monthly AI allowance, shown on your Account page.',
+    'When it runs out, AI keeps working on a simpler model until the 1st.',
+    'Reports, chat and photo checks now use a newer, better-value AI model.',
+  ], tour: [
+    { title: 'See your AI allowance', where: 'Account', href: '/account',
+      detail: 'A bar shows how much of this month\'s AI allowance is left and the date it refills.' },
+    { title: 'Ask for advice as usual', where: 'Home', href: '/home',
+      detail: 'Nothing changes in how you ask. Visitors who are not signed in get a small daily allowance, then a prompt to sign in.' },
   ] },
   { when: '27 September 2026', sha: 'f767fba9', changes: [
     'Market and Vegetables now show more regional draft slides beside English.',

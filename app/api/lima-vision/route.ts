@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -10,6 +11,9 @@ type AllowedMedia = (typeof ALLOWED_MEDIA)[number];
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/lima-vision');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/lima-vision', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
   const { image, mode }: {
     image: { data: string; mediaType: string };
     mode: 'crop' | 'weigh';
@@ -70,8 +74,8 @@ These are rough field estimates for guidance only.`;
     },
   ];
 
-  const msg = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+  const msg = await ai.messages.create({
+    model: AI_MODELS.main,
     max_tokens: 600,
     messages: [{ role: 'user', content }],
   });
