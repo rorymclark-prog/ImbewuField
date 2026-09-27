@@ -257,12 +257,12 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {
-    // The first eight source-paired Sesotho frames cover the opening and lesson 1. Later lessons
-    // remain English until their own draft media has had phone and source-pair checks.
+    // The first fourteen source-paired Sesotho frames cover the opening and lessons 1–2. Later
+    // lessons remain English until their own draft media has had phone and source-pair checks.
     slideLanguages: ['en', 'zu', 'st'],
     slideFormatsByLanguage: { st: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400 },
-    missingSlides: { st: Array.from({ length: 14 }, (_, i) => i + 9) },
+    missingSlides: { st: Array.from({ length: 8 }, (_, i) => i + 15) },
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {

@@ -103,6 +103,29 @@ test('the paired layout preflights all 22 full source records without writing me
   }
 });
 
+test('a paired illustration override must name an existing repository image before rendering', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'imbewu-paired-art-'));
+  try {
+    const json = join(temp, 'draft.json');
+    const art = join(temp, 'art.json');
+    const output = join(temp, 'slides');
+    writeFileSync(json, JSON.stringify(completeHold()));
+    writeFileSync(art, JSON.stringify({ 10: 'docs/media/no-such-site-image.jpg' }));
+    const args = ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'st', output,
+      '--paired-draft', json, '--paired-art', art, '--validate-only'];
+    const missing = spawnSync(process.execPath, args, { cwd: process.cwd(), encoding: 'utf8' });
+    assert.notEqual(missing.status, 0);
+    assert.match(missing.stderr, /image is missing or outside this repository/);
+    assert.equal(existsSync(output), false);
+    writeFileSync(art, JSON.stringify({ 10: 'docs/media/studies-illustrated-release/art/reading-landscape/landscape-walk.jpg' }));
+    const present = spawnSync(process.execPath, args, { cwd: process.cwd(), encoding: 'utf8' });
+    assert.equal(present.status, 0, present.stderr);
+    assert.match(present.stdout, /validated 22 source-paired slides/);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
 test('a long draft fails layout instead of shrinking or dropping a farming paragraph', () => {
   const temp = mkdtempSync(join(tmpdir(), 'imbewu-paired-overflow-'));
   try {

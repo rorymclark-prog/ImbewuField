@@ -192,9 +192,9 @@ test('Sesotho intro lesson downloads its draft images and honest English fallbac
   const pack = offlinePack('intro-permaculture', 'st');
   assert.deepEqual(pack.missing, [], 'a missing image would only surface after the learner went offline');
   const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
-  assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 8);
-  assert.ok(slides.includes('/course-decks/intro-permaculture/st/slide-08.webp'));
-  assert.ok(slides.includes('/course-decks/intro-permaculture/en/slide-09.jpg'));
+  assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 14);
+  assert.ok(slides.includes('/course-decks/intro-permaculture/st/slide-14.webp'));
+  assert.ok(slides.includes('/course-decks/intro-permaculture/en/slide-15.jpg'));
   assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
     entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')));

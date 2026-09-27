@@ -1180,7 +1180,7 @@ export default function StudentPage() {
                       )}
                       {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>
                         {lang === 'st' && mod.id === 'intro-permaculture'
-                          ? 'Slides: Sesotho AI draft (lesson 1); English later'
+                          ? 'Slides: Sesotho AI draft (lessons 1–2); English later'
                           : 'Slides: English'}
                       </span>}
                       {mod.lessons && mod.lessons.length > 0 && (
