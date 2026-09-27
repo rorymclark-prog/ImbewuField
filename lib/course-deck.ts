@@ -241,7 +241,12 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
   },
   'food-forest': {
-    slideLanguages: ['en', 'zu'],
+    slideLanguages: ['en', 'zu', 'ts'],
+    slideFormatsByLanguage: { ts: 'webp' },
+    slideAspectRatioByLanguage: { ts: 1440 / 5400 },
+    // The existing draft has only three safe conceptual paragraphs. Every other frame stays
+    // on its complete English teaching slide until a source-paired local review can extend it.
+    missingSlides: { ts: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
     slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),
   },
   'vegetables-staples': {

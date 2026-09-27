@@ -483,6 +483,22 @@ test('Sesotho slides remain Sesotho when English source narration is chosen', as
   } finally { act(() => view.unmount()); }
 });
 
+test('only source-paired Xitsonga Food Forest frames replace the English slide', () => {
+  const deck = COURSE_DECKS['food-forest'];
+  assert.ok(deck.slideLanguages.includes('ts'));
+  for (const slide of deck.slides) {
+    const selected = slideImageFor('food-forest', 'ts', slide.slide);
+    assert.ok(selected);
+    if (slide.slide === 4 || slide.slide === 8) {
+      assert.equal(selected.lang, 'ts');
+      assert.match(selected.url, /\/food-forest\/ts\/slide-(04|08)\.webp$/);
+      assert.ok(onDisk(selected.url));
+    } else {
+      assert.equal(selected.lang, 'en', `slide ${slide.slide} must show English until paired copy exists`);
+    }
+  }
+});
+
 test('deck arrows change slides only while the deck itself has plain-key focus', async () => {
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {
