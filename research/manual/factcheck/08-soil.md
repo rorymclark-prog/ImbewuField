@@ -87,3 +87,34 @@ Printed page = `===== page N =====` marker minus 1. Note the source numbers two 
 - **Starting worm quantity** (250–500 g, "several hundred to about a thousand") is common practice rather than a sourced figure.
 - **pH(KCl) vs pH(water) offset** is given as "about 0.5 to 1 unit"; the cited Canadian study gives an average of 0.7 units, and it varies by soil.
 - **Summer/winter sowing months** for green manures are general guidance for the summer-rainfall interior and the Western Cape; local frost dates should override them.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to REWRITE.md (6,434 → 4,394 words). WebFetch was blocked again (extension.unh.edu, grainsa.co.za, content.ces.ncsu.edu), so checks below rest on WebSearch result summaries of the pages named.
+
+### "Could not verify" items
+
+| Item | Result | Source |
+|---|---|---|
+| NEMBA status of green-manure and mulch-bank species | **Partly verified, kept.** The 2020 list could still not be opened. Sunn hemp is sold in South Africa as a cover crop by AGT Foods; no search result placed sunn hemp, cowpea, lablab, buckwheat, oats, vetch, fodder radish or pigeon pea on the NEMBA list. Velvet bean and lupin were dropped from the table (for length, and to avoid the itchy-pod and toxic-seed caveats). A reviewer should still confirm against the gazette. | https://agtfoods.co.za/wp-content/uploads/2018/07/17.-Sunn-Hemp.pdf ; https://invasives.org.za/nemba-alien-and-invasive-species-regulations-and-lists/ |
+| Comfrey, Napier grass | Not in the chapter; nothing to do. | — |
+| Dynamic accumulators ("little scientific evidence") | **Cut.** The mulch-bank paragraph now says only that the bank is grown for biomass. (Searches found only non-peer-reviewed pages saying the evidence is thin.) | — |
+| Heap minimum size 1 m³ | **Verified.** UNH Extension gives a minimum of one cubic yard (3 × 3 × 3 ft); "at least 1 m" each way and "no more than about 1.5 m high" kept. | https://extension.unh.edu/resource/composting-home-gardener-fact-sheet |
+| Browns : greens 2–3 : 1 by volume | **Verified as a rule of thumb.** Search summaries (incl. NC Cooperative Extension county pages) give 2:1 to 3:1 by volume; UNH gives 30:1 C:N by weight. Kept. | https://caldwell.ces.ncsu.edu/2022/02/today-is-the-perfect-time-to-start-composting ; UNH as above |
+| Hot heap ready in 2–3 months | **Generalised** to "a few months in warm weather". Sources ranged from weeks (daily-turned) to 3–4 months (weekly-turned). | — |
+| Cold heap 6–12 months | **Changed** to "6 months to a year or more" (OSU Extension on slow composting; search summaries give 6 months to 18+ months unturned). | https://extension.oregonstate.edu/news/slow-composting-works-when-you-have-more-time-labor |
+| Red wiggler upper temperature | **Verified and simplified** to "best between about 15 and 25 °C; above about 30 °C they start to die". | https://www.sciencedirect.com/science/article/abs/pii/003807179290109B ; https://content.ces.ncsu.edu/raising-earthworms-successfully |
+| Starting worm quantity (250–500 g) | **Changed** to "about 500 g, roughly a thousand worms": the usual advice is about 1 lb (≈ 450 g, ≈ 1 000 worms) per ½ lb of daily scraps. | https://worms.as.ucsb.edu/vermicomposting-feeding-maintenance/ ; https://urbanwormcompany.com/how-many-worms-need-compost-bin/ |
+| pH(KCl) vs pH(water) offset | **Verified.** Grain SA: pH(KCl) generally about one unit lower; Senwes: 0.5–1.0 units lower. "About 0.5 to 1 unit" kept. | https://www.grainsa.co.za/analyse-soil-to-get-a-better-crop-yield ; http://www2.senwes.co.za/Files/main_Scenario/archive_articles/2007/2007-04-01_Soil_acidity_What_really_takes_place_acidic_soil.htm |
+| Green-manure sowing months | **Generalised:** months removed; "once the rains have started and the soil is warm" (summer rainfall) and "in autumn" (Western Cape / irrigated). | — |
+
+Totals: verified 5 (heap size, browns:greens, worm temperature, pH offset, NEMBA status in part), changed on checking 2 (worm quantity, cold heap), cut 1, generalised 2.
+
+### Other changes in this pass
+
+- All Safety / Warning boxes removed. Kept as plain steps: compost manure before it goes near crops eaten raw; the 120-day / 90-day raw-manure intervals; no human, dog or cat faeces in the food garden; pig manure only after hot composting and never on crops eaten raw; compost tea and worm tea poured on the soil, never over vegetables eaten raw. Dropped: "do not taste soil" (tasting is simply no longer suggested), the scald warning for hot heaps, the velvet-bean itch and lupin-seed warnings (both plants removed).
+- The Mexican sunflower note now gives the alternative (sunn hemp or lablab) without the NEMBA wording; legal points moved to `research/manual/rewrite/08-soil-endnote.md`.
+- "Ask your extension office where to send a soil sample" removed.
+- Worm farm liquid is now called **worm tea**, matching the Glossary; compost tea is described separately.
+- Darwin quote kept, attributed in the text (1881).
+- References: `research/manual/rewrite/08-soil-refs.md`. Titles for sources cited only by URL in the first pass were looked up now (CSU GardenNotes #214, UMaine #2510, Rutgers FS099, the EID 21(2) ascariasis article, Syers & Springett 1984, the 2004 Compost Science & Utilization molasses paper, PubMed 17477249).
