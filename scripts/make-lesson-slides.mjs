@@ -264,6 +264,22 @@ def font(cands, size):
             if os.path.exists(p):
                 try: return ImageFont.truetype(p, size, index=idx)
                 except Exception: pass
+    if PAIRED:
+        # CI runs on Linux. Its default Pillow bitmap face ignores the requested size, which would make a
+        # 58px phone legibility preflight pass while rendering tiny text in the real deck.
+        first, index = cands[0]
+        if first.startswith('Georgia') and 'Italic' in first:
+            linux_face = 'DejaVuSerif-Italic.ttf'
+        elif first.startswith('Georgia'):
+            linux_face = 'DejaVuSerif-Bold.ttf'
+        elif index == 1:
+            linux_face = 'DejaVuSans-Bold.ttf'
+        else:
+            linux_face = 'DejaVuSans.ttf'
+        linux_path = '/usr/share/fonts/truetype/dejavu/' + linux_face
+        if os.path.exists(linux_path):
+            return ImageFont.truetype(linux_path, size)
+        raise RuntimeError('paired slide preflight requires a scalable font at the intended phone size')
     return ImageFont.load_default()
 
 SERIF_B = [('Georgia Bold.ttf', 0), ('Iowan Old Style.ttc', 1), ('Charter.ttc', 1)]
