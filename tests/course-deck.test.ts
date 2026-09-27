@@ -419,13 +419,12 @@ test('Water playback respects language gaps, download choice and the whole clear
 });
 
 test('Sesotho slides remain Sesotho when English source narration is chosen', async () => {
-  // The first lesson has real source-paired portrait frames. A single language state used to
-  // switch both image and voice to English on this path; later lessons still fall back by slide.
+  // Every frame has a source-paired portrait. A single language state used to switch both image
+  // and voice to English on this path, so opting into English voice must keep the draft pictures.
   const deck = COURSE_DECKS['intro-permaculture'];
   assert.ok(deck.slideLanguages.includes('st'));
   assert.equal(deck.slideAspectRatioByLanguage?.st, 1440 / 5400);
-  for (let slide = 1; slide <= 14; slide++) assert.ok(onDisk(slideImageUrl('intro-permaculture', 'st', slide)!));
-  assert.equal(slideImageUrl('intro-permaculture', 'st', 15), null);
+  for (let slide = 1; slide <= 22; slide++) assert.ok(onDisk(slideImageUrl('intro-permaculture', 'st', slide)!));
   assert.equal(animationUrls('intro-permaculture', 4, 'st'), null,
     'the English animation poster must not cover the paired Sesotho ethics frame');
 

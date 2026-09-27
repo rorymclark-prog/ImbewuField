@@ -188,13 +188,13 @@ test('a pack carries whatever the player will actually show, including any fallb
   }
 });
 
-test('Sesotho intro lesson downloads its draft images and honest English fallback', () => {
+test('Sesotho intro lessons download all paired images and keep English source audio distinct', () => {
   const pack = offlinePack('intro-permaculture', 'st');
   assert.deepEqual(pack.missing, [], 'a missing image would only surface after the learner went offline');
   const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
-  assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 14);
-  assert.ok(slides.includes('/course-decks/intro-permaculture/st/slide-14.webp'));
-  assert.ok(slides.includes('/course-decks/intro-permaculture/en/slide-15.jpg'));
+  assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 22);
+  assert.ok(slides.includes('/course-decks/intro-permaculture/st/slide-22.webp'));
+  assert.ok(!slides.some((url) => url.includes('/course-decks/intro-permaculture/en/')));
   assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
     entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')));
