@@ -187,8 +187,8 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
 // The three locally drawn Introduction clips await Rory's visual clearance.
 const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
   // The Sesotho proof carries the source illustration and paired text on the still. Showing the
-  // English animation poster instead would hide both language panels on the first ethics slide.
-  4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8, unavailableLanguages: ['st'] },
+  // English animation poster instead would hide both language panels on the ethics draft slides.
+  4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Locally drawn Reading the Landscape scenes stay out of the player pending visual clearance.
@@ -282,11 +282,15 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {
-    // All 22 frames pair unreviewed Sesotho drafts or explicit English holds with exact English.
+    // Regional frames pair unreviewed drafts or explicit English holds with exact English.
     // The narration remains English and needs a separate, explicit voice choice.
-    slideLanguages: ['en', 'zu', 'st'],
-    slideFormatsByLanguage: { st: 'webp' },
-    slideAspectRatioByLanguage: { st: 1440 / 5400 },
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    missingSlides: {
+      ve: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+      ts: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+    },
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {

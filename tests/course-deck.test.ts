@@ -418,6 +418,21 @@ test('Water playback respects language gaps, download choice and the whole clear
   }
 });
 
+test('new regional orientation and ethics stills stay visible while unauthored Introduction frames use English', () => {
+  for (const lang of ['ve', 'ts']) {
+    const deck = COURSE_DECKS['intro-permaculture'];
+    assert.ok(deck.slideLanguages.includes(lang));
+    assert.equal(deck.slideAspectRatioByLanguage?.[lang], 1440 / 5400);
+    for (const slide of [1, 2, 3, 4, 5, 6]) {
+      assert.ok(onDisk(slideImageUrl('intro-permaculture', lang, slide)!));
+      assert.match(slideImageFor('intro-permaculture', lang, slide)!.url, new RegExp(`/${lang}/slide-0${slide}\\.webp$`));
+    }
+    assert.equal(animationUrls('intro-permaculture', 4, lang), null,
+      'the old animation poster must not hide the paired ethics slide');
+    assert.match(slideImageFor('intro-permaculture', lang, 7)!.url, /intro-permaculture\/en\/slide-07\.jpg$/);
+  }
+});
+
 test('Sesotho slides remain Sesotho when English source narration is chosen', async () => {
   // Every frame has a source-paired portrait. A single language state used to switch both image
   // and voice to English on this path, so opting into English voice must keep the draft pictures.
