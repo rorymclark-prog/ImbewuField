@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'f767fba9', changes: [
+    'Market and Vegetables now show more regional draft slides beside English.',
+  ], tour: [
+    { title: 'Compare the Market and Vegetables drafts', where: 'Study → Market Gardening or Vegetables & Staples', href: '/student',
+      detail: 'Choose Sesotho for Market slides 2, 5 and 6; Xitsonga for Market slides 2 and 18; or Tshivenda for Vegetables slides 12 and 14. They are unreviewed AI drafts paired with exact English. Other slides and all narration remain English.' },
+  ] },
   { when: '27 September 2026', sha: 'fee0d9cd', changes: [
     'Food Forest and Vegetables now show more regional draft slides with English beside them.',
   ], tour: [

@@ -522,6 +522,29 @@ test('regional Food Forest and Xitsonga vegetables decks expose only authored pa
   }
 });
 
+test('regional Market and Tshivenda vegetables decks fall back to English for every unauthored frame', () => {
+  const cases: [string, string, number[]][] = [
+    ['market-community', 'st', [2, 5, 6]],
+    ['market-community', 'ts', [2, 18]],
+    ['vegetables-staples', 've', [12, 14]],
+  ];
+  for (const [moduleId, language, authored] of cases) {
+    const deck = COURSE_DECKS[moduleId];
+    assert.ok(deck.slideLanguages.includes(language));
+    for (const slide of deck.slides) {
+      const selected = slideImageFor(moduleId, language, slide.slide);
+      assert.ok(selected);
+      if (authored.includes(slide.slide)) {
+        assert.equal(selected.lang, language);
+        assert.match(selected.url, new RegExp(`/course-decks/${moduleId}/${language}/slide-\\d{2}\\.webp$`));
+        assert.ok(onDisk(selected.url));
+      } else {
+        assert.equal(selected.lang, 'en', `${language} slide ${slide.slide} needs full English fallback`);
+      }
+    }
+  }
+});
+
 test('deck arrows change slides only while the deck itself has plain-key focus', async () => {
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {
