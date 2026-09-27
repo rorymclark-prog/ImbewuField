@@ -760,10 +760,14 @@ interface RotationCourseUnderTest {
   end: number;
   sourceIds: Set<string>;
   plotCover: boolean;
+  /** Every cohort in this course is a proposed row drawn one year BACK. */
+  pastCopyOnly: boolean;
+  /** Some cohort in this course is a farmer-recorded existing row. */
+  hasExisting: boolean;
 }
 
 /** Bed-hold courses on the rolling timeline: existing rows once at their
- * observed offset, proposed rows at +0 and +12 (the saved annual template
+ * observed offset, proposed rows at -12, +0 and +12 (the saved annual template
  * repeats). Overlapping cohorts of ONE crop merge into one standing course,
  * exactly as the planner's ledger treats staggered sowings. */
 function rotationCoursesUnderTest(
@@ -789,13 +793,20 @@ function rotationCoursesUnderTest(
       end: start + span - 1,
       sourceIds: new Set([planting.id]),
       plotCover: beds.find((bed) => bed.id === bedId)?.kind === 'plot' && isPlotWinterCover(crop),
+      pastCopyOnly: !planting.existing && shift < 0,
+      hasExisting: planting.existing === true,
     };
   };
   const raw = [
     ...existing.filter((planting) => planting.bedId === bedId)
       .map((planting) => course(planting, 0)),
+    // -12 as well as +12 (2026-09-27): the planner's ledger compares against both
+    // annual neighbours. Drawing only year 0 and year +1 left a cohort at the very
+    // start of the window unable to join its staggered partners' previous-year
+    // occurrence, so one continuous spinach spell (sown May, Jun, then Aug) read as
+    // two spinach courses with nothing between them.
     ...proposed.filter((planting) => planting.bedId === bedId)
-      .flatMap((planting) => [course(planting, 0), course(planting, 12)]),
+      .flatMap((planting) => [course(planting, -12), course(planting, 0), course(planting, 12)]),
   ].filter((candidate): candidate is RotationCourseUnderTest => candidate !== null)
     .sort((a, b) => a.start - b.start || a.end - b.end);
   // Merge PER CROP, transitively: in a mixed bed another crop's course can sit
@@ -809,6 +820,8 @@ function rotationCoursesUnderTest(
     if (standing) {
       standing.start = Math.min(standing.start, next.start);
       standing.end = Math.max(standing.end, next.end);
+      standing.pastCopyOnly = standing.pastCopyOnly && next.pastCopyOnly;
+      standing.hasExisting = standing.hasExisting || next.hasExisting;
       for (const sourceId of next.sourceIds) standing.sourceIds.add(sourceId);
     } else {
       courses.push({ ...next, sourceIds: new Set(next.sourceIds) });
@@ -849,6 +862,11 @@ function sameFamilyRotationViolations(
         // exception (docs/CROP-PLAN-TRUTH-AUDIT: staple plots carry their own
         // course sequence), not a vegetable rotation course.
         if (!includePlotCovers && (a.plotCover || b.plotCover)) continue;
+        // A proposal drawn one year back is not something the farmer grew, so it
+        // is never judged against their recorded history — the planner's ledger
+        // draws the same line (only real history and current-cycle courses are
+        // evidence about what was actually in the ground).
+        if ((a.pastCopyOnly && b.hasExisting) || (b.pastCopyOnly && a.hasExisting)) continue;
         const overlap = a.start <= b.end && b.start <= a.end;
         if (overlap) {
           out.push(`${bed.id}: ${a.cropKey}[${a.start}..${a.end}] overlaps ${b.cropKey}[${b.start}..${b.end}] (${a.family})`);

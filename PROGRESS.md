@@ -52,6 +52,40 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 27 Sep 2026 — Crop-plan audit, phase 2: existing crops + frost gate
+- **Whole-year plan double-booking (critical):** the ideal-year sweep aged already-growing crops from
+  each synthetic anchor, so the winning plan was stacked on top of them (73% of 1,152 probe inputs;
+  Simple mode showed no conflict). Occupancy/BedRotation now age them from realNow and, in synthetic
+  frames, block their remaining calendar months. Regression test fails on the old engine.
+- **Frost gate (critical):** new `frostTender` flag on 14 warm-season crops; the hard-frost 'summer'
+  column no longer offers months that leave them in the field through May–Aug frost before first
+  harvest (potato Feb/Mar, maize/pumpkin/sweet potato Dec, dry beans Jan, groundnuts Nov, amadumbe).
+  Invariant: `tests/crop-catalog-frost.test.ts`.
+- Tried and reverted: a commercial focus-set chooser scored by one-bed rotation — after #749 it lost
+  17% on the audit case because the engine gives each focus crop its own beds.
+- Still open: heat gating from monthly temperatures (needs sourced per-crop limits), a sourced
+  frost-free column, rain-fed mode, "few big harvests" packing, heat-season crops, review screen
+  showing beds, Simple-mode conflict card, `/calendar` following the plan's climate, plans for
+  non-main sites in the Task Planner.
+
+### 27 Sep 2026 — Crop-plan audit: climate calendar + rotation packing
+- Multi-agent audit of every crop-planning feature, plus a line-by-line fact-check of one engine
+  plan for the Mkuze demo farm against two independent expert plans.
+- **Climate (critical):** `rainPatternFor` (lib/koppen-global.ts) now chooses the calendar column by
+  frost class first (coldest-month mean < 7 / < 11 / >= 13 °C), rain second. Before, the coldest
+  sites (< 4 °C) got the KZN *light*-frost calendar, hard-frost bimodal Karoo sites got the
+  frost-free column, and frost-free lowveld/coast (the demo farm, Durban, Mbombela) could only get
+  the hard-frost Highveld windows. Arid sites stay on the frost column. Warm-area plans now carry a
+  basis note to confirm months with an extension officer outside KZN.
+- **Rotation (critical):** a second, staggered sowing of one crop was refused because its partner's
+  next-year copy read as a same-family repeat, leaving beds mostly empty under the default settings.
+  Staggered cohorts joined in the current cycle now carry their annual copies (one course, as the
+  code's own comment says). The test oracle now also draws year −1, matching the engine.
+- Measured: Mkuze demo farm 154 → 191 kg/yr, bed-months 91.4% → 92.7%, winter tomatoes appear;
+  reference farm commercial/steady 324 → 365 kg, bed use 58% → 66%.
+- Still open from the audit (see the PR): temperature/heat gating, a sourced frost-free column,
+  kg-per-bed-month ranking, "few big harvests" packing, rain-fed mode, existing-crop double-booking in
+  the whole-year plan, potato/frost-tail windows, missing heat-season crops.
 ### 27 Sep 2026 — Monthly AI allowance + value models
 - New `lib/ai-budget.ts` + `lib/metered-ai.ts`: every Claude call in app/api goes through one metered
   client. €3/person/month (env `AI_MONTHLY_CAP_EUR`), priced from real usage, ledger in Firestore

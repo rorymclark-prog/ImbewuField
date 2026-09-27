@@ -167,9 +167,14 @@ test('family/steady on the real farm: March wins with a gap-free repeating year'
   assert.equal(ideal.perAnchor.length, 12);
   ideal.perAnchor.forEach((entry, i) => assert.equal(entry.anchorMonth, i + 1, 'perAnchor is in anchor order'));
   // The August anchor really is worse — the whole reason this feature exists.
+  // Re-read 2026-09-27: once a second, staggered sowing of one crop stopped being
+  // vetoed as a rotation repeat, every anchor sweeps gap-free (August and
+  // September used to leave September bare), so August now loses on the next
+  // key — its thinnest month carries one fresh crop against March's three.
   const august = ideal.perAnchor[REAL_NOW - 1];
-  assert.ok(august.zeroFreshMonths.length > ideal.best.score.zeroFreshMonths.length,
-    `generating from August must actually be worse than the winner (got ${JSON.stringify(august.zeroFreshMonths)})`);
+  assert.deepEqual(august.zeroFreshMonths, [], 'every anchor, August included, now sweeps gap-free');
+  assert.ok(august.minMonthlyFreshCrops < ideal.best.score.minMonthlyFreshCrops,
+    `generating from August must actually be worse than the winner (min ${august.minMonthlyFreshCrops} vs ${ideal.best.score.minMonthlyFreshCrops})`);
 });
 
 test('family/few-big on the real farm: March wins', () => {
@@ -183,9 +188,13 @@ test('family/few-big on the real farm: March wins', () => {
   assert.equal(ideal.best.anchorMonth, 3);
 });
 
-test('commercial/steady on the real farm: September wins', () => {
+test('commercial/steady on the real farm: October wins', () => {
+  // Re-pinned 2026-09-27 (was September, 324 kg). Every anchor leaves the same
+  // four bare months, so kg decides; with staggered same-crop sowings no longer
+  // vetoed, October packs the sale beds to ~364 kg (bed use 58% -> 66%).
   const ideal = suggestIdealYearPlan(roryAnswers('commercial', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
-  assert.equal(ideal.best.anchorMonth, 9);
+  assert.equal(ideal.best.anchorMonth, 10);
+  assert.ok(ideal.best.score.totalKg > 360, `the winner must keep the fuller packing (got ${ideal.best.score.totalKg})`);
 });
 
 // ── D. the truthfulness pass ─────────────────────────────────────────────────
@@ -880,4 +889,37 @@ test('a once row with no realNow context warns in dev, and stops once realNow is
   } finally {
     console.warn = originalWarn;
   }
+});
+
+// ── Already-growing crops hold their ground in every anchor frame ───────────
+//
+// Found 2026-09-27 by three independent auditors. The sweep aged `existing`
+// rows from each synthetic anchor instead of the real today, so a crop sown a
+// month or two ago looked finished in most frames and the winning plan was
+// stacked on top of it (73% of 1,152 probe inputs overbooked; Simple mode
+// showed no conflict). The benchmark's own conflict detector is the oracle.
+test('the whole-year plan never overbooks a bed holding an already-growing crop', async () => {
+  const { buildPlanYieldBenchmark } = await import('@/lib/crop-plan');
+  const beds: PlanBed[] = [
+    { id: 'eb-1', label: 'Bed 1', areaM2: 10, minDimM: 1.2 },
+    { id: 'eb-2', label: 'Bed 2', areaM2: 10, minDimM: 1.2 },
+  ];
+  const offenders: string[] = [];
+  for (const realNow of [1, 4, 7, 9, 11]) {
+    for (const [cropKey, back] of [['cabbage', 0], ['tomatoes', 2], ['carrots', 1], ['onions', 3]] as const) {
+      const existing: Planting[] = [{
+        id: `ex-${cropKey}`, bedId: 'eb-1', cropKey, sowMonth: wrapMonth(realNow - back), existing: true,
+      }];
+      const ideal = suggestIdealYearPlan({
+        goal: 'family', groups: [], cropKeys: ['cabbage', 'carrots', 'lettuce', 'green-beans', 'beetroot'],
+        rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+        allowMixedCropsInBed: true, reliableIrrigation: true,
+      }, 'mild-frost', beds, existing, realNow, REAL_NOW_YEAR);
+      const benchmark = buildPlanYieldBenchmark([...existing, ...ideal.best.result.plantings], beds, realNow);
+      if (benchmark.areaConflictBedLabels.length) {
+        offenders.push(`now=${realNow} existing ${cropKey} sown ${back} back → anchor ${ideal.best.anchorMonth} overbooks ${benchmark.areaConflictBedLabels.join(', ')}`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, []);
 });
