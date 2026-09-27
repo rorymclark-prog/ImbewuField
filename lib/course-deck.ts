@@ -52,6 +52,8 @@ export interface DeckSlide {
 export interface ModuleDeck {
   /** Languages with their OWN rendered slides. Others fall back — see resolveDeckLang. */
   slideLanguages: string[];
+  /** Rendered still dimensions may differ by language; width divided by height. */
+  slideAspectRatioByLanguage?: Record<string, number>;
   /**
    * Slides a language is missing, by slide number.
    *

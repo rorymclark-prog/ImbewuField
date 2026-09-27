@@ -81,17 +81,27 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const deck = deckFor(moduleId);
   const narration = COURSE_NARRATION[moduleId];
 
-  // WHICH LANGUAGE THIS DECK IS IN, separately from the app's.
+  // The picture and the voice can have different available languages. A Sesotho learner should
+  // keep a Sesotho slide when choosing English source narration, and the English voice should
+  // never start merely because a Sesotho recording is absent.
   //
   // Replacing the old track list with this player took the isiZulu/English switch away with it,
   // and that switch was doing real work: a learner reading isiZulu may still want to hear the
   // English, a facilitator checks both, and the app-wide language is a heavier thing to change and
   // change back. It defaults to the app's language and is only offered when the module actually
   // has more than one recording.
-  const [lang, setLang] = useState(appLang);
-  useEffect(() => { setLang(appLang); }, [appLang]);
-  const slideLang = resolveDeckLang(moduleId, lang);
-  const spokenLang = resolveNarrationLang(moduleId, lang);
+  const needsSourceNarrationChoice = appLang === 'st' && deck?.slideLanguages.includes('st') &&
+    !narration?.languages.includes('st');
+  const [slideChoice, setSlideChoice] = useState(appLang);
+  const [narrationChoice, setNarrationChoice] = useState<string | null>(
+    needsSourceNarrationChoice ? null : appLang,
+  );
+  useEffect(() => {
+    setSlideChoice(appLang);
+    setNarrationChoice(needsSourceNarrationChoice ? null : appLang);
+  }, [appLang, needsSourceNarrationChoice]);
+  const slideLang = resolveDeckLang(moduleId, slideChoice);
+  const spokenLang = narrationChoice ? resolveNarrationLang(moduleId, narrationChoice) : null;
   const languages = narration?.languages ?? [];
 
   const slides = useMemo(
@@ -126,7 +136,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const slideViewportRef = useRef<HTMLDivElement | null>(null);
   const expandButtonRef = useRef<HTMLButtonElement | null>(null);
   const exitButtonRef = useRef<HTMLButtonElement | null>(null);
-  useEffect(() => { setAudioFailed(false); setAnimationFailed(false); }, [index, lang]);
+  useEffect(() => { setAudioFailed(false); setAnimationFailed(false); }, [index, slideChoice, narrationChoice]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const narrationEnded = useRef(false);
@@ -236,7 +246,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   // Resolved up here, not after the early return below, because the play-through effects need it.
   const audioForCurrent = current && spokenLang ? slideAudioUrl(moduleId, spokenLang.lang, current.slide) : null;
-  const timedTour = !!current && !!animationUrls(moduleId, current.slide, lang)?.narrationTimed;
+  const timedTour = !!current && !!animationUrls(moduleId, current.slide, slideChoice)?.narrationTimed;
   const followNarration = useCallback(() => {
     const audio = audioRef.current;
     const video = videoRef.current;
@@ -319,7 +329,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     if (playing.has(current.slide)) return;
     let cancelled = false;
     (async () => {
-      const urls = animationUrls(moduleId, current.slide, lang);
+      const urls = animationUrls(moduleId, current.slide, slideChoice);
       if (!urls || typeof caches === 'undefined') return;
       try {
         const hit = await (await caches.open(COURSE_CACHE)).match(urls.video, { ignoreSearch: true });
@@ -329,7 +339,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       }
     })();
     return () => { cancelled = true; };
-  }, [running, current, moduleId, playing, lang, animationFailed]);
+  }, [running, current, moduleId, playing, slideChoice, animationFailed]);
 
   // When a clip ends, turn the page. On the last slide, stop rather than loop.
   const advance = useCallback(() => {
@@ -399,14 +409,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   if (!deck || !slideLang || !current) return null;
 
-  const img = slideImageFor(moduleId, lang, current.slide);
-  const anim = animationUrls(moduleId, current.slide, lang);
+  const img = slideImageFor(moduleId, slideChoice, current.slide);
+  const anim = animationUrls(moduleId, current.slide, slideChoice);
   const audio = audioForCurrent;
   const track = narration?.tracks.find((t) => t.slide === current.slide);
-  const heading = track ? trackTitle(track, lang) : current.title;
+  const heading = track ? trackTitle(track, slideChoice) : current.title;
   const isPlaying = playing.has(current.slide);
 
-  const slideRatio = anim?.aspectRatio ?? 16 / 9;
+  const slideRatio = anim?.aspectRatio ?? deck.slideAspectRatioByLanguage?.[img?.lang ?? slideLang.lang] ?? 16 / 9;
   const artModule = (COURSE_DECK_ART as Record<string, Record<string, { layout: string }>>)[moduleId];
   const art = artModule?.[current.slide];
   const presentationPoints = transcript ? slidePoints(transcript) : [];
@@ -436,15 +446,21 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           {index + 1} / {total}
         </span>
         <h3 className={styles.slideHeading} style={{ color: INK }}>{heading}</h3>
-        {languages.length > 1 && (
+        {(languages.length > 1 || needsSourceNarrationChoice) && (
           <div role="group" aria-label={t('courseNarrationLanguage')} style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
-            {languages.map((code) => {
-              const on = code === lang;
+            {(needsSourceNarrationChoice ? languages.filter((code) => code === 'en') : languages).map((code) => {
+              const on = code === narrationChoice;
               return (
                 <button
                   key={code}
                   type="button"
-                  onClick={() => { setPlaying(new Set()); setLang(code); }}
+                  onClick={() => {
+                    if (!needsSourceNarrationChoice) {
+                      setPlaying(new Set());
+                      setSlideChoice(code);
+                    }
+                    setNarrationChoice(code);
+                  }}
                   aria-pressed={on}
                   style={{
                     padding: '3px 9px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',
@@ -453,7 +469,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                     color: on ? GREEN : MUTED,
                   }}
                 >
-                  {langName(code, uiLang)}
+                  {needsSourceNarrationChoice && code === 'en' ? 'English source narration' : langName(code, uiLang)}
                 </button>
               );
             })}
@@ -622,7 +638,15 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
           {t('courseDeckNarrationFallback')
             .replace('{spokenLanguage}', langName(spokenLang.lang, uiLang))
-            .replace('{appLanguage}', langName(lang, uiLang))}
+            .replace('{appLanguage}', langName(appLang, uiLang))}
+        </p>
+      )}
+
+      {needsSourceNarrationChoice && (
+        <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+          No Sesotho narration available. {narrationChoice === 'en'
+            ? 'English source narration selected.'
+            : 'Select English source narration to hear the lesson.'}
         </p>
       )}
 
@@ -709,7 +733,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           </div>
           <div className={styles.imageViewerStage}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={fullSizeImageUrl} alt={heading} style={{ width: `${imageZoom * 100}%`, maxHeight: imageZoom === 1 ? '100%' : undefined }} />
+            <img src={fullSizeImageUrl} alt={heading} style={{ width: `${imageZoom * 100}%`, maxHeight: imageZoom === 1 && slideRatio >= 1 ? '100%' : undefined }} />
           </div>
         </dialog>
       )}

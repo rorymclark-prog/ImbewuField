@@ -418,6 +418,67 @@ test('Water playback respects language gaps, download choice and the whole clear
   }
 });
 
+test('Sesotho slides remain Sesotho when English source narration is chosen', async t => {
+  // Model a reviewed portrait deck without advertising files that are not on disk yet. A single
+  // language state used to switch both the image and voice to English on this path.
+  const deck = COURSE_DECKS['intro-permaculture'];
+  const originalLanguages = deck.slideLanguages;
+  const originalRatios = deck.slideAspectRatioByLanguage;
+  deck.slideLanguages = [...originalLanguages, 'st'];
+  deck.slideAspectRatioByLanguage = { st: 1440 / 3400 };
+  t.after(() => {
+    deck.slideLanguages = originalLanguages;
+    deck.slideAspectRatioByLanguage = originalRatios;
+  });
+
+  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
+    return nextLoad(url, context);
+  } });
+  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
+  hooks.deregister();
+
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'st' })); });
+  try {
+    const picture = () => view.root.findAllByType('img')[0];
+    const imageCanvas = () => picture().parent!;
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.jpg$/);
+    assert.equal(imageCanvas().props.style.aspectRatio, 1440 / 3400, 'portrait text must not be shrunk into a widescreen frame');
+    assert.equal(view.root.findAllByType('img')[1].props.style.maxHeight, undefined,
+      'the full-image viewer must allow a portrait slide to scroll at readable width');
+    assert.equal(view.root.findAllByType('audio').length, 0, 'English narration must wait for an explicit choice');
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No Sesotho narration available/);
+    const english = view.root.findAllByType('button').find(button => button.children.join('') === 'English source narration')!;
+    assert.equal(english.props['aria-pressed'], false);
+
+    act(() => english.props.onClick());
+    assert.equal(english.props['aria-pressed'], true);
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.jpg$/, 'choosing a voice must not replace the picture');
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /English source narration selected/);
+
+    act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-02\.jpg$/, 'page turns keep the selected slide language');
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-02\.mp3$/);
+  } finally { act(() => view.unmount()); }
+
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'en' })); });
+  try {
+    const zulu = view.root.findAllByType('button').find(button => button.children.join('') === 'isiZulu')!;
+    act(() => zulu.props.onClick());
+    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/zu\/slide-01\.jpg$/,
+      'the existing English and isiZulu switch still changes the slides');
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/zu\/slide-01\.mp3$/,
+      'the existing English and isiZulu switch still changes the narration');
+    assert.equal(view.root.findAllByType('img')[0].parent!.props.style.aspectRatio, 16 / 9);
+  } finally { act(() => view.unmount()); }
+});
+
 test('deck arrows change slides only while the deck itself has plain-key focus', async () => {
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {
