@@ -27,8 +27,8 @@ test('the month cards carry no hand-typed crop lists', () => {
     'a hand-typed plant/harvest list came back — derive it from CROPS instead',
   );
   assert.ok(
-    PAGE.includes('plant: CROPS.filter(') && PAGE.includes('harvest: CROPS.filter('),
-    'the month cards stopped deriving their crops from the catalog-backed CROPS array',
+    PAGE.includes('plant: crops.filter(') && PAGE.includes('harvest: crops.filter('),
+    'the month cards stopped deriving their crops from the catalog-backed crop rows (CROP_BASE via cropsForPattern)',
   );
 });
 
@@ -89,7 +89,7 @@ test('the grid explains itself when none of the farmer\'s planned crops are trac
     'the empty-filter case must be handled explicitly, not left to render a header-only table',
   );
   assert.match(
-    PAGE, /This grid tracks \{CROPS\.map/,
+    PAGE, /This grid tracks \{crops\.map/,
     'the empty state must name what this calendar DOES cover, derived from CROPS — not a second, hand-typed crop list that can drift from it',
   );
 });

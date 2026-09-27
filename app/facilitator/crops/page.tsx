@@ -770,6 +770,12 @@ function FacilitatorCropsPageInner() {
       allowVinesInBeds: aAllowVinesInBeds,
       allowMixedCropsInBed: aAllowMixedCropsInBed,
       reliableIrrigation: aReliableIrrigation,
+      // The site's own monthly climate: the heat check always reads the
+      // temperatures; rainfall and latitude matter only for a rain-fed plan
+      // (irrigation off). Absent when the site climate did not resolve.
+      siteMonthlyTempC: siteClimate?.monthlyTempC,
+      siteMonthlyRainMm: siteClimate?.monthlyRainMm,
+      siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
     };
     // Say WHERE the climate came from, not just what it is — a satellite-derived
     // per-site profile and a reference city 250 km away are different claims.
@@ -1874,6 +1880,31 @@ function FacilitatorCropsPageInner() {
               </div>
             )}
 
+            {/* Simple mode's own compact conflict warning — the full
+                bed×crop breakdown lives in the advanced Harvest total card
+                below (inside !simple), so this stays a plain-language
+                summary rather than a duplicate of it. */}
+            {simple && hasAreaConflict && (
+              <div className="mb-5 rounded-xl px-3 py-2.5" style={{ background: 'rgba(184,58,40,0.06)', border: '1px solid rgba(184,58,40,0.25)' }}>
+                <div className="font-display font-semibold mb-1 inline-flex items-center gap-1.5" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+                  <TriangleAlert size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} />
+                  {cropUi(lang, 'Some beds are double-booked', 'Eminye imibhede ibhukhwe kabili')}
+                </div>
+                <div className="font-sans space-y-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  {areaConflictDetails.map((conflict) => {
+                    const names = listNames([...new Set(conflict.plantings.map((p) => p.cropName))]);
+                    const months = [...new Set(conflict.plantings.flatMap((p) => p.months))].sort((a, b) => a - b);
+                    const span = months.length > 0 ? ` (${monthSpanLabel(months)})` : '';
+                    return (
+                      <div key={conflict.bedId}>
+                        <strong style={{ color: 'var(--text-primary)' }}>{conflict.bedLabel}</strong>: {names}{span}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {!simple && (
             <>
             <div className="font-sans mb-5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
@@ -2343,6 +2374,7 @@ function FacilitatorCropsPageInner() {
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
           reliableIrrigation={aReliableIrrigation} onReliableIrrigation={setAReliableIrrigation}
           siteClimate={siteClimate}
+          beds={beds}
           result={autoResult}
           onGenerate={runAutoSuggest}
           onAccept={acceptAutoSuggest}
@@ -3919,7 +3951,7 @@ function AutoSuggestModal({
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
   pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
-  siteClimate, result, onGenerate, onAccept, onBackToQuestions, onClose,
+  siteClimate, beds, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
@@ -3945,6 +3977,8 @@ function AutoSuggestModal({
   /** The site's own monthly climate, when it resolved. Null keeps the irrigation
    * question generic rather than quoting a reference region's rain as this site's. */
   siteClimate: SiteClimate | null;
+  /** Beds in the parent's scope, used to label each suggested planting with its bed. */
+  beds: PlanBed[];
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
@@ -4180,10 +4214,15 @@ function AutoSuggestModal({
             >
               <span style={{ display: 'inline-flex', alignItems: 'center' }}>{reliableIrrigation ? <Droplets size={16} aria-hidden /> : <Circle size={16} aria-hidden />}</span>
               <span>
-                <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>Reliable irrigation for every crop cycle (required)</div>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>
+                  Reliable irrigation for every crop cycle{siteClimate ? '' : ' (required)'}
+                </div>
                 <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>
                   This automatic plan deliberately packs successive crop cycles. A rainfall region does not
                   prove farm water, so it stays off unless you can irrigate throughout every suggested cycle.
+                  {siteClimate && !reliableIrrigation
+                    ? ' Left off, you get a rain-fed plan: crops only in the months this site’s own rain can carry them.'
+                    : ''}
                 </div>
               </span>
             </button>
@@ -4224,9 +4263,9 @@ function AutoSuggestModal({
               const needsCrops = goal !== 'family' && cropKeys.length === 0;
               const blockers = [
                 needsCrops ? 'Pick at least one crop above before the planner can suggest anything.' : null,
-                reliableIrrigation
+                reliableIrrigation || siteClimate
                   ? null
-                  : 'Turn on “Reliable irrigation for every crop cycle” above to generate a plan. This plan packs crop cycles back to back, so it only holds if you can water them through.',
+                  : 'Turn on “Reliable irrigation for every crop cycle” above to generate a plan. This plan packs crop cycles back to back, so it only holds if you can water them through. Or map this farm’s location, and a rain-fed plan can use its own rainfall.',
               ].filter((line): line is string => line !== null);
               const canGenerate = blockers.length === 0 && !generating;
               return (
@@ -4327,10 +4366,16 @@ function AutoSuggestModal({
                     if (!crop) return null;
                     const h = harvestMonthForCrop(p.sowMonth, crop);
                     const fieldEntry = plannedBedEntryMonth(p.sowMonth, crop);
+                    const bedLabel = beds.find((b) => b.id === p.bedId)?.label ?? null;
                     return (
                       <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
                           <CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)
+                          {bedLabel && (
+                            <span className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
+                              {bedLabel}
+                            </span>
+                          )}
                           {typeof p.once === 'string' && (
                             <span className="font-sans uppercase" style={{ fontSize: 8.5, letterSpacing: '0.06em', color: 'var(--color-forest-800)', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', borderRadius: 6, padding: '1px 5px' }}>
                               {IDEAL_PLAN_COPY.starterBadge}

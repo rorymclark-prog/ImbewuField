@@ -52,6 +52,26 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 27 Sep 2026 — Crop-plan audit, phase 3: the nine open items
+- **Few big harvests:** each crop now gets its next big sowing once its last harvest ends (follow-on
+  rounds), instead of one cohort and bare ground. Reference farm family/few-big 88 → 254 kg,
+  bed-months 29.6% → 80.3%; nine-bed August plan 53.7% → 70.4%. Commercial few-big unchanged
+  (rotation blocks the same-crop repeat).
+- **Heat check:** `lib/crop-climate-gate.ts` holds FAO ECOCROP TOPMX/TMAX for all 29 schedulable crops.
+  With the site's NASA POWER monthly means (`SiteClimate.monthlyTempC`, new) a sowing month is
+  skipped when the crop would grow through a month above TMAX (ECOCROP suitability 0); months
+  above TOPMX get a basis note. No site temperatures = regional calendar unchanged.
+- **Rain-fed mode:** irrigation off no longer means "no plan" when the site's own rain, temperature
+  and latitude are known: a cohort is sown only if every field month has P ≥ 0.5 PET (FAO AEZ
+  growing-period rule; Thornthwaite PET). Still refuses without site climate.
+- **Frost-free calendar:** `FROST_FREE_CALENDAR_CITED` lists the 8 crops whose 'all-year' months come
+  from KZN DARD Table 6 hot-area column (carrots corrected to Feb–Sep); a frost-free plan names every
+  other crop it uses as unchecked. The other 21 crops still need a source (none found; .gov.za blocked).
+- **Heat-season crops (cowpea, amaranth, okra):** NOT added — no days-to-harvest for cowpea, no yield
+  for amaranth, okra only from secondary sites; the DAFF PDFs could not be fetched here.
+- UI: review screen shows each crop's bed; Simple mode shows the double-booking card; `/calendar`
+  follows the saved plan's climate column; the Task Planner includes beds on every saved site.
+
 ### 27 Sep 2026 — Crop-plan audit, phase 2: existing crops + frost gate
 - **Whole-year plan double-booking (critical):** the ideal-year sweep aged already-growing crops from
   each synthetic anchor, so the winning plan was stacked on top of them (73% of 1,152 probe inputs;

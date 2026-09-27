@@ -456,7 +456,12 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9],
-      'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
+      // Was [1,2,3,4,8,9,10,11], uncited. KZN DARD Table 6, Carrots row, 'Hot
+      // areas Frost-free' column: 'Feb - Sep' — read from a reproduction of
+      // the table (the primary PDF could not be fetched on 2026-09-27); the
+      // same reproduction's warm-area cell gives Jan-Nov, matching the
+      // primary-cited 'mild-frost' row below, which is why it is trusted here.
+      'all-year': [2, 3, 4, 5, 6, 7, 8, 9],
       'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // KZN DARD Table 6: Jan-Nov in warm/light-frost areas
     },
     daysToHarvest: 120, // upper end across 90–105 summer / 110–120 winter — Starke Ayres Allyance/Kuroda/Chantenay Karoo variety pages
@@ -1210,6 +1215,16 @@ export const CROPS: CropDef[] = [
     harvestPeriodRangeWeeks: [2, 4],
   },
 ];
+
+/** Crops whose 'all-year' (frost-free) sowing months are taken from the KZN
+ * DARD Plant Establishment Table 6 'Hot areas Frost-free' column
+ * (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf).
+ * Audited 2026-09-27: every other crop's 'all-year' months have no source
+ * found yet, so the planner says so when a frost-free plan uses them rather
+ * than presenting them as checked. */
+export const FROST_FREE_CALENDAR_CITED: ReadonlySet<string> = new Set([
+  'swiss-chard', 'onions', 'tomatoes', 'peppers', 'chilli', 'true-spinach', 'turnip', 'carrots',
+]);
 
 export function cropByKey(k: string): CropDef | undefined {
   return CROPS.find((c) => c.key === k);

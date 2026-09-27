@@ -506,7 +506,10 @@ test('no page carries its own rival yield table — the sourced catalog is the o
 test('calendar sowing marks come from the catalog window, not a rival month table', () => {
   const calendarSource = readFileSync(new URL('../app/calendar/page.tsx', import.meta.url), 'utf8');
   assert.match(calendarSource, /sowMarksForPattern/);
-  assert.match(calendarSource, /CALENDAR_RAIN_PATTERN\s*=\s*['"]summer['"]/);
+  // The calendar follows the farmer's own saved crop plan (CropPlanState.rainPattern),
+  // falling back to 'summer' only for a plan saved before that field existed or when
+  // there is no plan yet — not a page-wide constant that ignores the plan's real climate.
+  assert.match(calendarSource, /rainPattern\s*\?\?\s*['"]summer['"]/);
   assert.doesNotMatch(
     calendarSource,
     /marks:\s*\[['"]/,

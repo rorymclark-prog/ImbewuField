@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'b668bc6', changes: [
+    'Few big harvests re-sows each crop after its harvest; too-hot months are skipped.',
+    'Irrigation off? A mapped farm now gets a rain-fed plan from its own rainfall.',
+    'Plans show each crop’s bed; the calendar and Task Planner follow all your farms.',
+  ], tour: [
+    { title: 'Try a rain-fed plan', where: 'Crop Plan → Auto-suggest', href: '/facilitator/crops',
+      detail: 'Leave “Reliable irrigation” off on a mapped farm. Crops are only sown in months your own rain can carry them, and each row names its bed.' },
+    { title: 'Check the Task Planner', where: 'Task Planner', href: '/cropplan',
+      detail: 'Plantings on beds at every saved farm now show up here, not only the main farm.' },
+  ] },
   { when: '27 September 2026', sha: 'a89acfd5', changes: [
     'Regional study slides now wait for your English narration choice.',
   ], tour: [

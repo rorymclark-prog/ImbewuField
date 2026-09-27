@@ -35,6 +35,9 @@ export interface SiteClimate {
   annualMm: number;
   /** Monthly rainfall normals, mm, Jan..Dec — for water calcs that want the shape. */
   monthlyRainMm: number[];
+  /** Monthly mean air temperature normals, °C, Jan..Dec (NASA POWER T2M) —
+   * the crop heat check and rain-fed evaporation estimate read these. */
+  monthlyTempC: number[];
   /** Köppen-Geiger code for the site (e.g. 'Cfa') — provenance detail, shown as modelled. */
   koppen: string;
   /** Which satellite dataset the rainfall came from (see lib/nasa-power.ts). */
@@ -87,6 +90,7 @@ export function siteClimateFromLocationData(data: unknown, lat: number): SiteCli
     pattern: rainPatternFor(monthly, koppen),
     annualMm: Math.round(monthlyRainMm.reduce((sum, v) => sum + v, 0)),
     monthlyRainMm,
+    monthlyTempC: tempC,
     koppen: koppen.code,
     rainfallSource,
   };

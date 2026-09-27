@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Sprout, Leaf, Droplets, Sun, Snowflake, ChevronDown } from 'lucide-react';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
@@ -11,6 +11,7 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
 import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
+import type { RainPattern } from '@/lib/crop-catalog';
 import { useLanguage } from '@/lib/i18n';
 import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
@@ -59,9 +60,18 @@ interface CropRow {
   harvestMonths: number[]; // 0-indexed
 }
 
-const CALENDAR_RAIN_PATTERN = 'summer' as const;
+/** English + isiZulu label for each RainPattern the calendar can be showing —
+ * whichever one the farmer's saved crop plan was generated against
+ * (CropPlanState.rainPattern, lib/crop-plan.ts), falling back to 'summer'
+ * for a plan saved before that field existed or when there is no plan yet. */
+const RAIN_PATTERN_LABELS: Record<RainPattern, { en: string; zu: string }> = {
+  summer: { en: 'Summer-rainfall pattern', zu: 'Iphethini yemvula yasehlobo' },
+  'mild-frost': { en: 'Summer rain, light winter frost', zu: 'Imvula yasehlobo, isithwathwa esincane sasebusika' },
+  'all-year': { en: 'Rain all year, frost-free', zu: 'Imvula unyaka wonke, asikho isithwathwa' },
+  winter: { en: 'Winter-rainfall pattern', zu: 'Iphethini yemvula yasebusika' },
+};
 
-const CROPS: CropRow[] = [
+const CROP_BASE: { name: string; catalogKey: string; harvestMonths: number[] }[] = [
   { name: 'Spinach', catalogKey: CATALOG_KEY_FOR_CROP.Spinach, harvestMonths: [5, 6, 7, 8, 9] },
   { name: 'Tomatoes', catalogKey: CATALOG_KEY_FOR_CROP.Tomatoes, harvestMonths: [11, 0, 1, 2] },
   { name: 'Maize', catalogKey: CATALOG_KEY_FOR_CROP.Maize, harvestMonths: [1, 2, 3] },
@@ -70,10 +80,16 @@ const CROPS: CropRow[] = [
   { name: 'Sweet Potato', catalogKey: CATALOG_KEY_FOR_CROP['Sweet potato'], harvestMonths: [1, 2, 3] },
   { name: 'Garlic', catalogKey: CATALOG_KEY_FOR_CROP.Garlic, harvestMonths: [8, 9, 10] },
   { name: 'Pumpkin', catalogKey: CATALOG_KEY_FOR_CROP.Pumpkin, harvestMonths: [1, 2, 3] },
-].map((crop) => ({
-  ...crop,
-  marks: sowMarksForPattern(crop.catalogKey, CALENDAR_RAIN_PATTERN),
-}));
+];
+
+/** Builds CROPS for whichever RainPattern the farmer's saved plan actually
+ * uses, rather than always assuming 'summer'. */
+function cropsForPattern(pattern: RainPattern): CropRow[] {
+  return CROP_BASE.map((crop) => ({
+    ...crop,
+    marks: sowMarksForPattern(crop.catalogKey, pattern),
+  }));
+}
 
 // ---------------------------------------------------------------------------
 // Monthly planting / harvest / maintain data
@@ -257,13 +273,16 @@ const MONTHLY_ADVICE: MonthAdvice[] = [
   },
 ];
 
-const MONTHLY_DATA: MonthData[] = MONTHLY_ADVICE.map((advice, monthIndex) => ({
-  ...advice,
-  // 'B' marks a month inside the catalog's sowing window for the summer-rainfall pattern this
-  // page states it is showing (CALENDAR_RAIN_PATTERN).
-  plant: CROPS.filter((crop) => crop.marks[monthIndex] === 'B').map((crop) => crop.name),
-  harvest: CROPS.filter((crop) => crop.harvestMonths.includes(monthIndex)).map((crop) => crop.name),
-}));
+/** 'B' marks a month inside the catalog's sowing window for whichever RainPattern
+ * `crops` was built for — the saved plan's own pattern (fallback 'summer'), not
+ * a page-wide assumption. */
+function monthlyDataForCrops(crops: CropRow[]): MonthData[] {
+  return MONTHLY_ADVICE.map((advice, monthIndex) => ({
+    ...advice,
+    plant: crops.filter((crop) => crop.marks[monthIndex] === 'B').map((crop) => crop.name),
+    harvest: crops.filter((crop) => crop.harvestMonths.includes(monthIndex)).map((crop) => crop.name),
+  }));
+}
 
 // ---------------------------------------------------------------------------
 // Season icon helper
@@ -373,6 +392,10 @@ export default function CalendarPage() {
   // 'imbewu_planner_crops', a key app/survey/page.tsx also only ever READ and nothing in the app
   // ever wrote — a permanently empty filter that could never once have matched anything.
   const [plannedCropKeys, setPlannedCropKeys] = useState<Set<string>>(new Set());
+  // The RainPattern the farmer's saved plan was generated against (lib/crop-plan.ts's
+  // CropPlanState.rainPattern) — read alongside plannedCropKeys below so this calendar
+  // follows the same plan rather than always assuming summer rainfall.
+  const [rainPattern, setRainPattern] = useState<RainPattern>('summer');
   // "Show all" overrides a real plan without touching it — the plan itself is read-only here.
   const [showAllOverride, setShowAllOverride] = useState(false);
   // Simple: the 12-month reference grid is behind this disclosure; All tools always shows it.
@@ -399,19 +422,25 @@ export default function CalendarPage() {
     try {
       const plan = loadCropPlan();
       setPlannedCropKeys(new Set(plan.plantings.map((p) => p.cropKey)));
+      setRainPattern(plan.rainPattern ?? 'summer');
     } catch { /* ignore */ }
   }, []);
+
+  // Rebuilt only when the plan's rain pattern changes — everything below reads
+  // from these, never from a page-wide 'summer' assumption.
+  const crops = useMemo(() => cropsForPattern(rainPattern), [rainPattern]);
+  const monthlyData = useMemo(() => monthlyDataForCrops(crops), [crops]);
 
   const hasPlan = plannedCropKeys.size > 0;
   const isFiltered = hasPlan && !showAllOverride;
   // Plantings are keyed by the catalog key (e.g. 'tomatoes', 'sweet-potato') — the same key
-  // CROPS[].catalogKey carries via lib/crop-display.ts's CATALOG_KEY_FOR_CROP, so this is a
+  // crops[].catalogKey carries via lib/crop-display.ts's CATALOG_KEY_FOR_CROP, so this is a
   // direct match, not a name comparison.
   const visibleCrops = isFiltered
-    ? CROPS.filter((c) => plannedCropKeys.has(c.catalogKey))
-    : CROPS;
+    ? crops.filter((c) => plannedCropKeys.has(c.catalogKey))
+    : crops;
 
-  const monthData = MONTHLY_DATA[selectedMonth];
+  const monthData = monthlyData[selectedMonth];
   // Simple's "what to do" card follows the real plan when there is one; All tools' card is
   // unchanged below and always reads the general monthData list.
   const simplePlant = hasPlan
@@ -802,7 +831,7 @@ export default function CalendarPage() {
                     color: 'var(--text-secondary)',
                   }}
                 >
-                  {localUi('Summer-rainfall pattern', 'Iphethini yemvula yasehlobo', lang)}
+                  {localUi(RAIN_PATTERN_LABELS[rainPattern].en, RAIN_PATTERN_LABELS[rainPattern].zu, lang)}
                 </span>
               </div>
             </div>
@@ -835,7 +864,7 @@ export default function CalendarPage() {
                 no clue why. Name what this grid covers instead of just going blank. */}
             {isFiltered && visibleCrops.length === 0 ? (
               <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                This grid tracks {CROPS.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
+                This grid tracks {crops.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
               </div>
             ) : (
             /* Scrollable table */

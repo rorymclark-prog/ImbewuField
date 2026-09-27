@@ -336,7 +336,10 @@ test('a crop chosen out of season fills the Later this year panel that could nev
   const result = autoSuggestPlan({
     goal: 'commercial', householdSize: 'medium', focusCropCount: 2, groups: [],
     cropKeys: ['green-beans', 'beetroot', 'swiss-chard'], rhythm: 'few-big',
-    rotateCrops: false, allowVinesInBeds: false, allowMixedCropsInBed: true,
+    // Rotation on: few-big now repeats a crop once its harvest ends, so with
+    // rotation off beetroot/chard would re-take every bed in August and leave
+    // no September room. Rotation blocks that same-family repeat.
+    rotateCrops: true, allowVinesInBeds: false, allowMixedCropsInBed: true,
     reliableIrrigation: true,
   }, 'summer', bedsFor(3, 0, 9), [], 2);
   assert.ok(!result.plantings.some((planting) => planting.cropKey === 'green-beans'),
