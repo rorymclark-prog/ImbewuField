@@ -200,6 +200,21 @@ test('Sesotho intro lessons download all paired images and keep English source a
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')));
 });
 
+test('Tshivenda and Xitsonga Introduction downloads include draft stills and English fallback', () => {
+  for (const lang of ['ve', 'ts']) {
+    const pack = offlinePack('intro-permaculture', lang);
+    assert.deepEqual(pack.missing, []);
+    const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+    for (const n of ['01', '04', '05', '06']) {
+      assert.ok(slides.includes(`/course-decks/intro-permaculture/${lang}/slide-${n}.webp`));
+    }
+    assert.ok(slides.includes('/course-decks/intro-permaculture/en/slide-07.jpg'));
+    assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+      entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
+    assert.ok(pack.entries.every((entry) => !entry.url.includes(`/course-audio/intro-permaculture/${lang}/`)));
+  }
+});
+
 test('both languages of the finished module are whole — no slide falls back', () => {
   // Seeds is the module being shown to people as the finished sample. A farmer reading isiZulu
   // should not meet an English slide in it.
