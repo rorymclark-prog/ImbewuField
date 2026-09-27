@@ -5,6 +5,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'no
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const completeHold = (language = 'st') => ({
@@ -46,6 +47,37 @@ test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
   assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
+});
+
+test('Food Forest Sesotho narration only drafts the three existing low-risk L1 body sentences', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/food-forest.st.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'st');
+  const drafted = slides.flatMap((slide: any) => slide.target.body
+    .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean));
+  assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
+  assert.deepEqual(slides.flatMap((slide: any) => slide.target.heading.status), Array(20).fill('english-hold'));
+  assert.deepEqual([
+    slides[3].target.body[0].text,
+    slides[3].target.body[1].text,
+    slides[7].target.body[1].text,
+  ], [
+    'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.',
+    'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.',
+    'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.',
+  ]);
+  const lessonBody = SESOTHO_FOOD_FOREST_DRAFT.lessons[0].body;
+  const lessonEnglish = lessonBody.sourceEnglish.split('\n\n');
+  const lessonSesotho = lessonBody.sesothoDraft.split('\n\n');
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[3, 0, 0], [3, 1, 1], [7, 1, 11]]) {
+    assert.equal(slides[slideIndex].english.body[slideParagraph], lessonEnglish[lessonParagraph],
+      `slide ${slideIndex + 1} must use the exact lesson source sentence`);
+    assert.equal(slides[slideIndex].target.body[slideParagraph].text, lessonSesotho[lessonParagraph],
+      `slide ${slideIndex + 1} must reuse the existing Sesotho draft sentence`);
+  }
+  assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
+    part.status === 'draft' || part.status === 'english-hold')));
 });
 
 test('a changed source sentence or heading blocks the entire paired draft', () => {
