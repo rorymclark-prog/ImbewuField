@@ -6,6 +6,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
+import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
+import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const completeHold = (language = 'st') => ({
@@ -89,6 +91,44 @@ test('Food Forest Sesotho narration only drafts the three existing low-risk L1 b
   }
   assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
     part.status === 'draft' || part.status === 'english-hold')));
+});
+
+test('Tshivenda Food Forest slides hold care, ground-cover and habitat claims in English', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/food-forest.ve.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 've');
+  const drafted = slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean));
+  assert.deepEqual(drafted, ['4:1', '4:3', '4:4', '6:1']);
+  const lesson = TSHIVENDA_FOOD_FOREST_DRAFT.lessons[0].body;
+  const english = lesson.sourceEnglish.split('\n\n');
+  const translated = lesson.tshivendaDraft.split('\n\n');
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[3, 0, 0], [3, 2, 2], [3, 3, 3], [5, 0, 4]]) {
+    assert.equal(slides[slideIndex].english.body[slideParagraph], english[lessonParagraph]);
+    assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
+  }
+  assert.equal(slides[5].target.body[1].status, 'english-hold');
+  assert.equal(slides[12].target.body[0].status, 'english-hold');
+});
+
+test('Vegetables slides pair only existing Xitsonga resilience concepts with exact English', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'ts');
+  const drafted = slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean));
+  assert.deepEqual(drafted, ['13:6', '14:1', '14:2', '14:5']);
+  const lesson = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body;
+  const english = lesson.sourceEnglish.split('\n\n');
+  const translated = lesson.xitsongaDraft.split('\n\n');
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 1, 12], [13, 4, 15]]) {
+    assert.equal(slides[slideIndex].english.body[slideParagraph], english[lessonParagraph]);
+    assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
+  }
+  assert.equal(slides[13].target.body[2].status, 'english-hold');
+  assert.equal(slides[13].target.body[3].status, 'english-hold');
 });
 
 test('a changed source sentence or heading blocks the entire paired draft', () => {
