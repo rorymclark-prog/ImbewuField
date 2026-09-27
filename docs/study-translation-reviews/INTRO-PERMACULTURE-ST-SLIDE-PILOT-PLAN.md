@@ -12,7 +12,7 @@ The app already has a Sesotho intro-permaculture review packet and visibly paire
 
 Use the existing numbered English source at `docs/narration/intro-permaculture.en.md` as the immutable source. The paired JSON packet contains exactly 22 numbered records. Each record retains the exact English heading and source paragraphs beside a provisional Sesotho heading and draft paragraphs. Missing or held target copy is explicitly marked as an English hold; no source fact, condition, number, or species is silently omitted. The packet carries an unreviewed machine-draft status. Its present 42 draft paragraphs and 46 English holds are review data, not a complete Sesotho teaching script.
 
-The generator now has an opt-in `--paired-draft` path. It checks all 22 records against the English script before rendering and uses vertically stacked Sesotho and exact-English panels with an unreviewed banner. The English and isiZulu paths remain unchanged. Its local images are text-only reviewer proofs: they omit the illustrated deck's teaching images. Do not register them as the learner deck until visual teaching parity is restored and all 22 images are checked in the actual phone player.
+The generator now has an opt-in `--paired-draft` path. It checks all 22 records against the English script before rendering and uses vertically stacked Sesotho and exact-English panels with an unreviewed banner. The English and isiZulu paths remain unchanged. The reviewer proof also reproduces each existing illustrated English source slide above the paired text, so a reviewer can compare the visual teaching context. These are still reviewer proofs, not a learner deck: the Sesotho copy is incomplete, portrait proofs have not been checked in the actual phone player, and there is no Sesotho narration.
 
 ## Manifest and player changes
 
@@ -31,4 +31,4 @@ The generator now has an opt-in `--paired-draft` path. It checks all 22 records 
 
 ## Cost and scope
 
-Rendering the 22 reviewer proofs uses local Pillow only, with no paid AI render or voice generation. The current local PNG proof set is about 6.9 MB and is not in the learner app. Measure any later deck's actual transfer size before release and let learners choose before downloading it.
+Rendering the 22 reviewer proofs uses local Pillow and the existing English slide JPGs, with no paid AI render or voice generation. The illustrated local PNG proof set is about 24 MB and is not in the learner app. Its portraits include the original English visual, followed by the Sesotho draft/hold and exact English source. Measure and optimize any later learner deck's actual transfer size before release, and let learners choose before downloading it.

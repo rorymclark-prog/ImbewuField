@@ -69,6 +69,11 @@ const raw = readFileSync(scriptPath, 'utf8');
 const pairedSlides = pairedPath
   ? validatePairedDraft(JSON.parse(readFileSync(pairedPath, 'utf8')), englishSlideRecords(raw))
   : null;
+const pairedSourceSlides = pairedSlides?.map(({ n }) =>
+  resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en', `slide-${String(n).padStart(2, '0')}.jpg`))) ?? null;
+for (const sourceSlide of pairedSourceSlides ?? []) {
+  if (!existsSync(sourceSlide)) throw new Error(`paired draft needs its illustrated English source slide: ${sourceSlide}`);
+}
 const artPlanPath = resolve('docs/course-deck-art.json');
 const artPlan = !pairedSlides && existsSync(artPlanPath) ? JSON.parse(readFileSync(artPlanPath, 'utf8'))[moduleId] ?? {} : {};
 const artOverrides = overridesPath && existsSync(overridesPath) ? JSON.parse(readFileSync(overridesPath, 'utf8')) : {};
@@ -229,6 +234,7 @@ writeFileSync(
     lessonArt,
     moduleNumber,
     pairedSlides,
+    pairedSourceSlides,
     validateOnly,
     footer: branding.footer || 'ImbewuField · Imbewu Yoshintso',
     branding,
@@ -242,7 +248,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 cfg = json.load(open(sys.argv[1]))
 PAIRED = cfg.get('pairedSlides')
-W, H = (1440, 4600) if PAIRED else (1920, 1080)
+W, H = (1440, 5400) if PAIRED else (1920, 1080)
 
 # Palette read off the produced Seeds deck, which is the standard the rest of the course is
 # measured against — warm paper, forest green for anything structural, ochre for the small
@@ -358,7 +364,10 @@ if PAIRED:
     # enough to register by mistake, especially when its remaining source claims are hidden.
     probe = ImageDraw.Draw(Image.new('RGB', (W, H), PAPER))
     paired_plans = []
-    for pair in PAIRED:
+    for pair, source_image in zip(PAIRED, cfg['pairedSourceSlides']):
+        with Image.open(source_image) as original:
+            if original.width < 1000 or original.height < 560:
+                raise ValueError('slide %d English illustration is too small for the paired proof' % pair['n'])
         target = pair['target']
         held = target['heading']['status'] == 'english-hold' or any(
             part['status'] == 'english-hold' for part in target['body'])
@@ -366,8 +375,8 @@ if PAIRED:
         target_body = [(source if part['status'] == 'english-hold' else part['text'])
                        for source, part in zip(pair['english']['body'], target['body'])]
         paired_plans.append((
-            panel_plan(probe, target_heading, target_body, 210, 2200, pair['n']),
-            panel_plan(probe, pair['english']['heading'], pair['english']['body'], 2230, 4220, pair['n']),
+            panel_plan(probe, target_heading, target_body, 1070, 3060, pair['n']),
+            panel_plan(probe, pair['english']['heading'], pair['english']['body'], 3090, 5080, pair['n']),
             held,
         ))
 
@@ -394,21 +403,26 @@ if PAIRED:
     if os.path.isdir(cfg['outDir']) and os.listdir(cfg['outDir']):
         raise ValueError('paired draft output directory must be empty to avoid stale slides')
     os.makedirs(cfg['outDir'], exist_ok=True)
-    for pair, (target_plan, source_plan, held) in zip(PAIRED, paired_plans):
+    for pair, source_image, (target_plan, source_plan, held) in zip(PAIRED, cfg['pairedSourceSlides'], paired_plans):
         image = Image.new('RGB', (W, H), PAPER)
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle([64, 40, W - 64, 175], radius=20, fill=RUST)
         draw.text((96, 75), 'SESOTHO AI DRAFT / NOT REVIEWED', font=F_PAIR_STATUS, fill=(255, 255, 255))
+        draw.text((96, 220), 'ILLUSTRATED ENGLISH SOURCE SLIDE', font=F_PAIR_LABEL, fill=AMBER)
+        with Image.open(source_image) as original:
+            original = original.convert('RGB')
+            original.thumbnail((1280, 720), Image.Resampling.LANCZOS)
+            image.paste(original, ((W - original.width) // 2, 290))
         target = pair['target']
         target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
         target_body = [(source if part['status'] == 'english-hold' else part['text'])
                        for source, part in zip(pair['english']['body'], target['body'])]
         draw_panel(draw, 'SESOTHO · RUST TEXT = ENGLISH HOLD' if held else 'SESOTHO · AI DRAFT',
-                   target_heading, target_body, 210, 2200, target_plan, target)
+                   target_heading, target_body, 1070, 3060, target_plan, target)
         draw_panel(draw, 'ENGLISH SOURCE · EXACT NARRATION', pair['english']['heading'],
-                   pair['english']['body'], 2230, 4220, source_plan)
-        draw.text((96, 4350), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
-        draw.text((W - 96, 4350), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
+                   pair['english']['body'], 3090, 5080, source_plan)
+        draw.text((96, 5220), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
+        draw.text((W - 96, 5220), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
         image.save(os.path.join(cfg['outDir'], 'slide-%02d.png' % pair['n']), 'PNG')
         print('  %2d  %s' % (pair['n'], pair['english']['heading'][:58]))
     sys.exit(0)
