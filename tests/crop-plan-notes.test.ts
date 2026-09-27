@@ -692,8 +692,12 @@ test('the out-of-KZN calendar caveat leads with the action and stays prominent',
     goal: 'family', householdSize: 'medium', groups: [], rhythm: 'steady',
     rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
   }, 'mild-frost', bedsFor(3, 0, 9), [], 3);
-  assert.ok(!kzn.notes.some((note) => /extension officer/.test(note.text)),
-    'the audited calendar must not carry the caveat');
+  assert.ok(!kzn.notes.some((note) => note.kind === 'warning' && /extension officer/.test(note.text)),
+    'the audited calendar must not carry the caveat as a warning');
+  // Frost-free sites outside KZN now reach this column too, so its provenance is
+  // still stated — quietly, as basis.
+  assert.ok(kzn.notes.some((note) => note.kind === 'basis' && /KZN DARD warm-area/.test(note.text)),
+    'the warm-area calendar must still say where it comes from');
 });
 
 // ── A resting staple plot is never passed over in silence ────────────────────
