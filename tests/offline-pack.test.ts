@@ -200,6 +200,19 @@ test('Sesotho intro lessons download all paired images and keep English source a
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')));
 });
 
+test('Sesotho Soil Health entry keeps paired stills and English source narration offline', () => {
+  const pack = offlinePack('soil-health', 'st');
+  assert.deepEqual(pack.missing, []);
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  for (const n of ['01', '02', '03', '04']) {
+    assert.ok(slides.includes(`/course-decks/soil-health/st/slide-${n}.webp`));
+  }
+  assert.ok(slides.includes('/course-decks/soil-health/en/slide-05.jpg'));
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/soil-health/en/slide-04.mp3'));
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/st/')));
+});
+
 test('Tshivenda and Xitsonga Introduction downloads include orientation stills and English fallback', () => {
   for (const lang of ['ve', 'ts']) {
     const pack = offlinePack('intro-permaculture', lang);
