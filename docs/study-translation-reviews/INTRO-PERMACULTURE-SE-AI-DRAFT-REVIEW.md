@@ -11,10 +11,10 @@
 
 ## Holds and review notes
 
-- **Intro L1 body hold:** all three paragraphs now render as exact English. An independent Agy Pro Low check of the existing live Sesotho candidate found material meaning and grammar problems in each paragraph: `lisebelisoa` suggested tools rather than resources, cattle grazing was expressed without the farmer's causative action, and the closing instruction said to bundle rather than build the ethics into decisions. Its “living systems” and swale terms also need local reviewer attention. The candidate text retained below is historical review material, not current learner wording.
+- **Intro L1 body:** the full-body candidate below was held after an independent Agy Pro Low check found material meaning and grammar problems: `lisebelisoa` suggested tools rather than resources, cattle grazing was expressed without the farmer's causative action, and the closing instruction said to bundle rather than build the ethics into decisions. A new three-sentence draft in paragraph 0 is learner-visible with exact English source; the Fair Share sentence and paragraphs 1–2 remain exact English. See [the scoped ethics review](INTRO-PERMACULTURE-ST-L1-ETHICS-CONCEPT-AI-DRAFT-REVIEW.md). The candidate text retained below is historical review material, not current learner wording.
 - **Publication status:** remaining translated fields are unreviewed machine drafts pending fluent Sesotho and local farming review.
 - The first Flash Low candidate for Lesson 1 quiz question 1 repeated wording around “composting”. It was discarded. A narrowly scoped Flash Low revision removes the repetition and keeps `(maize)` as an exact source-name check; Pro Low rechecked this field against the English meaning.
-- Pro Low’s complete spot review of the current module candidate reported matching source meaning, preserved answer indexes, no number/species findings and no non-Latin script. This is AI review only, not linguistic or agricultural approval.
+- Pro Low’s historical spot review of the older module candidate reported matching source meaning, preserved answer indexes, no number/species findings and no non-Latin script. It did not review the new three-sentence draft. This is AI review only, not linguistic or agricultural approval.
 
 ### Human reviewer attention
 

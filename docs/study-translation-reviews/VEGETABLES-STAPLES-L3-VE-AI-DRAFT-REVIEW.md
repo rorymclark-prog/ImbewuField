@@ -1,33 +1,42 @@
 # Vegetables and Staple Crops L3 — Tshivenda concept draft
 
-- **Status:** unreviewed machine draft for source-pair review; learner-visible in Study as an unreviewed AI draft with exact English source.
+- **Status:** unreviewed machine draft for source-pair review; learner-visible in Study as an unreviewed AI draft with exact English source. No fluent Tshivenda speaker or local farming reviewer has approved the added sentences.
 - **Source lesson:** [`lib/course-modules.ts`](../../lib/course-modules.ts), `vegetables-staples-l3`, “Staple Crops: Maize, Beans, and Root Vegetables.”
-- **Draft data:** [`lib/course-translation-drafts-ve-vegetables-staples.ts`](../../lib/course-translation-drafts-ve-vegetables-staples.ts). The learner draft covers exactly two conceptual body paragraphs; every other field is held in English. Study shows the exact English source in a separate block after the marked draft body.
+- **Draft data:** [`lib/course-translation-drafts-ve-vegetables-staples.ts`](../../lib/course-translation-drafts-ve-vegetables-staples.ts). The existing two Tshivenda body sentences are preserved byte-for-byte. Six additional body sentences are paired with their exact English sources below; all other body content and lesson fields remain unchanged.
 
-## Source pair
+## Added source pairs
 
-**English source:** “A staple earns its place because it feeds the household beyond the day of harvest.”
+Paragraph numbers are one-based, with source paragraphs separated by blank lines.
 
-**Unreviewed Tshivenda machine draft:** “Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.”
+| Paragraph / sentence | Exact English source | Unreviewed Tshivenda draft |
+|---|---|---|
+| 2.1 | It carries energy or protein. | Tshiḽiwa tsha vhuthogwa tshi fara energy kana protein. |
+| 2.2 | It stores, or it stays in the ground until you need it. | Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. |
+| 2.3 | And often it carries cultural memory too. | Nahone kanzhi tshi na cultural memory. |
+| 3.1 | One staple leaves you vulnerable. | Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. |
+| 12.1 | Resilience doesn't mean nothing fails. | Resilience a zwi ambi uri a hu na zwine zwa kundwa. |
+| 14.1 | One crop is one point of failure. | Tshibyariwa tshithihi ndi point nthihi ya failure. |
 
-**Literal English back-translation:** “An important food [staple] gets/earns its position because it gives the family/household food beyond the day of harvest.”
+The English terms *energy*, *protein*, *cultural memory*, *vulnerable*, *resilience* and *point of failure* are retained to avoid guessing at technical or abstract Tshivenda equivalents. The three sentences in paragraph 2 preserve the source's `or` and `often` qualifiers.
 
-The English word `[staple]` is retained because the low-cost draft model did not find a confident exact Tshivenda equivalent for the food-security concept. The phrase for “earns its place” is functional, but may be literal or unnatural. A separate Agy Pro Low back-check found no major omissions or harmful additions and judged the meaning broadly preserved. These model checks do not establish fluency or local suitability.
+## Existing source pairs preserved
 
-**English source:** “It means one failure doesn't finish your household's food plan.”
+**Paragraph 1 source:** “A staple earns its place because it feeds the household beyond the day of harvest.”
 
-**Unreviewed Tshivenda machine draft:** “Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.”
+**Existing draft:** “Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.”
 
-This is paragraph 13 of 16 in the canonical body. An earlier request called it paragraph 14; the exact source sentence fixes its position.
+**Paragraph 13 source:** “It means one failure doesn't finish your household's food plan.”
+
+**Existing draft:** “Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.”
+
+These earlier drafts remain unchanged; the first still keeps `[staple]` in English. The earlier review noted their wording may be literal and that model checks do not establish fluency or local suitability.
 
 ## Exact-English holds
 
-- The title stays English because it names maize and beans.
-- The infographic description stays English because it describes a grain stalk, climbing vine and root crop.
-- Body paragraphs 2–12 and 14–16 stay English; they include crop counts, specific crop identity, seed saving, water needs and other farming guidance.
-- All key points, quiz questions, options and rationales stay exact English. Their answer indexes and wording are unchanged.
-- No Tshivenda deck or narration is included or promised.
+- The module title and description, lesson title and infographic description stay English.
+- Paragraph 3 sentence 2 (“Two or more give you options when weather or pests hit.”) remains English, as does paragraph 4’s explicit “Grow at least two. Not one.” instruction and paragraph 5’s household-specific crop-choice guidance.
+- Paragraph 6’s general protection claim, paragraphs 7–11 with named crops, seed-saving, water, nutrient and crop-failure guidance, and paragraph 15’s two-or-more staple claim remain exact English.
+- Paragraph 16’s water/soil/season resource claim and its statement about protection remain exact English.
+- All key points, quiz questions, options and rationales remain exact English. Correct answer indexes are unchanged. No Tshivenda deck or narration is included or promised.
 
-## Learner display and limits
-
-The marked learner draft is source checked in `lib/course-localization.ts`; the module card retains its English title and description and labels that one Tshivenda lesson draft narrowly. The Student lesson shows the English source after the body, including both translated paragraphs. The English source appears as a separate block after the whole draft body, rather than immediately after each translated paragraph. Slides and narration stay English. A fluent Tshivenda speaker and local farming reviewer have not approved this draft.
+The drafts are conceptual wording only; they add no crop, count, planting instruction, water advice, or guarantee. A fluent Tshivenda speaker and local farming reviewer should check the selected wording before it is treated as approved.

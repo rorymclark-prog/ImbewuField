@@ -55,7 +55,7 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
     }
     checkPair(lesson.title, original.title, `${path}.title`);
     checkPair(lesson.body, original.body, `${path}.body`,
-      ['intro-permaculture-l1', 'intro-permaculture-l2'].includes(original.id) ? 'hold' : 'machine-draft');
+      original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
     assert.equal(lesson.body.sourceEnglish.split('\n\n').length, lesson.body.sesothoDraft.split('\n\n').length,
       `${path}.body: paragraph structure must stay aligned for review`);
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: key point count must match`);
@@ -83,17 +83,27 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
   }
 });
 
-test('a Sesotho learner sees exact English for the held ethics body', () => {
+test('a Sesotho learner sees the ethics concepts while water and drought examples remain exact English', () => {
   const source = COURSE_MODULES.find(module => module.id === 'intro-permaculture')?.lessons[0];
   assert.ok(source);
   const draft = SESOTHO_INTRO_PERMACULTURE_DRAFT.lessons[0];
-  assert.equal(draft.body.reviewStatus, 'hold');
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
   assert.equal(draft.body.sourceEnglish, source.body);
-  assert.equal(draft.body.sesothoDraft, source.body);
+  const englishParagraphs = source.body.split('\n\n');
+  const draftParagraphs = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, englishParagraphs.length);
+  assert.notEqual(draftParagraphs[0], englishParagraphs[0], 'the first ethics explanation is a Sesotho machine draft');
+  assert.ok(draftParagraphs[0].endsWith('Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.'),
+    'the source sentence that names water as a surplus must remain exact English');
+  assert.deepEqual(draftParagraphs.slice(1), englishParagraphs.slice(1),
+    'shared spring, cattle after drought, flood and action examples remain exact English');
   const presentation = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(presentation.status, 'draft');
-  assert.equal(presentation.content.body, source.body);
+  assert.equal(presentation.content.body, draft.body.sesothoDraft);
   assert.notEqual(presentation.content.title, source.title);
+  const changedSource = { ...source, body: `${source.body}\n\nNew ethics example.` };
+  assert.equal(resolveLearnerLessonPresentation(changedSource, 'st').status, 'english-fallback',
+    'a changed English source invalidates the whole paired draft');
 });
 
 test('Sesotho Introduction L2 holds unclear bed scale and slope wording in English for learners', () => {

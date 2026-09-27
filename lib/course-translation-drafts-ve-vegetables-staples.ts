@@ -1,6 +1,7 @@
 import type { TshivendaCourseModuleDraft, TshivendaSourcePair } from './course-translation-drafts-ve.ts';
+import { COURSE_MODULES } from './course-modules.ts';
 
-/** Source-paired review records for the two unreviewed conceptual passages in Vegetables L3. */
+/** Source-paired review records for unreviewed conceptual passages in Vegetables L3. */
 export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
   moduleId: 'vegetables-staples',
   lessonId: 'vegetables-staples-l3',
@@ -18,11 +19,49 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
     tshivendaDraft: 'Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.',
     reviewStatus: 'machine-draft',
   },
+  additionalBodyConcepts: [
+    {
+      paragraphIndex: 1,
+      sourceEnglish: 'It carries energy or protein.',
+      tshivendaDraft: 'Tshiḽiwa tsha vhuthogwa tshi fara energy kana protein.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 1,
+      sourceEnglish: 'It stores, or it stays in the ground until you need it.',
+      tshivendaDraft: 'Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 1,
+      sourceEnglish: 'And often it carries cultural memory too.',
+      tshivendaDraft: 'Nahone kanzhi tshi na cultural memory.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 2,
+      sourceEnglish: 'One staple leaves you vulnerable.',
+      tshivendaDraft: 'Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 11,
+      sourceEnglish: "Resilience doesn't mean nothing fails.",
+      tshivendaDraft: 'Resilience a zwi ambi uri a hu na zwine zwa kundwa.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 13,
+      sourceEnglish: 'One crop is one point of failure.',
+      tshivendaDraft: 'Tshibyariwa tshithihi ndi point nthihi ya failure.',
+      reviewStatus: 'machine-draft',
+    },
+  ],
   exactEnglishHoldPaths: [
     'module title and description',
     'lesson title',
     'infographicAlt',
-    'body paragraphs 2–12 and 14–16',
+    'body paragraph 3 sentence 2, paragraphs 4–11 and 15–16',
     'keyPoints',
     'quiz questions, options, and rationales',
   ],
@@ -30,6 +69,19 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
 
 const pair = (sourceEnglish: string, tshivendaDraft: string): TshivendaSourcePair => ({ sourceEnglish, tshivendaDraft, reviewStatus: 'machine-draft' });
 const hold = (sourceEnglish: string): TshivendaSourcePair => ({ sourceEnglish, tshivendaDraft: sourceEnglish, reviewStatus: 'hold' });
+const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.moduleId)!;
+const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.lessonId)!;
+const sourceParagraphs = sourceLesson.body.split('\n\n');
+const draftParagraphs = sourceParagraphs.map((paragraph, index) =>
+  index === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.bodyConcept.paragraphIndex
+    ? TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.bodyConcept.tshivendaDraft
+    : index === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.paragraphIndex
+      ? TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.tshivendaDraft
+      : paragraph,
+);
+for (const concept of TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.additionalBodyConcepts) {
+  draftParagraphs[concept.paragraphIndex] = draftParagraphs[concept.paragraphIndex].replace(concept.sourceEnglish, concept.tshivendaDraft);
+}
 
 export const TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT: TshivendaCourseModuleDraft = {
   id: "vegetables-staples", language: 've', reviewStatus: 'machine-draft',
@@ -41,8 +93,8 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT: TshivendaCourseModuleDraft =
     infographicAlt: hold("Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground."),
     title: hold("Staple Crops: Maize, Beans, and Root Vegetables"),
     body: pair(
-      "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
-      "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      sourceLesson.body,
+      draftParagraphs.join('\n\n'),
     ),
     keyPoints: [
       hold("Open-pollinated maize lets you save seed; hybrid seed won't breed true next season"),
