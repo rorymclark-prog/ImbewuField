@@ -1,312 +1,207 @@
 # Ukuhlela ama-sector
 
-Ukuhlela **ama-sector** (amandla emvelo angena endaweni — ilanga, umoya, umlilo, amanzi) kumayelana namandla emvelo avela ngaphandle komhlaba wakho adlula kuwo noma awuthinte. Awukwazi ukulawula lawa mandla, kodwa ungawahlelela.
+Umhlaba wakho awusona isiqhingi. Umoya, umlilo, ilanga, amanzi nomoya obandayo konke kufika kuvela ngaphesheya kothango lwakho, futhi kuzoqhubeka kufika isikhathi eside ngemva kokuba usutshale isihlahla sakho sokuqala. Awukwazi ukukuvimba. Ungakwazi ukunquma ukuthi kuhlangana nepulazi lakho kuphi, nokuthi yini emi lapho lapho kufika.
 
-Amandla amakhulu okufanele uwahlelele yilawa:
+Umlimi owaziyo ukuthi umoya oshisayo uvelaphi utshala **i-windbreak** (umugqa wezihlahla noma izihlahlana onciphisa umoya) endaweni efanele ngokokuqala. Umlimi ongazi, uyitshala kabili.
 
-- umlilo,
-- umoya,
-- ilanga, nendlela i-engeli yalo eshintsha ngayo phakathi kobusika nehlobo,
-- ukugeleza kwamanzi, kuhlanganise nezikhukhula,
-- isithwathwa nomoya obandayo,
-- izindawo ezinhle ukuzibuka nezingezinhle,
-- izindlela zezilwane zasendle (izindlela izilwane ezihamba ngazo ngaphesheya komhlaba),
-- umsindo nothuli.
+**Ekupheleni kwalesi sahluko uzokwazi:**
+
+- Ukuthola inyakatho yangempela ngekhampasi, ngelanga eliphumayo noma ngomthunzi wasemini
+- Ukudweba imephu yama-sector yamandla anqamula umhlaba wakho
+- Ukubeka ama-windbreak, ama-firebreak nezindawo eziluhlaza zokuvikela lapho umoya nomlilo ngokuvamile kuvela khona
+- Ukusebenzisa i-engeli yelanga nokugeleza komoya obandayo ukubeka imibhede, izihlahla nendlu
+- Ukufunda isimo sezulu sakho, nokukhetha izitshalo nezivikelo ezihambisana naso
 
 ## Ukudweba imephu yama-sector
 
-Imephu yama-sector ikhombisa indlela amandla ngamunye aqhamuka ngayo. Amandla ngamunye adwetshwa njengengxenye emise okukanxantathu, njengocezu lukaphayi, ekhomba endlini noma engadini yakho.
+**I-sector** ngamandla emvelo angena endaweni yakho evela ngaphandle: ilanga, umoya, umlilo, amanzi nezikhukhula, isithwathwa nomoya obandayo, izinto ezinhle nezimbi ozibonayo, izindlela zezilwane zasendle, umsindo nothuli.
 
-1. Thatha imephu yakho eyisisekelo (bheka isahluko 2) bese uphawula maphakathi nekhaya noma nengadi yakho.
-2. Phawula inyakatho yangempela emephini.
-3. Kumandla ngamunye, dweba ucezu kusukela ohlangothini aqhamuka kulo. Isibonelo, dweba umoya wasebusika oshisayo nowomile njengocezu oluvela enyakatho-ntshonalanga.
-4. Bhala inkathi yonyaka eduze kocezu ngalunye, ngoba amandla amaningi ashintsha ngezinkathi zonyaka.
+Imephu yama-sector idweba ngalinye njengesiqephu esinjengocezu lukaphaya, esikhomba ekhaya lakho sisuka lapho livela khona.
 
-Bese unquma, kumandla ngamunye, ukuthi uyafuna ukuwamukela, ukuwavimba noma ukuwaqondisa. Endaweni eshisayo ungafuna ukuvumela umoya opholile ungene endlini. Kwenye indawo kungadingeka uvimbe umoya obandayo onolaka. Ukuhlela ama-sector kukusiza ukuthi ubeke **ama-windbreak** (imigqa yezihlahla evimba umoya) **nama-firebreak** (imizila ehlanziwe evimba umlilo), ugcine izindawo ezinhle zokubuka zivulekile futhi usebenzise kahle ilanga lasebusika.
+1. Thatha imephu yakho eyisisekelo (isahluko 2) bese umaka maphakathi nekhaya noma ingadi yakho.
+2. Maka inyakatho yangempela.
+3. Kulelo nalelo mandla, dweba isiqephu esisuka ohlangothini elivela kulo. Umoya oshisayo, owomile wasebusika ungaba yisiqephu esivela enyakatho-ntshonalanga.
+4. Bhala inkathi yonyaka eceleni kwesiqephu ngasinye. Amandla amaningi ayashintsha ngezinkathi zonyaka.
+
+Bese unquma, kulelo nalelo mandla, ukuthi uzowamukela, uwavimbe noma uwaqondise. Umoya opholile wasehlobo uwungenisa endlini; umoya obandayo wasebusika uyawuvimba. Imephu ikhombisa lapho i-windbreak kanye ne-**firebreak** (umzila womhlaba ongenalutho olungasha) okufanele kube khona, yiziphi izinto ozibonayo okufanele zihlale zivulekile, nalapho ilanga lasebusika liwela khona.
 
 ## Ukuthola inyakatho
 
-Udinga ukwazi inyakatho, iningizimu, impumalanga nentshonalanga ngaphambi kokuthi udwebe noma yiliphi i-sector. Kunezindlela ezintathu ezilula zokuzithola.
+Wonke ama-sector ancike enyakatho. Nazi izindlela ezintathu ezilula zokuyithola.
 
-### Nge-compass
+### Ngekhampasi
 
-Inaliti ye-compass ikhomba inyakatho kazibuthe (magnetic north), hhayi inyakatho yangempela. ENingizimu Afrika inyakatho kazibuthe icishe ibe ngama-degree angu-20 kuya ku-28 entshonalanga yenyakatho yangempela. Isibonelo, ngo-2025 umehluko wawucishe ube ngama-degree angu-21 eGoli, angu-27 eKapa nangu-28 eThekwini. Ngakho inyakatho yangempela ingakwesokudla kancane (empumalanga) kwalapho inaliti ikhomba khona. Ama-app amaningi e-compass asefonini angakukhombisa inyakatho yangempela.
+Ikhampasi ikhomba inyakatho kazibuthe, hhayi inyakatho yangempela. ENingizimu Afrika, inyakatho kazibuthe ingama-degree angaba ngu-20 kuya ku-28 ngasentshonalanga kwenyakatho yangempela: ngo-2025 cishe ama-degree angu-21 eGoli, angu-27 eKapa nangu-28 eThekwini. Ngakho inyakatho yangempela incane ngakwesokudla (empumalanga) kwenaliti. Izinhlelo eziningi zekhampasi zocingo zikukhombisa inyakatho yangempela.
 
 ### Ngelanga eliphumayo
 
-Ilanga liphuma empumalanga lishone entshonalanga. Yima ubheke ilanga eliphumayo: inyakatho ingakwesobunxele sakho, iningizimu ingakwesokudla sakho, futhi intshonalanga ingemuva kwakho.
-
-Kodwa indawo lapho ilanga liphuma khona iyahamba kakhulu phakathi nonyaka. Liphuma impela empumalanga kuphela cishe mhla zingama-21 kuMashi nomhla zingama-23 kuSepthemba. ENingizimu Afrika, maphakathi nehlobo (uDisemba) liphuma cishe ama-degree angu-26 kuya ku-29 eningizimu yempumalanga. Maphakathi nobusika (uJuni) liphuma cishe ama-degree angu-26 kuya ku-29 enyakatho yempumalanga.
+Bheka ilanga eliphumayo: inyakatho ingakwesobunxele sakho, iningizimu ngakwesokudla. Kodwa ukuphuma kwelanga kuyahamba. Liphuma ngqo empumalanga kuphela cishe mhla zingu-21 kuNdasa nangomhla zingu-23 kuMandulo. NgoZibandlela liphuma cishe ama-degree angu-26 kuya ku-29 eningizimu kwempumalanga, kuthi ngoNhlangulana liphume cishe ama-degree angu-26 kuya ku-29 enyakatho kwempumalanga.
 
 ### Ngomthunzi wakho wasemini
 
-Emini bebade ilanga lisenyakatho cishe kuyo yonke iNingizimu ne-Afrika. Ngaleso sikhathi umthunzi wakho ukhomba eningizimu. Maphakathi nosuku lwelanga kuba phakathi cishe kuka-11:45 no-13:00 ngamawashi aseNingizimu Afrika, futhi kuba sekwephuzile uma usentshonalanga kakhulu. Okuwukuphela kokwehlukile yingxenye esenyakatho kakhulu yeLimpopo maphakathi nehlobo, lapho ilanga lasemini lingaba seningizimu kancane.
+Emini ilanga lisenyakatho cishe kuyo yonke iNingizimu ne-Afrika, ngakho umthunzi wakho ukhomba eningizimu. Imini ngokwelanga iwela phakathi kuka-11:45 no-13:00 ewashini, kamuva ngasentshonalanga. Kuphela enyakatho ekude yeLimpopo phakathi nehlobo lapho lingaba khona kancane eningizimu.
 
-> **Icebiso:** Uma usuyitholile inyakatho, yiphawule engadini ngetshe elipendiwe noma ngesigxobo ukuze uhlale uyikhumbula.
+> **Icebiso:** Uma usuyitholile inyakatho, yimake engadini ngetshe elipendiwe noma ngesigxobo, futhi ngeke uphinde uyifune.
 
 ## Umoya
 
-Umoya ngumoya ohamba usuka endaweni enomfutho womoya ophezulu uye endaweni enomfutho ophansi. Ilanga lishisa umhlaba, ulwandle namatshe ngokungalingani. Umoya ofudumele uyenyuka futhi umoya opholile uyehla, futhi lokhu kwenza umehluko womfutho odala umoya.
+Ilanga lishisa umhlaba, ulwandle namatshe ngokungalingani. Umoya ofudumele uyakhuphuka, umoya opholile uyehla, futhi umoya ugijima usuka endaweni enengcindezi ephezulu uye kwephansi. Yilowo umoya ovunguzayo.
 
-Umoya ungalimaza ipulazi lakho. Ungakwazi:
+Umoya womisa umhlabathi nezitshalo, wephula izitshalo nezihlahla, uphephula **i-topsoil** (ungqimba olungaphezulu lomhlabathi olumnyama, oluphilayo) futhi uqhuba imililo. Uphinde umpompe amanzi, upholise indlu ehlobo futhi uthwale impova yommbila.
 
-- ukomisa umhlabathi nezitshalo,
-- ukwephula izitshalo nezihlahla,
-- ukonakalisa izakhiwo,
-- ukuphephula **i-topsoil** (ungqimba oluphezulu lomhlabathi),
-- ukusabalalisa imililo ngokushesha.
+### Imimoya eNingizimu ne-Afrika
 
-Umoya ungasiza futhi. Ungampompa amanzi ngomshini womoya (windmill) futhi wenze ugesi ngophephela lukagesi womoya (wind turbine). Umoya opholile ungapholisa indlu yakho ehlobo. Ezinye izitshalo, njengommbila nezinhlobo eziningi zotshani, zincike emoyeni ukuthi uthwale impova yazo.
-
-### Imimoya yaseNingizimu ne-Afrika
-
-Imimoya ithwala ukushisa kwayo nomswakama wayo. Funda imimoya yendawo yakini nenkathi yonyaka lapho ngamunye uvunguza khona.
-
-| Umoya | Kuphi | Nini | Wenzani |
+| Umoya | Kuphi | Nini | Okwenzayo |
 |---|---|---|---|
-| Umoya we-berg (berg wind) | Ogwini nasemaweni aseNtshonalanga Kapa, eNingizimu Kapa, eMpumalanga Kapa naKwaZulu-Natal | Ikakhulu ebusika, kaningi usuku noma izinsuku ezimbili ngaphambi kwe-cold front | Umoya oshisayo, owomile kakhulu ovunguza usuka phakathi nezwe wehlele ogwini. Ingozi yomlilo iphezulu kakhulu. |
-| Imimoya ye-cold front | ENtshonalanga Kapa kakhulu, bese kulo lonke izwe | Ebusika | Imimoya enamandla yasenyakatho-ntshonalanga iletha imvula eNtshonalanga Kapa. Ngemva kokudlula kwe-front, imimoya ebandayo yaseningizimu iletha isithwathwa phakathi nezwe neqhwa ezintabeni eziphakeme. |
-| Umoya waseningizimu-mpumalanga ("Cape Doctor") | EKapa nasentshonalanga-ningizimu yeKapa | Ehlobo | Umoya onamandla, owomile, ovunguza ngamagagasi owomisa umhlabathi, wonakalise izitshalo futhi usabalalise imililo. |
-| Imimoya ka-Agasti | E-Highveld naphakathi nezwe | Ekupheleni kobusika nasekuqaleni kwentwasahlobo | Imimoya eyomile evunguza ngamagagasi, kaningi evela entshonalanga noma enyakatho-ntshonalanga, phezu kwedlelo lemvelo elomile. Uthuli nengozi yomlilo ephezulu kakhulu. |
-| Imimoya epholile yasolwandle | Ogwini olusentshonalanga, eduze komsinga obandayo we-Benguela | Unyaka wonke | Umoya opholile ongaletha inkungu. |
+| Umoya we-berg (berg wind) | Ogwini nasemaweni aseNtshonalanga Kapa, eNingizimu Kapa, eMpumalanga Kapa naKwaZulu-Natal | Ikakhulu ebusika, kaningi usuku noma izinsuku ezimbili ngaphambi kwe-cold front | Umoya oshisayo, owomile kakhulu osuka phakathi nezwe wehlele ogwini. Ingozi yomlilo iphezulu kakhulu. |
+| Imimoya ye-cold front | Ikakhulu eNtshonalanga Kapa, bese kuba sezweni lonke | Ebusika | Imimoya yasenyakatho-ntshonalanga iletha imvula eNtshonalanga Kapa. Ngemuva kwe-cold front, imimoya ebandayo yaseningizimu iletha isithwathwa phakathi nezwe neqhwa ezindaweni eziphakeme. |
+| Umoya waseningizimu-mpumalanga ("Cape Doctor") | EKapa nasentshonalanga-ningizimu yeKapa | Ehlobo | Umoya onamandla, owomile, ovunguza ngamagagasi owomisa umhlabathi, wonakalise izitshalo futhi usabalalise umlilo. |
+| Imimoya ka-Agasti | I-Highveld naphakathi nezwe | Ekupheleni kobusika nasekuqaleni kwentwasahlobo | Imimoya eyomile, evunguza ngamagagasi phezu kwedlelo elomile. Uthuli nengozi yomlilo ephezulu kakhulu. |
 
-Ama-cold front (izivunguvungu ezibandayo) yizinhlelo zeziphepho ezivela olwandle eningizimu-ntshonalanga. Awaqali ezintabeni, kodwa aletha iqhwa eliningi ezindaweni eziphakeme njengeDrakensberg, izintaba zaseLesotho nezintaba zaseKapa.
+### Thola izindlela ezinkulu zomoya wakho
 
-### Thola izindlela zemimoya yakho emikhulu
-
-1. Buka unyaka wonke. Bheka izihlahla ezithambekele, intuthu, uthuli nezingubo ezilengiswe entanjeni.
-2. Misa i-wind vane noma i-windsock (ishubhu lendwangu elisesigxotsheni). Lokhu kukhombisa indlela umoya ovunguza ngayo futhi kunikeze umbono wamandla awo.
-3. Buza omakhelwane nabantu abadala ukuthi yimiphi imimoya emibi kakhulu, nokuthi ivunguza nini.
-4. Qamba umoya ngamunye ngohlangothi oluvela kulo. Umoya wasenyakatho-ntshonalanga uvunguza uvela enyakatho-ntshonalanga.
-5. Dweba umoya ngamunye obalulekile emephini yakho yama-sector, kanye nenkathi yawo yonyaka.
-6. Tshala ama-windbreak ngaphesheya kwendlela yemimoya elimazayo (bheka isahluko 6).
+1. Buka unyaka wonke: izihlahla ezitshekile, intuthu, uthuli, izingubo ezisentanjeni.
+2. Misa isikhombi-moya noma i-windsock, ishubhu lendwangu esigxotsheni.
+3. Buza abantu abadala abaseduze ukuthi yimiphi imimoya emibi kakhulu, nokuthi ifika nini.
+4. Qamba umoya ngamunye ngokuthi uvelaphi: umoya wasenyakatho-ntshonalanga uvunguza usuka enyakatho-ntshonalanga.
+5. Dweba ngamunye emephini yakho yama-sector nenkathi yawo yonyaka, bese utshala ama-windbreak awanqamulayo lawo alimazayo (isahluko 6).
 
 ## Umlilo
 
-### Umlilo ezindaweni zaseNingizimu ne-Afrika
+Amadlelo otshani bemvelo, i-savanna ne-fynbos kudinga umlilo ngezikhathi ezifanele. Kodwa umlilo wasendle ongalawuleki ubulala abantu nemfuyo, futhi ushise amadlelo, izitshalo, izindlu nezintango.
 
-Utshani bemvelo (grassland), i-savanna ne-fynbos kujwayele umlilo. Kudinga umlilo ngezikhathi ezifanele ukuze kuhlale kuphilile. Kodwa imililo yasendle engalawulwa ingabulala abantu nemfuyo, futhi ishise amadlelo, izitshalo, izindlu, izintango nezihlahla. Intuthu ilimaza impilo, futhi ukushisa kukhipha amagesi abamba ukushisa (greenhouse gases).
-
-Inkathi yemililo incike lapho uhlala khona:
-
-- **Izindawo zemvula yasehlobo** (iningi leNingizimu Afrika, kanye neLesotho, i-Eswatini neZimbabwe): imililo yenzeka kakhulu ezinyangeni ezomile cishe kusukela kuMeyi kuya ku-Okthoba. Ukuphela kobusika nokuqala kwentwasahlobo, ngaphambi kwezimvula zokuqala, yisikhathi esiyingozi kakhulu.
-- **INtshonalanga Kapa enemvula yasebusika:** imililo yenzeka kakhulu ehlobo elishisayo nelomile, cishe kusukela kuDisemba kuya kuMashi.
-- **INingizimu Kapa naKwaZulu-Natal:** izinsuku zomoya we-berg ebusika zingaletha ingozi yomlilo ephezulu kakhulu ngokungazelelwe.
-
-Njengoba isimo sezulu siya ngokuya sishisa futhi somile kakhulu, ososayensi balindele izinsuku eziningi zengozi yomlilo ephezulu eNingizimu Afrika.
+Ezindaweni ezithola imvula ehlobo, inkathi yomlilo iqala cishe ngoNhlaba iye kuMfumfu, imbi kakhulu ekupheleni kobusika nasekuqaleni kwentwasahlobo ngaphambi kwemvula. ENtshonalanga Kapa, ethola imvula ebusika, iqala cishe ngoZibandlela iye kuNdasa. ENingizimu Kapa naKwaZulu-Natal, izinsuku zomoya we-berg ebusika ziletha ingozi yomlilo ephezulu kakhulu ngokungazelelwe.
 
 ### Umlilo uziphatha kanjani
 
-- Umlilo ungavela nganoma yiluphi uhlangothi, kodwa ezindaweni eziningi uvame ukuvela ohlangothini olulodwa olukhulu. Leli yi-sector yakho yomlilo. Kaningi luwuhlangothi lwemimoya eshisayo neyomile. Buza omakhelwane bakho ne-Fire Protection Association (inhlangano yokuvikela umlilo) yendawo yakini.
-- Umlilo ugijima ukhuphuka ngokushesha okukhulu kunokwehla. Cabanga ngomentshisi: uma uwuphethe ubheke phansi, ushisa ngokushesha okukhulu. Umthetho ovamile wokulinganisa uthi ijubane lomlilo liphindeka kabili kuwo wonke ama-degree ayi-10 omthambeka okhuphukayo. Emthambekeni wama-degree angu-20, umlilo ungasabalala cishe izikhathi ezine ngokushesha kunasemhlabathini oyisicaba.
-- Ngakho indlu esesiqongweni somthambeka owumqansa onotshani isengozini enkulu. Beka izivikelo zakho zomlilo ohlangothini olungezansi nasohlangothini imililo evame ukuvela kulo.
+Umlilo ungavela nganoma iluphi uhlangothi, kodwa emhlabeni omningi uvela ikakhulu ohlangothini olulodwa: i-sector yakho yomlilo. Ngokuvamile yindlela yomoya oshisayo, owomile, futhi omakhelwane bakho bazoyazi.
 
-Uma uklamela umlilo, vikela kuqala izinto ezibaluleke kakhulu: abantu nendlu, bese kuba yimfuyo, amashede, **i-fodder** (ukudla kwemfuyo) egciniwe **ne-food forest** (ingadi etshalwe ngezingqimba njengehlathi).
+Umlilo ugijima ukhuphuka igquma ngokushesha kakhulu kunokwehla. Bamba umentshisi ovuthayo ubheke phansi bese ubuka ilangabi likhuphuka. Umthetho ovamile uthi ijubane lomlilo liphindeka kabili ngawo wonke ama-degree ayi-10 omthambeka okhuphukayo, ngakho emthambekeni wama-degree angu-20 usabalala cishe ngokushesha okuphindwe kane kunasemhlabeni oyisicaba. Indlu esesiqongweni somthambeka ongumqansa, onotshani, isengozini enkulu kakhulu. Beka izivikelo zakho ngezansi, futhi ku-sector yomlilo.
+
+Vikela abantu nendlu kuqala, bese kuba yimfuyo, amashede, ukudla kwezilwane okugciniwe nezihlahla zezithelo.
 
 ### Izindlela zokunciphisa ingozi yomlilo
 
-1. **Nciphisa okungasha.** Ku-sector yomlilo nasezakhiweni ezungezile, gcina utshani bufushane, uhlanganise amaqabunga omile futhi ususe izinkuni ezifile. Gcina izinkuni, utshani obomile nokufulela kude nendlu.
-2. **Yenza ama-firebreak.** I-firebreak ngumucu womhlaba osusiwe kuwo izinto ezingasha. Imigwaqo, umhlaba olinyiwe, amadamu namachibi nakho kungasebenza njengama-firebreak. Bheka ingxenye yomthetho ngezansi.
-3. **Tshala izitshalo eziluhlaza ezimelana nomlilo.** Asikho isitshalo esingashi nhlobo, kodwa izitshalo ezinamaqabunga ashubile, amanzi, namafutha noma inhlaka encane zisha kancane. Izibonelo ezinhle zaseNingizimu Afrika yizinhlaba, i-spekboom (*Portulacaria afra*), i-*Cotyledon*, ama-vygie (*Delosperma* nezitshalo ezihlobene nayo), i-sour fig (*Carpobrotus edulis*), i-bietou (*Osteospermum moniliferum*) ne-num-num (izinhlobo ze-*Carissa*). Khetha lezo ezifanele isimo sezulu sakini, ngoba ezinye, njenge-spekboom, azisithandi isithwathwa esinamandla.
-4. **Gcina izihlahla ezisha kalula kude nezakhiwo.** Amaphayini, ama-gum nama-wattle aqukethe amafutha noma inhlaka futhi asha kabi kakhulu. Eziningi futhi zisohlwini **lwama-invasive species** (izitshalo zangaphandle ezisakazeka zingalawuleki).
-5. **Gcina amanzi elungile.** Yiba nethangi lamanzi, ipayipi noma izifafazi eduze kwendlu, kanye nezibhulo zomlilo noma isifafazi esithwalwa emhlane (knapsack sprayer).
-6. **Hlanganisa imisebenzi.** Ingadi yasekhaya enisele noma insimu yezithelo ezungeze indlu isebenza njengesivikelo esiluhlaza. Umucu wezitshalo ezimelana nomlilo ungasebenza futhi njenge-windbreak. Buza i-Fire Protection Association yakini ukuthi ubalwa yini njenge-firebreak esemthethweni.
-
-### Umthetho: National Veld and Forest Fire Act (101 of 1998)
-
-Lo Mthetho (uMthetho kaZwelonke Wemililo Yasendle Nasemahlathini) usebenza kubanikazi bomhlaba eNingizimu Afrika. Uma ulima emhlabeni womphakathi noma oqashiwe, buza umnikazi, umkhandlu wendabuko noma i-Fire Protection Association yakini ukuthi ngubani onesibopho.
-
-- **Ama-firebreak.** Uma umlilo wasendle ungaqala, ushise noma usabalale usuka emhlabeni wakho, kumele ulungise futhi unakekele i-firebreak ohlangothini lwakho lomngcele nomakhelwane ngamunye. Omakhelwane bangavumelana ukuthi i-firebreak ibekwe kwenye indawo.
-- **I-firebreak kumele ibe njani.** Kumele ibe banzi futhi ibe nde ngokwanele ukuze ibe nethuba elifanele lokumisa umlilo. Akumele idale **i-erosion** (ukukhukhuleka komhlabathi ngamanzi noma ngumoya). Kumele ingabi nezinto eziningi ezingathwala umlilo ziwuweze. Umthetho awubeki ububanzi obubodwa obunqunyiwe, ngakho buza i-Fire Protection Association yakini ukuthi yibuphi ububanzi obujwayelekile endaweni yakini.
-- **Ukushisa i-firebreak.** Zama ukuvumelana nomakhelwane bakho ngosuku. Uma ningavumelani, nika omakhelwane bakho ne-Fire Protection Association isaziso esibhaliwe okungenani sezinsuku ezi-14. Shisa kuphela uma ingozi yomlilo ivuma.
-- **Izexwayiso zengozi yomlilo.** I-South African Weather Service (iNsiza Yezulu YaseNingizimu Afrika) ikhipha amazinga engozi yomlilo. Uma ingozi yomlilo ilinganiswa ngokuthi iphezulu noma iphezulu kakhulu (extreme) endaweni yakini, kuyicala ukubasa noma ukusebenzisa umlilo ngaphandle.
-- **Yiba ukulungele ukulwa nomlilo.** Kumele ube nemishini, izingubo zokuzivikela nabantu abaqeqeshiwe abadingekayo ukuze kucinywe umlilo. Uma ungekho, abantu abanesibopho kumele babe seduze ukuze balwe nomlilo futhi baxwayise omakhelwane bakho ne-Fire Protection Association.
-- **Ama-Fire Protection Association.** Lawa ngamaqembu abanikazi bomhlaba abasebenza ndawonye ukuvimbela nokulwa nemililo yasendle. Kuhlakaniphile ukujoyina. Uma umlilo usabalala usuka emhlabeni wakho bese othile ekumangalela, inkantolo ithatha ngokuthi wawunganakile ngaphandle uma ufakazela okuphambene nalokho. Lokhu akusebenzi kumalungu e-Fire Protection Association.
-
-> **Ukuphepha:** Ungalokothi ushise i-firebreak uwedwa, ngosuku olushisayo noma olunomoya, noma uma ingozi yomlilo iphezulu. Yiba nabantu abanele, amanzi nezibhulo zomlilo ezilungile. Qala uthole ukuqeqeshwa ku-Fire Protection Association yakini noma kuhlelo lwe-Working on Fire.
+1. **Nciphisa okuvuthayo.** Ku-sector yomlilo nasezakhiweni ezizungezile, gcina utshani bufushane futhi ususe amaqabunga omile nezinkuni ezifile. Gcina izinkuni, utshani obomisiwe notshani bokufulela kude nendlu.
+2. **Yenza ama-firebreak.** Hlanza umzila wakho konke okungasha. Imigwaqo, umhlaba olinyiwe namadamu nakho kusebenza njengama-firebreak. Shisa i-firebreak kuphela ngosuku olupholile, oluzolile lapho ingozi yomlilo iphansi, ungalokothi ube wedwa, futhi ube nabantu abanele, amanzi nezishayi-mlilo zokuwubamba.
+3. **Tshala izitshalo eziluhlaza ezisha kancane.** Asikho isitshalo esingashi nhlobo, kodwa amaqabunga ashubile, amanzi, anamafutha noma inhlaka encane asha kancane: izinhlaba, i-spekboom (*Portulacaria afra*, engasithandi isithwathwa esinamandla), i-*Cotyledon*, ama-vygie (*Delosperma*), i-sour fig (*Carpobrotus edulis*), i-bietou (*Osteospermum moniliferum*) ne-num-num (*Carissa*).
+4. **Gcina izihlahla ezinamafutha kude nezakhiwo.** Uphayini, ugamthilini nowatela kusha ngamandla.
+5. **Gcina amanzi elungile**: ithangi nepayipi eduze kwendlu, nezishayi-mlilo noma isifafazi esithwalwa emhlane.
+6. **Hlanganisa imisebenzi.** Ingadi noma ingadi yezithelo eniselwayo ezungeze indlu iyisivikelo esiluhlaza, futhi umugqa wezitshalo ezisha kancane unciphisa umoya kanye nomlilo.
 
 ## Ukukhanya kwelanga
 
-Izitshalo zidinga ukukhanya kwelanga ukuze zikhule. Iningi lemifino nezithelo lidinga okungenani amahora ayisithupha elanga eliqondile ngosuku. Ilanga lasekuseni libaluleke kakhulu. Ezindaweni ezishisa kakhulu, umthunzi othile ntambama uyasiza.
-
-Izitshalo zingathola nelanga eliningi kakhulu. Amaqabunga nezithelo, isibonelo utamatisi nopelepele, kungasha. Umhlabathi ongenalutho elangeni elinamandla uyashisa kakhulu futhi womile, futhi lokhu kulimaza izidalwa zomhlabathi. Imisundu iya ngokujula noma ife. Gcina umhlabathi umbozwe **nge-mulch** (isembozo somhlabathi) noma ngezitshalo, futhi usebenzise indwangu yomthunzi noma izitshalo ezinde lapho ilanga linolaka khona kakhulu.
+Iningi lemifino nezithelo lidinga okungenani amahora ayisithupha elanga eliqondile ngosuku, futhi ilanga lasekuseni liyigugu kakhulu. Kodwa umhlabathi ongenalutho elangeni elinamandla uyabhaka womile, nempilo yawo iyahlupheka: imisundu iya ekujuleni noma ife. Gcina umhlabathi umbozekile **nge-mulch** (ungqimba lotshani obomile, amaqabunga noma amahlanga) noma ngezitshalo, futhi unike utamatisi nopelepele umthunzi ntambama ezindaweni ezishisa kakhulu.
 
 ### Ama-engeli elanga
 
-INingizimu Afrika iphakathi cishe kwama-degree angu-22 no-35 eningizimu ye-Equator. Emini ilanga lisenyakatho. Liphezulu esibhakabhakeni ehlobo futhi liphansi ebusika, ngakho imithunzi yasebusika mide kakhulu.
+INingizimu Afrika iphakathi kwama-degree angaba ngu-22 no-35 eningizimu ye-Equator. Emini ilanga lisenyakatho: liphezulu ehlobo, liphansi ebusika, ngakho imithunzi yasebusika mide kakhulu.
 
-| Indawo | Ukuphakama kwelanga emini maphakathi nobusika (21 kuJuni) | Ukuphakama kwelanga emini maphakathi nehlobo (21 kuDisemba) | Umthunzi wasemini wodonga olungu-2 m maphakathi nobusika |
+| Indawo | Ukuphakama kwelanga emini, phakathi nobusika (21 kuNhlangulana) | Ukuphakama kwelanga emini, phakathi nehlobo (21 kuZibandlela) | Umthunzi wasemini wodonga olungu-2 m, phakathi nobusika |
 |---|---|---|---|
-| EPolokwane (24° S) | 43° | cishe ngqo phezulu | cishe 2.2 m |
-| EGoli (26° S) | 40° | 87° | cishe 2.4 m |
-| EThekwini (30° S) | 37° | 84° | cishe 2.7 m |
-| EKapa (34° S) | 33° | 80° | cishe 3.1 m |
+| EPolokwane (24° S) | 43° | cishe liphezu kwekhanda | cishe ngu-2.2 m |
+| EGoli (26° S) | 40° | 87° | cishe ngu-2.4 m |
+| EThekwini (30° S) | 37° | 84° | cishe ngu-2.7 m |
+| EKapa (34° S) | 33° | 80° | cishe ngu-3.1 m |
 
-Ekuseni nantambama, imithunzi mide kakhulu kunalobu bude basemini. Ebusika, umbhede osohlangothini oluseningizimu lwesakhiwo noma lwesihlahla eside uthola ilanga elincane. Beka izihlahla ezinde nezakhiwo ohlangothini oluseningizimu lwengadi yakho, nezitshalo ezifushane ohlangothini olusenyakatho.
+Ebusika umbhede osohlangothini oluseningizimu lwesakhiwo noma lwesihlahla esikhulu uthola ilanga elincane. Ngakho beka izihlahla ezinde nezakhiwo ohlangothini oluseningizimu lwengadi, nezitshalo ezimfushane enyakatho.
 
 ### Ukusebenzisa ilanga
 
-- **Izihlahla nemivini ehlubula amaqabunga ebusika** ilahla amaqabunga ayo ebusika. Yitshale ohlangothini olusenyakatho lwendlu ukuze uthole umthunzi ehlobo nelanga ebusika. Izibonelo yimivini yamagilebhisi, amakhiwane, umvumvu (white stinkwood, *Celtis africana*) nowild pear (*Dombeya rotundifolia*).
-- **I-thermal mass** (izinto ezisindayo ezigcina ukushisa). Izitini, amatshe, umhlabathi namanzi kumunca ukushisa emini bese kukukhipha ebusuku. Kubeke lapho ilanga lasebusika lingakufinyelela khona, isibonelo ngemuva kwamafasitela abheke enyakatho.
-- **Ukwelekelela kophahla.** Ohlangothini olusenyakatho lwendlu, yenza ukwelekelela kophahla (eave) kube banzi ngokwanele ukuze kusithe amafasitela elangeni eliphezulu lasehlobo, kodwa kube kufushane ngokwanele ukuze ilanga eliphansi lasebusika likhanyise ngaphakathi.
-- **Amafasitela abheke entshonalanga** angenisa ilanga elishisayo lantambama. Ezindaweni ezishisayo, wenze abe mancane noma uwasithe.
+- **Izihlahla nemivini ehlubula amaqabunga ebusika** ilahla amaqabunga ayo ebusika. Yitshale enyakatho kwendlu ukuze uthole umthunzi ehlobo nelanga ebusika: imivini yamagilebhisi, amakhiwane, umvumvu (white stinkwood, *Celtis africana*) ne-wild pear (*Dombeya rotundifolia*).
+- **I-thermal mass** yizinto ezisindayo, njengezitini, amatshe, umhlabathi noma amanzi, ezimunca ukushisa emini bese zikubuyisela ebusuku. Yibeke lapho ilanga lasebusika liyifinyelela khona, njengangemuva kwamafasitela abheke enyakatho.
+- **Uphahla oluphumele ngaphandle.** Yenza umphetho wophahla osenyakatho ube banzi ngokwanele ukuthi wenze umthunzi emafasitela elangeni eliphezulu lasehlobo, kodwa ube mfushane ngokwanele ukuthi ungenise ilanga eliphansi lasebusika.
 
 ## Isimo sezulu
 
-Isimo sezulu yisimo sezulu esivamile sendawo phakathi neminyaka eminingi: ilanga, imvula, inkungu, isithwathwa, iqhwa, umoya nezinga lokushisa. Isimo sezulu yiso esibeka kakhulu umkhawulo wokuthi yiziphi izitshalo nezilwane ongazifuya noma ongazitshala.
+Isimo sezulu yisilinganiso sezulu lendawo eminyakeni eminingi. Ngaphezu kwakho konke, sinquma ukuthi yini ongayitshala.
 
-### Isimo sezulu saseNingizimu Afrika
+INingizimu Afrika yomile. Ithola imvula elinganiselwa ku-464 mm ngonyaka, uma kuqhathaniswa nesilinganiso somhlaba wonke esingaba ngu-860 mm, futhi iya ngokoma kusukela empumalanga kuya entshonalanga. Ingxenye enkulu yezwe, kanye neLesotho, i-Eswatini neZimbabwe, ithola **imvula yasehlobo**, ikakhulu kusukela cishe kuLwezi kuya kuNdasa, nobusika obomile. INtshonalanga Kapa eseningizimu-ntshonalanga ithola **imvula yasebusika**, ikakhulu kusukela cishe kuNhlaba kuya kuNcwaba, namahlobo ashisayo, omile. Ugu lwaseNingizimu Kapa luthola imvula unyaka wonke. Ukuphakama kubaluleke njengendawo: i-Highveld inesithwathwa njalo ebusika, kanti ugu lwaKwaZulu-Natal ne-Lowveld cishe akunasithwathwa.
 
-- INingizimu Afrika iyizwe elomile. Imvula evamile icishe ibe ngu-464 mm ngonyaka, kanti esilinganisweni somhlaba wonke icishe ibe ngu-860 mm. Ngokuvamile, imvula iyancipha kusukela empumalanga kuya entshonalanga.
-- **Isifunda semvula yasehlobo:** iningi lezwe, kuhlanganise ne-Highveld, i-Lowveld, iFreyistata, KwaZulu-Natal nangaphakathi eMpumalanga Kapa, kanye neLesotho, i-Eswatini neZimbabwe. Imvula ina kakhulu cishe kusukela kuNovemba kuya kuMashi, kaningi iza nokuduma. Ubusika bomile, futhi buyabanda nesithwathwa phakathi nezwe.
-- **Isifunda semvula yasebusika:** ingxenye eseningizimu-ntshonalanga yeNtshonalanga Kapa. Imvula ina kakhulu cishe kusukela kuMeyi kuya ku-Agasti, ilethwa ama-cold front. Amahlobo ashisa, omile futhi anomoya.
-- **Imvula yonyaka wonke:** ogwini lwaseNingizimu Kapa, empumalanga ye-Cape Agulhas.
-- **Ukuphakama ngaphezu kolwandle kubalulekile.** I-Highveld inesithwathwa njalo ebusika. IDrakensberg nezintaba zaseLesotho zithola iqhwa nesithwathwa esinamandla. Ugu lwaKwaZulu-Natal ne-Lowveld kufudumele futhi cishe akunasithwathwa.
+Funda okwakho: ukuthi imvula yokuqala ifika nini, nokuthi isithwathwa sokuqala nesokugcina siwa nini.
 
-> **Qaphela:** Isibonelo saseLesotho. Ezindaweni eziphansi zaseLesotho kungashisa ngaphezu kuka-30 °C ehlobo, kodwa ubusuku basebusika bubanda kakhulu ngaphansi kwezinga lokuqanda. Iqhwa livamile ezintabeni ezingaphezu cishe kuka-2,000 m.
-
-Funda isimo sezulu sakini. Izimvula zokuqala zivame ukuna nini? Isithwathwa sokuqala nesokugcina siba nini? Kushisa futhi komile, noma kunenkungu futhi kumanzi? Izimpendulo zinquma ukuthi yiziphi izihlahla zezithelo ozitshalayo, nokuthi yimiphi imifino ozoyitshala, kuphi nanini.
-
-> **Icebiso:** Gcina isilinganiso semvula esilula (rain gauge) ne-thermometer, bese ubhala phansi imvula namazinga okushisa abanda kakhulu usuku ngalunye. Ngemva kweminyaka embalwa uzosazi isimo sezulu sakini kangcono kunanoma iyiphi imephu.
+> **Icebiso:** Gcina isilinganisi-mvula nethemometha, bese ubhala imvula nokushisa okuphansi kakhulu nsuku zonke. Eminyakeni embalwa uzokwazi isimo sezulu sakho kangcono kunanoma iyiphi imephu.
 
 ### Ama-microclimate
 
-**I-microclimate** (isimo sezulu sendawo encane) yindawo encane enesimo sezulu esihlukile kunesendawo eyizungezile. Umthambeka, uhlangothi umhlaba obheke kulo, indawo egqumeni, amanzi, izindonga, izihlahla namatshe konke kudala ama-microclimate. Ungazenzela namasha. Ama-microclimate ahlukene akuvumela ukuthi utshale izinhlobo eziningi zezitshalo.
+**I-microclimate** yindawo encane enesimo sezulu esihlukile kunomhlaba oyizungezile. Ngayinye ikuvumela ukuthi utshale okuthile obungakwazi ukukutshala ngaphambilini. Zithole ngokubuka lapho isithwathwa sihlala khona isikhathi eside nalapho izitshalo ziqhakaza khona kusenesikhathi. Phansi ezigodini nasemaphethelweni emifula kuyabanda. Amakhona angemuva kwezindonga afudumele futhi akekho emoyeni: beka utamatisi odongeni olubheke enyakatho.
 
-Uzithola ngokubheka nangokuzama. Qaphela lapho isithwathwa silala khona kuqala, lapho sincibilika khona kuqala, nalapho izitshalo ziqhakaza khona kusenesikhathi. Izibonelo:
+Ukwenza ama-microclimate afudumele ezindaweni ezibandayo:
 
-- **Izindawo eziphansi nezansi kwezigodi** ziqoqa umoya obandayo ebusuku futhi zithola isithwathwa esibi kakhulu.
-- **Osebeni lwemifula** kumanzi futhi kupholile, futhi kaningi kunesithwathwa.
-- **Amakhona avikelekile** ngemuva kwezindonga nezintango afudumele futhi avikelekile emoyeni.
+- **Yakha ebhandeni elifudumele (thermal belt).** Ebusuku obucwebile nobuzolile, umoya obandayo ugeleza wehle egqumeni njengamanzi bese uqoqeka ezindaweni eziphansi ezibizwa ngokuthi **ama-frost pocket**. Ibhande eliphakathi nomthambeka lihlala lifudumele. Beka indlu nezitshalo ezizwela isithwathwa lapho.
+- **Tshala izihlahla ngaphezulu.** Umugqa wezihlahla ngaphezu kwendlu unciphisa futhi uphambukise umoya obandayo ogeleza wehla ebusuku.
+- **Sebenzisa amanzi.** Ngisho nechibi elincane noma ithangi eduze kwendlu lilinganisa ukushisa.
+- **Bhekisa indlu enyakatho**, bese ubeka inqwaba **ye-compost** (izinsalela zezitshalo ezibolayo) ngaphakathi kwethanele likapulasitiki ukuze kufudumale ebusika.
 
-Tshala izitshalo ezithanda ilanga, njengotamatisi, eduze nodonga olubheke enyakatho (uhlangothi olunelanga). Udonga luzinika ukufudumala okwengeziwe nokuvikeleka okuthile esithwathweni.
+### Izimo zezulu ezifudumele, ezimaphakathi nezomile
 
-Izindlela zokudala ama-microclimate amahle ezindaweni ezibandayo:
+**Izindawo ezifudumele**, njenge-Lowveld, ugu lwaKwaZulu-Natal nezigodi ezishisayo zaseLimpopo, zinesithwathwa esincane noma azinaso nhlobo. Tshala ukwatapheya, ubhanana, umango, i-litchi, uphopho (papaya), i-macadamia nama-citrus.
 
-- **Yakha ebhandeni elifudumele (thermal belt).** Ebusuku obucwebile nobuzolile, umoya obandayo ugeleza wehle egqumeni njengamanzi futhi uqoqeke ezigodini. Lezi zindawo ezibandayo zibizwa ngokuthi **ama-frost pocket** (izindawo eziphansi lapho kuqoqeka khona umoya obandayo nesithwathwa). Ibhande eliphakathi nomthambeka lihlala lifudumele kakhulu. Leli yibhande elifudumele. Yakha indlu yakho futhi utshale izitshalo ezizwela isithwathwa lapho, hhayi ezansi kwesigodi.
-- **Tshala izihlahla ngenhla.** Umucu wezihlahla ngaphezu kwendlu wehlisa ijubane futhi uphambukise umoya obandayo ogeleza wehla emthambekeni ebusuku.
-- **Sebenzisa amanzi.** Ngisho nechibi elincane noma ithangi eduze kwendlu kusiza ukulinganisa izinga lokushisa.
-- **Yakha izindlu zibheke enyakatho** ukuze zibambe ilanga lasebusika.
-- **Sebenzisa izitshalo ezihlubula amaqabunga ebusika** ukuze uthole umthunzi ehlobo nelanga ebusika.
-- **Sebenzisa ukushisa kwe-compost.** Inqwaba ye-compost (izinsalela zezitshalo ezibolile ezondla umhlabathi) ngaphakathi kwethanele lepulasitiki ikhipha ukushisa ebusika.
-- **Sebenzisa izitshalo ukupholisa.** Ehlobo, izitshalo zipholisa umoya ozungezile ngomthunzi wazo nangamanzi eziwakhiphayo.
+**Izindawo ezimaphakathi** (temperate) zinamahlobo afudumele nobusika obubandayo, obuvame ukuba nesithwathwa. Izihlahla eziningi zezithelo ezihlubula amaqabunga zidinga amakhaza asebusika, abizwa ngokuthi "chill", ukuze ziqhakaze futhi zithele kahle; ezindaweni ezifudumele khetha izinhlobo ezidinga amakhaza amancane. Tshala i-apula, ipheya, ipulamu, ipentshisi, i-apricot, i-almond, ikhiwane, amagilebhisi, ihalananda, i-persimmon, i-black mulberry ne-pecan.
 
-### Izinga lokushisa nezinhlobo zezimo zezulu
+**Izindawo ezomile**, njenge-Karoo nengxenye enkulu yeNyakatho Kapa, zithola imvula engaphansi kakhulu kuka-500 mm ngonyaka, kanti ezinye izingxenye zithola ngaphansi kuka-200 mm. Amabele, unyawothi nama-cowpea kwenza kangcono kunommbila lapha.
 
-Izinga lokushisa lilinganiswa nge-thermometer ngama-degree Celsius (°C). Amanzi ayaqanda ku-0 °C. Khetha izitshalo zakho nezinkathi zokutshala ezifanele amazinga akho okushisa nohlobo lwesimo sezulu sakini.
+## Ukugeleza kwamanzi
 
-Kunezinhlelo ezisemthethweni zokuhlukanisa izimo zezulu, njengohlelo lwe-Köppen–Geiger. Kule ncwadi sisebenzisa amaqembu amathathu alula.
+Ukugeleza kwamanzi (hydrology) yindaba yamanzi emhlabeni wakho. Ngaphambi kokuhlela, thola ukuthi yimaphi amanzi ongawasebenzisa (imifudlana, iziphethu, imithombo ejulile, amapompi), inkathi yakho yemvula nemvula yonyaka, ukuthi umhlabathi wakho uwakhipha futhi uwagcina kahle kangakanani amanzi, ukuthi uphahla lwakho lungabamba imvula engakanani, nokuthi i-climate change ingenzani emvuleni yakho.
 
-### Izimo zezulu ezifudumele (tropical ne-subtropical)
+Qala ngophahla. Imvula engu-1 mm emithini-skwele engu-1 inika ilitha elilodwa lamanzi. Uphahla lwamamitha-skwele angu-50 endaweni ethola imvula engu-500 mm ngonyaka lungabamba amalitha afika ku-25 000 ngonyaka, kususwe okunye okulahlekayo.
 
-Isimo sezulu se-tropical sangempela yilapho ngisho nenyanga ebanda kakhulu inesilinganiso sika-18 °C noma ngaphezulu. Zimbalwa kakhulu izindawo eNingizimu Afrika eziyi-tropical ngempela. Izindawo ezifudumele ze-subtropical, njenge-Lowveld, ugu lwaKwaZulu-Natal nezigodi ezishisayo zaseLimpopo, azinaso noma zinesithwathwa esincane. Zifanele izithelo ezidinga amahlobo amade nashisayo.
-
-Izibonelo: ukwatapheya, ubhanana, umango, i-litchi, uphopho (papaya), i-macadamia, ikhofi, i-custard apple nama-citrus (iwolintshi, inatshisi, ulamula). Ama-citrus akhula kahle nasezindaweni eziningi ezinobusika obungabandi kakhulu.
-
-> **Qaphela:** Ugwava (guava), i-granadilla ensomi (*Passiflora edulis*) ne-tree tomato (*Solanum betaceum*) zisohlwini lwama-invasive species ngaphansi kwe-NEMBA (2020) ezifundazweni eziningana, kuhlanganise naKwaZulu-Natal, eMpumalanga Kapa, eLimpopo naseMpumalanga. I-white mulberry (*Morus alba*) isohlwini kuyo yonke iNingizimu Afrika. Hlola imithetho yesifundazwe sakini ngaphambi kokuthi uzitshale. I-black mulberry (*Morus nigra*) ayikho ohlwini.
-
-### Izimo zezulu ezipholile (temperate)
-
-Izimo zezulu ezipholile (temperate) zinamahlobo afudumele nobusika obubandayo, kaningi obunesithwathwa. Izitshalo eziqinile esithwathweni zidlula ebusika zingalimele.
-
-Izihlahla zezithelo eziningi ezihlubula amaqabunga ebusika zivela ezindaweni ezinobusika obubandayo. Zidinga isikhathi samakhaza asebusika (okuthiwa isidingo samakhaza, "chill") ukuze ziqhakaze futhi zithele kahle. Ezindaweni ezifudumele, khetha izinhlobo ezidinga amakhaza amancane (low-chill).
-
-Izibonelo: i-apula, ipheya, ipulamu, ipentshisi, i-apricot, i-almond, ikhiwane, amagilebhisi, ihalananda (pomegranate), i-persimmon, i-kiwi fruit, i-pecan nut (edinga amanzi amaningi), ama-strawberry nama-blueberry.
-
-Imifino yenkathi epholile efana neklabishi, i-kale, ubhitrudi, uphizi nobhontshisi obubanzi (broad beans) ayidingi isithwathwa. Yitshale ezinyangeni ezipholile zonyaka.
-
-Izitshalo zenkathi efudumele ezifana namakhabe, amathanga, ubhontshisi nommbila zikhula ezinyangeni ezifudumele cishe yonke indawo.
-
-### Izimo zezulu ezomile nezomile kancane (arid ne-semi-arid)
-
-Izindawo ezomile (arid) zithola imvula engaphansi cishe kuka-250 mm ngonyaka. Izindawo ezomile kancane (semi-arid) zithola cishe u-250 kuya ku-500 mm. Ingxenye enkulu yeNyakatho Kapa ne-Karoo yomile noma yomile kancane. Kulezi zindawo, nasendaweni enkulu yeNingizimu Afrika, amanzi angahwamuka unyaka ngamunye angaphezu kwalawo ana njengemvula. Izitshalo ezimelana nesomiso ezifana namabele, i-pearl millet (unyawothi) ne-cowpea zenza kangcono lapha kunommbila.
-
-Noma ngabe isimo sezulu sakini sinjani, khetha izitshalo ezisifanele. Khona-ke ngeke uchithe isikhathi nemali ezitshalweni ezingakwazi ukukhula kahle.
-
-## Ukugeleza kwamanzi (hydrology)
-
-I-hydrology yisifundo samanzi asemhlabeni wakho: lapho evela khona, ukuthi ahamba kanjani nokuthi athinta kanjani izinto eziphilayo. Uma uhlela umhlaba wakho, thola:
-
-- ukuthi yimiphi imithombo yamanzi ongayisebenzisa: imifudlana, iziphethu, imithombo ejulile (boreholes) nompompi,
-- imvula endaweni yakini: inkathi yemvula nesilinganiso semvula ngonyaka,
-- ukuthi umhlabathi wakho ukhipha amanzi kahle kangakanani nokuthi ungabamba amanzi angakanani,
-- ukuthi ungaqoqa amanzi angakanani ophahleni nakwezinye izindawo eziqinile,
-- ukuthi **i-climate change** (ukushintsha kwesimo sezulu okubangelwa yimisebenzi yabantu) ilindeleke ukuthi yenzeni emvuleni endaweni yakini.
-
-Ukuze ubale ukuthi uphahla lungaqoqa amanzi angakanani: u-1 mm wemvula phezu kwemitha-skwele engu-1 yophahla unika ilitha elingu-1 lamanzi. Isibonelo, uphahla olungamamitha-skwele angu-50 endaweni ethola imvula engu-500 mm ngonyaka lungaqoqa amalitha afika ku-25,000 ngonyaka, ukhiphe amanye alahlekayo.
-
-Lolu lwazi lukusiza ukuthi ubeke imikhawulo yalokho ongakutshala. Lukusiza futhi ukuthi ukhethe izindlela ezingcono kakhulu zokuqoqa nokugcina amanzi, nezitshalo nezilwane ezifanele. Isitshalo nesilwane ngasinye sinezidingo zaso zamanzi, futhi kumele uzifeze ukuze uthole isivuno esihle.
-
-> **Qaphela:** Ngaphansi kwe-National Water Act (36 of 1998) (uMthetho kaZwelonke Wamanzi), ngaphandle kwelayisense ungathatha amanzi okusetshenziswa okufanele ekhaya nasengadini encane engeyona eyebhizinisi, uphuzise izilwane (kodwa hhayi i-feedlot) ezidla emhlabeni wakho, futhi uqoqe amanzi emvula ophahleni lwakho. Ukusebenzisa amanzi amaningi, isibonelo ukunisela kwebhizinisi noma idamu emfudlaneni, kungadinga ukubhaliswa noma ilayisense. Buza uMnyango Wamanzi Nokuthuthwa Kwendle.
+Lezi zinombolo zibeka imikhawulo yalokho umhlaba wakho ongakutshala.
 
 ## Isithwathwa
 
-Isithwathwa sivamile ebusika engxenyeni enkulu yangaphakathi eNingizimu Afrika: e-Highveld, eFreyistata, e-Karoo, ezindaweni ezimaphakathi (midlands) zaseMpumalanga Kapa nezaKwaZulu-Natal, naseLesotho. Siyakheka nasezigodini ezibandayo kwezinye izindawo. Iningi lezindawo ezisogwini ne-Lowveld kuthola isithwathwa esincane noma akusitholi nhlobo.
+Isithwathwa sifika njalo ebusika engxenyeni enkulu yangaphakathi kwezwe: i-Highveld, iFreistata, i-Karoo, amaphakathi eMpumalanga Kapa naKwaZulu-Natal, neLesotho. Siphinde sihlale ezigodini ezibandayo kwezinye izindawo. Ingxenye enkulu yogu ne-Lowveld kuthola esincane noma akutholi nhlobo.
 
-### Isithwathwa sakheka kanjani
+Ebusuku obucwebile nobuzolile, umhlabathi nezitshalo kulahlekelwa ukushisa kwakho kuye esibhakabhakeni esivulekile bese kubanda ukudlula umoya. Umhwamuko wamanzi uqandela kukho njengeqhwa elimhlophe: isithwathwa esimhlophe. Umoya obandayo ushelela wehla egqumeni bese uqoqeka, ngakho isithwathwa sibi kakhulu ezindaweni eziphansi. Uma umoya womile kakhulu, izitshalo zingaqanda kungekho qhwa nhlobo. Lesi **yisithwathwa esimnyama** (black frost), futhi asinikezi xwayiso: ngakusasa amaqabunga neziqu kuba mnyama bese kufa.
 
-Isithwathwa sakheka ebusuku obucwebile, obuzolile nobubandayo. Umhlabathi nezitshalo kulahlekelwa ukushisa kwakho kuye esibhakabhakeni esivulekile, bese kuba kubanda kakhulu kunomoya. Bese umhwamuko wamanzi (water vapour) uqanda phezu kwakho ube yizinhlayiya zeqhwa ezimhlophe. Lesi yisithwathwa esimhlophe (white frost). Umoya obandayo ugeleza wehle futhi uqoqeke ezindaweni eziphansi, ngakho isithwathwa sivame ukuba sibi kakhulu lapho.
+Isithwathwa singabambezela isihlahla sezithelo esisencane iminyaka. Lungiselela ngaphambi kobusika.
 
-Isithwathwa singalimaza kakhulu izicubu zezitshalo. Singabambezela ukukhula kwezihlahla zezithelo ezincane iminyaka eminingi. Ukuthi isithwathwa sishaya ingadi yakho kangakanani kuncike ekuphakameni kwakho ngaphezu kolwandle, ukuthi useningizimu kangakanani, indawo yakho emthambekeni nokuthi useduze kangakanani namanzi amaningi.
-
-### Isithwathwa esimnyama (black frost)
-
-Uma umoya womile kakhulu, izitshalo zingaqanda ngaphandle kokuthi kwakheke iqhwa elimhlophe. Lokhu kubizwa ngokuthi isithwathwa esimnyama. Asikho isexwayiso esimhlophe. Ngosuku olulandelayo amaqabunga neziqu kuba mnyama bese kufa. Iningi lezitshalo ezizwela isithwathwa alisoze lalulama, kodwa izitshalo eziqinile esithwathweni ziyaphila.
-
-### Ukuvikela izitshalo esithwathweni
-
-Vikela izitshalo zakho ngaphambi kokuba kuqale ubusika. Kungcono ukusheshisa kunokwephuza.
-
-1. **Mboza izitshalo ebusuku obunesithwathwa** ngendwangu yesithwathwa (frost cloth), amashidi amadala, amahlanga omile (straw) noma utshani obomile. Izimbozo ezifika phansi zigcina ukushisa okuningi komhlabathi. Zisuse ekuseni.
-2. **Vikela ingadi.** I-windbreak noma uthango oluphilayo oluzungeze ingadi luvimba umoya obandayo. Shiya igebe ohlangothini olungezansi ukuze umoya obandayo ukwazi ukuphuma, ungavaleleki engadini.
-3. **Phambukisa umoya obandayo uzungeze ingadi.** Tshala uthango oluphilayo olumise okwesicathulo sehhashi ohlangothini olungenhla, uhlangothi oluvulekile lubheke ezansi.
-4. **Yenza izicupho zelanga.** Udonga olubheke enyakatho, udonga lomhlabathi (bank) noma uthango oluphilayo olugobile kubamba ilanga futhi kugcine umoya ofudumele.
-5. **Gcina ukushisa.** Amatshe, izitini noma izigubhu zamanzi ezizungeze izitshalo kumunca ukushisa emini bese kukukhipha ebusuku.
-6. **Tshala izihlahla ezinakekelayo (nurse trees).** **I-canopy** (ungqimba oluphezulu lwamaqabunga ezihlahla) elula yezihlahla eziqala ukumila (pioneer trees) eziphila isikhathi esifushane ivikela izihlahla zezithelo ezincane nezinye izitshalo ezizwela isithwathwa.
-7. **Faka i-mulch ngokuqaphela.** I-mulch ivikela izimpande nezidalwa zomhlabathi ebusika. Kodwa i-mulch ivimba nomhlabathi ukuthi ukhiphe ukushisa owukugcinile ebusuku, ngakho izitshalo eziphansi kakhulu ezizwela isithwathwa zingathola isithwathwa esibi kakhulu phezu kwe-mulch ewugqinsi. Emibhedeni evame ukuba nesithwathwa, nisela umhlabathi ngosuku olwandulela ubusuku obunesithwathwa, ngoba umhlabathi omanzi ugcina ukushisa okuningi.
-8. **Sebenzisa ama-guild** (amaqembu ezitshalo ezisizanayo). Izitshalo ezitshalwe ndawonye ziyavikelana (bheka isahluko 6).
+1. **Mboza izitshalo ngobusuku obunesithwathwa** ngendwangu yesithwathwa, amashidi amadala noma amahlanga, kufinyelele phansi emhlabathini. Susa izembozo ekuseni.
+2. **Vikela ingadi** nge-windbreak noma ngothango oluphilayo, kodwa shiya igebe ohlangothini olungezansi ukuze umoya obandayo uphume esikhundleni sokuqoqeka.
+3. **Qondisa umoya obandayo uzungeze ingadi** ngothango olumise okwesicathulo sehhashi ohlangothini olungaphezulu, uhlangothi oluvulekile lubheke phansi.
+4. **Yenza izindawo zokubamba ilanga.** Udonga olubheke enyakatho noma uthango olugobile lubamba umoya ofudumele, futhi amatshe noma izigubhu zamanzi ezizungeze izitshalo zigcina ukushisa kwasemini.
+5. **Tshala izihlahla ezinakekelayo (nurse trees).** **I-canopy** elula (uphahla lwamaqabunga) yezihlahla eziqala ukumila eziphila isikhathi esifushane ivikela izihlahla zezithelo ezisencane.
+6. **Faka i-mulch ngokucophelela.** I-mulch ivikela izimpande, kodwa ivimba umhlabathi ukuthi ukhiphe ukushisa kwawo ebusuku, ngakho izitshalo eziphansi kakhulu zingathola isithwathwa esiningi phezu kwe-mulch ejiyile. Emibhedeni evame ukuba nesithwathwa, nisela umhlabathi ngosuku olungaphambi kobusuku obunesithwathwa: umhlabathi omanzi ugcina ukushisa okuningi.
+7. **Sebenzisa ama-guild.** **I-guild** yiqembu lezitshalo ezitshalwa ndawonye ukuze zisizane, kuhlanganise nokumelana nesithwathwa (isahluko 6).
 
 ## I-climate change
 
-I-climate change wushintsho lwesikhathi eside emaphethinini ezulu, endaweni eyodwa noma emhlabeni wonke. Iletha amazinga okushisa aphezulu, ushintsho emvuleni, isimo sezulu esibi kakhulu (extreme weather) namanzi ambalwa. Lokhu kungonakalisa umhlaba, kwehlise isivuno samapulazi futhi kuholele endlaleni nokuntuleka kwamanzi. Ingenye yezingozi ezinkulu kakhulu kwezolimo namuhla.
+**I-climate change** ukushintsha kwamaphethini esimo sezulu isikhathi eside, okubangelwa ikakhulu yimisebenzi yabantu: ukushisa okwengeziwe, imvula eshintshayo, isimo sezulu esinolaka namanzi amancane.
 
-### Kwenzekani eNingizimu ne-Afrika
-
-- INingizimu ne-Afrika ifudumala ngokushesha kunesilinganiso somhlaba wonke. Ezinye izingxenye zangaphakathi eNingizimu Afrika sezifudumale cishe ngokuphindwe kabili kunesilinganiso somhlaba wonke.
-- Izinsuku ezishisa kakhulu namagagasi okushisa (heatwaves) sekuvame kakhulu, kanti ubusuku obubandayo abusavamile. Ososayensi balindele ukuthi lokhu kuqhubeke.
-- Izomiso ezilimaza izitshalo nedlelo lemvelo kulindeleke ukuthi zande eningizimu ye-Afrika njengoba umhlaba ufudumala.
-- I-climate change yenza ukuthi isomiso saseKapa sika-2015 kuya ku-2017 sibe nethuba elicishe liphindwe kathathu lokwenzeka.
-- Kulindeleke izinsuku eziningi zengozi yomlilo ephezulu.
+INingizimu ne-Afrika ifudumala ngokushesha kunesilinganiso somhlaba wonke, ezinye izingxenye zangaphakathi cishe ngokuphindwe kabili. Amagagasi okushisa asevame kakhulu, futhi kulindeleke izomiso eziningi nezinsuku eziningi zengozi yomlilo. I-climate change yenza isomiso saseKapa sika-2015 kuya ku-2017 cishe kube namathuba aphindwe kathathu.
 
 ### Ukuklamela isimo sezulu esishintshayo
 
-Ku-permaculture sihlelela isimo sezulu esiguquguqukayo nezinhlekelele. Izindlela zokwakha ukuqina:
+Asisakwazi ukuthembela onyakeni ojwayelekile. Ngakho siklamela onyakeni omubi, futhi sakhe **ukuqina** (resilience): ikhono lokumelana nokushaqeka bese uyavuseleleka.
 
-- Tshala izitshalo eziningi ezehlukene, ukuze ukwehluleka kwesisodwa kungakuqedi.
-- Khetha izitshalo ezikwazi ukumelana nezimo eziningi ezehlukene, kuhlanganise nezitshalo zomdabu.
-- Tshala **ama-perennial** (izitshalo eziphila iminyaka eminingi): izihlahla, izihlahlana nezinye izitshalo eziphila izinkathi eziningi.
-- Fuya izinhlobo zemfuyo zendawo eziqinile, njengezinkukhu zesintu, izimbuzi nezinkomo zeNguni.
-- Tshala ama-windbreak futhi ugcine amanzi ukuze uvikeleke esimweni sezulu esibi kakhulu.
-- Gcina umhlabathi umbozwe ngezitshalo zokumboza umhlabathi nange-mulch.
-- Siza imvula ingene emhlabathini **ngama-swale** (imisele esezingeni elilodwa ebamba amanzi emvula), i-mulch nezitshalo ezimboza umhlabathi.
-- Londoloza ukudla okusele ngokukomisa, ngokukufaka kuviniga (pickling) nangokwenza ujamu nama-chutney.
-- Gcina imbewu yakho ukuze ijwayelane nezimo zendawo, futhi wabelane ngembewu ngebhange lembewu lomphakathi.
-- Sebenzisa ukuklabisa okuhleliwe (planned grazing): hambisa izilwane njalo futhi unike idlelo lemvelo isikhathi sokuphumula nokululama.
+1. Tshala izitshalo eziningi ezahlukene, ukuze ukwehluleka kwesisodwa kungakubhubhisi.
+2. Khetha izitshalo eziqinile, kuhlanganise nezomdabu ezikhula lapha ngokwemvelo, **nama-perennial**, aphila izinkathi eziningi.
+3. Fuya izinhlobo zasekhaya eziqinile: izinkukhu zesintu, izimbuzi nezinkomo zeNguni.
+4. Tshala ama-windbreak futhi ugcine amanzi ukuze unciphise isimo sezulu esinolaka.
+5. Gcina umhlabathi umbozekile ngezitshalo zokumboza umhlabathi ne-mulch, futhi usize imvula ingene **ngama-swale**, imisele esezingeni elilodwa embiwa inqamula umthambeka.
+6. Londoloza okusele. Kumise, ukufake kuviniga owanele (pickle), noma wenze ujamu ne-chutney. Ukuvalela emabhodleleni ekhaya ukudla okunesidi esincane njengobhontshisi, ithanga noma inyama ngaphandle kwendlela ehloliwe kungadala i-botulism, ubuthi bokudla obubulalayo.
+7. Londoloza imbewu yakho, ukuze ijwayele umhlaba wakho, futhi wabelane ngayo ngebhange lembewu lomphakathi.
+8. Hambisa izilwane ezidlayo kaningi, futhi unike idlelo isikhathi sokuphumula.
+9. Yakha ngaphandle kwezindawo ezikhukhulwa yizikhukhula. Gcina ama-firebreak namanzi elungile, futhi ugcine ukudla, imbewu ne-fodder (ukudla kwemfuyo) ngezikhathi ezinzima.
 
-> **Ukuphepha:** Ukuvalela emabhodleleni ekhaya ukudla okunesidi esincane, njengobhontshisi, ithanga, eminye imifino noma inyama, kungadala i-botulism, ubuthi bokudla obubulalayo, ngaphandle uma usebenzisa indlela ehloliwe. Esikhundleni salokho, faka imifino kuviniga owanele (pickle), yenza ujamu ngezithelo, noma womise ukudla kwakho. Landela iresiphi ehloliwe.
+## Zama lokhu
 
-Izinhlekelele ezifana nezikhukhula, izomiso, imililo, iziphepho ezinamandla nezishingishane zasezindaweni ezishisayo (tropical cyclones) zingonakalisa impahla futhi zibulale imfuyo nabantu. I-climate change yenza ezinye zazo, ikakhulukazi amagagasi okushisa, izomiso nesimo sezulu esivuna imililo, zenzeke kaningi noma zibe zimbi kakhulu eNingizimu ne-Afrika. Zihlelele: ungakhi ezindaweni ezikhukhulwa yizikhukhula (flood plains), gcina ama-firebreak namanzi kulungile, futhi ugcine ukudla, imbewu ne-fodder kwezikhathi ezinzima.
+Dweba imephu yakho yokuqala yama-sector kuleli sonto.
+
+1. Ngosuku olunelanga, misa induku eqondile emhlabathini ovulekile. Cishe emini, lapho umthunzi wayo umfushane kakhulu, umthunzi ukhomba eningizimu.
+2. Dweba ikhaya lakho, ingadi nomngcele ephepheni, nomcibisholo wenyakatho.
+3. Hamba umhlaba. Bhala lapho imimoya enamandla kakhulu ivela khona, lapho imililo yangaphambilini yavela khona, lapho amanzi engena khona ngemva kwemvula, nalapho isithwathwa sihlala khona isikhathi eside.
+4. Dweba amandla ngamunye njengesiqephu esikhomba ekhaya lakho, nenkathi yawo yonyaka.
+5. Buza umakhelwane omdala ngomoya nomlilo omubi kakhulu awukhumbulayo, bese uwengeza.
+6. Zungezisa amandla akukhathaza kakhulu. Yilapho i-windbreak yakho yokuqala, i-firebreak noma uthango luzoya khona.
 
 ## Amaphuzu amqoka
 
-- Imephu yama-sector ikhombisa ukuthi amandla avela ngaphandle aqhamuka kuphi, njengomlilo, umoya, ilanga, amanzi, isithwathwa, izindawo zokubuka nomsindo.
-- Thola inyakatho yangempela: eNingizimu Afrika i-compass ikhomba cishe ama-degree angu-20 kuya ku-28 entshonalanga yenyakatho yangempela, futhi ilanga lasemini lisenyakatho.
-- Funda imimoya yendawo yakini: umoya we-berg, ama-cold front, umoya waseningizimu-mpumalanga waseKapa nemimoya ka-Agasti konke kuletha umlilo noma amakhaza.
-- Inkathi yemililo ingubusika nentwasahlobo ezindaweni zemvula yasehlobo, kanti eNtshonalanga Kapa ihlobo.
-- Umlilo ugijima ngokushesha okukhulu uma ukhuphuka; beka izivikelo zomlilo ezansi naku-sector yomlilo.
-- Ngokomthetho, abanikazi bomhlaba kumele bagcine ama-firebreak, banikeze isaziso sezinsuku ezi-14 ngaphambi kokuwashisa futhi bangashisi uma ingozi yomlilo iphezulu. Joyina i-Fire Protection Association yakini.
-- Ilanga lasebusika liphansi enyakatho; gcina uhlangothi olusenyakatho lwemibhede nezindlu luvulekele lona.
-- Iningi leNingizimu Afrika lithola imvula yasehlobo; iNtshonalanga Kapa ithola imvula yasebusika; izwe lilonke lomile.
-- Umoya obandayo uqoqeka ezindaweni eziphansi; yakha futhi utshale izitshalo ezizwela isithwathwa ebhandeni elifudumele.
-- Hlola i-NEMBA ngaphambi kokutshala ugwava, i-granadilla, i-tree tomato noma i-mulberry.
-- INingizimu ne-Afrika ifudumala ngokushesha; hlelela ukushisa, isomiso nomlilo ngokwehlukahlukana, ama-perennial, ukumboza umhlabathi, nokugcina amanzi nembewu.
+- Imephu yama-sector ikhombisa lapho ilanga, umoya, umlilo, amanzi, isithwathwa, izinto ozibonayo nomsindo kuvela khona, ukuze ukwazi ukwamukela, ukuvimba noma ukuqondisa ngakunye.
+- ENingizimu Afrika ikhampasi ikhomba ama-degree angaba ngu-20 kuya ku-28 ngasentshonalanga kwenyakatho yangempela; ilanga lasemini lisenyakatho.
+- Umlilo ugijima ngokushesha ukhuphuka: beka izivikelo zomlilo ngezansi naku-sector yomlilo.
+- Ilanga eliphansi lasebusika livela enyakatho, futhi umoya obandayo uqoqeka ezindaweni eziphansi. Hlela imibhede, izihlahla nendlu ngokubheka kokubili.
+- INingizimu ne-Afrika ifudumala ngokushesha. Yiphendule ngokwehlukahlukana, ama-perennial, umhlabathi ombozekile, amanzi agciniwe nembewu elondoloziwe.
+
+Hamba umhlaba wakho kuzo zonke izinkathi zonyaka uphethe imephu esandleni. Inkathi ngayinye izokwengeza isiqephu obungakaze usibone.

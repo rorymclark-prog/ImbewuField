@@ -1,480 +1,315 @@
 # Ukulawula izinambuzane ngendlela yemvelo
 
-## Enye indlela yokucabanga ngezinambuzane
+Icimbi eklabishini akusona isitha. Ngukudla. Izinyoni, amaxoxo, izibankwa, izicabucabu, ama-ladybird neminyovu emincane kakhulu konke kuphila ngezidalwa esizibiza ngokuthi izinambuzane ezilimazayo. Bulala zonke izinambuzane ezilimazayo, sizobulala ngendlala nabasizi, bese ingadi iba nokuzinza okuncane, hhayi okukhulu.
 
-Ku-permaculture silawula izinambuzane ezilimaza izitshalo ngendlela imvelo ezilawula ngayo. Isinambuzane esilimazayo akusona isitha okufanele sisiqede nya. Siyingxenye yayo yonke **i-ecosystem** (izitshalo, izilwane nezidalwa zomhlabathi ezihlala ndawonye nomhlabathi, amanzi nomoya). Izinambuzane ezilimazayo ziwukudla kwezilwane ezizilawulayo: izinyoni, amaxoxo, izibankwa, izicabucabu, ama-ladybird nemiviyana emincane (wasps). Uma sibulala zonke izinambuzane ezilimazayo, sibulala ngendlala nalaba basizi, bese lonke uhlelo luphelelwa ukuzinza.
+Ngakho lapho izinambuzane zanda ngokungazelelwe, sikufunda njengomlayezo. Kukhona okungalingani: umhlabathi okhathele, izitshalo ezicindezelwe yisomiso, isitshalo esisodwa esiningi kakhulu endaweni eyodwa. Ukulungisa okusheshayo ngendlela yemvelo kungasindisa isivuno sale sizini. Umsebenzi ohlala njalo ukwelapha imbangela.
 
-Uma izinambuzane ziqhamuka ziziningi ngokuzumayo, kuvame ukuba wuphawu lokuthi kukhona okungalingani engadini. Isibonelo, umhlabathi ungaba mubi, izitshalo zingaba zicindezelwe yisomiso, noma kungaba nesitshalo esisodwa esiningi kakhulu endaweni eyodwa. Izindlela ezisheshayo zemvelo (organic) zinganciphisa umonakalo manje. Kodwa esikhathini eside kufanele silungise imbangela, hhayi uphawu kuphela.
+Lokhu akukhona ukuhlala nje. "Thola isivuno" kungesinye sezimiso zethu, futhi umndeni kufanele udle. Siyazivikela izitshalo ezihlala zisengozini, njengamaklabishi nezithombo. Kodwa asilindele ukuthi sonke isitshalo siphile. Ingxenye encane ibuyela ohlelweni, futhi uhlelo lusenzela umsebenzi omningi wokulawula izinambuzane.
 
-Inhloso yethu yipulazi eliba nempilo engcono futhi lizilawule kangcono unyaka nonyaka. Ukuzilawula kusho ukuthi sivumela imvelo yenze umsebenzi omningi. Isibonelo, izinyoni ezidla izinambuzane zisisiza ukulawula amacimbi.
+**Ekupheleni kwalesi sahluko uzokwazi:**
 
-Lokhu akusho ukuthi sihlala nje singenzi lutho uma izinambuzane zihlasela. Isimiso se-permaculture esithi "Thola isivuno" sibalulekile: kusafanele sivune ukudla. Ezinye izitshalo, njengamaklabishi nezithombo ezincane, zihlala zisengozini kakhulu kunezinye, futhi sizivikela ngezindlela zemvelo. Kodwa asilindele u-100% wesitshalo ngasinye. Kuwukuhlakanipha ukwamukela ukulahlekelwa okuncane, nokwabelana kancane nohlelo.
+- Ukubona izinambuzane ezinkulu ezilimaza izingadi eNingizimu ne-Afrika nokubhekana nesinye ngasinye ngaphandle koshevu
+- Ukuletha ama-predator engadini yakho ngezimbali, amanzi nendawo yokukhosela
+- Ukusebenzisa ama-trap crop nomakhelwane abalungile, nokwazi ukuthi yiziphi izimangalo ze-companion planting ezifakazelwe
+- Ukwenza isifutho sikagalikhi, u-anyanisi nopelepele nokusisebenzisa ngaphandle kokulimaza izinyosi
+- Ukuhlela i-crop rotation ukuze kungabikho mndeni wezitshalo obuyela embhedeni ofanayo phakathi neminyaka emithathu kuya kwemine
 
-## Kungani kufanele sigweme ubuthi bamakhemikhali
+## Kungani sigwema ushevu wamakhemikhali
 
-Ezolimo zezimboni zivame ukusebenzisa izibulali-zinambuzane zamakhemikhali. Lezi zidla imali isizini ngayinye, zingalimaza abantu nezilwane, futhi zidinga ukuphathwa okuningi. Ukulawula izinambuzane ngendlela yemvelo akubizi kakhulu uma sekumisiwe, kuphephile kakhulu, futhi kudinga umsebenzi omncane njengoba isikhathi sihamba.
+Izibulali-zinambuzane zamakhemikhali zibiza imali isizini ngayinye futhi zilimaza abantu nezilwane. Ukulawula izinambuzane ngendlela yemvelo kubiza kancane uma sekusunguliwe, futhi kuba lula unyaka nonyaka.
 
-Ukufafaza ubuthi kuvame ukudala umjikelezo wezinambuzane eziya ziba ziningi:
+Ushevu uphinde ubambe umlimi emjikelezweni:
 
-1. Ubuthi bubulala izinambuzane ezilimazayo, kodwa bubulala nezinambuzane ezizidlayo (**ama-predator**).
-2. Izinambuzane ezilimazayo zizalana ngokushesha okukhulu kunama-predator azo.
-3. Izinambuzane ezilimazayo zibuya kuqala, futhi manje akusekho lutho oluzidlayo.
-4. Umlimi uyafafaza futhi, bese inkinga iba nkulu. Izinambuzane eziningi nazo ziyajwayela ubuthi, bungabe busazibulala.
+1. Isifutho sibulala izinambuzane ezilimazayo, kanye **nama-predator**, izilwane nezinambuzane ezizingela futhi zidle izinambuzane ezilimazayo.
+2. Izinambuzane ezilimazayo zizalana ngokushesha kakhulu kunama-predator azo.
+3. Izinambuzane ezilimazayo zibuya kuqala, futhi manje akukho lutho olukhona oluzozidla.
+4. Umlimi uyaphinda afuthe. Inkinga iyakhula, futhi izinambuzane eziningi ziba nokumelana noshevu.
 
-Ngaphambi kokulima ngamakhemikhali lalingekho igama elithi ukulima "kwemvelo" (organic), ngoba konke ukulima kwakungokwemvelo. Izindlela eziningi zakudala zokulawula izinambuzane zisasebenza nanamuhla. Ziwusizo kakhulu ngesikhathi ingadi entsha ye-permaculture isaqala, ngaphambi kokuba ukulingana kwayo kwemvelo kwakheke.
-
-Esahlukweni esedlule sabona ukuthi singayakha kanjani i-ecosystem enempilo nenokwehlukahlukana. Lelo yiqhinga elibaluleke kakhulu esikhathini eside. Lesi sahluko sibheka izindlela ezisebenzayo zokuvikela izitshalo, ikakhulukazi imifino.
-
-## Izindlela zemvelo zokulawula izinambuzane
-
-Amathuluzi amakhulu yilawa:
-
-- **Ukwehlukahlukana kwezitshalo.** Xuba izitshalo eziningi ezahlukene esikhundleni sokutshala izingxenye ezinkulu zesitshalo esisodwa.
-- **Umhlabathi onempilo.** Izitshalo eziqinile emhlabathini ovundile zimelana nezinambuzane kangcono (bheka Isahluko 8).
-- **Ama-trap crop** (izitshalo zokuheha izinambuzane, noma izitshalo zomhlatshelo). Tshala into ethandwa yisinambuzane kakhulu kunesitshalo sakho sokudla, ukuze sihlasele yona esikhundleni salokho.
-- **I-companion planting** (ukuxuba izitshalo). Tshala ndawonye izitshalo ezisizanayo.
-- **I-crop rotation** (ukushintshanisa izitshalo). Ungatshali umndeni ofanayo wezitshalo embhedeni ofanayo unyaka nonyaka.
-- **Ama-inoculant omhlabathi.** Lena yimikhiqizo engeza izidalwa eziphilayo eziwusizo emhlabathini noma embewini, isibonelo amagciwane e-rhizobium kabhontshisi namantongomane, noma **i-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi) enhle.
-- **Ama-predator emvelo.** Nika izinyoni, amaxoxo, izibankwa, izinyoka nezinambuzane ezizingelayo indawo yokuhlala.
-- **Izinkukhu namadada.** Ngemva kokuvuna, noma esibayeni esihambayo (bheka Isahluko 5), ziqeda iminenke engenaqokobhe, iminenke nezinambuzane. Zigcine kude nezithombo ezincane, ngoba ziyazipheqa.
-- **Ukutshala ngokuhlanganisa (intercropping).** Tshala izitshalo ezimbili noma ngaphezulu embhedeni ofanayo ngesikhathi esisodwa.
-- **Uthango oluphilayo nothango.** Kuvikela ingadi ezilwaneni nasemoyeni.
-- **Indawo yasendle (i-Zone 5).** Shiya umucu wezitshalo zemvelo ube yikhaya lezilwane zasendle nama-predator.
-- **Izifutho ezenziwe ekhaya.** Zisebenzise kuphela uma zonke ezinye izindlela zehlulekile, futhi ezitshalweni ezithile kuphela.
-
-## Ziyini izinambuzane ezilimaza izitshalo?
-
-Iningi lazo yizinambuzane ngempela, kodwa nezinye izilwane ezilimaza izitshalo, njengamavukuzi (mole-rats), izingungumbane, izinyoni namagundane (rodents), nazo zibizwa ngokuthi yizinhlupho (pests).
-
-Singahlukanisa izinambuzane ezilimazayo zibe amaqembu amabili ngendlela ezidla ngayo: ezimunca uketshezi lwesitshalo, nezidla isitshalo ngokwaso.
-
-### Izinambuzane ezimunca uketshezi lwesitshalo
-
-Lezi zinambuzane zihlaba isitshalo zimunce uketshezi lwaso, ngaphezu noma ngaphansi komhlabathi. Uma zimbalwa azilimazi kakhulu, kodwa uma ziziningi zenza isitshalo sibe buthakathaka. Eziningi futhi zisabalalisa izifo zezitshalo, ikakhulukazi ama-virus, zisuka kwesinye isitshalo ziye kwesinye.
-
-Izibonelo:
-
-- ama-aphid
-- ama-scale insect
-- ama-mealybug
-- ama-leafhopper nama-planthopper
-- ama-whitefly
-- ama-thrips
-- ama-mite, njenge-red spider mite (ama-mite ayizihlobo ezincane kakhulu zezicabucabu, hhayi izinambuzane)
-- ama-nematode (izikelemu ezincane kakhulu emhlabathini ezidla izimpande; ama-root-knot nematode enza amaqhubu ezimpandeni, abizwa ngokuthi ama-gall)
-
-### Izinambuzane ezidla isitshalo
-
-Lezi zinambuzane zihlafuna amaqabunga, iziqu, izithelo noma izimpande. Zivame ukuba zinkulu futhi kulula ukuzibona. Ngenxa yokuthi zinkulu, kaningi ungazicosha ngesandla.
-
-Izibonelo:
-
-- amacimbi (njenge-cutworm, i-bollworm, i-diamond-back moth ne-fall armyworm)
-- amabhungane
-- iminenke engenaqokobhe neminenke
-- izinyoni
-- amagundane namavukuzi
-
-## Izinambuzane ezivamile eNingizimu ne-Afrika nokuthi ungabhekana kanjani nazo
-
-> **Icebiso:** Hamba engadini yakho okungenani kabili ngesonto ubheke nangaphansi kwamaqabunga. Izinambuzane kulula kakhulu ukuzilawula uma uzithola kusenesikhathi. Uma ungasazi isinambuzane, sithathe isithombe esicacile bese ubuza umeluleki wezolimo wendawo noma umeluleki wakho.
-
-### Ama-aphid
-
-Ama-aphid yizinambuzane ezincane, ezithambile, ezimise okwepheya, eziluhlaza, ezimnyama noma ezimpunga, ezihlangana ezihlumeni ezintsha nangaphansi kwamaqabunga. Zihlasela izitshalo eziningi, ikakhulukazi izitshalo zomndeni weklabishi, ubhontshisi nophizi. Uma ziziningi zenza izitshalo zibe buthakathaka futhi zingakhuli kahle, amaqabunga agoqeke, nesivuno sibe sincane. Ama-aphid aphinde athwale ama-virus ezitshalo asuke kwesinye isitshalo aye kwesinye. Izinambuzane ezisabalalisa izifo ngale ndlela zibizwa ngokuthi abathwali bezifo (vectors).
-
-Ama-aphid azalana ngokushesha okukhulu. Uma kufudumele, amasikazi azala amazinyane aphilayo ngaphandle kokukhwelana, futhi i-aphid eyodwa ingaba nenzalo eyizinkulungwane eziningi emavikini ambalwa uma kungekho okuyidlayo. Uma iqoqo seliminyene, amanye ama-aphid amila amaphiko andizele ezitshalweni ezintsha.
-
-Okufanele ukwenze:
-
-1. Chobozela amaqoqo amancane ngeminwe, noma uwageze ngamanzi afafazwa ngamandla.
-2. Vikela ama-ladybird, ama-hoverfly, ama-lacewing nama-parasitoid wasp (imiviyana emincane kakhulu ebeka amaqanda ayo ngaphakathi kwezinye izinambuzane). Ayawadla ama-aphid, noma abeke amaqanda awo kuwo. Iqoqo lama-aphid eseliphenduke nsundu futhi lafana nephepha livame ukuba selibulewe ama-parasitoid wasp, ngakho liyeke.
-3. Lawula izintuthwane (bheka ngezansi), ngoba izintuthwane zivikela ama-aphid ezitheni zawo.
-4. Tshala ama-nasturtium eduze njenge-trap crop, bese ukhipha amaqabunga e-nasturtium agcwele ama-aphid.
-5. Gwema umquba wezilwane omusha omningi kakhulu noma umanyolo we-nitrogen. Ukukhula okuthambile, okusheshayo nokunamaqabunga amaningi kuheha ama-aphid.
-
-### Ama-cutworm
-
-Ama-cutworm angamacimbi akhuluphele, ampunga-nsundu, azigoqa abe njengo-C uma uwaphazamisa. Acasha emhlabathini emini aphume ebusuku ukuze asike izithombo ezincane eduze nomhlabathi. Utamatisi, amaklabishi, ummbila nobhontshisi kuvame ukuhlaselwa.
-
-Okufanele ukwenze:
-
-1. Susa ukhula embhedeni okungenani amasonto amabili ngaphambi kokutshala, ukuze amacimbi amancane angatholi lutho lokudla.
-2. Uma uthola isithombo esisikiwe, mba kancane emhlabathini osizungezile. I-cutworm ivame ukuba ngaphakathi kwamasentimitha ambalwa. Yikhiphe.
-3. Faka indandatho yokuvikela (collar) esithombeni ngasinye: ishubhu lekhadibhodi, noma ibhodlela lepulasitiki elisikwe phezulu nangezansi, eligxunyekwe emhlabathini cishe ngo-2 cm.
-4. Izinyoni nezinkukhu zidla ama-cutworm uma umhlabathi uphendulwa ngaphambi kokutshala.
-
-### I-African bollworm
-
-I-African bollworm (*Helicoverpa armigera*) yicimbi eliluhlaza, elinsundu noma elipinki elinemigqa ezinhlangothini zalo, elibhoboza lingene ezithelweni nasezikhwebini. Ihlasela utamatisi, izikhwebu zommbila, ubhontshisi, uphizi, upelepele, amabele nokotini. Imbobo encane eyindilinga kutamatisi iwuphawu oluvamile.
-
-Okufanele ukwenze:
-
-1. Hlola izitshalo kaningi ngesikhathi ziqhakaza futhi zithela, ucoshe amacimbi namaqanda.
-2. Kha ubhubhise izithelo ezonakele, ukuze amacimbi angaphakathi angaqedi umjikelezo wempilo yawo.
-3. Vikela izitha zawo zemvelo, njengama-parasitoid wasp, izinambuzane ezizingelayo (predatory bugs) nezinyoni.
-4. Uma udinga ukufafaza, umkhiqizo owenziwe nge-Bt (*Bacillus thuringiensis*, igciwane lemvelo elibulala amacimbi kuphela) usebenza kahle kakhulu kumacimbi amancane ngaphambi kokuba angene esithelweni.
-
-### I-diamond-back moth
-
-I-diamond-back moth (*Plutella xylostella*) iyisinambuzane esibi kakhulu seklabishi, i-broccoli, ukholifulawa, i-rape nezinye izitshalo zomndeni weklabishi. Icimbi layo lincane (cishe 1 cm), liluhlaza ngokufiphele futhi licijile emaphethelweni omabili. Uma ulithinta, liyajijazela lihlehle ngokushesha okukhulu bese liwa eqabungeni lilenga entanjeni kasilika. Amacimbi amancane adla ingxenye engezansi yeqabunga ashiye "amafasitela" esikhumba esincane okubonakala ngaphakathi kuso. Amadala adla izimbobo ezingena ngqo eqabungeni.
-
-Lesi sinambuzane sesimelana nezibulali-zinambuzane zamakhemikhali eziningi, ngakho ukusilawula ngendlela yemvelo kubaluleke kakhulu.
-
-Okufanele ukwenze:
-
-1. Hlola ngaphansi kwamaqabunga ukhiphe amacimbi ngesandla.
-2. Vikela ama-parasitoid wasp amancane ahlasela amacimbi. Ukufafaza ubuthi kuyawabulala futhi kuvame ukwenza inkinga ibe mbi kakhulu.
-3. Mboza izitshalo ezincane ngenetha elincane noma ngendwangu yomthunzi lapho ungakwazi khona.
-4. Ungatshali izitshalo zomndeni weklabishi embhedeni ofanayo unyaka wonke. Shiya isikhathi sokuphumula ukuze umjikelezo wempilo wesinambuzane unqamuke.
-5. Imvula nokunisela kusukela phezulu kuwisa amacimbi amaningi amancane emaqabungeni.
-6. Uma kudingeka, fafaza umkhiqizo we-Bt kumacimbi amancane.
-
-### I-fall armyworm
-
-I-fall armyworm (*Spodoptera frugiperda*) ivela emazweni aseMelika. Yaqinisekiswa okokuqala eNingizimu Afrika ngoFebhuwari 2017, eLimpopo, yasheshe yasabalalela kwezinye izifundazwe. Ihlasela kakhulu ummbila, kodwa futhi namabele nolunye utshani, kanye nemifino ethile.
-
-Indlela yokuyibona:
-
-- Icimbi linomumo ophaphathekile we-"Y" ephendukezelwe ngaphambili ekhanda lalo.
-- Engxenyeni yomzimba eyesibili ukusuka ekugcineni kunamachashaza amane amnyama ahlelwe njengesikwele.
-- Amacimbi amancane aklwebha iqabunga ashiye "amafasitela" okubonakala ngaphakathi kuwo. Amadala adla izimbobo ezidabukile futhi agcwalise umgodi ophakathi nommbila omncane (whorl) ngendle efana nemvuthuluka yokhuni (sawdust).
-
-Okufanele ukwenze:
-
-1. Hlola insimu yommbila kabili ngesonto kusukela izitshalo zihluma. Hlola umgodi ophakathi nesitshalo ubheke indle entsha.
-2. Choboza amaqoqo amaqanda (amaqoqo anoboya emaqabungeni) namacimbi amancane ngesandla.
-3. Tshala kusenesikhathi futhi ngesikhathi esifanayo nomakhelwane bakho, ukuze ummbila ungabi mncane ngesikhathi i-fall armyworm iningi kakhulu.
-4. Xuba ummbila nobhontshisi, i-cowpea noma amathanga. Amasimu anokwehlukahlukana asekela izitha zemvelo eziningi, njengezintuthwane, ama-earwig, izinambuzane ezizingelayo nama-parasitoid wasp.
-5. Abanye abalimi e-Afrika basebenzisa uhlelo lwe-"push-pull" (sunduza-donsa), lapho kutshalwa isitshalo esixosha izinambuzane phakathi kwemigqa yommbila, notshani obuzihehayo buzungeze insimu. Buza umeluleki wezolimo wendawo ukuthi yiziphi izitshalo ezifanele futhi ezivumelekile endaweni yakho.
-6. Uma udinga ukufafaza, khetha umkhiqizo we-Bt noma omunye umkhiqizo obhaliswe ukulwa ne-fall armyworm, bese ufafaza emgodini ophakathi nesitshalo ngesikhathi amacimbi esemancane.
-
-> **Qaphela:** Bika ukuqhamuka kwesinambuzane esisha noma esingavamile eMnyangweni Wezolimo wesifundazwe sakho noma kumeluleki wezolimo wendawo. Izinambuzane ezintsha **ezingama-invasive species** (izinhlobo zangaphandle ezisakazeka zingalawuleki) zisabalala ngokushesha, futhi ukubika kusenesikhathi kusiza wonke umuntu.
-
-### Izimpukane zezithelo
-
-Izimpukane zezithelo (fruit flies) zibeka amaqanda azo ngaphansi kwesikhumba sezithelo ezivuthwayo. Izibungu zazo zidla ngaphakathi, bese isithelo siyabola siwe. Izinhlobo ezibalulekile eNingizimu Afrika zifaka i-Mediterranean fruit fly ne-Natal fruit fly, kanye ne-Oriental fruit fly (*Bactrocera dorsalis*), eyatholakala okokuqala eLimpopo ngo-2010 futhi kusukela lapho isizinzile ezifundazweni eziningana ezisenyakatho. Izimpukane zamathanga (pumpkin flies) zihlasela amathanga, ama-melon nezinye izitshalo zomndeni wethanga ngendlela efanayo.
-
-Okufanele ukwenze:
-
-1. Qoqa zonke izithelo eziwile nezonakele njalo ezinsukwini ezimbalwa. Zibhubhise: zivalele esikhwameni sepulasitiki esimnyama elangeni isonto lonke, noma uzigqibe okungenani ku-50 cm ukujula.
-2. Vuna izithelo ngokushesha nje uma sezivuthiwe.
-3. Faka izikhwama zephepha noma zendwangu ezithelweni ezifana namagwava, omango namapentshisi zisesencane.
-4. Lengisa izicupho ezinokudla okuhehayo (bait traps) ezihlahleni zezithelo ukuze ubambe izimpukane. Ungazithenga, noma ubuze umeluleki wezolimo wendawo ukuthi zenziwa kanjani.
-5. Sebenzisana nomakhelwane bakho. Izimpukane zezithelo zihamba phakathi kwezingadi, ngakho ingadi yezithelo eyodwa engahlanzekile ingaphinda ingenise izimpukane kuzo zonke ezinye.
-
-### Iminenke engenaqokobhe neminenke
-
-Iminenke engenaqokobhe neminenke yizilwane ezinemizimba ethambile ezitholakala ezindaweni ezimanzi. Iminenke ithwala igobolondo elenziwe kakhulu nge-calcium. Zidla amaqabunga, futhi zidala ukulahlekelwa kwangempela uma ziziningi noma uma zidla izithombo.
-
-**I-mulch** (isembozo somhlabathi) nenye **i-organic matter** (izinto eziphilayo ezibolayo) eziseduze nezitshalo zingaziheha, ngoba zigcina umhlabathi umanzi futhi zizinike ukudla nendawo yokucasha. Uhlobo lwe-mulch lubalulekile: i-mulch emahhadla, eyomile nehlabayo ayiziheha kangako njengezinto ezimanzi nezithambile.
-
-Okufanele ukwenze:
-
-1. Zicoshe ngokukhanya kwethoshi kusihlwa, ikakhulukazi ngemva kwemvula.
-2. Beka ipulangwe eliyisicaba noma isaka elidala phezu komhlabathi omanzi. Iminenke icasha ngaphansi kwalo emini, bese uyiqoqa ekuseni.
-3. Vumela amadada noma izinkukhu zihlanze imibhede phakathi kwesitshalo esisodwa nesilandelayo.
-4. Khuthaza amaxoxo, amaselesele (toads), izinyoni namabhungane omhlabathi.
-5. Hlehlisa i-mulch kancane isuke ezithombeni ezincane zize ziqine.
-
-> **Ukuphepha:** Gqoka amagilavu noma ugeze izandla kahle ngemva kokuphatha iminenke neminenke engenaqokobhe. Ingathwala i-rat lungworm (isikelemu samagundane esingena emaphashini), esesitholakele kumagundane eNingizimu Afrika futhi esingangena nasebantwini. Geza kahle imifino enamaqabunga ngaphambi kokuyidla. Ungasebenzisi ama-slug pellet (ubuthi obuyisicupho). Angabulala izinja, izinyoni nezingane eziwadlayo.
-
-### Izinyoni
-
-Iningi lezinyoni liyasiza epulazini. Izinyoni ezidla izinambuzane kufanele zikhuthazwe. Nokho, ezinye izinyoni ezidla imbewu, njenge-red-billed quelea (inyoni encane edla okusanhlamvu), zindiza ngemihlambi emikhulu kakhulu futhi zingaqeda izitshalo zokusanhlamvu ezinjengamabele, unyawothi nokolweni. Zenza umonakalo omkhulu kakhulu uma ukudla kwazo kwemvelo (imbewu yotshani) kuyindlala, ngoba insimu yokusanhlamvu iwukudla okuningi okutholakala kalula. Ukudla okuningi kungazisiza nokuthi zizalane kakhulu.
-
-Okufanele ukwenze:
-
-1. Vikela iziqeshana ezincane zokusanhlamvu ngenetha.
-2. Xosha izinyoni ekuseni kakhulu nantambama, lapho zidla, usebenzisa umsindo, amafulegi noma i-tape ecwebezelayo.
-3. Vuna ngokushesha nje uma okusanhlamvu sekuvuthiwe.
-4. Bika imihlambi emikhulu kakhulu ye-quelea eMnyangweni Wezolimo wesifundazwe sakho. Ungasebenzisi ubuthi: bubulala nezinkozi, izikhova nezinye izinyoni eziwusizo.
-
-### Izintuthwane
-
-Izintuthwane ngokuvamile azidli izitshalo. Zilimaza ngendlela engaqondile. Izintuthwane zidla i-honeydew, uketshezi olunoshukela olukhishwa ama-aphid, ama-scale insect nama-mealybug. Ngokubuyisela, izintuthwane zivikela lezi zinambuzane ezimunca uketshezi kuma-ladybird nakuma-parasitoid wasp. I-honeydew iphinde ivumele isikhunta esimnyama esibizwa ngokuthi i-sooty mould ukuthi sikhule emaqabungeni, futhi lokhu kunciphisa ukukhula kwesitshalo.
-
-Uma ulawula izintuthwane, izitha zemvelo zezinambuzane ezimunca uketshezi zingaphinde zenze umsebenzi wazo.
-
-Izintuthwane nazo ziyasiza. Izintuthwane eziningi zidla ezinye izinambuzane, kuhlanganise nomuhlwa namacimbi, futhi zisiza ukubolisa izinto ezifile.
-
-Okufanele ukwenze:
-
-1. Ezihlahleni zezithelo, bopha ibhande lento enamathelayo noma lamafutha (grease) lizungeze isiqu, phezu komucu wendwangu noma we-tape esikhundleni sokulibeka ngqo exolweni elisha, ukuze izintuthwane zingakwazi ukukhuphuka.
-2. Sika amagatsha athinta umhlabathi noma izindonga, ngoba izintuthwane ziwasebenzisa njengamabhuloho.
-3. Lawula ama-aphid nama-scale insect izintuthwane ezizifuyayo.
-
-### Amavukuzi nama-mole
-
-ENingizimu Afrika, "ama-mole" adla izigaxa (bulbs), amazambane, ubhatata nezimpande avame ukuba ngamavukuzi (mole-rats). Amavukuzi ayizilwane zohlobo lwamagundane (rodents) ezihlala emigudwini ejulile futhi ziphushele phezulu izinqwaba zomhlabathi. Ama-golden mole ayisilwane esihlukile. Amba imigudu ngaphansi nje kwendawo engaphezulu, futhi adla izinambuzane nemisundu, hhayi izitshalo. Izinhlobo eziningana zama-golden mole ziyivelakancane futhi zivikelwe ngumthetho, ngakho ziyeke.
-
-Okufanele ukwenze ngamavukuzi:
-
-1. Beka inetha likacingo eliqinile phansi emibhedeni ephakanyisiwe, noma emigodini yokutshala izitshalo eziyigugu.
-2. Tshala izigaxa nezihlahla ezincane ezibhasikidini zocingo.
-3. Khuthaza inyoka i-mole snake, izikhova namanye ama-predator emvelo.
-4. Ungasebenzisi ubuthi. Amavukuzi adle ubuthi angabulala izikhova, izinyoka, izinja namakati awadlayo.
-
-### Izingungumbane nezinye izilwane
-
-Izingungumbane zimba izimpande nezigaxa (tubers) futhi zihlube amagxolo ezihlahleni. Uthango oluqinile, olunenetha likacingo eligqitshwe kahle emhlabathini ukuze zingakwazi ukumba ngaphansi kwalo, luyisivikelo esingcono kakhulu. Hlola imithetho yendawo ngaphambi kokucupha noma ukubulala noma yisiphi isilwane sasendle.
+Ngaphambi kokulima ngamakhemikhali kwakungekho gama elithi "organic", ngoba konke ukulima kwakuyi-organic. Izindlela ezindala zisasebenza, futhi ingadi encane iyazidinga kakhulu.
 
 ## Indlela yokulawula izinambuzane: isinyathelo ngesinyathelo
 
-Ukulawula izinambuzane ngendlela yemvelo kusebenzisa izinhlelo zemvelo. Isibonelo, ama-predator ezinambuzane ezilimaza izitshalo anganciphisa inani lazo esikhundleni sethu. Landela lezi zinyathelo ngokulandelana:
+Ukulawula izinambuzane okuningi kwenzeka ngaphambi kokuba izinambuzane zifike. Izitshalo eziqinile emhlabathini ovundile (Isahluko 8) ziyamelana nokuhlaselwa. **I-biodiversity**, izinhlobo eziningi zezitshalo, izinambuzane, izinyoni nezidalwa zomhlabathi, inika zonke izinambuzane isitha (Isahluko 9). Indawo enkulu yesitshalo esisodwa yenza okuphambene: isinambuzane sithola ukudla kwaso kalula futhi siyande.
 
-1. **Bheka.** Hlola izitshalo kaningi futhi wenze okuthile kusenesikhathi.
-2. **Khuthaza ama-predator.** Wanike ukudla, amanzi nendawo yokucasha.
-3. **Susa izinambuzane ngesandla.** Cosha amacimbi, iminenke namabhungane.
-4. **Sebenzisa izithiyo.** Inetha, indwangu yomthunzi, izindandatho zokuvikela (collars) nezintango kugcina izinambuzane ngaphandle.
-5. **Fafaza kuphela uma zonke ezinye izindlela zehlulekile.** Sebenzisa izifutho ezenziwe ekhaya noma imikhiqizo yemvelo ebhalisiwe, ngokucophelela futhi kuphela ezitshalweni ezizidingayo.
+Lapho izinambuzane zifika, landela lezi zinyathelo ngokulandelana:
 
-Kungathatha izinkathi ezimbalwa zonyaka ukuthi ukulingana kwemvelo kwakheke, kuya ngendawo nangendlela ingadi eyayiphathwa ngayo ngaphambili. Uma sigwema ubuthi kakhulu futhi sandisa ukwehlukahlukana, ukulingana kufika ngokushesha.
+1. **Buka.** Hamba engadini okungenani kabili ngesonto futhi ubheke ngaphansi kwamaqabunga. Izinambuzane kulula kakhulu ukuzilawula uma uzithola kusenesikhathi.
+2. **Khuthaza ama-predator.** Wanike ukudla, amanzi nendawo yokukhosela.
+3. **Susa izinambuzane ngesandla.** Cosha amacimbi, iminenke namabhungane. Choboza amaqoqo ama-aphid.
+4. **Sebenzisa izivimbelo.** Amanetha, indwangu yomthunzi, izingqimba zokuzungeza isithombo nothango kugcina izinambuzane ngaphandle.
+5. **Letha izinyoni.** Phakathi kwezitshalo, izinkukhu noma amadada esibayeni esithuthekayo, **i-animal tractor** (Isahluko 5), zihlanza iminenke nezibungu. Zigcine kude nezithombo ezincane, eziziphenyayo.
+6. **Futha kuphela njengesinqumo sokugcina**, futhi kuphela izitshalo ezihlaselwe.
 
-Esahlukweni 9 sabona ukuthi izimbali, amachibi, izinqwaba zamatshe nezingodo zenza kanjani amakhaya ezidalwa eziningi. Lokhu kuheha izinyoni, amaxoxo, izibankwa, imiviyana emincane (engenabungozi ebantwini), ama-praying mantis, ama-ladybird, izicabucabu nokunye. Umthetho ulula: tshala izitshalo eziningi ezehlukene futhi wenze **ama-habitat** (amakhaya emvelo) amaningi ahlukene, bese ama-predator ahlukahlukene awusizo ezofika ezokusiza.
+Ukulingana kungathatha izinkathi ezimbalwa ukwakheka. Uma ushevu umncane futhi ukwehlukahlukana kukhulu, kufika ngokushesha.
 
-Izingxenye ezinkulu zesitshalo esisodwa (ukulima uhlobo olulodwa, i-monoculture) zenza kube lula kakhulu ukuthi izinambuzane zithole ukudla kwazo futhi zande. Ukuxuba izitshalo, nokufaka amakhambi anephunga elinamandla nezitshalo ezinamaqabunga amahhadla noma anoboya, kwenza kube nzima ukuthi izinambuzane zithole lokho ezikufunayo.
+## Izinambuzane ezivamile eNingizimu ne-Afrika
+
+Yazi isitha sakho ngaphambi kokuthi wenze okuthile. Iningi lezinto ezilimaza izitshalo yizinambuzane, futhi zidla ngenye yezindlela ezimbili. **Ezimunca ubisi lwesitshalo** zibhoboza isitshalo ziphuze ujusi waso: ama-aphid, ama-scale insect, ama-mealybug, i-whitefly, ama-thrips, ama-red spider mite (izihlobo ezincane kakhulu zezicabucabu) nama-root-knot nematode (izikelemu ezincane kakhulu ezenza izigaxa ezimpandeni). Uma ziningi zenza isitshalo sibe buthakathaka, futhi eziningi zithwala amagciwane e-virus zisuka esitshalweni ziye kwesinye. **Ezidla izitshalo** zihlafuna amaqabunga, iziqu, izithelo noma izimpande: amacimbi, amabhungane neminenke. Zinkulu, ngakho kaningi ungazicosha ngesandla. Amavukuzi, izinungu nezinye izinyoni nazo zingezilimazayo.
+
+### Ama-aphid
+
+Ama-aphid yizinambuzane ezincane, ezithambile, ezimise okwepheya, eziluhlaza, ezimnyama noma ezimpunga, eziminyana emahlumelweni amancane nangaphansi kwamaqabunga. Amaklabishi, ubhontshisi nophizi kuhlupheka kakhulu. Ayabambezela izitshalo, agoqe amaqabunga futhi athwale ama-virus. Uma kufudumele izinsikazi zizala amaphela aphilayo ngaphandle kokukhwelana, ngakho iqoqo lingaqhuma phakathi namasonto ambalwa. Uma sekuminyene, ama-aphid anamaphiko andizela ezitshalweni ezintsha.
+
+1. Choboza amaqoqo amancane ngeminwe yakho, noma uwageze ngamanzi aphuma ngamandla.
+2. Vikela ama-ladybird, ama-hoverfly, ama-lacewing neminyovu ezalela kwezinye izinambuzane (parasitic wasps). Adla ama-aphid noma azalele ngaphakathi kuwo.
+3. Lawula izintuthwane eziwaqaphayo (bheka Izintuthwane, ngezansi).
+4. Tshala ama-nasturtium emaphethelweni ombhede njenge-**trap crop**, isitshalo isinambuzane esisithanda kakhulu kunokudla kwakho (bheka i-Companion planting).
+5. Nciphisa umquba omusha ne-nitrogen. Ukukhula okuthambile, okusheshayo, okunamanzi kuheha ama-aphid.
+
+> **Icebiso:** Iqoqo lama-aphid eliphenduke laba nsundu futhi lafana nephepha libulawe yiminyovu ezalela kwezinye izinambuzane. Liyeke. Iminyovu elandelayo iyachamuseka kulo.
+
+### Ama-cutworm
+
+Ama-cutworm angamacimbi akhuluphele, ampunga ngokunsundu, azigoqa abe ngu-C uma ephazanyiswa. Acasha emhlabathini emini bese ephuma ebusuku azosika izithombo ezingeni lomhlabathi: utamatisi, amaklabishi, ummbila nobhontshisi.
+
+1. Hlanza ukhula embhedeni amasonto ambalwa ngaphambi kokutshala, ukuze amacimbi amancane angabi nalutho azoludla.
+2. Uma uthola isithombo esisikiwe, mba kancane ukuzungeza. I-cutworm ivame ukuba kumasentimitha ambalwa. Yisuse.
+3. Faka indandatho ezungeza isithombo ngasinye: ishubhu lekhadibhodi, noma ibhodlela likapulasitiki elisikwe phezulu naphansi, elishovwe ngo-3 kuya ku-5 cm emhlabathini.
+4. Phendula umhlabathi ngaphambi kokutshala bese uvumela izinyoni nezinkukhu zicoshe kuwo.
+
+### I-African bollworm
+
+I-African bollworm (*Helicoverpa armigera*) yicimbi elinemigqa, eliluhlaza, elinsundu noma elibomvana, elibhoboza utamatisi, izikhwebu zommbila, ubhontshisi, uphizi, upelepele namabele. Imbobo encane eyindilinga kutamatisi iwuphawu oluvamile.
+
+1. Hlola izitshalo kaningi ngenkathi ziqhakaza futhi zithela. Cosha amaqanda namacimbi.
+2. Kha futhi ubhubhise izithelo ezonakele, ukuze amacimbi angaphakathi angakwazi ukuqeda umjikelezo wempilo yawo.
+3. Vikela iminyovu ezalela kwezinye izinambuzane, izinambuzane ezizingelayo nezinyoni.
+4. Uma kufanele ufuthe, sebenzisa i-Bt (*Bacillus thuringiensis*), igciwane lemvelo elibulala amacimbi kuphela. Isebenza emacimbini amancane, ngaphambi kokuba angene esithelweni.
+
+### I-diamond-back moth
+
+I-diamond-back moth (*Plutella xylostella*) iyisinambuzane esibi kakhulu seklabishi, i-broccoli, i-cauliflower, i-rape nezihlobo zazo. Icimbi licishe libe ngu-1 cm ubude, liluhlaza ngokuphaphathekile futhi licijile emaphethelweni omabili. Lithinte lizozinyakazisa libuyele emuva bese lehla ngentambo kasilika. Amacimbi amancane ashiya "amafasitela" okubona ngaphakathi eqabungeni; amadala adla izimbobo ezingena ngale. Leli bhu selinqobe izibulali-zinambuzane eziningi zamakhemikhali, ngakho ukulawula ngendlela yemvelo kubaluleke kakhulu lapha.
+
+1. Hlola ngaphansi kwamaqabunga bese ususa amacimbi ngesandla.
+2. Vikela iminyovu emincane kakhulu ezalela ngaphakathi emacimbini. Ushevu ubulala iminyovu kuqala.
+3. Mboza izitshalo ezincane ngenetha elincane noma ngendwangu yomthunzi.
+4. Nika umbhede ikhefu ezitshalweni zomndeni weklabishi, ukuze umjikelezo wempilo webhu unqamuke.
+5. Ukunisela kusuka phezulu kuwisa amacimbi amancane amaningi. Uma kudingeka, futha i-Bt emacimbini amancane.
+
+### I-fall armyworm
+
+I-fall armyworm (*Spodoptera frugiperda*) yavela emazweni aseMelika. Yaqinisekiswa okokuqala eNingizimu Afrika, eLimpopo, ngoNhlolanja ka-2017, futhi yasabalala ngokushesha. Ihlasela ikakhulu ummbila, kanye namabele nobunye utshani. Bheka u-"Y" ophaphathekile obheke phansi ekhanda, namachashaza amane amnyama asesikweleni engxenyeni yomzimba yesibili kusukela ekugcineni. Amacimbi amadala adla izimbobo ezidabukile futhi agcwalise umlomo wommbila omncane ngendle efana nemvuthuluka yokhuni.
+
+1. Kusukela ngosuku ummbila uhluma ngalo, hlola kabili ngesonto. Bheka emlonyeni ukuthi ayikho yini indle entsha.
+2. Choboza amaqoqo amaqanda (izigaxa ezinoboya emaqabungeni) namacimbi amancane.
+3. Tshala kusenesikhathi, ngesikhathi esifanayo nomakhelwane bakho, ukuze ummbila wakho ungabi mncane lapho ama-armyworm esemaningi kakhulu.
+4. Xuba ummbila nobhontshisi, ama-cowpea noma amathanga. Amasimu axubile aphethe izintuthwane, ama-earwig, izinambuzane ezizingelayo neminyovu ezalela kwezinye eziningi ezidla i-armyworm.
+5. Uma kufanele ufuthe, faka i-Bt emlonyeni wommbila ngenkathi amacimbi esemancane.
+
+### Izimpukane zezithelo
+
+Izimpukane zezithelo zibeka amaqanda azo ngaphansi kwesikhumba sezithelo ezivuthwayo. Izibungu zidla ngaphakathi, bese isithelo siyabola futhi siwe. INingizimu Afrika ine-Mediterranean fruit fly ne-Natal fruit fly, kanye ne-Oriental fruit fly (*Bactrocera dorsalis*), eyatholakala okokuqala eLimpopo ngo-2010 futhi manje isizinzile ezifundazweni eziningana zasenyakatho. Izimpukane zamathanga zenza okufanayo emathangeni, kuma-melon nasekhukhambeni.
+
+1. Njalo ezinsukwini ezimbalwa, qoqa zonke izithelo eziwile nezonakele. Zivalele esikhwameni sepulasitiki bese usishiya elangeni elishisayo kuze kube izibungu zifile, noma uzigqibe okungenani ngo-50 cm ukujula.
+2. Vuna izithelo ngokushesha uma zivuthiwe.
+3. Bophela izikhwama zephepha noma zendwangu phezu kwamagwava amancane, umango namapentshisi.
+4. Lengisa izicupho ezinokuheha ezihlahleni.
+5. Sebenzisana nomakhelwane bakho. Izimpukane zezithelo ziyahamba phakathi kwezingadi, futhi ingadi eyodwa yezithelo enganakiwe iphinda ithelele zonke ezinye.
+
+### Iminenke
+
+Iminenke ihlala ezindaweni ezimanzi futhi idla amaqabunga, yenze umonakalo wangempela uma iningi noma uma ifika ezithombweni. **I-mulch**, isembozo sezinto zezitshalo ezomile esisisakaza phezu komhlabathi, iyigcina imanzi futhi ivikelekile, kodwa i-mulch emahhadlahhadla, eyomile, ehuzukayo ayiyifaneli kakhulu kune-mulch emanzi, ethambile.
+
+1. Yicoshe ngethoshi kusihlwa, ikakhulukazi ngemva kwemvula.
+2. Beka ipulangwe noma isaka elidala emhlabathini omanzi. Qoqa iminenke ecashe ngaphansi kwalo ekuseni.
+3. Vumela amadada noma izinkukhu zihlanze imibhede phakathi kwezitshalo.
+4. Khuthaza amaxoxo, amaselesele, izinyoni namabhungane omhlabathi.
+5. Hudula i-mulch iqhele ezithombweni ezincane kuze kube seziqinile.
+
+Iminenke ingathwala i-rat lungworm, isimuncagazi esitholakala emagundaneni eNingizimu Afrika esingagulisa abantu kakhulu. Gqoka amagilavu noma ugeze izandla ngemva kokuyiqoqa, futhi ugeze imifino kahle ngaphambi kokuyidla. Asisebenzisi amaphilisi eminenke: afaka ushevu ezinjeni nasemakatini kanye neminenke.
+
+### Izinyoni
+
+Iningi lezinyoni lingabangane. I-red-billed quelea iyahluka: indiza ngemihlambi emikhulu kakhulu futhi ingaqeda amabele, unyawothi nokolweni, ikakhulukazi lapho imbewu yotshani endle iyindlala.
+
+1. Faka amanetha ezisizeni ezincane zokusanhlamvu.
+2. Ethusa izinyoni ekuseni kakhulu nantambama, lapho zidla, ngomsindo, amafulegi noma itheyiphu ecwebezelayo.
+3. Vuna ngokushesha uma okusanhlamvu sekuvuthiwe.
+4. Ungalokothi ubeke ushevu. Izinkozi nezikhova ezidla izinyoni ezifile nazo ziyafa.
+
+### Izintuthwane
+
+Izintuthwane azivamile ukudla izitshalo. Zidla i-honeydew, uketshezi olunoshukela oluphuma kuma-aphid, ama-scale insect nama-mealybug, bese zona ziqapha lezo zinambuzane ezimunca ubisi lwesitshalo kuma-ladybird nasemnyovwini. I-honeydew iphinde ikhulise isikhunta esimnyama njengomsizi emaqabungeni, esivimba ukukhanya. Kwezinye izindawo izintuthwane zizingela umuhlwa namacimbi, ngakho senza okuthile kuphela lapho zifuya khona izinambuzane ezimunca ubisi lwesitshalo.
+
+1. Ezihlahleni zezithelo, bophela ibhande legrisi noma lezinto ezinamathelayo ezungeze isiqu, phezu komugqa wendwangu noma wetheyiphu esikhundleni sokuba phezu kwegxolo.
+2. Sika amagatsha athinta umhlabathi noma udonga. Izintuthwane ziwasebenzisa njengamabhuloho.
+3. Bhekana nama-aphid nama-scale, bese izintuthwane ziphelelwa yintshisekelo.
+
+### Amavukuzi nezinungu
+
+"Ama-mole" adla ama-bulb, amazambane nobhatata eNingizimu Afrika ngokuvamile angamavukuzi (mole-rats): amagundane akhuphula izindunduma zomhlabathi zivela emigudwini ejulile. Ama-golden mole ayisilwane esihlukile. Amba imigudu ngaphansi nje kwaphezulu futhi adla izinambuzane nemisundu, hhayi izitshalo. Izinhlobo eziningana ziyivelakancane, ngakho ziyeke.
+
+1. Bekela phansi kwemibhede ephakanyisiwe, nemigodi yokutshala yezitshalo eziyigugu, ngocingo lwenetha oluqinile.
+2. Tshala ama-bulb nezihlahla ezincane kubhasikidi bocingo.
+3. Yamukela izinyoka ze-mole snake nezikhova. Ungalokothi usebenzise ushevu: ivukuzi elifakwe ushevu libulala isikhova, inyoka, inja noma ikati elidlayo.
+4. Izinungu zimba izimpande futhi zihlubule amagxolo. Uthango oluqinile, olunenetha eligqitshwe kahle emhlabathini, luyazivimba ukuthi zimbe ngaphansi.
 
 ## Khuthaza ama-predator
 
-Ingadi yokudla enempilo idinga ama-predator emvelo. Uma ama-predator emaningi, ngokuvamile izinambuzane ezilimazayo ziba zimbalwa.
+Nika abazingeli **i-habitat**, indawo enokudla, amanzi nendawo yokukhosela abakudingayo, bese beyangena: amatshe nezingodo zezibankwa, ichibi elincane lamaxoxo, i-mulch yamabhungane omhlabathi, izimbali zeminyovu nama-hoverfly.
 
-- **Izinwabu nezibankwa** zidla izinambuzane. Zicasha phakathi kwamatshe namatshe afudumele engadini.
-- **Amaxoxo namaselesele** adla iminenke engenaqokobhe nezinambuzane eziningi kakhulu. Adinga indawo emanzi noma ichibi elincane ukuze ahlale futhi azalane.
+- **Izinwabu nezibankwa** zidla izinambuzane futhi zikhosela phakathi kwamatshe afudumele.
+- **Amaxoxo namaselesele** adla iminenke nezinambuzane. Adinga indawo emanzi noma ichibi elincane.
 - **Ama-ladybird** nezibungu zawo adla ama-aphid amaningi kakhulu.
-- **Ama-hoverfly** abukeka njengezinyosi ezincane. Izibungu zawo zidla ama-aphid. Amadala adla ezimbalini.
+- **Ama-hoverfly** abukeka njengezinyosi ezincane. Izibungu zawo zidla ama-aphid.
 - **Ama-lacewing** yizinambuzane eziluhlaza ezibuthakathaka. Izibungu zawo zidla ama-aphid, ama-mite namacimbi amancane.
-- **Ama-parasitoid wasp** yimiviyana emincane kakhulu ebeka amaqanda ayo ngaphakathi kwezinambuzane ezilimazayo njengamacimbi nama-aphid. Awakwazi ukutinyela abantu. Amadala adla umpe (nectar) wezimbali ezincane.
-- **Amabhungane omhlabathi** angamabhungane amnyama agijima ngokushesha anemilenze eqinile. Azingela noma yini encane kunawo, kaningi ebusuku. Avame kakhulu lapho umhlabathi umbozwe khona nge-mulch noma ngezitshalo. Amanye akhuphuka ezitshalweni ukuze azingele ama-aphid namacimbi.
-- **Ama-praying mantis** abamba izinambuzane ngemilenze yawo yangaphambili eqinile. Adla cishe noma yisiphi isidalwa esincane kunawo, kuhlanganise namanye ama-mantis.
-- **Izicabucabu** zibamba izinambuzane eziningi ezindizayo nezihuquzelayo.
-- **Izinyoni ezidla izinambuzane** zilawula amacimbi, ama-aphid, umuhlwa, amabhu (moths), ama-scale insect ngisho neminenke.
+- **Iminyovu ezalela kwezinye izinambuzane** mincane kakhulu futhi ayikwazi ukutinyela abantu. Ibeka amaqanda ayo ngaphakathi emacimbini nakuma-aphid.
+- **Amabhungane omhlabathi, ama-praying mantis nezicabucabu** kuzingela cishe noma yisiphi isinambuzane esincane kunakho.
+- **Izinyoni ezidla izinambuzane** zithatha amacimbi, amabhu, umuhlwa, ama-scale insect ngisho neminenke.
 
-> **Icebiso:** Akuwona wonke ama-ladybird angabangane. Iningi lama-ladybird acwebezelayo lidla ama-aphid. Kodwa amanye ama-ladybird awolintshi afiphele anamachashaza amaningi amnyama nomhlane onoboya kancane, kanye nezibungu zawo eziphuzi ezinameva, adla amaqabunga amathanga, amazambane nezitshalo ezihlobene nazo. Funda ukuwahlukanisa.
+> **Icebiso:** Akuwona wonke ama-ladybird angabangane. Lawo acwebezelayo adla ama-aphid. Ama-ladybird asawolintshi angacwebezeli anamachashaza amaningi amnyama nomhlane onoboya kancane, nezibungu zawo eziphuzi ezinameva, adla amaqabunga amathanga, amazambane nezihlobo zawo. Funda ukuwahlukanisa.
+
+### Izimbali ezondla ama-predator
+
+Iminyovu esikhulile, ama-hoverfly nama-lacewing aphila ngompe nempova, futhi izimbali ezincane ezivulekile njengezomndeni wesaqathe ziwafanele kakhulu. Tshala ingxube eqhakaza unyaka wonke:
+
+- Amakhambi aqhakazayo: i-dill, i-coriander, iparsley ne-caraway, nezaqathe ezimbalwa eziyekelwe ziqhakaze
+- I-yarrow, i-calendula, i-chamomile, i-zinnia, ubhekilanga, i-borage ne-lemon verbena
+- Ama-marigold aseFrance nase-Afrika, ne-cosmos (eduze kwendle, sika amakhanda ngaphambi kokuba awise imbewu, ngoba i-cosmos isabalala otshanini bemvelo)
+- Izimbali **zomdabu**, lezo ezingezalapha ngokwemvelo: i-gazania, ama-African daisy (*Arctotis*, *Osteospermum*, *Dimorphotheca*), i-pincushion (*Scabiosa*) nama-everlasting (*Helichrysum*)
+
+Vumela amakhambi nemifino embalwa iqhakaze embhedeni ngamunye. Abasizi bahlala lapho ukudla kukhona.
 
 ## I-companion planting
 
-I-companion planting isho ukutshala ndawonye izitshalo ezehlukene, izimbali namakhambi ukuze kusizane. Yakha ukutshala izinhlobo eziningi ndawonye (polyculture), okusho izitshalo eziningi ezikhula endaweni eyodwa.
+**I-companion planting** kusho ukutshala izitshalo, amakhambi nezimbali ndawonye ukuze zisizane. Kudala kakhulu. Abalimi baseShayina batshala ifern encane entantayo nelayisi labo amakhulu eminyaka, ngoba yengeza i-nitrogen emanzini. EMelika, ummbila, ubhontshisi nethanga kwakutshalwa ndawonye "njengodade abathathu": ummbila usekela ubhontshisi, ubhontshisi wengeza i-nitrogen, kanti amaqabunga amakhulu ethanga enza umthunzi emhlabathini futhi aminyanise ukhula.
 
-Abantu sebenesikhathi eside kakhulu betshala izitshalo ndawonye. EShayina, abalimi sebenamakhulu eminyaka betshala i-fern encane entantayo emanzini, i-*Azolla*, emasimini elayisi, ngoba yengeza i-nitrogen emanzini nasemhlabathini. EMelika, abalimi bomdabu babetshala ummbila, ubhontshisi ne-squash ndawonye, uhlelo olwaziwa ngokuthi "odadewethu abathathu" (three sisters). Ummbila unika ubhontshisi into yokukhwela, ubhontshisi wengeza i-nitrogen emhlabathini, futhi amaqabunga amakhulu e-squash asitha umhlabathi futhi aminyanise ukhula.
+Ama-trap crop, izimbali zama-predator nokutshala okuxubile kuhlolwe kahle. Ezinye izimangalo eziningi zingamabiko abalimi kuphela. Zizame, ubheke kahle bese ugcina lokho okusebenzayo emhlabeni wakho.
 
-> **Qaphela:** Ungayifaki i-*Azolla filiculoides* emadamini noma emachibini eNingizimu Afrika. Iyi-invasive species esohlwini ngaphansi komthetho wezwe.
+**Ukutshala okuxubile.** Ingxube yezitshalo yondla izidalwa zomhlabathi eziningi nama-predator amaningi. Izinambuzane eziningi zithola isitshalo sazo sokudla ngokuma kwaso, umbala waso nephunga laso, futhi umbhede onezimo nemibala eminingi uyazididayo, ngakho ezinye ziyadlula.
 
-I-companion planting ingasiza:
+**Ama-trap crop.** I-trap crop itshalwa eduze kwesitshalo sokudla ukuze idonsele isinambuzane kude. Ama-aphid avame ukukhetha ama-nasturtium kuneklabishi, i-broccoli ne-cauliflower. Sesike sabona ama-nasturtium atshalwe eceleni kwe-cauliflower ne-broccoli egcwala ama-aphid ngenkathi isitshalo siyekwa. Ukuze uyisebenzise:
 
-- **Ekulawuleni izinambuzane.** Ezinye izitshalo ziphazamisa, zididayo noma zixosha izinambuzane.
-- **Ekuthuthweni kwempova.** Izimbali ziheha izinyosi namanye **ama-pollinator** (izilwane nezinambuzane ezithutha impova) esitshalweni sakho esikhulu.
-- **Ekondleni ama-predator.** Izimbali zinika umpe nempova kuma-hoverfly, kuma-parasitoid wasp nakwabanye abasizi.
-- **Ekusebenziseni indawo kahle.** Izitshalo ezinezimpande ezijule ngokwehlukene noma ezikhula ngejubane elehlukene zabelana ngombhede owodwa, isibonelo ama-radish akhula ngokushesha phakathi kukalethisi noma izaqathe ezikhula kancane.
-- **Ekusekeleni.** Ummbila ungasekela ubhontshisi okhuphukayo.
+1. Tshala ama-nasturtium emaphethelweni ombhede, hhayi maphakathi.
+2. Wahlole kabili ngesonto.
+3. Lapho amaqabunga egcwala ama-aphid, kha lawo maqabunga bese uwanika izinkukhu.
 
-> **Qaphela:** Izinto eziningi ezishiwoyo nge-companion planting zivela kulokho abalimi abakubonile, futhi azikahlolwa ngokwesayensi. Ezinye zisekelwa kahle, njengama-trap crop, izimbali zama-predator nodadewethu abathathu. Ezinye zibikwa ngabalimi kuphela. Zizame, ubheke ngokucophelela bese ugcina lezo ezisebenzayo engadini yakho.
+I-trap crop ongakaze uyihlole iba yindawo yokuzalela.
 
-### Izindlela ze-companion planting
+**Iziphazamisi zephunga.** Iphunga elinamandla lingafihla isitshalo isinambuzane esisifunayo. Abalimi batshala u-anyanisi ezungeze izaqathe ukuvikela i-carrot fly. Ucwaningo eNgilandi lwathola ukuthi kusebenza kuphela uma u-anyanisi emningi kakhulu kunezaqathe, futhi kuphela ngenkathi u-anyanisi esemncane futhi enamaqabunga, ngaphambi kokwakha ama-bulb.
 
-**Ukutshala izinhlobo eziningi ndawonye.** Ukutshala izitshalo ezixubile kusekela izidalwa zomhlabathi eziningi nama-predator amaningi, futhi kwenza kube nzima ukuthi izinambuzane zithole ukudla kwazo. Njengoba isikhathi sihamba lokhu kusiza ingadi ukuthi izilawulele izinambuzane zayo.
+**Izitshalo eziqinisayo.** I-basil etshalwe notamatisi yanciphisa ama-thrips ne-whitefly kancane kwezinye izivivinyo. Isimangalo sokuthi ithuthukisa ukunambitheka kwawo asifakazelwe.
 
-**Ama-trap crop.** Ezinye izitshalo ziheha isinambuzane kakhulu kunesitshalo sakho esikhulu. Zitshale eduze kwesitshalo ukuze isinambuzane sihlasele zona esikhundleni salokho. Isibonelo, ama-aphid avame ukuthanda ama-nasturtium kuneklabishi, i-broccoli nokholifulawa. Tshala ama-nasturtium eceleni kombhede. Uma amaqabunga awo esegcwele ama-aphid, wakhe uwaphe izinkukhu zakho, noma uwabhubhise. I-trap crop isebenza kuphela uma uyihlola futhi ususa izinambuzane. Uma ungakwenzi lokho, iba yindawo yokuzalela.
+### Izitshalo ezingaxosha izinambuzane
 
-**Iziphazamisi zephunga.** Ezinye izitshalo zinephunga elinamandla elingafihla iphunga lesitshalo isinambuzane esisifunayo. Isibonelo, abalimi batshala u-anyanisi uzungeze izaqathe naphakathi kwazo ukuze bazivikele ku-carrot fly. Ucwaningo olwenziwa eNgilandi lwathola ukuthi lokhu kusebenza kuphela uma u-anyanisi emningi kakhulu kunezaqathe, futhi kuphela lapho u-anyanisi esemncane futhi enamaqabunga, hhayi uma eseqala ukwakha amagaxa.
+- **Ama-marigold aseFrance nase-Afrika** anciphisa i-whitefly kutamatisi wasendlini yezitshalo ezivivinyweni. Acindezela ama-root-knot nematode kuphela uma etshalwe eminyene njengesitshalo sokumboza umhlabathi izinyanga ezi-2 kuya kwezi-4 ngaphambi kwemifino. Izitshalo ezimbalwa ezisakazekile zenza okuncane.
+- **I-mint, i-rosemary, i-sage, i-lavender nomhlonyane** (*Artemisia afra*, osetshenziswa ngokwesintu ukugcina izinambuzane kude) abalimi bathi zinciphisa ama-aphid namabhu eklabishi. Kufanele kuzanywe. Tshala i-mint ethinini, ngoba isabalala ngokushesha.
 
-**Izitshalo ezithuthukisa impilo.** Abalimi babika ukuthi ezinye izitshalo zithuthukisa impilo yesitshalo esingumakhelwane. I-basil ivame ukutshalwa notamatisi. Olunye ucwaningo lwathola ukuthi i-basil inganciphisa kancane ama-thrips nama-whitefly eduze kukatamatisi. Okuvame ukushiwo kokuthi i-basil yenza utamatisi ube mnandi akukafakazelwa.
+## Omakhelwane abalungile nabangalungile
 
-**Iziphazamisi zamaphethini.** Izinambuzane eziningi ezilimazayo zithola isitshalo sokudla kwazo ngomumo waso, umbala waso nephunga laso. Umbhede onemimo nemibala eminingi ehlukene ungenza lokhu kube nzima, ngakho ezinye izinambuzane ziyadlula.
+Umthetho ofakazelwe kakhulu ulula: gcina izitshalo **zomndeni ofanayo** zihlukene. Amazambane, utamatisi, isitshalo seqanda (brinjal) nopelepele konke kuhlupheka ngama-blight, ukubuna nama-nematode afanayo, ngakho umugqa wesinye eceleni kwesinye udlulisela inkinga. Okunye okusethebuleni kuvela kulwazi lwabalimi bezingadi. Qala ngakho, bese uthembela emanothini akho ngokuhamba kwesikhathi.
 
-**Izitshalo eziheha ama-predator.** Ezinye izitshalo ziheha izinambuzane ezilawula izinambuzane ezilimazayo. Ama-parasitoid wasp amancane kakhulu, isibonelo, adla umpe nempova, futhi abeka amaqanda awo emacimbini nakuma-aphid alimazayo. Izitshalo ezinezimbali eziningi ezincane, njenge-yarrow, i-dill, i-coriander (dhaniya), nezaqathe ne-parsley eziqhakazayo, ziwondla kahle. Yeka amakhambi nemifino embalwa kuqhakaze embhedeni ngamunye.
-
-## Izitshalo ezingase zixoshe izinambuzane
-
-Ithebula elingezansi libala izitshalo abalimi abazisebenzisela ukuxosha izinambuzane. Lokho okushiwo wubufakazi kunikeziwe lapho kwaziwa khona. Ezinye zithathe njengezifanele ukuzanywa, hhayi njengeziqinisekile.
-
-| Isitshalo | Okubikwa ngabalimi | Okushiwo wubufakazi |
+| Isitshalo | Omakhelwane abalungile | Kugcine kude na- |
 |---|---|---|
-| I-marigold yaseFrance ne-African marigold (*Tagetes patula*, *T. erecta*) | Ama-whitefly nama-aphid ambalwa; ama-nematode ezimpande ambalwa | Kwanciphisa ama-whitefly kutamatisi ezivivinyweni ezenziwa ezindlini zezitshalo. Icindezela ama-root-knot nematode kuphela uma itshalwe iminyene njengesitshalo sokumboza umhlabathi izinyanga ezi-2 kuya kwezi-4 ngaphambi kwesitshalo semifino, hhayi njengezitshalo ezimbalwa ezisakazekile. |
-| I-nasturtium | Idonsela ama-aphid kude nemifino | Isebenza njenge-trap crop uma amaqabunga agcwele izinambuzane esuswa. |
-| I-basil | Izimpukane, ama-thrips nama-whitefly ambalwa eduze kukatamatisi | Umphumela omncane kuma-thrips nama-whitefly kwezinye izivivinyo. |
-| U-anyanisi, ugalikhi, ama-chive, ama-leek | Kuvikela izaqathe namaklabishi ngokufihla iphunga lazo | Kuncane. Kudinga izitshalo eziningi zomndeni ka-anyanisi, futhi kusebenza kahle kakhulu zisesencane. |
-| I-mint ne-spearmint | Izintuthwane, ama-aphid namabhu eklabishi ambalwa | Kubikwa ngabalimi kuphela. I-mint isabalala ngokushesha: yitshale ebhodweni noma ethinini. |
-| I-rosemary ne-sage | Amabhu eklabishi nezinambuzane zezaqathe ezimbalwa | Kubikwa ngabalimi kuphela. |
-| Umhlonyane (*Artemisia afra*, isitshalo somdabu) ne-southernwood | Ama-aphid namabhu eklabishi ambalwa; usetshenziswa ngokwesiko ukuxosha izinambuzane | Kubikwa ngabalimi nokusetshenziswa ngokwesiko. |
-| I-lavender | Ixosha izinambuzane ngokujwayelekile | Kubikwa ngabalimi kuphela. Iheha izinyosi kakhulu, futhi lokho kuyasiza. |
-| I-catnip | Ama-aphid namabhungane ambalwa | Amafutha ayo axosha ezinye izinambuzane ezivivinyweni; umphumela ezingadini awukafakazelwa. |
-| Imbabazane (stinging nettle) | Ama-aphid ahlangana kuyo ekuqaleni kwesizini futhi ondla ama-ladybird okuqala | Kubikwa ngabalimi kuphela. Gqoka amagilavu. |
+| Ubhontshisi | Ummbila, amazambane, izaqathe, iklabishi, ukhukhamba | U-anyanisi, ugalikhi, i-leek |
+| Umndeni weklabishi | U-anyanisi, i-celery, ubhitrudi, amazambane, ulethisi, amakhambi | Utamatisi, ama-strawberry |
+| Izaqathe | U-anyanisi, i-leek, ama-chive, uphizi, ulethisi | — |
+| Upelepele obabayo nopelepele | Izaqathe, u-anyanisi, i-basil, iparsley | Amazambane, umndeni weklabishi |
+| Ummbila | Amathanga, ubhontshisi, uphizi, ukhukhamba | — |
+| Umndeni ka-anyanisi | Izaqathe, ulethisi, ubhitrudi, umndeni weklabishi, utamatisi | Uphizi, ubhontshisi |
+| Uphizi | Izaqathe, ama-radish, amatheniphu, ummbila, ukhukhamba | Umndeni ka-anyanisi |
+| Amazambane | Ubhontshisi, ummbila, iklabishi | Utamatisi, isitshalo seqanda, upelepele, amathanga, ukhukhamba |
+| Ithanga, i-squash, i-butternut | Ummbila, ubhontshisi, ama-radish | Amazambane |
+| Utamatisi | I-basil, u-anyanisi, ama-chive, izaqathe, iparsley, ama-marigold | Amazambane, isitshalo seqanda |
 
-> **Qaphela:** Izinhlu ezindala (kuhlanganise nohlobo lokuqala lwale ncwadi) zibala izitshalo ezixosha ama-Japanese beetle, ama-Mexican bean beetle, ama-Colorado potato beetle, ama-squash bug nama-tomato hornworm. Lezi yizinambuzane zaseNyakatho Melika ezingatholakali eNingizimu ne-Afrika, ngakho azifakiwe lapha. I-rue ne-pyrethrum nazo azifakiwe: i-rue ingadala ukusha kwesikhumba okubuhlungu elangeni, kanti izimbali ze-pyrethrum ziwumthombo wesibulali-zinambuzane esinobuthi ezinyosini nasezinhlanzini.
-
-## Izitshalo eziheha izinambuzane eziwusizo
-
-Izimbali zondla izinambuzane ezilawula izinambuzane ezilimazayo. Tshala izitshalo ezixubile eziqhakaza ngezikhathi ezehlukene zonyaka, ukuze ukudla kuhlale kukhona. Izimbali eziningi zomdabu zaseNingizimu Afrika zinhle kakhulu kulokhu.
-
-| Isitshalo | Izinambuzane eziwusizo esiziheha |
-|---|---|
-| I-dill, i-coriander, i-caraway, i-anise ne-parsley eziqhakazayo | Ama-parasitoid wasp, ama-hoverfly, ama-ladybird, ama-lacewing |
-| Izaqathe eziyekwe ziqhakaze | Ama-parasitoid wasp, ama-hoverfly |
-| I-yarrow | Ama-parasitoid wasp, ama-hoverfly, ama-ladybird |
-| I-calendula (pot marigold) | Ama-hoverfly nezinye izinambuzane eziningi eziwusizo |
-| I-marigold yaseFrance ne-African marigold | Ama-hoverfly, ama-parasitoid wasp, ama-ladybird, izicabucabu |
-| I-cosmos | Ama-parasitoid wasp, ama-hoverfly, izimpukane ze-tachinid, izinyosi |
-| I-zinnia | Ama-ladybird, imiviyana nezimpukane ezi-parasitoid, izinyosi |
-| Ubhekilanga | Ama-hoverfly, ama-lacewing, ama-parasitoid wasp, izinyosi, ama-ladybird |
-| I-borage | Izinyosi namanye ama-pollinator, imiviyana, ama-praying mantis |
-| I-chamomile | Ama-hoverfly, ama-parasitoid wasp |
-| I-lemon verbena | Ama-praying mantis, ama-ladybird, imiviyana nezimpukane ezi-parasitoid |
-| I-lovage | Imiviyana; icashisa amabhungane omhlabathi |
-| I-lavender | Izinyosi |
-| I-spearmint eqhakazayo | Imiviyana nezimpukane ezizingelayo; icashisa izicabucabu |
-| I-purple coneflower (*Echinacea*) | Imiviyana, izimpukane eziwusizo, izicabucabu, ama-praying mantis |
-| I-dandelion | Ama-ladybird, izinyosi, imiviyana nezimpukane ezi-parasitoid |
-| I-land cress | Izinyosi; icashisa amabhungane omhlabathi nezicabucabu |
-| I-nasturtium | Icashisa amabhungane omhlabathi nezicabucabu; idonsela ama-aphid kude |
-| I-gazania (eyomdabu) | Ama-ladybird, izinambuzane ezizingelayo (predatory bugs), izinyosi |
-| Ama-African daisy (*Arctotis*, *Osteospermum*, *Dimorphotheca* zomdabu) | Umpe wezinambuzane eziningi eziwusizo |
-| I-pincushion flower (*Scabiosa* yomdabu) | Ama-hoverfly, izimpukane ze-tachinid, izinyosi |
-| Ama-everlasting omdabu (*Helichrysum*, imphepho) | Imiviyana nezimpukane ezi-parasitoid, izicabucabu |
-
-> **Qaphela:** I-cosmos ayikho ohlwini lwama-invasive species eNingizimu Afrika, kodwa isabalala kalula iye endle nasemaceleni emigwaqo. Sika izinhloko zezimbali ngaphambi kokuba ziwise imbewu uma uhlala eduze notshani bemvelo (grassland). I-goldenrod, i-tansy, i-sweet Annie ne-calliopsis ezisohlwini oludala azifakiwe ngoba zingaba ukhula, futhi isihlobo esiseduze se-calliopsis (*Coreopsis lanceolata*) siyi-invasive species esohlwini.
-
-## Omakhelwane abahle nabangebuhle
-
-Ithebula elingezansi livela kulokho abalimi abakubonile. Iningi lalo alikahlolwa ngokwesayensi. Iseluleko esisekelwe kakhulu wukugcina izitshalo **zomndeni ofanayo** zihlukene, ngoba zabelana ngezinambuzane nezifo. Isibonelo, amazambane, utamatisi, isitshalo seqanda (brinjal) nopelepele konke kuhlushwa ama-blight afanayo, izifo ezibunisayo (wilts) nama-nematode afanayo.
-
-| Isitshalo | Omakhelwane abahle | Ungazitshali eduze na- |
-|---|---|---|
-| Imbuya (amaranth, imifino, morogo) | U-anyanisi, amazambane, ummbila | — |
-| I-asparagus | Utamatisi, i-parsley, i-basil | U-anyanisi |
-| Ubhontshisi omfushane (bush beans) | Amazambane, ukhukhamba, ummbila, i-celery, iklabishi | U-anyanisi, ugalikhi, ama-leek, ama-chive |
-| Ubhontshisi okhuphukayo | Ummbila, izaqathe, isipinashi, ulethisi | U-anyanisi, ugalikhi, ama-leek, ama-chive, ubhitrudi, ubhekilanga |
-| Ubhitrudi | U-anyanisi, iklabishi, i-broccoli, ulethisi, i-kohlrabi | Ubhontshisi okhuphukayo |
-| Umndeni weklabishi (iklabishi, i-broccoli, ukholifulawa, ama-Brussels sprout, i-kohlrabi) | U-anyanisi, ugalikhi, i-celery, ubhitrudi, amazambane, ulethisi, isipinashi, amakhambi anephunga elimnandi, ubhontshisi omfushane, uphizi | Ama-strawberry, utamatisi, ubhontshisi okhuphukayo |
-| Isitshalo seqanda (brinjal, eggplant) | Ubhontshisi, uphizi, u-anyanisi, ulethisi | Amazambane, utamatisi (umndeni ofanayo) |
-| Izaqathe | Uphizi, ulethisi, ama-chive, u-anyanisi, ama-leek | — |
-| I-celery | Ama-leek, utamatisi, u-anyanisi, ukholifulawa, ulethisi | — |
-| Upelepele obabayo nopelepele omnandi | Izaqathe, u-anyanisi, ugalikhi, i-basil, i-parsley, ulethisi | I-fennel, umndeni weklabishi, amazambane |
-| Ukhukhamba | Ubhontshisi, ummbila, uphizi, ama-radish, i-celery | Amazambane, ubhekilanga |
-| Ummbila | Amathanga, ukhukhamba, ubhontshisi, uphizi, amazambane | — |
-| U-anyanisi, ugalikhi, ama-leek, ama-chive | Izaqathe, ulethisi, i-celery, ubhitrudi, umndeni weklabishi, utamatisi | Uphizi, ubhontshisi |
-| Ulethisi | Izaqathe, u-anyanisi, ugalikhi, ama-radish, ubhontshisi omfushane, i-cowpea | — |
-| Uphizi | Izaqathe, ama-radish, amatheniphu, ummbila, ukhukhamba | U-anyanisi, ugalikhi, ama-leek |
-| Amazambane | Ubhontshisi, ummbila, iklabishi | Utamatisi, isitshalo seqanda, upelepele (umndeni ofanayo); amathanga, i-squash, ukhukhamba, ubhekilanga |
-| Ithanga, i-squash, i-butternut | Ummbila, ubhontshisi, ama-radish, i-okra (idelele), uphizi | Amazambane |
-| I-radish | Uphizi, ulethisi, ukhukhamba, i-squash, iklabishi | — |
-| Isipinashi ne-Swiss chard | Uphizi, i-celery, u-anyanisi, ama-leek, umndeni weklabishi | — |
-| Ama-strawberry | Ubhontshisi, i-borage, isipinashi, ulethisi, u-anyanisi | Umndeni weklabishi |
-| Utamatisi | I-basil, ama-chive, u-anyanisi, i-asparagus, izaqathe, i-parsley, ama-marigold | Amazambane, isitshalo seqanda (umndeni ofanayo); i-fennel |
-| Amatheniphu | Uphizi | — |
-
-> **Icebiso:** Abalimi babika ukuthi i-fennel nobhekilanga kungabambezela ukukhula kwezinye izitshalo ezisondelene nakho. Kutshale emaphethelweni engadi esikhundleni sokukutshala maphakathi nombhede wemifino.
+> **Icebiso:** Abalimi bathola ukuthi ubhekilanga ubambezela ukukhula kwezitshalo eziseduze kwawo. Wutshale emaphethelweni engadi, lapho usondla khona izinyosi.
 
 ## Izifutho zezinambuzane ezenziwe ekhaya
 
-Izifutho ezenziwe ekhaya zisetshenziswa kuphela uma zonke ezinye izindlela zehlulekile. Ngisho nezifutho "zemvelo" zingabulala ama-ladybird, izinyosi nabanye abasizi osebenze kanzima ukubaheha. Fafaza kuphela izitshalo ezihlaselwe, futhi kuphela uma ukucosha ngesandla nezinye izindlela kunganele.
+Isifutho siyisinqumo sokugcina. Ngisho nesifutho "semvelo" sibulala ama-ladybird, ama-hoverfly nezinyosi osebenze kanzima ukuziheha. Ugalikhi, u-anyanisi nopelepele ikakhulu kuxosha izinambuzane kunokuzibulala, futhi iphunga liyaphela, ngakho isifutho kufanele siphindwe.
 
-Izitshalo eziningi ezinephunga elinamandla zingatshalwa zizungeze ingadi futhi zisetshenziswe ezifuthweni noma njenge-"mulch enephunga" ebekwa izungeze imifino. Ugalikhi, u-anyanisi nopelepele obabayo yizona ezivame kakhulu. Ikakhulukazi zixosha izinambuzane kunokuzibulala, futhi iphunga liyaphela, ngakho isifutho kufanele siphindwe.
+### Isifutho sikagalikhi, u-anyanisi nopelepele
 
-### Isifutho sikagalikhi, u-anyanisi nopelepele obabayo
-
-Lesi sifutho ikakhulukazi sixosha izinambuzane ezithambile njengama-aphid namacimbi amancane. Insipho isiza isifutho sinamathele emaqabungeni.
+Lesi sifutho sixosha izinambuzane ezithambile njengama-aphid namacimbi amancane. Insipho isiza ukuthi sinamathele emaqabungeni.
 
 Udinga:
 
-- u-anyanisi o-1 ophakathi nendawo
-- ama-clove angu-4 kagalikhi
-- izinkomishi ezi-2 zamaqabunga e-mint amasha (noma amaconsi angu-20 amafutha e-peppermint)
-- izipuni ezinkulu ezi-2 zikapelepele obabayo oyimpuphu noma i-cayenne pepper, noma isandla sikapelepele obabayo omusha
-- izipuni ezinkulu ezi-2 (30 ml) zensipho ewuketshezi engenamandla noma insipho yebha evamile encibilikisiwe
-- amalitha ama-3 amanzi
+- U-anyanisi o-1 ophakathi nendawo
+- Ama-clove kagalikhi ama-4
+- Izinkomishi ezi-2 zamaqabunga e-mint amasha, noma amaconsi angu-20 amafutha e-peppermint
+- Izipuni ezinkulu ezi-2 zempuphu kapelepele noma i-cayenne pepper, noma isandla sikapelepele obabayo omusha
+- Izipuni ezinkulu ezi-2 (30 ml) zensipho engamanzi ethambile, noma insipho yebha evamile encibilikiswe emanzini, engenayo i-bleach, isisusi samafutha noma iphunga elinamandla
+- Amalitha ama-3 amanzi
 
 Indlela:
 
-1. Gqoka amagilavu enjoloba futhi uvikele amehlo akho.
-2. Sika u-anyanisi, ugalikhi, i-mint nopelepele obabayo. Kuchoboze ngesigxobo nesigqa (mortar and pestle), noma ukugaye ku-blender nelitha elilodwa lamanzi.
-3. Shiya ingxube icwiliswe amahora ambalwa, imboziwe.
-4. Yihlunge ngendwangu ecolekile noma ngesisefo.
-5. Engeza amanzi asele (cishe amalitha ama-2) bese uxuba insipho kancane.
-6. Kuthele ebhodleleni lokufafaza elinelebula elicacile.
-7. Qala ukuhlola emaqabungeni ambalwa. Linda usuku olulodwa kuya kwezimbili. Uma amaqabunga ebonisa amabala ashile noma aphuzi, engeza amanzi amaningi ngaphambi kokukusebenzisa.
-8. Fafaza phezulu nangaphansi kwamaqabunga ezitshalo ezihlaselwe.
+1. Gqoka amagilavu enjoloba futhi ugcine izandla zakho kude namehlo. Upelepele nogalikhi kuyashisa.
+2. Qoba u-anyanisi, ugalikhi, i-mint nopelepele. Kuchoboze esigxotsheni nesigqa (mortar and pestle), noma ukugaye ngomshini wokugaya nelitha elilodwa lamanzi.
+3. Mboza bese ukuyeka kucwile amahora ambalwa.
+4. Hlunga ngendwangu ecolekile noma ngesihlungi.
+5. Engeza amanye amalitha ama-2 amanzi bese uxuba insipho kancane.
+6. Kuthele ebhodleleni lokufutha bese ubhala kulo. Ungalokothi ugcine isifutho ebhodleleni lesiphuzo noma lobisi.
+7. Kuhlole emaqabungeni ambalwa bese ulinda usuku olulodwa kuya kwezimbili. Uma amaqabunga ekhombisa amabala ashile noma aphuzi, engeza amanzi.
+8. Futha phezulu nangaphansi kwamaqabunga ezitshalo ezihlaselwe kuphela, ntambama noma kusihlwa lapho izinyosi seziyekile ukundiza. Ungafuthi izimbali ezivulekile, noma izitshalo ezibunile ekushiseni kwasemini.
 
-Kusebenzise kanye noma kabili ngesonto, naphinde ngemva kwemvula enamandla. Yenza okusha isikhathi ngasinye; kuyonakala phakathi kwezinsuku ezimbalwa.
+Kusebenzise kanye noma kabili ngesonto, nangemva kwemvula enkulu. Yenza okusha njalo, futhi ugeze imifino efuthiwe ngaphambi kokuyidla.
 
-> **Ukuphepha:** Izifutho zikapelepele obabayo nezikagalikhi zishisa amehlo nesikhumba. Gqoka amagilavu nokuvikela amehlo (izibuko zelanga noma ama-goggle) futhi ungathinti ubuso bakho ngenkathi usebenza. Ungafafazi ngosuku olunomoya. Gcina izingane nezilwane kude. Gcina isifutho ebhodleleni elinelebula, lapho izingane zingasifinyeleli khona, futhi ungalokothi usigcine ebhodleleni likakhukhunathi noma lobisi. Geza kahle yonke imifino efafaziwe ngaphambi kokuyidla.
-
-> **Ukuphepha:** Vikela izinyosi. Fafaza ntambama noma kusihlwa, lapho izinyosi seziyekile ukundiza, futhi ungafafazi izimbali ezivulekile. Insipho nopelepele obabayo kungabulala nezibungu zama-ladybird nezama-hoverfly, ngakho fafaza kuphela izitshalo ezihlaselwe.
-
-> **Icebiso:** Sebenzisa insipho engenamandla, evamile, engenayo i-bleach, isisusi samafutha (degreaser) noma iphunga elinamandla. Uketshezi lokugeza izitsha olunamandla lungashisa amaqabunga. Ungafafazi ngesikhathi sokushisa kwemini noma ezitshalweni ezibunile ngenxa yesomiso.
-
-### Ungasenzi isifutho sikagwayi
-
-Abanye abalimi bacwilisa ugwayi, ugwayi wokuhogela noma iziphundu zikagwayi emanzini ukuze benze isifutho. **Ungakwenzi lokhu.** I-nicotine esegwayini ingubuthi obunamandla. Ingena kalula esikhunjeni futhi ingamthelela ubuthi kakhulu, noma imbulale, umuntu ofafazayo, ikakhulukazi ingane eyiphuzayo. Inobuthi obukhulu nasezinyosini nakwezinye izinambuzane eziwusizo, ezilwaneni ezifuywayo nasezinhlanzini. I-nicotine ayisavunyelwa njengesibulali-zinambuzane emazweni amaningi ngoba iyingozi kakhulu.
-
-> **Ukuphepha:** Ungalokothi wenze izifutho ngogwayi, ngamajikijolo e-syringa, nge-moonflower (*Datura*, iloyi) noma ngezinye izitshalo ezinobuthi. Uma umuntu egwinya noma yisiphi isifutho sasengadini, yana emtholampilo ngokushesha futhi uphathe ibhodlela.
+I-nicotine ifaka ushevu ebantwini nasezilwaneni kanye nasezinambuzaneni, ngakho asenzi isifutho sikagwayi noma sikagwayi wokubhema ngekhala. Idlula esikhumbeni somuntu ofuthayo, futhi ingane ekuphuzayo ingafa. Futhi asenzi izifutho ngamajikijolo e-syringa noma ngeloyi (*Datura*), nazo ezinoshevu.
 
 ## I-crop rotation
 
-I-crop rotation isho ukushintsha isitshalo esitshalwa endaweni efanayo kusuka kwesinye isizini kuya kwesinye. Ekulimeni kwemvelo (organic), i-crop rotation ingenye yezindlela eziyinhloko zokuvimbela izinambuzane nezifo.
+**I-crop rotation** kusho ukuhambisa umndeni ngamunye wezitshalo uwuyise embhedeni ohlukile isizini ngayinye, ukuze izinambuzane nezifo zinganqwabelani. Tshala isitshalo esifanayo endaweni efanayo unyaka nonyaka, umhlabathi ulahlekelwa yizakhamzimba ezifanayo njalo, kanti izinambuzane zomhlabathi zimane zilinde ukudla kwazo kubuye. I-crop rotation inqamula umjikelezo wempilo yazo futhi ivumele umhlabathi ululame.
 
-Uma utshala isitshalo esifanayo endaweni efanayo unyaka nonyaka:
+### Ukushintshanisa ngomndeni wezitshalo
 
-- umhlabathi ulahlekelwa yizakhamzimba ezifanayo njalo
-- izinambuzane nezifo ezihlala emhlabathini ziyanda, futhi zidlulela kusuka kwesinye isizini kuya kwesinye
-
-I-crop rotation inqamula umjikelezo wempilo wezinambuzane nezifo, ivumela umhlabathi ululame, futhi isebenzisa i-nitrogen eshiywa **ama-legume** (izitshalo zohlobo lukabhontshisi).
-
-Kunezindlela ezimbili eziyinhloko zokuhlela i-crop rotation.
-
-### I-crop rotation ngomndeni wezitshalo
-
-Izitshalo zomndeni ofanayo ngokuvamile zidinga izakhamzimba ezifanayo futhi zihlushwa yizinambuzane nezifo ezifanayo. Ngakho sihambisa umndeni ngamunye siwuyise embhedeni omusha isizini ngayinye, futhi silinde okungenani iminyaka emithathu, noma kangcono emine, ngaphambi kokuba umndeni ofanayo ubuyele embhedeni ofanayo.
-
-Faka isitshalo se-legume okungenani kanye ezinkathini ezine. I-crop rotation elula yemibhede emine ingaba kanje:
+Izitshalo zomndeni owodwa zidinga ukudla okufanayo futhi zihlupheka ngezinambuzane ezifanayo. Linda okungenani iminyaka emithathu, kangcono emine, ngaphambi kokuba umndeni ubuyele embhedeni. I-crop rotation elula yemibhede emine:
 
 1. **Unyaka 1:** umndeni weklabishi (isibonelo iklabishi)
-2. **Unyaka 2:** umndeni wesaqathe noma izitshalo zezimpande (isibonelo izaqathe)
-3. **Unyaka 3:** ama-legume (isibonelo ubhontshisi)
+2. **Unyaka 2:** umndeni wesaqathe noma izimpande (isibonelo izaqathe)
+3. **Unyaka 3:** umndeni kabhontshisi (isibonelo ubhontshisi)
 4. **Unyaka 4:** umndeni ka-anyanisi (isibonelo u-anyanisi)
 
-Le ndlela isebenza kahle kubalimi bezohwebo abatshala uhlobo olulodwa lwemifino embhedeni ngamunye.
+Lokhu kufanele abalimi abatshala isitshalo esisodwa embhedeni ngamunye.
 
 | Umndeni | Izitshalo |
 |---|---|
-| Umndeni weklabishi (Brassicaceae) | Iklabishi, ukholifulawa, i-broccoli, iklabishi lesiShayina (Chinese cabbage), i-kale, i-rape, i-mustard greens, itheniphu, i-radish |
-| Umndeni katamatisi (Solanaceae) | Utamatisi, amazambane, upelepele omnandi, upelepele obabayo, isitshalo seqanda (eggplant) |
-| Umndeni wesaqathe (Apiaceae) | Izaqathe, i-celery, i-parsley, i-coriander, i-dill |
-| Umndeni kabhitrudi nembuya (Amaranthaceae) | I-Swiss chard, ubhitrudi, isipinashi, imbuya (imifino, morogo) |
-| Umndeni wethanga (Cucurbitaceae) | Ukhukhamba, amathanga, i-butternut, i-squash, ama-melon, amakhabe |
-| Umndeni we-legume noma kabhontshisi (Fabaceae) | Uphizi, ubhontshisi, i-cowpea, amantongomane, izindlubu (jugo beans, Bambara groundnuts), ubhontshisi we-soya |
-| Umndeni ka-anyanisi (Amaryllidaceae) | U-anyanisi, ama-leek, ugalikhi, u-anyanisi oluhlaza (spring onions), ama-chive |
-| Umndeni wotshani (Poaceae) | Ummbila, ummbila omnandi (sweetcorn), amabele, unyawothi |
-| Eminye imindeni | Ulethisi (umndeni we-daisy), ubhatata (umndeni we-morning glory), i-okra (umndeni we-hibiscus), i-asparagus |
+| Umndeni weklabishi | Iklabishi, i-cauliflower, i-broccoli, i-kale, i-rape, i-mustard greens, itheniphu, i-radish |
+| Umndeni katamatisi | Utamatisi, amazambane, upelepele, upelepele obabayo, isitshalo seqanda |
+| Umndeni wesaqathe | Izaqathe, i-celery, iparsley, i-coriander, i-dill |
+| Umndeni kabhitrudi | I-Swiss chard, ubhitrudi, isipinashi, imbuya (imifino) |
+| Umndeni wethanga | Ukhukhamba, amathanga, i-butternut, i-squash, ama-melon, amakhabe |
+| Umndeni kabhontshisi (ama-legume) | Uphizi, ubhontshisi, ama-cowpea, amantongomane, izindlubu, ubhontshisi we-soya |
+| Umndeni ka-anyanisi | U-anyanisi, i-leek, ugalikhi, u-anyanisi oluhlaza, ama-chive |
+| Umndeni wotshani | Ummbila, ummbila omnandi (sweetcorn), amabele, unyawothi |
 
-> **Icebiso:** Amazambane angabomndeni katamatisi. Ungatshali amazambane lapho kwakukhula khona utamatisi, upelepele noma isitshalo seqanda esizini edlule, noma okuphambene nalokho. Lapho i-bacterial wilt (isifo samagciwane esibunisa izitshalo) noma ama-nematode eyinkinga, shiya isikhathi eside nakakhulu.
+Amazambane angawomndeni katamatisi. Ungalokothi ulandelise utamatisi, upelepele noma isitshalo seqanda ngamazambane, noma okuphambene nalokho. Lapho i-bacterial wilt noma ama-nematode eyinkinga, shiya ikhefu elide nakakhulu.
 
-### I-crop rotation ngezidingo zokudla
+### Ukushintshanisa ngokuya ngokudla okudingekayo
 
-Singahlukanisa futhi izitshalo ngokuthi zithatha ukudla okungakanani emhlabathini:
+Singahlukanisa izitshalo nangokuthi zilambe kangakanani:
 
-- **Izitshalo ezidla kakhulu** zidinga umhlabathi ovundile. Izibonelo: iklabishi, i-broccoli, ukholifulawa, ummbila, utamatisi, amazambane, amathanga ne-butternut.
-- **Izitshalo ezidla ngokulinganisela nezidla kancane** zidinga okuncane. Izibonelo: ulethisi, i-Swiss chard, izaqathe, ubhitrudi, u-anyanisi, ugalikhi nama-radish.
-- **Izitshalo ezakha umhlabathi** yi-legume: ubhontshisi, uphizi, i-cowpea, amantongomane nobhontshisi obubanzi (broad beans). Amagciwane asemaqhubwini amancane (ama-nodule) asezimpandeni zawo athatha i-nitrogen emoyeni ayenze itholakale ezitshalweni.
+- **Izitshalo ezidla kakhulu** zidinga umhlabathi ovundile: iklabishi, i-broccoli, i-cauliflower, ummbila, utamatisi, amazambane, amathanga ne-butternut.
+- **Izitshalo ezidla kancane naphakathi** zidinga okuncane: ulethisi, i-Swiss chard, izaqathe, ubhitrudi, u-anyanisi, ugalikhi nama-radish.
+- **Izitshalo ezakha umhlabathi** zingama-**legume**, izitshalo zomndeni kabhontshisi: ubhontshisi, uphizi, ama-cowpea, amantongomane nobhontshisi obanzi. Amagciwane asezigaxaneni ezincane (ama-nodule) ezimpandeni zawo athatha i-nitrogen emoyeni futhi ayenze itholakale ezitshalweni.
 
-I-crop rotation elula yezinyathelo ezintathu yile:
+Shintshanisa ngezinyathelo ezintathu:
 
-1. Tshala izitshalo ezidla kakhulu ngemva kwesitshalo se-legume, noma ngemva kokufaka i-compost eningi noma umquba wezilwane omningi.
-2. Bese utshala izitshalo ezidla kancane.
-3. Bese utshala ama-legume ukuze wakhe kabusha umhlabathi, bese uqala futhi.
+1. Tshala izitshalo ezidla kakhulu ngemva kwama-legume, noma ngemva kwe-compost (izinsalela zezitshalo nezilwane ezibolile) eningi noma umquba.
+2. Zilandelise ngezitshalo ezidla kancane.
+3. Bese utshala ama-legume ukwakha kabusha umhlabathi, bese uqala futhi.
 
-Lokhu kuvimba ukuthi izakhamzimba ezifanayo ziphele isizini ngayinye. Kufanele futhi imibhede exubile enezitshalo eziningana (intercropping). Khetha iqembu lezitshalo ezisizanayo esigabeni ngasinye bese uhambisa iqembu ngokulandela i-crop rotation yezinyathelo ezi-3 noma ezi-4.
+Lokhu kufanele imibhede exubile: hambisa iqembu lezitshalo ezingomakhelwane ezinyathelweni ndawonye.
 
-> **Qaphela:** Iningi le-nitrogen ebophwa ama-legume lingena embewini yawo. Uma uvuna ubhontshisi owomile noma amantongomane, iningi layo liyaphuma ensimini. Ukuze wondle umhlabathi, shiya izimpande emhlabathini futhi ubuyisele amaqabunga neziqu embhedeni noma enqwabeni ye-compost.
+Iningi le-nitrogen i-legume eyibophayo liya embewini yayo futhi lihambe nesivuno. Shiya izimpande emhlabathini bese ubuyisela iziqu namaqabunga embhedeni noma enqwabeni ye-compost.
+
+## Zama lokhu
+
+Hlola umbhede owodwa kuleli sonto, uhlangane nezidalwa owabelana nazo ngawo.
+
+1. Khetha umbhede owodwa wemifino. Thatha incwajana.
+2. Hamba kancane eceleni kwawo ekuseni kakhulu noma kusihlwa. Phendula amaqabunga ayishumi esitshalo ngasinye.
+3. Bhala sonke isidalwa osibonayo, esilimazayo noma esisizayo. Dweba lezo ongazazi amagama.
+4. Bhala noma yimuphi umonakalo: izimbobo, amafasitela, amaqabunga agoqekile, izithombo ezisikiwe, indle emlonyeni wommbila.
+5. Kuso sonke isinambuzane esilimazayo, khetha isinyathelo sokuqala kulesi sahluko bese usenza namuhla.
+6. Hlwanyela umugqa omfushane we-coriander, i-dill noma ama-marigold ekugcineni kombhede.
+7. Phinda uhlole umbhede ofanayo ngemva kwesonto bese uqhathanisa amanothi akho.
 
 ## Amaphuzu amqoka
 
-- Izinambuzane ziyingxenye ye-ecosystem. Ukuqhamuka kwazo ziziningi kuwuphawu lokungalingani: lungisa imbangela, hhayi uphawu kuphela.
-- Izifutho zobuthi zibulala ama-predator kanye nezinambuzane ezilimazayo, futhi kaningi zenza izinkinga zezinambuzane zibe zimbi kakhulu.
-- Hlola izitshalo zakho kabili ngesonto, uzazi izinambuzane kusenesikhathi, futhi uzisuse ngesandla lapho ungakwazi khona.
-- Funda izinambuzane eziyinhloko zendawo: ama-aphid, i-cutworm, i-African bollworm, i-diamond-back moth, i-fall armyworm, izimpukane zezithelo, iminenke namavukuzi.
-- Khuthaza ama-predator ngezimbali, amanzi, i-mulch, amatshe nendawo yasendle.
-- I-companion planting iyasiza, kodwa izinto eziningi ezishiwoyo zibikwa ngabalimi kuphela. Ama-trap crop nezimbali zama-predator zinobufakazi obungcono kakhulu.
-- Gcina izitshalo zomndeni ofanayo zihlukene, futhi ushintshanise imindeni ukuze kungabikho obuyela embhedeni ofanayo iminyaka emithathu kuya kwemine.
-- Sebenzisa izifutho ezenziwe ekhaya kuphela uma zonke ezinye izindlela zehlulekile, gqoka amagilavu nokuvikela amehlo, futhi ufafaze kusihlwa kude nezimbali.
-- Ungalokothi wenze noma usebenzise isifutho sikagwayi (i-nicotine).
+- Ukwanda okukhulu kwezinambuzane kuwuphawu lokungalingani. Yelapha imbangela, hhayi uphawu kuphela.
+- Ushevu ubulala ama-predator kanye nezinambuzane ezilimazayo, futhi kaningi wenza inkinga ibe mbi kakhulu.
+- Hlola kabili ngesonto, uthole izinambuzane kusenesikhathi bese uzisusa ngesandla, ngezivimbelo noma nge-trap crop.
+- Yondla abasizi ngezimbali, amanzi, i-mulch namatshe, futhi ugcine imindeni efanayo yezitshalo ihlukene futhi ihlala ihamba.
+- Futha kuphela njengesinqumo sokugcina, kusihlwa futhi kude nezimbali. Asilokothi senze isifutho sikagwayi.
+
+Isizini ngesizini, uhlu lwabasizi encwajaneni yakho luya ngokuba lude. Lubuke lukhula, bese uyeka isifutho sigcwale uthuli.

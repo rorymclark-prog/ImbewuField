@@ -1,35 +1,41 @@
 # Isingeniso
 
-Le ncwadi iyisiqondiso esisebenzayo **se-permaculture** (indlela yokulima nokuhlala esebenzisana nemvelo, ehlala isikhathi eside) sabalimi abancane nabalimi basemizini eNingizimu ne-Afrika. Yaqala ukubhalwa njengencwadi yesifundo sokuqeqeshwa nge-permaculture esithatha izinsuku ezinhlanu. Ungayisebenzisa kanye nesifundo, noma uyisebenzise wedwa.
+Abalimi abancane abacebe kakhulu akuvamile ukuba yilabo abanomhlaba omkhulu. Yilabo abanomhlaba obasebenzelayo: umhlabathi obamba amanzi, izihlahla ezondlayo nezinika umthunzi, nezilwane ezivundisa umhlaba.
 
-Inhloso ukukusiza ukuba uqale uhambo lwakho lwe-permaculture. Le ncwadi ikuhambisa ezisekelweni zokuklama nge-permaculture, nokuthi uhlele kanjani ingadi noma ipulazi lakho, ukuze umsebenzi wakho nezinsiza zakho kufike kude. Ikhuluma futhi ngokwakha umhlabathi, ukuvunwa kwamanzi, izilwane, izihlahla nokulawula izinambuzane ngendlela yemvelo. Izindlela eziningi zazo ungazisebenzisa khona manjalo ukuze uthuthukise ukuvunda nesivuno sengadi yakho.
+Yilokho **i-permaculture** (indlela yokulima nokuhlala esebenzisana nemvelo, ehlala isikhathi eside) enikeza umlimi waseNingizimu ne-Afrika. Imvula yethu ayiqinisekile, isomiso siya ngokuba side, futhi imbewu, umanyolo nezifutho esizithengayo kuyabiza. I-permaculture iphendula ngomklamo: sibheka ukuthi imvelo isebenza kanjani, bese sihlela ipulazi ukuze amanzi, umhlabathi, izitshalo nezilwane kusekelane, sisebenzisa ikakhulu lokho esekukhona emhlabeni.
 
-Izindlela eziningi zisebenzisa lokho osunakho emhlabeni wakho, ngakho zikusiza wehlise izindleko zokuthenga imbewu, umanyolo namakhemikhali. Uma ulima okungaphezu kwalokho umndeni wakho okudingayo, le ncwadi inemibono yokuthengisa okusele noma ukwenyusa inani lakho.
+UBill Mollison, omunye wabasunguli be-permaculture, wakusho kalula: "Uguquko olukhulu okufanele silwenze ukusuka ekudleni okuthengiwe siye ekukhiqizeni, noma kungaba kancane, ezingadini zethu."
 
-Sithemba ukuthi uzoyithokozela le ncwadi, nokuthi izokugqugquzela endleleni yakho eya enalweni.
+**Ekupheleni kwalesi singeniso uzokwazi:**
 
-> **Qaphela:** "Uguquko olukhulu okufanele silwenze ukusuka ekudleni okuthengiwe siye ekukhiqizeni, noma kungaba kancane, ezingadini zethu." — Bill Mollison, omunye wabasunguli be-permaculture.
+- Ukusho ukuthi kungani i-permaculture ifanele ipulazi elincane eNingizimu ne-Afrika
+- Ukuthola isahluko somsebenzi ophambi kwakho
+- Ukwazi lapho ungabheka khona igama elisha
 
-## Lapho le ncwadi ivela khona
+## Le ncwadi ingeyabani
 
-Le ncwadi yahlanganiswa nguRory Clark. Yaqala ukubhalwa njenge-*The Permaculture Gardening Handbook* ukuze kuqeqeshwe nge-permaculture ephrojekthini ethi Reducing Vulnerability from Climate Change (RVCC), eyayiqhutshwa yi-UNDP noHulumeni waseLesotho ngo-2020–2021. Manje isihloliwe, yavuselelwa futhi yashintshelwa iNingizimu Afrika nesifunda sonke saseNingizimu ne-Afrika.
+Ingeyabalimi abancane nabalimi basemizini eNingizimu ne-Afrika, kanye nabeluleki, abafundi nabasebenzi basenkundleni abasebenza eceleni kwabo. Udinga isiqeshana somhlaba, noma singaba sincane kangakanani, kanye nentando yokuqala.
 
-Izingxenye zale ncwadi zithathwe encwadini ye-African Conservation Trust (ACT) ethi *Introduction to Permaculture and Homestead Gardening* (2014). Zisetshenziswe futhi zashintshwa ngemvume.
+## Le ncwadi ivelaphi
+
+Le ncwadi yahlanganiswa nguRory Clark. Yaqala njenge-*The Permaculture Gardening Handbook* yesifundo sokuqeqesha sephrojekthi ethi Reducing Vulnerability from Climate Change (RVCC), eyayiqhutshwa yi-UNDP noHulumeni waseLesotho ngo-2020 nango-2021. Kusukela lapho isihloliwe futhi yashintshelwa iNingizimu Afrika.
+
+Izingxenye zayo zithathwe, ngemvume, encwadini ye-African Conservation Trust ethi *Introduction to Permaculture and Homestead Gardening* (2014), zashintshwa.
 
 ## Indlela yokusebenzisa le ncwadi
 
-- **Funda isahluko esisodwa ngesikhathi.** Isahluko ngasinye siyazimela. Qala ngesahluko 1 (Iyini i-permaculture?) nesahluko 2 (Ukuhlela ipulazi lakho). Zichaza imibono ezakhelwa phezu kwayo ezinye izahluko.
-- **Zama into eyodwa, bese kulandela enye.** Khetha indlela eyodwa ongayenza kule sizini, njengenqwaba **ye-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi) noma umbhede ofakwe **i-mulch** (isembozo somhlabathi sotshani obomile noma amaqabunga). Buka ukuthi isebenza kanjani ngaphambi kokuthi wengeze okunye.
-- **Bheka amabhokisi.** Amabhokisi abhalwe ukuthi **Ukuphepha** akuxwayisa ngezingozi zangempela kubantu, ezilwaneni noma emvelweni. Wafunde njalo. Amabhokisi abhalwe ukuthi **Icebiso** noma **Qaphela** anikeza usizo olwengeziwe.
-- **Hlola "Amaphuzu amqoka".** Isahluko ngasinye siphela ngohlu olufushane lwemibono esemqoka. Lusebenzise ukuze uphinde ufunde, noma uchazele abanye ngesahluko.
-- **Kulungise kufane nendawo yakho.** INingizimu ne-Afrika inezimo zezulu eziningi. Ingxenye enkulu yangaphakathi kweNingizimu Afrika ithola imvula ehlobo, ibe nobusika obubandayo nobomile, imvamisa kube nesithwathwa eHighveld. INtshonalanga Kapa ithola imvula eningi ebusika. Shintsha izikhathi zokutshala zihambisane nenkathi yemvula yakini, futhi ubuze abalimi bendawo nabeluleki bezolimo bendawo ukuthi yini esebenzayo endaweni yakini.
-- **Khumbula ukuthi ilanga lisenyakatho.** ENingizimu ne-Afrika ilanga lihamba engxenyeni esenyakatho yesibhakabhaka. Imithambeka nezindonga ezibheke enyakatho yizo ezifudumele kakhulu nezithola ilanga kakhulu; lezo ezibheke eningizimu zipholile futhi zinomthunzi omningi.
-- **Khetha ezinye izilimi uma uzidinga.** Le ncwadi itholakala nangesiZulu, isiSuthu, isiVenda nesiTsonga. Lezi zinguqulo zisengamadrafti asahlolwa izikhulumi ezisazi kahle lezo zilimi, ngakho qhathanisa nesiNgisi uma kukhona okungacacile.
+1. **Qala ngemibono.** Isahluko 1 sichaza i-permaculture nezimiso zayo eziyishumi nambili. Izahluko 2 no-3 zikhombisa ukuthi uhlela kanjani ipulazi lakho ngokubheka ilanga, umoya, amanzi nomlilo.
+2. **Bese uya emsebenzini.** Izahluko 4 kuya ku-11 zikhuluma ngezitshalo, izilwane, izihlahla, amanzi, umhlabathi, imvelo, izinambuzane nekhaya. Isahluko ngasinye siyazimela, futhi siphela ngomsebenzi othi "Zama lokhu".
+3. **Zama into eyodwa ngesikhathi.** Yibuke isebenza ngaphambi kokuthi wengeze elandelayo.
+4. **Sebenzisa uHlu lwamagama.** Amagama obuchwepheshe afana ne-**swale** ne-**mulch** achazwa okokuqala uma evela, futhi onke ndawonye eHlwini lwamagama ekugcineni.
+5. **Thola amanothi ekugcineni.** Amanothi ngomthetho nangokugcina abantu nezilwane bephephile aqoqwe endaweni eyodwa ngemuva kwencwadi.
+
+Le ncwadi itholakala nangesiZulu, isiSuthu nesiVenda, njengamadrafti asahlolwa yizikhulumi ezazi kahle lezo zilimi. Uma kukhona okungacacile, qhathanisa nesiNgisi.
 
 ## Amaphuzu amqoka
 
-- Le ncwadi iyisiqondiso esisebenzayo, esihamba isinyathelo ngesinyathelo, se-permaculture sabalimi abancane baseNingizimu ne-Afrika.
-- Yahlanganiswa nguRory Clark futhi ingxenye yayo ishintshwe ngemvume encwadini ye-African Conservation Trust ethi *Introduction to Permaculture and Homestead Gardening* (2014).
-- Qala kancane: funda isahluko esisodwa, zama indlela eyodwa, ubuke, bese wakha phezu kwayo.
-- Njalo funda amabhokisi e-**Ukuphepha**.
-- Shintsha izikhathi nezindlela zihambisane nenkathi yemvula yakini nezimo zendawo yakho.
+- I-permaculture yakha ipulazi elikondlayo ezinkathini ezinzima, ngomklamo, hhayi ngezinto ezithengwayo.
+- Qala ngezahluko 1 kuya ku-3, bese uya esahlukweni osidingayo.
+- Amagama amasha aseHlwini lwamagama; amanothi ngomthetho nokuphepha asekugcineni.
+
+Qala lapho umi khona. Isahluko 1 siqala ngemibono ebamba konke ndawonye.
