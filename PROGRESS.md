@@ -54,7 +54,7 @@ must provision — not buildable from code alone).
 
 ### 2026-09-27 (Permaculture Manual — second edition in Rory's voice)
 - **What:** the English manual rewritten in Rory's teaching voice (`research/manual/VOICE.md`,
-  from his Style Engine) and cut from 55,370 to 37,858 words (print: 257 → 149 A4 pages). Every
+  from his Style Engine) and cut from 55,370 to 37,858 words (print: 257 → 214 A4 pages). Every
   chapter opens with WHY, lists what the reader will be able to do, has one hands-on "Try it",
   a short Key points list and a forward-looking close. SA words throughout (morogo, mielies,
   veld, pikmatok). Brief: `research/manual/REWRITE.md`.
