@@ -50,7 +50,9 @@ const FAMILY: AutoSuggestAnswers = {
   reliableIrrigation: true,
 } as AutoSuggestAnswers;
 
-test('auto-suggest refuses to invent a production plan until reliable irrigation is confirmed', () => {
+test('auto-suggest refuses to invent a production plan without irrigation or the site\'s own climate', () => {
+  // No siteMonthlyRainMm/TempC here, so no rain-fed plan either
+  // (tests/crop-climate-gate.test.ts covers the rain-fed path).
   for (const reliableIrrigation of [undefined, false]) {
     const result = autoSuggestPlan(
       { ...FAMILY, reliableIrrigation },
@@ -697,4 +699,21 @@ test('commercial concentration does not invent a universal plants-across cutoff 
   );
   assert.ok(result.plantings.some((planting) => planting.bedId === 'wide'));
   assert.doesNotMatch(noteText(result).join(' '), /too narrow|measured width/i);
+});
+
+test('few big harvests re-sows a crop after its harvest ends instead of leaving the ground bare', () => {
+  // Before 2026-09-27 few-big placed ONE cohort per crop and stopped, so an
+  // August plan on nine beds used 53.7% of bed-months. Follow-on rounds now
+  // add each crop's next big sowing once its previous one is harvested.
+  const res = autoSuggestPlan({
+    goal: 'family', householdSize: 'medium', groups: [], rhythm: 'few-big',
+    rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
+  }, 'summer', NINE_BEDS, [], 8);
+  const use = buildFieldUtilizationByMonth(res.plantings, NINE_BEDS, 8, 12);
+  const mean = use.reduce((sum, value) => sum + value, 0) / use.length;
+  assert.ok(mean >= 0.7, `few-big bed-month use fell to ${(mean * 100).toFixed(1)}%`);
+  const sowsOf = (key: string) => new Set(res.plantings.filter((p) => p.cropKey === key).map((p) => p.sowMonth));
+  assert.deepEqual([...sowsOf('green-beans')].sort((a, b) => a - b), [9, 12]);
+  assert.deepEqual([...sowsOf('carrots')].sort((a, b) => a - b), [2, 8]);
+  assert.ok(noteText(res).some((text) => /next sowing starts only after that harvest ends/.test(text)));
 });
