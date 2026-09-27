@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1163 files, 457.0 MB total.
+// 1169 files, 458.5 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -607,8 +607,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/en/slide-18.jpg': 833538,
   '/course-decks/food-forest/en/slide-19.jpg': 115313,
   '/course-decks/food-forest/en/slide-20.jpg': 103327,
+  '/course-decks/food-forest/st/slide-04.webp': 196006,
+  '/course-decks/food-forest/st/slide-08.webp': 473220,
   '/course-decks/food-forest/ts/slide-04.webp': 202992,
   '/course-decks/food-forest/ts/slide-08.webp': 474962,
+  '/course-decks/food-forest/ve/slide-04.webp': 196754,
+  '/course-decks/food-forest/ve/slide-06.webp': 260302,
   '/course-decks/food-forest/zu/slide-01.jpg': 386372,
   '/course-decks/food-forest/zu/slide-02.jpg': 95403,
   '/course-decks/food-forest/zu/slide-03.jpg': 88242,
@@ -1048,6 +1052,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/en/slide-16.jpg': 443907,
   '/course-decks/vegetables-staples/en/slide-17.jpg': 101251,
   '/course-decks/vegetables-staples/en/slide-18.jpg': 84363,
+  '/course-decks/vegetables-staples/ts/slide-13.webp': 340986,
+  '/course-decks/vegetables-staples/ts/slide-14.webp': 200778,
   '/course-decks/vegetables-staples/zu/slide-01.jpg': 93804,
   '/course-decks/vegetables-staples/zu/slide-02.jpg': 93317,
   '/course-decks/vegetables-staples/zu/slide-03.jpg': 63601,

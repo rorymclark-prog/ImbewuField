@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'fee0d9cd', changes: [
+    'Food Forest and Vegetables now show more regional draft slides with English beside them.',
+  ], tour: [
+    { title: 'Compare the regional Study drafts', where: 'Study → Food Forest Design or Vegetables & Staples', href: '/student',
+      detail: 'Choose Sesotho or Tshivenda for Food Forest slides 4 and 8 or 4 and 6. Choose Xitsonga for Vegetables slides 13 and 14. Each draft is marked unreviewed beside exact English; other slides and narration remain English. Select English source audio to listen.' },
+  ] },
   { when: '27 September 2026', sha: 'e0af86ae', changes: [
     'Food Forest lesson 1 now has two source-paired Xitsonga draft slides.',
   ], tour: [

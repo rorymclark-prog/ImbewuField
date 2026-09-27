@@ -4,7 +4,10 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
+import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
+import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const completeHold = (language = 'st') => ({
@@ -38,6 +41,17 @@ test('standard written Xitsonga uses the same exact source and paragraph pairing
   assert.throws(() => validatePairedDraft(completeHold('xh'), source, 'xh'), /language is unsupported/);
 });
 
+test('Tshivenda source pairing uses its native visible label and the same exact source checks', () => {
+  const draft = completeHold('ve');
+  assert.equal(pairedDraftLanguageLabel('st'), 'SESOTHO');
+  assert.equal(pairedDraftLanguageLabel('ts'), 'XITSONGA');
+  assert.equal(pairedDraftLanguageLabel('ve'), 'TSHIVENḒA');
+  assert.equal(validatePairedDraft(draft, source, 've').length, source.length);
+  draft.language = 'ts';
+  assert.throws(() => validatePairedDraft(draft, source, 've'), /language must be ve/);
+  assert.equal(pairedDraftLanguageLabel('xh'), null);
+});
+
 test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its current English narration', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/food-forest.ts.paired-draft.json', 'utf8'));
@@ -46,6 +60,75 @@ test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
   assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
+});
+
+test('Food Forest Sesotho narration only drafts the three existing low-risk L1 body sentences', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/food-forest.st.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'st');
+  const drafted = slides.flatMap((slide: any) => slide.target.body
+    .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean));
+  assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
+  assert.deepEqual(slides.flatMap((slide: any) => slide.target.heading.status), Array(20).fill('english-hold'));
+  assert.deepEqual([
+    slides[3].target.body[0].text,
+    slides[3].target.body[1].text,
+    slides[7].target.body[1].text,
+  ], [
+    'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.',
+    'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.',
+    'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.',
+  ]);
+  const lessonBody = SESOTHO_FOOD_FOREST_DRAFT.lessons[0].body;
+  const lessonEnglish = lessonBody.sourceEnglish.split('\n\n');
+  const lessonSesotho = lessonBody.sesothoDraft.split('\n\n');
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[3, 0, 0], [3, 1, 1], [7, 1, 11]]) {
+    assert.equal(slides[slideIndex].english.body[slideParagraph], lessonEnglish[lessonParagraph],
+      `slide ${slideIndex + 1} must use the exact lesson source sentence`);
+    assert.equal(slides[slideIndex].target.body[slideParagraph].text, lessonSesotho[lessonParagraph],
+      `slide ${slideIndex + 1} must reuse the existing Sesotho draft sentence`);
+  }
+  assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
+    part.status === 'draft' || part.status === 'english-hold')));
+});
+
+test('Tshivenda Food Forest slides hold care, ground-cover and habitat claims in English', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/food-forest.ve.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 've');
+  const drafted = slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean));
+  assert.deepEqual(drafted, ['4:1', '4:3', '4:4', '6:1']);
+  const lesson = TSHIVENDA_FOOD_FOREST_DRAFT.lessons[0].body;
+  const english = lesson.sourceEnglish.split('\n\n');
+  const translated = lesson.tshivendaDraft.split('\n\n');
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[3, 0, 0], [3, 2, 2], [3, 3, 3], [5, 0, 4]]) {
+    assert.equal(slides[slideIndex].english.body[slideParagraph], english[lessonParagraph]);
+    assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
+  }
+  assert.equal(slides[5].target.body[1].status, 'english-hold');
+  assert.equal(slides[12].target.body[0].status, 'english-hold');
+});
+
+test('Vegetables slides pair only existing Xitsonga resilience concepts with exact English', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'ts');
+  const drafted = slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean));
+  assert.deepEqual(drafted, ['13:6', '14:1', '14:2', '14:5']);
+  const lesson = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body;
+  const english = lesson.sourceEnglish.split('\n\n');
+  const translated = lesson.xitsongaDraft.split('\n\n');
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 1, 12], [13, 4, 15]]) {
+    assert.equal(slides[slideIndex].english.body[slideParagraph], english[lessonParagraph]);
+    assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
+  }
+  assert.equal(slides[13].target.body[2].status, 'english-hold');
+  assert.equal(slides[13].target.body[3].status, 'english-hold');
 });
 
 test('a changed source sentence or heading blocks the entire paired draft', () => {
@@ -127,7 +210,7 @@ test('the paired layout preflights all 22 full source records without writing me
   }
 });
 
-test('the CLI preflights Xitsonga paired drafts and rejects unsupported paired languages', () => {
+test('the CLI preflights all supported paired languages and rejects unsupported languages', () => {
   const temp = mkdtempSync(join(tmpdir(), 'imbewu-paired-language-'));
   try {
     const json = join(temp, 'draft.json');
@@ -141,12 +224,22 @@ test('the CLI preflights Xitsonga paired drafts and rejects unsupported paired l
     assert.match(supported.stdout, /validated 22 source-paired slides/);
     assert.equal(existsSync(output), false);
 
+    const veDraft = join(temp, 've-draft.json');
+    writeFileSync(veDraft, JSON.stringify(completeHold('ve')));
+    const tshivenda = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 've', output,
+        '--paired-draft', veDraft, '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.equal(tshivenda.status, 0, tshivenda.stderr);
+    assert.match(tshivenda.stdout, /validated 22 source-paired slides/);
+    assert.equal(existsSync(output), false);
+
     const unsupported = spawnSync(process.execPath,
       ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'xh', output,
         '--paired-draft', json, '--validate-only'],
       { cwd: process.cwd(), encoding: 'utf8' });
     assert.notEqual(unsupported.status, 0);
-    assert.match(unsupported.stderr, /supports st and ts/);
+    assert.match(unsupported.stderr, /supports st, ts and ve/);
     assert.equal(existsSync(output), false);
   } finally {
     rmSync(temp, { recursive: true, force: true });

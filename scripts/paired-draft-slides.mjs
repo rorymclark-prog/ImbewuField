@@ -20,10 +20,20 @@ export function englishSlideRecords(raw) {
   });
 }
 
-const PAIRED_DRAFT_LANGUAGES = new Set(['st', 'ts']);
+export const PAIRED_DRAFT_LANGUAGE_LABELS = Object.freeze({
+  st: 'SESOTHO',
+  ts: 'XITSONGA',
+  ve: 'TSHIVENḒA',
+});
+
+export function pairedDraftLanguageLabel(language) {
+  return Object.hasOwn(PAIRED_DRAFT_LANGUAGE_LABELS, language)
+    ? PAIRED_DRAFT_LANGUAGE_LABELS[language]
+    : null;
+}
 
 export function validatePairedDraft(draft, source, language = 'st') {
-  if (!PAIRED_DRAFT_LANGUAGES.has(language)) {
+  if (!pairedDraftLanguageLabel(language)) {
     throw new Error(`Paired draft language is unsupported: ${language}`);
   }
   if (!draft || typeof draft !== 'object' || Array.isArray(draft)) throw new Error('Paired draft must be a JSON object');

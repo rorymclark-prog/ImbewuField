@@ -499,6 +499,29 @@ test('only source-paired Xitsonga Food Forest frames replace the English slide',
   }
 });
 
+test('regional Food Forest and Xitsonga vegetables decks expose only authored paired frames', () => {
+  const cases: [string, string, number[]][] = [
+    ['food-forest', 'st', [4, 8]],
+    ['food-forest', 've', [4, 6]],
+    ['vegetables-staples', 'ts', [13, 14]],
+  ];
+  for (const [moduleId, language, authored] of cases) {
+    const deck = COURSE_DECKS[moduleId];
+    assert.ok(deck.slideLanguages.includes(language));
+    for (const slide of deck.slides) {
+      const selected = slideImageFor(moduleId, language, slide.slide);
+      assert.ok(selected);
+      if (authored.includes(slide.slide)) {
+        assert.equal(selected.lang, language);
+        assert.match(selected.url, new RegExp(`/course-decks/${moduleId}/${language}/slide-\\d{2}\\.webp$`));
+        assert.ok(onDisk(selected.url), `missing paired image ${selected.url}`);
+      } else {
+        assert.equal(selected.lang, 'en', `${language} slide ${slide.slide} must retain its complete English source`);
+      }
+    }
+  }
+});
+
 test('deck arrows change slides only while the deck itself has plain-key focus', async () => {
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {

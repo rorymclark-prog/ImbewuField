@@ -33,7 +33,7 @@ import { homedir, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { englishSlideRecords, validatePairedDraft } from './paired-draft-slides.mjs';
+import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } from './paired-draft-slides.mjs';
 
 const argv = process.argv.slice(2);
 const imgFlag = argv.indexOf('--images');
@@ -60,8 +60,8 @@ if (!moduleId || !lang) {
   process.exit(1);
 }
 
-if (pairedPath && (!['st', 'ts'].includes(lang) || sourcePath || brandingPath || overridesPath || imagesDir)) {
-  throw new Error('--paired-draft supports st and ts with the authored English source only, without art or branding overrides');
+if (pairedPath && (!pairedDraftLanguageLabel(lang) || sourcePath || brandingPath || overridesPath || imagesDir)) {
+  throw new Error('--paired-draft supports st, ts and ve with the authored English source only, without art or branding overrides');
 }
 if (pairedArtPath && !pairedPath) throw new Error('--paired-art requires --paired-draft');
 if (validateOnly && !pairedPath) throw new Error('--validate-only requires --paired-draft');
@@ -255,6 +255,7 @@ writeFileSync(
     lessonArt,
     moduleNumber,
     pairedSlides,
+    pairedLanguageLabel: pairedPath ? pairedDraftLanguageLabel(lang) : null,
     pairedSourceSlides,
     pairedArtSlides: Object.keys(pairedArt).map(Number),
     validateOnly,
@@ -270,7 +271,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 cfg = json.load(open(sys.argv[1]))
 PAIRED = cfg.get('pairedSlides')
-PAIRED_LANGUAGE = {'st': 'SESOTHO', 'ts': 'XITSONGA'}.get(cfg.get('lang'), 'TARGET LANGUAGE')
+PAIRED_LANGUAGE = cfg.get('pairedLanguageLabel') or 'TARGET LANGUAGE'
 W, H = (1440, 5400) if PAIRED else (1920, 1080)
 
 # Palette read off the produced Seeds deck, which is the standard the rest of the course is

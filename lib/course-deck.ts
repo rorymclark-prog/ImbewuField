@@ -241,16 +241,22 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
   },
   'food-forest': {
-    slideLanguages: ['en', 'zu', 'ts'],
-    slideFormatsByLanguage: { ts: 'webp' },
-    slideAspectRatioByLanguage: { ts: 1440 / 5400 },
-    // The existing draft has only three safe conceptual paragraphs. Every other frame stays
-    // on its complete English teaching slide until a source-paired local review can extend it.
-    missingSlides: { ts: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    // Unreviewed concept drafts only: every absent frame falls back to the full English slide.
+    missingSlides: {
+      st: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ve: [1, 2, 3, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ts: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    },
     slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),
   },
   'vegetables-staples': {
-    slideLanguages: ['en', 'zu'],
+    slideLanguages: ['en', 'zu', 'ts'],
+    slideFormatsByLanguage: { ts: 'webp' },
+    slideAspectRatioByLanguage: { ts: 1440 / 5400 },
+    missingSlides: { ts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18] },
     slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },
   'soil-health': {
