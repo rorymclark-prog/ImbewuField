@@ -525,8 +525,11 @@ test('regional Food Forest and Xitsonga vegetables decks expose only authored pa
 test('regional Market and Tshivenda vegetables decks fall back to English for every unauthored frame', () => {
   const cases: [string, string, number[]][] = [
     ['market-community', 'st', [2, 5, 6]],
+    ['market-community', 've', [2, 3]],
     ['market-community', 'ts', [2, 18]],
+    ['vegetables-staples', 'st', [1, 2, 8, 9]],
     ['vegetables-staples', 've', [12, 14]],
+    ['soil-health', 'ts', [1, 2]],
   ];
   for (const [moduleId, language, authored] of cases) {
     const deck = COURSE_DECKS[moduleId];

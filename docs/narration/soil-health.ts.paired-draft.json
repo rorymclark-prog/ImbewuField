@@ -4,15 +4,14 @@
   "reviewStatus": "unreviewed",
   "provenance": {
     "newDrafts": "Slides 1 and 2, first sentence only. These are new machine-draft proposals, not present in the existing Xitsonga course draft.",
-    "reusedDrafts": "Slide 4, second full narration paragraph, copied exactly from lib/course-translation-drafts-ts-soil-health.ts.",
-    "holds": "All other headings and narration remain English. Slide 4 paragraph 1 is held as a whole because its other sentence makes a technical microbiology and nutrient-cycling claim."
+    "reusedDrafts": "None in learner frames. Slide 4 existing technical paragraph was held after semantic cross-check.",
+    "holds": "Every heading and all other narration remain English. Slide 4 technical microbiology and nutrient-uptake paragraphs are held as complete source paragraphs."
   },
   "reviewNotes": [
     "Slide 1 uses the broad word “Misava” for soil/ground; a fluent Xitsonga reviewer should check that the sentence is natural and preserves the source distinction.",
     "Slide 2 “Xiyimo xa misava xi khumba timitsu, mati ni ntshovelo” is a new machine draft of a general orientation claim; confirm the terms for soil condition and harvest in the intended written variety.",
-    "Slide 4 preserves “some” as “tin’wana” and “can help” as “ti nga pfuna.” “Ku tswonga nutrients” may be awkward or imprecise for root nutrient uptake. “Fungi,” “nutrients,” and “Worm channels” remain English technical vocabulary; check them with a fluent Xitsonga and soil-science reviewer.",
-    "All translated paragraphs are complete Xitsonga-syntax candidates; no English-hold sentence is embedded inside a paragraph marked draft. English remains exact and complete alongside every target field.",
-    "No Xitsonga fluency, comprehension, or local soil-science approval is claimed."
+    "No Xitsonga fluency, comprehension, or local soil-science approval is claimed.",
+    "Slide 4 remains exact English: the existing ku tswonga nutrients wording could misstate nutrient uptake and the worm-channel terms need fluent and local soil-science review."
   ],
   "slides": [
     {
@@ -119,21 +118,7 @@
             "status": "english-hold"
           },
           {
-            "status": "draft",
-            "text": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
-            "provenance": "full paragraph reused from lib/course-translation-drafts-ts-soil-health.ts; both source sentences are paired",
-            "segments": [
-              {
-                "sourceEnglish": "Some fungi help roots take up nutrients.",
-                "xitsongaDraft": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients.",
-                "provenance": "reused existing exact source pair"
-              },
-              {
-                "sourceEnglish": "Worm channels can help water and air enter soil.",
-                "xitsongaDraft": "Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
-                "provenance": "reused existing exact source pair"
-              }
-            ]
+            "status": "english-hold"
           },
           {
             "status": "english-hold"

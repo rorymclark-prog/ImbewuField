@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'c77f1739', changes: [
+    'More regional Study drafts now appear beside English.',
+  ], tour: [
+    { title: 'Compare the new Study drafts', where: 'Study → Vegetables & Staples, Market Gardening or Soil Health', href: '/student',
+      detail: 'Choose Sesotho for Vegetables slides 1, 2, 8 and 9; Tshivenda for Market slides 2 and 3; or Xitsonga for Soil slides 1 and 2. These are unreviewed AI drafts beside exact English. Other slides and narration remain English.' },
+  ] },
   { when: '27 September 2026', sha: 'f767fba9', changes: [
     'Market and Vegetables now show more regional draft slides beside English.',
   ], tour: [
