@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 September 2026', sha: '01807c13', changes: [
+  { when: '28 September 2026', sha: 'cbe046d9', changes: [
     'Plant Guilds adds Sesotho draft slides beside English.',
   ], tour: [
     { title: 'Review Plant Guilds drafts', where: 'Study → Plant Selection & Guilds', href: '/student',
