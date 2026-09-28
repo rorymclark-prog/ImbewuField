@@ -239,7 +239,9 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     missingSlides: {
       st: [1, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      ve: [1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      // The silent Tshivenda review deck pairs the three existing draft passages with exact
+      // English; every other heading and teaching paragraph stays visibly held in English.
+      ve: [],
       ts: [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20],
     },
     slides: slidesFromNarration('market-community', MARKET_ANIMATIONS),
