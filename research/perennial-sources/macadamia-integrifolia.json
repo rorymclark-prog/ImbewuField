@@ -1,0 +1,71 @@
+{
+  "speciesId": "macadamia-integrifolia",
+  "commonName": "Macadamia",
+  "botanicalName": "Macadamia integrifolia",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general — Mpumalanga, KwaZulu-Natal, Limpopo)",
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "evidence": {
+        "quote": "Macadamia trees typically take 7-9 years to reach maturity, with yields increasing for the next 15-20 years. Flowering begins in July, and nuts begin to develop by October, with harvest season running from March through June/July (see Table 2).",
+        "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=South+Africa%27s+Macadamia+Industry+Grows+Despite+Export+Uncertainty_Pretoria_South+Africa+-+Republic+of_SF2025-0023.pdf",
+        "doc": "USDA Foreign Agricultural Service (FAS), GAIN Report SF2025-0023, 'South Africa's Macadamia Industry Grows Despite Export Uncertainty', FAS Pretoria Post, 2025",
+        "page": 5
+      },
+      "notes": "The report's own 'Table 2: Typical Macadamia Marketing Year in South Africa' (same page) shades 'Harvesting' across Mar-Jun with a lighter continuation into Jul, matching the text's 'March through June/July'. This is a USDA attaché (FAS) report compiling local industry (SAMAC-sourced) data, not a South African government or grower-body document itself, but was used because SAMAC's and ARC-ITSC's own cultivation pages (samac.org.za technical library, arc.agric.za/arc-itsc/Pages/Macadamia.aspx, nda.agric.za) were unreachable (503/404/membership-gated) during this research pass — see gaps."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "SAMAC's own information-hub page (via an AI-summarized fetch, not independently re-confirmed verbatim) suggested grafted trees can produce 'as early as 3 to 5 years, depending on the variety', but this could not be independently verified against the page's raw text (the FAQ page itself 404'd on direct fetch), so per the sourcing rules it is not used as evidence here and is left null."
+  },
+  "yearsToFullBearing": {
+    "value": [
+      7,
+      9
+    ],
+    "evidence": {
+      "quote": "Macadamia trees typically take 7-9 years to reach maturity, with yields increasing for the next 15-20 years.",
+      "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=South+Africa%27s+Macadamia+Industry+Grows+Despite+Export+Uncertainty_Pretoria_South+Africa+-+Republic+of_SF2025-0023.pdf",
+      "doc": "USDA Foreign Agricultural Service (FAS), GAIN Report SF2025-0023, 'South Africa's Macadamia Industry Grows Despite Export Uncertainty', FAS Pretoria Post, 2025",
+      "page": 5
+    },
+    "notes": "Taken as 'years to reach maturity' (7-9 years) rather than absolute peak yield, since the same sentence says yields then keep INCREASING for a further 15-20 years after that — i.e. macadamia in South Africa does not plateau at a stable 'full bearing' yield until roughly 22-29 years by this source's framing, but 7-9 years is the point industry treats trees as having reached commercial maturity."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Only hectare/industry-wide or single-farm production figures were found (e.g. SAMAC 'What have we learned 2024' newsletter: a grower's cross-pollination trial raising yield 'from an average of 0.5t/ha to 4t/ha'; a farm reporting 'an average of 1.3 tons of kernels a hectare annually'), and a tree density figure in a separate document (USDA FAS report: 'almost 312 trees per hectare' at 4m x 8m spacing) — but no single source gave both a mature-orchard yield AND its planting density together, so no honest per-tree conversion could be made. Left null rather than combining figures from different orchards/sources."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Macadamia is a subtropical evergreen with no documented winter-chill requirement for flowering; frost (not lack of chill) is the main cold-related limiting factor noted in South African sources (e.g. SAMAC's climate-modelling article notes an expected 'decreased frost risk, a key limiting factor for growing macadamia trees' under warming scenarios), but no source explicitly states 'no chill requirement', so left null per the rule rather than asserting it."
+  },
+  "pollination": {
+    "value": "partly-self-fertile",
+    "evidence": {
+      "quote": "Cross-pollination increases yields by 52% when compared with open pollination. ... Cross-pollination increases yields by 48.5% and improves nut quality (size and kernel weight). ... Genotyping of macadamia kernel to determine pollen parents: A4 was highly outcrossing (97%), 695 was 64% outcrossed, 816 41% outcrossed and 814 showed 10% outcrossing. ... Results demonstrated the critical role of honeybee colonies in macadamia orchards, with the absence of bees resulting in only 30% production in both cultivars.",
+      "url": "https://samac.org.za/wp-content/uploads/2024/05/SAMAC-What-have-we-learned-2024.pdf",
+      "doc": "SAMAC (South African Macadamia Growers' Association), 'What have we learned 2024' research summary newsletter",
+      "page": 13
+    },
+    "notes": "Changed from needs-cross-pollinator to partly-self-fertile in editor review: the same SAMAC summary measures 10-97% outcrossing by kernel genotyping (so some nuts are selfed) and says cross-pollination RAISES yield by about half, which is a partly self-fertile tree, not one that needs a pollinator to bear. SAMAC's own research summaries show macadamia is capable of self/open pollination (a cultivar-dependent 10-97% outcrossing rate was measured by kernel genotyping, and orchards without managed bee colonies still achieved 30% of full production) but that yield is substantially higher (48.5-52% more) with cross-pollination (interplanted cultivars) and managed honeybee colonies (industry recommends at least two hives/ha). This mixed picture — fruit set possible alone, but commercially reliant on cross-pollination/bee activity — is why 'needs-cross-pollinator' (the industry-recommended practice) rather than 'self-fertile' was chosen, though 'partly-self-fertile' is also defensible given the cultivar-dependent self/open-pollination yield floor; see this nuance rather than treating the choice as clear-cut."
+  },
+  "harvestProduct": "nut in shell",
+  "gaps": [
+    "SAMAC's own technical library ('Technical info – orchard establishment', likely containing exact years-to-bearing and per-tree yield curves) is behind a members-only login (samac.org.za/membership-login/) and could not be accessed.",
+    "ARC-ITSC's macadamia page (arc.agric.za/arc-itsc/Pages/Macadamia.aspx) returned HTTP 503 on every attempt.",
+    "nda.agric.za/DALRRD macadamia cultivation info-paks (two URL variants found via search) both failed: one returned HTTP 503 via WebFetch, the other failed at the network/proxy level via curl ('tunnel to the egress proxy closed').",
+    "No South African source was found giving both a mature-orchard yield and a matching planting density in the SAME document, so yieldKgPerTreeMature could not be honestly converted and was left null.",
+    "No explicit chill-unit or 'no chill requirement' statement found for macadamia in any SA source fetched; only frost-sensitivity commentary.",
+    "Editor review 2026-09-28: pollination changed from needs-cross-pollinator to partly-self-fertile to match the quoted outcrossing and yield figures."
+  ]
+}

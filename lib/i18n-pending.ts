@@ -144,6 +144,11 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   speciesPickerNoteLabel: 'Note:',
   speciesPickerNoteBody: 'Not yet agronomist-reviewed. Use as a starting point.',
   speciesPickerFrostNote: 'Frost-tender trees and shrubs are hidden where the modeled minimum reaches freezing; check the planting spot for frost.',
+  // The harvest line under a fruit tree (lib/perennial-harvest.ts). "SA sources" is the point: the
+  // months are the span South African sources give across all regions, not this farm's weeks.
+  speciesPickerHarvest: 'Picking {months} in SA sources',
+  speciesPickerFirstCrop: 'first crop {years} yrs',
+  speciesPickerYield: 'about {kg} kg a mature tree',
   designAdvisorLayerWater: 'Water',
   designAdvisorLayerZones: 'Zones',
   designAdvisorLayerPlanting: 'Planting',

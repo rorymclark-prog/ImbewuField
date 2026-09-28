@@ -1,0 +1,63 @@
+{
+  "speciesId": "punica-granatum",
+  "commonName": "Pomegranate",
+  "botanicalName": "Punica granatum",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general)",
+      "months": [2, 3, 4],
+      "evidence": {
+        "quote": "The Southern Hemisphere harvest season is from February to April.",
+        "url": "https://postharvestinnovation.org.za/commodities/pomegranate/",
+        "doc": "Post-Harvest Innovation Programme (PHI) — Pomegranate commodity page",
+        "page": null
+      },
+      "notes": "PHI is a South African fruit-industry postharvest research programme (jointly run with local universities/ARC). Statement is framed as the Southern Hemisphere season in a page specifically about the South African pomegranate industry, so treated as the SA harvest window; the same page separately notes 'Wonderful' (the dominant SA cultivar) is late-ripening."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "The source found gives only a full-bearing figure (six years), not a separate first-crop figure. No other primary source located a distinct 'first crop' age for South Africa."
+  },
+  "yearsToFullBearing": {
+    "value": [6, 6],
+    "evidence": {
+      "quote": "Pomegranate trees take six years to bear a full crop.",
+      "url": "https://postharvestinnovation.org.za/commodities/pomegranate/",
+      "doc": "Post-Harvest Innovation Programme (PHI) — Pomegranate commodity page",
+      "page": null
+    },
+    "notes": "Given as a single figure (six years), not a range, so recorded as [6,6]."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": {
+      "quote": "Pomegranates yield between 20 and 30 tonnes per hectare.",
+      "url": "https://postharvestinnovation.org.za/commodities/pomegranate/",
+      "doc": "Post-Harvest Innovation Programme (PHI) — Pomegranate commodity page",
+      "page": null
+    },
+    "notes": "Source gives t/ha only. No SA-sourced planting spacing/trees-per-ha figure was found alongside this yield statement, so no per-tree conversion was attempted (would require guessing a spacing)."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced from an acceptable primary source. A non-primary summary (gardening blog) claimed '100 to 400 chill hours, with most cultivars not needing winter chilling' but this was not traceable to a verbatim quote in a qualifying source (ARC/DALRRD/provincial dept/grower body/peer-reviewed paper), so left null rather than reported as fact. A ScienceDirect paper on chilling/heat requirement of pomegranate under deficit irrigation exists (S0304423819310039) but its full text/abstract could not be fetched (403 Forbidden) in this session."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced from an acceptable primary source in this session. A peer-reviewed-looking paper ('Pollination Biology of Pomegranate (Punica granatum L.) with special reference to Entomophily') was found via search but could not be fetched (403 Forbidden via ResearchGate); general web summaries describe pomegranate as commonly self-fruitful/self-pollinating but no verbatim quote from a qualifying source could be obtained."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Chill requirement (hours/units) not sourced to a verbatim quote from an acceptable source; ScienceDirect chilling/heat-requirement paper (doi via S0304423819310039) blocked (403).",
+    "Pollination requirement not sourced to a verbatim quote from an acceptable source; candidate peer-reviewed paper on pomegranate pollination biology blocked (403) via ResearchGate.",
+    "Years to first crop (as distinct from full bearing) not found.",
+    "Per-tree yield (kg/tree) not found; only t/ha figures available, with no sourced spacing to convert.",
+    "Region-specific harvest calendars (e.g. Western Cape vs Northern Cape/Vaalharts, where SA pomegranates are also grown) not found — only a single national/Southern-Hemisphere-level harvest window was sourced.",
+    "gov.za (DALRRD/ARC) domains were unreachable from this environment (connection blocked) for a direct government production-guideline check.",
+    "Acta Horticulturae articles ('The South African pomegranate value chain: challenges and opportunities'; 'Pomegranate production and export during the past decade in South Africa...') were found via ISHS but are paywalled — only abstracts were accessible, and abstracts did not contain the needed figures."
+  ]
+}

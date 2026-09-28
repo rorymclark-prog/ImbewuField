@@ -1,0 +1,74 @@
+{
+  "speciesId": "vitis-vinifera",
+  "commonName": "Grape vine (table grapes)",
+  "botanicalName": "Vitis vinifera",
+  "harvestMonths": [
+    {
+      "region": "South Africa — Northern Province(s) region (SATI production region; mild sub-tropical, earliest SA harvest)",
+      "months": [11, 12],
+      "evidence": {
+        "quote": "produces South Africa's earliest grapes from November to mid-December",
+        "url": "https://www.satgi.co.za/about/",
+        "doc": "South African Table Grape Industry (SATI) — 'About' page, production regions section",
+        "page": null
+      },
+      "notes": "SATI (South African Table Grape Industry, the SA table-grape grower body) names five production regions: Northern Provinces, Orange River, Olifants River, Berg River, Hex River. Only the Northern Provinces region gave an explicit month range in the quotable text; see gaps for the other four (Orange River, Olifants River, Berg River, Hex River), which were described only qualitatively ('mid-season', 'mid-season to late-season') without stated calendar months."
+      },
+    {
+      "region": "South Africa (overall, all regions combined)",
+      "months": [11, 12, 1, 2, 3, 4, 5],
+      "evidence": {
+        "quote": "South Africa boasts five major growing regions...enable growers to supply the markets with the latest varieties from November to May.",
+        "url": "https://www.satgi.co.za/about/",
+        "doc": "South African Table Grape Industry (SATI) — 'About' page",
+        "page": null
+      },
+      "notes": "This is the outer envelope of the whole-country export harvest/supply season (Nov-May) spanning all five SATI regions and all cultivars; it is not a single region's specific window. Individual mid-season and late-season regions (Berg River, Hex River, Olifants River, Orange River) fall somewhere within this envelope but their specific months were not found as a verbatim quote (see gaps)."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No South Africa-specific, verbatim-quotable figure was found. A WebSearch summary (not independently verified by fetching the source page, and not SA-specific) referenced a generic claim that 'full production can be obtained in five to six years' for grapevines in general viticulture literature — this was NOT used because it could not be traced to an actual fetched quote and is not stated as South African. A promising SA-specific lead, 'A Modular Course in Table Grape Production' jointly presented by SATI, ARC-Infruitec/Nietvoorbij and Elsenburg, was identified via search but its content pages were not locatable/fetchable within this session's budget."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found. See yearsToFirstCrop notes; the Elsenburg 'TABLE-GRAPE-FLAME-YR-4' enterprise budget (see yieldKgPerTreeMature) implies that by year 4 a Flame Seedless block in the Hex River Valley is already carrying a commercial yield (4400 cartons/ha), but Elsenburg's parallel Yr-1/Yr-2/Yr-3 (and any later, fully-mature-year) enterprise budgets for the same cultivar were not found/fetchable in this session, so no year-by-year progression or a stated 'full bearing' age could be documented."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": {
+      "quote": "Table Grape-Flame (4.5kg Box) [...] Carton [...] 4 400,00 [...] 352 000,00 [...] YIELD (Cartons/ha) [...] 4400,00",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2024/05/TABLE-GRAPE-FLAME-YR-4.pdf",
+      "doc": "Western Cape Department of Agriculture (Elsenburg), Agricultural Economic Services — 'Table Grape-Flame SL (Yr 4)' Enterprise Budget, Hex River Valley, Cape Winelands (updated 12 March 2024)",
+      "page": 1
+    },
+    "notes": "NOT converted to kg/vine: this source gives 4,400 cartons/ha x 4.5 kg/carton = 19,800 kg/ha for a 'Yr 4' (4th leaf/year) Flame Seedless block in the Hex River Valley, but the same document does not state a row/vine spacing or vines-per-hectare figure, so no per-vine conversion could be performed without guessing a spacing (which the task rules prohibit). Left null at the per-tree/per-vine level; the sourced per-hectare figure is preserved here for reference. A separate WebSearch-only figure ('industry average... 22.5 and 27 t/ha' and an unquoted 'Italia' cultivar figure of ~26.7 kg/vine from international, non-SA research) was found but not used as evidence since it was not independently verified via a direct fetch of a primary source."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "A directly on-topic, apparently peer-reviewed conference paper — 'Chill unit accumulation and necessity of rest breaking agents in South African table grape production regions' (BIO Web of Conferences, OIV 2014, bio-conferences.org/articles/bioconf/pdf/2014/02/bioconf_oiv2014_01017.pdf) — was found via search but could NOT be fetched: the PDF URL returned an anti-bot/CAPTCHA-gate HTML page (not the PDF) to both WebFetch and a direct curl download, and an academia.edu mirror and a scite.ai summary page both returned HTTP 403 Forbidden. A WebSearch-engine paraphrase describing 'the minimum chilling required to obtain a high bud break percentage (>80%)... defined as 200 hours between 0 and 10°C, or 400 hours at 3°C' exists, but per the task's evidence rule this could not be used as sourced data because it is a search-engine summary, not a verbatim quote taken from an actual fetched page of that document."
+  },
+  "pollination": {
+    "value": "self-fertile",
+    "evidence": {
+      "quote": "Hermaphroditic (perfect) flowers were a key trait in grapevine domestication, enabling a drastic increase in yields due to the efficiency of self-pollination in the domesticated grapevine (Vitis vinifera L. ssp. vinifera).",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8053984/",
+      "doc": "Zou, Massonnet, Minio et al., 'Multiple independent recombinations led to hermaphroditism in grapevine', Proceedings of the National Academy of Sciences (PNAS), Vol. 118, No. 15, e2023548118 (2021)",
+      "page": null
+    },
+    "notes": "This is a general (not South Africa-specific) peer-reviewed genetics/domestication paper, used because it directly and explicitly states that cultivated Vitis vinifera (the domesticated subspecies grown as table grapes, as opposed to wild dioecious V. vinifera ssp. sylvestris) bears hermaphroditic, self-pollinating flowers — i.e. does not require a separate pollinator vine. No SA-specific source contradicting or refining this general botanical fact was found; SA table-grape cultivar sheets/enterprise budgets checked in this session (e.g. the Elsenburg Flame Seedless budget) did not mention any cross-pollination requirement, consistent with self-fertility."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Region-specific harvest months for four of SATI's five named production regions (Orange River, Olifants River, Berg River, Hex River) were only described qualitatively ('mid-season', 'mid-season to late-season') on the SATI 'About' page, without stated calendar months in the fetched text — only the Northern Provinces region (Nov-mid Dec) and the whole-country envelope (Nov-May) had quotable month statements. A SATI 'Statistics of Table Grapes in South Africa 2023' publication was fetched and found to present harvest timing only as production-week numbers (e.g. week 44-20) rather than calendar months, so it could not be used to fill this gap either.",
+    "Years to first crop and years to full bearing: no South Africa-specific, verbatim-sourced figure found in this session. Only a generic, non-SA, unverified WebSearch claim exists ('five to six years' to full production) and was excluded per the no-fabrication rule.",
+    "Yield per vine (kg): a per-hectare yield (19,800 kg/ha, Flame Seedless, Yr 4, Hex River Valley) was found in an Elsenburg (Western Cape Dept of Agriculture) enterprise budget, but the same document does not state a vine spacing/vines-per-ha figure needed to convert to kg/vine, so the field was left null rather than assuming a spacing.",
+    "Chill units: a highly relevant, apparently peer-reviewed South African table-grape chilling-requirement study (BIO Web of Conferences / OIV 2014) exists but its PDF is behind an anti-bot/CAPTCHA gate (bio-conferences.org) and could not be fetched; an academia.edu mirror and a scite.ai summary page both returned 403 Forbidden. Left null.",
+    "DALRRD/old.dalrrd.gov.za's 'grapes_prod guideline.pdf' (found via search, a DALRRD production guideline that would likely be an on-hierarchy primary source) could not be fetched — the domain failed DNS resolution (getaddrinfo EAI_AGAIN), consistent with gov.za domain unreliability observed for other species in this research session.",
+    "ARC Infruitec-Nietvoorbij's own 'Table Grapes Publication List' (arc.agric.za, found via search) was identified as a likely lead for cultivar-specific establishment/yield/chilling data but was not fetched within this session's search budget.",
+    "Only one cultivar (Flame Seedless) and one region (Hex River Valley) were checked for enterprise-budget-style yield data; other SATI regions and major SA table-grape cultivars (e.g. Thompson Seedless/Sultanina, Crimson Seedless, Sugraone, Prime) were not individually researched."
+  ]
+}

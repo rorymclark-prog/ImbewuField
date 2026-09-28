@@ -185,7 +185,8 @@ under the rules above (produce view, three-quarter angle, soft-shaded illustrati
 existing set, 256×256 RGBA, transparent corners, readable at 24px). The filename is already
 correct; overwrite the PNG in place. `lib/crop-art.ts` already maps the key.
 
-Keys marked † are only needed if they end up in `CROPS` — check `lib/crop-catalog.ts` first.
+Chinese cabbage, leeks and cassava were researched but NOT added to `CROPS` (no primary SA source
+for their missing values), so they need no art. If they are added later, their rows go back here.
 
 | key | name | anchor hex | what to draw (and how it must differ from its look-alike) |
 |---|---|---|---|
@@ -209,11 +210,23 @@ Keys marked † are only needed if they end up in `CROPS` — check `lib/crop-ca
 | fodder-radish | Fodder radish (cover crop) | `#EDE6D6` | one long white tapering taproot with a leafy top; long and white vs radish's small round red |
 | sunn-hemp | Sunn hemp (cover crop) | `#E3B81F` | a few upright stems with yellow pea-flower spikes and narrow leaves |
 | medic | Medic (cover crop) | `#5E8C3A` | small clump of three-part (trefoil) leaves with coiled spiral seed pods — the spiral is the read |
-| chinese-cabbage † | Chinese cabbage | `#C8DDA0` | tall elongated head, pale crinkled leaves, broad white ribs; taller and paler than round cabbage |
-| leeks † | Leeks | `#4E7A5A` | 2 leeks: long white shaft into a fan of flat blue-green leaves; not onions' round bulb |
-| cassava † | Cassava | `#6B4A2E` | 2 long tapering roots with rough brown bark-like skin, one cut end showing white flesh |
 
 Hue check for the batch: purple (brinjal), red (radish), red-brown (sorghum, bambara), gold/yellow
 (sunflower, sunn hemp, sweetcorn, soybean), cream/white (cowpea, cauliflower, fodder radish),
 six greens differentiated by silhouette first (palmate, curly, trefoil, berries, speckled
 courgette, round gem) — follow the three-axis rule above for the greens.
+
+### Ready-to-paste Codex prompt (batch 2)
+
+> Replace the 20 placeholder PNGs in `public/crop-art/` listed in the Batch 2 table of
+> `docs/CROP-ART-BRIEF.md` with real produce art. Read the whole brief first and match the style of
+> the existing 29 crop PNGs (open 4–5 of them, e.g. `butternut.png`, `kale.png`, `dry-beans.png`).
+> For each key: draw only the harvested product, three-quarter view, soft-shaded illustration,
+> soft light from upper left, anchor hex as the dominant colour. The PNG must be 256×256 RGBA with
+> all four corners fully transparent, no shadow or ground, and the subject filling the frame
+> (≤3% margin). Overwrite the file in place and keep the filename. After each file, run the
+> brief's self-check script and do the 24×24 downscale look test. Do not edit `lib/crop-art.ts`
+> or `lib/crop-catalog.ts`; the mapping already exists. When all 20 are done, run
+> `node --import ./tests/register-alias.mjs --test tests/element-art.test.ts` and commit only the
+> PNGs.
+

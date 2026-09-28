@@ -1,0 +1,67 @@
+{
+  "speciesId": "carya-illinoinensis",
+  "commonName": "Pecan",
+  "botanicalName": "Carya illinoinensis",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general — Southern Hemisphere phenology; main areas Vaalharts/Northern Cape, Lower Orange River)",
+      "months": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence": {
+        "quote": "Shell hardening and nut-fill is complete around end of February, taking approximately three weeks. At this stage shuck-split will take place which indicates the start of the harvesting period, ending in middle June. Trees then enter dormancy after natural leaf drop end of July.",
+        "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292",
+        "doc": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA (South African Pecan Nut Producers' Association)",
+        "page": 3
+      },
+      "notes": "SAPPA's own 2026 harvest-progress updates (sappa.za.org/2026-harvest-update-september/) show processors still actively receiving nut-in-shell in September ('By week 36, participating processors had received approximately 57,719 tons' as the '2026 pecan harvest season nears completion'), suggesting the real-world harvest/delivery window in some years/regions extends noticeably later than the 'ending in middle June' stated in the phenology literature review — kept the literature review's Mar-Jun figure as the sourced evidence since it is an explicit month-range statement, but flagging this discrepancy rather than silently reconciling it."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced to standard. Web search results repeatedly suggested figures like 'up to seven years to start bearing' or '6-8 years to start producing', citing SAPPA, but these came only as AI-generated search summaries that could not be independently traced to a verbatim sentence in a directly fetched SAPPA/ARC/DALRRD document during this research pass, so left null per the rules rather than repeating an unverified number."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Same access limitation as yearsToFirstCrop. An unverified web search summary suggested 'full production between 12 and 15 years after planting', but this also could not be confirmed against directly fetched source text, so left null. SAPPA's own orchard-establishment slide deck does note (verbatim, Afrikaans) that 'pekanneute 'n besondere lang produksie lewe van 'n 100 jaar plus het' ('pecans have a particularly long production life of 100+ years'), which is about total productive lifespan, not years-to-full-bearing."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the SAPPA figure is an industry average across orchards of all ages used for a water calculation, not a yield for a mature tree. Withdrawn value: [20, 20]."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "The date of budburst is also important and depends on the growing degree hours (GDH) as well as the chilling requirement (Kudan et al., 2013). ... The prominent climate parameters winter chilling and HU in spring furthermore enhanced cultivar differences (Grauke and Thompson, 1996b).",
+      "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292",
+      "doc": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA",
+      "page": 27
+    },
+    "notes": "Unlike the other 7 species in this research set, pecan IS a true deciduous tree with a genuine winter-chilling requirement affecting budbreak and flowering (confirmed by this SAPPA-published review), but no specific chill-hour/chill-unit NUMBER for South African conditions or cultivars was given in the accessible text, so the value is left null rather than guessed; the qualitative requirement itself is real and captured in evidence/notes rather than defaulted to 'no chill requirement'."
+  },
+  "pollination": {
+    "value": "needs-cross-pollinator",
+    "evidence": {
+      "quote": "In pecans [Carya illinoinensis (Wangenh. K. Koch)], male (staminate) and female (pistillate) flowers occur on the same tree (monoecious) and exhibits heterodichogamy ... Therefore, trees were divided into two groups: “Protandrous” (Type I) which is when pollen from the male flowers is shed before the female flowers are receptive, and “Protogynous” (Type II), where female flowers are receptive to pollen before pollen is shed from the male flowers ... Compatible cultivars need to be in close proximity to each other for successful cross-pollination ... It is possible for fruit to set through self-pollination in the case of incomplete dichogamy, but this often results in smaller and lighter nuts ... Under self-pollination, pecan yield is 35 – 75% lower with nut quality severely reduced (Polles et al., 1980). Complete dichogamy will result in a self-sterile cultivar, as there is no overlap between pollen shed and pistil receptivity.",
+      "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292",
+      "doc": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA",
+      "page": 2
+    },
+    "notes": "Pecan is wind-pollinated and monoecious (male and female flowers on the same tree) but exhibits heterodichogamy — male and female flowers on a given tree mature at different times (Type I protandrous vs Type II protogynous) — so a single tree/cultivar alone generally cannot pollinate itself well or at all (many named cultivars are effectively self-sterile), and commercial orchards in South Africa are planted with complementary Type I x Type II cultivar combinations. Self-pollination is possible in some cultivars with incomplete dichogamy but yields 35-75% less with poorer nut quality — hence 'needs-cross-pollinator' rather than 'partly-self-fertile' or 'self-fertile'."
+  },
+  "harvestProduct": "nut in shell",
+  "gaps": [
+    "No verbatim, independently-fetched South African source was found giving a specific number of years to first crop or years to full/economic bearing; multiple unverified AI search-summary figures (7 years to bear, 12-15 years to full production, 6-8 years/10 years to profitability) exist online citing SAPPA but could not be traced to actual fetched source text (the ResearchGate paper 'Economic Contribution and Value Chain Analysis of the South African Pecan Nut Industry' that likely contains this returned HTTP 403; SAPPA's FAQ and cultivar-information pages did not state it in their visible text).",
+    "No specific numeric winter-chill-hour/chill-unit requirement for pecan under South African conditions was found; only a qualitative statement that chilling requirement affects budburst timing (SAPPA literature review, citing a Turkish study, Kudan et al. 2013, for the underlying concept).",
+    "The single yield-per-tree figure used (20 kg/tree) comes from a water-use slide in a SAPPA orchard-establishment presentation and is presented as a general/average figure, not explicitly tied to tree age or 'mature' status; no separate mature-vs-young yield curve was found.",
+    "SAPPA's larger 'Establishing an Orchard' PDF is mostly a slide deck with limited embedded body text (many pages are image-based), so a lot of its likely detailed content (e.g. spacing-to-yield tables) was not machine-extractable; other SAPPA PDFs (Orchard Layout, Pecan Nut Plant Materials) were not fetched due to size/budget constraints.",
+    "There is a discrepancy between the phenology literature review's stated harvest window (starting after shuck-split around end-Feb/March, 'ending in middle June') and SAPPA's own 2026 in-season harvest-tracker update showing nut deliveries to processors still substantial in September; both are noted but not reconciled with a single source.",
+    "Editor review 2026-09-28: yieldKgPerTreeMature withdrawn — the SAPPA figure is an industry average across orchards of all ages used for a water calculation, not a yield for a mature tree."
+  ]
+}

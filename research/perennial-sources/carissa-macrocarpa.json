@@ -1,0 +1,39 @@
+{
+  "speciesId": "carissa-macrocarpa",
+  "commonName": "Num-num / Natal plum",
+  "botanicalName": "Carissa macrocarpa",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in review: the only source was Morton, Fruits of Warm Climates (hort.purdue.edu), which is outside the approved source tiers (SA government/SANBI, grower bodies, peer-reviewed/FAO/ICRAF/PROTA). Withdrawn value: [2, 2]."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in PZA or the Morton (Purdue) reference; WebSearch surfaced an unverified paraphrase ('minimal yield of 3 tons per hectare under commercial production in South Africa') from general horticultural/nursery websites, which is explicitly excluded by the sourcing rules (not a primary/peer-reviewed source) and was never confirmed against a fetched primary document, so it is NOT used here."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says the (evergreen, subtropical) species has none."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in review: the only source was Morton, Fruits of Warm Climates (hort.purdue.edu), which is outside the approved source tiers (SA government/SANBI, grower bodies, peer-reviewed/FAO/ICRAF/PROTA). Withdrawn value: partly-self-fertile."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "harvestMonths: SANBI PlantZAfrica (https://pza.sanbi.org/carissa-macrocarpa) states only a FLOWERING season ('It flowers from spring to midsummer.'; plant-attributes field 'Flowering season: Spring, Early Summer') and gives no explicit fruit-ripening/harvest month. The Morton (Purdue) reference gives a global 'peak period for blooming and fruiting is May through September' but does not clearly state this is the South African pattern specifically (it may describe Florida or mixed cultivation regions), so it was not used to populate harvestMonths -- left as an empty array rather than guessing.",
+    "yearsToFullBearing and yieldKgPerTreeMature: not found in any fetched source. WebSearch-only paraphrases about hectare yield (~3 t/ha) were seen but never confirmed against a fetched primary/peer-reviewed document, so were excluded per the no-paraphrase rule.",
+    "chillUnits: not stated by any source found.",
+    "No ICRAF Agroforestree Database PDF exists for this species (apps.worldagroforestry.org/treedb2/AFTPDFS/Carissa_macrocarpa.PDF returns HTTP 500), and PROTA4U's descriptive content is not retrievable with available tools (loaded via client-side AJAX, absent from the static HTML).",
+    "Editor review 2026-09-28: yearsToFirstCrop and pollination withdrawn; Morton/Purdue NewCROP is not an approved tier."
+  ]
+}

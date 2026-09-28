@@ -42,6 +42,17 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: 'c711285', changes: [
+    'Fruit trees on your map now show their picking months in the crop plan.',
+    'Orchard switch: show or hide tree fruit; trees never count in per-m² figures.',
+    'Species picker shows picking months, years to first crop and kg per tree.',
+    'Every tree figure quotes its published source; unknown ones are left blank.',
+  ], tour: [
+    { title: 'See your trees in the calendar', where: 'Crop plan → Food, field & value → Availability', href: '/facilitator/crops',
+      detail: 'Open the Availability tab: a row under the chart counts the fruit trees on your map in season each month. Tap a month to see which trees and their years to first crop. Use the Orchard button to hide them.' },
+    { title: 'Check a tree before you plant it', where: 'Design Studio → place a tree → pick a species', href: '/design',
+      detail: 'Search a fruit tree such as avocado, mango or marula. Under its name you now see when South African sources say it is picked, how many years to its first crop and about how many kg a mature tree gives, where a source states it.' },
+  ] },
   { when: '28 September 2026', sha: '4fe85a91', changes: [
     'Introduction adds source-paired Tshivenda holds for slides 7 and 10.',
   ], tour: [

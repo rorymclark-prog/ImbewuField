@@ -52,6 +52,47 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 28 Sep 2026 — Perennial harvest layer (Phase B: fruit trees)
+- **New table `lib/perennial-harvest.ts`:** for each tree species it holds harvest months by SA
+  region, years to first crop and to full bearing, kg per mature tree, chill units and pollination.
+  Every value carries a verbatim quote, URL and page. Anything no approved source states is `null`.
+  - The data file `lib/perennial-harvest-data.ts` is GENERATED from
+    `research/perennial-sources/<speciesId>.json` by `node scripts/build-perennial-harvest.mjs`.
+  - `tests/perennial-harvest.test.ts` fails if the file drifts from the dossiers, or if a citation
+    lacks a quote/URL or uses a banned host.
+- **Quote check:** every quote was fetched and matched against its source (pypdf for PDFs); table
+  layouts were checked by hand. Values withdrawn in review, each with a `gaps` line in its dossier:
+  - Harpephyllum: its "harvest" months were really its flowering months.
+  - Carissa: first-crop and pollination came from Morton/Purdue, which is not an approved tier.
+  - Lemon, mandarin and litchi: the pollination quote did not say what the value claimed.
+  - Garcinia: first crop came from a secondary source, and its only window is Kenyan.
+  - Pappea: 21.85 kg was seed weight for oil, not fruit.
+  - Carpobrotus: pollination came from the GISD compilation, not the primary paper.
+  - Plum: window cut to the February that its quote supports.
+  - Mango: pollination came from a table of flower visitors, which does not say whether a second
+    cultivar is needed. Papaya pollination is also blank: it depends on the cultivar and the plant.
+  - Pecan: 20 kg was an industry average across orchards of every age, not a mature-tree yield.
+  - Banana: first-crop age was inferred from a fertiliser calendar. The all-year window is blank
+    because no quoted SA source says the harvest runs all year.
+  - Macadamia: changed to partly self-fertile. SAMAC measured 10–97% outcrossing, and cross-pollination
+    raises yield by about half.
+  - Papaya first crop and guava bearing/yield come from FAO and ICRAF, not SA sources. Their notes
+    say so. A harvest window is never taken from a non-SA source.
+- **Kei apple duplicate fixed:** `dovyalis-caffra` merged into `dovyalis-afra`. `lib/species-aliases.ts`
+  maps the retired id, so saved designs keep working.
+- **Crop plan → Availability** gets a tree row for fruit trees placed on the Studio map:
+  - Months are the SA-wide sourced span, labelled as such. Trees placed from the palette (Mango
+    Tree…) map to a species via `ELEMENT_SPECIES`; ambiguous elements (Citrus, Plum) are not guessed.
+  - "From today" counts only existing trees; an established year adds proposed ones.
+  - It uses the same orchard switch as Money/Records (`lib/produce-scope.ts`). Trees never enter a
+    per-m² figure, and the bed-yield modules may not import the table (a test enforces this).
+- **Design species picker** shows "Picking … in SA sources · first crop … yrs · about … kg a mature
+  tree" when the table has the data.
+- **Gaps:** most indigenous species have months only — no SA source gives their yield or bearing
+  age. Chill units exist for peach and plum only. Banana, papaya and guava have no SA window yet
+  (ARC-ITSC and DALRRD pages were unreachable). Regional window matching (the farm's own window
+  rather than the SA span) is next.
+
 ### 28 Sep 2026 — Crop catalog batch 1: 20 new crops + planner fixes
 - **Added (primary sources, cited per value in `lib/crop-catalog.ts`):** amaranth, cauliflower,
   parsley, sorghum, soybean, brinjal, gem squash, baby marrow, spanspek, sweetcorn, cowpea,

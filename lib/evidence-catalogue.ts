@@ -240,7 +240,7 @@ export const INDIGENOUS_EDIBLES = [
   { name: 'Wild plum', sci: 'Harpephyllum caffrum', desc: 'Red edible fruit · fast shade · KZN coast', protected: false },
   { name: 'Mobola plum', sci: 'Parinari curatellifolia', desc: 'Sweet fruit · drought-hardy', protected: false },
   { name: 'Monkey orange', sci: 'Strychnos spinosa', desc: 'Hard-shell fruit · roadside trade', protected: false },
-  { name: 'Kei apple', sci: 'Dovyalis caffra', desc: 'Tart fruit · thorny living fence', protected: false },
+  { name: 'Kei apple', sci: 'Dovyalis afra', desc: 'Tart fruit · thorny living fence', protected: false },
   { name: 'Wild medlar', sci: 'Vangueria infausta', desc: 'Brown edible fruit · bushveld', protected: false },
   { name: 'Red milkwood', sci: 'Mimusops caffra', desc: 'Edible berries · evergreen shade', protected: false },
 ];

@@ -1013,7 +1013,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     color: '#4E8B3B',
     zoneRec: [2, 3],
     castsShade: true,
-    botanical: 'Dovyalis caffra',
+    botanical: 'Dovyalis afra',
     // The one indigenous fruit in this catalog that crops in EVERY South African climate bucket
     // (see TREE_CLIMATES). That matters to the palette's Indigenous fruit section: without it a
     // fynbos, grassland or Karoo site filters the whole section down to nothing, because marula,

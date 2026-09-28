@@ -1,0 +1,55 @@
+{
+  "speciesId": "phoenix-reclinata",
+  "commonName": "Wild date palm / isuNdu",
+  "botanicalName": "Phoenix reclinata",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general)",
+      "months": [2, 3, 4],
+      "evidence": {
+        "quote": "The flowers appear during August, September and October. Male and female plants are separate... The orange-brown fruits are borne during February, March and April.",
+        "url": "https://pza.sanbi.org/phoenix-reclinata",
+        "doc": "SANBI PlantZAfrica - Phoenix reclinata",
+        "page": null
+      },
+      "notes": "Flowering Aug-Oct (months [8,9,10] for reference only, not the harvested product); fruit borne Feb-Apr."
+    },
+    {
+      "region": "southern Africa",
+      "months": [2, 3, 4, 5],
+      "evidence": {
+        "quote": "In southern Africa flowering usually occurs in August–December, and fruits mature in February–May.",
+        "url": "https://uses.plantnet-project.org/en/Phoenix_reclinata_(PROTA)",
+        "doc": "PROTA (Plant Resources of Tropical Africa) - Phoenix reclinata, via Pl@ntUse mirror",
+        "page": null
+      },
+      "notes": "Broader southern-Africa regional figure, overlapping with but slightly wider than the PZA South-Africa-specific window (extends flowering to December and fruiting to May)."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "PROTA states 'a coppice shoot is estimated to need 6-8 years of growth before it can be tapped' for palm wine - this is time-to-wine-tapping-readiness of a coppice shoot, NOT age to first fruiting/fruit crop, so it was deliberately excluded from this field rather than misapplied."
+  },
+  "yearsToFullBearing": { "value": null, "evidence": null, "notes": "" },
+  "yieldKgPerTreeMature": { "value": null, "evidence": null, "notes": "" },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Tropical/subtropical palm; no source states a chilling requirement or its explicit absence."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "quote": "Male and female plants are separate.",
+      "url": "https://pza.sanbi.org/phoenix-reclinata",
+      "doc": "SANBI PlantZAfrica - Phoenix reclinata",
+      "page": null
+    },
+    "notes": "Corroborated by PROTA's structural description: 'Dioecious, usually clustering, rarely solitary tree up to 15 m tall...' (https://uses.plantnet-project.org/en/Phoenix_reclinata_(PROTA)). Both sources independently and directly confirm dioecy (separate male and female plants), which maps cleanly onto the schema's 'separate-male-female-plants' category."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "yearsToFirstCrop / yearsToFullBearing / yieldKgPerTreeMature / chillUnits: not found in PZA, PROTA (Pl@ntUse mirror) or ICRAF Agroforestree Database for this species; PROTA's only age-related figure (6-8 years for a coppice shoot to be ready for wine-tapping) is for a different purpose (tapping, not fruit-bearing) and was explicitly not used for yearsToFirstCrop."
+  ]
+}

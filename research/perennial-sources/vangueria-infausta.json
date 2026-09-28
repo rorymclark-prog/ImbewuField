@@ -1,0 +1,61 @@
+{
+  "speciesId": "vangueria-infausta",
+  "commonName": "Wild medlar (mmilo)",
+  "botanicalName": "Vangueria infausta",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general; SA distribution given as Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape)",
+      "months": [1, 2, 3, 4],
+      "evidence": {
+        "quote": "It can be found on the plants during summer, from January to April.",
+        "url": "https://pza.sanbi.org/vangueria-infausta",
+        "doc": "Vangueria infausta | PlantZAfrica (SANBI)",
+        "page": null
+      },
+      "notes": "A second source gives a wider window for the same general region: ICRAF Agroforestree Database 4.0 (Orwa et al. 2009) fact sheet, BIOLOGY section, states 'In southern Africa, the tree flowers from September to November and fruits from November to April.' -- i.e. fruits Nov-Apr rather than SANBI's Jan-Apr. Both entries are kept (this one plus the separate ICRAF-sourced entry below) rather than merged, since they are two distinct sourced statements that partially disagree on the start month."
+    },
+    {
+      "region": "southern Africa (general, per ICRAF; not South-Africa-specific wording)",
+      "months": [11, 12, 1, 2, 3, 4],
+      "evidence": {
+        "quote": "In southern Africa, the tree flowers from September to November and fruits from November to April.",
+        "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Vangueria_infausta.PDF",
+        "doc": "Agroforestree Database 4.0 (Orwa et al. 2009), Vangueria infausta fact sheet, BIOLOGY section",
+        "page": 1
+      },
+      "notes": "This is the wider Nov-Apr fruiting window; see the SANBI-sourced entry above (Jan-Apr) for the narrower, South-Africa-specific 'found on the plants' window. Not averaged or reconciled into a single figure, per the no-conversion/no-averaging rule -- both are reported as separately sourced."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in either fetched source (SANBI PlantZAfrica, ICRAF Agroforestree Database 4.0 PDF). ICRAF states seedling growth is slow ('the growth rate is usually slow; 40-50 cm/year') but gives no years-to-fruiting figure."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says none is needed. Note this species is described as deciduous by both sources (SANBI: 'deciduous shrub or small tree'; ICRAF: 'Vangueria infausta is a deciduous tree'), so a 'no chill requirement' inference would not be safe to assume even if it were tropical/evergreen -- and no source makes any chilling statement either way."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states whether the species is self-fertile, dioecious, or needs a cross-pollinator. SANBI's Ecology section states 'Butterflies and flies visit the flowers.' and ICRAF's Tree management section states 'The flowers attract insects, which in turn attract insect-eating birds.' -- both confirm insects visit/likely pollinate the flowers, but neither makes a self-fertility/cross-pollination statement, so the enum value is left null."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "yearsToFirstCrop, yearsToFullBearing, yieldKgPerTreeMature: none found in either fetched source (SANBI PlantZAfrica, ICRAF Agroforestree Database 4.0 PDF fact sheet).",
+    "chillUnits: not stated by any source found.",
+    "Self-fertility/cross-pollination requirement: not stated by any source found; only that insects (butterflies, flies) visit the flowers is confirmed.",
+    "The two fetched sources disagree slightly on the fruiting window (SANBI: January-April; ICRAF: November-April) -- both are recorded as separate entries above rather than reconciled, since neither source explains the discrepancy and no third source was found to adjudicate."
+  ]
+}

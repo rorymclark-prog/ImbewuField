@@ -3,7 +3,7 @@ import type { Species } from './species-palette';
 export const SPECIES: Species[] = [
   {
     "id": "dovyalis-afra",
-    "commonName": "Kei apple",
+    "commonName": "Kei apple / umqokolo",
     "botanicalName": "Dovyalis afra",
     "indigenous": true,
     "section": "Indigenous fruit",
@@ -13,7 +13,8 @@ export const SPECIES: Species[] = [
       "living fence",
       "fodder",
       "pollinator",
-      "habitat"
+      "habitat",
+      "windbreak"
     ],
     "matureHeightM": 5,
     "matureWidthM": 4,
@@ -28,10 +29,30 @@ export const SPECIES: Species[] = [
       {
         "biome": "IOCB",
         "rank": 2
+      },
+      {
+        "biome": "NAMA_KAROO",
+        "rank": 1
+      },
+      {
+        "biome": "SAVANNA",
+        "rank": 4
+      },
+      {
+        "biome": "GRASSLAND",
+        "rank": 5
+      },
+      {
+        "biome": "FYNBOS",
+        "rank": 3
+      },
+      {
+        "biome": "FOREST",
+        "rank": 4
       }
     ],
-    "why": "Named for the Kei River and native to exactly this valley-bushveld country, it is the one plant that is simultaneously a stock-proof hedge, a heavy vitamin-C fruit crop, bulk livestock fodder and bee forage — SANBI: 'usually 3-5 m in height, but sometimes reaches 8 m', 'drought- and frost-resistant' (recently renamed from D. caffra under Madrid Code Art. 61.6).",
-    "source": "https://pza.sanbi.org/dovyalis-afra",
+    "why": "Named for the Kei River and native to exactly this valley-bushveld country, it is the one plant that is simultaneously a stock-proof hedge, a heavy vitamin-C fruit crop, bulk livestock fodder and bee forage — SANBI: 'usually 3-5 m in height, but sometimes reaches 8 m', 'drought- and frost-resistant' (recently renamed from D. caffra under Madrid Code Art. 61.6). In the eastern Karoo plant it as the werf/kraal boundary where it gets some run-off, not on the open western plains.",
+    "source": "https://pza.sanbi.org/dovyalis-afra (SANBI: impenetrable hedge to keep out unwanted animals and people, leaves used as bulk fodder, edible fruit, bee forage; formerly listed separately as https://pza.sanbi.org/dovyalis-caffra)",
     "nemba": "none",
     "reviewed": false
   },
@@ -2128,53 +2149,6 @@ export const SPECIES: Species[] = [
     ],
     "why": "Only for the Orange River and Vaalharts irrigation corridor, where 80–90% of SA's pecans already grow: it actively NEEDS the Karoo's winter frost for budbreak, then the long hot low-humidity summer, and the low humidity keeps scab out — but SAPPA specifies 15 000 m³/ha/yr in the warm dry west (Prieska, Douglas, Upington), so do not plant it on a rainfed farm.",
     "source": "https://www.sappa.za.org/wp-content/uploads/2018/11/sappa-water-requirement-per-production-area.pdf (SAPPA: 15 000 m³/ha/yr for the warm dry west — Vaalharts, Douglas, Prieska, Upington, Augrabies; peak 460–800 L/tree/day) + ARC Climate-Smart module (winter frost June–August needed for budding; humidity below 55%)",
-    "nemba": "none",
-    "reviewed": false
-  },
-  {
-    "id": "dovyalis-caffra",
-    "commonName": "Kei apple / umqokolo",
-    "botanicalName": "Dovyalis caffra",
-    "indigenous": true,
-    "section": "Small trees & large shrubs",
-    "stratum": "shrub",
-    "uses": [
-      "living fence",
-      "food",
-      "fodder",
-      "pollinator",
-      "habitat",
-      "windbreak"
-    ],
-    "matureHeightM": 4,
-    "matureWidthM": 4,
-    "crownForm": "multi-stem",
-    "waterNeed": "moderate",
-    "frostTolerance": "moderate",
-    "biomes": [
-      {
-        "biome": "NAMA_KAROO",
-        "rank": 1
-      },
-      {
-        "biome": "SAVANNA",
-        "rank": 4
-      },
-      {
-        "biome": "GRASSLAND",
-        "rank": 5
-      },
-      {
-        "biome": "FYNBOS",
-        "rank": 3
-      },
-      {
-        "biome": "FOREST",
-        "rank": 4
-      }
-    ],
-    "why": "South Africa's best-documented stock-proof living fence — SANBI says it can be 'used to form an impenetrable hedge around a garden to keep unwanted animals and people out' — while also giving apricot-flavoured fruit, bulk leaf fodder and bee forage; in this biome plant it as the werf/kraal boundary in the eastern Karoo where it gets some run-off, not on the open western plains.",
-    "source": "https://pza.sanbi.org/dovyalis-caffra (SANBI: impenetrable hedge to keep out unwanted animals and people, leaves used as bulk fodder, edible fruit, bee forage; ranked among priority indigenous fruit for KZN domestication)",
     "nemba": "none",
     "reviewed": false
   },

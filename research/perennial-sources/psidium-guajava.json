@@ -1,0 +1,63 @@
+{
+  "speciesId": "psidium-guajava",
+  "commonName": "Guava",
+  "botanicalName": "Psidium guajava",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": [1, 2],
+    "evidence": {
+      "quote": "Seedlings may flower within 2 years; clonally propagated trees often begin to bear during the first year after planting.",
+      "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Psidium_guajava.PDF",
+      "doc": "World Agroforestry (ICRAF), Agroforestree Database 4.0 (Orwa et al. 2009), Psidium guajava species sheet",
+      "page": 1
+    },
+    "notes": "This is a global horticultural-biology reference, not South Africa-specific; no SA source (ARC-ITSC's own guava page returned HTTP 503 on every attempt) was reachable to confirm or refine this for South African conditions/cultivars."
+  },
+  "yearsToFullBearing": {
+    "value": [5, 8],
+    "evidence": {
+      "quote": "Trees reach full bearing after 5-8 years, depending on growing conditions and spacing. The guava is not a long-lived tree (about 40 years), but the plants may bear heavily for 15-25 years.",
+      "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Psidium_guajava.PDF",
+      "doc": "World Agroforestry (ICRAF), Agroforestree Database 4.0 (Orwa et al. 2009), Psidium guajava species sheet",
+      "page": 1
+    },
+    "notes": "Same caveat as yearsToFirstCrop: global reference, not SA-specific."
+  },
+  "yieldKgPerTreeMature": {
+    "value": [50, 70],
+    "evidence": {
+      "quote": "Average yields are between 30-40 kg/plant in 5 year-old plants and will reach a maximum production of 50-70 kg at about 7 years if well managed.",
+      "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Psidium_guajava.PDF",
+      "doc": "World Agroforestry (ICRAF), Agroforestree Database 4.0 (Orwa et al. 2009), Psidium guajava species sheet",
+      "page": 2
+    },
+    "notes": "Took the 'about 7 years, well managed' maximum-production figure (50-70 kg/plant) as the mature-tree value rather than the 5-year-old figure (30-40 kg/plant), since 7 years falls within this same source's 5-8 year 'full bearing' range. Not South Africa-specific; no SA-specific per-tree yield figure was found (ARC-ITSC and a peer-reviewed SA journal article on guava wilt-disease-resistant selections were both unreachable/paywalled — see gaps)."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "In the subtropics quiescent trees withstand light frost and 3.5-6 months (depending on the cultivar) of mean temperatures above 16 deg. C suffice for flowering and fruiting.",
+      "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Psidium_guajava.PDF",
+      "doc": "World Agroforestry (ICRAF), Agroforestree Database 4.0 (Orwa et al. 2009), Psidium guajava species sheet",
+      "page": 2
+    },
+    "notes": "This describes a WARMTH requirement (months above 16°C) for flowering, not a winter-chill/dormancy requirement, and guava is evergreen/subtropical with no known formal chill-unit requirement; left null rather than 0 because no source frames it in chill-unit terms."
+  },
+  "pollination": {
+    "value": "partly-self-fertile",
+    "evidence": {
+      "quote": "Bees are the principal pollinators. There is some self- and cross-incompatibility but several cultivars have set fair crops of seedless or few-seeded fruit. Levels of 60-75% selfing have been found in natural populations; this has been used to produce homozygotic varieties that can be propagated from seed.",
+      "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Psidium_guajava.PDF",
+      "doc": "World Agroforestry (ICRAF), Agroforestree Database 4.0 (Orwa et al. 2009), Psidium guajava species sheet",
+      "page": 1
+    },
+    "notes": "Guava is capable of substantial self-pollination (60-75% selfing measured in natural populations) but also benefits from bee-mediated cross-pollination and shows some self-incompatibility in certain cultivars, matching 'partly-self-fertile' rather than a clean 'self-fertile' or 'needs-cross-pollinator'. Not South Africa-specific."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "NEMBA (National Environmental Management: Biodiversity Act) official invasive-species listing CONFIRMED via direct fetch of the Government Gazette PDF: '293. Psidium guajava L. Guava a. 2 for plantations in Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga and North-West. b. 3 elsewhere in Eastern Cape, Kwazulu-Natal, Limpopo, Mpumalanga and North-West. c. The fruit of the guava is not listed if used for human consumption.' (source: https://enviroworx.co.za/wp-content/uploads/2022/11/NEMBA-Invasive-Species-Lists-July-2016.pdf, a hosted copy of the DFFE/Government Gazette 'Alien and Invasive Species Lists' under NEMBA, GN R.864/1003, item 293, page 20 of the PDF; the official dffe.gov.za-hosted copy returned HTTP 503 on direct fetch). This is Category 2 for guava PLANTATIONS in the five named provinces (permit-controlled commercial cultivation) and Category 3 elsewhere in those provinces (no new planting, but existing plants may generally remain), with fruit for human consumption explicitly excluded from the listing.",
+    "No South Africa-specific harvest-month data could be verified: ARC-ITSC's own guava page (arc.agric.za/arc-itsc/Pages/Guava.aspx) returned HTTP 503 on every attempt; a relevant peer-reviewed South African Journal of Plant and Soil article ('Preliminary evaluation of guava selections for guava wilt disease resistance in South Africa') was found but is paywalled (HTTP 403) on Tandfonline; agribook.co.za's guava/subtropical-fruit pages gave production-volume and processing-vs-fresh-market figures but no harvest calendar. harvestMonths left as an empty array rather than filled with an unverified figure.",
+    "All quantitative bearing-age, yield-per-tree and pollination data used here come from a single global (non-South-African) source, the World Agroforestry Agroforestree Database; no South African primary source (ARC-ITSC, DAFF/DALRRD, or a specific SA guava growers' body) could be reached to confirm, refine or replace these figures for South African cultivars (e.g. 'Fan Retief', 'TS-G2') or conditions.",
+    "Confirmed South African guava production-region figures exist (Western Cape 547 ha, Limpopo 442 ha, Mpumalanga 140 ha, per a ResearchGate figure caption from 'Advances in Guava Propagation') but the underlying paper was not independently fetched to confirm the figures verbatim or find associated yield/bearing data, so not used as evidence."
+  ]
+}
