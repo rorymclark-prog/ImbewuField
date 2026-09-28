@@ -71,6 +71,25 @@ test('every promised slide image exists on disk', () => {
   }
 });
 
+test('regional Reading the Landscape decks expose all 21 paired WebPs with English source audio', () => {
+  const deck = deckFor('reading-landscape')!;
+  assert.deepEqual(deck.slideLanguages, ['en', 'zu', 'st', 've', 'ts']);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('en'), true);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('st'), false);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('ve'), false);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('ts'), false);
+
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(deck.slideFormatsByLanguage?.[lang], 'webp');
+    for (let slide = 1; slide <= 21; slide++) {
+      const url = slideImageFor('reading-landscape', lang, slide);
+      assert.ok(url?.exact, `${lang} slide ${slide} must stay on its paired regional still`);
+      assert.ok(url.url.endsWith('.webp'), `${lang} slide ${slide} should use the supplied WebP`);
+      assert.ok(onDisk(url.url), `missing offline still: ${url.url}`);
+    }
+  }
+});
+
 test('a declared-missing slide is really absent, and nothing else is', () => {
   // Guards the manifest against drifting from the folder in either direction: a slide declared
   // missing that later gets exported would stay hidden behind an English fallback forever, and a
