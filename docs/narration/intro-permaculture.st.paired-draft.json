@@ -661,10 +661,12 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ebe o thala metsu e kenang ho tswa kantle bakeng sa letsatsi, moya, mollo le metsi."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Leqephe leo la pampiri ke mokokotlo wa moralo wa hao. Ntho e nngwe le e nngwe khosong ena e itshetlehile hodima lona."
           },
           {
             "status": "draft",
@@ -700,7 +702,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nka senepe sa setshwantsho."
           }
         ]
       }
@@ -732,7 +735,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ebe o botsa moahisani a le mong ya hodileng hore na moya o mobe ka ho fetisisa o tswa ntlheng efe, mme o bapise karabo ya hae le motsu wa hao."
           }
         ]
       }
