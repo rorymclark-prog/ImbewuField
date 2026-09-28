@@ -1,0 +1,39 @@
+{
+  "key": "turnip",
+  "varieties": [
+    {
+      "name": "Early Purple Top",
+      "zones": ["highveld", "midlands-mistbelt", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": "early",
+      "season": "50 days to maturity; germinates in 7-10 days",
+      "traits": "Smooth white skin, bright purple top, crisp cream-coloured flesh",
+      "type": "OP",
+      "note": "Starke Ayres product page states the growing requirement directly as full sun for a summer/autumn crop, or a frost-free winter crop — read here as: grow it in summer/autumn wherever the zone allows, and only attempt a winter planting in the zones that are frost-free in winter (lowveld-bushveld, subtropical-coast). The winter-frost restriction is the source's own words, not this pass's inference.",
+      "evidence": [{ "quote": "Turnip Early Purple Top. This vegetable seed is known to produce turnips with smooth, white skin, a bright purple top, and crisp cream-coloured flesh. Germination 7 to 10 days. Maturity 50 days. Location Full sun in Summer, Autumn and Winter frost-free areas.", "url": "https://www.starkeayres.com/products/home-gardening-seed/superfoods/turnip-early-purple-top-2", "page": null, "doc": "Turnip Early Purple Top Seeds, Starke Ayres product page" }]
+    }
+  ],
+  "zoneAdvice": {
+    "lowveld-bushveld": {
+      "text": "A frost-free winter zone: Early Purple Top can be grown in full sun year-round (summer, autumn AND winter) per the source's explicit 'Winter frost-free areas' condition.",
+      "evidence": [{ "quote": "Location Full sun in Summer, Autumn and Winter frost-free areas.", "url": "https://www.starkeayres.com/products/home-gardening-seed/superfoods/turnip-early-purple-top-2", "page": null, "doc": "Turnip Early Purple Top Seeds, Starke Ayres product page" }]
+    },
+    "subtropical-coast": {
+      "text": "Same frost-free reasoning as lowveld-bushveld — inferred, not separately named by the source.",
+      "evidence": []
+    },
+    "highveld": {
+      "text": "Hard-frost interior: limit this cultivar to the summer/autumn window the source names, since it does not claim winter (frost) suitability here.",
+      "evidence": [{ "quote": "Location Full sun in Summer, Autumn and Winter frost-free areas.", "url": "https://www.starkeayres.com/products/home-gardening-seed/superfoods/turnip-early-purple-top-2", "page": null, "doc": "Turnip Early Purple Top Seeds, Starke Ayres product page" }]
+    },
+    "midlands-mistbelt": {
+      "text": "Same summer/autumn-only reasoning as highveld (light-to-moderate winter frost) — inferred, not source-confirmed by zone name.",
+      "evidence": []
+    }
+  },
+  "gaps": [
+    "Only one named cultivar found for the entire crop, from a single SA seed-company product page — no DAFF/KZN DARD production guide for turnip could be located this session (every guessed KZN DARD filename returned HTTP 404, and DAFF/nda.gov.za connections failed outright).",
+    "No sourced recommendation at all for western-cape, southern-cape, karoo-arid or high-mountain.",
+    "The source's zone language is only 'Summer, Autumn and Winter frost-free areas' — it does not name provinces or the brief's specific zone keys, so the highveld/midlands-mistbelt 'summer/autumn only' advice above is this pass's own reading of that sentence, not a verbatim zone-by-zone source statement.",
+    "No spacing, row spacing or yield-per-hectare data sourced for this cultivar."
+  ]
+}

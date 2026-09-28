@@ -176,3 +176,44 @@ contrast needs more separation, not a color tweak.
 4. Add the matching `lib/crop-art.ts` entry in the same commit. The automated
    guard requires every catalog key, mapping and on-disk filename to agree.
 5. Do not change a crop name while doing artwork; the checked catalog is the authority.
+
+## Batch 2 — new catalog crops (2026-09-28)
+
+The crop-catalog expansion (PR #754) adds these crops. Each is currently shipped with a
+**temporary generated placeholder** so the guard test passes — replace every one with real art
+under the rules above (produce view, three-quarter angle, soft-shaded illustration matching the
+existing set, 256×256 RGBA, transparent corners, readable at 24px). The filename is already
+correct; overwrite the PNG in place. `lib/crop-art.ts` already maps the key.
+
+Keys marked † are only needed if they end up in `CROPS` — check `lib/crop-catalog.ts` first.
+
+| key | name | anchor hex | what to draw (and how it must differ from its look-alike) |
+|---|---|---|---|
+| amaranth | Amaranth (imifino / thepe) | `#6E8B3D` | loose bunch of pointed-oval leaves, some red-flushed stems; not spinach-smooth, not kale-crinkled |
+| african-nightshade | African nightshade (umsobo) | `#2F4F2A` | bunch of small dark oval leaves with a few purple-black berries; darkest leafy green of the batch |
+| spider-plant | Spider plant (Cleome, lerotho) | `#4E7F3A` | bunch of stems with 5-fingered (palmate) leaves — the hand shape is the silhouette |
+| cowpea | Cowpea | `#E6D8B8` | small pile of cream kidney-shaped seeds each with a black "eye"; must not read as dry-beans' speckled pile |
+| bambara-groundnut | Bambara groundnut (izindlubu) | `#B5654A` | pile of round, mottled red-brown and cream seeds; rounder than beans, no shell (unlike groundnuts) |
+| mung-bean | Mung bean | `#6B8E23` | small pile of tiny olive-green round beans; smaller and greener than every other legume |
+| soybean | Soybean | `#E3C77A` | small pile of round pale-yellow beans, 2–3 fuzzy tan pods beside them |
+| sorghum | Sorghum (amabele) | `#A0522D` | one dense upright grain head of rounded red-brown seeds on a short stalk; not oats' loose golden stalks |
+| sunflower | Sunflower | `#E8B923` | flower head, yellow petals round a dark seed disc; the disc is the product so keep it large |
+| sweetcorn | Sweetcorn | `#F2DC6B` | fresh cob, bright green husk peeled back, pale glossy kernels; maize is dry gold with papery husk |
+| gem-squash | Gem squash | `#2F4A2A` | small round dark-green ball, one half cut showing yellow flesh; smaller and darker than pumpkin |
+| baby-marrow | Baby marrow (courgette) | `#4F7F3A` | 2 small straight speckled courgettes with stem ends; matte speckle vs cucumber's smooth waxy skin |
+| spanspek | Spanspek (cantaloupe) | `#D8B86A` | round melon with beige netted rind, one wedge cut to show orange flesh; not watermelon's green/red |
+| brinjal | Brinjal (eggplant) | `#3D1E4A` | one glossy deep-purple brinjal with green calyx cap; the only purple fruit in the set |
+| cauliflower | Cauliflower | `#F2EEDC` | white knobbly curd head framed by a few green leaves; white is the read, not the leaves |
+| parsley | Parsley | `#3F8F3A` | tight bunch of CURLY leaves; coriander is flat and lighter, so the curl is the differentiator |
+| radish | Radish | `#C8283C` | 3–4 small round red radishes, white tips, tops trimmed short |
+| fodder-radish | Fodder radish (cover crop) | `#EDE6D6` | one long white tapering taproot with a leafy top; long and white vs radish's small round red |
+| sunn-hemp | Sunn hemp (cover crop) | `#E3B81F` | a few upright stems with yellow pea-flower spikes and narrow leaves |
+| medic | Medic (cover crop) | `#5E8C3A` | small clump of three-part (trefoil) leaves with coiled spiral seed pods — the spiral is the read |
+| chinese-cabbage † | Chinese cabbage | `#C8DDA0` | tall elongated head, pale crinkled leaves, broad white ribs; taller and paler than round cabbage |
+| leeks † | Leeks | `#4E7A5A` | 2 leeks: long white shaft into a fan of flat blue-green leaves; not onions' round bulb |
+| cassava † | Cassava | `#6B4A2E` | 2 long tapering roots with rough brown bark-like skin, one cut end showing white flesh |
+
+Hue check for the batch: purple (brinjal), red (radish), red-brown (sorghum, bambara), gold/yellow
+(sunflower, sunn hemp, sweetcorn, soybean), cream/white (cowpea, cauliflower, fodder radish),
+six greens differentiated by silhouette first (palmate, curly, trefoil, berries, speckled
+courgette, round gem) — follow the three-axis rule above for the greens.

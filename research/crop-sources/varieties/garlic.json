@@ -1,0 +1,86 @@
+{
+  "key": "garlic",
+  "varieties": [
+    {
+      "name": "Egyptian Pink",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Softneck; pink cloves; long storage life; pungent, flavourful",
+      "type": "OP",
+      "note": "Source names it 'well-adapted to South African conditions' without specifying which zone(s); softneck types generally need less winter chill than hardneck, so are the safer default for milder/frost-free areas, but this is this pass's general inference, not a source-stated zone.",
+      "evidence": [{ "quote": "Egyptian Pink Garlic: This variety, known for its beautiful pink cloves and long storage life, is well-adapted to South African conditions.", "url": "https://gracelandgarlicseed.com/softneck-garlic/", "page": null, "doc": "Softneck Garlic: The Versatile Choice for South African Farms, Graceland Garlic Seed, May 2024" }]
+    },
+    {
+      "name": "Egyptian White",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Softneck; white cloves; mild flavour; reliable storer",
+      "type": "OP",
+      "note": "Same source, no named zone.",
+      "evidence": [{ "quote": "Egyptian White Garlic: With its clean, white cloves and mild, delicious flavor, Egyptian White Garlic is another excellent choice for South African growers. It's a reliable storer", "url": "https://gracelandgarlicseed.com/softneck-garlic/", "page": null, "doc": "Softneck Garlic: The Versatile Choice for South African Farms, Graceland Garlic Seed, May 2024" }]
+    },
+    {
+      "name": "Rocambole",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt"],
+      "maturity": null,
+      "season": "February-May planting",
+      "traits": "Hardneck; rich flavour, marbled purple cloves; 4-10 cloves per bulb; needs a distinct winter (cold requirement) to bulb properly; produces an edible flower stalk (scape)",
+      "type": "OP",
+      "note": "Zones are this pass's inference: the source ties ALL hardneck types (as a group, not this cultivar specifically) to 'regions that experience a distinct winter season' with February-May as the ideal SA planting window — assigned to the zones with real winter cold per the brief's zone key.",
+      "evidence": [
+        { "quote": "Hardneck garlic, known for its cold hardiness, is particularly well-suited for South Africa's varied climatic conditions. It flourishes in regions that experience a distinct winter season, as the cooler temperatures promote optimal bulb development... February to May is generally the ideal window for planting hardneck garlic in South Africa.", "url": "https://gracelandgarlicseed.com/hardneck-garlic/", "page": null, "doc": "Hardneck Garlic: The Robust and Flavorful Choice for South African Growers, Graceland Garlic Seed, May 2024" },
+        { "quote": "Rocambole Garlic: This variety is known for its rich flavour and beautiful, marbled purple cloves. It typically produces 4-10 cloves per bulb.", "url": "https://gracelandgarlicseed.com/hardneck-garlic/", "page": null, "doc": "Hardneck Garlic: The Robust and Flavorful Choice for South African Growers, Graceland Garlic Seed, May 2024" }
+      ]
+    },
+    {
+      "name": "Purple Stripe",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt"],
+      "maturity": null,
+      "season": "February-May planting",
+      "traits": "Hardneck; bold purple-striped cloves; spicy flavour, strong aroma",
+      "type": "OP",
+      "note": "Same hardneck cold-requirement reasoning and zone inference as Rocambole.",
+      "evidence": [{ "quote": "Purple Stripe Garlic: As its name suggests, this garlic features bold purple stripes on its cloves. It is known for its spicy flavour and strong aroma.", "url": "https://gracelandgarlicseed.com/hardneck-garlic/", "page": null, "doc": "Hardneck Garlic: The Robust and Flavorful Choice for South African Growers, Graceland Garlic Seed, May 2024" }]
+    },
+    {
+      "name": "Porcelain",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt"],
+      "maturity": null,
+      "season": "February-May planting",
+      "traits": "Hardneck; large white cloves, robust complex flavour; stores exceptionally well",
+      "type": "OP",
+      "note": "Same hardneck cold-requirement reasoning and zone inference as Rocambole.",
+      "evidence": [{ "quote": "Porcelain Garlic: This variety boasts large, white cloves with a robust, complex flavor. It stores exceptionally well and is a favorite among chefs.", "url": "https://gracelandgarlicseed.com/hardneck-garlic/", "page": null, "doc": "Hardneck Garlic: The Robust and Flavorful Choice for South African Growers, Graceland Garlic Seed, May 2024" }]
+    }
+  ],
+  "zoneAdvice": {
+    "highveld": {
+      "text": "Hard winter cold here best matches hardneck garlic's stated need for 'a distinct winter season' to bulb properly — plant Feb-May.",
+      "evidence": [{ "quote": "It flourishes in regions that experience a distinct winter season, as the cooler temperatures promote optimal bulb development.", "url": "https://gracelandgarlicseed.com/hardneck-garlic/", "page": null, "doc": "Hardneck Garlic: The Robust and Flavorful Choice for South African Growers, Graceland Garlic Seed, May 2024" }]
+    },
+    "high-mountain": {
+      "text": "Same reasoning as highveld — severe frost fits hardneck's winter-chill requirement well, but not independently confirmed for this zone by name.",
+      "evidence": []
+    },
+    "midlands-mistbelt": {
+      "text": "Moderate frost is assumed sufficient for hardneck chilling, but this is an inference, not a source-stated recommendation.",
+      "evidence": []
+    },
+    "lowveld-bushveld": {
+      "text": "No sourced recommendation, but softneck types (Egyptian Pink/White) are the more plausible fit given they don't need the same winter chill hardneck does — general horticultural reasoning, not sourced for this specific zone.",
+      "evidence": []
+    },
+    "subtropical-coast": {
+      "text": "Same reasoning as lowveld-bushveld: frost-free coast likely favours softneck over hardneck, but this is unsourced inference.",
+      "evidence": []
+    }
+  },
+  "gaps": [
+    "No SA production guide (DAFF/DALRRD) could be fetched this session for garlic — nda.gov.za/dalrrd.gov.za connections and the Wayback Machine snapshot both failed, so all sourcing here is a single specialist seed company's two blog-style pages, not an official/primary agronomic source.",
+    "No zone is explicitly named by name (e.g. 'Free State' or 'KZN Midlands') anywhere in the source for any cultivar — every zone assignment above is this pass's own inference from the general hardneck/softneck cold-requirement framing, flagged as such in each variety's note.",
+    "No sourced recommendation at all for western-cape, southern-cape or karoo-arid.",
+    "No maturity length, spacing, or yield data found for any named cultivar."
+  ]
+}

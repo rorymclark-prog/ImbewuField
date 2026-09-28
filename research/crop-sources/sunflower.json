@@ -1,0 +1,137 @@
+{
+  "key": "sunflower",
+  "name": "Sunflower",
+  "localNames": { "af": "Sonneblom", "zu": "Bhekilanga" },
+  "botanicalName": "Helianthus annuus L.",
+  "family": "Asteraceae",
+  "role": "food",
+  "foodGroup": null,
+  "harvestProduct": "dry seed (for oil)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "KTMP (absolute minimum/killing temperature) = 0",
+        "url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/master/EcoCrop_DB.csv",
+        "page": null,
+        "doc": "FAO ECOCROP database (OpenCLIM copy), row: Helianthus annuus"
+      }
+    ],
+    "notes": "The DAFF/ARC-GCI production guideline itself never mentions frost; it only says the crop is 'tolerant of both low and high temperatures but more tolerant to low temperatures' and germinates at soil temperatures from 5 degC. FAO ECOCROP's killing temperature (0 degC) is used here instead, since it is the only sourced frost data point found."
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Sunflower is propagated by seed.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Brochure%20Sunflower.pdf",
+        "page": 2,
+        "doc": "Sunflower, DAFF (with ARC-Grain Crops Institute), 2009"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [11, 12, 1],
+      "evidence": [
+        {
+          "quote": "In South Africa, sunflower is planted from the beginning of November until the end of December in the eastern areas and until mid-January in the western areas.",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Brochure%20Sunflower.pdf",
+          "page": 2,
+          "doc": "Sunflower, DAFF (with ARC-Grain Crops Institute), 2009"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [125, 130],
+    "evidence": [
+      {
+        "quote": "The total growing period (from seeding to harvesting) for sunflower ranges from 125 to 130 days.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Brochure%20Sunflower.pdf",
+        "page": 1,
+        "doc": "Sunflower, DAFF (with ARC-Grain Crops Institute), 2009"
+      }
+    ],
+    "notes": "Grain/seed maturity. Harvest should start once 80% of heads are brown, about 30-45 days after bloom, at ~35% seed moisture."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": [90, 100],
+    "evidence": [
+      {
+        "quote": "Row width can range from 90 to 100 cm, however, wider rows can also be used, particularly to accommodate other managerial aspects of crop production.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Brochure%20Sunflower.pdf",
+        "page": 2,
+        "doc": "Sunflower, DAFF (with ARC-Grain Crops Institute), 2009"
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [30, 30],
+    "evidence": [
+      {
+        "quote": "The required spacing in the row is about 30 cm at seed depth of 5 to 8 cm.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Brochure%20Sunflower.pdf",
+        "page": 2,
+        "doc": "Sunflower, DAFF (with ARC-Grain Crops Institute), 2009"
+      }
+    ],
+    "notes": "Source gives a single value (~30cm), not a range."
+  },
+  "sowDepthRangeCm": {
+    "value": [5, 8],
+    "evidence": [
+      {
+        "quote": "The required spacing in the row is about 30 cm at seed depth of 5 to 8 cm.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Brochure%20Sunflower.pdf",
+        "page": 2,
+        "doc": "Sunflower, DAFF (with ARC-Grain Crops Institute), 2009"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": [1.2, 2.1],
+    "product": "dry seed (grain)",
+    "conditions": "South Africa, 2005-2010 period: 2.1 t/ha is the ARC-GCI small-plot yield-trial average, 1.2 t/ha is the actual national/provincial full-scale dryland production average",
+    "evidence": [
+      {
+        "quote": "Graph 2 illustrates the gap between the average yields obtained in the ARC-GCI yield trials and the average yields obtained in the various provinces. From (2005 - 2010), the ARC average yield was 2,1 t/ha and country average was 1,2 t/ha. Naturally, yield trial data will always produce higher yields on small plots compared to actual full scale production.",
+        "url": "https://www.grainsa.co.za/the-future-of-sunflower-production-in-south-africa",
+        "page": null,
+        "doc": "The future of sunflower production in South Africa, Grain SA (citing ARC-Grain Crops Institute yield-trial data)"
+      }
+    ],
+    "notes": "Range spans the actual full-scale country average (1.2 t/ha, the more realistic smallholder/commercial-farm expectation) to the ARC-GCI research-trial average (2.1 t/ha, an upper genetic-potential figure) -- the source itself frames these as two ends of a known yield gap, not interchangeable numbers."
+  },
+  "ecocrop": {
+    "row": "Helianthus annuus",
+    "TOPMN": 17,
+    "TOPMX": 34,
+    "TMIN": 5,
+    "TMAX": 45,
+    "GMIN": 70,
+    "GMAX": 200
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {
+    "highveld": "North West (Dr Ruth Segomotsi Mompati, Dr Kenneth Kaunda, Ngaka Modiri Malema, Bojanala) and Free State (Motheo, Lejweleputswa, Mofutsanyane) districts are named as production areas.",
+    "lowveld-bushveld": "Limpopo (Capricorn, Waterberg) and Mpumalanga (Gert Sibande, Nkangala, Ehlanzeni) districts are named as production areas."
+  },
+  "gaps": [
+    "No DAFF/DALRRD-hosted sunflower guideline under nda.gov.za was found via Wayback in the initial CDX listing; the version used here ('Brochure Sunflower.pdf') was located under the dalrrd.gov.za Portals path.",
+    "Yield is now sourced from Grain SA (citing ARC-Grain Crops Institute yield-trial data, 2005-2010), not from the DAFF/ARC-GCI brochure itself, which gives no yield figure at all. The 1.2-2.1 t/ha range spans small-plot trial yield (2.1) vs. actual full-scale country-average production (1.2), which the source itself frames as a known yield gap rather than a single expected figure.",
+    "No seed rate in kg/ha; only plant population (25 000-35 000 plants/ha) is given.",
+    "No named cultivars/varieties -- source only refers generically to 'disease resistant cultivars' and 'certified seeds'.",
+    "Frost sensitivity is not addressed by the primary source at all; frostTender is based on FAO ECOCROP's killing-temperature field instead, as noted above.",
+    "No winter-rainfall (Western Cape), all-year, or mild-frost specific sowing guidance -- only the summer-rainfall Nov-Dec(east)/mid-Jan(west) window is given.",
+    "'foodGroup' does not map cleanly onto this crop (an oilseed rather than a legume, leafy green, staple grain, etc.); left as null rather than forced into a wrong category."
+  ],
+  "verdict": "ready",
+  "summary": "DAFF/ARC-GCI's 2009 Sunflower brochure gives a well-sourced sowing window (summer, the only relevant rain pattern for this dryland interior grain crop), days-to-harvest, row/in-row spacing and sowing depth. Yield is now sourced from Grain SA (citing ARC-GCI trial data): 1.2-2.1 t/ha, spanning full-scale country-average production to small-plot research-trial yield. It still has no seed rate in kg/ha and no named varieties, and never mentions frost (frostTender relies on FAO ECOCROP instead), but the ready-bar (sowMonths, daysToHarvestRange, spacing, yield) is now met."
+}

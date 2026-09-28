@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: 'bf42c58', changes: [
+    '20 new crops: sorghum, soybean, brinjal, gem squash, spanspek, amaranth and more.',
+    'Cowpea has no trusted yield yet, so you add it by hand; it is not auto-suggested.',
+    'Auto-suggest keeps every bed winter-ready and fills empty harvest months.',
+  ], tour: [
+    { title: 'Re-run auto-suggest', where: 'Crop plan → Auto-suggest', href: '/facilitator/crops',
+      detail: 'New crops such as sweetcorn, baby marrow and cauliflower can now appear in the plan. No bed is left bare in winter because a summer crop took its slot.' },
+    { title: 'Add a new crop by hand', where: 'Crop plan → Add a crop', href: '/facilitator/crops',
+      detail: 'Pick cowpea, bambara groundnut or African nightshade from the crop list and choose the bed and month yourself.' },
+  ] },
   { when: '28 September 2026', sha: 'd0a0dec8', changes: [
     'Introduction has a Sesotho draft voice, with English source available.',
     'Reading the Landscape adds Sesotho, Tshivenda and Xitsonga drafts beside English.',

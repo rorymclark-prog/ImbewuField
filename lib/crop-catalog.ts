@@ -1214,6 +1214,639 @@ export const CROPS: CropDef[] = [
     // extra whole calendar month beyond the first harvest month.
     harvestPeriodRangeWeeks: [2, 4],
   },
+  {
+    // DAFF: leafy amaranth (imbuya/thepe), Sep-Oct sowing window only — no
+    // winter/all-year/mild-frost calendar sourced. DAFF's own spacing
+    // figures conflict (a 762mm-row field trial vs. a 1.5m direct-sow/
+    // transplant recommendation elsewhere in the same guide), and its
+    // printed 272kg/ha seed rate is agronomically implausible for
+    // amaranth's dust-fine seed (the dossier itself flags this as an
+    // implausibly dense sowing) — so this crop ships with
+    // fieldSpacingVerified:false rather than silently picking one figure
+    // and hiding the conflict.
+    key: 'amaranth',
+    name: 'Amaranth (imbuya/thepe)',
+    icon: '🌺',
+    sowMonths: {
+      summer: [9, 10],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [],
+    },
+    daysToHarvest: 55,
+    daysToHarvestRange: [30, 55],
+    frostTender: true,
+    spacingCm: 30,
+    sowDepthCm: 1.25,
+    // Both quoted, deliberately not reconciled — see comment above.
+    rowSpacingRangeCm: [76.2, 150],
+    inRowSpacingRangeCm: [30, 30],
+    fieldSpacingVerified: false,
+    yieldKgPerM2: null,
+    note: "A traditional leafy green (imbuya/thepe), not the grain amaranth grown elsewhere. DAFF's own spacing figures for this crop conflict with each other and its printed seed rate is too dense to be plausible for amaranth's tiny seed, so treat the spacing here as a starting point to confirm locally, not a verified field plan. No yield figure was found either, so it stays manual.",
+    harvestPeriodNote: 'DAFF: leaves picked about every two weeks once harvesting starts, continuing until frost ends the crop.',
+  },
+  {
+    // KZN DARD 'Cole Crops': Sabadel/TSX C22/Synergy/Lagardo/Arano/
+    // Huntsmen/White Gold cultivars, all transplanted.
+    key: 'cauliflower',
+    name: 'Cauliflower',
+    icon: '⚪',
+    transplant: true,
+    sowMonths: {
+      // KZN DARD Table 6, 'Cold areas / Moderate frosts' column.
+      summer: [8, 9, 12, 1, 2, 3],
+      // No dedicated Western Cape source; set equal to 'summer' by
+      // inference, same treatment as this catalog's other cole crops.
+      winter: [8, 9, 12, 1, 2, 3],
+      // KZN DARD Table 6, 'Hot areas / Frost-free' column.
+      'all-year': [2, 3, 4],
+      // KZN DARD Table 6, 'Warm areas / Light frosts' column.
+      'mild-frost': [7, 8, 9, 1, 2, 3, 4],
+    },
+    // KZN DARD: 60-130 days from transplanting, cultivar-dependent.
+    daysToHarvest: 130,
+    daysToHarvestRange: [60, 130],
+    spacingCm: 42.5,
+    rowSpacingCm: 75,
+    inRowSpacingCm: 42.5,
+    sowDepthCm: 1.6,
+    rowSpacingRangeCm: [60, 90],
+    inRowSpacingRangeCm: [35, 50],
+    sowDepthRangeCm: [1.2, 2],
+    fieldSpacingVerified: true,
+    // KZN DARD Expected Yields Table 8: Conservative 7-8 / Likely 10-12 / Target 15-20 t/ha.
+    yieldKgPerM2: 0.7,
+    yieldRangeKgPerM2: [0.7, 1.2],
+    note: "A cole crop like cabbage and broccoli — same rotation family, so avoid following one straight after another in the same bed. DAFF states cauliflower survives to about 0°C once established, so it is not flagged frost-tender here, but young transplants still want protection from a hard frost snap.",
+    harvestPeriodRangeWeeks: [2, 4],
+    varieties: [
+      { name: 'Sabadel', bestFor: 'general SA cultivation', note: 'Named KZN DARD cultivar.' },
+      { name: 'TSX C22', bestFor: 'general SA cultivation', note: 'Named KZN DARD cultivar.' },
+      { name: 'Synergy', bestFor: 'general SA cultivation', note: 'Named KZN DARD cultivar.' },
+      { name: 'Lagardo', bestFor: 'general SA cultivation', note: 'Named KZN DARD cultivar.' },
+      { name: 'Arano', bestFor: 'general SA cultivation', note: 'Named KZN DARD cultivar.' },
+      { name: 'Huntsmen', bestFor: 'general SA cultivation', note: 'Named KZN DARD cultivar.' },
+      { name: 'White Gold', bestFor: 'general SA cultivation', note: 'Named KZN DARD cultivar.' },
+    ],
+  },
+  {
+    key: 'parsley',
+    name: 'Parsley',
+    icon: '💚',
+    sowMonths: {
+      // DAFF national parsley guide.
+      summer: [8, 9, 10, 11, 12, 1, 2, 3],
+      winter: [8, 9, 10, 11, 12, 1, 2, 3], // no WC-specific source; set equal to 'summer'
+      'all-year': [2, 3, 4, 5, 6, 7, 8, 9],
+      'mild-frost': [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+    },
+    daysToHarvest: 80,
+    daysToHarvestRange: [70, 80],
+    spacingCm: 10,
+    rowSpacingCm: 30,
+    inRowSpacingCm: 10,
+    sowDepthCm: 1.75,
+    rowSpacingRangeCm: [30, 30],
+    inRowSpacingRangeCm: [10, 10],
+    sowDepthRangeCm: [1.5, 2],
+    fieldSpacingVerified: true,
+    seedRateKgPerHaRange: [3, 3],
+    // DAFF: 2-4 t/ha.
+    yieldKgPerM2: 0.2,
+    yieldRangeKgPerM2: [0.2, 0.4],
+    note: 'A biennial herb grown as an annual for its leaves. Apiaceae family, same as carrots — avoid repeating that family in the same bed too often.',
+    varieties: [
+      { name: 'Parsley Plain', bestFor: 'general SA cultivation', note: 'DAFF-listed cultivar.' },
+      { name: 'Parsley Moss Curled', bestFor: 'general SA cultivation', note: "DAFF-listed cultivar; days-to-maturity not recorded (the source's printed 12-14 day figure is implausible for a herb and was not used)." },
+    ],
+  },
+  {
+    key: 'sorghum',
+    name: 'Sorghum',
+    icon: '🟤',
+    sowMonths: {
+      // DAFF: Oct-Dec window; December dropped here because that sowing's
+      // first harvest lands in May, inside the hard-frost months this
+      // catalog enforces for frost-tender crops.
+      summer: [10, 11],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [],
+    },
+    daysToHarvest: 140,
+    daysToHarvestRange: [120, 140],
+    frostTender: true,
+    spacingCm: 8,
+    rowSpacingCm: 160,
+    inRowSpacingCm: 8,
+    sowDepthCm: 3.75,
+    rowSpacingRangeCm: [91, 230],
+    inRowSpacingRangeCm: [1, 15],
+    sowDepthRangeCm: [2.5, 5],
+    fieldSpacingVerified: true,
+    seedRateKgPerHaRange: [3, 7],
+    // DAFF national average dryland grain sorghum: 0.77-1.2 t/ha.
+    yieldKgPerM2: 0.077,
+    note: "A drought-tolerant grain crop, more heat- and dry-tolerant than maize. A December sowing is left off this catalog's planner because the resulting May harvest would run into frost — still workable with local frost protection, just not auto-scheduled here. No named SA cultivars were found.",
+  },
+  {
+    key: 'soybean',
+    name: 'Soybean',
+    icon: '🟡',
+    sowMonths: {
+      summer: [11, 12],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [],
+    },
+    daysToHarvest: 130,
+    daysToHarvestRange: [120, 130],
+    spacingCm: 10,
+    rowSpacingCm: 65,
+    inRowSpacingCm: 10,
+    sowDepthCm: 3.5,
+    rowSpacingRangeCm: [40, 90],
+    inRowSpacingRangeCm: [5, 15],
+    sowDepthRangeCm: [2, 5],
+    fieldSpacingVerified: true,
+    // DAFF national average dryland yield: 2.5-3.0 t/ha.
+    yieldKgPerM2: 0.25,
+    yieldRangeKgPerM2: [0.25, 0.3],
+    note: 'A nitrogen-fixing legume grain crop grown for dry beans, not green pods. DAFF never states a frost sensitivity for soybean, so it is not flagged frost-tender here — but it is a warm-season crop and these sow months are already timed for that.',
+    varieties: [
+      { name: 'Sonop', bestFor: 'general SA cultivation', note: 'DAFF-listed cultivar.' },
+      { name: 'Dumela', bestFor: 'general SA cultivation', note: 'DAFF-listed cultivar.' },
+      { name: 'LS 6161 R', bestFor: 'general SA cultivation', note: 'DAFF-listed cultivar.' },
+    ],
+  },
+  {
+    key: 'brinjal',
+    name: 'Brinjal (eggplant)',
+    icon: '🍆',
+    transplant: true,
+    frostTender: true,
+    sowMonths: {
+      // Starke Ayres/DAFF summer-rainfall window.
+      summer: [10, 11],
+      // Starke Ayres: a real Western Cape-specific window, not an inference.
+      winter: [10, 11, 12],
+      'all-year': [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      'mild-frost': [9, 10, 11, 12, 1],
+    },
+    // From transplanting.
+    daysToHarvest: 85,
+    daysToHarvestRange: [60, 85],
+    spacingCm: 50,
+    rowSpacingCm: 75,
+    inRowSpacingCm: 50,
+    sowDepthCm: 1.75,
+    rowSpacingRangeCm: [70, 80],
+    inRowSpacingRangeCm: [50, 50],
+    sowDepthRangeCm: [1.5, 2],
+    fieldSpacingVerified: true,
+    // KZN DARD Expected Yields Table 8: Conservative 12-15 / Likely 20 / Target 25 t/ha.
+    yieldKgPerM2: 1.2,
+    yieldRangeKgPerM2: [1.2, 2.0],
+    note: "Solanaceae family, same as tomatoes, peppers, chilli and potato — keep this rotation family together when planning beds. Frost-tender: raise as transplants and set out only once frost risk has passed.",
+    harvestPeriodRangeMonths: [2, 3],
+    varieties: [
+      { name: 'Black King', bestFor: 'general SA cultivation', note: '70-80 days to first pick after transplanting (Starke Ayres).' },
+      { name: 'Violet Moon', bestFor: 'general SA cultivation', note: '70-80 days to first pick after transplanting (Starke Ayres).' },
+    ],
+  },
+  {
+    key: 'gem-squash',
+    name: 'Gem squash',
+    icon: '🥎',
+    frostTender: true,
+    sowMonths: {
+      // KZN DARD 'Cucurbits' proxy row (same treatment as pumpkin in this catalog).
+      summer: [9, 10, 11, 12, 1],
+      winter: [], // Western Cape is a real production area (Starke Ayres) but no month calendar sourced
+      'all-year': [3, 4, 5, 7, 8, 9, 10],
+      'mild-frost': [8, 9, 10, 11, 12, 1, 2],
+    },
+    daysToHarvest: 80,
+    daysToHarvestRange: [50, 80],
+    spacingCm: 45,
+    rowSpacingCm: 125,
+    inRowSpacingCm: 45,
+    sowDepthCm: 2.5,
+    rowSpacingRangeCm: [100, 150],
+    inRowSpacingRangeCm: [40, 50],
+    sowDepthRangeCm: [2, 3],
+    fieldSpacingVerified: true,
+    seedRateKgPerHaRange: [2, 3],
+    // KZN DARD Expected Yields Table 8: Conservative 12 / Likely 15-18 / Target 25-30 t/ha.
+    yieldKgPerM2: 1.2,
+    yieldRangeKgPerM2: [1.2, 1.8],
+    note: 'Cucurbitaceae family, same as pumpkin, butternut, cucumber and watermelon — avoid repeating this family in the same bed. Frost-tender vine crop; no Western Cape sowing calendar was found even though it is a known WC crop, so treat that as a local-confirmation item.',
+    varieties: [
+      { name: 'Pinnacle', bestFor: 'lowveld-bushveld', note: '50-60 days for baby fruit, 70-80 days for mature fruit (case study).' },
+      { name: 'STAR 8001', bestFor: 'general SA cultivation', note: 'Named cultivar; no further detail sourced.' },
+    ],
+  },
+  {
+    key: 'baby-marrow',
+    name: 'Baby marrow (courgette)',
+    icon: '🟩',
+    frostTender: true,
+    sowMonths: {
+      summer: [9, 10, 11, 12, 1],
+      winter: [],
+      'all-year': [3, 4, 5, 7, 8, 9, 10],
+      'mild-frost': [8, 9, 10, 11, 12, 1, 2],
+    },
+    daysToHarvest: 50,
+    daysToHarvestRange: [40, 50],
+    spacingCm: 42.5,
+    rowSpacingCm: 100,
+    inRowSpacingCm: 42.5,
+    sowDepthCm: 2.5,
+    rowSpacingRangeCm: [80, 120],
+    inRowSpacingRangeCm: [35, 50],
+    sowDepthRangeCm: [2, 3],
+    fieldSpacingVerified: true,
+    seedRateKgPerHaRange: [4, 6],
+    // KZN DARD Expected Yields Table 8: Conservative 7-8 / Likely 12 / Target 15 t/ha.
+    yieldKgPerM2: 0.7,
+    yieldRangeKgPerM2: [0.7, 1.2],
+    note: 'A fast-cropping Cucurbitaceae vine picked young and often — same rotation family as pumpkin, gem-squash, cucumber and watermelon. Frost-tender; no Western Cape calendar sourced.',
+    harvestPeriodRangeWeeks: [6, 9],
+    varieties: [
+      { name: 'Everglade', bestFor: 'general SA cultivation', note: 'Named cultivar; no further detail sourced.' },
+      { name: 'Monitor', bestFor: 'general SA cultivation', note: 'Named cultivar.' },
+      { name: 'Mira', bestFor: 'general SA cultivation', note: 'Named cultivar.' },
+    ],
+  },
+  {
+    key: 'spanspek',
+    name: 'Spanspek (sweet melon)',
+    icon: '🍈',
+    frostTender: true,
+    sowMonths: {
+      // January dropped: that sowing's harvest would run into frost.
+      summer: [9, 10, 11, 12],
+      winter: [], // Western Cape is a real production area (Venus cultivar) but no month calendar sourced
+      'all-year': [3, 4, 5, 7, 8, 9, 10],
+      'mild-frost': [8, 9, 10, 11, 12, 1, 2],
+    },
+    daysToHarvest: 110,
+    daysToHarvestRange: [80, 110],
+    spacingCm: 30,
+    rowSpacingCm: 150,
+    inRowSpacingCm: 30,
+    sowDepthCm: 2.5,
+    rowSpacingRangeCm: [150, 150],
+    inRowSpacingRangeCm: [25, 35],
+    sowDepthRangeCm: [2, 3],
+    fieldSpacingVerified: true,
+    seedRateKgPerHaRange: [3, 3],
+    // KZN DARD Expected Yields Table 8: Conservative 12 / Likely 15-18 / Target 25 t/ha.
+    yieldKgPerM2: 1.2,
+    yieldRangeKgPerM2: [1.2, 1.8],
+    note: "Cucurbitaceae melon vine. A January sowing is left off this catalog's planner because the resulting harvest would run into frost — still workable with local frost protection, just not auto-scheduled here.",
+    harvestPeriodRangeMonths: [2, 2],
+    varieties: [
+      { name: 'Venus', bestFor: 'western-cape/southern-cape-type climates', note: "Named cultivar; zone mapping to other SA regions is the dossier's own approximation." },
+      { name: 'Colorspring', bestFor: 'general SA cultivation', note: '70-75 days to maturity.' },
+      { name: 'Orangelly', bestFor: 'general SA cultivation', note: 'Named cultivar; no further detail sourced.' },
+    ],
+  },
+  {
+    key: 'sweetcorn',
+    name: 'Sweetcorn',
+    icon: '🟨',
+    frostTender: true,
+    sowMonths: {
+      summer: [9, 10, 11, 12],
+      winter: [],
+      'all-year': [1, 2, 3, 7, 8, 9],
+      'mild-frost': [8, 9, 10, 11, 12, 1, 2],
+    },
+    daysToHarvest: 90,
+    daysToHarvestRange: [70, 90],
+    spacingCm: 30,
+    rowSpacingCm: 75,
+    inRowSpacingCm: 30,
+    sowDepthCm: 3.25,
+    rowSpacingRangeCm: [70, 80],
+    inRowSpacingRangeCm: [25, 35],
+    sowDepthRangeCm: [2.5, 4],
+    fieldSpacingVerified: true,
+    // Standard sweetcorn seeding rate; Super Sweet types use roughly half this.
+    seedRateKgPerHaRange: [12, 15],
+    // KZN DARD Expected Yields Table 8: Conservative 7-8 / Likely 10 / Target 15 t/ha.
+    yieldKgPerM2: 0.7,
+    yieldRangeKgPerM2: [0.7, 1.0],
+    note: "Grown and eaten as a fresh vegetable, unlike field maize — the dossier's own food-group is fruiting vegetable, not staple grain, so it is kept there rather than lumped with maize despite the shared species. Tender to frost like maize.",
+    harvestPeriodRangeWeeks: [1, 2],
+    varieties: [
+      { name: 'Odyssey', bestFor: 'highveld/lowveld-bushveld/karoo-arid', note: 'Named cultivar.' },
+      { name: 'Invictus', bestFor: 'general SA cultivation', note: 'Dual-season cultivar; no specific zone given.' },
+    ],
+  },
+  {
+    key: 'cowpea',
+    name: 'Cowpea (imbumba/dinawa)',
+    icon: '🖤',
+    frostTender: true,
+    sowMonths: {
+      summer: [11, 12],
+      winter: [], // a Western Cape yield-trial exists but is not treated as a sowing-calendar source
+      'all-year': [12, 1],
+      'mild-frost': [],
+    },
+    // 21 days = first imifino (leaf) pick; 120 days = grain-type upper bound (used for bed occupancy).
+    daysToHarvest: 120,
+    daysToHarvestRange: [21, 120],
+    spacingCm: 15,
+    rowSpacingCm: 62,
+    inRowSpacingCm: 15,
+    sowDepthCm: 3.5,
+    rowSpacingRangeCm: [50, 75],
+    // 15-25cm erect/grain types, 50-75cm spreading types — erect/grain end used as the point value.
+    inRowSpacingRangeCm: [15, 75],
+    sowDepthRangeCm: [3, 4],
+    fieldSpacingVerified: true,
+    seedRateKgPerHaRange: [25, 30],
+    // Yield: no usable planning figure. The only SA number found is one Western Cape trial
+    // (Mfeka et al., S. Afr. J. Sci. 2019): "The average seed yield of the three cowpea lines was
+    // 60.7 kg/ha and 1184.2 kg/ha at Nietvoorbij and Bien Donne', respectively" — two sites, one
+    // season, a 20x spread. Its low end would plan 0.6 g of grain per plant, so null (manual add
+    // only, not auto-suggested or totalled) rather than picking an end.
+    yieldKgPerM2: null,
+    note: 'A dual-purpose legume: young leaves (imifino) can be picked from three to four weeks after sowing, and dry grain follows later. No yield figure is given because the only South African trial found disagreed twenty-fold between its two sites. No named SA cultivars were found.',
+  },
+  {
+    key: 'bambara-groundnut',
+    name: 'Bambara groundnut (jugo bean)',
+    icon: '🟠',
+    frostTender: true,
+    sowMonths: {
+      // December dropped: that sowing's first harvest lands in May, inside hard frost.
+      summer: [10, 11],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [],
+    },
+    daysToHarvest: 150,
+    daysToHarvestRange: [110, 150],
+    spacingCm: 12.5,
+    rowSpacingCm: 67.5,
+    inRowSpacingCm: 12.5,
+    sowDepthCm: 5,
+    rowSpacingRangeCm: [45, 90],
+    inRowSpacingRangeCm: [10, 15],
+    sowDepthRangeCm: [2.5, 7.5],
+    fieldSpacingVerified: true,
+    // Majola, UKZN PhD thesis 2023, p2 (75 genotypes x 7 SA environments, dry grain): "ARC
+    // Bamb-68 (0.96 ton ha-1) ... attained the highest grain yield across locations, while ARC
+    // Bamb-74 exhibited the lowest grain yield of 0.16 ton ha-1." Those across-location genotype
+    // means (0.16-0.96 t/ha) are used, not the 0.10/1.4 single-environment extremes.
+    yieldKgPerM2: 0.016,
+    yieldRangeKgPerM2: [0.016, 0.096],
+    note: "An indigenous nitrogen-fixing legume grown for its underground dry seed pods (a groundnut relative, not a true bean). The yield figure is dry seed, the low end of genotype averages across seven South African trial sites. A December sowing is left off this catalog's planner because the resulting harvest would run into frost.",
+    varieties: [
+      { name: 'MPB51', bestFor: 'lowveld-bushveld', note: 'ARC Lowveld Research Unit selection for higher yield (DAFF 2016 guideline).' },
+      { name: 'MPB31', bestFor: 'lowveld-bushveld', note: 'ARC Lowveld Research Unit selection, highly tolerant of the parasitic weed Alectra vogelii (DAFF 2016).' },
+      { name: 'Black-seeded landrace', bestFor: 'general SA cultivation', note: 'Early-maturing landrace type.' },
+      { name: 'Red-seeded landrace', bestFor: 'general SA cultivation', note: 'Late-maturing landrace type, prone to seed rotting in wet conditions.' },
+    ],
+  },
+  {
+    key: 'sunflower',
+    name: 'Sunflower (for seed)',
+    icon: '🌻',
+    frostTender: true,
+    sowMonths: {
+      // December and January both dropped: either sowing's first harvest
+      // lands in a hard-frost month (May/June) under this catalog's arithmetic.
+      summer: [11],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [],
+    },
+    daysToHarvest: 130,
+    daysToHarvestRange: [125, 130],
+    spacingCm: 30,
+    rowSpacingCm: 95,
+    inRowSpacingCm: 30,
+    sowDepthCm: 6.5,
+    rowSpacingRangeCm: [90, 100],
+    inRowSpacingRangeCm: [30, 30],
+    sowDepthRangeCm: [5, 8],
+    fieldSpacingVerified: true,
+    // Grain SA/ARC-GCI, dry seed: 1.2 t/ha country average, 2.1 t/ha trial average.
+    yieldKgPerM2: 0.12,
+    yieldRangeKgPerM2: [0.12, 0.21],
+    note: "An oilseed grain crop grown for dry seed. Frost sensitivity is taken from ECOCROP (DAFF's own guide does not mention frost), and only a November sowing is auto-scheduled here — December and January sowings are left off this catalog's planner because their harvest would run into frost. No named SA cultivars were found.",
+  },
+  {
+    key: 'radish',
+    name: 'Radish',
+    icon: '🔴',
+    sowMonths: {
+      summer: [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+      winter: [7, 8, 9, 10, 11, 12, 1, 2, 3, 4], // no WC-specific source; set equal to 'summer'
+      'all-year': [3, 4, 5, 6, 7, 8, 9, 10],
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+    daysToHarvest: 30,
+    daysToHarvestRange: [20, 30],
+    spacingCm: 5,
+    rowSpacingCm: 17.5,
+    inRowSpacingCm: 5,
+    sowDepthCm: 1.75,
+    rowSpacingRangeCm: [15, 20],
+    inRowSpacingRangeCm: [4, 6],
+    sowDepthRangeCm: [1.5, 2],
+    fieldSpacingVerified: true,
+    seedRateKgPerHaRange: [6, 6],
+    // No yield (t/ha) figure was found for radish in any sourced document —
+    // KZN DARD's Expected Yields table has no radish row.
+    yieldKgPerM2: null,
+    note: 'A very fast root crop, ready in three to four weeks — good for filling gaps between slower crops. No published yield figure was found, so it stays manual and will not drive auto-suggest ranking. Brassicaceae family, same as cabbage and turnip.',
+    harvestPeriodRangeWeeks: [1, 2],
+    varieties: [
+      { name: 'Sparkler', bestFor: 'general SA home-garden cultivation, all seasons', note: 'Scarlet-and-white radish; 20-25 days to maturity (Starke Ayres).' },
+      { name: 'Red round radish', bestFor: 'general SA home-garden cultivation, all seasons', note: 'Bright red, round radish; cultivar name not resolvable from the source catalogue. 20-25 days to maturity.' },
+    ],
+  },
+  {
+    key: 'mung-bean',
+    name: 'Mung bean',
+    icon: '🔵',
+    sowMonths: {
+      summer: [11, 12],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [],
+    },
+    daysToHarvest: 90,
+    daysToHarvestRange: [75, 90],
+    spacingCm: 10,
+    rowSpacingCm: 90,
+    inRowSpacingCm: 10,
+    sowDepthCm: 5.75,
+    // The source gives two conflicting row-spacing passages (18cm and
+    // 75cm-1.2m) — kept visible rather than silently choosing one; the
+    // point value above uses the more prominent 75cm-1.2m recommendation.
+    // fieldSpacingVerified is left at its default (true): this gap is real
+    // but not as severe as amaranth's rejected 272kg/ha seed rate above.
+    rowSpacingRangeCm: [18, 120],
+    inRowSpacingRangeCm: [5, 15],
+    sowDepthRangeCm: [4, 7.5],
+    // No seed rate or yield figure was found for mung bean; both stay unset/null.
+    yieldKgPerM2: null,
+    note: "A short-season legume grain grown for dry seed. No seed rate or yield figure was found in any sourced document, so it stays manual and will not drive auto-suggest ranking. The source's own row-spacing guidance is inconsistent (18cm in one place, 75cm-1.2m in another) — confirm locally before committing a full bed.",
+    harvestPeriodNote: 'Pod maturity is uneven; up to five successive hand-pickings are typical rather than one single harvest date.',
+  },
+  {
+    key: 'spider-plant',
+    name: 'Spider plant (Cleome gynandra)',
+    icon: '🕸️',
+    transplant: true,
+    frostTender: true,
+    sowMonths: {
+      // DAFF: Aug-Oct sowing window only.
+      summer: [8, 9, 10],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [],
+    },
+    // DAFF counts days from seedling EMERGENCE, not from sowing — the source
+    // gives no clean sowing-to-harvest conversion, so this range is recorded
+    // as published rather than adjusted by an unsourced assumption.
+    daysToHarvest: 42,
+    daysToHarvestRange: [28, 42],
+    spacingCm: 12.5,
+    rowSpacingCm: 37.5,
+    inRowSpacingCm: 12.5,
+    rowSpacingRangeCm: [25, 50],
+    inRowSpacingRangeCm: [10, 15],
+    fieldSpacingVerified: true,
+    // DAFF: "production levels not known yet" — no yield figure exists for this crop.
+    yieldKgPerM2: null,
+    note: "An indigenous leafy green (Cleome gynandra), its own botanical family (not a Brassica despite the resemblance). DAFF states no South African cultivars have been developed yet and no yield figures are known, so it stays manual. Days-to-harvest is counted from seedling emergence in the source, not from sowing — treat the range as approximate.",
+    harvestPeriodRangeWeeks: [4, 5],
+  },
+  {
+    key: 'african-nightshade',
+    name: 'African nightshade (umsobo)',
+    icon: '🟪',
+    transplant: true,
+    frostTender: true,
+    sowMonths: {
+      // DAFF: Oct-Nov sowing window only.
+      summer: [10, 11],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [],
+    },
+    // DAFF: a fixed four weeks (28 days) post-transplant, not a true range.
+    daysToHarvest: 28,
+    daysToHarvestRange: [28, 28],
+    spacingCm: 30,
+    rowSpacingCm: 30,
+    inRowSpacingCm: 30,
+    rowSpacingRangeCm: [30, 30],
+    inRowSpacingRangeCm: [30, 30],
+    fieldSpacingVerified: true,
+    // No yield figure was found for this crop.
+    yieldKgPerM2: null,
+    note: 'An indigenous leafy green (Solanum retroflexum, umsobo/nightshade) grown for its leaves, picked young — the ripe berries of some related Solanum species are toxic, so only follow a trusted local source for which parts are eaten. DAFF: sensitive to frost. No South African cultivars or yield figures were found, so it stays manual.',
+    harvestPeriodNote: 'DAFF describes three successive harvests rather than one continuous picking period.',
+  },
+  {
+    // Barenbrug: warm-season legume cover, sow once soil temperature is
+    // above 16°C; grown for biomass/green-manure, not a food harvest.
+    // Broadcast seed rate only — no row/in-row spacing sourced, same
+    // legacy-placeholder treatment as oats.
+    key: 'sunn-hemp',
+    name: 'Sunn hemp (cover crop)',
+    icon: '🧶',
+    frostTender: true,
+    sowMonths: {
+      summer: [10, 11],
+      winter: [],
+      'all-year': [10, 11],
+      'mild-frost': [10, 11],
+    },
+    // To reach a large-biomass termination state (not flowering).
+    daysToHarvest: 90,
+    daysToHarvestRange: [60, 90],
+    // A seed company's termination guide, not a primary authority, and not in
+    // PLOT_WINTER_COVER_KEYS: kept for manual records, never auto-scheduled.
+    timingVerified: false,
+    spacingCm: 6,
+    fieldSpacingVerified: false,
+    // Barenbrug: 20kg/ha (Red cultivar) to 40-50kg/ha (Black cultivar), broadcast.
+    seedRateKgPerHaRange: [20, 50],
+    fieldSpacingInstruction: 'broadcast at 20kg/ha (Red cultivar) to 40-50kg/ha (Black cultivar); terminate at large biomass, before the next crop',
+    yieldKgPerM2: 0,
+    note: 'A fast-growing nitrogen-fixing cover crop, not a food harvest in this plan. Sow October-November once soil has warmed, then terminate before the next crop — nothing is added to kitchen harvest totals.',
+  },
+  {
+    // Western/Southern/Eastern Cape winter-rainfall pasture legume; the
+    // duration figure is a best-available proxy from the closely related
+    // Bur Medic annual cycle, disclosed rather than hidden.
+    key: 'medic',
+    name: 'Medic (cover crop)',
+    icon: '☘️',
+    sowMonths: {
+      summer: [],
+      winter: [4, 5],
+      'all-year': [4, 5],
+      'mild-frost': [],
+    },
+    daysToHarvest: 100,
+    daysToHarvestRange: [60, 100],
+    // Proxy duration from Bur Medic (see above), so not treated as verified timing.
+    timingVerified: false,
+    spacingCm: 6,
+    fieldSpacingVerified: false,
+    // 4-7kg/ha in a mixture, 10-12kg/ha planted alone, 12-15kg/ha broadcast.
+    seedRateKgPerHaRange: [4, 15],
+    fieldSpacingInstruction: 'broadcast at 12-15kg/ha alone, or 4-7kg/ha in a pasture mixture; terminate before the next crop',
+    yieldKgPerM2: 0,
+    note: 'A winter-rainfall pasture/cover legume for the Western, Southern and Eastern Cape — not a food harvest in this plan. Sow April-May at the start of the winter rains, then terminate before the next crop.',
+  },
+  {
+    // Grain SA 'Integrated crop and pasture-based livestock production
+    // systems – Part 15: Radish' (2019); daysToHarvestRange from Ncisana
+    // et al. 2026 (Agronomy), days-to-full-flowering for cv Nooitgedacht.
+    // Grown as a cover crop (denser, broadcast) — legacy density
+    // placeholder and fieldSpacingVerified:false follow the oats pattern;
+    // the row/in-row figures below are shown to farmers as context, not
+    // fed into the density calculation.
+    key: 'fodder-radish',
+    name: 'Fodder radish (cover crop)',
+    icon: '🔻',
+    sowMonths: {
+      summer: [12, 1, 2],
+      winter: [],
+      'all-year': [],
+      'mild-frost': [1, 2],
+    },
+    // To full flowering (cv Nooitgedacht) — the point by which a cover crop
+    // should already have been terminated for best fodder quality.
+    daysToHarvest: 180,
+    daysToHarvestRange: [161, 180],
+    // Days to full flowering is a proxy for the termination date, not a sourced
+    // cover-crop duration — not auto-scheduled until one is found.
+    timingVerified: false,
+    spacingCm: 6,
+    fieldSpacingVerified: false,
+    rowSpacingRangeCm: [50, 90],
+    inRowSpacingRangeCm: [35, 50],
+    // 2kg/ha in rows, 4kg/ha broadcast (denser broadcast rate typical for cover-crop use).
+    seedRateKgPerHaRange: [2, 4],
+    fieldSpacingInstruction: 'broadcast at up to 4kg/ha, or drill in rows up to 90cm apart at 2kg/ha; terminate at full flowering, before the next crop',
+    yieldKgPerM2: 0,
+    note: 'A fast-growing biomass/soil-conditioning and grazing cover crop grown to full flowering, not for a food harvest — not counted in kitchen harvest totals. Same botanical family as radish and cabbage, so plan rotation accordingly. Not frost-tender itself, but is killed by the first hard frost or by herbicide, which is the usual way it is terminated.',
+  },
 ];
 
 /** Crops whose 'all-year' (frost-free) sowing months are taken from the KZN

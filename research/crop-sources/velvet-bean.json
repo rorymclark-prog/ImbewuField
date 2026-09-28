@@ -1,0 +1,122 @@
+{
+  "key": "velvet-bean",
+  "name": "Velvet Bean",
+  "localNames": null,
+  "botanicalName": "Mucuna pruriens",
+  "family": "Fabaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "green manure / grazing biomass, rolled/incorporated at late vegetative stage",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Velvet bean requires a long growing season and is sensitive to frost and therefore requires at least 180 frost free days.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-21-velvet-bean-mucuna-pruriens-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 21: Velvet bean, SA Grain/Grain SA (Truter, Dannhauser, Smith & Trytsman), 2019"
+      }
+    ]
+  },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [] },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": { "value": null, "evidence": [], "notes": "No explicit day-count to termination found; only a calendar description ('end of February' rolling in a KZN intercrop context) and a minimum '180 frost-free days' requirement." },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": [100, 100],
+    "evidence": [
+      {
+        "quote": "The best method to plant velvet bean is by drilling it into the soil with about 1 m between rows and 20 cm – 80 cm between plants (20 kg/ha – 40 kg/ha seed).",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-21-velvet-bean-mucuna-pruriens-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 21: Velvet bean, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [20, 80],
+    "evidence": [
+      {
+        "quote": "The best method to plant velvet bean is by drilling it into the soil with about 1 m between rows and 20 cm – 80 cm between plants (20 kg/ha – 40 kg/ha seed).",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-21-velvet-bean-mucuna-pruriens-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 21: Velvet bean, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": [3, 10],
+    "evidence": [
+      {
+        "quote": "Seeds are large, so seeding depth can be as deep as 10 cm but not less than 3 cm.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-21-velvet-bean-mucuna-pruriens-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 21: Velvet bean, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [20, 40],
+    "evidence": [
+      {
+        "quote": "20 cm – 80 cm between plants (20 kg/ha – 40 kg/ha seed)",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-21-velvet-bean-mucuna-pruriens-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 21: Velvet bean, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [5, 13],
+    "product": "dry matter (green manure/fodder biomass)",
+    "conditions": "subtropical, rainfall-dependent",
+    "evidence": [
+      {
+        "quote": "Velvet bean has a high dry matter production for a subtropical legume. Yields range from 5 t/ha – 13 t/ha depending on the rainfall.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-21-velvet-bean-mucuna-pruriens-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 21: Velvet bean, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Mucuna pruriens",
+    "TOPMN": 20,
+    "TOPMX": 30,
+    "TMIN": 10,
+    "TMAX": 34,
+    "GMIN": 90,
+    "GMAX": 270
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": null,
+    "biomassTPerHa": 13,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "Terminating the cover crop by rolling at a late vegetative stage (end of February).",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-21-velvet-bean-mucuna-pruriens-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 21: Velvet bean, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "varieties": [],
+  "zoneNotes": {
+    "subtropical-coast": "Requires >= 180 frost-free days and temperatures of 20-30°C (min 5°C); best suited to frost-free/mild-frost summer-rain and subtropical coastal zones such as KZN.",
+    "highveld": "Not suited — frost sensitivity and 180 frost-free day requirement rule out hard-frost interior."
+  },
+  "gaps": [
+    "No explicit sow-month/calendar found for any rain pattern (only a relative '45 days after companion crop' intercropping rule and a 180-frost-free-day requirement) — sowMonths left empty for all patterns.",
+    "No numeric N-fixed (kg/ha) figure found for velvet bean in any SA source.",
+    "No exact days-to-termination figure; only a qualitative 'end of February' example and general biomass/frost-day requirements.",
+    "No named SA cultivars found."
+  ],
+  "verdict": "partial",
+  "summary": "Spacing, seed rate and biomass yield (5-13 t DM/ha) are well sourced from Grain SA's Part 21 (Truter et al.). sowMonths could not be pinned to specific calendar months in any source, and no N-fixed figure or cultivar names were found, so the entry cannot reach 'ready'."
+}

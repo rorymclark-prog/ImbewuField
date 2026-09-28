@@ -46,7 +46,7 @@ import {
   buildPlanTableRows, buildTopCrops, buildWorkloadSeries, cropAbbreviations,
   type CalendarRow, type MonthCount,
 } from '@/lib/crop-export-benchmark';
-import { cropByKey } from '@/lib/crop-catalog';
+import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
 import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 
 export interface CropPlanPdfMeta {
@@ -75,6 +75,13 @@ export interface CropPlanPdfMeta {
   locationLine: string;
   /** The climate pattern, on its own: "Summer rainfall". Empty when genuinely unknown. */
   climateLine: string;
+  /**
+   * The site's rainfall/frost pattern as DATA, not the rendered climateLine text — used to gate
+   * the frost caveat on the Full Plan table. Optional and undefined for callers that have not
+   * wired it through yet; the caveat simply does not print in that case (a warning withheld is
+   * safer than one derived by re-parsing climateLine's display string).
+   */
+  rainPattern?: RainPattern;
   /** "6 beds · 2 staple plots · 48.0 m² of growing space". */
   bedsSummary: string;
   /** Already-localised date string for the cover line. */
@@ -1053,7 +1060,8 @@ function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
   pageTitle(s, 'Full plan', 'Bed-by-bed plan',
     'Each line is one planting. Yield is a conservative benchmark comparison where a verified kg/m² entry exists; "Not verified" is never treated as 0kg.');
 
-  const rows = buildPlanTableRows(input.plantings, input.beds).map((r) => ({
+  const mildFrostSite = input.meta.rainPattern === 'mild-frost';
+  const rows = buildPlanTableRows(input.plantings, input.beds, mildFrostSite).map((r) => ({
     area: r.area,
     // A one-time starter has to say so on its own line. Without it the sheet a
     // farmer carries into the field reads a first-season bridge sowing as a
@@ -1063,7 +1071,9 @@ function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
     share: r.share,
     establish: r.establish,
     field: r.intoField,
-    harvest: r.harvest,
+    // A caveat is a WARNING, not a sourced frost date — appended onto the harvest
+    // cell (which auto-wraps) rather than given its own column.
+    harvest: r.frostCaveat ? `${r.harvest} — ${r.frostCaveat}` : r.harvest,
     yield: benchmarkYieldLabel(r.yieldKg),
     group: r.area,
   }));
@@ -1143,7 +1153,7 @@ function drawFieldSheets(
   startPage: (o: 'portrait' | 'landscape') => void,
 ): void {
   for (const month of rollingMonths(nowMonth)) {
-    const sheet = buildFieldSheet(month, input.tasks, now);
+    const sheet = buildFieldSheet(month, input.tasks, now, input.plantings, input.beds);
     if (!sheet.sections.length) continue;
 
     startPage('portrait');
@@ -1224,6 +1234,19 @@ function drawFieldSheets(
       s.doc.text(pdfSafe(section.title.toUpperCase()), s.margin + 6, s.y + 11);
       s.y += 16;
 
+      // Generic guidance for the whole section (e.g. "confirm the bed is
+      // clear before preparing it"), said once here instead of after every
+      // row — see FieldSheetSection.note.
+      if (section.note) {
+        s.font(7.5);
+        s.ink(INK.muted);
+        const noteLines = s.doc.splitTextToSize(pdfSafe(section.note), cWork + cPlace - 12) as string[];
+        const noteH = noteLines.length * 9.5 + 8;
+        if (s.need(noteH + 4)) { continued(); headRow(); }
+        s.doc.text(noteLines, s.margin + cTick + 4, s.y + 9);
+        s.y += noteH;
+      }
+
       for (const row of section.rows) {
         s.font(8);
         const lines = s.doc.splitTextToSize(pdfSafe(row.work), cWork - 12) as string[];
@@ -1254,22 +1277,6 @@ function drawFieldSheets(
         s.y += rowH;
       }
     }
-
-    // The weather note is the LAST ROW OF THE TABLE, not a floating box after
-    // it. As a box it only appeared on months short enough to leave room, so
-    // some sheets had somewhere to write the rain and some did not.
-    if (s.need(44)) { continued(); headRow(); }
-    s.fill(INK.panelGrey);
-    s.doc.rect(s.margin, s.y, s.contentWidth, 42, 'F');
-    s.font(8, true);
-    s.ink(INK.text);
-    s.doc.text(pdfSafe('Weather, soil'), s.margin + cTick + 4, s.y + 14);
-    s.doc.text(pdfSafe('and irrigation'), s.margin + cTick + 4, s.y + 24);
-    s.stroke(INK.hair);
-    s.doc.setLineWidth(0.4);
-    s.doc.rect(s.margin, s.y, s.contentWidth, 42, 'S');
-    s.doc.line(s.margin + cTick + cPlace, s.y, s.margin + cTick + cPlace, s.y + 42);
-    s.y += 48;
   }
 }
 

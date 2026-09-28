@@ -39,10 +39,62 @@ import {
   latestBedEntryMonth,
   plannedBedEntryMonth,
   plantingBedEntryOffsets,
+  seedBoqBatchesForPlan,
   taskMonthsFromNow,
   yieldByCrop,
 } from '@/lib/crop-plan';
 import { MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
+
+/**
+ * Which planting-material noun a crop actually uses, keyed off the SAME field
+ * `seedBoqBatchesForPlan` already computes for the buying schedule (see
+ * lib/crop-plan.ts's SeedBoqBatch.unit) — never a second, independently
+ * hardcoded list of "which crops grow from pieces". A crop absent from the
+ * result (an already-`existing` cohort, or one the BOQ deliberately excludes)
+ * falls back to the same transplant/seed split the BOQ itself falls back to.
+ */
+function unitByCropKey(plantings: Planting[], beds: PlanBed[]): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const batch of seedBoqBatchesForPlan(plantings, beds)) map.set(batch.cropKey, batch.unit);
+  return map;
+}
+
+/** A crop bought and planted as a living piece (slip, seed potato, clove,
+ *  corm...) rather than botanical seed or a raised seedling. */
+function isLivingPieceUnit(unit: string | undefined): unit is string {
+  return unit !== undefined && unit !== 'seeds' && unit !== 'seedlings';
+}
+
+/** "sweet potato slips", "garlic cloves", "amadumbe corms" — but just "seed
+ *  potatoes", not "potato seed potatoes", when the unit noun already names
+ *  the crop. Generic on `unit`; adding a new living-piece crop to the catalog
+ *  needs no new case here. */
+function pieceLabel(cropName: string, unit: string): string {
+  return unit.toLowerCase().includes(cropName.toLowerCase()) ? unit : `${cropName} ${unit}`;
+}
+
+/** SA winter — the frost risk window (Jun-Jul). Used only to raise a WARNING
+ *  caveat on a frost-tender crop whose harvest window reaches it on a
+ *  'mild-frost' site; this pattern's own catalog header only records "light
+ *  frost in low pockets on clear winter nights" with no sourced first/last
+ *  frost date for the zone, so this is never a sowing or harvest gate. */
+export const SA_WINTER_FROST_MONTHS: ReadonlySet<number> = new Set([6, 7]);
+
+const FROST_CAVEAT_TEXT = 'Frost-tender: finish picking before the first frost or cover on clear, still nights.';
+
+/** Does the inclusive month range start..end (wrapping past December) touch
+ *  any month in `targets`? Capped at 12 steps — a harvest window longer than
+ *  a year is not a value this planner produces. */
+function monthRangeHits(start: number, end: number, targets: ReadonlySet<number>): boolean {
+  let m = wrapMonth(start);
+  const stop = wrapMonth(end);
+  for (let i = 0; i < 12; i++) {
+    if (targets.has(m)) return true;
+    if (m === stop) return false;
+    m = wrapMonth(m + 1);
+  }
+  return false;
+}
 
 // ── 1. Dashboard ────────────────────────────────────────────────────────────
 
@@ -454,6 +506,10 @@ export interface FieldSheetRow {
 export interface FieldSheetSection {
   title: string;
   rows: FieldSheetRow[];
+  /** Guidance that applies to every row below and would otherwise repeat on
+   *  each one — stated once for the whole section instead. Undefined when
+   *  the section has nothing generic to say once. */
+  note?: string;
 }
 
 export interface FieldSheet {
@@ -495,6 +551,8 @@ export function buildFieldSheet(
   month: number,
   tasks: CropTask[],
   now: Date,
+  plantings: Planting[] = [],
+  beds: PlanBed[] = [],
 ): FieldSheet {
   const nowMonth = now.getMonth() + 1;
   const targetOffset = ((wrapMonth(month) - nowMonth) % 12 + 12) % 12;
@@ -503,13 +561,21 @@ export function buildFieldSheet(
   // November sheet merely because both are called "November".
   const mine = tasks.filter((t) => taskMonthsFromNow(t, nowMonth) === targetOffset);
   const mulchedCrops = new Set(mine.filter((t) => t.action === 'mulch').map((t) => `${t.bedLabel}::${t.cropKey}`));
+  const unitByCrop = unitByCropKey(plantings, beds);
+
+  // Distinct ground-prep guidance for this month, said ONCE in the section's
+  // own note rather than after every bed — see FieldSheetSection.note. Every
+  // planting's prep task carries the same one or two catalog-driven sentences
+  // (lib/crop-plan.ts's bedKind split), so repeating it per bed added nothing
+  // but length.
+  const prepNotes = new Set<string>();
 
   // A row is one BED and one kind of job. Within it each crop keeps its own
   // spacing in brackets — merging the crops but not their instructions is how
   // "Sow at rows 47cm apart. Sow at about 17cm each way." ended up in one
   // sentence with nothing saying which crop either belonged to.
   interface Bucket {
-    sow: string[]; transplant: string[]; plain: string[]; extra: Set<string>;
+    sow: string[]; plantPieces: string[]; transplant: string[]; plain: string[]; extra: Set<string>;
     waterSow: boolean; waterTransplant: boolean;
   }
   const buckets = new Map<string, Map<string, Bucket>>();
@@ -518,7 +584,7 @@ export function buildFieldSheet(
     if (!byPlace) { byPlace = new Map(); buckets.set(section, byPlace); }
     let entry = byPlace.get(place);
     if (!entry) {
-      entry = { sow: [], transplant: [], plain: [], extra: new Set(), waterSow: false, waterTransplant: false };
+      entry = { sow: [], plantPieces: [], transplant: [], plain: [], extra: new Set(), waterSow: false, waterTransplant: false };
       byPlace.set(place, entry);
     }
     return entry;
@@ -542,7 +608,17 @@ export function buildFieldSheet(
           b.extra.add(`Start checking in ${monthShort(earliest)}; transplant when ready, within the planning window through ${monthShort(latest)}.`);
         } else {
           const b = bucketFor('Direct sowing and planting', t.bedLabel);
-          b.sow.push(`${name} (${spacingPhrase(crop)})`);
+          const unit = unitByCrop.get(t.cropKey);
+          // Sweet potato slips, seed potatoes, garlic cloves, amadumbe corms —
+          // living planting material, never botanical seed. "Direct sow" /
+          // "Sow" is the wrong instruction for a piece someone plants whole;
+          // driven by the same `unit` the buying schedule already uses, not a
+          // second hardcoded list of crop keys.
+          if (isLivingPieceUnit(unit)) {
+            b.plantPieces.push(`${pieceLabel(name, unit)} (${spacingPhrase(crop)})`);
+          } else {
+            b.sow.push(`${name} (${spacingPhrase(crop)})`);
+          }
           b.waterSow ||= watered;
         }
         break;
@@ -555,7 +631,7 @@ export function buildFieldSheet(
       case 'prep': {
         const b = bucketFor('Prepare for the next planting', t.bedLabel);
         b.plain.push(name);
-        if (t.prepText) b.extra.add(`${capitalise(stripPrepWrapper(t.prepText))}.`);
+        if (t.prepText) prepNotes.add(`${capitalise(stripPrepWrapper(t.prepText))}.`);
         break;
       }
       case 'harvest': {
@@ -601,11 +677,12 @@ export function buildFieldSheet(
         const phrases = [...byCrop.entries()].map(([crop, bedsOf]) => `${crop} for ${compactPlaces(bedsOf)}`);
         parts.push(`Raise and label trays for ${joinList(phrases)}.`);
       }
-      else if (title === 'Prepare for the next planting') parts.push(`If this follows another crop, confirm it is finished and the bed is clear; then prepare the ground for ${joinList(unique(b.plain))}.`);
+      else if (title === 'Prepare for the next planting') parts.push(`Prepare the ground for ${joinList(unique(b.plain))}.`);
       else if (title === 'Harvest and record') parts.push(`Harvest ${joinList(unique(b.plain))}.`);
       else if (title === 'End the cover crop') parts.push(`Cut or roll down ${joinList(unique(b.plain))} before the next crop.`);
       else if (title === 'Maintenance') parts.push(`Weed and check for pests around ${joinList(unique(b.plain))}.`);
       if (b.sow.length) parts.push(`Sow ${joinList(unique(b.sow))}.`);
+      if (b.plantPieces.length) parts.push(`Plant ${joinList(unique(b.plantPieces))}.`);
       if (b.transplant.length) parts.push(`From this month, transplant ${joinList(unique(b.transplant))} when seedlings and the bed are ready.`);
       // ONE watering sentence per row. A bed that is both sown and planted into
       // in the same month used to end "...Water and mulch. Water, mulch and
@@ -615,7 +692,17 @@ export function buildFieldSheet(
       parts.push(...b.extra);
       rows.push({ place, work: parts.filter(Boolean).join(' ') });
     }
-    sections.push({ title, rows: mergeIdenticalWork(rows) });
+    // The "if this follows another crop, confirm it is clear" reminder and the
+    // soil/drainage assessment used to repeat after every single bed. Both are
+    // generic guidance, not a fact specific to any one bed, so they are said
+    // once for the section instead — see FieldSheetSection.note.
+    const note = title === 'Prepare for the next planting' && prepNotes.size
+      ? [
+        'Where a bed follows another crop, confirm it is finished and cleared before preparing it.',
+        ...prepNotes,
+      ].join(' ')
+      : undefined;
+    sections.push({ title, rows: mergeIdenticalWork(rows), ...(note ? { note } : {}) });
   }
 
   const workRows = sections.reduce((s, x) => s + x.rows.length, 0);
@@ -740,6 +827,12 @@ export interface PlanTableRow {
    *  year — the exact phantom-recurrence reading the `once` field exists to
    *  prevent, recreated in print. Consumers must mark these rows. */
   once: boolean;
+  /** A short WARNING for a frost-tender crop harvesting into SA's winter
+   *  (Jun-Jul) on a 'mild-frost' site — never null on a hard summer-frost or
+   *  frost-free site, since the catalog's own frost gate already keeps a
+   *  frost-tender crop out of the field there before its first harvest. Null
+   *  whenever no caveat applies. */
+  frostCaveat: string | null;
 }
 
 /**
@@ -747,9 +840,13 @@ export interface PlanTableRow {
  * because for a tray crop they are different months and different jobs — the
  * single "sow" column they used to share is what let nursery and field work
  * blur together in the first place.
+ *
+ * `mildFrostSite` gates the frost caveat only — it never changes what is
+ * sown or when; see SA_WINTER_FROST_MONTHS.
  */
-export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[]): PlanTableRow[] {
+export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildFrostSite = false): PlanTableRow[] {
   const rows: PlanTableRow[] = [];
+  const unitByCrop = unitByCropKey(plantings, beds);
   for (const bed of beds) {
     const mine = plantings
       .filter((p) => p.bedId === bed.id)
@@ -760,12 +857,18 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[]): Plan
     mine.forEach(({ p, crop }, i) => {
       const h = crop.timingVerified === false ? null : harvestMonthForCrop(p.sowMonth, crop);
       const end = h === null ? null : wrapMonth(h + (crop.harvestWindowMonths ?? 0));
+      const unit = unitByCrop.get(crop.key);
+      const establish = crop.transplant
+        ? `Nursery ${monthShort(p.sowMonth)}`
+        : isLivingPieceUnit(unit)
+          ? `Plant ${unit} ${monthShort(p.sowMonth)}`
+          : `Direct sow ${monthShort(p.sowMonth)}`;
       rows.push({
         area: bed.label,
         isFirstOfArea: i === 0,
         crop: p.variety ? `${crop.name} - ${p.variety}` : crop.name,
         share: shareCode(p.areaFraction ?? 1),
-        establish: crop.transplant ? `Nursery ${monthShort(p.sowMonth)}` : `Direct sow ${monthShort(p.sowMonth)}`,
+        establish,
         intoField: crop.transplant
           ? `Check ${monthShort(bedEntryMonth(p.sowMonth, crop))}-${monthShort(latestBedEntryMonth(p.sowMonth, crop))}; transplant when ready`
           : 'Direct',
@@ -776,6 +879,10 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[]): Plan
           ? null
           : estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
         once: typeof p.once === 'string',
+        frostCaveat: mildFrostSite && crop.frostTender && h !== null && end !== null
+          && monthRangeHits(h, end, SA_WINTER_FROST_MONTHS)
+          ? FROST_CAVEAT_TEXT
+          : null,
       });
     });
   }

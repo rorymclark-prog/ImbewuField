@@ -47,6 +47,28 @@ export const CROP_ART: Record<string, string> = {
   oats: '/crop-art/oats.png',
   'true-spinach': '/crop-art/true-spinach.png',
   turnip: '/crop-art/turnip.png',
+
+  // 2026-09-28 batch.
+  amaranth: '/crop-art/amaranth.png',
+  cauliflower: '/crop-art/cauliflower.png',
+  parsley: '/crop-art/parsley.png',
+  sorghum: '/crop-art/sorghum.png',
+  soybean: '/crop-art/soybean.png',
+  brinjal: '/crop-art/brinjal.png',
+  'gem-squash': '/crop-art/gem-squash.png',
+  'baby-marrow': '/crop-art/baby-marrow.png',
+  spanspek: '/crop-art/spanspek.png',
+  sweetcorn: '/crop-art/sweetcorn.png',
+  cowpea: '/crop-art/cowpea.png',
+  'bambara-groundnut': '/crop-art/bambara-groundnut.png',
+  radish: '/crop-art/radish.png',
+  'mung-bean': '/crop-art/mung-bean.png',
+  sunflower: '/crop-art/sunflower.png',
+  'spider-plant': '/crop-art/spider-plant.png',
+  'african-nightshade': '/crop-art/african-nightshade.png',
+  'sunn-hemp': '/crop-art/sunn-hemp.png',
+  medic: '/crop-art/medic.png',
+  'fodder-radish': '/crop-art/fodder-radish.png',
 };
 
 /** Returns the art path for a crop key, or undefined if none exists yet. */

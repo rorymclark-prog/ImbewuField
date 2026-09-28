@@ -1,0 +1,127 @@
+{
+  "key": "jute-mallow",
+  "name": "Jute Mallow",
+  "localNames": {
+    "en": "Jew's mallow / jute",
+    "af": "Jute / Wilde jute",
+    "st": "Thelele / Ligusha"
+  },
+  "botanicalName": "Corchorus olitorius L.",
+  "family": "Malvaceae (Tiliaceae in some older sources)",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "fresh leaves and young shoots (mucilaginous when cooked)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Jute mallow grows well in summer when temperature is above 27 °C and performs better in well drained sandy clay loam soils, but also grows in a wide range of soils.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 20,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ],
+    "notes": "No DAFF/DALRRD production guideline exists for jute mallow (confirmed absent via exhaustive Wayback CDX search of nda.agric.za, nda.gov.za and dalrrd.gov.za). The only South African primary source found (WRC/PGALV) describes it only as a warm-season crop (>27°C) and never uses the word 'frost' or states a minimum/cold-tolerance temperature for it. frostTender=true is a reasonable inference for a tropical Corchorus species but is NOT a directly sourced SA statement — flagged honestly as inferred, not quoted."
+  },
+  "transplant": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Sowing and Transplanting: Mix seed 1:10 with sand or dry soil. Sow in rows or broadcast. Thin the seedlings out (1-2 cm apart) to ensure that you have stronger seedlings. Transplant seedlings when they are about 7-10 cm tall, as older plants will not grow well.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 20,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ],
+    "notes": "Both direct sowing/broadcasting and transplanting (at 7-10cm seedling height) are described as options."
+  },
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [] },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": null,
+    "evidence": [],
+    "notes": "GAP: no explicit days-to-first-harvest figure found in any South African source. The WRC/PGALV guideline describes management (seed dormancy of 4 months before sowing, transplanting at 7-10cm) but never states a sowing-to-first-pick day count. A non-South African source (Biovision Africa Trust / eoai-africa.org, a Kenyan smallholder growing guide) states 'ready for the first cutting in about 60-70 days' — recorded here only as unverified non-SA supplementary context, not used as the sourced SA value, per the sourcing rules for this catalog."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "Repeat cutting 3-4 times per planting; 2-week succession sowing recommended to spread the marketing period.",
+    "evidence": [
+      {
+        "quote": "Harvest Jute mallow by picking the tops or cut young growth back at about 15 cm above the ground level. New side shoots will develop and harvesting can be repeated 3 or 4 times.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 20,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      },
+      {
+        "quote": "Plant Jute mallow at an interval of two weeks to spread the marketing period.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 20,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [30, 50],
+    "evidence": [
+      {
+        "quote": "Spacing for tall varieties is 10 cm in the row by 30-50 cm between rows. Broad varieties with many side shoots require a spacing of 30 x 50 cm.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 20,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ],
+    "notes": "Figure is for 'tall varieties' specifically. For 'broad varieties with many side shoots' the source gives '30 x 50 cm' without stating which dimension is the row and which is in-row — recorded as ambiguous."
+  },
+  "inRowSpacingRangeCm": {
+    "value": [10, 30],
+    "evidence": [
+      {
+        "quote": "Spacing for tall varieties is 10 cm in the row by 30-50 cm between rows. Broad varieties with many side shoots require a spacing of 30 x 50 cm.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 20,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ],
+    "notes": "10cm applies to 'tall varieties'; the 30cm figure is the ambiguous dimension of the 30x50cm 'broad variety' spacing (see rowSpacingRangeCm notes) — not a second, distinct in-row measurement for the same variety type."
+  },
+  "sowDepthRangeCm": {
+    "value": null,
+    "evidence": [],
+    "notes": "No sowing depth stated in the source."
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": null,
+    "product": "fresh leaves",
+    "conditions": null,
+    "evidence": [],
+    "notes": "GAP: no fresh-leaf yield figure (t/ha) found. No DAFF/DALRRD guideline exists for this crop; the WRC/PGALV guideline (the only SA primary source found) contains no quantitative yield data for any of its 8 covered crops. An ARC-VOPI nitrogen-response trial on Corchorus olitorius (Maseko et al., Acta Horticulturae 2019, ISHS) was located via its abstract but gives only qualitative yield statements, not exact t/ha figures, and the full paper could not be accessed (network-blocked). MDPI, ScienceDirect, ResearchGate and Tandfonline searches for a quantified SA yield trial were all blocked in this session."
+  },
+  "ecocrop": {
+    "row": "Corchorus capsularis (proxy — the edible C. olitorius is not itself listed in ECOCROP; C. capsularis is the closest congener present, grown mainly for fibre, not as a leafy vegetable)",
+    "TOPMN": 20,
+    "TOPMX": 37,
+    "TMIN": 13,
+    "TMAX": 45,
+    "GMIN": 80,
+    "GMAX": 150
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {},
+  "gaps": [
+    "No DAFF/DALRRD production guideline exists for jute mallow (confirmed absent by exhaustive Wayback CDX search of nda.agric.za, nda.gov.za and dalrrd.gov.za for jute/Corchorus/delele terms).",
+    "sowMonths could not be sourced at all — the WRC/PGALV guideline (the only SA primary document covering this crop) has no month-by-month planting/harvest schedule, unlike the individual DAFF crop brochures.",
+    "daysToHarvestRange is unsourced for South Africa; only a non-SA (Kenyan) figure was found, and per the sourcing rules it is not used as the value.",
+    "No fresh-leaf yield (t/ha) figure found in any consulted source.",
+    "Sow depth and seed rate not stated in the source.",
+    "No South African cultivars or named varieties found; the source distinguishes only informal 'tall' vs 'broad' plant types, not named cultivars. No ARC-VOPI accession/line names for this species were located.",
+    "No South African production-zone information (which provinces grow it) was found in the WRC/PGALV guideline or elsewhere.",
+    "Family is given here as Malvaceae (the modern placement for Corchorus) since the source materials consulted do not state a family for this genus explicitly; older literature (e.g. the FAO/PROTA-type references cited elsewhere in this catalog) places Corchorus in Tiliaceae — noting this as it may cause inconsistency with older reference material."
+  ],
+  "verdict": "unsourced",
+  "summary": "No DAFF/DALRRD guideline exists for jute mallow; the only South African primary source is the WRC/DAFF Production Guidelines for African Leafy Vegetables, which gives spacing, transplanting and repeat-harvest practice but has no sowing-month schedule and no yield figures for any crop it covers. Days-to-harvest and yield are unsourced gaps for South Africa; only a non-SA Kenyan smallholder guide provided a first-cutting figure (60-70 days), which is noted but not used as a sourced value."
+}

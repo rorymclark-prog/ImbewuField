@@ -1,0 +1,32 @@
+{
+  "key": "cucumber",
+  "varieties": [
+    {
+      "name": "Delft",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "High yield potential; shiny dark green, large fruit; very good disease resistance; heat tolerance",
+      "type": "hybrid",
+      "note": "Sakata F1 hybrid. Source gives no SA zone or region — only crop traits — so no zone assigned rather than guessed.",
+      "evidence": [{ "quote": "DELFT: High yield potential. Shiny dark green, large fruit. Very good disease resistance. Heat tolerance", "url": "https://sakata.co.za/wp-content/uploads/2024/03/Sakata-Product-Brochure-2024-2025.pdf", "page": 9, "doc": "Sakata Seed Southern Africa Product Overview 2024-2025" }]
+    },
+    {
+      "name": "Invictus",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Excellent fruit quality; good disease package; open plant habit for easy harvest; good adaptability",
+      "type": "hybrid",
+      "note": "Sakata F1 hybrid, marked experimental (not yet on the official SA Variety List at brochure publication). No zone stated.",
+      "evidence": [{ "quote": "INVICTUS*: Excellent fruit quality. Good disease package. Open plant for easy harvest. Good adaptability", "url": "https://sakata.co.za/wp-content/uploads/2024/03/Sakata-Product-Brochure-2024-2025.pdf", "page": 9, "doc": "Sakata Seed Southern Africa Product Overview 2024-2025" }]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "No KZN DARD or DAFF production guide specific to cucumber could be located this session — every guessed KZN DARD filename (cucumber.pdf and similar) returned HTTP 404, and nda.gov.za/dalrrd.gov.za connections failed outright.",
+    "The only source found (Sakata's commercial seed brochure) gives cultivar traits (heat tolerance, disease resistance) with NO mention of South African regions, provinces or climate zones at all — so every zone in the required output is an honest gap, not an inference, for this crop.",
+    "No maturity/days-to-harvest, spacing, or yield figures sourced for either named cultivar.",
+    "No zone-specific recommendation exists for any of the 8 zones in this file."
+  ]
+}

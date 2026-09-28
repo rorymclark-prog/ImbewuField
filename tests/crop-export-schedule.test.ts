@@ -796,3 +796,91 @@ test('the printed bed-by-bed plan marks a one-time starter, so paper cannot read
   assert.equal(starterRow.once, true, 'the starter row carries the flag the printer needs');
   assert.equal(recurringRow.once, false, 'a recurring row must never be flagged');
 });
+
+// ── Living-piece wording (2026-09-28 PDF audit) ─────────────────────────────
+
+test('a crop grown from a living piece is "planted", never "direct sown" or "seed", driven by unit not a hardcoded key list', () => {
+  const pieces: Planting[] = [
+    { id: 'sp', bedId: 'bed-1', cropKey: 'sweet-potato', sowMonth: 12 },
+    { id: 'po', bedId: 'bed-2', cropKey: 'potato', sowMonth: 8 },
+    { id: 'ga', bedId: 'bed-3', cropKey: 'garlic', sowMonth: 4 },
+    { id: 'am', bedId: 'plot-1', cropKey: 'amadumbe', sowMonth: 10 },
+  ];
+  const rows = buildPlanTableRows(pieces, BEDS);
+  const byCrop = new Map(rows.map((r) => [r.crop, r]));
+  assert.equal(byCrop.get('Sweet potato')!.establish, 'Plant slips Dec');
+  assert.equal(byCrop.get('Potato')!.establish, 'Plant seed potatoes Aug');
+  assert.equal(byCrop.get('Garlic')!.establish, 'Plant cloves Apr');
+  assert.equal(byCrop.get('Amadumbe (taro)')!.establish, 'Plant corms Oct');
+  for (const row of rows) assert.doesNotMatch(row.establish, /direct sow/i);
+});
+
+test('the monthly field sheet says "plant sweet potato slips", never "sow sweet potato"', () => {
+  const sp: Planting[] = [{ id: 'sp', bedId: 'bed-1', cropKey: 'sweet-potato', sowMonth: 12 }];
+  const tasks = tasksForPlan(sp, BEDS);
+  const sheet = buildFieldSheet(12, tasks, new Date('2026-12-05T00:00:00Z'), sp, BEDS);
+  const planting = sheet.sections.find((s) => s.title === 'Direct sowing and planting')!;
+  const work = planting.rows.map((r) => r.work).join(' ');
+  assert.match(work, /plant sweet potato slips/i);
+  assert.doesNotMatch(work, /sow sweet potato/i);
+});
+
+// ── Prep guidance said once per month, not once per bed (2026-09-28 audit) ──
+
+test('the "prepare for the next planting" boilerplate is said once in the section note, and each row is a short instruction', () => {
+  const prepMix: Planting[] = [
+    { id: 'bed-crop', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 4 },
+    { id: 'plot-crop', bedId: 'plot-1', cropKey: 'green-beans', sowMonth: 4 },
+  ];
+  const tasks = tasksForPlan(prepMix, BEDS);
+  const sheet = buildFieldSheet(3, tasks, new Date('2026-03-05T00:00:00Z'), prepMix, BEDS);
+  const prep = sheet.sections.find((s) => s.title === 'Prepare for the next planting')!;
+
+  assert.equal(prep.rows.length, 2, 'one row per bed, each still naming its own crop');
+  for (const row of prep.rows) {
+    assert.match(row.work, /^Prepare the ground for/);
+    assert.doesNotMatch(row.work, /if this follows another crop|assess soil and drainage/i);
+  }
+
+  assert.ok(prep.note, 'the generic guidance must survive somewhere');
+  assert.match(prep.note!, /confirm it is finished and cleared before preparing it/i);
+  // Both bed-kind phrasings of the catalog's prep guidance appear, each exactly once.
+  assert.match(prep.note!, /assess soil and drainage; use a soil test or local advice before adding amendments/i);
+  assert.match(prep.note!, /assess soil and drainage; use a soil test or local advice before cultivating or adding amendments/i);
+});
+
+// ── No orphan "Weather, soil and irrigation" page (2026-09-28 audit) ────────
+
+test('the field sheet no longer carries an always-empty "Weather, soil and irrigation" box, and a section note has somewhere to render', () => {
+  const pdfSource = readFileSync(new URL('../lib/crop-export-pdf.ts', import.meta.url), 'utf8');
+  assert.doesNotMatch(pdfSource, /Weather, soil/, 'the box that produced empty-row-only continuation pages must be gone');
+  assert.match(pdfSource, /section\.note/, 'the section note this fix relies on must actually be drawn');
+});
+
+// ── Frost caveat: a warning, never a sowing/harvest gate (2026-09-28 audit) ─
+
+test('a frost-tender crop whose harvest window reaches SA winter gets a caveat on a mild-frost site, and only there', () => {
+  const frostCases: Planting[] = [
+    { id: 'tom', bedId: 'bed-1', cropKey: 'tomatoes', sowMonth: 12 },
+    { id: 'pep', bedId: 'bed-2', cropKey: 'peppers', sowMonth: 11 },
+    { id: 'sp', bedId: 'bed-3', cropKey: 'sweet-potato', sowMonth: 12 },
+  ];
+  const CAVEAT = 'Frost-tender: finish picking before the first frost or cover on clear, still nights.';
+
+  const mildFrostRows = buildPlanTableRows(frostCases, BEDS, true);
+  const byCrop = new Map(mildFrostRows.map((r) => [r.crop, r]));
+  assert.equal(byCrop.get('Tomatoes')!.harvest, 'May-Jul');
+  assert.equal(byCrop.get('Tomatoes')!.frostCaveat, CAVEAT);
+  assert.equal(byCrop.get('Peppers')!.harvest, 'Apr-Jun');
+  assert.equal(byCrop.get('Peppers')!.frostCaveat, CAVEAT);
+  assert.equal(byCrop.get('Sweet potato')!.harvest, 'May-Jun');
+  assert.equal(byCrop.get('Sweet potato')!.frostCaveat, CAVEAT);
+
+  // Never a gate: same plantings, mildFrostSite left off (the default), no caveat at all.
+  const defaultRows = buildPlanTableRows(frostCases, BEDS);
+  assert.ok(defaultRows.every((r) => r.frostCaveat === null));
+
+  // A crop whose harvest window never touches Jun/Jul gets no caveat even on a mild-frost site.
+  const noWinter: Planting[] = [{ id: 'oats-only', bedId: 'plot-1', cropKey: 'oats', sowMonth: 4 }];
+  assert.equal(buildPlanTableRows(noWinter, BEDS, true)[0].frostCaveat, null);
+});
