@@ -62,7 +62,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   const abortRef = useRef<AbortController | null>(null);
 
   const totalBytes = packs.reduce((s, p) => s + p.bytes, 0);
-  const hasEnglishMedia = lang === 'zu' && packs.some(pack => pack.entries.some(entry =>
+  const hasEnglishMedia = lang !== 'en' && packs.some(pack => pack.entries.some(entry =>
     (entry.kind === 'slide' || entry.kind === 'audio') && entry.url.includes('/en/'),
   ));
   // Both totals are known up front so the choice can be made with the two numbers side by side,
