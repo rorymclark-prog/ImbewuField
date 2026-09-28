@@ -1,0 +1,158 @@
+{
+  "enterpriseId": "pig-pork",
+  "commonName": "Pig (small-scale / emerging-farmer sow herd)",
+  "animal": "pig",
+  "animalUnit": "sow",
+  "product": "meat",
+  "outputUnit": "piglets weaned/sow/year",
+  "outputPerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced as a per-sow-per-year rate for a small-scale/smallholder SA herd (see gaps for the three candidate sources reviewed and rejected)."
+  },
+  "productionMonths": [],
+  "seasonalPattern": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced: no SA source found states pig breeding/farrowing is confined to certain months or explicitly year-round (see gaps)."
+  },
+  "timeToFirstProductWeeks": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn in editor review: the only figure found (22-24 weeks) is the marketing age of a finishing pig, not the time from starting a sow herd to its first product, which also includes mating and gestation. No source states the latter."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced - no SA source gave a sow culling age, parity limit, or productive-lifespan figure in years (see gaps)."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for an adult sow (see gaps: the only SA figure found is an aggregate annual whole-herd purchase, not a stated per-sow-per-day ration)."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": [
+      10,
+      23
+    ],
+    "evidence": {
+      "quote": "Pregnant sows 10-18...Lactating sows 18-23",
+      "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+      "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 1 (Water requirements of pigs, litres/pig/day)",
+      "page": 10
+    },
+    "notes": "Table 1 gives separate ranges by physiological class of the same animal (sow): pregnant sows 10-18 L/day and lactating sows 18-23 L/day. Combined here into a single sow-herd range [10,23] spanning both states, rather than mixing in the table's other classes (nursery, grower, finishing pigs, boars), which are a different animalUnit. South Africa (general smallholder/commercial training-manual figure, not tied to one system)."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for HOUSING (indoor/pen) floor space for a sow. The only floor-space figures found (0.3/0.4/0.8 m2 per porker/baconer/adult pig) are for TRANSPORT loading density under the SA livestock Code of Practice, not housing, so they are recorded under welfare instead of here (see gaps)."
+  },
+  "welfare": [
+    {
+      "point": "When pigs are trucked, the SA code of practice for handling and transporting animals recommends 0.3 m² per porker, 0.4 m² per baconer and 0.8 m² per adult pig.",
+      "evidence": {
+        "quote": "According to the code of practice for handling and transporting animals in South Africa, the \nrecommended floor space per animal are 0,3 m2 per porker; 0,4 m2 per baconer; and 0,8 m2 per \nadult pig (Tomlinson, 2000).",
+        "url": "https://sappo.org/wp-content/uploads/2022/09/6_Muchenje_pig_welfare.pdf",
+        "doc": "Muchenje, V. & Ndou, S.P., How pig pre-slaughter welfare affects pork quality and the pig industry (Univ. of Fort Hare, hosted by SAPPO), quoting Tomlinson (2000) Code of Practice for the Handling and Transport of Livestock",
+        "page": 7
+      }
+    },
+    {
+      "point": "It is an offence to keep a pig somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+      "evidence": {
+        "quote": "confines, chains, tethers or secures any animal unnecessarily or under such conditions or in such a manner or position as to cause that animal unnecessary suffering or in any place which affords inadequate space, ventilation, light, protection or shelter from heat, cold or weather",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(b)",
+        "page": 1
+      }
+    },
+    {
+      "point": "It is an offence to starve, under-feed, or deny water or food to a pig.",
+      "evidence": {
+        "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+        "page": 1
+      }
+    },
+    {
+      "point": "In heat waves, pig houses need better ventilation/airflow and lower stocking density, and outdoor pigs need shade and shelter.",
+      "evidence": {
+        "quote": "increase \nventilation and airflow and check that the \ncooling system is in good working order...reduce stocking density if possible, to allow \nair to flow between the pigs...These pigs should have access to shade and \nshelter as well",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+        "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production",
+        "page": 9
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "African swine fever (ASF) is listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act; warthogs and Ornithodorus ticks are carriers/vectors.",
+      "evidence": {
+        "quote": "Table 2   Controlled animal diseases (in terms of the Animal Disease Act, Act 35 of 1984) pertaining to pigs...African swine fever \n(ASF)...Carriers of ASF is warthog",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+        "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 2",
+        "page": 15
+      }
+    },
+    {
+      "point": "Foot-and-mouth disease (FMD) is also listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act.",
+      "evidence": {
+        "quote": "Table 2   Controlled animal diseases (in terms of the Animal Disease Act, Act 35 of 1984) pertaining to pigs...Foot and mouth \ndisease (FMD)",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+        "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 2",
+        "page": 15
+      }
+    },
+    {
+      "point": "Swill (food waste) may not be fed to pigs unless it has been boiled for at least 60 minutes or sterilised by another equally effective method.",
+      "evidence": {
+        "quote": "Regulation 24 of the Animal Diseases Act, 1984 (Act 35 of 1984) prohibits the feeding of swill unless boiled for 60 min or sterilised by means of another efficient method",
+        "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S1019-91282020000100012",
+        "doc": "Munzhelele et al., Investigation of African swine fever outbreaks in pigs outside the controlled areas of South Africa, 2012-2017 (Journal of the South African Veterinary Association, SciELO SA mirror)",
+        "page": null
+      }
+    },
+    {
+      "point": "Pigs may only be moved into a biosecure compartment from another compartment that is officially certified/approved for that purpose.",
+      "evidence": {
+        "quote": "Only pigs certified to originate from another officially approved compartment are allowed to enter a compartment.",
+        "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S1019-91282020000100012",
+        "doc": "Munzhelele et al., Investigation of African swine fever outbreaks in pigs outside the controlled areas of South Africa, 2012-2017 (Journal of the South African Veterinary Association, SciELO SA mirror)",
+        "page": null
+      }
+    },
+    {
+      "point": "A pig may not be slaughtered anywhere but a registered abattoir, except for own household consumption or cultural/religious purposes.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir;",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+        "page": 6
+      }
+    },
+    {
+      "point": "A pig owner must apply to register an official identification mark and mark their pigs with it, under the Animal Identification Act.",
+      "evidence": {
+        "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+        "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+        "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+        "page": 4
+      }
+    }
+  ],
+  "gaps": [
+    "sapork.biz (named in the task brief as the SA Pork Producers' Organisation domain) is dead/squatted: curl -sI shows a 301 redirect to an unrelated site (aboutcarsales.org). Substituted the current live SAPPO domain, sappo.org, which hosts the Muchenje & Ndou pre-slaughter welfare review used above.",
+    "The LWCC's official 'South African Pig Welfare Code' PDF (lwcc.org.za/wp-content/uploads/2017/04/Code-Pig-Welfare.pdf) is reachable (HTTP 200) but has a broken/unembedded font encoding: pypdf, pdfplumber, PyMuPDF and WebFetch all failed to extract readable text from it (garbled words, raw (cid:N) codes, or an explicit decode failure). poppler-utils/pdftotext and tesseract were not installable in this environment (apt mirror 404). No quote could be taken from this source.",
+    "outputPerAnimal (piglets weaned/sow/year): no clean, source-stated smallholder rate was found. Reviewed and rejected: (1) Matabane et al. 2018 (J. Agricultural Science, CCSE), a 9-farm/73-sow AI study on Gauteng smallholder farms, gives 9.5+/-3.1 piglets weaned PER LITTER (avg litter size 11.8) but no litters-per-sow-per-year figure, so a per-year rate cannot be built without stitching two unrelated numbers; (2) Munzhelele et al. 2016 (Onderstepoort J Vet Res, SciELO), on Mpumalanga's 220-farmer 'Masibuyele esibayeni' 1-10 sow programme, gives only percentage distributions (e.g. '41% of farms... farrowed >11 piglets per litter', 'Only about 19% weaned at 1 month'), not a clean rate; (3) the UP North West thesis quotes a COMMERCIAL SAPPO benchmark of 'litters per sow per annum (2.38)' and 'total born alive per litter (13.5)', which is both a commercial (not smallholder) figure and would require forbidden multiplication/derivation to reach a weaned-per-year number.",
+    "productionMonths / seasonalPattern: no SA source found states pig breeding/farrowing calendar months or an explicit year-round/continuous statement for either a smallholder or commercial system. The closest source (Matabane et al. 2018) records farrowings grouped only into 'summer' (Dec-Feb), 'autumn' (Mar-May) and 'winter' (Jun-Aug) for statistical analysis - it never mentions spring (Sep-Nov) and never states production is continuous or year-round, so per the round-2 rule the months array was left empty rather than inferred.",
+    "feedKgPerAnimalPerDay: the Western Cape DoA (Elsenburg) 'Piggery' enterprise budget gives an aggregate 'Sow Meel' purchase of 36,500 kg for a 20-sow herd unit, but the document does not explicitly state the period this covers, nor confirm the feed is fed to sows exclusively rather than also to growers/finishers on the same unit; dividing this into a per-sow-per-day figure would be exactly the cross-document/aggregate stitching the round-2 rules prohibit, so it was not used. A SAJAS/Stellenbosch study on Cape Metropole smallholder pig feedstuffs (sajas.co.za/article/download/23899/25374) gives nutrient composition percentages referencing NRC (2012), not a kg/day intake figure.",
+    "productiveLifeYears: not found in any accessible source. The UP North West thesis reports that 72% of surveyed 'pig keepers' cull their animals and gives reasons for culling (Figure 4.8), but no age, parity or years-in-production figure.",
+    "spaceM2PerAnimal (housing): no SA source gave an indoor/pen floor-space figure for a sow; the only floor-space numbers found (SAPPO/Muchenje review, quoting the Tomlinson 2000 Code of Practice) are for TRANSPORT loading density, not housing, and were used under welfare instead.",
+    "journals.co.za (AOSIS, hosting the full Journal of the South African Veterinary Association) returned a Cloudflare challenge (HTTP 403, cf-mitigated: challenge) to direct fetch, and pmc.ncbi.nlm.nih.gov article pages return a Google reCAPTCHA challenge to plain curl. Used scielo.org.za mirrors of the same peer-reviewed articles instead, and verified by curl+grep that the exact quoted text exists at those SciELO URLs.",
+    "nda.gov.za and dalrrd.gov.za were unreachable (connection failure) for every attempted URL (ASF disease-management strategy, controlled/notifiable disease lists).",
+    "Editor review 2026-09-28 (round 2): timeToFirstProductWeeks withdrawn (22-24 weeks is a finishing pig's commercial marketing age from a personal communication, not the time from a sow herd to its first product). The transport floor-space quote's URL 404'd; the same Muchenje review and passage is at sappo.org/wp-content/uploads/2022/09/6_Muchenje_pig_welfare.pdf, and its point now says 'recommends', for trucks, as the quote does. The FMD legal quote now carries the table heading that names pigs."
+  ]
+}
