@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', sha: '2b6a70e8', changes: [
+  { when: '29 September 2026', sha: '0f47d957', changes: [
     'Market Gardening has 20 silent Sesotho and Xitsonga review slides.',
     'Existing drafts pair with English; held text stays in one English source card.',
   ], tour: [
