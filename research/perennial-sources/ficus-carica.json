@@ -1,0 +1,60 @@
+{
+  "speciesId": "ficus-carica",
+  "commonName": "Fig",
+  "botanicalName": "Ficus carica",
+  "harvestMonths": [
+    {
+      "region": "Western Cape (Breede River valley, near Worcester)",
+      "months": [1, 2, 3, 4, 5],
+      "evidence": {
+        "quote": "Common type figs produce their main crop from buds in the axils of leaves on the current season’s growth (McEachern, 1996; Flaishman et al., 2008).  Harvest may start in the middle of summer and can last several months, until the onset of winter.",
+        "url": "https://www.figdatabase.com/uploads/Tree%20Training%20And%20Managing%20Complexcity%20and%20Yield%20In%20Figs.pdf",
+        "doc": "Gerber, H.J. (2010) 'Tree training and managing complexity and yield in fig (Ficus carica L.)', MSc(Agric) thesis, University of Stellenbosch",
+        "page": 38
+      },
+      "notes": "Trial orchard: Breede River valley near Worcester, Western Cape (33°34'S, 19°16'E), Mediterranean-type climate, common-type cultivars 'Bourjasotte Noire', 'Col de Damme Noire', 'Noire de Caromb'. 'Middle of summer' in the Southern Hemisphere is approx. January and 'onset of winter' is approx. May/June, so months [1-5] are an approximation of the stated wording, not an exact calendar range given by the source."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not explicitly stated by the source found. Gerber (2010) studied a '4-year-old commercial orchard' (planted October 2004, studied in the 2008/2009 season) that was already bearing measurable fruit per shoot, which is consistent with, but does not establish, an exact years-to-first-crop figure."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found. Searched ARC-Infruitec-Nietvoorbij site, PROTA4U, and general search; no SA-specific figure located."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Gerber (2010) reports yield per fruiting shoot (grams of fruit per N-shoot) broken down by shoot-length category, not whole-tree yield, so no per-tree figure could be sourced or safely derived."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "Fig buds require little or no winter chilling to break endo-dormancy (Ferguson et al., 1990) and growth resumes in early spring (Flaishman et al., 2008).",
+      "url": "https://www.figdatabase.com/uploads/Tree%20Training%20And%20Managing%20Complexcity%20and%20Yield%20In%20Figs.pdf",
+      "doc": "Gerber, H.J. (2010) 'Tree training and managing complexity and yield in fig (Ficus carica L.)', MSc(Agric) thesis, University of Stellenbosch",
+      "page": 38
+    },
+    "notes": "no/little chill requirement, per source. Separately, the same trial site (Worcester, Western Cape) itself accumulated 541.5 chill units (1 May-31 Aug 2008, Daily Positive Chill Unit model) — that is ambient regional chill received, not a stated requirement of the fig tree, so it was not used as the value."
+  },
+  "pollination": {
+    "value": "self-fertile",
+    "evidence": {
+      "quote": "The common fig, to which ‘Bourjasotte Noire’, ‘Col de Dame Noire’ and ‘Noire de Caromb’ belong, develops parthenocarpically and usually does not require the stimulus of pollination (Condit, 1955).",
+      "url": "https://www.figdatabase.com/uploads/Tree%20Training%20And%20Managing%20Complexcity%20and%20Yield%20In%20Figs.pdf",
+      "doc": "Gerber, H.J. (2010) 'Tree training and managing complexity and yield in fig (Ficus carica L.)', MSc(Agric) thesis, University of Stellenbosch",
+      "page": 13
+    },
+    "notes": "More precisely 'parthenocarpic' (fruit sets without any pollination at all, i.e. requires neither a wasp nor cross-pollen) for the common-type fig cultivars grown commercially in South Africa; mapped to the closest schema option 'self-fertile'. Other fig types (Smyrna, Capri, San Pedro) do need pollination/caprification but are not the type commercially grown in SA per this source."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Years to first crop and years to full bearing not found in any primary/authoritative SA source checked (ARC-Infruitec-Nietvoorbij site had no fig-specific guideline page findable; PROTA4U not reachable via search for a SA-specific figure).",
+    "Whole-tree (kg/tree) yield not found; only per-shoot gram yield published in the one detailed SA study located (Gerber 2010, Stellenbosch thesis).",
+    "DALRRD/nda.gov.za and other .gov.za domains were unreachable from this environment (connection blocked) for a direct government production-guideline cross-check.",
+    "Harvest-month range for other SA fig-growing regions (e.g. Ceres, Wellington, Eastern Cape) not sourced — only the Worcester/Breede River valley trial site was documented in the primary source found."
+  ]
+}

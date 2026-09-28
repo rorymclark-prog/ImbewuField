@@ -26,6 +26,8 @@ import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
+import { buildTreeAvailability, formatMonthSpan, formatRange, placedTreeGroups, sourcedSeasonMonths, type PlacedTreeGroup, type TreeAvailabilityItem } from '@/lib/perennial-harvest';
+import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
@@ -669,6 +671,13 @@ function FacilitatorCropsPageInner() {
   const [design, setDesign] = useState<FacilitatorDesignState | null | undefined>(undefined);
   // Beds read from the Design Studio canvas when arriving via ?canvasSite.
   const [canvasBeds, setCanvasBeds] = useState<PlanBed[]>([]);
+  // The design's fruit trees, for the availability chart's own row. Read from the same canvas
+  // as the beds and refreshed on the same event, so a tree placed in the Studio shows up here.
+  const [canvasTrees, setCanvasTrees] = useState<PlacedTreeGroup[]>([]);
+  // The same orchard switch as Money and Records (lib/produce-scope.ts) — one preference, so
+  // turning the orchard off in one place is not quietly undone in another.
+  const [includeTrees, setIncludeTrees] = useState(DEFAULT_INCLUDE_PERENNIALS);
+  useEffect(() => { setIncludeTrees(loadIncludePerennials()); }, []);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
   // One-level-per-action undo, mirroring FacilitatorCanvas's own pushHistory
   // pattern — mainly for undoing a whole auto-suggested batch in one tap
@@ -1034,8 +1043,12 @@ function FacilitatorCropsPageInner() {
   // reloads facilitator state), so placing another bed in the Studio (another
   // tab) refreshes the bed list here without a reload.
   useEffect(() => {
-    if (!canvasSite) return;
-    const refresh = () => setCanvasBeds(bedsFromDesignCanvas(loadCanvasState(canvasSite)));
+    if (!canvasSite) { setCanvasTrees([]); return; }
+    const refresh = () => {
+      const state = loadCanvasState(canvasSite);
+      setCanvasBeds(bedsFromDesignCanvas(state));
+      setCanvasTrees(placedTreeGroups(state?.items ?? []));
+    };
     refresh();
     window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
     return () => window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
@@ -1320,6 +1333,13 @@ function FacilitatorCropsPageInner() {
     const annual = buildFoodAvailability(chartPlantings, beds);
     return monthOrder.map((month) => annual[month]);
   }, [chartPlantings, beds, chartNowMonth, monthOrder]);
+  // Trees get their own row, never a share of the bars: the bars count planned bed crops, and
+  // a mango tree is not a bed crop (lib/perennial-produce.ts). "From today" leaves out proposed
+  // trees, which are years from a first crop; the established year shows the whole design.
+  const treeAvailability = useMemo(
+    () => buildTreeAvailability(canvasTrees, monthOrder, yearMode === 'fromToday'),
+    [canvasTrees, monthOrder, yearMode],
+  );
   const fieldUtilization = useMemo(() => {
     if (chartNowMonth !== undefined) return buildFieldUtilizationByMonth(chartPlantings, beds, chartNowMonth, DISPLAY_MONTHS);
     const annual = buildFieldUtilizationByMonth(chartPlantings, beds);
@@ -1952,6 +1972,10 @@ function FacilitatorCropsPageInner() {
               onCashflowSettingsChange={updateCashflowSettings}
               yearMode={yearMode}
               onYearModeChange={setYearMode}
+              treeGroups={canvasTrees}
+              treeAvailability={treeAvailability}
+              includeTrees={includeTrees}
+              onIncludeTreesChange={(next) => { setIncludeTrees(next); saveIncludePerennials(next); }}
             />
 
             {/* Tasks + harvest */}
@@ -2477,10 +2501,12 @@ function CropStorageLine({ crop }: { crop: CropDef }) {
  * what make a "stored" square mean anything.
  */
 function MonthAvailabilityDetail({
-  month, items, onClose,
+  month, items, trees = [], treeGroups = [], onClose,
 }: {
   month: number;
   items: FoodAvailabilityItem[];
+  trees?: TreeAvailabilityItem[];
+  treeGroups?: PlacedTreeGroup[];
   onClose: () => void;
 }) {
   const { lang } = useLanguage();
@@ -2499,7 +2525,26 @@ function MonthAvailabilityDetail({
           other crop this panel knows nothing — it must not claim the pantry
           is empty, only that it has nothing sourced to report. */}
       {items.length === 0 && (
-        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Nothing is scheduled for picking, and nothing with a sourced shelf life is still in store.</div>
+        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Nothing is scheduled for picking in the beds, and nothing with a sourced shelf life is still in store.</div>
+      )}
+      {trees.length > 0 && (
+        <div className="mb-2 mt-1.5">
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>From your trees (sourced SA season)</div>
+          {trees.map((tree) => {
+            const harvest = treeGroups.find((g) => g.harvest.speciesId === tree.speciesId)?.harvest;
+            const first = harvest?.yearsToFirstCrop;
+            return (
+              <div key={tree.speciesId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <span className="inline-flex items-center gap-1.5"><Trees size={12} aria-hidden style={{ color: 'var(--emerald)' }} /> {tree.name} × {tree.trees}</span>
+                {harvest && (
+                  <span style={{ color: 'var(--text-muted)' }}>
+                    {' '}— {formatMonthSpan(sourcedSeasonMonths(harvest))} across SA{first ? `; first crop ${formatRange(first.value)} yrs after planting` : ''}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
       )}
       {fresh.length > 0 && (
         <div className="mb-2">
@@ -2746,14 +2791,56 @@ function AvailabilityIconTray({ items, tint, rows }: { items: FoodAvailabilityIt
   );
 }
 
+/**
+ * The trees' own strip under the bars, one cell per month column.
+ *
+ * A count of tree KINDS, not kilograms: the sources give a picking span, not a monthly curve, the
+ * same reason the bars above carry no kg. A cell is a button onto the same month detail as its
+ * bar, so the names and the sourced season are one tap away on a phone.
+ */
+function TreeAvailabilityRow({ slots, openMonth, onToggleMonth }: {
+  slots: TreeAvailabilityItem[][];
+  openMonth: number | null;
+  onToggleMonth: (index: number) => void;
+}) {
+  return (
+    <div style={{ ...MONTH_COLUMNS, marginTop: 6 }} data-crop-tree-availability>
+      {slots.map((slot, i) => (
+        <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }}>
+          <button
+            type="button"
+            onClick={() => onToggleMonth(i)}
+            aria-expanded={openMonth === i}
+            aria-label={slot.length === 0 ? 'No tree season this month' : `${slot.map((t) => t.name).join(', ')} in season, tap for detail`}
+            className="font-sans inline-flex items-center justify-center gap-1"
+            style={{
+              width: '68%', minHeight: 24, borderRadius: 6, cursor: 'pointer', fontSize: 11.5, fontWeight: 700,
+              border: slot.length ? '1px solid var(--emerald)' : '1px dashed var(--border)',
+              background: slot.length ? 'var(--bg-2)' : 'transparent',
+              color: slot.length ? 'var(--text-primary)' : 'var(--text-muted)',
+            }}
+          >
+            {slot.length > 0 ? <><Trees size={11} aria-hidden style={{ color: 'var(--emerald)' }} />{slot.length}</> : '–'}
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 type FoodValueMode = 'availability' | 'utilization' | 'value';
 
 function FoodAvailabilityChart({
   monthOrder, availability, yieldBenchmark, utilization, plantings, priceOverrides, onPriceOverrideChange,
   cashflowSettings, onCashflowSettingsChange, yearMode, onYearModeChange, registerScroll, onMonthScroll,
+  treeGroups, treeAvailability, includeTrees, onIncludeTreesChange,
 }: {
   monthOrder: number[];
   availability: FoodAvailabilityItem[][];
+  treeGroups: PlacedTreeGroup[];
+  treeAvailability: TreeAvailabilityItem[][];
+  includeTrees: boolean;
+  onIncludeTreesChange: (next: boolean) => void;
   yieldBenchmark: PlanYieldBenchmark;
   utilization: number[];
   registerScroll: (node: HTMLDivElement | null) => void;
@@ -2787,7 +2874,8 @@ function FoodAvailabilityChart({
   const maxTotal = Math.max(1, ...cols.map((c) => c.fresh.length + c.stored.length));
   const hasStoredItems = cols.some((c) => c.stored.length > 0);
   const maxFreshRows = Math.ceil(Math.max(0, ...cols.map((c) => c.fresh.length)) / TRAY_COLS);
-  const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
+  const showTreeRow = includeTrees && treeAvailability.some((slot) => slot.length > 0);
+  const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0) && !showTreeRow;
   const utilMax = Math.max(1, ...utilization);
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
   const unpricedBenchmarkCrops = yieldBenchmark.byCrop.filter((row) => !priceFor(row.cropKey, priceOverrides)).map((row) => row.name);
@@ -2842,6 +2930,18 @@ function FoodAvailabilityChart({
 
       {mode === 'availability' && (
         <>
+          {treeGroups.length > 0 && (
+            <button
+              type="button"
+              onClick={() => onIncludeTreesChange(!includeTrees)}
+              aria-pressed={includeTrees}
+              className="font-sans rounded-full inline-flex items-center gap-1 mb-3"
+              style={{ fontSize: 12, fontWeight: includeTrees ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${includeTrees ? 'var(--emerald)' : 'var(--border)'}`, background: includeTrees ? 'var(--bg-2)' : 'transparent', color: includeTrees ? 'var(--text-primary)' : 'var(--text-muted)' }}
+            >
+              <Trees size={12} aria-hidden strokeWidth={includeTrees ? 2.2 : 1.6} />
+              {includeTrees ? `Orchard in · ${treeGroups.length} fruit tree kind${treeGroups.length === 1 ? '' : 's'} on your map` : 'Orchard out'}
+            </button>
+          )}
           <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
             Fresh-picking windows only. Storage appears only with sourced conditions. The source does not provide a within-window kg curve, so this chart deliberately shows no monthly kilograms or money.
           </p>
@@ -2852,8 +2952,15 @@ function FoodAvailabilityChart({
               <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
                 <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh</span>
                 {hasStoredItems && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> Stored under named conditions</span>}
+                {showTreeRow && <span className="inline-flex items-center gap-1.5"><Trees size={11} aria-hidden style={{ color: 'var(--emerald)' }} /> Your trees&apos; sourced season</span>}
               </div>
+              {showTreeRow && (
+                <p className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
+                  Tree months are the span South African sources give across all growing regions. Your own weeks depend on your area and cultivar{yearMode === 'fromToday' ? '; trees drawn as proposed are left out, as they are years from a first crop' : ''}. Trees are never added to the bars or to any per-m² figure.
+                </p>
+              )}
               <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
+                <>
                 <div style={MONTH_COLUMNS} data-crop-availability-columns>
                   {cols.map(({ m, fresh, stored }, i) => {
                     const total = fresh.length + stored.length;
@@ -2921,12 +3028,18 @@ function FoodAvailabilityChart({
                     );
                   })}
                 </div>
+                {showTreeRow && (
+                  <TreeAvailabilityRow slots={treeAvailability} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
+                )}
+                </>
               </CropMonthViewport>
               {openMonth !== null && (
                 <div key={openMonth} className="crop-availability-detail">
                   <MonthAvailabilityDetail
                     month={monthOrder[openMonth]}
                     items={availability[openMonth] ?? []}
+                    trees={showTreeRow ? (treeAvailability[openMonth] ?? []) : []}
+                    treeGroups={treeGroups}
                     onClose={() => setOpenMonth(null)}
                   />
                 </div>

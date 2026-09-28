@@ -1,0 +1,56 @@
+{
+  "speciesId": "litchi-chinensis",
+  "commonName": "Litchi",
+  "botanicalName": "Litchi chinensis",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general — Mpumalanga lowveld, Limpopo, KZN coast)",
+      "months": [
+        11,
+        12,
+        1,
+        2
+      ],
+      "evidence": {
+        "quote": "Lychees mature between November and February with a peak in December and January.",
+        "url": "https://rfcarchives.org.au/Next/Fruits/Litchi/LycheeSouthAfrica7-95.htm",
+        "doc": "Menzel, C., 'Lychee Growing and Marketing in South Africa', The Archives of the Rare Fruit Council Australia, July 1995 (production regions cited: Eastern Transvaal Lowveld, Northern/North-Eastern Transvaal, North and South Coast of Natal)",
+        "page": null
+      },
+      "notes": "Consistent with an independent industry summary found (not directly fetched/quoted so not used as primary evidence here) that the SA litchi season 'begins around mid-October in the early areas of Malelane and Komatipoort in Mpumalanga, peaks in December and ends around the end of February' in Nelspruit/Tzaneen/Louis Trichardt — i.e. slightly earlier-starting in the hottest lowveld pockets than the Nov-Feb figure used here."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced to standard. General web claims of '5-8 years to full production' for litchi could not be traced to a verbatim quote in an ARC-ITSC, SALGA or peer-reviewed document that was actually fetched during this research pass; ISHS articles on the SA litchi industry and irrigation ('THE SOUTH AFRICAN LITCHI INDUSTRY - AN OVERVIEW', 'IRRIGATION OF LITCHIS IN SOUTH AFRICA') were only accessible as abstracts (full text is behind an Acta Horticulturae paywall)."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Same access limitation as yearsToFirstCrop above."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Found mature tree spacing (12 x 12 m = 64 trees/ha, with some growers planting 6 x 6 m and thinning to that at year 15) and industry-wide totals (~8000 tonnes from ~1500 ha) in the Menzel (1995) article, but did not use these to derive a kg/tree figure because the tonnage is an all-ages industry average, not a stated mature-tree/mature-orchard yield, and converting it would misrepresent an industry mean as a per-tree mature yield."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Litchi flower-induction is known in the wider horticultural literature to require a period of cool, dry winter weather, but no ARC-ITSC/SALGA/peer-reviewed South African source giving a specific temperature threshold or chill-unit/chill-day count for litchi floral induction was fetched and verified during this pass, so left null rather than repeating an unverified figure."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the quote is a reformatted table of flower-visitor shares (honeybee 65%...). It does not state whether a single litchi tree sets fruit alone. Withdrawn value: partly-self-fertile."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Full text of ISHS/Acta Horticulturae articles ('THE SOUTH AFRICAN LITCHI INDUSTRY - AN OVERVIEW', 'IRRIGATION OF LITCHIS IN SOUTH AFRICA - AN OVERVIEW') is paywalled; only abstracts were accessible, so years-to-bearing, yield/tree and chilling data likely contained in these could not be extracted.",
+    "arc.agric.za/arc-itsc/Pages/Litchi.aspx (ARC-ITSC's own litchi page) returned HTTP 503 Service Unavailable when fetched.",
+    "SALGA's own site (litchisa.co.za) was found in search results but not fetched directly for a production guideline; worth trying in a follow-up pass.",
+    "No SA-specific, verifiable number found for years to first crop, years to full bearing, yield per mature tree, or a litchi chill-unit/chill-day requirement despite multiple searches; all left null per instructions rather than guessed.",
+    "Editor review 2026-09-28: pollination withdrawn — the flower-visitor table does not support a self-fertility claim."
+  ]
+}

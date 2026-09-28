@@ -1,0 +1,86 @@
+{
+  "speciesId": "prunus-persica",
+  "commonName": "Low-chill peach",
+  "botanicalName": "Prunus persica",
+  "harvestMonths": [
+    {
+      "region": "South Africa — low-chill cultivar 'Earligold' (ARC Infruitec-Nietvoorbij bred, low-chill growing areas)",
+      "months": [12],
+      "evidence": {
+        "quote": "Week 49 – 50 (2nd week December)",
+        "url": "https://culdevco.co.za/peach-cultivar-info-earligold/",
+        "doc": "Culdevco (Plant Breeders' Rights licensing body for ARC-bred deciduous fruit cultivars) — Earligold peach cultivar information sheet",
+        "page": null
+      },
+      "notes": "Earligold: 'low to medium (200-400 Infruitec Chilling Units)', released by ARC Infruitec-Nietvoorbij."
+    },
+    {
+      "region": "South Africa — low/medium-chill cultivars 'Cederberg' and 'Afrisun' (ARC Infruitec-Nietvoorbij bred)",
+      "months": [1],
+      "evidence": {
+        "quote": "Cederberg: Week 2 (2nd week January). Afrisun: Harvest date (first pick): Week 1 (1st week January).",
+        "url": "https://culdevco.co.za/peach-cultivar-info-cederberg/",
+        "doc": "Culdevco — Cederberg and Afrisun peach cultivar information sheets",
+        "page": null
+      },
+      "notes": "Both cultivars: 'Medium (400-600 Infruitec Chilling Units)'. Quote combines the two cultivar sheets (Cederberg URL given; Afrisun at https://culdevco.co.za/peach-cultivar-info-afrisun/)."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [3, 3],
+    "evidence": {
+      "quote": "Light cropping starts in year 3, with full production from year 7.  Commercial orchards last approximately 12-15 years.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+      "page": 28
+    },
+    "notes": "Same source used for years-to-full-bearing; region context is the low-chill peach areas named by the source: Muden, Middelrus and Weenen river valleys, KZN."
+  },
+  "yearsToFullBearing": {
+    "value": [7, 7],
+    "evidence": {
+      "quote": "Light cropping starts in year 3, with full production from year 7.  Commercial orchards last approximately 12-15 years.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+      "page": 28
+    },
+    "notes": "'Commercial orchards last approximately 12-15 years' — recorded here as context, not as a schema field."
+  },
+  "yieldKgPerTreeMature": {
+    "value": [23, 43],
+    "evidence": {
+      "quote": "Yields (t/ha) Conservative:   12      Average: 15-18        Good: 25+",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+      "page": 28
+    },
+    "notes": "CONVERTED, arithmetic shown: took the 'Average' yield band (15-18 t/ha) and the same source's stated spacing ('Generally planted 6m x 4m or 5 m x 3 m'). At 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 and 18000kg/416.7=43.2 kg/tree. At 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 and 18000/666.7=27.0 kg/tree. Combined range across both spacings, rounded: [23, 43] kg/tree. This spread reflects the two different sourced spacings, not cultivar variation."
+  },
+  "chillUnits": {
+    "value": [200, 600],
+    "evidence": {
+      "quote": "Low chill areas (200-600PCU’s) \nPeaches – Transvalia, Sonette, Oom Sarel, Keisie",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+      "page": 29
+    },
+    "notes": "PCU = Peach Chill Units (Infruitec/ARC chill-unit model used for SA stone fruit). This source's 'low chill' band (200-600 PCU) is corroborated by per-cultivar Culdevco/ARC sheets: 'Earligold' = 'low to medium (200-400 Infruitec Chilling Units)'; 'Cederberg' and 'Afrisun' = 'Medium (400-600 Infruitec Chilling Units)'. The KZN source's own category label bundles both 'low' and 'medium' ARC sub-bands into one 'low chill areas' bracket contrasted with '>600 PCU's' for high-chill areas."
+  },
+  "pollination": {
+    "value": "self-fertile",
+    "evidence": {
+      "quote": "‘Self’ – This cultivar is self-fertile and does not require a separate pollinator variety.",
+      "url": "https://culdevco.co.za/peach-cultivar-info-earligold/",
+      "doc": "Culdevco — Earligold peach cultivar information sheet",
+      "page": null
+    },
+    "notes": "Corroborated by the Cederberg sheet ('Self' pollinating) and the Afrisun sheet ('Pollinator: Self-compatible'), all three being ARC Infruitec-Nietvoorbij low/medium-chill peach cultivars."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Yield-per-tree figure required combining a t/ha range with a separately-sourced spacing figure from the same KZN document (see notes) — treat as an approximate, arithmetic-derived range rather than a directly-stated per-tree figure.",
+    "No single, comprehensive harvest-month range found for 'low-chill peach' as a category; the months given are from three specific ARC-bred low/medium-chill cultivars (Earligold, Cederberg, Afrisun) rather than a stated season for the category as a whole. Harvest weeks for the KZN-named low-chill cultivars themselves (Transvalia, Sonette, Oom Sarel, Keisie) were only partly found (Transvalia ~Week 47/3rd week November, from an unquoted search summary of a Culdevco Red Velvet page, not independently verified with a direct fetch) and are not included as sourced evidence.",
+    "DALRRD/nda.gov.za stone-fruit production guidelines and Hortgro Science's own production manuals were not directly fetchable in full (gov.za domains blocked/503; Hortgro-Science cultivar app pages returned post-harvest handling data, not chill/pollination/yield).",
+    "'Years to full bearing' and 'years to first crop' were sourced from a general KZN peach section, not specifically restricted to low-chill cultivars, though the source's low-chill cultivar list (Transvalia, Sonette, Oom Sarel, Keisie) appears in the same document section."
+  ]
+}

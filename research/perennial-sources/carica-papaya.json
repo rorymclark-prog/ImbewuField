@@ -1,0 +1,48 @@
+{
+  "speciesId": "carica-papaya",
+  "commonName": "Pawpaw / papaya",
+  "botanicalName": "Carica papaya",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": [
+      0.75,
+      0.83
+    ],
+    "evidence": {
+      "quote": "Commercial pawpaws are normally harvested 9 to 10 months after being transplanted from nurseries.",
+      "url": "https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_Pawpaw__Papaya_.pdf",
+      "doc": "FAO, 'Pawpaw (Papaya): Post-harvest Operations' (Post-Harvest Compendium)",
+      "page": 21
+    },
+    "notes": "9-10 months converted to years: 9/12=0.75, 10/12≈0.83. This is a general (non-South-Africa-specific) commercial figure from FAO's global compendium, not a South African source; South African government (nda.gov.za) papaya production guideline PDFs were found via search but returned HTTP 503 on every fetch attempt during this pass (see gaps)."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. Papaya is a short-lived, fast-cycling herbaceous plant harvested almost immediately after first flowering/fruit set rather than ramping up over several years like a tree crop; the FAO compendium instead documents a limited productive LIFESPAN ('Papaya is typically productive for 3 to 5 years before fruit size and yield decline' — seen only as an unverified AI search summary, not independently confirmed verbatim in the fetched PDF text, so not used as evidence and left null)."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "The FAO compendium gives only non-South-African hectare yields (e.g. 'an average yield of 48.6 Ton/ha' for an unspecified/other-country context, p.28; 'In Mexico, the yield of pawpaw crop fluctuate between 40,000 kg and 85,000 kg/ha', p.44) with no matching planting density in the same passages, and no South African per-plant or per-hectare yield figure was found, so left null rather than guessed or converted from a non-SA source."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Papaya is a frost-tender tropical/subtropical plant with no winter-chill requirement for flowering, but no fetched source explicitly stated 'no chill requirement' for papaya, so left null per the rule rather than asserting it. The FAO compendium instead notes cold sensitivity in a postharvest-ripening context, not a floral-induction chilling need."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the FAO quote says papaya plants are male, female or perfect; which applies depends on the cultivar and the plant, so no single value is stated by the source. Withdrawn value: partly-self-fertile."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "No South Africa-specific harvest-month/season data could be verified: nda.gov.za's own 'Brochure Papaya.pdf' and nda.agric.za/docs/papaya/papaya.htm (both direct DAFF/NDA production guideline documents) returned HTTP 503 Service Unavailable on every fetch attempt during this pass, so harvestMonths was left as an empty array rather than filled with an unverified figure.",
+    "ISHS 'OVERVIEW OF THE SOUTH AFRICAN PAPAYA INDUSTRY' (Connolly) was fetched but only its abstract was accessible; it confirmed papaya is a 'small but lucrative industry' with 'very limited papaya production areas within the country' and that South Africa's climate 'is not ideal' for papaya, but gave no harvest months, yields or bearing-age figures in the accessible text.",
+    "No South Africa-specific yield-per-plant or yield-per-hectare figure, nor a matching planting density, was found; all yield figures located were for other countries (Mexico, unspecified 48.6 t/ha reference).",
+    "No SA-specific years-to-full-bearing or productive-lifespan figure was independently verified verbatim (an unverified AI search summary claimed '3 to 5 years' productive life, not used as evidence).",
+    "agribook.co.za's general fruit chapter mentions papaya is grown 'mainly in Mpumalanga and Limpopo' but its dedicated subtropical-fruit page (referenced but not linked) was not located/fetched.",
+    "Editor review 2026-09-28: pollination withdrawn — the FAO quote says papaya plants are male, female or perfect; which applies depends on the cultivar and the plant, so no single value is stated by the source."
+  ]
+}

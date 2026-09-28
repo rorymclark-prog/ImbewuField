@@ -1,0 +1,84 @@
+{
+  "speciesId": "musa-acuminata-aaa-group",
+  "commonName": "Banana (Dwarf Cavendish, Williams)",
+  "botanicalName": "Musa acuminata AAA",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general — Mpumalanga/Limpopo lowveld and KZN coast)",
+      "months": [],
+      "evidence": {
+        "quote": "Seasonal Fluctuation in Supply and Price. ... It is evident that the highest paying pools are from January to May. Supplies of first grade fruit during this period are lower, due to increased downgrading from thrips, mites, mechanical damage and undersized fruit, as well as generally lower yields resulting from «November dump». However, demand for bananas is highest during these months.",
+        "url": "https://revues.cirad.fr/index.php/fruits/article/download/34912/35666",
+        "doc": "'The structure and statistics of the banana industry in South Africa', Fruits (CIRAD/IRFA journal), vol. 41, n°2, 1986, citing South African Banana Board statistics",
+        "page": 3
+      },
+      "notes": "Emptied in editor review: the quoted passage says first-grade supply is LOWER from January to May, which shows harvest in those months but does not state a year-round harvest; the rest of the article (checked in full) never says so either. Kept in unverifiedMonths. Banana in South Africa is harvested and marketed continuously year-round rather than in one discrete season, because plants flower and fruit asynchronously and the crop cannot be stored (same article, p.3: green bananas 'can only be stored for a maximum of 3 weeks' and 'Irregular seasonal production is a serious obstacle to the expansion of the Industry'). Supply/quality fluctuates seasonally (dips are linked to the 'November dump' — winter-initiated bunches that emerge deformed — corroborated by the KwaZulu-Natal Dept. of Agriculture report cited below) but some harvest occurs in every month, hence all 12 months are listed rather than a bounded season.",
+      "unverifiedMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: inferred from the timing of a fertiliser calendar; the leaflet never states when the first bunch is cut. Withdrawn value: [1, 1.2]."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Banana is not tree-structured but a perennial herb grown as a continuous mat/ratoon system (mother plant replaced each cycle by a selected follower sucker), so there is no widely-quantified multi-year ramp to 'full bearing' analogous to a fruit tree. No SA source found stating a specific number of years/cycles until the ratoon system reaches its stable/mature yield, so left null rather than guessed."
+  },
+  "yieldKgPerTreeMature": {
+    "value": [
+      19,
+      22.2
+    ],
+    "evidence": {
+      "quote": "Apply 40 g LAN (28) per plant every month from September to April and 200 g KCI per plant in September, November and February. This should be sufficient for a 40 t/ha crop. ... Density should not exceed 2 100 plants/ha and the long term optimum would be 1 800 - 2 000 plants/ha. This may be established by spacings of 3 x 1.75 m or 2.8 x 1.9 m.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Research%20and%20Technology%20Development%20Services/Publications/RESEARCH%20REPORTS/BananasinKwaZulu-Natal.pdf",
+      "doc": "Lagerwall, G., 'Bananas in KwaZulu-Natal', KwaZulu-Natal Dept. of Agriculture and Rural Development, Research Report",
+      "page": 4
+    },
+    "notes": "Converted from sourced t/ha at the sourced density for the 'Williams' cultivar in the cooler KZN subtropics: 40 000 kg/ha ÷ 2 100 plants/ha = 19.0 kg/plant; 40 000 kg/ha ÷ 1 800 plants/ha = 22.2 kg/plant. This represents kg per plant per fruiting cycle (~12-14 months, i.e. roughly one bunch/plant/year under continuous ratoon cropping), not a tree accumulating yield over many years as with a fruit tree. The same source gives a higher density (2 200-2 500 plants/ha) for the warmer 'Grand Nain'/'Chinese Cavendish' areas, which would give a somewhat lower kg/plant (16.0-18.2 kg) at the same 40 t/ha target; no separate density figure specific to 'Dwarf Cavendish' was given in this source."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "The optimum mean temperature ((max + min) ÷ 2) range for leaf development and bunch initiation and growth is between 22° C and 31° C. Growth ceases at a mean daily temperature of 14° C and leaf chlorophyll destruction takes place at an actual temperature of 6° C, with leaf die back at 0° C.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Research%20and%20Technology%20Development%20Services/Publications/RESEARCH%20REPORTS/BananasinKwaZulu-Natal.pdf",
+      "doc": "Lagerwall, G., 'Bananas in KwaZulu-Natal', KwaZulu-Natal Dept. of Agriculture and Rural Development, Research Report",
+      "page": 1
+    },
+    "notes": "Banana has no winter-chill requirement for flowering (it is tropical/evergreen); the source instead frames cold as a growth-limiting/damaging factor (growth stops below 14°C mean, chlorophyll damage at 6°C actual, leaf die-back at 0°C) rather than a chill accumulation banana needs to fruit. Left value null rather than 0 because the source does not use chill-unit terminology, but the note captures the actual (inverse) temperature sensitivity."
+  },
+  "pollination": {
+    "value": "self-fertile",
+    "evidence": {
+      "quote": "parthenocarpic seedless fruits that develop in the absence of pollination ... the ability to produce a fruit in the absence of pollination",
+      "url": "https://www.promusa.org/Domestication+of+the+banana",
+      "doc": "ProMusa (Bioversity International-affiliated global banana knowledge platform), 'Domestication of the banana'",
+      "page": null
+    },
+    "notes": "Not South Africa-specific, but this is a fixed genetic trait of the edible triploid (AAA group) Cavendish/Williams/Dwarf Cavendish clones grown in SA, not something that varies by region: these cultivars are parthenocarpic and set seedless fruit without any pollination at all (stronger than ordinary self-fertility). 'self-fertile' is the closest available enum value; strictly no pollen transfer of any kind (self or cross) is required for fruit set."
+  },
+  "harvestProduct": "fruit (bunch of bananas)",
+  "gaps": [
+    "Could not access DALRRD/nda.gov.za 'Banana Market Value Chain Profile' (2012 or 2020 editions) — nda.gov.za connection was reset and webapps1.daff.gov.za failed DNS resolution in this environment — which likely has current SA-specific yield/ha, planted area and harvest calendar data.",
+    "No SA-specific source found for years-to-full-bearing of a banana ratoon system, or for a numeric chilling/cold-damage threshold expressed as a 'chill unit' count (only qualitative temperature thresholds were found, see chillUnits notes).",
+    "Pollination evidence is a global banana-biology source (ProMusa), not a South African one specifically, since the trait is intrinsic to the triploid cultivar genetics rather than a regional growing condition; searched ARC-ITSC and KZN DARD documents directly but neither discussed pollination/seedlessness.",
+    "Yield-per-plant figure is converted from a KZN-specific (Williams cultivar, cooler subtropics) t/ha target and planting density in one ARC/KZN DARD source; a separate density and yield figure specific to Dwarf Cavendish (the other cultivar named in the species brief) was not found.",
+    "Editor review 2026-09-28: yearsToFirstCrop withdrawn — inferred from the timing of a fertiliser calendar; the leaflet never states when the first bunch is cut.",
+    "Editor review 2026-09-28: harvest window emptied — no quoted South African source states a year-round harvest; needs a DALRRD banana value-chain profile or ARC-ITSC statement."
+  ]
+}

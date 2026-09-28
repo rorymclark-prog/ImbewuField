@@ -1,0 +1,50 @@
+{
+  "speciesId": "carpobrotus-edulis",
+  "commonName": "Sour fig",
+  "botanicalName": "Carpobrotus edulis",
+  "harvestMonths": [
+    {
+      "region": "South Africa (native range)",
+      "months": [],
+      "evidence": {
+        "quote": "Flowering season: Spring",
+        "url": "https://pza.sanbi.org/carpobrotus-edulis",
+        "doc": "SANBI PlantZAfrica - Carpobrotus edulis",
+        "page": null
+      },
+      "notes": "PZA states only a FLOWERING season (spring, i.e. Aug-Oct in South Africa), with no separate 'fruiting/ripening season' field on the page at all. Months left empty deliberately rather than guessing a fruit-ripening window from the flowering season - see gaps. Flowering months for reference only (not the harvested product): [8,9,10]."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": ""
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": ""
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": ""
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Low, frost-tender coastal groundcover succulent; no source states a chilling requirement or its explicit absence."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the source is the IUCN GISD compilation, which summarises Vila 1998 and Suehs 2004 but is not the primary paper, and those papers were paywalled. Same rule as the other secondary sources. Withdrawn value: self-fertile."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "No fruit-ripening/harvest month found in any source (PZA gives only a flowering season, 'Spring'); ICRAF Agroforestree Database has no entry for this species (confirmed via switchboard search).",
+    "yearsToFirstCrop, yearsToFullBearing, yieldKgPerTreeMature, chillUnits: not found in PZA or the GISD account - this is a groundcover succulent with no SA production-guideline literature located (it is not a commercial crop in South Africa).",
+    "Primary peer-reviewed sources for the self-fertility finding (Suehs et al. 2004, Heredity, nature.com/articles/6800454) could not be fetched directly - 303 redirect to a paywalled/login page. A related Carpobrotus monograph on tandfonline.com also returned 403 Forbidden. The finding was instead sourced via the IUCN GISD compilation, which quotes it verbatim with citation.",
+    "Editor review 2026-09-28: pollination withdrawn — the source is the IUCN GISD compilation, which summarises Vila 1998 and Suehs 2004 but is not the primary paper, and those papers were paywalled. Same rule as the other secondary sources."
+  ]
+}

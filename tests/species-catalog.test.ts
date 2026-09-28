@@ -15,6 +15,7 @@ test('species catalog is valid and merges correct counts', () => {
     expectTrue(s.source.trim().length > 0);
   }
 
-  // Exact count after merging 394 raw entries by botanical name and skipping NEMBA 1a/1b
-  expectToBe(SPECIES.length, 197);
+  // Exact count after merging 394 raw entries by botanical name and skipping NEMBA 1a/1b (197),
+  // then folding Dovyalis caffra into its new name D. afra (lib/species-aliases.ts).
+  expectToBe(SPECIES.length, 196);
 });

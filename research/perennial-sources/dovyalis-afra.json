@@ -1,0 +1,68 @@
+{
+  "speciesId": "dovyalis-afra",
+  "commonName": "Kei apple",
+  "botanicalName": "Dovyalis afra (formerly Dovyalis caffra)",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general / southern Africa)",
+      "months": [
+        11,
+        12,
+        1
+      ],
+      "evidence": {
+        "quote": "The species is dioecious. In southern Africa, flowering and fruiting occur from November to January. D. caffra starts to fruit when at least 3 years old. Pollination is carried out by insects, and fruits are developed within 4 months.",
+        "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Dovyalis_caffra.PDF",
+        "doc": "Agroforestree Database 4.0 (Orwa et al. 2009), Dovyalis caffra fact sheet, BIOLOGY section",
+        "page": 1
+      },
+      "notes": "The source sentence conflates 'flowering and fruiting' into a single Nov-Jan window, but the same paragraph also says 'fruits are developed within 4 months' (i.e. after flowering), which would put actual ripening closer to March-May if flowering peaks Nov-Jan. Recorded literally as stated (Nov-Jan) rather than inferring/calculating a shifted window, since the source does not itself state a separate ripening month; this ambiguity is flagged rather than resolved by guesswork."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      3,
+      3
+    ],
+    "evidence": {
+      "quote": "D. caffra starts to fruit when at least 3 years old.",
+      "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Dovyalis_caffra.PDF",
+      "doc": "Agroforestree Database 4.0 (Orwa et al. 2009), Dovyalis caffra fact sheet, BIOLOGY section",
+      "page": 1
+    },
+    "notes": "Source gives only a minimum ('at least 3 years old'), no upper bound. [3,3] repeats the single sourced value as both array entries to fit the schema; treat this as a lower-bound estimate, not a true min-max range. Editor review: the source says 'at least 3 years old', so 3 is the earliest age, not a typical one."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not stated in any fetched source (PZA pages for dovyalis-afra/dovyalis-caffra, or ICRAF Agroforestree fact sheet)."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in PZA or ICRAF sources. A ScienceDirect paper title surfaced by WebSearch, 'Leaf gas exchange, water use, and yield of Marula (Sclerocarya birrea) and Kei Apple (Dovyalis caffra): South African indigenous fruit trees with domestication potential', looked directly relevant, but WebFetch on it returned HTTP 403 Forbidden (paywalled/blocked), so no verbatim quote could be obtained."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says none is needed; species is evergreen but this was not stated in connection with chilling by any source read."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "quote": "The species is dioecious.",
+      "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Dovyalis_caffra.PDF",
+      "doc": "Agroforestree Database 4.0 (Orwa et al. 2009), Dovyalis caffra fact sheet, BIOLOGY section",
+      "page": 1
+    },
+    "notes": "Confirmed independently by SANBI: 'Male and female flowers on separate trees.' (Dovyalis caffra PZA botanic description, https://pza.sanbi.org/dovyalis-caffra) and the Dovyalis afra PZA page describes separate 'Male flowers' and 'Female flowers' paragraphs. Insects (and birds) are the pollen vector between the separate-sex trees: ICRAF states 'Pollination is carried out by insects'; SANBI's Dovyalis afra Ecology section states 'Insects and birds play a very important role in pollinating this tree.'"
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Exact ripening/harvest month (as opposed to flowering) is not cleanly separated from flowering month in the only source found with specific months (ICRAF); noted as an interpretive ambiguity above rather than resolved by calculation.",
+    "yearsToFullBearing: not found in any fetched source.",
+    "yieldKgPerTreeMature: not found; the one directly on-topic paper found (ScienceDirect, marula & kei apple yield/water-use study) could not be fetched (HTTP 403).",
+    "chillUnits: not stated by any source found.",
+    "Naming/identity check requested by the task: SANBI's pza.sanbi.org/dovyalis-afra and pza.sanbi.org/dovyalis-caffra were both fetched (via curl with a spoofed browser User-Agent, since WebFetch/plain curl were blocked by an Azure WAF on pza.sanbi.org). Both pages are byte-identical in extracted body text (same title 'Dovyalis afra | PlantZAfrica', same content, describing the same plant under the same accepted name Dovyalis afra), differing only in which URL path serves them. SANBI's own History section explains the rename explicitly: 'The species name was previously caffra, a name that was used in older botanical works to indicate that the plant was found along the southeastern seaboard of South Africa. Today this word is not used as it is an offensive slur and the species name is afra, meaning, of Africa.' -- i.e. these are NOT two different plants, just two URLs/names (old and current) for one species, and SANBI has retired 'caffra' as an epithet for this species entirely."
+  ]
+}

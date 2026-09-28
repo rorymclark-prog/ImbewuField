@@ -1,0 +1,60 @@
+{
+  "speciesId": "strychnos-spinosa",
+  "commonName": "Spiny monkey orange",
+  "botanicalName": "Strychnos spinosa",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general)",
+      "months": [8, 9, 10, 11, 12],
+      "evidence": {
+        "quote": "Strychnos spinosa is a seasonal fruit tree that is harvested between August and December",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+        "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+        "page": null
+      },
+      "notes": "SANBI PlantZAfrica gives only FLOWERING months for this species ('Produces small greenish-white flowers in dense heads at the ends of branches (Sep-Feb/Spring - summer)') and separately notes 'They take a long time to ripen', without giving a specific ripening/harvest month; the PMC8703348 review paper's Aug-Dec harvesting statement is used here as the actual harvest-month evidence instead."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [3, 5],
+    "evidence": {
+      "quote": "Presently, Strychnos spinosa can be propagated via seeds, grafting, or budding, with the production of fruit starting 3–5 years after planting",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+      "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+      "page": null
+    },
+    "notes": ""
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "yieldKgPerTreeMature": {
+    "value": [40, 100],
+    "evidence": {
+      "quote": "Fruit weighs between 145 and 383 g, while about 300–700 fruits (40–100 kg) can be produced per tree stand.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+      "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+      "page": null
+    },
+    "notes": "Value taken directly as stated by the source in kg (40-100 kg per tree for 300-700 fruits); no conversion performed."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says the species has none."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "SANBI states only 'It is believed that various insects pollinate the flowers.' (Ecology section, https://pza.sanbi.org/strychnos-spinosa) -- this confirms insect pollination but does not state whether the species is self-fertile, partly-self-fertile, needs a cross-pollinator, or is dioecious, so no enum value could be confidently assigned. The ICRAF Agroforestree Database 4.0 fact sheet for this species (fetched PDF) contains a BOTANIC DESCRIPTION, ECOLOGY, PRODUCTS, TREE MANAGEMENT and GERMPLASM MANAGEMENT section but NO BIOLOGY section with reproductive/phenology detail, unlike the fact sheets for other species in this batch."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "yearsToFullBearing: not found in any fetched source.",
+    "Precise pollination mechanism (self-fertile vs needing a cross-pollinator vs dioecious) not stated by any source found; only 'insects pollinate the flowers' (SANBI) is confirmed.",
+    "chillUnits: not stated by any source found.",
+    "The ICRAF Agroforestree Database PDF fact sheet for this species, unusually, has no BIOLOGY section (phenology/pollination content that exists for the other ICRAF fact sheets used in this project is simply absent here), so it contributed no additional facts beyond botanic description/ecology/products already covered by SANBI."
+  ]
+}

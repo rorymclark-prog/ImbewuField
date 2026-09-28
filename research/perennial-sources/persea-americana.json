@@ -1,0 +1,91 @@
+{
+  "speciesId": "persea-americana",
+  "commonName": "Avocado",
+  "botanicalName": "Persea americana",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general, SAAGA industry overview)",
+      "months": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "evidence": {
+        "quote": "the South African avocado season extended from February to October, but with new plantings at higher elevations and more southerly latitudes harvesting now takes place from February in the to mid-January.",
+        "url": "https://avocado.co.za/sa-avocado-industry-overview/",
+        "doc": "SA Avocado Industry Overview – South African Avocado Growers' Association (SAAGA)",
+        "page": null
+      },
+      "notes": "Source text has a garbled clause ('...takes place from February in the to mid-January') indicating the season is extending later into the year with new higher-elevation/southerly plantings; the core Feb-Oct figure is the clear, unambiguous statement so it is used as the general-SA range."
+    },
+    {
+      "region": "South Africa - warm subtropical regions (Hass cultivar)",
+      "months": [6, 7, 8, 9, 10],
+      "evidence": {
+        "quote": "Hass ... Flowering and harvesting months ... Warm regions ... Flowering: July - September ... Harvesting: June - October",
+        "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf",
+        "doc": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops)",
+        "page": 5
+      },
+      "notes": "Hass and Hass-type cultivars make up ~80% of SA nursery avocado trees per SAAGA. 'Warm regions' in this DAFF/ARC guide corresponds to lowveld areas such as Tzaneen/Levubu (Limpopo) and Mpumalanga lowveld."
+    },
+    {
+      "region": "South Africa - cool subtropical regions (Hass cultivar)",
+      "months": [8, 9, 10, 11, 12],
+      "evidence": {
+        "quote": "Hass ... Cool regions ... Flowering: August - October ... Harvesting: August - December",
+        "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf",
+        "doc": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops)",
+        "page": 5
+      },
+      "notes": "'Cool regions' corresponds to higher-altitude/mistbelt areas such as the KZN midlands and cooler parts of Mpumalanga/Limpopo."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [2, 3],
+    "evidence": {
+      "quote": "Hass was the most precocious cultivar, with bearing starting in the second season, and reaching 10 t ha-1 by year three.",
+      "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+      "doc": "Wolstenholme, Kaiser & Palmer, 'Yield Potential of Intensively Managed Avocados in the Natal Midlands — The Early Bearing Years', South African Avocado Growers' Association Yearbook 1991, 14:15-18",
+      "page": 1
+    },
+    "notes": "Trial orchard at Bruyns Hill, Natal midlands (bioclimatic group 2), Hass on Duke 7 rootstock, 7x7 m spacing (200 trees/ha), planted 1982-1984. A separate SAAGA 1995 paper (Hackney, Boshoff & Slabbert, Everdon Estate, KZN) corroborates: 'Hass trees after two seasons of growth usually have attained sufficient canopy size to set a reasonable crop' (p.1, https://www.avocadosource.com/journals/saaga/saaga_1995/saaga_1995_pg_054-055.pdf)."
+  },
+  "yearsToFullBearing": {
+    "value": [6, 8],
+    "evidence": {
+      "quote": "Hass was the most precocious and consistent bearer, averaging over 15 t ha-1 and reaching an average of 20 t ha-1 by the sixth year. Thereafter, an average yield of about 22,5 t ha-1 appears to be sustainable.",
+      "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+      "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+      "page": 7
+    },
+    "notes": "Same paper also states orchards in this trial 'can be considered to be approaching maximum sustainable average yields' by year eight (p.7), giving the [6,8] range for reaching full/sustainable bearing."
+  },
+  "yieldKgPerTreeMature": {
+    "value": [100, 112.5],
+    "evidence": {
+      "quote": "reaching an average of 20 t ha-1 by the sixth year. Thereafter, an average yield of about 22,5 t ha-1 appears to be sustainable ... At a spacing of 7 x 7 m (200 trees per ha)",
+      "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+      "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+      "page": 3
+    },
+    "notes": "Converted from sourced t/ha at the sourced spacing: 20 000 kg/ha ÷ 200 trees/ha = 100 kg/tree; 22 500 kg/ha ÷ 200 trees/ha = 112.5 kg/tree. Same paper notes 'because number of trees per ha varies widely, yield per tree is meaningless unless related to trees per ha' (p.2) — flagged here since modern SA orchards are often planted much denser (up to 800 trees/ha per the same source), which would give a lower kg/tree at a similar or higher t/ha."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No SA source found quantifying a chill-unit requirement for avocado. Avocado is evergreen/subtropical, but no source located explicitly states 'no chill requirement', so left null per instructions rather than assumed."
+  },
+  "pollination": {
+    "value": "partly-self-fertile",
+    "evidence": {
+      "quote": "Hass, an A-type flowerer, tended to be out of phase with Fuerte and Rinton on a seasonal yield basis ... favourable temperatures at fruit-set (especially in B flowering type cultivars such as Fuerte) can result in heavy cropping",
+      "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+      "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+      "page": 6
+    },
+    "notes": "SA source confirms avocado's type A / type B protogynous dichogamous flowering system (temporal separation of male and female phases within a single tree) rather than stating self-fertility directly. Supporting SA quote on the practical effect: DAFF/ARC 'Cultivation of Avocados' guide lists for Fuerte (a Type B cultivar) 'Comments: fruit set increased by a pollinator' (http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf, p.5), i.e. trees do set fruit alone (self-fertile) but cross-pollination with the opposite flower type improves fruit set — hence 'partly-self-fertile' rather than 'self-fertile' or 'needs-cross-pollinator'."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Could not find a SA primary/grower-body source stating a numeric chill-unit requirement for avocado; searched ARC-ITSC, DAFF/nda.agric.za (page returned HTTP 503), SAAGA yearbooks, and general 'chill unit' South Africa searches (mostly returned deciduous-fruit chill-model literature, none avocado-specific).",
+    "nda.agric.za/docs/avocado/avocado.htm (an nda.agric.za avocado page found via search) returned HTTP 503 Service Unavailable when fetched and could not be used.",
+    "Years-to-first-crop and yield/tree figures are sourced from one detailed KZN Natal-midlands trial (SAAGA 1991) plus a corroborating SAAGA 1995 KZN paper; did not find an equivalent quantified trial for the Limpopo/Mpumalanga lowveld (the largest SA production area) despite searching ARC-ITSC and SAAGA yearbook archives — noted as a regional gap."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "speciesId": "sclerocarya-birrea-subsp-caffra",
+  "commonName": "Marula",
+  "botanicalName": "Sclerocarya birrea subsp. caffra",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general; SA distribution given as KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "months": [2, 3, 4, 5, 6],
+      "evidence": {
+        "quote": "Male and female flowers are borne on separate trees, the flowers of male plants producing pollen and the female flowers producing the fruit for which the tree is so well known. These are green on the tree and turn yellow after falling (Feb-June).",
+        "url": "https://pza.sanbi.org/sclerocarya-birrea",
+        "doc": "Sclerocarya birrea | PlantZAfrica (SANBI)",
+        "page": null
+      },
+      "notes": "PZA's own wording is ambiguous about whether 'Feb-June' describes fruit ripening/drop on the tree or only the colour change after the fruit has already fallen ('turn yellow after falling'); recorded as the harvest window since Feb-June is the well-known marula fruiting season, but the exact meaning of 'after falling' is not spelled out by the source."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source. WebSearch surfaced Shackleton, C.M. 2002 'Growth and fruit production of Sclerocarya birrea in the South African lowveld' (Agroforestry Systems, Springer/ResearchGate) as a likely primary source, but the full text is paywalled and was not fetched/read, so no verbatim quote could be taken from it. Not used per the no-paraphrase rule."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source (see yearsToFirstCrop notes on the unfetched Shackleton 2002 paper)."
+  },
+  "yieldKgPerTreeMature": {
+    "value": [200, 1500],
+    "evidence": {
+      "quote": "The S. birrea ssp. caffra tree is a prolific seed bearer: between 0.2 and 1.5 t of fruit have been collected from a single tree in 1 season in the wild.",
+      "url": "https://apps.worldagroforestry.org/treedb2/speciesprofile.php?Spid=1513",
+      "doc": "ICRAF Agroforestree Species Profile, Sclerocarya birrea ssp. caffra (Spid=1513)",
+      "page": null
+    },
+    "notes": "Converted from tonnes to kg as stated by the source: 0.2 t x 1000 = 200 kg; 1.5 t x 1000 = 1500 kg. Source describes this as a wild-tree range, not necessarily a managed orchard tree. WebSearch (not fetched/verified verbatim) also surfaced other figures from Shackleton (2002) and a 2014 Agroforestry Systems paper (e.g. ~30-570 kg/tree/yr, up to ~1600 kg/tree) that roughly agree with this range but were NOT used as evidence here because they were only seen as paraphrased search-result summaries, never as verbatim fetched text."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source consulted (PZA, ICRAF treedb2) states a chilling requirement or explicitly says marula has none; deciduous but no chill-hour figure or 'no chill requirement' statement found."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "quote": "Male and female flowers are borne on separate trees, the flowers of male plants producing pollen and the female flowers producing the fruit for which the tree is so well known.",
+      "url": "https://pza.sanbi.org/sclerocarya-birrea",
+      "doc": "Sclerocarya birrea | PlantZAfrica (SANBI)",
+      "page": null
+    },
+    "notes": "Confirmed by a second, independent source: ICRAF treedb2 species profile (Spid=1513) states 'Although male and female flowers occasionally occur on the same tree, it is considered dioecious.' PZA's own Ecology section also states 'Insects pollinate the flowers.' (https://pza.sanbi.org/sclerocarya-birrea), i.e. pollen is moved between separate male and female trees by insects."
+  },
+  "harvestProduct": "fruit (also the nut/kernel inside the stone is eaten, but the picked product is the fruit)",
+  "gaps": [
+    "yearsToFirstCrop and yearsToFullBearing: not found in any fetched source; Shackleton (2002, Agroforestry Systems) and a 2014 Agroforestry Systems paper on population variation in growth/fruit yield were identified via WebSearch as likely primary sources but are paywalled and were not fetched, so no verbatim quote was available.",
+    "chillUnits: no source found stating a chilling requirement, positive or explicitly absent.",
+    "Botanical-name / speciesId discrepancy: the user-supplied speciesId uses 'subsp. caffra', but SANBI's live PlantZAfrica page (fetched 2026) now names the plant 'Sclerocarya birrea (A.Rich.) Hochst. subsp. afra (Sond.) Kokwaro', i.e. SANBI has renamed the subspecies from 'caffra' to 'afra' (the word 'caffra' is treated by SANBI as an offensive historical term, as made explicit on SANBI's own Dovyalis afra page for the same reason). This dossier keeps the speciesId and botanicalName as given in the task, but flags that current SANBI usage is 'subsp. afra', and ICRAF's treedb2 profile at the fetched URL still uses 'subsp. caffra' -- the two authorities currently disagree on the accepted subspecies epithet."
+  ]
+}

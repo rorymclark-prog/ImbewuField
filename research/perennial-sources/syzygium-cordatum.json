@@ -1,0 +1,46 @@
+{
+  "speciesId": "syzygium-cordatum",
+  "commonName": "Waterberry / umDoni",
+  "botanicalName": "Syzygium cordatum",
+  "harvestMonths": [
+    {
+      "region": "southern Africa",
+      "months": [11, 12, 1, 2, 3],
+      "evidence": {
+        "quote": "In southern Africa flowering is in August–November, and fruiting in November–March.",
+        "url": "https://uses.plantnet-project.org/en/Syzygium_cordatum_(PROTA)",
+        "doc": "PROTA (Plant Resources of Tropical Africa) - Syzygium cordatum, via Pl@ntUse mirror",
+        "page": null
+      },
+      "notes": "PROTA text credited to Brink, M., 2008, PROTA4U record for Syzygium cordatum. SANBI PlantZAfrica (https://pza.sanbi.org/syzygium-cordatum) independently corroborates the flowering half of this: 'It flowers from August to November. The fruits are oval berries, red to dark-purple when ripe.' - but PZA does not itself state a fruit-ripening month, so only the PROTA source is used for the months array."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "ICRAF Agroforestree Database notes only that 'trees can be grown in containers, in which case they will flower and fruit at an earlier age' (no number given)."
+  },
+  "yearsToFullBearing": { "value": null, "evidence": null, "notes": "" },
+  "yieldKgPerTreeMature": { "value": null, "evidence": null, "notes": "" },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Evergreen subtropical/tropical tree; no source explicitly stated a chill requirement or its absence, so left null rather than assuming."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": {
+      "quote": "The flowers provide nectar for honey bees.",
+      "url": "https://uses.plantnet-project.org/en/Syzygium_cordatum_(PROTA)",
+      "doc": "PROTA (Plant Resources of Tropical Africa) - Syzygium cordatum, via Pl@ntUse mirror",
+      "page": null
+    },
+    "notes": "PROTA also describes the flowers as bisexual ('Flowers bisexual, regular, usually 4-merous...') and bee-pollinated, but no source made an explicit self-fertile / needs-cross-pollinator statement, so left null rather than inferring from flower structure alone."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "yearsToFirstCrop / yearsToFullBearing: searched PZA, PROTA (plantuse.plantnet.org) and ICRAF Agroforestree (speciesprofile Spid=1575, apps.worldagroforestry.org/treedb2/AFTPDFS/Syzygium_cordatum.PDF) - no numeric years-to-bearing found in any of the three; only the qualitative container-grown note above.",
+    "yieldKgPerTreeMature: no kg/tree figure found in PZA, PROTA or ICRAF Agroforestree pages for this species.",
+    "chillUnits: no source discusses chilling requirement for this evergreen indigenous species."
+  ]
+}

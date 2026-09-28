@@ -1,0 +1,79 @@
+{
+  "speciesId": "mangifera-indica",
+  "commonName": "Mango",
+  "botanicalName": "Mangifera indica",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area)",
+      "months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "evidence": {
+        "quote": "The mango season in South Africa normally begins in November and ends around late March thus making it the shortest season compared to other subtropical fruits such as avocadoes which stretch from February to November as well as litchis which stretch from November to late April (FPEF, 2024).",
+        "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf",
+        "doc": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024)",
+        "page": 3
+      },
+      "notes": "Same report gives the provincial split: Limpopo 4280 ha, Mpumalanga 1362 ha, Western Cape 101 ha, KwaZulu-Natal 16 ha, North-West 15 ha, Gauteng 1 ha, of 5775 ha total planted, with Limpopo+Mpumalanga = at least 96% of production (p.3-4)."
+    },
+    {
+      "region": "South Africa - early-season cultivar (Tommy Atkins), general",
+      "months": [],
+      "evidence": {
+        "quote": "Availability starts in late November in the Limpopo Province around Malelane with the Tommy Atkins variety.",
+        "url": "https://mango.co.za/",
+        "doc": "SA Mango Growers' Association (SAMGA) website / associated seasonal reporting",
+        "page": null
+      },
+      "notes": "Included as a cultivar-level supplement to the NAMC region-wide Nov-Mar figure; SAMGA's own cultivars page (mango.co.za/cultivars/) confirms Tommy Atkins is grouped as 'Mid Season' without giving exact months, so this narrower Nov-Dec start date is treated as lower-confidence than the NAMC quote above. Editor review: excluded (months emptied). The quote could not be found on mango.co.za when re-fetched, and the general Nov–Mar window already covers these months.",
+      "unverifiedMonths": [
+        11,
+        12
+      ]
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced to the required standard. General claims of '3-4 years' or 'up to 8 years' for South African mango bearing appear repeatedly in non-primary web content (farming blogs, tourism sites) but could not be traced to a verbatim statement in an ARC/SAMGA/Subtrop/DALRRD/peer-reviewed document during this research pass."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. SAMGA yearbook articles likely to contain this (e.g. 'Tree Spacing Trends and Options for Yield Improvement in Mango', yearbook.mango.co.za) returned 404 / were behind what appears to be a restructured or members-only URL when fetched directly."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Hectare-level figures were found (e.g. Subtrop-referenced 20-30 t/ha average commercial yield, up to 85 t/ha for Keitt in specialised operations) but without a verbatim, directly-fetched primary-source quote giving both the yield AND the planting spacing/trees-per-ha needed to convert to kg/tree honestly, so left null rather than estimated."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "It is therefore clear that mango growth and development are strongly influenced by the environment as temperatures of below 15 oC readily promote floral induction ... According to an experiment conducted by Robbertse & Manyaga (1998), there is also a difference in the number of cold units (days) required by different cultivars.",
+      "url": "https://repository.up.ac.za/server/api/core/bitstreams/04bb6250-e61b-4490-8794-af975ee71a82/content",
+      "doc": "Yeshitela, T.B. (2004) PhD thesis, University of Pretoria, Chapter 2 Literature Review (citing Robbertse & Manyaga 1998, S.A. Mango Growers' Association Yearbook)",
+      "page": 3
+    },
+    "notes": "Mango floral induction in South African cultivars is triggered by a period of days below 15°C ('cold units'), not by a Utah/chill-hour type accumulated chill-unit figure as used for deciduous fruit, and the number of such cool days needed differs by cultivar per the cited Robbertse & Manyaga (1998) SAMGA study. Could not obtain the primary Robbertse & Manyaga (1998) SAMGA Yearbook article itself (18:18-19) to extract the actual day-counts per cultivar, so left value null rather than repeating an unverified secondary-source figure."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the quoted SAJS tables list which insects visited mango flowers in Limpopo and Mpumalanga; a visitor list does not state whether the flowers set fruit without a second cultivar, which is what this field claims. Withdrawn value: partly-self-fertile."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "DALRRD/nda.gov.za and dalrrd.gov.za domains (which host the 'Mango Market Value Chain Profile 2020', a likely strong source for yield/bearing/pollination data) could not be reached: DNS resolution failed for www.dalrrd.gov.za, webapps.daff.gov.za and webapps1.daff.gov.za in this environment.",
+    "SAMGA's yearbook.mango.co.za technical archive lists several directly relevant article titles (e.g. 'Tree Spacing Trends and Options for Yield Improvement in Mango', 'Determination of Cool-temperature Requirement for Flowering in Various Mango Cultivars' by Robbertse & Manyaga 1998) but the specific PDF URLs found via search returned HTTP 404, and the site's Technical Info / Research Library sections appear to require SAMGA membership login, so full text could not be fetched.",
+    "No SA-specific, sourced number found for years to first crop, years to full bearing, or yield per tree (mature) despite ~10 search/fetch attempts across DAFF/DALRRD, NAMC, SAMGA/Subtrop, ISHS and a University of Pretoria thesis; all left null rather than guessed.",
+    "Pollination evidence is a secondary-source (SAJS review) table citing two 1990s SALGA/SAMGA-yearbook-era field studies (Eardley & Mansell 1996; Carvalheiro et al.); the primary SAMGA Yearbook article itself was not independently fetched, and the table shows pollinator visitation shares, not a controlled fruit-set/exclusion-cage experiment proving pollinators are required (vs. just present) for SA mango fruit set.",
+    "Agrekon paper 'Financial Analysis of Mango Production on Small-scale Emerging Commercial Farms in the Venda Region of South Africa' (Vol 38, 1999) looked promising (peer-reviewed, Limpopo-specific) but is paywalled on Tandfonline and was not fetched.",
+    "Editor review 2026-09-28: early-season Tommy Atkins window excluded: its quote was not found on the re-fetched page.",
+    "Editor review 2026-09-28: pollination withdrawn — the quoted SAJS tables list which insects visited mango flowers in Limpopo and Mpumalanga; a visitor list does not state whether the flowers set fruit without a second cultivar, which is what this field claims."
+  ]
+}
