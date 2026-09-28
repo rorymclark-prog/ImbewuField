@@ -1346,6 +1346,8 @@ function FacilitatorCropsPageInner() {
       // them by splitting siteLine printed "Climate: Not set" for every region in the country.
       locationLine,
       climateLine: climateSource === 'none' ? `Assuming ${patternMeta.label.toLowerCase()}` : patternMeta.label,
+      // Lets the PDF flag frost-tender harvest windows that run into Jun–Jul at a light-frost site.
+      rainPattern: pattern,
       bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
         + `${plotCount ? ` · ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`
         + ` · ${beds.reduce((s, b) => s + b.areaM2, 0).toFixed(1)} m² of growing space`,
@@ -1354,7 +1356,7 @@ function FacilitatorCropsPageInner() {
       lossPercent: cashflowSettings.lossPercent,
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+  }, [beds, canvasSite, placeName, designTitle, region, pattern, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
