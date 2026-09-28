@@ -125,13 +125,13 @@
   },
   "gaps": [
     "No DAFF/DALRRD-hosted sunflower guideline under nda.gov.za was found via Wayback in the initial CDX listing; the version used here ('Brochure Sunflower.pdf') was located under the dalrrd.gov.za Portals path.",
-    "No yield figure (t/ha) anywhere in the source.",
+    "Yield is now sourced from Grain SA (citing ARC-Grain Crops Institute yield-trial data, 2005-2010), not from the DAFF/ARC-GCI brochure itself, which gives no yield figure at all. The 1.2-2.1 t/ha range spans small-plot trial yield (2.1) vs. actual full-scale country-average production (1.2), which the source itself frames as a known yield gap rather than a single expected figure.",
     "No seed rate in kg/ha; only plant population (25 000-35 000 plants/ha) is given.",
     "No named cultivars/varieties -- source only refers generically to 'disease resistant cultivars' and 'certified seeds'.",
     "Frost sensitivity is not addressed by the primary source at all; frostTender is based on FAO ECOCROP's killing-temperature field instead, as noted above.",
     "No winter-rainfall (Western Cape), all-year, or mild-frost specific sowing guidance -- only the summer-rainfall Nov-Dec(east)/mid-Jan(west) window is given.",
     "'foodGroup' does not map cleanly onto this crop (an oilseed rather than a legume, leafy green, staple grain, etc.); left as null rather than forced into a wrong category."
   ],
-  "verdict": "partial",
-  "summary": "DAFF/ARC-GCI's 2009 Sunflower brochure gives a well-sourced sowing window, days-to-harvest, row/in-row spacing and sowing depth. It has no yield figure, no seed rate in kg/ha, and no named varieties, and never mentions frost (frostTender relies on FAO ECOCROP instead), so verdict is partial."
+  "verdict": "ready",
+  "summary": "DAFF/ARC-GCI's 2009 Sunflower brochure gives a well-sourced sowing window (summer, the only relevant rain pattern for this dryland interior grain crop), days-to-harvest, row/in-row spacing and sowing depth. Yield is now sourced from Grain SA (citing ARC-GCI trial data): 1.2-2.1 t/ha, spanning full-scale country-average production to small-plot research-trial yield. It still has no seed rate in kg/ha and no named varieties, and never mentions frost (frostTender relies on FAO ECOCROP instead), but the ready-bar (sowMonths, daysToHarvestRange, spacing, yield) is now met."
 }

@@ -192,7 +192,7 @@
   "gaps": [
     "No commercial-scale South African production: source states 'Mung beans are not produced on a commercial scale' and that SA research attempts 'have been made... but with no success' due to late/erratic pod maturing, so most of the guideline content is drawn from international (mainly US) sources rather than SA field trials.",
     "No seed rate in kg/ha; only plant population targets are given (200 000-350 000 plants/ha dryland, 400 000 plants/ha irrigated).",
-    "No yield figure (t/ha); source only states the crop is 'low yielding' without a number.",
+    "No yield figure (t/ha); source only states the crop is 'low yielding' without a number. Further search found no acceptable SA or FAO figure: a SA J Plant & Soil diversity-analysis paper (DOI 10.1080/02571862.2019.1579004) exists but is Cloudflare-blocked on tandfonline and, per its abstract, reports 'yield per plant', not a t/ha field figure; FAO's crop-information pages give no mungbean yield; Feedipedia's often-cited '0.4-2.5 t/ha' figure is a secondary compilation (citing AVRDC 2012) with no primary document located, so it was not used; ACIAR's mungbean production guides are Cambodia-specific, not SA or FAO. Recorded as a genuine gap.",
     "Row spacing has two conflicting stated ranges within the same document (75cm-1.2m vs 18-100cm); both recorded rather than silently picking one.",
     "No varieties confirmed as specifically available/grown in South Africa -- Berken, Texsprout and AVRDC lines are cited from international sources.",
     "No winter-rainfall, all-year, or mild-frost sowing guidance; only one national window given."

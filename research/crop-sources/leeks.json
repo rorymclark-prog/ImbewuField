@@ -65,7 +65,7 @@
     "product": "blanched pseudostems",
     "conditions": null,
     "evidence": [],
-    "notes": "KZN DARD's 'Expected Yields' Table 8 runs alphabetically from Lettuce directly to Marrow with no Leek row — confirmed absent, not overlooked. No other sourced primary document gives a leek yield figure for South Africa. Recorded as a gap."
+    "notes": "KZN DARD's 'Expected Yields' Table 8 runs alphabetically from Lettuce directly to Marrow with no Leek row — confirmed absent, not overlooked. A South African DAFF-authored leek article was located via a Senwes 'Crops and Markets' quarterly (2010), which states leek production is a year-round SA enterprise, but the hosting domain (www2.senwes.co.za) is blocked by this environment's network egress and could not be fetched to extract or verify any yield figure. No other SA study (ARC, university) with a leek field-trial yield could be found. DAFF/DALRRD's own brochure archive could not be checked in this pass either: the Wayback Machine was returning 'Internet Archive: Temporarily Offline' for the whole domain, and dalrrd.gov.za/nda.agric.za direct connections failed (502/connection-reset), both confirmed to be transient infrastructure issues at the time of this search rather than a confirmed absence of the document. Recorded as a genuine, still-open gap pending a retry when those sources are reachable again."
   },
   "ecocrop": null,
   "ecocropNotes": "EcoCrop_DB.csv has no row for Allium ampeloprasum, Allium porrum, or any leek-labelled entry; only Allium cepa, A. fistulosum and A. cepa var. aggregatum rows exist, none of which is leek's own species, so left null rather than substituting a different Allium species' climate envelope.",
@@ -83,7 +83,7 @@
     "high-mountain": "Not confirmed by source; the crop's long 150-day cycle through the Cold-areas window suggests it endures real frost, but no direct statement covers this zone specifically."
   },
   "gaps": [
-    "No yield (t/ha) figure found for leek in any sourced KZN DARD document — confirmed absent from the 'Expected Yields' table rather than overlooked.",
+    "No yield (t/ha) figure found for leek in any sourced KZN DARD document — confirmed absent from the 'Expected Yields' table rather than overlooked. A relevant Senwes/DAFF article exists but its host is blocked in this research environment; DAFF/DALRRD's own archive was unreachable during this pass due to a Wayback Machine outage and direct nda.agric.za/dalrrd.gov.za connection failures -- see yield.notes.",
     "No named SA leek cultivars sourced from any seed catalogue, DAFF or KZN document checked.",
     "No Western Cape/winter-rainfall-specific sowing calendar found; 'winter' sowMonths inferred equal to 'summer'.",
     "frostTender left null — no explicit cold-tolerance statement found for leek specifically.",

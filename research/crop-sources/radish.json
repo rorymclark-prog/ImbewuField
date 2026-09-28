@@ -70,7 +70,7 @@
     "product": "roots",
     "conditions": null,
     "evidence": [],
-    "notes": "KZN DARD's 'Expected Yields' Table 8 has no Radish row (it is a minor, fast-cycle crop not covered by that table). No other sourced document gives a radish yield figure for South Africa. Recorded as a gap."
+    "notes": "KZN DARD's 'Expected Yields' Table 8 has no Radish row (it is a minor, fast-cycle crop not covered by that table). Further search found only fodder/forage radish yield studies (a different production system, grown to bulk biomass rather than a marketable root, e.g. a 2025 Agronomy paper on rain-fed fodder radish in South Africa reporting 4-12 t DM/ha/season) and generic non-SA (European/Indian) root-radish figures with no attributable primary document -- neither is an acceptable substitute for this crop's edible-root yield. DAFF/DALRRD's own brochure archive could not be checked in this pass: the Wayback Machine was returning 'Internet Archive: Temporarily Offline' and direct nda.agric.za/dalrrd.gov.za connections failed (502/connection-reset) at the time of this search -- a transient infrastructure issue, not a confirmed absence of the document. Recorded as a genuine, still-open gap."
   },
   "ecocrop": {
     "row": "Raphanus sativus",
@@ -113,7 +113,7 @@
     "high-mountain": "Not confirmed by source."
   },
   "gaps": [
-    "No yield (t/ha) figure found for radish in any sourced document — confirmed absent from KZN's 'Expected Yields' table.",
+    "No yield (t/ha) figure found for radish in any sourced document — confirmed absent from KZN's 'Expected Yields' table. Fodder/forage radish yield studies exist for South Africa but measure a different production system (biomass, not marketable root) so were not substituted; DAFF/DALRRD's archive was unreachable during this pass due to a Wayback Machine outage and nda.agric.za/dalrrd.gov.za connection failures -- see yield.notes.",
     "One of the two Starke Ayres radish cultivars could not be confidently named from the extracted catalogue text (photo caption/spec-block layout issue).",
     "No Western Cape/winter-rainfall-specific sowing calendar found; 'winter' sowMonths inferred equal to 'summer'.",
     "frostTender left null — no explicit cold-tolerance statement found for radish specifically.",

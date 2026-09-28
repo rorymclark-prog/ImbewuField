@@ -91,11 +91,18 @@
   "sowDepthRangeCm": null,
   "seedRateKgPerHaRange": null,
   "yield": {
-    "tPerHaRange": null,
+    "tPerHaRange": [60.96, 108.85],
     "product": "fresh tuberous roots",
-    "conditions": null,
-    "evidence": [],
-    "notes": "DAFF guide gives plant density (10,000-15,000 plants/ha) and a nutrient-removal figure (a '25 kg/ha' crop removes ~60 kg/ha N) but no root/tuber t/ha yield figure. Recorded as a gap rather than converting the nutrient-removal line into a yield estimate."
+    "conditions": "On-farm multi-environment cultivar trial, 11 cassava clones (from IITA, UKZN and ARC) at 6 sites across KwaZulu-Natal, Mpumalanga and Limpopo, South Africa, rain-fed, no fertiliser or pesticide applied, 1m x 1m spacing",
+    "evidence": [
+      {
+        "quote": "There were significant genotypic differences for FRY, ranging from 60.96-ton ha−1 for cultivar P1/19 to 108.85-ton ha−1 for UKF4, with an overall mean FRY of 83.23-ton ha−1.",
+        "url": "https://www.namc.co.za/wp-content/uploads/2024/03/Assefa-et-al-2022-On-Farm-multi-environment-evaluation-of-selected-cassava-cultivars-in-South-Africa.pdf",
+        "page": 4,
+        "doc": "Amelework AB, Bairu MW, Marx R, Owoeye L, Laing M, Venter SL. On-Farm Multi-Environment Evaluation of Selected Cassava (Manihot esculenta Crantz) Cultivars in South Africa. Plants. 2022;11(23):3339 (DOI 10.3390/plants11233339), ARC-Vegetable, Industrial and Medicinal Plants / UKZN / North-West University"
+      }
+    ],
+    "notes": "Fresh storage-root yield (FRY), the per-genotype range across 11 cultivars x 6 South African on-farm environments (mean 83.23 t/ha). No fertiliser or pesticide was applied, so this is closer to a genetic-potential/adaptability figure than a typical smallholder-input yield; no single national/provincial average yield figure was found to compare it against. DAFF's own brochure gives no root yield figure at all (only a plant-density range and an ambiguous nutrient-removal line, '25 kg/ha of cassava removes about 60 kg/ha of N', whose area basis is unclear and which was deliberately not used)."
   },
   "ecocrop": {
     "row": "Manihot esculenta",
@@ -121,12 +128,12 @@
     "southern-cape": "Not confirmed by source; DAFF only names Limpopo, Mpumalanga and northern KZN as SA production areas."
   },
   "gaps": [
-    "No root/tuber yield (t/ha) figure found in the DAFF guide for South Africa; only a nutrient-removal figure and plant-density range are given.",
+    "DAFF's own guide gives no root/tuber yield (t/ha) figure (only a nutrient-removal figure and plant-density range); yield is now sourced instead from a 2022 ARC/UKZN/North-West University on-farm multi-environment cultivar trial (Plants journal, MDPI): fresh root yield 60.96-108.85 t/ha (mean 83.23 t/ha) across 11 cultivars x 6 South African sites, rain-fed, unfertilised.",
     "No exact sowing-month calendar quoted by DAFF; 'all-year' sowMonths are inferred from the warm/rainy-season planting convention for a frost-free crop, not a direct source statement, and are flagged accordingly.",
     "No named SA cultivars/varieties sourced — DAFF distinguishes only 'bitter' vs 'sweet' types; no seed-company catalogue exists (vegetatively propagated).",
     "Sow depth / cutting-length-and-orientation detail not converted into a cm range (source describes 15-30 cm root diameter/length for tubers, not planting-cutting depth).",
     "The 18-20 month (540-600 day) optimum-starch-yield maturity noted by DAFF for some strains is not merged into daysToHarvestRange, which instead reflects the food-purposes 6-12 month window; both figures should probably be surfaced separately in the UI."
   ],
   "verdict": "partial",
-  "summary": "DAFF's Cassava production guideline sources frost-tenderness, row/in-row spacing (80-100cm x 80-100cm), and a food-harvest window (6-12 months, cross-checked against FAO ECOCROP's 180-365 growing-cycle days for Manihot esculenta). Yield (t/ha), an exact sowing calendar, and named SA varieties are unsourced gaps — cassava is a minor, vegetatively-propagated crop in SA agriculture with only two broad bitter/sweet types documented, no seed-company variety catalogue exists, and the source is silent on root yield."
+  "summary": "DAFF's Cassava production guideline sources frost-tenderness, row/in-row spacing (80-100cm x 80-100cm), and a food-harvest window (6-12 months, cross-checked against FAO ECOCROP's 180-365 growing-cycle days for Manihot esculenta). Yield is now sourced from a 2022 ARC/UKZN on-farm multi-environment cultivar trial (60.96-108.85 t/ha fresh root, 11 cultivars x 6 SA sites). Verdict stays partial because sowMonths is still not directly sourced -- DAFF gives no planting calendar at all, so the 'all-year' months recorded are an inference from planting-season convention, not a quoted source statement -- and no named SA varieties exist for this vegetatively-propagated crop."
 }
