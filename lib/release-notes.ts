@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '01807c13', changes: [
+    'Plant Guilds adds Sesotho draft slides beside English.',
+  ], tour: [
+    { title: 'Review Plant Guilds drafts', where: 'Study → Plant Selection & Guilds', href: '/student',
+      detail: 'Choose Sesotho and compare the 51 labelled draft slides with their exact English source. Field instructions held in English and all Sesotho wording still need facilitator review.' },
+  ] },
   { when: '28 September 2026', sha: 'd0a0dec8', changes: [
     'Introduction has a Sesotho draft voice, with English source available.',
     'Reading the Landscape adds Sesotho, Tshivenda and Xitsonga drafts beside English.',
