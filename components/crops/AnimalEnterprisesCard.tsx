@@ -22,6 +22,7 @@ import {
   type HousingKind,
   type PlacedAnimalGroup,
 } from '@/lib/animal-enterprises';
+import { animalArtUrl } from '@/lib/animal-art';
 import { formatMonthSpan, formatRange, type HarvestCitation, type SourcedRange } from '@/lib/perennial-harvest';
 
 export const PRODUCT_ICON: Readonly<Record<AnimalProduct, LucideIcon>> = {
@@ -96,8 +97,12 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
     e.weeksToFirstProduct?.source, e.productiveLifeYears?.source, e.feedKgPerDay?.source,
     e.waterLPerDay?.source, e.spaceM2?.source, ...e.welfare.map((p) => p.source), ...e.legal.map((p) => p.source),
   ].filter((c): c is HarvestCitation => !!c);
+  const art = animalArtUrl(e.enterpriseId);
   return (
     <div className="mt-3">
+      {art && (
+        <img className="produce-art" src={art} alt={e.name} width={72} height={72} loading="lazy" style={{ width: 'clamp(56px, 5vw, 72px)', height: 'auto', objectFit: 'contain', marginBottom: 8 }} />
+      )}
       <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
         <Fact label={`${e.product === 'fish' ? 'Harvest' : PRODUCT_LABEL[e.product]} per ${e.animalUnit}`} value={rangeText(e.outputPerAnimal, e.outputUnit)} source={e.outputPerAnimal?.source} />
         <Fact label="When" value={months.length ? `${formatMonthSpan(months)}${e.windows.length === 1 ? ` · ${firstWindow.region}` : ' across SA sources'}` : null} source={firstWindow?.source} />
@@ -187,6 +192,7 @@ export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
                 {options.map((e) => {
                   const on = chosen?.enterpriseId === e.enterpriseId;
                   const Icon = PRODUCT_ICON[e.product];
+                  const chipArt = animalArtUrl(e.enterpriseId);
                   return (
                     <button
                       key={e.enterpriseId}
@@ -196,7 +202,9 @@ export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
                       className="font-sans rounded-full inline-flex items-center gap-1"
                       style={{ fontSize: 12, fontWeight: on ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${on ? 'var(--emerald)' : 'var(--border)'}`, background: on ? 'var(--bg-2)' : 'transparent', color: on ? 'var(--text-primary)' : 'var(--text-secondary)' }}
                     >
-                      <Icon size={12} aria-hidden /> {e.name}
+                      {chipArt
+                        ? <img className="produce-art" src={chipArt} alt="" aria-hidden width={16} height={16} style={{ width: 16, height: 16, objectFit: 'contain' }} />
+                        : <Icon size={12} aria-hidden />} {e.name}
                     </button>
                   );
                 })}

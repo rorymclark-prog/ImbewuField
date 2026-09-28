@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { PNG } from 'pngjs';
 import {
   ANIMAL_ENTERPRISES,
   ANIMAL_LABEL,
@@ -18,6 +19,7 @@ import {
   type HousingKind,
 } from '@/lib/animal-enterprises';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { ANIMAL_ART, ANIMAL_ART_ROOT } from '@/lib/animal-art';
 import { enterpriseFromDossier, loadDossiers } from '../scripts/build-animal-enterprises.mjs';
 
 const records = Object.values(ANIMAL_ENTERPRISES);
@@ -179,4 +181,23 @@ test('small per-animal amounts keep their size instead of rounding to 0.1', () =
   assert.equal(formatAmountRange([4.57, 4.71]), '4.6–4.7');
   assert.equal(formatAmountRange([407.1, 428.6]), '407.1–428.6');
   assert.equal(formatAmountRange([16, 17]), '16–17');
+});
+
+test('animal art: every picture belongs to an enterprise, exists, and is a 256×256 transparent icon', () => {
+  const dir = new URL(`../public${ANIMAL_ART_ROOT}/`, import.meta.url);
+  for (const [id, url] of Object.entries(ANIMAL_ART)) {
+    assert.ok(ANIMAL_ENTERPRISES[id], `${id}: animal art for an enterprise that does not exist`);
+    assert.equal(url, `${ANIMAL_ART_ROOT}/${id}.png`, `${id}: file must be named after the enterprise`);
+    const { width, height, data } = PNG.sync.read(readFileSync(new URL(`${id}.png`, dir)));
+    assert.deepEqual([width, height], [256, 256], `${id}: deployed art is 256×256`);
+    for (const [x, y] of [[0, 0], [width - 1, 0], [0, height - 1], [width - 1, height - 1]]) {
+      assert.equal(data[(y * width + x) * 4 + 3], 0, `${id}: corner (${x},${y}) is not transparent`);
+    }
+  }
+  // A PNG on disk with no mapping is a picture nobody sees.
+  if (existsSync(dir)) {
+    for (const file of readdirSync(dir).filter((f) => f.endsWith('.png'))) {
+      assert.ok(ANIMAL_ART[file.replace(/\.png$/, '')], `${file}: on disk but not in lib/animal-art.ts`);
+    }
+  }
 });
