@@ -1,0 +1,23 @@
+{
+  "key": "butternut",
+  "varieties": [
+    {
+      "name": "MO1015 (proposed commercial name \"Carla\")",
+      "zones": ["western-cape"],
+      "maturity": null,
+      "season": null,
+      "traits": "Large, Waltham-shaped, smooth dark tan skin; fresh-market/export segment; average fruit 1.6-1.8kg in trials",
+      "type": "hybrid",
+      "note": "A Starke Ayres breeding-trial line specifically framed as new butternut options for Western Cape growers, aimed at the export fresh-market segment rather than a home garden. Named here as the only zone-specific butternut lead found, not as a general recommendation.",
+      "evidence": [
+        { "quote": "MO 1015 and MO 1014 identified as having exceptional potential to satisfy the demands of the export sector. MO1015 (proposed name Carla) is a large, Waltham-shaped, fresh market segment variety with a smooth, dark tan-coloured skin that produced an average fruit size of 1.6-1.8kg in the trials.", "url": "https://www.starkeayres.com/news/new-butternut-squash-varieties-for-the-western-cape", "page": null, "doc": "New butternut squash varieties for the Western Cape, Starke Ayres news article (via search snippet — page could not be independently re-fetched for a verbatim quote in this pass)" }
+      ]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "Starke Ayres' own Butternut Production Guideline 2019 (fetched and read in full, https://www.starkeayres.com/uploads/files/Squash/Butternut/Butternut-Production-Guideline-2019.pdf) names NO specific cultivars at all — it is generic agronomy (spacing, fertiliser, climate) and matches what crop-catalog.ts already cites for spacing.",
+    "No zone-by-zone butternut variety table was found for any of the other 7 zones. The widely-known OP 'Waltham Butternut' type sold by several SA home-garden retailers was considered but not added, because no South African primary/seed-company source was opened and quoted for it in this pass (would have been inserted from general knowledge, which the brief forbids).",
+    "This matches crop-catalog.ts's own existing stance on butternut: it deliberately carries NO varieties array, with a header comment stating published SA guidance here is 'purely about sow-timing' rather than a real region-driven variety choice — this file's single Western Cape lead is a genuine addition, not a reversal of that finding, and the other 7 zones remain a gap consistent with that prior conclusion."
+  ]
+}
