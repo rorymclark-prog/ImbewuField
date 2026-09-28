@@ -49,7 +49,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Compare the Sesotho Soil Health slides', where: 'Study → Soil Health & Composting', href: '/student',
       detail: 'Choose Sesotho and page through all 20 slides. Each pairs its existing draft or English hold with the exact English source. Slides open silently; choose English narration if you want it.' },
   ] },
-  { when: '28 September 2026', changes: [
+  { when: '28 September 2026', sha: 'e75bc004', changes: [
     'Variety guidance names your growing area and lists varieties chosen for it first.',
     'Each named variety links to the seed company or guide that recommends it.',
     'Gem squash, brinjal, baby marrow, cauliflower, spanspek, soya and sunflower have prices.',
