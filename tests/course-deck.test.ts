@@ -19,6 +19,22 @@ const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css'
 const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress', slideStage: 'slideStage' };";
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
+test('phone full-screen slide image stays below the lesson and exit controls', () => {
+  const css = readFileSync(new URL(DECK_PLAYER_CSS_URL), 'utf8');
+  const rule = (selector: string) => {
+    const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return css.match(new RegExp(`${escaped}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
+  };
+  const stage = rule('.expanded .slideStage');
+  const controls = rule('.expanded .controlStrip');
+
+  assert.match(stage, /z-index:\s*0\s*;/,
+    'the full-viewport slide must form a lower stacking layer so it cannot intercept phone taps');
+  assert.match(controls, /z-index:\s*5\s*;/, 'Play lesson remains above the slide');
+  assert.match(css, /\.expanded \.playerHeader,[\s\S]*?\.expanded \.controlStrip\s*\{[^}]*z-index:\s*5\s*;/,
+    'Exit full screen remains in the same higher layer as Play lesson');
+});
+
 test('sound-off learners get the complete current script, including its final instruction', () => {
   // A beautiful picture cannot replace words a learner cannot hear. This fails on a missing
   // paragraph, stale edit, shifted slide, or accidentally published draft-language transcript.
