@@ -53,6 +53,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Check a tree before you plant it', where: 'Design Studio → place a tree → pick a species', href: '/design',
       detail: 'Search a fruit tree such as avocado, mango or marula. Under its name you now see when South African sources say it is picked, how many years to its first crop and about how many kg a mature tree gives, where a source states it.' },
   ] },
+  { when: '28 September 2026', sha: 'fb647dd3', changes: [
+    'Introduction L2 adds one Sesotho study prompt beside its English source.',
+    'Farm guidance, key points and quiz stay in English pending review.',
+  ], tour: [
+    { title: 'Compare the Introduction L2 draft', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open L2. One general study prompt is a draft beside its exact English source. Farm advice, all key points and both quiz items remain English; fluent Sesotho review is pending.' },
+  ] },
   { when: '28 September 2026', sha: '4fe85a91', changes: [
     'Introduction adds source-paired Tshivenda holds for slides 7 and 10.',
   ], tour: [
