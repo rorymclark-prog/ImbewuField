@@ -30,6 +30,28 @@ test('the Sesotho pilot pairs all 22 actual English introduction slides in autho
   assert.equal(validatePairedDraft(completeHold(), source).length, 22);
 });
 
+test('Sesotho Introduction review slides keep uncertain field steps paired in English beside backchecked draft lines', () => {
+  const packet = JSON.parse(readFileSync('docs/narration/intro-permaculture.st.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'st');
+  const body = (n: number) => slides[n - 1].target.body;
+
+  assert.equal(body(20)[1].status, 'draft');
+  assert.equal(body(20)[1].text, 'Ebe o thala metsu e kenang ho tswa kantle bakeng sa letsatsi, moya, mollo le metsi.');
+  assert.equal(body(20)[2].status, 'draft');
+  assert.equal(body(20)[2].text, 'Leqephe leo la pampiri ke mokokotlo wa moralo wa hao. Ntho e nngwe le e nngwe khosong ena e itshetlehile hodima lona.');
+  assert.equal(body(20)[0].status, 'english-hold', 'the rings instruction stays paired in exact English after the backcheck flagged ambiguous wording');
+
+  assert.equal(body(21)[3].status, 'draft');
+  assert.equal(body(21)[3].text, 'Nka senepe sa setshwantsho.');
+  assert.ok(body(21).slice(0, 3).every((part: any) => part.status === 'english-hold'),
+    'technical zone and energy directions stay exact English for facilitator review');
+
+  assert.equal(body(22)[3].status, 'draft');
+  assert.equal(body(22)[3].text, 'Ebe o botsa moahisani a le mong ya hodileng hore na moya o mobe ka ho fetisisa o tswa ntlheng efe, mme o bapise karabo ya hae le motsu wa hao.');
+  assert.ok(body(22).slice(0, 3).every((part: any) => part.status === 'english-hold'),
+    'uncertain ground checking, counting and crop relocation wording stays exact English');
+});
+
 test('standard written Xitsonga uses the same exact source and paragraph pairing as Sesotho', () => {
   const draft = completeHold('ts');
   assert.equal(validatePairedDraft(draft, source, 'ts').length, source.length);
