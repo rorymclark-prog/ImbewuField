@@ -1,0 +1,128 @@
+{
+  "key": "cereal-rye",
+  "name": "Cereal Rye (Stooling Rye)",
+  "localNames": { "af": "stoelrog" },
+  "botanicalName": "Secale cereale",
+  "family": "Poaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "winter grazing/fodder/silage and green-manure biomass, killed at early boot stage before summer grain planting",
+  "frostTender": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Once well-established, it can withstand very cold conditions (down to -35°C).",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA (Truter, Dannhauser, Smith & Trytsman), 2019"
+      }
+    ]
+  },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": {
+      "months": [2, 3],
+      "evidence": [
+        {
+          "quote": "The best time to seed this species is February/March.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": {
+      "months": [2, 3],
+      "evidence": [
+        {
+          "quote": "The best time to seed this species is February/March.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+        }
+      ]
+    }
+  },
+  "daysToHarvestRange": {
+    "value": null,
+    "evidence": [
+      {
+        "quote": "It is recommended to harvest rye no later than at early boot stage (before heading) in order to maintain good palatability, intake and nutritive value.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "It is used as a cover crop and killed two weeks before planting summer grain.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      }
+    ],
+    "notes": "Termination is defined by growth stage (early boot) and by proximity to the following summer-grain planting date, not by a day-count from sowing."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": {
+    "value": [25, 75],
+    "evidence": [
+      {
+        "quote": "Seeding rates can be between 25 kg/ha – 50 kg/ha (dryland) and 50 kg/ha – 75 kg/ha (irrigated) and depends upon whether it is sown in a mixture or not.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [7, 10],
+    "product": "dry matter (fodder/green-manure biomass) at boot stage",
+    "conditions": "optimal management",
+    "evidence": [
+      {
+        "quote": "When the plant reaches boot stage, the species should yield in the order of 7 tons – 10 tons of dry matter (DM)/ha under optimal management conditions.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Secale cereale",
+    "TOPMN": 15,
+    "TOPMX": 20,
+    "TMIN": 3,
+    "TMAX": 31,
+    "GMIN": 110,
+    "GMAX": 270
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": null,
+    "biomassTPerHa": 10,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "It is used as a cover crop and killed two weeks before planting summer grain.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "varieties": [],
+  "zoneNotes": {
+    "highveld": "Grown in areas with cold winters/warm dry summers; tolerates -35°C once established; sown Feb/March ahead of winter grazing and killed before the next summer grain crop.",
+    "karoo-arid": "Relatively drought-resistant, can tolerate annual rainfall as low as 400mm."
+  },
+  "gaps": [
+    "No row/in-row spacing or sow-depth figures found (this cereal is drilled/broadcast, not spaced as a row crop in the source).",
+    "No explicit days-to-harvest day-count; only growth-stage (early boot) and calendar-relative (two weeks before summer grain) termination cues.",
+    "No named SA rye cultivars found (source mentions diploid vs tetraploid cultivars generically without naming SA-marketed ones)."
+  ],
+  "verdict": "partial",
+  "summary": "Sow window (Feb/Mar), seed rate (25-75 kg/ha dryland/irrigated) and DM biomass yield at boot stage (7-10 t/ha) are all directly sourced from Grain SA's Part 19 (Stooling rye) article. Not a legume, so N-fixed is null. Spacing and an exact days-to-termination figure are gaps; termination is described only by growth stage and by proximity to the next planting."
+}
