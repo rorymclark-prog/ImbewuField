@@ -659,26 +659,11 @@ test('Sesotho draft narration starts with paired slides and English source choic
   } finally { act(() => view.unmount()); }
 });
 
-test('only source-paired Xitsonga Food Forest frames replace the English slide', () => {
-  const deck = COURSE_DECKS['food-forest'];
-  assert.ok(deck.slideLanguages.includes('ts'));
-  for (const slide of deck.slides) {
-    const selected = slideImageFor('food-forest', 'ts', slide.slide);
-    assert.ok(selected);
-    if (slide.slide === 4 || slide.slide === 8) {
-      assert.equal(selected.lang, 'ts');
-      assert.match(selected.url, /\/food-forest\/ts\/slide-(04|08)\.webp$/);
-      assert.ok(onDisk(selected.url));
-    } else {
-      assert.equal(selected.lang, 'en', `slide ${slide.slide} must show English until paired copy exists`);
-    }
-  }
-});
-
 test('regional Food Forest and Xitsonga vegetables decks expose the complete paired still set', () => {
   const cases: [string, string, number[]][] = [
     ['food-forest', 'st', [4, 8]],
     ['food-forest', 've', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
+    ['food-forest', 'ts', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
     ['vegetables-staples', 'ts', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
   ];
   for (const [moduleId, language, authored] of cases) {
