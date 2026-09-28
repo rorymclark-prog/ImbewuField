@@ -108,6 +108,333 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       }
     ]
   },
+  "cattle-beef": {
+    "enterpriseId": "cattle-beef",
+    "name": "Nguni / crossbred beef cattle (communal and extensive veld)",
+    "animal": "cattle",
+    "animalUnit": "cow",
+    "product": "meat",
+    "outputUnit": "kg weaning weight/calf",
+    "outputPerAnimal": {
+      "value": [
+        114.51,
+        121.21
+      ],
+      "source": {
+        "quote": "Calves’ in humid zone had higher performance with 121.21 kg for WW, 96.83 kg for P-WG and 0.477 kg/day for P-ADG. The lowest WW (114.51 kg)...were observed in arid zone.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5203849/",
+        "doc": "Mpofu, Ginindza, Siwendu, Nephawe & Mtileni (2016). Effect of agro-ecological zone, season of birth and sex on pre-weaning performance of Nguni calves in Limpopo Province, South Africa. Tropical Animal Health and Production 49:187-194 (PMC5203849), Table 5",
+        "page": null
+      },
+      "note": "Table 5 gives weaning weight (WW) across four agro-ecological zones for the same nine Nguni communal herds: arid 114.51 kg (lowest), semi-arid 119.98 kg, dry sub-humid 117.91 kg, humid 121.21 kg (highest). The range recorded here spans this one study's own arid-to-humid zone means; it is not merged with any other paper's weaning-weight figures (other SA studies report different ranges for different systems - e.g. research-station or stud herds - and were deliberately excluded to avoid mixing systems). 826 Nguni calves from nine herds that the paper itself says were 'kept under extensive grazing system' in Limpopo Province - a genuine communal/extensive veld system matching this enterprise."
+    },
+    "windows": [],
+    "seasonalPattern": null,
+    "weeksToFirstProduct": null,
+    "productiveLifeYears": {
+      "value": [
+        6.44,
+        6.44
+      ],
+      "source": {
+        "quote": "Average failure time (days) 2 354",
+        "url": "https://scholar.ufs.ac.za/bitstreams/80aad384-ea22-4242-b763-f218826c11ec/download",
+        "doc": "Ngayo, M. (2017). Factors Affecting Productive Life and Fertility in Nguni Cows (MSc dissertation, University of the Free State), Table 5.1",
+        "page": 58
+      },
+      "note": "2354 days / 365.25 = 6.44 years. 'Failure time' is the length of productive herd life for the 580 uncensored (fully-observed) records in the combined dataset; the dissertation itself defines productive herd life as 'the time interval between first calving date to culling date'. Combined data from three extensively-grazed Nguni stud herds, animals born 1968-2015."
+    },
+    "feedKgPerDay": null,
+    "waterLPerDay": null,
+    "spaceM2": null,
+    "welfare": [
+      {
+        "point": "Cattle pens must not be overcrowded: there must be enough floor space for every animal to lie down at the same time.",
+        "source": {
+          "quote": "Livestock shall not be penned in overcrowded conditions. ... Penning space provided shall be enough to permit all livestock to lie down at the same \ntime",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.1.2",
+          "page": 4
+        }
+      },
+      {
+        "point": "During transport, cattle must have at least 1.4 m² of floor space each so loading is neither too tight nor too loose.",
+        "source": {
+          "quote": "1,4 sq.m per each adult cattle",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.4.6.1",
+          "page": 7
+        }
+      },
+      {
+        "point": "Cattle may not be transported for more than 18 hours without being off-loaded and given feed, water and shelter.",
+        "source": {
+          "quote": "Livestock shall not be transported for periods in excess of 18 h. If the journey is longer than  \n18 h the livestock shall be off-loaded and provided with suitable feed, potable water and shelter.",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.7.1",
+          "page": 9
+        }
+      },
+      {
+        "point": "It is an offence to starve, under-feed, or deny water or food to cattle.",
+        "source": {
+          "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+          "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+          "page": 1
+        }
+      }
+    ],
+    "legal": [
+      {
+        "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: state Veterinary Services enforce isolation and movement restrictions.",
+        "source": {
+          "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+          "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+          "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+          "page": null
+        }
+      },
+      {
+        "point": "Every cattle owner must register an official identification mark and brand or mark their cattle with it, under the Animal Identification Act.",
+        "source": {
+          "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+          "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+          "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+          "page": 4
+        }
+      },
+      {
+        "point": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.",
+        "source": {
+          "quote": "all suspected and confirmed cases of abortion must be reported to the nearest State Veterinary office for zoo-sanitary actions as prescribed in the national bovine brucellosis control scheme",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10784229/",
+          "doc": "Marumo, Hlokwe & Kayoka-Kabongo, Seroprevalence of brucellosis in communal and smallholder cattle farming in North West Province, South Africa, Onderstepoort Journal of Veterinary Research (PMC10784229)",
+          "page": null
+        }
+      },
+      {
+        "point": "No animal may be slaughtered anywhere but a registered abattoir, with the exception below.",
+        "source": {
+          "quote": "slaughter any animal at any place other than an abattoir;",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+          "page": 6
+        }
+      },
+      {
+        "point": "Slaughter for the farmer's own household consumption, or for cultural or religious purposes, is exempt from the abattoir rule.",
+        "source": {
+          "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+          "page": 6
+        }
+      }
+    ]
+  },
+  "cattle-dairy": {
+    "enterpriseId": "cattle-dairy",
+    "name": "Small-scale dairy cow (Jersey, Holstein or crossbred)",
+    "animal": "cattle",
+    "animalUnit": "cow",
+    "product": "milk",
+    "outputUnit": "kg milk/cow/lactation",
+    "outputPerAnimal": {
+      "value": [
+        3840,
+        5422
+      ],
+      "source": {
+        "quote": "Milk FCM BF \n% ... 6426 \n5422 \n4468 \n3840",
+        "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/PRODUCTION_GUIDELINES/Dairying_in_KwaZulu-Natal/Breeds%20of%20Dairy%20Cattle.pdf",
+        "doc": "Gertenbach, W.D., Dairying in KwaZulu-Natal: Breeds of Dairy Cattle, Cedara Agricultural Development Institute, KZN Department of Agriculture and Rural Development, Table 1",
+        "page": 1
+      },
+      "note": "Table 1 ('Comparison of number of cows, production and fertility in the main dairy breeds in South Africa'), Milk column, Grade rows: Jersey 3840 kg and Holstein-Friesland 5422 kg per lactation (Registered rows: 4468 and 6426 kg). The document says these are National Milk Recording Scheme herds, which 'have been shown to be better managed than those outside the scheme, with their performance per lactation being 50 % greater than that of the national herd', so a smallholder herd should expect less."
+    },
+    "windows": [
+      {
+        "region": "South Africa (commercial and small-commercial dairy, general)",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "source": {
+          "quote": "not an option for dairy farmers in South Africa, \nas processors require a year-round even milk \nflow to ensure processing plants operating at \nfull capacity for most of the year.",
+          "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+          "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+          "page": 239
+        }
+      }
+    ],
+    "seasonalPattern": {
+      "text": "SA dairy processors need a steady year-round milk supply, so seasonal (batch) calving is not viable for SA dairy farmers - milk is produced continuously all year.",
+      "source": {
+        "quote": "not an option for dairy farmers in South Africa, \nas processors require a year-round even milk \nflow to ensure processing plants operating at \nfull capacity for most of the year.",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+        "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+        "page": 239
+      }
+    },
+    "weeksToFirstProduct": {
+      "value": [
+        121.8,
+        130.5
+      ],
+      "source": {
+        "quote": "28 30 25 28 29 32 ... AFC : Mean age at first calving, months.",
+        "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/PRODUCTION_GUIDELINES/Dairying_in_KwaZulu-Natal/Breeds%20of%20Dairy%20Cattle.pdf",
+        "doc": "Gertenbach, W.D., Dairying in KwaZulu-Natal: Breeds of Dairy Cattle, Cedara Agricultural Development Institute, KZN Department of Agriculture and Rural Development, Table 1",
+        "page": 1
+      },
+      "note": "Table 1, AFC column, rows in the table's order Holstein-Friesland Reg./Grade, Jersey Reg./Grade, Ayrshire Reg./Grade: 28, 30, 25, 28, 29, 32 months. The Grade rows used here are Holstein-Friesland 30 and Jersey 28 (Grade Ayrshire 32 is not used: the enterprise is Jersey or Holstein type). 28 x 4.35 = 121.8 weeks; 30 x 4.35 = 130.5 weeks. Milk begins at first calving, so age at first calving is the time to first product."
+    },
+    "productiveLifeYears": {
+      "value": [
+        1.91,
+        2.02
+      ],
+      "source": {
+        "quote": "Table 2 indicates that the average length of productive life was 739.33 ± 434.31 and 696.81 ± 415.44 days",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12560872/",
+        "doc": "Cow Longevity and Reasons and Risk Factors for Culling in South African Holstein and Jersey Dairy Herds, Animals 2025 (PMC12560872)",
+        "page": null
+      },
+      "note": "Holstein 739.33 and Jersey 696.81 days of productive life (first calving to culling) in South African milk-recorded herds, 2000-2019: 696.81/365.25 = 1.91 and 739.33/365.25 = 2.02 years."
+    },
+    "feedKgPerDay": {
+      "value": [
+        14,
+        28
+      ],
+      "source": {
+        "quote": "The daily feed intake of Jersey \ncows is about 14 to 16 kg DM, while Holstein \ncows consume about 24 to 28 kg DM per day.",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+        "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+        "page": 10
+      },
+      "note": "Dry-matter (DM) intake for lactating dairy cows: Jersey 14-16 kg DM/day, Holstein 24-28 kg DM/day. Full span across both breeds used here (14 to 28 kg/day) since the enterprise covers Jersey, Holstein or crossbred cows generically."
+    },
+    "waterLPerDay": {
+      "value": [
+        58,
+        75
+      ],
+      "source": {
+        "quote": "Water intake per day (l) 58 75",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+        "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg), Table 21.1",
+        "page": 122
+      },
+      "note": "Table 21.1 gives water intake for a lactating Holstein-type cow under comfortable versus hot conditions: 58 L/day (comfortable) to 75 L/day (hot). Used as the general lactating-cow range; not broken out by breed since the table's other columns are for comfort/heat-stress states rather than breed."
+    },
+    "spaceM2": null,
+    "welfare": [
+      {
+        "point": "Cattle pens must not be overcrowded: there must be enough floor space for every animal to lie down at the same time.",
+        "source": {
+          "quote": "Livestock shall not be penned in overcrowded conditions. ... Penning space provided shall be enough to permit all livestock to lie down at the same \ntime",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.1.2",
+          "page": 4
+        }
+      },
+      {
+        "point": "Cows must not be loaded for transport if their udders are distended with milk.",
+        "source": {
+          "quote": "No livestock which is diseased, emaciated, injured, disabled, exhausted or otherwise unfit or cows with udders distended with milk, or livestock blind in one or both eyes should be loaded onto a vehicle",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.6.13",
+          "page": 9
+        }
+      },
+      {
+        "point": "Cattle may not be transported for more than 18 hours without being off-loaded and given feed, water and shelter.",
+        "source": {
+          "quote": "Livestock shall not be transported for periods in excess of 18 h. If the journey is longer than  \n18 h the livestock shall be off-loaded and provided with suitable feed, potable water and shelter.",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.7.1",
+          "page": 9
+        }
+      },
+      {
+        "point": "It is an offence to starve, under-feed, or deny water or food to a dairy cow.",
+        "source": {
+          "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+          "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+          "page": 1
+        }
+      },
+      {
+        "point": "Cows on pasture or in open camps need shade: shade structures should give at least 4 to 5 m² of shade per cow.",
+        "source": {
+          "quote": "Shade structures should provide at least 4 to \n5 m² shade space per cow.",
+          "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+          "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+          "page": 129
+        }
+      }
+    ],
+    "legal": [
+      {
+        "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: state Veterinary Services enforce isolation and movement restrictions.",
+        "source": {
+          "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+          "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+          "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+          "page": null
+        }
+      },
+      {
+        "point": "Every cattle owner must register an official identification mark and brand or mark their cattle with it, under the Animal Identification Act.",
+        "source": {
+          "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+          "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+          "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+          "page": 4
+        }
+      },
+      {
+        "point": "Dairy farmers are legally required to test their herds for bovine TB, mainly because of export requirements, so most dairy cattle in South Africa are tested.",
+        "source": {
+          "quote": "Dairy farmers are required by legislation to test their herds for TB, this mainly as a result of export requirements, so the majority of dairy cattle are tested.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10369683/",
+          "doc": "Bovine tuberculosis / dairy herd testing study, PMC10369683",
+          "page": null
+        }
+      },
+      {
+        "point": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, under the national bovine brucellosis control scheme.",
+        "source": {
+          "quote": "all suspected and confirmed cases of abortion must be reported to the nearest State Veterinary office for zoo-sanitary actions as prescribed in the national bovine brucellosis control scheme",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10784229/",
+          "doc": "Marumo, Hlokwe & Kayoka-Kabongo, Seroprevalence of brucellosis in communal and smallholder cattle farming in North West Province, South Africa, Onderstepoort Journal of Veterinary Research (PMC10784229)",
+          "page": null
+        }
+      },
+      {
+        "point": "A cull cow may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+        "source": {
+          "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+          "page": 6
+        }
+      }
+    ]
+  },
   "chicken-broiler": {
     "enterpriseId": "chicken-broiler",
     "name": "Broilers (commercial)",
@@ -670,6 +997,135 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       }
     ]
   },
+  "fish-tilapia": {
+    "enterpriseId": "fish-tilapia",
+    "name": "Tilapia (Mozambique tilapia, small pond or tank)",
+    "animal": "fish",
+    "animalUnit": "fish",
+    "product": "fish",
+    "outputUnit": "g harvest weight/fish",
+    "outputPerAnimal": {
+      "value": [
+        800,
+        800
+      ],
+      "source": {
+        "quote": "Harvestable size (+- 800g) in 10-\n12 months",
+        "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+        "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia)",
+        "page": 69
+      },
+      "note": "Table 8-3 gives the Mozambique Tilapia's harvestable size as an approximate single figure ('+- 800g'), not a range, so [800, 800] is used rather than inventing a spread. The same table cell wraps '10-12' across a line break in the PDF ('10-\\n12'), kept verbatim. The table's Nile Tilapia row gives the same approximate weight (+-800g) reached faster, in 6-10 months — not used here because this dossier is framed around the indigenous, legally unrestricted Mozambique Tilapia per task instruction; see 'legal' for why Nile Tilapia is treated separately. No SA source was found giving a feed-conversion-based or per-hectare yield figure specific to O. mossambicus that could be converted to this per-fish unit without stitching numbers across documents, so outputUnit follows the source's own unit (grams harvest weight per fish) rather than being converted."
+    },
+    "windows": [
+      {
+        "region": "North-Eastern South Africa (sub-tropical climate, unheated water)",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "source": {
+          "quote": "Due to the South African climate, grow -out can only occur seasonally in some part of the \ncountry, unless water is heated to maintain higher temperatures. However, in the North -\nEastern parts of the country, the subtropical climate allows  for year-round grow-out conditions \nwithout the need for water heating.",
+          "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+          "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+          "page": 84
+        }
+      }
+    ],
+    "seasonalPattern": {
+      "text": "Winter water temperatures halt tilapia growth over most of South Africa; only the sub-tropical North-East supports year-round unheated grow-out.",
+      "source": {
+        "quote": "Most of South Africa, however, does not have a year -round temperature within the required \n‘optimal’ growth range for Tilapia  (reported to be between 25-35 degrees Celsius (FAO, \n2014e)), with temperatures falling below the lower threshold for Tilapia survival during the \nwinter months in much of the country. Optimal temperatures are reached during the summer \nmonths, but this is restricted to areas on the North -Eastern side of South Africa where a more \nsub-tropical climate prevails.",
+        "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+        "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+        "page": 75
+      }
+    },
+    "weeksToFirstProduct": {
+      "value": [
+        43.5,
+        52.2
+      ],
+      "source": {
+        "quote": "Relative to the Nile Tilapia, the Mozambique Tilapia is slower growing, reaching full  harvestable \nsize in approximately 10 – 12 months (depending on temperatures, feeding regimes, etcetera).",
+        "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+        "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+        "page": 69
+      },
+      "note": "10 months x 4.35 = 43.5 weeks; 12 months x 4.35 = 52.2 weeks. This is Mozambique Tilapia (O. mossambicus) grow-out time to harvestable size; the source separately states Nile Tilapia (O. niloticus) reaches harvestable maturity faster, in 6-10 months (= 26.1-43.5 weeks) — not used here as it is a different species with a different legal status (see 'legal')."
+    },
+    "productiveLifeYears": null,
+    "feedKgPerDay": null,
+    "waterLPerDay": null,
+    "spaceM2": null,
+    "welfare": [],
+    "legal": [
+      {
+        "point": "The indigenous Mozambique Tilapia (O. mossambicus) is not a listed invasive species and may be farmed without an alien-species permit; the faster-growing Nile Tilapia (O. niloticus) is.",
+        "source": {
+          "quote": "Legality of Production Allowed Allowed with Permits",
+          "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+          "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia)",
+          "page": 69
+        }
+      },
+      {
+        "point": "Nile Tilapia (Oreochromis niloticus) is a nationally listed invasive fish species: Category 1b inside National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry Reserves, and Category 3 in all other areas.",
+        "source": {
+          "quote": "Oreochromis niloticus Nile tilapia See below\na. 1b in National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry      \nReserves declared in terms of the Protected Areas Act. \nb. 3 for all other discrete catchment systems in which it occurs.",
+          "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
+          "doc": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet), List 7 (National List of Invasive Fresh-water Fish Species)",
+          "page": 32
+        }
+      },
+      {
+        "point": "Outside protected areas Nile tilapia is Category 3: it may remain in prescribed areas or provinces, but further propagation or trade is prohibited.",
+        "source": {
+          "quote": "Category 3:  Invasive species which may remain in prescribed areas or provinces. Further  \n   planting, propagation or trade, is however prohibited. Plants in riparian areas are Cat 1b.",
+          "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
+          "doc": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet)",
+          "page": 3
+        }
+      },
+      {
+        "point": "Nile Tilapia has been listed under the NEMBA Alien and Invasive Species Regulations as requiring a permit to produce.",
+        "source": {
+          "quote": "Nile Tila pia has now been included in \nthe latest NEMBA legislation as an alien and invasive species requiring a permit for production",
+          "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+          "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+          "page": 69
+        }
+      },
+      {
+        "point": "Producing an alien or invasive species (such as Nile Tilapia) is prohibited in areas designated under the Protected Areas Act and the Fish Sanctuary Act; a permit is required to produce it elsewhere.",
+        "source": {
+          "quote": "Production involving the \nuse of an alien and/or \ninvasive species is \nprohibited in areas \ndesignated by the \nProtected Areas Act and \nthe Fish Sanctuary Act. A \npermit is required for \nproduction in other areas.",
+          "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+          "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+          "page": 74
+        }
+      },
+      {
+        "point": "Producing tilapia in South Africa requires a water use licence under the National Water Act.",
+        "source": {
+          "quote": "Production of Tilapia in South Africa will require a \nwater use license.",
+          "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+          "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+          "page": 75
+        }
+      }
+    ]
+  },
   "goat-dairy": {
     "enterpriseId": "goat-dairy",
     "name": "Dairy goat (Saanen / Toggenburg / British Alpine)",
@@ -906,7 +1362,15 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       "note": "Weaning rate (kids weaned/doe mated) of 149% = 1.49 kids weaned per doe per year. This is a 20-year national average for Boer does under EXTENSIVE conditions at 295 mm rainfall (low-rainfall/arid veld), not a feedlot or high-input system. The same source (Casey & Van Niekerk, 1988, quoted a few sentences later) separately reports mean litter SIZE (kids born per parturition, not per year) of 1.93 for Boer does - not merged into this per-year figure since it measures a different thing. A South Africa-wide extensive-system kidding percentage of 180% (not weaning rate) is corroborated independently in a different source (see gaps/seasonalPattern sourcing), which is consistent with the 187% kidding rate reported here."
     },
     "windows": [],
-    "seasonalPattern": null,
+    "seasonalPattern": {
+      "text": "Breeding/kidding is not confined to one season - Boer does kid throughout the year - but kidding is concentrated in three peaks: March-April, June-July and September-October, with an overall peak in autumn.",
+      "source": {
+        "quote": "Breeding was not restricted to any particular season. Kidding peaked in autumn, indicating summer breeding season which coincides with optimum feed availability ... Lambing occurred throughout the year. However, most of the lambing took place in ranges of March to April, June to July and September to October in all years.",
+        "url": "https://scholar.ufs.ac.za/server/api/core/bitstreams/46b48d9c-608a-40b2-bcbd-c429533189ef/content",
+        "doc": "King, F.J.M. (2009). Production Parameters for Boer Goats in South Africa (MSc dissertation, University of the Free State), Chapter 4",
+        "page": 36
+      }
+    },
     "weeksToFirstProduct": null,
     "productiveLifeYears": null,
     "feedKgPerDay": null,
@@ -976,6 +1440,128 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
           "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
           "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
           "page": 6
+        }
+      }
+    ]
+  },
+  "pig-pork": {
+    "enterpriseId": "pig-pork",
+    "name": "Pig (small-scale / emerging-farmer sow herd)",
+    "animal": "pig",
+    "animalUnit": "sow",
+    "product": "meat",
+    "outputUnit": "piglets weaned/sow/year",
+    "outputPerAnimal": null,
+    "windows": [],
+    "seasonalPattern": null,
+    "weeksToFirstProduct": null,
+    "productiveLifeYears": null,
+    "feedKgPerDay": null,
+    "waterLPerDay": {
+      "value": [
+        10,
+        23
+      ],
+      "source": {
+        "quote": "Pregnant sows 10-18...Lactating sows 18-23",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+        "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 1 (Water requirements of pigs, litres/pig/day)",
+        "page": 10
+      },
+      "note": "Table 1 gives separate ranges by physiological class of the same animal (sow): pregnant sows 10-18 L/day and lactating sows 18-23 L/day. Combined here into a single sow-herd range [10,23] spanning both states, rather than mixing in the table's other classes (nursery, grower, finishing pigs, boars), which are a different animalUnit. South Africa (general smallholder/commercial training-manual figure, not tied to one system)."
+    },
+    "spaceM2": null,
+    "welfare": [
+      {
+        "point": "When pigs are trucked, the SA code of practice for handling and transporting animals recommends 0.3 m² per porker, 0.4 m² per baconer and 0.8 m² per adult pig.",
+        "source": {
+          "quote": "According to the code of practice for handling and transporting animals in South Africa, the \nrecommended floor space per animal are 0,3 m2 per porker; 0,4 m2 per baconer; and 0,8 m2 per \nadult pig (Tomlinson, 2000).",
+          "url": "https://sappo.org/wp-content/uploads/2022/09/6_Muchenje_pig_welfare.pdf",
+          "doc": "Muchenje, V. & Ndou, S.P., How pig pre-slaughter welfare affects pork quality and the pig industry (Univ. of Fort Hare, hosted by SAPPO), quoting Tomlinson (2000) Code of Practice for the Handling and Transport of Livestock",
+          "page": 7
+        }
+      },
+      {
+        "point": "It is an offence to keep a pig somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+        "source": {
+          "quote": "confines, chains, tethers or secures any animal unnecessarily or under such conditions or in such a manner or position as to cause that animal unnecessary suffering or in any place which affords inadequate space, ventilation, light, protection or shelter from heat, cold or weather",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+          "doc": "Animals Protection Act 71 of 1962, s.2(1)(b)",
+          "page": 1
+        }
+      },
+      {
+        "point": "It is an offence to starve, under-feed, or deny water or food to a pig.",
+        "source": {
+          "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+          "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+          "page": 1
+        }
+      },
+      {
+        "point": "In heat waves, pig houses need better ventilation/airflow and lower stocking density, and outdoor pigs need shade and shelter.",
+        "source": {
+          "quote": "increase \nventilation and airflow and check that the \ncooling system is in good working order...reduce stocking density if possible, to allow \nair to flow between the pigs...These pigs should have access to shade and \nshelter as well",
+          "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+          "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production",
+          "page": 9
+        }
+      }
+    ],
+    "legal": [
+      {
+        "point": "African swine fever (ASF) is listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act; warthogs and Ornithodorus ticks are carriers/vectors.",
+        "source": {
+          "quote": "Table 2   Controlled animal diseases (in terms of the Animal Disease Act, Act 35 of 1984) pertaining to pigs...African swine fever \n(ASF)...Carriers of ASF is warthog",
+          "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+          "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 2",
+          "page": 15
+        }
+      },
+      {
+        "point": "Foot-and-mouth disease (FMD) is also listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act.",
+        "source": {
+          "quote": "Table 2   Controlled animal diseases (in terms of the Animal Disease Act, Act 35 of 1984) pertaining to pigs...Foot and mouth \ndisease (FMD)",
+          "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+          "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 2",
+          "page": 15
+        }
+      },
+      {
+        "point": "Swill (food waste) may not be fed to pigs unless it has been boiled for at least 60 minutes or sterilised by another equally effective method.",
+        "source": {
+          "quote": "Regulation 24 of the Animal Diseases Act, 1984 (Act 35 of 1984) prohibits the feeding of swill unless boiled for 60 min or sterilised by means of another efficient method",
+          "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S1019-91282020000100012",
+          "doc": "Munzhelele et al., Investigation of African swine fever outbreaks in pigs outside the controlled areas of South Africa, 2012-2017 (Journal of the South African Veterinary Association, SciELO SA mirror)",
+          "page": null
+        }
+      },
+      {
+        "point": "Pigs may only be moved into a biosecure compartment from another compartment that is officially certified/approved for that purpose.",
+        "source": {
+          "quote": "Only pigs certified to originate from another officially approved compartment are allowed to enter a compartment.",
+          "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S1019-91282020000100012",
+          "doc": "Munzhelele et al., Investigation of African swine fever outbreaks in pigs outside the controlled areas of South Africa, 2012-2017 (Journal of the South African Veterinary Association, SciELO SA mirror)",
+          "page": null
+        }
+      },
+      {
+        "point": "A pig may not be slaughtered anywhere but a registered abattoir, except for own household consumption or cultural/religious purposes.",
+        "source": {
+          "quote": "slaughter any animal at any place other than an abattoir;",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+          "page": 6
+        }
+      },
+      {
+        "point": "A pig owner must apply to register an official identification mark and mark their pigs with it, under the Animal Identification Act.",
+        "source": {
+          "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+          "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+          "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+          "page": 4
         }
       }
     ]
@@ -1094,6 +1680,299 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
           "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
           "doc": "South Africa's National Listed Invasive Species booklet (NEMBA Alien and Invasive Species Lists)",
           "page": 27
+        }
+      }
+    ]
+  },
+  "sheep-mutton": {
+    "enterpriseId": "sheep-mutton",
+    "name": "Meat sheep (Dorper, Damara, indigenous fat-tailed and crossbred)",
+    "animal": "sheep",
+    "animalUnit": "ewe",
+    "product": "meat",
+    "outputUnit": "lambs born per ewe",
+    "outputPerAnimal": {
+      "value": [
+        0.61,
+        1.39
+      ],
+      "source": {
+        "quote": "Lambing percentages averaged 139 ± 38% for the Eden District, 83 ± 15% for the Karoo District, and 61± 12% for the West Coast District.",
+        "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0301-603X2019000300007",
+        "doc": "Factors influencing off-take rates of smallholder sheep farming systems in the Western Cape Province of South Africa (South African Journal of Agricultural Extension, 47(3), 2019)",
+        "page": null
+      },
+      "note": "outputUnit is 'lambs born/ewe/year' rather than the suggested 'kg live weight/lamb at weaning or slaughter' or 'lambs weaned/ewe/year': the source explains 'Measuring accurate lambing percentages for smallholder sheep farmers is challenging as these farmers mostly farm extensively and do not keep records', and instead calculates 'Lambs born per ewe (as recorded from the surveys based on interviews with individual respondents)' - a lambing (born), not weaning, figure, self-reported by smallholder farmers rather than measured/weighed. 139%=1.39, 83%=0.83, 61%=0.61 lambs born/ewe/year; the range [0.61, 1.39] spans the three Western Cape smallholder districts surveyed (Eden, Central Karoo, West Coast), all from this one study/quote - not merged with any other document. The same paper separately states a COMMERCIAL extensive benchmark of 110-156% lambing and 94-132% weaning (Snyman & Herselman, 2005), explicitly 'expressed over ewes joined' (a different denominator/system) - not merged into this smallholder range."
+    },
+    "windows": [],
+    "seasonalPattern": null,
+    "weeksToFirstProduct": null,
+    "productiveLifeYears": null,
+    "feedKgPerDay": null,
+    "waterLPerDay": null,
+    "spaceM2": null,
+    "welfare": [
+      {
+        "point": "Sheep must not be penned overcrowded: at least 0.56 square metres of floor space per sheep so every animal can lie down.",
+        "source": {
+          "quote": "Livestock shall not be penned in overcrowded conditions. ... Penning space provided shall be enough to permit all livestock to lie down at the same time and shall not be less than: ... for bacon and small porker pigs, sheep and goats: 0, 56 sq.m of floor area;",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.1.2",
+          "page": 4
+        }
+      },
+      {
+        "point": "Electric prodders, sticks or goads may not be used on sheep.",
+        "source": {
+          "quote": "Electric prodders, sticks or goads shall not be used on sheep, pigs, horses, mules, donkeys, goats and un-weaned calves.",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.2.7",
+          "page": 5
+        }
+      },
+      {
+        "point": "Sheep driven on the hoof may not be moved more than 20 km in a single day (25 km is regarded as excessive).",
+        "source": {
+          "quote": "during a journey of not more than one day's duration in the case of: a) sheep and goats: 20 Kilometers (25 km is excessive) and;",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.3.4.1",
+          "page": 6
+        }
+      },
+      {
+        "point": "Livestock must be given water and fed as soon as they reach their night camp or final destination.",
+        "source": {
+          "quote": "Livestock shall be watered and fed immediately on reaching their night camp or final",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.3.5",
+          "page": 6
+        }
+      },
+      {
+        "point": "Injured, disabled or blind sheep must be given priority slaughter, or emergency slaughter, to prevent further pain or distress.",
+        "source": {
+          "quote": "Injured, disabled and blind livestock shall be priority slaughtered. If necessary and to prevent further pain or distress, emergency slaughter may be required.",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.2.13",
+          "page": 5
+        }
+      }
+    ],
+    "legal": [
+      {
+        "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act; Veterinary Services enforce isolation and movement restrictions.",
+        "source": {
+          "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+          "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+          "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+          "page": null
+        }
+      },
+      {
+        "point": "Inside a declared FMD zone, sheep and their products cannot be moved into, out of, or within it without a state veterinary permit.",
+        "source": {
+          "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+          "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+          "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+          "page": null
+        }
+      },
+      {
+        "point": "Sheep scab is a controlled disease by law: a suspected or positive case must be reported to the State Veterinarian immediately.",
+        "source": {
+          "quote": "Sheep scab is an extremely infectious disease, and by law, a positive case has to be immediately reported to the local State Veterinarian.",
+          "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+          "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+          "page": 1
+        }
+      },
+      {
+        "point": "Against sheep scab, all small stock on the farm must be treated with a remedy registered under Act 36 of 1947, and infected sheep treated twice, eight to ten days apart.",
+        "source": {
+          "quote": "all small stock on the farm must be treated with a remedy that is registered for a specific breed under Law 36 of 1947. Infected sheep must be treated twice with an interval of eight to ten days.",
+          "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+          "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+          "page": 3
+        }
+      },
+      {
+        "point": "Every sheep owner must register an official identification mark and mark their sheep with it, under the Animal Identification Act.",
+        "source": {
+          "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+          "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+          "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+          "page": 4
+        }
+      },
+      {
+        "point": "A sheep may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+        "source": {
+          "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+          "page": 6
+        }
+      }
+    ]
+  },
+  "sheep-wool": {
+    "enterpriseId": "sheep-wool",
+    "name": "Wool sheep (Merino / Dohne Merino, incl. communal wool growers)",
+    "animal": "sheep",
+    "animalUnit": "sheep",
+    "product": "wool",
+    "outputUnit": "kg greasy wool/sheep/year",
+    "outputPerAnimal": {
+      "value": [
+        4,
+        5
+      ],
+      "source": {
+        "quote": "Average Merino fleece weights vary from 4 kg to 5 kg per year in the semi-arid regions, to up to 8 kg per year from sheep grazing on cultivated pastures.",
+        "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0301-603X2019000400006",
+        "doc": "Assessing Socio-economic Factors Influencing Wool Production in Kolomana Villages of Eastern Cape, South Africa (South African Journal of Agricultural Extension), citing Bot et al., 2004",
+        "page": null
+      },
+      "note": "Semi-arid/extensive-veld range (4-5 kg greasy wool/sheep/year) used as the primary value; the same sentence's 8 kg/year figure is for a different system (sheep grazing CULTIVATED pastures) and is deliberately excluded from the range rather than averaged in. A Western Cape Government (Elsenburg) Dohne Merino Extensive enterprise budget (Ceres-Karoo, 2024) separately reports total flock wool sold as 4439.64 kg from a flock of '1 519' Smallstock Units, i.e. 4439.64/1519 = 2.92 kg per Smallstock Unit/year - not used as the primary value because the source does not state that 1 Smallstock Unit = 1 sheep (SSU is a standardised stock-class weighting, not a literal head count), so converting it to kg/sheep would require an unstated conversion factor. A separate NWGA/Mandela Initiative paper on the Eastern Cape communal Wool Sheep Development Program reports a Grootfontein ADI progeny-test 'Greasy fleece weight (kg) 2.8 [commercial rams] 2.4 [communal rams]' for communal Eastern Cape flocks - not merged into the primary value because that table is explicitly for '6-month old lambs' (a different life stage from a mature sheep's full annual clip), consistent with the rule against mixing figures across life stages; kept here only as EC-communal context: commercial-ram-sired lambs at 6 months averaged 2.8 kg, communal-ram-sired lambs 2.4 kg, a +16% difference."
+    },
+    "windows": [
+      {
+        "region": "South Africa (national wool industry aggregate, all shearing sheds/regions combined)",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "source": {
+          "quote": "The shearing season usually runs from the end of July up to mid-May and falls in line with the selling season, which runs from mid-August to early June.",
+          "url": "https://nwga.co.za/the-abcs-of-wool-processing/",
+          "doc": "National Wool Growers' Association: The ABCs of Wool Processing (article)",
+          "page": null
+        }
+      }
+    ],
+    "seasonalPattern": {
+      "text": "Nationally sheep are shorn from around end-July to mid-May (aggregate across sheds); many farms now shear every 6-8 months rather than once a year.",
+      "source": {
+        "quote": "The shearing season usually runs from the end of July up to mid-May and falls in line with the selling season, which runs from mid-August to early June. ... although some producers still stick to a twelve-month shearing pattern, many are moving to either an eight-month or even a six-month interval in some cases.",
+        "url": "https://nwga.co.za/the-abcs-of-wool-processing/",
+        "doc": "National Wool Growers' Association: The ABCs of Wool Processing (article)",
+        "page": null
+      }
+    },
+    "weeksToFirstProduct": null,
+    "productiveLifeYears": null,
+    "feedKgPerDay": null,
+    "waterLPerDay": null,
+    "spaceM2": null,
+    "welfare": [
+      {
+        "point": "Sheep must not be penned overcrowded: at least 0.56 square metres of floor space per sheep so every animal can lie down.",
+        "source": {
+          "quote": "Livestock shall not be penned in overcrowded conditions. ... Penning space provided shall be enough to permit all livestock to lie down at the same time and shall not be less than: ... for bacon and small porker pigs, sheep and goats: 0, 56 sq.m of floor area;",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.1.2",
+          "page": 4
+        }
+      },
+      {
+        "point": "Electric prodders, sticks or goads may not be used on sheep.",
+        "source": {
+          "quote": "Electric prodders, sticks or goads shall not be used on sheep, pigs, horses, mules, donkeys, goats and un-weaned calves.",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.2.7",
+          "page": 5
+        }
+      },
+      {
+        "point": "Sheep driven on the hoof may not be moved more than 20 km in a single day (25 km is regarded as excessive).",
+        "source": {
+          "quote": "during a journey of not more than one day's duration in the case of: a) sheep and goats: 20 Kilometers (25 km is excessive) and;",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.3.4.1",
+          "page": 6
+        }
+      },
+      {
+        "point": "Injured, disabled or blind sheep must be given priority slaughter, or emergency slaughter, to prevent further pain or distress.",
+        "source": {
+          "quote": "Injured, disabled and blind livestock shall be priority slaughtered. If necessary and to prevent further pain or distress, emergency slaughter may be required.",
+          "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+          "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.2.13",
+          "page": 5
+        }
+      },
+      {
+        "point": "A sheep-scab treatment plan should be in place: the disease carries a high economic and welfare cost.",
+        "source": {
+          "quote": "A treatment plan against sheep scab should be in place because of the high economic and welfare cost of the disease.",
+          "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+          "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+          "page": 3
+        }
+      }
+    ],
+    "legal": [
+      {
+        "point": "Despite foot-and-mouth disease (FMD) in South Africa, wool exports continue under the inactivation clause of the OIE (World Organisation for Animal Health) rules.",
+        "source": {
+          "quote": "The foot and mouth disease (FMD) status for South Africa has not changed and wool exports are continuing under the inactivation clause of the OIE regulations.",
+          "url": "https://www.capewools.co.za/assets/annual_report/20202021annualreport.pdf",
+          "doc": "Cape Wools SA Annual Review 2020/2021",
+          "page": 8
+        }
+      },
+      {
+        "point": "Inside a declared FMD zone, sheep and their products cannot be moved into, out of, or within it without a state veterinary permit.",
+        "source": {
+          "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+          "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+          "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+          "page": null
+        }
+      },
+      {
+        "point": "Sheep scab is a controlled disease by law: a suspected or positive case must be reported to the State Veterinarian immediately.",
+        "source": {
+          "quote": "Sheep scab is an extremely infectious disease, and by law, a positive case has to be immediately reported to the local State Veterinarian.",
+          "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+          "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+          "page": 1
+        }
+      },
+      {
+        "point": "Wool from scab-infected sheep must be destroyed rather than sent to the buyer, where it would be marked as scab wool.",
+        "source": {
+          "quote": "Wool from infected animals must be destroyed rather than send ing it to the buyer (i.e. BKB). If the wool is sent to the buyer, the wool will be marked as scab wool as it is heavier than normal wool.",
+          "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+          "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+          "page": 3
+        }
+      },
+      {
+        "point": "Every sheep owner must register an official identification mark and mark their sheep with it, under the Animal Identification Act.",
+        "source": {
+          "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+          "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+          "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+          "page": 4
+        }
+      },
+      {
+        "point": "A sheep may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+        "source": {
+          "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+          "page": 6
         }
       }
     ]
