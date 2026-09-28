@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', sha: '8f5f454b', changes: [
+  { when: '29 September 2026', sha: '6dd61753', changes: [
     'Soil Health now has 20 silent Sesotho slides paired with their English source.',
     'Draft text is marked unreviewed; held teaching stays in English.',
     'Sesotho Vegetables now has 18 silent, source-paired draft slides.',
