@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '320a50b', changes: [
+    'Animals on your map now shows a picture of each animal, from laying hens to tilapia.',
+    '20 more crops have real pictures, and 5 indigenous fruit trees have their own art.',
+  ], tour: [
+    { title: 'See your animals', where: 'Crop plan → Animals on your map', href: '/facilitator/crops',
+      detail: 'Each choice now shows a small picture, and the animal you pick appears above its figures.' },
+    { title: 'Find the indigenous fruit trees', where: 'Design Studio → Plant Catalog', href: '/design',
+      detail: 'Choose Other Tree in the palette, then look for Jacket plum, Transvaal milkplum, African mangosteen, Sour fig or Spiny monkey orange.' },
+  ] },
   { when: '28 September 2026', sha: '48d93e7c', changes: [
     'Food Forest: 20 silent Xitsonga slides; Vegetables: 18 silent Tshivenda slides.',
     'Draft text pairs with English; uncertain farming guidance remains English.',
