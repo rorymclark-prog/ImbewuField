@@ -52,7 +52,24 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Add a new crop by hand', where: 'Crop plan → Add a crop', href: '/facilitator/crops',
       detail: 'Pick cowpea, bambara groundnut or African nightshade from the crop list and choose the bed and month yourself.' },
   ] },
-  { when: '27 September 2026', sha: 'b668bc6', changes: [
+  { when: '28 September 2026', sha: 'd0a0dec8', changes: [
+    'Introduction has a Sesotho draft voice, with English source available.',
+    'Reading the Landscape adds Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'On portrait phones, full-screen slides keep the narration and exit controls visible.',
+  ], tour: [
+    { title: 'Compare Introduction narration', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho, open the Introduction deck and compare the labelled machine voice with the English source. Some uncertain passages remain in English, and fluent-speaker and local farming review are pending.' },
+    { title: 'Review the regional slide drafts', where: 'Study → Reading the Landscape', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga in the slide selector. Every regional page is marked as an unreviewed draft and keeps the English source beside it. English is the only narration available; fluent-speaker and local farming review are pending.' },
+  ] },
+  { when: '28 September 2026', sha: '3e75bbe6', changes: [
+    'Introduction has more Sesotho and Tshivenda draft slides beside the exact English source.',
+    'The Xitsonga Introduction cover now shows its provisional draft title.',
+  ], tour: [
+    { title: 'Compare the Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho for slides 20–22, Tshivenda for slides 8, 9 and 11–14, or Xitsonga for slide 1. These are AI drafts awaiting facilitator review. Other regional slides may still show English. Sesotho Introduction now also has a draft voice; the other regional recordings remain English.' },
+  ] },
+  { when: '27 September 2026', sha: '040b1e2f', changes: [
     'Few big harvests re-sows each crop after its harvest; too-hot months are skipped.',
     'Irrigation off? A mapped farm now gets a rain-fed plan from its own rainfall.',
     'Plans show each crop’s bed; the calendar and Task Planner follow all your farms.',

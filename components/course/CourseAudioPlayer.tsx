@@ -22,7 +22,7 @@ import {
   type NarrationTrack,
 } from '@/lib/course-audio';
 import { useLanguage } from '@/lib/i18n-context';
-import { narrationReviewPending } from '@/lib/narration-blockers';
+import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
@@ -172,7 +172,9 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                     minHeight: 28,
                   }}
                 >
-                  {langName(code, appLang)}
+                  {regionalNarrationDraft(moduleId, code)
+                    ? `${langName(code, appLang)} AI draft + English`
+                    : langName(code, appLang)}
                 </button>
               );
             })}
@@ -193,6 +195,13 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
           {appLang === 'zu'
             ? 'Lo msindo wesiZulu usalindele ukubuyekezwa ngumuntu olwazi kahle ulimi.'
             : 'This isiZulu narration is awaiting review by a fluent speaker.'}
+        </p>
+      )}
+
+      {regionalNarrationDraft(moduleId, lang) && (
+        <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
+          Unreviewed machine {langName(lang, appLang)} narration with exact English passages.
+          Fluent-speaker, local-farming and listening review are pending.
         </p>
       )}
 

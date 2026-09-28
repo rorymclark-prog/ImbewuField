@@ -68,6 +68,8 @@
 
 .expanded .slideStage {
   position: absolute !important;
+  /* Keep the full-viewport image in its own layer beneath clickable controls. */
+  z-index: 0;
   inset: 0;
   display: flex;
   width: 100%;

@@ -83,8 +83,28 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
   },
 };
 
+/** Regional recordings released as visibly mixed machine drafts for facilitator feedback.
+ * The paired English/target packet and generated clip hashes are checked in tests; this is
+ * publication status, never fluent-speaker or local-farming sign-off. */
+export const REGIONAL_NARRATION_DRAFTS: Readonly<Record<string, {
+  sourcePair: string; sourcePairSha256: string; verificationRecord: string;
+  draftParagraphs: number; englishHolds: number;
+}>> = {
+  'intro-permaculture.st': {
+    sourcePair: 'docs/narration/intro-permaculture.st.paired-draft.json',
+    sourcePairSha256: '50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9',
+    verificationRecord: 'docs/narration-reviews/INTRO-PERMACULTURE-ST-AUDIO-2026-09-28.json',
+    draftParagraphs: 43, englishHolds: 45,
+  },
+};
+
+export function regionalNarrationDraft(moduleId: string, lang: string) {
+  return REGIONAL_NARRATION_DRAFTS[`${moduleId}.${lang}`] ?? null;
+}
+
 export function narrationReviewPending(moduleId: string, lang: string): boolean {
-  return NARRATION_RELEASE_EXCEPTIONS[`${moduleId}.${lang}`]?.reviewStatus === 'pending';
+  return NARRATION_RELEASE_EXCEPTIONS[`${moduleId}.${lang}`]?.reviewStatus === 'pending' ||
+    !!regionalNarrationDraft(moduleId, lang);
 }
 
 /** True when the script says, in its own words, that it still needs a human. */

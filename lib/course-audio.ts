@@ -87,7 +87,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     ],
   },
   'intro-permaculture': {
-    languages: ['en', 'zu'],
+    languages: ['en', 'zu', 'st'],
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
     // The isiZulu draft uses zu-ZA-ThandoNeural at -12%. Slide 22 was rerecorded on 2026-09-25
@@ -98,16 +98,19 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     // NOTE the voice differs from seeds-sovereignty's en-ZA-LeahNeural — the eight modules
     // recorded after this one share Luke, so seeds is the odd one out; Rory decides whether to
     // re-record seeds EN for a single course voice.
+    // The Sesotho track is an unreviewed machine voice with 43 draft and 45 exact-English
+    // paragraphs. Rory asked to publish it for facilitator feedback on 28 September; the
+    // paired text, clip hashes and open listening review are recorded in docs/narration-reviews/.
     tracks: [
-      { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture', titleByLang: { zu: 'Isingeniso Se-Permaculture' } },
-      { slide: 2,  lesson: null,                    title: 'Why This Matters', titleByLang: { zu: 'Kungani Lokhu Kubalulekile' } },
-      { slide: 3,  lesson: null,                    title: 'Learning Outcomes', titleByLang: { zu: 'Imiphumela Yokufunda' } },
-      { slide: 4,  lesson: 'intro-permaculture-l1', title: 'Earth Care', titleByLang: { zu: 'Ukunakekela Umhlaba' } },
-      { slide: 5,  lesson: 'intro-permaculture-l1', title: 'People Care', titleByLang: { zu: 'Ukunakekela Abantu' } },
-      { slide: 6,  lesson: 'intro-permaculture-l1', title: 'Fair Share', titleByLang: { zu: 'Ukwabelana Ngokulinganayo' } },
-      { slide: 7,  lesson: 'intro-permaculture-l1', title: 'Watch: One Decision, Three Ethics', titleByLang: { zu: 'Bheka: Isinqumo Esisodwa, Ama-Ethics Amathathu' } },
+      { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture', titleByLang: { zu: 'Isingeniso Se-Permaculture', st: 'Selelekela sa Permaculture' } },
+      { slide: 2,  lesson: null,                    title: 'Why This Matters', titleByLang: { zu: 'Kungani Lokhu Kubalulekile', st: 'Lebaka Leo Sena se Leng Bohlokwa ka Lona' } },
+      { slide: 3,  lesson: null,                    title: 'Learning Outcomes', titleByLang: { zu: 'Imiphumela Yokufunda', st: 'Dintho Tseo o Tla Kgona ho di Etsa' } },
+      { slide: 4,  lesson: 'intro-permaculture-l1', title: 'Earth Care', titleByLang: { zu: 'Ukunakekela Umhlaba', st: 'Tlhokomelo ya Lefatshe' } },
+      { slide: 5,  lesson: 'intro-permaculture-l1', title: 'People Care', titleByLang: { zu: 'Ukunakekela Abantu', st: 'Tlhokomelo ya Batho' } },
+      { slide: 6,  lesson: 'intro-permaculture-l1', title: 'Fair Share', titleByLang: { zu: 'Ukwabelana Ngokulinganayo', st: 'Karolelano e Lokileng (Fair Share)' } },
+      { slide: 7,  lesson: 'intro-permaculture-l1', title: 'Watch: One Decision, Three Ethics', titleByLang: { zu: 'Bheka: Isinqumo Esisodwa, Ama-Ethics Amathathu', st: 'Shebella: Qeto e le Nngwe, Melao e Meraro ya Boitshwaro' } },
       { slide: 8,  lesson: 'intro-permaculture-l1', title: 'When There Is No Rulebook', titleByLang: { zu: 'Lapho Kungekho Rulebook' } },
-      { slide: 9,  lesson: 'intro-permaculture-l2', title: 'Twelve Principles', titleByLang: { zu: 'Izimiso Eziyishumi Nambili' } },
+      { slide: 9,  lesson: 'intro-permaculture-l2', title: 'Twelve Principles', titleByLang: { zu: 'Izimiso Eziyishumi Nambili', st: 'Melao-motheo e Leshome le Metso e Mmedi' } },
       { slide: 10, lesson: 'intro-permaculture-l2', title: 'Observe and Interact', titleByLang: { zu: 'Bheka Bese Uxhumana Nomhlaba Wakho' } },
       { slide: 11, lesson: 'intro-permaculture-l2', title: 'Catch and Store Energy', titleByLang: { zu: 'Bamba Ugcine Amandla' } },
       { slide: 12, lesson: 'intro-permaculture-l2', title: 'Use Edges and Value the Marginal', titleByLang: { zu: 'Sebenzisa Imiphetho Nezindawo Eziseceleni' } },
@@ -119,8 +122,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside', titleByLang: { zu: 'Ama-Sector: Izinto Ezifika Zivela Ngaphandle' } },
       { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: Shelter Between Wind and Crops', titleByLang: { zu: 'Buka: I-Windbreak Phakathi Komoya Nezitshalo' } },
       { slide: 20, lesson: 'intro-permaculture-l3', title: 'Sketch It And You Have A Design', titleByLang: { zu: 'Dweba Ukuze Uqale Uhlelo' } },
-      { slide: 21, lesson: null,                    title: 'Field Assignment', titleByLang: { zu: 'Umsebenzi Wasensimini' } },
-      { slide: 22, lesson: null,                    title: 'Field Action', titleByLang: { zu: 'Isenzo Sasensimini' } },
+      { slide: 21, lesson: null,                    title: 'Field Assignment', titleByLang: { zu: 'Umsebenzi Wasensimini', st: 'Mosebetsi oa Tšimo.' } },
+      { slide: 22, lesson: null,                    title: 'Field Action', titleByLang: { zu: 'Isenzo Sasensimini', st: 'Ketso ea Tšimo.' } },
     ],
   },
   'reading-landscape': {

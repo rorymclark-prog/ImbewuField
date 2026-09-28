@@ -29,7 +29,7 @@ import { hasDeck, deckFor, deckSlideCount, resolveDeckLang } from '@/lib/course-
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
-import { narrationReviewPending } from '@/lib/narration-blockers';
+import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 import { APP_GUIDES } from '@/lib/course-app-guides';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
 import { resolveCourseModulePresentation } from '@/lib/course-module-translation-drafts';
@@ -278,7 +278,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {t('studentZuluLessonEnglishFallbackNotice')}
             </div>
           )}
-          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {lang === 'st' && moduleId === 'intro-permaculture' ? 'Slides pair Sesotho drafts and English holds with exact English source. Narration remains English.' : 'Slides and narration remain in English.'}</div>}
+          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {lang === 'st' && moduleId === 'intro-permaculture' ? 'Slides and narration pair Sesotho drafts with exact English holds; the English source track is also available.' : 'Slides and narration remain in English.'}</div>}
           {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson, its slides and narration are still in English.</div>}
           {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
           {hasAudio && (
@@ -1174,7 +1174,9 @@ export default function StudentPage() {
                         <div className="flex items-center gap-1">
                           <Headphones size={11} style={{ color: '#1F4D2B' }} />
                           <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>
-                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: English' : t('studentAudio')}
+                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi'
+                              : regionalNarrationDraft(mod.id, lang) ? `Audio: ${{ st: 'Sesotho', ts: 'Xitsonga', ve: 'Tshivenda' }[lang as 'st' | 'ts' | 've']} AI draft + English holds`
+                                : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: English' : t('studentAudio')}
                           </span>
                         </div>
                       )}
@@ -1251,7 +1253,9 @@ export default function StudentPage() {
                     {narrationReviewPending(mod.id, lang) && (
                       <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
                         style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
-                        {t('studentZuluAudioDraftNotice')}
+                        {regionalNarrationDraft(mod.id, lang)
+                          ? `Unreviewed machine ${lang === 'st' ? 'Sesotho' : lang === 've' ? 'Tshivenda' : 'Xitsonga'} narration. Some passages are spoken in exact English for safety and terminology. Fluent-speaker, local-farming and listening review are pending.`
+                          : t('studentZuluAudioDraftNotice')}
                       </p>
                     )}
                     {/* THE LESSON ITSELF, FIRST — not a list of files that add up to one.

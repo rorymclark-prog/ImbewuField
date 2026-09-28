@@ -188,7 +188,7 @@ test('a pack carries whatever the player will actually show, including any fallb
   }
 });
 
-test('Sesotho intro lessons download all paired images and keep English source audio distinct', () => {
+test('Sesotho intro lessons download paired images and their source-bound draft narration', () => {
   const pack = offlinePack('intro-permaculture', 'st');
   assert.deepEqual(pack.missing, [], 'a missing image would only surface after the learner went offline');
   const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
@@ -196,8 +196,13 @@ test('Sesotho intro lessons download all paired images and keep English source a
   assert.ok(slides.includes('/course-decks/intro-permaculture/st/slide-22.webp'));
   assert.ok(!slides.some((url) => url.includes('/course-decks/intro-permaculture/en/')));
   assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
-    entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
-  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')));
+    entry.url === '/course-audio/intro-permaculture/st/slide-04.mp3'));
+  assert.equal(pack.entries.filter((entry) => entry.kind === 'audio' &&
+    entry.url.startsWith('/course-audio/intro-permaculture/st/slide-')).length, 22,
+  'the offline pack carries each distinct slide clip once without redownloading full.mp3');
+  assert.ok(!pack.entries.some((entry) => entry.url.endsWith('/full.mp3')));
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/en/')),
+    'the offline pack should not silently add the English recording when Sesotho was chosen');
 });
 
 test('Sesotho Soil Health entry keeps paired stills and English source narration offline', () => {
