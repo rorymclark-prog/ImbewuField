@@ -73,7 +73,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mvelelo dza Ngudo"
         },
         "body": [
           {
@@ -105,8 +106,7 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Ḓaka ḽa mupo ḽi ḓadza fhethu u bva kha maṱavhi a nṱhesa u swika kha midzi."
+            "status": "english-hold"
           },
           {
             "status": "english-hold"
@@ -116,8 +116,7 @@
             "text": "Ḓaka ḽa zwiḽiwa ḽi edzisa nḓila heyi nga zwimela zwi bveledzaho."
           },
           {
-            "status": "draft",
-            "text": "Mvelelo a si tshiliṅwa tshithihi kha muduba muthihi, fhedzi ndi miṱaṱo minzhi i vhuyedzaho zwi tshi aluwa zwo ṱangana."
+            "status": "english-hold"
           }
         ]
       }
@@ -545,7 +544,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mushumo wa Tsimuni"
         },
         "body": [
           {
