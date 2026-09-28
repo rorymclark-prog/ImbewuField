@@ -75,6 +75,32 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   assert.equal(pairedDraftLanguageLabel('xh'), null);
 });
 
+test('Food Forest Xitsonga slides keep only the recorded concept sentences as drafts', () => {
+  const foodForestSource = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/food-forest.ts.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, foodForestSource, 'ts');
+  assert.equal(packet.reviewStatus, 'unreviewed');
+  assert.equal(slides.length, 20);
+  const drafts = slides.flatMap((slide: any) => [
+    ...(slide.target.heading.status === 'draft' ? [`${slide.n}:heading`] : []),
+    ...slide.target.body.flatMap((part: any, index: number) =>
+      part.status === 'draft' ? [`${slide.n}:body-${index + 1}`] : []),
+  ]);
+  assert.deepEqual(drafts, ['4:body-1', '4:body-2', '8:body-2']);
+  assert.ok(slides.every((slide: any) => slide.target.heading.status === 'english-hold'),
+    'titles remain exact English while their Xitsonga terminology awaits review');
+  for (const slide of slides) {
+    for (const [index, part] of slide.target.body.entries()) {
+      if (part.status === 'english-hold') {
+        assert.equal(part.text, undefined, `slide ${slide.n} paragraph ${index + 1} is an explicit English hold`);
+      }
+    }
+  }
+  assert.ok(slides.filter((slide: any) => slide.n === 7 || slide.n >= 9).every((slide: any) =>
+    slide.target.body.every((part: any) => part.status === 'english-hold')),
+  'species, site, water, legal and field-action slides retain all teaching text in English');
+});
+
 test('regional Introduction drafts stay source-paired while uncertain farming, safety and permission advice stays English', () => {
   for (const lang of ['ve', 'ts']) {
     const packet = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
@@ -247,19 +273,17 @@ test('Xitsonga Market media pairs only the two existing low-risk learner concept
   assert.equal(slides[17].target.body[1].status, 'english-hold');
 });
 
-test('Tshivenda staples media holds quantities and crop claims beside two existing concepts', () => {
+test('Tshivenda staples media holds the unresolved staple placeholder in English', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ve.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 've');
   assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
     .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-    .filter(Boolean)), ['12:1', '14:2']);
-  const concepts = [TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.bodyConcept,
-    TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept];
-  for (const [n, p, concept] of [[12, 1, concepts[0]], [14, 2, concepts[1]]] as const) {
-    assert.equal(slides[n - 1].english.body[p - 1], concept.sourceEnglish);
-    assert.equal(slides[n - 1].target.body[p - 1].text, concept.tshivendaDraft);
-  }
+    .filter(Boolean)), ['14:2']);
+  assert.equal(slides[11].target.body[0].status, 'english-hold',
+    'the literal [staple] placeholder cannot be shown as a learner draft');
+  assert.equal(slides[13].english.body[1], TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.sourceEnglish);
+  assert.equal(slides[13].target.body[1].text, TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.tshivendaDraft);
   assert.equal(slides[11].target.body[3].status, 'english-hold');
   assert.equal(slides[13].target.body[3].status, 'english-hold');
 });
