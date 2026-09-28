@@ -99,7 +99,7 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
   return (
     <div className="mt-3">
       <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
-        <Fact label={`${PRODUCT_LABEL[e.product]} per ${e.animalUnit}`} value={rangeText(e.outputPerAnimal, e.outputUnit)} source={e.outputPerAnimal?.source} />
+        <Fact label={`${e.product === 'fish' ? 'Harvest' : PRODUCT_LABEL[e.product]} per ${e.animalUnit}`} value={rangeText(e.outputPerAnimal, e.outputUnit)} source={e.outputPerAnimal?.source} />
         <Fact label="When" value={months.length ? `${formatMonthSpan(months)}${e.windows.length === 1 ? ` · ${firstWindow.region}` : ' across SA sources'}` : null} source={firstWindow?.source} />
         <Fact label="First product" value={e.weeksToFirstProduct ? formatWeeks(e.weeksToFirstProduct.value) : null} source={e.weeksToFirstProduct?.source} />
         <Fact label="Productive life" value={rangeText(e.productiveLifeYears, 'years')} source={e.productiveLifeYears?.source} />
