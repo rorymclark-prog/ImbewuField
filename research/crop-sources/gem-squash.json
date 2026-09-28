@@ -1,0 +1,124 @@
+{
+  "key": "gem-squash",
+  "name": "Gem Squash",
+  "localNames": null,
+  "botanicalName": "Cucurbita pepo",
+  "family": "Cucurbitaceae",
+  "role": "vegetable",
+  "foodGroup": "fruiting-vegetable",
+  "harvestProduct": "fruit (picked young as 'baby gem' or left to mature)",
+  "frostTender": {
+    "value": true,
+    "evidence": {
+      "quote": "2. Very Tender (very sensitive to low temperatures)\nChili Okra Sweet pepper\nCucumber Pumpkin Sweet potato\nEggplant Squash Vegetable marrow\nLima bean Sweet melon Watermelon",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/climatic_requirements.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Climatic Requirements' (Vegetable Production series), Table 1"
+    },
+    "notes": "Corroborated directly for gem squash: Starke Ayres' Gem Squash Production Guideline states 'They are frost-sensitive and grow best under warm conditions.'"
+  },
+  "transplant": {
+    "value": false,
+    "evidence": {
+      "quote": "Most gem squash is direct-sown, that is the seed is planted directly into the soil.",
+      "url": "https://www.starkeayres.com/uploads/files/Gem-Squash-Production-Guideline-2019.pdf",
+      "page": 2,
+      "doc": "Starke Ayres, 'Gem Squash Production Guideline', 2019"
+    }
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [9, 10, 11, 12, 1],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Cold areas' column"
+      },
+      "notes": "No gem-squash-specific sowing-calendar row exists; the generic 'Cucurbits' row is used as the regional proxy, the same approach already applied to the 'pumpkin' catalog entry."
+    },
+    "winter": {
+      "months": [],
+      "evidence": null
+    },
+    "all-year": {
+      "months": [3, 4, 5, 7, 8, 9, 10],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Hot areas' column"
+      }
+    },
+    "mild-frost": {
+      "months": [8, 9, 10, 11, 12, 1, 2],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Warm areas' column"
+      }
+    }
+  },
+  "daysToHarvestRange": {
+    "value": [50, 80],
+    "evidence": {
+      "quote": "Approximately 50 - 60 days to maturity for Baby Gems, and 70 - 80 days for mature fruit.",
+      "url": "https://www.starkeayres.com/products/vegetables/gem-squash/pinnacle",
+      "page": null,
+      "doc": "Starke Ayres, product page for 'Pinnacle' gem squash hybrid"
+    },
+    "notes": "Range spans picking as immature 'baby gem' (50-60 days) through to mature fruit (70-80 days). A real-farm case study (Starke Ayres news article, Brits, North West) reported first picking '81 days after sowing', slightly above the upper bound, likely reflecting field rather than trial conditions."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": [100, 150],
+  "inRowSpacingRangeCm": [40, 50],
+  "sowDepthRangeCm": [2.0, 3.0],
+  "seedRateKgPerHaRange": [2, 3],
+  "yield": {
+    "tPerHaRange": [12, 30],
+    "product": "fruit",
+    "conditions": "Conservative 12 t/ha, likely 15-18 t/ha, target 25-30 t/ha (KZN); a commercial case study near Brits, North West targeted 'around 30 ton per hectare'",
+    "evidence": {
+      "quote": "Gem squash 12 15 - 18 25 -30",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Expected Yields' (Vegetable Production series), Table 8"
+    }
+  },
+  "ecocrop": {
+    "row": "Cucurbita pepo",
+    "TOPMN": 17,
+    "TOPMX": 30,
+    "TMIN": 6,
+    "TMAX": 40,
+    "GMIN": 40,
+    "GMAX": 100
+  },
+  "coverCrop": false,
+  "varieties": [
+    {
+      "name": "Pinnacle",
+      "supplier": "Starke Ayres",
+      "maturity": "50-60 days (baby gem) / 70-80 days (mature fruit)",
+      "zones": ["lowveld-bushveld"],
+      "notes": "Compact/restricted-habit hybrid with ZYMV and powdery-mildew tolerance; used commercially near Brits, North West in a Starke Ayres case study (direct-seeded from 1 August, ~12,000-13,000 plants/ha, ~30 t/ha target). Company markets it nationally; the lowveld-bushveld tag reflects the case-study region, not an exclusive recommendation."
+    },
+    {
+      "name": "STAR 8001",
+      "supplier": "Starke Ayres",
+      "maturity": null,
+      "zones": [],
+      "notes": "Listed by Starke Ayres as a baby-gem hybrid product; only the name/title was retrievable from a JS-rendered catalogue listing this session, so no maturity or zone claim is made."
+    }
+  ],
+  "zoneNotes": "A Starke Ayres case study near Brits (North West, lowveld-bushveld-type climate) describes the area as having 'short, mild winters with some frost-free areas', allowing direct seeding 'as early as [1] August' with four staggered plantings totalling 52ha between August and October, broadly consistent with the KZN DARD 'Warm areas' Cucurbits window used for the mild-frost pattern above.",
+  "gaps": [
+    "Winter/Western Cape sowMonths not sourced: KZN DARD's sowing calendar is KZN-specific (Cold/Warm/Hot-area columns) and has no Western Cape column, and no Western Cape/Elsenburg-specific cucurbit sowing calendar was found this session. Gem squash is certainly grown in the Western Cape (Starke Ayres' Pinnacle product page references a 'winter production' population figure of 15,000-18,000 plants/ha), so this is recorded as a genuine gap, not an empty array implying the crop isn't grown there.",
+    "Harvest period duration (how many weeks/months a planting keeps producing, as distinct from days-to-first-harvest) is not sourced specifically for gem squash.",
+    "Row/in-row spacing is sourced via KZN DARD's generic 'Squash, trailing' table row rather than a gem-squash-specific spacing trial, following the same regional-proxy approach already used for the catalog's 'pumpkin' entry.",
+    "STAR 8001 variety details (maturity, recommended zones) could not be verified beyond its product name."
+  ],
+  "verdict": "partial",
+  "summary": "Frost tenderness, transplant status, days-to-harvest, row/in-row spacing, seed rate and yield are all sourced (KZN DARD Tables 5/8 plus Starke Ayres' Gem Squash Guideline and Pinnacle product page). Verdict held to 'partial' because winter/Western Cape sowMonths could not be sourced this session."
+}

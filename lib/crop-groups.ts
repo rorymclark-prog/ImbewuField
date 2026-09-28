@@ -78,6 +78,37 @@ export const FOOD_GROUP: Record<string, FoodGroup> = {
   chilli: 'fruiting_veg',
   cucumber: 'fruiting_veg',
   watermelon: 'fruiting_veg',
+
+  // 2026-09-28 batch — see research/crop-sources/<key>.json for citations.
+  amaranth: 'leafy_green',
+  cauliflower: 'leafy_green',
+  parsley: 'allium_aromatic', // herb — grouped with the questionnaire's existing herb/aromatic bucket rather than invent a seventh FoodGroup
+  sorghum: 'staple_grain',
+  soybean: 'legume',
+  brinjal: 'fruiting_veg',
+  'gem-squash': 'fruiting_veg',
+  'baby-marrow': 'fruiting_veg',
+  spanspek: 'fruiting_veg',
+  // Dossier's own foodGroup is "fruiting_veg" (grown/picked like a vegetable
+  // fruit, not milled like maize) — kept as sourced rather than forced into
+  // maize's staple_grain bucket despite the shared species.
+  sweetcorn: 'fruiting_veg',
+  cowpea: 'legume',
+  'bambara-groundnut': 'legume',
+  radish: 'root_tuber',
+  'mung-bean': 'legume',
+  // Dossier's own foodGroup is null (an oilseed fits none of the six
+  // buckets cleanly); mapped to staple_grain as the closest fit for a
+  // dryland grain-like crop rather than defaulting to fruiting_veg.
+  sunflower: 'staple_grain',
+  'spider-plant': 'leafy_green',
+  'african-nightshade': 'leafy_green',
+
+  // Cover crops, not a food harvest — grouped by botanical family only, same
+  // non-food-but-must-have-a-bucket precedent as oats ('staple_grain' above).
+  'sunn-hemp': 'legume', // Fabaceae
+  medic: 'legume', // Fabaceae
+  'fodder-radish': 'root_tuber', // Brassicaceae, same family bucket as radish
 };
 
 export function foodGroupOf(crop: CropDef): FoodGroup {
@@ -104,6 +135,7 @@ export type RotationFamily =
   | 'araceae'
   | 'asteraceae'
   | 'brassicaceae'
+  | 'cleomaceae'
   | 'convolvulaceae'
   | 'cucurbitaceae'
   | 'fabaceae'
@@ -117,6 +149,9 @@ export const ROTATION_FAMILY_META: Record<RotationFamily, { label: string }> = {
   araceae: { label: 'Amadumbe family' },
   asteraceae: { label: 'Lettuce family' },
   brassicaceae: { label: 'Cabbage family' },
+  // Spider-plant (Cleome gynandra) — its own family, not Brassicaceae despite
+  // the superficial resemblance; added 2026-09-28.
+  cleomaceae: { label: 'Spider-plant family' },
   convolvulaceae: { label: 'Sweet-potato family' },
   cucurbitaceae: { label: 'Pumpkin family' },
   fabaceae: { label: 'Bean & pea family' },
@@ -154,6 +189,28 @@ export const ROTATION_FAMILY: Record<string, RotationFamily> = {
   pumpkin: 'cucurbitaceae',
   cucumber: 'cucurbitaceae',
   watermelon: 'cucurbitaceae',
+
+  // 2026-09-28 batch — see research/crop-sources/<key>.json for citations.
+  amaranth: 'amaranthaceae',
+  cauliflower: 'brassicaceae',
+  parsley: 'apiaceae',
+  sorghum: 'poaceae',
+  soybean: 'fabaceae',
+  brinjal: 'solanaceae',
+  'gem-squash': 'cucurbitaceae',
+  'baby-marrow': 'cucurbitaceae',
+  spanspek: 'cucurbitaceae',
+  sweetcorn: 'poaceae',
+  cowpea: 'fabaceae',
+  'bambara-groundnut': 'fabaceae',
+  radish: 'brassicaceae',
+  'mung-bean': 'fabaceae',
+  sunflower: 'asteraceae',
+  'spider-plant': 'cleomaceae',
+  'african-nightshade': 'solanaceae',
+  'sunn-hemp': 'fabaceae',
+  medic: 'fabaceae',
+  'fodder-radish': 'brassicaceae',
 };
 
 export function rotationFamilyOf(crop: CropDef): RotationFamily {

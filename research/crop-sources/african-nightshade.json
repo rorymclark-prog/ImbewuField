@@ -1,0 +1,137 @@
+{
+  "key": "african-nightshade",
+  "name": "African Nightshade",
+  "localNames": {
+    "en": "Black nightshade / sunberry",
+    "af": "Nastergal",
+    "zu": "Umsobo (also umsobo wesinja, umosobosobo)",
+    "ts": "Muxe"
+  },
+  "botanicalName": "Solanum retroflexum Dun. (DAFF guideline species); often marketed/consumed interchangeably with S. scabrum within the wider African nightshade (Solanum L. section Solanum) complex",
+  "family": "Solanaceae",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "fresh leaves and tender shoots (ripe black/purple berries also eaten)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Black nightshade requires optimum temperatures of 20 to 34 ºC. The plant prefers full sunlight, but can grow in partially shaded areas. It is sensitive to frost.",
+        "url": "https://web.archive.org/web/20200721165946/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Production%20Guidelines%20Black%20nightshade.pdf",
+        "page": 3,
+        "doc": "Solanum retroflexum Dun. — Production guidelines, DAFF, February 2013"
+      }
+    ]
+  },
+  "transplant": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "The seedlings are ready for transplanting in four to six weeks when they have 4 to 7 true leaves (10 to15 cm). A spacing of 30 cm by 30 cm is recommended.",
+        "url": "https://web.archive.org/web/20200721165946/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Production%20Guidelines%20Black%20nightshade.pdf",
+        "page": 4,
+        "doc": "Solanum retroflexum Dun. — Production guidelines, DAFF, February 2013"
+      }
+    ],
+    "notes": "Source also allows direct field sowing (rows 15-20cm apart) as an alternative to the nursery/transplant method; the transplant method is the one given a specific final field spacing (30x30cm)."
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [10, 11],
+      "evidence": [
+        {
+          "quote": "Production Schedule — Planting [shaded: October, November]; Harvesting [shaded: December]; Marketing [shaded: January, December]",
+          "url": "https://web.archive.org/web/20200721165946/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Production%20Guidelines%20Black%20nightshade.pdf",
+          "page": 6,
+          "doc": "Solanum retroflexum Dun. — Production guidelines, DAFF, February 2013 (Production Schedule table, read from the shaded cells)"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [28, 28],
+    "evidence": [
+      {
+        "quote": "Harvesting maturity: The crop is ready for harvest 4 weeks from transplanting.",
+        "url": "https://web.archive.org/web/20200721165946/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Production%20Guidelines%20Black%20nightshade.pdf",
+        "page": 4,
+        "doc": "Solanum retroflexum Dun. — Production guidelines, DAFF, February 2013"
+      }
+    ],
+    "notes": "First leaf pick, from transplanting. If sown direct rather than transplanted, adding the source's separately-stated 4-6 week nursery period gives an estimated ~56-70 days from sowing to first harvest, but this total is a derived calculation from two separate figures in the source, not itself a stated number."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "Normally three successive harvests are taken from a planting (WRC/DAFF Production Guidelines for African Leafy Vegetables); the DAFF national schedule shows harvesting/marketing concentrated in Dec-Jan from an Oct-Nov planting.",
+    "evidence": [
+      {
+        "quote": "After you have harvested the plants for the first time, which you should do by cutting the stem about 5 cm above the soil surface, apply LAN again... Repeat the application of LAN... after the second harvest. Normally, three harvests can be obtained.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 30,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12 (Jansen van Rensburg, Van Averbeke, Beletse & Slabbert, 2012, co-published with DAFF)"
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [30, 30],
+    "evidence": [
+      {
+        "quote": "A spacing of 30 cm by 30 cm is recommended.",
+        "url": "https://web.archive.org/web/20200721165946/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Production%20Guidelines%20Black%20nightshade.pdf",
+        "page": 4,
+        "doc": "Solanum retroflexum Dun. — Production guidelines, DAFF, February 2013"
+      }
+    ],
+    "notes": "Alternative direct-sow method: 'Sow the mixture thinly, either by broadcasting or in rows, 15 to 20 cm apart' — no in-row figure given for that method."
+  },
+  "inRowSpacingRangeCm": {
+    "value": [30, 30],
+    "evidence": [
+      {
+        "quote": "A spacing of 30 cm by 30 cm is recommended.",
+        "url": "https://web.archive.org/web/20200721165946/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Production%20Guidelines%20Black%20nightshade.pdf",
+        "page": 4,
+        "doc": "Solanum retroflexum Dun. — Production guidelines, DAFF, February 2013"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": null,
+    "evidence": [],
+    "notes": "Source says only 'cover with a fine layer of soil' — no numeric depth given."
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": null,
+    "product": "fresh leaves",
+    "conditions": null,
+    "evidence": [],
+    "notes": "GAP: no fresh-leaf yield figure (t/ha) found in the DAFF guideline, the WRC/DAFF 'Production Guidelines for African Leafy Vegetables' (TT536/12), or in WebSearch of peer-reviewed SA literature. The DAFF document itself states production levels are unknown ('Statistical data on production levels of black nightshade are not known in South Africa'). A commonly circulated '12 t/ha' figure traces to a non-primary gardening website, not a research/extension source, so it was not used."
+  },
+  "ecocrop": {
+    "row": "Solanum nigrum (proxy — S. retroflexum/scabrum not separately listed in ECOCROP)",
+    "TOPMN": 21,
+    "TOPMX": 28,
+    "TMIN": 8,
+    "TMAX": 40,
+    "GMIN": 80,
+    "GMAX": 110
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {
+    "lowveld-bushveld": "DAFF: 'Black nightshade grows almost anywhere in South Africa, often under marginal conditions' — no zone-specific breakdown given.",
+    "karoo-arid": "No zone-specific data; general statement of wide adaptability only."
+  },
+  "gaps": [
+    "No fresh-leaf yield (t/ha) figure found in any consulted source — flagged above.",
+    "Only one national sowing/harvest window is published (DAFF schedule); no separate data for winter, all-year or mild-frost climate columns.",
+    "Sow depth not quantified.",
+    "No named South African cultivars found; also no ARC-VOPI accession/line names for this species were located in the sources consulted (the ARC's own trial work is referenced only via journal citations we could not access, e.g. Jacoby, Labuschagne & Viljoen 2003 on genetic relationships).",
+    "The brief's dual naming 'Solanum retroflexum / scabrum' is only partly resolved: the DAFF guideline documents S. retroflexum specifically. It cites Mwai, Onyango & Abukutsa-Onyango (2007) on taxonomy of the African nightshade (Solanum L. Section Solanum) complex — which includes S. scabrum — but that paper itself was not accessible in this session, so the exact retroflexum/scabrum relationship is not independently verified here."
+  ],
+  "verdict": "partial",
+  "summary": "DAFF's Feb 2013 Solanum retroflexum guideline plus the WRC/DAFF Production Guidelines for African Leafy Vegetables give solid, consistent data for sowing months, first-harvest timing (4 weeks post-transplant) and 30x30cm spacing. The one major gap is yield — no t/ha figure for fresh leaves could be found in any primary or acceptable secondary source, and South Africa has no registered cultivars for this landrace crop."
+}

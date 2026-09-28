@@ -1,0 +1,172 @@
+{
+  "key": "grazing-vetch",
+  "name": "Grazing Vetch",
+  "localNames": { "af": "weiwieke" },
+  "botanicalName": "Vicia dasycarpa (syn. Vicia villosa ssp. dasycarpa)",
+  "family": "Fabaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "grazing / hay / green manure, killed before pods mature",
+  "frostTender": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Grazing vetch however, is more tolerant of cold winters than other vetches and more suited for grazing.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-18-vetches-vicia-spp/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 18: Vetches, SA Grain/Grain SA (Truter, Dannhauser, Smith & Trytsman), 2019"
+      }
+    ]
+  },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": {
+      "months": [12, 1, 2, 3],
+      "evidence": [
+        {
+          "quote": "The best time to sow vetch is from December to March.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-18-vetches-vicia-spp/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 18: Vetches, SA Grain/Grain SA, 2019"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": {
+      "months": [12, 1, 2, 3],
+      "evidence": [
+        {
+          "quote": "The best time to sow vetch is from December to March.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-18-vetches-vicia-spp/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 18: Vetches, SA Grain/Grain SA, 2019"
+        }
+      ]
+    }
+  },
+  "daysToHarvestRange": {
+    "value": null,
+    "evidence": [
+      {
+        "quote": "Usually vetch is killed during an active growing period, but not later than two weeks before the planting of maize, which is done directly into the mulch.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-18-vetches-vicia-spp/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 18: Vetches, SA Grain/Grain SA, 2019"
+      }
+    ],
+    "notes": "Termination is timed relative to the following maize planting, not a fixed day-count from sowing; no explicit number of days found."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": {
+    "value": [20, 35],
+    "evidence": [
+      {
+        "quote": "When grazing or hairy vetch is sown on its own, a sowing density of 35 kg/ha is recommended.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-18-vetches-vicia-spp/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 18: Vetches, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "Seeding rates for vetches in mixtures range from about 20 kg vetch/ha – 30 kg vetch/ha and 25 kg oats/ha.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-18-vetches-vicia-spp/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 18: Vetches, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "Sowing rate (pure) 20 - 25 kg/ha, Sowing rate (mixture) 7 - 12 kg/ha",
+        "url": "https://barenbrug.co.za/forage/products/vetch/haymaker.htm",
+        "page": null,
+        "doc": "Haymaker | Woolly Pod Vetch product page, Barenbrug South Africa"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [4, 5],
+    "product": "green/dry fodder",
+    "conditions": "dryland wheat-belt rotation, 350-550mm rainfall",
+    "evidence": [
+      {
+        "quote": "Vetches are very nutritious fodder and research conducted by the Hamilton Veterinary Institute has shown that vetches can have the following nutritional value: Crude protein (16% – 28%), digestibility (50% – 82%) and metabolise energy (7 MJ – 11 MJ), and produce yields of between 4 tons/ha – 5 tons/ha.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-18-vetches-vicia-spp/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 18: Vetches, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Vicia villosa ssp. dasycarpa",
+    "TOPMN": 10,
+    "TOPMX": 24,
+    "TMIN": 4,
+    "TMAX": 32,
+    "GMIN": 90,
+    "GMAX": 150
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": 140,
+    "biomassTPerHa": 5,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "Since vetch species are leguminous, nitrogen (N) is fixed and will help meet the needs of the following crop, protect the soil from erosion and improve soil tilth creating a loose and friable soil structure.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-18-vetches-vicia-spp/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 18: Vetches, SA Grain/Grain SA, 2019 (qualitative only, no kg/ha figure given for grazing vetch)"
+      },
+      {
+        "quote": "Hairy Vetch (Vicia villosa) ... They show good N fixation at around 140kg/ha of N.",
+        "url": "https://www.grainsa.co.za/upload/conservation-agriculture/eng/6-CA-manual-Chapter-5-Cover-crops.pdf",
+        "page": 7,
+        "doc": "Conservation Agriculture Manual, Chapter 5: Cover crops, Grain SA, 2016 — NOTE: this 140 kg/ha figure is given for hairy vetch (Vicia villosa), a closely related SA vetch species, not for grazing vetch (Vicia dasycarpa) specifically."
+      }
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Haymaker (Woolly Pod Vetch, Vicia villosa)",
+      "zones": ["highveld", "lowveld-bushveld", "karoo-arid"],
+      "maturity": "mid",
+      "season": null,
+      "note": "\"Haymaker Plus, also referred to as grazing vetch\" in SA seed trade; better adapted to light soils, low-rainfall situations, more winter growth than Namoi, efficient N fixer.",
+      "evidence": [
+        {
+          "quote": "Haymaker Plus, also referred to as grazing vetch, was derived from selections out of Namoi. ... It is well adapted to low rainfall situations and selected for its improved winter growth and dry matter production.",
+          "url": "https://barenbrug.co.za/forage/products/vetch/haymaker.htm",
+          "page": null,
+          "doc": "Haymaker | Woolly Pod Vetch product page, Barenbrug South Africa"
+        }
+      ]
+    },
+    {
+      "name": "Morava (Common Vetch, Vicia sativa)",
+      "zones": ["western-cape", "southern-cape"],
+      "maturity": null,
+      "season": null,
+      "note": "Suitable for green manuring and grazing, areas with average rainfall above 300mm; different species (common vetch) sold as a grazing-vetch alternative.",
+      "evidence": [
+        {
+          "quote": "Replacement for current varieties in areas with average rainfall above 300 mm. Suitable for green manuring and grazing.",
+          "url": "https://barenbrug.co.za/forage/products/vetch/morava.htm",
+          "page": null,
+          "doc": "Morava | Common Vetch product page, Barenbrug South Africa"
+        }
+      ]
+    }
+  ],
+  "zoneNotes": {
+    "western-cape": "Purple vetch is the winter-rainfall type used mainly for silage/hay, not grazing, per Part 18; common vetch (Morava) also sold there.",
+    "highveld": "Vetches commonly grown in dryland wheat production areas; require 350-550mm rainfall/year and soils to be limed if acid."
+  },
+  "gaps": [
+    "No numeric N-fixed (kg/ha) figure specific to grazing vetch (Vicia dasycarpa) was found — the 140 kg/ha figure used is for the closely related hairy vetch (Vicia villosa), flagged in its evidence.",
+    "No row/in-row spacing or sow-depth figures found (vetch is broadcast/drilled at a seeding rate, not grown in defined rows in these sources).",
+    "No explicit days-to-termination count; termination is described relative to the following maize planting date, not sowing date.",
+    "Author's own words: 'Very little production research data is published for South African conditions, making it extremely difficult to rely on international literature and data.'"
+  ],
+  "verdict": "partial",
+  "summary": "Sow window (Dec-Mar) and pure/mixture seed rates (20-35 kg/ha) are directly sourced from Grain SA's Part 18 (Vetches), which explicitly names Vicia dasycarpa as the 'grazing vetch' of SA farming. Yield (4-5 t/ha) is sourced but N-fixation borrows a hairy-vetch figure (flagged); spacing and exact termination timing are gaps, as the source itself notes SA production data for vetches is very limited."
+}

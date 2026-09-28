@@ -1,0 +1,52 @@
+{
+  "key": "watermelon",
+  "varieties": [
+    {
+      "name": "Daytona",
+      "zones": [],
+      "maturity": "early",
+      "season": null,
+      "traits": "Early maturing diploid All Sweet type; vigorous growth habit; 10-12kg fruit; good internal quality",
+      "type": "hybrid",
+      "note": "Sakata F1 hybrid. No SA zone or region stated in the source — only crop traits.",
+      "evidence": [{ "quote": "DAYTONA: Early maturing diploid All Sweet. Vigorous growth habit. 10 - 12 kg fruit. Good internal quality", "url": "https://sakata.co.za/wp-content/uploads/2024/03/Sakata-Product-Brochure-2024-2025.pdf", "page": 26, "doc": "Sakata Seed Southern Africa Product Overview 2024-2025" }]
+    },
+    {
+      "name": "El Capitan",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Excellent yield potential; darker Crimson Sweet rind pattern; very small pip size; very firm flesh",
+      "type": "hybrid",
+      "note": "Sakata F1 hybrid, marked experimental. No zone stated.",
+      "evidence": [{ "quote": "EL CAPITAN*: Excellent yield potential. Darker Crimson Sweet rind pattern. Very small pip size. Very firm flesh", "url": "https://sakata.co.za/wp-content/uploads/2024/03/Sakata-Product-Brochure-2024-2025.pdf", "page": 26, "doc": "Sakata Seed Southern Africa Product Overview 2024-2025" }]
+    },
+    {
+      "name": "Sensei",
+      "zones": [],
+      "maturity": "early",
+      "season": null,
+      "traits": "Early maturing; very firm flesh with excellent flavour; deep red flesh colour; very good tolerance to internal cracking",
+      "type": "hybrid",
+      "note": "Sakata F1 hybrid. No zone stated.",
+      "evidence": [{ "quote": "SENSEI: Early maturing. Very firm flesh with excellent flavour. Deep red flesh colour. Very good tolerance to internal cracking", "url": "https://sakata.co.za/wp-content/uploads/2024/03/Sakata-Product-Brochure-2024-2025.pdf", "page": 26, "doc": "Sakata Seed Southern Africa Product Overview 2024-2025" }]
+    },
+    {
+      "name": "Thunder",
+      "zones": [],
+      "maturity": "early",
+      "season": null,
+      "traits": "Early maturing; very firm flesh with excellent flavour; very high yield potential; excellent internal quality",
+      "type": "hybrid",
+      "note": "Sakata F1 hybrid, marked experimental. No zone stated.",
+      "evidence": [{ "quote": "THUNDER*: Early maturing. Very firm flesh with excellent flavour. Very high yield potential. Excellent internal quality", "url": "https://sakata.co.za/wp-content/uploads/2024/03/Sakata-Product-Brochure-2024-2025.pdf", "page": 26, "doc": "Sakata Seed Southern Africa Product Overview 2024-2025" }]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "No KZN DARD or DAFF production guide specific to watermelon could be located this session — nda.gov.za/dalrrd.gov.za connections failed and no matching KZN DARD filename was found.",
+    "The only source found (Sakata's commercial seed brochure) gives cultivar traits with NO mention of South African regions, provinces or climate zones — every zone in the required output is an honest gap for this crop, not an inference.",
+    "No spacing or yield-per-hectare figures sourced for any named cultivar (only individual fruit weight for Daytona).",
+    "No zone-specific recommendation exists for any of the 8 zones in this file."
+  ]
+}

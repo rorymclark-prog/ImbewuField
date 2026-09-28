@@ -1,0 +1,82 @@
+{
+  "key": "broccoli",
+  "varieties": [
+    {
+      "name": "Green Valiant",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "Possibly the most popular broccoli cultivar in KZN",
+      "type": null,
+      "note": "Zones are this pass's inference: the source's sowing-time table gives broccoli windows for 'cold areas (heavy frost)' Sept-Jan, 'warm areas (light frost)' Jan-Sept, and 'hot areas (frost free)' Feb-June/July, without tying named cultivars to a specific one of those three groups — so all cultivars from this source are given the same broad zone spread rather than an unsupported narrower pick.",
+      "evidence": [{ "quote": "Broccoli\nGreen Valiant is possibly the most popular, but fair-sized plantings of Liberty, Pirate, Star 2201 and Viking are also made.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "COLE CROPS, KZN DARD" }]
+    },
+    {
+      "name": "Liberty",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "Fair-sized commercial plantings in KZN",
+      "type": null,
+      "note": "Same source/zone-inference caveat as Green Valiant.",
+      "evidence": [{ "quote": "Green Valiant is possibly the most popular, but fair-sized plantings of Liberty, Pirate, Star 2201 and Viking are also made.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "COLE CROPS, KZN DARD" }]
+    },
+    {
+      "name": "Pirate",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "Fair-sized commercial plantings in KZN",
+      "type": null,
+      "note": "Same source/zone-inference caveat as Green Valiant.",
+      "evidence": [{ "quote": "Green Valiant is possibly the most popular, but fair-sized plantings of Liberty, Pirate, Star 2201 and Viking are also made.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "COLE CROPS, KZN DARD" }]
+    },
+    {
+      "name": "Star 2201",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "Fair-sized commercial plantings in KZN",
+      "type": "hybrid",
+      "note": "Same source/zone-inference caveat as Green Valiant. 'Star' prefix indicates a Starke Ayres hybrid line.",
+      "evidence": [{ "quote": "Green Valiant is possibly the most popular, but fair-sized plantings of Liberty, Pirate, Star 2201 and Viking are also made.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "COLE CROPS, KZN DARD" }]
+    },
+    {
+      "name": "Viking",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "Fair-sized commercial plantings in KZN",
+      "type": null,
+      "note": "Same source/zone-inference caveat as Green Valiant.",
+      "evidence": [{ "quote": "Green Valiant is possibly the most popular, but fair-sized plantings of Liberty, Pirate, Star 2201 and Viking are also made.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "COLE CROPS, KZN DARD" }]
+    }
+  ],
+  "zoneAdvice": {
+    "highveld": {
+      "text": "Cold, heavy-frost interior: sow September-January.",
+      "evidence": [{ "quote": "Broccoli September - January", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "COLE CROPS, KZN DARD (Table 14, Sowing times)" }]
+    },
+    "high-mountain": {
+      "text": "Treated as the same 'cold areas, heavy frost' group as highveld (Sept-Jan sowing) — not separately confirmed for this specific zone.",
+      "evidence": []
+    },
+    "midlands-mistbelt": {
+      "text": "Warm, light-frost areas: sow January-September (i.e. nearly year-round, avoiding only the depth of a hard-frost window).",
+      "evidence": [{ "quote": "Broccoli January - September", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "COLE CROPS, KZN DARD (Table 14, Sowing times)" }]
+    },
+    "lowveld-bushveld": {
+      "text": "Treated as the same 'warm areas, light frost' group as midlands-mistbelt (Jan-Sept sowing) — not separately confirmed for this specific zone.",
+      "evidence": []
+    },
+    "subtropical-coast": {
+      "text": "Hot, frost-free areas: sow February-June/July.",
+      "evidence": [{ "quote": "Broccoli September - January January - September Feb - June/July", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "COLE CROPS, KZN DARD (Table 14, Sowing times, reading the Broccoli row's three columns: Cold/Warm/Hot areas)" }]
+    }
+  },
+  "gaps": [
+    "No cultivar is tied to a specific one of the three named sowing-time groups (cold/warm/hot) — the source lists the five popular KZN cultivars as a single undifferentiated group, so this pass could not honestly narrow any of them to a subset of zones.",
+    "No sourced recommendation at all for western-cape, southern-cape or karoo-arid.",
+    "No maturity length, spacing or yield figures found tied to any specific named cultivar (the existing crop-catalog.ts general 50-80 day figure is corroborated only in general terms by a separate KZN DARD 'length_of_growing_period' document referenced in search results, which time did not allow fetching and quoting directly this session)."
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "key": "bambara-groundnut",
+  "name": "Bambara Groundnut",
+  "localNames": { "zu": "Indlubu / izindlubu", "st": "Ditloo-marapo", "generic": "Jugo bean" },
+  "botanicalName": "Vigna subterranea (L.) Verdc",
+  "family": "Fabaceae",
+  "role": "food",
+  "foodGroup": "legume",
+  "harvestProduct": "dry seed (underground pod/nut)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "The bambara groundnut is a fast growing plant, which requires warm temperatures and does not tolerate freezing temperatures during the growing season.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+        "page": 11,
+        "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+      }
+    ]
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "The bambara groundnut is propagated by seed.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+        "page": 11,
+        "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [10, 11, 12],
+      "evidence": [
+        {
+          "quote": "It is planted from October to early December after good rainfall.",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+          "page": 12,
+          "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [110, 150],
+    "evidence": [
+      {
+        "quote": "A growth period of 110 to 150 days is required for the crop to develop fully. Plants should be harvested when they turn yellow or wilt or when about 80 % of the pods have matured.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+        "page": 14,
+        "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+      }
+    ],
+    "notes": "Days to pod/seed maturity, not a leaf/vegetable harvest (crop is grown for its underground seed)."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "harvested once at maturity; small plots often harvested over a period of time as pods mature/break off unevenly",
+    "evidence": [
+      {
+        "quote": "Harvesting small plots is often done over a period of time. Bambara pods can break off very easily and up to half of the pods can remain in the soil, requiring collection by hand.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+        "page": 14,
+        "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [45, 90],
+    "evidence": [
+      {
+        "quote": "seed can be planted 2,5 to 3,0 cm deep and 5,0 to 7,5 cm deep in sandy soil, with a recommended spacing of 10 to 15 cm in sin­gle rows of 45 to 90 cm apart",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+        "page": 12,
+        "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [10, 15],
+    "evidence": [
+      {
+        "quote": "a recommended spacing of 10 to 15 cm in single rows of 45 to 90 cm apart",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+        "page": 12,
+        "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": [2.5, 7.5],
+    "evidence": [
+      {
+        "quote": "seed can be planted 2,5 to 3,0 cm deep and 5,0 to 7,5 cm deep in sandy soil",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+        "page": 12,
+        "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+      }
+    ],
+    "notes": "2.5-3.0cm on heavy/moist soil, 5.0-7.5cm on sandy soil."
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": [0.10, 1.4],
+    "product": "dry grain/seed",
+    "conditions": "field trial, 75 Bambara groundnut genotypes across 7 South African environments (incl. Loskop, Brits, Mafikeng), 2020-2021 cropping seasons",
+    "evidence": [
+      {
+        "quote": "Grain yield across environments ranged from 1.4 ton ha-1 for ARC Bamb-68 to 0.10 ton ha-1 for ARC Bamb-74. Genotype ARC Bamb-68 (0.96 ton ha-1), ARC Bamb-9 (0.88 ton ha-1) and ARC Bamb-54 (0.84 ton ha-1) attained the highest grain yield across locations, while ARC Bamb-74 exhibited the lowest grain yield of 0.16 ton ha-1.",
+        "url": "https://researchspace.ukzn.ac.za/items/7bebe189-775e-489d-94fe-e5c4ae1f137a",
+        "page": 2,
+        "doc": "Majola NG. Breeding Bambara Groundnut (Vigna subterranea (L.) Verdc) for Enhanced Yield and Nutritional Quality in South Africa. PhD thesis, African Centre for Crop Improvement, University of KwaZulu-Natal, December 2023"
+      }
+    ],
+    "notes": "1.4 t/ha and 0.10 t/ha are the extreme single-genotype values across the full 75-genotype x 7-environment trial; most named genotypes cluster between 0.16 and 0.96 t/ha. This is markedly higher than the DAFF brochure's single ARC Lowveld Research Unit local-selection note ('MPB51 ... higher yields (2355 kg)', units/area basis not stated in that source) — that figure is left unconverted since its area basis is unclear, and the UKZN thesis figure is used instead as the sourced yield."
+  },
+  "ecocrop": {
+    "row": "Vigna subterranea",
+    "TOPMN": 19,
+    "TOPMX": 30,
+    "TMIN": 16,
+    "TMAX": 38,
+    "GMIN": 90,
+    "GMAX": 180
+  },
+  "coverCrop": null,
+  "varieties": [
+    {
+      "name": "MPB51",
+      "zones": ["lowveld-bushveld"],
+      "maturity": null,
+      "season": null,
+      "note": "ARC Lowveld Research Unit local selection bred for higher yields (2355 kg, unit/basis not specified in source).",
+      "evidence": [
+        {
+          "quote": "Two local variety selection, MPB51 and MPB31 have been developed by the Lowveld Research Unit for higher yields (2355 kg) and high tolerance to A. vogelii respectively.",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+          "page": 13,
+          "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+        }
+      ]
+    },
+    {
+      "name": "MPB31",
+      "zones": ["lowveld-bushveld"],
+      "maturity": null,
+      "season": null,
+      "note": "ARC Lowveld Research Unit local selection bred for high tolerance to the root parasite Alectra vogelii.",
+      "evidence": [
+        {
+          "quote": "Two local variety selection, MPB51 and MPB31 have been developed by the Lowveld Research Unit for higher yields (2355 kg) and high tolerance to A. vogelii respectively.",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+          "page": 13,
+          "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+        }
+      ]
+    },
+    {
+      "name": "Black-seeded landrace type",
+      "zones": [],
+      "maturity": "early",
+      "season": null,
+      "note": "Early maturing, usually small to medium-sized kernels, mainly one-seeded.",
+      "evidence": [
+        {
+          "quote": "Black: Early maturing, usually small to medium-sized kernels. Mainly one-seeded",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+          "page": 8,
+          "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+        }
+      ]
+    },
+    {
+      "name": "Red-seeded landrace type",
+      "zones": [],
+      "maturity": "late",
+      "season": null,
+      "note": "Late maturing, large kernels, good yielder but prone to rotting on site.",
+      "evidence": [
+        {
+          "quote": "Red: Late maturing. Kernels are large. A good yielder, however, it is prone to rotting onsite",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Bambara.pdf",
+          "page": 8,
+          "doc": "Bambara Groundnuts (Vigna subterranea) Production Guideline, DAFF, 2016"
+        }
+      ]
+    }
+  ],
+  "zoneNotes": {
+    "lowveld-bushveld": "Named major production areas: Limpopo (Mopani, Capricorn, Waterberg, Vhembe districts) and Mpumalanga (Ehlanzeni district, where ARC's Lowveld Research Unit is based).",
+    "subtropical-coast": "KwaZulu-Natal areas named: Greytown, Msinga, Nkandla, Nguthuthu, Makhati, Kosibaai, plus minor production in Umzinyathi and Illembe districts.",
+    "highveld": "North West and Gauteng are named as major production areas, but the source does not distinguish highveld frost risk for this crop, which it states 'does not tolerate freezing temperatures' (gap: no explicit highveld guidance beyond the general Oct-early Dec window)."
+  },
+  "gaps": [
+    "No seed rate (kg/ha) given in any source checked.",
+    "Not grown commercially in South Africa per the DAFF source ('The crop is not grown commercially in South Africa... little was known about the optimum agronomic practices for this crop'), so agronomic recommendations are subsistence-level rather than a full commercial package.",
+    "No winter-rainfall (Western Cape), all-year (subtropical coast) or mild-frost specific sowing windows given beyond the single Oct-early Dec national window.",
+    "The 7 landrace seed-colour types are not tied to specific SA growing zones in the source (only stated to be 'location specific' in general).",
+    "The DAFF brochure's own single ARC-selection note ('MPB51 ... higher yields (2355 kg)') has no stated area basis and was not used; yield is instead sourced from a separate, more rigorous UKZN PhD multi-environment trial (75 genotypes x 7 SA sites)."
+  ],
+  "verdict": "ready",
+  "summary": "DAFF's 2016 Bambara Groundnut production guideline gives solid sourcing for climate/frost sensitivity, sowing window, spacing and sowing depth, and days-to-maturity, and documents named local ARC selections (MPB51, MPB31) plus 7 landrace seed-colour types. Yield is now sourced from a 2023 UKZN PhD thesis multi-environment trial (75 genotypes across 7 South African sites): grain yield 0.10-1.4 t/ha, meeting the ready-bar. Seed rate remains unsourced."
+}

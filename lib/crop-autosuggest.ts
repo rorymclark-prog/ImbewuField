@@ -878,6 +878,20 @@ function freshGapGain(
   return freshHarvestMonths(sowMonth, crop)
     .reduce((gain, month) => gain + (1 - (bed?.get(month) ?? 0)), 0);
 }
+/** Fresh months this cohort would add that NO vegetable bed picks yet.
+ * freshGapGain is per bed, so to it every half-empty bed looks like a gap; this
+ * sees the kitchen's calendar instead. Plots are left out — their staples are
+ * field harvests, not the fresh picking the sowing cadence exists for. */
+function gardenFreshGapGain(
+  coverage: FreshCoverage,
+  vegBedIds: readonly string[],
+  crop: CropDef,
+  sowMonth: number,
+): number {
+  return freshHarvestMonths(sowMonth, crop)
+    .filter((month) => !vegBedIds.some((id) => (coverage.get(id)?.get(month) ?? 0) > 0))
+    .length;
+}
 function noteFreshCoverage(
   coverage: FreshCoverage,
   planting: Pick<Planting, 'bedId' | 'cropKey' | 'sowMonth' | 'areaFraction'>,
@@ -940,6 +954,51 @@ function noteCropBed(spread: CropSpread, cropKey: string, bedId: string): void {
 function spreadRank(spread: CropSpread, cropKey: string, bedId: string): number {
   const used = bedsUsedBy(spread, cropKey);
   return used + (spread.get(cropKey)?.has(bedId) ? 0 : 1);
+}
+
+/**
+ * GARDEN-WIDE MONOCULTURE CAP (2026-09-28 audit, Ubhejane repro): spreadRank
+ * above is a tiebreak only — "once every fitting chosen crop has had a
+ * chance, a useful repeat still beats falsely declaring the space
+ * impossible" — and that was exactly the hole. Cabbage, lettuce and carrots
+ * each carry a near-year-round mild-frost sow window, so every one of the
+ * three closing passes (backfillWinterGaps, ensureSowingCadence,
+ * fillRemainingGaps) kept finding them the best-scoring fit for one more
+ * empty bed, pass after pass, until they held 7-9 of 9 shared beds between
+ * them — a diamondback-moth-friendly brassica in nearly every bed, not a
+ * rotation. This is a genuine ceiling, not a preference: half of the
+ * garden's shared VEG beds, rounded up (a plot follows its own one-course-
+ * per-plot-per-season rule already and is never subject to this). A crop
+ * already at the cap may still repeat on a bed it already holds — that is a
+ * further course on its own ground, not new spread. The cap is skipped
+ * entirely when it would leave a bed with NO legal candidate at all: an
+ * honestly-disclosed rest is fine, but never a plan that goes quiet because
+ * every candidate for a slot happened to already be at its cap.
+ */
+function exceedsGardenSpreadCap(spread: CropSpread, cropKey: string, bedId: string, capBeds: number): boolean {
+  if (spread.get(cropKey)?.has(bedId)) return false;
+  return bedsUsedBy(spread, cropKey) >= capBeds;
+}
+
+/** Half of the garden's shared veg beds, rounded up — plots run their own
+ * one-course-per-plot rule and never count here. See exceedsGardenSpreadCap. */
+function gardenSpreadCapFor(beds: readonly PlanBed[]): number {
+  return Math.max(1, Math.ceil(beds.filter((b) => b.kind !== 'plot').length / 2));
+}
+
+/** Apply the garden-wide cap to a bed's candidate list, but never let it empty
+ * the list outright — a bed with no legal candidate at all falls back to
+ * every candidate the cap would otherwise have excluded, so an honest "still
+ * resting" note is the worst outcome, never a silent gap. */
+function applyGardenSpreadCap<T extends { crop: CropDef }>(
+  candidates: readonly T[],
+  bed: PlanBed,
+  spread: CropSpread,
+  capBeds: number,
+): T[] {
+  if (bed.kind === 'plot') return [...candidates];
+  const uncapped = candidates.filter((c) => !exceedsGardenSpreadCap(spread, c.crop.key, bed.id, capBeds));
+  return uncapped.length ? uncapped : [...candidates];
 }
 
 /** Fraction ladder for a bed. A plot (field-scale rotation unit) takes ONE crop at FULL area — never a half or a third; that is what distinguishes it from a shared veg bed. */
@@ -1475,6 +1534,35 @@ function planSuccession(
    * placement may JOIN (same sowing month, another bed or share) — that makes
    * the one harvest bigger rather than adding a second, staggered one. */
   joinSowOffset = -1,
+  /**
+   * MONOCULTURE BRAKE (2026-09-28 audit, Ubhejane repro): a crop whose regional
+   * sow calendar spans nearly all 12 months as one cluster (cabbage's
+   * mild-frost column, KZN DARD Table 6) used to round-robin every cohort
+   * across every bed handed to it — with mixed-bed sharing on, that IS every
+   * shared bed in the garden, so one crop alone filled 8-9 of 9 beds
+   * year-round and every other selected crop lost the diversity fight before
+   * it even got a turn. This caps how many DISTINCT beds a single call may
+   * open to a crop's successive cohorts: half of the beds it was offered,
+   * rounded up (so a lone crop with the whole garden to itself is unaffected —
+   * half of a one-crop pool's beds is still every bed once occupancy allows
+   * reuse — while a crop sharing the garden cannot crowd out the rest). A
+   * cohort beyond the cap may still land on a bed this same call already
+   * claimed — that is a further course on ground it already holds, not new
+   * spread — it simply may not open further NEW ground. Defaults to no cap
+   * (every caller but the family breadth-first pass is unaffected).
+   */
+  spreadCapBeds = bedsForCrop.length,
+  /**
+   * WINTER ROUTE GUARD (2026-09-28, batch-1 catalog crops): a cohort that would
+   * leave one of the bed's still-bare winter months with nothing left that could
+   * ever fit there is steered to another bed first. Adding gem squash and
+   * sweetcorn to the catalog let two February cohorts fill Bed 7's April-May
+   * beside its tomatoes — the space the only June-covering option (a turnip
+   * sown in April) needed — so a light-frost garden that had covered every
+   * winter bed went bare in June. Soft: when every bed fails the guard the
+   * cohort still lands wherever it fits, exactly as before. Omitted = no guard.
+   */
+  keepsWinterReachable?: (bed: PlanBed, sowMonth: number, share: number) => boolean,
 ): SuccessionOutcome {
   const clusters = clusterSowMonths(sowMonthsOf(crop, pattern));
   // THE choke point for automatic place compatibility. Every allocation route
@@ -1482,6 +1570,7 @@ function planSuccession(
   // gap-fill pass.
   bedsForCrop = bedsForCrop.filter((bed) => supportsAutomaticPlacement(crop, bed));
   if (!clusters.length || !bedsForCrop.length) return { plantings: [], status: 'NO_WINDOW' };
+  const bedSpreadCap = Math.max(1, Math.min(bedsForCrop.length, spreadCapBeds));
 
   let nearestCluster = clusters[0];
   let nearest = nearestEntry(nowMonth, clusters[0].months);
@@ -1505,18 +1594,38 @@ function planSuccession(
   // was silently under-using capacity whenever there were fewer beds than
   // the crop's own succession cap, even when a bed would free up in time.
   const nearestWindowMonths = nearestCluster.months.slice(startIdx);
+  // HEAT PREFERENCE (2026-09-28 audit, Ubhejane repro): the climate gate
+  // already drops a sow month outright once its growing months breach the
+  // crop's ECOCROP absoluteMax (sowMonthsOf, above) — a sow month can only
+  // reach here 'ok'. Between optimalMax and absoluteMax the gate is
+  // deliberately advisory (monthsAboveOptimum), never exclusionary, because
+  // growth slows rather than fails. But "advisory" should still mean the
+  // planner reaches for a cooler legal month FIRST when one is available —
+  // it should not sow lettuce's transplant into a Jan-Mar window or nursery
+  // cabbage into December while a cooler 'ok' month sits unused elsewhere in
+  // the same window. A stable sort keeps every month's relative
+  // (nearest-first / chronological) order EXCEPT for reordering a
+  // heat-flagged month behind a non-flagged one — so a crop with no site
+  // temperature data, or whose whole window is equally flagged (or equally
+  // clear), sees no change at all.
+  const gateForHeatOrder = activeClimateGate;
+  const aboveOptimum = (sowMonth: number): boolean => gateForHeatOrder !== null
+    && monthsAboveOptimum(crop, fieldMonthsOf(crop, sowMonth), gateForHeatOrder).length > 0;
+  const preferCoolerMonths = (months: readonly number[]): number[] => gateForHeatOrder
+    ? [...months].sort((a, b) => Number(aboveOptimum(a)) - Number(aboveOptimum(b)))
+    : [...months];
   // "Few big" asks for one successful cohort, not one attempt. If an observed
   // crop already occupies every remaining month in the current sow window,
   // stopping after the nearest blocked month turns a legal later-season crop
   // into an empty plan. Probe the rest of the twelve-month horizon in real
   // chronological order and stop as soon as the one requested cohort fits.
   const sowMonthsToTry = rhythm === 'few-big'
-    ? [...new Set(clusters.flatMap((cluster) => cluster.months))]
+    ? preferCoolerMonths([...new Set(clusters.flatMap((cluster) => cluster.months))]
       .filter((month) => monthsForward(nowMonth, month) <= PLAN_HORIZON_MONTHS
         && (monthsForward(nowMonth, month) > sowAfterOffset
           || monthsForward(nowMonth, month) === joinSowOffset))
-      .sort((a, b) => monthsForward(nowMonth, a) - monthsForward(nowMonth, b))
-    : nearestWindowMonths.slice(0, cap);
+      .sort((a, b) => monthsForward(nowMonth, a) - monthsForward(nowMonth, b)))
+    : preferCoolerMonths(nearestWindowMonths).slice(0, cap);
   const numBatches = Math.min(sowMonthsToTry.length, cap);
 
   // A whole-bed crop with more than one batch claiming the FULL bed per
@@ -1575,11 +1684,24 @@ function planSuccession(
   }
 
   let bedCursor = rotation.nextIndex(bedsForCrop);
+  const bedsClaimedThisCall = new Set<string>();
   for (const sowMonth of sowMonthsToTry) {
     if (plantings.length >= numBatches) break;
     let placed = false;
+    // Guarded sweep first, then the unguarded one — see keepsWinterReachable.
+    for (const guarded of keepsWinterReachable ? [true, false] : [false]) {
+    if (placed) break;
     for (let i = 0; i < bedsForCrop.length; i++) {
         const bed = bedsForCrop[(bedCursor + i) % bedsForCrop.length];
+        // MONOCULTURE BRAKE — see spreadCapBeds above. Once this crop already
+        // holds as many distinct beds as its cap allows, a further cohort may
+        // only land on ground it already holds (a later course on the same
+        // bed), never open a bed no cohort of this call has touched yet —
+        // that ground stays free for the next crop in the queue.
+        if (!bedsClaimedThisCall.has(bed.id) && bedsClaimedThisCall.size >= bedSpreadCap) {
+          blockedBy = combineBlock(blockedBy, 'space');
+          continue;
+        }
         if (rotation.repeats(bed.id, crop, sowMonth)) {
           blockedBy = combineBlock(blockedBy, 'rotation');
           continue;
@@ -1592,6 +1714,10 @@ function planSuccession(
         // knows nothing about what is already in the bed, which is where most
         // of a big site's unplantable strips came from.
         const share = usableShare(occupancy, bed, sowMonth, crop, perBatchFraction, 1, true);
+        if (share !== null && guarded && !keepsWinterReachable!(bed, sowMonth, share)) {
+          blockedBy = combineBlock(blockedBy, 'space');
+          continue;
+        }
         if (share !== null) {
           occupancy.add(bed.id, sowMonth, crop, share);
           const areaFraction = share < 1 ? share : undefined;
@@ -1603,11 +1729,13 @@ function planSuccession(
             areaFraction,
           });
           rotation.recordUse(bed.id, crop, sowMonth);
+          bedsClaimedThisCall.add(bed.id);
           bedCursor = (bedCursor + i + 1) % bedsForCrop.length;
           placed = true;
           break;
         }
         blockedBy = combineBlock(blockedBy, 'space');
+    }
     }
   }
   return plantings.length < numBatches
@@ -1662,7 +1790,37 @@ function runFamilyBreadthFirst(
   // viable choices; later gap passes can still add legal successions. This is
   // an allocation guard, not an agronomic area prescription.
   const wholeBedQuota = Math.max(1, Math.ceil(sharedBeds.length / Math.max(1, queuedCropCount)));
+  // MONOCULTURE BRAKE (see planSuccession's spreadCapBeds) — mixed-bed mode
+  // hands every crop the FULL sharedBeds list (that's the whole point of
+  // sharing), so without a separate cap here a crop whose sow window spans
+  // most of the year could open every one of those beds in its one call,
+  // leaving nothing for the rest of the queue. Half the shared beds, rounded
+  // up, mirrors wholeBedQuota's own "fair share of the garden" reasoning
+  // without shrinking to 1 the moment several crops are requested — a lone
+  // crop with the whole garden to itself is unaffected (occupancy still lets
+  // it reuse a bed it already holds for a later course), while a garden of
+  // several crops keeps at least half its beds free for the rest of the
+  // queue after any one crop's turn. Whole-bed mode already gets its fair
+  // share up front via wholeBedQuota, so it passes its own bed count through
+  // unchanged rather than being capped a second time.
+  const mixedBedSpreadCap = Math.max(1, Math.ceil(sharedBeds.length / 2));
   const followOnOrder: CropDef[] = [];
+  // See planSuccession's keepsWinterReachable. Occupancy only — rotation is
+  // left to the later passes, so this never refuses ground on a guess about
+  // which family will be legal there.
+  const keepsWinterReachableFor = (crop: CropDef) => (bed: PlanBed, sowMonth: number, share: number): boolean => {
+    const bare = WINTER_MONTHS.filter((m) => occupancy.fractionAt(bed.id, m) === 0);
+    if (!bare.length) return true;
+    const smallest = Math.min(...fractionPresetsFor(bed));
+    occupancy.add(bed.id, sowMonth, crop, share);
+    try {
+      return bare.every((m) => occupancy.fractionAt(bed.id, m) > 0
+        || reachingCandidates(pool, pattern, nowMonth, m).some((c) => supportsAutomaticPlacement(c.crop, bed)
+          && occupancy.fits(bed.id, c.sowMonth, c.crop, smallest)));
+    } finally {
+      occupancy.add(bed.id, sowMonth, crop, -share);
+    }
+  };
 
   // Every crop in the farmer's exact list gets a chance. The old loop converted
   // household headcount into an arbitrary 1/2/3-round budget (and then ran one
@@ -1693,6 +1851,11 @@ function runFamilyBreadthFirst(
         sharedFraction,
         rotation,
         allowMixedCropsInBed,
+        false,
+        -1,
+        -1,
+        allowMixedCropsInBed ? mixedBedSpreadCap : bedsForCrop.length,
+        keepsWinterReachableFor(crop),
       );
       if (outcome.status === 'NO_WINDOW') continue;
       plantings.push(...outcome.plantings);
@@ -1713,14 +1876,19 @@ function runFamilyBreadthFirst(
       for (const crop of followOnOrder) {
         const after = lastHoldOffsetOf(nowMonth, crop, plantings);
         const wholeBed = !allowMixedCropsInBed || sharedBeds.length === 1;
-        const bedsForCrop = allowMixedCropsInBed
-          ? sharedBeds
-          : Array.from({ length: Math.min(wholeBedQuota, sharedBeds.length) }, (_, index) =>
-            sharedBeds[(rotation.nextIndex(sharedBeds) + index) % sharedBeds.length]);
+        // Every shared bed, not the first round's wholeBedQuota slice: that quota
+        // shares out FIRST cohorts fairly, and few-big still places one cohort per
+        // call. Offering one bed here let a newly catalogued crop's first cohort
+        // (brinjal, 2026-09-28) take green beans' only offered bed and strand its
+        // second sowing while other beds stood empty.
+        const bedsForCrop = Array.from({ length: sharedBeds.length }, (_, index) =>
+          sharedBeds[(rotation.nextIndex(sharedBeds) + index) % sharedBeds.length]);
         const outcome = planSuccession(
           crop, pattern, bedsForCrop, occupancy, nowMonth, wholeBed, rhythm,
           sharedFraction, rotation, allowMixedCropsInBed, false, after,
           latestSowOffsetOf(nowMonth, crop, plantings),
+          allowMixedCropsInBed ? mixedBedSpreadCap : bedsForCrop.length,
+          keepsWinterReachableFor(crop),
         );
         plantings.push(...outcome.plantings);
         addedThisRound += outcome.plantings.length;
@@ -2084,6 +2252,7 @@ function backfillWinterGaps(
   // bridger on most of its beds, and twenty near-identical sentences buried
   // the notes that actually needed reading (2026-08-19 audit).
   const bridged: { bed: PlanBed; cropName: string; sowMonth: number; fraction: number }[] = [];
+  const gardenSpreadCapBeds = gardenSpreadCapFor(beds);
 
   for (const bed of beds) {
     if (!WINTER_MONTHS.every((mo) => occupancy.fractionAt(bed.id, mo) === 0)) continue;
@@ -2099,11 +2268,15 @@ function backfillWinterGaps(
     const bridgePool = bed.kind === 'plot'
       ? poolForBed(bed, pool, true, plotsWithCourse, strictCropKeys)
       : pool;
-    const candidates = bridgePool
-      .flatMap((crop) => winterCoveringSowMonths(crop, pattern, nowMonth).map((sowMonth) => ({ crop, sowMonth })))
-      .filter((x) => supportsAutomaticPlacement(x.crop, bed))
-      .filter((x) => occupancy.fits(bed.id, x.sowMonth, x.crop, 1))
-      .sort((a, b) =>
+    const candidates = applyGardenSpreadCap(
+      bridgePool
+        .flatMap((crop) => winterCoveringSowMonths(crop, pattern, nowMonth).map((sowMonth) => ({ crop, sowMonth })))
+        .filter((x) => supportsAutomaticPlacement(x.crop, bed))
+        .filter((x) => occupancy.fits(bed.id, x.sowMonth, x.crop, 1)),
+      bed,
+      spread,
+      gardenSpreadCapBeds,
+    ).sort((a, b) =>
         // On a PLOT the winter slot belongs to the cover crop, ahead of everything else.
         // Without this a staple wins the bridge on score — potato took the May slot on
         // three of four plots — and the plot's own tuber course is then spent before the
@@ -2727,16 +2900,39 @@ function ensureSowingCadence(
   sowCounts: SowCounts,
   spread: CropSpread,
   supportedMonths: ReadonlySet<number>,
+  freshCoverage: FreshCoverage,
 ): { plantings: Planting[] } {
   const plantings: Planting[] = [];
   const bedEligiblePool = allowVinesInBeds ? pool : pool.filter((c) => !isSpaceHungry(c));
+  const gardenSpreadCapBeds = gardenSpreadCapFor(beds);
+  const vegBedIds = beds.filter((b) => b.kind !== 'plot').map((b) => b.id);
+  type CadenceCandidate = { bed: PlanBed; crop: CropDef; fraction: number; freeAtM: number; spread: number; freshGap: number };
+  // FRESH GAP after spread (2026-09-28): with the batch-1 catalog crops, a
+  // mild-frost family garden's January cadence sowing went to kale (picked in
+  // July, already covered) over broccoli (picked in June, when nothing else
+  // was) purely on share and score, and the plan lost its only June harvest.
+  const preferCandidate = (current: CadenceCandidate | null, candidate: CadenceCandidate): CadenceCandidate => {
+    if (!current) return candidate;
+    const betterWithinSameGap = candidate.fraction > current.fraction
+      || (candidate.fraction === current.fraction && (candidate.freeAtM > current.freeAtM
+        || (candidate.freeAtM === current.freeAtM && commercialScore(candidate.crop) > commercialScore(current.crop))));
+    const betterWithinSameSpread = candidate.freshGap > current.freshGap
+      || (candidate.freshGap === current.freshGap && betterWithinSameGap);
+    return candidate.spread < current.spread || (candidate.spread === current.spread && betterWithinSameSpread)
+      ? candidate
+      : current;
+  };
 
   for (let i = 0; i < 12; i++) {
     const m = wrapMonth(nowMonth + i);
     if (!supportedMonths.has(m)) continue;
     if (sowCountAt(sowCounts, m) > 0) continue;
 
-    let best: { bed: PlanBed; crop: CropDef; fraction: number; freeAtM: number; spread: number } | null = null;
+    // GARDEN-WIDE MONOCULTURE CAP (see exceedsGardenSpreadCap): tracked
+    // alongside the uncapped best so a month never goes silently unsown just
+    // because every fitting crop happened to already be at its cap.
+    let best: CadenceCandidate | null = null;
+    let bestUncapped: CadenceCandidate | null = null;
     for (const bed of beds) {
       // PLOTS SIT THIS PASS OUT ENTIRELY. Monthly sowing cadence is a VEG-BED idea —
       // it exists so the kitchen has something coming in every month. A staple plot is
@@ -2769,32 +2965,42 @@ function ensureSowingCadence(
           // prospective number of beds is compared directly, and a sole viable crop
           // can still be used wherever it fits.
           const spreadHere = spreadRank(spread, crop.key, bed.id);
-          const betterWithinSameSpread = best
-            ? fraction > best.fraction
-              || (fraction === best.fraction && (freeAtM > best.freeAtM
-                || (freeAtM === best.freeAtM && commercialScore(crop) > commercialScore(best.crop))))
-            : false;
-          if (!best || spreadHere < best.spread || (spreadHere === best.spread && betterWithinSameSpread)) {
-            best = { bed, crop, fraction, freeAtM, spread: spreadHere };
+          const candidate: CadenceCandidate = {
+            bed, crop, fraction, freeAtM, spread: spreadHere,
+            freshGap: gardenFreshGapGain(freshCoverage, vegBedIds, crop, m),
+          };
+          bestUncapped = preferCandidate(bestUncapped, candidate);
+          // GARDEN-WIDE MONOCULTURE CAP: this pass runs once a month across all
+          // twelve months, so it is exactly the loop that let cabbage keep
+          // claiming one more bed every month even after the initial family
+          // pass was capped. Skip a crop that is already at its garden-wide bed
+          // cap for the capped tracker; bestUncapped above guarantees the month
+          // still gets sown (falling back to an over-cap crop) if literally
+          // nothing else can fill it.
+          if (!exceedsGardenSpreadCap(spread, crop.key, bed.id, gardenSpreadCapBeds)) {
+            best = preferCandidate(best, candidate);
           }
           break; // biggest fitting fraction for this (bed, crop) found — no need to shrink further
         }
       }
     }
-    if (!best) continue;
+    const chosen = best ?? bestUncapped;
+    if (!chosen) continue;
 
-    occupancy.add(best.bed.id, m, best.crop, best.fraction);
-    rotation.recordUse(best.bed.id, best.crop, m);
+    occupancy.add(chosen.bed.id, m, chosen.crop, chosen.fraction);
+    rotation.recordUse(chosen.bed.id, chosen.crop, m);
     bumpSow(sowCounts, m);
-    noteCropBed(spread, best.crop.key, best.bed.id);
-    const areaFraction = best.fraction < 1 ? best.fraction : undefined;
-    plantings.push({
-      id: plantingId(best.bed.id, best.crop.key, m, areaFraction),
-      bedId: best.bed.id,
-      cropKey: best.crop.key,
+    noteCropBed(spread, chosen.crop.key, chosen.bed.id);
+    const areaFraction = chosen.fraction < 1 ? chosen.fraction : undefined;
+    const planting: Planting = {
+      id: plantingId(chosen.bed.id, chosen.crop.key, m, areaFraction),
+      bedId: chosen.bed.id,
+      cropKey: chosen.crop.key,
       sowMonth: m,
       areaFraction,
-    });
+    };
+    plantings.push(planting);
+    noteFreshCoverage(freshCoverage, planting);
   }
   return { plantings };
 }
@@ -2908,6 +3114,13 @@ function fillRemainingGaps(
   // left to offer (a real farm can end up growing one thing all year
   // otherwise, in a small-garden/narrow-selection case).
   const lastCropByBed = new Map<string, string>();
+  // GARDEN-WIDE MONOCULTURE CAP (see exceedsGardenSpreadCap): this is the LAST
+  // of the three closing passes, and it places more plantings than either of
+  // the other two, so leaving it uncapped let a wide-window crop (cabbage,
+  // lettuce, carrots) pick up the one or two beds the earlier passes' caps
+  // had denied it. spreadRank below is still a tiebreak among legal
+  // candidates; this is the hard ceiling on top of it.
+  const gardenSpreadCapBeds = gardenSpreadCapFor(beds);
 
   for (const bed of beds) {
     // A plot draws only from the staples (poolForBed) — the vine it wants IS a staple
@@ -3010,10 +3223,12 @@ function fillRemainingGaps(
         || (commercialScore(b.crop) - commercialScore(a.crop))
         || (a.startGap - b.startGap)
         || a.crop.key.localeCompare(b.crop.key);
-      const tryFractions = (avoidSlivers: boolean): typeof chosen => {
+      const tryFractions = (avoidSlivers: boolean, respectCap: boolean): typeof chosen => {
         for (const fraction of fractionPresetsFor(bed)) {
           const fitting = reaching
             .filter((c) => occupancy.fits(bed.id, c.sowMonth, c.crop, fraction))
+            .filter((c) => !respectCap || bed.kind === 'plot'
+              || !exceedsGardenSpreadCap(spread, c.crop.key, bed.id, gardenSpreadCapBeds))
             .sort(preferenceRank);
           if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
 
@@ -3080,7 +3295,11 @@ function fillRemainingGaps(
         return null;
       };
 
-      chosen = tryFractions(true) ?? tryFractions(false);
+      // Cap respected first (both sliver preferences), then — only if that
+      // leaves nothing — fall back to over-cap so a fillable month is never
+      // left bare just because every reaching crop is already at its cap.
+      chosen = tryFractions(true, true) ?? tryFractions(false, true)
+        ?? tryFractions(true, false) ?? tryFractions(false, false);
 
       if (!chosen) { stuckMonths.add(gapMonth); continue; } // this month can't be filled — remember it, keep trying the bed's OTHER gaps
 
@@ -3745,7 +3964,7 @@ function autoSuggestPlanUnderGate(
   if (answers.rhythm === 'steady') {
     // One spread tally, seeded before the winter bridge and shared by every
     // closing pass so they cannot independently over-use one crop.
-    const cadenceResult = ensureSowingCadence(closingPool, beds, occupancy, pattern, nowMonth, rotation, answers.allowVinesInBeds, sowCounts, spread, supportedMonths);
+    const cadenceResult = ensureSowingCadence(closingPool, beds, occupancy, pattern, nowMonth, rotation, answers.allowVinesInBeds, sowCounts, spread, supportedMonths, tallyFreshCoverage([...usableExistingPlantings, ...added]));
     added.push(...cadenceResult.plantings);
     const gapResult = fillRemainingGaps(
       closingPool,

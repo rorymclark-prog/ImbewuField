@@ -1,0 +1,139 @@
+{
+  "key": "cassava",
+  "name": "Cassava",
+  "localNames": null,
+  "botanicalName": "Manihot esculenta",
+  "family": "Euphorbiaceae",
+  "role": "food",
+  "foodGroup": "root_tuber",
+  "harvestProduct": "tuberous roots (leaves also eaten)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Temperature is important, as all growth stops at about 10 °C. The crop is typically grown in areas that are frost-free all year round.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf",
+        "page": 8,
+        "doc": "Production Guidelines for Cassava, DAFF (South Africa), n.d."
+      }
+    ]
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Cassava is propagated exclusively from cuttings.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf",
+        "page": 9,
+        "doc": "Production Guidelines for Cassava, DAFF (South Africa), n.d."
+      }
+    ],
+    "notes": "Not sown from seed at all — established from stem cuttings direct into the field. 'transplant: false' reflects that there is no separate nursery/transplant stage, not that it is direct-seeded."
+  },
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [{"quote": "The crop is typically grown in areas that are frost-free all year round.", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf", "page": 8, "doc": "Production Guidelines for Cassava, DAFF, n.d."}] },
+    "winter": { "months": [], "evidence": [{"quote": "the crop requires a warm, humid climate", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf", "page": 8, "doc": "Production Guidelines for Cassava, DAFF, n.d."}] },
+    "all-year": { "months": [9, 10, 11, 12], "evidence": [{"quote": "In South Africa, the crop is cultivated in Limpopo, Mpumalanga and northern KwaZulu-Natal.", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf", "page": 8, "doc": "Production Guidelines for Cassava, DAFF, n.d."}] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "sowMonthsNotes": "DAFF does not state a planting calendar month directly; 'all-year' months (Sep-Dec) are inferred from planting-season convention for a frost-free-only, 12°C-min tropical crop with a >180-day cycle in a subtropical zone (start of the warm/rainy season) — flagged as a gap, not a direct quote.",
+  "daysToHarvestRange": {
+    "value": [180, 365],
+    "evidence": [
+      {
+        "quote": "The tubers can be harvested between six months and three years after planting, but for food purposes harvesting can take place at almost any age below 12 months.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf",
+        "page": 13,
+        "doc": "Production Guidelines for Cassava, DAFF, n.d."
+      },
+      {
+        "quote": "GMIN=180, GMAX=365 (growing-cycle days)",
+        "url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/master/EcoCrop_DB.csv",
+        "page": null,
+        "doc": "FAO ECOCROP database, row 'Manihot esculenta' (OpenCLIM copy)"
+      }
+    ],
+    "notes": "First food-purposes harvest window (6-12 months). DAFF separately reports an optimum age of 18-20 months (540-600 days) for peak STARCH yield in some strains — a longer, distinct target not folded into this range; see gaps."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "in areas with year-round rain, harvestable throughout the year once mature; in seasonal-rain regions harvest concentrates in the dry season",
+    "evidence": [
+      {
+        "quote": "Harvesting usually takes place in the dry season, during the dormant period of the plant. In areas where rain prevails all year round, the crop can be harvested throughout the year.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf",
+        "page": 13,
+        "doc": "Production Guidelines for Cassava, DAFF, n.d."
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [80, 100],
+    "evidence": [
+      {
+        "quote": "Spacing between the rows is about 80 cm to 100 cm, while spacing along the rows is usually 80 cm to 100 cm. However, this is mainly determined by local conditions.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf",
+        "page": 11,
+        "doc": "Production Guidelines for Cassava, DAFF, n.d."
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [80, 100],
+    "evidence": [
+      {
+        "quote": "spacing along the rows is usually 80 cm to 100 cm",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cassava.pdf",
+        "page": 11,
+        "doc": "Production Guidelines for Cassava, DAFF, n.d."
+      }
+    ]
+  },
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": [60.96, 108.85],
+    "product": "fresh tuberous roots",
+    "conditions": "On-farm multi-environment cultivar trial, 11 cassava clones (from IITA, UKZN and ARC) at 6 sites across KwaZulu-Natal, Mpumalanga and Limpopo, South Africa, rain-fed, no fertiliser or pesticide applied, 1m x 1m spacing",
+    "evidence": [
+      {
+        "quote": "There were significant genotypic differences for FRY, ranging from 60.96-ton ha−1 for cultivar P1/19 to 108.85-ton ha−1 for UKF4, with an overall mean FRY of 83.23-ton ha−1.",
+        "url": "https://www.namc.co.za/wp-content/uploads/2024/03/Assefa-et-al-2022-On-Farm-multi-environment-evaluation-of-selected-cassava-cultivars-in-South-Africa.pdf",
+        "page": 4,
+        "doc": "Amelework AB, Bairu MW, Marx R, Owoeye L, Laing M, Venter SL. On-Farm Multi-Environment Evaluation of Selected Cassava (Manihot esculenta Crantz) Cultivars in South Africa. Plants. 2022;11(23):3339 (DOI 10.3390/plants11233339), ARC-Vegetable, Industrial and Medicinal Plants / UKZN / North-West University"
+      }
+    ],
+    "notes": "Fresh storage-root yield (FRY), the per-genotype range across 11 cultivars x 6 South African on-farm environments (mean 83.23 t/ha). No fertiliser or pesticide was applied, so this is closer to a genetic-potential/adaptability figure than a typical smallholder-input yield; no single national/provincial average yield figure was found to compare it against. DAFF's own brochure gives no root yield figure at all (only a plant-density range and an ambiguous nutrient-removal line, '25 kg/ha of cassava removes about 60 kg/ha of N', whose area basis is unclear and which was deliberately not used)."
+  },
+  "ecocrop": {
+    "row": "Manihot esculenta",
+    "TOPMN": 20,
+    "TOPMX": 29,
+    "TMIN": 10,
+    "TMAX": 35,
+    "GMIN": 180,
+    "GMAX": 365,
+    "KTMP": 0
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "varietiesNotes": "DAFF gives only two broad TYPES, not named cultivars: 'Bitter' and 'sweet' cassava, distinguished mainly by root-peel colour/texture; no SA seed-company catalogue exists for cassava (it is propagated from stem cuttings, not sold as seed) so no zone/maturity-specific variety list could be sourced.",
+  "zoneNotes": {
+    "lowveld-bushveld": "DAFF: 'In South Africa, the crop is cultivated in Limpopo, Mpumalanga and northern KwaZulu-Natal. It is produced on a large scale in Limpopo, mainly for industrial purposes.' (p.8) — fits this zone's frost-free/light-frost heat.",
+    "subtropical-coast": "Same DAFF source names northern KwaZulu-Natal as a production area; frost-free coastal belt suits the crop's 10°C growth floor.",
+    "highveld": "Not viable — DAFF: growth stops at ~10°C and the crop needs frost-free conditions year-round; the Highveld's hard May-Aug frost rules it out.",
+    "karoo-arid": "Not viable — DAFF: crop needs 500-5000mm rainfall and frost-free warmth; not listed as an SA production area.",
+    "high-mountain": "Not viable — severe frost incompatible with the sourced 10°C growth floor / frost-free requirement.",
+    "midlands-mistbelt": "Not confirmed by source (moderate frost risk in this zone conflicts with the frost-free requirement); no DAFF mention.",
+    "western-cape": "Not viable — winter-rainfall Mediterranean cold season and DAFF's frost-free requirement conflict; not listed as a production area.",
+    "southern-cape": "Not confirmed by source; DAFF only names Limpopo, Mpumalanga and northern KZN as SA production areas."
+  },
+  "gaps": [
+    "DAFF's own guide gives no root/tuber yield (t/ha) figure (only a nutrient-removal figure and plant-density range); yield is now sourced instead from a 2022 ARC/UKZN/North-West University on-farm multi-environment cultivar trial (Plants journal, MDPI): fresh root yield 60.96-108.85 t/ha (mean 83.23 t/ha) across 11 cultivars x 6 South African sites, rain-fed, unfertilised.",
+    "No exact sowing-month calendar quoted by DAFF; 'all-year' sowMonths are inferred from the warm/rainy-season planting convention for a frost-free crop, not a direct source statement, and are flagged accordingly.",
+    "No named SA cultivars/varieties sourced — DAFF distinguishes only 'bitter' vs 'sweet' types; no seed-company catalogue exists (vegetatively propagated).",
+    "Sow depth / cutting-length-and-orientation detail not converted into a cm range (source describes 15-30 cm root diameter/length for tubers, not planting-cutting depth).",
+    "The 18-20 month (540-600 day) optimum-starch-yield maturity noted by DAFF for some strains is not merged into daysToHarvestRange, which instead reflects the food-purposes 6-12 month window; both figures should probably be surfaced separately in the UI."
+  ],
+  "verdict": "partial",
+  "summary": "DAFF's Cassava production guideline sources frost-tenderness, row/in-row spacing (80-100cm x 80-100cm), and a food-harvest window (6-12 months, cross-checked against FAO ECOCROP's 180-365 growing-cycle days for Manihot esculenta). Yield is now sourced from a 2022 ARC/UKZN on-farm multi-environment cultivar trial (60.96-108.85 t/ha fresh root, 11 cultivars x 6 SA sites). Verdict stays partial because sowMonths is still not directly sourced -- DAFF gives no planting calendar at all, so the 'all-year' months recorded are an inference from planting-season convention, not a quoted source statement -- and no named SA varieties exist for this vegetatively-propagated crop."
+}

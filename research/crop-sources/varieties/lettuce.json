@@ -1,0 +1,135 @@
+{
+  "key": "lettuce",
+  "varieties": [
+    {
+      "name": "Heat-tolerant / bolt-resistant type",
+      "zones": [],
+      "maturity": null,
+      "season": "Summer sowings",
+      "traits": "Bolt resistance for summer",
+      "type": null,
+      "note": "Kept from the existing crop-catalog.ts entry (previously uncited generic advice). Now cross-verified and made concrete below by Brigadier (Starke Ayres) and the KZN DARD warm/hot-area cultivar groups, which name the actual heat-tolerant varieties this generic note was gesturing at.",
+      "evidence": [{ "quote": "Look for a variety specifically marketed as bolt-resistant for summer — 'triple red' and similar red-leaf types are noticeably more heat-susceptible, so save those for cooler-season sowings instead.", "url": null, "page": null, "doc": "Existing ImbewuField lib/crop-catalog.ts lettuce entry" }]
+    },
+    {
+      "name": "Del Rio",
+      "zones": ["highveld", "high-mountain"],
+      "maturity": null,
+      "season": null,
+      "traits": "Relatively cold-tolerant crisphead type",
+      "type": null,
+      "note": "Zones inferred from 'cold areas (heavy frost)' sowing-time group in the same source, not stated verbatim for this cultivar by name.",
+      "evidence": [{ "quote": "Cultivars such as Del Rio, Del Oro, Frosty, Wintercrisp and Winter Supreme are relatively cold-tolerant, whereas Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold and Victory are better-adapted to warmer conditions.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 2, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    {
+      "name": "Del Oro",
+      "zones": ["highveld", "high-mountain"],
+      "maturity": null,
+      "season": null,
+      "traits": "Relatively cold-tolerant crisphead type",
+      "type": null,
+      "note": "Same source/quote as Del Rio.",
+      "evidence": [{ "quote": "Cultivars such as Del Rio, Del Oro, Frosty, Wintercrisp and Winter Supreme are relatively cold-tolerant, whereas Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold and Victory are better-adapted to warmer conditions.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 2, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    {
+      "name": "Frosty",
+      "zones": ["highveld", "high-mountain"],
+      "maturity": null,
+      "season": null,
+      "traits": "Relatively cold-tolerant crisphead type",
+      "type": null,
+      "note": "Same source/quote as Del Rio.",
+      "evidence": [{ "quote": "Cultivars such as Del Rio, Del Oro, Frosty, Wintercrisp and Winter Supreme are relatively cold-tolerant, whereas Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold and Victory are better-adapted to warmer conditions.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 2, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    {
+      "name": "Wintercrisp",
+      "zones": ["highveld", "high-mountain"],
+      "maturity": null,
+      "season": null,
+      "traits": "Relatively cold-tolerant crisphead type",
+      "type": null,
+      "note": "Same source/quote as Del Rio.",
+      "evidence": [{ "quote": "Cultivars such as Del Rio, Del Oro, Frosty, Wintercrisp and Winter Supreme are relatively cold-tolerant, whereas Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold and Victory are better-adapted to warmer conditions.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 2, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    {
+      "name": "Winter Supreme",
+      "zones": ["highveld", "high-mountain"],
+      "maturity": null,
+      "season": null,
+      "traits": "Relatively cold-tolerant crisphead type",
+      "type": null,
+      "note": "Same source/quote as Del Rio.",
+      "evidence": [{ "quote": "Cultivars such as Del Rio, Del Oro, Frosty, Wintercrisp and Winter Supreme are relatively cold-tolerant, whereas Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold and Victory are better-adapted to warmer conditions.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 2, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    {
+      "name": "Aviram",
+      "zones": ["lowveld-bushveld", "subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "Crisphead type better-adapted to warmer conditions",
+      "type": null,
+      "note": "Zones inferred from 'warm/hot areas' sowing-time groups in the same source; cultivar itself not tied verbatim to a named zone.",
+      "evidence": [{ "quote": "Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold and Victory are better-adapted to warmer conditions.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 2, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    {
+      "name": "Tropical Emperor",
+      "zones": ["lowveld-bushveld", "subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "Crisphead type better-adapted to warmer conditions",
+      "type": null,
+      "note": "Same source/quote as Aviram.",
+      "evidence": [{ "quote": "Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold and Victory are better-adapted to warmer conditions.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 2, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    {
+      "name": "Summer Gold",
+      "zones": ["lowveld-bushveld", "subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "Crisphead type better-adapted to warmer conditions",
+      "type": null,
+      "note": "Same source/quote as Aviram.",
+      "evidence": [{ "quote": "Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold and Victory are better-adapted to warmer conditions.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 2, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    {
+      "name": "Brigadier",
+      "zones": ["lowveld-bushveld", "subtropical-coast", "karoo-arid"],
+      "maturity": "medium",
+      "season": "Summer harvest; 55-60 days from transplant",
+      "traits": "Fusarium race 1 & 2 resistance; excellent heat tolerance; reduced ribbing; medium-large 550-800g heads; good head formation under warm conditions",
+      "type": "hybrid",
+      "note": "Directly matches and upgrades the existing catalog's uncited 'heat-tolerant / bolt-resistant' note with a named, current commercial product. Zones are this pass's inference for 'warm conditions', not the source's own zone list.",
+      "evidence": [
+        { "quote": "A Fusarium-resistant lettuce with excellent heat tolerance for the pre-pack market. Summer harvest. Resistance to Fusarium race 1 and 2 with excellent heat tolerance", "url": "https://www.starkeayres.com/products/commercial-farming-seed/lettuce-crisphead-iceberg/brigadier", "page": null, "doc": "Brigadier Lettuce Seeds, Starke Ayres product page" },
+        { "quote": "Maturity 55 - 60 days from transplant... Excellent heat tolerance... 550 - 800g head with reduced ribbing and a flat base... Good head formation under warm conditions", "url": "https://www.starkeayres.com/products/commercial-farming-seed/lettuce-crisphead-iceberg/brigadier", "page": null, "doc": "Brigadier Lettuce Seeds, Starke Ayres product page" }
+      ]
+    }
+  ],
+  "zoneAdvice": {
+    "highveld": {
+      "text": "Cold, heavy-frost interior — sow Jan-Apr and Jul-Dec; favour cold-tolerant crisphead types (Del Rio, Del Oro, Frosty, Wintercrisp, Winter Supreme).",
+      "evidence": [{ "quote": "Cold areas (heavy frost) Jan - Apr, Jul - Dec", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 1, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    "high-mountain": {
+      "text": "Extrapolated from the same 'cold areas, heavy frost' sowing group as highveld — not separately confirmed for this specific zone.",
+      "evidence": []
+    },
+    "midlands-mistbelt": {
+      "text": "Treated as a 'warm areas (light frost)' zone, sow all year; no cultivar-name-to-zone mapping found beyond the general cold/warm cultivar split.",
+      "evidence": [{ "quote": "Warm areas (light frost) All year", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 1, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    "lowveld-bushveld": {
+      "text": "Hot, frost-free areas sow Feb-Aug/Sept; favour warm-adapted crisphead types (Aviram, Commander, Tropical Emperor, Empire 2000, Summer Gold, Victory) or a marketed heat-tolerant hybrid like Brigadier.",
+      "evidence": [{ "quote": "Hot areas (no frost) Feb - Aug/Sept", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/lettuce.pdf", "page": 1, "doc": "LETTUCE INTRODUCTION, KZN DARD" }]
+    },
+    "subtropical-coast": {
+      "text": "Extrapolated from the same 'hot areas, no frost' sowing group as lowveld-bushveld — not separately confirmed for this specific zone.",
+      "evidence": []
+    }
+  },
+  "gaps": [
+    "No sourced cultivar-zone data at all for western-cape, southern-cape or karoo-arid — Brigadier's zone assignment above is this pass's own inference from its heat-tolerance claim, not a source-stated zone.",
+    "Cultivar-to-zone links for the KZN DARD cold/warm groups are inferred by this pass from the document's separate 'sowing times by frost category' table — the source does not itself state 'Del Rio is for highveld', only that it is 'cold-tolerant'.",
+    "No row/in-row spacing-to-zone or yield-to-zone breakdown found; spacing (250-350mm x 350-450mm) and plant population (60,000-100,000/ha) are sourced but zone-agnostic in the KZN document."
+  ]
+}

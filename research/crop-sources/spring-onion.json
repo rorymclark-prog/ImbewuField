@@ -1,0 +1,92 @@
+{
+  "key": "spring-onion",
+  "name": "Spring onion",
+  "localNames": null,
+  "botanicalName": "Allium fistulosum (also sold in SA as young-harvested Allium cepa)",
+  "family": "Amaryllidaceae (Alliaceae)",
+  "role": "food",
+  "foodGroup": "allium_aromatic",
+  "harvestProduct": "whole young plant (leaves and unswollen/lightly-swollen stem), sold in bunches",
+  "botanicalNameNotes": "No dedicated SA government or KZN DARD document for spring/bunching onion was found in this research pass. KZN DARD's general 'Onion' chapter (for bulb onion, Allium cepa) notes: 'A small portion of the crop is sometimes harvested when the bulbs are sufficiently sized and are marketed as green onions, usually in bunches.' (kzndard.gov.za, Onion, p.4) — i.e. in SA commercial practice 'spring onion'/'green onion' is often just an early-pulled bulb-onion crop, not a separate botanical species. A Starke Ayres home-garden catalogue separately sells a distinct 'Broad-leaved spring onion... Perennial' product, consistent with true non-bulbing Allium fistulosum (Welsh onion). Both usages exist in the SA market; this file could not determine which one the source data actually describes for most fields, and treats the two as separate lines of evidence.",
+  "frostTender": null,
+  "frostTenderNotes": "Not addressed by any source found for this crop specifically.",
+  "transplant": null,
+  "transplantNotes": "Not established. Bulb-onion-type spring onion would typically be direct-sown or transplanted like table onion (both practiced per KZN DARD's 'Onion' chapter); a true perennial bunching type (Allium fistulosum) is usually direct-sown or division-propagated. No source distinguishes practice for a 'spring onion' product specifically.",
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [], "notes": "No primary source found. Left empty rather than substituting the general bulb-onion calendar (KZN 'Plant Establishment' Table 6: Onion — Cold areas Feb-Mar) for a distinct crop." },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": null,
+    "evidence": [],
+    "notes": "No primary source found. A Starke Ayres home-garden catalogue gives 75-95 days for an unnamed 'Broad-leaved spring onion' and 90 days for 'Slender Star' — recorded here as context only, not as the sourced value, per the brief's rule that seed catalogues are not an acceptable sole source for a number (quote: 'DAYS TO MATURITY: 75-95' / 'DAYS TO MATURITY: 90', Starke Ayres Seed & Garden Care Catalogue, First Edition, p.24-25)."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": null,
+    "evidence": [],
+    "notes": "No primary source found for spring onion specifically. KZN DARD's bulb-onion spacing (Rows 200-300mm, Plant 60-80mm — 'Plant Establishment' Table 5, p.5) is not substituted here since spring onion is typically grown at closer spacing than a bulb crop; recorded as a gap."
+  },
+  "inRowSpacingRangeCm": { "value": null, "evidence": [], "notes": "See rowSpacingRangeCm notes — no primary source found." },
+  "sowDepthRangeCm": { "value": null, "evidence": [], "notes": "No primary source found." },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": null,
+    "product": "bunched young plants",
+    "conditions": null,
+    "evidence": [],
+    "notes": "KZN DARD's 'Onion' chapter states 'Yields can vary from about 15 to over 40 tons per hectare' (p.4) for the bulb crop — not usable for a bunched, immature-harvest product sold by the bunch rather than by mass in the same way. No yield figure specific to spring/bunching onion was found. Recorded as a gap."
+  },
+  "ecocrop": {
+    "row": "Allium fistulosum",
+    "TOPMN": 12,
+    "TOPMX": 25,
+    "TMIN": 6,
+    "TMAX": 30,
+    "GMIN": 60,
+    "GMAX": 160,
+    "KTMP": null
+  },
+  "ecocropNotes": "EcoCrop_DB.csv also has an 'Allium cepa' row (TOPMN 12, TOPMX 25, TMIN 4, TMAX 30, GMIN 85, GMAX 175) which would apply instead if the crop in practice is a young-harvested bulb onion rather than true Allium fistulosum. Both are recorded here; the Allium fistulosum row was chosen as primary since it is the closer botanical match to a true non-bulbing 'spring onion'.",
+  "coverCrop": null,
+  "varieties": [
+    {
+      "name": "Slender Star",
+      "zones": null,
+      "maturity": "medium",
+      "season": "Autumn & Winter",
+      "note": "Bunching-style spring onion with a mild flavour.",
+      "evidence": [{"quote": "Bunching-style spring onion with a mild flavour. SOWING SEASON: Autumn & Winter DAYS TO GERMINATION 10-12 DAYS TO MATURITY: 90 SOW DEPTH: 1cm", "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf", "page": 24, "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition"}]
+    },
+    {
+      "name": "Broad-leaved spring onion (cultivar name not resolvable from extracted text)",
+      "zones": null,
+      "maturity": "medium",
+      "season": "Spring, Summer, Autumn & Winter",
+      "note": "Broad-leaved spring onion with mild garlic flavour. Perennial — consistent with true Allium fistulosum (Welsh/bunching onion) rather than a young-harvested bulb-onion cultivar.",
+      "evidence": [{"quote": "Broad-leaved spring onion with mild garlic flavour. Perennial. SOWING SEASON: Spring, Summer, Autumn & Winter DAYS TO GERMINATION 10-15 DAYS TO MATURITY: 75-95 SOW DEPTH: 5mm", "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf", "page": 24, "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition"}]
+    }
+  ],
+  "varietiesNotes": "Zones left null for both cultivars — the catalogue gives only a generic season claim, not SA regional recommendations, and no other source distinguishes these two products by growing region. The two cultivars' differing season claims (one year-round, one Autumn/Winter-only) were not reconciled into a single crop-level sowMonths calendar because they may represent genuinely different botanical products (see botanicalNameNotes).",
+  "zoneNotes": {
+    "highveld": "Not confirmed by any source found for this crop.",
+    "lowveld-bushveld": "Not confirmed by any source found.",
+    "subtropical-coast": "Not confirmed by any source found.",
+    "midlands-mistbelt": "Not confirmed by any source found.",
+    "western-cape": "Not confirmed by any source found.",
+    "southern-cape": "Not confirmed by any source found.",
+    "karoo-arid": "Not confirmed by any source found.",
+    "high-mountain": "Not confirmed by any source found."
+  },
+  "gaps": [
+    "No dedicated SA government, provincial or ARC production guideline for spring/bunching onion was located — this is the weakest-sourced crop in this batch.",
+    "Ambiguity over whether 'spring onion' in the SA smallholder/retail context means a distinct Allium fistulosum crop or an early-pulled Allium cepa (bulb onion) crop was not resolved by any source found; both are documented as existing.",
+    "sowMonths, daysToHarvestRange, row/in-row spacing, sow depth, seed rate and yield are all unsourced from a primary/official document; only two seed-catalogue variety listings (Starke Ayres) were found, which per the brief cannot be used as the sole source for these numeric fields.",
+    "No zone-specific information found for any of the 8 SA growing zones.",
+    "frostTender and transplant practice are both unconfirmed."
+  ],
+  "verdict": "unsourced",
+  "summary": "No DAFF, ARC or KZN DARD production guideline dedicated to spring/bunching onion was found despite multiple targeted searches; KZN's general Onion chapter only notes in passing that bulb onion is sometimes pulled young and bunched as 'green onions'. The only concrete finds were two Starke Ayres home-garden seed-catalogue listings ('Slender Star' and an unnamed 'broad-leaved' perennial type) giving season and approximate days-to-maturity, which under the brief's sourcing rules cannot stand in for the core sourced numeric fields. All agronomic fields (sowMonths, spacing, yield, days-to-harvest) are recorded as gaps."
+}

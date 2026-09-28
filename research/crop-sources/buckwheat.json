@@ -1,0 +1,67 @@
+{
+  "key": "buckwheat",
+  "name": "Buckwheat",
+  "localNames": null,
+  "botanicalName": "Fagopyrum esculentum",
+  "family": "Polygonaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "green manure / pollinator cover, killed before seed shatter",
+  "frostTender": { "value": null, "evidence": [] },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [] },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": { "value": null, "evidence": [], "notes": "No SA-specific source with a day-count to flowering/termination was found; only the FAO ECOCROP generic growing-cycle range below." },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": {
+    "value": [50, 50],
+    "evidence": [
+      {
+        "quote": "Seeding rate 50kg/ha",
+        "url": "https://barenbrug.co.za/cover-crops/products/buckwheat",
+        "page": null,
+        "doc": "Buckwheat product page, Barenbrug South Africa"
+      }
+    ]
+  },
+  "yield": null,
+  "ecocrop": {
+    "row": "Fagopyrum esculentum",
+    "TOPMN": 17,
+    "TOPMX": 27,
+    "TMIN": 7,
+    "TMAX": 40,
+    "GMIN": 55,
+    "GMAX": 85
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": null,
+    "biomassTPerHa": null,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "Buckwheat is a valuable cover crop known for its rapid growth. It is often employed to suppress summer annual weeds and enhance soil quality within short windows, particularly between warm-season crops or during the transitional phases between winter and summer annuals.",
+        "url": "https://barenbrug.co.za/cover-crops/products/buckwheat",
+        "page": null,
+        "doc": "Buckwheat product page, Barenbrug South Africa"
+      }
+    ]
+  },
+  "varieties": [],
+  "zoneNotes": {},
+  "gaps": [
+    "No SA sow-month/calendar window found — only a qualitative description of use as a fast 'gap filler' between warm- and cool-season crops.",
+    "No row/in-row spacing or sow-depth figures found.",
+    "No SA-specific biomass, yield, or days-to-termination figures found. General cover-crop guides (e.g. SARE, Johnny's Selected Seeds, eOrganic) give '4-5 weeks to flower, 10-12 weeks to maturity' but these are US/general gardening sources, not on the brief's acceptable list, and were only seen as search-summary text, never opened and quoted, so they are excluded per the no-invented-numbers rule.",
+    "Only one commercial SA source (Barenbrug) was found for buckwheat at all; Agricol/Advance Seed/Du Toit Agri searches returned nothing buckwheat-specific."
+  ],
+  "verdict": "unsourced",
+  "summary": "Only a seed rate (50 kg/ha, Barenbrug) and the FAO ECOCROP climate envelope could be substantiated from an acceptable source. Sow months, spacing, biomass, yield and days-to-termination are all gaps — no DAFF/ARC/Grain SA/FAO/scielo document treating buckwheat as an SA cover crop was located."
+}

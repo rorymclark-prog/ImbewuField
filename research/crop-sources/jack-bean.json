@@ -1,0 +1,61 @@
+{
+  "key": "jack-bean",
+  "name": "Jack Bean",
+  "localNames": null,
+  "botanicalName": "Canavalia ensiformis",
+  "family": "Fabaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "green manure / fodder biomass",
+  "frostTender": { "value": null, "evidence": [] },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [] },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": { "value": null, "evidence": [], "notes": "No SA-specific or FAO/ARC source with a day-count was found; only ECOCROP's generic growing-cycle range (see ecocrop.GMIN/GMAX below)." },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": [3, 5],
+    "product": "dry matter (fodder/green-manure biomass)",
+    "conditions": "sub-humid sub-tropics; figure is a GROUP average, not species-specific",
+    "evidence": [
+      {
+        "quote": "Annual legumes (Cowpea, Lablab, Velvet bean, Jack bean): 3 – 5 t DM/ha",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-26-integration-of-pasture-leys-with-grain-crop-systems/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 26: Integration of pasture leys with grain crop systems, SA Grain/Grain SA (Table 1), 2019"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Canavalia ensiformis",
+    "TOPMN": 20,
+    "TOPMX": 28,
+    "TMIN": 14,
+    "TMAX": 36,
+    "GMIN": 80,
+    "GMAX": 300
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": null,
+    "biomassTPerHa": null,
+    "terminateAfterDays": null,
+    "evidence": []
+  },
+  "varieties": [],
+  "zoneNotes": {},
+  "gaps": [
+    "No dedicated SA source (DAFF/ARC/KZN DARD/Elsenburg/Grain SA/FAO/scielo/seed-company catalogue) was found that treats jack bean on its own — it appears only as one member of a 4-species group ('Cowpea, Lablab, Velvet bean, Jack bean') in Grain SA's Part 26 summary table, so the 3-5 t DM/ha yield figure is NOT species-specific and is recorded with that caveat.",
+    "No SA-specific seed rate, row/in-row spacing, sow-depth, sow-month, N-fixed figure, or days-to-termination were found. A widely circulated '360 kg N/ha' figure and a PMC nodulation study (Eswatini) appeared in web search results, but neither could be opened and verbatim-quoted (PMC blocked the fetch with a reCAPTCHA challenge; the 360 kg N/ha figure only appeared in AI-summarized search text, never in an opened primary document), so per the no-invented-numbers rule neither is used.",
+    "Agricol, Barenbrug and Du Toit Agri were searched specifically for a jack bean product page; none was found — jack bean does not appear to be a commercial SA cover-crop seed-catalogue item."
+  ],
+  "verdict": "unsourced",
+  "summary": "Jack bean could not be substantiated with SA-specific agronomic data from any acceptable source. Only a non-species-specific biomass range (part of a 4-crop group average in a Grain SA table) and the generic FAO ECOCROP climate envelope were found. Sow months, seed rate, spacing, N-fixation and days-to-termination are all gaps; this entry needs a dedicated ARC/DAFF or peer-reviewed SA trial to move past 'unsourced'."
+}

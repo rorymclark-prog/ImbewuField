@@ -1,0 +1,183 @@
+{
+  "key": "lupin",
+  "name": "Lupin",
+  "localNames": { "af": "lupien" },
+  "botanicalName": "Lupinus angustifolius / Lupinus albus",
+  "family": "Fabaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "grain (protein/energy livestock feed) and/or green manure",
+  "frostTender": { "value": null, "evidence": [] },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": {
+      "months": [9, 10],
+      "evidence": [
+        {
+          "quote": "In the summer rainfall regions, where cool and moist conditions prevail, lupines can be planted as soon as the rainy season begins in September/October and when these species are planted under irrigation, they can be planted as early as August",
+          "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA (Truter, Dannhauser, Smith & Trytsman), 2019"
+        }
+      ]
+    },
+    "winter": {
+      "months": [3, 4],
+      "evidence": [
+        {
+          "quote": "...and in March for winter rainfall regions.",
+          "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA, 2019"
+        },
+        {
+          "quote": "Planting Months: Apr - May",
+          "url": "https://www.agricol.co.za/agricol-products/sweet-lupins-narrow-leaf/",
+          "page": null,
+          "doc": "Sweet Lupins - narrow leaf product page, Agricol"
+        }
+      ]
+    },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": {
+      "months": [9, 10],
+      "evidence": [
+        {
+          "quote": "It therefore thrives in the cool, moist areas of the Highveld regions of Mpumalanga, Eastern Free State and the KwaZulu-Natal plateau.",
+          "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA, 2019"
+        }
+      ]
+    }
+  },
+  "daysToHarvestRange": { "value": null, "evidence": [], "notes": "No SA source gives an explicit day-count from sowing to seed maturity or termination." },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": {
+    "value": [0, 3],
+    "evidence": [
+      {
+        "quote": "Even though lupin seed is big, it is recommended that the seed should be planted shallow, no more than 3 cm deep.",
+        "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA, 2019"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [40, 100],
+    "evidence": [
+      {
+        "quote": "Since white lupin seed is big, high seeding rates (40 kg/ha to 50 kg/ha) are required regardless of row spacing.",
+        "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA, 2019"
+      },
+      {
+        "quote": "Seeding: 80-100kg/ha",
+        "url": "https://www.agricol.co.za/agricol-products/sweet-lupins-narrow-leaf/",
+        "page": null,
+        "doc": "Sweet Lupins - narrow leaf (Soet Smalblaar Lupien) product page, Agricol"
+      },
+      {
+        "quote": "Seeding: 50-70kg/ha",
+        "url": "https://www.agricol.co.za/agricol-products/bitter-lupins/",
+        "page": null,
+        "doc": "Bitter Lupins (Bitter Lupiene) product page, Agricol"
+      },
+      {
+        "quote": "Seeding rate (pure) 50 - 80kg/ha",
+        "url": "https://barenbrug.co.za/forage/products/lupines/narrow-leaf-sweet-and-bitter-lupines.htm",
+        "page": null,
+        "doc": "Narrow Leaf Sweet and Bitter Lupines product page, Barenbrug South Africa"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [1.5, 4],
+    "product": "seed/grain",
+    "conditions": "optimal conditions, variety/season dependent",
+    "evidence": [
+      {
+        "quote": "Lupines are known for their high production of good quality seed and it can be expected under optimal conditions, to yield anything between 1,5 tons/ha to 4 tons/ha depending on prevailing conditions.",
+        "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA, 2019"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Lupinus angustifolius",
+    "TOPMN": 12,
+    "TOPMX": 18,
+    "TMIN": 4,
+    "TMAX": 26,
+    "GMIN": 100,
+    "GMAX": 180
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": null,
+    "biomassTPerHa": null,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "Atmospheric nitrogen fixation rates of up to 400 kg N/ha has been observed in Europe and Australia.",
+        "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA, 2019 — figure explicitly attributed to Europe/Australia, NOT South Africa, so not used as an SA N-fixed value."
+      }
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Lupinus angustifolius (narrow leaf / sweet & bitter types)",
+      "zones": ["western-cape"],
+      "maturity": null,
+      "season": "Winter-rainfall: planted March-May",
+      "note": "Most common species planted in Western Cape, popular for sandy soils. Cultivars: Mandellup, Lila-Baer (sweet); SSL10 (bitter).",
+      "evidence": [
+        {
+          "quote": "The most common species planted in the Western Cape is mainly L. angustifolius and has become popular for sandy soils",
+          "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA, 2019"
+        },
+        {
+          "quote": "Cultivars: Mandellup, Lila-Baer",
+          "url": "https://www.agricol.co.za/agricol-products/sweet-lupins-narrow-leaf/",
+          "page": null,
+          "doc": "Sweet Lupins - narrow leaf product page, Agricol"
+        }
+      ]
+    },
+    {
+      "name": "Lupinus albus (sweet white lupin, loamier soils)",
+      "zones": ["highveld", "midlands-mistbelt"],
+      "maturity": null,
+      "season": "Summer-rainfall: planted September/October (August under irrigation)",
+      "note": "Better adapted to loamier soils; thrives in cool moist Highveld areas of Mpumalanga, Eastern Free State and the KZN plateau.",
+      "evidence": [
+        {
+          "quote": "L. albus is better adapted to the loamier soils. ... It therefore thrives in the cool, moist areas of the Highveld regions of Mpumalanga, Eastern Free State and the KwaZulu-Natal plateau.",
+          "url": "https://www.grainsa.co.za/integrated-crop-and-pasture-based-livestock-production-systems---part-17",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 17: Lupines, Grain SA, 2019"
+        }
+      ]
+    }
+  ],
+  "zoneNotes": {
+    "western-cape": "Coastal Western Cape is the classic lupin production area, sown March-May, mainly for sheep production.",
+    "highveld": "L. albus sweet white lupin, sown September/October (August if irrigated)."
+  },
+  "gaps": [
+    "No row/in-row spacing figures found in any source.",
+    "No explicit days-to-harvest/termination day-count found.",
+    "The 'up to 400 kg N/ha' N-fixation figure is explicitly for Europe/Australia, not South Africa — no SA-specific N-fixed number was found, so nFixedKgPerHa is left null.",
+    "Seed rate varies widely by source/type (40-50kg/ha Grain SA generic vs 50-100kg/ha Agricol/Barenbrug by cultivar) — range reflects this spread rather than one authoritative figure."
+  ],
+  "verdict": "partial",
+  "summary": "Sow windows for both summer-rainfall (Sept/Oct, Aug irrigated) and winter-rainfall (Mar-May) regions, seed rate, sow depth and seed yield (1.5-4 t/ha) are sourced from Grain SA's Part 17 and Agricol/Barenbrug cultivar pages. Row/in-row spacing, days-to-harvest and an SA-specific N-fixation figure are gaps — the only N figure found is explicitly a European/Australian one and was excluded."
+}

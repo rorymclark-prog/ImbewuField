@@ -262,6 +262,82 @@ test('the recommended family plan limits long per-bed harvest gaps and does not 
   assert.ok(result.plantings.some((planting) => planting.cropKey === 'maize' && planting.bedId.startsWith('zone-staple-')));
 });
 
+test('a garden-wide spread cap keeps one crop off most of the shared beds (2026-09-28 Ubhejane audit)', () => {
+  // Ubhejane's real 9-bed + 4-plot mild-frost farm, mixed-crop-list style (the
+  // audited plan itself chose these twelve crops). Before the cap, the widest
+  // sow windows (cabbage, carrots, lettuce -- all legal in almost every month
+  // of the year, so every pass reaches for them whenever nothing narrower
+  // fits) filled cabbage into all 9 shared beds and carrots into all 9, with
+  // lettuce close behind at 8 -- a garden that is a brassica monoculture with
+  // extra steps. gardenSpreadCapFor(beds) = ceil(9 shared beds / 2) = 5, and
+  // every placement/closing pass in the pipeline now respects that ceiling
+  // UNLESS respecting it would leave a fillable slot bare (no invented crop
+  // can fill it, so the cap yields rather than starving a month) -- which is
+  // why the audited ceiling below is 7, not 5: the three wide-window crops
+  // are still sometimes the only legal candidate left once the other two are
+  // already capped. That fallback-adjusted 7 is still a real cut from 9/9/8.
+  const beds = [...NINE_BEDS, ...FOUR_PLOTS];
+  const cropKeys = ['cabbage', 'lettuce', 'maize', 'potato', 'dry-beans', 'oats', 'broad-beans',
+    'butternut', 'carrots', 'onions', 'tomatoes', 'green-beans'];
+  const tempC = [26, 25, 24, 21, 18, 15, 14, 16, 19, 22, 24, 26]; // mild-frost KZN-ish normals
+  const result = autoSuggestPlan({
+    ...FAMILY, cropKeys, groups: [], allowMixedCropsInBed: true, siteMonthlyTempC: tempC,
+  }, 'mild-frost', beds, [], 1);
+
+  const bedsUsedBy = (cropKey: string) =>
+    new Set(result.plantings.filter((p) => p.cropKey === cropKey).map((p) => p.bedId)).size;
+  for (const key of ['cabbage', 'lettuce', 'carrots']) {
+    assert.ok(bedsUsedBy(key) <= 7, `${key} still reached ${bedsUsedBy(key)} of ${NINE_BEDS.length} shared beds (cap-with-fallback ceiling is 7)`);
+  }
+
+  // Staple plots: the two that already had a second, real catalog crop with a
+  // compatible sow window before the cap work (Plot 1 butternut + broad
+  // beans, Plot 3 maize + broad beans) must still get both -- the cap must
+  // not touch plot logic (plots bypass it entirely).
+  const plantingsOn = (bedId: string) => result.plantings.filter((p) => p.bedId === bedId).map((p) => p.cropKey);
+  assert.deepEqual(new Set(plantingsOn(FOUR_PLOTS[0].id)), new Set(['butternut', 'broad-beans']));
+  assert.deepEqual(new Set(plantingsOn(FOUR_PLOTS[2].id)), new Set(['maize', 'broad-beans']));
+
+  // Plot 2 (dry beans only) and Plot 4 (potato only) are DELIBERATELY left
+  // single-crop here: dry beans' Jan sow (soonest legal, correctly preferred
+  // by the plot ordering) leaves too short a window before its own May
+  // harvest for either winter cover crop's Apr/May sow, and potato's Aug sow
+  // occupies through December, which overlaps every legal sow month of both
+  // covers regardless of which of potato's own legal months is chosen given
+  // their real 6-7 month field spans (holdSpanMonths). No catalog crop closes
+  // either gap without inventing a schedule, so this is pinned as a known,
+  // explained limit rather than silently left to drift.
+  assert.deepEqual(plantingsOn(FOUR_PLOTS[1].id), ['dry-beans']);
+  assert.deepEqual(plantingsOn(FOUR_PLOTS[3].id), ['potato']);
+});
+
+test('planSuccession reaches for a cooler legal sow month before a hotter one when both are ok (2026-09-28 heat-preference audit)', () => {
+  // Lettuce is legal (ECOCROP absoluteMax 30) every month of a mild-frost
+  // year, so with no site temperatures the engine has no reason to prefer
+  // any one month and 'few-big' (cap 1) just takes the soonest: nowMonth 1.
+  const beds = Array.from({ length: 6 }, (_, i) => ({ id: `hb-${i + 1}`, label: `Bed ${i + 1}`, areaM2: 9, minDimM: 3 }));
+  const noTemps = autoSuggestPlan({
+    ...FAMILY, cropKeys: ['lettuce'], groups: [], rhythm: 'few-big', allowMixedCropsInBed: true,
+  }, 'mild-frost', beds, [], 1);
+  assert.ok(noTemps.plantings.length > 0, 'fixture: lettuce must place with no site temps');
+  assert.ok(noTemps.plantings.every((p) => p.sowMonth === 1), 'fixture: with no heat data the soonest month (Jan) is chosen');
+
+  // A hot mild-frost site (Jan/Feb mid-20s, ECOCROP optimum 21) makes Jan and
+  // Feb sowings grow into their hottest stretch. optimalMax is advisory, not
+  // exclusionary (tests/crop-climate-gate.test.ts covers that split), so both
+  // months stay legal -- but planSuccession's cooler-first reorder must now
+  // reach past them for a non-flagged month while one is available.
+  const tempC = [26, 25, 24, 21, 18, 15, 14, 16, 19, 22, 24, 26];
+  const withTemps = autoSuggestPlan({
+    ...FAMILY, cropKeys: ['lettuce'], groups: [], rhythm: 'few-big', allowMixedCropsInBed: true, siteMonthlyTempC: tempC,
+  }, 'mild-frost', beds, [], 1);
+  assert.ok(withTemps.plantings.length > 0, 'a heat-aware site must still get a lettuce schedule');
+  assert.ok(
+    withTemps.plantings.every((p) => p.sowMonth !== 1 && p.sowMonth !== 2),
+    `a hot Jan/Feb must be passed over while a cooler legal month exists: got ${withTemps.plantings.map((p) => p.sowMonth)}`,
+  );
+});
+
 test('automatic vegetable plantings use only full, half, third or quarter beds', () => {
   const result = autoSuggestPlan({
     ...FAMILY,
