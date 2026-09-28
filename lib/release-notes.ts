@@ -53,6 +53,12 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Check a tree before you plant it', where: 'Design Studio → place a tree → pick a species', href: '/design',
       detail: 'Search a fruit tree such as avocado, mango or marula. Under its name you now see when South African sources say it is picked, how many years to its first crop and about how many kg a mature tree gives, where a source states it.' },
   ] },
+  { when: '28 September 2026', sha: '4fe85a91', changes: [
+    'Introduction adds source-paired Tshivenda holds for slides 7 and 10.',
+  ], tour: [
+    { title: 'Review Tshivenda Introduction slides', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda and open slides 7 and 10. Both keep the exact English source beside a visible English hold; fluent and local farming review are pending.' },
+  ] },
   { when: '28 September 2026', sha: '87396b07', changes: [
     'Introduction shows source-paired Tshivenda and Xitsonga slide drafts.',
     'Most Xitsonga text and all field guidance remain English.',

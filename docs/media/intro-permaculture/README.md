@@ -120,3 +120,18 @@ it does not claim the picture shows sectors or prescribed distances. The old
 Sesotho and Tshivenda image descriptions referred to rings, so they are held in
 exact English until fluent review. Lesson bodies, quizzes and narration were
 not changed.
+
+### Tshivenda source-paired slides 7 and 10 — 28 September 2026
+
+Slides 7 and 10 now have WebP learner frames. They come from the current English slide source
+records and the unchanged packet at `docs/narration/intro-permaculture.ve.paired-draft.json`.
+The target heading and every paragraph on each slide are exact-English holds, visibly marked
+as such beside the complete exact English narration. The borehole diagram on slide 7 and the
+farm illustration on slide 10 remain source artwork; they do not imply Tshivenda translation.
+
+Both 1440 × 5400 frames were inspected after WebP encoding at a 390 px viewport. The AI-draft
+banner, source artwork, exact-English hold label, complete body and matching English source
+panel fit without clipping. The asset-size manifest includes both files, the Introduction deck
+uses them directly, and the regional offline-pack test checks both URLs. This completes the
+22-frame Tshivenda slide set; fluency and local-farming review are still pending, and no
+Tshivenda narration is registered.

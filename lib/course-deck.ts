@@ -296,9 +296,6 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
     slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
-    missingSlides: {
-      ve: [7, 10],
-    },
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {
