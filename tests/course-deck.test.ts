@@ -661,7 +661,7 @@ test('Sesotho draft narration starts with paired slides and English source choic
 
 test('regional Food Forest and Vegetables decks expose their complete paired still sets', () => {
   const cases: [string, string, number[]][] = [
-    ['food-forest', 'st', [4, 8]],
+    ['food-forest', 'st', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
     ['food-forest', 've', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
     ['food-forest', 'ts', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
     ['vegetables-staples', 've', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
@@ -682,6 +682,15 @@ test('regional Food Forest and Vegetables decks expose their complete paired sti
       }
     }
   }
+});
+
+test('Sesotho Food Forest keeps its paired still visible instead of the English Watch poster', () => {
+  assert.equal(animationUrls('food-forest', 16, 'st'), null,
+    'the English sheet-mulching poster would cover the paired Sesotho source and draft panels');
+  const still = slideImageFor('food-forest', 'st', 16);
+  assert.deepEqual(still, {
+    url: '/course-decks/food-forest/st/slide-16.webp', lang: 'st', exact: true,
+  });
 });
 
 test('regional Market and incomplete Study decks fall back to English for every unauthored frame', () => {

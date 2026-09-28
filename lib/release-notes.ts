@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '3ef09f15', changes: [
+    'Food Forest has 20 unreviewed Sesotho draft slides paired with English.',
+  ], tour: [
+    { title: 'Compare the Food Forest draft slides', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Sesotho to compare the complete slide set. Three existing unreviewed draft passages appear beside their exact English source; the rest stays held in English. The deck is silent unless you choose the existing English narration.' },
+  ] },
   { when: '28 September 2026', sha: '320a50b', changes: [
     'Animals on your map now shows a picture of each animal, from laying hens to tilapia.',
     '20 more crops have real pictures, and 5 indigenous fruit trees have their own art.',

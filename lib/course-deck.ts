@@ -215,7 +215,7 @@ const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
   // The close-up visibly moves mulch onto cardboard and holds the final layer order. The earlier
   // wide Flow film stopped before this action, and the authored composite awaits Rory's review.
-  16: { src: 'flow-sheet-mulching-closeup', poster: 'flow-sheet-mulching-closeup', bytes: 6248424, seconds: 8, playOnce: true },
+  16: { src: 'flow-sheet-mulching-closeup', poster: 'flow-sheet-mulching-closeup', bytes: 6248424, seconds: 8, playOnce: true, unavailableLanguages: ['st'] },
 };
 
 // Keep the real footage and Flow results. The bee close-up shows one continuous move between two
@@ -251,10 +251,10 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
     slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
-    // Xitsonga frames pair its three existing unreviewed concept lines with exact English; held
-    // teaching claims stay in English inside each paired frame.
+    // Sesotho and Xitsonga frames pair only their existing unreviewed concept lines with exact
+    // English; held teaching claims stay in English inside each paired frame.
     missingSlides: {
-      st: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      st: [],
       ve: [],
       ts: [],
     },
