@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'a35173c2', changes: [
+    'Soil Health now has 20 silent Sesotho slides paired with their English source.',
+    'Draft text is marked unreviewed; held teaching stays in English.',
+  ], tour: [
+    { title: 'Compare the Sesotho Soil Health slides', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and page through all 20 slides. Each pairs its existing draft or English hold with the exact English source. Slides open silently; choose English narration if you want it.' },
+  ] },
   { when: '28 September 2026', sha: '3ef09f15', changes: [
     'Food Forest has 20 unreviewed Sesotho draft slides paired with English.',
   ], tour: [

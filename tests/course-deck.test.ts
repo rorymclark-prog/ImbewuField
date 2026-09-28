@@ -240,6 +240,25 @@ test('Soil isiZulu uses localized stills instead of mismatched English Flow scen
   }
 });
 
+test('Sesotho Soil Health keeps every paired still visible and suppresses English compost posters', () => {
+  for (let slide = 1; slide <= 20; slide++) {
+    const selected = slideImageFor('soil-health', 'st', slide);
+    assert.deepEqual(selected, {
+      url: `/course-decks/soil-health/st/slide-${String(slide).padStart(2, '0')}.webp`,
+      lang: 'st', exact: true,
+    });
+    assert.ok(onDisk(selected!.url), `paired Sesotho slide ${slide} must be present`);
+  }
+  for (const slide of [10, 11]) {
+    assert.ok(animationUrls('soil-health', slide, 'en'), 'English learners keep the reviewed compost film');
+    assert.equal(animationUrls('soil-health', slide, 'st'), null,
+      'the English poster must not cover the Sesotho source-paired frame');
+  }
+  assert.equal(slideAudioUrl('soil-health', 'st', 1), null,
+    'Sesotho stills remain silent until narration is reviewed');
+  assert.ok(slideAudioUrl('soil-health', 'en', 1), 'English narration remains available by choice');
+});
+
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // The isiZulu deck came back from PowerPoint as "Repaired" with 23 of its 24 slides — the repair
   // dropped slide 13, "Buka: Indlela Eyomile". Falling the whole module back to English because of
@@ -618,9 +637,9 @@ test('Sesotho draft narration starts with paired slides and English source choic
         [language === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration', 'No narration']);
       assert.equal(voiceButtons[1].props['aria-pressed'], true, `${language} Soil Health opens without narration`);
       assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No narration will play/);
-      if (language === 've') {
+      if (language === 'st' || language === 've') {
         assert.equal(slideImageFor('soil-health', language, 20)?.exact, true,
-          'the last Tshivenda source-paired frame is available, with no English slide fallback');
+          `the last ${language} source-paired frame is available, with no English slide fallback`);
         assert.equal(view.root.findAllByType('img')[0].parent!.props.style.aspectRatio, 1440 / 5400,
           'the full source-paired slide keeps its portrait ratio on a phone');
         assert.equal(view.root.findByProps({ className: 'slideStage' }).props.style.maxHeight, 'min(65vh, 600px)',
@@ -693,13 +712,12 @@ test('Sesotho Food Forest keeps its paired still visible instead of the English 
   });
 });
 
-test('regional Market and incomplete Study decks fall back to English for every unauthored frame', () => {
+test('incomplete regional Study decks fall back to English for every unauthored frame', () => {
   const cases: [string, string, number[]][] = [
     ['market-community', 'st', [2, 5, 6]],
     ['market-community', 've', [2, 3]],
     ['market-community', 'ts', [2, 18]],
     ['vegetables-staples', 'st', [1, 2, 8, 9]],
-    ['soil-health', 'st', [1, 2, 3, 4, 5]],
     ['soil-health', 'ts', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
   ];
   for (const [moduleId, language, authored] of cases) {

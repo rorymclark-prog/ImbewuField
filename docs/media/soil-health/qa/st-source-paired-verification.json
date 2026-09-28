@@ -1,0 +1,224 @@
+{
+  "module": "soil-health",
+  "language": "st",
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "narration": null,
+  "pairedSource": "docs/narration/soil-health.st.paired-draft.json",
+  "pairedSourceSha256": "bb748948749673fb784801b1d7cee7ce4b9a6c0f4400153edf26a016c8acabdd",
+  "englishSource": "docs/narration/soil-health.en.md",
+  "englishSourceSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+  "slides": [
+    {
+      "slide": 1,
+      "path": "public/course-decks/soil-health/st/slide-01.webp",
+      "pixels": "1440x5400",
+      "bytes": 301620,
+      "sha256": "bad8522b399e7783320c5a07dba2e295a7645033873a807f271e5e5c88693b0d"
+    },
+    {
+      "slide": 2,
+      "path": "public/course-decks/soil-health/st/slide-02.webp",
+      "pixels": "1440x5400",
+      "bytes": 220490,
+      "sha256": "ab3c70353c849567708c29df8a38066a1e9d98db67a04ac1140dc2a3e928a74f"
+    },
+    {
+      "slide": 3,
+      "path": "public/course-decks/soil-health/st/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 206574,
+      "sha256": "a17482567939e10ac9e422b516e4416e197716d88871e9cb7ae7e25d29b984af"
+    },
+    {
+      "slide": 4,
+      "path": "public/course-decks/soil-health/st/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 231954,
+      "sha256": "97a821b5b15af2cbb53b1166b43cfc3e01a9195d2cbe196f593592f0fe4234d6"
+    },
+    {
+      "slide": 5,
+      "path": "public/course-decks/soil-health/st/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 495984,
+      "sha256": "17c90b5b62ed4d0547967dc1e47106fc448b0007c93ac9d1f34fee9bcad1e693"
+    },
+    {
+      "slide": 6,
+      "path": "public/course-decks/soil-health/st/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 393576,
+      "sha256": "d012ea7326c93bc05d7adddc4d21bd5fea85d515d2b246ef061ebad5b47e3509"
+    },
+    {
+      "slide": 7,
+      "path": "public/course-decks/soil-health/st/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 254360,
+      "sha256": "55e6e1eb0c305f6d0567b3274cf578c1d5b18d37dda7c6c6fc3af55f26094182"
+    },
+    {
+      "slide": 8,
+      "path": "public/course-decks/soil-health/st/slide-08.webp",
+      "pixels": "1440x5400",
+      "bytes": 578780,
+      "sha256": "ac71f2bfa889bc902753e1b0570d986dc5e444a95a93ae365a144dc5137a96fb"
+    },
+    {
+      "slide": 9,
+      "path": "public/course-decks/soil-health/st/slide-09.webp",
+      "pixels": "1440x5400",
+      "bytes": 268680,
+      "sha256": "ab64fed56d56a26121bf30352482ce1c4cd2a38db1e91a3faeb6c2f9495aa9cd"
+    },
+    {
+      "slide": 10,
+      "path": "public/course-decks/soil-health/st/slide-10.webp",
+      "pixels": "1440x5400",
+      "bytes": 182962,
+      "sha256": "4733af1941c88e94ff29152975645c63f187f86b6e2428a60438cb2795c90d70"
+    },
+    {
+      "slide": 11,
+      "path": "public/course-decks/soil-health/st/slide-11.webp",
+      "pixels": "1440x5400",
+      "bytes": 557614,
+      "sha256": "61fbc67b74ef875b18a3fb01111c3b16995686631666a9d9b591960037e97801"
+    },
+    {
+      "slide": 12,
+      "path": "public/course-decks/soil-health/st/slide-12.webp",
+      "pixels": "1440x5400",
+      "bytes": 311318,
+      "sha256": "6a37fea6341376d9ec7a952a3f7cce53654ac8622a5b1cda298b6964f1b6dbf3"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-decks/soil-health/st/slide-13.webp",
+      "pixels": "1440x5400",
+      "bytes": 279812,
+      "sha256": "79e9b14b3a5532d9f44ffd66820bcea4c4a46813508e8e5500b49d8e2ecde9a6"
+    },
+    {
+      "slide": 14,
+      "path": "public/course-decks/soil-health/st/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 235234,
+      "sha256": "b762dcdffd1326b9d0ad68f173e38df4c52b38ae76ef306a002476754f3a8c49"
+    },
+    {
+      "slide": 15,
+      "path": "public/course-decks/soil-health/st/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 525280,
+      "sha256": "be68d3cdabe889972ce90ddf84fe454cb2b3c9f9776e2aebc174e4644a5be0b0"
+    },
+    {
+      "slide": 16,
+      "path": "public/course-decks/soil-health/st/slide-16.webp",
+      "pixels": "1440x5400",
+      "bytes": 555086,
+      "sha256": "0261355bdc3bb5e16499047ef9f56fa774e405f41407df1d28f404ff19d4344c"
+    },
+    {
+      "slide": 17,
+      "path": "public/course-decks/soil-health/st/slide-17.webp",
+      "pixels": "1440x5400",
+      "bytes": 534468,
+      "sha256": "429dd12ebd74125c579caf1bff1966d3bbf1d3d0b11bf46054e3713634d0f64a"
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/soil-health/st/slide-18.webp",
+      "pixels": "1440x5400",
+      "bytes": 489330,
+      "sha256": "bd7f13588c5cd062df63648b8c6755f0e004a88fec35299784d4a6302fb2ef78"
+    },
+    {
+      "slide": 19,
+      "path": "public/course-decks/soil-health/st/slide-19.webp",
+      "pixels": "1440x5400",
+      "bytes": 234032,
+      "sha256": "e14b54f0e29e1c4596764e1381d160803af052f2f7c2a6dd589068b05085a25d"
+    },
+    {
+      "slide": 20,
+      "path": "public/course-decks/soil-health/st/slide-20.webp",
+      "pixels": "1440x5400",
+      "bytes": 241146,
+      "sha256": "82def4243385fa3c95dadea23cf10c6dc34e02ec23dde0ce1698e343a3b6a934"
+    }
+  ],
+  "contactSheet": "docs/media/soil-health/qa/st-source-paired-contact-sheet.jpg",
+  "phoneSamples": [
+    {
+      "slide": 1,
+      "path": "docs/media/soil-health/qa/st-slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "eb66a0f369419698cd32ec7a83e32fa21d157d996c306c05b941f4882fbb8ccb"
+    },
+    {
+      "slide": 5,
+      "path": "docs/media/soil-health/qa/st-slide-05-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "81c6458ce153fd7f13c0b255ff694d5a2d48138f09c661c1abc7846cc9399957"
+    },
+    {
+      "slide": 6,
+      "path": "docs/media/soil-health/qa/st-slide-06-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "17c155ca1eb976bdd29bcfc7e1a81eb23ed466f02c4c97d8efad4e8c06f31648"
+    },
+    {
+      "slide": 10,
+      "path": "docs/media/soil-health/qa/st-slide-10-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "e1d045ba96dc93a11d9de37ed3d5d733151425cd68d167a82faa7d08b5801f39"
+    },
+    {
+      "slide": 11,
+      "path": "docs/media/soil-health/qa/st-slide-11-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "d2b57875e8db70f22ce69afe2eb065c109cd56626b1022a729051ba83755d52f"
+    },
+    {
+      "slide": 12,
+      "path": "docs/media/soil-health/qa/st-slide-12-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "ae742da68b3bb522f93fab79bf412121821e698bb218b3bde8e0de7fc6acdeba"
+    },
+    {
+      "slide": 14,
+      "path": "docs/media/soil-health/qa/st-slide-14-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "cef3ecaf01b8af9a6fd6e609611cce61d7a1df3ecb6432a07718ab8d08044172"
+    },
+    {
+      "slide": 16,
+      "path": "docs/media/soil-health/qa/st-slide-16-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "b809b1108eff0cc802bb1efddf5c9160b5c2bd2a1a950167ecc8c732d0405fe5"
+    },
+    {
+      "slide": 17,
+      "path": "docs/media/soil-health/qa/st-slide-17-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "172d442c27b48a3f3c9417ac7027dcdd799d9d9a25ab719acef1fb8e6bb8d042"
+    },
+    {
+      "slide": 18,
+      "path": "docs/media/soil-health/qa/st-slide-18-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "6571a063cfba7d34e7560f6acaf07fa264e9d58118322b4d5373561bd3fdd55d"
+    },
+    {
+      "slide": 20,
+      "path": "docs/media/soil-health/qa/st-slide-20-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "16f3adbfc8a905c3dbff3c1e802ef9c64dc85728d5d90685e1a3abf7a67b687d"
+    }
+  ],
+  "note": "All 20 silent frames pair the unchanged English illustration and exact English source with only the existing marked Sesotho machine drafts. Every other heading and passage is held in English. No Sesotho narration or local farming approval is claimed."
+}
