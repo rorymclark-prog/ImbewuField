@@ -1,0 +1,929 @@
+{
+  "title": "Water Harvesting regional slide and narration review packet",
+  "status": "review-only; not learner content",
+  "source": {
+    "path": "docs/narration/water-harvesting.en.md",
+    "sha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+    "slideCount": 24
+  },
+  "locales": {
+    "st": {
+      "name": "Sesotho",
+      "status": "machine draft",
+      "approval": "No fluent or local technical approval.",
+      "draftSource": "lib/course-translation-drafts-st-water-harvesting.ts"
+    },
+    "ve": {
+      "name": "Tshivenda",
+      "status": "machine draft",
+      "approval": "No fluent or local technical approval.",
+      "draftSource": "lib/course-translation-drafts-ve-water-harvesting.ts"
+    },
+    "ts": {
+      "name": "standard written Xitsonga",
+      "status": "provisional for Shangani-speaking learners",
+      "approval": "No fluent Xitsonga/Shangani or local technical approval.",
+      "draftSource": "lib/course-translation-drafts-ts-water-harvesting.ts",
+      "varietyNote": "Standard written Xitsonga is provisional for the Shangani-speaking group; confirm variety and terminology with a local speaker."
+    }
+  },
+  "reviewInstructions": [
+    "Compare every draft against sourceEnglish; return exact corrections with their English meaning, reviewer identity/role, region or variety, date, and accept/revise/hold decision.",
+    "All narration and all slide headings except the existing module-title candidate remain exact English holds in this batch.",
+    "Do not infer construction dimensions, safety permissions, water quality, species, or numeric advice from these materials.",
+    "Any later translation of earthworks, dam, roof-water, drinking-water, wastewater, or field-task language requires fluent review and the relevant local technical review before learner release."
+  ],
+  "slides": [
+    {
+      "slide": 1,
+      "title": {
+        "sourceEnglish": "Water Harvesting",
+        "regionalDrafts": {
+          "st": {
+            "draft": "Ho Kotula Metsi (Water Harvesting)",
+            "status": "machine-draft",
+            "note": "Existing module-title candidate; still needs fluent review."
+          },
+          "ve": {
+            "draft": "U Kuvhanganya Maḓi",
+            "status": "machine-draft",
+            "note": "Existing module-title candidate; still needs fluent review."
+          },
+          "ts": {
+            "draft": "Ku hlengeleta Mati",
+            "status": "machine-draft",
+            "note": "Existing module-title candidate; still needs fluent review."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 2,
+      "title": {
+        "sourceEnglish": "Learning Outcomes",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.\n\nExplain why dams need a designed spillway and a site assessment.\n\nExplain what a first-flush diverter does and why tank water still needs a safety check.\n\nKeep greywater away from people, food and drinking-water pipes.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 3,
+      "title": {
+        "sourceEnglish": "Two Swale Designs",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.\n\nSome swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 4,
+      "title": {
+        "sourceEnglish": "A Swale May Let Water Soak In",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.\n\nIt does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 5,
+      "title": {
+        "sourceEnglish": "The Downhill Berm",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.\n\nTrees may draw on moisture stored in nearby soil after rain; the result varies by site.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 6,
+      "title": {
+        "sourceEnglish": "Storms Need a Safe Overflow",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 7,
+      "title": {
+        "sourceEnglish": "Assess the Overflow Before Digging",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "A swale needs a planned overflow route for heavy rain. Check it before digging.\n\n[pause]\n\nWater may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 8,
+      "title": {
+        "sourceEnglish": "Check the Site Before Digging",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 9,
+      "title": {
+        "sourceEnglish": "Watch: Roots Help Hold Soil",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Roots help hold soil along a planted contour line.\n\nChoose erosion controls with local advice; steep land needs a site assessment.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 10,
+      "title": {
+        "sourceEnglish": "Store Rain for the Dry Season",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 11,
+      "title": {
+        "sourceEnglish": "Design the Spillway Before the Wall",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 12,
+      "title": {
+        "sourceEnglish": "Dam and Spillway: A Concept",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Design the spillway before the wall — an overtopped wall can breach catastrophically.\n\n[pause]\n\nCatchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 13,
+      "title": {
+        "sourceEnglish": "Care for the Dam and Its Banks",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 14,
+      "title": {
+        "sourceEnglish": "Your Roof Is a Harvesting Surface",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 15,
+      "title": {
+        "sourceEnglish": "Divert the Dirty First Flush",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 16,
+      "title": {
+        "sourceEnglish": "First Flush to Tank: A Concept",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "A first-flush diverter keeps early roof runoff out of the tank.\n\nSize and maintain it for your roof; later runoff still needs a safety check.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 17,
+      "title": {
+        "sourceEnglish": "Match Tank Size to Water Demand",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Tank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 18,
+      "title": {
+        "sourceEnglish": "Keep Stored Water Protected",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 19,
+      "title": {
+        "sourceEnglish": "Used Water Varies by Source",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way.\n\nSouth African guidance differs on kitchen water and laundry water. Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 20,
+      "title": {
+        "sourceEnglish": "Get Local Advice Before Any Reuse",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site.\n\nIf this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 21,
+      "title": {
+        "sourceEnglish": "A Picture Is Not a Farm Design",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "This generic picture is not a tested or approved farm design. It does not prove that the source, route or destination is safe.\n\nCheck with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 22,
+      "title": {
+        "sourceEnglish": "Prevent Contact and Pollution",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 23,
+      "title": {
+        "sourceEnglish": "Field Assignment",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "Build an A-frame level from three poles and a weighted string.\n\nUse it to find one level line across your slope.\n\nPhotograph the A-frame and the line you marked.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    },
+    {
+      "slide": 24,
+      "title": {
+        "sourceEnglish": "Check Your Work",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English source retained; no regional slide-heading candidate supplied."
+          }
+        }
+      },
+      "narration": {
+        "sourceEnglish": "My A-frame is built and I have tested it.\n\nTurn it around — it should read the same.\n\nI have marked at least three points at the same height across my slope.\n\nMy marked line runs across the slope, not down it.\n\nRealistic minimum time for the real work: 5 days.",
+        "regionalDrafts": {
+          "st": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ve": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          },
+          "ts": {
+            "status": "hold",
+            "reason": "Exact English narration retained pending fluent and local technical review."
+          }
+        }
+      }
+    }
+  ]
+}
