@@ -42,6 +42,17 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '54b32b4', changes: [
+    'New Year of food card: every month, beds, fruit trees and animals together.',
+    'Months with nothing fresh are marked, with a one-line summary of the year.',
+    'Suggested sowings to fill months with no fresh vegetable, on a bed with room.',
+    'Plan it opens the planting form filled in, so you check it before adding.',
+  ], tour: [
+    { title: 'See your whole year of food', where: 'Crop plan → Year of food', href: '/facilitator/crops',
+      detail: 'Under the availability chart, twelve month boxes show what comes in each month from your beds, fruit trees and animals. Months with nothing fresh have a dashed ochre edge. The Orchard and Animals buttons on the chart change this card too.' },
+    { title: 'Fill a month with no vegetables', where: 'Crop plan → Year of food → Fill the months', href: '/facilitator/crops',
+      detail: 'Each month with no fresh vegetable lists up to three sowings that would pick then, on a bed with room. Tap Plan it: the planting form opens with the bed, crop, month and share filled in. Check the notes and tap Add to bed.' },
+  ] },
   { when: '28 September 2026', sha: '8e07078', changes: [
     'Coops, goat pens, hives, hutches and duck ponds on your map now show in the crop plan.',
     'Say what your animals are for: layers, broilers, village hens, milk or meat goats.',
