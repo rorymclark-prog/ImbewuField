@@ -715,10 +715,11 @@ test('Sesotho Food Forest keeps its paired still visible instead of the English 
   });
 });
 
-test('incomplete regional Study decks fall back to English for every unauthored frame', () => {
+test('regional Study decks show every paired frame and fall back for each missing frame', () => {
   const cases: [string, string, number[]][] = [
     ['market-community', 'st', [2, 5, 6]],
-    ['market-community', 've', [2, 3]],
+    // The Tshivenda packet now has all 20 paired review stills; only three paragraphs are drafts.
+    ['market-community', 've', Array.from({ length: 20 }, (_, i) => i + 1)],
     ['market-community', 'ts', [2, 18]],
     ['soil-health', 'ts', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
   ];

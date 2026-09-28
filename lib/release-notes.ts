@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'e1967bb8', changes: [
+    'Market Gardening has 20 silent review slides; three Tshivenda passages are drafts.',
+    'Slides 2–3 pair those drafts with English; other teaching is English pending translation.',
+  ], tour: [
+    { title: 'Compare the Tshivenda Market Gardening draft', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Open Tshivenda to compare three existing draft passages on slides 2 and 3 with the exact English source. All other slide teaching stays in English and is marked translation pending.' },
+  ] },
   { when: '29 September 2026', sha: '6dd61753', changes: [
     'Soil Health now has 20 silent Sesotho slides paired with their English source.',
     'Draft text is marked unreviewed; held teaching stays in English.',
