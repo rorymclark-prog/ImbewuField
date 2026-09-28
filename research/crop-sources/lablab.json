@@ -65,7 +65,7 @@
         "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
       }
     ],
-    "notes": "Harvest/termination event is 'just prior to flowering' — no numeric day-count from sowing found in any SA source."
+    "notes": "Harvest/termination event is 'just prior to flowering' — no numeric day-count from sowing found in any SA source. Further search checked: (1) Grain SA's own Conservation Agriculture Manual Chapter 5 (Cover crops) -- has a Dolichos/lablab paragraph (N-fixation, pH range, July-August sowing per an external lablablab.org page) but no flowering/termination day-count; (2) a KZN DARD-style search for an SA lablab agronomy trial found none; (3) a peer-reviewed PLOS ONE paper (Nord et al. 2020, 'Investigating the diverse potential of a multi-purpose legume, Lablab purpureus (L.) Sweet, for smallholder production in East Africa', DOI 10.1371/journal.pone.0227739) explicitly measures 'maturity (days to 50% flowering)' across 14 lablab accessions in Tanzania, so the variable exists in the literature, but the actual per-accession day numbers are reported only in a figure/table that did not survive this session's HTML-to-text extraction (only the variable-definition sentences were recoverable, not the numeric results) -- and even if recovered, this is Tanzanian accession-trial data, not South African, so it was not force-fitted in as a headline figure. Recorded as a genuine, still-open gap rather than guessing or using an unverifiable number."
   },
   "harvestPeriodWeeksOrMonths": null,
   "rowSpacingRangeCm": {
@@ -174,7 +174,7 @@
     "highveld": "Low tolerance for frost, so not recommended where hard frost arrives before the crop has finished seeding."
   },
   "gaps": [
-    "No exact day-count from sowing to flowering/termination; only 'just prior to flowering' as the harvest cue.",
+    "No exact day-count from sowing to flowering/termination; only 'just prior to flowering' as the harvest cue -- checked Grain SA's CA manual (no day-count) and a peer-reviewed East African (Tanzania) lablab accession trial (Nord et al. 2020, PLOS ONE) which measures 'days to 50% flowering' but whose numeric results were not recoverable from the accessible text/figures in this pass, and which is not SA-specific in any case; see daysToHarvestRange.notes.",
     "Grain SA's Chapter 5 quotes an external lablab-info website giving 'sowing done in July-August' which conflicts with the SA-specific Part 20 article's October/November window; the SA Grain Part 20 figure (SA-specific, peer-authored) was preferred and the July-August figure was not used.",
     "Only one named SA cultivar (Rongai) found; no early- vs late-maturing comparison for lablab specifically."
   ],

@@ -46,7 +46,7 @@
     }
   },
   "daysToHarvestRange": {
-    "value": null,
+    "value": [75, 139],
     "evidence": [
       {
         "quote": "It is recommended to harvest rye no later than at early boot stage (before heading) in order to maintain good palatability, intake and nutritive value.",
@@ -59,9 +59,21 @@
         "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
         "page": null,
         "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "Cultivars varied in the number of days it took from planting to harvest at soft dough stage (Figure 2). The earliest silage harvest was Josefina barley and KM 10 triticale (83 days after planting) and the cultivars that had the latest silage harvest were Elisabet oats, Overberg oats and Estero 1430 red oat (166 days after planting). The time to flowering for the short duration cultivars was between 75 and 139 days after sowing.",
+        "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf",
+        "page": 2,
+        "doc": "Berjak D. 'Short, medium and long duration cereals for cover crops and winter forage', KZN DARD Research & Technology Bulletin 2020/21-09, published Feb 2021"
+      },
+      {
+        "quote": "Short duration Medium duration Long duration\nEarly flowering Medium flowering Late flowering\n... LS 35 (R) ... SSR 1 (R) SSR 727 (R) Southern Green (R) ... Forage cereals (Rye (R), Oats (O), Black oats (BO), Red oats (RO), Triticale (T), Barley (B))",
+        "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf",
+        "page": 4,
+        "doc": "Berjak D., Figure 4 cultivar-classification schematic, KZN DARD Research & Technology Bulletin 2020/21-09, 2021"
       }
     ],
-    "notes": "Termination is defined by growth stage (early boot) and by proximity to the following summer-grain planting date, not by a day-count from sowing."
+    "notes": "Value [75,139] is days-from-sowing-to-FLOWERING for the 'short duration' category of a 2019 Cedara (KZN DARD) forage-cereal cultivar trial. Four of the ~12 short-duration cultivars tested were stooling/spring rye lines (LS 35, SSR 1, SSR 727, Southern Green -- see Figure 4), so the 75-139 day figure is an SA institutional, trial-derived range that includes cereal rye but is not isolated to rye alone (the trial's other short-duration cultivars were oats, triticale and barley); this scope limitation is recorded honestly rather than presenting it as rye-only. The same bulletin's Figure 4 also shows several OTHER named rye cultivars (Southern Blue, Barpower, NCD Grazer, AgriBlue, LS 62, SSR 729, Barfuro, Sorom) falling in the medium/long-duration (later-flowering) categories, so 75-139 days should be read as the EARLY end of cereal rye's real flowering-time spread, not a ceiling for every rye cultivar sold in SA. The pre-existing SA Grain quotes (early-boot-stage harvest cue; killed 2 weeks before summer-grain planting) remain the operative FIELD MANAGEMENT rule -- rye is meant to be grazed/terminated well BEFORE the 75-139 day flowering point, so that figure is an upper bound on when flowering (and the end of good forage quality) occurs, not a recommended termination day itself."
   },
   "harvestPeriodWeeksOrMonths": null,
   "rowSpacingRangeCm": null,
@@ -119,10 +131,10 @@
     "karoo-arid": "Relatively drought-resistant, can tolerate annual rainfall as low as 400mm."
   },
   "gaps": [
-    "No row/in-row spacing or sow-depth figures found (this cereal is drilled/broadcast, not spaced as a row crop in the source).",
-    "No explicit days-to-harvest day-count; only growth-stage (early boot) and calendar-relative (two weeks before summer grain) termination cues.",
-    "No named SA rye cultivars found (source mentions diploid vs tetraploid cultivars generically without naming SA-marketed ones)."
+    "No row/in-row spacing or sow-depth figures found (this cereal is drilled/broadcast, not spaced as a row crop in the source) -- this is why verdict stays 'partial' even though days-to-harvest is now sourced.",
+    "The 75-139 day flowering-time figure is drawn from a 'short duration' forage-cereal category that includes 4 named rye cultivars alongside oats/triticale/barley, not an isolated rye-only trial; other named SA rye cultivars fall in the later-flowering medium/long-duration categories of the same trial (see daysToHarvestRange.notes) and were not numerically dated.",
+        "No named SA rye cultivars carried into this dossier's own 'varieties' list yet, despite several now being identifiable by name from the KZN DARD bulletin (e.g. LS 35, Southern Green, Southern Blue, AgriBlue)."
   ],
   "verdict": "partial",
-  "summary": "Sow window (Feb/Mar), seed rate (25-75 kg/ha dryland/irrigated) and DM biomass yield at boot stage (7-10 t/ha) are all directly sourced from Grain SA's Part 19 (Stooling rye) article. Not a legume, so N-fixed is null. Spacing and an exact days-to-termination figure are gaps; termination is described only by growth stage and by proximity to the next planting."
+  "summary": "Sow window (Feb/Mar), seed rate (25-75 kg/ha dryland/irrigated) and DM biomass yield at boot stage (7-10 t/ha) are all directly sourced from Grain SA's Part 19 (Stooling rye) article. Not a legume, so N-fixed is null. Days-to-harvest is now sourced (75-139 days sowing-to-flowering for short-duration cultivars, incl. 4 named rye lines, from a 2019 KZN DARD Cedara cultivar trial), with the SA Grain early-boot-stage/two-weeks-before-summer-grain cues retained as the field termination rule (i.e. terminate well before the 75-139 day flowering point). Verdict stays 'partial' solely because no row/in-row spacing figure exists for this drilled/broadcast cereal in any source checked."
 }

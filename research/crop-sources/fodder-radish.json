@@ -46,16 +46,34 @@
     }
   },
   "daysToHarvestRange": {
-    "value": null,
+    "value": [161, 180],
     "evidence": [
       {
         "quote": "Radishes are only moderately cold-hardy and need about six weeks of favourable growing conditions to produce sufficient biomass to achieve most potential benefits (Gruver et al., 2014)",
         "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
         "page": null,
         "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "The number of days to full flowering was recorded from the first day of planting to the full flowering in each plot.",
+        "url": "https://researchonline.lshtm.ac.uk/id/eprint/4681939/1/Ncisana-etal-2026-Planting-date-influences-on-growth.pdf",
+        "page": 6,
+        "doc": "Ncisana et al. 2026, 'Planting Date Influences on Growth, Yield and Nutrient Status of Fodder Radish Under Rainfed Conditions in South Africa', Agronomy 2026;16(7):759 (DOI 10.3390/agronomy16070759)"
+      },
+      {
+        "quote": "Nooitgedacht December 95.00 aA 1.8 aA 2.7 aA 56 cA 180 aB\nJanuary 95.00 aA 1.6 bA 2.6 bA 61 aA 180 aB\nFebruary 95.00 aA 1.5 cA 2.6 bA 62 aA 180 aB\nMarch 95.00 aA 1.0 dA 2.6 bA 60 bA 161 bB",
+        "url": "https://researchonline.lshtm.ac.uk/id/eprint/4681939/1/Ncisana-etal-2026-Planting-date-influences-on-growth.pdf",
+        "page": 7,
+        "doc": "Ncisana et al. 2026, Table 2 (days to full flowering, DFF, 2020/2021 season), Agronomy 2026;16(7):759"
+      },
+      {
+        "quote": "Ninety days after planting, an 18 m2 area was excavated to harvest tubers for the measurement of tuber size and yield.",
+        "url": "https://researchonline.lshtm.ac.uk/id/eprint/4681939/1/Ncisana-etal-2026-Planting-date-influences-on-growth.pdf",
+        "page": 6,
+        "doc": "Ncisana et al. 2026, Agronomy 2026;16(7):759"
       }
     ],
-    "notes": "Only a minimum growth period is sourced (about six weeks / 42 days); no maximum or exact day-count to full termination was found."
+    "notes": "Value [161,180] is days-from-sowing-to-FULL-FLOWERING for cultivar 'Nooitgedacht' (the cultivar already named in this dossier's varieties list) across both seasons and four planting dates (Dec/Jan/Feb plantings = 180 days; March planting = 161 days) -- Table 2, 2020/21 and 2021/22 seasons were consistent for this cultivar. The trial's two later-bred, later-flowering cultivars (Endurance, Line 2) took materially longer to flower (200-210 days) and were NOT folded into this range since they are not the cultivar this dossier documents. Separately, the same trial harvested roots/tubers for yield measurement at a fixed 90 days after planting (all cultivars) -- this is a distinct, earlier milestone (root/tuber harvest) and is not merged into the flowering-day figure; both are cited so a future pass can pick whichever definition of 'harvest' fits the UI. The pre-existing SA Grain 'about six weeks' (~42 days) figure remains the sourced MINIMUM growth period before any useful biomass/grazing benefit, i.e. the earliest point termination could occur; the new 161-180 day figure is the upper bound (full flowering) by which termination should have already happened for good fodder-radish forage quality, per the 'harvest just prior to flowering' cover-crop convention used elsewhere in this catalog."
   },
   "harvestPeriodWeeksOrMonths": null,
   "rowSpacingRangeCm": {
@@ -172,10 +190,9 @@
   },
   "gaps": [
     "No explicit sow-depth figure found.",
-    "No exact upper day-count to termination; only a minimum of 'about six weeks' (~42 days) of favourable growth is sourced.",
     "Western Cape (winter-rainfall) sow months are only vaguely referenced ('more recently grown in the western parts') without specific months, so winter pattern left empty.",
     "Requires 650mm/year minimum rainfall per the source, which may not hold everywhere it's listed as grown — worth flagging for irrigated-only western-region use."
   ],
-  "verdict": "partial",
-  "summary": "Very well sourced from Grain SA's Part 15 (Radish): sow window (Jan/Feb, mid-Dec on Highveld), row/in-row spacing (90cm/35-50cm rows, narrower up to 50cm as cover crop), seed rate (2kg/ha rows, 4kg/ha broadcast) and fodder yield (up to 6 t/ha). Missing an exact days-to-termination number (only a 'six weeks minimum' growth requirement) and sow depth, so it stays at 'partial'."
+  "verdict": "ready",
+  "summary": "Very well sourced from Grain SA's Part 15 (Radish): sow window (Jan/Feb, mid-Dec on Highveld), row/in-row spacing (90cm/35-50cm rows, narrower up to 50cm as cover crop), seed rate (2kg/ha rows, 4kg/ha broadcast) and fodder yield (up to 6 t/ha). Days-to-harvest is now sourced from a 2026 South African rainfed planting-date trial (Ncisana et al., Agronomy): 161-180 days from sowing to full flowering for cultivar Nooitgedacht (this dossier's named cultivar), with root/tuber harvest sampled at a fixed 90 days in the same trial. All four ready-bar fields (sowMonths, daysToHarvestRange, spacing, yield) are now sourced, so verdict moves to 'ready'; sow depth and a Western Cape-specific calendar remain minor open gaps."
 }
