@@ -252,6 +252,31 @@ test('Tshivenda staples media holds quantities and crop claims beside two existi
   assert.equal(slides[13].target.body[3].status, 'english-hold');
 });
 
+test('Sesotho Reading the Landscape portrait draft keeps every instruction source-paired and visibly reviewable', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/reading-landscape.st.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'st');
+  assert.equal(packet.reviewStatus, 'unreviewed');
+  assert.equal(slides.length, 21);
+
+  assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
+    .map((slide: any) => slide.n), [1, 2, 3, 4, 16]);
+  assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean)), ['1:1', '1:2', '1:3', '9:1', '17:1', '19:3']);
+  assert.equal(slides.reduce((n: number, slide: any) => n + slide.english.body.length, 0), 55);
+  assert.equal(slides.reduce((n: number, slide: any) => n + slide.target.body.filter((part: any) => part.status === 'draft').length, 0), 6);
+
+  for (let n = 1; n <= 21; n++) {
+    const path = `public/course-decks/reading-landscape/st/slide-${String(n).padStart(2, '0')}.webp`;
+    assert.ok(existsSync(path), `paired Sesotho review slide ${n} must be present`);
+  }
+  for (const n of [4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 18, 20, 21]) {
+    assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+      `slide ${n}: water, A-frame, frost, wind, soil, scale or field-action claims stay exact English`);
+  }
+});
+
 test('the next regional Study frames keep safety and business advice as exact English holds', () => {
   const cases = [
     { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '8:1', '8:4', '9:1'], held: ['8:2', '8:3', '8:5', '8:6'] },
