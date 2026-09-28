@@ -212,8 +212,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   }, [expanded]);
 
   useEffect(() => {
-    if (!expanded || !chromeVisible) return;
-    const timeout = window.setTimeout(() => setChromeVisible(false), landscape ? 3500 : 10000);
+    // A portrait phone needs a persistent way to exit and start narration. Rory's landscape
+    // presentation can still hide its chrome after a short pause to give the picture room.
+    if (!expanded || !chromeVisible || !landscape) return;
+    const timeout = window.setTimeout(() => setChromeVisible(false), 3500);
     return () => window.clearTimeout(timeout);
   }, [expanded, chromeVisible, landscape, index]);
 

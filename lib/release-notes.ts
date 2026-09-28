@@ -42,9 +42,10 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 September 2026', sha: '4dfe11ff', changes: [
+  { when: '28 September 2026', sha: 'd0a0dec8', changes: [
     'Introduction has a Sesotho draft voice, with English source available.',
     'Reading the Landscape adds Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'On portrait phones, full-screen slides keep the narration and exit controls visible.',
   ], tour: [
     { title: 'Compare Introduction narration', where: 'Study → Introduction to Permaculture', href: '/student',
       detail: 'Choose Sesotho, open the Introduction deck and compare the labelled machine voice with the English source. Some uncertain passages remain in English, and fluent-speaker and local farming review are pending.' },
