@@ -104,10 +104,18 @@
   },
   "seedRateKgPerHaRange": null,
   "yield": {
-    "tPerHaRange": null,
-    "product": null,
-    "conditions": null,
-    "evidence": []
+    "tPerHaRange": [0.10, 1.4],
+    "product": "dry grain/seed",
+    "conditions": "field trial, 75 Bambara groundnut genotypes across 7 South African environments (incl. Loskop, Brits, Mafikeng), 2020-2021 cropping seasons",
+    "evidence": [
+      {
+        "quote": "Grain yield across environments ranged from 1.4 ton ha-1 for ARC Bamb-68 to 0.10 ton ha-1 for ARC Bamb-74. Genotype ARC Bamb-68 (0.96 ton ha-1), ARC Bamb-9 (0.88 ton ha-1) and ARC Bamb-54 (0.84 ton ha-1) attained the highest grain yield across locations, while ARC Bamb-74 exhibited the lowest grain yield of 0.16 ton ha-1.",
+        "url": "https://researchspace.ukzn.ac.za/items/7bebe189-775e-489d-94fe-e5c4ae1f137a",
+        "page": 2,
+        "doc": "Majola NG. Breeding Bambara Groundnut (Vigna subterranea (L.) Verdc) for Enhanced Yield and Nutritional Quality in South Africa. PhD thesis, African Centre for Crop Improvement, University of KwaZulu-Natal, December 2023"
+      }
+    ],
+    "notes": "1.4 t/ha and 0.10 t/ha are the extreme single-genotype values across the full 75-genotype x 7-environment trial; most named genotypes cluster between 0.16 and 0.96 t/ha. This is markedly higher than the DAFF brochure's single ARC Lowveld Research Unit local-selection note ('MPB51 ... higher yields (2355 kg)', units/area basis not stated in that source) — that figure is left unconverted since its area basis is unclear, and the UKZN thesis figure is used instead as the sourced yield."
   },
   "ecocrop": {
     "row": "Vigna subterranea",
@@ -187,12 +195,12 @@
     "highveld": "North West and Gauteng are named as major production areas, but the source does not distinguish highveld frost risk for this crop, which it states 'does not tolerate freezing temperatures' (gap: no explicit highveld guidance beyond the general Oct-early Dec window)."
   },
   "gaps": [
-    "No t/ha (or any per-hectare) yield figure in the source; only one ambiguous 'yields (2355 kg)' note for a specific ARC selection (MPB51) with no stated area basis or units clarified as kg/ha.",
-    "No seed rate (kg/ha) given.",
-    "Not grown commercially in South Africa per the source ('The crop is not grown commercially in South Africa... little was known about the optimum agronomic practices for this crop'), so recommendations are subsistence-level rather than a full agronomic package.",
+    "No seed rate (kg/ha) given in any source checked.",
+    "Not grown commercially in South Africa per the DAFF source ('The crop is not grown commercially in South Africa... little was known about the optimum agronomic practices for this crop'), so agronomic recommendations are subsistence-level rather than a full commercial package.",
     "No winter-rainfall (Western Cape), all-year (subtropical coast) or mild-frost specific sowing windows given beyond the single Oct-early Dec national window.",
-    "The 7 landrace seed-colour types are not tied to specific SA growing zones in the source (only stated to be 'location specific' in general)."
+    "The 7 landrace seed-colour types are not tied to specific SA growing zones in the source (only stated to be 'location specific' in general).",
+    "The DAFF brochure's own single ARC-selection note ('MPB51 ... higher yields (2355 kg)') has no stated area basis and was not used; yield is instead sourced from a separate, more rigorous UKZN PhD multi-environment trial (75 genotypes x 7 SA sites)."
   ],
-  "verdict": "partial",
-  "summary": "DAFF's 2016 Bambara Groundnut production guideline gives solid sourcing for climate/frost sensitivity, sowing window, spacing, sowing depth and days-to-maturity, and documents named local ARC selections (MPB51, MPB31) plus 7 landrace seed-colour types. No yield or seed-rate figures are given, and the source itself states the crop is not grown commercially in SA and its optimum agronomy is not well known, so verdict is partial."
+  "verdict": "ready",
+  "summary": "DAFF's 2016 Bambara Groundnut production guideline gives solid sourcing for climate/frost sensitivity, sowing window, spacing and sowing depth, and days-to-maturity, and documents named local ARC selections (MPB51, MPB31) plus 7 landrace seed-colour types. Yield is now sourced from a 2023 UKZN PhD thesis multi-environment trial (75 genotypes across 7 South African sites): grain yield 0.10-1.4 t/ha, meeting the ready-bar. Seed rate remains unsourced."
 }

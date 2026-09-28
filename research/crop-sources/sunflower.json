@@ -95,10 +95,18 @@
   },
   "seedRateKgPerHaRange": null,
   "yield": {
-    "tPerHaRange": null,
-    "product": null,
-    "conditions": null,
-    "evidence": []
+    "tPerHaRange": [1.2, 2.1],
+    "product": "dry seed (grain)",
+    "conditions": "South Africa, 2005-2010 period: 2.1 t/ha is the ARC-GCI small-plot yield-trial average, 1.2 t/ha is the actual national/provincial full-scale dryland production average",
+    "evidence": [
+      {
+        "quote": "Graph 2 illustrates the gap between the average yields obtained in the ARC-GCI yield trials and the average yields obtained in the various provinces. From (2005 - 2010), the ARC average yield was 2,1 t/ha and country average was 1,2 t/ha. Naturally, yield trial data will always produce higher yields on small plots compared to actual full scale production.",
+        "url": "https://www.grainsa.co.za/the-future-of-sunflower-production-in-south-africa",
+        "page": null,
+        "doc": "The future of sunflower production in South Africa, Grain SA (citing ARC-Grain Crops Institute yield-trial data)"
+      }
+    ],
+    "notes": "Range spans the actual full-scale country average (1.2 t/ha, the more realistic smallholder/commercial-farm expectation) to the ARC-GCI research-trial average (2.1 t/ha, an upper genetic-potential figure) -- the source itself frames these as two ends of a known yield gap, not interchangeable numbers."
   },
   "ecocrop": {
     "row": "Helianthus annuus",
