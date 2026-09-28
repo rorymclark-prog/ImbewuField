@@ -1,0 +1,38 @@
+{
+  "key": "kale",
+  "varieties": [
+    {
+      "name": "1000 Headed (Chou Moellier / Thousand Headed)",
+      "zones": ["highveld", "midlands-mistbelt", "high-mountain", "western-cape", "southern-cape", "subtropical-coast", "lowveld-bushveld", "karoo-arid"],
+      "maturity": "medium",
+      "season": "Spring to autumn (per Kirchhoffs); Starke Ayres markets it as an all-year full-sun crop",
+      "traits": "Highly productive, tender leaves; \"does not handle extreme heat\" per Kirchhoffs' page for the same Thousand Headed type",
+      "type": "OP",
+      "note": "This is the same variety crop-catalog.ts's own inline comments already rely on for kale's sow-window and 55-120 day maturity range (Starke Ayres 1000 Headed/Black Tuscan pages + Kirchhoffs Chou Moullier Thousand Headed page); this file adds it as an actual CropVariety entry, which the catalog did not previously have for kale. Its heat intolerance (already noted in the catalog's own farmer-facing note) is the real reason to favour it in the cooler zones (highveld, midlands-mistbelt, high-mountain) and sow it only in cooler months in the hot zones (lowveld-bushveld, karoo-arid, subtropical-coast).",
+      "evidence": [
+        { "quote": "1000 Headed Kale is a highly productive variety with tender, nutrient-packed leaves. It's perfect for fresh eating, smoothies, and cooking.", "url": "https://www.starkeayres.com/products/home-gardening-seed/kale/1000-headed", "page": null, "doc": "1000 Headed Kale, Starke Ayres product page (via search snippet — JS-rendered page, not directly fetchable for a verbatim on-page quote)" }
+      ]
+    },
+    {
+      "name": "Black Tuscan (Lacinato / Dinosaur kale)",
+      "zones": ["highveld", "midlands-mistbelt", "high-mountain", "western-cape", "southern-cape", "subtropical-coast", "lowveld-bushveld", "karoo-arid"],
+      "maturity": "medium",
+      "season": "Sold alongside 1000 Headed as an all-year Starke Ayres offering",
+      "traits": "Deep green, highly nutritious, rich flavour leaves — the narrow-leaf Italian type, distinct from the broad-leaf 1000 Headed",
+      "type": "OP",
+      "note": "A second nationally-marketed kale type, offering a leaf-shape/texture alternative to 1000 Headed for salads specifically.",
+      "evidence": [
+        { "quote": "Black Tuscan Kale, also known as Lacinato or Dinosaur Kale, offers deep green, highly nutritious leaves with a rich flavor. It's perfect for salads and cooking.", "url": "https://www.starkeayres.com/products/home-gardening-seed/superfoods/black-tuscan-kale-2", "page": null, "doc": "Black Tuscan Kale, Starke Ayres product page (via search snippet — JS-rendered page, not directly fetchable for a verbatim on-page quote)" }
+      ]
+    }
+  ],
+  "zoneAdvice": {
+    "lowveld-bushveld": { "text": "No source states kale is unsuited here, but crop-catalog.ts's own note (carried over, not re-verified in this pass) says kale 'does not handle extreme heat', and this is the hottest of the 8 zones — treat both varieties as a cool-season-only planting here, not a year-round one.", "evidence": [] },
+    "karoo-arid": { "text": "Same heat caveat as lowveld-bushveld applies to Karoo summers; no zone-specific kale source was found for the Karoo.", "evidence": [] }
+  },
+  "gaps": [
+    "Both varieties are marketed nationally with no explicit zone restriction; the zone lists above are the full 8-zone set with a heat caveat noted in zoneAdvice, not a per-zone sourced recommendation.",
+    "As with green-beans and swiss-chard, the Starke Ayres product pages are JS-rendered and could not be independently fetched for verbatim on-page text in this pass — quotes come from a WebSearch summary of that page, flagged rather than hidden.",
+    "The Kirchhoffs Chou Moullier Thousand Headed page that crop-catalog.ts's own comments cite (for the 40x40cm spacing, 1cm/2mm depth and heat-intolerance note) was not re-opened in this pass; it is carried over as the existing catalog's basis, not independently re-verified here."
+  ]
+}

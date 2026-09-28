@@ -1,0 +1,183 @@
+{
+  "key": "lablab",
+  "name": "Lablab (Dolichos bean)",
+  "localNames": null,
+  "botanicalName": "Lablab purpureus",
+  "family": "Fabaceae",
+  "role": "dual",
+  "foodGroup": "legume",
+  "harvestProduct": "green pods / dry beans (food) and fodder / green-manure biomass (cover)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Regarding extreme climatic conditions, lablab has a low tolerance for frost, especially because this plant can seed late.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA (Truter, Dannhauser, Smith & Trytsman), 2019"
+      }
+    ]
+  },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": {
+      "months": [10, 11],
+      "evidence": [
+        {
+          "quote": "An acceptable seeding rate is 25 kg/ha. For fodder and grazing 15 kg/ha – 20 kg/ha seed can be planted in rows during October/November.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": {
+      "months": [10, 11],
+      "evidence": [
+        {
+          "quote": "For fodder and grazing 15 kg/ha – 20 kg/ha seed can be planted in rows during October/November.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+        }
+      ]
+    },
+    "mild-frost": {
+      "months": [10, 11],
+      "evidence": [
+        {
+          "quote": "For fodder and grazing 15 kg/ha – 20 kg/ha seed can be planted in rows during October/November.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+        }
+      ]
+    }
+  },
+  "daysToHarvestRange": {
+    "value": null,
+    "evidence": [
+      {
+        "quote": "If harvested for fodder purposes, it should be harvested just prior to the flowering stage and when cut, it is essential to leave sufficient stubble at a height of 10 cm – 15 cm to ensure optimal regrowth.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+      }
+    ],
+    "notes": "Harvest/termination event is 'just prior to flowering' — no numeric day-count from sowing found in any SA source."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": [45, 45],
+    "evidence": [
+      {
+        "quote": "It is advised that this crop be planted in rows and preferably with a spacing of 30 cm apart in the row and 45 cm between rows.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [30, 30],
+    "evidence": [
+      {
+        "quote": "It is advised that this crop be planted in rows and preferably with a spacing of 30 cm apart in the row and 45 cm between rows.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": [5, 5],
+    "evidence": [
+      {
+        "quote": "Seeds can be planted as deep as 5 cm and covered properly.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [15, 30],
+    "evidence": [
+      {
+        "quote": "An acceptable seeding rate is 25 kg/ha. For fodder and grazing 15 kg/ha – 20 kg/ha seed can be planted in rows during October/November.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "Seeding rate (pure) 15 - 30kg/ha",
+        "url": "https://barenbrug.co.za/forage/products/dolichos/rongai.htm",
+        "page": null,
+        "doc": "Rongai | Dolichos product page, Barenbrug South Africa"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [2, 6],
+    "product": "dry matter (fodder/green-manure biomass)",
+    "conditions": "sub-humid sub-tropics, seasonal",
+    "evidence": [
+      {
+        "quote": "Numerous research trials indicate seasonal yields of 2 tons – 6 tons of DM/ha in sub-humid sub-tropics, depending on the specific climatic conditions in which the crop is grown.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-20-lablab-lablab-purpureus-l-dolichos-lablab-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 20: Lablab, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Lablab purpureus",
+    "TOPMN": 18,
+    "TOPMX": 32,
+    "TMIN": 3,
+    "TMAX": 38,
+    "GMIN": 70,
+    "GMAX": 300
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": 170,
+    "biomassTPerHa": 6,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "Being a legume, it can fix atmospheric nitrogen to the extent of around 170 kg/ha besides leaving enough crop residues to enrich the soils with organic matter.",
+        "url": "https://www.grainsa.co.za/upload/conservation-agriculture/eng/6-CA-manual-Chapter-5-Cover-crops.pdf",
+        "page": 6,
+        "doc": "Conservation Agriculture Manual, Chapter 5: Cover crops, Grain SA, 2016"
+      }
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Rongai",
+      "zones": ["lowveld-bushveld", "subtropical-coast", "mild-frost"],
+      "maturity": "late",
+      "season": "Long growing season; poor frost tolerance",
+      "note": "Vigorous twining growth habit, restores soil fertility as green manure, good insect/disease resistance, poor frost tolerance.",
+      "evidence": [
+        {
+          "quote": "It is a late maturing, vigorous, herbaceous, annual or shortlived perennial legume. ... Poor frost tolerance",
+          "url": "https://barenbrug.co.za/forage/products/dolichos/rongai.htm",
+          "page": null,
+          "doc": "Rongai | Dolichos product page, Barenbrug South Africa"
+        }
+      ]
+    }
+  ],
+  "zoneNotes": {
+    "highveld": "Low tolerance for frost, so not recommended where hard frost arrives before the crop has finished seeding."
+  },
+  "gaps": [
+    "No exact day-count from sowing to flowering/termination; only 'just prior to flowering' as the harvest cue.",
+    "Grain SA's Chapter 5 quotes an external lablab-info website giving 'sowing done in July-August' which conflicts with the SA-specific Part 20 article's October/November window; the SA Grain Part 20 figure (SA-specific, peer-authored) was preferred and the July-August figure was not used.",
+    "Only one named SA cultivar (Rongai) found; no early- vs late-maturing comparison for lablab specifically."
+  ],
+  "verdict": "partial",
+  "summary": "Sow window (Oct/Nov), row+in-row spacing (45cm/30cm), seed rate (15-30 kg/ha), biomass yield (2-6 t DM/ha) and N-fixation (~170 kg/ha) are all sourced from Grain SA's Part 20 article and the Grain SA CA manual. Missing only an exact days-to-harvest figure (only 'just before flowering' given) and a broader variety list."
+}

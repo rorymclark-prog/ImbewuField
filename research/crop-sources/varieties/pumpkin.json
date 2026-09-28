@@ -1,0 +1,36 @@
+{
+  "key": "pumpkin",
+  "varieties": [
+    {
+      "name": "Flat White Boer",
+      "zones": ["karoo-arid", "highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape"],
+      "maturity": "late",
+      "season": null,
+      "traits": "Vigorous vining habit; \"well adapted to the South African climate and can withstand dry conditions really well\"; fruit 10-25lb (4.5-11kg); lower yield ceiling (~25t/ha) than modern grey hybrids",
+      "type": "OP",
+      "note": "A traditional Afrikaner/Boer-settler heirloom landrace, open-pollinated and seed-saveable — the classic smallholder choice named across several SA seed retailers. No single source restricts it to one zone; its drought tolerance is the documented trait, which is most relevant to the drier zones (karoo-arid) but the source does not exclude other zones.",
+      "evidence": [
+        { "quote": "The Flat White Boer pumpkin is well adapted to the South African climate and can withstand dry conditions really well. It was most probably developed by early Dutch settlers in South Africa.", "url": "https://www.seedsforafrica.co.za/products/flat-white-boer-pumpkin-bulk-vegetable-seeds", "page": null, "doc": "Flat White Boer Pumpkin, Seeds for Africa product page (via search snippet)" },
+        { "quote": "The old Boer pumpkin is a strong runner that starts producing fruiting flowers only when the runners are quite long... the maximum yield is only about 25t/ha, whereas modern grey-skinned varieties have a substantially higher yield potential.", "url": "https://horticulture.org.za/production-pumpkins-squashes/", "page": null, "doc": "The production of pumpkins and squashes, South African Horticulture growing guide (via search snippet)" }
+      ]
+    },
+    {
+      "name": "Nelson F1",
+      "zones": [],
+      "maturity": "early",
+      "season": null,
+      "traits": "Semi-bush habit (not vining — allows mechanical weed control later in the season and a shorter production cycle); vigorous; 1-2 fruit/plant, 3-5kg, grey skin, deep orange thick flesh, small seed cavity; stores up to 3 months",
+      "type": "hybrid",
+      "note": "A modern grey-skinned hybrid — the higher-yielding alternative the horticulture.org.za quote above contrasts with old Boer types. Its semi-bush habit suits a smaller smallholder plot than a full vining Boer pumpkin. No specific growing zone is stated by Sakata.",
+      "evidence": [
+        { "quote": "Nelson is a very early maturing semi-bush type grey-skin pumpkin hybrid with very good internal quality... each plant can be expected to produce about 1 to 2 fruits... The fruit is medium-sized (3-5 kg) and smooth... Nelson can be stored for up to 3 months under controlled conditions.", "url": "https://sakata.co.za/shop/vegetables/pumpkin/nelson-f1-hybrid-grey-pumpkin/", "page": null, "doc": "Nelson F1 Hybrid Grey Pumpkin, Sakata product page (fetched directly, page text verbatim)" }
+      ]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "No source differentiates pumpkin VARIETY by South African growing zone in the way onions or carrots are differentiated — both named varieties above are general/national, so zoneAdvice is left empty and Flat White Boer's zone list is a reasoned 'not excluded from' set rather than a sourced recommendation per zone.",
+    "This matches crop-catalog.ts's own existing stance: pumpkin currently carries no varieties array, with a header comment stating published SA guidance for it is 'purely about sow-timing' rather than a real region-driven choice; the two entries here are a genuine addition (a landrace + a modern hybrid contrast) but do not overturn that zone-neutral finding.",
+    "DAFF/DALRRD's own pumpkin production guideline (referenced in crop-catalog.ts as 'DAFF's Cucurbita moschata brochure') was not reachable in this pass to check for named cultivars."
+  ]
+}

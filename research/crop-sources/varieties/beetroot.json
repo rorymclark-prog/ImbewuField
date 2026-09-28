@@ -1,0 +1,32 @@
+{
+  "key": "beetroot",
+  "varieties": [
+    {
+      "name": "Detroit Dark Red",
+      "zones": [],
+      "maturity": "medium",
+      "season": null,
+      "traits": "Deep red, round, globe-shaped roots; smooth skin; classic OP market type; ~55-60 days per search snippet",
+      "type": "OP",
+      "note": "The standard, nationally-sold, seed-saveable beetroot in South Africa — added as a new entry (crop-catalog.ts had no prior varieties array for beetroot). Direct verbatim fetch was attempted against Sakata (both a guessed product URL and its beetroot category listing page) but both failed — see gaps — so this is sourced only via a WebSearch summary of the Starke Ayres product page, flagged rather than presented as independently verified.",
+      "evidence": [{ "quote": "Detroit Dark Red produces deep red, round beetroot with smooth skin, ready to harvest in around 55-60 days.", "url": "https://www.starkeayres.com/products/home-gardening-seed/vegetable-seed/beetroot-detroit-dark-red", "page": null, "doc": "Detroit Dark Red Beetroot, Starke Ayres product page (via search snippet — JS-rendered page, not directly fetchable for a verbatim on-page quote)" }]
+    },
+    {
+      "name": "Crimson Globe",
+      "zones": [],
+      "maturity": "medium",
+      "season": null,
+      "traits": "Round, deep crimson roots; reliable, widely adapted",
+      "type": "OP",
+      "note": "A second nationally-marketed OP beetroot alternative to Detroit Dark Red; same sourcing caveat applies.",
+      "evidence": [{ "quote": "Crimson Globe is a reliable variety producing round, deep crimson beetroot with good uniformity.", "url": "https://www.starkeayres.com/products/home-gardening-seed/vegetable-seed/beetroot-crimson-globe", "page": null, "doc": "Crimson Globe Beetroot, Starke Ayres product page (via search snippet — JS-rendered page, not directly fetchable for a verbatim on-page quote)" }]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "No zone differentiation was found for beetroot anywhere in this pass — both varieties are generically marketed nationally, so zoneAdvice is left empty and both zones lists are empty rather than invented.",
+    "A Sakata product page for beetroot could not be located: a guessed URL for Detroit Dark Red returned 404, and Sakata's beetroot category listing page (fetched directly via curl) did not contain the <h2>/<h3> product-name markup that worked for swiss-chard and carrots, so no Sakata beetroot text could be extracted in this pass — this is a genuine dead end, not a decision to skip Sakata.",
+    "Both varieties above rely on WebSearch summaries of JS-rendered Starke Ayres pages rather than independently verified verbatim quotes, per the same limitation noted for green-beans, swiss-chard, and kale.",
+    "No ARC, DAFF/DALRRD, or KZN DARD source on beetroot cultivars was found or opened in this pass."
+  ]
+}
