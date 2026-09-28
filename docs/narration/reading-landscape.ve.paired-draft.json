@@ -1,0 +1,576 @@
+{
+  "language": "ve",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "provenance": {
+    "newDrafts": "Only the general “Why This Matters” and “Learning Outcomes” headings remain unreviewed machine-draft candidates from the existing Tshivenda packet branch; exact English remains paired below.",
+    "holds": "Water movement, contour/scale, wind, frost, soil, crop, safety, and other instructional or ambiguous wording remains exact English. A semantic back-check flagged “land you already have” as a possible soil/land shift, so that heading is held in English.",
+    "backCheck": "A separate Agy CLI 1.2.12 Gemini 3.1 Pro high-effort semantic back-check reviewed candidate meaning against its paired English. This is a machine check only, not human language review."
+  },
+  "reviewNotes": [
+    "A fluent Tshivenda speaker and local agriculture adviser must review each candidate for meaning, register, and local terminology before classroom use. No fluent-language or farming approval is implied.",
+    "English source text is paired sentence by sentence and checked against docs/narration/reading-landscape.en.md."
+  ],
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "n": 1,
+        "heading": "Reading the Landscape",
+        "body": [
+          "A permaculture course for South African smallholder farmers.",
+          "Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.",
+          "These observations guide practical choices for crops, trees, buildings, roads, and water. They are the start of good design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "n": 2,
+        "heading": "Why This Matters",
+        "body": [
+          "Every farm has patterns that work before we add anything.",
+          "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+          "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the land."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ndi ngani hezwi zwi zwa ndeme",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "n": 3,
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "You will read sun angles, shade, wind, frost, and slope.",
+          "You will use an A-frame level to trace contours.",
+          "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zwipikwa zwa ngudo",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "n": 4,
+        "heading": "Lesson 1: Where Rain Goes",
+        "body": [
+          "Before you harvest water, learn where it already goes.",
+          "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "Some excess water needs a safe route away so it does not cause damage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "n": 5,
+        "heading": "Watch: Water Slows, Sinks, and Leaves",
+        "body": [
+          "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "n": 6,
+        "heading": "Trace Contours with an A-Frame",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+          "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "n": 7,
+        "heading": "Observe Water Before You Build",
+        "body": [
+          "Water picks up speed and erosive force as it runs downhill.",
+          "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "n": 8,
+        "heading": "Lesson 2: Read Sun and Shade",
+        "body": [
+          "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+          "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+          "Watch your own site before choosing where to place tender crops, trees, or buildings."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "n": 9,
+        "heading": "Watch: Follow the Sun Across the Site",
+        "body": [
+          "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "n": 10,
+        "heading": "Check Winter Shadows Before Building",
+        "body": [
+          "Winter sun is lower and farther north than summer sun.",
+          "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+          "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "n": 11,
+        "heading": "Protect Frost-Tender Plants",
+        "body": [
+          "Pawpaw and young citrus are sensitive to frost.",
+          "Keep tender plants out of known low frost pockets. Observe local frost before planting."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "n": 12,
+        "heading": "Lesson 3: Read Wind, Frost, and Slope",
+        "body": [
+          "Wind can damage crops on a smallholding.",
+          "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "Wind, cold air and slope all matter when choosing places for crops and shelter."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "n": 13,
+        "heading": "Watch: See Wind and Cold Air on the Map",
+        "body": [
+          "A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "n": 14,
+        "heading": "Cold Air Flows Downhill",
+        "body": [
+          "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+          "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+          "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+          "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "n": 15,
+        "heading": "Choose Airflow and Warmth",
+        "body": [
+          "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+          "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "n": 16,
+        "heading": "Lesson 4: Start Your Site Map",
+        "body": [
+          "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+          "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+          "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "n": 17,
+        "heading": "Watch: Draw the Land You Already Have",
+        "body": [
+          "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "n": 18,
+        "heading": "Let Plants Help You Read Soil",
+        "body": [
+          "Look for places where frost sits longest and where the ground smells damp during dry months.",
+          "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+          "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "n": 19,
+        "heading": "Add Seasons, Zones, and Sectors",
+        "body": [
+          "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+          "Overlay your zones and sectors on the same base map.",
+          "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "n": 20,
+        "heading": "Field Assignment",
+        "body": [
+          "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+          "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+          "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "n": 21,
+        "heading": "Field Action",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+          "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -281,7 +281,12 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),
   },
   'reading-landscape': {
-    slideLanguages: ['en', 'zu'],
+    // Every regional still is a source-paired draft. The artwork labels it unreviewed and keeps
+    // the exact English source beside any draft text or English hold; no translation is complete.
+    // Regional learners must choose the available English source narration explicitly.
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {

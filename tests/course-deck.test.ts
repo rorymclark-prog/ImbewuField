@@ -19,6 +19,22 @@ const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css'
 const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress', slideStage: 'slideStage' };";
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
+test('phone full-screen slide image stays below the lesson and exit controls', () => {
+  const css = readFileSync(new URL(DECK_PLAYER_CSS_URL), 'utf8');
+  const rule = (selector: string) => {
+    const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return css.match(new RegExp(`${escaped}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
+  };
+  const stage = rule('.expanded .slideStage');
+  const controls = rule('.expanded .controlStrip');
+
+  assert.match(stage, /z-index:\s*0\s*;/,
+    'the full-viewport slide must form a lower stacking layer so it cannot intercept phone taps');
+  assert.match(controls, /z-index:\s*5\s*;/, 'Play lesson remains above the slide');
+  assert.match(css, /\.expanded \.playerHeader,[\s\S]*?\.expanded \.controlStrip\s*\{[^}]*z-index:\s*5\s*;/,
+    'Exit full screen remains in the same higher layer as Play lesson');
+});
+
 test('sound-off learners get the complete current script, including its final instruction', () => {
   // A beautiful picture cannot replace words a learner cannot hear. This fails on a missing
   // paragraph, stale edit, shifted slide, or accidentally published draft-language transcript.
@@ -67,6 +83,25 @@ test('every promised slide image exists on disk', () => {
       }
       assert.ok(url, `no url for ${lang} slide ${s.slide}`);
       assert.ok(onDisk(url!), `missing file: ${url}`);
+    }
+  }
+});
+
+test('regional Reading the Landscape decks expose all 21 paired WebPs with English source audio', () => {
+  const deck = deckFor('reading-landscape')!;
+  assert.deepEqual(deck.slideLanguages, ['en', 'zu', 'st', 've', 'ts']);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('en'), true);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('st'), false);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('ve'), false);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('ts'), false);
+
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(deck.slideFormatsByLanguage?.[lang], 'webp');
+    for (let slide = 1; slide <= 21; slide++) {
+      const url = slideImageFor('reading-landscape', lang, slide);
+      assert.ok(url?.exact, `${lang} slide ${slide} must stay on its paired regional still`);
+      assert.ok(url.url.endsWith('.webp'), `${lang} slide ${slide} should use the supplied WebP`);
+      assert.ok(onDisk(url.url), `missing offline still: ${url.url}`);
     }
   }
 });
@@ -511,6 +546,31 @@ test('Sesotho draft narration starts with paired slides and English source choic
       assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`),
         'choosing English source audio must leave the regional paired slide visible');
       assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+    } finally { act(() => view.unmount()); }
+  }
+
+  // Soil Health is the exact small-screen Study case that exposed the selector problem: its
+  // regional opening slides exist, but its only recordings are English and isiZulu. The learner
+  // must choose a source voice explicitly, and that voice choice must not replace the paired slide.
+  for (const language of ['st', 'ts']) {
+    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'soil-health', lang: language })); });
+    try {
+      const picture = () => view.root.findAllByType('img')[0];
+      assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`));
+      assert.equal(view.root.findAllByType('audio').length, 0,
+        `${language} Soil Health learners should choose before English narration starts`);
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+      const voiceButtons = view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
+      assert.deepEqual(voiceButtons.map(button => button.children.join('')),
+        [language === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration']);
+      act(() => voiceButtons[0].props.onClick());
+      assert.match(view.root.findByType('audio').props.src, /soil-health\/en\/slide-01\.mp3$/);
+      assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`),
+        'choosing English narration must keep the selected Soil Health slides');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+      const choiceStatus = view.root.findByProps({ role: 'status' }).children.join('');
+      assert.match(choiceStatus, /English source narration selected/i);
+      if (language === 'ts') assert.match(choiceStatus, /itsonga narration is not available/i);
     } finally { act(() => view.unmount()); }
   }
 

@@ -42,11 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 September 2026', sha: '8153d1ad', changes: [
+  { when: '28 September 2026', sha: 'd0a0dec8', changes: [
     'Introduction has a Sesotho draft voice, with English source available.',
+    'Reading the Landscape adds Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'On portrait phones, full-screen slides keep the narration and exit controls visible.',
   ], tour: [
     { title: 'Compare Introduction narration', where: 'Study → Introduction to Permaculture', href: '/student',
       detail: 'Choose Sesotho, open the Introduction deck and compare the labelled machine voice with the English source. Some uncertain passages remain in English, and fluent-speaker and local farming review are pending.' },
+    { title: 'Review the regional slide drafts', where: 'Study → Reading the Landscape', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga in the slide selector. Every regional page is marked as an unreviewed draft and keeps the English source beside it. English is the only narration available; fluent-speaker and local farming review are pending.' },
   ] },
   { when: '28 September 2026', sha: '3e75bbe6', changes: [
     'Introduction has more Sesotho and Tshivenda draft slides beside the exact English source.',
