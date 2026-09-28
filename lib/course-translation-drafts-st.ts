@@ -166,50 +166,24 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
         "Twelve Principles: Designing with Nature",
         "Melao-motheo e Leshome le Metso e Mmedi: Ho Rala le Tlhaho",
       ),
-      body: hold(
+      body: pair(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nKgetha melao-motheo e mmedi kapa e meraro e amanang le bothata bo boholo ba hao, mme o e sebedise ka tieo. E meng e tla hlaka ha o ntse o tswela pele.",
       ),
       keyPoints: [
-        pair(
-          "Observe your land for a full season before major earthworks",
-          "Shebella naha ya hao sehla se feletseng pele o etsa mesebetsi e meholo ya mobu",
-        ),
-        pair(
-          "Catch and store rain, sun, and biomass before they leave your property",
-          "Tshwara le ho boloka pula, letsatsi, le biomass pele di tloha setsheng sa hao",
-        ),
-        pair(
-          "Edges and margins can be useful places to observe what grows well",
-          "Mathoko le dibaka tse ka thoko e ka ba dibaka tse sebetsang tsa ho shebella se melang hantle",
-        ),
-        pair(
-          "Hail injury to maize depends on the storm and the crop’s growth stage",
-          "Tshenyo ya sefako hodima poone (maize) e itshetlehile ka sefefo le boemo ba kgolo ya dijalo",
-        ),
+        hold("Observe your land for a full season before major earthworks"),
+        hold("Catch and store rain, sun, and biomass before they leave your property"),
+        hold("Edges and margins can be useful places to observe what grows well"),
+        hold("Hail injury to maize depends on the storm and the crop’s growth stage"),
       ],
       quiz: [
         {
-          question: pair(
-            "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
-            "Molemi o batla ho tjheka mekero (swales) ho kotula metsi a pula. O lokela ho etsa eng pele, a latela 'sheba mme o sebedisane' (observe and interact)?",
-          ),
+          question: hold("A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?"),
           options: [
-            pair(
-              "Dig immediately after the first good rain",
-              "Tjheka hang-hang ka mora pula ya pele e ntle",
-            ),
-            pair(
-              "Watch where water flows and pools across at least one wet season",
-              "Shebella moo metsi a phallang teng le moo a bokellanang teng bonyane nakong ya sehla se le seng sa dipula",
-            ),
-            pair(
-              "Copy a neighbour's swale layout",
-              "Kopitsa moralo wa mekero ya moahelani",
-            ),
-            pair(
-              "Assume the same swale design fits every site",
-              "Nka hore moralo o tshwanang wa mokero (swale) o lekana sebaka se seng le se seng",
-            ),
+            hold("Dig immediately after the first good rain"),
+            hold("Watch where water flows and pools across at least one wet season"),
+            hold("Copy a neighbour's swale layout"),
+            hold("Assume the same swale design fits every site"),
           ],
           sourceCorrectIndex: 1,
           rationale: hold(
@@ -217,32 +191,17 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
           ),
         },
         {
-          question: pair(
-            "Which layout best applies 'integrate rather than segregate'?",
-            "Ke moralo ofe o sebedisang hantle 'kopanya ho e na le ho arola' (integrate rather than segregate)?",
-          ),
+          question: hold("Which layout best applies 'integrate rather than segregate'?"),
           options: [
-            pair(
-              "Chickens penned far from the garden",
-              "Dikgoho tse kwaletsweng hole le serapa",
-            ),
+            hold("Chickens penned far from the garden"),
             hold(
               "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
             ),
-            pair(
-              "Separate paddocks for each crop",
-              "Dikotwana tse arohaneng bakeng sa sejalo ka seng",
-            ),
-            pair(
-              "All animals kept off the cultivated zone",
-              "Diphoofolo tsohle di behellwa ka thoko ho sebaka se lengwang",
-            ),
+            hold("Separate paddocks for each crop"),
+            hold("All animals kept off the cultivated zone"),
           ],
           sourceCorrectIndex: 1,
-          rationale: pair(
-            "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
-            "Kopanyo e etsa hore karolo ka nngwe e sebeletse baahisani ba yona — mona, dikgoho di hlwekisa dikokwanyana mme di eketsa menontsha ho e na le ho dula feela ka lesakeng le sa sisinyeheng. Manyolo a matjha a ka jara dikokwana-hloko, kahoo hlahloba tsamaiso e bolokehileng pele dijalo tse jewang di kgutla.",
-          ),
+          rationale: hold("Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return."),
         },
       ],
     },
