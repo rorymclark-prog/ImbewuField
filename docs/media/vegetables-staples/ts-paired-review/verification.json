@@ -1,0 +1,168 @@
+{
+  "module": "vegetables-staples",
+  "language": "ts",
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "narration": null,
+  "pairedSource": "docs/narration/vegetables-staples.ts.paired-draft.json",
+  "pairedSourceSha256": "61bc51f238adbbbee0dd867421159b1320f2e32c9bdae56aab33afeb4d36ecc9",
+  "englishSource": "docs/narration/vegetables-staples.en.md",
+  "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+  "slides": [
+    {
+      "slide": 1,
+      "path": "public/course-decks/vegetables-staples/ts/slide-01.webp",
+      "pixels": "1440x5400",
+      "bytes": 330432,
+      "sha256": "a63beaf20705edb0cd40c8a533311639f224972dd4431f9137cd08db0cf51b96"
+    },
+    {
+      "slide": 2,
+      "path": "public/course-decks/vegetables-staples/ts/slide-02.webp",
+      "pixels": "1440x5400",
+      "bytes": 312712,
+      "sha256": "e79c3115794c458e7419c8a7e3c804fb88f836c1cfd519e013d5f8a6fd7934fa"
+    },
+    {
+      "slide": 3,
+      "path": "public/course-decks/vegetables-staples/ts/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 372478,
+      "sha256": "82bbafc23ab62eeeab9c738d888f8f094dc93865d4c2810ba499840112fde51f"
+    },
+    {
+      "slide": 4,
+      "path": "public/course-decks/vegetables-staples/ts/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 706024,
+      "sha256": "926d5bd92b4a5b44ce784eccd359dad15b8526b8c8da293540b55f8501e6e964"
+    },
+    {
+      "slide": 5,
+      "path": "public/course-decks/vegetables-staples/ts/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 430114,
+      "sha256": "4a6c9c59e578e7fd704d7c13506bc018445575b61f3b80e3cb69d2ea88e9c369"
+    },
+    {
+      "slide": 6,
+      "path": "public/course-decks/vegetables-staples/ts/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 593526,
+      "sha256": "eee79f1ad3fbd5d85121b838d80d191dab40a2ce46f2e2546501c850e1a3a91f"
+    },
+    {
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/ts/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 698220,
+      "sha256": "784a5ad73721d69bc60ce1b66b60c9466ce102e3cf6628ce7472375f99ad1ab6"
+    },
+    {
+      "slide": 8,
+      "path": "public/course-decks/vegetables-staples/ts/slide-08.webp",
+      "pixels": "1440x5400",
+      "bytes": 429694,
+      "sha256": "b78874bceb68c6e336cb268d4a99892fea8e2a377a3f7c47110161421aef3749"
+    },
+    {
+      "slide": 9,
+      "path": "public/course-decks/vegetables-staples/ts/slide-09.webp",
+      "pixels": "1440x5400",
+      "bytes": 352884,
+      "sha256": "1c15cec9548d90c859416d6aeceb4b7bde86053ce1726d960911cfcc2585b1ed"
+    },
+    {
+      "slide": 10,
+      "path": "public/course-decks/vegetables-staples/ts/slide-10.webp",
+      "pixels": "1440x5400",
+      "bytes": 787810,
+      "sha256": "48fc0320258b3c1c2effff74ae0f4c03f6cf0c3763fa31e45197ebdbc94da405"
+    },
+    {
+      "slide": 11,
+      "path": "public/course-decks/vegetables-staples/ts/slide-11.webp",
+      "pixels": "1440x5400",
+      "bytes": 412568,
+      "sha256": "149beffbfbe6e81156ae998be6b0cdd76b14089a4917469123973073fe598de6"
+    },
+    {
+      "slide": 12,
+      "path": "public/course-decks/vegetables-staples/ts/slide-12.webp",
+      "pixels": "1440x5400",
+      "bytes": 460462,
+      "sha256": "08e76cc15d1cbd9cd814c45ba797d304a2befe74a8154fbc05ada56454f187d4"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-decks/vegetables-staples/ts/slide-13.webp",
+      "pixels": "1440x5400",
+      "bytes": 446686,
+      "sha256": "8b88ffcb589da478798066743b97ffcea1ec0406dd57145e9e312fed4f8e0fe8"
+    },
+    {
+      "slide": 14,
+      "path": "public/course-decks/vegetables-staples/ts/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 259100,
+      "sha256": "b641f76546c804bf481ac30a15241acd301eac983e652cc8a57bfc112151f91b"
+    },
+    {
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/ts/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 572762,
+      "sha256": "0444cda9ccb4f139899c6d9a61b35fcfb352dcaaf9d7ac0fa27606b92c3f1ba5"
+    },
+    {
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/ts/slide-16.webp",
+      "pixels": "1440x5400",
+      "bytes": 556238,
+      "sha256": "c15ca978ef6ae2d53093dde6d49fb25969889cdc2794a0c5f7e03d6f9848fb71"
+    },
+    {
+      "slide": 17,
+      "path": "public/course-decks/vegetables-staples/ts/slide-17.webp",
+      "pixels": "1440x5400",
+      "bytes": 373912,
+      "sha256": "3c82d2e1c204e1d26e4d443822cbd6ac10db55602f5be16095c4d32a61de66ce"
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/vegetables-staples/ts/slide-18.webp",
+      "pixels": "1440x5400",
+      "bytes": 344448,
+      "sha256": "d6874a8f0e8ac8e9db68b530e6bd531f873d40b76ea23a49a1f3889cc0eb39c4"
+    }
+  ],
+  "contactSheet": "docs/media/vegetables-staples/ts-paired-review/contact-sheet.jpg",
+  "phoneSamples": [
+    {
+      "slide": 1,
+      "path": "docs/media/vegetables-staples/ts-paired-review/slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "0bb91b74b2f3b91171781254d75f82f0b1e95df28323e7252bb70e1b049374b9"
+    },
+    {
+      "slide": 13,
+      "path": "docs/media/vegetables-staples/ts-paired-review/slide-13-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "7074230ff9e3fb5ecca26dd70dceb7f5a5a3fa8fcd8e9f5eb70cb3a6fb2d5f82"
+    },
+    {
+      "slide": 14,
+      "path": "docs/media/vegetables-staples/ts-paired-review/slide-14-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "e0e658690307102744a38232811a3d9d4f9d8a32cbd0d1095a3ef84f8919eb1d"
+    },
+    {
+      "slide": 18,
+      "path": "docs/media/vegetables-staples/ts-paired-review/slide-18-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "facfd9962be96aae910129954603386995d9d9b6e6ef97f3c2fdcd2807b0ade4"
+    }
+  ],
+  "note": "Each frame pairs existing English artwork, the explicit draft/hold panel, and exact English narration. No audio is generated or registered."
+}

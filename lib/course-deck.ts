@@ -254,7 +254,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     // Unreviewed concept drafts only: every absent frame falls back to the full English slide.
     missingSlides: {
       st: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      ve: [1, 2, 3, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ve: [],
       ts: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
     },
     slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),
@@ -266,7 +266,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     missingSlides: {
       st: [3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18],
       ve: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 16, 17, 18],
-      ts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18],
+      ts: [],
     },
     slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },

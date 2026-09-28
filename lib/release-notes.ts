@@ -42,6 +42,10 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '0954e72', changes: [
+    'Food Forest has 20 silent Tshivenda review slides; Vegetables has 18 in Xitsonga.',
+    'Both are unreviewed drafts with most teaching still in English.',
+  ] },
   { when: '28 September 2026', sha: '5121dd4', changes: [
     'Tshivenda and Xitsonga Study decks can now be saved as smaller silent slide packs.',
     'English narration and clips remain an optional full download.',
