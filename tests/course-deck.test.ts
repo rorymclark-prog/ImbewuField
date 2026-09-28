@@ -675,11 +675,11 @@ test('only source-paired Xitsonga Food Forest frames replace the English slide',
   }
 });
 
-test('regional Food Forest and Xitsonga vegetables decks expose only authored paired frames', () => {
+test('regional Food Forest and Xitsonga vegetables decks expose the complete paired still set', () => {
   const cases: [string, string, number[]][] = [
     ['food-forest', 'st', [4, 8]],
-    ['food-forest', 've', [4, 6]],
-    ['vegetables-staples', 'ts', [13, 14]],
+    ['food-forest', 've', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
+    ['vegetables-staples', 'ts', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
   ];
   for (const [moduleId, language, authored] of cases) {
     const deck = COURSE_DECKS[moduleId];
