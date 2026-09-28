@@ -1,0 +1,182 @@
+[
+  {
+    "crop": "cauliflower",
+    "retail": {
+      "valuePerKg": 123.30,
+      "quote": "Cauliflower Florets 300 g ... \"offers\":[{\"@type\":\"Offer\",\"price\":\"36.99\",\"priceCurrency\":\"ZAR\"...",
+      "url": "https://www.woolworths.co.za/prod/_/A-20088552",
+      "accessed": "2026-09-28",
+      "arithmetic": "R36.99 / 0.3 kg = R123.30/kg"
+    },
+    "wholesale": {
+      "valuePerKg": 26.64,
+      "quote": "CAULIFLOWER | Total Value Sold R38,758.00 (MTD: R3,054,457.00) | Total Qty Sold 514 (MTD: 27,472) | Total Kg Sold 1,455 (MTD: 84,500) | Qty Available 1,677",
+      "url": "https://joburgmarket.co.za/jhb-market/dailyprices.php?commodity=134",
+      "accessed": "2026-09-28",
+      "arithmetic": "R38,758.00 / 1,455 kg = R26.64/kg"
+    },
+    "gaps": "Retail figure is for pre-cut, packaged florets (a processed/premium format), not a whole head, so it likely overstates a typical whole-cauliflower retail price; no whole-head price could be sourced because Checkers and PriceCheck return 403 (bot-blocked) and Pick n Pay's product page is a JS-rendered SPA with no price in static HTML."
+  },
+  {
+    "crop": "parsley",
+    "retail": {
+      "valuePerKg": 337.38,
+      "quote": "\"description\":\"Fresh Parsley 80 g\" ... \"offers\":[{\"@type\":\"Offer\",\"price\":\"26.99\",\"priceCurrency\":\"ZAR\"...",
+      "url": "https://www.woolworths.co.za/prod/_/A-6009217077267",
+      "accessed": "2026-09-28",
+      "arithmetic": "R26.99 / 0.08 kg = R337.38/kg"
+    },
+    "wholesale": {
+      "valuePerKg": 15.91,
+      "quote": "PARSLEY | Total Value Sold R2,800.00 (MTD: R188,708.00) | Total Qty Sold 47 (MTD: 2,310) | Total Kg Sold 176 (MTD: 7,957) | Qty Available 121",
+      "url": "https://joburgmarket.co.za/jhb-market/dailyprices.php?commodity=180",
+      "accessed": "2026-09-28",
+      "arithmetic": "R2,800.00 / 176 kg = R15.91/kg"
+    },
+    "gaps": "None strictly required — Joburg Market does record PARSLEY on a kg basis (it is not bunch-only at the wholesale/citywide level), and Woolworths sells a weighed 80 g pack, so both figures could be computed. Note the retail figure is a small herb-pack price and is not directly comparable per kg to a bulk vegetable; treat with that caveat rather than as a discrepancy."
+  },
+  {
+    "crop": "sorghum",
+    "retail": {
+      "valuePerKg": 75.98,
+      "quote": "\"description\":\"Red Sorghum 500 g\" ... \"offers\":[{\"@type\":\"Offer\",\"price\":\"37.99\",\"priceCurrency\":\"ZAR\"...",
+      "url": "https://www.woolworths.co.za/prod/_/A-6007875168952",
+      "accessed": "2026-09-28",
+      "arithmetic": "R37.99 / 0.5 kg = R75.98/kg"
+    },
+    "wholesale": null,
+    "gaps": "No wholesale figure: sorghum is not one of SAFEX's traded grain/oilseed contracts (confirmed by web search; Grain SA's Daily Report lists only White Maize, Yellow Maize, Wheat, Sunflower and Soybean spot prices), it does not appear in the Joburg Market's fresh-produce commodity list (fresh produce markets do not trade dry grain), and Grain SA's only sorghum document, the 'Somergrane - Plaaslike pryse vs Pariteitspryse' PDF, is chart-only with no extractable numeric price text to quote verbatim."
+  },
+  {
+    "crop": "soybean",
+    "retail": {
+      "valuePerKg": 113.27,
+      "quote": "\"description\":\"Soya Bean 150g\" ... \"offers\":[{\"@type\":\"Offer\",\"price\":\"16.99\",\"priceCurrency\":\"ZAR\"...",
+      "url": "https://www.woolworths.co.za/prod/_/A-6009189827785",
+      "accessed": "2026-09-28",
+      "arithmetic": "R16.99 / 0.15 kg = R113.27/kg"
+    },
+    "wholesale": {
+      "valuePerKg": 8.95,
+      "quote": "Oilseeds /Oliesade ... Commodity Spot Price Previous Price Change Previous Month Change (M-M) Previous Year Change (Y-Y) | Soybean 8,950.00 8,968.00 -0.20% 8,205.00 9.08% 6,947.00 28.83% | Report on 28 September 2026 | Latest Settlement 25 September 2026",
+      "url": "https://www.grainsa.co.za/upload/report_files/Grain-SA-Morning-Market-Report-28-Sep-2026.pdf",
+      "accessed": "2026-09-28",
+      "arithmetic": "SAFEX spot price R8,950.00/ton / 1,000 = R8.95/kg"
+    },
+    "gaps": "Retail figure is for Woolworths' 'steam cooked & vacuum packed' ready-to-eat soya beans (150 g), not raw dry soybean grain — it is almost certainly far higher than a raw dry-grain retail price would be, since no SA supermarket was found selling plain dry soybeans by weight; use with that strong caveat."
+  },
+  {
+    "crop": "brinjal",
+    "retail": {
+      "valuePerKg": 31.80,
+      "quote": "{\"@type\":\"Product\",...\"name\":\"Brinjals/Aubergines 500g\",...,\"offers\":[{\"@type\":\"Offer\",\"priceSpecification\":[{\"@type\":\"UnitPriceSpecification\",\"price\":\"15.90\",\"priceCurrency\":\"ZAR\"...",
+      "url": "https://littleoaks.co.za/product/brinjals-aubergines-500g/",
+      "accessed": "2026-09-28",
+      "arithmetic": "R15.90 / 0.5 kg = R31.80/kg"
+    },
+    "wholesale": {
+      "valuePerKg": 11.33,
+      "quote": "BRINJALS | Total Value Sold R19,714.00 (MTD: R1,320,900.94) | Total Qty Sold 380 (MTD: 22,062) | Total Kg Sold 1,740 (MTD: 103,063) | Qty Available 661",
+      "url": "https://joburgmarket.co.za/jhb-market/dailyprices.php?commodity=124",
+      "accessed": "2026-09-28",
+      "arithmetic": "R19,714.00 / 1,740 kg = R11.33/kg"
+    },
+    "gaps": "Retail source (Little Oaks Produce) is a small online farm-box seller, not one of the named major chains (Checkers/PnP/Woolworths/Spar/PriceCheck), which were all inaccessible for this item (Checkers/PriceCheck 403 bot-blocked, PnP JS-rendered with no static price, Woolworths has no plain fresh-brinjal product page found)."
+  },
+  {
+    "crop": "gem-squash",
+    "retail": {
+      "valuePerKg": 29.99,
+      "quote": "\"name\":\"Gem Squash 1 kg\",...,\"sku\":\"20008390\",...,\"offers\":[{\"@type\":\"Offer\",\"price\":\"29.99\",\"priceCurrency\":\"ZAR\",\"sku\":\"20008390\",\"url\":\"https://www.woolworths.co.za/prod/Food/Fruit-Vegetables-Salads/Fresh-Vegetables/Butternut-Pumpkin-Squash/Gem-Squash-1-kg/_/A-20008390\"}]",
+      "url": "https://www.woolworths.co.za/prod/_/A-20008390",
+      "accessed": "2026-09-28",
+      "arithmetic": "Sold as a 1 kg pack at R29.99, i.e. R29.99/kg directly"
+    },
+    "wholesale": {
+      "valuePerKg": 6.28,
+      "quote": "GEM SQUASHES | Total Value Sold R85,714.00 (MTD: R2,286,956.40) | Total Qty Sold 1,457 (MTD: 27,204) | Total Kg Sold 13,651 (MTD: 239,266) | Qty Available 7,436",
+      "url": "https://joburgmarket.co.za/jhb-market/dailyprices.php?commodity=154",
+      "accessed": "2026-09-28",
+      "arithmetic": "R85,714.00 / 13,651 kg = R6.28/kg"
+    },
+    "gaps": "None. Retail figure corroborated by an independent seller, Superb Hyper, whose product page 'Gem Squash Per Kg' also quotes R19.99/kg (https://superbhyper.co.za/product/gem-squash-per-kg/, accessed 2026-09-28) — lower than Woolworths but same order of magnitude; Woolworths (a major national chain) was used as the primary sourced figure."
+  },
+  {
+    "crop": "baby-marrow",
+    "retail": {
+      "valuePerKg": 73.00,
+      "quote": "window.mcPixel.data = {\"product\":{\"id\":\"12204\",\"productId\":\"12204\",\"title\":\"Baby Marrow 1kg\",\"price\":73,\"currency\":\"ZAR\",...}",
+      "url": "https://www.papyrusnatural.co.za/product/baby-marrow-1kg/",
+      "accessed": "2026-09-28",
+      "arithmetic": "Sold as a 1 kg pack at R73.00, i.e. R73.00/kg directly"
+    },
+    "wholesale": {
+      "valuePerKg": 15.40,
+      "quote": "BABY MARROWS | Total Value Sold R81,067.00 (MTD: R3,193,648.00) | Total Qty Sold 1,048 (MTD: 49,729) | Total Kg Sold 5,263 (MTD: 225,222) | Qty Available 1,480",
+      "url": "https://joburgmarket.co.za/jhb-market/dailyprices.php?commodity=1189",
+      "accessed": "2026-09-28",
+      "arithmetic": "R81,067.00 / 5,263 kg = R15.40/kg"
+    },
+    "gaps": "Retail source (Papyrus Natural) is a small premium/organic online grocer, not one of the named major chains — all of which were inaccessible for this item (Checkers 403 bot-blocked; Woolworths and PnP have no plain fresh-baby-marrow product page found in search). R73/kg is far above the wholesale figure (implied margin ~4.7x, versus ~2-3x typical for these crops), so this retail number should be treated as an upper-bound/premium-retailer data point rather than a representative mainstream price."
+  },
+  {
+    "crop": "spanspek",
+    "retail": null,
+    "wholesale": {
+      "valuePerKg": 12.11,
+      "quote": "MUSK MELONS | Total Value Sold R53,740.00 (MTD: R4,518,893.00) | Total Qty Sold 469 (MTD: 30,774) | Total Kg Sold 4,437 (MTD: 250,970) | Qty Available 547",
+      "url": "https://joburgmarket.co.za/jhb-market/dailyprices.php?commodity=47",
+      "accessed": "2026-09-28",
+      "arithmetic": "R53,740.00 / 4,437 kg = R12.11/kg"
+    },
+    "gaps": "Retail: no spanspek-specific supermarket price could be sourced — the Checkers 'Large Spanspek' product page (https://www.checkers.co.za/product/large-spanspek-10145719EA) returns 403 (bot-blocked), and Pick n Pay/Woolworths spanspek pages are JS-rendered or not found. A lower-confidence cross-reference only: selinawamucii.com's 'Fresh Melons' page (generic melons, not spanspek-specific) states 'The retail price range in Rand for fresh melons is between ZAR 5.53 and ZAR 13.16 per kilogram... in Johannesburg' (https://www.selinawamucii.com/insights/prices/south-africa/fresh-melons/, page dated September 2026, accessed 2026-09-28) — not used as the sourced retail figure because it is not spanspek-specific. Wholesale: Joburg Market also lists a separate 'SWEET MELONS' commodity code (R30,380.00 / 2,833 kg = R10.72/kg, same URL pattern with commodity=49, accessed 2026-09-28); MUSK MELONS was used as primary because it is the closer botanical/common-name match to spanspek (Cucumis melo var. reticulatus), but the two codes' near-2x price difference vs SWEET MELONS should be noted."
+  },
+  {
+    "crop": "sweetcorn",
+    "retail": null,
+    "wholesale": {
+      "valuePerKg": 69.55,
+      "quote": "SWEET CORN | Total Value Sold R168,034.00 (MTD: R4,955,777.00) | Total Qty Sold 543 (MTD: 21,838) | Total Kg Sold 2,416 (MTD: 88,357) | Qty Available 326",
+      "url": "https://joburgmarket.co.za/jhb-market/dailyprices.php?commodity=144",
+      "accessed": "2026-09-28",
+      "arithmetic": "R168,034.00 / 2,416 kg = R69.55/kg"
+    },
+    "gaps": "Retail: Woolworths' 'Sweetcorn' product page (https://www.woolworths.co.za/prod/_/A-20008956, price R52.99, accessed 2026-09-28) has no stated pack weight or count anywhere in the fetched static HTML, so no per-kg arithmetic could be shown, and per the no-estimating rule this is left as a gap rather than guessed. Wholesale: Joburg Market also lists a separate 'GREEN MEALIES' commodity code traded at very low volume today (R290.00 / 75 kg = R3.87/kg, only 6 units sold citywide; https://joburgmarket.co.za/jhb-market/dailyprices.php?commodity=173, accessed 2026-09-28) — excluded as primary because the thin volume makes it unreliable, but noted since 'sweetcorn (green mealies)' could plausibly map to either commodity code and the two prices differ by ~18x."
+  },
+  {
+    "crop": "cowpea",
+    "retail": null,
+    "wholesale": null,
+    "gaps": "No wholesale figure: cowpea does not appear anywhere in the Joburg Market's full ~152-commodity list, is not a SAFEX-traded contract, and does not appear with price data in the NAMC SASDE report (which covers only tonnage/supply-demand, not prices). No retail figure: no South African supermarket or PriceCheck listing was found for dried cowpeas/black-eyed peas. The only related data point located anywhere is selinawamucii.com's statement that 'The latest export unit value is US$0.986 per kg' for South Africa cow peas (black eyed peas) as of January 2025 (https://www.selinawamucii.com/insights/prices/south-africa/cow-peas-black-eyed-peas/, page dated September 2026, accessed 2026-09-28) — this is a UN Comtrade export unit value, not a wholesale or retail price, so it was not used as either figure and both are left as explicit gaps."
+  },
+  {
+    "crop": "bambara-groundnut",
+    "retail": {
+      "valuePerKg": 119.90,
+      "quote": "variants: [{\"id\":46784317194427,\"title\":\"500g\",\"option1\":\"500g\",...}] ... \"name\":\"Bambara Groundnut - 500g - 500g\",\"public_title\":\"500g\",\"options\":[\"500g\"],\"price\":59.95,...\"available\":true",
+      "url": "https://www.vicfame.com/products/bambara-groundnut",
+      "accessed": "2026-09-28",
+      "arithmetic": "R59.95 / 0.5 kg = R119.90/kg"
+    },
+    "wholesale": null,
+    "gaps": "No wholesale figure: bambara groundnut does not appear in the Joburg Market's commodity list, is not a SAFEX contract, and no formal market/price report for it was found. The retail figure comes from VicFame, a niche specialty/bulk-foods online grocer, not one of the named major supermarket chains, which had no bambara groundnut listing at all."
+  },
+  {
+    "crop": "sunflower",
+    "retail": {
+      "valuePerKg": 195.96,
+      "quote": "\"description\":\"Sunflower Seeds 250 g\" ... \"offers\":[{\"@type\":\"Offer\",\"price\":\"48.99\",\"priceCurrency\":\"ZAR\"...",
+      "url": "https://www.woolworths.co.za/prod/_/A-6001009013422",
+      "accessed": "2026-09-28",
+      "arithmetic": "R48.99 / 0.25 kg = R195.96/kg"
+    },
+    "wholesale": {
+      "valuePerKg": 10.106,
+      "quote": "Oilseeds /Oliesade ... Commodity Spot Price Previous Price Change Previous Month Change (M-M) Previous Year Change (Y-Y) | Sunflower 10,106.00 9,900.00 2.08% 10,345.00 -2.31% 10,616.00 -4.80% | Report on 28 September 2026 | Latest Settlement 25 September 2026",
+      "url": "https://www.grainsa.co.za/upload/report_files/Grain-SA-Morning-Market-Report-28-Sep-2026.pdf",
+      "accessed": "2026-09-28",
+      "arithmetic": "SAFEX spot price R10,106.00/ton / 1,000 = R10.106/kg"
+    },
+    "gaps": "Retail figure is for Woolworths' shelled, roasted/salted snacking sunflower seeds (250 g), not raw oilseed sold for pressing or animal feed — it is almost certainly far higher than a raw-seed retail price, since no SA supermarket was found selling plain raw sunflower seed by weight for that purpose; use with that strong caveat."
+  }
+]

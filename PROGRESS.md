@@ -69,6 +69,13 @@ must provision — not buildable from code alone).
   follow Table 8's conservative-through-likely convention like every other row, so planning points
   stay. Green beans range upper 0.8 → 1.0 kg/m² (ARC "Estimated yield: 100 kg/100m2"); broccoli
   0.8 → 0.9 (KZN Cole Crops "6 to 9 tons per hectare"); peas left (KZN Green Peas average 5–6 t/ha).
+- **Prices for batch-1 crops** (`lib/crop-prices.ts`, quotes in `research/crop-sources/_prices-2026-09-28.json`):
+  gem squash, brinjal, baby marrow both sides real (Joburg Market + shop listing); cauliflower,
+  spanspek, soybean, sunflower have real wholesale (Joburg Market / SAFEX) with retail derived by
+  the file's ~38% ratio, because the only shop listings were a different product (florets, cooked
+  soya, snack seed). Still excluded, with reasons: parsley (pack vs market 21x apart), sorghum,
+  bambara, sweetcorn (two market codes 18x apart), cowpea. `PRICE_SNAPSHOT_MONTHS` now reads
+  "July, August and September 2026".
 
 ### 28 Sep 2026 — Artwork: Codex batches merged (20 crops, 15 animals, 5 fruit trees)
 - **Crop Batch 2 (#779):** the 20 flat placeholders in `public/crop-art/` replaced with finished

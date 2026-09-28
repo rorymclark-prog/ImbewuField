@@ -42,6 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', changes: [
+    'Variety guidance names your growing area and lists varieties chosen for it first.',
+    'Each named variety links to the seed company or guide that recommends it.',
+    'Gem squash, brinjal, baby marrow, cauliflower, spanspek, soya and sunflower have prices.',
+    'Green bean and broccoli yield ranges now reach the higher figures a second guide gives.',
+  ], tour: [
+    { title: 'Varieties for your area', where: 'Crop plan → + crop → pick a crop → Variety guidance', href: '/facilitator/crops',
+      detail: 'Open a crop in any bed. Variety guidance says which growing area this site’s climate points to, then lists the varieties a seed company or growing guide named for it. Where the climate fits two areas, both are named.' },
+    { title: 'Check where a variety comes from', where: 'Crop plan → Variety guidance → Other varieties', href: '/facilitator/crops',
+      detail: 'Open Other varieties to see the rest and the areas they were named for. Every card links its source; hover the link to read the sentence it comes from.' },
+    { title: 'See the new prices', where: 'Crop plan → Plan-cycle value', href: '/facilitator/crops',
+      detail: 'Plant gem squash, brinjal or another newly priced crop and it now counts in the value figures. Each price shows its date, and estimated ones say so.' },
+  ] },
   { when: '28 September 2026', sha: '3ef09f15', changes: [
     'Food Forest has 20 unreviewed Sesotho draft slides paired with English.',
   ], tour: [

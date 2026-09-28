@@ -29,7 +29,7 @@ export const PRICE_SNAPSHOT_DATE = '14 July 2026';
  * date actually in the book falls outside the months named here, so the sentence cannot go stale
  * silently the next time a crop is priced.
  */
-export const PRICE_SNAPSHOT_MONTHS = 'July–August 2026';
+export const PRICE_SNAPSHOT_MONTHS = 'July, August and September 2026';
 
 /**
  * The date to print on one crop's price card: that price's own research date when it has one, else
