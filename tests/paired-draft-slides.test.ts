@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
@@ -11,6 +11,7 @@ import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-dra
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
+import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const completeHold = (language = 'st') => ({
@@ -78,6 +79,29 @@ test('regional Introduction orientation and ethics frames hold uncertain farming
       assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
         `slide ${n} ${lang}: work, zones, water and permission claims must remain English`);
     }
+  }
+});
+
+test('Tshivenda Reading the Landscape pairs all 21 illustrated frames and holds actionable field wording in English', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/reading-landscape.ve.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 've');
+  assert.equal(slides.length, 21);
+  assert.equal(packet.reviewStatus, 'unreviewed');
+  assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
+    .map((slide: any) => slide.n), [2, 3, 5, 13, 17]);
+  assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) => part.status === 'english-hold')),
+    'water, scale, sun, wind, soil, frost, species, safety, permission and field advice remain exact English');
+  assert.equal(slides[8].target.heading.status, 'english-hold',
+    'the candidate for “Follow the Sun Across the Site” changed across-the-site to everywhere');
+
+  for (const n of Array.from({ length: 21 }, (_, i) => i + 1)) {
+    const slide = String(n).padStart(2, '0');
+    const assetPath = `public/course-decks/reading-landscape/ve/slide-${slide}.webp`;
+    const assetUrl = `/course-decks/reading-landscape/ve/slide-${slide}.webp`;
+    assert.ok(existsSync(assetPath), `missing source-paired phone frame ${assetPath}`);
+    assert.equal(COURSE_ASSET_SIZES[assetUrl], statSync(assetPath).size,
+      `the offline byte count must match ${assetUrl}`);
   }
 });
 
