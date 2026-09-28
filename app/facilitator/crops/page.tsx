@@ -30,6 +30,9 @@ import { buildTreeAvailability, formatMonthSpan, formatRange, placedTreeGroups, 
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
+import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
+import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
+import { climateGateFrom } from '@/lib/crop-climate-gate';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
@@ -1356,6 +1359,28 @@ function FacilitatorCropsPageInner() {
     () => buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, yearMode === 'fromToday'),
     [canvasAnimals, animalChoices, monthOrder, yearMode],
   );
+  // The year of food folds the chart's own first twelve slots into one verdict per month, so it
+  // follows the year mode and the orchard/animal switches exactly as the chart does.
+  const yearOfFood = useMemo(
+    () => buildYearOfFood(
+      monthOrder, foodAvailability,
+      includeTrees ? treeAvailability : undefined,
+      includeAnimals ? animalAvailability : undefined,
+    ),
+    [monthOrder, foodAvailability, includeTrees, treeAvailability, includeAnimals, animalAvailability],
+  );
+  // The same climate gate auto-suggest applies: temperatures always, rainfall only when the
+  // plan is rain-fed. Null when the site climate has not resolved, and then only the region's
+  // sowing windows filter the suggestions.
+  const yearGate = useMemo(() => climateGateFrom({
+    siteMonthlyTempC: siteClimate?.monthlyTempC,
+    siteMonthlyRainMm: siteClimate?.monthlyRainMm,
+    siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
+  }, !aReliableIrrigation), [siteClimate, hasSiteCoords, siteLat, aReliableIrrigation]);
+  const gapFills = useMemo(
+    () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate }),
+    [yearOfFood, beds, plantings, pattern, currentMonth, yearGate],
+  );
   function chooseAnimalEnterprise(animal: AnimalKind, enterpriseId: string | null) {
     if (!canvasSite) return;
     const next = { ...animalChoices };
@@ -1431,6 +1456,14 @@ function FacilitatorCropsPageInner() {
     setPickerFraction(p.areaFraction ?? 1);
     setPickerExisting(!!p.existing);
     setPickerVariety(p.variety ?? '');
+  }
+  // A gap-fill suggestion opens the ordinary picker already filled in, so the farmer sees the
+  // same sowing-window note and overlap warning as any other planting before it is added.
+  function planGapFill(s: GapFillSuggestion) {
+    openPicker(s.bed.id);
+    setPickerCrop(s.crop);
+    setPickerMonth(s.sowMonth);
+    setPickerFraction(s.areaFraction);
   }
   function closePicker() {
     setPickerBedId(null);
@@ -2002,6 +2035,14 @@ function FacilitatorCropsPageInner() {
               animalAvailability={animalAvailability}
               includeAnimals={includeAnimals}
               onIncludeAnimalsChange={(next) => { setIncludeAnimals(next); saveIncludeAnimals(next); }}
+            />
+            <YearOfFoodCard
+              year={yearOfFood}
+              gapFills={gapFills}
+              yearMode={yearMode}
+              hasBeds={beds.some((b) => b.kind !== 'plot')}
+              climateKnown={!!yearGate?.tempC}
+              onPlan={planGapFill}
             />
             <AnimalEnterprisesCard groups={canvasAnimals} choices={animalChoices} onChoose={chooseAnimalEnterprise} />
 

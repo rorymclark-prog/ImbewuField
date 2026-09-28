@@ -52,6 +52,27 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 28 Sep 2026 — Year of food (Phase D: one calendar, gap-fill sowings)
+- **New `lib/year-of-food.ts`:** `buildYearOfFood` folds the Availability chart's OWN first 12
+  slots (bed crops, fruit trees, animals) into one verdict per month: fresh (anything fresh from any
+  source), stored-only, or empty. It recomputes nothing, so it cannot disagree with the chart, and
+  it follows the chart's year mode and the Orchard/Animals switches. A "veg gap" month has no fresh
+  vegetable even if fruit or eggs cover it.
+- **Gap-fill sowings (`suggestGapFills`):** for each veg-gap month (hungry months first), up to 3
+  sowings that pick fresh in it. Only crops the auto-planner trusts (`hasAutomaticPlanningBasis`,
+  yield > 0, so no soil covers; not maize), sown in the region's window, inside the site climate gate
+  auto-suggest uses (heat always, rain when rain-fed), on a veg bed (not a staple plot) with room
+  from the printed field-entry month to the end of picking. The share offered is the largest picker
+  share still free; vines only get a whole bed. Fresh months use `buildFoodAvailability`'s own
+  arithmetic, and the test adds each suggestion as a planting and checks the chart shows it.
+  When no bed has room, the card names the crops that could have picked and says so.
+- **Crop plan (`/facilitator/crops`):** "Year of food" card under the chart: 12 month cells with
+  Lucide pips (fresh veg, fruit, eggs/milk/meat/honey, in store), empty months dashed in ochre, a
+  one-line summary ("Something fresh in 9 of 12 months; nothing fresh in Jun–Aug") and an
+  availability-not-sufficiency caveat. "Plan it" opens the normal crop picker prefilled with bed,
+  crop, sow month and share, so the overlap warning and window note still show before anything is
+  added. Tests: `tests/year-of-food.test.ts`.
+
 ### 28 Sep 2026 — Animal enterprises (Phase C: chickens, goats, bees, rabbits, ducks)
 - **New table `lib/animal-enterprises.ts`:** per ENTERPRISE, not per m². Each of 9 enterprises
   (layer, broiler and village chickens; dairy, meat and indigenous goats; honeybees; meat rabbits;
