@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '46810d6', changes: [
+    'Study downloads now flag English slides or narration in regional language packs.',
+  ] },
   { when: '28 September 2026', sha: '9518110', changes: [
     '17 fruit trees in the Plant Catalog now show their picture, from mango to marula.',
     'On the plan, those trees now draw their own crown instead of one shared stand-in.',
