@@ -14,6 +14,7 @@ import {
   ANIMAL_LABEL,
   PRODUCT_LABEL,
   enterprisesFor,
+  formatAmountRange,
   sourcedProductMonths,
   type AnimalEnterprise,
   type AnimalKind,
@@ -39,7 +40,7 @@ const STRUCTURE_NOUN: Readonly<Record<AnimalKind, [string, string]>> = {
 
 /** Weeks as a farmer says them: "18–20 weeks" up to half a year, months after that. */
 export function formatWeeks([min, max]: [number, number]): string {
-  if (max <= 26) return `${formatRange([min, max])} weeks`;
+  if (max <= 26) return `${formatAmountRange([min, max])} weeks`;
   const months = (w: number) => Math.round(w / 4.35);
   return `about ${formatRange([months(min), months(max)])} months`;
 }
@@ -72,7 +73,7 @@ function Fact({ label, value, source }: { label: string; value: string | null; s
   );
 }
 
-const rangeText = (r: SourcedRange | null, unit: string) => (r ? `${formatRange(r.value)} ${unit}` : null);
+const rangeText = (r: SourcedRange | null, unit: string) => (r ? `${formatAmountRange(r.value)} ${unit}` : null);
 
 function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
   const months = sourcedProductMonths(e);

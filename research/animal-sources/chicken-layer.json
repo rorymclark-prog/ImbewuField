@@ -1,0 +1,204 @@
+{
+  "enterpriseId": "chicken-layer",
+  "commonName": "Laying hens (commercial)",
+  "animal": "chicken",
+  "animalUnit": "hen",
+  "product": "eggs",
+  "outputUnit": "eggs/hen housed, laying cycle to 90 weeks",
+  "outputPerAnimal": {
+    "value": [
+      407.1,
+      428.6
+    ],
+    "evidence": {
+      "quote": "Eggs/hen housed  428.6 422.5 424.6 407.1 428.2 421.0",
+      "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf",
+      "doc": "SAPA Industry Profile 2022, Table 4a (Breed standards in laying hens)",
+      "page": 39
+    },
+    "notes": "Table 4a's cumulative 'Eggs/hen housed' for five commercial strains; the same table gives 'Age at depop. weeks 90.0' for every strain. Commercial barn/cage average, not a free-range smallholder trial. Kept as the source gives it: a per-year rate would need a point-of-lay age from another document."
+  },
+  "productionMonths": [
+    {
+      "region": "SA commercial houses with 14–16 h lighting",
+      "months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "by maintaining the light period on a constant level of 14 - 16 hours per day, egg production is \nmaintained on a high level throughout the year.",
+        "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+        "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+        "page": 15
+      },
+      "notes": "Year-round production in commercial systems is achieved with an artificial lighting program (14-16 hours/day) precisely because layers are naturally photoperiod-sensitive; the source frames this as counteracting a seasonal (day-length) decline rather than describing a naturally flat annual pattern."
+    }
+  ],
+  "seasonalPattern": {
+    "value": "With a constant 14–16 hour light day, commercial hens keep laying at a high rate all year.",
+    "evidence": {
+      "quote": "by maintaining the light period on a constant level of 14 - 16 hours per day, egg production is \nmaintained on a high level throughout the year.",
+      "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+      "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+      "page": 15
+    },
+    "notes": "Commercial/intensive system, South Africa (general)."
+  },
+  "timeToFirstProductWeeks": {
+    "value": [
+      16,
+      17
+    ],
+    "evidence": {
+      "quote": "Receiving and housing point-of-lay pullets at 16 / 17 weeks of age",
+      "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+      "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+      "page": 5
+    },
+    "notes": "Point-of-lay = pullets are about to begin laying when housed at 16-17 weeks; used directly as age-to-first-product (already in weeks, no conversion needed). Commercial system, South Africa."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: derived by subtracting a point-of-lay age from one document from a depopulation age in another; neither source states a laying life. Withdrawn value: [1.4, 1.42]."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": [
+      0.11,
+      0.11
+    ],
+    "evidence": {
+      "quote": "Layers under normal circumstances would drink twice the amount of water than the weight of feed \nthey consume, approximately 220 ml per day.",
+      "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+      "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+      "page": 13
+    },
+    "notes": "Source states water intake is twice the WEIGHT of feed consumed, and gives water as approximately 220 ml/day. Feed weight = 220 ml (treated as 220 g, water density) / 2 = 110 g/day = 0.11 kg/day. Cross-check: SAPA Industry Profile 2022 Table 4a (p.39) gives cumulative 'Feed intake kg' of 53.5-58.1 kg per hen over the ~73-74 week laying period (511-518 days): 53500/511 = 104.7 g/day to 58100/518 = 112.2 g/day, i.e. approximately 0.105-0.112 kg/day - consistent with the 0.11 kg/day figure used here. Commercial system, South Africa."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": [
+      0.22,
+      0.22
+    ],
+    "evidence": {
+      "quote": "Layers under normal circumstances would drink twice the amount of water than the weight of feed \nthey consume, approximately 220 ml per day.",
+      "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+      "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+      "page": 13
+    },
+    "notes": "220 ml/day = 0.22 L/day. Commercial system, South Africa."
+  },
+  "spaceM2PerAnimal": {
+    "value": [
+      0.083,
+      0.083
+    ],
+    "evidence": {
+      "quote": "In \nhouses with appropriate perching/roosting facilities, stocking densities may be \nincreased to 12 birds per square meter.",
+      "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+      "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+      "page": 1
+    },
+    "notes": "Indoor/house floor space in a Free Range or Barn system with perches: 12 birds/m2 = 1/12 = 0.083 m2/bird. The same Code's external range limit is much larger (5 birds/m2 = 0.2 m2/bird outdoors, see welfare) - not mixed into this indoor figure, per the instruction not to combine different systems. A separate cage-system table in the same document (Table 3.1) gives a different, more confined figure for battery cages, also not used here since this enterprise is framed as free-range/barn. South Africa."
+  },
+  "welfare": [
+    {
+      "point": "In free-range systems, hens must have access to the outdoor range for at least 8 hours a day in daylight.",
+      "evidence": {
+        "quote": "In Free Range production, birds must have access to the external range for a \nminimum of 8 hours per day, during natural daylight hours.",
+        "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+        "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+        "page": 1
+      }
+    },
+    {
+      "point": "Where individual nest boxes are used, at least one nest for every 8 hens.",
+      "evidence": {
+        "quote": "Where individual nest boxes are provided, this should not be less \nthan 1 nest per 8 hens.",
+        "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+        "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+        "page": 1
+      }
+    },
+    {
+      "point": "Hens need at least 8 hours of continuous darkness in every 24-hour cycle to rest properly.",
+      "evidence": {
+        "quote": "A minimum period of 8 hours continuous darkness per 24-hour cycle \nmust also be provided in order to accommodate the birds’ requirement for adequate \nrest.",
+        "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+        "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+        "page": 1
+      }
+    },
+    {
+      "point": "Floor housing needs litter on at least a third (33%) of the floor.",
+      "evidence": {
+        "quote": "Litter must be provided \non at least 33% of the floor area.",
+        "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+        "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+        "page": 1
+      }
+    },
+    {
+      "point": "The outdoor free-range area must not be overstocked: no more than 5 birds per square metre of range.",
+      "evidence": {
+        "quote": "The stocking rate of the external range should not exceed 5 birds per square meter.",
+        "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+        "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+        "page": 1
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+      "evidence": {
+        "quote": "have become or can reasonably be suspected of having become infected with any controlled\nanimal disease, immediately report such incidence in the prescribed manner to the director.",
+        "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+        "doc": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii)",
+        "page": 9
+      }
+    },
+    {
+      "point": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+      "evidence": {
+        "quote": "Newcastle disease\n• Notifiable Avian Influenza (NAI)",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+        "doc": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet)",
+        "page": 1
+      }
+    },
+    {
+      "point": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir;",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+        "page": 6
+      }
+    },
+    {
+      "point": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+      "evidence": {
+        "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "No free-range/smallholder-specific eggs/hen/year figure was found for commercial layer breeds; the outputPerAnimal figure used (SAPA Industry Profile Table 4a) is a national commercial (intensive/barn) average across five hybrid strains, not a smallholder free-range trial.",
+    "nda.gov.za and dalrrd.gov.za were unreachable for the Animal Diseases Act (connection reset / 502 on every attempted URL, consistent with this being a known-flaky host); an eccogta.gov.za (Eastern Cape district) mirror of the same Act text was used instead and verified to match the original page count and content.",
+    "Editor review 2026-09-28: outputPerAnimal was a per-year rate built from two documents (cumulative eggs ÷ a laying period from a point-of-lay age elsewhere); restored to the source's own 407.1–428.6 eggs per hen housed to 90 weeks. productiveLifeYears withdrawn on the same ground. Months relabelled as a lit commercial house (a hen without lighting is not claimed to lay all year). Legal: dropped the Act's general definition (the factsheet point names avian influenza and Newcastle) and trimmed summaries that said more than their quotes (who may sell, why nests or litter are needed)."
+  ]
+}

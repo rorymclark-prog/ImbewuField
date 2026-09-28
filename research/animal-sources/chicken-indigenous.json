@@ -1,0 +1,144 @@
+{
+  "enterpriseId": "chicken-indigenous",
+  "commonName": "Village chickens (indigenous, free-range)",
+  "animal": "chicken",
+  "animalUnit": "hen",
+  "product": "eggs",
+  "outputUnit": "eggs/hen/year",
+  "outputPerAnimal": {
+    "value": [
+      40.43,
+      49.91
+    ],
+    "evidence": {
+      "quote": "Egg number per year  40.43 49.91 NS",
+      "url": "https://www.scielo.org.za/pdf/sajas/v53n6/06.pdf",
+      "doc": "Tenza, Mhlongo & Chimonyo (2023), 'Village chicken production and egg quality in dry and wet, resource-limited environments in KwaZulu-Natal, South Africa', South African Journal of Animal Science 53(6)",
+      "page": 5
+    },
+    "notes": "Free-range/scavenging village chickens, KwaZulu-Natal: dry (40.43) vs wet (49.91) environment, difference not significant ('NS'). A managed-system ARC Irene trial of named indigenous breeds (Grobbelaar, Sutherland & Molalakgotla 2010, Animal Genetic Resources 46: 25-32) reports far higher counts, but its figures could not be checked against a fetchable text and are not recorded here."
+  },
+  "productionMonths": [],
+  "seasonalPattern": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the quote is about what foraging hens eat (adequate for maintenance and growth, not laying), not about when eggs come; that finding is kept as a welfare point. Withdrawn value: \"Nutrient levels in free-ranging birds' diets vary by season and generally fall short of what is needed to sustain egg production, even when maintenance needs are met.\"."
+  },
+  "timeToFirstProductWeeks": {
+    "value": [
+      15.74,
+      27.78
+    ],
+    "evidence": {
+      "quote": "Age at first lay (weeks)  15.74 27.78 *",
+      "url": "https://www.scielo.org.za/pdf/sajas/v53n6/06.pdf",
+      "doc": "Tenza, Mhlongo & Chimonyo (2023), 'Village chicken production and egg quality in dry and wet, resource-limited environments in KwaZulu-Natal, South Africa', South African Journal of Animal Science 53(6)",
+      "page": 5
+    },
+    "notes": "Free-range village chickens, KwaZulu-Natal; dry-environment birds started laying earlier (15.74 weeks) than wet-environment birds (27.78 weeks), difference flagged significant ('*') in the source table. Wide range reflects genuine dry/wet-season environmental variation reported by the source, not measurement uncertainty."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "No SA source found stating how many years a free-range/village hen is kept before replacement or culling. The Tenza et al. (2023) and Raphulu et al. (2015) papers report age-at-first-lay and production-cycle egg counts but not a total productive-life span; the ARC Module 11 training manual (Climate-Smart Agriculture Training Manual, Poultry Production) discusses extensive/village-system husbandry generally (see welfare) but likewise gives no productive-life figure. Left null rather than guessed."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Village/free-range indigenous chickens are predominantly scavenging and not given a controlled, measured daily feed ration in the sources reviewed (see welfare quote below: 'forced to scrounge for their own water and food'), so no kg/day figure exists for this system in the SA literature searched (ARC Module 11, Tenza et al. 2023, Raphulu et al. 2015, Malatji et al. 2016). A commercial-system feed figure exists (see chicken-layer.json / chicken-broiler.json) but is not applicable here since it is a different production system."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Same reasoning as feedKgPerAnimalPerDay: free-ranging/scavenging birds source their own water opportunistically (see welfare quote below) rather than being given a measured daily ration, and no SA source reviewed gives a litres/day figure for this system."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Village/free-range indigenous chickens roam and scavenge over an unenclosed or loosely-enclosed home range rather than being kept at a fixed stocking density in the sources reviewed; none of ARC Module 11, Tenza et al. (2023), Raphulu et al. (2015) or Malatji et al. (2016) gives an m2/bird figure for this system, only qualitative descriptions of free ranging and night housing (see welfare)."
+  },
+  "welfare": [
+    {
+      "point": "In extensive village systems the chickens have to find their own water and food.",
+      "evidence": {
+        "quote": "The chickens are forced to scrounge for \ntheir own water and food",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+        "doc": "ARC, Climate-Smart Agriculture Training Manual, Module 11: Poultry Production",
+        "page": 471
+      }
+    },
+    {
+      "point": "Scavenging village chickens grow more slowly than commercially-farmed birds and are more vulnerable to disease, parasites and predators.",
+      "evidence": {
+        "quote": "Most chickens will scavenge for food rather than \nbeing fed, and their growth rates are generally \nlow when compared to birds on commercial \nfarms. They are also more susceptible to \ndisease, parasites, and predator attacks.",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+        "doc": "ARC, Climate-Smart Agriculture Training Manual, Module 11: Poultry Production",
+        "page": 468
+      }
+    },
+    {
+      "point": "In the Limpopo and KwaZulu-Natal survey, 94.9% of farmers housed their chickens at night.",
+      "evidence": {
+        "quote": "94.9% farmers provided chicken housing at night.",
+        "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0030-24652016000100008",
+        "doc": "Malatji, Tsotetsi, van Marle-Koster & Muchadeyi (2016), 'A description of village chicken production systems and prevalence of gastrointestinal parasites: Case studies in Limpopo and KwaZulu-Natal provinces of South Africa', Onderstepoort Journal of Veterinary Research 83(1)",
+        "page": null
+      }
+    },
+    {
+      "point": "What free-ranging hens forage met their needs for maintenance and growth but not for laying: protein in every season, calcium and phosphorus in winter.",
+      "evidence": {
+        "quote": "The crude protein (CP) level of the crop contents of adult \nchickens in all seasons and the calcium and phosphorus levels in winter corresponded with the requirements \nof poultry for maintenance and growth, but not egg production.",
+        "url": "https://www.scielo.org.za/pdf/sajas/v45n2/05.pdf",
+        "doc": "Raphulu, Jansen van Rensburg & van Ryssen (2015), 'Nutrient content of crop contents of free ranging indigenous chickens raised under village conditions', South African Journal of Animal Science 45(2)",
+        "page": 1
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+      "evidence": {
+        "quote": "have become or can reasonably be suspected of having become infected with any controlled\nanimal disease, immediately report such incidence in the prescribed manner to the director.",
+        "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+        "doc": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii)",
+        "page": 9
+      }
+    },
+    {
+      "point": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+      "evidence": {
+        "quote": "Newcastle disease\n• Notifiable Avian Influenza (NAI)",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+        "doc": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet)",
+        "page": 1
+      }
+    },
+    {
+      "point": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir;",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+        "page": 6
+      }
+    },
+    {
+      "point": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+      "evidence": {
+        "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "No SA source gave a controlled feed intake (kg/day), water intake (L/day) or housing space (m2/bird) figure for free-range/village indigenous chickens specifically: these birds forage/scavenge rather than receiving a measured ration or fixed stocking density in every source reviewed (ARC Module 11, Tenza et al. 2023, Raphulu et al. 2015, Malatji et al. 2016); commercial-system figures exist (see chicken-layer.json/chicken-broiler.json) but were not applied here since they describe a different production system.",
+    "No calendar-month egg-laying pattern (productionMonths) could be sourced for indigenous/village chickens; the closest source (Raphulu et al. 2015) reports a seasonal nutrient-adequacy finding (used for seasonalPattern) but not specific laying months, so productionMonths is left as an empty array rather than inferred.",
+    "productiveLifeYears could not be sourced for this system; no SA source reviewed gives a total productive-life span (years) for village/free-range hens before replacement or culling.",
+    "nda.gov.za and dalrrd.gov.za were unreachable for the Animal Diseases Act (connection reset / 502 on every attempted URL, a known-flaky host per the task brief); an eccogta.gov.za (Eastern Cape district) mirror of the same Act text was used instead and verified to match.",
+    "A relevant SA peer-reviewed managed/semi-intensive-system figure exists for named indigenous breeds (Grobbelaar, Sutherland & Molalakgotla 2010, ARC Irene, Animal Genetic Resources 46: 25-32, doi:10.1017/S2078633610000664) but no stable, directly fetchable full-text URL could be found this session; its figures are therefore not recorded.",
+    "Editor review 2026-09-28: seasonalPattern withdrawn: its quote is a nutrition finding, not a laying season (kept as a welfare point). Breed egg counts from an unfetchable paper removed from notes and gaps: a figure no checked quote stands behind is not kept even as context. Legal: dropped the Act's general definition and trimmed summaries beyond their quotes; welfare summaries trimmed likewise."
+  ]
+}

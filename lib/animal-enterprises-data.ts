@@ -108,6 +108,449 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       }
     ]
   },
+  "chicken-broiler": {
+    "enterpriseId": "chicken-broiler",
+    "name": "Broilers (commercial)",
+    "animal": "chicken",
+    "animalUnit": "broiler",
+    "product": "meat",
+    "outputUnit": "kg/bird at slaughter (32–33 days)",
+    "outputPerAnimal": {
+      "value": [
+        1.8,
+        1.85
+      ],
+      "source": {
+        "quote": "Average slaughter age is \nnow 32 – 33 days at a weight of 1.8 – 1.85 kg.",
+        "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf",
+        "doc": "SAPA Industry Profile 2022, section 6.9 Performance efficiency",
+        "page": 79
+      },
+      "note": "National commercial broiler industry average, South Africa, 2022. A separate breed-trial table (Table 4b, same document, p.39) gives named-strain 'Cumulative FI (kg)' and 'Body weight (kg)' at exactly 35 days: Arbor Acres Plus 2.29kg, Cobb 500 2.52kg, Indian River 2.30kg, Ross 308 2.30kg (cumulative feed intake 3.21-3.64kg) - a slightly older age (35 vs 32-33 days) and higher weight than the industry-wide average quoted above; not merged into the primary figure since it is a different (breed-standard trial) dataset, but used below for the feed-intake figure."
+    },
+    "windows": [],
+    "seasonalPattern": null,
+    "weeksToFirstProduct": {
+      "value": [
+        4.57,
+        4.71
+      ],
+      "source": {
+        "quote": "Average slaughter age is \nnow 32 – 33 days at a weight of 1.8 – 1.85 kg.",
+        "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf",
+        "doc": "SAPA Industry Profile 2022, section 6.9 Performance efficiency",
+        "page": 79
+      },
+      "note": "32 days / 7 = 4.57 weeks; 33 days / 7 = 4.71 weeks. This enterprise has a single grow-out cycle ending in slaughter, so 'time to first product' = age at slaughter. South Africa, commercial industry average."
+    },
+    "productiveLifeYears": null,
+    "feedKgPerDay": null,
+    "waterLPerDay": null,
+    "spaceM2": null,
+    "welfare": [
+      {
+        "point": "Floor-housed broilers: no more than 40 kg of bird per square metre.",
+        "source": {
+          "quote": "Not to exceed 40 kg/m2",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-broilers.pdf",
+          "doc": "SAPA Code of Practice for Broiler Production (May 2012), 2.2 Housing of broilers in Floor Systems",
+          "page": 6
+        }
+      },
+      {
+        "point": "Newly hatched chicks must be given feed within 24 hours of hatching.",
+        "source": {
+          "quote": "Newly hatched broiler chicks must be provided with food within 24 hours of hatching.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-broilers.pdf",
+          "doc": "SAPA Code of Practice for Broiler Production (May 2012)",
+          "page": 11
+        }
+      },
+      {
+        "point": "Newly hatched chicks must be given access to water within 24 hours of hatching, sooner in hot weather.",
+        "source": {
+          "quote": "Newly hatched broiler chicks should receive water within 24 hours of hatching but sooner during hot \nweather.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-broilers.pdf",
+          "doc": "SAPA Code of Practice for Broiler Production (May 2012)",
+          "page": 12
+        }
+      },
+      {
+        "point": "Fresh water and the right feed always available, so birds are free from hunger and thirst.",
+        "source": {
+          "quote": "Free from hunger and thirst via the availability of fresh water and the appropriate feed.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-broilers.pdf",
+          "doc": "SAPA Code of Practice for Broiler Production (May 2012)",
+          "page": 7
+        }
+      },
+      {
+        "point": "Broiler houses need a minimum ventilation/airflow rate of 5 cubic metres per hour for every kilogram of bird mass in the house.",
+        "source": {
+          "quote": "minimum airflow of 5 cubic \nmeters per hour per kg of bird mass is required.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-broilers.pdf",
+          "doc": "SAPA Code of Practice for Broiler Production (May 2012)",
+          "page": 8
+        }
+      },
+      {
+        "point": "In free-range broiler production, indoor stocking must not exceed 15 birds per square metre of floor space.",
+        "source": {
+          "quote": "stocking density of 15 broiler birds per square meter of available floor space is permitted.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-broilers.pdf",
+          "doc": "SAPA Code of Practice for Broiler Production (May 2012), 2.4 Free Range Broiler Production",
+          "page": 8
+        }
+      }
+    ],
+    "legal": [
+      {
+        "point": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+        "source": {
+          "quote": "have become or can reasonably be suspected of having become infected with any controlled\nanimal disease, immediately report such incidence in the prescribed manner to the director.",
+          "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+          "doc": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii)",
+          "page": 9
+        }
+      },
+      {
+        "point": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+        "source": {
+          "quote": "Newcastle disease\n• Notifiable Avian Influenza (NAI)",
+          "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+          "doc": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet)",
+          "page": 1
+        }
+      },
+      {
+        "point": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+        "source": {
+          "quote": "slaughter any animal at any place other than an abattoir;",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+          "page": 6
+        }
+      },
+      {
+        "point": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+        "source": {
+          "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+          "page": 6
+        }
+      }
+    ]
+  },
+  "chicken-indigenous": {
+    "enterpriseId": "chicken-indigenous",
+    "name": "Village chickens (indigenous, free-range)",
+    "animal": "chicken",
+    "animalUnit": "hen",
+    "product": "eggs",
+    "outputUnit": "eggs/hen/year",
+    "outputPerAnimal": {
+      "value": [
+        40.43,
+        49.91
+      ],
+      "source": {
+        "quote": "Egg number per year  40.43 49.91 NS",
+        "url": "https://www.scielo.org.za/pdf/sajas/v53n6/06.pdf",
+        "doc": "Tenza, Mhlongo & Chimonyo (2023), 'Village chicken production and egg quality in dry and wet, resource-limited environments in KwaZulu-Natal, South Africa', South African Journal of Animal Science 53(6)",
+        "page": 5
+      },
+      "note": "Free-range/scavenging village chickens, KwaZulu-Natal: dry (40.43) vs wet (49.91) environment, difference not significant ('NS'). A managed-system ARC Irene trial of named indigenous breeds (Grobbelaar, Sutherland & Molalakgotla 2010, Animal Genetic Resources 46: 25-32) reports far higher counts, but its figures could not be checked against a fetchable text and are not recorded here."
+    },
+    "windows": [],
+    "seasonalPattern": null,
+    "weeksToFirstProduct": {
+      "value": [
+        15.74,
+        27.78
+      ],
+      "source": {
+        "quote": "Age at first lay (weeks)  15.74 27.78 *",
+        "url": "https://www.scielo.org.za/pdf/sajas/v53n6/06.pdf",
+        "doc": "Tenza, Mhlongo & Chimonyo (2023), 'Village chicken production and egg quality in dry and wet, resource-limited environments in KwaZulu-Natal, South Africa', South African Journal of Animal Science 53(6)",
+        "page": 5
+      },
+      "note": "Free-range village chickens, KwaZulu-Natal; dry-environment birds started laying earlier (15.74 weeks) than wet-environment birds (27.78 weeks), difference flagged significant ('*') in the source table. Wide range reflects genuine dry/wet-season environmental variation reported by the source, not measurement uncertainty."
+    },
+    "productiveLifeYears": null,
+    "feedKgPerDay": null,
+    "waterLPerDay": null,
+    "spaceM2": null,
+    "welfare": [
+      {
+        "point": "In extensive village systems the chickens have to find their own water and food.",
+        "source": {
+          "quote": "The chickens are forced to scrounge for \ntheir own water and food",
+          "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+          "doc": "ARC, Climate-Smart Agriculture Training Manual, Module 11: Poultry Production",
+          "page": 471
+        }
+      },
+      {
+        "point": "Scavenging village chickens grow more slowly than commercially-farmed birds and are more vulnerable to disease, parasites and predators.",
+        "source": {
+          "quote": "Most chickens will scavenge for food rather than \nbeing fed, and their growth rates are generally \nlow when compared to birds on commercial \nfarms. They are also more susceptible to \ndisease, parasites, and predator attacks.",
+          "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+          "doc": "ARC, Climate-Smart Agriculture Training Manual, Module 11: Poultry Production",
+          "page": 468
+        }
+      },
+      {
+        "point": "In the Limpopo and KwaZulu-Natal survey, 94.9% of farmers housed their chickens at night.",
+        "source": {
+          "quote": "94.9% farmers provided chicken housing at night.",
+          "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0030-24652016000100008",
+          "doc": "Malatji, Tsotetsi, van Marle-Koster & Muchadeyi (2016), 'A description of village chicken production systems and prevalence of gastrointestinal parasites: Case studies in Limpopo and KwaZulu-Natal provinces of South Africa', Onderstepoort Journal of Veterinary Research 83(1)",
+          "page": null
+        }
+      },
+      {
+        "point": "What free-ranging hens forage met their needs for maintenance and growth but not for laying: protein in every season, calcium and phosphorus in winter.",
+        "source": {
+          "quote": "The crude protein (CP) level of the crop contents of adult \nchickens in all seasons and the calcium and phosphorus levels in winter corresponded with the requirements \nof poultry for maintenance and growth, but not egg production.",
+          "url": "https://www.scielo.org.za/pdf/sajas/v45n2/05.pdf",
+          "doc": "Raphulu, Jansen van Rensburg & van Ryssen (2015), 'Nutrient content of crop contents of free ranging indigenous chickens raised under village conditions', South African Journal of Animal Science 45(2)",
+          "page": 1
+        }
+      }
+    ],
+    "legal": [
+      {
+        "point": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+        "source": {
+          "quote": "have become or can reasonably be suspected of having become infected with any controlled\nanimal disease, immediately report such incidence in the prescribed manner to the director.",
+          "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+          "doc": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii)",
+          "page": 9
+        }
+      },
+      {
+        "point": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+        "source": {
+          "quote": "Newcastle disease\n• Notifiable Avian Influenza (NAI)",
+          "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+          "doc": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet)",
+          "page": 1
+        }
+      },
+      {
+        "point": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+        "source": {
+          "quote": "slaughter any animal at any place other than an abattoir;",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+          "page": 6
+        }
+      },
+      {
+        "point": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+        "source": {
+          "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+          "page": 6
+        }
+      }
+    ]
+  },
+  "chicken-layer": {
+    "enterpriseId": "chicken-layer",
+    "name": "Laying hens (commercial)",
+    "animal": "chicken",
+    "animalUnit": "hen",
+    "product": "eggs",
+    "outputUnit": "eggs/hen housed, laying cycle to 90 weeks",
+    "outputPerAnimal": {
+      "value": [
+        407.1,
+        428.6
+      ],
+      "source": {
+        "quote": "Eggs/hen housed  428.6 422.5 424.6 407.1 428.2 421.0",
+        "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf",
+        "doc": "SAPA Industry Profile 2022, Table 4a (Breed standards in laying hens)",
+        "page": 39
+      },
+      "note": "Table 4a's cumulative 'Eggs/hen housed' for five commercial strains; the same table gives 'Age at depop. weeks 90.0' for every strain. Commercial barn/cage average, not a free-range smallholder trial. Kept as the source gives it: a per-year rate would need a point-of-lay age from another document."
+    },
+    "windows": [
+      {
+        "region": "SA commercial houses with 14–16 h lighting",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "source": {
+          "quote": "by maintaining the light period on a constant level of 14 - 16 hours per day, egg production is \nmaintained on a high level throughout the year.",
+          "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+          "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+          "page": 15
+        }
+      }
+    ],
+    "seasonalPattern": {
+      "text": "With a constant 14–16 hour light day, commercial hens keep laying at a high rate all year.",
+      "source": {
+        "quote": "by maintaining the light period on a constant level of 14 - 16 hours per day, egg production is \nmaintained on a high level throughout the year.",
+        "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+        "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+        "page": 15
+      }
+    },
+    "weeksToFirstProduct": {
+      "value": [
+        16,
+        17
+      ],
+      "source": {
+        "quote": "Receiving and housing point-of-lay pullets at 16 / 17 weeks of age",
+        "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+        "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+        "page": 5
+      },
+      "note": "Point-of-lay = pullets are about to begin laying when housed at 16-17 weeks; used directly as age-to-first-product (already in weeks, no conversion needed). Commercial system, South Africa."
+    },
+    "productiveLifeYears": null,
+    "feedKgPerDay": {
+      "value": [
+        0.11,
+        0.11
+      ],
+      "source": {
+        "quote": "Layers under normal circumstances would drink twice the amount of water than the weight of feed \nthey consume, approximately 220 ml per day.",
+        "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+        "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+        "page": 13
+      },
+      "note": "Source states water intake is twice the WEIGHT of feed consumed, and gives water as approximately 220 ml/day. Feed weight = 220 ml (treated as 220 g, water density) / 2 = 110 g/day = 0.11 kg/day. Cross-check: SAPA Industry Profile 2022 Table 4a (p.39) gives cumulative 'Feed intake kg' of 53.5-58.1 kg per hen over the ~73-74 week laying period (511-518 days): 53500/511 = 104.7 g/day to 58100/518 = 112.2 g/day, i.e. approximately 0.105-0.112 kg/day - consistent with the 0.11 kg/day figure used here. Commercial system, South Africa."
+    },
+    "waterLPerDay": {
+      "value": [
+        0.22,
+        0.22
+      ],
+      "source": {
+        "quote": "Layers under normal circumstances would drink twice the amount of water than the weight of feed \nthey consume, approximately 220 ml per day.",
+        "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+        "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+        "page": 13
+      },
+      "note": "220 ml/day = 0.22 L/day. Commercial system, South Africa."
+    },
+    "spaceM2": {
+      "value": [
+        0.083,
+        0.083
+      ],
+      "source": {
+        "quote": "In \nhouses with appropriate perching/roosting facilities, stocking densities may be \nincreased to 12 birds per square meter.",
+        "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+        "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+        "page": 1
+      },
+      "note": "Indoor/house floor space in a Free Range or Barn system with perches: 12 birds/m2 = 1/12 = 0.083 m2/bird. The same Code's external range limit is much larger (5 birds/m2 = 0.2 m2/bird outdoors, see welfare) - not mixed into this indoor figure, per the instruction not to combine different systems. A separate cage-system table in the same document (Table 3.1) gives a different, more confined figure for battery cages, also not used here since this enterprise is framed as free-range/barn. South Africa."
+    },
+    "welfare": [
+      {
+        "point": "In free-range systems, hens must have access to the outdoor range for at least 8 hours a day in daylight.",
+        "source": {
+          "quote": "In Free Range production, birds must have access to the external range for a \nminimum of 8 hours per day, during natural daylight hours.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+          "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+          "page": 1
+        }
+      },
+      {
+        "point": "Where individual nest boxes are used, at least one nest for every 8 hens.",
+        "source": {
+          "quote": "Where individual nest boxes are provided, this should not be less \nthan 1 nest per 8 hens.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+          "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+          "page": 1
+        }
+      },
+      {
+        "point": "Hens need at least 8 hours of continuous darkness in every 24-hour cycle to rest properly.",
+        "source": {
+          "quote": "A minimum period of 8 hours continuous darkness per 24-hour cycle \nmust also be provided in order to accommodate the birds’ requirement for adequate \nrest.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+          "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+          "page": 1
+        }
+      },
+      {
+        "point": "Floor housing needs litter on at least a third (33%) of the floor.",
+        "source": {
+          "quote": "Litter must be provided \non at least 33% of the floor area.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+          "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+          "page": 1
+        }
+      },
+      {
+        "point": "The outdoor free-range area must not be overstocked: no more than 5 birds per square metre of range.",
+        "source": {
+          "quote": "The stocking rate of the external range should not exceed 5 birds per square meter.",
+          "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+          "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+          "page": 1
+        }
+      }
+    ],
+    "legal": [
+      {
+        "point": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+        "source": {
+          "quote": "have become or can reasonably be suspected of having become infected with any controlled\nanimal disease, immediately report such incidence in the prescribed manner to the director.",
+          "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+          "doc": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii)",
+          "page": 9
+        }
+      },
+      {
+        "point": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+        "source": {
+          "quote": "Newcastle disease\n• Notifiable Avian Influenza (NAI)",
+          "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+          "doc": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet)",
+          "page": 1
+        }
+      },
+      {
+        "point": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+        "source": {
+          "quote": "slaughter any animal at any place other than an abattoir;",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+          "page": 6
+        }
+      },
+      {
+        "point": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+        "source": {
+          "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+          "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+          "page": 6
+        }
+      }
+    ]
+  },
   "duck": {
     "enterpriseId": "duck",
     "name": "Meat duck (Pekin / Muscovy, backyard)",

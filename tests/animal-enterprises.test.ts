@@ -7,6 +7,7 @@ import {
   ELEMENT_ANIMAL,
   buildAnimalAvailability,
   enterprisesFor,
+  formatAmountRange,
   placedAnimalGroups,
   sourcedProductMonths,
   type AnimalKind,
@@ -129,4 +130,13 @@ test('animals never reach a per-m² figure', () => {
     try { src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'); } catch { continue; }
     assert.doesNotMatch(src, /animal-enterprises/, `${file} must not read animal enterprises`);
   }
+});
+
+test('small per-animal amounts keep their size instead of rounding to 0.1', () => {
+  assert.equal(formatAmountRange([0.11, 0.11]), '0.11');
+  assert.equal(formatAmountRange([0.083, 0.083]), '0.083');
+  assert.equal(formatAmountRange([0.22, 0.22]), '0.22');
+  assert.equal(formatAmountRange([4.57, 4.71]), '4.6–4.7');
+  assert.equal(formatAmountRange([407.1, 428.6]), '407.1–428.6');
+  assert.equal(formatAmountRange([16, 17]), '16–17');
 });

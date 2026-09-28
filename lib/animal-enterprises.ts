@@ -129,6 +129,22 @@ export function placedAnimalGroups(items: readonly PlacedAnimalItem[]): PlacedAn
   return [...byKind.values()].sort((a, b) => order.indexOf(a.animal) - order.indexOf(b.animal));
 }
 
+/**
+ * A per-animal range as a farmer reads it.
+ *
+ * The orchard's formatRange keeps one decimal, which is right for kilograms off a tree and wrong
+ * here: a hen eats 0.11 kg a day and needs 0.083 m², and one decimal turns both into "0.1".
+ * Below 1, two significant figures; from 1 up, one decimal as the orchard does.
+ */
+export function formatAmountRange([min, max]: [number, number]): string {
+  const f = (n: number) => {
+    if (Number.isInteger(n)) return String(n);
+    if (Math.abs(n) < 1) return String(Number(n.toPrecision(2)));
+    return n.toFixed(1).replace(/\.0$/, '');
+  };
+  return min === max ? f(min) : `${f(min)}–${f(max)}`;
+}
+
 /** Every month any sourced window of an enterprise covers, ascending. */
 export function sourcedProductMonths(e: AnimalEnterprise): number[] {
   const months = new Set<number>();
