@@ -106,6 +106,18 @@ test('regional Reading the Landscape decks expose all 21 paired WebPs with Engli
   }
 });
 
+test('Sesotho Plant Guilds exposes every paired slide without claiming a Sesotho voice', () => {
+  const deck = deckFor('plant-guilds')!;
+  assert.ok(deck.slideLanguages.includes('st'));
+  assert.equal(COURSE_NARRATION['plant-guilds'].languages.includes('st'), false);
+  for (let slide = 1; slide <= 51; slide++) {
+    const selected = slideImageFor('plant-guilds', 'st', slide);
+    assert.ok(selected?.exact, `slide ${slide} should keep its source-paired Sesotho frame`);
+    assert.ok(selected.url.endsWith('.webp'));
+    assert.ok(onDisk(selected.url), `offline frame missing: ${selected.url}`);
+  }
+});
+
 test('a declared-missing slide is really absent, and nothing else is', () => {
   // Guards the manifest against drifting from the folder in either direction: a slide declared
   // missing that later gets exported would stay hidden behind an English fallback forever, and a

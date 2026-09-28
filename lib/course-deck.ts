@@ -306,7 +306,10 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),
   },
   'plant-guilds': {
-    slideLanguages: ['en', 'zu'],
+    // Sesotho frames are unreviewed source-paired drafts; operational field steps remain English.
+    slideLanguages: ['en', 'zu', 'st'],
+    slideFormatsByLanguage: { st: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400 },
     slides: slidesFromNarration('plant-guilds', GUILD_ANIMATIONS),
   },
   'seeds-sovereignty': {

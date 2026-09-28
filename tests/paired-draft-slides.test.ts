@@ -428,3 +428,41 @@ test('a long draft fails layout instead of shrinking or dropping a farming parag
     rmSync(temp, { recursive: true, force: true });
   }
 });
+
+
+test('Sesotho Plant Guilds learner draft keeps exact source pairing, labeled field holds and all 51 rendered slides', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/plant-guilds.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/plant-guilds.st.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'st');
+  assert.equal(packet.reviewStatus, 'unreviewed');
+  assert.equal(slides.length, 51);
+  assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
+    .map((slide: any) => slide.n), [1, 2, 3, 4, 5, 6, 7, 8, 33, 34, 37, 38, 48, 49]);
+
+  const draftedBodySlides = slides.filter((slide: any) => slide.target.body.some((part: any) => part.status === 'draft'))
+    .map((slide: any) => slide.n);
+  assert.deepEqual(draftedBodySlides, [1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 20, 22, 24, 27, 33, 34, 36, 38, 42, 46, 47, 48, 49]);
+  assert.equal(slides.flatMap((slide: any) => slide.target.body).filter((part: any) => part.status === 'draft').length, 23);
+  assert.equal(slides.flatMap((slide: any) => slide.target.body)
+    .filter((part: any) => part.status === 'draft' && part.text.includes('ENGLISH HOLD —')).length, 13,
+  'mixed Sesotho and English paragraphs explicitly mark every held sentence for facilitator review');
+  assert.equal(slides.flatMap((slide: any) => slide.target.body)
+    .filter((part: any) => part.status === 'english-hold').length, 28,
+  'uncertain field guidance stays fully in English instead of being presented as Sesotho');
+
+  for (const slide of slides) {
+    const image = `public/course-decks/plant-guilds/st/slide-${String(slide.n).padStart(2, '0')}.webp`;
+    assert.ok(existsSync(image), `published paired learner slide ${slide.n} has its rendered image`);
+  }
+
+  const slide4 = slides[3].target.body[0].text;
+  assert.ok(slide4.includes('ENGLISH HOLD — Check sunlight, drainage, soil condition and water availability.'));
+  assert.ok(slide4.includes('Nitrojene ke e nngwe feela ya dintho tse ka nnang tsa thibela kgolo.'));
+  const slide8 = slides[7].target.body[0].text;
+  assert.ok(slide8.includes('ENGLISH HOLD — Find nodules on a spare legume plant.'));
+  assert.ok(slide8.includes('ENGLISH HOLD — Nodulation and growth depend on the plant, suitable bacteria and growing conditions.'));
+  const slide34 = slides[33].target.body[0].text;
+  assert.ok(slide34.includes('ENGLISH HOLD — Many ladybirds eat aphids; some parasitoid wasps attack crop pests.'));
+  assert.ok(slide34.includes('Ha e le hantle kokonyana ena e etsa eng?'));
+  assert.ok(slides[48].target.body[0].text.includes('ENGLISH HOLD — Write down what will trigger pruning or thinning.'));
+});

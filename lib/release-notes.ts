@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: 'cbe046d9', changes: [
+    'Plant Guilds adds Sesotho draft slides beside English.',
+  ], tour: [
+    { title: 'Review Plant Guilds drafts', where: 'Study → Plant Selection & Guilds', href: '/student',
+      detail: 'Choose Sesotho and compare the 51 labelled draft slides with their exact English source. Field instructions held in English and all Sesotho wording still need facilitator review.' },
+  ] },
   { when: '28 September 2026', sha: 'bf42c58', changes: [
     '20 new crops: sorghum, soybean, brinjal, gem squash, spanspek, amaranth and more.',
     'Cowpea has no trusted yield yet, so you add it by hand; it is not auto-suggested.',
