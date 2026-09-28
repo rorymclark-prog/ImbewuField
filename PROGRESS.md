@@ -52,6 +52,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 28 Sep 2026 — Variety guidance by growing zone; yield benchmarks checked; crop prices
+- **Growing zones (`lib/growing-zones.ts`):** the site's own monthly temperature and rain → the
+  zone(s) `research/crop-sources/_zones.json` files the variety research under, using the Köppen
+  class and koppen-global's frost lines (7 °C / 13 °C coldest month). Where monthly data can't split
+  two zones (Highveld/Midlands, Lowveld/coast, BSk steppe, hard frost vs high mountain) it names
+  both. No site climate → no zone claimed. Tested against 9 reference places (`tests/growing-zones.test.ts`).
+- **Sourced cultivars:** `scripts/build-crop-varieties.mjs` turns the variety dossiers into
+  `lib/crop-varieties-data.ts` (28 crops, 105 cultivars). Evidence citing the app itself is dropped,
+  and any cultivar left with no outside source; researcher notes ("fetched directly, verbatim") are
+  stripped from the source name. `tests/crop-varieties.test.ts` fails if data and dossiers drift.
+- **Crop picker → Variety guidance** (`components/crops/VarietyGuidance.tsx`): "Your area" line,
+  zone notes, cultivars named for your area, then "Other varieties" with the areas their source
+  named; every card links its source with the quote on hover. Catalog advice stays as General guidance.
+- **Low benchmarks checked** against a second source (KZN crop guides, ARC, Elsenburg). All three
+  follow Table 8's conservative-through-likely convention like every other row, so planning points
+  stay. Green beans range upper 0.8 → 1.0 kg/m² (ARC "Estimated yield: 100 kg/100m2"); broccoli
+  0.8 → 0.9 (KZN Cole Crops "6 to 9 tons per hectare"); peas left (KZN Green Peas average 5–6 t/ha).
+
 ### 28 Sep 2026 — Artwork: Codex batches merged (20 crops, 15 animals, 5 fruit trees)
 - **Crop Batch 2 (#779):** the 20 flat placeholders in `public/crop-art/` replaced with finished
   256² art; the whole crop library is 3.79 MB, under the 4 MB gate in `tests/element-art.test.ts`.
