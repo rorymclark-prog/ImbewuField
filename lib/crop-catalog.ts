@@ -223,7 +223,11 @@ export const CROPS: CropDef[] = [
     inRowSpacingRangeCm: [4, 7],
     sowDepthRangeCm: [2, 5],
     yieldKgPerM2: 0.5,
-    yieldRangeKgPerM2: [0.5, 0.8], // conservative through likely (5; 7-8 t/ha) — KZN DARD Expected Yields Table 8
+    // Low end: KZN DARD Expected Yields Table 8 conservative (5 t/ha); its likely tier is 7-8 and
+    // the KZN Green Beans guide p.4 repeats 5/8. High end: ARC 'Growing Green Beans' p.3, a
+    // garden-scale figure — "Estimated yield: 100 kg/100m2." (1 kg/m²), inside Table 8's
+    // 10-15 t/ha target tier. arc.agric.za/Agricultural%20Sector%20News/Growing%20Green%20Beans.pdf
+    yieldRangeKgPerM2: [0.5, 1],
     note: 'These figures are for bush green beans. Sow small batches 2–3 weeks apart to spread the picking windows; weather and crop growth still decide whether harvests join up without a gap.',
     harvestPeriodRangeWeeks: [2, 3],
     // KZN DARD gives bush green beans a 2-3 week picking period: no extra
@@ -927,7 +931,10 @@ export const CROPS: CropDef[] = [
     inRowSpacingRangeCm: [5, 8],
     sowDepthRangeCm: [3, 6],
     yieldKgPerM2: 0.4,
-    yieldRangeKgPerM2: [0.4, 0.6], // conservative through likely (4; 6 t/ha) — KZN DARD Expected Yields Table 8
+    // conservative through likely (4; 6 t/ha) — KZN DARD Expected Yields Table 8. Checked against
+    // KZN DARD 'Green Peas' p.4: "yields of peas in pods vary from 3 tons to 10 tons per hectare,
+    // or an average of 5 or 6 tons" — the average sits inside this range, so it stays.
+    yieldRangeKgPerM2: [0.4, 0.6],
     note: 'Give climbing types a trellis; pick pods while still glossy for the sweetest peas.',
     harvestPeriodRangeWeeks: [2, 3],
     // KZN DARD gives a 2-3 week picking period: no extra whole month here.
@@ -986,7 +993,10 @@ export const CROPS: CropDef[] = [
     inRowSpacingRangeCm: [30, 45],
     sowDepthRangeCm: [1.5, 2],
     yieldKgPerM2: 0.5,
-    yieldRangeKgPerM2: [0.5, 0.8], // conservative through likely (5; 8 t/ha) — KZN DARD Expected Yields Table 8
+    // Low end: KZN DARD Expected Yields Table 8 conservative (5 t/ha; likely 8, target 12). High
+    // end: KZN DARD 'Cole Crops' p.27, "Commercial yields generally range from 6 to 9 tons per
+    // hectare." kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf
+    yieldRangeKgPerM2: [0.5, 0.9],
     note: 'Harvest the central head before the flowers open, then side shoots keep coming.',
     harvestWindowMonths: 1,
     harvestPeriodNote: 'main heads 1–2 weeks; side sprouts 3–4 weeks longer',

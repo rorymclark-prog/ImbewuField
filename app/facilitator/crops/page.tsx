@@ -42,6 +42,8 @@ import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import { driestMonths, resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
+import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
+import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
 import {
@@ -1166,6 +1168,12 @@ function FacilitatorCropsPageInner() {
   const pattern: RainPattern = siteClimate?.pattern ?? mapPattern;
   const climateSource: 'site' | 'reference' | 'none' = siteClimate ? 'site' : (region ? 'reference' : 'none');
   const patternMeta = PATTERN_META[pattern];
+  // Which of the eight growing zones this site's own climate points to — for the picker's
+  // variety guidance only. Empty without a site climate: a reference city is not the site.
+  const growingZones = useMemo<GrowingZoneId[]>(
+    () => (siteClimate && hasSiteCoords ? growingZonesForClimate(siteClimate.monthlyTempC, siteClimate.monthlyRainMm, siteLat!) : []),
+    [siteClimate, hasSiteCoords, siteLat],
+  );
   const designTitle = design?.title || design?.bgSite?.name || 'Garden design';
 
   // Plantings whose bed no longer exists in the current design (a bed was
@@ -2420,6 +2428,7 @@ function FacilitatorCropsPageInner() {
           onFraction={setPickerFraction}
           variety={pickerVariety}
           onVariety={setPickerVariety}
+          growingZones={growingZones}
           existing={pickerExisting}
           onExisting={setPickerExisting}
           overlapWarning={pickerOverlapWarning}
@@ -3789,7 +3798,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
 // ── Crop picker modal ────────────────────────────────────────────────────
 
 function CropPickerModal({
-  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, variety, onVariety, overlapWarning, hasUnverifiedTiming,
+  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, variety, onVariety, growingZones, overlapWarning, hasUnverifiedTiming,
   isEditing, favouriteCropKeys, onToggleFavourite, allowBedSharing, onEnableBedSharing, onPick, onBack, onMonth, onConfirm, onClose,
   isPlot,
 }: {
@@ -3804,6 +3813,8 @@ function CropPickerModal({
   onExisting: (v: boolean) => void;
   variety: string;
   onVariety: (v: string) => void;
+  /** The site's growing zone(s), most likely first; empty when the site climate is unknown. */
+  growingZones: GrowingZoneId[];
   /** Null when the bed can carry this planting alongside what is already there. */
   overlapWarning: BedOverlapWarning | null;
   hasUnverifiedTiming: boolean;
@@ -3947,20 +3958,7 @@ function CropPickerModal({
               <input value={variety} onChange={e => onVariety(e.target.value)} maxLength={120} placeholder="Name on your seed packet" className="block w-full mt-2 rounded-lg border p-3" style={{ background: 'var(--bg-1)', color: 'var(--text-primary)' }} />
               <span className="block mt-1">Leave blank if you have not chosen one. Timing remains the crop’s general guidance.</span>
             </label>
-            {crop.varieties && crop.varieties.length > 0 && (
-              <div className="mb-3">
-                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>Variety guidance</div>
-                <div className="space-y-1.5">
-                  {crop.varieties.map((v, i) => (
-                    <div key={i} className="px-2.5 py-2 rounded-lg" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-                      <div className="font-sans font-semibold" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>{v.name}</div>
-                      <div className="font-mono" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginBottom: 2 }}>Best for: {v.bestFor}</div>
-                      <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{v.note}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <VarietyGuidance crop={crop} zones={growingZones} />
             {crop.timingVerified === false && (
               <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
                 This legacy record can be kept or removed, but it cannot be rescheduled until a source-backed local duration is available.
