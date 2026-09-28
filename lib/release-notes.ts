@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: 'fdb0b21d', changes: [
+    'Tshivenda Introduction slides 15–22 now show paired source and draft frames.',
+    'Zone, weather and field instructions remain exact English pending local review.',
+  ], tour: [
+    { title: 'Compare the Tshivenda Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda. Slides 15–22 show selected draft text beside exact English.' },
+  ] },
   { when: '28 September 2026', sha: 'd0a0dec8', changes: [
     'Introduction has a Sesotho draft voice, with English source available.',
     'Reading the Landscape adds Sesotho, Tshivenda and Xitsonga drafts beside English.',

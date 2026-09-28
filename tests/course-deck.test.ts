@@ -473,6 +473,10 @@ test('new regional orientation and ethics stills stay visible while unauthored I
     assert.equal(slideImageFor('intro-permaculture', 've', slide)?.exact, true);
   }
   assert.equal(slideImageFor('intro-permaculture', 've', 10)?.lang, 'en');
+  for (let slide = 15; slide <= 22; slide++) {
+    assert.ok(onDisk(slideImageUrl('intro-permaculture', 've', slide)!));
+    assert.equal(slideImageFor('intro-permaculture', 've', slide)?.exact, true);
+  }
 });
 
 test('Sesotho draft narration starts with paired slides and English source choice keeps them', async () => {
