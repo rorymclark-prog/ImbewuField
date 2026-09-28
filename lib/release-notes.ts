@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 September 2026', sha: '22d1b99', changes: [
+  { when: '28 September 2026', sha: '8e07078', changes: [
     'Coops, goat pens, hives, hutches and duck ponds on your map now show in the crop plan.',
     'Say what your animals are for: layers, broilers, village hens, milk or meat goats.',
     'Per-animal eggs, milk or meat, feed, water, space, welfare and the law, each sourced.',
