@@ -218,17 +218,38 @@ test('Sesotho Soil Health entry keeps paired stills and English source narration
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/st/')));
 });
 
-test('itsonga Soil Health keeps five paired stills and exact English fallback/audio offline', () => {
+test('itsonga Soil Health keeps all 20 paired stills and only optional English source audio offline', () => {
   const pack = offlinePack('soil-health', 'ts');
   assert.deepEqual(pack.missing, []);
   const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
-  for (const n of ['01', '02', '03', '04', '05']) {
-    assert.ok(slides.includes(`/course-decks/soil-health/ts/slide-${n}.webp`));
+  for (let n = 1; n <= 20; n++) {
+    const number = String(n).padStart(2, '0');
+    assert.ok(slides.includes(`/course-decks/soil-health/ts/slide-${number}.webp`),
+      `the silent Xitsonga deck needs paired slide ${number}`);
   }
-  assert.ok(slides.includes('/course-decks/soil-health/en/slide-06.jpg'));
+  assert.ok(!slides.some((url) => url.includes('/course-decks/soil-health/en/')),
+    'every Xitsonga frame embeds its English source, so no separate fallback slide is needed');
   assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
-    entry.url === '/course-audio/soil-health/en/slide-04.mp3'));
+    entry.url === '/course-audio/soil-health/en/slide-04.mp3'),
+  'English source audio remains an explicit optional choice');
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/ts/')));
+});
+
+test('Tshivenda Soil Health packs all paired frames and leaves English narration optional offline', () => {
+  const pack = offlinePack('soil-health', 've');
+  assert.deepEqual(pack.missing, [], 'all 20 regional stills and selected English audio assets exist');
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  assert.equal(slides.filter((url) => url.includes('/course-decks/soil-health/ve/')).length, 20,
+    'the offline pack carries every Tshivenda source-paired frame');
+  for (let slide = 1; slide <= 20; slide++) {
+    const number = String(slide).padStart(2, '0');
+    assert.ok(slides.includes(`/course-decks/soil-health/ve/slide-${number}.webp`));
+  }
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/soil-health/en/slide-01.mp3'),
+  'English source narration remains available only as an optional player choice');
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/ve/')),
+    'the deck does not promise Tshivenda narration');
 });
 
 test('regional Introduction downloads every selected still and never promise regional audio', () => {

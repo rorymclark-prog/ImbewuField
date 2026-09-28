@@ -1,23 +1,16 @@
 {
-  "language": "ts",
+  "language": "ve",
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–2 first sentence, slide 3 heading/first sentence, slide 4 heading, slide 5 first sentence, slide 7 heading, and slides 19–20 activity headings are unreviewed machine drafts with exact English source. All other headings and bodies remain explicit English holds.",
-    "reusedDrafts": "None in learner frames. Slide 4 existing technical paragraph was held after semantic cross-check.",
-    "holds": "All other narration and uncertain soil, jar, compost, water and diagnostic guidance remain exact English."
+    "newDrafts": "Unreviewed machine drafts for selected explanatory text on slides 1–5. Every learner frame keeps the exact English source beside the Tshivenda draft.",
+    "reusedDrafts": "None.",
+    "holds": "All soil-science, compost, jar-test, diagnostic, safety and practical farming guidance remains exact English. Slides 6–20 remain exact English holds. No narration or audio is provided."
   },
   "reviewNotes": [
-    "Slide 1 uses the broad word “Misava” for soil/ground; a fluent Xitsonga reviewer should check that the sentence is natural and preserves the source distinction.",
-    "Slide 2 “Xiyimo xa misava xi khumba timitsu, mati ni ntshovelo” is a new machine draft of a general orientation claim; confirm the terms for soil condition and harvest in the intended written variety.",
-    "No Xitsonga fluency, comprehension, or local soil-science approval is claimed.",
-    "Slide 4 body remains exact English: the existing ku tswonga nutrients wording could misstate nutrient uptake and the worm-channel terms need fluent and local soil-science review.",
-    "Slide 5 draft refers to the two illustrated soil examples; the underlying source is a concept cutaway, not a diagnostic photograph or laboratory comparison.",
-    "Slides 6–10 retain the jar method, particle settling, diagnostic caveats, compost claims and heap-building instructions in exact English. The slide 7 heading draft only says to look at the jar carefully; check its naturalness and intended meaning with a fluent Xitsonga reviewer. These frames are still-only drafts and do not include Xitsonga narration.",
-    "Slides 6 and 10 localize only broad heading words (“Explore”; “Watch”). Soil Texture, Jar and the full heap-building instruction remain English. Check these mixed-language headings for natural Xitsonga with a fluent reviewer; all related procedures and claims remain held.",
-    "The mixed-language slide 6 heading “Kambisisa Soil Texture hi Jar” and slide 10 label “Languta” are not fluency-checked. Confirm that the English technical terms and word order sound natural in the intended Xitsonga variety; these are not approved learner translations.",
-    "Slides 11–20 keep all bodies and operational or technical headings in exact English. Only the simple activity labels “Field Assignment” (slide 19) and “Field Action” (slide 20) are machine-draft Xitsonga: “Ntirho wa le nsinini” and “Xiendlo xa le nsinini.” Check these labels with a fluent Xitsonga facilitator; all associated field instructions remain English.",
-    "The slide 6 mixed heading draft was withdrawn and is now an exact English hold because the mixed-language word order was not defensible. Slide 10’s Watch/build heading is also held in full. Slide 7’s earlier simple heading remains an unreviewed draft and needs fluent review."
+    "Every Tshivenda phrase is an unreviewed machine draft. A fluent Tshivenda speaker should check natural wording, register and comprehension before learner use.",
+    "A local farming practitioner should review all teaching content. Technical soil and farming guidance is held in exact English.",
+    "Slides 6–20 are exact English holds; no Tshivenda narration or audio is included."
   ],
   "slides": [
     {
@@ -37,8 +30,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Misava a hi leswi nga ehansi ka milenge ya wena ntsena.",
-            "provenance": "new-machine-draft; proposed for review; not present in the existing Xitsonga course draft"
+            "text": "Mavu a si fhethu fhedzi hu re fhasi ha milenzhe yaṋu.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
             "status": "english-hold"
@@ -61,13 +54,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ndi ngani hezwi zwi zwa ndeme",
+          "provenance": "new-unreviewed-machine-draft; source paired"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Xiyimo xa misava xi khumba timitsu, mati ni ntshovelo.",
-            "provenance": "new-machine-draft; proposed for review; not present in the existing Xitsonga course draft"
+            "text": "Vhuimo ha mavu vhu kwama midzi, maḓi na khaṋo.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
             "status": "english-hold"
@@ -91,12 +86,12 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Leswi u nga ta swi dyondza"
+          "text": "Zwine na ḓo guda",
+          "provenance": "new-unreviewed-machine-draft; source paired"
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Languta swikombiso swo hlayanyana swa xiyimo xa misava."
+            "status": "english-hold"
           },
           {
             "status": "english-hold"
@@ -120,7 +115,8 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Misava ya hanya"
+          "text": "Mavu a a tshila",
+          "provenance": "new-unreviewed-machine-draft; source paired"
         },
         "body": [
           {
@@ -154,7 +150,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Langutisisa swikombiso leswi swimbirhi swa misava."
+            "text": "Lavhelesani tsumbo idzi mbili dza mavu nga vhuronwane.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
             "status": "english-hold"
@@ -210,8 +207,7 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Languta jar hi vukheta."
+          "status": "english-hold"
         },
         "body": [
           {
@@ -531,8 +527,7 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Ntirho wa le nsinini"
+          "status": "english-hold"
         },
         "body": [
           {
@@ -560,8 +555,7 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Xiendlo xa le nsinini"
+          "status": "english-hold"
         },
         "body": [
           {

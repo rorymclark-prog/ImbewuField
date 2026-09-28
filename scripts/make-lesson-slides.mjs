@@ -445,7 +445,7 @@ if PAIRED:
                        for source, part in zip(pair['english']['body'], target['body'])]
         draw_panel(draw, PAIRED_LANGUAGE + ' · RUST TEXT = ENGLISH HOLD' if held else PAIRED_LANGUAGE + ' · AI DRAFT',
                    target_heading, target_body, 1070, 3060, target_plan, target)
-        draw_panel(draw, 'ENGLISH SOURCE · EXACT NARRATION', pair['english']['heading'],
+        draw_panel(draw, 'ENGLISH SOURCE · EXACT TEXT', pair['english']['heading'],
                    pair['english']['body'], 3090, 5080, source_plan)
         draw.text((96, 5220), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
         draw.text((W - 96, 5220), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
