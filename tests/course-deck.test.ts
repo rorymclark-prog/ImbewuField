@@ -174,6 +174,8 @@ test('vegetable lesson 1 offers the reviewed Flow transplant and holds its plant
   assert.equal(clip.poster, '/course-animations/vegetables-staples/posters/flow-transplant-root-plug.jpg');
   assert.equal(clip.seconds, 8);
   assert.equal(clip.playOnce, true);
+  assert.equal(animationUrls('vegetables-staples', 6, 'st'), null,
+    'the English poster must not cover the paired Sesotho slide and its exact English source');
 });
 
 test('vegetable pest lesson keeps its still while the unapproved decision animation stays out of the player', () => {
@@ -683,6 +685,7 @@ test('regional Food Forest and Vegetables decks expose their complete paired sti
     ['food-forest', 'st', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
     ['food-forest', 've', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
     ['food-forest', 'ts', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
+    ['vegetables-staples', 'st', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
     ['vegetables-staples', 've', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
     ['vegetables-staples', 'ts', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
   ];
@@ -717,7 +720,6 @@ test('incomplete regional Study decks fall back to English for every unauthored 
     ['market-community', 'st', [2, 5, 6]],
     ['market-community', 've', [2, 3]],
     ['market-community', 'ts', [2, 18]],
-    ['vegetables-staples', 'st', [1, 2, 8, 9]],
     ['soil-health', 'ts', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
   ];
   for (const [moduleId, language, authored] of cases) {

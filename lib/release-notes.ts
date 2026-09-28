@@ -42,12 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', sha: 'a35173c2', changes: [
+  { when: '29 September 2026', sha: '6dd61753', changes: [
     'Soil Health now has 20 silent Sesotho slides paired with their English source.',
     'Draft text is marked unreviewed; held teaching stays in English.',
+    'Sesotho Vegetables now has 18 silent, source-paired draft slides.',
   ], tour: [
     { title: 'Compare the Sesotho Soil Health slides', where: 'Study → Soil Health & Composting', href: '/student',
       detail: 'Choose Sesotho and page through all 20 slides. Each pairs its existing draft or English hold with the exact English source. Slides open silently; choose English narration if you want it.' },
+    { title: 'Compare the Sesotho Vegetables draft', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Five existing draft passages appear beside their exact English source. Other teaching stays held in English. No Sesotho audio is included.' },
   ] },
   { when: '28 September 2026', sha: 'e75bc004', changes: [
     'Variety guidance names your growing area and lists varieties chosen for it first.',
