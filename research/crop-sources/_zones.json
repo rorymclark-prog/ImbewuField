@@ -1,0 +1,181 @@
+{
+  "purpose": "Validate/correct the 8 provisional SA growing zones so a farm site (monthly temp/rain, frost, Koppen, elevation — the shape lib/site-climate.ts's SiteClimate already carries) can be auto-classified into one. Classification rules below are written on THAT data shape, and wherever possible reuse the app's own already-audited thresholds (lib/koppen-global.ts) rather than inventing new ones, per the brief's instruction to read how site climate is derived first.",
+  "appDataFields": {
+    "note": "Fields available on lib/site-climate.ts's SiteClimate + the MonthlyClimate it feeds classifyKoppen()/rainPatternFor() with.",
+    "fields": ["monthlyTempC[12]", "monthlyRainMm[12]", "annualMm", "koppen (code)", "pattern (RainPattern)"],
+    "derivable": ["coldestMonthMeanC = min(monthlyTempC)", "hottestMonthMeanC = max(monthlyTempC)", "summerRainShare = sum(rain Oct-Mar)/annualMm for southern hemisphere (koppen-global.ts summerMonthIndices)", "elevation NOT in SiteClimate today — a gap, see below"]
+  },
+  "zones": [
+    {
+      "key": "highveld",
+      "name": "Highveld",
+      "provinces": "Gauteng, Free State, North West, Mpumalanga highveld (Witbank/Middelburg/Dullstroom/Belfast/Lydenburg/Harrismith)",
+      "description": "Cold, summer-rain interior plateau with real hard/regular winter frost.",
+      "classificationRules": {
+        "coldestMonthMeanC": "< 13, typically 6-11 (Bloemfontein ~8C, Johannesburg ~10C per app's own cited readings)",
+        "summerRainShare": ">= 0.65 (Oct-Mar)",
+        "koppen": ["Cwb", "BSk (western/Free State fringe)"],
+        "elevationBand_m": "~1200-1800 (GAP: no elevation figure in SiteClimate to check this against; see gaps)",
+        "appRainPatternResult": "'summer' — koppen-global.ts's rainPatternFor: summerShare>=0.65 and coldest-month <13C fails the >=13C light-frost carve-out, so it falls to 'summer'."
+      },
+      "rainPattern": "summer",
+      "frostWindow": {"firstFrostMonth": "Apr/May", "lastFrostMonth": "Aug/Sep", "notes": "'real hard frost risk May-Aug' per the catalog's own header"},
+      "plantingSeasonNotes": "Transplant/sow warm-season crops Oct-Nov once frost risk passes.",
+      "evidence": [
+        {"quote": "The Highveld, known for its frost-prone winters and cooler spring temperatures, has a narrower window for successful planting, with the ideal time to transplant seedlings from October to November. Planting earlier risks exposure to late frost.", "url": "https://www.starkeayres.com/news/pinpointing-the-best-green-pepper-planting-season-in-south-africa-by-region", "page": null, "doc": "Starke Ayres, 'Pinpointing the Best Green Pepper Planting Season in South Africa by Region', 3 Nov 2025"},
+        {"quote": "summer  = summer-rainfall interior (Gauteng / Limpopo / Mpumalanga / Free State / North West, KZN Midlands) — real hard frost risk May-Aug, warm-season crops wait for it to pass.", "url": "internal:lib/crop-catalog.ts", "page": null, "doc": "ImbewuField repo, lib/crop-catalog.ts header (existing convention)"},
+        {"quote": "Coldest-month MEAN is the one temperature every caller has... < 11 C regular frost (Bloemfontein ~8, Johannesburg ~10) — frost column unless the rain is winter-dominant", "url": "internal:lib/koppen-global.ts", "page": null, "doc": "ImbewuField repo, lib/koppen-global.ts 2026-09-27 audit comment"},
+        {"quote": "Cwb 140405.00 12.11", "url": "https://www.ukesa.info/download/AJocf5R3CpaTd0X6Fk7s4niSVwyvePxm/Conradie-2012-South-Africa-s-Climatic-Zones.pdf", "page": 7, "doc": "Conradie, 'South Africa's Climatic Zones: Today, Tomorrow', IGBC&E 2012 (CSIR Köppen-Geiger map, Table 3)"}
+      ]
+    },
+    {
+      "key": "lowveld-bushveld",
+      "name": "Lowveld / Bushveld",
+      "provinces": "Mpumalanga Lowveld (Nelspruit/Hazyview/Malelane/White River), Limpopo bushveld (Polokwane/Tzaneen/Musina/Phalaborwa/Thabazimbi/Lephalale/Bela Bela), North West bushveld (Brits, Rustenburg), N KZN (Pongola/Mkuze)",
+      "description": "Hot, summer-rain interior lowland, frost-free to light-frost.",
+      "classificationRules": {
+        "coldestMonthMeanC": ">= 13 (Mbombela ~14C, Mkuze ~17C — app's own cited readings)",
+        "summerRainShare": ">= 0.65",
+        "koppen": ["Cwa", "BSh (drier N Limpopo bushveld, e.g. Musina)"],
+        "appRainPatternResult": "'mild-frost' — per koppen-global.ts's CURRENT rainPatternFor: summerShare>=0.65 and not-arid coldest-month>=13C triggers the light-frost ('mild-frost') branch, not 'summer'; the file names Mkuze (~17C) explicitly as this case."
+      },
+      "rainPattern": "mild-frost",
+      "frostWindow": {"firstFrostMonth": "rare/none", "lastFrostMonth": "rare/none", "notes": "Frost-free to light frost in low pockets on clear winter nights only"},
+      "plantingSeasonNotes": "Extended season — Starke Ayres has Lowveld seedling establishment Feb-May, well ahead of the Highveld's Oct-Nov.",
+      "evidence": [
+        {"quote": "The Lowveld's consistently warm and frost-free environment allows for an earlier start to the season, with the best time to establish seedlings from February to May.", "url": "https://www.starkeayres.com/news/pinpointing-the-best-green-pepper-planting-season-in-south-africa-by-region", "page": null, "doc": "Starke Ayres, green-pepper regional planting guide, 3 Nov 2025"},
+        {"quote": ">= 13 C with summer-dominant rain, not arid — light frost in low pockets at most (Upper Highway, Mbombela ~14, Mkuze ~17, Durban ~17): KZN DARD's warm-area column", "url": "internal:lib/koppen-global.ts", "page": null, "doc": "ImbewuField repo, lib/koppen-global.ts 2026-09-27 audit comment"},
+        {"quote": "Bela Bela (Warmbaths) • Brits • ... • Lephalale (Ellisras) • ... • Mokopane (Potgietersrus) • ... • Musina (Messina) • ... • Phalaborwa • ... • Polokwane (Pietersburg) • ... • Thabazimbi • Tzaneen ... Rustenburg [Middleveld/Bushveld]; Nelspruit • Hazyview • Malelane • Bushbuck Ridge • White River [Lowveld]", "url": "https://www.kirchhoffs.co.za/wp-content/uploads/2023/12/Kirchhoffs_Sow-Grow.pdf", "page": 4, "doc": "Kirchhoffs, 'Sow & Grow: Yearly Gardening Handbook', Jan 2024, Regions table"}
+      ]
+    },
+    {
+      "key": "subtropical-coast",
+      "name": "Subtropical Coast",
+      "provinces": "KZN coast (Durban, Ballito, Port Shepstone, Scottburgh, Kosi Bay, St Lucia), Wild Coast",
+      "description": "Humid, frost-free coastal belt with rain spread more evenly across the year than the interior.",
+      "classificationRules": {
+        "coldestMonthMeanC": ">= 11 (Durban ~17C per app's own cited reading)",
+        "summerRainShare": "0.35-0.65 (less sharply seasonal than the Lowveld's)",
+        "koppen": ["Cfa"],
+        "appRainPatternResult": "'all-year' — summerShare falling under the 0.65 threshold skips rainPatternFor's frost/light-frost branch entirely and, with coldest-month >=11C, resolves to 'all-year'."
+      },
+      "rainPattern": "all-year",
+      "frostWindow": {"firstFrostMonth": "none", "lastFrostMonth": "none", "notes": "Frost-free"},
+      "plantingSeasonNotes": "Broad, forgiving windows year-round per the catalog's existing 'all-year' description.",
+      "evidence": [
+        {"quote": "all-year = frost-free subtropical/coastal Eastern Cape style climate — broader, more forgiving windows.", "url": "internal:lib/crop-catalog.ts", "page": null, "doc": "ImbewuField repo, lib/crop-catalog.ts header"},
+        {"quote": "Durban comes back with a coldest month of 20.0 C (really nearer 17). The A/C boundary sits at exactly 18, so the grid's warm coastal bias tips it from Cfa to Aw.", "url": "internal:lib/koppen-global.ts", "page": null, "doc": "ImbewuField repo, lib/koppen-global.ts (NASA POWER grid-bias note, confirms Durban's TRUE class is Cfa)"},
+        {"quote": "Pongola • Kosi Bay • Mtubatuba • St Lucia • Ballito • Port Shepstone • Port Edward • Scottburgh • Uvongo • Durban [KZN Coast]", "url": "https://www.kirchhoffs.co.za/wp-content/uploads/2023/12/Kirchhoffs_Sow-Grow.pdf", "page": 4, "doc": "Kirchhoffs Sow & Grow, Jan 2024, Regions table"}
+      ]
+    },
+    {
+      "key": "midlands-mistbelt",
+      "name": "Midlands / Mistbelt",
+      "provinces": "KZN Midlands (Pietermaritzburg, Howick, Nottingham Road, Mooi River, Ixopo, Kokstad), EC escarpment/Midlands",
+      "description": "Cool, moist, summer-rain upland with moderate (not Highveld-severe) frost.",
+      "classificationRules": {
+        "coldestMonthMeanC": "roughly 7-13 (between the hard-frost Highveld and the light-frost Lowveld bands) — GAP: no primary-sourced figure for Pietermaritzburg/Midlands coldest-month mean found this pass",
+        "summerRainShare": ">= 0.65",
+        "koppen": ["Cwb"],
+        "appRainPatternResult": "Ambiguous without the coldest-month figure: if <13C it resolves to 'summer' like the Highveld branch (the app currently has no distinct mid-band inside the summerShare>=0.65 path other than the 13C light-frost cut), which would mean midlands-mistbelt and highveld are NOT distinguishable by rainPatternFor today — flagged as a correction candidate, not resolved here."
+      },
+      "rainPattern": "summer (see classificationRules note — possibly indistinguishable from highveld under current thresholds)",
+      "frostWindow": {"firstFrostMonth": "May", "lastFrostMonth": "Aug", "notes": "Lighter/later than Highveld but still real, per zone description in the research brief"},
+      "plantingSeasonNotes": "GAP — no region-specific seed-company or DAFF sowing chart retrieved this pass distinguishing Midlands from Highveld timing.",
+      "evidence": [
+        {"quote": "Pietermaritzburg • Richmond • Ixopo • Kokstad • Howick • Merrivale • Hilton • Lions River • Dargle • Lidgetton • Balgowan • Nottingham Road • Rosetta • Mooi River [Natal Midlands]", "url": "https://www.kirchhoffs.co.za/wp-content/uploads/2023/12/Kirchhoffs_Sow-Grow.pdf", "page": 4, "doc": "Kirchhoffs Sow & Grow, Jan 2024, Regions table"}
+      ]
+    },
+    {
+      "key": "western-cape",
+      "name": "Western Cape",
+      "provinces": "Cape Town, Stellenbosch, Paarl, Franschhoek, Boland, Swartland, Overberg, Worcester, Robertson",
+      "description": "Mediterranean winter-rainfall climate; dry, hot summers.",
+      "classificationRules": {
+        "summerRainShare": "<= 0.35 (rain concentrated Apr-Sep)",
+        "koppen": ["Csa", "Csb"],
+        "appRainPatternResult": "'winter' — rainPatternFor returns 'winter' directly when summerShare<=0.35, regardless of temperature."
+      },
+      "rainPattern": "winter",
+      "frostWindow": {"firstFrostMonth": "rare (inland valleys only)", "lastFrostMonth": "rare", "notes": "Coastal areas largely frost-free; inland valleys (Ceres, Worcester) get occasional winter frost"},
+      "plantingSeasonNotes": "Warm-season crops grown spring-summer under irrigation, opposite calendar to the interior.",
+      "evidence": [
+        {"quote": "The Western Cape's Mediterranean climate, with winter rainfall and dry summers, alters the rhythm of the planting season. Here, the optimal window for green peppers falls between October and December.", "url": "https://www.starkeayres.com/news/pinpointing-the-best-green-pepper-planting-season-in-south-africa-by-region", "page": null, "doc": "Starke Ayres, green-pepper regional planting guide, 3 Nov 2025"},
+        {"quote": "winter   = Western Cape winter rainfall (Mediterranean).", "url": "internal:BRIEF.md", "page": null, "doc": "Research brief, planner rain-pattern definitions"},
+        {"quote": "Csa 5120.00 0.44 ... Csb 18395.00 1.59", "url": "https://www.ukesa.info/download/AJocf5R3CpaTd0X6Fk7s4niSVwyvePxm/Conradie-2012-South-Africa-s-Climatic-Zones.pdf", "page": 7, "doc": "Conradie 2012, Table 3 (CSIR Köppen-Geiger map)"},
+        {"quote": "Cape Town, Csa -> Csb", "url": "internal:lib/koppen-global.ts", "page": null, "doc": "ImbewuField repo, lib/koppen-global.ts (notes both classic-map Csa and the corrected finer-grid Csb are seen for Cape Town)"}
+      ]
+    },
+    {
+      "key": "southern-cape",
+      "name": "Southern Cape",
+      "provinces": "Garden Route (Mossel Bay, George, Knysna), Nelson Mandela Bay/Port Elizabeth, Jeffreys Bay",
+      "description": "Mild, all-year-rainfall coastal strip — climatically distinct from the Western Cape's winter-only pattern.",
+      "classificationRules": {
+        "summerRainShare": "0.35-0.65 (rain spread across the year, unlike the Western Cape's <=0.35)",
+        "koppen": ["Cfb"],
+        "appRainPatternResult": "'all-year' via the same 0.35-0.65 default branch as subtropical-coast, given coldest-month typically >=11C."
+      },
+      "rainPattern": "all-year",
+      "frostWindow": {"firstFrostMonth": "rare", "lastFrostMonth": "rare", "notes": "Mild coastal, largely frost-free"},
+      "plantingSeasonNotes": "GAP — no region-specific sowing chart retrieved this pass; Kirchhoffs' 'Western and Southern Cape' region merges this zone with western-cape (see mergeSplitSuggestions).",
+      "evidence": [
+        {"quote": "Montagu • Barrydale • Ladismith • Calitzdorp • Oudtshoorn ... [Western and Southern Cape] ... Mossel Bay • George • Knysna", "url": "https://www.kirchhoffs.co.za/wp-content/uploads/2023/12/Kirchhoffs_Sow-Grow.pdf", "page": 4, "doc": "Kirchhoffs Sow & Grow, Jan 2024, Regions table — note this table folds western-cape and southern-cape into one commercial region"},
+        {"quote": "Cfb 93405.00 8.06", "url": "https://www.ukesa.info/download/AJocf5R3CpaTd0X6Fk7s4niSVwyvePxm/Conradie-2012-South-Africa-s-Climatic-Zones.pdf", "page": 7, "doc": "Conradie 2012, Table 3"}
+      ]
+    },
+    {
+      "key": "karoo-arid",
+      "name": "Karoo / Arid Interior",
+      "provinces": "Northern Cape, Great/Upper Karoo, Little Karoo, Kalahari, Namaqualand (De Aar, Colesberg, Kimberley, Upington, Springbok, Sutherland, Kakamas, Pofadder)",
+      "description": "Arid to semi-arid, extreme diurnal/seasonal temperature range; irrigation-dependent.",
+      "classificationRules": {
+        "koppen": ["BWk (cold desert, e.g. Namaqualand/interior Karoo)", "BWh (hot desert)", "BSk (cold steppe)", "BSh (hot steppe)"],
+        "note": "Aridity (group B) is checked FIRST in classifyKoppen and overrides the temperature/rain-seasonality logic that assigns the other 7 zones — an arid-interior site should be routed to karoo-arid on koppen.group==='B' before any of the summer/winter/frost checks below are applied.",
+        "appRainPatternResult": "rainPatternFor explicitly special-cases group B in its own mild-frost carve-out ('Arid (group B) is excluded... Upington frosts with a coldest month near 11-13C, so the mean alone cannot clear it of frost'), i.e. arid sites can still return 'summer' even with a mild-looking coldest-month mean."
+      },
+      "rainPattern": "summer (interior Karoo/Kalahari) or winter (western/Namaqualand fringe near the Cape) depending on rain seasonality — GAP: not further split here",
+      "frostWindow": {"firstFrostMonth": "Apr/May", "lastFrostMonth": "Aug/Sep", "notes": "Severe clear-night frost despite a moderate monthly mean — see koppen-global.ts's Upington caveat above"},
+      "plantingSeasonNotes": "Almost entirely irrigation-dependent; dryland cropping marginal.",
+      "evidence": [
+        {"quote": "Arid (group B) is excluded: a desert's clear winter nights fall far below its monthly mean (Upington frosts with a coldest month near 11-13 °C), so the mean alone cannot clear it of frost.", "url": "internal:lib/koppen-global.ts", "page": null, "doc": "ImbewuField repo, lib/koppen-global.ts rainPatternFor"},
+        {"quote": "Bsh 192269.00 16.59 ... Bsk 275927.00 23.81 ... Bwh 188784.00 16.29 ... Bwk 164629.00 14.20 ... Total ... Arid climates (70.89%)", "url": "https://www.ukesa.info/download/AJocf5R3CpaTd0X6Fk7s4niSVwyvePxm/Conradie-2012-South-Africa-s-Climatic-Zones.pdf", "page": 6, "doc": "Conradie 2012, Table 3 — 70.89% of South Africa is arid (group B)"},
+        {"quote": "De Aar • Cavinia • Colesburg • Fraserburg • Hopetown • Sutherland ... Kimberley • Upington • Douglas ... Kakamas • Pofadder [Northern Cape & Great Karoo]", "url": "https://www.kirchhoffs.co.za/wp-content/uploads/2023/12/Kirchhoffs_Sow-Grow.pdf", "page": 4, "doc": "Kirchhoffs Sow & Grow, Jan 2024, Regions table"}
+      ]
+    },
+    {
+      "key": "high-mountain",
+      "name": "High Mountain",
+      "provinces": "Drakensberg, Lesotho border (Matatiele, Sterkspruit, Mount Fletcher), NE Free State highlands (Harrismith area), EC highlands",
+      "description": "Severe frost, short growing season, alpine/highland grassland — a small-area zone that commercial seed-company region tables typically fold into a neighbouring lowland region (see mergeSplitSuggestions), but which a vegetation/Köppen study keeps distinct.",
+      "classificationRules": {
+        "koppen": ["Cwc (subtropical highland, short summer — 0.31% of SA's area per Conradie's Table 3, consistent with a small alpine extent)"],
+        "note": "South Africa's Köppen inventory (Conradie 2012, Table 3) contains NO snow (D) or polar (E) classes at all — everything sums to A+B+C = 100%. The country's most extreme cold-and-short-season areas therefore present as Cwc, not as a D-class, under the standard Köppen scheme; a site-climate classifier should not expect to see group D/E for a South African coordinate.",
+        "appRainPatternResult": "Not distinctly handled by rainPatternFor today — a Cwc site with summer-dominant rain and a low coldest-month mean would currently fall out as 'summer', identical to highveld. Flagged as a gap: the app has no elevation input to separately route high-mountain sites."
+      },
+      "rainPattern": "summer",
+      "frostWindow": {"firstFrostMonth": "Mar/Apr", "lastFrostMonth": "Oct", "notes": "Longest and severest frost window of the 8 zones — GAP: no primary-sourced first/last-frost dates found this pass"},
+      "plantingSeasonNotes": "Very short frost-free window; GAP — no region-specific sowing chart found.",
+      "evidence": [
+        {"quote": "14. Eastern Mountain grassland 15. Alpine Heathland", "url": "https://www.ukesa.info/download/AJocf5R3CpaTd0X6Fk7s4niSVwyvePxm/Conradie-2012-South-Africa-s-Climatic-Zones.pdf", "page": 3, "doc": "Conradie 2012, Fig 1 vegetation-climate region list (Low 1996 / Kruger)"},
+        {"quote": "Cwc 3564.00 0.31", "url": "https://www.ukesa.info/download/AJocf5R3CpaTd0X6Fk7s4niSVwyvePxm/Conradie-2012-South-Africa-s-Climatic-Zones.pdf", "page": 6, "doc": "Conradie 2012, Table 3"},
+        {"quote": "Matatiele ... Mount Fletcher (Tlokoeng) ... Sterkspruit [Eastern Cape & Little Karoo]", "url": "https://www.kirchhoffs.co.za/wp-content/uploads/2023/12/Kirchhoffs_Sow-Grow.pdf", "page": 4, "doc": "Kirchhoffs Sow & Grow, Jan 2024 — note these Drakensberg-border towns are folded into the EC region here, not given their own row"}
+      ]
+    }
+  ],
+  "mergeSplitSuggestions": [
+    "Kirchhoffs' own 8-region commercial table does not map 1:1 onto the brief's 8 zones: it splits the interior hot lowland into 'Middleveld/Bushveld' + 'Lowveld' (both = this file's single lowveld-bushveld), and it merges western-cape + southern-cape into one 'Western and Southern Cape' row despite their different rain seasonality (Csb winter-dominant vs Cfb all-year) — evidence above. Recommend KEEPING western-cape and southern-cape split in the app, since rainPatternFor already produces different RainPatterns for them (winter vs all-year) from real seasonality data; a commercial guide's convenience grouping is not a climatic argument for merging.",
+    "No source found gives high-mountain its own commercial planting table — Kirchhoffs folds Drakensberg-border towns (Matatiele, Mount Fletcher, Sterkspruit) into 'Eastern Cape & Little Karoo'. However Conradie's vegetation-based regional map (Fig 1: 'Eastern Mountain grassland', 'Alpine Heathland') and its Köppen table (a distinct, small-area Cwc class) both support keeping high-mountain as its own zone for classification purposes, just accepting that no seed-company sowing chart will ever name it directly — its planting notes will stay a GAP until a DAFF/ARC source is reached.",
+    "CORRECTION to the brief's own rain-pattern write-up: BRIEF.md's 'all-year' definition lists 'Lowveld' alongside KZN/EC coast, but the app's own rainPatternFor (as audited in koppen-global.ts, citing Mkuze at ~80% summer rain / 17C coldest month) computes 'mild-frost' for real Lowveld coordinates, not 'all-year' — summer rain in the Lowveld is too seasonally concentrated (>=65% Oct-Mar) to clear the 0.35-0.65 band that 'all-year' requires. Recommend treating lowveld-bushveld as mild-frost, matching the code, not the brief's prose list."
+  ],
+  "gaps": [
+    "Could not reach www.nda.gov.za / dalrrd.gov.za directly or via the Wayback Machine this pass — the proxy status log shows other agents' attempts this session also failed (ws_closed_mid_exchange / 502 on www.nda.gov.za, www.dalrrd.gov.za, www.daff.gov.za). No DAFF/DALRRD production-guideline PDF defining agro-climatic regions was retrieved, so no DAFF-sourced numeric thresholds (frost-day counts, first/last frost dates, region-specific annual rainfall bands) are in this file.",
+    "kzndard.gov.za also failed this session (ws_closed_mid_exchange in the proxy log) — no direct KZN DARD zone document retrieved; this file relies on the ImbewuField codebase's own prior citations of KZN DARD ('warm areas/light frosts') rather than a freshly-fetched KZN DARD source.",
+    "R.E. Schulze's South African Atlas of Climatology and Agrohydrology (WRC 1489/1/08) was only reached as a short 1997 preface to its 1983 Natal predecessor (archive.iwmi.org) — confirms the Atlas maps Precipitation, Temperature and Frost as named sections (methodological support for frost/rain-based zoning) but contains NO zone-specific numeric tables; the full Atlas itself was not locatable/downloadable this pass.",
+    "No ARC-ISCW AGIS agro-climatic zone polygon/boundary document was reached (arc.agric.za's ISCW product-catalogue PDFs list Land Type Maps and Memoirs but do not themselves give zone boundaries or thresholds).",
+    "Elevation is not part of lib/site-climate.ts's SiteClimate today, so the 'elevation band' column in classificationRules above is descriptive only and cannot currently be checked against real site data — flagging this as a possible SiteClimate field gap if elevation-based zone splitting (e.g. highveld vs midlands-mistbelt, both often near-identical on temperature/rain alone) is wanted.",
+    "midlands-mistbelt has no sourced coldest-month-mean or annual-rainfall figure this pass, and — per the classificationRules note on that zone — appears to be computationally indistinguishable from highveld under the app's current rainPatternFor thresholds (both fall out as 'summer' once coldest-month is under 13C). This is the single most actionable follow-up: a primary source giving Pietermaritzburg/Midlands' coldest-month mean would show whether a real threshold split exists or whether the app needs a genuinely new signal (e.g. elevation, or KZN-specific override) to keep the two zones apart.",
+    "karoo-arid's own rain-pattern split (interior 'summer' vs Namaqualand-fringe 'winter') is asserted from general Köppen geography, not from a zone-specific quote — no source pinning the exact boundary was found this pass.",
+    "No first/last-frost calendar dates (only qualitative 'May-Aug'/frost-free wording) were sourced for any zone from a primary meteorological document; SAWS was not reached this pass."
+  ]
+}
