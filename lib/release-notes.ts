@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'e1967bb8', changes: [
+    'Market Gardening has 20 silent Sesotho and Xitsonga review slides.',
+    'Existing drafts pair with English; held text stays in one English source card.',
+  ], tour: [
+    { title: 'Compare Market Gardening review slides', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho or Xitsonga and page through all 20 slides. Existing draft passages pair with exact English; every other slide shows one English source card labelled translation pending. No narration or farming approval is claimed.' },
+  ] },
   { when: '29 September 2026', sha: '6dd61753', changes: [
     'Soil Health now has 20 silent Sesotho slides paired with their English source.',
     'Draft text is marked unreviewed; held teaching stays in English.',

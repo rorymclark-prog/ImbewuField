@@ -715,11 +715,11 @@ test('Sesotho Food Forest keeps its paired still visible instead of the English 
   });
 });
 
-test('incomplete regional Study decks fall back to English for every unauthored frame', () => {
+test('regional Study decks use their complete authored frames and fall back only where frames are absent', () => {
   const cases: [string, string, number[]][] = [
-    ['market-community', 'st', [2, 5, 6]],
+    ['market-community', 'st', COURSE_DECKS['market-community'].slides.map(({ slide }) => slide)],
+    ['market-community', 'ts', COURSE_DECKS['market-community'].slides.map(({ slide }) => slide)],
     ['market-community', 've', [2, 3]],
-    ['market-community', 'ts', [2, 18]],
     ['soil-health', 'ts', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
   ];
   for (const [moduleId, language, authored] of cases) {

@@ -73,6 +73,17 @@ test('every size in the generated manifest matches the real file, to the byte', 
   assert.deepEqual(wrong, [], `stale asset sizes — run: node scripts/gen-asset-sizes.mjs`);
 });
 
+test('Sesotho and Xitsonga Market review decks download every exact frame offline', () => {
+  for (const language of ['st', 'ts']) {
+    const pack = offlinePack('market-community', language, 'standard', 'slides');
+    assert.deepEqual(pack.missing, [], `${language} Market slide pack must be complete`);
+    const slides = pack.entries.filter((item) => item.kind === 'slide');
+    assert.equal(slides.length, 20);
+    assert.ok(slides.every((item) => item.url.startsWith(`/course-decks/market-community/${language}/`)));
+    assert.equal(new Set(slides.map(({ url }) => url)).size, 20);
+  }
+});
+
 test('the deck manifest states each clip\'s true size — the play button is a promise', () => {
   // course-deck.ts carries its own `bytes` because the play button shows it before a farmer spends
   // the data. Hand-rounded values survived a re-encode once and every button on the page was then
