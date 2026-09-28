@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1204 files, 468.6 MB total.
+// 1225 files, 475.4 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -881,6 +881,27 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/en/slide-19.jpg': 105724,
   '/course-decks/reading-landscape/en/slide-20.jpg': 1136835,
   '/course-decks/reading-landscape/en/slide-21.jpg': 114448,
+  '/course-decks/reading-landscape/ts/slide-01.webp': 270630,
+  '/course-decks/reading-landscape/ts/slide-02.webp': 267612,
+  '/course-decks/reading-landscape/ts/slide-03.webp': 262376,
+  '/course-decks/reading-landscape/ts/slide-04.webp': 260076,
+  '/course-decks/reading-landscape/ts/slide-05.webp': 194430,
+  '/course-decks/reading-landscape/ts/slide-06.webp': 587854,
+  '/course-decks/reading-landscape/ts/slide-07.webp': 270936,
+  '/course-decks/reading-landscape/ts/slide-08.webp': 332010,
+  '/course-decks/reading-landscape/ts/slide-09.webp': 181990,
+  '/course-decks/reading-landscape/ts/slide-10.webp': 555462,
+  '/course-decks/reading-landscape/ts/slide-11.webp': 192088,
+  '/course-decks/reading-landscape/ts/slide-12.webp': 447294,
+  '/course-decks/reading-landscape/ts/slide-13.webp': 177130,
+  '/course-decks/reading-landscape/ts/slide-14.webp': 443442,
+  '/course-decks/reading-landscape/ts/slide-15.webp': 412018,
+  '/course-decks/reading-landscape/ts/slide-16.webp': 280616,
+  '/course-decks/reading-landscape/ts/slide-17.webp': 205824,
+  '/course-decks/reading-landscape/ts/slide-18.webp': 546342,
+  '/course-decks/reading-landscape/ts/slide-19.webp': 268416,
+  '/course-decks/reading-landscape/ts/slide-20.webp': 642140,
+  '/course-decks/reading-landscape/ts/slide-21.webp': 293248,
   '/course-decks/reading-landscape/zu/slide-01.jpg': 94361,
   '/course-decks/reading-landscape/zu/slide-02.jpg': 79810,
   '/course-decks/reading-landscape/zu/slide-03.jpg': 80659,

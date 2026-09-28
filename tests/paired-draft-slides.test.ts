@@ -55,6 +55,49 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   assert.equal(pairedDraftLanguageLabel('xh'), null);
 });
 
+test('Reading the Landscape Xitsonga draft pairs selected headings and safe descriptive narration', () => {
+  const landscapeSource = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/reading-landscape.ts.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, landscapeSource, 'ts');
+  assert.equal(slides.length, 21);
+  assert.equal(packet.reviewStatus, 'unreviewed');
+  assert.match(packet.reviewNotes.join(' '), /comprehension has not been established/);
+
+  const draftedHeadings = slides.filter((slide: any) => slide.target.heading.status === 'draft');
+  assert.deepEqual(draftedHeadings.map((slide: any) => slide.n), [1, 3, 4, 8]);
+  assert.deepEqual(draftedHeadings.map((slide: any) => slide.target.heading.text), [
+    'Ku Hlaya Vutshamo bya Misava',
+    'Leswi Nga Ta Dyondziwa',
+    'Dyondzo ya 1: Laha Mpfula Yi Yaka Kona',
+    'Dyondzo ya 2: Hlaya Dyambu na Ndzhuti',
+  ]);
+  const draftedBodyFields = slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean));
+  assert.deepEqual(draftedBodyFields, ['1:1', '2:1', '2:2', '5:1']);
+  assert.equal(slides[1].target.body[0].text,
+    'Purasi rin’wana na rin’wana ri na maendlelo lama tirhaka na hi nga si engetela nchumu na wun’we.');
+  assert.equal(slides[1].target.body[1].text,
+    'Mpfula se yi landzelela mintila ehenhla ka misava. Dyambu se ri kufumeta tindhawu tin’wana ku tlurisa tin’wana. Moya se wu kuma swivandla (gaps) na tinhlohlorhi ta misava (ridges). Moya wo titimela se wu dzika eka swinkovane (hollows).');
+  assert.equal(slides[4].target.body[0].text,
+    'Xifaniso xi komba mpfula yi ri karhi yi rhelela ehansi (downhill). Landzelela laha yi hatlisaka kona, yi hangalaka, yi nghena emisaveni (sinks), yi hlengeletana, na ku suka emhlabeni.');
+
+  const fieldStatuses = slides.flatMap((slide: any) => [slide.target.heading, ...slide.target.body]);
+  assert.equal(fieldStatuses.length, 76);
+  assert.equal(fieldStatuses.filter((part: any) => part.status === 'draft').length, 8);
+  assert.equal(fieldStatuses.filter((part: any) => part.status === 'english-hold').length, 68);
+  for (let slide = 1; slide <= slides.length; slide += 1) {
+    assert.ok(existsSync(`public/course-decks/reading-landscape/ts/slide-${String(slide).padStart(2, '0')}.webp`),
+      `paired Xitsonga slide ${slide} must be present on disk`);
+  }
+  for (const slide of slides) {
+    assert.ok(slide.target.body.every((part: any, index: number) => {
+      const field = `${slide.n}:${index + 1}`;
+      return part.status === (draftedBodyFields.includes(field) ? 'draft' : 'english-hold');
+    }));
+  }
+});
+
 test('regional Introduction orientation and ethics frames hold uncertain farming and design claims in English', () => {
   for (const lang of ['ve', 'ts']) {
     const packet = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
