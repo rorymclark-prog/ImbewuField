@@ -2716,6 +2716,34 @@ function MonthLineChart({
   );
 }
 
+const TRAY_COLS = 2;
+const TRAY_ICON = 18;
+const TRAY_GAP = 4;
+
+function AvailabilityIconTray({ items, tint, rows }: { items: FoodAvailabilityItem[]; tint: string; rows: number }) {
+  if (rows === 0) return null;
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: `repeat(${TRAY_COLS}, ${TRAY_ICON}px)`,
+      gridAutoRows: TRAY_ICON,
+      gap: TRAY_GAP,
+      justifyContent: 'center',
+      alignContent: 'start',
+      minHeight: rows * TRAY_ICON + (rows - 1) * TRAY_GAP + 8,
+      margin: '4px 4px 0',
+      padding: 4,
+      borderRadius: 6,
+      background: `rgba(${tint},0.14)`,
+      border: `1px solid rgba(${tint},0.4)`,
+    }}>
+      {items.map((item, idx) => (
+        <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={TRAY_ICON} />
+      ))}
+    </div>
+  );
+}
+
 type FoodValueMode = 'availability' | 'utilization' | 'value';
 
 function FoodAvailabilityChart({
@@ -2756,6 +2784,7 @@ function FoodAvailabilityChart({
   });
   const maxTotal = Math.max(1, ...cols.map((c) => c.fresh.length + c.stored.length));
   const hasStoredItems = cols.some((c) => c.stored.length > 0);
+  const maxFreshRows = Math.ceil(Math.max(0, ...cols.map((c) => c.fresh.length)) / TRAY_COLS);
   const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
   const utilMax = Math.max(1, ...utilization);
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
@@ -2871,16 +2900,20 @@ function FoodAvailabilityChart({
                             )}
                           </div>
                           <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 6 }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
-                          <div style={{ fontSize: 18, minHeight: 22, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', marginTop: 2 }}>
-                            {fresh.map((item, idx) => (
-                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={18} />
-                            ))}
-                          </div>
-                          <div style={{ fontSize: 18, minHeight: 22, opacity: 0.6, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
-                            {stored.map((item, idx) => (
-                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={18} />
-                            ))}
-                          </div>
+                          {/* Each month's crops sit in their own bounded tray,
+                              two to a row. Rory, 2026-09-28, on an iPad: "the
+                              veg needs to be clearly visible for that month".
+                              A free-wrapping row filled the ~58px column edge
+                              to edge (3 × 18px + gaps), so one month's icons
+                              ran straight into the next and nothing said where
+                              Sep ended and Oct began. The tray is tinted in its
+                              legend colour (fresh green / stored ochre) instead
+                              of the old 60% opacity, which made the stored
+                              crops the hardest ones to recognise. The fresh
+                              tray takes the tallest month's height so every
+                              stored tray starts on the same line. */}
+                          <AvailabilityIconTray items={fresh} tint="127,174,110" rows={maxFreshRows} />
+                          {stored.length > 0 && <AvailabilityIconTray items={stored} tint="212,160,23" rows={Math.ceil(stored.length / TRAY_COLS)} />}
                         </button>
                       </div>
                     );
