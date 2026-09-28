@@ -66,6 +66,25 @@ export const SPECIES_ART = {
   'searsia-lancea-rhus-lancea': { picker: 'tree_karee.png', plan: 'karee-v1.png' },
   'sideroxylon-inerme': { picker: 'tree_white_milkwood.png', plan: 'white-milkwood-v1.png' },
   'olea-europaea-subsp-europaea': { picker: 'tree_olive.png', plan: 'olive-v1.png' },
+  // Fruit trees with harvest data (lib/perennial-harvest-data.ts) that already had artwork under
+  // their design element but no species entry, so the picker showed them with no picture.
+  'carica-papaya': { picker: 'tree_pawpaw.png', plan: 'pawpaw-tree-v2.png' },
+  'carissa-macrocarpa': { picker: 'tree_natal_plum-v3.png', plan: 'natal-plum-v2.png' },
+  'citrus-limon': { picker: 'tree_lemon.png', plan: 'citrus-tree-v3.png' },
+  'citrus-reticulata': { picker: 'tree_citrus.png', plan: 'citrus-tree-v3.png' },
+  'dovyalis-afra': { picker: 'tree_kei_apple.png', plan: 'kei-apple-tree-v2.png' },
+  'ficus-carica': { picker: 'tree_fig.png', plan: 'fig-tree-v1.png' },
+  'harpephyllum-caffrum': { picker: 'tree_wild_plum.png', plan: 'wild-plum-v2.png' },
+  'litchi-chinensis': { picker: 'tree_litchi.png', plan: 'litchi-tree-v5.png' },
+  'macadamia-integrifolia': { picker: 'tree_macadamia.png', plan: 'macadamia-tree-v2.png' },
+  'mangifera-indica': { picker: 'tree_mango.png', plan: 'mango-tree-v2.png' },
+  'persea-americana': { picker: 'tree_avocado.png', plan: 'avocado-tree-v5.png' },
+  'prunus-persica': { picker: 'tree_peach.png', plan: 'peach-tree-v1.png' },
+  'prunus-salicina': { picker: 'tree_plum.png', plan: 'plum-tree-v1.png' },
+  'psidium-guajava': { picker: null, plan: 'guava-v2.png' },
+  'punica-granatum': { picker: 'tree_pomegranate.png', plan: 'pomegranate-tree-v1.png' },
+  'sclerocarya-birrea-subsp-caffra': { picker: 'tree_marula.png', plan: 'marula-tree-v2.png' },
+  'syzygium-cordatum': { picker: 'tree_waterberry.png', plan: 'waterberry-v2.png' },
 } as const satisfies Readonly<Record<string, SpeciesArtwork>>;
 
 export type SpeciesReferenceArtwork = Exclude<

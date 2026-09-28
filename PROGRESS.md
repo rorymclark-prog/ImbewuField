@@ -52,6 +52,22 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 28 Sep 2026 — Artwork: 17 fruit trees linked, Codex brief for trees and animals
+- **17 harvest-table fruit trees linked to art they already had** (`lib/species-art.ts`): pawpaw,
+  num-num/Natal plum, lemon, naartjie, Kei apple, fig, wild plum, litchi, macadamia, mango, avocado,
+  peach, Japanese plum, pomegranate, marula, waterberry, plus guava's plan crown. The Plant Catalog
+  (opened from Other Tree) showed them with no picture, and on the plan they drew the generic
+  orchard crown because they are saved as `tree_other` + `speciesId`.
+- **Animal picture slot:** `lib/animal-art.ts` (empty map) + `AnimalEnterprisesCard` shows a 16 px
+  chip image and a 56–72 px picture when an entry exists; Lucide icon otherwise.
+  `tests/animal-enterprises.test.ts` guards id ↔ file ↔ 256×256 transparent corners, and orphans.
+- **`docs/ANIMAL-TREE-ART-BRIEF.md`:** Codex brief + paste-ready prompt. Part A: 5 trees with no art
+  anywhere (sour fig, Transvaal milkplum, African mangosteen, jacket plum, spiny monkey orange;
+  picker 192² + plan 1024²) and a guava picker. Part B: 15 animal pictures (256²).
+- **`docs/CROP-ART-BRIEF.md`:** status now says the 20 Batch 2 files are placeholders, and tells
+  Codex to branch from current `main` (a stale clone read the old 1024² rule).
+- **Left:** all Codex drawing (20 crops, 11 tree files, 15 animals).
+
 ### 28 Sep 2026 — Animal enterprises, round 2 (Phase C: cattle, sheep, pigs, fish; month search)
 - **New enterprises (15 in all):** beef cattle (Nguni/crossbred, communal veld), dairy cow, meat
   sheep, wool sheep, pigs (small-scale sow herd) and tilapia (Mozambique tilapia, small pond or

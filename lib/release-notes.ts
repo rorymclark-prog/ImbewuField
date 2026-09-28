@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', changes: [
+    '17 fruit trees in the Plant Catalog now show their picture, from mango to marula.',
+    'On the plan, those trees now draw their own crown instead of one shared stand-in.',
+  ], tour: [
+    { title: 'Pick a fruit tree by its picture', where: 'Design Studio → Plant Catalog', href: '/design',
+      detail: 'Choose Other Tree in the palette and the Plant Catalog opens. Mango, avocado, litchi, fig, marula, waterberry, wild plum and ten more now show a picture beside the name, so the list is quicker to scan.' },
+    { title: 'See the tree on the plan', where: 'Design Studio → Exact plan', href: '/design',
+      detail: 'A tree placed from the Plant Catalog now draws that species\u2019 own crown on the plan. Before, these 17 all drew the same stand-in crown.' },
+  ] },
   { when: '28 September 2026', sha: 'f10ee34', changes: [
     'Kraals, pig pens and small ponds on your map now show under Animals on your map.',
     'New: beef and dairy cattle, meat and wool sheep, pigs and tilapia, each sourced.',

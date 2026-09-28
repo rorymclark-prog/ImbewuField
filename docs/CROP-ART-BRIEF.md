@@ -1,6 +1,10 @@
 # Crop Art Brief
 
-**Status:** deployed and guarded by `tests/element-art.test.ts`
+**Status:** 29 crops have finished art. **20 crops (Batch 2, near the end) still ship flat
+placeholder shapes** that pass the tests but need real art — that is the open job.
+Work from current `main` (`git fetch origin && git checkout origin/main -b codex/crop-art-batch-2`):
+an older clone still asks for 1024×1024 files, but the deployed size is **256×256**.
+Guarded by `tests/element-art.test.ts`.
 **Requested by:** Rory, 2026-08-15 — flagged the Farm-gate Prices screen showing a
 raw 🧡 orange-heart emoji for Butternut ("that's just an orange heart... we can do
 better than that").
@@ -183,7 +187,8 @@ The crop-catalog expansion (PR #754) adds these crops. Each is currently shipped
 **temporary generated placeholder** so the guard test passes — replace every one with real art
 under the rules above (produce view, three-quarter angle, soft-shaded illustration matching the
 existing set, 256×256 RGBA, transparent corners, readable at 24px). The filename is already
-correct; overwrite the PNG in place. `lib/crop-art.ts` already maps the key.
+correct; overwrite the PNG in place. `lib/crop-art.ts` already maps the key. The placeholders are easy to spot: flat single-colour
+shapes under 35 KB, where the finished files are shaded and 60–130 KB.
 
 Chinese cabbage, leeks and cassava were researched but NOT added to `CROPS` (no primary SA source
 for their missing values), so they need no art. If they are added later, their rows go back here.
@@ -218,6 +223,8 @@ courgette, round gem) — follow the three-axis rule above for the greens.
 
 ### Ready-to-paste Codex prompt (batch 2)
 
+> Run `git fetch origin && git checkout origin/main -b codex/crop-art-batch-2` first. The 20 files
+> below exist and are already mapped, but they are flat placeholder shapes, not finished art.
 > Replace the 20 placeholder PNGs in `public/crop-art/` listed in the Batch 2 table of
 > `docs/CROP-ART-BRIEF.md` with real produce art. Read the whole brief first and match the style of
 > the existing 29 crop PNGs (open 4–5 of them, e.g. `butternut.png`, `kale.png`, `dry-beans.png`).
