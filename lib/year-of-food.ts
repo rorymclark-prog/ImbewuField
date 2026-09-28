@@ -63,7 +63,7 @@ export interface YearOfFood {
   vegGapMonths: number[];
 }
 
-const PRODUCT_ORDER: readonly AnimalProduct[] = ['eggs', 'milk', 'meat', 'honey'];
+const PRODUCT_ORDER: readonly AnimalProduct[] = ['eggs', 'milk', 'meat', 'fish', 'honey'];
 
 /**
  * Fold the chart's three rows into twelve months. `monthOrder` is the chart's own slot order;

@@ -28,7 +28,7 @@ import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/li
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { buildTreeAvailability, formatMonthSpan, formatRange, placedTreeGroups, sourcedSeasonMonths, type PlacedTreeGroup, type TreeAvailabilityItem } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
-import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
+import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
 import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
 import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
@@ -687,7 +687,7 @@ function FacilitatorCropsPageInner() {
   // each kind is kept for, and the animals' own switch. A coop is housing, not a head count, and
   // not an enterprise either — so nothing is charted for a kind until the farmer picks one.
   const [canvasAnimals, setCanvasAnimals] = useState<PlacedAnimalGroup[]>([]);
-  const [animalChoices, setAnimalChoices] = useState<Partial<Record<AnimalKind, string>>>({});
+  const [animalChoices, setAnimalChoices] = useState<Partial<Record<HousingKind, string>>>({});
   const [includeAnimals, setIncludeAnimals] = useState(DEFAULT_INCLUDE_ANIMALS);
   useEffect(() => { setIncludeAnimals(loadIncludeAnimals()); }, []);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
@@ -1381,10 +1381,10 @@ function FacilitatorCropsPageInner() {
     () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate }),
     [yearOfFood, beds, plantings, pattern, currentMonth, yearGate],
   );
-  function chooseAnimalEnterprise(animal: AnimalKind, enterpriseId: string | null) {
+  function chooseAnimalEnterprise(housing: HousingKind, enterpriseId: string | null) {
     if (!canvasSite) return;
     const next = { ...animalChoices };
-    if (enterpriseId) next[animal] = enterpriseId; else delete next[animal];
+    if (enterpriseId) next[housing] = enterpriseId; else delete next[housing];
     setAnimalChoices(next);
     saveEnterpriseChoices(canvasSite, next);
   }

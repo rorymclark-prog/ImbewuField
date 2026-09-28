@@ -4,13 +4,18 @@ import { readFileSync } from 'node:fs';
 import {
   ANIMAL_ENTERPRISES,
   ANIMAL_LABEL,
-  ELEMENT_ANIMAL,
+  ELEMENT_HOUSING,
+  HOUSING_ANIMALS,
   buildAnimalAvailability,
+  cleanChoices,
   enterprisesFor,
+  enterprisesForHousing,
+  isFoodProduct,
   formatAmountRange,
   placedAnimalGroups,
   sourcedProductMonths,
   type AnimalKind,
+  type HousingKind,
 } from '@/lib/animal-enterprises';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { enterpriseFromDossier, loadDossiers } from '../scripts/build-animal-enterprises.mjs';
@@ -28,13 +33,13 @@ test('the generated table is exactly what the dossiers say', () => {
   }
 });
 
-test('the first build covers chickens, goats, bees, rabbits and ducks', () => {
+test('every animal kind has at least one enterprise, filed under its own name', () => {
   for (const kind of Object.keys(ANIMAL_LABEL) as AnimalKind[]) {
     assert.ok(enterprisesFor(kind).length > 0, `no ${kind} enterprise`);
   }
   for (const e of records) {
     assert.ok(e.enterpriseId.startsWith(e.animal === 'bee' ? 'bee' : e.animal), `${e.enterpriseId} is filed under ${e.animal}`);
-    assert.ok(['eggs', 'meat', 'milk', 'honey'].includes(e.product), `${e.enterpriseId}: product ${e.product}`);
+    assert.ok(['eggs', 'meat', 'milk', 'honey', 'fish', 'wool'].includes(e.product), `${e.enterpriseId}: product ${e.product}`);
     assert.ok(e.outputUnit.trim() && e.animalUnit.trim(), `${e.enterpriseId}: units`);
   }
 });
@@ -77,10 +82,43 @@ test('months and ranges are well formed', () => {
 });
 
 test('element shortcuts point at real elements, and ambiguous housing is not guessed at', () => {
-  for (const defId of Object.keys(ELEMENT_ANIMAL)) assert.ok(ELEMENTS_BY_ID[defId], `${defId} is not a design element`);
-  // A kraal holds cattle, goats or sheep; a pig pen has no dossier yet.
-  assert.equal(ELEMENT_ANIMAL.kraal, undefined);
-  assert.equal(ELEMENT_ANIMAL.pig_pen, undefined);
+  for (const defId of Object.keys(ELEMENT_HOUSING)) assert.ok(ELEMENTS_BY_ID[defId], `${defId} is not a design element`);
+  // A kraal holds cattle, sheep or goats, so it offers all three and waits for the farmer.
+  const kraal = enterprisesForHousing('kraal');
+  assert.ok(kraal.length > 1, 'a kraal must offer a choice');
+  assert.ok(kraal.every((e) => ['cattle', 'sheep', 'goat'].includes(e.animal)), 'a kraal holds only cattle, sheep or goats');
+  // A pond offers only fish, and never assumes it holds any.
+  assert.ok(enterprisesForHousing('pond').every((e) => e.animal === 'fish'));
+  const groups = placedAnimalGroups([{ defId: 'kraal', status: 'existing' }, { defId: 'pond_small', status: 'existing' }]);
+  assert.ok(buildAnimalAvailability(groups, {}, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], false).every((slot) => slot.length === 0));
+  // Every housing's animals exist.
+  for (const [housing, animals] of Object.entries(HOUSING_ANIMALS)) {
+    for (const a of animals) assert.ok(a in ANIMAL_LABEL, `${housing}: ${a}`);
+  }
+});
+
+test('a saved choice must fit its housing', () => {
+  const kraalPick = enterprisesForHousing('kraal')[0];
+  const fishPick = enterprisesForHousing('pond')[0];
+  const raw: Record<string, string> = { chicken: 'chicken-layer', kraal: kraalPick?.enterpriseId ?? '', pond: kraalPick?.enterpriseId ?? '', nonsense: 'chicken-layer' };
+  const clean = cleanChoices(raw);
+  assert.equal(clean.chicken, 'chicken-layer', 'saves from before housing kinds stay valid');
+  if (kraalPick) assert.equal(clean.kraal, kraalPick.enterpriseId);
+  assert.equal(clean.pond, undefined, 'a kraal enterprise cannot be what a pond is for');
+  assert.equal((clean as Record<string, string>).nonsense, undefined);
+  if (fishPick) assert.equal(cleanChoices({ pond: fishPick.enterpriseId }).pond, fishPick.enterpriseId);
+});
+
+test('wool is never on the food chart', () => {
+  const wool = records.filter((e) => !isFoodProduct(e.product));
+  assert.ok(wool.every((e) => e.product === 'wool'));
+  const groups = placedAnimalGroups([{ defId: 'kraal', status: 'existing' }]);
+  const all = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  for (const e of wool) {
+    const housing = (Object.keys(HOUSING_ANIMALS) as HousingKind[]).find((h) => h === 'kraal' && HOUSING_ANIMALS[h].includes(e.animal));
+    if (!housing) continue;
+    assert.ok(buildAnimalAvailability(groups, { kraal: e.enterpriseId }, all, false).every((slot) => slot.length === 0), `${e.enterpriseId} reached the chart`);
+  }
 });
 
 test('structures are grouped by animal and counted as structures, not animals', () => {
@@ -89,10 +127,12 @@ test('structures are grouped by animal and counted as structures, not animals', 
     { defId: 'chicken_tractor', status: 'proposed' },
     { defId: 'chicken_coop' }, // legacy: no status = existing
     { defId: 'beehive', status: 'proposed' },
-    { defId: 'kraal', status: 'existing' },
+    { defId: 'pig_pen', status: 'existing' },
     { defId: 'veg_bed' },
   ]);
-  assert.deepEqual(groups.map((g) => [g.animal, g.existing, g.proposed]), [['chicken', 2, 1], ['bee', 0, 1]]);
+  const expected: [HousingKind, number, number][] = [['chicken', 2, 1], ['bee', 0, 1]];
+  if (enterprisesForHousing('pig').length) expected.push(['pig', 1, 0]);
+  assert.deepEqual(groups.map((g) => [g.housing, g.existing, g.proposed]), expected);
 });
 
 test('the availability row shows only what the farmer said they keep, and standing structures from today', () => {
