@@ -52,6 +52,37 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 28 Sep 2026 — Animal enterprises (Phase C: chickens, goats, bees, rabbits, ducks)
+- **New table `lib/animal-enterprises.ts`:** per ENTERPRISE, not per m². Each of 9 enterprises
+  (layer, broiler and village chickens; dairy, meat and indigenous goats; honeybees; meat rabbits;
+  meat ducks) holds output per animal, production months, first product, productive life, feed,
+  water, space, welfare points and legal points (avian flu and FMD as controlled diseases, movement
+  restrictions, beekeeper registration, animal ID marks, abattoir rule and its own-use exemption).
+  - Generated from `research/animal-sources/<enterpriseId>.json` by
+    `node scripts/build-animal-enterprises.mjs`; `tests/animal-enterprises.test.ts` fails on drift,
+    a missing quote/URL, a banned host or animals reaching the bed-yield modules.
+- **Quote check:** every quote was re-fetched and matched. Withdrawn or restated in review, each with
+  a `gaps` line starting "Editor review 2026-09-28":
+  - Derived figures: layer eggs/year and laying life (two documents stitched), broiler feed/day
+    (cumulative ÷ 35) and space (kg/m² ÷ a weight from elsewhere; kept as a welfare point), rabbit
+    water (g/kg × assumed weight), goat-milk litres (assumed density; restored to kg/305-day
+    lactation), indigenous-goat months (kidding + assumed weaning; kept as `unverifiedMonths`).
+  - Wrong fit: rabbit feed was a buck figure; experimental conditions read as welfare rules (rabbit,
+    duck); village-chicken "seasonal pattern" was a nutrition finding.
+  - Legal points citing only the Animal Diseases Act's general definition were dropped or re-cited
+    to a statement that names the disease (SAnews for FMD; the controlled-disease list for NAI).
+  - Breed egg counts from a paper with no fetchable text were removed even from notes.
+- **Crop plan (`/facilitator/crops`):** "Animals on your map" card groups coops, pens, hives,
+  hutches and duck ponds by animal. The farmer picks what they are for (per canvas site); nothing
+  is multiplied by structure count (a coop is housing, not a head count). Laying hens' sourced
+  months add a row to the Availability chart; the Animals switch only appears for kinds that can
+  put something on it. Small amounts keep 2 significant figures (0.083 m², not 0.1).
+- **Gaps:** no sourced months yet for honey, goat milk, rabbits, ducks, broilers or village hens,
+  so only laying hens reach the chart. Kraal and pig pen are not guessed at.
+- **Test script fix:** a merge (4d003ea, PR #762) left `npm test` as
+  `node --import ./tests/tshivenda-…test.ts …` — no `register-alias`, no `--test` — so CI ran two
+  files and PRs #763/#764 went untested. Restored in b9e2d2f; the full suite passes in CI again.
+
 ### 28 Sep 2026 — Perennial harvest layer (Phase B: fruit trees)
 - **New table `lib/perennial-harvest.ts`:** for each tree species it holds harvest months by SA
   region, years to first crop and to full bearing, kg per mature tree, chill units and pollination.

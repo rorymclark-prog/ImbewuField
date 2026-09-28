@@ -42,6 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '22d1b99', changes: [
+    'Coops, goat pens, hives, hutches and duck ponds on your map now show in the crop plan.',
+    'Say what your animals are for: layers, broilers, village hens, milk or meat goats.',
+    'Per-animal eggs, milk or meat, feed, water, space, welfare and the law, each sourced.',
+    'Laying hens add their months to the availability chart; animals never count per m².',
+  ], tour: [
+    { title: 'See what your animals give', where: 'Crop plan → Animals on your map', href: '/facilitator/crops',
+      detail: 'Below the availability chart, each kind of animal housing on your map gets a card. Pick what the animals are for, such as laying hens, and read eggs per hen, feed, water, space, welfare and legal points. Tap a source to read the exact sentence.' },
+    { title: 'Put your laying hens on the calendar', where: 'Crop plan → Food, field & value → Availability', href: '/facilitator/crops',
+      detail: 'Once you have picked laying hens, a row under the chart marks the months your hens give eggs. Use the Animals button to hide it. Animals are never added to the bed yield or any per-m² figure.' },
+    { title: 'Place a coop or hive', where: 'Design Studio → element palette', href: '/design',
+      detail: 'Search the palette for a chicken coop, goat pen, beehive, rabbit hutch or duck pond and place it. Mark it existing or proposed; only existing housing counts in the From today chart.' },
+  ] },
   { when: '28 September 2026', sha: '2b8b4717', changes: [
     'Introduction L2 adds one Sesotho study prompt beside its English source.',
     'Farm guidance, key points and quiz stay in English pending review.',

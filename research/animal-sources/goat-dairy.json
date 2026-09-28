@@ -1,0 +1,135 @@
+{
+  "enterpriseId": "goat-dairy",
+  "commonName": "Dairy goat (Saanen / Toggenburg / British Alpine)",
+  "animal": "goat",
+  "animalUnit": "doe",
+  "product": "milk",
+  "outputUnit": "kg milk/doe/305-day lactation",
+  "outputPerAnimal": {
+    "value": [
+      775.4,
+      1073.4
+    ],
+    "evidence": {
+      "quote": "Third parity dams gave the highest lactation yields (1073.4 ± 40.0 kg, 40.6 ± 1.6 kg, 31.3 ± 1.4 kg, and 46.7 ± 1.9 kg for MY, FY, PY, and LY, respectively), whereas lowest lactation yields for these traits were estimated in the > 7th parity group (775.4 ± 56.6, 29.5 ± 2.3, 20.6 ± 2.0, and 33.0 ± 2.9 kg for MY, FY, PY, and LY, respectively).",
+      "url": "https://www.scielo.org.za/scielo.php?pid=S0375-15892024000500009&script=sci_arttext&tlng=en",
+      "doc": "Malemela, M.J., Nemutandani, K.R. & Tada, O. (2024). Non-genetic sources of variation influencing yield and composition of milk production parameters in South African Saanen goats. S. Afr. J. Anim. Sci. 54(5):620-630",
+      "page": null
+    },
+    "notes": "Lowest (>7th parity) and highest (3rd parity) parity-group means for milk yield per 305-day standardised lactation, 16 407 ARC milk-recording lactations of SA Saanen goats, 1955-2018, mostly intensive/semi-intensive stud herds. Kept in kg as the source gives it."
+  },
+  "productionMonths": [],
+  "seasonalPattern": {
+    "value": "Milk yield and lactose yield are significantly affected by season of kidding, with does that kid in spring giving the highest lactation milk yields; breeders are advised to plan mating for spring kidding.",
+    "evidence": {
+      "quote": "There was a substantial variation due to dam kidding season in all parameters except protein yield and urea concentration, with dams kidding in spring attaining the highest average lactation milk and lactose yields. ... For optimal lactation performance, planned breeding should be applied for spring kidding.",
+      "url": "https://www.scielo.org.za/scielo.php?pid=S0375-15892024000500009&script=sci_arttext&tlng=en",
+      "doc": "Malemela, M.J., Nemutandani, K.R. & Tada, O. (2024). Non-genetic sources of variation influencing yield and composition of milk production parameters in South African Saanen goats. S. Afr. J. Anim. Sci. 54(5):620-630",
+      "page": null
+    },
+    "notes": "The source names the kidding season only as 'spring' and does not give the specific calendar months it means by that, so no productionMonths entry could be built from it without guessing which months 'spring' covers for this specific dataset (see gaps). A different SA indigenous-goat study (Webb & Mamabolo, 2004, Mpumalanga) explicitly defines its own region's spring as August-September, but that is a different breed/system and was not applied here to avoid mixing sources."
+  },
+  "timeToFirstProductWeeks": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. The Saanen milk-recording study analyses lactation performance by parity but does not state doe age at first kidding or first lactation, so no age/time-to-first-milk figure could be built with shown arithmetic (see gaps)."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. The source reports declining yields beyond the 6th-7th parity but gives no explicit culling age or productive-lifespan figure in years (see gaps)."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced from an SA-specific or FAO document. Elsenburg's Dairy Farming Handbook (elsenburg.com) is cattle-focused and its only goat content is a milk-composition comparison table, not a feed-intake figure (see gaps)."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced - no SA-specific or FAO document with a dairy goat water-intake figure was found or fetchable within the search budget (see gaps)."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced - no SA-specific dairy goat housing floor-space figure was found or fetchable within the search budget (see gaps)."
+  },
+  "welfare": [
+    {
+      "point": "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+      "evidence": {
+        "quote": "confines, chains, tethers or secures any animal unnecessarily or under such conditions or in such a manner or position as to cause that animal unnecessary suffering or in any place which affords inadequate space, ventilation, light, protection or shelter from heat, cold or weather",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(b)",
+        "page": 1
+      }
+    },
+    {
+      "point": "It is an offence to starve, under-feed, or deny water or food to a goat.",
+      "evidence": {
+        "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+        "page": 1
+      }
+    },
+    {
+      "point": "An owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when able to.",
+      "evidence": {
+        "quote": "being the owner of any animal, deliberately or negligently keeps such animal in a dirty or parasitic condition or allows it to become infested with external parasites or fails to render or procure veterinary or other medical treatment or attention which he is able to render or procure for any such animal in need of such treatment or attention",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(e)",
+        "page": 1
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+      "evidence": {
+        "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Inside a declared FMD-affected zone, goats and their products (including milk) cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+      "evidence": {
+        "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Every goat owner must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+      "evidence": {
+        "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+        "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+        "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+        "page": 4
+      }
+    },
+    {
+      "point": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act (relevant when culled dairy does or male kids are sold for meat); slaughtering for the farmer's own consumption, or for cultural/religious purposes, is exempt but that meat may not then be sold.",
+      "evidence": {
+        "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "No explicit calendar months for dairy-goat kidding/milk season: the SA Saanen SciELO paper says only 'spring' kidding gives the best yields, without defining which months. An attempt was made to source a British Alpine-specific paper (Discover Agriculture/Springer, 'Phenotypic determinants of milk yield and reproductive performance of stud British Alpine goats across agro-ecological zones in South Africa') that a web search indicated discusses September-November and March-May mating/kidding windows, but the article itself was blocked by a JS client-challenge page and a Springer login redirect on every fetch attempt, so that claim could not be verified against the actual page text and is NOT used here. milkgoats.co.za (SA Milch Goat Breeders' Society / SA Milk Goats) was also tried for a breeder-society kidding calendar; the connection was reset on every attempt.",
+    "No SA-specific L/day or lactation-length (days) figure was found to put in outputPerAnimal's notes as instructed - the sourced figure is a 305-day standardised total only.",
+    "No age-at-first-kidding/lactation figure was found for SA dairy goats, so timeToFirstProductWeeks is null.",
+    "No productive-life-years figure was found; the source shows declining yield after the 6th-7th parity but not a culling/replacement age.",
+    "No SA-specific or FAO feed kg/day, water L/day, or housing space m2/animal figure for dairy goats was found: nda.gov.za, dalrrd.gov.za and kzndard.gov.za reset the connection on every attempt, and Elsenburg's Dairy Farming Handbook (elsenburg.com) is cattle-focused with only a goat milk-composition table.",
+    "The milk-density figure (1.03 kg/L) used to convert the sourced kg lactation yield to litres is general dairy-science knowledge, not taken from an SA-specific or FAO source - flagged per the conversion-transparency rule.",
+    "A specific, fetchable SA government statement naming Limpopo and Mpumalanga (in addition to KwaZulu-Natal) as areas with active FMD control/protection zones was not found: the accessible SAnews articles located for Limpopo (2024-2025) describe the LIFTING of that province's Disease Management Area restrictions rather than an active zone, and no equivalent Mpumalanga-specific article was found accessible; the legal point above is therefore evidenced only for the KZN DMA, with the general controlled-disease/permit mechanism understood to apply nationally wherever a zone is declared.",
+    "Editor review 2026-09-28: legal[0] cited only the Act's general definition of 'controlled animal disease', which does not name FMD; re-cited to the SAnews statement that names FMD as a controlled disease under the Act.",
+    "Editor review 2026-09-28: outputPerAnimal was converted to litres with a 1.03 kg/L density the source does not give; restored to the source's own kg per 305-day lactation, [775.4, 1073.4]."
+  ]
+}

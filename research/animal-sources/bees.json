@@ -1,0 +1,134 @@
+{
+  "enterpriseId": "bees",
+  "commonName": "Honeybee (managed hives)",
+  "animal": "bee",
+  "animalUnit": "hive",
+  "product": "honey",
+  "outputUnit": "kg honey/hive/year",
+  "outputPerAnimal": {
+    "value": [
+      25,
+      25
+    ],
+    "evidence": {
+      "quote": "The national average honey yield of in the region of 25 kilograms of honey per hive per year in Table 7 is un-weighted across beekeepers.",
+      "url": "https://open.uct.ac.za/bitstreams/5d2ecb2c-3a9d-4560-aa17-b4774df6b5e2/download",
+      "doc": "Survey of Beekeeping in South Africa, CSSR Working Paper No. 221 (Conradie & Nortje, 2008, UCT Centre for Social Science Research)",
+      "page": 14
+    },
+    "notes": "From a 2008 national postal survey of 112 SABIO-member beekeepers (22.4% response rate) managing an estimated 19,520 hives at 2,094 apiary sites; figure is self-reported and un-weighted. Table 7 (same doc, p.13-14) shows wide variance by region/operation-focus/size for the same year: e.g. 'All' region, honey-focused, all-size operations = 25.1-26.9 kg/hive/yr across 3 survey sites; Western Cape honey-focused = 23.6-27.9 kg/hive/yr; Western Cape pollination-focused, small operations = only 7.0-7.5 kg/hive/yr. The same document also quotes an earlier, more rigorously validated study: 'Their average reported yield is very low, at just 13.4 kilograms per hive' for Western Cape hives (Allsopp & Cherry 2004, cited p.2 of this working paper), and historical national bee-census data of 8.3 kg/hive/annum (1911-1988 average) rising to 24 kg/hive in the 1974/5 census (same doc, p.1). No single number can be called definitive; 25 kg/hive/yr is used as the document's own headline national estimate."
+  },
+  "productionMonths": [],
+  "seasonalPattern": null,
+  "timeToFirstProductWeeks": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced from an acceptable primary/peer-reviewed reference (see gaps)."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced from an acceptable primary/peer-reviewed reference (see gaps)."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "No sourced sugar-feeding rate (kg/day) found. The UCT survey (open.uct.ac.za/bitstreams/5d2ecb2c-3a9d-4560-aa17-b4774df6b5e2/download, p.9) notes 'Exactly half the respondents indicated that they feed bees on occasion or when necessary' but gives no quantity, so no figure could be extracted."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "No sourced per-colony water-volume figure found in any accessible SA source."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not applicable in the usual sense for bees (hives are sited in apiaries, not housed on a floor-space basis); no sourced apiary-density figure found either."
+  },
+  "welfare": [
+    {
+      "point": "Inspect every colony regularly for signs of notifiable bee disease and Cape-bee (Capensis) infection.",
+      "evidence": {
+        "quote": "Every beekeeper shall conduct regular inspections of every colony kept in beehives at each apiary site to detect- (a)clinical symptoms of notifiable bee diseases; or (b)Capensis-infected colonies.",
+        "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
+        "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, Government Notice No. R.858 of 15 November 2013 (Government Gazette No. 37015)",
+        "page": 5
+      }
+    },
+    {
+      "point": "Site and secure hives against theft and vandalism, which is one of the biggest challenges facing South African beekeepers.",
+      "evidence": {
+        "quote": "One of the big challenges for beekeepers in South Africa is that their hives are damaged and/or stolen.",
+        "url": "https://www.sanbi.org/wp-content/uploads/2018/05/gumsbees-web-version-hyperlinks.pdf",
+        "doc": "Gums & Bees: A roadmap for landowners in South Africa (South African National Biodiversity Institute, SANBI)",
+        "page": 21
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Every beekeeper (commercial or hobbyist) must register with the national Department between 1 January and 31 March each year.",
+      "evidence": {
+        "quote": "Every beekeeper shall register with the Department between 1 January and 31 March of each year.",
+        "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
+        "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
+        "page": 3
+      }
+    },
+    {
+      "point": "A beekeeper who fails to re-register annually is automatically deregistered.",
+      "evidence": {
+        "quote": "In the case of failure to comply with control measure 2 (1), a registered beekeeper shall be deregistered.",
+        "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
+        "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
+        "page": 4
+      }
+    },
+    {
+      "point": "Every beehive must be clearly and legibly marked with the beekeeper's registration number.",
+      "evidence": {
+        "quote": "Every beekeeper must mark his beehives to display clearly and legibly the registration number allocated to him in terms of control measure 2 (3).",
+        "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
+        "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
+        "page": 4
+      }
+    },
+    {
+      "point": "Keep written records of how many colonies you keep, where each apiary is, and any disease found.",
+      "evidence": {
+        "quote": "Every beekeeper shall, during the period of registration, keep written records of the- (a)number of colonies kept; (b)location of every apiary; (c)presence of any notifiable or other disease in the apiaries kept by the beekeeper;",
+        "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
+        "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
+        "page": 4
+      }
+    },
+    {
+      "point": "Do not move honeybees across the Cape bee line, or keep Cape bees north of it, without written approval.",
+      "evidence": {
+        "quote": "No person may- (a)remove honey-bees across the line; ... (b)remove or keep Cape bees north of the line; (c)remove any Capensis-infected colony, without the prior written approval of executive officer.",
+        "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
+        "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
+        "page": 5
+      },
+      "notes": "The 'line' is defined in the same document (p.2) as running roughly along the northern boundaries of the old Cape magisterial districts from Vredendal on the west coast to Willowvale on the Indian Ocean coast, separating the Cape bee (Apis mellifera capensis) area from the rest of South Africa."
+    },
+    {
+      "point": "Report any suspected notifiable disease (American foulbrood is listed); officials can order an infected colony destroyed.",
+      "evidence": {
+        "quote": "Every beekeeper shall notify the executive officer or area official of the presence or suspected presence of any notifiable disease or Capensis-infected colony ... instruct a beekeeper to destroy a colony, beehive or bee product.",
+        "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
+        "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015), Annexure A: List of Notifiable Diseases",
+        "page": 8
+      }
+    }
+  ],
+  "gaps": [
+    "Could not access nda.gov.za, www.nda.gov.za, dalrrd.gov.za, daff.gov.za, dffe.gov.za, arc.agric.za or sabio.org.za directly - every attempt (curl and WebFetch, with and without a proxy CA bundle) returned a connection reset or HTTP 503 via the outbound proxy. Used the FAOLEX (fao.org) mirror of the actual Government Gazette text (GN R.858 of 15 Nov 2013, Gazette No. 37015) instead, which is the same official regulation text, just hosted off a gov.za domain that was unreachable.",
+    "productionMonths / seasonalPattern: searched for SA-specific nectar-flow / honey-harvest month data (eucalyptus, citrus, fynbos, aloe) via ARC, DALRRD, provincial depts, SANBI infosheets, SANBI 'Gums & Bees' roadmap, and an African Entomology paper on Apis mellifera capensis fynbos forage (Allsopp, 2006, Vol.14(1), journals.co.za/content/ento/14/1/EJC32660). The SANBI documents named forage species (fynbos ericas/proteas/mesembs, aloes, Eucalyptus spp., citrus, canola) but gave no explicit flowering/harvest months; the African Entomology paper's full text was not accessible (abstract/citation only) so no verbatim quote could be taken. Left as an empty array / null rather than guess.",
+    "timeToFirstProductWeeks: no ARC/DALRRD/peer-reviewed figure found for weeks from hiving a swarm/colony to first honey harvest. Commonly repeated figures (4-6 months for an active colony, 9-12 months for a baited/empty hive) came only from beekeeping-supply and hobbyist sites (Bhive, PerfectBee, HonestBee, Honey Buzz) which are excluded under the sourcing rules.",
+    "productiveLifeYears: no SA-specific or peer-reviewed source found for how long a hive/colony (or queen) stays productive before requeening/replacement is typical practice. General bee-biology sites (queen lifespan 2-5 years) were excluded as non-authoritative and not SA-specific.",
+    "feedKgPerAnimalPerDay / waterLPerAnimalPerDay: no sourced sugar-syrup feeding rate or per-colony water-volume figure found in any of the accessible SA documents.",
+    "welfare siting guidance (distance from people/animals/dwellings, shade, dedicated water source) could not be sourced from an authoritative SA guide - ARC, DALRRD, KZN DARD and Elsenburg (Western Cape DoA) sites were all unreachable through the proxy on every attempt. Only non-primary sources (Agribook Digital, hobbyist/commercial beekeeping sites) had this exact content and were excluded per the sourcing rules; welfare section instead uses the two points that could be sourced from the Control Measures regulation and the SANBI 'Gums & Bees' roadmap.",
+    "Editor review 2026-09-28: four welfare/legal quotes were extended to the full passage of GN R.858 so each summary point is stated by its quote (inspection targets, record contents, the Cape bee line, disease reporting and destruction)."
+  ]
+}

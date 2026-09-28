@@ -1,0 +1,130 @@
+{
+  "enterpriseId": "goat-meat",
+  "commonName": "Boer goat (meat enterprise)",
+  "animal": "goat",
+  "animalUnit": "doe",
+  "product": "meat",
+  "outputUnit": "kids weaned/doe/year",
+  "outputPerAnimal": {
+    "value": [
+      1.49,
+      1.49
+    ],
+    "evidence": {
+      "quote": "According to the National Department of Agriculture, Boer goat females under extensive conditions with a precipitation of 295 mm, have an average conception rate of 90%, kidding rate of 187%, fecundity (kids born/does kidded) of 210%, and weaning rate (kids weaned/doe mated) of 149% over a twenty year period (Malan, 2000).",
+      "url": "https://scholar.ufs.ac.za/server/api/core/bitstreams/46b48d9c-608a-40b2-bcbd-c429533189ef/content",
+      "doc": "King, F.J.M. (2009). Production Parameters for Boer Goats in South Africa (MSc dissertation, University of the Free State), citing National Dept of Agriculture data via Malan, S.W. (2000)",
+      "page": null
+    },
+    "notes": "Weaning rate (kids weaned/doe mated) of 149% = 1.49 kids weaned per doe per year. This is a 20-year national average for Boer does under EXTENSIVE conditions at 295 mm rainfall (low-rainfall/arid veld), not a feedlot or high-input system. The same source (Casey & Van Niekerk, 1988, quoted a few sentences later) separately reports mean litter SIZE (kids born per parturition, not per year) of 1.93 for Boer does - not merged into this per-year figure since it measures a different thing. A South Africa-wide extensive-system kidding percentage of 180% (not weaning rate) is corroborated independently in a different source (see gaps/seasonalPattern sourcing), which is consistent with the 187% kidding rate reported here."
+  },
+  "productionMonths": [],
+  "seasonalPattern": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the value had no supporting quote. Withdrawn value: \"No SA-specific sourced statement of Boer goat breeding/kidding calendar months was found; only a national kidding-rate/weaning-rate average (not tied to a season) and a general kidding-percentage figure were sourced.\"."
+  },
+  "timeToFirstProductWeeks": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. The UFS dissertation and BGBSA-hosted textbook give growth/weaning-age and reproduction-rate data but no age-at-first-mating or gestation-length figure specific to Boer does that would let a time-to-first-kids figure be built with shown arithmetic (see gaps)."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. No SA Boer goat source found gave a doe culling age or productive-lifespan figure (see gaps)."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for a productive adult Boer doe. A SciELO SA study (Beckman et al., scielo.org.za pid S0375-15892020000400001) models feed intake and growth of GROWING FEEDLOT Boer kids (start weight 22.2 kg) on a formulated feedlot ration, not adult breeding does on veld/extensive grazing, so it was not used to avoid mixing feedlot-kid and extensive-doe systems into one figure (see gaps)."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced - no SA-specific (ARC/SAJAS/provincial) or FAO document with a goat water-intake figure was found or fetchable within the search budget (see gaps)."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced - no SA-specific goat housing/camp stocking-density figure was found or fetchable within the search budget (see gaps)."
+  },
+  "welfare": [
+    {
+      "point": "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+      "evidence": {
+        "quote": "confines, chains, tethers or secures any animal unnecessarily or under such conditions or in such a manner or position as to cause that animal unnecessary suffering or in any place which affords inadequate space, ventilation, light, protection or shelter from heat, cold or weather",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(b)",
+        "page": 1
+      }
+    },
+    {
+      "point": "It is an offence to starve, under-feed, or deny water or food to a goat.",
+      "evidence": {
+        "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+        "page": 1
+      }
+    },
+    {
+      "point": "An owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when able to.",
+      "evidence": {
+        "quote": "being the owner of any animal, deliberately or negligently keeps such animal in a dirty or parasitic condition or allows it to become infested with external parasites or fails to render or procure veterinary or other medical treatment or attention which he is able to render or procure for any such animal in need of such treatment or attention",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(e)",
+        "page": 1
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+      "evidence": {
+        "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Inside a declared FMD-affected zone, goats and their products cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+      "evidence": {
+        "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Every goat owner must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+      "evidence": {
+        "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+        "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+        "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+        "page": 4
+      }
+    },
+    {
+      "point": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes, is exempt from that rule, but that meat may not then be sold.",
+      "evidence": {
+        "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "No sourced calendar months for Boer goat breeding/kidding season: searched the UFS Boer goat production-parameters dissertation (scholar.ufs.ac.za) in full - no mention of season/spring/autumn/winter/summer anywhere in its text - and the BGBSA-hosted 'Goat Science and Production' textbook's Applied Reproductive Physiology chapter, which gives an SA-specific kidding-percentage figure but not a month range. nda.gov.za and kzndard.gov.za were unreachable (connection reset on every attempt) for a possible Boer-specific breeding calendar.",
+    "No time-to-first-product (weeks to first weaned kids) figure: no source gave age-at-first-mating or gestation length specific to Boer does alongside each other to compute this with shown arithmetic.",
+    "No productive-life-years figure for a Boer doe was found in any accessible source.",
+    "No SA-specific feed kg/day figure for an adult (non-feedlot) Boer doe: the only SA feed-intake study found (SciELO, S0375-15892020000400001) models growing feedlot KIDS on formulated feed, a different system from a doe on extensive veld, so it was excluded rather than mixed in.",
+    "No SA-specific or FAO water L/day or housing/camp space m2/animal figure for goats was found: nda.gov.za, dalrrd.gov.za and kzndard.gov.za (including its 'Goat Production in KwaZulu-Natal' page) all reset the connection on every attempt; Elsenburg's Dairy Farming Handbook (elsenburg.com) is cattle-focused and only mentions goats in a milk-composition comparison table.",
+    "Attempted the Boer Goat Breeders' Association / Milk SA / SA Milch Goat Breeders' Society website (milkgoats.co.za) for further breed-society production guidance; connection reset on every attempt.",
+    "A specific, fetchable SA government statement naming Limpopo and Mpumalanga (in addition to KwaZulu-Natal) as areas with active FMD control/protection zones was not found: the accessible SAnews articles located for Limpopo (2024-2025) describe the LIFTING of that province's Disease Management Area restrictions rather than an active zone, and no equivalent Mpumalanga-specific article was found accessible; the legal point above is therefore evidenced only for the KZN DMA, with the general controlled-disease/permit mechanism understood to apply nationally wherever a zone is declared.",
+    "Editor review 2026-09-28: legal[0] cited only the Act's general definition of 'controlled animal disease', which does not name FMD; re-cited to the SAnews statement that names FMD as a controlled disease under the Act.",
+    "Editor review 2026-09-28: seasonalPattern carried a sentence with no evidence; set to null."
+  ]
+}
