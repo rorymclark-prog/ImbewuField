@@ -35,3 +35,6 @@ research/manual/rvcc-handbook-source.txt
 # Printed manual PDFs (scripts/build-manual-pdfs.mjs) — shared via Drive, too large for git.
 output/manual/
 research/manual/figures-source/
+
+# Python bytecode (a test imports scripts/generate-regional-course-audio.py)
+__pycache__/
