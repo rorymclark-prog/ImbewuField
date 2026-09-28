@@ -106,6 +106,41 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
   // used for dry-beans above): 5.12/0.38 ≈ R13/kg, in the same band as
   // carrots' real R14/kg — sanity-checked, not just formula output.
   turnip: { retailPerKg: 13, wholesalePerKg: 5.12, confidence: 'estimated', pricedAt: '19 August 2026' },
+
+  // 2026-09-28 pass for the crop-catalog batch 1 crops. Wholesale is Joburg Market daily trade
+  // (joburgmarket.co.za/jhb-market/dailyprices.php?commodity=<n>, fetched 2026-09-28: total value
+  // sold / total kg sold) or the SAFEX spot in Grain SA's Morning Market Report of 28 Sep 2026
+  // (settlement 25 Sep; grainsa.co.za/upload/report_files/Grain-SA-Morning-Market-Report-28-Sep-2026.pdf).
+  // Retail is a live shop listing, used only when it sells the SAME product the farmer grows.
+  // Where the only listing is a processed product (florets, cooked soya, roasted snack seed) it is
+  // not this crop, so retail is derived from the real wholesale via the ~38% ratio above and the
+  // entry is 'estimated'. Full quotes: research/crop-sources/_prices-2026-09-28.json.
+  //
+  // Both sides real. Gem squash: Woolworths "Gem Squash 1 kg" R29.99; GEM SQUASHES R85,714.00 /
+  // 13,651 kg = R6.28 (commodity=154).
+  'gem-squash': { retailPerKg: 29.99, wholesalePerKg: 6.28, confidence: 'sourced', pricedAt: '28 September 2026' },
+  // Brinjal: Little Oaks "Brinjals/Aubergines 500g" R15.90 = R31.80/kg (a small online farm-box
+  // seller; the chains were bot-blocked); BRINJALS R19,714.00 / 1,740 kg = R11.33 (commodity=124).
+  brinjal: { retailPerKg: 31.8, wholesalePerKg: 11.33, confidence: 'sourced', pricedAt: '28 September 2026' },
+  // Baby marrow: Papyrus Natural "Baby Marrow 1kg" R73.00; BABY MARROWS R81,067.00 / 5,263 kg =
+  // R15.40 (commodity=1189). The only retail listing found is a premium organic grocer — 4.7x
+  // wholesale against ~2-3x for the other crops — so read it as the top of the retail range.
+  'baby-marrow': { retailPerKg: 73, wholesalePerKg: 15.4, confidence: 'sourced', pricedAt: '28 September 2026' },
+  //
+  // Wholesale real, retail derived (wholesale / 0.38).
+  // Cauliflower: CAULIFLOWER R38,758.00 / 1,455 kg = R26.64 (commodity=134). The only retail
+  // listing is Woolworths pre-cut "Cauliflower Florets 300 g" (R123.30/kg) — a processed format,
+  // not a head — so 26.64 / 0.38 ≈ R70/kg; the florets price is an upper bound.
+  cauliflower: { retailPerKg: 70, wholesalePerKg: 26.64, confidence: 'estimated', pricedAt: '28 September 2026' },
+  // Spanspek: MUSK MELONS R53,740.00 / 4,437 kg = R12.11 (commodity=47; SWEET MELONS traded
+  // R10.72). No spanspek retail page could be read (Checkers 403), so 12.11 / 0.38 ≈ R32/kg.
+  spanspek: { retailPerKg: 32, wholesalePerKg: 12.11, confidence: 'estimated', pricedAt: '28 September 2026' },
+  // Soybean: SAFEX spot "Soybean 8,950.00" R/ton = R8.95/kg. The only retail soya is Woolworths'
+  // steam-cooked 150 g pack (R113.27/kg), not dry grain, so 8.95 / 0.38 ≈ R23.50/kg.
+  soybean: { retailPerKg: 23.5, wholesalePerKg: 8.95, confidence: 'estimated', pricedAt: '25 September 2026' },
+  // Sunflower: SAFEX spot "Sunflower 10,106.00" R/ton = R10.11/kg. The only retail is roasted
+  // snack seed (Woolworths 250 g, R195.96/kg), not oilseed, so 10.11 / 0.38 ≈ R26.60/kg.
+  sunflower: { retailPerKg: 26.6, wholesalePerKg: 10.11, confidence: 'estimated', pricedAt: '25 September 2026' },
 };
 
 // Herbs are sold and valued completely differently from bulk vegetables —
@@ -136,26 +171,28 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
 // would misrepresent a field planting rather than estimate it. No
 // bunch-form or field-crop per-kg price for true spinach specifically could
 // be found. Honest exclusion, same pattern as coriander.
-// 2026-09-28 batch: these 12 food crops carry a sourced planning yield
-// (research/crop-sources/<key>.json) but no price research was done in that
-// pass — no retail or wholesale figure was looked up, so none is invented
-// here. Deliberately excluded rather than left to silently fail the
-// "every planning-yield crop is priced" gate (tests/crop-prices.test.ts).
+// parsley: unlike coriander a per-kg figure exists on both sides, and they are 21x apart —
+// Joburg Market PARSLEY R2,800.00 / 176 kg = R15.91/kg on thin volume, Woolworths "Fresh Parsley
+// 80 g" R26.99 = R337.38/kg (both fetched 2026-09-28). A herb pack is priced as a pack; no ratio
+// bridges that, and either figure alone would misstate a bed of parsley. Same exclusion as coriander.
+//
+// Crop-catalog batch 1 crops still without a usable price after the 2026-09-28 price pass
+// (research/crop-sources/_prices-2026-09-28.json):
+// - sorghum: not a SAFEX contract and not on the fresh-produce market; the one retail listing is a
+//   500 g speciality pack (R75.98/kg), and deriving wholesale from it would put sorghum at ~6x the
+//   price of maize.
+// - bambara-groundnut: no formal market; the one retail listing is a niche online grocer (R119.90/kg).
+// - sweetcorn: Joburg Market's SWEET CORN traded R69.55/kg and GREEN MEALIES R3.87/kg the same day —
+//   18x apart, the pack unit behind each unclear, and the one retail page gives no weight.
+// - cowpea: on no market list, SAFEX or SA retail shelf found (and it has no planning yield).
 export const UNPRICED_CROPS = new Set<string>([
   'coriander',
   'true-spinach',
-  'cauliflower',
   'parsley',
   'sorghum',
-  'soybean',
-  'brinjal',
-  'gem-squash',
-  'baby-marrow',
-  'spanspek',
   'sweetcorn',
   'cowpea',
   'bambara-groundnut',
-  'sunflower',
 ]);
 
 const PRICE_OVERRIDES_KEY = 'imbewu_crop_price_overrides_v1';
