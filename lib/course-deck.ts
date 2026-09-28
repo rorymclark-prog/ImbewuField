@@ -271,12 +271,13 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },
   'soil-health': {
-    slideLanguages: ['en', 'zu', 'st', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ts: 'webp' },
-    slideAspectRatioByLanguage: { st: 1440 / 5400, ts: 1440 / 5400 },
+    // Tshivenda frames source-pair unreviewed opening drafts and English holds across all 20 slides.
+    slideLanguages: ['en', 'zu', 'st', 'ts', 've'],
+    slideFormatsByLanguage: { st: 'webp', ts: 'webp', ve: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ts: 1440 / 5400, ve: 1440 / 5400 },
     missingSlides: {
       st: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      ts: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ts: [],
     },
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),
   },

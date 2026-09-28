@@ -53,6 +53,7 @@ const MUTED = '#5C5040';
 const PAPER = '#FFFEFA';
 const LINE = '#ECE3C9';
 const GREEN = '#2F6B3A';
+const NO_NARRATION = 'none';
 
 /** Human names for the languages a module can be recorded in; an unlisted code shows as-is. */
 const LANG_NAME: Record<string, string> = {
@@ -93,16 +94,19 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const regionalSlidesSelected = ['st', 've', 'ts'].includes(appLang);
   const needsSourceNarrationChoice = regionalSlidesSelected &&
     !!narration?.languages.includes('en') && !narration.languages.includes(appLang);
+  const defaultNarrationChoice = needsSourceNarrationChoice ? NO_NARRATION : appLang;
   const [slideChoice, setSlideChoice] = useState(appLang);
   const [narrationChoice, setNarrationChoice] = useState<string | null>(
-    needsSourceNarrationChoice ? null : appLang,
+    defaultNarrationChoice,
   );
   useEffect(() => {
     setSlideChoice(appLang);
-    setNarrationChoice(needsSourceNarrationChoice ? null : appLang);
-  }, [appLang, needsSourceNarrationChoice]);
+    setNarrationChoice(defaultNarrationChoice);
+  }, [appLang, defaultNarrationChoice]);
   const slideLang = resolveDeckLang(moduleId, slideChoice);
-  const spokenLang = narrationChoice ? resolveNarrationLang(moduleId, narrationChoice) : null;
+  const spokenLang = narrationChoice && narrationChoice !== NO_NARRATION
+    ? resolveNarrationLang(moduleId, narrationChoice)
+    : null;
   const languages = narration?.languages ?? [];
 
   const slides = useMemo(
@@ -489,6 +493,32 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                 </button>
               );
             })}
+            {needsSourceNarrationChoice && (
+              <button
+                type="button"
+                onClick={() => {
+                  // A voice choice can change while play-through is running. Stop and rewind it
+                  // before React removes the audio element, then keep silent reading manual.
+                  audioRef.current?.pause();
+                  if (audioRef.current) audioRef.current.currentTime = 0;
+                  videoRef.current?.pause();
+                  setPlaying(new Set());
+                  setRunning(false);
+                  setTimedVoiceActive(false);
+                  setNarrationChoice(NO_NARRATION);
+                }}
+                aria-pressed={narrationChoice === NO_NARRATION}
+                style={{
+                  padding: '3px 9px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',
+                  maxWidth: '100%', whiteSpace: 'normal', textAlign: 'center',
+                  background: narrationChoice === NO_NARRATION ? 'rgba(47,107,58,0.10)' : 'transparent',
+                  border: `1px solid ${narrationChoice === NO_NARRATION ? 'rgba(47,107,58,0.30)' : LINE}`,
+                  color: narrationChoice === NO_NARRATION ? GREEN : MUTED,
+                }}
+              >
+                No narration
+              </button>
+            )}
           </div>
         )}
         <button
@@ -666,12 +696,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
       {needsSourceNarrationChoice && (
         <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
-          {appLang === 'st' ? <>Sesotho AI draft · {narrationChoice === 'en'
+          {narrationChoice === NO_NARRATION
+            ? `${langName(appLang, uiLang)} slides selected. No narration will play. Use Next to read at your own pace.`
+            : appLang === 'st' ? <>Sesotho AI draft · {narrationChoice === 'en'
             ? 'Ho kgethilwe modumo wa Senyesemane (wa mohlodi). English source: English source narration selected.'
-            : 'Ha ho modumo wa Sesotho wa thuto ena. Kgetha modumo wa Senyesemane hore o mamele thuto. English source: No Sesotho narration available. Select English source narration to hear the lesson.'}</>
+            : 'Ha ho modumo wa Sesotho wa thuto ena. Kgetha modumo wa Senyesemane gore o mamele thuto, kana khetha “No narration”. English source: No Sesotho narration is available. Select English source narration or No narration.'}</>
             : narrationChoice === 'en'
               ? `English source narration selected. ${langName(appLang, uiLang)} narration is not available for this module yet.`
-              : `No ${langName(appLang, uiLang)} narration available. Select English source narration to hear the lesson.`}
+              : `No ${langName(appLang, uiLang)} narration is available. Select English source narration or No narration.`}
         </p>
       )}
 

@@ -42,6 +42,10 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '759a695', changes: [
+    'Soil Health now has 20 unreviewed Tshivenda and Xitsonga review slides.',
+    'They open silent; most teaching stays in English for review.',
+  ] },
   { when: '28 September 2026', sha: '46810d6', changes: [
     'Study downloads now flag English slides or narration in regional language packs.',
   ] },

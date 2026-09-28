@@ -556,7 +556,10 @@ test('Sesotho draft narration starts with paired slides and English source choic
   } finally { act(() => view.unmount()); }
 
   for (const language of ['ve', 'ts']) {
-    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: language })); });
+    const audioDevice = { currentTime: 0, paused: true, pause() { this.paused = true; }, play() { this.paused = false; return Promise.resolve(); } };
+    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: language }), {
+      createNodeMock: element => element.type === 'audio' ? audioDevice : null,
+    }); });
     try {
       const picture = () => view.root.findAllByType('img')[0];
       assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`));
@@ -564,23 +567,45 @@ test('Sesotho draft narration starts with paired slides and English source choic
         `${language} learners should not hear English before choosing it`);
       assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
       const voiceButtons = view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
-      assert.deepEqual(voiceButtons.map(button => button.children.join('')), ['English source narration'],
-        'the isiZulu voice must not be offered as the regional voice');
-      const expectedName = language === 've' ? 'Tshivenda' : 'Xi' + 'tsonga';
+      assert.deepEqual(voiceButtons.map(button => button.children.join('')), ['English source narration', 'No narration'],
+        'regional learners can choose English source narration or silence');
+      assert.equal(voiceButtons[1].props['aria-pressed'], true, 'regional slides open in silent mode');
       assert.match(view.root.findByProps({ role: 'status' }).children.join(''),
-        new RegExp(`No ${expectedName} narration available`, 'i'));
-      act(() => voiceButtons[0].props.onClick());
+        /No narration will play/);
+      const silent = voiceButtons[1];
+      assert.equal(view.root.findAllByType('audio').length, 0, 'silence must not mount an English audio element');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true,
+        'the narration play control stays disabled in silent mode');
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`),
+        'choosing silence must keep the regional slide visible');
+      const english = voiceButtons[0];
+      act(() => english.props.onClick());
       assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
       assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`),
         'choosing English source audio must leave the regional paired slide visible');
       assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+      act(() => view.root.findByProps({ className: 'playControl' }).props.onClick());
+      assert.equal(audioDevice.paused, false, 'the learner can opt into English source narration');
+      audioDevice.currentTime = 12;
+      act(() => silent.props.onClick());
+      assert.equal(audioDevice.paused, true, 'switching to silence pauses the current audio immediately');
+      assert.equal(audioDevice.currentTime, 0, 'switching to silence rewinds the interrupted audio');
+      assert.equal(view.root.findAllByType('audio').length, 0, 'switching to silence removes the audio element');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props['aria-label'], 'Play the lesson',
+        'switching to silence stops audio-driven play-through');
+      assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No narration will play/);
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`));
+      act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-02\\.webp$`),
+        'manual page turns remain available with no narration');
+      assert.equal(view.root.findAllByType('audio').length, 0);
     } finally { act(() => view.unmount()); }
   }
 
   // Soil Health is the exact small-screen Study case that exposed the selector problem: its
-  // regional opening slides exist, but its only recordings are English and isiZulu. The learner
-  // must choose a source voice explicitly, and that voice choice must not replace the paired slide.
-  for (const language of ['st', 'ts']) {
+  // regional slides have no matching voice. They open silent, with English source audio as an
+  // explicit option that must not replace the paired slide.
+  for (const language of ['st', 'ts', 've']) {
     act(() => { view = create(createElement(DeckPlayer, { moduleId: 'soil-health', lang: language })); });
     try {
       const picture = () => view.root.findAllByType('img')[0];
@@ -590,7 +615,20 @@ test('Sesotho draft narration starts with paired slides and English source choic
       assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
       const voiceButtons = view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
       assert.deepEqual(voiceButtons.map(button => button.children.join('')),
-        [language === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration']);
+        [language === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration', 'No narration']);
+      assert.equal(voiceButtons[1].props['aria-pressed'], true, `${language} Soil Health opens without narration`);
+      assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No narration will play/);
+      if (language === 've') {
+        assert.equal(slideImageFor('soil-health', language, 20)?.exact, true,
+          'the last Tshivenda source-paired frame is available, with no English slide fallback');
+        assert.equal(view.root.findAllByType('img')[0].parent!.props.style.aspectRatio, 1440 / 5400,
+          'the full source-paired slide keeps its portrait ratio on a phone');
+        assert.equal(view.root.findByProps({ className: 'slideStage' }).props.style.maxHeight, 'min(65vh, 600px)',
+          'the portrait slide scrolls while the phone navigation controls stay on screen');
+      }
+      assert.equal(view.root.findAllByType('audio').length, 0, `${language} silent choice must not create an audio element`);
+      assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`),
+        'silent mode must retain the selected regional Soil Health still');
       act(() => voiceButtons[0].props.onClick());
       assert.match(view.root.findByType('audio').props.src, /soil-health\/en\/slide-01\.mp3$/);
       assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`),
@@ -668,7 +706,7 @@ test('regional Market and Tshivenda vegetables decks fall back to English for ev
     ['vegetables-staples', 'st', [1, 2, 8, 9]],
     ['vegetables-staples', 've', [12, 14]],
     ['soil-health', 'st', [1, 2, 3, 4, 5]],
-    ['soil-health', 'ts', [1, 2, 3, 4, 5]],
+    ['soil-health', 'ts', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
   ];
   for (const [moduleId, language, authored] of cases) {
     const deck = COURSE_DECKS[moduleId];
