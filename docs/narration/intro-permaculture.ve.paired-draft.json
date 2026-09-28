@@ -3,7 +3,7 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible.",
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible. Slides 8–14: six concept headings, factual attribution and framing statements; independently back-checked candidates. Actionable farm, water, safety, permission, windbreak, zone/sector field instructions and uncertain ecological claims remain exact English.",
     "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
     "holds": "Unverified spade wording, the land-works-with-you contrast, all examples, site and crop advice, money claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English."
   },
@@ -272,7 +272,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Musi hu si na bugu ya milayo",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
         },
         "body": [
           {
@@ -302,17 +304,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Milayo ya fumi-mbili",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "David Holmgren o vhea milayo ya fumi-mbili ya nzudzanyo (twelve design principles) kha Essence of Permaculture. Bill Mollison na David Holmgren vho thoma muhumbulo wa permaculture vhothe.",
+            "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A zwi ṱoḓi uri ni vhe na yoṱhe ya fumi-mbili u itela u thoma. Zwipiḓa zwiraru zwavhuḓi zwa u thoma ngudo ino ndi: u lavhelesa na u shumisana (observe and interact), u fara na u vhulunga maanḓa (catch and store energy), na u shumisa mikombero na u dzhiela nṱha zwipiḓa zwa thungo (use edges and value the marginal).",
+            "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ri ḓo dzhia hezwo zwiraru tshithihi nga tshithihi.",
+            "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
           }
         ]
       }
@@ -361,7 +371,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ni fare nahone ni vhulunge maanḓa",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
         },
         "body": [
           {
@@ -391,7 +403,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ni shumise mikano nahone ni dzhiele nṱha zwa magumoni",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
         },
         "body": [
           {
@@ -418,7 +432,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ni shumise nahone ni dzhiele nṱha u fhambana",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
         },
         "body": [
           {
@@ -446,11 +462,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ni ṱanganye nṱhani ha u fhambanya",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vheani tshithu tshiṅwe na tshiṅwe (each element) fhethu hune tsha shumela zwi re tsini natsho (its neighbours).",
+            "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
           },
           {
             "status": "english-hold"

@@ -55,7 +55,7 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   assert.equal(pairedDraftLanguageLabel('xh'), null);
 });
 
-test('regional Introduction orientation and ethics frames hold uncertain farming and design claims in English', () => {
+test('regional Introduction drafts stay source-paired while uncertain farming, safety and permission advice stays English', () => {
   for (const lang of ['ve', 'ts']) {
     const packet = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
@@ -63,9 +63,13 @@ test('regional Introduction orientation and ethics frames hold uncertain farming
     const drafted = slides.flatMap((slide: any) => slide.target.body
       .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
       .filter(Boolean));
-    assert.deepEqual(drafted, ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1']);
+    assert.deepEqual(drafted, lang === 've'
+      ? ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1', '9:1', '9:2', '9:3', '14:1']
+      : ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1']);
     assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
-      .map((slide: any) => slide.n), lang === 've' ? [2, 4, 5, 6] : [2, 3, 4, 5, 6]);
+      .map((slide: any) => slide.n), lang === 've'
+      ? [2, 4, 5, 6, 8, 9, 11, 12, 13, 14]
+      : [2, 3, 4, 5, 6]);
     for (const p of [0, 2, 3]) assert.equal(slides[1].target.body[p].status, 'english-hold',
       `slide 2 ${lang}: the spade, land-work contrast and work question need a local check`);
     for (const part of slides[2].target.body.slice(1)) assert.equal(part.status, 'english-hold',
@@ -77,6 +81,16 @@ test('regional Introduction orientation and ethics frames hold uncertain farming
     for (const n of [7, 8]) {
       assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
         `slide ${n} ${lang}: work, zones, water and permission claims must remain English`);
+    }
+    if (lang === 've') {
+      for (const n of [10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22]) {
+        assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+          `slide ${n}: farming, safety, ecological, zone/sector and field instructions need a fluent review`);
+      }
+      assert.equal(slides[9].target.heading.status, 'english-hold',
+        'slide 10 keeps Observe and Interact in English because the candidate changed the object of interaction');
+      assert.ok(slides[13].target.body.slice(1).every((part: any) => part.status === 'english-hold'),
+        'slide 14 keeps manure, food-safety and further integration wording in English');
     }
   }
 });
