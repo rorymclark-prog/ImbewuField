@@ -169,10 +169,11 @@ test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its
   assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
 });
 
-test('Food Forest Sesotho narration only drafts the three existing low-risk L1 body sentences', () => {
+test('Food Forest Sesotho slides show only the three existing unreviewed concept sentences', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/food-forest.st.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'st');
+  assert.equal(slides.length, 20);
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
@@ -187,6 +188,8 @@ test('Food Forest Sesotho narration only drafts the three existing low-risk L1 b
     'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.',
     'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.',
   ]);
+  assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
+    part.status === 'draft' || (part.status === 'english-hold' && part.text === undefined))));
   const lessonBody = SESOTHO_FOOD_FOREST_DRAFT.lessons[0].body;
   const lessonEnglish = lessonBody.sourceEnglish.split('\n\n');
   const lessonSesotho = lessonBody.sesothoDraft.split('\n\n');
