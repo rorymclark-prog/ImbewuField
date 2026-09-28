@@ -188,8 +188,7 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Humbulani nga ha maṱavhi malapfu a nṱha a no fuka ḓaka, miri miṱuku, zwiṱaka na zwimela zwi si na thanda."
+            "status": "english-hold"
           },
           {
             "status": "english-hold"
@@ -544,8 +543,7 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Mushumo wa Tsimuni"
+          "status": "english-hold"
         },
         "body": [
           {
