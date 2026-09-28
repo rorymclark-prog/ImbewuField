@@ -1,6 +1,6 @@
 # Animal and Fruit-Tree Art Brief
 
-**Status:** open, drawn by Codex (2026-09-28)
+**Status:** done (2026-09-28). Drawn by Codex in PR #774; plan crowns re-saved as palette PNGs afterwards.
 **Why:** the fruit-tree harvest table (`lib/perennial-harvest-data.ts`, 30 species) and the animal
 table (`lib/animal-enterprises-data.ts`, 15 enterprises) went live without pictures for part of the
 set. 17 of the trees already had artwork under their design element and are now linked in
@@ -26,14 +26,15 @@ Each species needs **two** files, in the style of the existing pairs (open `tree
 | view | where it shows | path | size |
 |---|---|---|---|
 | **Picker** | the species list in the Design Studio, 24–64 px | `public/element-art/tree_<name>.png` | **192×192** RGBA |
-| **Plan** | composited top-down onto the farm plan, clipped to the tree's footprint | `public/render-assets/reference-blueprint/<name>-v1.png` | **1024×1024** RGBA |
+| **Plan** | composited top-down onto the farm plan, clipped to the tree's footprint | `public/render-assets/reference-blueprint/<name>-v1.png` | **768×768**, 256-colour palette PNG with transparency, ≤ 270 KB |
 
 - **Picker:** the whole plant in side view, soft-shaded illustration, trunk (or base) at the bottom
   centre, fruit visible. All four corners are fully transparent. No ground, shadow or text.
 - **Plan:** a top-down crown only. Follow `docs/CANOPY-ART-BRIEF-V2.md` for the edge: jagged leaf
   lobes out to 95–100% of the radius, transparent notches at 72–85%, and **no basin, soil,
   mulch, shadow or ring**. Fruit should be visible from above in the species' fruit colour.
-  Deliver at 1024×1024 (not 2048), which is what the rest of the set ships at.
+  Every file in `reference-blueprint/` is a palette (mode P) PNG of 262 KB or less. A full-colour
+  1024² RGBA crown is about 1.8 MB, so reduce it to 768² and 256 colours before committing.
 
 | speciesId | name | picker file | plan file | what to draw, and how it differs from its look-alike |
 |---|---|---|---|---|
@@ -106,7 +107,7 @@ are safe.
 from PIL import Image
 import sys
 
-SIZES = {"animal-art": 256, "element-art": 192, "reference-blueprint": 1024}
+SIZES = {"animal-art": 256, "element-art": 192, "reference-blueprint": 768}
 for path in sys.argv[1:]:
     want = next(v for k, v in SIZES.items() if f"/{k}/" in path)
     im = Image.open(path).convert("RGBA")
@@ -139,7 +140,7 @@ Commit only the PNGs plus the `lib/species-art.ts` and `lib/animal-art.ts` entri
 > existing art: open `public/element-art/tree_marula.png`,
 > `public/render-assets/reference-blueprint/marula-tree-v2.png` and 3–4 files in
 > `public/crop-art/` first. Deployed sizes: animals 256×256, tree pickers 192×192, plan crowns
-> 1024×1024, all RGBA with transparent corners and no ground or shadow. Run the brief's self-check
+> 768×768 palette PNGs ≤ 270 KB, all with transparent corners and no ground or shadow. Run the brief's self-check
 > after each file and do the downscale look test. Add each file's entry to `lib/species-art.ts` or
 > `lib/animal-art.ts` in the same commit. Finish by running the three test files named in the
 > brief, then open a PR.

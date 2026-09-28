@@ -1,9 +1,7 @@
 # Crop Art Brief
 
-**Status:** 29 crops have finished art. **20 crops (Batch 2, near the end) still ship flat
-placeholder shapes** that pass the tests but need real art — that is the open job.
-Work from current `main` (`git fetch origin && git checkout origin/main -b codex/crop-art-batch-2`):
-an older clone still asks for 1024×1024 files, but the deployed size is **256×256**.
+**Status:** done (2026-09-28). All 49 crops have finished art at the deployed size of
+**256×256**; the 20 Batch 2 placeholders were replaced in PR #779.
 Guarded by `tests/element-art.test.ts`.
 **Requested by:** Rory, 2026-08-15 — flagged the Farm-gate Prices screen showing a
 raw 🧡 orange-heart emoji for Butternut ("that's just an orange heart... we can do

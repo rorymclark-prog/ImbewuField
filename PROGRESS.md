@@ -52,6 +52,17 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 28 Sep 2026 — Artwork: Codex batches merged (20 crops, 15 animals, 5 fruit trees)
+- **Crop Batch 2 (#779):** the 20 flat placeholders in `public/crop-art/` replaced with finished
+  256² art; the whole crop library is 3.79 MB, under the 4 MB gate in `tests/element-art.test.ts`.
+- **Animals + trees (#774):** 15 animal pictures in `public/animal-art/`, wired in `lib/animal-art.ts`
+  (the Animals on your map chips and picked-animal picture); pickers + plan crowns for sour fig,
+  Transvaal milkplum, African mangosteen, jacket plum and spiny monkey orange, plus a guava picker.
+- **Crown size fix:** the 5 new plan crowns shipped as 1024² RGBA at ~1.8 MB each (9 MB together).
+  Re-saved as 768² 256-colour palette PNGs, 242–258 KB each, the same format and range as the rest
+  of `reference-blueprint/` (all palette, max 262 KB). No visible difference at map scale.
+- Both briefs marked done, and ANIMAL-TREE-ART-BRIEF now asks for palette crowns ≤ 270 KB.
+
 ### 28 Sep 2026 — Artwork: 17 fruit trees linked, Codex brief for trees and animals
 - **17 harvest-table fruit trees linked to art they already had** (`lib/species-art.ts`): pawpaw,
   num-num/Natal plum, lemon, naartjie, Kei apple, fig, wild plum, litchi, macadamia, mango, avocado,
@@ -66,7 +77,7 @@ must provision — not buildable from code alone).
   picker 192² + plan 1024²) and a guava picker. Part B: 15 animal pictures (256²).
 - **`docs/CROP-ART-BRIEF.md`:** status now says the 20 Batch 2 files are placeholders, and tells
   Codex to branch from current `main` (a stale clone read the old 1024² rule).
-- **Left:** all Codex drawing (20 crops, 11 tree files, 15 animals).
+- **Left:** all Codex drawing (20 crops, 11 tree files, 15 animals). *Done — see the entry above.*
 
 ### 28 Sep 2026 — Animal enterprises, round 2 (Phase C: cattle, sheep, pigs, fish; month search)
 - **New enterprises (15 in all):** beef cattle (Nguni/crossbred, communal veld), dairy cow, meat
