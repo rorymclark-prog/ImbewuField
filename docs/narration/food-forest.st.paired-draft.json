@@ -76,7 +76,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Liphetho tsa ho ithuta"
         },
         "body": [
           {
@@ -105,7 +106,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Moru o sebelisa mekhahlelo eohle"
         },
         "body": [
           {
@@ -120,7 +122,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Phello ha se sejalo se le seng moleng o le mong; ke mekhahlelo e mengata e molemo e melang hammoho."
           }
         ]
       }
@@ -246,7 +249,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tlhokomelo e fetoha ha limela li ntse li hola"
         },
         "body": [
           {

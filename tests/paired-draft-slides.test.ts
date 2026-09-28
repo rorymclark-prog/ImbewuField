@@ -143,15 +143,29 @@ test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its
   assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
 });
 
-test('Food Forest Sesotho narration only drafts the three existing low-risk L1 body sentences', () => {
+test('Food Forest Sesotho narration drafts only scoped conceptual text and keeps field advice held', () => {
+  // This draft lane adds a few low-risk headlines and one layer-summary sentence for review.
+  // Keep the body allowlist explicit so new planting, safety or species advice cannot slip in.
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/food-forest.st.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'st');
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
-  assert.deepEqual(slides.flatMap((slide: any) => slide.target.heading.status), Array(20).fill('english-hold'));
+  assert.deepEqual(drafted, ['4:1', '4:2', '4:4', '8:2']);
+  assert.deepEqual(slides.map((slide: any) => slide.target.heading.status), Array.from({ length: 20 }, (_, index) =>
+    [3, 4, 8].includes(index + 1) ? 'draft' : 'english-hold'));
+  assert.deepEqual([
+    slides[2].target.heading.text,
+    slides[3].target.heading.text,
+    slides[7].target.heading.text,
+    slides[3].target.body[3].text,
+  ], [
+    'Liphetho tsa ho ithuta',
+    'Moru o sebelisa mekhahlelo eohle',
+    'Tlhokomelo e fetoha ha limela li ntse li hola',
+    'Phello ha se sejalo se le seng moleng o le mong; ke mekhahlelo e mengata e molemo e melang hammoho.',
+  ]);
   assert.deepEqual([
     slides[3].target.body[0].text,
     slides[3].target.body[1].text,
