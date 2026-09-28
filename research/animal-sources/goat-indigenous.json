@@ -1,0 +1,161 @@
+{
+  "enterpriseId": "goat-indigenous",
+  "commonName": "Indigenous veld / communal goat (e.g. Nguni, Tankwa, Xhosa lob-ear)",
+  "animal": "goat",
+  "animalUnit": "doe",
+  "product": "meat",
+  "outputUnit": "kids weaned/doe/year",
+  "outputPerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source gave a direct 'kids weaned per doe per year' figure for indigenous/communal goats. The best SA source (Webb & Mamabolo, 2004, Moutsi district, Mpumalanga) gives litter size (1.7 kids/doe), a kidding-interval-based annual reproductive-rate FORMULA ('litter size x 365 / kidding interval'), and separately a mortality rate, but pre-weaning mortality is not broken out from the overall mortality figure, so a weaned (as opposed to born) figure cannot be computed with shown arithmetic without guessing what share of the 40.6% mortality happens before weaning. A directly-titled NDA/SASAS document ('Factors influencing weaning percentages of indigenous goats on communal grazing') was sought as the more direct source but could not be reached (see gaps). Value left null rather than invented."
+  },
+  "productionMonths": [],
+  "seasonalPattern": {
+    "value": "Breeding is not controlled and happens all year, but in one Mpumalanga communal study kidding rates were highest in autumn (96%) and spring (93%), lower in winter (63%) and nil in summer.",
+    "evidence": {
+      "quote": "Breeding is not controlled and occurs all year round, which creates managerial problems. ... the highest kidding rates were attained in autumn (96%), followed by spring (93%), winter (63%) and summer (0%)",
+      "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892004000500070&lng=pt&nrm=iso",
+      "doc": "Webb, E.C. & Mamabolo, M.J. (2004). Production and reproduction characteristics of South African indigenous goats in communal farming systems. S. Afr. J. Anim. Sci. 34(5):236-239",
+      "page": null
+    },
+    "notes": "Same source's kidding-rate-by-season data (autumn 96%, spring 93%, winter 63%, summer 0%) is used above for productionMonths. A separate KZN report (Letty & Madiba, KZN DARD) independently confirms most ewes kid in spring or autumn in a different communal system, without giving its own numeric rates or months."
+  },
+  "timeToFirstProductWeeks": {
+    "value": [
+      69.6,
+      78.3
+    ],
+    "evidence": {
+      "quote": "the indigenous goats in Mpumalanga are early breeders, reaching puberty at 6 to 7 months of age. The age at first kidding varied between 16 to 18 months of age",
+      "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892004000500070&lng=pt&nrm=iso",
+      "doc": "Webb, E.C. & Mamabolo, M.J. (2004). Production and reproduction characteristics of South African indigenous goats in communal farming systems. S. Afr. J. Anim. Sci. 34(5):236-239",
+      "page": null
+    },
+    "notes": "This is age at first KIDDING (birth of first kids), not first weaned kids. 16 months x 4.35 = 69.6 weeks; 18 months x 4.35 = 78.3 weeks, from doe birth to her giving birth for the first time. Adding the source's own ~150-day (~5-month, ~21.75-week) weaning assumption would put first WEANED kids at roughly 91-100 weeks of doe age, but that compound figure is not shown as the primary value since the field is documented as 'age/time from start (hatch, birth) to first product' and first kidding is the clearer, directly-stated milestone; the weaning offset is noted here for transparency."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. The Mpumalanga source states the annual reproductive rate 'increases with age and peaks at 3 to 4 years of age, remains stable and then starts to decrease' but gives no culling/replacement age or productive-lifespan figure in years (see gaps)."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. Indigenous/communal goats in the sourced studies graze/browse veld under a herder rather than being fed a measured ration, and no SA-specific kg/day supplementary-feed figure was found (see gaps)."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced - no SA-specific or FAO document with a goat water-intake figure was found or fetchable within the search budget (see gaps)."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced as an m2/animal figure. The KZN DARD report states an average flock size of 13 (range 5-34) goats per household kept under a communal tethering/kraal system, but gives no floor-space or kraal-area figure (see gaps)."
+  },
+  "welfare": [
+    {
+      "point": "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+      "evidence": {
+        "quote": "confines, chains, tethers or secures any animal unnecessarily or under such conditions or in such a manner or position as to cause that animal unnecessary suffering or in any place which affords inadequate space, ventilation, light, protection or shelter from heat, cold or weather",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(b)",
+        "page": 1
+      }
+    },
+    {
+      "point": "It is an offence to starve, under-feed, or deny water or food to a goat.",
+      "evidence": {
+        "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+        "page": 1
+      }
+    },
+    {
+      "point": "An owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when able to.",
+      "evidence": {
+        "quote": "being the owner of any animal, deliberately or negligently keeps such animal in a dirty or parasitic condition or allows it to become infested with external parasites or fails to render or procure veterinary or other medical treatment or attention which he is able to render or procure for any such animal in need of such treatment or attention",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(e)",
+        "page": 1
+      }
+    },
+    {
+      "point": "Winter feed shortage on communal sourveld is a known welfare/production risk: does that kid in autumn must feed kids through winter, and does that kid in spring suffer poor nutrition during late pregnancy, so winter feed supplementation matters.",
+      "evidence": {
+        "quote": "Winter nutrition is thus a definite constraint to goat production in the sourveld areas. The time of kidding exacerbates the problem since the majority of ewes kid either in spring or in autumn. Those kidding in autumn must feed their lambs through winter while those kidding in spring suffer from poor nutrition during late gestation",
+        "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/RESEARCH_REPORTS/Constraints%20to%20Small-scale%20Goat%20Production%20in%20KZN.pdf",
+        "doc": "Letty, B. & Madiba, S., KZN DARD. Constraints to Small-Scale Goat Production in the Highland Sourveld Area of KwaZulu-Natal",
+        "page": 3
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+      "evidence": {
+        "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Inside a declared FMD-affected zone, goats and their products cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+      "evidence": {
+        "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Every goat owner, including communal/smallholder owners, must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+      "evidence": {
+        "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+        "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+        "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+        "page": 4
+      }
+    },
+    {
+      "point": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes (including ceremonial slaughter, common with indigenous goats), is exempt from that rule, but that meat may not then be sold.",
+      "evidence": {
+        "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "No direct 'kids weaned per doe per year' figure: the NDA/SASAS document specifically titled 'Factors influencing weaning percentages of indigenous goats on communal grazing' would likely answer this directly, but nda.gov.za reset the connection on every attempt, the SASAS (sasas.co.za) copy returned only a Cloudflare bot-challenge page (not real content), and a web.archive.org fallback for the nda.gov.za PDF returned only an empty archive stub - all three access routes failed.",
+    "The Mpumalanga source's own abstract (238 days) and body text (258 days, n=297) give two different average kidding-interval figures for the same study population - flagged here rather than silently picking one, since neither productionMonths nor outputPerAnimal above relies on the exact interval value.",
+    "The same source's overall mortality rate is reported inconsistently: 40.6% in the abstract, but the body text gives a range of roughly 3.8-40.1% across sub-groups - not used to estimate a weaning percentage because of this inconsistency and because pre- vs post-weaning mortality is not separated.",
+    "No productive-life-years, feed kg/day, water L/day, or housing/kraal space m2/animal figure was found for indigenous/communal goats in any accessible SA source; kzndard.gov.za (including a dedicated 'Goat Production in KwaZulu-Natal' page), nda.gov.za and dalrrd.gov.za all reset the connection on every attempt; a SASAS paper specifically on 'Indigenous goat production on Kikuyu pasture in South Africa' (Househam, sasas.co.za) was fetched but was a Cloudflare bot-challenge page, not real content.",
+    "A specific, fetchable SA government statement naming Limpopo and Mpumalanga (in addition to KwaZulu-Natal) as areas with active FMD control/protection zones was not found: the accessible SAnews articles located for Limpopo (2024-2025) describe the LIFTING of that province's Disease Management Area restrictions rather than an active zone, and no equivalent Mpumalanga-specific article was found accessible; the legal point above is therefore evidenced only for the KZN DMA, with the general controlled-disease/permit mechanism understood to apply nationally wherever a zone is declared.",
+    "Editor review 2026-09-28: legal[0] cited only the Act's general definition of 'controlled animal disease', which does not name FMD; re-cited to the SAnews statement that names FMD as a controlled disease under the Act.",
+    "Editor review 2026-09-28: productionMonths [1,2,7,8,9] were derived (kidding season + an assumed 150-day weaning), not stated by the source; moved to unverifiedMonths and withdrawn. seasonalPattern quote extended to cover the kidding-rate figures its summary gives."
+  ],
+  "unverifiedMonths": [
+    {
+      "region": "Moutsi district, Mpumalanga (communal farming system)",
+      "months": [
+        1,
+        2,
+        7,
+        8,
+        9
+      ],
+      "evidence": {
+        "quote": "the highest kidding rates were attained in autumn (96%), followed by spring (93%), winter (63%) and summer (0%) ... The seasonal characteristics of the area are summer (October - January), winter (May - July), autumn (February - April) and spring (August - September). ... Weaning was assumed to occur at 150 days",
+        "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892004000500070&lng=pt&nrm=iso",
+        "doc": "Webb, E.C. & Mamabolo, M.J. (2004). Production and reproduction characteristics of South African indigenous goats in communal farming systems. S. Afr. J. Anim. Sci. 34(5):236-239",
+        "page": null
+      },
+      "notes": "Derived, arithmetic shown: kidding is concentrated in the source's own autumn (Feb-Apr) and spring (Aug-Sep) windows, with almost no summer kidding. Weaning is stated to be assumed at 150 days (~5 months) after birth, so kids taken off the doe (the 'product') follow roughly 5 months after kidding: Feb+5=Jul, Mar+5=Aug, Apr+5=Sep (from autumn kidding), and Aug+5=Jan, Sep+5=Feb (from spring kidding). Combined weaning/product months = Jan, Feb, Jul, Aug, Sep. This is specific to one Mpumalanga communal system studied in 1997 (297 goats, 40 farmers) - a different KZN communal report (see welfare) corroborates the general spring/autumn pattern without giving its own months."
+    }
+  ]
+}

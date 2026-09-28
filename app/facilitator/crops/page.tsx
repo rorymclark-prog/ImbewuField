@@ -15,7 +15,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSPr
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
-import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2, Plus } from 'lucide-react';
+import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2, Plus, PawPrint } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
@@ -28,6 +28,8 @@ import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/li
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { buildTreeAvailability, formatMonthSpan, formatRange, placedTreeGroups, sourcedSeasonMonths, type PlacedTreeGroup, type TreeAvailabilityItem } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
+import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
+import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
@@ -678,6 +680,13 @@ function FacilitatorCropsPageInner() {
   // turning the orchard off in one place is not quietly undone in another.
   const [includeTrees, setIncludeTrees] = useState(DEFAULT_INCLUDE_PERENNIALS);
   useEffect(() => { setIncludeTrees(loadIncludePerennials()); }, []);
+  // The design's coops, pens, hutches and hives (lib/animal-enterprises.ts), what the farmer says
+  // each kind is kept for, and the animals' own switch. A coop is housing, not a head count, and
+  // not an enterprise either — so nothing is charted for a kind until the farmer picks one.
+  const [canvasAnimals, setCanvasAnimals] = useState<PlacedAnimalGroup[]>([]);
+  const [animalChoices, setAnimalChoices] = useState<Partial<Record<AnimalKind, string>>>({});
+  const [includeAnimals, setIncludeAnimals] = useState(DEFAULT_INCLUDE_ANIMALS);
+  useEffect(() => { setIncludeAnimals(loadIncludeAnimals()); }, []);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
   // One-level-per-action undo, mirroring FacilitatorCanvas's own pushHistory
   // pattern — mainly for undoing a whole auto-suggested batch in one tap
@@ -1043,11 +1052,13 @@ function FacilitatorCropsPageInner() {
   // reloads facilitator state), so placing another bed in the Studio (another
   // tab) refreshes the bed list here without a reload.
   useEffect(() => {
-    if (!canvasSite) { setCanvasTrees([]); return; }
+    if (!canvasSite) { setCanvasTrees([]); setCanvasAnimals([]); setAnimalChoices({}); return; }
+    setAnimalChoices(loadEnterpriseChoices(canvasSite));
     const refresh = () => {
       const state = loadCanvasState(canvasSite);
       setCanvasBeds(bedsFromDesignCanvas(state));
       setCanvasTrees(placedTreeGroups(state?.items ?? []));
+      setCanvasAnimals(placedAnimalGroups(state?.items ?? []));
     };
     refresh();
     window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
@@ -1340,6 +1351,18 @@ function FacilitatorCropsPageInner() {
     () => buildTreeAvailability(canvasTrees, monthOrder, yearMode === 'fromToday'),
     [canvasTrees, monthOrder, yearMode],
   );
+  // Animals get their own row too, by the same rule: a coop drawn as proposed has no hens yet.
+  const animalAvailability = useMemo(
+    () => buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, yearMode === 'fromToday'),
+    [canvasAnimals, animalChoices, monthOrder, yearMode],
+  );
+  function chooseAnimalEnterprise(animal: AnimalKind, enterpriseId: string | null) {
+    if (!canvasSite) return;
+    const next = { ...animalChoices };
+    if (enterpriseId) next[animal] = enterpriseId; else delete next[animal];
+    setAnimalChoices(next);
+    saveEnterpriseChoices(canvasSite, next);
+  }
   const fieldUtilization = useMemo(() => {
     if (chartNowMonth !== undefined) return buildFieldUtilizationByMonth(chartPlantings, beds, chartNowMonth, DISPLAY_MONTHS);
     const annual = buildFieldUtilizationByMonth(chartPlantings, beds);
@@ -1976,7 +1999,11 @@ function FacilitatorCropsPageInner() {
               treeAvailability={treeAvailability}
               includeTrees={includeTrees}
               onIncludeTreesChange={(next) => { setIncludeTrees(next); saveIncludePerennials(next); }}
+              animalAvailability={animalAvailability}
+              includeAnimals={includeAnimals}
+              onIncludeAnimalsChange={(next) => { setIncludeAnimals(next); saveIncludeAnimals(next); }}
             />
+            <AnimalEnterprisesCard groups={canvasAnimals} choices={animalChoices} onChoose={chooseAnimalEnterprise} />
 
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
@@ -2501,12 +2528,13 @@ function CropStorageLine({ crop }: { crop: CropDef }) {
  * what make a "stored" square mean anything.
  */
 function MonthAvailabilityDetail({
-  month, items, trees = [], treeGroups = [], onClose,
+  month, items, trees = [], treeGroups = [], animals = [], onClose,
 }: {
   month: number;
   items: FoodAvailabilityItem[];
   trees?: TreeAvailabilityItem[];
   treeGroups?: PlacedTreeGroup[];
+  animals?: AnimalAvailabilityItem[];
   onClose: () => void;
 }) {
   const { lang } = useLanguage();
@@ -2539,6 +2567,25 @@ function MonthAvailabilityDetail({
                 {harvest && (
                   <span style={{ color: 'var(--text-muted)' }}>
                     {' '}— {formatMonthSpan(sourcedSeasonMonths(harvest))} across SA{first ? `; first crop ${formatRange(first.value)} yrs after planting` : ''}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {animals.length > 0 && (
+        <div className="mb-2 mt-1.5">
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>From your animals (sourced months)</div>
+          {animals.map((a) => {
+            const e = ANIMAL_ENTERPRISES[a.enterpriseId];
+            const Icon = PRODUCT_ICON[a.product];
+            return (
+              <div key={a.enterpriseId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <span className="inline-flex items-center gap-1.5"><Icon size={12} aria-hidden style={{ color: 'var(--gold-dim)' }} /> {PRODUCT_LABEL[a.product]} · {e?.name ?? ANIMAL_LABEL[a.animal]}</span>
+                {e && (
+                  <span style={{ color: 'var(--text-muted)' }}>
+                    {' '}— {formatMonthSpan(sourcedProductMonths(e))}{e.outputPerAnimal ? `; ${formatRange(e.outputPerAnimal.value)} ${e.outputUnit}` : ''}
                   </span>
                 )}
               </div>
@@ -2828,12 +2875,48 @@ function TreeAvailabilityRow({ slots, openMonth, onToggleMonth }: {
   );
 }
 
+/** The animals' row: one product icon per chosen enterprise giving its product that month. */
+function AnimalAvailabilityRow({ slots, openMonth, onToggleMonth }: {
+  slots: AnimalAvailabilityItem[][];
+  openMonth: number | null;
+  onToggleMonth: (index: number) => void;
+}) {
+  return (
+    <div style={{ ...MONTH_COLUMNS, marginTop: 6 }} data-crop-animal-availability>
+      {slots.map((slot, i) => (
+        <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }}>
+          <button
+            type="button"
+            onClick={() => onToggleMonth(i)}
+            aria-expanded={openMonth === i}
+            aria-label={slot.length === 0 ? 'No animal product this month' : `${slot.map((a) => `${PRODUCT_LABEL[a.product]} from ${ANIMAL_LABEL[a.animal].toLowerCase()}`).join(', ')}, tap for detail`}
+            className="font-sans inline-flex items-center justify-center gap-0.5"
+            style={{
+              width: '68%', minHeight: 24, borderRadius: 6, cursor: 'pointer', fontSize: 11.5, fontWeight: 700,
+              border: slot.length ? '1px solid var(--gold)' : '1px dashed var(--border)',
+              background: slot.length ? 'var(--bg-2)' : 'transparent',
+              color: slot.length ? 'var(--text-primary)' : 'var(--text-muted)',
+            }}
+          >
+            {slot.length > 0 ? slot.slice(0, 2).map((a) => {
+              const Icon = PRODUCT_ICON[a.product];
+              return <Icon key={a.enterpriseId} size={11} aria-hidden style={{ color: 'var(--gold-dim)' }} />;
+            }) : '–'}
+            {slot.length > 2 && <span>+{slot.length - 2}</span>}
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 type FoodValueMode = 'availability' | 'utilization' | 'value';
 
 function FoodAvailabilityChart({
   monthOrder, availability, yieldBenchmark, utilization, plantings, priceOverrides, onPriceOverrideChange,
   cashflowSettings, onCashflowSettingsChange, yearMode, onYearModeChange, registerScroll, onMonthScroll,
   treeGroups, treeAvailability, includeTrees, onIncludeTreesChange,
+  animalAvailability, includeAnimals, onIncludeAnimalsChange,
 }: {
   monthOrder: number[];
   availability: FoodAvailabilityItem[][];
@@ -2841,6 +2924,9 @@ function FoodAvailabilityChart({
   treeAvailability: TreeAvailabilityItem[][];
   includeTrees: boolean;
   onIncludeTreesChange: (next: boolean) => void;
+  animalAvailability: AnimalAvailabilityItem[][];
+  includeAnimals: boolean;
+  onIncludeAnimalsChange: (next: boolean) => void;
   yieldBenchmark: PlanYieldBenchmark;
   utilization: number[];
   registerScroll: (node: HTMLDivElement | null) => void;
@@ -2875,7 +2961,12 @@ function FoodAvailabilityChart({
   const hasStoredItems = cols.some((c) => c.stored.length > 0);
   const maxFreshRows = Math.ceil(Math.max(0, ...cols.map((c) => c.fresh.length)) / TRAY_COLS);
   const showTreeRow = includeTrees && treeAvailability.some((slot) => slot.length > 0);
-  const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0) && !showTreeRow;
+  // Only kinds with a chosen enterprise AND sourced months can put anything on the chart; a
+  // switch for the rest would be a dead control (their card still says "When: not sourced").
+  const chartableAnimals = (Object.keys(ANIMAL_LABEL) as AnimalKind[])
+    .filter((a) => animalAvailability.some((slot) => slot.some((it) => it.animal === a)));
+  const showAnimalRow = includeAnimals && chartableAnimals.length > 0;
+  const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0) && !showTreeRow && !showAnimalRow;
   const utilMax = Math.max(1, ...utilization);
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
   const unpricedBenchmarkCrops = yieldBenchmark.byCrop.filter((row) => !priceFor(row.cropKey, priceOverrides)).map((row) => row.name);
@@ -2930,17 +3021,33 @@ function FoodAvailabilityChart({
 
       {mode === 'availability' && (
         <>
+          {(treeGroups.length > 0 || chartableAnimals.length > 0) && (
+          <div className="flex flex-wrap gap-2 mb-3">
           {treeGroups.length > 0 && (
             <button
               type="button"
               onClick={() => onIncludeTreesChange(!includeTrees)}
               aria-pressed={includeTrees}
-              className="font-sans rounded-full inline-flex items-center gap-1 mb-3"
+              className="font-sans rounded-full inline-flex items-center gap-1"
               style={{ fontSize: 12, fontWeight: includeTrees ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${includeTrees ? 'var(--emerald)' : 'var(--border)'}`, background: includeTrees ? 'var(--bg-2)' : 'transparent', color: includeTrees ? 'var(--text-primary)' : 'var(--text-muted)' }}
             >
               <Trees size={12} aria-hidden strokeWidth={includeTrees ? 2.2 : 1.6} />
               {includeTrees ? `Orchard in · ${treeGroups.length} fruit tree kind${treeGroups.length === 1 ? '' : 's'} on your map` : 'Orchard out'}
             </button>
+          )}
+          {chartableAnimals.length > 0 && (
+            <button
+              type="button"
+              onClick={() => onIncludeAnimalsChange(!includeAnimals)}
+              aria-pressed={includeAnimals}
+              className="font-sans rounded-full inline-flex items-center gap-1"
+              style={{ fontSize: 12, fontWeight: includeAnimals ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${includeAnimals ? 'var(--gold)' : 'var(--border)'}`, background: includeAnimals ? 'var(--bg-2)' : 'transparent', color: includeAnimals ? 'var(--text-primary)' : 'var(--text-muted)' }}
+            >
+              <PawPrint size={12} aria-hidden strokeWidth={includeAnimals ? 2.2 : 1.6} />
+              {includeAnimals ? `Animals in · ${chartableAnimals.map((a) => ANIMAL_LABEL[a].toLowerCase()).join(', ')}` : 'Animals out'}
+            </button>
+          )}
+          </div>
           )}
           <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
             Fresh-picking windows only. Storage appears only with sourced conditions. The source does not provide a within-window kg curve, so this chart deliberately shows no monthly kilograms or money.
@@ -2953,10 +3060,16 @@ function FoodAvailabilityChart({
                 <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh</span>
                 {hasStoredItems && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> Stored under named conditions</span>}
                 {showTreeRow && <span className="inline-flex items-center gap-1.5"><Trees size={11} aria-hidden style={{ color: 'var(--emerald)' }} /> Your trees&apos; sourced season</span>}
+                {showAnimalRow && <span className="inline-flex items-center gap-1.5"><PawPrint size={11} aria-hidden style={{ color: 'var(--gold-dim)' }} /> Your animals&apos; sourced months</span>}
               </div>
               {showTreeRow && (
                 <p className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
                   Tree months are the span South African sources give across all growing regions. Your own weeks depend on your area and cultivar{yearMode === 'fromToday' ? '; trees drawn as proposed are left out, as they are years from a first crop' : ''}. Trees are never added to the bars or to any per-m² figure.
+                </p>
+              )}
+              {showAnimalRow && (
+                <p className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
+                  Animal months are the ones the sources give for what you said each kind is kept for{yearMode === 'fromToday' ? '; housing drawn as proposed is left out, as nothing lives in it yet' : ''}. Animals are never added to the bars or to any per-m² figure.
                 </p>
               )}
               <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
@@ -3031,6 +3144,9 @@ function FoodAvailabilityChart({
                 {showTreeRow && (
                   <TreeAvailabilityRow slots={treeAvailability} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
                 )}
+                {showAnimalRow && (
+                  <AnimalAvailabilityRow slots={animalAvailability} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
+                )}
                 </>
               </CropMonthViewport>
               {openMonth !== null && (
@@ -3040,6 +3156,7 @@ function FoodAvailabilityChart({
                     items={availability[openMonth] ?? []}
                     trees={showTreeRow ? (treeAvailability[openMonth] ?? []) : []}
                     treeGroups={treeGroups}
+                    animals={showAnimalRow ? (animalAvailability[openMonth] ?? []) : []}
                     onClose={() => setOpenMonth(null)}
                   />
                 </div>

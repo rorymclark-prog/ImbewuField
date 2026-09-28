@@ -1,0 +1,139 @@
+{
+  "enterpriseId": "rabbit",
+  "commonName": "Meat rabbit (New Zealand White / Californian, backyard hutches)",
+  "animal": "rabbit",
+  "animalUnit": "doe",
+  "product": "meat",
+  "outputUnit": "kits weaned/doe/year",
+  "outputPerAnimal": {
+    "value": [
+      30,
+      35
+    ],
+    "evidence": {
+      "quote": "For backyard rabbitries, it is as- sumed that weaning takes place at 42 days, servicing at 24 days after kindling, and the average conception rate is 70 percent. This gives an average of six litters per doe per year. ... If an average six young per litter are weaned and 5.5 reach slaughter or reproduction age, the objective is then 30 rabbits per doe annually. This modest goal is realistic for back- yard rabbitries not based exclusively on pelleted feed. ... This would give an additional litter per doe, raising the annual goal to 35 rabbits per doe.",
+      "url": "https://www.fao.org/4/t1690e/t1690e.pdf",
+      "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
+      "page": 107
+    },
+    "notes": "FAO (general, not SA-specific). Figure is explicitly for 'backyard rabbitries not based exclusively on pelleted feed' (extensive/semi-intensive, not industrial). 30 = number of young reaching slaughter/reproduction age per doe/year at the base backyard rate (6 young weaned x 5.5 litters, allowing for post-weaning loss); 35 = same backyard system but with an extra litter gained by remating 7 days earlier (day 17 vs day 24 post-kindling). The source calls a 40-50/doe target 'not a realistic goal' for many countries, so that higher industrial figure was excluded. No SA-specific (ARC/SAJAS/provincial) doe-productivity figure was found (see gaps)."
+  },
+  "productionMonths": [],
+  "seasonalPattern": {
+    "value": "In hot, humid wet-season conditions rabbit reproduction rates fall; artificial lighting in managed hutches can largely offset this.",
+    "evidence": {
+      "quote": "In tropical climates a drop in the rate of reproduction is noted during the same period, the wet season",
+      "url": "https://www.fao.org/4/t1690e/t1690e.pdf",
+      "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
+      "page": 79
+    },
+    "notes": "FAO (general, not SA-specific). No source gave specific calendar months for a South African wet/hot season effect on rabbit reproduction, so productionMonths is left empty (see gaps)."
+  },
+  "timeToFirstProductWeeks": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced as 'time to first weaned litter'. FAO states does are first mated at about four months (medium-size, properly fed does) and bucks at about five months, but no source gave gestation length or the full mating-to-first-weaning interval needed to compute weeks to first product, so no value/arithmetic could be shown."
+  },
+  "productiveLifeYears": {
+    "value": [
+      0.76,
+      0.76
+    ],
+    "evidence": {
+      "quote": "The yearly renewal rate of does of 131 percent means that in order to maintain 100 breeding females year-round, 131 new does must be introduced each year, i.e. the average produc- tive life of a doe is just over nine months (365 days ÷ 1.31 = 279 days) between the first mating and withdrawal (culled or dead).",
+      "url": "https://www.fao.org/4/t1690e/t1690e.pdf",
+      "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
+      "page": 201
+    },
+    "notes": "279 days / 365 = 0.76 years. This figure is from French INTENSIVE commercial rabbitries (average of 1992 national recording-scheme data), NOT backyard/extensive hutches - the source gives no separate productive-life figure for backyard systems (see gaps). Treat as a lower-bound / industrial-system reference only."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the quote is for bucks, but the figures on this enterprise are per doe. Withdrawn value: [0.12, 0.18]."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: derived by multiplying a g/kg drinking rate by a 4 kg live weight from another page; the source states no litres per rabbit. Withdrawn value: [0.4, 0.6]."
+  },
+  "spaceM2PerAnimal": {
+    "value": [
+      0.48,
+      0.7
+    ],
+    "evidence": {
+      "quote": "Cages for breeding animals usually have at least a 60 to 70 cm x 80 to 100 cm floor space and are 50 to 60 cm high.",
+      "url": "https://www.fao.org/4/t1690e/t1690e.pdf",
+      "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
+      "page": 172
+    },
+    "notes": "0.60x0.80=0.48 m2 to 0.70x1.00=0.70 m2, indoor/hutch cage per single breeding adult (one buck or doe per cage), 50-60 cm high. FAO (general, not SA-specific). A separate FAO table (p.174, Fort & Martin 1981) gives a doe's cage as 65-70 cm (front) x 50 cm (depth) = 0.325-0.35 m2 and a buck's cage as 40x50 cm = 0.20 m2 - a narrower alternative figure from the same book, not merged into the range above to avoid mixing two different tabulated sources."
+  },
+  "welfare": [
+    {
+      "point": "It is an offence to deny a rabbit food or water, or keep it somewhere lacking adequate space, ventilation, light or shelter from heat and cold.",
+      "evidence": {
+        "quote": "confines, chains, tethers or secures any animal unnecessarily or under such conditions or in such a manner or position as to cause that animal unnecessary suffering or in any place which affords inadequate space, ventilation, light, protection or shelter from heat, cold or weather ... unnecessarily starves ... or denies water or food to any animal",
+        "url": "https://cer.org.za/wp-content/uploads/2019/11/Animals-Protection-Act-No.-71-of-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962 (consolidated text, s.2(1)(b)-(c))",
+        "page": 2
+      }
+    },
+    {
+      "point": "Give breeding rabbits roughly 0.48-0.70 m2 of hutch floor space each, 50-60 cm high, not a cramped cage.",
+      "evidence": {
+        "quote": "Cages for breeding animals usually have at least a 60 to 70 cm x 80 to 100 cm floor space and are 50 to 60 cm high.",
+        "url": "https://www.fao.org/4/t1690e/t1690e.pdf",
+        "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
+        "page": 172
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Rabbits are one of the domesticated animal species listed in the Meat Safety Act, so the Act's rules on abattoirs and hygiene apply to them, as they do to ducks and other listed species.",
+      "evidence": {
+        "quote": "Pigeon Quail Rabbit Sheep Turkey",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, Schedule 1 (Animals to which this Act applies)",
+        "page": 16
+      }
+    },
+    {
+      "point": "Rabbits slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt from this rule but the meat from it may not be sold.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir; ... (2) (a) Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7",
+        "page": 6
+      }
+    },
+    {
+      "point": "At the abattoir, rabbits (like other listed animals) must be handled humanely during loading, transport, offloading, housing, immobilising and killing, under the Animals Protection Act.",
+      "evidence": {
+        "quote": "an animal presented for slaughter at an abattoir must be handled humanely during loading, transportation, off-loading, housing, immobilizing and killing as prescribed in accordance with the requirements of the Animals Protection Act, 1962 (Act No. 71 of 1962)",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.9",
+        "page": 7
+      }
+    },
+    {
+      "point": "The wild European rabbit (the same species as farmed New Zealand White/Californian rabbits) is only listed as an invasive species under NEMBA on South Africa's off-shore islands - it is not a listed/restricted species on the mainland.",
+      "evidence": {
+        "quote": "28 Oryctolagus cuniculus European rabbit See below a. 1a for off-shore islands. b. Not listed elsewhere.",
+        "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
+        "doc": "South Africa's National Listed Invasive Species booklet (NEMBA Alien and Invasive Species Lists)",
+        "page": 27
+      }
+    }
+  ],
+  "gaps": [
+    "DALRRD/nda.gov.za: tried to fetch the department's own 'Rabbit meat regulations' SEIAS assessment (nda.gov.za/.../rabbit-meat-regulations-seias-initial-assessment-phase-1.pdf) which would likely confirm rabbit abattoir registration status directly - the nda.gov.za host reset the connection on every attempt (site down/blocked), so this could not be used.",
+    "ARC Animal Production Institute (arc.agric.za): searched for a rabbit-specific production guide or unit page; search results only surfaced general institute pages and the SA Phendula breed's existence, no fetchable ARC document with rabbit performance/feed/space figures was found.",
+    "No SA-specific (ARC/SAJAS/provincial DoA) figure was found for: doe-specific feed intake in kg/day (only buck figure and energy-unit doe requirements were available), time from birth/mating to first weaned litter (weeks), or productive life of a doe kept in a South African backyard/extensive system specifically (only an intensive French industrial figure of ~9 months was found).",
+    "No source gave specific calendar months in which South African backyard rabbit production is seasonal (only a general FAO statement that wet-season heat/humidity reduces reproduction), so productionMonths is empty.",
+    "Searched for a KZN DARD / Elsenburg rabbit production guide specifically; none was found via web search (only DAFF/ARC poultry material and general farming-media rabbit articles, which are excluded as non-primary sources).",
+    "Editor review 2026-09-28: feed withdrawn (buck figure on a per-doe enterprise); water withdrawn (derived from a g/kg rate and an assumed weight). Two welfare points withdrawn: enrichment and ad-libitum feed/water were the conditions of one SAJAS experiment, not a stated welfare requirement."
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "enterpriseId": "duck",
+  "commonName": "Meat duck (Pekin / Muscovy, backyard)",
+  "animal": "duck",
+  "animalUnit": "bird",
+  "product": "meat",
+  "outputUnit": "kg live weight/bird at slaughter",
+  "outputPerAnimal": {
+    "value": [
+      2.29,
+      2.93
+    ],
+    "evidence": {
+      "quote": "Steklenev (1990) reported live weight at slaughter at 8-10 weeks for the Pekin and Muscovy to be 2.93 and 2.29 kg respectively.",
+      "url": "https://www.lrrd.org/lrrd18/11/solo18154.htm",
+      "doc": "Livestock Research for Rural Development 18(11) 2006 - Solomon et al. (Guyana; not an SA figure), citing Steklenev 1990",
+      "page": null
+    },
+    "notes": "Non-SA (Guyana study reporting a citation to Steklenev 1990); no SA-specific absolute slaughter live-weight figure was found (see gaps). 2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches this enterprise's two breeds. The same LRRD paper's own experiment (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as: Pekin drakes 2.53 kg, Pekin hens 2.29 kg, Muscovy drakes 2.47 kg, Muscovy hens 1.51 kg - broadly consistent with, but not merged into, the cited range above since it is a separate dataset/table in the same source. No sourced eggs/duck/year figure was found for either breed (see gaps); the LRRD and SAJAS sources used here studied ducks reared only for meat."
+  },
+  "productionMonths": [],
+  "seasonalPattern": {
+    "value": null,
+    "evidence": null,
+    "notes": "No SA government/research, peer-reviewed or FAO source found describing a seasonal pattern (e.g. breeding season, month-to-month slaughter/production variation) specific to meat ducks; the sources used (LRRD Guyana study, SAJAS SA housing-system study) run fixed-length rearing trials without reference to calendar seasonality."
+  },
+  "timeToFirstProductWeeks": {
+    "value": [
+      7,
+      12
+    ],
+    "evidence": {
+      "quote": "P44 ducks and drakes were kept until 7 weeks of age, whereas the MR71 ducks until 10 weeks of age, and MR71 drakes until 12 weeks of age.",
+      "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001",
+      "doc": "South African Journal of Animal Science 44(2): Effect of production system and slaughter age on meat quality of ducks",
+      "page": null
+    },
+    "notes": "P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). South Africa-specific (SAJAS)."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not applicable in the sourced material: meat ducks (Pekin/Muscovy raised for slaughter) are reared through a single grow-out cycle of 7-12 weeks and then slaughtered (see timeToFirstProductWeeks), not kept for a multi-year productive life. No source gave a separate productive-life figure for breeding/parent stock kept to produce further ducklings, so this is left null rather than guessed (see gaps)."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "No SA government/research, peer-reviewed (SAJAS/LRRD) or FAO source gave an as-fed kg/day feed intake figure for ducks. The SAJAS SA study recorded 'feed intake (kg/bird)... in groups' but never states the resulting number in extractable text (likely only in a table image). The LRRD Guyana study reports cumulative 8-week feed intake in a table whose row/column alignment could not be reliably read from the extracted text, so it was not used to avoid an unverifiable or mis-attributed figure (see gaps)."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source gave a litres/day water-intake figure for ducks; sources describe water being provided 'ad libitum' (SAJAS; LRRD) without quantifying it (see gaps)."
+  },
+  "spaceM2PerAnimal": {
+    "value": [
+      12.5,
+      12.5
+    ],
+    "evidence": {
+      "quote": "birds were kept according to the guidelines for intensive production system on deep litter and at a stocking density of 2.9 bird/m 2 . Thereafter, half the ducks and drakes of each genetic group was allowed to use free ranges, at a stock density of 0.08 bird/m 2 (outdoor system - OS).",
+      "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001",
+      "doc": "South African Journal of Animal Science 44(2): Effect of production system and slaughter age on meat quality of ducks",
+      "page": null
+    },
+    "notes": "0.08 bird/m2 (outdoor/free-range system) = 1/0.08 = 12.5 m2/bird - used here as the primary figure since smallholder/backyard duck-keeping is closer to this free-range system than to intensive deep-litter housing. The same source's INTENSIVE deep-litter system gives 2.9 bird/m2 = 1/2.9 = 0.34 m2/bird (a very different, much more confined figure) - noted here for context but NOT merged into the range above, per the instruction not to mix figures from different systems. South Africa-specific (SAJAS)."
+  },
+  "welfare": [
+    {
+      "point": "It is an offence to deny a duck food or water, or keep it somewhere lacking adequate space, ventilation, light or shelter from heat and cold.",
+      "evidence": {
+        "quote": "confines, chains, tethers or secures any animal unnecessarily or under such conditions or in such a manner or position as to cause that animal unnecessary suffering or in any place which affords inadequate space, ventilation, light, protection or shelter from heat, cold or weather ... unnecessarily starves ... or denies water or food to any animal",
+        "url": "https://cer.org.za/wp-content/uploads/2019/11/Animals-Protection-Act-No.-71-of-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962 (consolidated text, s.2(1)(b)-(c))",
+        "page": 2
+      }
+    },
+    {
+      "point": "Watch flocks for sudden deaths, ruffled feathers, swollen wattles/combs or a sudden drop in egg production - these are signs of avian influenza and should be reported at once.",
+      "evidence": {
+        "quote": "The disease may cause a large number (up to 100%) of sudden deaths in a flock. ... sudden drop in production of eggs ... wattles and combs become swollen and congested",
+        "url": "https://www.westerncape.gov.za/agriculture/files/wcg-blob-files?file=2024-07%2Favian-infl_0.pdf&type=file",
+        "doc": "Western Cape Department of Agriculture, Avian Influenza (Bird Flu) factsheet",
+        "page": 2
+      }
+    },
+    {
+      "point": "Keep ducks away from wild birds and open water/feed that attracts them, and control visitors' access to duck housing, to reduce avian-influenza risk.",
+      "evidence": {
+        "quote": "Keep poultry away from areas frequented by wild fowl ... Keep control over access to poultry houses by people and equipment",
+        "url": "https://www.westerncape.gov.za/agriculture/files/wcg-blob-files?file=2024-07%2Favian-infl_0.pdf&type=file",
+        "doc": "Western Cape Department of Agriculture, Avian Influenza (Bird Flu) factsheet",
+        "page": 2
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Ducks are one of the domesticated animal species listed in the Meat Safety Act, so its rules on registered abattoirs and hygiene apply to them.",
+      "evidence": {
+        "quote": "Donkey Duck Farmed deer Fowl",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, Schedule 1 (Animals to which this Act applies)",
+        "page": 16
+      }
+    },
+    {
+      "point": "Ducks slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt but that meat may not be sold.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir; ... (2) (a) Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7",
+        "page": 6
+      }
+    },
+    {
+      "point": "At the abattoir, ducks must be handled humanely during loading, transport, offloading, housing, immobilising and killing, under the Animals Protection Act.",
+      "evidence": {
+        "quote": "an animal presented for slaughter at an abattoir must be handled humanely during loading, transportation, off-loading, housing, immobilizing and killing as prescribed in accordance with the requirements of the Animals Protection Act, 1962 (Act No. 71 of 1962)",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.9",
+        "page": 7
+      }
+    },
+    {
+      "point": "Ducks are birds/poultry, so an outbreak of avian influenza in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported to the state vet immediately.",
+      "evidence": {
+        "quote": "It is also a controlled animal disease listed under the Animal Diseases Act, 1984 (Act No. 35 of 1984).",
+        "url": "https://www.westerncape.gov.za/agriculture/files/wcg-blob-files?file=2024-07%2Favian-infl_0.pdf&type=file",
+        "doc": "Western Cape Department of Agriculture, Avian Influenza (Bird Flu) factsheet",
+        "page": 2
+      }
+    }
+  ],
+  "gaps": [
+    "nda.gov.za: every attempted fetch (avian-influenza outbreak reports, the Act's own primary host copy) returned 'Connection reset by peer' - the host is down/blocked in this environment, consistent with the task brief's warning. Used a Western Cape provincial government mirror (westerncape.gov.za) and an Eastern Cape district municipality (eccogta.gov.za) hosted copy of the Act instead.",
+    "No SA-specific (ARC/SAJAS/provincial) absolute live-weight-at-slaughter figure in kg was found in extractable text - the SAJAS SA duck-housing paper (scielo.org.za, S0375-15892014000200001) gives slaughter AGES for Pekin (P44) and Muscovy (MR71) precisely, but its absolute weight values only appear in table images that could not be extracted as text, so the weight figure used is a non-SA (Guyana, LRRD) study instead, with the SAJAS paper used for ages and space only.",
+    "No feed kg/day or water L/day figure could be sourced for ducks: the SAJAS paper records 'feed intake (kg/bird)' only as a table-image value, and the LRRD paper's cumulative-feed-intake table could not be reliably attributed to specific breed/sex columns from the extracted text, so both fields are null rather than guessed.",
+    "No sourced eggs/duck/year figure was found for Pekin or Muscovy ducks in any approved source - the LRRD and SAJAS papers used both study ducks reared purely for meat, not laying performance. Searched FAO's general poultry pages/PDF (fao.org) and found no duck-specific egg-production numbers there either.",
+    "No source gave South African calendar months or a seasonal pattern (e.g. wet/dry season effect, moult) specific to duck meat production, so productionMonths is empty and seasonalPattern is null.",
+    "Agrodok 33 (Duck keeping in the tropics, Agromisa/CTA, cgspace.cgiar.org) surfaced repeatedly in search results with likely-relevant practical feed/space/water figures, but was not used: it is not SA government/research, not peer-reviewed, and not an FAO document, so it does not fit the approved source hierarchy (the attempted download also failed with an HTTP 429 rate-limit, which is moot given this).",
+    "Editor review 2026-09-28: Withdrew the welfare point that read the SAJAS trial's stocking density as what ducks \"need\" (it is the density the experiment used, and already the space figure), and the legal point resting on the Animal Diseases Act's general definition (the Western Cape factsheet point already names avian influenza as controlled). Output source relabelled as non-SA."
+  ]
+}
