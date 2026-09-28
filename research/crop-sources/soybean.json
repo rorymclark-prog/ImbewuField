@@ -1,0 +1,183 @@
+{
+  "key": "soybean",
+  "name": "Soybean",
+  "localNames": null,
+  "botanicalName": "Glycine max",
+  "family": "Fabaceae",
+  "role": "dual",
+  "foodGroup": "legume",
+  "harvestProduct": "dry grain (seed)",
+  "frostTender": {
+    "value": null,
+    "evidence": []
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Propagation is through seed.",
+        "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+        "page": null,
+        "doc": "Soya Beans - Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [11, 12],
+      "evidence": [
+        {
+          "quote": "Planting date from early to mid-November is the most appropriate for optimum seed production in South Africa. In relatively warm areas where high temperatures enhance growth rate, planting as late as the end of December can still produce satisfactory yields.",
+          "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+          "page": null,
+          "doc": "Soya Beans - Production guideline, DAFF, 2010"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [120, 130],
+    "evidence": [
+      {
+        "quote": "The duration from planting to maturity should be approximately 120 to 130 days for a well-adapted cultivar. Where cultivars are planted at higher altitudes or latitudes than recommended; the growth period will be longer.",
+        "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+        "page": null,
+        "doc": "Soya Beans - Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": [40, 90],
+    "evidence": [
+      {
+        "quote": "The spacing between the rows can range from 40 to 90 cm and from 5 to 15 cm between the plants in the rows.",
+        "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+        "page": null,
+        "doc": "Soya Beans - Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [5, 15],
+    "evidence": [
+      {
+        "quote": "The spacing between the rows can range from 40 to 90 cm and from 5 to 15 cm between the plants in the rows.",
+        "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+        "page": null,
+        "doc": "Soya Beans - Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": [2, 5],
+    "evidence": [
+      {
+        "quote": "Seed should be planted at a soil depth of 3 to 5 cm and should emerge within five to seven days after planting. Planting depth should be 2 cm in clay soil and 5 cm in sandy soil.",
+        "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+        "page": null,
+        "doc": "Soya Beans - Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": [2.5, 3.0],
+    "product": "dry grain",
+    "conditions": "national average under dryland conditions",
+    "evidence": [
+      {
+        "quote": "Soya bean production in South Africa currently ranges from 450 000 to 500 000 tons per annum at an average yield of 2, 5 to 3 t/ha under dry-land conditions.",
+        "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+        "page": null,
+        "doc": "Soya Beans - Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Glycine max",
+    "TOPMN": 20,
+    "TOPMX": 33,
+    "TMIN": 10,
+    "TMAX": 38,
+    "GMIN": 75,
+    "GMAX": 180
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": 40,
+    "biomassTPerHa": null,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "This enables plants not only to fix nitrogen to meet their own requirements, but also to carry over 30 to 50 kg of available nitrogen to the subsequent crop.",
+        "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+        "page": null,
+        "doc": "Soya Beans - Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Sonop",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "note": "Listed among 'several registered determinate and indeterminate cultivars in South Africa with suitability varying according to regions or provinces'; not individually mapped to a zone in the source.",
+      "evidence": [
+        {
+          "quote": "Sonop (150)",
+          "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+          "page": null,
+          "doc": "Soya Beans - Production guideline, DAFF, 2010"
+        }
+      ]
+    },
+    {
+      "name": "Dumela",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "note": "Conventional (non-GMO) cultivar from the source's registered-cultivar list.",
+      "evidence": [
+        {
+          "quote": "Dumela (305)",
+          "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+          "page": null,
+          "doc": "Soya Beans - Production guideline, DAFF, 2010"
+        }
+      ]
+    },
+    {
+      "name": "LS 6161 R",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "note": "GMO (Roundup Ready) cultivar; source states over 80% of SA soybean production is Roundup Ready cultivars.",
+      "evidence": [
+        {
+          "quote": "In South Africa, more than 80% of the soya bean production is Roundup Ready cultivars, which can be obtained from various registered seed companies.",
+          "url": "https://archive.org/details/daff-2010-soya-beans-production-guideline",
+          "page": null,
+          "doc": "Soya Beans - Production guideline, DAFF, 2010"
+        }
+      ]
+    }
+  ],
+  "zoneNotes": {
+    "highveld": "Mpumalanga (largest producer, ~42% of harvest) and Free State (~22%) are the top producing provinces; districts named include Gert Sibande, Nkangala (Mpumalanga) and Thabo Mofutsanyane, Fezile Dabi (Free State).",
+    "midlands-mistbelt": "KwaZulu-Natal produces about 15% of the national harvest (Umgungundlovu/Greytown, UMzinyathi/Dundee, eThekwini/Winterton-Bergville districts named).",
+    "lowveld-bushveld": "Limpopo (~8%, Waterberg and Sekhukhune districts) and North West (~5%) are named producing provinces."
+  },
+  "gaps": [
+    "No explicit frost-kill statement or temperature found anywhere in the 1625-line DAFF 2010 guideline (searched for 'frost', 'cold', 'freeze' -- none found), and FAO ECOCROP's killing-temperature field is blank (NA) for Glycine max, so frostTender is recorded as an honest gap rather than assumed from general knowledge.",
+    "No seed rate in kg/ha; only plant population (250 000-400 000 plants/ha, lower under dry conditions) is given.",
+    "Cultivars are listed by name only (with an unexplained numeric code in brackets, likely a registration/breeder code, not a stated maturity-group day count); none are mapped to specific growing zones in the source, so the varieties entries above carry empty zones arrays.",
+    "Source is a 2010 scanned book (OCR text via archive.org), not a paginated PDF Claude could extract page numbers from confidently, so 'page' is left null for all soybean citations rather than guessed.",
+    "No winter-rainfall, all-year, or mild-frost specific sowing guidance -- only the summer-rainfall Nov-Dec window is given."
+  ],
+  "verdict": "partial",
+  "summary": "DAFF's 2010 Soya Beans production guideline (retrieved as an archive.org book scan, since no Wayback-crawled PDF exists) gives strong sourcing for sowing window, days-to-maturity, row/in-row spacing, sowing depth, nitrogen contribution and national yield/production by province. It never mentions frost at all and gives no seed rate in kg/ha, and its many named cultivars are not mapped to specific SA zones, so verdict is partial rather than ready."
+}
