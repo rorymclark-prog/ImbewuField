@@ -1,0 +1,165 @@
+{
+  "enterpriseId": "sheep-mutton",
+  "commonName": "Meat sheep - Dorper, Damara, indigenous fat-tailed and crossbreds (smallholder/communal)",
+  "animal": "sheep",
+  "animalUnit": "ewe",
+  "product": "meat",
+  "outputUnit": "lambs born per ewe",
+  "outputPerAnimal": {
+    "value": [
+      0.61,
+      1.39
+    ],
+    "evidence": {
+      "quote": "Lambing percentages averaged 139 ± 38% for the Eden District, 83 ± 15% for the Karoo District, and 61± 12% for the West Coast District.",
+      "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0301-603X2019000300007",
+      "doc": "Factors influencing off-take rates of smallholder sheep farming systems in the Western Cape Province of South Africa (South African Journal of Agricultural Extension, 47(3), 2019)",
+      "page": null
+    },
+    "notes": "outputUnit is 'lambs born/ewe/year' rather than the suggested 'kg live weight/lamb at weaning or slaughter' or 'lambs weaned/ewe/year': the source explains 'Measuring accurate lambing percentages for smallholder sheep farmers is challenging as these farmers mostly farm extensively and do not keep records', and instead calculates 'Lambs born per ewe (as recorded from the surveys based on interviews with individual respondents)' - a lambing (born), not weaning, figure, self-reported by smallholder farmers rather than measured/weighed. 139%=1.39, 83%=0.83, 61%=0.61 lambs born/ewe/year; the range [0.61, 1.39] spans the three Western Cape smallholder districts surveyed (Eden, Central Karoo, West Coast), all from this one study/quote - not merged with any other document. The same paper separately states a COMMERCIAL extensive benchmark of 110-156% lambing and 94-132% weaning (Snyman & Herselman, 2005), explicitly 'expressed over ewes joined' (a different denominator/system) - not merged into this smallholder range."
+  },
+  "productionMonths": [],
+  "seasonalPattern": {
+    "value": null,
+    "evidence": null,
+    "notes": "No SA source was found stating the calendar months of the meat-sheep breeding/lambing season for an extensive/communal system. Cape Wools SA's 2020/2021 Annual Review mentions ewes lambing 'outside the recommended lambing season' causing cold-snap losses, but does not itself state what the recommended months are, so no month range could be recorded without deriving one (see gaps)."
+  },
+  "timeToFirstProductWeeks": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for an extensive/communal system. The only SA weaning-age figure found ('On weaning at 90 days old, four ram and four ewe lambs from each breed were housed under feedlot conditions...') is the stated starting point of a controlled FEEDLOT growth trial (six breeds moved onto a high-energy concentrate ration at 90 days, grown to maturity at about 12 months), not a smallholder/extensive-system weaning or first-sale age, so it was not used here to avoid applying a feedlot-trial figure to an extensive/communal system (see gaps)."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for Dorper/Damara/indigenous/crossbred meat ewes. A Western Cape Government (Elsenburg) enterprise budget gives a 20%/year ewe replacement rate (implying ~5 years' productive life) for an EXTENSIVE Dohne Merino WOOL flock, but that breed and enterprise (wool, not meat) does not represent Dorper/Damara/indigenous meat sheep, so it was not carried over here (see sheep-wool.json and gaps)."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for a mature/productive ewe. A SciELO/SAJAS 2022 paper (van der Merwe et al., 'Predicting feed intake from weaning to maturity in South African sheep reared on high-energy grain-based diets') models dry-matter intake of six SA sheep breeds (including Dorper and White Dorper) as breed-specific quadratic functions of bodyweight, measured on FEEDLOT lambs on a high-energy concentrate diet from weaning to 12 months - it states no single daily kg figure and describes a feedlot growth trial, not extensive/veld grazing of a productive adult ewe, so it was not used (see gaps)."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. A '2.27 to 18 litres/day' figure attributed by web search results to 'SheepConnect SA' traces to sheepconnectsa.com.au, an Australian (South Australian) site, not a South African source, so it was excluded (see gaps)."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn in editor review: 0.56 m² is the Livestock Welfare Coordinating Committee code's minimum for a holding pen (all animals able to lie down at once), not space to keep a sheep in. It stays as a welfare point about penning. No source gives housing or camp space per sheep."
+  },
+  "welfare": [
+    {
+      "point": "Sheep must not be penned overcrowded: at least 0.56 square metres of floor space per sheep so every animal can lie down.",
+      "evidence": {
+        "quote": "Livestock shall not be penned in overcrowded conditions. ... Penning space provided shall be enough to permit all livestock to lie down at the same time and shall not be less than: ... for bacon and small porker pigs, sheep and goats: 0, 56 sq.m of floor area;",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.1.2",
+        "page": 4
+      }
+    },
+    {
+      "point": "Electric prodders, sticks or goads may not be used on sheep.",
+      "evidence": {
+        "quote": "Electric prodders, sticks or goads shall not be used on sheep, pigs, horses, mules, donkeys, goats and un-weaned calves.",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.2.7",
+        "page": 5
+      }
+    },
+    {
+      "point": "Sheep driven on the hoof may not be moved more than 20 km in a single day (25 km is regarded as excessive).",
+      "evidence": {
+        "quote": "during a journey of not more than one day's duration in the case of: a) sheep and goats: 20 Kilometers (25 km is excessive) and;",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.3.4.1",
+        "page": 6
+      }
+    },
+    {
+      "point": "Livestock must be given water and fed as soon as they reach their night camp or final destination.",
+      "evidence": {
+        "quote": "Livestock shall be watered and fed immediately on reaching their night camp or final",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.3.5",
+        "page": 6
+      }
+    },
+    {
+      "point": "Injured, disabled or blind sheep must be given priority slaughter, or emergency slaughter, to prevent further pain or distress.",
+      "evidence": {
+        "quote": "Injured, disabled and blind livestock shall be priority slaughtered. If necessary and to prevent further pain or distress, emergency slaughter may be required.",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.2.13",
+        "page": 5
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act; Veterinary Services enforce isolation and movement restrictions.",
+      "evidence": {
+        "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Inside a declared FMD zone, sheep and their products cannot be moved into, out of, or within it without a state veterinary permit.",
+      "evidence": {
+        "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Sheep scab is a controlled disease by law: a suspected or positive case must be reported to the State Veterinarian immediately.",
+      "evidence": {
+        "quote": "Sheep scab is an extremely infectious disease, and by law, a positive case has to be immediately reported to the local State Veterinarian.",
+        "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+        "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+        "page": 1
+      }
+    },
+    {
+      "point": "Against sheep scab, all small stock on the farm must be treated with a remedy registered under Act 36 of 1947, and infected sheep treated twice, eight to ten days apart.",
+      "evidence": {
+        "quote": "all small stock on the farm must be treated with a remedy that is registered for a specific breed under Law 36 of 1947. Infected sheep must be treated twice with an interval of eight to ten days.",
+        "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+        "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+        "page": 3
+      }
+    },
+    {
+      "point": "Every sheep owner must register an official identification mark and mark their sheep with it, under the Animal Identification Act.",
+      "evidence": {
+        "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+        "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+        "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+        "page": 4
+      }
+    },
+    {
+      "point": "A sheep may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "No sourced calendar months for meat-sheep breeding/lambing season in an extensive/communal system: Cape Wools SA's 2020/2021 Annual Review mentions lambing 'outside the recommended lambing season' (implying winter cold-snap losses) without stating the recommended months themselves, so no month range could be recorded without deriving one.",
+    "No smallholder/extensive-specific weaning-age or age-to-first-sale figure: the only SA weaning-age figure found (90 days) is the starting point of a controlled feedlot growth trial (SciELO/SAJAS 2022), not an extensive-system practice, so it was excluded per the rule against applying feedlot-trial figures to a different (extensive) system.",
+    "No productive-life-years figure for Dorper/Damara/indigenous/crossbred meat ewes: a replacement-rate-based figure exists only for a Dohne Merino WOOL enterprise budget (different breed/enterprise), so it was not reused here.",
+    "No SA-specific feed kg/day figure for a mature (non-feedlot) meat ewe: the only SA feed-intake study found models growing feedlot lambs via breed-specific regression curves, not a stated daily figure for an adult ewe on veld.",
+    "No SA-specific water L/day figure was found; an Australian 'SheepConnect SA' figure surfaced in web search but was excluded as non-South African.",
+    "No permanent on-farm housing/camp stocking-density figure (as opposed to a pre-transport holding pen) was found for meat sheep.",
+    "Unreachable/unusable sources tried: nda.gov.za's 2012 wool/mutton value chain profiles (connection reset), webapps1.daff.gov.za Mutton Market Value Chain Profile 2021 (unreachable), a kzndard.gov.za 'Imvu - The Indigenous Sheep of KwaZulu-Natal' PDF (connection reset on repeated attempts), rpo.co.za's Code of Best Practice page (landing page only, no code text), nahf.co.za controlled-and-notifiable-diseases page (403 Forbidden), and a SASAS (sasas.co.za) paper (403 Forbidden).",
+    "Editor review 2026-09-28 (round 2): spaceM2PerAnimal withdrawn (a holding-pen minimum from the handling and transport code, kept as a welfare point). Legal points trimmed to their quotes: the FMD point no longer claims a reporting duty, the Meat Safety Act point now quotes the abattoir rule itself and drops 'for sale' and 'may not then be sold', and the scab points drop 'declared outbreak' and 'financially penalised'. outputUnit is 'lambs born per ewe' (the source's lambing percentages), without '/year', which the source does not state."
+  ]
+}
