@@ -34,7 +34,7 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
     assert.doesNotMatch(pair.sesothoDraft, nonLatin, `${path}: draft must remain Latin script`);
     assert.deepEqual(placeholders(pair.sesothoDraft), placeholders(english), `${path}: placeholders must be preserved`);
     assert.deepEqual(numberTokens(pair.sesothoDraft), numberTokens(english), `${path}: numeric figures must be preserved`);
-    if (status === 'machine-draft' && /\bmaize\b/i.test(english)) {
+    if (status === 'machine-draft' && /\bmaize\b/i.test(english) && /\bpoone\b/i.test(pair.sesothoDraft)) {
       assert.match(pair.sesothoDraft, /\(maize\)/i, `${path}: keep the exact crop name beside its Sesotho rendering`);
     }
   };
@@ -57,31 +57,30 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
       assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent image alt text`);
     }
     checkPair(lesson.title, original.title, `${path}.title`);
-    checkPair(lesson.body, original.body, `${path}.body`,
-      original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
+    checkPair(lesson.body, original.body, `${path}.body`);
     assert.equal(lesson.body.sourceEnglish.split('\n\n').length, lesson.body.sesothoDraft.split('\n\n').length,
       `${path}.body: paragraph structure must stay aligned for review`);
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: key point count must match`);
     for (const [pointIndex, point] of lesson.keyPoints.entries()) {
-      checkPair(point, original.keyPoints[pointIndex], `${path}.keyPoints[${pointIndex}]`);
+      checkPair(point, original.keyPoints[pointIndex], `${path}.keyPoints[${pointIndex}]`,
+        original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
     }
     assert.equal(lesson.quiz.length, original.quiz.length, `${path}: quiz question count must match`);
     for (const [questionIndex, question] of lesson.quiz.entries()) {
       const english = original.quiz[questionIndex];
       const questionPath = `${path}.quiz[${questionIndex}]`;
-      checkPair(question.question, english.q, `${questionPath}.question`);
+      checkPair(question.question, english.q, `${questionPath}.question`,
+        original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
       assert.equal(question.options.length, english.options.length, `${questionPath}: option count/order must match`);
       for (const [optionIndex, option] of question.options.entries()) {
-        const holdUnsafeL2Bed = original.id === 'intro-permaculture-l2' && questionIndex === 1 && optionIndex === 1;
         checkPair(option, english.options[optionIndex], `${questionPath}.options[${optionIndex}]`,
-          holdUnsafeL2Bed ? 'hold' : 'machine-draft');
+          original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
       }
       assert.equal(question.sourceCorrectIndex, english.correct, `${questionPath}: answer index must remain unchanged`);
       assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, english.options[english.correct],
         `${questionPath}: correct answer must still point to the exact English correct option`);
-      const holdUnsafeL2Slope = original.id === 'intro-permaculture-l2' && questionIndex === 0;
       checkPair(question.rationale, english.rationale, `${questionPath}.rationale`,
-        holdUnsafeL2Slope ? 'hold' : 'machine-draft');
+        original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
     }
   }
 });
@@ -109,7 +108,7 @@ test('a Sesotho learner sees the ethics concepts while water and drought example
     'a changed English source invalidates the whole paired draft');
 });
 
-test('Sesotho Introduction L2 holds unclear bed scale and slope wording in English for learners', () => {
+test('Sesotho Introduction L2 drafts the general learning prompt while retaining concrete farm guidance in English', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture');
   assert.ok(sourceModule);
   const source = sourceModule.lessons.find(lesson => lesson.id === 'intro-permaculture-l2');
@@ -117,9 +116,18 @@ test('Sesotho Introduction L2 holds unclear bed scale and slope wording in Engli
   const draft = SESOTHO_INTRO_PERMACULTURE_DRAFT.lessons.find(lesson => lesson.id === source.id);
   assert.ok(draft);
 
-  assert.equal(draft.body.reviewStatus, 'hold');
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
   assert.equal(draft.body.sourceEnglish, source.body);
-  assert.equal(draft.body.sesothoDraft, source.body);
+  const sourceParagraphs = source.body.split('\n\n');
+  const pairedParagraphs = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(pairedParagraphs.length, sourceParagraphs.length, 'each English paragraph has one aligned review paragraph');
+  assert.deepEqual(pairedParagraphs.slice(0, 2), sourceParagraphs.slice(0, 2),
+    'authorship, earthworks, water, compost, irrigation, crop and hail claims remain exact English');
+  assert.notEqual(pairedParagraphs[2], sourceParagraphs[2], 'the general learning prompt is proposed in Sesotho');
+  draft.keyPoints.forEach((point, index) => {
+    assert.equal(point.reviewStatus, 'hold');
+    assert.equal(point.sesothoDraft, source.keyPoints[index]);
+  });
   assert.equal(draft.quiz[0].rationale.reviewStatus, 'hold');
   assert.equal(draft.quiz[0].rationale.sourceEnglish, source.quiz[0].rationale);
   assert.equal(draft.quiz[0].rationale.sesothoDraft, source.quiz[0].rationale);
@@ -130,10 +138,19 @@ test('Sesotho Introduction L2 holds unclear bed scale and slope wording in Engli
 
   const presentation = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(presentation.status, 'draft');
-  assert.equal(presentation.content.body, source.body);
+  assert.equal(presentation.content.body, draft.body.sesothoDraft);
+  assert.equal(presentation.content.quiz[0].q, source.quiz[0].q);
+  assert.deepEqual(presentation.content.quiz[0].options, source.quiz[0].options,
+    'all earthworks and rainfall quiz guidance remains English');
   assert.equal(presentation.content.quiz[0].rationale, source.quiz[0].rationale);
+  assert.equal(presentation.content.quiz[1].q, source.quiz[1].q);
+  assert.deepEqual(presentation.content.quiz[1].options, source.quiz[1].options,
+    'all poultry and edible-crop safety guidance remains English');
   assert.equal(presentation.content.quiz[1].options[source.quiz[1].correct], source.quiz[1].options[source.quiz[1].correct]);
   assert.equal(presentation.content.quiz[1].correct, source.quiz[1].correct);
+  assert.equal(presentation.content.quiz[1].rationale, source.quiz[1].rationale);
+  assert.deepEqual(presentation.content.keyPoints, source.keyPoints,
+    'earthwork, water, crop and weather key points remain exact English');
   assert.notEqual(presentation.content.title, source.title);
 });
 

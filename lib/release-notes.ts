@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '2b8b4717', changes: [
+    'Introduction L2 adds one Sesotho study prompt beside its English source.',
+    'Farm guidance, key points and quiz stay in English pending review.',
+    'Lesson audio language choices now wrap on narrow phone screens.',
+  ], tour: [
+    { title: 'Compare the Introduction L2 draft', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open L2. One general study prompt is a draft beside its exact English source. Farm advice, all key points and both quiz items remain English; fluent Sesotho review is pending.' },
+  ] },
   { when: '28 September 2026', sha: 'c711285', changes: [
     'Fruit trees on your map now show their picking months in the crop plan.',
     'Orchard switch: show or hide tree fruit; trees never count in per-m² figures.',
