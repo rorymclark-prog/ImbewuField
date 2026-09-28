@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: 'bf42c58', changes: [
+    '20 new crops: sorghum, soybean, brinjal, gem squash, spanspek, amaranth and more.',
+    'Cowpea has no trusted yield yet, so you add it by hand; it is not auto-suggested.',
+    'Auto-suggest keeps every bed winter-ready and fills empty harvest months.',
+  ], tour: [
+    { title: 'Re-run auto-suggest', where: 'Crop plan → Auto-suggest', href: '/facilitator/crops',
+      detail: 'New crops such as sweetcorn, baby marrow and cauliflower can now appear in the plan. No bed is left bare in winter because a summer crop took its slot.' },
+    { title: 'Add a new crop by hand', where: 'Crop plan → Add a crop', href: '/facilitator/crops',
+      detail: 'Pick cowpea, bambara groundnut or African nightshade from the crop list and choose the bed and month yourself.' },
+  ] },
   { when: '27 September 2026', sha: 'b668bc6', changes: [
     'Few big harvests re-sows each crop after its harvest; too-hot months are skipped.',
     'Irrigation off? A mapped farm now gets a rain-fed plan from its own rainfall.',
