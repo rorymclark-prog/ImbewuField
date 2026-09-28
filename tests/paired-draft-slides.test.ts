@@ -65,7 +65,11 @@ test('regional Introduction orientation and ethics frames hold uncertain farming
       .filter(Boolean));
     assert.deepEqual(drafted, ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1']);
     assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
-      .map((slide: any) => slide.n), lang === 've' ? [2, 4, 5, 6] : [2, 3, 4, 5, 6]);
+      .map((slide: any) => slide.n), lang === 've' ? [2, 4, 5, 6] : [1, 2, 3, 4, 5, 6]);
+    if (lang === 'ts') {
+      assert.equal(slides[0].target.heading.text, 'Masungulo ya Permaculture');
+      assert.equal(slides[0].english.heading, 'Introduction to Permaculture');
+    }
     for (const p of [0, 2, 3]) assert.equal(slides[1].target.body[p].status, 'english-hold',
       `slide 2 ${lang}: the spade, land-work contrast and work question need a local check`);
     for (const part of slides[2].target.body.slice(1)) assert.equal(part.status, 'english-hold',
