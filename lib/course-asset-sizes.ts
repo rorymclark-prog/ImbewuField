@@ -677,7 +677,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/st/slide-20.webp': 403192,
   '/course-decks/intro-permaculture/st/slide-21.webp': 192792,
   '/course-decks/intro-permaculture/st/slide-22.webp': 231466,
-  '/course-decks/intro-permaculture/ts/slide-01.webp': 268576,
+  '/course-decks/intro-permaculture/ts/slide-01.webp': 265008,
   '/course-decks/intro-permaculture/ts/slide-02.webp': 266810,
   '/course-decks/intro-permaculture/ts/slide-03.webp': 246212,
   '/course-decks/intro-permaculture/ts/slide-04.webp': 470606,
