@@ -152,19 +152,23 @@ test('Food Forest Sesotho narration drafts only scoped conceptual text and keeps
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  assert.deepEqual(drafted, ['4:1', '4:2', '4:4', '8:2']);
+  assert.deepEqual(drafted, ['4:1', '4:2', '4:3', '4:4', '8:2', '13:1']);
   assert.deepEqual(slides.map((slide: any) => slide.target.heading.status), Array.from({ length: 20 }, (_, index) =>
     [3, 4, 8].includes(index + 1) ? 'draft' : 'english-hold'));
   assert.deepEqual([
     slides[2].target.heading.text,
     slides[3].target.heading.text,
     slides[7].target.heading.text,
+    slides[3].target.body[2].text,
     slides[3].target.body[3].text,
+    slides[12].target.body[0].text,
   ], [
     'Liphetho tsa ho ithuta',
     'Moru o sebelisa mekhahlelo eohle',
     'Tlhokomelo e fetoha ha limela li ntse li hola',
+    'Serapa sa lijo sa moru se etsisa mokhoa ona ka limela tse hlahisang lihlahisoa.',
     'Phello ha se sejalo se le seng moleng o le mong; ke mekhahlelo e mengata e molemo e melang hammoho.',
+    'Dimela tsa tlhaho tsa sebakeng seo, tse loketseng tikoloho, di ka tshehetsa bodulo ba diphedi e le karolo ya moralo.',
   ]);
   assert.deepEqual([
     slides[3].target.body[0].text,

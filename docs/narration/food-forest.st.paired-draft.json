@@ -119,7 +119,8 @@
             "text": "Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Serapa sa lijo sa moru se etsisa mokhoa ona ka limela tse hlahisang lihlahisoa."
           },
           {
             "status": "draft",
@@ -395,7 +396,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dimela tsa tlhaho tsa sebakeng seo, tse loketseng tikoloho, di ka tshehetsa bodulo ba diphedi e le karolo ya moralo."
           },
           {
             "status": "english-hold"
