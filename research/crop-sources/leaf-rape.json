@@ -1,0 +1,111 @@
+{
+  "key": "leaf-rape",
+  "name": "Rape (leaf)",
+  "localNames": null,
+  "botanicalName": "Brassica napus (leaf/fodder type, not the oilseed/canola form)",
+  "family": "Brassicaceae",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "fresh leaves",
+  "frostTender": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Most summer crops, such as Amaranth and Spider plant (spider flower) die when they are exposed to frost. Others, such as kale, rape or mustard can withstand frost.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 8,
+        "doc": "Production Guidelines for African Leafy Vegetables (DAFF/DST-acknowledged manual, amanziforfood.co.za republication), n.d."
+      }
+    ]
+  },
+  "transplant": null,
+  "transplantNotes": "Not stated by any source found. Rape is commonly direct-sown as a fast leafy green in general SA horticultural practice, but no primary source located in this research pass confirms this for rape specifically.",
+  "sowMonths": {
+    "summer": {
+      "months": [2, 3, 4, 5, 9],
+      "evidence": [
+        {
+          "quote": "Most brassica vegetables were planted during February and March with 32.2 % of the farmers planting in February and 29 % in March (Table 1). ... Table 1: Vegetable brassica planting time in the Gauteng province and Waterberg district, Limpopo province. February 32.2 ... March 29.0 ... April 6.5 ... May 6.5 ... September 12.9 ... Throughout the year 12.9",
+          "url": "https://www.jarts.info/index.php/jarts/article/download/2016010549535/861",
+          "page": 4,
+          "doc": "Mandiriza-Mukwirimba, Kritzinger & Aveling, 'A survey of brassica vegetable smallholder farmers in the Gauteng and Limpopo provinces of South Africa', J. Agric. Rural Develop. Trop. Subtrop. 117(1), 2016"
+        }
+      ],
+      "notes": "This is a farmer-practice survey of ALL brassica vegetables grown by 31 smallholders (cabbage 93.6%, rape 41.2%, broccoli 23.5%, mustard 17.7%) across Gauteng province AND the Waterberg district of Limpopo combined — it is not rape-specific and does not separate the two provinces/climates in its published percentages. Placed under 'summer' as the best single-column fit for this mixed highveld/lowveld-bushveld interior sample; not a rain-pattern-specific quote."
+    },
+    "winter": { "months": [], "evidence": [], "notes": "No Western Cape-specific source found." },
+    "all-year": { "months": [], "evidence": [], "notes": "The same survey's 'Throughout the year' category (12.9% of farmers) suggests some year-round planting occurs, and a Starke Ayres catalogue lists its 'English Giant' rape cultivar's sowing season as 'Spring, Summer, Autumn & Winter', but neither source distinguishes a frost-free/all-year rain-pattern zone specifically, so left empty rather than assumed." },
+    "mild-frost": { "months": [], "evidence": [], "notes": "Not separated out by the source survey (see 'summer' notes)." }
+  },
+  "daysToHarvestRange": {
+    "value": null,
+    "evidence": [],
+    "notes": "No primary/official source found. A Starke Ayres home-garden catalogue lists 'English Giant' rape at 90 days to maturity with 5-10 days to germination ('DAYS TO MATURITY: 90', Starke Ayres Seed & Garden Care Catalogue, First Edition, p.24) — recorded as context only, not usable as the sole source for this field per the brief's rule on seed catalogues. Also note leaf rape is typically cut-and-come-again (repeat leaf picking), so a single 'days to harvest' figure may understate the true cropping duration; PGALV notes for African leafy vegetables generally that 'harvesting can take place four to five times during the season' (p.9), though that statement is not rape-specific either."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": { "value": null, "evidence": [], "notes": "No primary source found for rape specifically." },
+  "inRowSpacingRangeCm": { "value": null, "evidence": [], "notes": "No primary source found." },
+  "sowDepthRangeCm": { "value": null, "evidence": [], "notes": "No primary source found; Starke Ayres lists 1cm sow depth for 'English Giant' but is not used as a sole numeric source per the brief." },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": null,
+    "product": "fresh leaves",
+    "conditions": null,
+    "evidence": [],
+    "notes": "No sourced yield figure. KZN DARD's 'Expected Yields' Table 8 has no rape row (it covers mainstream commercial vegetables, not this smallholder-oriented leafy brassica). No other primary source located."
+  },
+  "ecocrop": {
+    "row": "Brassica napus",
+    "TOPMN": 15,
+    "TOPMX": 25,
+    "TMIN": 5,
+    "TMAX": 41,
+    "GMIN": 85,
+    "GMAX": 340,
+    "KTMP": -6
+  },
+  "ecocropNotes": "EcoCrop_DB.csv's 'Brassica napus' row is a species-level entry that most directly reflects the oilseed/canola-breeding literature (GMAX=340 days fits a seed-maturity crop, not a leafy-green cut repeatedly over weeks), not a leaf-harvest cycle specifically. Used as the closest available match since no leaf-type-specific EcoCrop row exists, but flagged as an imperfect fit — the true leaf-harvest window is much shorter than GMIN=85/GMAX=340 suggests.",
+  "coverCrop": null,
+  "varieties": [
+    {
+      "name": "English Giant",
+      "zones": ["highveld", "lowveld-bushveld"],
+      "maturity": "medium",
+      "season": "Spring, Summer, Autumn & Winter",
+      "note": "The most popular named rape variety among surveyed smallholders in Gauteng and Limpopo's Waterberg district (33.3% of rape growers who could name their cultivar), and still marketed today by Starke Ayres as 'a superb, highly productive and easy to grow rape variety'.",
+      "evidence": [
+        {"quote": "English Giant was the second popular rape variety (33.3 %) followed by Giant Essex at 8.3 %.", "url": "https://www.jarts.info/index.php/jarts/article/download/2016010549535/861", "page": 4, "doc": "Mandiriza-Mukwirimba, Kritzinger & Aveling (2016), J. Agric. Rural Develop. Trop. Subtrop. 117(1)"},
+        {"quote": "Superb, highly productive and easy to grow rape variety. SOWING SEASON: Spring, Summer, Autumn & Winter DAYS TO GERMINATION 5-10 DAYS TO MATURITY: 90 SOW DEPTH: 1cm", "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf", "page": 24, "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition"}
+      ]
+    },
+    {
+      "name": "Giant Essex",
+      "zones": ["highveld", "lowveld-bushveld"],
+      "maturity": null,
+      "season": null,
+      "note": "Named as the third most popular rape variety among the same surveyed smallholders (8.3%); not found in the Starke Ayres catalogue checked, so no independent maturity/season confirmation exists.",
+      "evidence": [{"quote": "English Giant was the second popular rape variety (33.3 %) followed by Giant Essex at 8.3 %.", "url": "https://www.jarts.info/index.php/jarts/article/download/2016010549535/861", "page": 4, "doc": "Mandiriza-Mukwirimba, Kritzinger & Aveling (2016), J. Agric. Rural Develop. Trop. Subtrop. 117(1)"}]
+    }
+  ],
+  "varietiesNotes": "58% of surveyed rape growers 'did not know the name of the cultivar they were growing' (same source, p.3-4) — i.e. most SA smallholders growing rape use unnamed/unlabelled seed, which is itself a notable finding for this catalog's target audience. Zones (highveld, lowveld-bushveld) reflect the two provinces actually surveyed (Gauteng and Limpopo's Waterberg district), not a claim that rape is unsuited elsewhere — its wider SA range is simply unconfirmed by source.",
+  "zoneNotes": {
+    "highveld": "Directly surveyed (Gauteng province) — rape is grown here per Mandiriza-Mukwirimba et al. (2016); PGALV confirms general frost tolerance for rape as a category.",
+    "lowveld-bushveld": "Directly surveyed (Waterberg district, Limpopo) — same source confirms rape is grown here.",
+    "subtropical-coast": "Not confirmed by any source found; the same source separately notes rape 'is popular in Limpopo and Mpumalanga provinces' (p.2) and that its popularity 'also extends to the Gauteng province', suggesting Mpumalanga (which spans lowveld/escarpment zones) is also a growing area, though not one of the two provinces actually surveyed for agronomic detail.",
+    "midlands-mistbelt": "Not confirmed by source.",
+    "western-cape": "Not confirmed by source.",
+    "southern-cape": "Not confirmed by source.",
+    "karoo-arid": "Not confirmed by source; EcoCrop's TMAX=41°C (species-level, oilseed-breeding context) suggests some heat tolerance, but aridity/frost extremes here are not addressed.",
+    "high-mountain": "Not confirmed by source; PGALV's frost-tolerance note ('can withstand frost') is encouraging but not a specific claim for this severe-frost zone."
+  },
+  "gaps": [
+    "No DAFF, ARC or KZN DARD production guideline dedicated to leaf rape was found — DAFF's only Brassica napus guideline located is for canola (oilseed), a different end-use and harvest-timing crop.",
+    "daysToHarvestRange, spacing (row and in-row), sow depth, seed rate and yield are all unsourced from a primary document; only a seed-catalogue day-to-maturity figure (90 days, 'English Giant') exists, which cannot stand alone as the source per the brief's rules.",
+    "sowMonths is populated only under 'summer', from a smallholder survey that combines two different provinces/climates (Gauteng highveld and Limpopo's Waterberg bushveld) without separating them, and covers 'brassica vegetables' broadly rather than rape alone — 'winter', 'all-year' and 'mild-frost' are left empty rather than guessed.",
+    "transplant practice and frost-tender low-temperature threshold (beyond the qualitative 'can withstand frost' statement) are unconfirmed.",
+    "58% of surveyed smallholders growing rape could not name their own cultivar, meaning named-variety data has limited real-world coverage even where sourced.",
+    "The EcoCrop 'Brassica napus' row used is a species-level, oilseed-breeding-oriented entry (GMAX=340 days) that is a poor proxy for a repeatedly-cut leafy green's actual cropping cycle."
+  ],
+  "verdict": "unsourced",
+  "summary": "No dedicated SA government or KZN DARD leaf-rape production guideline was found. The strongest material is a peer-reviewed 2016 smallholder survey (Gauteng + Limpopo Waterberg) confirming rape as the second most-grown brassica vegetable, naming its two leading cultivars (English Giant, Giant Essex) and a combined brassica-vegetable planting-time table, plus PGALV's frost-tolerance note and a Starke Ayres catalogue entry cross-validating 'English Giant' as a still-current 90-day variety. Core planner fields (days-to-harvest, spacing, seed rate, yield) remain unsourced gaps, so verdict is 'unsourced' despite reasonably solid variety and frost-tolerance evidence."
+}

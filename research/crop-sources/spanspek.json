@@ -1,0 +1,130 @@
+{
+  "key": "spanspek",
+  "name": "Spanspek (Sweet Melon / Cantaloupe)",
+  "localNames": ["cantaloupe", "musk melon", "sweet melon"],
+  "botanicalName": "Cucumis melo",
+  "family": "Cucurbitaceae",
+  "role": "vegetable",
+  "foodGroup": "fruiting-vegetable",
+  "harvestProduct": "fruit",
+  "frostTender": {
+    "value": true,
+    "evidence": {
+      "quote": "2. Very Tender (very sensitive to low temperatures)\nChili Okra Sweet pepper\nCucumber Pumpkin Sweet potato\nEggplant Squash Vegetable marrow\nLima bean Sweet melon Watermelon",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/climatic_requirements.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Climatic Requirements' (Vegetable Production series), Table 1 ('Sweet melon')"
+    }
+  },
+  "transplant": {
+    "value": false,
+    "evidence": {
+      "quote": "Melon 20 - 40 - - 3 kg 20 - 30 250 - 350 1500",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+      "page": 5,
+      "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 5, 'Melon' row"
+    },
+    "notes": "Inferred indirectly: the seedtray and seedbed-rate columns are both blank ('-') for Melon in this table, unlike Brinjal which has explicit seedtray/seedbed figures, implying melon is not normally raised as transplants in this table's convention. This is an inference from the table's structure, not an explicit statement that melon is direct-sown."
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [9, 10, 11, 12, 1],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Cold areas' column"
+      },
+      "notes": "No dedicated melon sowing-calendar row exists in Table 6; the generic 'Cucurbits' row is used as the regional proxy (same approach as the catalog's 'pumpkin' entry)."
+    },
+    "winter": {
+      "months": [],
+      "evidence": null
+    },
+    "all-year": {
+      "months": [3, 4, 5, 7, 8, 9, 10],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Hot areas' column"
+      }
+    },
+    "mild-frost": {
+      "months": [8, 9, 10, 11, 12, 1, 2],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Warm areas' column"
+      }
+    }
+  },
+  "daysToHarvestRange": {
+    "value": [80, 110],
+    "evidence": {
+      "quote": "Melon, musk/sweet 80 - 110 2 months",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+      "page": 3,
+      "doc": "KZN DARD, 'Length of Growing Period' (Vegetable Production series), Table 4"
+    },
+    "notes": "Starke Ayres' 'Colorspring' cultivar is quoted with a faster 'Main season 70 - 75 days', slightly below the KZN DARD range's lower bound, likely reflecting an early-maturing hybrid vs. the generic range."
+  },
+  "harvestPeriodWeeksOrMonths": "2 months",
+  "rowSpacingRangeCm": [150, 150],
+  "inRowSpacingRangeCm": [25, 35],
+  "sowDepthRangeCm": [2.0, 3.0],
+  "seedRateKgPerHaRange": [3, 3],
+  "yield": {
+    "tPerHaRange": [12, 25],
+    "product": "fruit",
+    "conditions": "Conservative 12 t/ha, likely 15-18 t/ha, target 25 t/ha (KZN); identical figures given for both 'Melon, musk' and 'Melon, sweet' rows",
+    "evidence": {
+      "quote": "Melon, musk 12 15 - 18 25 / Melon, sweet 12 15 - 18 25",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Expected Yields' (Vegetable Production series), Table 8"
+    }
+  },
+  "ecocrop": {
+    "row": "Cucumis melo",
+    "TOPMN": 18,
+    "TOPMX": 30,
+    "TMIN": 9,
+    "TMAX": 35,
+    "GMIN": 50,
+    "GMAX": 120
+  },
+  "coverCrop": false,
+  "varieties": [
+    {
+      "name": "Venus",
+      "supplier": "Starke Ayres",
+      "maturity": null,
+      "zones": ["western-cape", "karoo-arid", "highveld"],
+      "notes": "Quoted verbatim: 'ideal for early to main season production ... popular with customers who prefer aromatic musk melons in the Western Cape, Northern Cape and Free State production areas of South Africa.' Zone keys are an approximation (Northern Cape -> karoo-arid, Free State -> highveld) since the catalog's zone list has no direct Northern Cape/Free State entries."
+    },
+    {
+      "name": "Colorspring",
+      "supplier": "Starke Ayres",
+      "maturity": "70-75 days (main season)",
+      "zones": [],
+      "notes": "Quoted verbatim: 'Ideal for the spring and summer seasons ... Main season 70 - 75 days.' No specific province/zone stated by the supplier."
+    },
+    {
+      "name": "Orangelly",
+      "supplier": "Starke Ayres",
+      "maturity": null,
+      "zones": [],
+      "notes": "Described in a Starke Ayres melon news article as suited to 'early- and late-summer production in various climates'; no specific province stated."
+    }
+  ],
+  "zoneNotes": "Starke Ayres' 'Venus' cultivar description is the only source found this session that ties a spanspek/melon variety to specific South African provinces (Western Cape, Northern Cape, Free State), which at least confirms the Western Cape is a real commercial production area for this crop even though a Western Cape-specific sowing-month source could not be found.",
+  "gaps": [
+    "Winter/Western Cape sowMonths (specific months) not sourced: only that the Venus variety is commercially popular in the Western Cape, without a stated sowing window. No Western Cape/Elsenburg-specific melon sowing calendar was retrieved this session.",
+    "Transplant status (false) is inferred indirectly from blank seedtray/seedbed columns in KZN DARD's spacing table, rather than an explicit statement that melon is direct-sown.",
+    "Additional named varieties (Morgan, Gatsby, Cyclone, Sweet Spring) were seen in a Starke Ayres news article with only general seasonal descriptors ('early-summer', 'mid-summer') and no province-level detail, so they were left out of the varieties list beyond Orangelly."
+  ],
+  "verdict": "partial",
+  "summary": "Frost tenderness, days-to-harvest, row/in-row spacing, seed rate and yield are sourced (KZN DARD Tables 4/5/8), and the Western Cape is confirmed as a real production zone via Starke Ayres' Venus cultivar description. Verdict held to 'partial' because winter/Western Cape sowMonths (specific months) and transplant status remain only indirectly sourced or unsourced."
+}
