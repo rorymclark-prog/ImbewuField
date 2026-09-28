@@ -48,6 +48,9 @@ export interface OfflinePack {
  */
 export type PackQuality = 'standard' | 'high';
 
+/** A slide-only pack keeps the stills a regional learner sees and any matching poster. */
+export type OfflinePackVariant = 'full' | 'slides';
+
 /**
  * The high-quality twin of an asset, where one exists.
  *
@@ -86,8 +89,14 @@ function entry(url: string, kind: PackEntry['kind'], missing: string[], quality:
  *
  * `full.mp3` is excluded on the same principle: it is the slide clips concatenated, so including
  * it would spend another 6–7 MB of a farmer's data on a second copy of audio they already have.
+ * The optional 'slides' variant keeps only the resolved stills and posters a deck can display.
  */
-export function offlinePack(moduleId: string, lang: string, quality: PackQuality = 'standard'): OfflinePack {
+export function offlinePack(
+  moduleId: string,
+  lang: string,
+  quality: PackQuality = 'standard',
+  variant: OfflinePackVariant = 'full',
+): OfflinePack {
   const missing: string[] = [];
   const entries: PackEntry[] = [];
   const push = (e: PackEntry | null) => { if (e) entries.push(e); };
@@ -104,24 +113,26 @@ export function offlinePack(moduleId: string, lang: string, quality: PackQuality
 
       const animation = animationUrls(moduleId, slide.slide, lang);
       if (animation) {
-        push(at(animation.video, 'animation'));
+        if (variant === 'full') push(at(animation.video, 'animation'));
         push(at(animation.poster, 'poster'));
       }
     }
   }
 
   const narration = COURSE_NARRATION[moduleId];
-  // Save the same disclosed fallback the player uses, or English-only decks go silent offline
-  // for a learner whose app is set to isiZulu.
+  // The full pack saves the same disclosed fallback the player uses, or English-only decks go
+  // silent offline for a learner whose app is set to another language.
   const spokenLang = resolveNarrationLang(moduleId, lang);
-  if (narration && spokenLang) {
+  if (variant === 'full' && narration && spokenLang) {
     for (const track of narration.tracks) {
       push(at(`/course-audio/${moduleId}/${spokenLang.lang}/slide-${String(track.slide).padStart(2, '0')}.mp3`, 'audio'));
     }
   }
 
-  for (const lesson of COURSE_MODULES.find((m) => m.id === moduleId)?.lessons ?? []) {
-    if (lesson.infographicUrl) push(at(lesson.infographicUrl, 'image'));
+  if (variant === 'full') {
+    for (const lesson of COURSE_MODULES.find((m) => m.id === moduleId)?.lessons ?? []) {
+      if (lesson.infographicUrl) push(at(lesson.infographicUrl, 'image'));
+    }
   }
 
   // A slide can be reached twice — its own file plus an English fallback pointing at the same
