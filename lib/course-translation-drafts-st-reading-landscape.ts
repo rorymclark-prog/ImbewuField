@@ -8,7 +8,7 @@ const pair = (sourceEnglish: string, sesothoDraft: string, reviewStatus: Sesotho
 export const SESOTHO_READING_LANDSCAPE_DRAFT: SesothoCourseModuleDraft = {
   id: 'reading-landscape', language: 'st', reviewStatus: 'machine-draft',
   sourceMetadata: { durationMins: 25, category: "design" },
-  title: pair("Reading the Landscape", "Ho Bala Sebopeho sa Naha (Reading the Landscape)", "machine-draft"),
+  title: pair("Reading the Landscape", "Reading the Landscape", "hold"),
   description: pair("Identify water flow, sun angles, wind patterns and topography on your site.", "Hlokomela phallo ya metsi, di-angle tsa letsatsi, mekgwa ya moya le boemo ba naha (topography) setsheng sa hao.", "machine-draft"),
   lessons: [
     {
