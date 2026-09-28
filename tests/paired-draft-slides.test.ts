@@ -84,15 +84,25 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
       .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
       .filter(Boolean));
     assert.deepEqual(drafted, lang === 've'
-      ? ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1', '9:1', '9:2', '9:3', '14:1']
-      : ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1']);
+      ? ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1', '9:1', '9:2', '9:3', '14:1', '16:4', '18:4', '20:4']
+      : ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1', '9:3', '16:3', '16:4']);
     assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
       .map((slide: any) => slide.n), lang === 've'
-      ? [2, 4, 5, 6, 8, 9, 11, 12, 13, 14]
+      ? [2, 4, 5, 6, 8, 9, 11, 12, 13, 14, 18, 19, 20, 21, 22]
       : [1, 2, 3, 4, 5, 6]);
     if (lang === 'ts') {
       assert.equal(slides[0].target.heading.text, 'Masungulo ya Permaculture');
       assert.equal(slides[0].english.heading, 'Introduction to Permaculture');
+      assert.ok(slides.slice(6).every((slide: any) => slide.target.heading.status === 'english-hold'),
+        'slides 7–22 keep every title in exact English until its terms and register receive fluent review');
+      for (const n of [7, 8, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22]) {
+        assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+          `slide ${n}: ethics, technical, farming, safety or field-action text stays in exact English`);
+      }
+      assert.ok(slides[8].target.body.slice(0, 2).every((part: any) => part.status === 'english-hold'));
+      assert.ok(slides[15].target.body.slice(0, 2).every((part: any) => part.status === 'english-hold'));
+      assert.equal(slides[8].target.body[2].status, 'draft');
+      assert.deepEqual(slides[15].target.body.slice(2).map((part: any) => part.status), ['draft', 'draft']);
     }
     for (const p of [0, 2, 3]) assert.equal(slides[1].target.body[p].status, 'english-hold',
       `slide 2 ${lang}: the spade, land-work contrast and work question need a local check`);
@@ -107,10 +117,14 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
         `slide ${n} ${lang}: work, zones, water and permission claims must remain English`);
     }
     if (lang === 've') {
+      const permittedReflectiveDrafts: Record<number, number[]> = { 16: [3], 18: [3], 20: [3] };
       for (const n of [10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22]) {
-        assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+        assert.ok(slides[n - 1].target.body.every((part: any, index: number) =>
+          part.status === 'english-hold' || (permittedReflectiveDrafts[n] ?? []).includes(index)),
           `slide ${n}: farming, safety, ecological, zone/sector and field instructions need a fluent review`);
       }
+      for (const n of [15, 16, 17]) assert.equal(slides[n - 1].target.heading.status, 'english-hold',
+        `slide ${n}: rejected or unreviewed heading stays in English`);
       assert.equal(slides[9].target.heading.status, 'english-hold',
         'slide 10 keeps Observe and Interact in English because the candidate changed the object of interaction');
       assert.ok(slides[13].target.body.slice(1).every((part: any) => part.status === 'english-hold'),
