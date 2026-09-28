@@ -44,15 +44,64 @@
     "notes": "Corroborated by Starke Ayres' Clemson Spineless cultivar, independently stated as 50-60 days to maturity, an exact match to the KZN DARD figure."
   },
   "harvestPeriodWeeksOrMonths": "4-6 weeks",
-  "rowSpacingRangeCm": null,
-  "inRowSpacingRangeCm": null,
-  "sowDepthRangeCm": null,
-  "seedRateKgPerHaRange": null,
+  "rowSpacingRangeCm": {
+    "value": [45, 60],
+    "evidence": [
+      {
+        "quote": "Spacing varies: 45x45 cm, 50x30 cm or 60x15 cm between the rows and within the rows, respectively.",
+        "url": "https://web.archive.org/web/2024id_/https://dardlea.mpg.gov.za/documents/publications/tips/indigenius_vegetables.pdf",
+        "page": 1,
+        "doc": "Compiled & Published by SD-Industrial & Indigenous Crops (Dardla) [Mpumalanga Dept of Agriculture, Rural Development, Land & Environmental Affairs], 'Indigenous Vegetables', 2012"
+      }
+    ],
+    "notes": "Mpumalanga provincial dept gives three grower-chosen row x in-row combinations (45x45, 50x30, 60x15 cm). Two independent ARC-VOPI okra breeding trials used different, wider row spacing for research plots: 85 cm rows x 40 cm in-row (Roodeplaat, Gauteng, rain-fed, 2015-16 seasons; Gerrano, IntechOpen 2018, https://www.intechopen.com/chapters/57756) and 100 cm rows x 30 cm in-row (Loskop, Limpopo, rain-fed, 2020-21 seasons; Gerrano et al., J. Underutilised Crops Res. 2024(1):a8, https://doi.org/10.4102/jucr.v3i1.8) — these are research-trial spacings, not grower recommendations, so are recorded here as corroboration only and not folded into the range."
+  },
+  "inRowSpacingRangeCm": {
+    "value": [15, 45],
+    "evidence": [
+      {
+        "quote": "Spacing varies: 45x45 cm, 50x30 cm or 60x15 cm between the rows and within the rows, respectively.",
+        "url": "https://web.archive.org/web/2024id_/https://dardlea.mpg.gov.za/documents/publications/tips/indigenius_vegetables.pdf",
+        "page": 1,
+        "doc": "Compiled & Published by SD-Industrial & Indigenous Crops (Dardla) [Mpumalanga Dept of Agriculture, Rural Development, Land & Environmental Affairs], 'Indigenous Vegetables', 2012"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": [1.5, 1.5],
+    "evidence": [
+      {
+        "quote": "Planting depth is about 1.5 cm.",
+        "url": "https://web.archive.org/web/2024id_/https://dardlea.mpg.gov.za/documents/publications/tips/indigenius_vegetables.pdf",
+        "page": 1,
+        "doc": "Compiled & Published by SD-Industrial & Indigenous Crops (Dardla) [Mpumalanga Dept of Agriculture, Rural Development, Land & Environmental Affairs], 'Indigenous Vegetables', 2012"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [8, 10],
+    "evidence": [
+      {
+        "quote": "About 8 to 10 kg of seed is required per hectare.",
+        "url": "https://web.archive.org/web/2024id_/https://dardlea.mpg.gov.za/documents/publications/tips/indigenius_vegetables.pdf",
+        "page": 1,
+        "doc": "Compiled & Published by SD-Industrial & Indigenous Crops (Dardla) [Mpumalanga Dept of Agriculture, Rural Development, Land & Environmental Affairs], 'Indigenous Vegetables', 2012"
+      }
+    ]
+  },
   "yield": {
-    "tPerHaRange": null,
-    "product": "pods",
-    "conditions": null,
-    "evidence": null
+    "tPerHaRange": [0.06, 0.4],
+    "product": "dry grain (seed)",
+    "conditions": "ARC-VOPI breeding trial, 24 okra accessions, Loskop Research Station, Limpopo province, rain-fed, 2020 and 2021 cropping seasons",
+    "evidence": [
+      {
+        "quote": "The okra accessions displayed a significant difference in grain yield, ranging between 60 kg/ha (Acc No. 1859.2.3.1) and 400 kg/ha (Acc No. 1214.3.1.2). The overall mean for grain yield of the genotypes was 120 kg/ha.",
+        "url": "https://doi.org/10.4102/jucr.v3i1.8",
+        "page": null,
+        "doc": "Gerrano AS, Matjeke BM, Khoza L, et al. Phenotypic plasticity of okra for yield and associated traits. Journal of Underutilised Crops Research. 2024;3(1), a8 (open access, AOSIS)"
+      }
+    ],
+    "notes": "This is DRY GRAIN (seed) yield from an ARC breeding trial, not the fresh-pod (vegetable) yield that is okra's normal harvested product for the farmer catalog — no South African fresh-pod t/ha figure was found in any source checked (KZN DARD's Expected Yields table has no okra row; no DAFF/DALRRD brochure exists per prior search). Recorded as the best-available SA figure with the product/conditions clearly flagged, per the honesty rule, rather than presenting it as a pod yield."
   },
   "ecocrop": {
     "row": "Abelmoschus esculentus",
@@ -75,12 +124,12 @@
   ],
   "zoneNotes": null,
   "gaps": [
-    "SowMonths for all four rain patterns (summer, winter, all-year, mild-frost) are unsourced. KZN DARD's own sowing-calendar table (Table 6, 'Plant Establishment') has no Okra row at all — confirmed on both p7 and p8 where the adjoining crops (Brinjal, Cucurbits, Sweet corn) do have rows. No DAFF/DALRRD production brochure for okra could be found: direct nda.gov.za/dalrrd.gov.za access is blocked from this environment, and a rigorous Wayback Machine CDX search (validated first against a known-good match, an existing Eggplant brochure capture, then run as an unfiltered listing of the entire 'Brochures_and_Production_Guidelines' directory, 22 total archived files) found no Okra brochure was ever archived, despite a plausible-looking 'Brochure Okra.pdf' URL appearing in web search results that does not actually resolve.",
-    "Row spacing, in-row spacing, sow depth and seed rate are unsourced. KZN DARD's Table 5 (spacing/seed-rate table, 'Plant Establishment', p4-p6) has no Okra row, confirmed by reading the full table twice.",
-    "Yield is unsourced. KZN DARD's Table 8 ('Expected Yields', p1-p3) has no Okra row, confirmed by reading the full table.",
-    "A South Africa-hosted, peer-reviewed paper on drip-irrigated okra was found on scielo.org.za (Water SA journal, vol. 49 no. 2, 2023, DOI 10.17159/wsa/2023.v49.i2.3990), but on reading its full text it describes an Indian field trial (Haryana Agricultural University, sown in India's June/Kharif season, spacings of 45x40cm or 60x30cm under subsurface drip irrigation) with no connection to South African growing conditions or calendar. It was deliberately excluded as a source for okra spacing or sowMonths, since South Africa's June is a winter/frost month in the interior and using this data would mislead SA farmers despite the source's otherwise-preferred domain.",
+    "SowMonths for all four rain patterns remain unsourced. KZN DARD's own sowing-calendar table (Table 6, 'Plant Establishment') has no Okra row at all. No DAFF/DALRRD production brochure for okra could be found (confirmed absent from the Wayback CDX listing of the entire 'Brochures_and_Production_Guidelines' directory). The Mpumalanga 'Indigenous Vegetables' guide and two ARC-VOPI trial papers checked in this pass all describe okra's warm-season/frost-sensitive requirement (optimum 21-29°C / min 18°C soil temp per KZN DARD's own Climatic Requirements table; ARC trials run 'during the summer growing season' / '2020 and 2021 cropping seasons' under rain-fed conditions) but none states an actual sowing month or window, so no month numbers are recorded rather than inferring them from temperature tolerance alone.",
+    "The yield figure now recorded is DRY GRAIN (seed) yield from an ARC breeding trial (60-400 kg/ha, mean 120 kg/ha) — very low, and not the fresh-pod yield that matters for the vegetable harvest; no South African fresh-pod t/ha figure was found anywhere (KZN DARD's Expected Yields table has no okra row; no DAFF/DALRRD brochure exists).",
+    "A South Africa-hosted, peer-reviewed paper on drip-irrigated okra was found on scielo.org.za (Water SA journal, vol. 49 no. 2, 2023, DOI 10.17159/wsa/2023.v49.i2.3990), but on reading its full text it describes an Indian field trial (Haryana Agricultural University, sown in India's June/Kharif season) with no connection to South African growing conditions or calendar. It was deliberately excluded as a source for okra spacing or sowMonths.",
+    "Row/in-row spacing is now sourced from a Mpumalanga provincial dept guide (grower recommendation) plus two ARC-VOPI research-trial spacings (recorded as corroboration only, not merged into the range, since trial-plot spacing is not the same as an agronomic recommendation).",
     "Only one variety (Clemson Spineless, a general home-garden cultivar) could be verified with a specific maturity figure; no SA commercial/zone-specific okra cultivar guidance was found."
   ],
   "verdict": "partial",
-  "summary": "Frost tenderness, days-to-harvest and ECOCROP limits are sourced from KZN DARD's Vegetable Production series and corroborated by Starke Ayres. SowMonths, spacing and yield are all confirmed gaps: no KZN DARD table row exists for okra in any of the sowing-calendar, spacing or yield tables, no DAFF/DALRRD brochure could be located or confirmed to exist (rigorous Wayback CDX search), and the one candidate peer-reviewed source (SciELO, Water SA) was excluded as reporting Indian, not South African, growing conditions."
+  "summary": "Frost tenderness, days-to-harvest and ECOCROP limits are sourced from KZN DARD's Vegetable Production series and corroborated by Starke Ayres. Spacing, sow depth and seed rate are now sourced from a Mpumalanga Dept of Agriculture indigenous-vegetables guide, and yield from an ARC-VOPI okra breeding trial (dry grain, 60-400 kg/ha) — but that yield is for grain, not the fresh pods okra is actually grown for, and sowMonths remain wholly unsourced despite a dedicated search of ARC-VOPI, Limpopo/Mpumalanga dept guides, DAFF/DALRRD Wayback listings and SA peer-reviewed trials, so verdict stays partial."
 }

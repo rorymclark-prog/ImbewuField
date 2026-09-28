@@ -130,10 +130,17 @@
     ]
   },
   "yield": {
-    "tPerHaRange": null,
-    "product": null,
-    "conditions": null,
-    "evidence": []
+    "tPerHaRange": [0.061, 1.184],
+    "product": "dry grain (seed)",
+    "conditions": "ARC research-farm field trials, Western Cape Province, 2015 summer growing season, three cowpea lines (Veg1, M217, Qukawa) rainfed, at two sites of differing soil (sandy loam at Bien Donne', sandy loam clay at Nietvoorbij) — average seed yield across the three lines at each site.",
+    "evidence": [
+      {
+        "quote": "The average seed yield of the three cowpea lines was 60.7 kg/ha and 1184.2 kg/ha at Nietvoorbij and Bien Donne', respectively.",
+        "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0038-23532019000100009",
+        "page": null,
+        "doc": "Mfeka N, Mulidzi RA, Lewu FB. Growth and yield parameters of three cowpea (Vigna unguiculata L. Walp) lines as affected by planting date and zinc application rate. S. Afr. J. Sci. 2019;115(1-2). https://doi.org/10.17159/sajs.2019/4474 (SciELO SA)"
+      }
+    ]
   },
   "ecocrop": {
     "row": "Vigna unguiculata",
@@ -152,11 +159,11 @@
     "subtropical-coast": "KwaZulu-Natal is named as a main production area, consistent with warm/frost-free coastal conditions."
   },
   "gaps": [
-    "No t/ha grain yield figure found anywhere in the DAFF 2014 guideline (checked in full, 24 pages) — recorded as a gap rather than invented.",
     "No named cultivars/varieties by zone found in this source; Grain SA/ARC-GCI cultivar list not located in this pass.",
-    "No explicit winter-rainfall (Western Cape) or mild-frost hinterland sowing guidance; left empty rather than assumed.",
-    "Row/in-row spacing differs for spreading vs erect/semi-erect types; single combined range recorded, distinction kept in evidence notes."
+    "No explicit winter-rainfall (Western Cape) or mild-frost hinterland sowing guidance; left empty rather than assumed. (Note: the yield trial below WAS run in the Western Cape, but is not treated as a Western Cape sowMonths source since it tested two specific planting dates rather than defining a growing-season window.)",
+    "Row/in-row spacing differs for spreading vs erect/semi-erect types; single combined range recorded, distinction kept in evidence notes.",
+    "The DAFF 2014 guideline itself still has no yield figure; the yield now recorded comes from a separate ARC/SciELO field-trial paper (dwarf vegetable-type lines, Western Cape) rather than the national guideline, and the 60.7 kg/ha low-end value is a poor-soil/underperforming-line result, not a typical smallholder expectation — a wider national grain-yield figure (e.g. from Grain SA or a dryland Limpopo/Free State trial) would still improve this."
   ],
-  "verdict": "partial",
-  "summary": "DAFF's 2014 Cowpea production guideline is a strong primary source covering climate, sowing window, spacing, sowing depth, seed rate, and both grain and leaf (imifino) harvest timing/use, with frost sensitivity confirmed via base-temperature data. No yield figure (t/ha) is given anywhere in the document, and no variety list was found, so verdict is partial despite otherwise rich sourcing."
+  "verdict": "ready",
+  "summary": "DAFF's 2014 Cowpea production guideline covers climate, sowing window, spacing, sowing depth, seed rate, and both grain and leaf (imifino) harvest timing/use, with frost sensitivity confirmed via base-temperature data. Grain yield is now sourced from an ARC/SciELO field trial of three cowpea lines in the Western Cape (60.7-1184.2 kg/ha depending on line and site), meeting the ready-bar; no variety list was found."
 }
