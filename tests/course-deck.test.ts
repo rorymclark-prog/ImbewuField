@@ -465,18 +465,32 @@ test('Water playback respects language gaps, download choice and the whole clear
   }
 });
 
-test('new regional orientation and ethics stills stay visible while unauthored Introduction frames use English', () => {
+test('regional Introduction chooses every registered still and falls back only for declared gaps', () => {
   for (const lang of ['ve', 'ts']) {
     const deck = COURSE_DECKS['intro-permaculture'];
     assert.ok(deck.slideLanguages.includes(lang));
     assert.equal(deck.slideAspectRatioByLanguage?.[lang], 1440 / 5400);
-    for (const slide of [1, 2, 3, 4, 5, 6]) {
-      assert.ok(onDisk(slideImageUrl('intro-permaculture', lang, slide)!));
-      assert.match(slideImageFor('intro-permaculture', lang, slide)!.url, new RegExp(`/${lang}/slide-0${slide}\\.webp$`));
+    const declaredMissing = new Set(deck.missingSlides?.[lang] ?? []);
+    for (const { slide } of deck.slides) {
+      const own = slideImageUrl('intro-permaculture', lang, slide);
+      const selected = slideImageFor('intro-permaculture', lang, slide);
+      assert.ok(selected, `${lang} slide ${slide} must have either its frame or the English source`);
+      if (declaredMissing.has(slide)) {
+        assert.equal(own, null, `${lang} slide ${slide} is declared missing and must use its English source`);
+        assert.equal(selected.lang, 'en');
+        assert.equal(selected.exact, false);
+        assert.ok(onDisk(selected.url));
+      } else {
+        assert.ok(own, `${lang} slide ${slide} has a regional frame in the manifest`);
+        assert.equal(selected.lang, lang);
+        assert.equal(selected.exact, true);
+        assert.ok(onDisk(own!));
+      }
     }
     assert.equal(animationUrls('intro-permaculture', 4, lang), null,
       'the old animation poster must not hide the paired ethics slide');
-    assert.match(slideImageFor('intro-permaculture', lang, 7)!.url, /intro-permaculture\/en\/slide-07\.jpg$/);
+    assert.equal(COURSE_NARRATION['intro-permaculture'].languages.includes(lang), false,
+      `${lang} stills must not promise an unreviewed narration track`);
   }
   // The new Tshivenda concepts are readable in their own paired frames. Slide 10 still falls
   // back because the candidate changed the meaning of "interact with the land".
@@ -485,6 +499,10 @@ test('new regional orientation and ethics stills stay visible while unauthored I
     assert.equal(slideImageFor('intro-permaculture', 've', slide)?.exact, true);
   }
   assert.equal(slideImageFor('intro-permaculture', 've', 10)?.lang, 'en');
+  for (let slide = 15; slide <= 22; slide++) {
+    assert.ok(onDisk(slideImageUrl('intro-permaculture', 've', slide)!));
+    assert.equal(slideImageFor('intro-permaculture', 've', slide)?.exact, true);
+  }
 });
 
 test('Sesotho draft narration starts with paired slides and English source choice keeps them', async () => {

@@ -231,17 +231,23 @@ test('itsonga Soil Health keeps five paired stills and exact English fallback/au
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/ts/')));
 });
 
-test('Tshivenda and Xitsonga Introduction downloads include orientation stills and English fallback', () => {
+test('regional Introduction downloads every selected still and never promise regional audio', () => {
   for (const lang of ['ve', 'ts']) {
     const pack = offlinePack('intro-permaculture', lang);
     assert.deepEqual(pack.missing, []);
     const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
-    for (const n of ['01', '02', '03', '04', '05', '06']) {
-      assert.ok(slides.includes(`/course-decks/intro-permaculture/${lang}/slide-${n}.webp`));
+    const deck = COURSE_DECKS['intro-permaculture'];
+    for (const { slide } of deck.slides) {
+      const selected = slideImageFor('intro-permaculture', lang, slide);
+      assert.ok(selected, `${lang} slide ${slide} must resolve to a regional or English frame`);
+      assert.ok(slides.includes(selected.url), `offline pack must include the shown ${lang} slide ${slide}`);
+      if (selected.exact) assert.equal(selected.lang, lang);
+      else assert.equal(selected.lang, 'en', `${lang} slide ${slide} fallback must be the exact English source`);
     }
-    assert.ok(slides.includes('/course-decks/intro-permaculture/en/slide-07.jpg'));
     assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
       entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
+    assert.equal(COURSE_NARRATION['intro-permaculture'].languages.includes(lang), false,
+      `${lang} slides must not promise an unreviewed narration track`);
     assert.ok(pack.entries.every((entry) => !entry.url.includes(`/course-audio/intro-permaculture/${lang}/`)));
   }
 });

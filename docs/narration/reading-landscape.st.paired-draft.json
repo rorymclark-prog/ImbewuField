@@ -16,8 +16,7 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Ho Bala Sebopeho sa Naha"
+          "status": "english-hold"
         },
         "body": [
           {
@@ -25,8 +24,7 @@
             "text": "Khoso ea permaculture bakeng sa lihoai tse nyane tsa Afrika Boroa."
           },
           {
-            "status": "draft",
-            "text": "Bala lefatshe pele o le fetola. Fumana moo metsi a tsamayang teng, moo kganya ya letsatsi e welang teng, moo moya o tsamayang teng, le moo moya o batang o dutsang teng."
+            "status": "english-hold"
           },
           {
             "status": "draft",
@@ -574,10 +572,12 @@
   "provenance": {
     "newDrafts": "Selected descriptive headings and narration are unreviewed machine-draft candidates from the existing Sesotho packet branch; exact English remains paired below.",
     "holds": "Actionable farming, water, contour/scale, wind, frost, safety, and other held narration remains exact English. The paired English is copied from reading-landscape.en.md.",
-    "backCheck": "A separate Agy CLI 1.2.12 Gemini 3.1 Pro high-effort semantic back-check reviewed candidate meaning against its paired English. This is a machine check only, not human language review."
+    "backCheck": "A separate Agy CLI 1.2.12 Gemini 3.1 Pro high-effort semantic back-check reviewed candidate meaning against its paired English. This is a machine check only, not human language review.",
+    "descriptiveHeadingScreen": "Ten new heading candidates were generated with Agy Gemini 3.8 Flash Low and checked independently with Gemini 3.1 Pro Low. Two passed the machine semantic screen and remain unreviewed drafts; eight failed and remain exact-English holds. One existing Sesotho heading was also flagged and returned to English hold. See the facilitator review packet."
   },
   "reviewNotes": [
     "A fluent Sesotho speaker and local agriculture adviser must review every candidate for meaning, register, and local terminology before classroom use. No fluent-language or farming approval is implied.",
-    "English source text is paired sentence by sentence and checked against docs/narration/reading-landscape.en.md."
+    "English source text is paired sentence by sentence and checked against docs/narration/reading-landscape.en.md.",
+    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. Machine checks are not fluent-speaker approval."
   ]
 }

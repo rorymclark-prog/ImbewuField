@@ -3,14 +3,16 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slide 1 heading: Masungulo ya Permaculture. Slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible.",
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slide 1 heading: Masungulo ya Permaculture. Slides 4–6: ethics label openings. Slides 9 and 16: three short orientation/reflection lines selected after independent Flash Low candidate and Pro Low backcheck. Unreviewed machine candidates; exact English source remains visible.",
     "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
-    "holds": "Unverified spade wording, the land-works-with-you contrast, all examples, site and crop advice, money claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English."
+    "holds": "Slides 7–8 and 10–15, 17–22 remain exact English. Water, borehole, permission, swale, earthworks, overflow, manure, edible-crop, farming, ethics, named-principle, zone-number, windbreak and field-action wording remains held; uncertain edge, consequence and site-specific wind questions also remain exact English."
   },
   "reviewNotes": [
     "A fluent standard written Xitsonga speaker should check the dig/plot wording, smallholding and work terms, register, ethics term and named labels before classroom reliance.",
     "This is provisional standard written Xitsonga for a Shangani-speaking group; comprehension has not been established.",
-    "The slide 1 heading is a provisional machine draft; keep the exact English title visible and ask the facilitator whether the wording is understood by this Shangani group."
+    "The slide 1 heading is a provisional machine draft; keep the exact English title visible and ask the facilitator whether the wording is understood by this Shangani group.",
+    "Slides 9 and 16 contain three candidate lines from Gemini 3.8 Flash Low, independently backchecked with Gemini 3.1 Pro Low. Agreement is not fluent review; compare each line with its exact English source and check standard written Xitsonga and Shangani comprehension before classroom use.",
+    "The three selected lines are only a small source-paired slice. Slides 7–8 and 10–15, 17–22 stay exact English. In particular, no ethics decision, technical instruction, farming recommendation, numerical zone, safety statement or field procedure is translated here."
   ],
   "slides": [
     {
@@ -317,7 +319,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi ta teka sweswo swinharhu hi xin'we hi xin'we.",
+            "provenance": "Gemini 3.8 Flash Low candidate; independently backchecked with Gemini 3.1 Pro Low; unreviewed-machine-draft"
           }
         ]
       }
@@ -523,10 +527,14 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ehleketa hi tindlela leti u fambaka eka tona siku rin'wana ni rin'wana.",
+            "provenance": "Gemini 3.8 Flash Low candidate; independently backchecked with Gemini 3.1 Pro Low; unreviewed-machine-draft"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I yini lexi u xi endzelaka ngopfu lexi a xi fanele ku va ekusuhi?",
+            "provenance": "Gemini 3.8 Flash Low candidate; independently backchecked with Gemini 3.1 Pro Low; unreviewed-machine-draft"
           }
         ]
       }

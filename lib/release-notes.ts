@@ -53,6 +53,15 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Check a tree before you plant it', where: 'Design Studio → place a tree → pick a species', href: '/design',
       detail: 'Search a fruit tree such as avocado, mango or marula. Under its name you now see when South African sources say it is picked, how many years to its first crop and about how many kg a mature tree gives, where a source states it.' },
   ] },
+  { when: '28 September 2026', sha: '87396b07', changes: [
+    'Introduction shows source-paired Tshivenda and Xitsonga slide drafts.',
+    'Most Xitsonga text and all field guidance remain English.',
+    'Sesotho landscape slide 1 keeps its uncertain title and field step in English.',
+    'The Sesotho Reading the Landscape course card keeps its uncertain title in English.',
+  ], tour: [
+    { title: 'Compare the regional Introduction slides', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Drafts keep the English source; Xitsonga and Tshivenda audio are not available.' },
+  ] },
   { when: '28 September 2026', sha: 'cbe046d9', changes: [
     'Plant Guilds adds Sesotho draft slides beside English.',
   ], tour: [
