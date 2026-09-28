@@ -246,6 +246,14 @@ test('regional Introduction downloads every selected still and never promise reg
     }
     assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
       entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
+    if (lang === 've') {
+      assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 22,
+        'all 22 source-paired Tshivenda frames must be included in its download');
+      for (const n of [7, 10]) {
+        assert.ok(slides.includes(`/course-decks/intro-permaculture/ve/slide-${String(n).padStart(2, '0')}.webp`),
+          `Tshivenda slide ${n} should download its source-paired English hold frame`);
+      }
+    }
     assert.equal(COURSE_NARRATION['intro-permaculture'].languages.includes(lang), false,
       `${lang} slides must not promise an unreviewed narration track`);
     assert.ok(pack.entries.every((entry) => !entry.url.includes(`/course-audio/intro-permaculture/${lang}/`)));

@@ -492,13 +492,11 @@ test('regional Introduction chooses every registered still and falls back only f
     assert.equal(COURSE_NARRATION['intro-permaculture'].languages.includes(lang), false,
       `${lang} stills must not promise an unreviewed narration track`);
   }
-  // The new Tshivenda concepts are readable in their own paired frames. Slide 10 still falls
-  // back because the candidate changed the meaning of "interact with the land".
-  for (const slide of [8, 9, 11, 12, 13, 14]) {
+  // The Tshivenda concepts and exact-English holds each have their own paired frame.
+  for (const slide of [7, 8, 9, 10, 11, 12, 13, 14]) {
     assert.ok(onDisk(slideImageUrl('intro-permaculture', 've', slide)!));
     assert.equal(slideImageFor('intro-permaculture', 've', slide)?.exact, true);
   }
-  assert.equal(slideImageFor('intro-permaculture', 've', 10)?.lang, 'en');
   for (let slide = 15; slide <= 22; slide++) {
     assert.ok(onDisk(slideImageUrl('intro-permaculture', 've', slide)!));
     assert.equal(slideImageFor('intro-permaculture', 've', slide)?.exact, true);
