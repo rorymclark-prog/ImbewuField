@@ -208,7 +208,8 @@ const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
 // footage completes only the transplant action; the choice between methods stays in the
 // narration and still. The locally drawn diagrams remain held for Rory's visual clearance.
 const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
-  6: { src: 'flow-transplant-root-plug', poster: 'flow-transplant-root-plug', bytes: 6707780, seconds: 8, playOnce: true },
+  // The English poster would cover both the Sesotho draft panel and its exact English source.
+  6: { src: 'flow-transplant-root-plug', poster: 'flow-transplant-root-plug', bytes: 6707780, seconds: 8, playOnce: true, unavailableLanguages: ['st'] },
 };
 
 // Keep the reviewed Flow hand action; the three locally authored scenes await visual clearance.
@@ -264,8 +265,9 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
     slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    // Every Sesotho frame is a source-paired draft; uncertain farming guidance stays in English.
     missingSlides: {
-      st: [3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+      st: [],
       ve: [],
       ts: [],
     },

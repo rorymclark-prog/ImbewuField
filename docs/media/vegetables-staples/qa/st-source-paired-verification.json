@@ -1,0 +1,168 @@
+{
+  "module": "vegetables-staples",
+  "language": "st",
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "narration": null,
+  "pairedSource": "docs/narration/vegetables-staples.st.paired-draft.json",
+  "pairedSourceSha256": "cf2128f21dcd38bc2b9e0aa2a12755a8e57a253e04ac1787a152a4cb32151022",
+  "englishSource": "docs/narration/vegetables-staples.en.md",
+  "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+  "slides": [
+    {
+      "slide": 1,
+      "path": "public/course-decks/vegetables-staples/st/slide-01.webp",
+      "pixels": "1440x5400",
+      "bytes": 320922,
+      "sha256": "d37e6154aab7a855300292b1d31d14e2818d049cec9b4203dc18d8032c8ba7a1"
+    },
+    {
+      "slide": 2,
+      "path": "public/course-decks/vegetables-staples/st/slide-02.webp",
+      "pixels": "1440x5400",
+      "bytes": 309222,
+      "sha256": "5892461fb487e1726731262be4d56b5ed6fbcdf72c0d0eb0a1e820e61a2313fa"
+    },
+    {
+      "slide": 3,
+      "path": "public/course-decks/vegetables-staples/st/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 371520,
+      "sha256": "75f39716e06e0a27c8226dfab47bffc4e386139fc90608ff8b414f16d36398e1"
+    },
+    {
+      "slide": 4,
+      "path": "public/course-decks/vegetables-staples/st/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 705876,
+      "sha256": "0400ad97e11727654510db07ac3fa94e8fb610594f55c3b0af759b1644a20260"
+    },
+    {
+      "slide": 5,
+      "path": "public/course-decks/vegetables-staples/st/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 429338,
+      "sha256": "09401d5a346cc567fa5f78f4d0b08f605ea5dde6129ca58ee322f450a75ca629"
+    },
+    {
+      "slide": 6,
+      "path": "public/course-decks/vegetables-staples/st/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 592216,
+      "sha256": "53178fa2dd8aa4712fa302ba0ff37e796fb2bf979b463128fd2f4a4af6594fcc"
+    },
+    {
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/st/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 697370,
+      "sha256": "11b7c77e1b80ec518d2bb267e4d070ebf46881fa1e4402b9231ba92ddf2ab220"
+    },
+    {
+      "slide": 8,
+      "path": "public/course-decks/vegetables-staples/st/slide-08.webp",
+      "pixels": "1440x5400",
+      "bytes": 439644,
+      "sha256": "cf7e82083d0c61c58277b5d0e4ab43102633df440687a633cc747f7ef1f1f3f8"
+    },
+    {
+      "slide": 9,
+      "path": "public/course-decks/vegetables-staples/st/slide-09.webp",
+      "pixels": "1440x5400",
+      "bytes": 354042,
+      "sha256": "40decd8c75391b766aed995521879e3e9fa503188b2ab30bb748f21d908c542e"
+    },
+    {
+      "slide": 10,
+      "path": "public/course-decks/vegetables-staples/st/slide-10.webp",
+      "pixels": "1440x5400",
+      "bytes": 787200,
+      "sha256": "c8f529a959b4147680a55eb5d767a8b4bf584b704f3cf63ed2570808525519ef"
+    },
+    {
+      "slide": 11,
+      "path": "public/course-decks/vegetables-staples/st/slide-11.webp",
+      "pixels": "1440x5400",
+      "bytes": 411708,
+      "sha256": "a1784947e3aae24c3fc3a2e79012d9f4a2be7cf6bc0e48f4800fefb166fd41ec"
+    },
+    {
+      "slide": 12,
+      "path": "public/course-decks/vegetables-staples/st/slide-12.webp",
+      "pixels": "1440x5400",
+      "bytes": 459716,
+      "sha256": "dd8b078f7ce3984543ad6221e4774c1bebdb4ebf607a4e2c571f3e41db205d39"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-decks/vegetables-staples/st/slide-13.webp",
+      "pixels": "1440x5400",
+      "bytes": 443438,
+      "sha256": "8310577ea52f70a5d2a0a762d37402d3d05dd5323e86daee4567143fac744e30"
+    },
+    {
+      "slide": 14,
+      "path": "public/course-decks/vegetables-staples/st/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 253370,
+      "sha256": "9e643ab7b998b76c7a5df44a3a8079ecf4956fff0c990689b88a79a74242d9a9"
+    },
+    {
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/st/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 572096,
+      "sha256": "3b553774d421d9e0b3ffcf88c52b84b5a26043e1e2c1c9e6f3af4b1cb42dcbfa"
+    },
+    {
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/st/slide-16.webp",
+      "pixels": "1440x5400",
+      "bytes": 555384,
+      "sha256": "67f0b1e678725db08727c068c48648e57b1ece0c397b71c144542f866f5cfc84"
+    },
+    {
+      "slide": 17,
+      "path": "public/course-decks/vegetables-staples/st/slide-17.webp",
+      "pixels": "1440x5400",
+      "bytes": 373376,
+      "sha256": "ce2c1ea0f223afcb0f5d22f0bf2a33d8cac29b8fb7769d32b13fd5c1e46fc72a"
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/vegetables-staples/st/slide-18.webp",
+      "pixels": "1440x5400",
+      "bytes": 343532,
+      "sha256": "045ba20d3e79a779b64c3c08c59985d4ff753960f26054aa75e9f4d9067178e8"
+    }
+  ],
+  "contactSheet": "docs/media/vegetables-staples/qa/st-source-paired-contact-sheet.jpg",
+  "phoneSamples": [
+    {
+      "slide": 1,
+      "path": "docs/media/vegetables-staples/qa/st-slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "53092ffdf133367456768fc17b08de589bbf5984616288313fd92365f5d1c9db"
+    },
+    {
+      "slide": 2,
+      "path": "docs/media/vegetables-staples/qa/st-slide-02-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "8178954858be29cd7676a29cfc0cb5547a3fa85c6f186c966ec8a1d526eab67d"
+    },
+    {
+      "slide": 8,
+      "path": "docs/media/vegetables-staples/qa/st-slide-08-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "ecd730de32eb85bd865154541ff0d68ccbfd5bbda90ccebb1a3cd95fa00e5bda"
+    },
+    {
+      "slide": 9,
+      "path": "docs/media/vegetables-staples/qa/st-slide-09-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "fdbb78af5c045f848550e05ab5fb64ad397faa69e502d7664e873ab231df06a3"
+    }
+  ],
+  "note": "All 18 silent frames pair the unchanged English illustration and exact English source with the five existing Sesotho machine-draft passages from the validated packet. All other target fields remain explicit English holds. No Sesotho narration or farming approval is claimed."
+}
