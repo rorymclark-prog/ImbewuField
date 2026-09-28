@@ -291,13 +291,13 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   },
   'intro-permaculture': {
     // Regional frames pair unreviewed drafts or explicit English holds with exact English.
-    // The narration remains English and needs a separate, explicit voice choice.
+    // The Xitsonga deck is a partial draft; its later source frames do not signal translated text.
+    // No Tshivenda or Xitsonga narration is registered; an existing voice needs an explicit choice.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
     slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     missingSlides: {
-      ve: [7, 10, 15, 16, 17, 18, 19, 20, 21, 22],
-      ts: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+      ve: [7, 10],
     },
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },

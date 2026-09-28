@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '03671fb7', changes: [
+    'Introduction shows source-paired Tshivenda and Xitsonga slide drafts.',
+    'Most Xitsonga text and all field guidance remain English.',
+  ], tour: [
+    { title: 'Compare the regional Introduction slides', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Drafts keep the English source; Xitsonga and Tshivenda audio are not available.' },
+  ] },
   { when: '28 September 2026', sha: 'cbe046d9', changes: [
     'Plant Guilds adds Sesotho draft slides beside English.',
   ], tour: [

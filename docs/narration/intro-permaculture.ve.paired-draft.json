@@ -3,13 +3,14 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible. Slides 8–14: six concept headings, factual attribution and framing statements; independently back-checked candidates. Actionable farm, water, safety, permission, windbreak, zone/sector field instructions and uncertain ecological claims remain exact English.",
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible. Slides 8–14: six concept headings, factual attribution and framing statements; independently back-checked candidates. Actionable farm, water, safety, permission, windbreak, zone/sector field instructions and uncertain ecological claims remain exact English. Slides 16–22: selected reflective question and headings, plus slide 20 closing sentence; generated with Agy Gemini 3.8 Flash Low and independently back-checked with Agy Gemini 3.1 Pro Low. Slide 15 heading and slide 17 reflective question remain held after back-check.",
     "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
-    "holds": "Unverified spade wording, the land-works-with-you contrast, all examples, site and crop advice, money claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English."
+    "holds": "Unverified spade wording, the land-works-with-you contrast, all examples, site and crop advice, money claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English. All zone examples and frequencies, farm layout suggestions, observation or sketching steps, weather directions, shelter claims and site-specific field actions on slides 15–22 remain exact English."
   },
   "reviewNotes": [
     "A fluent Tshivenda speaker should check the dig/plot wording, smallholding and work terms, register, ethics term and named labels before classroom reliance.",
-    "This is an unreviewed machine draft, not local farming approval."
+    "This is an unreviewed machine draft, not local farming approval.",
+    "Slides 15–22 contain only a few Agy machine candidates: slide 16 reflection, slide 18 heading and reflection, slide 19 heading, slide 20 heading and closing sentence, and slides 21–22 headings. Agy Pro Low rejected the slide 15 heading for changing visit frequency to timing and rejected slide 17 question for changing “without thinking” to “without thinking anymore”; both remain exact English. Every practical zone, sector, windbreak and field instruction is held in exact English. Fluent Tshivenda and local farming review remains required."
   ],
   "slides": [
     {
@@ -541,7 +542,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi zwifhio zwine na zwi dalela kanzhi zwine zwa nga vha tsini?",
+            "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
           }
         ]
       }
@@ -590,7 +593,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzisekithara (Sectors): Maanḓa A Bvaho Nnḓa",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
         },
         "body": [
           {
@@ -603,7 +608,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mutsho une wa ni vhaisa u bva lufhio lurumbu?",
+            "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
           }
         ]
       }
@@ -622,7 +629,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱolisisani: Tsireledzo Vhukati Ha Muya Na Zwimela",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
         },
         "body": [
           {
@@ -656,7 +665,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Zwi Olani Ndi Hone Ni Tshi Vha Na Nzudzanyo (Design)",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
         },
         "body": [
           {
@@ -669,7 +680,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A zwi ṱoḓei uri zwi vhe zwo naka tshoṱhe. Zwi tea u vha ngoho.",
+            "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
           }
         ]
       }
@@ -687,7 +700,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mushumo Wa Masimuni",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
         },
         "body": [
           {
@@ -718,7 +733,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nyito Masimuni",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
         },
         "body": [
           {
