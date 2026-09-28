@@ -1,0 +1,95 @@
+{
+  "key": "leeks",
+  "name": "Leeks",
+  "localNames": null,
+  "botanicalName": "Allium ampeloprasum var. porrum",
+  "family": "Amaryllidaceae (Alliaceae)",
+  "role": "food",
+  "foodGroup": "allium_aromatic",
+  "harvestProduct": "blanched leaf stem (pseudostem)",
+  "frostTender": null,
+  "frostTenderNotes": "Not stated directly by the sourced KZN DARD documents. Leeks are grown through the coldest 'Cold areas / Moderate frosts' window (Nov-Apr, spanning the hard-frost May-Aug period's lead-up and tail) per Table 6, implying meaningful cold tolerance, but no explicit minimum-temperature or frost-damage statement was found, so left null rather than inferred.",
+  "transplant": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "there is another group which transplant comparatively easily and successfully, even at a more advanced age. These include crops such as brinjal, broccoli, Brussels sprouts, cabbage, cauliflower, celery, chilli, leek, lettuce, onion, sweet pepper and tomato.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 2,
+        "doc": "KZN DARD, 'Plant Establishment'"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": { "months": [11, 12, 1, 2, 3, 4], "evidence": [{"quote": "Leek Nov - Apr Sept - Oct, Feb - May Mar - Apr", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Cold areas / Moderate frosts column"}] },
+    "winter": { "months": [11, 12, 1, 2, 3, 4], "evidence": [], "notes": "No Western Cape/winter-rainfall-specific source found; set equal to 'summer' (Cold areas) by inference, following this catalog's existing precedent for cool-season crops, not a direct quote." },
+    "all-year": { "months": [3, 4], "evidence": [{"quote": "Leek Nov - Apr Sept - Oct, Feb - May Mar - Apr", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Hot areas / Frost-free column"}] },
+    "mild-frost": { "months": [9, 10, 2, 3, 4, 5], "evidence": [{"quote": "Leek Nov - Apr Sept - Oct, Feb - May Mar - Apr", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Warm areas / Light frosts column"}] }
+  },
+  "daysToHarvestRange": {
+    "value": [150, 150],
+    "evidence": [
+      {
+        "quote": "Leek 150 1 - 2 months",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+        "page": 2,
+        "doc": "KZN DARD, 'Length of Growing Period', Table 4"
+      }
+    ],
+    "notes": "Source gives a single figure (150 days), not a range, unlike most other crops in the same table; no '*' marker so it is unclear whether this is from sowing or transplanting. A Starke Ayres home-garden catalogue separately markets an onion (not leek) cultivar at 155 days for comparison, but no leek entry was found in that catalogue, so no seed-company cross-check exists for leek maturity."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "1-2 months",
+    "evidence": [{"quote": "Leek 150 1 - 2 months", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf", "page": 2, "doc": "KZN DARD, 'Length of Growing Period', Table 4"}]
+  },
+  "rowSpacingRangeCm": {
+    "value": [30, 30],
+    "evidence": [{"quote": "Leek 280-400 [Seed/g] 0,7-1,5kg [Seedtray] 4kg [Seedbed] 8kg [Direct] 15-20 [depth mm] 100 [Plant mm] 300 [Rows mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 5, "doc": "KZN DARD, 'Plant Establishment', Table 5"}],
+    "notes": "Source gives a single row-spacing figure (300mm), not a range."
+  },
+  "inRowSpacingRangeCm": {
+    "value": [10, 10],
+    "evidence": [{"quote": "Leek ... 100 [Plant mm] 300 [Rows mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 5, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "sowDepthRangeCm": {
+    "value": [1.5, 2],
+    "evidence": [{"quote": "Leek ... 15 - 20 [Sowing depth mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 5, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [4, 8],
+    "evidence": [{"quote": "Leek 280-400 [Seed/g] 0,7-1,5kg [Seedtray] 4kg [Seedbed] 8kg [Direct]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 5, "doc": "KZN DARD, 'Plant Establishment', Table 5"}],
+    "notes": "4kg/ha (seedbed, for raising transplants) to 8kg/ha (direct field sowing); the 0.7-1.5kg seedtray figure is left out of the range as it is a lower-volume specialised-nursery method, not a field-scale rate."
+  },
+  "yield": {
+    "tPerHaRange": null,
+    "product": "blanched pseudostems",
+    "conditions": null,
+    "evidence": [],
+    "notes": "KZN DARD's 'Expected Yields' Table 8 runs alphabetically from Lettuce directly to Marrow with no Leek row — confirmed absent, not overlooked. No other sourced primary document gives a leek yield figure for South Africa. Recorded as a gap."
+  },
+  "ecocrop": null,
+  "ecocropNotes": "EcoCrop_DB.csv has no row for Allium ampeloprasum, Allium porrum, or any leek-labelled entry; only Allium cepa, A. fistulosum and A. cepa var. aggregatum rows exist, none of which is leek's own species, so left null rather than substituting a different Allium species' climate envelope.",
+  "coverCrop": null,
+  "varieties": [],
+  "varietiesNotes": "No SA seed-company catalogue with a dedicated leek entry was located in this research pass (the Starke Ayres home-garden catalogue checked covers onion and spring onion cultivars but has no leek section), and neither DAFF nor the KZN DARD documents used name any leek cultivars. Recorded as a gap rather than inventing cultivar names.",
+  "zoneNotes": {
+    "highveld": "KZN's 'Cold areas / Moderate frosts' window (Nov-Apr) applies per the sourced 3-tier table.",
+    "lowveld-bushveld": "Falls under 'Hot areas / Frost-free' (Mar-Apr) per the sourced table — a narrow window compared with the other zones.",
+    "subtropical-coast": "Falls under 'Hot areas / Frost-free' (Mar-Apr) by the same table; not separately confirmed.",
+    "midlands-mistbelt": "KZN's own 'Warm areas / Light frosts' window (Sept-Oct, Feb-May) applies directly.",
+    "western-cape": "Not covered by a Western Cape-specific source; 'winter' sowMonths inferred equal to 'summer' — flagged gap.",
+    "southern-cape": "Not confirmed by source.",
+    "karoo-arid": "Not confirmed by source.",
+    "high-mountain": "Not confirmed by source; the crop's long 150-day cycle through the Cold-areas window suggests it endures real frost, but no direct statement covers this zone specifically."
+  },
+  "gaps": [
+    "No yield (t/ha) figure found for leek in any sourced KZN DARD document — confirmed absent from the 'Expected Yields' table rather than overlooked.",
+    "No named SA leek cultivars sourced from any seed catalogue, DAFF or KZN document checked.",
+    "No Western Cape/winter-rainfall-specific sowing calendar found; 'winter' sowMonths inferred equal to 'summer'.",
+    "frostTender left null — no explicit cold-tolerance statement found for leek specifically.",
+    "No EcoCrop row exists for Allium ampeloprasum/porrum in the available database copy.",
+    "The 150-day days-to-harvest figure is a single point value, not a range, and it is unclear whether it is measured from sowing or from transplanting."
+  ],
+  "verdict": "partial",
+  "summary": "Sourced from KZN DARD's 'Plant Establishment' and 'Length of Growing Period' chapters: sowMonths (all four rain-pattern columns via the Cold/Warm/Hot 3-tier table), row/in-row spacing, sow depth, seed rate and a single days-to-harvest figure (150 days) are directly quoted. Verdict is 'partial' because no yield (t/ha) figure exists for leek in the KZN 'Expected Yields' table (confirmed absent) and no named SA cultivars could be sourced from any catalogue checked."
+}

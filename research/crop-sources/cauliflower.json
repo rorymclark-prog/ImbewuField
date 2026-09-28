@@ -144,8 +144,17 @@
       }
     ]
   },
-  "ecocrop": null,
-  "ecocropNotes": "EcoCrop_DB.csv has no separate row for Brassica oleracea var. botrytis (cauliflower); only the species-level 'Brassica oleracea' entries in the file cover cabbage-type crops broadly and were not treated as cauliflower-specific, so this field is left null rather than borrowing another cultivar-group's climate envelope.",
+  "ecocrop": {
+    "row": "Brassica oleracea var. botrytis",
+    "TOPMN": 10,
+    "TOPMX": 25,
+    "TMIN": 5,
+    "TMAX": 30,
+    "GMIN": 60,
+    "GMAX": 120,
+    "KTMP": -5
+  },
+  "ecocropNotes": "EcoCrop_DB.csv row 'Brassica oleracea var. botrytis' used directly (cauliflower-specific cultivar group, not a generic Brassica oleracea species row).",
   "coverCrop": null,
   "varieties": [
     { "name": "Sabadel", "zones": ["highveld", "midlands-mistbelt"], "maturity": "early", "season": "Early summer sowing", "note": "Large plant, big white dome head; fresh market and industry.", "evidence": [{"quote": "Sabadel Early summer 70-80 Large Big White Dome Fresh market and industry", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf", "page": 9, "doc": "Production Guidelines for Cauliflower, DAFF, n.d."}] },
@@ -170,7 +179,6 @@
   },
   "gaps": [
     "No Western Cape / Southern Cape-specific sowing calendar found — the sourced 3-tier sowing table (Cold/Warm/Hot areas) is a summer-rainfall-oriented national/KZN table, not a winter-rainfall-specific one; 'winter' sowMonths are set equal to 'summer' by inference, following this catalog's cabbage/broccoli precedent, not a direct quote.",
-    "No EcoCrop row specific to Brassica oleracea var. botrytis was used (left null) rather than substituting a different cultivar-group's climate envelope.",
     "Arano's DAFF table entry prints '90-20' for days-to-maturity — very likely an OCR/scan artefact of '90-120' (its head-mass, colour and use match the neighbouring rows) but recorded with that caveat rather than silently 'corrected'.",
     "Named KZN cultivars (Incline, Glacier, Arizona, Fremont, Siria, Star 4403/4405, Tenere) have no individual season, maturity or zone data in the source beyond 'popular in KwaZulu-Natal'.",
     "No single seedRateKgPerHaRange recorded — DAFF gives two different figures (0.3 kg/ha via transplants, 1 kg/ha direct-seeded) that describe different establishment methods rather than a single range."

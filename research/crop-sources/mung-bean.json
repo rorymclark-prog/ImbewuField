@@ -1,0 +1,202 @@
+{
+  "key": "mung-bean",
+  "name": "Mung Bean",
+  "localNames": { "st": "Dithlodi", "af": "Mungboontjie" },
+  "botanicalName": "Vigna radiata",
+  "family": "Fabaceae",
+  "role": "food",
+  "foodGroup": "legume",
+  "harvestProduct": "dry grain (also used fresh as bean sprouts)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Sow seeds directly at least two weeks after the end of the frost. Seeds planted earlier may rot.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 10,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      },
+      {
+        "quote": "Mung bean is a warm season crop requiring 90–120 days of frost-free conditions from planting to maturity (depending on the variety).",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 9,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Mung beans are propagated from seed.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 10,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [11, 12],
+      "evidence": [
+        {
+          "quote": "Mung bean should be planted between late November and early December like the other legumes (field bean and cowpea) which are grown as the major crop on the field.",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+          "page": 11,
+          "doc": "Mung Bean Production Guideline, DAFF, 2010"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [75, 90],
+    "evidence": [
+      {
+        "quote": "Mung bean matures within 75 to 90 days.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 16,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "Elsewhere the same guideline gives a broader climatic requirement of '90-120 days of frost-free conditions from planting to maturity (depending on the variety)'; 75-90 days is the specific 'harvest maturity' figure used here."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "pod maturity is uneven; harvest begins when 1/2 to 2/3 of pods are mature, with up to five hand-pickings possible on high-yielding lines",
+    "evidence": [
+      {
+        "quote": "Pod maturity in mung bean is not uniform because the plants flower over an extended period... Generally, harvesting should begin when one half to two thirds of the pods are mature.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 16,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      },
+      {
+        "quote": "In developing countries, mung beans are hand-picked as the pods mature. Five pickings are possibly in some high-yielding lines",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 17,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [18, 120],
+    "evidence": [
+      {
+        "quote": "The rows should be 75 cm to 1,2 m apart.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 10,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      },
+      {
+        "quote": "The crop can be sown at different row spacings of 18 cm to 100 cm depending on yield expectations, planting equipment, stubble management and rotated crops.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 11,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "The guideline gives two different row-spacing statements (75cm-1.2m in one passage, 18cm-100cm in another, both drawn from the same US-extension-derived text); combined outer range recorded rather than picking one arbitrarily."
+  },
+  "inRowSpacingRangeCm": {
+    "value": [5, 15],
+    "evidence": [
+      {
+        "quote": "In full sun, set seeds 5 cm to 10 cm apart... Eventually, the seedlings should be thinned to 15 cm apart.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 10,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "5-10cm is the initial sowing spacing; plants are later thinned to a final 15cm spacing."
+  },
+  "sowDepthRangeCm": {
+    "value": [4, 7.5],
+    "evidence": [
+      {
+        "quote": "Seeds should be planted 4 cm deep in a well-prepared seedbed with good moisture content. If the surface layers are dry this depth can be increased to 7,5 cm if the soil type is one which does not crust easily.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+        "page": 11,
+        "doc": "Mung Bean Production Guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "A separate passage in the same guideline gives 2.5cm for a raised-bed home-garden layout; the 4-7.5cm 'Planting' section figure is used as the primary field recommendation."
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": null,
+    "product": null,
+    "conditions": null,
+    "evidence": []
+  },
+  "ecocrop": {
+    "row": "Vigna radiata",
+    "TOPMN": 21,
+    "TOPMX": 36,
+    "TMIN": 8,
+    "TMAX": 40,
+    "GMIN": 50,
+    "GMAX": 120
+  },
+  "coverCrop": null,
+  "varieties": [
+    {
+      "name": "Berken",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "note": "Described as green-coloured and 'the variety preferred by farmers' (source citation is a US reference, Myers 2000); not confirmed as grown/available in South Africa specifically.",
+      "evidence": [
+        {
+          "quote": "there are a few varieties available, such as Berken and Texsprout. Berken is green in colour and is the variety preferred by farmers (Myers, 2000).",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+          "page": 8,
+          "doc": "Mung Bean Production Guideline, DAFF, 2010"
+        }
+      ]
+    },
+    {
+      "name": "Texsprout",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "note": "Named alongside Berken as an available variety; not confirmed as grown/available in South Africa specifically.",
+      "evidence": [
+        {
+          "quote": "there are a few varieties available, such as Berken and Texsprout.",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+          "page": 8,
+          "doc": "Mung Bean Production Guideline, DAFF, 2010"
+        }
+      ]
+    },
+    {
+      "name": "AVRDC early-maturing lines",
+      "zones": [],
+      "maturity": "early",
+      "season": null,
+      "note": "Developed by AVRDC (Taiwan/Tanzania) for the tropics/subtropics: mature 55-65 days after sowing, high yielding, uniform and disease resistant. Not confirmed as released or grown in South Africa.",
+      "evidence": [
+        {
+          "quote": "The AVRDC in Tanzania has also developed several superior lines for production in the tropics and subtropics. These lines mature early (55–65 days after sowing), are high yielding, uniform and disease resistant.",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Mung%20bean%20-%20production%20guideline.pdf",
+          "page": 8,
+          "doc": "Mung Bean Production Guideline, DAFF, 2010"
+        }
+      ]
+    }
+  ],
+  "zoneNotes": {
+    "lowveld-bushveld": "Main South African production areas named: Limpopo and Mpumalanga, produced mainly for consumption, not on a commercial scale."
+  },
+  "gaps": [
+    "No commercial-scale South African production: source states 'Mung beans are not produced on a commercial scale' and that SA research attempts 'have been made... but with no success' due to late/erratic pod maturing, so most of the guideline content is drawn from international (mainly US) sources rather than SA field trials.",
+    "No seed rate in kg/ha; only plant population targets are given (200 000-350 000 plants/ha dryland, 400 000 plants/ha irrigated).",
+    "No yield figure (t/ha); source only states the crop is 'low yielding' without a number.",
+    "Row spacing has two conflicting stated ranges within the same document (75cm-1.2m vs 18-100cm); both recorded rather than silently picking one.",
+    "No varieties confirmed as specifically available/grown in South Africa -- Berken, Texsprout and AVRDC lines are cited from international sources.",
+    "No winter-rainfall, all-year, or mild-frost sowing guidance; only one national window given."
+  ],
+  "verdict": "partial",
+  "summary": "DAFF's 2010 Mung Bean guideline (compiled mainly from international/US literature, since local SA research had 'no success') gives a clear days-to-maturity figure, sowing window, sowing depth and spacing, but no seed-rate-in-kg/ha or yield figure, and no confirmed SA-grown varieties, so verdict is partial. The source is explicit that mung bean is not commercially produced in South Africa."
+}

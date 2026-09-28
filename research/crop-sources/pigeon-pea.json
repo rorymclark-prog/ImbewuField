@@ -1,0 +1,131 @@
+{
+  "key": "pigeon-pea",
+  "name": "Pigeon Pea",
+  "localNames": { "st": "Lethlodi / Dithlodi", "zu": "Udali", "generic": "Duifert" },
+  "botanicalName": "Cajanus cajan L.",
+  "family": "Fabaceae",
+  "role": "dual",
+  "foodGroup": "legume",
+  "harvestProduct": "dry grain (also green immature seed, and used as fodder/green manure)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Pigeon peas are drought tolerant but are frost intolerant legume crops.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pigeon%20peas%20-%20Brochure.pdf",
+        "page": 2,
+        "doc": "Pigeon peas, DAFF (Lowveld Research Unit, Mpumalanga)"
+      }
+    ]
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Pigeon peas are best established by direct seeding in a well-prepared seedbed.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pigeon%20peas%20-%20Brochure.pdf",
+        "page": 2,
+        "doc": "Pigeon peas, DAFF (Lowveld Research Unit, Mpumalanga)"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [] },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": {
+      "months": [10, 11, 12],
+      "evidence": [
+        {
+          "quote": "Planting starts from October to December",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pigeon%20peas%20-%20Brochure.pdf",
+          "page": 2,
+          "doc": "Pigeon peas, DAFF (Lowveld Research Unit, Mpumalanga)"
+        }
+      ]
+    },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": null,
+    "evidence": [],
+    "notes": "Source distinguishes 'long and medium duration' plants and notes early maturity under low rainfall, but gives no numeric days-to-maturity figure."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": [70, 90],
+    "evidence": [
+      {
+        "quote": "The long and medium duration plants are planted at an interspacing of 70 to 90 cm.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pigeon%20peas%20-%20Brochure.pdf",
+        "page": 2,
+        "doc": "Pigeon peas, DAFF (Lowveld Research Unit, Mpumalanga)"
+      }
+    ],
+    "notes": "Source calls this 'interspacing' without clarifying whether it is row-to-row or plant-to-plant; treated here as row spacing since no separate in-row figure is given."
+  },
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": {
+    "value": [4, 5],
+    "evidence": [
+      {
+        "quote": "placement of the seeds is from 4 to 5 cm deep; the deeper figure being in hand dibbling",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pigeon%20peas%20-%20Brochure.pdf",
+        "page": 2,
+        "doc": "Pigeon peas, DAFF (Lowveld Research Unit, Mpumalanga)"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [45, 67],
+    "evidence": [
+      {
+        "quote": "Seeds can be spread at a seed rate of 45 to 67 kg/ha",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pigeon%20peas%20-%20Brochure.pdf",
+        "page": 2,
+        "doc": "Pigeon peas, DAFF (Lowveld Research Unit, Mpumalanga)"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": null,
+    "product": null,
+    "conditions": null,
+    "evidence": []
+  },
+  "ecocrop": {
+    "row": "Cajanus cajan",
+    "TOPMN": 18,
+    "TOPMX": 38,
+    "TMIN": 10,
+    "TMAX": 45,
+    "GMIN": 90,
+    "GMAX": 365
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": 40,
+    "biomassTPerHa": null,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "The root nodules of the peas enrich the soil by adding about 40 kg of nitrogen per hectare.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pigeon%20peas%20-%20Brochure.pdf",
+        "page": 2,
+        "doc": "Pigeon peas, DAFF (Lowveld Research Unit, Mpumalanga)"
+      }
+    ]
+  },
+  "varieties": [],
+  "zoneNotes": {
+    "lowveld-bushveld": "Named production districts: Limpopo (Bohlabela, Capricorn, Mopani) and Mpumalanga (Gert Sibande, Ekangala, Ehlanzeni South and North) -- all Lowveld/warm-interior districts, consistent with the crop's frost intolerance.",
+    "highveld": "Not addressed by the source; given the crop is stated to be frost intolerant, hard-frost highveld areas are likely unsuitable for a full-season crop (inference, not stated -- gap)."
+  },
+  "gaps": [
+    "No numeric days-to-maturity figure; only a qualitative 'long vs medium duration' distinction and a note that low-rainfall conditions bring earlier maturity.",
+    "No yield figure (t/ha) anywhere in the source.",
+    "'Interspacing' of 70-90cm is not clearly labelled as row spacing vs in-row spacing, so in-row spacing is recorded as a gap rather than guessed.",
+    "No named varieties/cultivars -- only the generic 'long' and 'medium' duration plant types are mentioned.",
+    "Source's Oct-Dec planting window and production districts are all Lowveld (frost-free); no separate guidance for highveld, Western Cape, or coastal mild-frost areas."
+  ],
+  "verdict": "partial",
+  "summary": "This DAFF/ARC Lowveld Research Unit brochure gives solid figures for sowing depth, seed rate, row spacing and nitrogen fixation (40 kg N/ha), and clearly documents frost intolerance and direct-seeding. It has no days-to-maturity or yield figures and no named varieties, so verdict is partial."
+}

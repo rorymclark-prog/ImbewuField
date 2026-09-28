@@ -1,0 +1,124 @@
+{
+  "key": "radish",
+  "name": "Radish",
+  "localNames": null,
+  "botanicalName": "Raphanus sativus",
+  "family": "Brassicaceae",
+  "role": "food",
+  "foodGroup": "root_tuber",
+  "harvestProduct": "root",
+  "frostTender": null,
+  "frostTenderNotes": "Not stated directly by the sourced KZN DARD documents. Radish is sown across the coldest 'Cold areas / Moderate frosts' window (Jul-Apr) per Table 6, implying real cold tolerance at the seedling/root stage, but no explicit minimum-temperature or frost-damage statement was found, so left null rather than inferred.",
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Radish 75 - 110 [Seed/g] - [Seedtray] - [Seedbed] 6 kg [Direct] 15 - 20 [depth mm] 40 - 60 [Plant mm] 150 - 200 [Rows mm]",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 6,
+        "doc": "KZN DARD, 'Plant Establishment', Table 5"
+      }
+    ],
+    "notes": "Radish is not named in the document's list of crops that 'transplant comparatively easily' (brinjal, broccoli, cabbage, cauliflower, celery, chilli, leek, lettuce, onion, sweet pepper, tomato — p.2), and Table 5 gives it only a Direct-sow rate (6kg/ha) with no Seedtray/Seedbed figures, the same pattern shown for other direct-sown root crops in that table."
+  },
+  "sowMonths": {
+    "summer": { "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4], "evidence": [{"quote": "Radish Jul -Apr All year Mar-Oct", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 8, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Cold areas / Moderate frosts column"}] },
+    "winter": { "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4], "evidence": [], "notes": "No Western Cape/winter-rainfall-specific source found; set equal to 'summer' (Cold areas) by inference, following this catalog's existing precedent, not a direct quote." },
+    "all-year": { "months": [3, 4, 5, 6, 7, 8, 9, 10], "evidence": [{"quote": "Radish Jul -Apr All year Mar-Oct", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 8, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Hot areas / Frost-free column"}] },
+    "mild-frost": { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "evidence": [{"quote": "Radish Jul -Apr All year Mar-Oct", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 8, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Warm areas / Light frosts column ('All year')"}] }
+  },
+  "daysToHarvestRange": {
+    "value": [20, 30],
+    "evidence": [
+      {
+        "quote": "Radish 20 - 30 1 - 2 weeks",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+        "page": 3,
+        "doc": "KZN DARD, 'Length of Growing Period', Table 4"
+      },
+      {
+        "quote": "DAYS TO MATURITY: 20-25",
+        "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf",
+        "page": 25,
+        "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition — 'Sparkler' and red round radish cultivars"
+      }
+    ],
+    "notes": "KZN's 20-30 day figure is the primary source; the Starke Ayres catalogue's 20-25 day figure for two named cultivars sits inside it and is recorded as corroboration only (per the brief, seed catalogues are not used as the sole source for a number)."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "1-2 weeks",
+    "evidence": [{"quote": "Radish 20 - 30 1 - 2 weeks", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf", "page": 3, "doc": "KZN DARD, 'Length of Growing Period', Table 4"}]
+  },
+  "rowSpacingRangeCm": {
+    "value": [15, 20],
+    "evidence": [{"quote": "Radish ... 40 - 60 [Plant mm] 150 - 200 [Rows mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 6, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [4, 6],
+    "evidence": [{"quote": "Radish ... 40 - 60 [Plant mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 6, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "sowDepthRangeCm": {
+    "value": [1.5, 2],
+    "evidence": [{"quote": "Radish ... 15 - 20 [Sowing depth mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 6, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [6, 6],
+    "evidence": [{"quote": "Radish ... 6 kg [Direct]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 6, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "yield": {
+    "tPerHaRange": null,
+    "product": "roots",
+    "conditions": null,
+    "evidence": [],
+    "notes": "KZN DARD's 'Expected Yields' Table 8 has no Radish row (it is a minor, fast-cycle crop not covered by that table). No other sourced document gives a radish yield figure for South Africa. Recorded as a gap."
+  },
+  "ecocrop": {
+    "row": "Raphanus sativus",
+    "TOPMN": 12,
+    "TOPMX": 26,
+    "TMIN": 10,
+    "TMAX": 37,
+    "GMIN": 50,
+    "GMAX": 80,
+    "KTMP": null
+  },
+  "coverCrop": null,
+  "varieties": [
+    {
+      "name": "Sparkler",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape"],
+      "maturity": "early",
+      "season": "Spring, Summer, Autumn & Winter",
+      "note": "Spectacular scarlet and white radish.",
+      "evidence": [{"quote": "Spectacular scarlet and white radish. SOWING SEASON: Spring, Summer, Autumn & Winter DAYS TO GERMINATION 5-10 DAYS TO MATURITY: 20-25 SOW DEPTH: 1cm", "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf", "page": 25, "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition"}]
+    },
+    {
+      "name": "(unnamed red round radish, same catalogue page as Sparkler)",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape"],
+      "maturity": "early",
+      "season": "Spring, Summer, Autumn & Winter",
+      "note": "Bright red, round and tasty radish. Cultivar name not resolvable from the extracted page layout — recorded as a distinct listing rather than merged with Sparkler.",
+      "evidence": [{"quote": "Bright red, round and tasty radish. SOWING SEASON: Spring, Summer, Autumn & Winter DAYS TO GERMINATION 5-10 DAYS TO MATURITY: 20-25 SOW DEPTH: 1cm", "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf", "page": 25, "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition"}]
+    }
+  ],
+  "varietiesNotes": "Only a home-garden (not commercial-scale) Starke Ayres catalogue was located with radish entries; the PDF-to-text extraction interleaves photo captions and spec blocks, so the second cultivar's printed name could not be confidently resolved and is left unnamed rather than guessed. No official DALRRD varietal list entry for radish was checked in this pass. 'Zones' for both are the catalogue's own 'Spring, Summer, Autumn & Winter' claim applied broadly since it does not name specific SA regions; karoo-arid and high-mountain are left out as radish's fast, shallow-rooted cycle and the catalogue's own claim are not verified for those extreme-climate zones by any source.",
+  "zoneNotes": {
+    "highveld": "KZN's 'Cold areas / Moderate frosts' window (Jul-Apr) applies per the sourced 3-tier table; the fast 20-30 day cycle allows multiple sowings between frosts.",
+    "lowveld-bushveld": "Falls under 'Hot areas / Frost-free' (Mar-Oct) per the sourced table.",
+    "subtropical-coast": "Falls under 'Hot areas / Frost-free' (Mar-Oct); not separately confirmed.",
+    "midlands-mistbelt": "KZN's own 'Warm areas / Light frosts' window ('All year') applies directly.",
+    "western-cape": "Not covered by a Western Cape-specific source; 'winter' sowMonths inferred equal to 'summer' — flagged gap.",
+    "southern-cape": "Not confirmed by source.",
+    "karoo-arid": "Not confirmed by source; EcoCrop's TMAX of 37°C suggests summer heat tolerance but extreme Karoo aridity/frost swings are not addressed.",
+    "high-mountain": "Not confirmed by source."
+  },
+  "gaps": [
+    "No yield (t/ha) figure found for radish in any sourced document — confirmed absent from KZN's 'Expected Yields' table.",
+    "One of the two Starke Ayres radish cultivars could not be confidently named from the extracted catalogue text (photo caption/spec-block layout issue).",
+    "No Western Cape/winter-rainfall-specific sowing calendar found; 'winter' sowMonths inferred equal to 'summer'.",
+    "frostTender left null — no explicit cold-tolerance statement found for radish specifically.",
+    "Zone assignments for the Starke Ayres cultivars reflect the catalogue's own generic 'grows in all seasons' claim, not a region-specific recommendation."
+  ],
+  "verdict": "partial",
+  "summary": "Sourced primarily from KZN DARD's 'Plant Establishment' and 'Length of Growing Period' chapters: sowMonths (all four rain-pattern columns), row/in-row spacing, sow depth, seed rate and days-to-harvest (20-30 days) are directly quoted, cross-checked against a Starke Ayres home-garden catalogue (20-25 days for two named cultivars). Verdict is 'partial' because no yield (t/ha) figure exists for radish in any sourced document, and one of the two catalogue cultivars could not be reliably named from the extracted text."
+}

@@ -1,0 +1,172 @@
+{
+  "key": "amaranth",
+  "name": "Amaranth",
+  "localNames": {
+    "en": "Pigweed",
+    "af": "Hanekam",
+    "st": "Thepe",
+    "zu": "Imbuya",
+    "ve": "Vowa"
+  },
+  "botanicalName": "Amaranthus spp. (A. cruentus, A. hybridus, A. spinosus, A. caudatus, A. thunbergii)",
+  "family": "Amaranthaceae",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "fresh leaves (grain also used, but not the focus here)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Because amaranth is an annual crop, it does not mature completely in areas with a short growing season. Frost is necessary to terminate the crop's growth.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 9,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      },
+      {
+        "quote": "Before harvesting can begin a killing frost must occur, followed by a week of good drying weather to make the crop drier for harvest",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 13,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "There are three ways to plant amaranth: Seeds are sown directly into the soil ... Seeds are sown in shallow rows ... Seeds can be planted in seed trays. Transplant them after approximately four weeks when the plants should be about 15 cm tall.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 11,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "Direct sowing (broadcast or in rows) is the default method described; transplanting from trays is offered as a third, optional method."
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [9, 10],
+      "evidence": [
+        {
+          "quote": "Production Schedules — Planting [shaded: September, October]; Harvesting [shaded: January, February, March, November, December]",
+          "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+          "page": 12,
+          "doc": "Amaranthus — Production guideline, DAFF, 2010 (Production Schedules table, read from the shaded cells)"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [30, 55],
+    "evidence": [
+      {
+        "quote": "Most amaranth cultivars grow rapidly and may be harvested from 30 to 55 days from sowing, when they reach a height of 0,6 m.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 13,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      },
+      {
+        "quote": "When the plants are harvested at regular intervals, start picking the leaves eight weeks after sowing or four weeks after transplanting.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 14,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "First leaf pick. Source gives two figures depending on management: general harvest maturity at 30-55 days from sowing (0.6m height) for young-plant/thinning harvest, versus a slower 8-week-from-sowing (4-week-from-transplant) start if the farmer is running a regular, repeated picking cycle rather than a once-off pull."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "Continuous picking roughly every 2 weeks once harvest starts, until frost ends the crop; DAFF's own national schedule shows harvesting spanning Nov-Mar from a Sep-Oct planting.",
+    "evidence": [
+      {
+        "quote": "If the plants are treated correctly, it should be possible to harvest leaves every two weeks.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 10,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [76.2, 150],
+    "evidence": [
+      {
+        "quote": "Row widths of 762 mm have been reported to be the standard with amaranth trials.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 11,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      },
+      {
+        "quote": "Seeds are sown in shallow rows. These rows should be 1, 5 m apart. ... Transplant into rows 1, 5 m apart and with a spacing of 30 cm in the row.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 11,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "Document gives two inconsistent row widths (762mm from a broadcast/grain trial reference vs 1.5m for direct-row-sowing and transplanting) — flagged, not reconciled by the source."
+  },
+  "inRowSpacingRangeCm": {
+    "value": [30, 30],
+    "evidence": [
+      {
+        "quote": "Transplant into rows 1, 5 m apart and with a spacing of 30 cm in the row.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 11,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "Only given for the transplant method; no in-row figure given for direct-sown rows."
+  },
+  "sowDepthRangeCm": {
+    "value": [null, 1.25],
+    "evidence": [
+      {
+        "quote": "Seeds should be planted not more than 1,25 cm deep, depending on soil texture and surface moisture at planting time.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 10,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": [null, 40],
+    "product": "fresh leaves",
+    "conditions": "cultivated (South Africa)",
+    "evidence": [
+      {
+        "quote": "The production levels of amaranth are not known. However, recent research indicates that under cultivated conditions, amaranth produces fresh leaf yields of up to 40 t/ha.",
+        "url": "https://web.archive.org/web/20200806115829/https://www.nda.agric.za/docs/Brochures/Amaranthus.pdf",
+        "page": 7,
+        "doc": "Amaranthus — Production guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "Same source also gives a grain yield figure: 'The yield of grain amaranth is highly variable with 1 000 kg/ha considered a good yield' — not used here since the catalog entry is for leaf harvest."
+  },
+  "ecocrop": {
+    "row": "Amaranthus cruentus",
+    "TOPMN": 22,
+    "TOPMX": 28,
+    "TMIN": 10,
+    "TMAX": 45,
+    "GMIN": 30,
+    "GMAX": 300
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {
+    "lowveld-bushveld": "Named as a main South African producing area (Limpopo).",
+    "highveld": "Named as a main producing area (North West, Mpumalanga) — DAFF schedule's Sep-Oct planting window assumes frost has passed.",
+    "midlands-mistbelt": "KwaZulu-Natal named as a main producing area; no separate mild-frost-specific window published.",
+    "karoo-arid": "Not mentioned as a producing area in this source."
+  },
+  "gaps": [
+    "No separate sowMonths given for winter (Western Cape), all-year (subtropical coast) or mild-frost climates — only one national DAFF schedule is published.",
+    "Seed rate: the source states 'approximately 272 kg of seed per hectare is considered suitable' but this figure looks like a unit/transcription artifact carried over from a US grain-amaranth extension text (amaranth seed is tiny — the same document says 'up to 3 000 seeds per gram' — so 272 kg/ha would be an implausibly dense sowing); left as null rather than recorded as a trustworthy field-seeding rate.",
+    "Row spacing is internally inconsistent in the source (762mm vs 1.5m) and not reconciled.",
+    "No named/registered South African cultivars — the DAFF guideline lists indigenous species only (A. cruentus, A. hybridus, A. spinosus, A. caudatus, A. thunbergii), harvested largely as a volunteer/landrace crop, so no varieties list could be populated.",
+    "ARC-VOPI accession/line names for amaranth were not found in the sources consulted."
+  ],
+  "verdict": "ready",
+  "summary": "DAFF's 2010 Amaranthus production guideline is a solid primary source for South African leaf-amaranth growing practice: national Sep-Oct planting/Nov-Mar harvest schedule, 30-55 day first-leaf-pick maturity, a 40 t/ha fresh-leaf yield figure, and row/in-row spacing (though the row-width figure is internally inconsistent). It is not grown as a named-cultivar crop in South Africa — production is from indigenous species, largely self-seeded/landrace, so no variety list applies."
+}

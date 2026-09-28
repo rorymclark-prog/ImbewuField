@@ -1,0 +1,162 @@
+{
+  "key": "cowpea",
+  "name": "Cowpea",
+  "localNames": { "zu": "Imbumba", "st": "Dinawa / Dinaba", "nso": "Munawa" },
+  "botanicalName": "Vigna unguiculata",
+  "family": "Fabaceae",
+  "role": "dual",
+  "foodGroup": "legume",
+  "harvestProduct": "dry grain and fresh leaves (imifino)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "The base temperature for germination is 8,5 °C and for leaf growth 20 °C ... optimum temperature for growth and development is around 30 °C.",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      }
+    ]
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "The seed should be planted at 3 to 4 cm deep.",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [11, 12],
+      "evidence": [
+        {
+          "quote": "cowpea should be planted late November to early December in the lower rainfall areas of South Africa",
+          "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+          "page": null,
+          "doc": "Production guidelines for Cowpea, DAFF, 2014"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": {
+      "months": [12, 1],
+      "evidence": [
+        {
+          "quote": "The optimum sowing times are December to January.",
+          "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+          "page": null,
+          "doc": "Production guidelines for Cowpea, DAFF, 2014"
+        }
+      ]
+    },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [21, 120],
+    "evidence": [
+      {
+        "quote": "Harvest of young leaves for a vegetable can be done as soon as it is 3 weeks from sowing.",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      },
+      {
+        "quote": "short (<100 days) growth duration, grown mostly for grain, to longer (>120 days) duration in semi-erect to trailing plants which are normally grown primarily for forage",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      }
+    ],
+    "notes": "21 days = first leaf pick (imifino); grain varieties mature in under 100 days, forage/trailing types over 120 days. Range given spans first leaf harvest to grain-type upper bound."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "leaves picked weekly from 3-4 weeks after planting until flowering",
+    "evidence": [
+      {
+        "quote": "the leaves are picked 4 weeks after planting, and this continues until the plants start to flower",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [50, 75],
+    "evidence": [
+      {
+        "quote": "The recommended spacing is 50 to 75 cm between rows and 50 to 75 cm between plants for spreading varieties and 50 cm between rows and 15 to 25 cm for erect and semi-erect varieties.",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [15, 75],
+    "evidence": [
+      {
+        "quote": "The recommended spacing is 50 to 75 cm between rows and 50 to 75 cm between plants for spreading varieties and 50 cm between rows and 15 to 25 cm for erect and semi-erect varieties.",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      }
+    ],
+    "notes": "15-25cm for erect/semi-erect (grain) types, 50-75cm for spreading types."
+  },
+  "sowDepthRangeCm": {
+    "value": [3, 4],
+    "evidence": [
+      {
+        "quote": "The seed should be planted at 3 to 4 cm deep.",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [25, 30],
+    "evidence": [
+      {
+        "quote": "Seeding rate ranges from 25 to 30 kg of good and viable seeds per hectare.",
+        "url": "https://web.archive.org/web/2024id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/COWPEA%20PRODUCTION%20GUIDELINES%202014.pdf",
+        "page": null,
+        "doc": "Production guidelines for Cowpea, DAFF, 2014"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": null,
+    "product": null,
+    "conditions": null,
+    "evidence": []
+  },
+  "ecocrop": {
+    "row": "Vigna unguiculata",
+    "TOPMN": 25,
+    "TOPMX": 35,
+    "TMIN": 15,
+    "TMAX": 40,
+    "GMIN": 30,
+    "GMAX": 240
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {
+    "lowveld-bushveld": "Main production areas named: Limpopo, Mpumalanga (both include lowveld/bushveld districts).",
+    "highveld": "North-West is named as a main production area; cowpea's 400-750mm rainfall need and frost sensitivity mean highveld hard-frost areas are marginal (not stated explicitly in source, inferred from base-temperature data).",
+    "subtropical-coast": "KwaZulu-Natal is named as a main production area, consistent with warm/frost-free coastal conditions."
+  },
+  "gaps": [
+    "No t/ha grain yield figure found anywhere in the DAFF 2014 guideline (checked in full, 24 pages) — recorded as a gap rather than invented.",
+    "No named cultivars/varieties by zone found in this source; Grain SA/ARC-GCI cultivar list not located in this pass.",
+    "No explicit winter-rainfall (Western Cape) or mild-frost hinterland sowing guidance; left empty rather than assumed.",
+    "Row/in-row spacing differs for spreading vs erect/semi-erect types; single combined range recorded, distinction kept in evidence notes."
+  ],
+  "verdict": "partial",
+  "summary": "DAFF's 2014 Cowpea production guideline is a strong primary source covering climate, sowing window, spacing, sowing depth, seed rate, and both grain and leaf (imifino) harvest timing/use, with frost sensitivity confirmed via base-temperature data. No yield figure (t/ha) is given anywhere in the document, and no variety list was found, so verdict is partial despite otherwise rich sourcing."
+}
