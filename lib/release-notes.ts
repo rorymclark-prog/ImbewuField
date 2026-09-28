@@ -42,7 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 September 2026', sha: 'b668bc6', changes: [
+  { when: '28 September 2026', sha: '3e75bbe6', changes: [
+    'Introduction has more Sesotho and Tshivenda draft slides beside the exact English source.',
+    'The Xitsonga Introduction cover now shows its provisional draft title.',
+  ], tour: [
+    { title: 'Compare the Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho for slides 20–22, Tshivenda for slides 8, 9 and 11–14, or Xitsonga for slide 1. These are AI drafts awaiting facilitator review. Other regional slides may still show English, and narration remains English until regional recordings are ready.' },
+  ] },
+  { when: '27 September 2026', sha: '040b1e2f', changes: [
     'Few big harvests re-sows each crop after its harvest; too-hot months are skipped.',
     'Irrigation off? A mapped farm now gets a rain-fed plan from its own rainfall.',
     'Plans show each crop’s bed; the calendar and Task Planner follow all your farms.',
