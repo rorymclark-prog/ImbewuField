@@ -147,14 +147,14 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
 
   return (
     <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${HAIRLINE}`, background: '#FFFEFA' }}>
-      <div className="flex items-center gap-2 px-3.5 py-2.5" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
+      <div className="flex flex-wrap items-center gap-2 px-3.5 py-2.5" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
         <Volume2 size={14} style={{ color: GREEN, flexShrink: 0 }} />
         <span className="font-display text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>
           {label ?? t('courseAudioListen')}
         </span>
-        <div className="flex-1" />
+        <div className="flex-1 min-w-0" />
         {narration.languages.length > 1 && (
-          <div className="flex items-center gap-1" role="group" aria-label={t('courseNarrationLanguage')}>
+          <div className="ml-auto flex w-full flex-wrap items-center justify-end gap-1 sm:w-auto" role="group" aria-label={t('courseNarrationLanguage')}>
             {narration.languages.map((code) => {
               const on = code === lang;
               return (
@@ -163,7 +163,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                   type="button"
                   onClick={() => switchLang(code)}
                   aria-pressed={on}
-                  className="font-sans text-xs px-2 py-1 rounded-full"
+                  className="font-sans text-xs px-2 py-1 rounded-full shrink-0"
                   style={{
                     background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
                     border: `1px solid ${on ? 'rgba(31,77,43,0.30)' : HAIRLINE}`,
