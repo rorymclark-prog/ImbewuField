@@ -52,6 +52,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 28 Sep 2026 — Crop catalog batch 1: 20 new crops + planner fixes
+- **Added (primary sources, cited per value in `lib/crop-catalog.ts`):** amaranth, cauliflower,
+  parsley, sorghum, soybean, brinjal, gem squash, baby marrow, spanspek, sweetcorn, cowpea,
+  bambara groundnut, sunflower, radish, mung bean, spider plant, African nightshade, sunn hemp,
+  medic, fodder radish. Research dossiers in `research/crop-sources/<key>.json`.
+- **Judgement calls:** cowpea has no yield (only SA trial: 60.7 vs 1184 kg/ha at two sites) so it
+  is manual-add only; bambara uses the UKZN 2023 genotype-mean range 0.16–0.96 t/ha, planning at the
+  low end; sorghum from national production/area; parsley from the conservative KZN 2 t/ha.
+- **Cover crops** sunn hemp, medic and fodder radish carry `timingVerified: false` (termination days
+  are proxies), so they are recorded but not auto-scheduled. Only oats/broad beans stay as winter cover.
+- **Not added:** Chinese cabbage, leeks, cassava — no primary SA source for the missing values.
+- **Prices:** 12 new crops are in `UNPRICED_CROPS` (no price research yet); plan value skips them.
+- **Planner fixes the bigger catalog exposed:** (1) a sowing that would leave a bed with no crop able
+  to reach a bare winter month is tried last (winter route guard); (2) few-big follow-on sowings
+  may use any shared bed, so a large crop can't strand a second sowing; (3) the sowing-cadence pass
+  prefers the candidate that fills a fresh-harvest month no bed covers yet.
+- **Art:** 20 placeholder PNGs in `public/crop-art/`; the Codex brief is `docs/CROP-ART-BRIEF.md` (batch 2).
+
 ### 27 Sep 2026 — Crop-plan audit, phase 3: the nine open items
 - **Few big harvests:** each crop now gets its next big sowing once its last harvest ends (follow-on
   rounds), instead of one cohort and bare ground. Reference farm family/few-big 88 → 254 kg,

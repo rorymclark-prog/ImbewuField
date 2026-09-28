@@ -136,7 +136,27 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
 // would misrepresent a field planting rather than estimate it. No
 // bunch-form or field-crop per-kg price for true spinach specifically could
 // be found. Honest exclusion, same pattern as coriander.
-export const UNPRICED_CROPS = new Set<string>(['coriander', 'true-spinach']);
+// 2026-09-28 batch: these 12 food crops carry a sourced planning yield
+// (research/crop-sources/<key>.json) but no price research was done in that
+// pass — no retail or wholesale figure was looked up, so none is invented
+// here. Deliberately excluded rather than left to silently fail the
+// "every planning-yield crop is priced" gate (tests/crop-prices.test.ts).
+export const UNPRICED_CROPS = new Set<string>([
+  'coriander',
+  'true-spinach',
+  'cauliflower',
+  'parsley',
+  'sorghum',
+  'soybean',
+  'brinjal',
+  'gem-squash',
+  'baby-marrow',
+  'spanspek',
+  'sweetcorn',
+  'cowpea',
+  'bambara-groundnut',
+  'sunflower',
+]);
 
 const PRICE_OVERRIDES_KEY = 'imbewu_crop_price_overrides_v1';
 

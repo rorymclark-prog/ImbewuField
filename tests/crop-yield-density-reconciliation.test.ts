@@ -78,6 +78,26 @@ const RECORDED_IMPLIED_KG_PER_PLANT: Record<string, number> = {
   'watermelon': 1.221,
   'tomatoes': 1.4175,
   'pumpkin': 1.95,
+
+  // 2026-09-28 batch — restated from lib/crop-catalog.ts's own rowSpacingCm ×
+  // inRowSpacingCm × yieldKgPerM2 (see research/crop-sources/<key>.json for
+  // the underlying spacing/yield citations). Cover crops use the same
+  // legacy spacingCm=6 placeholder as oats, so their implied value is 0 by
+  // the same "soil-cover crop: zero FOOD kg by design" reasoning.
+  'sunn-hemp': 0,
+  'medic': 0,
+  'fodder-radish': 0,
+  'bambara-groundnut': 0.00135,
+  'parsley': 0.006,
+  'sorghum': 0.009856,
+  'soybean': 0.01625,
+  'sunflower': 0.0342,
+  'sweetcorn': 0.1575,
+  'baby-marrow': 0.2975,
+  'cauliflower': 0.223125,
+  'spanspek': 0.54,
+  'brinjal': 0.45,
+  'gem-squash': 0.675,
 };
 
 /**

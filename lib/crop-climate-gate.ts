@@ -68,6 +68,38 @@ export const ECOCROP_HEAT_LIMITS_C: Readonly<Record<string, HeatLimitC>> = {
   oats: { optimalMax: 20, absoluteMax: 30 },
   'true-spinach': { optimalMax: 20, absoluteMax: 27 },
   turnip: { optimalMax: 17, absoluteMax: 30 },
+
+  // 2026-09-28 batch — see research/crop-sources/<key>.json for citations.
+  // Rows: Brassica oleracea var. botrytis; Petroselinum crispum; Sorghum
+  // bicolor; Glycine max; Solanum melongena; Cucurbita pepo (gem-squash and
+  // baby-marrow share the row); Cucumis melo; Zea mays (same row as maize);
+  // Vigna unguiculata; Vigna subterranea; Helianthus annuus; Raphanus
+  // sativus (radish and fodder-radish share the row); Vigna radiata;
+  // Gynandropsis gynandra (ECOCROP's listing for spider-plant/Cleome
+  // gynandra, recorded there as a synonym); Crotalaria juncea; Medicago
+  // truncatula (closest ECOCROP medic-genus proxy).
+  cauliflower: { optimalMax: 25, absoluteMax: 30 },
+  parsley: { optimalMax: 20, absoluteMax: 28 },
+  sorghum: { optimalMax: 35, absoluteMax: 40 },
+  soybean: { optimalMax: 33, absoluteMax: 38 },
+  brinjal: { optimalMax: 35, absoluteMax: 40 },
+  'gem-squash': { optimalMax: 30, absoluteMax: 40 },
+  'baby-marrow': { optimalMax: 30, absoluteMax: 40 },
+  spanspek: { optimalMax: 30, absoluteMax: 35 },
+  sweetcorn: { optimalMax: 33, absoluteMax: 47 },
+  cowpea: { optimalMax: 35, absoluteMax: 40 },
+  'bambara-groundnut': { optimalMax: 30, absoluteMax: 38 },
+  sunflower: { optimalMax: 34, absoluteMax: 45 },
+  radish: { optimalMax: 26, absoluteMax: 37 },
+  'mung-bean': { optimalMax: 36, absoluteMax: 40 },
+  'spider-plant': { optimalMax: 25, absoluteMax: 35 },
+  // ECOCROP has no row for Solanum retroflexum/scabrum; this uses its
+  // Solanum nigrum row as the nearest available proxy (same dossier
+  // disclosure — research/crop-sources/african-nightshade.json).
+  'african-nightshade': { optimalMax: 28, absoluteMax: 40 },
+  'sunn-hemp': { optimalMax: 30, absoluteMax: 40 },
+  medic: { optimalMax: 25, absoluteMax: 35 },
+  'fodder-radish': { optimalMax: 25, absoluteMax: 30 },
 };
 
 export function heatLimitOf(crop: Pick<CropDef, 'key'>): HeatLimitC | undefined {
