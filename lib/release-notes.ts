@@ -53,7 +53,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Check a tree before you plant it', where: 'Design Studio → place a tree → pick a species', href: '/design',
       detail: 'Search a fruit tree such as avocado, mango or marula. Under its name you now see when South African sources say it is picked, how many years to its first crop and about how many kg a mature tree gives, where a source states it.' },
   ] },
-  { when: '28 September 2026', sha: 'fb647dd3', changes: [
+  { when: '28 September 2026', sha: 'c5dc967e', changes: [
     'Introduction L2 adds one Sesotho study prompt beside its English source.',
     'Farm guidance, key points and quiz stay in English pending review.',
   ], tour: [
