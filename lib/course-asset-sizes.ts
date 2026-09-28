@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1558 files, 585.6 MB total.
+// 1576 files, 587.8 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -880,8 +880,26 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/market-community/ts/slide-18.webp': 536034,
   '/course-decks/market-community/ts/slide-19.webp': 132004,
   '/course-decks/market-community/ts/slide-20.webp': 150540,
-  '/course-decks/market-community/ve/slide-02.webp': 195798,
-  '/course-decks/market-community/ve/slide-03.webp': 196260,
+  '/course-decks/market-community/ve/slide-01.webp': 109900,
+  '/course-decks/market-community/ve/slide-02.webp': 232500,
+  '/course-decks/market-community/ve/slide-03.webp': 232710,
+  '/course-decks/market-community/ve/slide-04.webp': 101320,
+  '/course-decks/market-community/ve/slide-05.webp': 122358,
+  '/course-decks/market-community/ve/slide-06.webp': 124084,
+  '/course-decks/market-community/ve/slide-07.webp': 138032,
+  '/course-decks/market-community/ve/slide-08.webp': 121928,
+  '/course-decks/market-community/ve/slide-09.webp': 93056,
+  '/course-decks/market-community/ve/slide-10.webp': 123390,
+  '/course-decks/market-community/ve/slide-11.webp': 136020,
+  '/course-decks/market-community/ve/slide-12.webp': 116206,
+  '/course-decks/market-community/ve/slide-13.webp': 123866,
+  '/course-decks/market-community/ve/slide-14.webp': 108924,
+  '/course-decks/market-community/ve/slide-15.webp': 151186,
+  '/course-decks/market-community/ve/slide-16.webp': 109142,
+  '/course-decks/market-community/ve/slide-17.webp': 136952,
+  '/course-decks/market-community/ve/slide-18.webp': 129122,
+  '/course-decks/market-community/ve/slide-19.webp': 132376,
+  '/course-decks/market-community/ve/slide-20.webp': 150830,
   '/course-decks/market-community/zu/slide-01.jpg': 231014,
   '/course-decks/market-community/zu/slide-02.jpg': 99870,
   '/course-decks/market-community/zu/slide-03.jpg': 110807,

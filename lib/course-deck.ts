@@ -239,7 +239,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     missingSlides: {
       st: [],
-      ve: [1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ve: [],
       ts: [],
     },
     slides: slidesFromNarration('market-community', MARKET_ANIMATIONS),
