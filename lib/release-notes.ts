@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 September 2026', sha: '54b32b4', changes: [
+  { when: '28 September 2026', sha: '964eeae', changes: [
     'New Year of food card: every month, beds, fruit trees and animals together.',
     'Months with nothing fresh are marked, with a one-line summary of the year.',
     'Suggested sowings to fill months with no fresh vegetable, on a bed with room.',
