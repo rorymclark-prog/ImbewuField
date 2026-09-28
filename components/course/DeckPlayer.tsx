@@ -19,7 +19,7 @@ import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 import COURSE_DECK_ART from '@/docs/course-deck-art.json' with { type: 'json' };
 import { useLanguage } from '@/lib/i18n-context';
-import { narrationReviewPending } from '@/lib/narration-blockers';
+import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 
 // The module as it was actually written: slides in a teaching order, narrated, with animations
 // where a still cannot carry the idea. Built for one farmer alone with a phone and metered data.
@@ -90,7 +90,8 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // English, a facilitator checks both, and the app-wide language is a heavier thing to change and
   // change back. It defaults to the app's language and is only offered when the module actually
   // has more than one recording.
-  const needsSourceNarrationChoice = ['st', 've', 'ts'].includes(appLang) &&
+  const regionalSlidesSelected = ['st', 've', 'ts'].includes(appLang);
+  const needsSourceNarrationChoice = regionalSlidesSelected &&
     !!narration?.languages.includes('en') && !narration.languages.includes(appLang);
   const [slideChoice, setSlideChoice] = useState(appLang);
   const [narrationChoice, setNarrationChoice] = useState<string | null>(
@@ -455,7 +456,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </span>
         <h3 className={styles.slideHeading} style={{ color: INK }}>{heading}</h3>
         {(languages.length > 1 || needsSourceNarrationChoice) && (
-          <div role="group" aria-label={t('courseNarrationLanguage')} style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
+          <div role="group" aria-label={t('courseNarrationLanguage')} style={{ display: 'flex', flexWrap: 'wrap', gap: 4, flex: '1 1 100%', minWidth: 0, maxWidth: '100%' }}>
             {(needsSourceNarrationChoice ? languages.filter((code) => code === 'en') : languages).map((code) => {
               const on = code === narrationChoice;
               return (
@@ -463,7 +464,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                   key={code}
                   type="button"
                   onClick={() => {
-                    if (!needsSourceNarrationChoice) {
+                    if (!regionalSlidesSelected) {
                       setPlaying(new Set());
                       setSlideChoice(code);
                     }
@@ -472,13 +473,16 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                   aria-pressed={on}
                   style={{
                     padding: '3px 9px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',
+                    maxWidth: '100%', whiteSpace: 'normal', textAlign: 'center',
                     background: on ? 'rgba(47,107,58,0.10)' : 'transparent',
                     border: `1px solid ${on ? 'rgba(47,107,58,0.30)' : LINE}`,
                     color: on ? GREEN : MUTED,
                   }}
                 >
-                  {needsSourceNarrationChoice && code === 'en'
+                  {regionalSlidesSelected && code === 'en'
                     ? appLang === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration'
+                    : regionalNarrationDraft(moduleId, code)
+                      ? `${langName(code, uiLang)} AI draft · English holds`
                     : langName(code, uiLang)}
                 </button>
               );
@@ -669,11 +673,24 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </p>
       )}
 
+      {regionalSlidesSelected && !needsSourceNarrationChoice && narrationChoice === 'en' && (
+        <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+          English source narration selected. Your regional slides remain visible.
+        </p>
+      )}
+
       {spokenLang?.lang === 'zu' && narrationReviewPending(moduleId, 'zu') && (
         <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
           {uiLang === 'zu'
             ? 'Lo msindo wesiZulu usalindele ukubuyekezwa ngumuntu olwazi kahle ulimi.'
             : 'This isiZulu narration is awaiting review by a fluent speaker.'}
+        </p>
+      )}
+
+      {spokenLang && regionalNarrationDraft(moduleId, spokenLang.lang) && (
+        <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+          Unreviewed {langName(spokenLang.lang, uiLang)} machine narration. Some passages are exact English holds.
+          Fluent-speaker, local-farming and listening review are pending.
         </p>
       )}
 

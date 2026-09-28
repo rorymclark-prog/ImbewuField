@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 // Picture-led teaching still needs the full authored words when a learner cannot hear the voice.
 import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { COURSE_NARRATION } from '../lib/course-audio.ts';
 import { parseScriptBlocks } from '../lib/narration-check.ts';
+import { regionalNarrationDraft } from '../lib/narration-blockers.ts';
 
 export function collectTranscripts() {
   const result = {};
@@ -11,6 +13,26 @@ export function collectTranscripts() {
     result[moduleId] = {};
     // The audio manifest is the release boundary. Draft translations must not leak into the UI.
     for (const lang of narration.languages) {
+      const regional = regionalNarrationDraft(moduleId, lang);
+      if (regional) {
+        // Rory authorised visibly unreviewed mixed-language audio for facilitator feedback.
+        // A sound-off learner must read exactly its source-paired spoken text, including every
+        // retained English passage, rather than an unrelated translation or missing script.
+        const bytes = readFileSync(new URL(`../${regional.sourcePair}`, import.meta.url));
+        if (createHash('sha256').update(bytes).digest('hex') !== regional.sourcePairSha256) {
+          throw new Error(`${moduleId}/${lang}: paired source changed since audio was recorded`);
+        }
+        const paired = JSON.parse(bytes.toString('utf8'));
+        const registered = narration.tracks.map(t => t.slide);
+        if (JSON.stringify(paired.slides.map(s => s.n)) !== JSON.stringify(registered)) {
+          throw new Error(`${moduleId}/${lang}: paired slides and published narration differ`);
+        }
+        result[moduleId][lang] = Object.fromEntries(paired.slides.map(slide => [slide.n,
+          slide.target.body.map((body, index) => body.status === 'draft'
+            ? body.text : slide.english.body[index]),
+        ]));
+        continue;
+      }
       const source = readFileSync(new URL(`../docs/narration/${moduleId}.${lang}.md`, import.meta.url), 'utf8');
       const blocks = parseScriptBlocks(source);
       const registered = narration.tracks.map(t => t.slide);

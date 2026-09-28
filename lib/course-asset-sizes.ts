@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1204 files, 468.6 MB total.
+// 1233 files, 480.2 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -152,6 +152,29 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/intro-permaculture/en/slide-20.mp3': 126720,
   '/course-audio/intro-permaculture/en/slide-21.mp3': 93744,
   '/course-audio/intro-permaculture/en/slide-22.mp3': 106704,
+  '/course-audio/intro-permaculture/st/full.mp3': 5168108,
+  '/course-audio/intro-permaculture/st/slide-01.mp3': 283628,
+  '/course-audio/intro-permaculture/st/slide-02.mp3': 255980,
+  '/course-audio/intro-permaculture/st/slide-03.mp3': 245804,
+  '/course-audio/intro-permaculture/st/slide-04.mp3': 239660,
+  '/course-audio/intro-permaculture/st/slide-05.mp3': 226028,
+  '/course-audio/intro-permaculture/st/slide-06.mp3': 231788,
+  '/course-audio/intro-permaculture/st/slide-07.mp3': 257708,
+  '/course-audio/intro-permaculture/st/slide-08.mp3': 199148,
+  '/course-audio/intro-permaculture/st/slide-09.mp3': 255020,
+  '/course-audio/intro-permaculture/st/slide-10.mp3': 346028,
+  '/course-audio/intro-permaculture/st/slide-11.mp3': 244268,
+  '/course-audio/intro-permaculture/st/slide-12.mp3': 172844,
+  '/course-audio/intro-permaculture/st/slide-13.mp3': 227180,
+  '/course-audio/intro-permaculture/st/slide-14.mp3': 331820,
+  '/course-audio/intro-permaculture/st/slide-15.mp3': 255788,
+  '/course-audio/intro-permaculture/st/slide-16.mp3': 161708,
+  '/course-audio/intro-permaculture/st/slide-17.mp3': 215468,
+  '/course-audio/intro-permaculture/st/slide-18.mp3': 234860,
+  '/course-audio/intro-permaculture/st/slide-19.mp3': 226604,
+  '/course-audio/intro-permaculture/st/slide-20.mp3': 242540,
+  '/course-audio/intro-permaculture/st/slide-21.mp3': 145964,
+  '/course-audio/intro-permaculture/st/slide-22.mp3': 182828,
   '/course-audio/intro-permaculture/zu/full.mp3': 5266604,
   '/course-audio/intro-permaculture/zu/slide-01.mp3': 216576,
   '/course-audio/intro-permaculture/zu/slide-02.mp3': 232416,
@@ -663,8 +686,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/st/slide-06.webp': 471666,
   '/course-decks/intro-permaculture/st/slide-07.webp': 316054,
   '/course-decks/intro-permaculture/st/slide-08.webp': 246518,
-  '/course-decks/intro-permaculture/st/slide-09.webp': 254200,
-  '/course-decks/intro-permaculture/st/slide-10.webp': 637380,
+  '/course-decks/intro-permaculture/st/slide-09.webp': 253428,
+  '/course-decks/intro-permaculture/st/slide-10.webp': 592998,
   '/course-decks/intro-permaculture/st/slide-11.webp': 236554,
   '/course-decks/intro-permaculture/st/slide-12.webp': 216360,
   '/course-decks/intro-permaculture/st/slide-13.webp': 352656,
@@ -676,7 +699,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/st/slide-19.webp': 499162,
   '/course-decks/intro-permaculture/st/slide-20.webp': 443178,
   '/course-decks/intro-permaculture/st/slide-21.webp': 208754,
-  '/course-decks/intro-permaculture/st/slide-22.webp': 249256,
+  '/course-decks/intro-permaculture/st/slide-22.webp': 231466,
   '/course-decks/intro-permaculture/ts/slide-01.webp': 265008,
   '/course-decks/intro-permaculture/ts/slide-02.webp': 266810,
   '/course-decks/intro-permaculture/ts/slide-03.webp': 246212,

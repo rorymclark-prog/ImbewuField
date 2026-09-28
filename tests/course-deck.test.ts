@@ -440,9 +440,10 @@ test('new regional orientation and ethics stills stay visible while unauthored I
   assert.equal(slideImageFor('intro-permaculture', 've', 10)?.lang, 'en');
 });
 
-test('Sesotho slides remain Sesotho when English source narration is chosen', async () => {
-  // Every frame has a source-paired portrait. A single language state used to switch both image
-  // and voice to English on this path, so opting into English voice must keep the draft pictures.
+test('Sesotho draft narration starts with paired slides and English source choice keeps them', async () => {
+  // A single language state used to switch both image and voice to English. With a real but
+  // unreviewed Sesotho recording, the learner may listen to it or choose the English source;
+  // neither choice may swap away the source-paired picture.
   const deck = COURSE_DECKS['intro-permaculture'];
   assert.ok(deck.slideLanguages.includes('st'));
   assert.equal(deck.slideAspectRatioByLanguage?.st, 1440 / 5400);
@@ -473,11 +474,9 @@ test('Sesotho slides remain Sesotho when English source narration is chosen', as
     assert.equal(stage.props.style.maxHeight, 'min(65vh, 600px)');
     assert.equal(view.root.findAllByType('img')[1].props.style.maxHeight, undefined,
       'the full-image viewer must allow a portrait slide to scroll at readable width');
-    assert.equal(view.root.findAllByType('audio').length, 0, 'English narration must wait for an explicit choice');
-    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true,
-      'play-through must wait until the learner chooses a source voice');
-    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No Sesotho narration available/);
-    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /Sesotho AI draft.*Ha ho modumo wa Sesotho/);
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/st\/slide-01\.mp3$/);
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /Unreviewed Sesotho machine narration/);
     const english = view.root.findAllByType('button').find(button => button.children.join('').includes('English source narration'))!;
     assert.equal(english.props['aria-pressed'], false);
 
