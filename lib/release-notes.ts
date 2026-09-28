@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 September 2026', changes: [
+  { when: '28 September 2026', sha: 'f10ee34', changes: [
     'Kraals, pig pens and small ponds on your map now show under Animals on your map.',
     'New: beef and dairy cattle, meat and wool sheep, pigs and tilapia, each sourced.',
     'Dairy cows and tilapia add their months to the chart; wool never counts as food.',
