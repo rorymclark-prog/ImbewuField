@@ -1,0 +1,1064 @@
+{
+  "language": "st",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "n": 1,
+        "heading": "Plant Selection and Guilds",
+        "body": [
+          "Choose plants that work together—and change the planting as it grows."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kgetho ya dimela le dihlopha tsa dimela (guilds)"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kgetha dimela tse sebetsang mmoho—mme o fetole temo ha e ntse e hola."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "n": 2,
+        "heading": "Plant Selection and Guilds",
+        "body": [
+          "A fruit tree needs light, water, soil nutrients and room. Support plants can supply food, leafy mulch, flowers and living cover.  Give each plant a useful job. Keep observing whether it helps the tree and the household. Which jobs does your planting need?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kgetho ya dimela le dihlopha tsa dimela (guilds)"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sefate sa ditholwana se hloka lesedi, metsi, phepo ya mobu le sebaka.\n\nDimela tsa tshehetso di ka fana ka dijo, masalla a mahlaku a kwahelang mobu, dipalesa le sekoaelo se phelang sa mobu.\n\nFa semela ka seng mosebetsi o molemo.\n\nTswela pele ho ela hloko hore na se thusa sefate hammoho le lelapa.\n\nKe mesebetsi efe e hlokehang temong ya hao?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "n": 3,
+        "heading": "Start With the Site",
+        "body": [
+          "Find out what is limiting growth before choosing a plant."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Qala ka sebaka"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Fumana hore na ke eng e thibelang kgolo pele o kgetha semela."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "n": 4,
+        "heading": "Start With the Site",
+        "body": [
+          "Check sunlight, drainage, soil condition and water availability. Nitrogen is only one possible limitation.  Compare the soil beneath mulch with exposed soil. Choose support plants that fit the actual conditions. What does this site need first?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Qala ka sebaka"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Check sunlight, drainage, soil condition and water availability.\n\nNitrojene ke e nngwe feela ya dintho tse ka nnang tsa thibela kgolo.\n\nENGLISH HOLD — Compare the soil beneath mulch with exposed soil.\n\nENGLISH HOLD — Choose support plants that fit the actual conditions.\n\nSebaka sena se hloka eng pele?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "n": 5,
+        "heading": "Give Every Plant a Job",
+        "body": [
+          "A useful guild produces benefits you can observe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Fana ka mosebetsi ho semela ka seng"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sehlopha se molemo sa dimela tse tshehetsanang (guild) se hlahisa melemo eo o ka e bonang."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "n": 6,
+        "heading": "Give Every Plant a Job",
+        "body": [
+          "Choose members for food, nitrogen fixation, mulch, flowers or ground cover. One plant may do several jobs.  By the end, plan a guild, explain how residues feed soil, and decide which support plants to keep, cut or remove. Which job is still missing?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Fana ka mosebetsi ho semela ka seng"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Choose members for food, nitrogen fixation, mulch, flowers or ground cover.\n\nSemela se le seng se ka etsa mesebetsi e mengata.\n\nENGLISH HOLD — By the end, plan a guild, explain how residues feed soil, and decide which support plants to keep, cut or remove.\n\nKe mosebetsi ofe o ntseng o haella?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "n": 7,
+        "heading": "Look for Root Nodules",
+        "body": [
+          "Legumes work with rhizobia in nodules on their roots."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Batla mafito a metso"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dimela tsa dinawa di sebetsa mmoho le baktheria tsa rhizobia ka mafito a metso ya tsona."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "n": 8,
+        "heading": "Look for Root Nodules",
+        "body": [
+          "These bacteria convert nitrogen from the air into forms the legume can use.  Find nodules on a spare legume plant. Nodulation and growth depend on the plant, suitable bacteria and growing conditions. Can you find the nodules?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Batla mafito a metso"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dibaktheria tsena di fetola nitrogen e tswang moyeng hore e be mefuta eo semela sa dinawa se ka e sebedisang.\n\nENGLISH HOLD — Find nodules on a spare legume plant.\n\nENGLISH HOLD — Nodulation and growth depend on the plant, suitable bacteria and growing conditions.\n\nNa o ka fumana mafito a metso?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "n": 9,
+        "heading": "Return Leaves to the Soil",
+        "body": [
+          "Nitrogen in plant material becomes useful as that material breaks down."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Naetrojene e ka hara dikarolo tsa semela e ba molemo ha dikarolo tseo di bola."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "n": 10,
+        "heading": "Return Leaves to the Soil",
+        "body": [
+          "Return suitable leafy prunings, fallen leaves and crop residues as mulch. Soil organisms release nutrients during decomposition.  This takes time. A living legume is not an instant fertiliser pipe into the fruit tree. Which residues can you return?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "n": 11,
+        "heading": "Sesbania Has a Useful Role",
+        "body": [
+          "Sesbania sesban can supply fast growth and leafy mulch."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "n": 12,
+        "heading": "Sesbania Has a Useful Role",
+        "body": [
+          "It is indigenous to KwaZulu-Natal. In suitable warm conditions, manage this short-lived shrub or small tree as a support plant.  Allow room for its growth. Prune for mulch and reassess it when shade or water competition increases. Where could you manage its growth?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "n": 13,
+        "heading": "Check the Full Plant Name",
+        "body": [
+          "Sesbania sesban and Sesbania punicea are different species."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "n": 14,
+        "heading": "Check the Full Plant Name",
+        "body": [
+          "Sesbania punicea is the invasive red sesbania. Its pods have four lengthwise wings. Confirm identity using reliable botanical guidance.  Check the full name before planting. Respect the agreed project species list, including any restriction on Sesbania sesban. Can the supplier verify the species?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "n": 15,
+        "heading": "Pigeon Pea Gives Food Too",
+        "body": [
+          "Pigeon pea—Cajanus cajan—can provide peas, leafy material and nitrogen fixation."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "n": 16,
+        "heading": "Pigeon Pea Gives Food Too",
+        "body": [
+          "Use a sunny, freely draining position. It is a short-lived support shrub; frost and waterlogging can limit it.  Decide whether each plant mainly supplies peas or leafy material. Frequent severe cutting can damage it and reduce the food harvest. Are you growing this plant for peas or mulch?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "n": 17,
+        "heading": "Choose for Place and Size",
+        "body": [
+          "A useful support tree in one place may be too large or unsuitable in another."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "n": 18,
+        "heading": "Choose for Place and Size",
+        "body": [
+          "Compare mature crown, roots, shade, rainfall and temperature. Check locally appropriate species and planting rules.  Put large support trees where they have space. For a small young guild, a manageable shrub may be easier to maintain. How large will this plant become?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Compare mature crown, roots, shade, rainfall and temperature.\n\nENGLISH HOLD — Check locally appropriate species and planting rules.\n\nENGLISH HOLD — Put large support trees where they have space.\n\nENGLISH HOLD — For a small young guild, a manageable shrub may be easier to maintain.\n\nSemela sena se tla ba seholo hakae?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "n": 19,
+        "heading": "Annual Cover Has a Place",
+        "body": [
+          "Sunn hemp can cover a suitable warm-season gap before the next crop."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "n": 20,
+        "heading": "Annual Cover Has a Place",
+        "body": [
+          "Grow it where its season and space fit the plan. Its contribution depends on growth, nodulation and the material returned.  After cutting, allow for decomposition. An annual cover crop plays a different role from a longer-lived support shrub. When will this space be needed again?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Grow it where its season and space fit the plan.\n\nENGLISH HOLD — Its contribution depends on growth, nodulation and the material returned.\n\nENGLISH HOLD — After cutting, allow for decomposition.\n\nENGLISH HOLD — An annual cover crop plays a different role from a longer-lived support shrub.\n\nSebaka sena se tla hlokahala neng hape?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "n": 21,
+        "heading": "Leave Room Around the Tree",
+        "body": [
+          "Keep the young fruit tree in light and retain access for care."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "n": 22,
+        "heading": "Leave Room Around the Tree",
+        "body": [
+          "Keep an open establishment basin and access to the fruit tree. Place temporary support plants where their size and water use can be managed.  Put leafy cuttings where mulch is needed. Neighbouring fruit trees can share support strips between them. Can you reach both plants as they grow?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Keep an open establishment basin and access to the fruit tree.\n\nENGLISH HOLD — Place temporary support plants where their size and water use can be managed.\n\nENGLISH HOLD — Put leafy cuttings where mulch is needed.\n\nENGLISH HOLD — Neighbouring fruit trees can share support strips between them.\n\nNa o ka kgona ho fihlella dimela tsena ka bobedi ha di ntse di hola?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 23,
+      "english": {
+        "n": 23,
+        "heading": "Build a Layered Support Guild",
+        "body": [
+          "Combine seasonal cover, support shrubs and temporary small trees."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 24,
+      "english": {
+        "n": 24,
+        "heading": "Build a Layered Support Guild",
+        "body": [
+          "Cowpea covers sunny gaps. Pigeon pea provides food and leafy material. Managed Sesbania sesban can supply taller temporary support.  Add suitable flowering and mulch plants. Keep the mango trunk clear and manage light, water and access. Which layers fit your site?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Cowpea covers sunny gaps.\n\nENGLISH HOLD — Pigeon pea provides food and leafy material.\n\nENGLISH HOLD — Managed Sesbania sesban can supply taller temporary support.\n\nENGLISH HOLD — Add suitable flowering and mulch plants.\n\nENGLISH HOLD — Keep the mango trunk clear and manage light, water and access.\n\nKe mekgahlelo efe e loketseng sebaka sa hao?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 25,
+      "english": {
+        "n": 25,
+        "heading": "How Many Support Plants?",
+        "body": [
+          "Plan abundant support where the site and your care can sustain it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 26,
+      "english": {
+        "n": 26,
+        "heading": "How Many Support Plants?",
+        "body": [
+          "Count woody supports across the spaces between fruit trees. Sow suitable ground cover by area.  There is no universal number per fruit tree. Adjust density to water, soil, plant size and your ability to prune and thin. How much support can you maintain?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 27,
+      "english": {
+        "n": 27,
+        "heading": "Chop-and-Drop for Light and Mulch",
+        "body": [
+          "Watch the branch fall onto the cut leaves."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Shebella ha lekala le wela hodima mahlaku a pomilweng."
+          }
+        ]
+      }
+    },
+    {
+      "n": 28,
+      "english": {
+        "n": 28,
+        "heading": "Chop-and-Drop for Light and Mulch",
+        "body": [
+          "Prune a support tree and return suitable leafy cuttings to the soil. The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.  Match cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas. Which plant needs a cut—and how much?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 29,
+      "english": {
+        "n": 29,
+        "heading": "Keep Mulch Off the Trunk",
+        "body": [
+          "Spread suitable cut material over the soil, with the trunk and root collar clear."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 30,
+      "english": {
+        "n": 30,
+        "heading": "Keep Mulch Off the Trunk",
+        "body": [
+          "Mulch protects the surface, helps conserve moisture and returns organic material.  Leave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition. Is the root collar still clear?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 31,
+      "english": {
+        "n": 31,
+        "heading": "Choose the Right Comfrey",
+        "body": [
+          "Bocking 14 comfrey can supply cut leaves for mulch."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 32,
+      "english": {
+        "n": 32,
+        "heading": "Choose the Right Comfrey",
+        "body": [
+          "Obtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.  Place it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree. Is this a good permanent place for the clump?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 33,
+      "english": {
+        "n": 33,
+        "heading": "Observe Helpful Insects",
+        "body": [
+          "Flowers can provide resources for useful insects."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ela hloko dikokonyana tse thusang"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dipalesa di ka fana ka mehlodi bakeng sa dikokonyana tse thusang."
+          }
+        ]
+      }
+    },
+    {
+      "n": 34,
+      "english": {
+        "n": 34,
+        "heading": "Observe Helpful Insects",
+        "body": [
+          "Many ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.  Watch which insects visit and whether damage changes. A flowering plant does not guarantee pest control. What is the insect actually doing?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ela hloko dikokonyana tse thusang"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Many ladybirds eat aphids; some parasitoid wasps attack crop pests.\n\nENGLISH HOLD — Flowering members such as African basil can add resources.\n\nENGLISH HOLD — Watch which insects visit and whether damage changes.\n\nENGLISH HOLD — A flowering plant does not guarantee pest control.\n\nHa e le hantle kokonyana ena e etsa eng?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 35,
+      "english": {
+        "n": 35,
+        "heading": "Give Flowers Their Space",
+        "body": [
+          "Wild garlic can be a flowering member where the site suits it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 36,
+      "english": {
+        "n": 36,
+        "heading": "Give Flowers Their Space",
+        "body": [
+          "Tulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.  Observe visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak. Where can flowers grow without crowding?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Tulbaghia violacea has narrow leaves and lilac flowers.\n\nENGLISH HOLD — Place a clump where it has light and room to grow.\n\nENGLISH HOLD — Observe visiting insects.\n\nENGLISH HOLD — Do not promise that a ring of wild garlic will repel pests or cure an outbreak.\n\nDipalesa di ka mela kae ntle le ho pitlagana?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 37,
+      "english": {
+        "n": 37,
+        "heading": "Bring the Jobs Together",
+        "body": [
+          "Choose useful partners while protecting the mango's growing space."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kopanya mesebetsi mmoho"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 38,
+      "english": {
+        "n": 38,
+        "heading": "Bring the Jobs Together",
+        "body": [
+          "Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Some plants serve several functions.  Keep the trunk area and path open. Reassess each member as the mango and its neighbours grow. Does each member have space and a job?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kopanya mesebetsi mmoho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover.\n\nENGLISH HOLD — Some plants serve several functions.\n\nENGLISH HOLD — Keep the trunk area and path open.\n\nENGLISH HOLD — Reassess each member as the mango and its neighbours grow.\n\nNa setho ka seng se na le sebaka hammoho le mosebetsi?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 39,
+      "english": {
+        "n": 39,
+        "heading": "Food Cover Also Competes",
+        "body": [
+          "Sweet potato can cover ground and provide food in a suitable sunny space."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 40,
+      "english": {
+        "n": 40,
+        "heading": "Food Cover Also Competes",
+        "body": [
+          "Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.  Where resources are tight, compare living cover with an ordinary mulch basin. Is this cover helping the tree establish?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 41,
+      "english": {
+        "n": 41,
+        "heading": "First, Establish the Guild",
+        "body": [
+          "Start while the young fruit tree and its support plants have enough light and water."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 42,
+      "english": {
+        "n": 42,
+        "heading": "First, Establish the Guild",
+        "body": [
+          "Plant into a suitable season, mulch and maintain establishment water. Keep the access gap open.  Start with the number of support plants you can care for. Observe survival and growth before adding more. Can you care for every plant through establishment?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Plant into a suitable season, mulch and maintain establishment water.\n\nENGLISH HOLD — Keep the access gap open.\n\nENGLISH HOLD — Start with the number of support plants you can care for.\n\nENGLISH HOLD — Observe survival and growth before adding more.\n\nNa o ka kgona ho hlokomela semela se seng le se seng ho fihlela se mela hantle le ho ikemela (establishment)?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 43,
+      "english": {
+        "n": 43,
+        "heading": "Thin as the Fruit Tree Grows",
+        "body": [
+          "When pruning is no longer enough, reduce selected support plants. Cut down selected competing supports to open space. Suitable cut material can stay as mulch: this is thinning through chop-and-drop.  Manage regrowth to keep the opening. Check light, soil moisture and growth; thinning does not instantly stop root competition. Which support plants should now give way?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 44,
+      "english": {
+        "n": 44,
+        "heading": "Move Support Into the Light",
+        "body": [
+          "As shade increases, renew sun-loving support plants in open edges and younger plantings."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 45,
+      "english": {
+        "n": 45,
+        "heading": "Move Support Into the Light",
+        "body": [
+          "Carry useful prunings back to established trees. Keep nearby plants only where they still perform well.  Mature fruit trees still need nutrients. Monitor growth, harvest and soil conditions; support plants do not remove that need. Where is the next useful sunny space?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 46,
+      "english": {
+        "n": 46,
+        "heading": "Let Observation Decide",
+        "body": [
+          "Keep a short record of how the guild performs."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Boloka rekoto e kgutshwane ya kamoo sehlopha sa dimela tse tshehetsanang se sebetsang kateng."
+          }
+        ]
+      }
+    },
+    {
+      "n": 47,
+      "english": {
+        "n": 47,
+        "heading": "Let Observation Decide",
+        "body": [
+          "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. What evidence would make you change the guild?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage.\n\nENGLISH HOLD — Note what was cut, returned or removed.\n\nENGLISH HOLD — Use these observations to change the layout and care.\n\nENGLISH HOLD — A plant earns its place through what it does here.\n\nKe bopaki bofe bo ka etsang hore o fetole sehlopha sena sa dimela tse tshehetsanang (guild)?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 48,
+      "english": {
+        "n": 48,
+        "heading": "Plan One Real Guild",
+        "body": [
+          "Choose one fruit tree and mark a layout you can manage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Rala sehlopha sa sebele sa dimela tse tshehetsanang"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kgetha sefate se le seng sa ditholwana mme o tshwaye moralo oo o ka kgonang ho o laola."
+          }
+        ]
+      }
+    },
+    {
+      "n": 49,
+      "english": {
+        "n": 49,
+        "heading": "Plan One Real Guild",
+        "body": [
+          "Record the tree, site conditions and missing jobs. Name the support species fully, mark the starting number and leave access.  Write down what will trigger pruning or thinning. Agree the species list with the project team where required. Can someone else explain your plan back to you?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Rala sehlopha sa sebele sa dimela tse tshehetsanang"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "ENGLISH HOLD — Record the tree, site conditions and missing jobs.\n\nENGLISH HOLD — Name the support species fully, mark the starting number and leave access.\n\nENGLISH HOLD — Write down what will trigger pruning or thinning.\n\nENGLISH HOLD — Agree the species list with the project team where required.\n\nNa ho na le motho e mong ya ka kgonang ho o hlalosetsa leano la hao hape?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 50,
+      "english": {
+        "n": 50,
+        "heading": "Plant, Observe, Adjust",
+        "body": [
+          "Start one suitable guild and care for it through its first stage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 51,
+      "english": {
+        "n": 51,
+        "heading": "Plant, Observe, Adjust",
+        "body": [
+          "Use the right species, a manageable number of plants and room to grow. Return useful biomass and protect the fruit tree.  Review the planting as crowns expand. Keep, cut, replace or remove each support plant when its role changes. What will you do first—and when will you review it?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    }
+  ]
+}
