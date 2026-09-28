@@ -42,12 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 September 2026', sha: '6d56499', changes: [
-    'Food Forest now has a silent 20-slide Xitsonga review deck.',
-    'Three concept lines pair with English; all other teaching text stays in English.',
+  { when: '28 September 2026', sha: '48d93e7c', changes: [
+    'Food Forest: 20 silent Xitsonga slides; Vegetables: 18 silent Tshivenda slides.',
+    'Draft text pairs with English; uncertain farming guidance remains English.',
   ], tour: [
     { title: 'Compare the Xitsonga Food Forest draft', where: 'Study → Food Forest Design', href: '/student',
       detail: 'Choose Xitsonga and open Food Forest Design. Compare the marked sentences on slides 4 and 8 with the exact English source. The other teaching text stays in English; slides open silently and English source narration is optional.' },
+    { title: 'Read the Tshivenda Vegetables slides', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Choose Tshivenda and open Vegetables and Staple Crops. The slides open silently, with most farming guidance held in English beside the source.' },
   ] },
   { when: '28 September 2026', sha: '0954e72', changes: [
     'Food Forest has 20 silent Tshivenda review slides; Vegetables has 18 in Xitsonga.',

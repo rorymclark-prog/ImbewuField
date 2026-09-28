@@ -273,19 +273,17 @@ test('Xitsonga Market media pairs only the two existing low-risk learner concept
   assert.equal(slides[17].target.body[1].status, 'english-hold');
 });
 
-test('Tshivenda staples media holds quantities and crop claims beside two existing concepts', () => {
+test('Tshivenda staples media holds the unresolved staple placeholder in English', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ve.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 've');
   assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
     .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-    .filter(Boolean)), ['12:1', '14:2']);
-  const concepts = [TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.bodyConcept,
-    TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept];
-  for (const [n, p, concept] of [[12, 1, concepts[0]], [14, 2, concepts[1]]] as const) {
-    assert.equal(slides[n - 1].english.body[p - 1], concept.sourceEnglish);
-    assert.equal(slides[n - 1].target.body[p - 1].text, concept.tshivendaDraft);
-  }
+    .filter(Boolean)), ['14:2']);
+  assert.equal(slides[11].target.body[0].status, 'english-hold',
+    'the literal [staple] placeholder cannot be shown as a learner draft');
+  assert.equal(slides[13].english.body[1], TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.sourceEnglish);
+  assert.equal(slides[13].target.body[1].text, TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.tshivendaDraft);
   assert.equal(slides[11].target.body[3].status, 'english-hold');
   assert.equal(slides[13].target.body[3].status, 'english-hold');
 });
