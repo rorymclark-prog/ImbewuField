@@ -10,7 +10,7 @@ import {
   moduleLevelTracks, narrationFor, resolveNarrationLang, trackTitle, tracksForLesson, trackUrl,
 } from '../lib/course-audio.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { narrationReviewPending } from '../lib/narration-blockers.ts';
+import { narrationReviewPending, REGIONAL_NARRATION_DRAFTS } from '../lib/narration-blockers.ts';
 
 const PUBLIC_AUDIO = join(process.cwd(), 'public', 'course-audio');
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -193,6 +193,41 @@ test('every clip on disk is claimed by the manifest', () => {
         assert.ok(known.has(file), `${moduleId}/${lang}: orphan clip not in the manifest: ${file}`);
       }
     }
+  }
+});
+
+test('regional machine narration stays bound to its paired source and the published audio bytes', () => {
+  // A text correction must invalidate the recording. This catches a real learner-facing drift:
+  // a slide can show a safer English hold while an older voice still speaks the rejected draft.
+  for (const [key, draft] of Object.entries(REGIONAL_NARRATION_DRAFTS)) {
+    const [moduleId, lang] = key.split('.');
+    const pairedBytes = readFileSync(join(process.cwd(), draft.sourcePair));
+    assert.equal(createHash('sha256').update(pairedBytes).digest('hex'), draft.sourcePairSha256);
+    const paired = JSON.parse(pairedBytes.toString('utf8'));
+    const record = JSON.parse(readFileSync(join(process.cwd(), draft.verificationRecord), 'utf8'));
+    assert.equal(record.reviewStatus, 'unreviewed-machine-audio');
+    assert.equal(record.fluentReview, 'pending');
+    assert.equal(record.localFarmingReview, 'pending');
+    assert.equal(record.listeningReview, 'pending');
+    assert.equal(record.sourcePairSha256, draft.sourcePairSha256);
+    assert.equal(record.slides.length, paired.slides.length);
+    assert.ok(COURSE_NARRATION[moduleId].languages.includes(lang));
+    assert.equal(narrationReviewPending(moduleId, lang), true);
+    let translated = 0, held = 0;
+    for (const slide of record.slides) {
+      const source = paired.slides[slide.slide - 1];
+      const spoken = source.target.body.map((body: { status: string; text?: string }, index: number) =>
+        body.status === 'draft' ? body.text : source.english.body[index]).join('\n\n');
+      assert.equal(slide.spokenText, spoken, `slide ${slide.slide}: voice text must match the pictured source pair`);
+      translated += slide.draftParagraphs;
+      held += slide.englishHolds;
+      assert.equal(createHash('sha256').update(readFileSync(join(PUBLIC_AUDIO, moduleId, lang,
+        `slide-${pad2(slide.slide)}.mp3`))).digest('hex'), slide.audioSha256);
+    }
+    assert.equal(translated, draft.draftParagraphs);
+    assert.equal(held, draft.englishHolds);
+    assert.equal(createHash('sha256').update(readFileSync(join(PUBLIC_AUDIO, moduleId, lang, 'full.mp3')))
+      .digest('hex'), record.fullNarration.audioSha256);
   }
 });
 

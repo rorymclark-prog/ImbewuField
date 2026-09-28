@@ -141,8 +141,10 @@ def join_full_narration(output: Path, count: int) -> dict:
             listing.write(f"file '{clip}'\n")
         listing.flush()
         full = output / "full.mp3"
+        # Independent MP3 encoders reset frame timestamps. Re-encode the joined convenience
+        # file so a long phone lesson can seek without non-monotonic timestamp warnings.
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
-                        "-i", listing.name, "-c", "copy", str(full)], check=True)
+                        "-i", listing.name, "-ac", "1", "-b:a", "64k", str(full)], check=True)
     duration = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries",
                                               "format=duration", "-of", "csv=p=0", str(full)], text=True).strip())
     return {"seconds": round(duration, 3), "audioSha256": hashlib.sha256(full.read_bytes()).hexdigest()}
@@ -155,6 +157,7 @@ def main() -> None:
     parser.add_argument("out_dir", type=Path)
     parser.add_argument("--generate", action="store_true", help="Call paid TTS; otherwise validate/print the plan")
     parser.add_argument("--limit", type=int, help="Generate at most this many slides for a pilot")
+    parser.add_argument("--replace-stale", action="store_true", help="Regenerate only clips whose source-pair hashes changed")
     args = parser.parse_args()
     slides = plan(args.module, args.lang)
     print(f"{args.module}/{args.lang}: {len(slides)} source-matched slides, "
@@ -170,27 +173,51 @@ def main() -> None:
         raise SystemExit("Stage outside the repository; register checked clips in a separate commit")
     output.mkdir(parents=True, exist_ok=True)
     selected = slides[:args.limit] if args.limit else slides
-    for slide in selected:
-        path = output / f"slide-{slide['slide']:02d}.mp3"
-        if path.exists():
-            raise SystemExit(f"Refusing to overwrite an existing staged clip: {path}")
-        try:
-            wav = synthesize(slide["spokenText"], args.lang, key)
-        except urllib.error.HTTPError as error:
-            raise SystemExit(f"TTS failed on slide {slide['slide']}: HTTP {error.code}") from error
-        slide["seconds"] = encode_mp3(wav, path)
-        slide["audioSha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
-        print(f"slide {slide['slide']:02d}: {slide['seconds']}s, "
-              f"{slide['draftParagraphs']} draft / {slide['englishHolds']} English holds", flush=True)
+    record_path = output / "verification.json"
+    previous = json.loads(record_path.read_text()) if record_path.exists() else None
+    verified = {item["slide"]: item for item in previous["slides"]} if previous else {}
+    if previous and (previous["module"] != args.module or previous["language"] != args.lang):
+        raise SystemExit("Staged clips belong to a different module or language")
     verification = {
         "module": args.module, "language": args.lang, "reviewStatus": "unreviewed-machine-audio",
         "voice": VOICE, "model": MODEL,
         "warning": "Machine voice and translation need fluent speaker and local farming review. English holds are read verbatim.",
-        "slides": selected,
+        "slides": [],
     }
+    for slide in selected:
+        path = output / f"slide-{slide['slide']:02d}.mp3"
+        generate = not path.exists()
+        if path.exists():
+            old = verified.get(slide["slide"])
+            if not old or old["spokenSha256"] != slide["spokenSha256"] or \
+                    old["sourceSha256"] != slide["sourceSha256"] or \
+                    old["audioSha256"] != hashlib.sha256(path.read_bytes()).hexdigest():
+                if not args.replace_stale or not old:
+                    raise SystemExit(f"Existing clip cannot be safely reused: {path}")
+                # Keep the former recording recoverable until the new spoken source has been checked.
+                previous_path = output / f"slide-{slide['slide']:02d}.{old['audioSha256'][:10]}.stale.mp3"
+                if previous_path.exists():
+                    raise SystemExit(f"Refusing to overwrite a previous recording: {previous_path}")
+                path.rename(previous_path)
+                generate = True
+            else:
+                slide["seconds"] = old["seconds"]
+                slide["audioSha256"] = old["audioSha256"]
+        if generate:
+            try:
+                wav = synthesize(slide["spokenText"], args.lang, key)
+            except urllib.error.HTTPError as error:
+                raise SystemExit(f"TTS failed on slide {slide['slide']}: HTTP {error.code}") from error
+            slide["seconds"] = encode_mp3(wav, path)
+            slide["audioSha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+        verified[slide["slide"]] = slide
+        verification["slides"] = [verified[n] for n in sorted(verified)]
+        record_path.write_text(json.dumps(verification, ensure_ascii=False, indent=2) + "\n")
+        print(f"slide {slide['slide']:02d}: {slide['seconds']}s, "
+              f"{slide['draftParagraphs']} draft / {slide['englishHolds']} English holds", flush=True)
     if len(selected) == len(slides):
         verification["fullNarration"] = join_full_narration(output, len(slides))
-    (output / "verification.json").write_text(json.dumps(verification, ensure_ascii=False, indent=2) + "\n")
+    record_path.write_text(json.dumps(verification, ensure_ascii=False, indent=2) + "\n")
 
 
 if __name__ == "__main__":

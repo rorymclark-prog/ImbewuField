@@ -42,12 +42,18 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '8153d1ad', changes: [
+    'Introduction has a Sesotho draft voice, with English source available.',
+  ], tour: [
+    { title: 'Compare Introduction narration', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho, open the Introduction deck and compare the labelled machine voice with the English source. Some uncertain passages remain in English, and fluent-speaker and local farming review are pending.' },
+  ] },
   { when: '28 September 2026', sha: '3e75bbe6', changes: [
     'Introduction has more Sesotho and Tshivenda draft slides beside the exact English source.',
     'The Xitsonga Introduction cover now shows its provisional draft title.',
   ], tour: [
     { title: 'Compare the Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
-      detail: 'Choose Sesotho for slides 20–22, Tshivenda for slides 8, 9 and 11–14, or Xitsonga for slide 1. These are AI drafts awaiting facilitator review. Other regional slides may still show English, and narration remains English until regional recordings are ready.' },
+      detail: 'Choose Sesotho for slides 20–22, Tshivenda for slides 8, 9 and 11–14, or Xitsonga for slide 1. These are AI drafts awaiting facilitator review. Other regional slides may still show English. Sesotho Introduction now also has a draft voice; the other regional recordings remain English.' },
   ] },
   { when: '27 September 2026', sha: '040b1e2f', changes: [
     'Few big harvests re-sows each crop after its harvest; too-hot months are skipped.',

@@ -46,10 +46,8 @@ test('Sesotho Introduction review slides keep uncertain field steps paired in En
   assert.ok(body(21).slice(0, 3).every((part: any) => part.status === 'english-hold'),
     'technical zone and energy directions stay exact English for facilitator review');
 
-  assert.equal(body(22)[3].status, 'draft');
-  assert.equal(body(22)[3].text, 'Ebe o botsa moahisani a le mong ya hodileng hore na moya o mobe ka ho fetisisa o tswa ntlheng efe, mme o bapise karabo ya hae le motsu wa hao.');
-  assert.ok(body(22).slice(0, 3).every((part: any) => part.status === 'english-hold'),
-    'uncertain ground checking, counting and crop relocation wording stays exact English');
+  assert.ok(body(22).every((part: any) => part.status === 'english-hold'),
+    'ground checking, counting, crop relocation and wind direction stay exact English after semantic backcheck');
 });
 
 test('standard written Xitsonga uses the same exact source and paragraph pairing as Sesotho', () => {
