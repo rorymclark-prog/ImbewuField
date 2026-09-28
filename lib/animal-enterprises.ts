@@ -29,8 +29,13 @@ import type { HarvestCitation, HarvestWindow, SourcedRange } from './perennial-h
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
 
-export type AnimalKind = 'chicken' | 'goat' | 'bee' | 'rabbit' | 'duck';
-export type AnimalProduct = 'eggs' | 'meat' | 'milk' | 'honey';
+export type AnimalKind = 'chicken' | 'goat' | 'bee' | 'rabbit' | 'duck' | 'cattle' | 'sheep' | 'pig' | 'fish';
+export type AnimalProduct = 'eggs' | 'meat' | 'milk' | 'honey' | 'fish' | 'wool';
+
+/** Wool is shorn, not eaten: it has months and a card, but never a place on a food chart. */
+export function isFoodProduct(product: AnimalProduct): boolean {
+  return product !== 'wool';
+}
 
 export interface SourcedPoint {
   /** Plain-English summary; the quote in `source` is what it rests on. */
@@ -68,6 +73,10 @@ export const ANIMAL_LABEL: Readonly<Record<AnimalKind, string>> = {
   bee: 'Bees',
   rabbit: 'Rabbits',
   duck: 'Ducks',
+  cattle: 'Cattle',
+  sheep: 'Sheep',
+  pig: 'Pigs',
+  fish: 'Fish',
 };
 
 export const PRODUCT_LABEL: Readonly<Record<AnimalProduct, string>> = {
@@ -75,27 +84,64 @@ export const PRODUCT_LABEL: Readonly<Record<AnimalProduct, string>> = {
   meat: 'Meat',
   milk: 'Milk',
   honey: 'Honey',
+  fish: 'Fish',
+  wool: 'Wool',
 };
 
 /**
- * Design elements that house one kind of animal.
- *
- * Only elements whose name leaves no doubt are listed. The kraal holds cattle, goats or sheep and
- * the pig pen has no dossier yet, so neither is guessed at; the livestock trough waters whatever
- * drinks from it.
+ * What a structure on the map can house. Most house one kind of animal; a kraal holds cattle,
+ * sheep or goats, and a small pond may or may not have fish in it. Either way the farmer says
+ * what it is for (rule 3) — a kraal is never assumed to be cattle, nor a pond to hold fish.
  */
-export const ELEMENT_ANIMAL: Readonly<Record<string, AnimalKind>> = {
+export type HousingKind = 'chicken' | 'goat' | 'bee' | 'rabbit' | 'duck' | 'pig' | 'kraal' | 'pond';
+
+export const HOUSING_ANIMALS: Readonly<Record<HousingKind, readonly AnimalKind[]>> = {
+  chicken: ['chicken'],
+  goat: ['goat'],
+  bee: ['bee'],
+  rabbit: ['rabbit'],
+  duck: ['duck'],
+  pig: ['pig'],
+  kraal: ['cattle', 'sheep', 'goat'],
+  pond: ['fish'],
+};
+
+export const HOUSING_LABEL: Readonly<Record<HousingKind, string>> = {
+  chicken: 'Chickens',
+  goat: 'Goats',
+  bee: 'Bees',
+  rabbit: 'Rabbits',
+  duck: 'Ducks',
+  pig: 'Pigs',
+  kraal: 'Kraal',
+  pond: 'Pond',
+};
+
+/**
+ * Design elements that house animals. Only elements whose name says what can live there are
+ * listed; the livestock trough waters whatever drinks from it, so it is not.
+ */
+export const ELEMENT_HOUSING: Readonly<Record<string, HousingKind>> = {
   chicken_coop: 'chicken',
   chicken_tractor: 'chicken',
   goat_pen: 'goat',
   beehive: 'bee',
   rabbit_hutch: 'rabbit',
   duck_pond: 'duck',
+  pig_pen: 'pig',
+  kraal: 'kraal',
+  pond_small: 'pond',
 };
 
 /** The enterprises one kind of animal can be kept for, in table order. */
 export function enterprisesFor(animal: AnimalKind): AnimalEnterprise[] {
   return Object.values(ANIMAL_ENTERPRISES).filter((e) => e.animal === animal);
+}
+
+/** The enterprises a structure can be used for: every enterprise of every animal it can hold. */
+export function enterprisesForHousing(housing: HousingKind): AnimalEnterprise[] {
+  const animals = HOUSING_ANIMALS[housing];
+  return Object.values(ANIMAL_ENTERPRISES).filter((e) => animals.includes(e.animal));
 }
 
 export interface PlacedAnimalItem {
@@ -104,29 +150,34 @@ export interface PlacedAnimalItem {
 }
 
 export interface PlacedAnimalGroup {
-  animal: AnimalKind;
+  housing: HousingKind;
   /** Structures (coops, hives, pens) on the map — NOT animals. */
   existing: number;
   proposed: number;
 }
 
 /**
- * The design's animal structures, grouped by the animal they house.
+ * The design's animal structures, grouped by what they house.
  *
  * Kinds with no enterprise in the table are dropped: a hutch with nothing to say about rabbits
  * would be a row of blanks. Legacy items with no status count as existing, as they do for trees.
  */
 export function placedAnimalGroups(items: readonly PlacedAnimalItem[]): PlacedAnimalGroup[] {
-  const byKind = new Map<AnimalKind, PlacedAnimalGroup>();
+  const byKind = new Map<HousingKind, PlacedAnimalGroup>();
   for (const item of items) {
-    const animal = ELEMENT_ANIMAL[item.defId];
-    if (!animal || enterprisesFor(animal).length === 0) continue;
-    const group = byKind.get(animal) ?? { animal, existing: 0, proposed: 0 };
+    const housing = ELEMENT_HOUSING[item.defId];
+    if (!housing || enterprisesForHousing(housing).length === 0) continue;
+    const group = byKind.get(housing) ?? { housing, existing: 0, proposed: 0 };
     if (item.status === 'proposed') group.proposed++; else group.existing++;
-    byKind.set(animal, group);
+    byKind.set(housing, group);
   }
-  const order = Object.keys(ANIMAL_LABEL) as AnimalKind[];
-  return [...byKind.values()].sort((a, b) => order.indexOf(a.animal) - order.indexOf(b.animal));
+  const order = Object.keys(HOUSING_LABEL) as HousingKind[];
+  return [...byKind.values()].sort((a, b) => order.indexOf(a.housing) - order.indexOf(b.housing));
+}
+
+/** Whether an enterprise can be kept in a kind of structure. */
+function fits(housing: HousingKind, e: AnimalEnterprise): boolean {
+  return HOUSING_ANIMALS[housing].includes(e.animal);
 }
 
 /**
@@ -161,29 +212,30 @@ export interface AnimalAvailabilityItem {
 }
 
 /**
- * Which chosen enterprises give their product in each chart slot, by the sourced months.
+ * Which chosen enterprises give FOOD in each chart slot, by the sourced months.
  *
- * Only kinds the farmer has said what they keep them for are shown (rule 3). `onlyStanding` is
+ * Only structures the farmer has said what they keep them for are shown (rule 3). Wool has
+ * months but is not food, so a wool flock stays on its card and off the chart. `onlyStanding` is
  * the "from today" chart's rule, as for trees: a coop drawn as proposed has no hens in it yet.
  */
 export function buildAnimalAvailability(
   groups: readonly PlacedAnimalGroup[],
-  choices: Readonly<Partial<Record<AnimalKind, string>>>,
+  choices: Readonly<Partial<Record<HousingKind, string>>>,
   months: readonly number[],
   onlyStanding: boolean,
 ): AnimalAvailabilityItem[][] {
   const rows = groups
     .map((g) => {
-      const e = choices[g.animal] ? ANIMAL_ENTERPRISES[choices[g.animal]!] : undefined;
+      const e = choices[g.housing] ? ANIMAL_ENTERPRISES[choices[g.housing]!] : undefined;
       return { g, e, structures: onlyStanding ? g.existing : g.existing + g.proposed };
     })
     .filter((r): r is { g: PlacedAnimalGroup; e: AnimalEnterprise; structures: number } =>
-      !!r.e && r.e.animal === r.g.animal && r.structures > 0)
+      !!r.e && fits(r.g.housing, r.e) && isFoodProduct(r.e.product) && r.structures > 0)
     .map((r) => ({ ...r, season: new Set(sourcedProductMonths(r.e)) }))
     .filter((r) => r.season.size > 0);
   return months.map((m) => rows
     .filter((r) => r.season.has(m))
-    .map((r) => ({ enterpriseId: r.e.enterpriseId, animal: r.g.animal, product: r.e.product, structures: r.structures })));
+    .map((r) => ({ enterpriseId: r.e.enterpriseId, animal: r.e.animal, product: r.e.product, structures: r.structures })));
 }
 
 // ── The two view choices ────────────────────────────────────────────────────
@@ -198,7 +250,7 @@ const ENTERPRISE_CHOICE_KEY = 'imbewu_animal_enterprise_choice_v1';
 export const DEFAULT_INCLUDE_ANIMALS = true;
 
 let sandboxIncludeAnimals = DEFAULT_INCLUDE_ANIMALS;
-let sandboxChoices: Record<string, Partial<Record<AnimalKind, string>>> = {};
+let sandboxChoices: Record<string, Partial<Record<HousingKind, string>>> = {};
 
 export function loadIncludeAnimals(): boolean {
   if (isSampleMode()) return sandboxIncludeAnimals;
@@ -221,19 +273,19 @@ export function saveIncludeAnimals(include: boolean): void {
   }
 }
 
-/** Drop anything that is not a live enterprise of the kind it is filed under. */
-function cleanChoices(raw: unknown): Partial<Record<AnimalKind, string>> {
-  const out: Partial<Record<AnimalKind, string>> = {};
+/** Drop anything that is not a live enterprise the structure it is filed under can hold. */
+export function cleanChoices(raw: unknown): Partial<Record<HousingKind, string>> {
+  const out: Partial<Record<HousingKind, string>> = {};
   if (!raw || typeof raw !== 'object') return out;
-  for (const [kind, id] of Object.entries(raw as Record<string, unknown>)) {
-    if (typeof id !== 'string') continue;
+  for (const [housing, id] of Object.entries(raw as Record<string, unknown>)) {
+    if (typeof id !== 'string' || !(housing in HOUSING_ANIMALS)) continue;
     const e = ANIMAL_ENTERPRISES[id];
-    if (e && e.animal === kind) out[kind as AnimalKind] = id;
+    if (e && fits(housing as HousingKind, e)) out[housing as HousingKind] = id;
   }
   return out;
 }
 
-export function loadEnterpriseChoices(siteId: string): Partial<Record<AnimalKind, string>> {
+export function loadEnterpriseChoices(siteId: string): Partial<Record<HousingKind, string>> {
   if (isSampleMode()) return { ...(sandboxChoices[siteId] ?? {}) };
   if (typeof window === 'undefined' || !window.localStorage) return {};
   try {
@@ -245,7 +297,7 @@ export function loadEnterpriseChoices(siteId: string): Partial<Record<AnimalKind
   }
 }
 
-export function saveEnterpriseChoices(siteId: string, choices: Partial<Record<AnimalKind, string>>): void {
+export function saveEnterpriseChoices(siteId: string, choices: Partial<Record<HousingKind, string>>): void {
   const clean = cleanChoices(choices);
   if (isSampleMode()) { sandboxChoices = { ...sandboxChoices, [siteId]: clean }; return; }
   if (typeof window === 'undefined' || !window.localStorage) return;

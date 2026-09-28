@@ -42,6 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', changes: [
+    'Kraals, pig pens and small ponds on your map now show under Animals on your map.',
+    'New: beef and dairy cattle, meat and wool sheep, pigs and tilapia, each sourced.',
+    'Dairy cows and tilapia add their months to the chart; wool never counts as food.',
+    'Honey, goat milk, rabbits, ducks and broilers still have no sourced months.',
+  ], tour: [
+    { title: 'Say what your kraal is for', where: 'Crop plan → Animals on your map → Kraal', href: '/facilitator/crops',
+      detail: 'A kraal can hold cattle, sheep or goats, so it lists all of them. Pick one, such as a dairy cow, to read milk per cow, first calving, feed, water, welfare and the law, each with its source.' },
+    { title: 'Fish in a small pond', where: 'Crop plan → Animals on your map → Pond', href: '/facilitator/crops',
+      detail: 'A small pond asks whether you keep fish in it. Pick tilapia and its months join the availability chart and the Year of food, next to your beds, fruit trees and hens.' },
+    { title: 'Place a kraal, pig pen or pond', where: 'Design Studio → element palette', href: '/design',
+      detail: 'Search the palette for a kraal, pig pen or small pond and place it. The crop plan picks it up on the same site.' },
+  ] },
   { when: '28 September 2026', sha: '964eeae', changes: [
     'New Year of food card: every month, beds, fruit trees and animals together.',
     'Months with nothing fresh are marked, with a one-line summary of the year.',

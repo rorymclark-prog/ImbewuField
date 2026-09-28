@@ -52,6 +52,34 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 28 Sep 2026 — Animal enterprises, round 2 (Phase C: cattle, sheep, pigs, fish; month search)
+- **New enterprises (15 in all):** beef cattle (Nguni/crossbred, communal veld), dairy cow, meat
+  sheep, wool sheep, pigs (small-scale sow herd) and tilapia (Mozambique tilapia, small pond or
+  tank). Dossiers in `research/animal-sources/`; same build script and drift test.
+- **Housing, not animal:** choices are now keyed by the structure (`HousingKind`). A kraal holds
+  cattle, sheep or goats, so it offers every enterprise of those three ("What is the kraal for?");
+  a small pond asks "Keeping fish in it?"; a pig pen offers pigs. `cleanChoices` drops a saved
+  choice that no longer fits its housing. Product `fish` (Fish icon, "Harvest per fish") and
+  `wool` (Scissors) are new. Wool is not food: `isFoodProduct` keeps it off the Availability chart
+  and the Year of food, and the card says so.
+- **Months now on the chart:** laying hens, dairy cows ("processors require a year-round even milk
+  flow", Elsenburg Dairy Farming Handbook) and tilapia (year-round harvest, North-Eastern SA).
+- **Month search for honey, goat milk, rabbits, ducks, broilers and village hens:** each was
+  searched again; no source states the months the product is taken for the system recorded, so
+  they stay empty with a "Round 2" gaps line. Withdrawn in editor review:
+  - Honey: two Johannsmeier (Strelitzia 37) months described one plant's nectar flow, not a
+    region's honey season.
+  - Boer goat meat: kidding months plus an assumed weaning age (the kidding pattern stays as text).
+  - Beef: the "months" were a paper's birth-season classes; age at first calving is not a first
+    weaned calf; a holding-pen floor minimum is not housing space.
+  - Dairy: shade m² moved to a welfare point; a dead KZN URL replaced; wrong ± figures in a
+    productive-life quote replaced by the paper's own sentence; table notes corrected.
+  - PMC quotes were checked against the Europe PMC full text (PMC serves scripts a reCAPTCHA).
+- **Tests:** `tests/animal-enterprises.test.ts` adds kraal/pond/pig housing, choice-fits-housing
+  and wool-never-food cases. 14 `npm test` failures in this container (auth transition, course
+  deck, product tour, public SSR, venue location, saved reports, paired slides) fail identically
+  on `origin/main` here — loader/environment, not this change.
+
 ### 28 Sep 2026 — Year of food (Phase D: one calendar, gap-fill sowings)
 - **New `lib/year-of-food.ts`:** `buildYearOfFood` folds the Availability chart's OWN first 12
   slots (bed crops, fruit trees, animals) into one verdict per month: fresh (anything fresh from any

@@ -9,16 +9,17 @@
 // Every figure opens onto the sentence it came from; a figure no source states reads "not sourced".
 
 import type { LucideIcon } from 'lucide-react';
-import { PawPrint, Egg, Milk, Hexagon, Drumstick, Scale, ShieldCheck, HeartHandshake, ExternalLink } from 'lucide-react';
+import { PawPrint, Egg, Milk, Hexagon, Drumstick, Fish, Scissors, Scale, ShieldCheck, HeartHandshake, ExternalLink } from 'lucide-react';
 import {
-  ANIMAL_LABEL,
+  HOUSING_LABEL,
   PRODUCT_LABEL,
-  enterprisesFor,
+  enterprisesForHousing,
   formatAmountRange,
+  isFoodProduct,
   sourcedProductMonths,
   type AnimalEnterprise,
-  type AnimalKind,
   type AnimalProduct,
+  type HousingKind,
   type PlacedAnimalGroup,
 } from '@/lib/animal-enterprises';
 import { formatMonthSpan, formatRange, type HarvestCitation, type SourcedRange } from '@/lib/perennial-harvest';
@@ -28,14 +29,25 @@ export const PRODUCT_ICON: Readonly<Record<AnimalProduct, LucideIcon>> = {
   milk: Milk,
   honey: Hexagon,
   meat: Drumstick,
+  fish: Fish,
+  wool: Scissors,
 };
 
-const STRUCTURE_NOUN: Readonly<Record<AnimalKind, [string, string]>> = {
+const STRUCTURE_NOUN: Readonly<Record<HousingKind, [string, string]>> = {
   chicken: ['coop or tractor', 'coops and tractors'],
   goat: ['goat pen', 'goat pens'],
   bee: ['hive', 'hives'],
   rabbit: ['hutch', 'hutches'],
   duck: ['duck pond', 'duck ponds'],
+  pig: ['pig pen', 'pig pens'],
+  kraal: ['kraal', 'kraals'],
+  pond: ['small pond', 'small ponds'],
+};
+
+/** The question each structure asks: a pond is often just water, so it asks whether, not what. */
+const PURPOSE_QUESTION: Readonly<Partial<Record<HousingKind, string>>> = {
+  kraal: 'What is the kraal for?',
+  pond: 'Keeping fish in it?',
 };
 
 /** Weeks as a farmer says them: "18–20 weeks" up to half a year, months after that. */
@@ -87,7 +99,7 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
   return (
     <div className="mt-3">
       <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
-        <Fact label={`${PRODUCT_LABEL[e.product]} per ${e.animalUnit}`} value={rangeText(e.outputPerAnimal, e.outputUnit)} source={e.outputPerAnimal?.source} />
+        <Fact label={`${e.product === 'fish' ? 'Harvest' : PRODUCT_LABEL[e.product]} per ${e.animalUnit}`} value={rangeText(e.outputPerAnimal, e.outputUnit)} source={e.outputPerAnimal?.source} />
         <Fact label="When" value={months.length ? `${formatMonthSpan(months)}${e.windows.length === 1 ? ` · ${firstWindow.region}` : ' across SA sources'}` : null} source={firstWindow?.source} />
         <Fact label="First product" value={e.weeksToFirstProduct ? formatWeeks(e.weeksToFirstProduct.value) : null} source={e.weeksToFirstProduct?.source} />
         <Fact label="Productive life" value={rangeText(e.productiveLifeYears, 'years')} source={e.productiveLifeYears?.source} />
@@ -95,6 +107,11 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
         <Fact label={`Water per ${e.animalUnit}`} value={rangeText(e.waterLPerDay, 'L a day')} source={e.waterLPerDay?.source} />
         <Fact label={`Space per ${e.animalUnit}`} value={rangeText(e.spaceM2, 'm²')} source={e.spaceM2?.source} />
       </div>
+      {!isFoodProduct(e.product) && (
+        <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
+          {PRODUCT_LABEL[e.product]} is not food, so it stays off the availability chart and the year of food.
+        </p>
+      )}
       {e.seasonalPattern && (
         <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
           {e.seasonalPattern.text} <SourceLink source={e.seasonalPattern.source} />
@@ -139,8 +156,8 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
 
 export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
   groups: PlacedAnimalGroup[];
-  choices: Partial<Record<AnimalKind, string>>;
-  onChoose: (animal: AnimalKind, enterpriseId: string | null) => void;
+  choices: Partial<Record<HousingKind, string>>;
+  onChoose: (housing: HousingKind, enterpriseId: string | null) => void;
 }) {
   if (groups.length === 0) return null;
   return (
@@ -153,20 +170,20 @@ export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
       </p>
       <div className="flex flex-col gap-4">
         {groups.map((g) => {
-          const options = enterprisesFor(g.animal);
-          const chosen = options.find((e) => e.enterpriseId === choices[g.animal]) ?? null;
+          const options = enterprisesForHousing(g.housing);
+          const chosen = options.find((e) => e.enterpriseId === choices[g.housing]) ?? null;
           const total = g.existing + g.proposed;
-          const [one, many] = STRUCTURE_NOUN[g.animal];
+          const [one, many] = STRUCTURE_NOUN[g.housing];
           return (
-            <section key={g.animal} style={{ borderTop: '1px solid var(--border)', paddingTop: 12 }}>
+            <section key={g.housing} style={{ borderTop: '1px solid var(--border)', paddingTop: 12 }} data-animal-housing={g.housing}>
               <div className="font-sans font-semibold" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
-                {ANIMAL_LABEL[g.animal]}
+                {HOUSING_LABEL[g.housing]}
                 <span className="font-normal" style={{ color: 'var(--text-muted)', fontSize: 12 }}>
                   {' '}· {total} {total === 1 ? one : many} on the map{g.proposed > 0 ? ` (${g.proposed} proposed)` : ''}
                 </span>
               </div>
-              <div className="font-sans mt-2 mb-1" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>What are they for?</div>
-              <div className="flex flex-wrap gap-1.5" role="group" aria-label={`What the ${ANIMAL_LABEL[g.animal].toLowerCase()} are for`}>
+              <div className="font-sans mt-2 mb-1" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>{PURPOSE_QUESTION[g.housing] ?? 'What are they for?'}</div>
+              <div className="flex flex-wrap gap-1.5" role="group" aria-label={PURPOSE_QUESTION[g.housing] ?? `What the ${HOUSING_LABEL[g.housing].toLowerCase()} are for`}>
                 {options.map((e) => {
                   const on = chosen?.enterpriseId === e.enterpriseId;
                   const Icon = PRODUCT_ICON[e.product];
@@ -175,7 +192,7 @@ export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
                       key={e.enterpriseId}
                       type="button"
                       aria-pressed={on}
-                      onClick={() => onChoose(g.animal, on ? null : e.enterpriseId)}
+                      onClick={() => onChoose(g.housing, on ? null : e.enterpriseId)}
                       className="font-sans rounded-full inline-flex items-center gap-1"
                       style={{ fontSize: 12, fontWeight: on ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${on ? 'var(--emerald)' : 'var(--border)'}`, background: on ? 'var(--bg-2)' : 'transparent', color: on ? 'var(--text-primary)' : 'var(--text-secondary)' }}
                     >

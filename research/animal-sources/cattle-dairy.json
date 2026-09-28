@@ -1,0 +1,216 @@
+{
+  "enterpriseId": "cattle-dairy",
+  "commonName": "Small-scale dairy cow (Jersey, Holstein or crossbred)",
+  "animal": "cattle",
+  "animalUnit": "cow",
+  "product": "milk",
+  "outputUnit": "kg milk/cow/lactation",
+  "outputPerAnimal": {
+    "value": [
+      3840,
+      5422
+    ],
+    "evidence": {
+      "quote": "Milk FCM BF \n% ... 6426 \n5422 \n4468 \n3840",
+      "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/PRODUCTION_GUIDELINES/Dairying_in_KwaZulu-Natal/Breeds%20of%20Dairy%20Cattle.pdf",
+      "doc": "Gertenbach, W.D., Dairying in KwaZulu-Natal: Breeds of Dairy Cattle, Cedara Agricultural Development Institute, KZN Department of Agriculture and Rural Development, Table 1",
+      "page": 1
+    },
+    "notes": "Table 1 ('Comparison of number of cows, production and fertility in the main dairy breeds in South Africa'), Milk column, Grade rows: Jersey 3840 kg and Holstein-Friesland 5422 kg per lactation (Registered rows: 4468 and 6426 kg). The document says these are National Milk Recording Scheme herds, which 'have been shown to be better managed than those outside the scheme, with their performance per lactation being 50 % greater than that of the national herd', so a smallholder herd should expect less."
+  },
+  "productionMonths": [
+    {
+      "region": "South Africa (commercial and small-commercial dairy, general)",
+      "months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "not an option for dairy farmers in South Africa, \nas processors require a year-round even milk \nflow to ensure processing plants operating at \nfull capacity for most of the year.",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+        "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+        "page": 239
+      },
+      "notes": "The handbook's own sentence states that a seasonal calving pattern is not an option for SA dairy farmers because processors need a year-round, even milk flow - i.e. milk is produced/supplied continuously through the year, which is the source's own year-round statement (not a months figure derived by this researcher from a breeding season)."
+    }
+  ],
+  "seasonalPattern": {
+    "value": "SA dairy processors need a steady year-round milk supply, so seasonal (batch) calving is not viable for SA dairy farmers - milk is produced continuously all year.",
+    "evidence": {
+      "quote": "not an option for dairy farmers in South Africa, \nas processors require a year-round even milk \nflow to ensure processing plants operating at \nfull capacity for most of the year.",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+      "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+      "page": 239
+    },
+    "notes": "Same source as productionMonths; South Africa, commercial/small-commercial dairy."
+  },
+  "timeToFirstProductWeeks": {
+    "value": [
+      121.8,
+      130.5
+    ],
+    "evidence": {
+      "quote": "28 30 25 28 29 32 ... AFC : Mean age at first calving, months.",
+      "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/PRODUCTION_GUIDELINES/Dairying_in_KwaZulu-Natal/Breeds%20of%20Dairy%20Cattle.pdf",
+      "doc": "Gertenbach, W.D., Dairying in KwaZulu-Natal: Breeds of Dairy Cattle, Cedara Agricultural Development Institute, KZN Department of Agriculture and Rural Development, Table 1",
+      "page": 1
+    },
+    "notes": "Table 1, AFC column, rows in the table's order Holstein-Friesland Reg./Grade, Jersey Reg./Grade, Ayrshire Reg./Grade: 28, 30, 25, 28, 29, 32 months. The Grade rows used here are Holstein-Friesland 30 and Jersey 28 (Grade Ayrshire 32 is not used: the enterprise is Jersey or Holstein type). 28 x 4.35 = 121.8 weeks; 30 x 4.35 = 130.5 weeks. Milk begins at first calving, so age at first calving is the time to first product."
+  },
+  "productiveLifeYears": {
+    "value": [
+      1.91,
+      2.02
+    ],
+    "evidence": {
+      "quote": "Table 2 indicates that the average length of productive life was 739.33 ± 434.31 and 696.81 ± 415.44 days",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12560872/",
+      "doc": "Cow Longevity and Reasons and Risk Factors for Culling in South African Holstein and Jersey Dairy Herds, Animals 2025 (PMC12560872)",
+      "page": null
+    },
+    "notes": "Holstein 739.33 and Jersey 696.81 days of productive life (first calving to culling) in South African milk-recorded herds, 2000-2019: 696.81/365.25 = 1.91 and 739.33/365.25 = 2.02 years."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": [
+      14,
+      28
+    ],
+    "evidence": {
+      "quote": "The daily feed intake of Jersey \ncows is about 14 to 16 kg DM, while Holstein \ncows consume about 24 to 28 kg DM per day.",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+      "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+      "page": 10
+    },
+    "notes": "Dry-matter (DM) intake for lactating dairy cows: Jersey 14-16 kg DM/day, Holstein 24-28 kg DM/day. Full span across both breeds used here (14 to 28 kg/day) since the enterprise covers Jersey, Holstein or crossbred cows generically."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": [
+      58,
+      75
+    ],
+    "evidence": {
+      "quote": "Water intake per day (l) 58 75",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+      "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg), Table 21.1",
+      "page": 122
+    },
+    "notes": "Table 21.1 gives water intake for a lactating Holstein-type cow under comfortable versus hot conditions: 58 L/day (comfortable) to 75 L/day (hot). Used as the general lactating-cow range; not broken out by breed since the table's other columns are for comfort/heat-stress states rather than breed."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn in editor review: 4-5 m² is shade per cow from the Dairy Farming Handbook, not housing space (kept as a welfare point). No source gives housing space per dairy cow."
+  },
+  "welfare": [
+    {
+      "point": "Cattle pens must not be overcrowded: there must be enough floor space for every animal to lie down at the same time.",
+      "evidence": {
+        "quote": "Livestock shall not be penned in overcrowded conditions. ... Penning space provided shall be enough to permit all livestock to lie down at the same \ntime",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.1.2",
+        "page": 4
+      }
+    },
+    {
+      "point": "Cows must not be loaded for transport if their udders are distended with milk.",
+      "evidence": {
+        "quote": "No livestock which is diseased, emaciated, injured, disabled, exhausted or otherwise unfit or cows with udders distended with milk, or livestock blind in one or both eyes should be loaded onto a vehicle",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.6.13",
+        "page": 9
+      }
+    },
+    {
+      "point": "Cattle may not be transported for more than 18 hours without being off-loaded and given feed, water and shelter.",
+      "evidence": {
+        "quote": "Livestock shall not be transported for periods in excess of 18 h. If the journey is longer than  \n18 h the livestock shall be off-loaded and provided with suitable feed, potable water and shelter.",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.7.1",
+        "page": 9
+      }
+    },
+    {
+      "point": "It is an offence to starve, under-feed, or deny water or food to a dairy cow.",
+      "evidence": {
+        "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+        "page": 1
+      }
+    },
+    {
+      "point": "Cows on pasture or in open camps need shade: shade structures should give at least 4 to 5 m² of shade per cow.",
+      "evidence": {
+        "quote": "Shade structures should provide at least 4 to \n5 m² shade space per cow.",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+        "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+        "page": 129
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: state Veterinary Services enforce isolation and movement restrictions.",
+      "evidence": {
+        "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Every cattle owner must register an official identification mark and brand or mark their cattle with it, under the Animal Identification Act.",
+      "evidence": {
+        "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+        "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+        "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+        "page": 4
+      }
+    },
+    {
+      "point": "Dairy farmers are legally required to test their herds for bovine TB, mainly because of export requirements, so most dairy cattle in South Africa are tested.",
+      "evidence": {
+        "quote": "Dairy farmers are required by legislation to test their herds for TB, this mainly as a result of export requirements, so the majority of dairy cattle are tested.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10369683/",
+        "doc": "Bovine tuberculosis / dairy herd testing study, PMC10369683",
+        "page": null
+      }
+    },
+    {
+      "point": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, under the national bovine brucellosis control scheme.",
+      "evidence": {
+        "quote": "all suspected and confirmed cases of abortion must be reported to the nearest State Veterinary office for zoo-sanitary actions as prescribed in the national bovine brucellosis control scheme",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10784229/",
+        "doc": "Marumo, Hlokwe & Kayoka-Kabongo, Seroprevalence of brucellosis in communal and smallholder cattle farming in North West Province, South Africa, Onderstepoort Journal of Veterinary Research (PMC10784229)",
+        "page": null
+      }
+    },
+    {
+      "point": "A cull cow may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "outputPerAnimal, timeToFirstProductWeeks: the Milk SA / MPO 'Lacto Data' publications and the Milk Producers' Organisation site (mpo.co.za) were the preferred sources per the brief but were not fetchable as usable per-cow lactation-yield tables within the search budget; used the KZN DARD (provincial Dept of Agriculture) 'Breeds of Dairy Cattle' factsheet instead, which is a directly on-list provincial source and gives a full Registered-vs-Grade breed table for Jersey, Holstein, Ayrshire and Crossbred cows in one place.",
+    "The 'Code of Practice for Milk Producers' referenced by dairystandard.co.za (a likely additional welfare source) could not be downloaded: curl returned a connection reset and the PDF was too large for WebFetch to retrieve directly; the LWCC Handling and Transport of Livestock Code (2018) was used instead, and does include a dairy-specific clause (no loading of udder-distended cows).",
+    "A separate LWCC 'Code of Practice for the Welfare of Dairy Cattle' PDF exists but has an irrecoverably garbled custom font encoding under pypdf, pymupdf and WebFetch alike, so no quote could be taken from it.",
+    "spaceM2PerAnimal: no SA source was found giving indoor freestall/cubicle housing floor space per dairy cow (SA small-scale dairying is mostly pasture/camp-based per the Elsenburg handbook); the figure used (4-5 m2) is pasture shade-structure space, not enclosed housing, and is noted as such.",
+    "A web-search AI summary had claimed brucellosis testing is compulsory only for dairy/export herds and voluntary for others under a specific scheme reference; this exact differentiated claim could not be verified verbatim in any actually-fetched primary source, so it was NOT used - the brucellosis point above cites only the reporting-obligation language that was independently verified.",
+    "Editor review 2026-09-28 (round 2): the Breeds of Dairy Cattle URL 404'd and now points at the KZN DARD Dairying in KwaZulu-Natal copy. Its notes had the table wrong in places (the yields are the Milk column, not FCM; Grade Ayrshire first calving is 32 months; there is no crossbred row) and now say the herds are milk-recording herds 50% above the national herd. The productive-life quote was not in the paper as given (its ± figures were wrong) and is replaced by the paper's own sentence, same means. Shade space moved from spaceM2PerAnimal to welfare. The Meat Safety Act quote now carries the abattoir rule and its point drops 'for sale'. PMC quotes were checked against the Europe PMC full text of the same articles."
+  ]
+}

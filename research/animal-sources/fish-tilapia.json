@@ -1,0 +1,160 @@
+{
+  "enterpriseId": "fish-tilapia",
+  "commonName": "Tilapia (Mozambique tilapia, small pond or tank)",
+  "animal": "fish",
+  "animalUnit": "fish",
+  "product": "fish",
+  "outputUnit": "g harvest weight/fish",
+  "outputPerAnimal": {
+    "value": [
+      800,
+      800
+    ],
+    "evidence": {
+      "quote": "Harvestable size (+- 800g) in 10-\n12 months",
+      "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+      "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia)",
+      "page": 69
+    },
+    "notes": "Table 8-3 gives the Mozambique Tilapia's harvestable size as an approximate single figure ('+- 800g'), not a range, so [800, 800] is used rather than inventing a spread. The same table cell wraps '10-12' across a line break in the PDF ('10-\\n12'), kept verbatim. The table's Nile Tilapia row gives the same approximate weight (+-800g) reached faster, in 6-10 months — not used here because this dossier is framed around the indigenous, legally unrestricted Mozambique Tilapia per task instruction; see 'legal' for why Nile Tilapia is treated separately. No SA source was found giving a feed-conversion-based or per-hectare yield figure specific to O. mossambicus that could be converted to this per-fish unit without stitching numbers across documents, so outputUnit follows the source's own unit (grams harvest weight per fish) rather than being converted."
+  },
+  "productionMonths": [
+    {
+      "region": "North-Eastern South Africa (sub-tropical climate, unheated water)",
+      "months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "Due to the South African climate, grow -out can only occur seasonally in some part of the \ncountry, unless water is heated to maintain higher temperatures. However, in the North -\nEastern parts of the country, the subtropical climate allows  for year-round grow-out conditions \nwithout the need for water heating.",
+        "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+        "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+        "page": 84
+      },
+      "notes": "The source explicitly states 'year-round grow-out conditions' for this specific region (sub-tropical North-East, e.g. the Limpopo/Mpumalanga lowveld and northern KZN belt referred to elsewhere in the report), satisfying the year-round rule. No months array is given for the rest of South Africa: the report says growth is seasonal and halts below a temperature threshold 'during the winter months' (see seasonalPattern) but never states which calendar months that covers, and deriving specific months from the word 'winter' without the source defining them would be an unsupported derivation, so that region is left out rather than guessed."
+    }
+  ],
+  "seasonalPattern": {
+    "value": "Winter water temperatures halt tilapia growth over most of South Africa; only the sub-tropical North-East supports year-round unheated grow-out.",
+    "evidence": {
+      "quote": "Most of South Africa, however, does not have a year -round temperature within the required \n‘optimal’ growth range for Tilapia  (reported to be between 25-35 degrees Celsius (FAO, \n2014e)), with temperatures falling below the lower threshold for Tilapia survival during the \nwinter months in much of the country. Optimal temperatures are reached during the summer \nmonths, but this is restricted to areas on the North -Eastern side of South Africa where a more \nsub-tropical climate prevails.",
+      "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+      "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+      "page": 75
+    },
+    "notes": "Applies to pond/outdoor grow-out without supplemental water heating, South Africa (general), Mozambique and Nile Tilapia both discussed on this page (the temperature tolerances given are for 'Tilapia' generally, not split by species). RAS (recirculating aquaculture system) or greenhouse producers can heat water to escape this seasonal limit, per the same report (p.76), but no specific extended production months are quoted for a heated system."
+  },
+  "timeToFirstProductWeeks": {
+    "value": [
+      43.5,
+      52.2
+    ],
+    "evidence": {
+      "quote": "Relative to the Nile Tilapia, the Mozambique Tilapia is slower growing, reaching full  harvestable \nsize in approximately 10 – 12 months (depending on temperatures, feeding regimes, etcetera).",
+      "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+      "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+      "page": 69
+    },
+    "notes": "10 months x 4.35 = 43.5 weeks; 12 months x 4.35 = 52.2 weeks. This is Mozambique Tilapia (O. mossambicus) grow-out time to harvestable size; the source separately states Nile Tilapia (O. niloticus) reaches harvestable maturity faster, in 6-10 months (= 26.1-43.5 weeks) — not used here as it is a different species with a different legal status (see 'legal')."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. This dossier is framed around a grow-out (fingerling-to-harvest) enterprise, and no source found states how many years a breeding/broodstock animal remains productive before replacement. Searched the IDC 2015 report (broodstock section not reached/not present) and the FAO O. niloticus fact sheet, which gives brood-fish stocking densities (see spaceM2PerAnimal notes) but not a productive-life span in years."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced as an as-fed kg/day figure. The FAO O. niloticus fact sheet gives feeding rates only as a percentage of body weight per day at various life stages (e.g. brood fish 0.5-2%/day, fingerlings 8-15% decreasing to 4-9%/day) with no stated body weight for a defined 'adult' animal, and stitching an assumed body weight onto those percentages to produce a kg/day figure would be an unsupported conversion. No SA-specific feed-rate document was reachable (dffe.gov.za and nda.gov.za were down — see gaps)."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced, and the concept does not map cleanly onto pond/tank aquaculture the way it does for a terrestrial animal's drinking water. Sources instead describe water management as an exchange rate relative to pond/system volume (e.g. FAO fact sheet: 'exchanging 5-15 percent of the pond volume daily' for semi-intensive ponds, p.45), a different unit that cannot be converted to L/fish/day without an assumed pond volume and stocking density the source does not tie together for one system."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn in editor review: the only figure was 1-3 fish/m² from an FAO fact sheet for Nile tilapia (O. niloticus), not the Mozambique tilapia this dossier covers, turned into m² per fish by division the source does not do."
+  },
+  "welfare": [],
+  "legal": [
+    {
+      "point": "The indigenous Mozambique Tilapia (O. mossambicus) is not a listed invasive species and may be farmed without an alien-species permit; the faster-growing Nile Tilapia (O. niloticus) is.",
+      "evidence": {
+        "quote": "Legality of Production Allowed Allowed with Permits",
+        "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+        "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia)",
+        "page": 69
+      }
+    },
+    {
+      "point": "Nile Tilapia (Oreochromis niloticus) is a nationally listed invasive fish species: Category 1b inside National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry Reserves, and Category 3 in all other areas.",
+      "evidence": {
+        "quote": "Oreochromis niloticus Nile tilapia See below\na. 1b in National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry      \nReserves declared in terms of the Protected Areas Act. \nb. 3 for all other discrete catchment systems in which it occurs.",
+        "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
+        "doc": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet), List 7 (National List of Invasive Fresh-water Fish Species)",
+        "page": 32
+      }
+    },
+    {
+      "point": "Outside protected areas Nile tilapia is Category 3: it may remain in prescribed areas or provinces, but further propagation or trade is prohibited.",
+      "evidence": {
+        "quote": "Category 3:  Invasive species which may remain in prescribed areas or provinces. Further  \n   planting, propagation or trade, is however prohibited. Plants in riparian areas are Cat 1b.",
+        "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
+        "doc": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet)",
+        "page": 3
+      }
+    },
+    {
+      "point": "Nile Tilapia has been listed under the NEMBA Alien and Invasive Species Regulations as requiring a permit to produce.",
+      "evidence": {
+        "quote": "Nile Tila pia has now been included in \nthe latest NEMBA legislation as an alien and invasive species requiring a permit for production",
+        "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+        "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+        "page": 69
+      },
+      "notes": "The IDC 2015 report also describes Nile Tilapia's classification at that time as a 'Category 2' species under the 2014 AIS Regulations (p.74); the current NEMBA booklet (2022, sourced above) instead lists it as Category 1b/3. The category number appears to have changed since 2015, so only the general, still-current point — that a permit is required — is used from the IDC report, not the specific (now superseded) category number."
+    },
+    {
+      "point": "Producing an alien or invasive species (such as Nile Tilapia) is prohibited in areas designated under the Protected Areas Act and the Fish Sanctuary Act; a permit is required to produce it elsewhere.",
+      "evidence": {
+        "quote": "Production involving the \nuse of an alien and/or \ninvasive species is \nprohibited in areas \ndesignated by the \nProtected Areas Act and \nthe Fish Sanctuary Act. A \npermit is required for \nproduction in other areas.",
+        "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+        "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+        "page": 74
+      }
+    },
+    {
+      "point": "Producing tilapia in South Africa requires a water use licence under the National Water Act.",
+      "evidence": {
+        "quote": "Production of Tilapia in South Africa will require a \nwater use license.",
+        "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+        "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+        "page": 75
+      }
+    }
+  ],
+  "gaps": [
+    "dffe.gov.za and nda.gov.za (the DFFE/DAFF Aquaculture Yearbook, Tilapia feasibility studies, Mozambique tilapia species leaflet/production guideline, and Legal Guide for the Aquaculture Sector) were completely unreachable in every attempted URL (curl exit code 000, connection could not be established); web.archive.org is blocked by this environment's egress policy so it could not be used as a fallback.",
+    "wrc.org.za: the Water Research Commission's TT892 report on small-scale aquaculture/aquaponics returned 404 on two different URL patterns (including a wrcwebsite.azurewebsites.net mirror that works for other WRC reports); could not be fetched.",
+    "dws.gov.za: the South African Water Quality Guidelines Volume 6 (Aquaculture), a strong candidate for a welfare/water-quality source, returned 403 Forbidden on both curl and WebFetch.",
+    "journals.co.za (SA Journal of Aquatic Science / SA Aquaculture Society papers) was not reachable for a full-text article during this search.",
+    "welfare is left empty: no reachable SA aquaculture code of practice, Act, regulation or department guide stating specific husbandry/welfare requirements for farmed tilapia was found. Farming-practice figures in the FAO fact sheet and IDC report (stocking densities, water exchange rates, RAS conditions) are production/trial parameters, not welfare rules from a code or Act, so per the round-2 rule against presenting experimental conditions as welfare, none were used.",
+    "No SA-specific or O. mossambicus-specific stocking density (spaceM2PerAnimal), feed rate (feedKgPerAnimalPerDay) or water requirement figure was found; the value used for spaceM2PerAnimal is FAO general data for O. niloticus in earthen ponds only (see notes) — no tank/RAS-specific density figure was sourced for either species.",
+    "myaquaponics.co.za and other aquaculture blogs/hobbyist sites turned up in search results but were excluded as not being SA government, research-body or peer-reviewed sources, per the hard sourcing rules.",
+    "A SciELO SA market-survey paper (scielo.org.za/pdf/sajae/v53n5/01.pdf, Limpopo fish traders) gives a preferred trading weight of around 300g, but this reflects trader purchasing preference rather than a production guide's target harvest weight for a specific grow-out period, so it was not used for outputPerAnimal.",
+    "productiveLifeYears, feedKgPerAnimalPerDay and waterLPerAnimalPerDay are null; see each field's notes for what was searched and why no figure could be used without an unsupported conversion or a stitched/wrong-stage number.",
+    "Editor review 2026-09-28 (round 2): product filed as 'fish' rather than 'meat'. spaceM2PerAnimal withdrawn (a Nile tilapia stocking density from FAO, divided into m² per fish). Two legal points withdrawn: the Elsenburg controlled-disease list names Bacterial Kidney Disease, IHN, IPN, VHS and Koi Herpes Virus, which are salmonid and carp diseases, not tilapia's, and its quote did not carry the reporting duty the point stated; and 'the Animals Protection Act does not cover fish' was a reading of the Act's general definition, which the source does not state. The Category 3 point was reworded to what its quote says."
+  ]
+}
