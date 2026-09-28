@@ -143,51 +143,40 @@ test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its
   assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
 });
 
-test('Food Forest Sesotho narration drafts only scoped conceptual text and keeps field advice held', () => {
-  // This draft lane adds a few low-risk headlines and one layer-summary sentence for review.
-  // Keep the body allowlist explicit so new planting, safety or species advice cannot slip in.
+test('Food Forest Sesotho keeps only backchecked headings and leaf-litter sentence as drafts', () => {
+  // The independent backcheck rejected the layer and habitat wording as ambiguous. Keep only its
+  // accepted fields; advice and uncertain concepts remain paired with exact English.
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/food-forest.st.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'st');
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  assert.deepEqual(drafted, ['4:1', '4:2', '4:3', '4:4', '8:2', '13:1']);
+  assert.deepEqual(drafted, ['8:2']);
   assert.deepEqual(slides.map((slide: any) => slide.target.heading.status), Array.from({ length: 20 }, (_, index) =>
-    [3, 4, 8].includes(index + 1) ? 'draft' : 'english-hold'));
+    [3, 8].includes(index + 1) ? 'draft' : 'english-hold'));
   assert.deepEqual([
     slides[2].target.heading.text,
-    slides[3].target.heading.text,
     slides[7].target.heading.text,
-    slides[3].target.body[2].text,
-    slides[3].target.body[3].text,
-    slides[12].target.body[0].text,
-  ], [
-    'Liphetho tsa ho ithuta',
-    'Moru o sebelisa mekhahlelo eohle',
-    'Tlhokomelo e fetoha ha limela li ntse li hola',
-    'Serapa sa lijo sa moru se etsisa mokhoa ona ka limela tse hlahisang lihlahisoa.',
-    'Phello ha se sejalo se le seng moleng o le mong; ke mekhahlelo e mengata e molemo e melang hammoho.',
-    'Dimela tsa tlhaho tsa sebakeng seo, tse loketseng tikoloho, di ka tshehetsa bodulo ba diphedi e le karolo ya moralo.',
-  ]);
-  assert.deepEqual([
-    slides[3].target.body[0].text,
-    slides[3].target.body[1].text,
     slides[7].target.body[1].text,
   ], [
-    'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.',
-    'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.',
+    'Liphetho tsa ho ithuta',
+    'Tlhokomelo e fetoha ha limela li ntse li hola',
     'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.',
   ]);
+  assert.ok(slides[3].target.body.every((part: any) => part.status === 'english-hold'),
+    'all layer terms and claims rejected by backcheck stay in exact English');
+  assert.equal(slides[3].target.heading.status, 'english-hold');
+  assert.equal(slides[12].target.body[0].status, 'english-hold',
+    'the indigenous-plant habitat claim stays in exact English pending term review');
   const lessonBody = SESOTHO_FOOD_FOREST_DRAFT.lessons[0].body;
   const lessonEnglish = lessonBody.sourceEnglish.split('\n\n');
   const lessonSesotho = lessonBody.sesothoDraft.split('\n\n');
-  for (const [slideIndex, slideParagraph, lessonParagraph] of [[3, 0, 0], [3, 1, 1], [7, 1, 11]]) {
-    assert.equal(slides[slideIndex].english.body[slideParagraph], lessonEnglish[lessonParagraph],
-      `slide ${slideIndex + 1} must use the exact lesson source sentence`);
-    assert.equal(slides[slideIndex].target.body[slideParagraph].text, lessonSesotho[lessonParagraph],
-      `slide ${slideIndex + 1} must reuse the existing Sesotho draft sentence`);
-  }
+  assert.equal(slides[3].english.body[0], lessonEnglish[0], 'slide 4 keeps its exact source sentence');
+  assert.equal(slides[3].english.body[1], lessonEnglish[1], 'slide 4 keeps its exact source sentence');
+  assert.equal(slides[7].english.body[1], lessonEnglish[11], 'slide 8 keeps its exact source sentence');
+  assert.equal(slides[7].target.body[1].text, lessonSesotho[11],
+    'the accepted slide 8 leaf-litter draft reuses the existing machine text');
   assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
     part.status === 'draft' || part.status === 'english-hold')));
 });

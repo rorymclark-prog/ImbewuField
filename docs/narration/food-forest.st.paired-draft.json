@@ -106,25 +106,20 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Moru o sebelisa mekhahlelo eohle"
+          "status": "english-hold"
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong."
+            "status": "english-hold"
           },
           {
-            "status": "draft",
-            "text": "Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona."
+            "status": "english-hold"
           },
           {
-            "status": "draft",
-            "text": "Serapa sa lijo sa moru se etsisa mokhoa ona ka limela tse hlahisang lihlahisoa."
+            "status": "english-hold"
           },
           {
-            "status": "draft",
-            "text": "Phello ha se sejalo se le seng moleng o le mong; ke mekhahlelo e mengata e molemo e melang hammoho."
+            "status": "english-hold"
           }
         ]
       }
@@ -396,8 +391,7 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Dimela tsa tlhaho tsa sebakeng seo, tse loketseng tikoloho, di ka tshehetsa bodulo ba diphedi e le karolo ya moralo."
+            "status": "english-hold"
           },
           {
             "status": "english-hold"
