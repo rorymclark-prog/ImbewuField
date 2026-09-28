@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 September 2026', changes: [
+  { when: '28 September 2026', sha: 'c711285', changes: [
     'Fruit trees on your map now show their picking months in the crop plan.',
     'Orchard switch: show or hide tree fruit; trees never count in per-m² figures.',
     'Species picker shows picking months, years to first crop and kg per tree.',
