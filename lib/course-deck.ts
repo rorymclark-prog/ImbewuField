@@ -200,8 +200,8 @@ const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   // The farmer visibly places dry leaves and straw over fresh green trimmings, then spreads them.
   // Moisture, decomposition and finished compost remain in the narration and later slides.
-  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true, unavailableLanguages: ['zu'] },
-  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8, unavailableLanguages: ['zu'] },
+  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true, unavailableLanguages: ['zu', 'st'] },
+  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8, unavailableLanguages: ['zu', 'st'] },
 };
 
 // Slide 6 keeps the direct-sowing-versus-transplanting still as its poster. The reviewed Flow
@@ -272,12 +272,12 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },
   'soil-health': {
-    // Tshivenda frames source-pair unreviewed opening drafts and English holds across all 20 slides.
+    // Sesotho, Tshivenda and Xitsonga frames source-pair unreviewed drafts and exact English holds.
     slideLanguages: ['en', 'zu', 'st', 'ts', 've'],
     slideFormatsByLanguage: { st: 'webp', ts: 'webp', ve: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ts: 1440 / 5400, ve: 1440 / 5400 },
     missingSlides: {
-      st: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      st: [],
       ts: [],
     },
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),

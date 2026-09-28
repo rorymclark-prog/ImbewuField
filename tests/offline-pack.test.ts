@@ -209,13 +209,19 @@ test('Sesotho Soil Health entry keeps paired stills and English source narration
   const pack = offlinePack('soil-health', 'st');
   assert.deepEqual(pack.missing, []);
   const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
-  for (const n of ['01', '02', '03', '04', '05']) {
-    assert.ok(slides.includes(`/course-decks/soil-health/st/slide-${n}.webp`));
+  assert.equal(slides.filter((url) => url.startsWith('/course-decks/soil-health/st/')).length, 20,
+    'the complete source-paired Sesotho deck must be available offline');
+  for (let n = 1; n <= 20; n++) {
+    const number = String(n).padStart(2, '0');
+    assert.ok(slides.includes(`/course-decks/soil-health/st/slide-${number}.webp`));
   }
-  assert.ok(slides.includes('/course-decks/soil-health/en/slide-06.jpg'));
+  assert.ok(!slides.some((url) => url.includes('/course-decks/soil-health/en/')),
+    'each Sesotho slide already includes its exact English source');
   assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
     entry.url === '/course-audio/soil-health/en/slide-04.mp3'));
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/st/')));
+  assert.ok(!pack.entries.some((entry) => entry.url.includes('/course-animations/soil-health/')),
+    'English compost films cannot cover the paired Sesotho slides in the silent pack');
 });
 
 test('itsonga Soil Health keeps all 20 paired stills and only optional English source audio offline', () => {

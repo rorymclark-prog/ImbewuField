@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1494 files, 568.9 MB total.
+// 1509 files, 574.3 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -1256,11 +1256,26 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/soil-health/en/slide-18.jpg': 795928,
   '/course-decks/soil-health/en/slide-19.jpg': 88867,
   '/course-decks/soil-health/en/slide-20.jpg': 128522,
-  '/course-decks/soil-health/st/slide-01.webp': 303790,
-  '/course-decks/soil-health/st/slide-02.webp': 222618,
-  '/course-decks/soil-health/st/slide-03.webp': 208772,
-  '/course-decks/soil-health/st/slide-04.webp': 234188,
-  '/course-decks/soil-health/st/slide-05.webp': 498166,
+  '/course-decks/soil-health/st/slide-01.webp': 301620,
+  '/course-decks/soil-health/st/slide-02.webp': 220490,
+  '/course-decks/soil-health/st/slide-03.webp': 206574,
+  '/course-decks/soil-health/st/slide-04.webp': 231954,
+  '/course-decks/soil-health/st/slide-05.webp': 495984,
+  '/course-decks/soil-health/st/slide-06.webp': 393576,
+  '/course-decks/soil-health/st/slide-07.webp': 254360,
+  '/course-decks/soil-health/st/slide-08.webp': 578780,
+  '/course-decks/soil-health/st/slide-09.webp': 268680,
+  '/course-decks/soil-health/st/slide-10.webp': 182962,
+  '/course-decks/soil-health/st/slide-11.webp': 557614,
+  '/course-decks/soil-health/st/slide-12.webp': 311318,
+  '/course-decks/soil-health/st/slide-13.webp': 279812,
+  '/course-decks/soil-health/st/slide-14.webp': 235234,
+  '/course-decks/soil-health/st/slide-15.webp': 525280,
+  '/course-decks/soil-health/st/slide-16.webp': 555086,
+  '/course-decks/soil-health/st/slide-17.webp': 534468,
+  '/course-decks/soil-health/st/slide-18.webp': 489330,
+  '/course-decks/soil-health/st/slide-19.webp': 234032,
+  '/course-decks/soil-health/st/slide-20.webp': 241146,
   '/course-decks/soil-health/ts/slide-01.webp': 304324,
   '/course-decks/soil-health/ts/slide-02.webp': 219032,
   '/course-decks/soil-health/ts/slide-03.webp': 211840,
