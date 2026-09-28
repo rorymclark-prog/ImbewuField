@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 
 test('Reading the Landscape Sesotho draft stays paired to every exact source field', () => {
@@ -13,6 +14,11 @@ test('Reading the Landscape Sesotho draft stays paired to every exact source fie
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
   assert.equal(draft.sourceMetadata.category, source.category);
   assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(draft.title.sesothoDraft, source.title, 'uncertain “Bala” card title must stay exact English');
+  assert.equal(draft.title.reviewStatus, 'hold');
+  const moduleCard = resolveCourseModulePresentation(source, 'st');
+  assert.equal(moduleCard.title, source.title, 'the Sesotho Study card must use the held English title');
+  assert.equal(moduleCard.description, draft.description.sesothoDraft);
   assert.equal(draft.description.sourceEnglish, source.description);
   assert.deepEqual(draft.lessons.map(lesson => lesson.id), source.lessons.map(lesson => lesson.id));
 
