@@ -514,6 +514,31 @@ test('Sesotho draft narration starts with paired slides and English source choic
     } finally { act(() => view.unmount()); }
   }
 
+  // Soil Health is the exact small-screen Study case that exposed the selector problem: its
+  // regional opening slides exist, but its only recordings are English and isiZulu. The learner
+  // must choose a source voice explicitly, and that voice choice must not replace the paired slide.
+  for (const language of ['st', 'ts']) {
+    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'soil-health', lang: language })); });
+    try {
+      const picture = () => view.root.findAllByType('img')[0];
+      assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`));
+      assert.equal(view.root.findAllByType('audio').length, 0,
+        `${language} Soil Health learners should choose before English narration starts`);
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+      const voiceButtons = view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
+      assert.deepEqual(voiceButtons.map(button => button.children.join('')),
+        [language === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration']);
+      act(() => voiceButtons[0].props.onClick());
+      assert.match(view.root.findByType('audio').props.src, /soil-health\/en\/slide-01\.mp3$/);
+      assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`),
+        'choosing English narration must keep the selected Soil Health slides');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+      const choiceStatus = view.root.findByProps({ role: 'status' }).children.join('');
+      assert.match(choiceStatus, /English source narration selected/i);
+      if (language === 'ts') assert.match(choiceStatus, /itsonga narration is not available/i);
+    } finally { act(() => view.unmount()); }
+  }
+
   act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'en' })); });
   try {
     const zulu = view.root.findAllByType('button').find(button => button.children.join('') === 'isiZulu')!;
