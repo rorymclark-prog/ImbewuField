@@ -81,10 +81,15 @@ export const SPECIES_ART = {
   'persea-americana': { picker: 'tree_avocado.png', plan: 'avocado-tree-v5.png' },
   'prunus-persica': { picker: 'tree_peach.png', plan: 'peach-tree-v1.png' },
   'prunus-salicina': { picker: 'tree_plum.png', plan: 'plum-tree-v1.png' },
-  'psidium-guajava': { picker: null, plan: 'guava-v2.png' },
+  'psidium-guajava': { picker: 'tree_guava.png', plan: 'guava-v2.png' },
   'punica-granatum': { picker: 'tree_pomegranate.png', plan: 'pomegranate-tree-v1.png' },
   'sclerocarya-birrea-subsp-caffra': { picker: 'tree_marula.png', plan: 'marula-tree-v2.png' },
   'syzygium-cordatum': { picker: 'tree_waterberry.png', plan: 'waterberry-v2.png' },
+  'carpobrotus-edulis': { picker: 'tree_sour_fig.png', plan: 'sour-fig-v1.png' },
+  'englerophytum-magalismontanum': { picker: 'tree_transvaal_milkplum.png', plan: 'transvaal-milkplum-v1.png' },
+  'garcinia-livingstonei': { picker: 'tree_african_mangosteen.png', plan: 'african-mangosteen-v1.png' },
+  'pappea-capensis': { picker: 'tree_jacket_plum.png', plan: 'jacket-plum-v1.png' },
+  'strychnos-spinosa': { picker: 'tree_spiny_monkey_orange.png', plan: 'spiny-monkey-orange-v1.png' },
 } as const satisfies Readonly<Record<string, SpeciesArtwork>>;
 
 export type SpeciesReferenceArtwork = Exclude<
