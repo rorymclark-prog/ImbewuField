@@ -10,7 +10,23 @@
  */
 export const ANIMAL_ART_ROOT = '/animal-art';
 
-export const ANIMAL_ART: Readonly<Record<string, string>> = {};
+export const ANIMAL_ART: Readonly<Record<string, string>> = {
+  'chicken-layer': '/animal-art/chicken-layer.png',
+  'chicken-broiler': '/animal-art/chicken-broiler.png',
+  'chicken-indigenous': '/animal-art/chicken-indigenous.png',
+  duck: '/animal-art/duck.png',
+  rabbit: '/animal-art/rabbit.png',
+  bees: '/animal-art/bees.png',
+  'goat-meat': '/animal-art/goat-meat.png',
+  'goat-dairy': '/animal-art/goat-dairy.png',
+  'goat-indigenous': '/animal-art/goat-indigenous.png',
+  'cattle-beef': '/animal-art/cattle-beef.png',
+  'cattle-dairy': '/animal-art/cattle-dairy.png',
+  'sheep-mutton': '/animal-art/sheep-mutton.png',
+  'sheep-wool': '/animal-art/sheep-wool.png',
+  'pig-pork': '/animal-art/pig-pork.png',
+  'fish-tilapia': '/animal-art/fish-tilapia.png',
+};
 
 export function animalArtUrl(enterpriseId: string): string | null {
   return ANIMAL_ART[enterpriseId] ?? null;
