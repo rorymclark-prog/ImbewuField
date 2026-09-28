@@ -307,6 +307,24 @@ test('Tshivenda and Xitsonga slide-only packs contain every displayed still and 
   }
 });
 
+test('Sesotho Food Forest saves all 20 paired stills without the English Flow poster', () => {
+  const pack = offlinePack('food-forest', 'st');
+  assert.deepEqual(pack.missing, []);
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  assert.equal(slides.length, 20);
+  for (let n = 1; n <= 20; n++) {
+    assert.ok(slides.includes(`/course-decks/food-forest/st/slide-${String(n).padStart(2, '0')}.webp`),
+      `the source-paired Sesotho deck needs slide ${n} offline`);
+  }
+  assert.ok(!pack.entries.some((entry) => entry.kind === 'poster' || entry.kind === 'animation'),
+    'the English Flow poster must not hide the source-paired Sesotho slide');
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/food-forest/en/slide-04.mp3'),
+    'existing English source narration remains an available explicit choice');
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/food-forest/st/')),
+    'no Sesotho narration is claimed or packed');
+});
+
 test('the optional full regional pack preserves legacy contents and its English source narration', () => {
   for (const lang of ['ve', 'ts']) {
     const legacy = offlinePack('intro-permaculture', lang);
