@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 September 2026', sha: '5121dd4', changes: [
+    'Tshivenda and Xitsonga Study decks can now be saved as smaller silent slide packs.',
+    'English narration and clips remain an optional full download.',
+  ], tour: [
+    { title: 'Choose your Study language', where: 'Sample course', href: '/samples',
+      detail: 'Choose Tshivenda or Xitsonga to try the regional Study slides.' },
+    { title: 'Save silent slides', where: 'Student → Offline downloads', href: '/student',
+      detail: 'Choose Slides only to save the displayed deck without audio or video.' },
+  ] },
   { when: '28 September 2026', sha: '759a695', changes: [
     'Soil Health now has 20 unreviewed Tshivenda and Xitsonga review slides.',
     'They open silent; most teaching stays in English for review.',

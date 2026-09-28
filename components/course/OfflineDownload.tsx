@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Download, Check, Loader2, Trash2, AlertTriangle, WifiOff } from 'lucide-react';
 
-import { offlinePack, formatPackSize, type OfflinePack, type PackQuality } from '@/lib/offline-pack';
+import { offlinePack, formatPackSize, type OfflinePack, type OfflinePackVariant, type PackQuality } from '@/lib/offline-pack';
+import { COURSE_DECKS } from '@/lib/course-deck';
 import {
   downloadPack, packStatus, removePack, offlineSupported, requestPersistence, storageEstimate,
   CACHE_CHANGED_EVENT,
@@ -47,6 +48,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   // student or farmer who switches to All tools must still never see this, only its own default.
   const { navigationRole } = useRoleNavigation();
   const isStaff = isStaffRole(navigationRole);
+  const regionalSlidePack = ['ve', 'ts'].includes(lang) && moduleIds.some((id) => Boolean(COURSE_DECKS[id]));
   const [packs, setPacks] = useState<OfflinePack[]>([]);
   const [phase, setPhase] = useState<Phase>('checking');
   const [doneFiles, setDoneFiles] = useState(0);
@@ -59,6 +61,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   // higher-quality set exists for facilitators, funders and anyone training off a laptop on wifi.
   // Defaulting the other way would spend a farmer's airtime to serve a projector.
   const [quality, setQuality] = useState<PackQuality>('standard');
+  const [variant, setVariant] = useState<OfflinePackVariant>(regionalSlidePack ? 'slides' : 'full');
   const abortRef = useRef<AbortController | null>(null);
 
   const totalBytes = packs.reduce((s, p) => s + p.bytes, 0);
@@ -67,16 +70,20 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   ));
   // Both totals are known up front so the choice can be made with the two numbers side by side,
   // rather than by toggling and watching a figure change.
-  const sizeFor = useCallback((q: PackQuality) => moduleIds
-    .map((id) => offlinePack(id, lang, q))
-    .reduce((s, p) => s + p.bytes, 0), [moduleIds, lang]);
+  const sizeFor = useCallback((q: PackQuality, content: OfflinePackVariant = variant) => moduleIds
+    .map((id) => offlinePack(id, lang, q, content))
+    .reduce((s, p) => s + p.bytes, 0), [moduleIds, lang, variant]);
   const standardBytes = sizeFor('standard');
   const highBytes = sizeFor('high');
   const hasHigher = highBytes > standardBytes;
 
   useEffect(() => {
-    setPacks(moduleIds.map((id) => offlinePack(id, lang, quality)).filter((p) => p.entries.length > 0));
-  }, [moduleIds, lang, quality]);
+    setVariant(regionalSlidePack ? 'slides' : 'full');
+  }, [lang, regionalSlidePack]);
+
+  useEffect(() => {
+    setPacks(moduleIds.map((id) => offlinePack(id, lang, quality, variant)).filter((p) => p.entries.length > 0));
+  }, [moduleIds, lang, quality, variant]);
 
   const refresh = useCallback(async () => {
     if (packs.length === 0) return;
@@ -173,7 +180,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             {/* Says WHY, in the learner's own terms. A download button with no reason attached
                 reads as an app asking for data; this one is a plan for the month. */}
             <p className="font-sans text-xs mt-0.5 leading-relaxed" style={{ color: '#5C5040' }}>
-              {t('offlineGetWhileSignal')}
+              {regionalSlidePack && variant === 'slides' ? t('offlineGetSlidesWhileSignal') : t('offlineGetWhileSignal')}
             </p>
           </div>
         </div>
@@ -181,7 +188,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
       {hasEnglishMedia && (
         <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
-          {t('offlineEnglishMediaFallback')}
+          {variant === 'slides' ? t('offlineEnglishSlidesFallback') : t('offlineEnglishMediaFallback')}
         </p>
       )}
 
@@ -226,6 +233,44 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           </button>
         )}
       </div>
+
+      {regionalSlidePack && !busy && (
+        <div role="group" aria-label={t('offlineRegionalPackChoice')} className="flex flex-wrap items-center gap-1.5">
+          {([
+            { key: 'slides' as OfflinePackVariant, name: t('offlineRegionalSlidesOnly'), size: sizeFor(quality, 'slides') },
+            { key: 'full' as OfflinePackVariant, name: t('offlineRegionalFullMedia'), size: sizeFor(quality, 'full') },
+          ]).map((opt) => {
+            const on = variant === opt.key;
+            return (
+              <button
+                key={opt.key}
+                type="button"
+                onClick={() => {
+                  if (variant === opt.key) return;
+                  setPhase('checking');
+                  setVariant(opt.key);
+                }}
+                aria-pressed={on}
+                className="text-left px-2.5 py-1.5 rounded-xl"
+                style={{
+                  background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
+                  border: `1px solid ${on ? 'rgba(31,77,43,0.30)' : '#E2D8C4'}`,
+                  cursor: 'pointer',
+                }}
+              >
+                <span className="font-sans text-xs font-semibold block" style={{ color: on ? '#1F4D2B' : '#5C5040' }}>
+                  {opt.name} · {formatPackSize(opt.size)}
+                </span>
+              </button>
+            );
+          })}
+          {variant === 'full' && (
+            <p className="basis-full font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+              {t('offlineRegionalFullMediaNote')}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* THE QUALITY CHOICE, named for who it is for and priced in the same breath.
           Rory: "i want a high res version available for facilitators and funders and those with

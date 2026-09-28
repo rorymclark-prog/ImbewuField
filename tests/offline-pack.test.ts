@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import { appGuideOfflinePack, offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
 import { APP_GUIDES, appGuideNarrationSections } from '@/lib/course-app-guides';
-import { COURSE_DECKS, slideImageFor } from '@/lib/course-deck';
+import { COURSE_DECKS, animationUrls, slideImageFor } from '@/lib/course-deck';
 import { COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { FINANCE_PATHWAY_MEDIA_URLS, STUDIES_PATHWAY_PACKS, STUDIES_PATHWAY_PAGES } from '@/lib/studies-pathway-pack';
@@ -278,6 +278,64 @@ test('regional Introduction downloads every selected still and never promise reg
     assert.equal(COURSE_NARRATION['intro-permaculture'].languages.includes(lang), false,
       `${lang} slides must not promise an unreviewed narration track`);
     assert.ok(pack.entries.every((entry) => !entry.url.includes(`/course-audio/intro-permaculture/${lang}/`)));
+  }
+});
+
+test('Tshivenda and Xitsonga slide-only packs contain every displayed still and poster, with no media', () => {
+  for (const moduleId of Object.keys(COURSE_DECKS)) {
+    const deck = COURSE_DECKS[moduleId];
+    for (const lang of ['ve', 'ts']) {
+      if (!deck.slideLanguages.includes(lang)) continue;
+      const pack = offlinePack(moduleId, lang, 'standard', 'slides');
+      assert.deepEqual(pack.missing, [], `${moduleId}/${lang}`);
+      assert.deepEqual(pack.entries.filter((e) => e.kind === 'slide').map((e) => e.url).sort(),
+        deck.slides.map(({ slide }) => slideImageFor(moduleId, lang, slide)!.url).sort(),
+        `${moduleId}/${lang} includes the exact regional or English fallback stills shown by DeckPlayer`);
+      const expectedPosters = deck.slides.flatMap(({ slide }) => {
+        const animation = animationUrls(moduleId, slide, lang);
+        return animation ? [animation.poster] : [];
+      }).sort();
+      assert.deepEqual(pack.entries.filter((e) => e.kind === 'poster').map((e) => e.url).sort(), expectedPosters,
+        `${moduleId}/${lang} includes only posters its player can show`);
+      assert.ok(pack.entries.every((e) => e.kind === 'slide' || e.kind === 'poster'),
+        `${moduleId}/${lang} slide-only pack contains no narration, video, or lesson infographic`);
+      assert.equal(pack.bytes, pack.entries.reduce((sum, e) => sum + e.bytes, 0));
+      for (const item of pack.entries) {
+        assert.equal(item.bytes, statSync(join(PUBLIC, item.url.replace(/^\//, ''))).size, item.url);
+      }
+    }
+  }
+});
+
+test('the optional full regional pack preserves legacy contents and its English source narration', () => {
+  for (const lang of ['ve', 'ts']) {
+    const legacy = offlinePack('intro-permaculture', lang);
+    const explicitFull = offlinePack('intro-permaculture', lang, 'standard', 'full');
+    const slidesOnly = offlinePack('intro-permaculture', lang, 'standard', 'slides');
+    assert.deepEqual(explicitFull, legacy, `${lang} default remains the existing full pack`);
+    assert.ok(explicitFull.entries.some((e) => e.kind === 'audio' &&
+      e.url === '/course-audio/intro-permaculture/en/slide-04.mp3'),
+      `${lang} full pack carries the available English source narration`);
+    assert.ok(explicitFull.bytes > slidesOnly.bytes, `${lang} full pack quotes the larger actual total`);
+  }
+});
+
+test('whole-course regional slide-only totals include every saved still without narration or video', () => {
+  const moduleIds = COURSE_MODULES.map(({ id }) => id);
+  for (const lang of ['ve', 'ts']) {
+    const slidesOnly = moduleIds.map((id) => offlinePack(id, lang, 'standard', 'slides'))
+      .filter((pack) => pack.entries.length > 0);
+    const full = moduleIds.map((id) => offlinePack(id, lang, 'standard', 'full'))
+      .filter((pack) => pack.entries.length > 0);
+    const slidesOnlyBytes = slidesOnly.reduce((sum, pack) => sum + pack.bytes, 0);
+    const fullBytes = full.reduce((sum, pack) => sum + pack.bytes, 0);
+    assert.ok(slidesOnly.length > 0, `${lang} whole-course selection has downloadable deck files`);
+    assert.ok(slidesOnly.every((pack) => pack.entries.every((e) => e.kind === 'slide' || e.kind === 'poster')));
+    assert.equal(slidesOnlyBytes, slidesOnly.reduce((sum, pack) =>
+      sum + pack.entries.reduce((packSum, entry) => packSum + entry.bytes, 0), 0));
+    assert.ok(fullBytes > slidesOnlyBytes, `${lang} full course visibly costs more than slides only`);
+    assert.ok(full.some((pack) => pack.entries.some((e) => e.kind === 'audio' && e.url.includes('/en/'))),
+      `${lang} full course includes its available English source narration`);
   }
 });
 
