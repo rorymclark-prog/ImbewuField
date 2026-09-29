@@ -170,8 +170,8 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
     // This added sentence is an ordinary People Care example. The surplus,
     // sharing, safety and permission examples remain exact English holds.
     assert.deepEqual(drafted, lang === 've'
-      ? ['1:1', '1:4', '2:2', '2:4', '3:1', '4:1', '4:4', '5:1', '5:3', '6:1', '9:1', '9:2', '9:3', '14:1', '16:4', '17:1', '18:4', '20:4']
-      : ['1:1', '1:4', '2:2', '2:4', '3:1', '4:1', '4:4', '5:1', '5:3', '6:1', '9:3', '16:3', '16:4', '17:1']);
+      ? ['1:1', '1:4', '2:2', '2:4', '3:1', '4:1', '4:4', '5:1', '5:2', '5:3', '5:5', '6:1', '9:1', '9:2', '9:3', '14:1', '16:4', '17:1', '18:4', '20:4']
+      : ['1:1', '1:4', '2:2', '2:4', '3:1', '4:1', '4:4', '5:1', '5:2', '5:3', '5:5', '6:1', '9:3', '16:3', '16:4', '17:1']);
     assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
       .map((slide: any) => slide.n), lang === 've'
       ? [2, 4, 5, 6, 8, 9, 11, 12, 13, 14, 18, 19, 20, 21, 22]
@@ -197,13 +197,25 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
       `slide 3 ${lang}: ethics, principles, zones and sectors must remain English`);
     for (const n of [4, 5, 6]) {
       assert.ok(slides[n - 1].target.body.slice(1).every((part: any, index: number) =>
-        part.status === 'english-hold' || (n === 4 && index === 2) || (n === 5 && index === 1)),
+        part.status === 'english-hold' || (n === 4 && index === 2) || (n === 5 && [0, 1, 3].includes(index))),
         `slide ${n} ${lang}: examples and care advice stay held apart from the ordinary reflections and People Care example`);
     }
     assert.match(slides[4].target.body[2].text, /People Care/,
       `slide 5 ${lang}: keep the named ethic visible in English`);
     assert.notEqual(slides[4].target.body[2].text, slides[4].english.body[2],
       `slide 5 ${lang}: a draft label cannot disguise unchanged English as a translation`);
+    assert.equal(slides[4].target.body[1].status, 'draft',
+      `slide 5 ${lang}: the family-priority sentence is a marked, source-paired draft`);
+    assert.equal(slides[4].target.body[4].status, 'draft',
+      `slide 5 ${lang}: the closing household-food reflection is a marked, source-paired draft`);
+    assert.equal(slides[4].target.body[3].status, 'english-hold',
+      `slide 5 ${lang}: keep the farm-purpose sentence held until its wording is checked`);
+    for (const index of [1, 4]) {
+      assert.ok(slides[4].target.body[index].text?.trim(),
+        `slide 5 ${lang}: each new draft needs visible target text`);
+      assert.notEqual(slides[4].target.body[index].text, slides[4].english.body[index],
+        `slide 5 ${lang}: a draft label cannot disguise unchanged English as a translation`);
+    }
     for (const index of [1, 2]) assert.equal(slides[5].target.body[index].status, 'english-hold',
       `slide 6 ${lang}: keep the uncertain surplus/mielies example paired in English`);
     for (const n of [7, 8]) {

@@ -3,7 +3,7 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slide 1 heading: Masungulo ya Permaculture. Slides 4–6: ethics label openings. Slides 9 and 16: three short orientation/reflection lines selected after independent Flash Low candidate and Pro Low backcheck. Unreviewed machine candidates; exact English source remains visible. Slides 2 and 4: ordinary reflective questions; slide 17: short transition. These are unreviewed machine drafts paired with the unchanged English source. One unreviewed AI draft for the farmer example on slide 5 body paragraph 3; exact English source stays visible.",
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slide 1 heading: Masungulo ya Permaculture. Slides 4–6: ethics label openings. Slides 9 and 16: three short orientation/reflection lines selected after independent Flash Low candidate and Pro Low backcheck. Unreviewed machine candidates; exact English source remains visible. Slides 2 and 4: ordinary reflective questions; slide 17: short transition. These are unreviewed machine drafts paired with the unchanged English source. One unreviewed AI draft for the farmer example on slide 5 body paragraph 3; exact English source stays visible. Slide 5 body paragraphs 2 and 5 now have unreviewed, source-paired ordinary-language candidates; paragraph 2 has a slight future-tense shift and paragraph 5 uses “farm” and “does not eat” for review. The purpose sentence in paragraph 4 remains an English hold because the candidate obligation wording is stronger than the English purpose wording.",
     "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
     "holds": "The surplus and mielies examples on slide 6, all slide 7–8 body text, slides 10–15, and slides 17–22 apart from the slide 17 opening transition remain exact English. Water, borehole, permission, swale, earthworks, overflow, manure, edible-crop, farming, ethics, named-principle, zone-number, windbreak and field-action wording remains held; uncertain edge, consequence and site-specific wind questions also remain exact English."
   },
@@ -12,7 +12,8 @@
     "This is provisional standard written Xitsonga for a Shangani-speaking group; comprehension has not been established.",
     "The slide 1 heading is a provisional machine draft; keep the exact English title visible and ask the facilitator whether the wording is understood by this Shangani group.",
     "Slides 9 and 16 contain three candidate lines from Gemini 3.8 Flash Low, independently backchecked with Gemini 3.1 Pro Low. Agreement is not fluent review; compare each line with its exact English source and check standard written Xitsonga and Shangani comprehension before classroom use.",
-    "The new slide 5 farmer example is an unreviewed AI draft beside its exact English source. Slides 6–8 and 10–15, 17–22 remain exact English holds. No ethics decision, technical instruction, farming recommendation, numerical zone, safety statement or field procedure is translated. A fluent standard written Xitsonga speaker should check the sentence and comprehension by the intended Shangani-speaking group."
+    "The new slide 5 farmer example is an unreviewed AI draft beside its exact English source. Slides 6–8 and 10–15, 17–22 remain exact English holds. No ethics decision, technical instruction, farming recommendation, numerical zone, safety statement or field procedure is translated. A fluent standard written Xitsonga speaker should check the sentence and comprehension by the intended Shangani-speaking group.",
+    "Slide 5 body paragraphs 2 and 5 are semantic-only unreviewed drafts paired with the unchanged English. Check that “will come first” preserves the general-priority meaning, and that “farm” for “land” plus “does not eat” for “never eats” fit the intended scope. Paragraph 4 remains an English hold: the candidate uses a must/should sense rather than “is meant to”. This is not fluent review or evidence of comprehension by the intended Shangani-speaking group."
   ],
   "slides": [
     {
@@ -190,7 +191,9 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swilaveko swa ndyangu wa wena swi ta rhanga, ivi swa vaaki va wena swi landzela.",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
           },
           {
             "status": "draft",
@@ -201,7 +204,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I yini leswi humaka epurasini ra wena leswi ndyangu wa wena wu nga swi dyiki?",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
           }
         ]
       }

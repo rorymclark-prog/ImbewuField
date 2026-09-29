@@ -42,12 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', sha: 'b683cdcb', changes: [
-    'Introduction slide 5 adds People Care drafts in Tshivenda and Xitsonga.',
-    'English stays beside each silent, unreviewed slide.',
+  { when: '29 September 2026', sha: '81cdc282', changes: [
+    'Introduction adds family-priority and food reflections in Tshivenda and Xitsonga.',
+    'The farm-purpose sentence and other advice stay in English beside each draft.',
   ], tour: [
     { title: 'Compare the People Care example', where: 'Study → Introduction to Permaculture → slide 5', href: '/student',
-      detail: 'Choose Tshivenda or Xitsonga. Read the marked example against its exact English source; the Fair Share examples remain in English.' },
+      detail: 'Choose Tshivenda or Xitsonga. Read the family-priority and household-food questions beside their exact English source. The farm-purpose sentence and Fair Share examples remain in English.' },
   ] },
   { when: '29 September 2026', sha: 'ccf8cec0', changes: [
     'Small Livestock shows unreviewed Xitsonga module and bee-lesson labels.',
