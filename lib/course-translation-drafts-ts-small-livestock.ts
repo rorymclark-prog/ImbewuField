@@ -19,13 +19,19 @@ export const XITSONGA_SMALL_LIVESTOCK_DRAFT: XitsongaCourseModuleDraft = {
   language: 'ts',
   reviewStatus: 'machine-draft',
   sourceMetadata: { durationMins: 20, category: 'foundation' },
-  title: hold('Small Livestock Integration'),
-  description: hold('Chickens, ducks and bees as system components — not afterthoughts.'),
+  title: pair('Small Livestock Integration', 'Ku Hlanganisa Swifuwo Leswitsongo'),
+  description: pair(
+    'Chickens, ducks and bees as system components — not afterthoughts.',
+    'Tihuku, masekwe na tinyoxi i swiphemu swa sisiteme — a hi swilo leswi ehleketiwaka endzhaku.',
+  ),
   lessons: [
     {
       id: 'small-livestock-l2',
       infographicAlt: hold('A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.'),
-      title: hold('Bees: Pollination, Honey, and System Ecology'),
+      title: pair(
+        'Bees: Pollination, Honey, and System Ecology',
+        'Tinyoxi: Pollination, Vulombe, na Ecology ya Sisiteme',
+      ),
       body: pair(sourceBody, draftParagraphs.join('\n\n')),
       keyPoints: [
         hold('Pollinators help many crops; the benefit depends on the crop and conditions'),
