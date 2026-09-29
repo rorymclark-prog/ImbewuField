@@ -1,0 +1,632 @@
+{
+  "st": {
+    "language": "st",
+    "reviewStatus": "unreviewed-machine-draft",
+    "humanLanguageReview": false,
+    "localWaterSafetyReview": false,
+    "narration": null,
+    "optionalSourceNarration": "English, only after an explicit learner choice",
+    "pairedSource": "docs/narration/water-harvesting.st.paired-draft.json",
+    "pairedSourceSha256": "ccde21c612b461b02784dda9134770a4db3d7624c99a0249a688cc16fbe63660",
+    "englishSource": "docs/narration/water-harvesting.en.md",
+    "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+    "slides": [
+      {
+        "slide": 1,
+        "path": "public/course-decks/water-harvesting/st/slide-01.webp",
+        "pixels": "1440x5400",
+        "bytes": 166810,
+        "sha256": "87bcc3efb40f83ab057011ff6023663b8f3ddbf19b7441ee4a263474994a0a37"
+      },
+      {
+        "slide": 2,
+        "path": "public/course-decks/water-harvesting/st/slide-02.webp",
+        "pixels": "1440x5400",
+        "bytes": 286662,
+        "sha256": "314981bf00fb79bc1ba42ec72bf8e675206ae67e80e9ae69b3b2c452bdd6ee48"
+      },
+      {
+        "slide": 3,
+        "path": "public/course-decks/water-harvesting/st/slide-03.webp",
+        "pixels": "1440x5400",
+        "bytes": 299686,
+        "sha256": "c0ac9e57340b02d7e55608ca6c0107dc3a7922e8eb610d7edfa77b726dce0140"
+      },
+      {
+        "slide": 4,
+        "path": "public/course-decks/water-harvesting/st/slide-04.webp",
+        "pixels": "1440x5400",
+        "bytes": 244512,
+        "sha256": "6f6f2791ff955be3d51523d7fc2304058e328216367b1a3a350026bd507569dd"
+      },
+      {
+        "slide": 5,
+        "path": "public/course-decks/water-harvesting/st/slide-05.webp",
+        "pixels": "1440x5400",
+        "bytes": 207734,
+        "sha256": "524ce4897c66d133871c6824c5d0de25765b3f15d185e7c8447acab1739bee41"
+      },
+      {
+        "slide": 6,
+        "path": "public/course-decks/water-harvesting/st/slide-06.webp",
+        "pixels": "1440x5400",
+        "bytes": 284594,
+        "sha256": "c35bea5195e64f70fec61257bc0e0cd53defc860dde0aad5cfbb693e9b2e8883"
+      },
+      {
+        "slide": 7,
+        "path": "public/course-decks/water-harvesting/st/slide-07.webp",
+        "pixels": "1440x5400",
+        "bytes": 250508,
+        "sha256": "babdd7febff39c2a293a5ade7a94fa1bb0bcf396305f404c4613171628587eae"
+      },
+      {
+        "slide": 8,
+        "path": "public/course-decks/water-harvesting/st/slide-08.webp",
+        "pixels": "1440x5400",
+        "bytes": 259322,
+        "sha256": "7ccb10a471db35f8c4eb29a848492d0e39fddedc958345978ae291996bc0b080"
+      },
+      {
+        "slide": 9,
+        "path": "public/course-decks/water-harvesting/st/slide-09.webp",
+        "pixels": "1440x5400",
+        "bytes": 178290,
+        "sha256": "c1471b632de48aa393a6d9a81b571bd2f7af3f4d9b3dec113e44fb83e0e70b58"
+      },
+      {
+        "slide": 10,
+        "path": "public/course-decks/water-harvesting/st/slide-10.webp",
+        "pixels": "1440x5400",
+        "bytes": 296466,
+        "sha256": "de4563eba96f994e383a53f6b7ed60dbe6c10e06405d0f9c2aac3e47172d7c1c"
+      },
+      {
+        "slide": 11,
+        "path": "public/course-decks/water-harvesting/st/slide-11.webp",
+        "pixels": "1440x5400",
+        "bytes": 304192,
+        "sha256": "74cf8f6e8ba6f357ebdab62cc007f65fdc0e95fb129077e152bac3beea7cd74f"
+      },
+      {
+        "slide": 12,
+        "path": "public/course-decks/water-harvesting/st/slide-12.webp",
+        "pixels": "1440x5400",
+        "bytes": 234612,
+        "sha256": "db21fdf472811c6717eec12070c6cfcfbcca48cdbe8f3c2ec2d5941974b55119"
+      },
+      {
+        "slide": 13,
+        "path": "public/course-decks/water-harvesting/st/slide-13.webp",
+        "pixels": "1440x5400",
+        "bytes": 279758,
+        "sha256": "821445dc80e10c127268a8bedcd90ca2342d0c21b420907a0e15c45c29561804"
+      },
+      {
+        "slide": 14,
+        "path": "public/course-decks/water-harvesting/st/slide-14.webp",
+        "pixels": "1440x5400",
+        "bytes": 581262,
+        "sha256": "e4d35e1fe044c328a41ec369f4793c078c28324a02da67c9f760bda21fcadeb9"
+      },
+      {
+        "slide": 15,
+        "path": "public/course-decks/water-harvesting/st/slide-15.webp",
+        "pixels": "1440x5400",
+        "bytes": 360758,
+        "sha256": "2c33057bc9c4cfc40844cf230736c4cd0c9b8109e9d8ba32cc7b97e6b5541a36"
+      },
+      {
+        "slide": 16,
+        "path": "public/course-decks/water-harvesting/st/slide-16.webp",
+        "pixels": "1440x5400",
+        "bytes": 169234,
+        "sha256": "345e3eadd3740659fb70a7da3155af48ae6031cc545ad87b9a806ed8df8f02f1"
+      },
+      {
+        "slide": 17,
+        "path": "public/course-decks/water-harvesting/st/slide-17.webp",
+        "pixels": "1440x5400",
+        "bytes": 273830,
+        "sha256": "557ab05ccab90275adba47be1a4e1bca14f9afa43b5cc8c8fad0accdf696a087"
+      },
+      {
+        "slide": 18,
+        "path": "public/course-decks/water-harvesting/st/slide-18.webp",
+        "pixels": "1440x5400",
+        "bytes": 587598,
+        "sha256": "d8fe09ce7cee9535729f2d4470762b2eba9474826f288009d8bc5b41f8eca0dc"
+      },
+      {
+        "slide": 19,
+        "path": "public/course-decks/water-harvesting/st/slide-19.webp",
+        "pixels": "1440x5400",
+        "bytes": 296920,
+        "sha256": "be0c26aaf80194f38f55aba74dc95d80dcc9e6bdd6efbba420209e852f3904b5"
+      },
+      {
+        "slide": 20,
+        "path": "public/course-decks/water-harvesting/st/slide-20.webp",
+        "pixels": "1440x5400",
+        "bytes": 259686,
+        "sha256": "242b5cb2637e88c69c1d8f455d98ba5d0cf6042ff6b1d476e43f5901f589b16a"
+      },
+      {
+        "slide": 21,
+        "path": "public/course-decks/water-harvesting/st/slide-21.webp",
+        "pixels": "1440x5400",
+        "bytes": 220740,
+        "sha256": "53e99ad69727611aa40ef0c2ee4fbd2713bcf49ca13a61019cf8300a9e222fe9"
+      },
+      {
+        "slide": 22,
+        "path": "public/course-decks/water-harvesting/st/slide-22.webp",
+        "pixels": "1440x5400",
+        "bytes": 269736,
+        "sha256": "c5c63acfa81d712eb77df21304c61f9717c00632290dc2a49a797b8fe4f81a96"
+      },
+      {
+        "slide": 23,
+        "path": "public/course-decks/water-harvesting/st/slide-23.webp",
+        "pixels": "1440x5400",
+        "bytes": 177034,
+        "sha256": "1cd2133072e46a8dc12d9edb000b476c330cb82f065c43f5bbc3ca4c8faa3713"
+      },
+      {
+        "slide": 24,
+        "path": "public/course-decks/water-harvesting/st/slide-24.webp",
+        "pixels": "1440x5400",
+        "bytes": 221316,
+        "sha256": "c705c0decaacd8c8470e15772e2a55aa9dbfc2f619d90525f5598fd6534dbb58"
+      }
+    ],
+    "contactSheet": "docs/media/water-harvesting/qa/st/contact-sheet.jpg",
+    "phoneSamples": [
+      {
+        "slide": 10,
+        "path": "docs/media/water-harvesting/qa/st/slide-10-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "85d7310246ea30514620a55ee7c5b241a199c1f9e48f891bea388ba75ea70b7d"
+      },
+      {
+        "slide": 18,
+        "path": "docs/media/water-harvesting/qa/st/slide-18-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "658599874a08cdb6c0f64afbc8dd2cab6757425ea1b146caf5065b4ff69bf8cf"
+      },
+      {
+        "slide": 20,
+        "path": "docs/media/water-harvesting/qa/st/slide-20-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "f213b1ba6a77197eee701a745b938524f8e72a662d04ac59f5139d5139fc6640"
+      },
+      {
+        "slide": 23,
+        "path": "docs/media/water-harvesting/qa/st/slide-23-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "45d95fbd13890bf4d49725de58116672df35b3fe32dab0a46e2295d9a0256bde"
+      }
+    ],
+    "note": "All 24 frames retain the exact English source beside the candidate panel and the existing illustrated English source slide. Only the rainfall-seasons sentence on slide 10 is a regional draft; every other title and passage is held in exact English. This is not an approved translation or a substitute for local water and sanitation advice."
+  },
+  "ve": {
+    "language": "ve",
+    "reviewStatus": "unreviewed-machine-draft",
+    "humanLanguageReview": false,
+    "localWaterSafetyReview": false,
+    "narration": null,
+    "optionalSourceNarration": "English, only after an explicit learner choice",
+    "pairedSource": "docs/narration/water-harvesting.ve.paired-draft.json",
+    "pairedSourceSha256": "a52b1ee60a5e693b3d991ed50bc1650c8f369817f1e226273ad09562607e7e81",
+    "englishSource": "docs/narration/water-harvesting.en.md",
+    "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+    "slides": [
+      {
+        "slide": 1,
+        "path": "public/course-decks/water-harvesting/ve/slide-01.webp",
+        "pixels": "1440x5400",
+        "bytes": 168350,
+        "sha256": "706ecd7271a9b232a930c34b72d7b438d49704558aa597d652aefe80652db41b"
+      },
+      {
+        "slide": 2,
+        "path": "public/course-decks/water-harvesting/ve/slide-02.webp",
+        "pixels": "1440x5400",
+        "bytes": 288172,
+        "sha256": "c05a2957ae0606d8c9ec56ea20e93528b090a0155de2101961c408c9234a43fb"
+      },
+      {
+        "slide": 3,
+        "path": "public/course-decks/water-harvesting/ve/slide-03.webp",
+        "pixels": "1440x5400",
+        "bytes": 301070,
+        "sha256": "ef3121fe0e11632903ef175c3510857fe2a05543ff2006d26fd62fa75e9b98fa"
+      },
+      {
+        "slide": 4,
+        "path": "public/course-decks/water-harvesting/ve/slide-04.webp",
+        "pixels": "1440x5400",
+        "bytes": 245926,
+        "sha256": "6845e983d24f579e330b49178c9a5dfbc925b2c5506cc45ea6de369384898ff9"
+      },
+      {
+        "slide": 5,
+        "path": "public/course-decks/water-harvesting/ve/slide-05.webp",
+        "pixels": "1440x5400",
+        "bytes": 209318,
+        "sha256": "b284553b3f6242aa239e7a9baa498da503198274598765d5da6a4d673f0c9fcb"
+      },
+      {
+        "slide": 6,
+        "path": "public/course-decks/water-harvesting/ve/slide-06.webp",
+        "pixels": "1440x5400",
+        "bytes": 290002,
+        "sha256": "322889e42b97e11dee45a9b448964bc6e2fb7749d7c95870d2267fcbef333333"
+      },
+      {
+        "slide": 7,
+        "path": "public/course-decks/water-harvesting/ve/slide-07.webp",
+        "pixels": "1440x5400",
+        "bytes": 255328,
+        "sha256": "494d67af390464c4d7a259970cae5ae286b0685c33391ae9bf81d49769cb5ac9"
+      },
+      {
+        "slide": 8,
+        "path": "public/course-decks/water-harvesting/ve/slide-08.webp",
+        "pixels": "1440x5400",
+        "bytes": 260866,
+        "sha256": "83c0f58d34fe5be43ea68ed755a0cdc89432044466fdec00a47e3f522dc6d52f"
+      },
+      {
+        "slide": 9,
+        "path": "public/course-decks/water-harvesting/ve/slide-09.webp",
+        "pixels": "1440x5400",
+        "bytes": 179888,
+        "sha256": "57ff86163f74b3eea56acb299917725677ccb93141fca402b51e14a52f857724"
+      },
+      {
+        "slide": 10,
+        "path": "public/course-decks/water-harvesting/ve/slide-10.webp",
+        "pixels": "1440x5400",
+        "bytes": 299312,
+        "sha256": "7989a526d0f64227ddbec1469fbfac27b95320beb91da9e87bdfd208e2023359"
+      },
+      {
+        "slide": 11,
+        "path": "public/course-decks/water-harvesting/ve/slide-11.webp",
+        "pixels": "1440x5400",
+        "bytes": 305918,
+        "sha256": "afe57847c05d8e4d5c399aa2a82f4298e53d0c58f401e6899478d4109fb67378"
+      },
+      {
+        "slide": 12,
+        "path": "public/course-decks/water-harvesting/ve/slide-12.webp",
+        "pixels": "1440x5400",
+        "bytes": 236182,
+        "sha256": "e8dc344ad4146cf4c089ec24ba7e91b3b46b5b7f85ebbefe276280be3def367a"
+      },
+      {
+        "slide": 13,
+        "path": "public/course-decks/water-harvesting/ve/slide-13.webp",
+        "pixels": "1440x5400",
+        "bytes": 281402,
+        "sha256": "6474daeca5ee85dc0a2db6f80f7e80b58a0f5e31e70b0590e46eacdb86881fec"
+      },
+      {
+        "slide": 14,
+        "path": "public/course-decks/water-harvesting/ve/slide-14.webp",
+        "pixels": "1440x5400",
+        "bytes": 582916,
+        "sha256": "7bb36cf5e038ca71074915eb0cab1753a02c95b9f214ada77c2f61980363d4c1"
+      },
+      {
+        "slide": 15,
+        "path": "public/course-decks/water-harvesting/ve/slide-15.webp",
+        "pixels": "1440x5400",
+        "bytes": 361978,
+        "sha256": "310ad2bd51834828fd6cdaa0cf501a79c2863c42e35d7f17e91cf309319bc7ab"
+      },
+      {
+        "slide": 16,
+        "path": "public/course-decks/water-harvesting/ve/slide-16.webp",
+        "pixels": "1440x5400",
+        "bytes": 170708,
+        "sha256": "df23516d18cdf252562a9b227d1350dda9b5debd5a2f394a25770ce41042d3fc"
+      },
+      {
+        "slide": 17,
+        "path": "public/course-decks/water-harvesting/ve/slide-17.webp",
+        "pixels": "1440x5400",
+        "bytes": 275364,
+        "sha256": "140a5006b2ed00f1e652042d51bd316fdb8b7f77ad5eb87a2a8e22f4a2f578c9"
+      },
+      {
+        "slide": 18,
+        "path": "public/course-decks/water-harvesting/ve/slide-18.webp",
+        "pixels": "1440x5400",
+        "bytes": 589262,
+        "sha256": "0c76851540ec20897c4b87227488ca40f6ac2eab0d7adb2c59e21426b6732e22"
+      },
+      {
+        "slide": 19,
+        "path": "public/course-decks/water-harvesting/ve/slide-19.webp",
+        "pixels": "1440x5400",
+        "bytes": 298382,
+        "sha256": "ef06b26aed41e201ef042cbffbbe6e0556eb6e55f1cf4c0f387ef96a295e4651"
+      },
+      {
+        "slide": 20,
+        "path": "public/course-decks/water-harvesting/ve/slide-20.webp",
+        "pixels": "1440x5400",
+        "bytes": 261032,
+        "sha256": "6551482303c983a1e226efa3eded9e01794c1ce8c7b14e883370ec2c5bcbc021"
+      },
+      {
+        "slide": 21,
+        "path": "public/course-decks/water-harvesting/ve/slide-21.webp",
+        "pixels": "1440x5400",
+        "bytes": 222578,
+        "sha256": "76974b5172ec86b266a586b3970f7fd663d6c716d828cbc9265984ca1c55d799"
+      },
+      {
+        "slide": 22,
+        "path": "public/course-decks/water-harvesting/ve/slide-22.webp",
+        "pixels": "1440x5400",
+        "bytes": 268446,
+        "sha256": "d30c5a72b78f79e6c95b2151fe8013e581c4a0ff0cbe22d11e6240f3bea8e02b"
+      },
+      {
+        "slide": 23,
+        "path": "public/course-decks/water-harvesting/ve/slide-23.webp",
+        "pixels": "1440x5400",
+        "bytes": 178570,
+        "sha256": "53fcb25f5dd6f1a2cfab57b8cff1262b259c68a8f5c40a9bb89aa681808221c6"
+      },
+      {
+        "slide": 24,
+        "path": "public/course-decks/water-harvesting/ve/slide-24.webp",
+        "pixels": "1440x5400",
+        "bytes": 223000,
+        "sha256": "14eabc9926d6ef7ff7615260149e4cfa73eb62d0452e8b951fae5c7d6b2a983f"
+      }
+    ],
+    "contactSheet": "docs/media/water-harvesting/qa/ve/contact-sheet.jpg",
+    "phoneSamples": [
+      {
+        "slide": 10,
+        "path": "docs/media/water-harvesting/qa/ve/slide-10-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "7138e5c3acd73138cb6e69df95f6a25aa8182dad05722876ef01d762427b928a"
+      },
+      {
+        "slide": 18,
+        "path": "docs/media/water-harvesting/qa/ve/slide-18-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "e191fd3ff1b3e6f6ad50a0e172f6fbab6b80553f43433c9fa38b7e1292eb5dc2"
+      },
+      {
+        "slide": 20,
+        "path": "docs/media/water-harvesting/qa/ve/slide-20-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "6a93843ec035623ebcb4dce394e7c5c4e90559f50129aa0aface18303851a491"
+      },
+      {
+        "slide": 23,
+        "path": "docs/media/water-harvesting/qa/ve/slide-23-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "c8a4341c822974922fa4dcc2243c77bc2d8effcd6b0983d8b5c8461245f78780"
+      }
+    ],
+    "note": "All 24 frames retain the exact English source beside the candidate panel and the existing illustrated English source slide. Only the rainfall-seasons sentence on slide 10 is a regional draft; every other title and passage is held in exact English. This is not an approved translation or a substitute for local water and sanitation advice."
+  },
+  "ts": {
+    "language": "ts",
+    "reviewStatus": "unreviewed-machine-draft",
+    "humanLanguageReview": false,
+    "localWaterSafetyReview": false,
+    "narration": null,
+    "optionalSourceNarration": "English, only after an explicit learner choice",
+    "pairedSource": "docs/narration/water-harvesting.ts.paired-draft.json",
+    "pairedSourceSha256": "8e3025a1b69157c0986ca616717c58d509151503d2981e83fb590abb46a527ae",
+    "englishSource": "docs/narration/water-harvesting.en.md",
+    "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+    "slides": [
+      {
+        "slide": 1,
+        "path": "public/course-decks/water-harvesting/ts/slide-01.webp",
+        "pixels": "1440x5400",
+        "bytes": 167636,
+        "sha256": "0788f9c44fa356f2c5d8f372aa18d960e286c8cb90755ef0d31b8a1319e4302e"
+      },
+      {
+        "slide": 2,
+        "path": "public/course-decks/water-harvesting/ts/slide-02.webp",
+        "pixels": "1440x5400",
+        "bytes": 287466,
+        "sha256": "f989b1fe1481e57e72fe460779ea3836ed1b43a66fb4d90a09c1fd67b96866c5"
+      },
+      {
+        "slide": 3,
+        "path": "public/course-decks/water-harvesting/ts/slide-03.webp",
+        "pixels": "1440x5400",
+        "bytes": 300434,
+        "sha256": "1e9a1d07ee1effb0989be2154b635f6f29232efa466ad6a7193df665e852842e"
+      },
+      {
+        "slide": 4,
+        "path": "public/course-decks/water-harvesting/ts/slide-04.webp",
+        "pixels": "1440x5400",
+        "bytes": 245144,
+        "sha256": "42485e6f00ef136f149315bd0b25f70e3731f0d3ef9382b4ad8a7f494c4b4104"
+      },
+      {
+        "slide": 5,
+        "path": "public/course-decks/water-harvesting/ts/slide-05.webp",
+        "pixels": "1440x5400",
+        "bytes": 208774,
+        "sha256": "8ba90d6f18ab577248d917e2a7713fc2f5206cfa9cdd3159cc67b6f009fa7241"
+      },
+      {
+        "slide": 6,
+        "path": "public/course-decks/water-harvesting/ts/slide-06.webp",
+        "pixels": "1440x5400",
+        "bytes": 289430,
+        "sha256": "4a6c46c7706ba62022e37c9a03538a22638a4793de5b460797c16c0f0fb283e1"
+      },
+      {
+        "slide": 7,
+        "path": "public/course-decks/water-harvesting/ts/slide-07.webp",
+        "pixels": "1440x5400",
+        "bytes": 254596,
+        "sha256": "8416aa26f549d244443c321a8c2555c749e801c3d6ac9aafed06323bdc7c5931"
+      },
+      {
+        "slide": 8,
+        "path": "public/course-decks/water-harvesting/ts/slide-08.webp",
+        "pixels": "1440x5400",
+        "bytes": 260094,
+        "sha256": "cec83c9b90e676f54a61e1d1eb52c62f5342ca377fd2035ac6d4e9312bc6e681"
+      },
+      {
+        "slide": 9,
+        "path": "public/course-decks/water-harvesting/ts/slide-09.webp",
+        "pixels": "1440x5400",
+        "bytes": 179082,
+        "sha256": "9e53f0e8656ff90ab68cac3f6208e71ee084566847c3228aa5644bbc5d1dff4f"
+      },
+      {
+        "slide": 10,
+        "path": "public/course-decks/water-harvesting/ts/slide-10.webp",
+        "pixels": "1440x5400",
+        "bytes": 296158,
+        "sha256": "6c6e48af48fb6ec9a6d0740c2c0754c118665aecf48b800756a9ae8089dcd4dc"
+      },
+      {
+        "slide": 11,
+        "path": "public/course-decks/water-harvesting/ts/slide-11.webp",
+        "pixels": "1440x5400",
+        "bytes": 305224,
+        "sha256": "f6c18940d492f44256334fcb09723e8a9358e71782f809370f8fbb4f45c38b2d"
+      },
+      {
+        "slide": 12,
+        "path": "public/course-decks/water-harvesting/ts/slide-12.webp",
+        "pixels": "1440x5400",
+        "bytes": 235476,
+        "sha256": "254414d3cbba6cd7344705a4c100415663a3c665344ff512859307f9546bcf0f"
+      },
+      {
+        "slide": 13,
+        "path": "public/course-decks/water-harvesting/ts/slide-13.webp",
+        "pixels": "1440x5400",
+        "bytes": 280548,
+        "sha256": "01474145303308eea37e6d822c629c51c2b1f7c736488ba2060e1a0e5e5fbf9a"
+      },
+      {
+        "slide": 14,
+        "path": "public/course-decks/water-harvesting/ts/slide-14.webp",
+        "pixels": "1440x5400",
+        "bytes": 582152,
+        "sha256": "eecc80601ad32e6e3d5c003dbf5a139be98ab5187da3c9f68edddeda5dfe20a6"
+      },
+      {
+        "slide": 15,
+        "path": "public/course-decks/water-harvesting/ts/slide-15.webp",
+        "pixels": "1440x5400",
+        "bytes": 361234,
+        "sha256": "3d89fb9ba8aa9fe2e4763801006c22b0ee0217a9c7a6513251f0effde320a413"
+      },
+      {
+        "slide": 16,
+        "path": "public/course-decks/water-harvesting/ts/slide-16.webp",
+        "pixels": "1440x5400",
+        "bytes": 170036,
+        "sha256": "924112b0b0f29c221689adf646dc7adfca39a3b7d5b01b01e9fafb3334f5cfee"
+      },
+      {
+        "slide": 17,
+        "path": "public/course-decks/water-harvesting/ts/slide-17.webp",
+        "pixels": "1440x5400",
+        "bytes": 274762,
+        "sha256": "1862419bd77cb7d773268733404afa9f91cb179ca81ed88757d6ad0ccdbfe872"
+      },
+      {
+        "slide": 18,
+        "path": "public/course-decks/water-harvesting/ts/slide-18.webp",
+        "pixels": "1440x5400",
+        "bytes": 588432,
+        "sha256": "141559394dda77c7020f59f76ce437b51f723d224f9e1ff7fbd7f1e6010df525"
+      },
+      {
+        "slide": 19,
+        "path": "public/course-decks/water-harvesting/ts/slide-19.webp",
+        "pixels": "1440x5400",
+        "bytes": 297856,
+        "sha256": "4e50697f0533d07c7191a21a4c9dfc15780524c09cffb6bb2a11a2412978548d"
+      },
+      {
+        "slide": 20,
+        "path": "public/course-decks/water-harvesting/ts/slide-20.webp",
+        "pixels": "1440x5400",
+        "bytes": 260464,
+        "sha256": "95688d8b953da91b8e72efa1fb7642d38b118e98c3fde02fa10e04e6e6c1d88c"
+      },
+      {
+        "slide": 21,
+        "path": "public/course-decks/water-harvesting/ts/slide-21.webp",
+        "pixels": "1440x5400",
+        "bytes": 219094,
+        "sha256": "9ff14f9ff5c854e6d1790a25c3ff880ef8807166c438f7551629cff568447ab6"
+      },
+      {
+        "slide": 22,
+        "path": "public/course-decks/water-harvesting/ts/slide-22.webp",
+        "pixels": "1440x5400",
+        "bytes": 271008,
+        "sha256": "230e960ab78bbac58d0073e869e1dc9454e2a52d319895bfd244b9d5c065da85"
+      },
+      {
+        "slide": 23,
+        "path": "public/course-decks/water-harvesting/ts/slide-23.webp",
+        "pixels": "1440x5400",
+        "bytes": 177884,
+        "sha256": "8e6b1678af9a1a9131be1534d16f031b9bc14cc8f9dd14ddb0e8f79f243afb32"
+      },
+      {
+        "slide": 24,
+        "path": "public/course-decks/water-harvesting/ts/slide-24.webp",
+        "pixels": "1440x5400",
+        "bytes": 222042,
+        "sha256": "16b41fd943d8e9b2f069aea0f0b472e92749d5c80a9187e14126fa3fcb99d098"
+      }
+    ],
+    "contactSheet": "docs/media/water-harvesting/qa/ts/contact-sheet.jpg",
+    "phoneSamples": [
+      {
+        "slide": 10,
+        "path": "docs/media/water-harvesting/qa/ts/slide-10-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "874a82331d31dbdf222ab9291a23e45f9706b5bfb9d535da7977f4d2a4dd8d35"
+      },
+      {
+        "slide": 18,
+        "path": "docs/media/water-harvesting/qa/ts/slide-18-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "06da4b78871e7e967ff73baa6477948a0d8cefd46959e39f4af02199cc091d1e"
+      },
+      {
+        "slide": 20,
+        "path": "docs/media/water-harvesting/qa/ts/slide-20-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "5df70d75063f45dc21f5f38a613c8bf94c26ad8832c1b589b021bf2d90a25e2d"
+      },
+      {
+        "slide": 23,
+        "path": "docs/media/water-harvesting/qa/ts/slide-23-390.jpg",
+        "pixels": "390x1463",
+        "sha256": "e6464c2fbe79ec6253a19362cc3411bbd3c81ffbee227d20d7175c0d0e345c8e"
+      }
+    ],
+    "note": "All 24 frames retain the exact English source beside the candidate panel and the existing illustrated English source slide. Only the rainfall-seasons sentence on slide 10 is a regional draft; every other title and passage is held in exact English. This is not an approved translation or a substitute for local water and sanitation advice."
+  }
+}

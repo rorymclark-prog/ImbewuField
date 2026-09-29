@@ -80,7 +80,7 @@ test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer ma
   }
 });
 
-test('Tshivenda Water Harvesting presents only its labelled title draft and keeps instruction media English', () => {
+test('Tshivenda Water Harvesting keeps lesson instruction English and shows its source-paired slide draft', () => {
   const source = COURSE_MODULES.find(module => module.id === TSHIVENDA_WATER_HARVESTING_DRAFT.id);
   assert.ok(source, 'the canonical Water Harvesting module must exist');
   const modulePresentation = resolveCourseModulePresentation(source, 've');
@@ -109,8 +109,8 @@ test('Tshivenda Water Harvesting presents only its labelled title draft and keep
 
   assert.equal(resolveCourseModulePresentation({ ...source, title: `${source.title} Changed.` }, 've').status,
     'english-fallback', 'changed module source withdraws its card title');
-  assert.deepEqual(resolveDeckLang(source.id, 've'), { lang: 'en', exact: false },
-    'Tshivenda slide deck remains explicitly identified as English');
+  assert.deepEqual(resolveDeckLang(source.id, 've'), { lang: 've', exact: true },
+    'the silent, source-paired Tshivenda review deck is available');
   assert.deepEqual(resolveNarrationLang(source.id, 've'), { lang: 'en', exact: false },
     'Tshivenda narration remains explicitly identified as English');
 });

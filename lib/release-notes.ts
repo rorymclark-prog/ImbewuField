@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'd833f08d', changes: [
+    'Water Harvesting has silent Sesotho, Tshivenda and Xitsonga draft slides.',
+    'Only one rainfall sentence is drafted; water and safety instructions stay English.',
+    'English narration is optional; regional wording still needs local review.',
+  ], tour: [
+    { title: 'Read the Water Harvesting slides', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Every slide keeps the exact English source; one rainfall sentence is an unreviewed draft. English narration is optional.' },
+  ] },
   { when: '29 September 2026', sha: '1e495413', changes: [
     'Small Livestock has silent Sesotho, Tshivenda and Xitsonga slides.',
     'Draft words sit beside English; animal-care advice needing review stays English.',

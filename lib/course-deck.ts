@@ -183,7 +183,7 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
 const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
   // The swale and overflow extracts on slides 4/7 imply site outcomes that their lesson cannot
   // establish. Keep their stills until the teaching and visual review are resolved together.
-  14: { src: 'flow-roof-rain', poster: 'flow-roof-rain', bytes: 3828056, seconds: 8 },
+  14: { src: 'flow-roof-rain', poster: 'flow-roof-rain', bytes: 3828056, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // The three locally drawn Introduction clips await Rory's visual clearance.
@@ -310,7 +310,12 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {
-    slideLanguages: ['en', 'zu'],
+    // Regional frames keep every water and safety instruction in exact English. Only one
+    // ordinary rainfall sentence is an unreviewed language candidate; learners must choose the
+    // existing English source voice explicitly, and its animation poster cannot cover the pair.
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),
   },
   'plant-guilds': {
