@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'd18aaaec', changes: [
+    'Food availability now shows fruit trees and animal products as picture trays.',
+    'Each chart names this month (Now) and the year, so you know which column is which.',
+    'The crop-plan PDF has a new Food availability page with the same pictures.',
+  ], tour: [
+    { title: 'Read the availability chart', where: 'Crop plan → Food availability', href: '/facilitator/crops',
+      detail: 'Under the fresh and stored veg trays, a green tray shows the fruit trees in season and an ochre tray shows eggs, milk, fish and other animal food. The first column says Now, and each January shows its year.' },
+    { title: 'Print what there is to eat', where: 'Crop plan → Download PDF → Food availability', href: '/facilitator/crops',
+      detail: 'A landscape page shows twelve months from now with the veg, tree and animal pictures, how much bed space each month uses, and a key naming every picture. Trees or animals you switched off on screen stay off the paper.' },
+  ] },
   { when: '29 September 2026', sha: '0b83fcbb', changes: [
     'The crop-plan PDF was checked at eight sites across South Africa and tidied.',
     'A first-year gap is no longer called yearly when next year\'s crops fill it.',

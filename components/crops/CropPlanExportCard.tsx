@@ -18,8 +18,10 @@ import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
 import {
-  buildCropPlanPdf, cropPlanPdfFilename, type CropPlanPageFormat, type CropPlanPdfInput, type CropPlanPdfMeta,
+  availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename,
+  type CropPlanAvailability, type CropPlanPageFormat, type CropPlanPdfInput, type CropPlanPdfMeta,
 } from '@/lib/crop-export-pdf';
+import { loadPdfIcons } from '@/lib/pdf-icons';
 import {
   canShareFiles, deliverFile, downloadFile, openFileInTab, prefersShareSheet,
 } from '@/lib/crop-export-deliver';
@@ -34,12 +36,15 @@ export interface CropPlanExportCardProps {
    * reasons behind it and not just the rows. */
   planNotes?: PlanNote[];
   planNotesAt?: number;
+  /** The planner's availability chart (veg, food forest, animals, field space), so the printed
+   * "Food availability" page shows the same trays the farmer sees on screen. */
+  availability?: CropPlanAvailability;
 }
 
 type Busy = 'ics' | 'pdf' | null;
 const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
-export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt }: CropPlanExportCardProps) {
+export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability }: CropPlanExportCardProps) {
   const { lang } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -93,7 +98,12 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     setBusy('pdf');
     setStatus(null);
     try {
-      const blob = await buildCropPlanPdf({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, ...overrides });
+      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, ...overrides };
+      // The availability page draws the app's own crop, tree and animal art. Only that page
+      // needs pictures, so a print without it (quick print) never fetches any.
+      const wantsIcons = !input.sections || input.sections.includes('availability');
+      const icons = wantsIcons ? await loadPdfIcons(availabilityIconKeys(input)) : undefined;
+      const blob = await buildCropPlanPdf({ ...input, icons });
       await run(blob);
       setStatus(done);
     } catch (err) {

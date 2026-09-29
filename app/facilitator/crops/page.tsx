@@ -31,6 +31,10 @@ import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennial
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
 import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
+import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
+import { printableAvailability } from '@/lib/crop-export-availability';
+import { animalArtUrl } from '@/lib/animal-art';
+import { speciesPickerArtworkUrl } from '@/lib/species-art';
 import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
 import { climateGateFrom } from '@/lib/crop-climate-gate';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
@@ -70,7 +74,7 @@ import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format
 // and three copies of that sentence is how they stop doing so.
 import type { BuyingMonth } from '@/lib/crop-export-schedule';
 import {
-  buildBuyingSchedule, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
+  buildBuyingSchedule, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
   taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE,
 } from '@/lib/crop-export-schedule';
 
@@ -702,6 +706,7 @@ function FacilitatorCropsPageInner() {
   const PLAN_HISTORY_LIMIT = 10;
   const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(1);
+  const [currentYear, setCurrentYear] = useState(2026);
   const [useVirtual, setUseVirtual] = useState(false);
 
   const [pickerBedId, setPickerBedId] = useState<string | null>(null);
@@ -1041,6 +1046,7 @@ function FacilitatorCropsPageInner() {
     setDesign(loadFacilitatorState());
     setPlan(loadCropPlan());
     setCurrentMonth(new Date().getMonth() + 1);
+    setCurrentYear(new Date().getFullYear());
     setFavouriteCropKeys(loadFavouriteCropKeys());
     setAllowBedSharing(loadAllowBedSharing());
     setPriceOverrides(loadCropPriceOverrides());
@@ -1267,6 +1273,7 @@ function FacilitatorCropsPageInner() {
   // months before anything useful starts. Scrollable out to a full 2 years
   // ahead rather than a hard 12-month wall.
   const monthOrder = useMemo(() => Array.from({ length: DISPLAY_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
+  const monthAxis = useMemo(() => monthAxisSlots(currentMonth, currentYear, DISPLAY_MONTHS), [currentMonth, currentYear]);
   // Keep the task list concise; the charts use monthOrder to align with the beds.
   const lookAheadMonthOrder = useMemo(() => Array.from({ length: LOOK_AHEAD_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
 
@@ -1401,6 +1408,13 @@ function FacilitatorCropsPageInner() {
     const annual = buildFieldUtilizationByMonth(chartPlantings, beds);
     return monthOrder.map((month) => annual[month]);
   }, [chartPlantings, beds, chartNowMonth, monthOrder]);
+
+  // The printed "Food availability" page: the first twelve columns of the chart above, with the
+  // tree and animal rows only when the farmer has them switched on there.
+  const printAvailability = useMemo(() => printableAvailability({
+    yearMode, veg: foodAvailability, utilization: fieldUtilization,
+    trees: treeAvailability, animals: animalAvailability, includeTrees, includeAnimals,
+  }), [yearMode, foodAvailability, fieldUtilization, treeAvailability, animalAvailability, includeTrees, includeAnimals]);
 
   // Cover-page facts for the printed plan and the calendar's name. Built from
   // the same values the header and the bed-check strip already show, so the
@@ -1916,9 +1930,10 @@ function FacilitatorCropsPageInner() {
                           // year) reading as the same column.
                           borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
                         }}
-                        title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}
+                        title={monthAxisTitle(monthAxis[i], m)}
                       >
                         {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
+                        <MonthAxisTag slot={monthAxis[i]} />
                       </div>
                     ))}
                     </div>
@@ -2024,6 +2039,7 @@ function FacilitatorCropsPageInner() {
                 covered month to month" at a glance. */}
             <FoodAvailabilityChart
               monthOrder={monthOrder}
+              axis={monthAxis}
               availability={foodAvailability}
               yieldBenchmark={planYieldBenchmark}
               utilization={fieldUtilization}
@@ -2290,6 +2306,7 @@ function FacilitatorCropsPageInner() {
               planNotes={plan?.planNotes}
               planNotesAt={plan?.planNotesAt}
               meta={exportMeta}
+              availability={printAvailability}
             />
 
             {/* Seed BOQ + year-ahead report */}
@@ -2794,10 +2811,37 @@ function CropMonthViewport({ children, registerScroll, onMonthScroll }: {
   );
 }
 
+/**
+ * The line under a month name that says WHICH month it is: a "Now" pill on the first column and
+ * the calendar year on every January. Always the same height, so a column with no tag keeps its
+ * neighbours' baseline. See lib/month-axis.ts for why.
+ */
+function MonthAxisTag({ slot, fontSize = 9.5 }: { slot?: MonthAxisSlot; fontSize?: number }) {
+  const tag = !slot ? null : slot.isNow ? (
+    <span
+      className="font-sans font-bold uppercase"
+      style={{ fontSize, letterSpacing: '0.06em', padding: '0 5px', borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--bg-1)' }}
+    >
+      Now
+    </span>
+  ) : slot.showYear ? (
+    <span className="font-sans font-semibold" style={{ fontSize, color: 'var(--text-secondary)' }}>{slot.year}</span>
+  ) : null;
+  return <div aria-hidden style={{ height: fontSize + 5, lineHeight: `${fontSize + 5}px`, whiteSpace: 'nowrap' }}>{tag}</div>;
+}
+
+/** "September 2026 (now)" — the words a screen reader and a hover tooltip get for one column. */
+function monthAxisTitle(slot: MonthAxisSlot | undefined, m: number): string {
+  if (!slot) return MONTHS_SHORT[m - 1];
+  return `${MONTH_NAMES[slot.month - 1]} ${slot.year}${slot.isNow ? ' (now)' : ''}`;
+}
+
 function MonthLineChart({
-  monthOrder, values, max, color, formatLabel, labelColor, dotColor, referenceValue, tooltipFor,
+  monthOrder, axis, values, max, color, formatLabel, labelColor, dotColor, referenceValue, tooltipFor,
 }: {
   monthOrder: number[];
+  /** Calendar tags per column (lib/month-axis.ts); absent = month names only. */
+  axis?: MonthAxisSlot[];
   values: number[];
   max: number;
   color: string;
@@ -2846,10 +2890,11 @@ function MonthLineChart({
         </svg>
         <div style={MONTH_COLUMNS} data-crop-chart-labels>
           {monthOrder.map((m, i) => (
-            <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}>
+            <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={monthAxisTitle(axis?.[i], m)}>
               <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 4 }}>
                 {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
               </div>
+              <MonthAxisTag slot={axis?.[i]} fontSize={9} />
               <div className="font-mono font-semibold" style={{ fontSize: 11, color: labelColor ? labelColor(values[i]) : 'var(--text-primary)', marginTop: 2 }}>
                 {formatLabel(values[i])}
               </div>
@@ -2864,7 +2909,10 @@ const TRAY_COLS = 2;
 const TRAY_ICON = 18;
 const TRAY_GAP = 4;
 
-function AvailabilityIconTray({ items, tint, rows }: { items: FoodAvailabilityItem[]; tint: string; rows: number }) {
+/** The bounded, tinted box one month's icons sit in — two to a row, so a month's picture can't
+ * run into the next column. `rows` is the tallest month's row count, so every tray in a row of
+ * the chart starts and ends on the same line. */
+function IconTray({ count, tint, rows, dashed = false, children }: { count: number; tint: string; rows: number; dashed?: boolean; children?: ReactNode }) {
   if (rows === 0) return null;
   return (
     <div style={{
@@ -2873,33 +2921,66 @@ function AvailabilityIconTray({ items, tint, rows }: { items: FoodAvailabilityIt
       gridAutoRows: TRAY_ICON,
       gap: TRAY_GAP,
       justifyContent: 'center',
-      alignContent: 'start',
+      alignContent: count === 0 ? 'center' : 'start',
       minHeight: rows * TRAY_ICON + (rows - 1) * TRAY_GAP + 8,
       margin: '4px 4px 0',
       padding: 4,
       borderRadius: 6,
-      background: `rgba(${tint},0.14)`,
-      border: `1px solid rgba(${tint},0.4)`,
+      background: count === 0 ? 'transparent' : `rgba(${tint},0.14)`,
+      border: count === 0 || dashed ? '1px dashed var(--border)' : `1px solid rgba(${tint},0.4)`,
     }}>
-      {items.map((item, idx) => (
-        <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={TRAY_ICON} />
-      ))}
+      {children}
     </div>
   );
 }
 
+function AvailabilityIconTray({ items, tint, rows }: { items: FoodAvailabilityItem[]; tint: string; rows: number }) {
+  return (
+    <IconTray count={items.length} tint={tint} rows={rows}>
+      {items.map((item, idx) => (
+        <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={TRAY_ICON} />
+      ))}
+    </IconTray>
+  );
+}
+
+/** One picture in a tree or animal tray: the studio's own artwork, or a Lucide stand-in when a
+ * kind has none yet (never an emoji — CLAUDE.md). */
+function TrayArt({ src, label, Fallback, color }: { src: string | null; label: string; Fallback: LucideIcon; color: string }) {
+  return src ? (
+    // eslint-disable-next-line @next/next/no-img-element -- 18px sprite, next/image adds nothing here
+    <img src={src} alt="" title={label} width={TRAY_ICON} height={TRAY_ICON} style={{ width: TRAY_ICON, height: TRAY_ICON, objectFit: 'contain' }} />
+  ) : (
+    <span title={label} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: TRAY_ICON, height: TRAY_ICON }}>
+      <Fallback size={14} aria-hidden style={{ color }} />
+    </span>
+  );
+}
+
+/** A month's animal items, one per enterprise: a layer flock giving eggs AND meat is one hen in
+ * the tray (the detail panel lists both products), not two identical pictures. */
+function animalTrayItems(slot: AnimalAvailabilityItem[]): AnimalAvailabilityItem[][] {
+  const byEnterprise = new Map<string, AnimalAvailabilityItem[]>();
+  for (const item of slot) byEnterprise.set(item.enterpriseId, [...(byEnterprise.get(item.enterpriseId) ?? []), item]);
+  return [...byEnterprise.values()];
+}
+
 /**
- * The trees' own strip under the bars, one cell per month column.
+ * The food forest's tray under each month, a third box after the veg's fresh and stored ones.
  *
- * A count of tree KINDS, not kilograms: the sources give a picking span, not a monthly curve, the
- * same reason the bars above carry no kg. A cell is a button onto the same month detail as its
- * bar, so the names and the sourced season are one tap away on a phone.
+ * Rory, 2026-09-29: "i would prefer icons of fruit and berries just like the others so a 3rd, 4th
+ * little box … food forest products etc with icons". It used to be a count of tree kinds beside a
+ * Lucide tree, which said how many but not which. Each kind in season now shows its own studio
+ * artwork. Still no kilograms: the sources give a picking span, not a monthly curve, the same
+ * reason the bars above carry none. The tray is a button onto the same month detail as its bar.
  */
-function TreeAvailabilityRow({ slots, openMonth, onToggleMonth }: {
+function TreeAvailabilityRow({ slots, axis, openMonth, onToggleMonth }: {
   slots: TreeAvailabilityItem[][];
+  axis: MonthAxisSlot[];
   openMonth: number | null;
   onToggleMonth: (index: number) => void;
 }) {
+  const rows = Math.max(1, Math.ceil(Math.max(0, ...slots.map((slot) => slot.length)) / TRAY_COLS));
   return (
     <div style={{ ...MONTH_COLUMNS, marginTop: 6 }} data-crop-tree-availability>
       {slots.map((slot, i) => (
@@ -2908,16 +2989,14 @@ function TreeAvailabilityRow({ slots, openMonth, onToggleMonth }: {
             type="button"
             onClick={() => onToggleMonth(i)}
             aria-expanded={openMonth === i}
-            aria-label={slot.length === 0 ? 'No tree season this month' : `${slot.map((t) => t.name).join(', ')} in season, tap for detail`}
-            className="font-sans inline-flex items-center justify-center gap-1"
-            style={{
-              width: '68%', minHeight: 24, borderRadius: 6, cursor: 'pointer', fontSize: 11.5, fontWeight: 700,
-              border: slot.length ? '1px solid var(--emerald)' : '1px dashed var(--border)',
-              background: slot.length ? 'var(--bg-2)' : 'transparent',
-              color: slot.length ? 'var(--text-primary)' : 'var(--text-muted)',
-            }}
+            aria-label={`${monthAxisTitle(axis[i], axis[i]?.month ?? 1)}: ${slot.length === 0 ? 'no tree season' : `${slot.map((t) => t.name).join(', ')} in season`}, tap for detail`}
+            style={{ display: 'block', width: '100%', background: openMonth === i ? 'var(--bg-2)' : 'none', border: 'none', borderRadius: 6, padding: '0 0 2px', cursor: 'pointer' }}
           >
-            {slot.length > 0 ? <><Trees size={11} aria-hidden style={{ color: 'var(--emerald)' }} />{slot.length}</> : '–'}
+            <IconTray count={slot.length} tint="46,107,58" rows={rows}>
+              {slot.map((tree) => (
+                <TrayArt key={tree.speciesId} src={speciesPickerArtworkUrl(tree.speciesId)} label={`${tree.name} × ${tree.trees}`} Fallback={Trees} color="var(--emerald)" />
+              ))}
+            </IconTray>
           </button>
         </div>
       ))}
@@ -2925,34 +3004,38 @@ function TreeAvailabilityRow({ slots, openMonth, onToggleMonth }: {
   );
 }
 
-/** The animals' row: one product icon per chosen enterprise giving its product that month. */
-function AnimalAvailabilityRow({ slots, openMonth, onToggleMonth }: {
+/** The animals' tray: the fourth box, one picture per chosen enterprise giving a product that
+ * month — the same animal art the studio and the enterprise card use. */
+function AnimalAvailabilityRow({ slots, axis, openMonth, onToggleMonth }: {
   slots: AnimalAvailabilityItem[][];
+  axis: MonthAxisSlot[];
   openMonth: number | null;
   onToggleMonth: (index: number) => void;
 }) {
+  const grouped = slots.map(animalTrayItems);
+  const rows = Math.max(1, Math.ceil(Math.max(0, ...grouped.map((g) => g.length)) / TRAY_COLS));
   return (
     <div style={{ ...MONTH_COLUMNS, marginTop: 6 }} data-crop-animal-availability>
-      {slots.map((slot, i) => (
+      {grouped.map((groups, i) => (
         <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }}>
           <button
             type="button"
             onClick={() => onToggleMonth(i)}
             aria-expanded={openMonth === i}
-            aria-label={slot.length === 0 ? 'No animal product this month' : `${slot.map((a) => `${PRODUCT_LABEL[a.product]} from ${ANIMAL_LABEL[a.animal].toLowerCase()}`).join(', ')}, tap for detail`}
-            className="font-sans inline-flex items-center justify-center gap-0.5"
-            style={{
-              width: '68%', minHeight: 24, borderRadius: 6, cursor: 'pointer', fontSize: 11.5, fontWeight: 700,
-              border: slot.length ? '1px solid var(--gold)' : '1px dashed var(--border)',
-              background: slot.length ? 'var(--bg-2)' : 'transparent',
-              color: slot.length ? 'var(--text-primary)' : 'var(--text-muted)',
-            }}
+            aria-label={`${monthAxisTitle(axis[i], axis[i]?.month ?? 1)}: ${groups.length === 0 ? 'no animal product' : slots[i].map((a) => `${PRODUCT_LABEL[a.product]} from ${ANIMAL_LABEL[a.animal].toLowerCase()}`).join(', ')}, tap for detail`}
+            style={{ display: 'block', width: '100%', background: openMonth === i ? 'var(--bg-2)' : 'none', border: 'none', borderRadius: 6, padding: '0 0 2px', cursor: 'pointer' }}
           >
-            {slot.length > 0 ? slot.slice(0, 2).map((a) => {
-              const Icon = PRODUCT_ICON[a.product];
-              return <Icon key={a.enterpriseId} size={11} aria-hidden style={{ color: 'var(--gold-dim)' }} />;
-            }) : '–'}
-            {slot.length > 2 && <span>+{slot.length - 2}</span>}
+            <IconTray count={groups.length} tint="192,122,30" rows={rows}>
+              {groups.map((items) => (
+                <TrayArt
+                  key={items[0].enterpriseId}
+                  src={animalArtUrl(items[0].enterpriseId)}
+                  label={`${ANIMAL_LABEL[items[0].animal]}: ${items.map((a) => PRODUCT_LABEL[a.product].toLowerCase()).join(', ')}`}
+                  Fallback={PRODUCT_ICON[items[0].product]}
+                  color="var(--gold-dim)"
+                />
+              ))}
+            </IconTray>
           </button>
         </div>
       ))}
@@ -2963,12 +3046,13 @@ function AnimalAvailabilityRow({ slots, openMonth, onToggleMonth }: {
 type FoodValueMode = 'availability' | 'utilization' | 'value';
 
 function FoodAvailabilityChart({
-  monthOrder, availability, yieldBenchmark, utilization, plantings, priceOverrides, onPriceOverrideChange,
+  monthOrder, axis, availability, yieldBenchmark, utilization, plantings, priceOverrides, onPriceOverrideChange,
   cashflowSettings, onCashflowSettingsChange, yearMode, onYearModeChange, registerScroll, onMonthScroll,
   treeGroups, treeAvailability, includeTrees, onIncludeTreesChange,
   animalAvailability, includeAnimals, onIncludeAnimalsChange,
 }: {
   monthOrder: number[];
+  axis: MonthAxisSlot[];
   availability: FoodAvailabilityItem[][];
   treeGroups: PlacedTreeGroup[];
   treeAvailability: TreeAvailabilityItem[][];
@@ -3106,11 +3190,11 @@ function FoodAvailabilityChart({
             <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add a planting with verified timing to see availability.</div>
           ) : (
             <>
-              <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-3 font-sans" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
                 <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh</span>
                 {hasStoredItems && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> Stored under named conditions</span>}
-                {showTreeRow && <span className="inline-flex items-center gap-1.5"><Trees size={11} aria-hidden style={{ color: 'var(--emerald)' }} /> Your trees&apos; sourced season</span>}
-                {showAnimalRow && <span className="inline-flex items-center gap-1.5"><PawPrint size={11} aria-hidden style={{ color: 'var(--gold-dim)' }} /> Your animals&apos; sourced months</span>}
+                {showTreeRow && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: 'rgba(46,107,58,0.3)', border: '1px solid rgba(46,107,58,0.6)', display: 'inline-block' }} /> Food forest: your trees&apos; sourced season</span>}
+                {showAnimalRow && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: 'rgba(192,122,30,0.3)', border: '1px solid rgba(192,122,30,0.6)', display: 'inline-block' }} /> Animal products: your animals&apos; sourced months</span>}
               </div>
               {showTreeRow && (
                 <p className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
@@ -3150,7 +3234,7 @@ function FoodAvailabilityChart({
                           type="button"
                           onClick={() => setOpenMonth(openMonth === i ? null : i)}
                           aria-expanded={openMonth === i}
-                          aria-label={`${MONTHS_SHORT[m - 1]}${i >= 12 ? ', next year' : ''} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
+                          aria-label={`${monthAxisTitle(axis[i], m)} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
                           className="crop-availability-month"
                           style={{ display: 'block', width: '100%', background: openMonth === i ? 'var(--bg-2)' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
                         >
@@ -3172,6 +3256,7 @@ function FoodAvailabilityChart({
                             )}
                           </div>
                           <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 6 }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
+                          <MonthAxisTag slot={axis[i]} />
                           {/* Each month's crops sit in their own bounded tray,
                               two to a row. Rory, 2026-09-28, on an iPad: "the
                               veg needs to be clearly visible for that month".
@@ -3192,10 +3277,10 @@ function FoodAvailabilityChart({
                   })}
                 </div>
                 {showTreeRow && (
-                  <TreeAvailabilityRow slots={treeAvailability} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
+                  <TreeAvailabilityRow slots={treeAvailability} axis={axis} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
                 )}
                 {showAnimalRow && (
-                  <AnimalAvailabilityRow slots={animalAvailability} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
+                  <AnimalAvailabilityRow slots={animalAvailability} axis={axis} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
                 )}
                 </>
               </CropMonthViewport>
@@ -3222,7 +3307,7 @@ function FoodAvailabilityChart({
             Share of mapped growing area occupied each month. The planner reserves each crop through the upper end of its supported maturity and picking range to avoid double-booking; finish a crop earlier only after checking the bed.
           </p>
           <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
-            <MonthLineChart monthOrder={monthOrder} values={utilization} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : 'var(--text-primary)')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
+            <MonthLineChart monthOrder={monthOrder} axis={axis} values={utilization} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : 'var(--text-primary)')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
           </CropMonthViewport>
         </>
       )}

@@ -52,6 +52,34 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 29 Sep 2026 — Food availability: tree and animal picture trays, month labels, printed page
+Rory, looking at the availability chart: "i would prefer icons of fruoit and berrues just like the
+others so a 3rd, 4th litle box after staple crops animal products and food forest pruducts etc with
+icons", "i dont know what month this is?", and "i want in the crop plan printed a version of the
+calendar we have in the app with the veg and other icons".
+- **Picture trays** (`app/facilitator/crops/page.tsx`): the food-forest and animal rows are now
+  tinted trays of the same art as the veg (`speciesPickerArtworkUrl`, `animalArtUrl`; Lucide
+  fallback), one tray per month, replacing the count/Lucide rows. Legend has tinted swatches.
+- **Month identity** (`lib/month-axis.ts`): each column knows its calendar year; the first shows a
+  **Now** pill with the year, every January shows its year. On the timeline header, the
+  availability chart and the line charts; tooltips/aria read e.g. "September 2026 (now)".
+- **Printed page** (`lib/crop-export-pdf.ts` section `availability`, in the default export after
+  the bed calendar): landscape "What there is to eat: Sep 2026 - Aug 2027" — fresh / stored veg,
+  food forest, animal products (empty trays left off, as on screen), a **field space used** row
+  (% + bar, red over 100%), January seam, a key naming every picture, and the source notes.
+  Pictures come from `lib/pdf-icons.ts` (browser: fetched, drawn at 64 px, embedded once by alias);
+  a missing or unreadable picture prints the crop code instead. The export card passes the chart's
+  first 12 columns via `lib/crop-export-availability.ts`, honouring the tree/animal switches.
+  Quick print stays calendar + tasks and loads no pictures.
+- **Not printed:** the plan-cycle value chart (prices move; it stays on screen with its dates).
+- **Regional harness** (`scripts/crop-plan-pdf-regions.ts`) now adds a sample food forest and a
+  layer coop + tilapia pond with icons from `public/`; all 16 site/water PDFs rebuilt and the
+  page checked. Picture cost ~10 KB each (~290 KB for a busy plan).
+- Guava, pawpaw and honey have no sourced months yet, so they stay off the chart and the page.
+- **Next (PR2):** berries (strawberry, blueberry, raspberry, cape gooseberry; dossiers drafted,
+  Codex art needed), moringa and mulberry harvest data, food-forest harvest rows in the monthly plan.
+- Tests: `tests/print-availability.test.ts` (new), availability cases in `tests/crop-plan-pdf-build.test.ts`.
+
 ### 29 Sep 2026 — Crop-plan PDF audited at eight SA sites
 - **Harness:** `scripts/crop-plan-pdf-regions.ts` builds the full PDF through the planner's own
   pipeline for KZN Midlands, Durban, Gauteng, Stellenbosch, Tzaneen, Mthatha, Bloemfontein and

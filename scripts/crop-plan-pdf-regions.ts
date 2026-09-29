@@ -9,12 +9,23 @@
 // responses named clim-<site>.json (T2M, PRECTOTCORR; the same parameters lib/nasa-power.ts
 // reads). The script never fetches, so a regional PDF can always be rebuilt from the same climate.
 // PLAN_NOW (ISO date, default 2026-09-29) sets the day the plan is made.
+//
+// The farm also carries a small food forest and a laying-hen coop and a tilapia pond, so the printed
+// "Food availability" page shows all four trays. Its pictures are the app's own art from public/,
+// shrunk to print size here the way lib/pdf-icons.ts shrinks them in the browser.
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { buildCropPlanPdf } from '@/lib/crop-export-pdf';
-import { buildPlanYieldBenchmark, buildYearReport, tasksForPlan, type PlanBed } from '@/lib/crop-plan';
+import { PNG } from 'pngjs';
+
+import { availabilityIconKeys, buildCropPlanPdf, type CropPlanPdfInput } from '@/lib/crop-export-pdf';
+import { printableAvailability } from '@/lib/crop-export-availability';
+import { rollingMonths } from '@/lib/crop-export-schedule';
+import { buildFieldUtilizationByMonth, buildFoodAvailability, buildPlanYieldBenchmark, buildYearReport, recurringPlanPlantings, tasksForPlan, type PlanBed } from '@/lib/crop-plan';
+import { buildTreeAvailability, placedTreeGroups } from '@/lib/perennial-harvest';
+import { buildAnimalAvailability, placedAnimalGroups } from '@/lib/animal-enterprises';
+import { PDF_ICON_PX, pdfIconUrl } from '@/lib/pdf-icons';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { suggestIdealYearPlan, type IdealYearPlan } from '@/lib/crop-plan-ideal';
 import type { AutoSuggestAnswers } from '@/lib/crop-autosuggest';
@@ -52,6 +63,51 @@ const CROP_KEYS = ['maize', 'dry-beans', 'green-beans', 'butternut', 'pumpkin', 
   'peas', 'broad-beans', 'broccoli', 'cucumber', 'watermelon', 'oats', 'true-spinach', 'turnip', 'amaranth', 'soybean',
   'brinjal', 'bambara-groundnut'];
 
+// A creche food forest: a few of each common SA fruit tree, drawn as existing on the canvas.
+const TREES = ['tree_mango', 'tree_avocado', 'tree_guava', 'tree_lemon', 'tree_pawpaw', 'tree_peach', 'tree_fig', 'tree_macadamia']
+  .map((defId) => ({ defId, status: 'existing' as const }));
+// Guava, pawpaw and honey have no sourced months yet, so they stay off the page, as on screen.
+const ANIMALS = [{ defId: 'chicken_coop', status: 'existing' as const }, { defId: 'pond_small', status: 'existing' as const }];
+const ANIMAL_CHOICES = { chicken: 'chicken-layer', pond: 'fish-tilapia' };
+
+/** One art file as a PDF_ICON_PX PNG data URL (box-averaged, alpha kept), or null without art. */
+function iconFromPublic(iconKey: string, cache: Map<string, string | null>): string | null {
+  if (cache.has(iconKey)) return cache.get(iconKey)!;
+  const url = pdfIconUrl(iconKey);
+  let out: string | null = null;
+  try {
+    if (url) {
+      const src = PNG.sync.read(readFileSync(join('public', url)));
+      const px = PDF_ICON_PX;
+      const dst = new PNG({ width: px, height: px });
+      const scale = Math.max(src.width, src.height) / px;
+      const offX = (px - src.width / scale) / 2;
+      const offY = (px - src.height / scale) / 2;
+      for (let y = 0; y < px; y++) {
+        for (let x = 0; x < px; x++) {
+          const acc = [0, 0, 0, 0];
+          let n = 0;
+          for (let sy = Math.floor((y - offY) * scale); sy < Math.floor((y + 1 - offY) * scale); sy++) {
+            for (let sx = Math.floor((x - offX) * scale); sx < Math.floor((x + 1 - offX) * scale); sx++) {
+              if (sx < 0 || sy < 0 || sx >= src.width || sy >= src.height) continue;
+              const i = (sy * src.width + sx) * 4;
+              for (let c = 0; c < 4; c++) acc[c] += src.data[i + c];
+              n++;
+            }
+          }
+          const o = (y * px + x) * 4;
+          for (let c = 0; c < 4; c++) dst.data[o + c] = n ? Math.round(acc[c] / n) : 0;
+        }
+      }
+      out = `data:image/png;base64,${PNG.sync.write(dst).toString('base64')}`;
+    }
+  } catch {
+    out = null;
+  }
+  cache.set(iconKey, out);
+  return out;
+}
+
 const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const KEYS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
@@ -72,6 +128,10 @@ async function main() {
   const nowMonth = now.getUTCMonth() + 1;
   const irrigatedModes = (process.env.WATER ?? 'irrigated').split(',');
   const summary: string[] = [];
+  const iconCache = new Map<string, string | null>();
+  const months = rollingMonths(nowMonth);
+  const trees = buildTreeAvailability(placedTreeGroups(TREES), months, false);
+  const animals = buildAnimalAvailability(placedAnimalGroups(ANIMALS), ANIMAL_CHOICES, months, false);
 
   for (const site of SITES) {
     const climate = climateFor(climateDir, site.id, site.lat);
@@ -98,8 +158,19 @@ async function main() {
       const plantings = ideal.best.result.plantings;
       const tasks = tasksForPlan(plantings, BEDS, nowMonth);
       const benchmark = buildPlanYieldBenchmark(plantings, BEDS, nowMonth);
-      const blob = await buildCropPlanPdf({
+      const recurring = recurringPlanPlantings(plantings);
+      const annualVeg = buildFoodAvailability(recurring, BEDS);
+      const annualUse = buildFieldUtilizationByMonth(recurring, BEDS);
+      const availability = printableAvailability({
+        yearMode: 'established',
+        veg: months.map((m) => annualVeg[m] ?? []),
+        utilization: months.map((m) => annualUse[m] ?? 0),
+        trees,
+        animals,
+      });
+      const input: CropPlanPdfInput = {
         plantings,
+        availability,
         beds: BEDS,
         tasks,
         yearReport: buildYearReport(plantings, BEDS),
@@ -118,7 +189,13 @@ async function main() {
           lossPercent: 10,
           lossAllowanceConfirmed: true,
         },
-      });
+      };
+      const icons: Record<string, string> = {};
+      for (const key of availabilityIconKeys(input)) {
+        const data = iconFromPublic(key, iconCache);
+        if (data) icons[key] = data;
+      }
+      const blob = await buildCropPlanPdf({ ...input, icons });
       const file = join(outDir, `${site.id}-${water}.pdf`);
       writeFileSync(file, Buffer.from(await blob.arrayBuffer()));
       summary.push(`${site.id}-${water}: ${climate.pattern} (${climate.koppen}, ${climate.annualMm} mm) · ${plantings.length} plantings · ${(blob.size / 1024).toFixed(0)} KB`);
