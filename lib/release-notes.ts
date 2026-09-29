@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', sha: '1fdb6fa1', changes: [
+  { when: '29 September 2026', sha: 'a835dc28', changes: [
     'Food availability now shows fruit trees and animal products as picture trays.',
     'Each chart names this month (Now) and the year, so you know which column is which.',
     'The crop-plan PDF has a new Food availability page with the same pictures.',
@@ -52,7 +52,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Print what there is to eat', where: 'Crop plan → Download PDF → Food availability', href: '/facilitator/crops',
       detail: 'A landscape page shows twelve months from now with the veg, tree and animal pictures, how much bed space each month uses, and a key naming every picture. Trees or animals you switched off on screen stay off the paper.' },
   ] },
-  { when: '29 September 2026', sha: 'd18aaaec', changes: [
+  { when: '29 September 2026', sha: '1fdb6fa1', changes: [
     'Seeds slides 5–9 add Sesotho, Tshivenda and Xitsonga draft prompts beside English.',
     'The dry-seed and ten-seed stills now match their lessons in silent reading mode.',
     'Seed science stays in English where wording needs review. Regional decks remain silent.',
