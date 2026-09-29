@@ -3,7 +3,7 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible. Slides 8–14: six concept headings, factual attribution and framing statements; independently back-checked candidates. Actionable farm, water, safety, permission, windbreak, zone/sector field instructions and uncertain ecological claims remain exact English. Slides 16–22: selected reflective question and headings, plus slide 20 closing sentence; generated with Agy Gemini 3.8 Flash Low and independently back-checked with Agy Gemini 3.1 Pro Low. Slide 15 heading and slide 17 reflective question remain held after back-check.",
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible. Slides 8–14: six concept headings, factual attribution and framing statements; independently back-checked candidates. Actionable farm, water, safety, permission, windbreak, zone/sector field instructions and uncertain ecological claims remain exact English. Slides 16–22: selected reflective question and headings, plus slide 20 closing sentence; generated with Agy Gemini 3.8 Flash Low and independently back-checked with Agy Gemini 3.1 Pro Low. Slide 15 heading and slide 17 reflective question remain held after back-check. Slides 2 and 4: ordinary reflective questions; slide 17: short transition. These are unreviewed machine drafts paired with the unchanged English source.",
     "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
     "holds": "Unverified spade wording, the land-works-with-you contrast, all examples, site and crop advice, money claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English. All zone examples and frequencies, farm layout suggestions, observation or sketching steps, weather directions, shelter claims and site-specific field actions on slides 15–22 remain exact English."
   },
@@ -78,7 +78,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Humbulani nga mushumo muthihi bulasini yaṋu une wa dzhia tshifhinga tshilapfu u fhira tshine tsha ṱoḓea. Tshifhinga tshi khou ya ngafhi zwa vhukuma?",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           }
         ]
       }
@@ -150,7 +152,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani tshipiḓa tshithihi tsha mavu a songo tibedzwaho tsimuni yaṋu. Hu na tshithu tshine tsha khou tsireledza mavu eneo zwino?",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           }
         ]
       }
@@ -566,7 +570,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndivho ya nyito yoṱhe ndi iyi.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
             "status": "english-hold"

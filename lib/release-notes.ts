@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '864dd861', changes: [
+    'Introduction to Permaculture adds three Tshivenda and Xitsonga reflection drafts.',
+    'Each draft stays beside English; the slides remain silent and unreviewed.',
+    'Slide 17 shows a farm walk instead of the zone-circle picture.',
+  ], tour: [
+    { title: 'Compare the Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga and read slides 2, 4 and 17. The short unreviewed drafts stay beside the exact English source. No regional narration is included.' },
+  ] },
   { when: '29 September 2026', sha: '4db18c3f', changes: [
     'Market Gardening L1 adds unreviewed harvest and season-end record-keeping drafts.',
     'Other instructions stay in English beside the exact source.',
