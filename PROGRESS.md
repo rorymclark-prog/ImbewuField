@@ -52,6 +52,21 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 29 Sep 2026 — Crop-plan PDF audited at eight SA sites
+- **Harness:** `scripts/crop-plan-pdf-regions.ts` builds the full PDF through the planner's own
+  pipeline for KZN Midlands, Durban, Gauteng, Stellenbosch, Tzaneen, Mthatha, Bloemfontein and
+  Kimberley, irrigated and rain-fed (NASA POWER climatology in `scripts/fixtures/crop-plan-regions/`).
+- **Truth fix:** `fillFirstSeasonGaps` split each year-one bare run by the repeating plan's year-two
+  ledger. Only months also bare in year two say "recurs every year"; the rest print as "First-year
+  gap only" (cycle crop sown in a month already passed). Test in `tests/staple-crops.test.ts`.
+- **Layout:** title wraps to two lines; stat tiles size to their text; page-1 trust panel kept off the
+  footer; workload chart unit moved beside its title with 1/2/5 steps; crop-code key filed by colour
+  and empty colours dropped; `m²` throughout.
+- **Wording:** buying list and field sheet places compact to "Beds 2, 4, 8, 9; Plot 3"; crop names
+  keep inner capitals ("true spinach (English spinach)"); covered prep note printed once; long crop
+  whitelists counted instead of listed; Aug nursery seedlings not bought on a Sep plan.
+- **Next:** fruit/berry icon trays, month-chart year labels, berries + moringa, food-forest rows.
+
 ### 29 Sep 2026 — Recommended prices for the last five unpriced catalogue crops
 - New price confidence level `'recommended'` (`lib/crop-prices.ts`): the plain average of the
   like-for-like cited prices found, for crops no single source fits. Labelled "Recommended price —

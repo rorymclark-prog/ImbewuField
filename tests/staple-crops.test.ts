@@ -398,6 +398,31 @@ test('a still-bare rest note never promises the repeating plan covers it next ye
   assert.match(restNote!.text, /does not reach these stretches either.*recurs every year/);
 });
 
+// 2026-09-29 regional PDF audit: a cycle crop sown in a month that has already passed (potato in
+// Jul, planned in Sep) holds nothing in year one but the same months every year after. The rest
+// note printed the whole year-one gap as "recurs every year", beside a repeating-plan note that
+// rested the plot for only part of it. Only the months the year-two ledger also leaves bare recur.
+test('a year-one gap that the repeating plan fills from next year is not called recurring', () => {
+  const beds: PlanBed[] = [
+    { id: 'b1', label: 'Bed 1', areaM2: 9, minDimM: 1.5 },
+    { id: 'p1', label: 'Plot 1', areaM2: 100, minDimM: 8, kind: 'plot' },
+  ];
+  const fill = fillFirstSeasonGaps(
+    { ...FILL_ANSWERS, rhythm: 'steady', rotateCrops: false, cropKeys: ['potato', 'swiss-chard'] },
+    'summer', beds, [{ id: 'c', bedId: 'p1', cropKey: 'potato', sowMonth: 7 }], [], 9, 2026,
+  );
+  const texts = fill.notes.map((n) => n.text);
+  const recurring = texts.find((text) => text.startsWith('First-year rest:'));
+  const firstYear = texts.find((text) => text.startsWith('First-year gap only:'));
+  assert.ok(recurring && firstYear, `fixture drifted: ${JSON.stringify(texts)}`);
+  // Potato sown Jul holds Jul-Nov: Sep-Nov is bare only this first year, Dec-Jun every year.
+  assert.match(firstYear!, /Plot 1 \(Sep–Nov\)/);
+  assert.doesNotMatch(firstYear!, /recurs every year/);
+  assert.match(recurring!, /Plot 1 \(Dec–Jun\)/);
+  assert.match(recurring!, /recurs every year/);
+  assert.ok(texts.indexOf(firstYear!) < texts.indexOf(recurring!), 'the earlier stretch reads first');
+});
+
 test("a plot that spends its course on a starter may still take a catalog winter cover", () => {
   // The deliberate, non-subtractive side effect: with broad food-group
   // answers, poolForBed's covers branch draws from the whole catalog

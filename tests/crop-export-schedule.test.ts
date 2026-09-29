@@ -447,7 +447,7 @@ test('a mixed plan labels its kg as a known benchmark subtotal and names every e
   assert.equal(dashboard.stats[1].value, `${expectedKnownKg.toFixed(1)} kg`);
   // The density stat is the SAME two numbers divided, not a third estimate.
   assert.equal(dashboard.stats[2].label, 'benchmark density');
-  assert.equal(dashboard.stats[2].value, `${(expectedKnownKg / totalAreaM2).toFixed(2)} kg/m2`);
+  assert.equal(dashboard.stats[2].value, `${(expectedKnownKg / totalAreaM2).toFixed(2)} kg/m²`);
   assert.equal(dashboard.stats[3].value, 'Not calculated');
   assert.deepEqual(dashboard.unknownYieldCrops, ['Amadumbe (taro)']);
   assert.match(dashboard.decisions.join(' '), /not a meal or surplus guarantee/);
@@ -844,9 +844,11 @@ test('the "prepare for the next planting" boilerplate is said once in the sectio
 
   assert.ok(prep.note, 'the generic guidance must survive somewhere');
   assert.match(prep.note!, /confirm it is finished and cleared before preparing it/i);
-  // Both bed-kind phrasings of the catalog's prep guidance appear, each exactly once.
-  assert.match(prep.note!, /assess soil and drainage; use a soil test or local advice before adding amendments/i);
+  // The bed phrasing ("before adding amendments") is wholly contained in the plot phrasing
+  // ("before cultivating or adding amendments"), so printing both read as the same sentence twice
+  // (2026-09-29 regional PDF audit). The fuller one is kept, and the soil advice is said once.
   assert.match(prep.note!, /assess soil and drainage; use a soil test or local advice before cultivating or adding amendments/i);
+  assert.equal(prep.note!.match(/assess soil and drainage/gi)?.length, 1, 'the soil advice must not be repeated');
 });
 
 // ── No orphan "Weather, soil and irrigation" page (2026-09-28 audit) ────────

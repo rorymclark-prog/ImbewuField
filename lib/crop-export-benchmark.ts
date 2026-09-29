@@ -43,7 +43,7 @@ import {
   taskMonthsFromNow,
   yieldByCrop,
 } from '@/lib/crop-plan';
-import { MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
+import { inSentence, MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
 
 /**
  * Which planting-material noun a crop actually uses, keyed off the SAME field
@@ -184,7 +184,7 @@ export function buildPlanDashboard(
 
   const stats: DashboardStat[] = [
     {
-      value: `${areaM2.toFixed(1)} m2`,
+      value: `${areaM2.toFixed(1)} m²`,
       label: 'growing space',
       detail: `${bedCount} bed${bedCount === 1 ? '' : 's'}${plotCount ? ` + ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`,
     },
@@ -199,11 +199,11 @@ export function buildPlanDashboard(
       // Same knownKg ÷ same areaM2 already above — never a separate estimate,
       // so it cannot read "in line" while the two figures it is built from
       // disagree with each other.
-      value: hasKnownYield && benchmark.kgPerM2 !== null ? `${benchmark.kgPerM2.toFixed(2)} kg/m2` : 'Not shown',
+      value: hasKnownYield && benchmark.kgPerM2 !== null ? `${benchmark.kgPerM2.toFixed(2)} kg/m²` : 'Not shown',
       label: areaConflictBedLabels.length ? 'benchmark density blocked' : 'benchmark density',
       detail: areaConflictBedLabels.length
         ? 'blocked with the total above until shares are resolved'
-        : 'known benchmark total ÷ whole growing area, for comparing against other plans',
+        : 'known total ÷ whole growing area, to compare plans',
     },
     lossConfirmed
       ? {
@@ -255,7 +255,7 @@ export function buildPlanDashboard(
   if (areaConflictBedLabels.length) {
     decisions.push(`Resolve the planting shares in ${areaConflictBedLabels.join(', ')} before using any crop benchmark or value scenario.`);
   } else if (top[0]) {
-    decisions.push(`Compare the ${top[0].name.toLowerCase()} benchmark with actual harvest records before planning storage or sales.`);
+    decisions.push(`Compare the ${inSentence(top[0].name)} benchmark with actual harvest records before planning storage or sales.`);
   }
   decisions.push('Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.');
   if (busiest.length) {
@@ -516,8 +516,12 @@ export interface FieldSheet {
   month: number;
   monthLabel: string;
   sourceLines: number;
+  /** Printed rows (tick boxes) across every section. */
   workRows: number;
+  /** Printed rows under nursery + direct sowing — the same unit as workRows. Counting raw per-bed
+   *  task lines instead printed "12 jobs · 14 sowing" on one header: more sowings than jobs. */
   plantingFocus: number;
+  /** Printed rows under "Harvest and record", in the same unit. */
   harvestFocus: number;
   sections: FieldSheetSection[];
 }
@@ -593,7 +597,7 @@ export function buildFieldSheet(
   for (const t of mine) {
     const crop = cropByKey(t.cropKey);
     const watered = mulchedCrops.has(`${t.bedLabel}::${t.cropKey}`);
-    const name = t.cropName.toLowerCase();
+    const name = inSentence(t.cropName);
     switch (t.action) {
       case 'sow':
         if (crop?.transplant) {
@@ -699,7 +703,7 @@ export function buildFieldSheet(
     const note = title === 'Prepare for the next planting' && prepNotes.size
       ? [
         'Where a bed follows another crop, confirm it is finished and cleared before preparing it.',
-        ...prepNotes,
+        ...withoutCoveredNotes([...prepNotes]),
       ].join(' ')
       : undefined;
     sections.push({ title, rows: mergeIdenticalWork(rows), ...(note ? { note } : {}) });
@@ -711,8 +715,8 @@ export function buildFieldSheet(
     monthLabel: `${MONTH_NAMES[month - 1]} ${resolveYear(month, now)}`,
     sourceLines: mine.length,
     workRows,
-    plantingFocus: mine.filter((t) => t.action === 'sow' || t.action === 'transplant').length,
-    harvestFocus: mine.filter((t) => t.action === 'harvest').length,
+    plantingFocus: rowsIn(sections, 'Nursery - raise seedlings') + rowsIn(sections, 'Direct sowing and planting'),
+    harvestFocus: rowsIn(sections, 'Harvest and record'),
     sections,
   };
 }
@@ -746,6 +750,26 @@ function sowDepthPhrase(crop: CropDef): string | null {
 
 function formatCmRange(range: readonly [number, number]): string {
   return range[0] === range[1] ? String(range[0]) : `${range[0]}–${range[1]}`;
+}
+
+function rowsIn(sections: FieldSheetSection[], title: string): number {
+  return sections.find((x) => x.title === title)?.rows.length ?? 0;
+}
+
+/** Drop a note whose every word already appears in a longer note. A month that prepares both a bed
+ *  and a staple plot printed "…before adding amendments. …before cultivating or adding
+ *  amendments." — the second sentence already says everything the first does. */
+function withoutCoveredNotes(notes: string[]): string[] {
+  const words = (n: string) => new Set(n.toLowerCase().match(/[a-z0-9]+/g) ?? []);
+  return notes.filter((note, i) => {
+    const mine = words(note);
+    return !notes.some((other, j) => {
+      if (j === i) return false;
+      const theirs = words(other);
+      if (theirs.size < mine.size || (theirs.size === mine.size && j > i)) return false;
+      return [...mine].every((w) => theirs.has(w));
+    });
+  });
 }
 
 /** Older saved tasks may phrase bed prep as "prep bed (...)" — unwrap that
@@ -795,18 +819,33 @@ function mergeIdenticalWork(rows: FieldSheetRow[]): FieldSheetRow[] {
   return [...byWork.entries()].map(([work, places]) => ({ place: compactPlaces(places), work }));
 }
 
-/** "Bed 3" + "Bed 7" + "Bed 12" -> "Beds 3, 7, 12"; anything mixed just joins. */
-function compactPlaces(places: string[]): string {
-  if (places.length === 1) return places[0];
-  const bedNums = places.map((p) => /^Bed (\d+)$/.exec(p)?.[1]);
-  if (bedNums.every((n): n is string => n !== undefined)) {
-    return `Beds ${bedNums.map(Number).sort((a, b) => a - b).join(', ')}`;
+/** "1, 2, 3, 4, 6" -> "1–4, 6": three or more consecutive numbers become a range, so nine beds fit
+ *  the place column as "Beds 1–9" instead of wrapping over three lines. */
+function numberRuns(nums: number[]): string {
+  const sorted = [...new Set(nums)].sort((a, b) => a - b);
+  const out: string[] = [];
+  for (let i = 0; i < sorted.length;) {
+    let j = i;
+    while (j + 1 < sorted.length && sorted[j + 1] === sorted[j] + 1) j++;
+    if (j - i >= 2) out.push(`${sorted[i]}–${sorted[j]}`);
+    else for (let k = i; k <= j; k++) out.push(String(sorted[k]));
+    i = j + 1;
   }
-  const plotNums = places.map((p) => /^Plot (\d+)$/.exec(p)?.[1]);
-  if (plotNums.every((n): n is string => n !== undefined)) {
-    return `Plots ${plotNums.map(Number).sort((a, b) => a - b).join(', ')}`;
-  }
-  return places.join(', ');
+  return out.join(', ');
+}
+
+/** "Bed 9" + "Bed 2" + "Bed 3" + "Plot 3" -> "Beds 2, 3, 9; Plot 3": numbered beds and plots are
+ *  sorted and grouped, anything else keeps its own name, in the order given. */
+export function compactPlaces(places: string[]): string {
+  const unique = [...new Set(places)];
+  if (unique.length === 1) return unique[0];
+  const group = (singular: string) => {
+    const nums = unique.map((p) => new RegExp(`^${singular} (\\d+)$`).exec(p)?.[1]).filter((n): n is string => n !== undefined).map(Number);
+    if (!nums.length) return null;
+    return nums.length === 1 ? `${singular} ${nums[0]}` : `${singular}s ${numberRuns(nums)}`;
+  };
+  const others = unique.filter((p) => !/^(Bed|Plot) \d+$/.test(p));
+  return [group('Bed'), group('Plot'), ...others].filter((part): part is string => !!part).join('; ');
 }
 
 // ── 4. Full plan table rows ─────────────────────────────────────────────────

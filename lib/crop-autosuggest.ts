@@ -123,7 +123,23 @@ export interface PlanNote {
   /** Growing areas this note is about, by bed id — lets a caller link a note
    * back to the map without re-parsing bed labels out of the sentence. */
   bedIds?: string[];
+  /** Crops a "chosen but not placed" note names, by key — so a later pass that places one of them
+   *  (the first-season starters in lib/crop-plan-ideal.ts) can rewrite the note instead of leaving
+   *  "true spinach didn't fit anywhere" beside a true spinach starter in four beds. */
+  unplacedCropKeys?: string[];
   text: string;
+}
+
+/** The "chosen but didn't fit" warning for exactly these crops; null when none are left. */
+export function chosenButUnplacedNote(crops: readonly CropDef[]): PlanNote | null {
+  if (!crops.length) return null;
+  const names = crops.map((crop) => crop.name).join(', ');
+  const one = crops.length === 1;
+  return {
+    kind: 'warning',
+    unplacedCropKeys: crops.map((crop) => crop.key),
+    text: `${names} ${one ? 'was' : 'were'} chosen but didn't fit anywhere in this plan — every sowing window ${one ? 'it has' : 'they have'} was already committed to other crops, or ruled out by rotation. Add ${one ? 'it' : 'them'} by hand if you want to make room.`,
+  };
 }
 
 const NOTE_KIND_RANK: Record<PlanNoteKind, number> = { warning: 0, choice: 1, gap: 2, basis: 3 };
@@ -2554,6 +2570,10 @@ export function fillFirstSeasonGaps(
   };
 
   const occupiedByBed = new Map<string, number[]>();
+  // The repeating plan alone, so a year-one gap can be checked against what the same ground
+  // holds in year two. The two differ wherever a cycle crop is sown in a month that has already
+  // passed: it holds nothing this first year and the same months every year after.
+  const cycleByBed = new Map<string, number[]>();
   const unfillableBeds = new Set<string>();
   const markOccupied = (bedId: string, entry: number, span: number, share = 1): void => {
     let ledger = occupiedByBed.get(bedId);
@@ -2579,7 +2599,14 @@ export function fillFirstSeasonGaps(
     if (p.existing || typeof p.once === 'string') {
       markOccupied(p.bedId, entry, span, share);
     } else {
-      for (let start = entry; start < HORIZON; start += 12) markOccupied(p.bedId, start, span, share);
+      for (let start = entry; start < HORIZON; start += 12) {
+        markOccupied(p.bedId, start, span, share);
+        let cycle = cycleByBed.get(p.bedId);
+        if (!cycle) { cycle = Array<number>(HORIZON).fill(0); cycleByBed.set(p.bedId, cycle); }
+        for (let index = 0; index < span; index++) {
+          if (start + index >= 0 && start + index < HORIZON) cycle[start + index] += share;
+        }
+      }
     }
   }
 
@@ -2607,7 +2634,7 @@ export function fillFirstSeasonGaps(
 
   const starters: Planting[] = [];
   const added: { bed: PlanBed; cropName: string; sowMonth: number }[] = [];
-  const stillBare: { bed: PlanBed; from: number; to: number }[] = [];
+  const stillBare: { bed: PlanBed; from: number; to: number; recurs: boolean }[] = [];
 
   for (const bed of beds) {
     if (unfillableBeds.has(bed.id)) continue;
@@ -2719,14 +2746,21 @@ export function fillFirstSeasonGaps(
     // What honestly remains bare in year one on this ground (runs ≥ 2 months
     // are worth a sentence; a single bare month between crops is normal turn-
     // around and naming it would bury the real message).
+    // Each run is split by whether the repeating plan also leaves that calendar month bare in
+    // year two (offset + 12): only that part honestly "recurs every year" (2026-09-29 regional
+    // PDF audit — Western Cape Plot 3 printed "Sep–Jun ... recurs every year" beside a
+    // repeating-plan note that rested it only Dec–Jun, because its cycle potato is sown in Jul).
+    const cycle = cycleByBed.get(bed.id);
+    const recursAt = (offset: number): boolean => (cycle?.[offset + 12] ?? 0) <= BED_SHARE_EPS;
     let runStart = -1;
     for (let offset = 0; offset <= 12; offset++) {
       const bare = offset < 12 && (occupied[offset] ?? 0) <= BED_SHARE_EPS;
-      if (bare && runStart < 0) runStart = offset;
-      if (!bare && runStart >= 0) {
-        if (offset - runStart >= 2) stillBare.push({ bed, from: runStart, to: offset - 1 });
+      const continues = bare && runStart >= 0 && recursAt(offset) === recursAt(runStart);
+      if (runStart >= 0 && !continues) {
+        if (offset - runStart >= 2) stillBare.push({ bed, from: runStart, to: offset - 1, recurs: recursAt(runStart) });
         runStart = -1;
       }
+      if (bare && runStart < 0) runStart = offset;
     }
   }
 
@@ -2754,7 +2788,7 @@ export function fillFirstSeasonGaps(
 function firstSeasonFillNotes(
   realNowMonth: number,
   added: readonly { bed: PlanBed; cropName: string; sowMonth: number }[],
-  stillBare: readonly { bed: PlanBed; from: number; to: number }[],
+  stillBare: readonly { bed: PlanBed; from: number; to: number; recurs: boolean }[],
 ): PlanNote[] {
   const notes: PlanNote[] = [];
   const tailLine = 'It runs once, this year only — the repeating plan does not reach these months on its own, so this ground will likely need the same kind of one-off help again next year unless the plan itself changes.';
@@ -2783,15 +2817,34 @@ function firstSeasonFillNotes(
       added.map((entry) => entry.bed.id),
     ));
   }
-  if (stillBare.length) {
-    const monthName = (offset: number): string => MONTHS_SHORT[(realNowMonth - 1 + offset) % 12];
-    const spans = stillBare
-      .map((hole) => `${hole.bed.label} (${monthName(hole.from)}–${monthName(hole.to)})`)
-      .join(', ');
+  const monthName = (offset: number): string => MONTHS_SHORT[(realNowMonth - 1 + offset) % 12];
+  // One entry per bed, its stretches together — "Plot 1 (Sep–Dec, Jun–Aug)", as the
+  // repeating-plan rest note already prints them.
+  const spansOf = (holes: readonly { bed: PlanBed; from: number; to: number }[]): string => {
+    const byBed = new Map<string, { label: string; spans: string[] }>();
+    for (const hole of holes) {
+      const entry = byBed.get(hole.bed.id) ?? { label: hole.bed.label, spans: [] };
+      entry.spans.push(`${monthName(hole.from)}–${monthName(hole.to)}`);
+      byBed.set(hole.bed.id, entry);
+    }
+    return [...byBed.values()].map((entry) => `${entry.label} (${entry.spans.join(', ')})`).join(', ');
+  };
+  const recurring = stillBare.filter((hole) => hole.recurs);
+  const firstYearOnly = stillBare.filter((hole) => !hole.recurs);
+  if (firstYearOnly.length) {
+    // Checked month by month against the repeating plan's year-two ledger above, so this is the
+    // one case where "next year" relief is a fact of this plan rather than a hope.
     notes.push(planNote(
       'gap',
-      `First-year rest: ${spans}. No chosen crop both suits that ground and finishes in time this year — and the repeating plan itself does not reach ${stillBare.length === 1 ? 'this stretch' : 'these stretches'} either, so this is not just a first-year gap: it recurs every year unless the plan itself changes.`,
-      stillBare.map((hole) => hole.bed.id),
+      `First-year gap only: ${spansOf(firstYearOnly)}. The repeating plan first sows this ground later in the year, and from then on its crop is still standing through these months every year — so only this first year is bare. No chosen crop both suits the ground and finishes in time to bridge ${firstYearOnly.length === 1 ? 'it' : 'them'} now.`,
+      firstYearOnly.map((hole) => hole.bed.id),
+    ));
+  }
+  if (recurring.length) {
+    notes.push(planNote(
+      'gap',
+      `First-year rest: ${spansOf(recurring)}. No chosen crop both suits that ground and finishes in time this year — and the repeating plan itself does not reach ${recurring.length === 1 ? 'this stretch' : 'these stretches'} either, so this is not just a first-year gap: it recurs every year unless the plan itself changes.`,
+      recurring.map((hole) => hole.bed.id),
     ));
   }
   return notes;
@@ -3396,9 +3449,14 @@ function reportStillRestingBeds(
   const exactCropNames = strictCropKeys
     ? [...strictCropKeys].map((key) => CROPS.find((crop) => crop.key === key)?.name ?? key)
     : [];
+  // Name the whitelist while it is short enough to read; a 30-crop list in one sentence is a
+  // paragraph of names the farmer typed in themselves, so a long choice is only counted.
   const exactChoice = exactCropNames.length
-    ? `your chosen crops (${exactCropNames.join(', ')})`
+    ? exactCropNames.length <= 5
+      ? `your chosen crops (${exactCropNames.join(', ')})`
+      : `the ${exactCropNames.length} crops you chose`
     : null;
+  const ExactChoice = exactChoice ? exactChoice.charAt(0).toUpperCase() + exactChoice.slice(1) : null;
 
   // One entry per bed with a genuine no-new-sowing stretch, bucketed by CAUSE.
   // Grouping by cause rather than flattening everything into one sentence keeps
@@ -3455,7 +3513,7 @@ function reportStillRestingBeds(
     // the stretch are already planted, so a crop needing that run of months has
     // nowhere in the calendar to sit. An earlier rewrite said "no room in the
     // bed around them", which reads as a shortage of ground.
-    'plan-is-full': `${exactChoice ? `${exactChoice} and other well-documented crops have` : 'Well-documented crops have'} a sowing window for those stretches, but the months around them are already fully planted, or crop rotation rules out the families that would fit. Clearing a nearby month, or letting the ground rest, are both fine choices.`,
+    'plan-is-full': `${ExactChoice ? `${ExactChoice} and other well-documented crops have` : 'Well-documented crops have'} a sowing window for those stretches, but the months around them are already fully planted, or crop rotation rules out the families that would fit. Clearing a nearby month, or letting the ground rest, are both fine choices.`,
     'nothing-reaches': `${exactChoice ? `Nothing among ${exactChoice}, and no other crop` : 'No crop'} the catalog can plan properly — one with a checked growing time, spacing and yield — has a sowing window that reaches those stretches. Ask locally what else does; this plan is not proof that nothing can grow then.`,
   };
 
@@ -3607,7 +3665,7 @@ function autoSuggestPlanUnderGate(
     // the very top of 75% of all plans, so the first thing most farmers in the
     // country read was a paragraph about an audit. It is genuinely actionable,
     // so it stays prominent — but as a warning that opens with the thing to do.
-    notes.push(planNote('warning', 'Check each sowing month with your local extension officer — outside KZN this calendar has not been checked crop by crop.'));
+    notes.push(planNote('warning', 'Check each sowing month with your local extension officer — this calendar has been checked crop by crop only for KwaZulu-Natal.'));
   } else {
     // Frost-free and light-frost summer-rain sites OUTSIDE KZN (Mbombela, Tzaneen)
     // now reach this column too (lib/koppen-global.ts rainPatternFor). The engine
@@ -3838,7 +3896,16 @@ function autoSuggestPlanUnderGate(
       plotLines.push(`${plot.label}: ${chosen.crop.name} (sow ${MONTHS_SHORT[chosen.sowMonth - 1]})`);
     }
     if (plotLines.length) {
-      notes.push(planNote('choice', `Staple plots each take one crop at full area — ${plotLines.join(' · ')}. With prior crop records supplied and Rotate crops on, this proposal avoids an immediate repeat of the most recently recorded botanical family; it is not a stored multi-year history.`, plots.map((plot) => plot.id)));
+      // The rotation sentence used to be printed on every plan, including one built with no crop
+      // records at all — "With prior crop records supplied…" on a farm that had supplied none.
+      const plotIds = new Set(plots.map((plot) => plot.id));
+      const plotHistory = usableExistingPlantings.some((planting) => plotIds.has(planting.bedId));
+      const rotationLine = !answers.rotateCrops
+        ? ''
+        : plotHistory
+          ? ' With Rotate crops on, this proposal avoids an immediate repeat of the most recently recorded botanical family; it is not a stored multi-year history.'
+          : ' No earlier crop is recorded on these plots, so rotation could not steer this first choice — record what grew there before, if you know it.';
+      notes.push(planNote('choice', `Staple plots each take one crop at full area — ${plotLines.join(' · ')}.${rotationLine}`, plots.map((plot) => plot.id)));
     }
   }
 
@@ -4078,11 +4145,8 @@ function autoSuggestPlanUnderGate(
     && !selectedWithoutScheduleKeys.has(crop.key)
     && !climateRuledOut.has(crop.key)
     && !isSpaceHungry(crop));
-  if (explicitlyChosenButAbsent.length) {
-    const names = explicitlyChosenButAbsent.map((crop) => crop.name).join(', ');
-    const one = explicitlyChosenButAbsent.length === 1;
-    notes.push(planNote('warning', `${names} ${one ? 'was' : 'were'} chosen but didn't fit anywhere in this plan — every sowing window ${one ? 'it has' : 'they have'} was already committed to other crops, or ruled out by rotation. Add ${one ? 'it' : 'them'} by hand if you want to make room.`));
-  }
+  const unplacedNote = chosenButUnplacedNote(explicitlyChosenButAbsent);
+  if (unplacedNote) notes.push(unplacedNote);
 
   const plantings = consolidatePlantings(added);
   return {
