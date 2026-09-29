@@ -16,6 +16,8 @@ test('species catalog is valid and merges correct counts', () => {
   }
 
   // Exact count after merging 394 raw entries by botanical name and skipping NEMBA 1a/1b (197),
-  // then folding Dovyalis caffra into its new name D. afra (lib/species-aliases.ts).
-  expectToBe(SPECIES.length, 196);
+  // then folding Dovyalis caffra into its new name D. afra (lib/species-aliases.ts) — 196 — and
+  // then hand-adding four berries (strawberry, southern highbush blueberry, Cape gooseberry,
+  // raspberry). Blackberry was left out on purpose: Rubus fruticosus agg. is NEMBA category 2.
+  expectToBe(SPECIES.length, 200);
 });

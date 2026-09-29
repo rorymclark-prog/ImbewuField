@@ -793,3 +793,35 @@ test('few big harvests re-sows a crop after its harvest ends instead of leaving 
   assert.deepEqual([...sowsOf('carrots')].sort((a, b) => a - b), [2, 8]);
   assert.ok(noteText(res).some((text) => /next sowing starts only after that harvest ends/.test(text)));
 });
+
+test('a crop the farmer picked by name is placed, or the plan says truthfully why not', () => {
+  // Rory, 2026-09-29: "i selected pumpkin theres no pumkin or amadumbe or peanuts bambara".
+  const beds: PlanBed[] = Array.from({ length: 6 }, (_, i) => ({ id: `pk-${i}`, label: `Bed ${i + 1}`, areaM2: 9, minDimM: 1.4 }));
+  const cropKeys = ['pumpkin', 'amadumbe', 'groundnuts', 'bambara-groundnut', 'cabbage', 'carrots'];
+  const run = (pattern: 'summer' | 'mild-frost') => autoSuggestPlan({
+    goal: 'family', groups: [], cropKeys, rhythm: 'steady', rotateCrops: true,
+    allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+  }, pattern, beds, [], 9);
+  for (const pattern of ['summer', 'mild-frost'] as const) {
+    const result = run(pattern);
+    const placed = new Set(result.plantings.map((p) => p.cropKey));
+    // Ticking pumpkin is the opt-in the vine toggle asks for; the review note still names its bed.
+    assert.ok(placed.has('pumpkin'), `${pattern}: pumpkin was chosen by name and not placed`);
+    assert.ok(result.notes.some((n) => /Pumpkin gets Bed \d to itself/.test(n.text)));
+    assert.ok(!result.notes.some((n) => /Pumpkin wants? more room to sprawl/.test(n.text)));
+    assert.ok(placed.has('groundnuts'), `${pattern}: groundnuts not placed`);
+    // Whatever is left out has no month on this calendar, and is not blamed on full beds.
+    for (const key of cropKeys.filter((k) => !placed.has(k))) {
+      const crop = cropByKey(key)!;
+      assert.deepEqual(crop.sowMonths[pattern], [], `${pattern}: ${key} had months but was left out`);
+      const note = result.notes.find((n) => n.unplacedCropKeys?.includes(key));
+      assert.ok(note && /no sowing month/.test(note.text) && !/didn't fit/.test(note.text), `${pattern}: ${key} note: ${note?.text}`);
+    }
+  }
+  // A vine nobody asked for still waits for the toggle.
+  const broad = autoSuggestPlan({
+    goal: 'family', groups: ['fruiting_veg'], rhythm: 'steady', rotateCrops: true,
+    allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+  }, 'summer', beds, [], 9);
+  assert.ok(!broad.plantings.some((p) => isSpaceHungry(cropByKey(p.cropKey)!)));
+});

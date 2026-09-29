@@ -1,0 +1,131 @@
+{
+  "speciesId": "fragaria-x-ananassa",
+  "commonName": "Strawberry",
+  "botanicalName": "Fragaria x ananassa",
+  "harvestMonths": [
+    {
+      "region": "Western Cape",
+      "months": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "In the western Cape the season is September to December.",
+        "url": "https://ishs.org/ishs-article/265_125/",
+        "doc": "J.P. Human & E.P. Evans, 'STRAWBERRY PRODUCTION IN SOUTH AFRICA', Acta Horticulturae 265 (International Strawberry Symposium), abstract (article 265_125)",
+        "page": 757
+      },
+      "notes": "Acta Horticulturae 1989 abstract (old data, winter-rainfall area). Abstract page 757."
+    },
+    {
+      "region": "Transvaal (now Gauteng/Limpopo/Mpumalanga/North West), grown in tunnels",
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "In the Transvaal some farmers grow strawberries in tunnels (10–15 ha). This enalbes them to produce fruit from late May until mid-December.",
+        "url": "https://ishs.org/ishs-article/265_125/",
+        "doc": "J.P. Human & E.P. Evans, 'STRAWBERRY PRODUCTION IN SOUTH AFRICA', Acta Horticulturae 265 (International Strawberry Symposium), abstract (article 265_125)",
+        "page": 757
+      },
+      "notes": "'late May until mid-December' is stored as May-December (both partial months included). Tunnels extend the season. Region names follow the 1989 source ('Transvaal' is now Gauteng/Limpopo/Mpumalanga/North West)."
+    },
+    {
+      "region": "South Africa (industry body overview, all regions)",
+      "months": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "Depending on the variety of the strawberry and the production region, strawberries are planted from March to April, and harvested from June to December.",
+        "url": "https://strawberries.org.za/an-overview-of-strawberry-cultivation-in-south-africa/",
+        "doc": "South African Strawberry Growers Association (SASGA), An overview of strawberry cultivation in South Africa",
+        "page": null
+      },
+      "notes": "SASGA industry overview, no page numbers. Union across regions and varieties."
+    },
+    {
+      "region": "KwaZulu-Natal, frost-free areas",
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "evidence": {
+        "quote": "In KwaZulu-Natal, flower and fruit production occurs in late autumn/winter in frost-free areas, in spring to early summer where light frosts occur",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+        "page": 34
+      },
+      "notes": "'late autumn/winter' in the southern hemisphere is approximated as May-August: an approximation of the source wording, not a calendar range given by the source. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    },
+    {
+      "region": "KwaZulu-Natal, areas with light frosts",
+      "months": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "In KwaZulu-Natal, flower and fruit production occurs in late autumn/winter in frost-free areas, in spring to early summer where light frosts occur",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+        "page": 34
+      },
+      "notes": "'spring to early summer' approximated as September-December (source gives no calendar months). The same sentence adds 'even into late summer in cold areas'. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": {
+      "quote": "Replant annually in most areas.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+      "page": 35
+    },
+    "notes": "Treated as an annual crop in SA: planted March-April (KZN and SASGA) and harvested from June onward, i.e. roughly a few months after planting, but no source states a duration, so no number is stored."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not applicable/not stated: 'Strawberries are grown as an annual crop on raised beds covered with black plastic mulch.' (Acta Hort. 265). KZN notes: 'In cold areas the crop may be retained for a second year, but yields and fruit quality are affected.'"
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Per PLANT yield not found in any SA source. Per hectare only: KZN 'Conservative : 10 Average : 15-20 Good: 30 +' t/ha; Acta Hort. 265: 'now yields of 20 to 30 t/ha are obtained'. KZN spacing 300 mm x 300-400 mm in two to four rows on raised beds. No per-plant derivation stored."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found. KZN notes only say plants 'become dormant when temperatures are low and days short'; no chill hours."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched SA source. (The KZN notes mention planting from runners only.)"
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Per-plant yield: Tandfonline SAJPS strawberry papers (1992, 1999, 2021) blocked (403/Cloudflare); OpenAlex gave the 2021 abstract with no per-plant figure.",
+    "Pollination and chill units not sourced. DAFF/DALRRD strawberry brochure (DLRRD mirror) gives only spacing and general guidance, no months/yield.",
+    "Regional windows rest on a 1989 abstract (Acta Hort. 265), a SASGA overview and KZN notes. Current Western Cape and Gauteng windows with modern cultivars/tunnels not sourced.",
+    "NEMBA 2020: Fragaria is not listed. Duchesnea indica (mock/wild strawberry, item 121) IS listed as category 1b but is a different genus and not the garden strawberry."
+  ]
+}

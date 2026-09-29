@@ -6367,5 +6367,143 @@ export const SPECIES: Species[] = [
     "source": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf (Notice 3, List 1 item 256) + https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf",
     "nemba": "2",
     "reviewed": false
+  },
+  {
+    "id": "fragaria-x-ananassa",
+    "commonName": "Strawberry",
+    "botanicalName": "Fragaria x ananassa",
+    "indigenous": false,
+    "section": "Groundcovers & herbaceous",
+    "stratum": "groundcover",
+    "uses": [
+      "food",
+      "groundcover"
+    ],
+    "matureHeightM": 0.25,
+    "matureWidthM": 0.4,
+    "crownForm": "mat",
+    "waterNeed": "high",
+    "frostTolerance": "moderate",
+    "biomes": [
+      {
+        "biome": "FYNBOS",
+        "rank": 5
+      },
+      {
+        "biome": "GRASSLAND",
+        "rank": 5
+      }
+    ],
+    "why": "A short-cycle food crop that fruits from winter to early summer, replanted from runners each autumn.",
+    "source": "Spacing 300 x 300-400 mm, frost-resistant plants and water-stress sensitivity: KZN DARD Fruit and Nut Production advisory notes, section 4.1 (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf). Western Cape season Sept-Dec and annual culture: Acta Hort. 265, https://ishs.org/ishs-article/265_125/. National season June-Dec: https://strawberries.org.za/an-overview-of-strawberry-cultivation-in-south-africa/. NEMBA: not listed in GN 1003 of 18 Sept 2020 (https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf). Height, frost class and the biome/rank are editor placeholders — no primary source gave them, so they wait on agronomist review. GRASSLAND added from the same Acta Hort. 265 abstract (Transvaal tunnel crop, late May to mid-December) and the KZN light-frost window; that biome mapping is the editor's, not the sources'.",
+    "nemba": "none",
+    "reviewed": false
+  },
+  {
+    "id": "vaccinium-corymbosum",
+    "commonName": "Blueberry (southern highbush)",
+    "botanicalName": "Vaccinium corymbosum",
+    "indigenous": false,
+    "section": "Exotic fruit & nuts",
+    "stratum": "shrub",
+    "uses": [
+      "food",
+      "pollinator"
+    ],
+    "matureHeightM": 1.5,
+    "matureWidthM": 1.0,
+    "crownForm": "multi-stem",
+    "waterNeed": "high",
+    "frostTolerance": "moderate",
+    "biomes": [
+      {
+        "biome": "FYNBOS",
+        "rank": 5
+      }
+    ],
+    "why": "A cool-winter berry shrub that crops from August to November in the Western Cape and needs acid, moist soil.",
+    "source": "Western Cape harvest (Hex River, Wolseley): Steyn 2022 MSc, https://scholar.sun.ac.za/server/api/core/bitstreams/47824860-fa96-4626-b2b2-da6439d6a8f4/content. In-row spacing 0.75-1.0 m, acid soil pH 4.0-5.0, irrigation volumes: KZN DARD section 4.3 (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf). Season Sept-Feb: USDA FAS GAIN 2017 blueberry report. NEMBA: Vaccinium not listed in GN 1003 of 18 Sept 2020 (https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf). Height, frost class and biome/rank are placeholders — no primary source gave them, so they wait on agronomist review.",
+    "nemba": "none",
+    "reviewed": false
+  },
+  {
+    "id": "physalis-peruviana",
+    "commonName": "Cape gooseberry",
+    "botanicalName": "Physalis peruviana",
+    "indigenous": false,
+    "section": "Shrubs",
+    "stratum": "shrub",
+    "uses": [
+      "food"
+    ],
+    "matureHeightM": 1.0,
+    "matureWidthM": 1.0,
+    "crownForm": "sprawling",
+    "waterNeed": "low",
+    "frostTolerance": "light",
+    "biomes": [
+      {
+        "biome": "GRASSLAND",
+        "rank": 5
+      },
+      {
+        "biome": "SAVANNA",
+        "rank": 5
+      },
+      {
+        "biome": "FYNBOS",
+        "rank": 5
+      },
+      {
+        "biome": "IOCB",
+        "rank": 5
+      },
+      {
+        "biome": "NAMA_KAROO",
+        "rank": 5
+      },
+      {
+        "biome": "SUCCULENT_KAROO",
+        "rank": 5
+      },
+      {
+        "biome": "ALBANY_THICKET",
+        "rank": 5
+      }
+    ],
+    "why": "A quick-cropping, short-lived soft shrub that gives fruit four to five months after planting and, per SA seed and nursery sources, can be harvested in most regions; it needs frost protection and replanting every one to three years.",
+    "source": "Size, water, frost and lifespan: SA sources, all seed-company, nursery, trade-press or portal pages (no government or peer-reviewed SA source gave these). Height and width about 1 m: ProAgri \"Cape gooseberry is a shrub that grows to a metre high ... up to a metre wide\" (https://www.proagrimedia.com/crops/fruit-production-part-5-the-cape-gooseberry-is-a-golden-crop/) and Kirchhoffs \"at least 1m high and wide\" (https://www.kirchhoffs.co.za/cape-gooseberries-easy-to-grow-tasty-treats/). Water: ProAgri \"water-wise plants\", Kirchhoffs \"prefer being on the dry side\" and \"Grows best in low waer conditions\"; mapped to low, but Berries for Africa and southafrica.co.za say consistent irrigation is needed to set a crop. Frost: sources conflict (ProAgri and Berries for Africa: survives about -4 C and regrows; Kirchhoffs: \"Frost tender\"; southafrica.co.za: \"highly sensitive to frost damage\"; Morton, non-SA: SA plants killed to the ground at -0.75 C), so light is an editor call. Lifespan 18 months to 2-3 years per the same seed-company pages; harvest months are NOT from these pages: they are one Stellenbosch University tunnel trial's picking dates (research/perennial-sources/physalis-peruviana.json); the seed company's sowing calendar is not used. Habit \"sprawling\" rests on The Gardener \"rather untidy growth habit\". Biomes are NOT stated by any source: they are the editor's mapping of Kirchhoffs' eight regions (all eight list a harvest window) and of the Keisie Valley Klein-Karoo commercial farm, at neutral rank 5. NEMBA: no Physalis entry in GN 1003 of 18 Sept 2020 (https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf); Nicandra physalodes (item 229) and Pereskia aculeata \"Barbados gooseberry\" (item 266) are listed 1b but are different species.",
+    "nemba": "none",
+    "reviewed": false
+  },
+  {
+    "id": "rubus-idaeus",
+    "commonName": "Raspberry",
+    "botanicalName": "Rubus idaeus",
+    "indigenous": false,
+    "section": "Shrubs",
+    "stratum": "shrub",
+    "uses": [
+      "food"
+    ],
+    "matureHeightM": 1.8,
+    "matureWidthM": 0.9,
+    "crownForm": "upright",
+    "waterNeed": "high",
+    "frostTolerance": "hardy",
+    "biomes": [
+      {
+        "biome": "FYNBOS",
+        "rank": 5
+      },
+      {
+        "biome": "GRASSLAND",
+        "rank": 5
+      }
+    ],
+    "why": "A cane fruit that crops from November to late January in cooler wet-summer areas and needs winter chill.",
+    "source": "KZN DARD Fruit and Nut Production section 4.2 (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf): harvest 1st week November to late January, spacing 2.5-3.0 x 0.6-1.2 m, spring bearers high chill, autumn bearers 300-600 PCUs. Western Cape and Free State as production regions: https://southafrica.co.za/raspberries.html (portal page, not primary). NEMBA: Rubus idaeus not listed in GN 1003 of 18 Sept 2020 (https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf). Height, frost class and biome/rank are placeholders — no primary source gave them, so they wait on agronomist review.",
+    "nemba": "none",
+    "reviewed": false
   }
 ];

@@ -140,6 +140,7 @@ export const ELEMENT_SPECIES: Readonly<Record<string, string>> = {
   tree_peach: 'prunus-persica',
   tree_fig: 'ficus-carica',
   tree_pomegranate: 'punica-granatum',
+  tree_moringa: 'moringa-oleifera',
   banana_clump: 'musa-acuminata-aaa-group',
 };
 
@@ -205,4 +206,34 @@ export function buildTreeAvailability(
   return months.map((m) => rows
     .filter((r) => r.season.has(m))
     .map((r) => ({ speciesId: r.g.harvest.speciesId, name: r.g.harvest.name, trees: r.trees })));
+}
+
+export interface TreePickingLine {
+  speciesId: string;
+  name: string;
+  /** Standing trees (or bushes) of this species on the design. */
+  trees: number;
+  /** The sourced South African season, every region's window together. */
+  season: number[];
+}
+
+/**
+ * The crop plan's "pick from your trees" lines: for each month given, the standing trees whose
+ * sourced SA season includes it.
+ *
+ * This is a to-do list read from today, so it follows the "from today" chart's rule — a tree drawn
+ * as proposed is years from its first crop and is left out. The season is the union of every
+ * sourced region's window, not this farm's: the line says so wherever it is shown.
+ */
+export function treePickingByMonth(groups: readonly PlacedTreeGroup[], months: readonly number[]): TreePickingLine[][] {
+  const seasons = new Map(groups.map((g) => [g.harvest.speciesId, sourcedSeasonMonths(g.harvest)]));
+  return buildTreeAvailability(groups, months, true).map((slot) => slot.map((item) => ({
+    ...item,
+    season: seasons.get(item.speciesId) ?? [],
+  })));
+}
+
+/** "Pick Blueberry (3) — SA season Aug–Feb". One line, the same on screen and on paper. */
+export function treePickingPhrase(line: TreePickingLine): string {
+  return `Pick ${line.name} (${line.trees}) — SA season ${formatMonthSpan(line.season)}`;
 }

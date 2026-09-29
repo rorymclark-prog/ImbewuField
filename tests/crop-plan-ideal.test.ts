@@ -138,7 +138,24 @@ test('a full tie resolves to the anchor starting soonest after the real today', 
 
 // ── C. the empirical winners (pinned from the verified sweep) ───────────────
 
-test('family/steady on the real farm: March wins with a gap-free repeating year', () => {
+test('family/steady on the real farm: November wins with a gap-free repeating year', () => {
+  // Re-pinned 2026-09-29 (March → November). This fixture picks butternut,
+  // pumpkin and watermelon by name, and a vine the farmer chose by name now
+  // takes a bed even with "vines in beds" off (Rory: "i selected pumin theres
+  // no pumkin"). Re-read from the full sweep with the vines placed:
+  //
+  //   anchor  1  gaps []  minMonthly 2  kg 233      anchor  7  gaps []  1  232
+  //   anchor  2  gaps []  minMonthly 2  kg 245      anchor  8  gaps []  2  238
+  //   anchor  3  gaps []  minMonthly 1  kg 241      anchor  9  gaps []  2  235
+  //   anchor  4  gaps []  minMonthly 1  kg 251      anchor 10  gaps []  1  224
+  //   anchor  5  gaps []  minMonthly 2  kg 260      anchor 11  gaps []  3  257  ←
+  //   anchor  6  gaps []  minMonthly 1  kg 235      anchor 12  gaps []  2  240
+  //
+  // Every anchor sweeps gap-free, and November is the only one whose thinnest
+  // month still carries three fresh crops, so the kg key never decides. May
+  // again scores the most kg (260) and loses on continuity.
+  //
+  // Earlier history of this pin, kept for the reasoning:
   // Re-pinned 2026-08-23 (January → December → March, twice in one day as
   // kale was sourced in two halves). Read by hand from the full sweep, not
   // just re-recorded:
@@ -160,9 +177,9 @@ test('family/steady on the real farm: March wins with a gap-free repeating year'
   // and still loses — continuity outranks kg, which is the point of the
   // feature. Kale is genuinely placed here (three sowings, months 1/3/3).
   const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
-  assert.equal(ideal.best.anchorMonth, 3);
+  assert.equal(ideal.best.anchorMonth, 11);
   assert.deepEqual(ideal.best.score.zeroFreshMonths, [],
-    'the sweep found March leaves NO month without fresh harvest on this farm');
+    'the sweep found November leaves NO month without fresh harvest on this farm');
   assert.equal(ideal.sameAsToday, false);
   assert.equal(ideal.perAnchor.length, 12);
   ideal.perAnchor.forEach((entry, i) => assert.equal(entry.anchorMonth, i + 1, 'perAnchor is in anchor order'));
@@ -170,7 +187,7 @@ test('family/steady on the real farm: March wins with a gap-free repeating year'
   // Re-read 2026-09-27: once a second, staggered sowing of one crop stopped being
   // vetoed as a rotation repeat, every anchor sweeps gap-free (August and
   // September used to leave September bare), so August now loses on the next
-  // key — its thinnest month carries one fresh crop against March's three.
+  // key — its thinnest month carries fewer fresh crops than the winner's three.
   const august = ideal.perAnchor[REAL_NOW - 1];
   assert.deepEqual(august.zeroFreshMonths, [], 'every anchor, August included, now sweeps gap-free');
   assert.ok(august.minMonthlyFreshCrops < ideal.best.score.minMonthlyFreshCrops,

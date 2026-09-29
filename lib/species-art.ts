@@ -16,6 +16,7 @@ export const SPECIES_ART = {
   'coffea-arabica': { picker: 'tree_arabica_coffee.png', plan: 'arabica-coffee-tree-v1.png' },
   'musa-acuminata-aaa-group': { picker: 'tree_banana_dwarf_cavendish_williams.png', plan: 'banana-dwarf-cavendish-williams-v1.png' },
   'morus-nigra': { picker: 'tree_black_mulberry.png', plan: 'black-mulberry-tree-v1.png' },
+  'moringa-oleifera': { picker: 'tree_moringa.png', plan: 'moringa-tree-v1.png' },
   'ceratonia-siliqua': { picker: 'tree_carob.png', plan: 'carob-tree-v1.png' },
   'phoenix-dactylifera': { picker: 'tree_date_palm.png', plan: 'date-palm-v1.png' },
   'carya-illinoinensis': { picker: 'tree_pecan.png', plan: 'pecan-tree-v1.png' },
@@ -123,4 +124,32 @@ export function speciesPickerArtworkUrl(speciesId?: string | null): string | nul
 export function speciesReferenceArtworkFor(speciesId?: string | null): SpeciesReferenceArtwork | null {
   if (!speciesId) return null;
   return (SPECIES_ART as Readonly<Record<string, SpeciesArtwork>>)[speciesId]?.plan as SpeciesReferenceArtwork ?? null;
+}
+
+// ── fruit art ────────────────────────────────────────────────────────────────
+// The crop calendar shows what a tree GIVES in a month — the fruit, nut, berry or pod — not the
+// tree. One icon per species in lib/perennial-harvest-data.ts, all present in public/fruit-art/.
+// The SVGs are flat placeholders from scripts/build-fruit-placeholder-art.mjs; when Codex paints a
+// PNG per docs/FRUIT-ART-BRIEF.md, list its speciesId in FRUIT_ART_PNG and the PNG is used instead.
+
+export const FRUIT_ART_ROOT = '/fruit-art';
+
+export const FRUIT_ART_SPECIES = [
+  'carica-papaya', 'carissa-macrocarpa', 'carpobrotus-edulis', 'carya-illinoinensis', 'citrus-limon',
+  'citrus-reticulata', 'dovyalis-afra', 'englerophytum-magalismontanum', 'ficus-carica',
+  'fragaria-x-ananassa', 'garcinia-livingstonei', 'grewia-occidentalis', 'harpephyllum-caffrum',
+  'litchi-chinensis', 'macadamia-integrifolia', 'mangifera-indica', 'mimusops-zeyheri',
+  'moringa-oleifera', 'musa-acuminata-aaa-group', 'pappea-capensis', 'passiflora-edulis',
+  'persea-americana', 'phoenix-reclinata', 'physalis-peruviana', 'prunus-persica', 'prunus-salicina',
+  'psidium-guajava', 'punica-granatum', 'rhoicissus-tomentosa', 'rubus-idaeus',
+  'sclerocarya-birrea-subsp-caffra', 'strychnos-spinosa', 'syzygium-cordatum', 'vaccinium-corymbosum',
+  'vangueria-infausta', 'vitis-vinifera',
+] as const;
+
+/** Species whose painted PNG has landed in public/fruit-art/ (replaces the placeholder SVG). */
+export const FRUIT_ART_PNG: ReadonlySet<string> = new Set<string>([]);
+
+export function speciesFruitArtworkUrl(speciesId?: string | null): string | null {
+  if (!speciesId || !(FRUIT_ART_SPECIES as readonly string[]).includes(speciesId)) return null;
+  return `${FRUIT_ART_ROOT}/${speciesId}.${FRUIT_ART_PNG.has(speciesId) ? 'png' : 'svg'}`;
 }

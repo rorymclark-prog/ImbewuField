@@ -1,0 +1,73 @@
+{
+  "speciesId": "passiflora-edulis",
+  "commonName": "Purple granadilla (passion fruit)",
+  "botanicalName": "Passiflora edulis",
+  "harvestMonths": [
+    {
+      "region": "KwaZulu-Natal (Bioresource Groups 3 and 5, cool subtropical)",
+      "months": [
+        11,
+        12,
+        1,
+        6,
+        7
+      ],
+      "evidence": {
+        "quote": "Heaviest crop in November to January, secondary crop in June to July, with light cropping in between.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+        "page": 14
+      },
+      "notes": "Months are in picking order: main crop Nov-Jan then secondary crop Jun-Jul, with 'light cropping in between' (so the fruit is available in other months at low volume). Purple granadilla section of the KZN advisory notes. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      0.5,
+      0.67
+    ],
+    "evidence": {
+      "quote": "First harvests are obtained 6 to 8 months after transplanting, with full bearing within 18 months.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+      "page": 14
+    },
+    "notes": "6 to 8 months after transplanting = 0.5 to 0.67 years (rounded). Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+  },
+  "yearsToFullBearing": {
+    "value": [
+      1.5,
+      1.5
+    ],
+    "evidence": {
+      "quote": "First harvests are obtained 6 to 8 months after transplanting, with full bearing within 18 months.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+      "page": 14
+    },
+    "notes": "'within 18 months' is an upper bound, stored as 1.5. Same sentence as the first-crop figure. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not stated per vine. KZN advisory notes give yields only per hectare: 'Conservative: 3 Average: 4 to 6 Good: 8+' t/ha with plants 'about 3 to 4 metres apart' and '3 300 plants/ha' in the irrigation line. A per-vine figure would be a derivation, so none is given (average 4-6 t/ha over 3 300 plants/ha would be roughly 1.2-1.8 kg/vine; NOT stored)."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No chill requirement stated. KZN notes describe a frost-free area with 'average monthly minimums above 5 C' and monthly maxima not above 29 C."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not stated in the KZN notes or the ARC-TSC granadilla page fetched."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Other SA provinces (Limpopo, Mpumalanga) not sourced; only KZN advisory notes give months.",
+    "DALRRD/NDA granadilla brochure documents Passiflora quadrangularis (giant granadilla), NOT P. edulis, so it was not used.",
+    "ARC-TSC granadilla page (arc.agric.za) fetched: no months, yields or bearing age; only a leaflet for sale.",
+    "Per-vine yield and pollination not sourced. KZN gives plantation life of 3-4 years in hot low-lying areas and up to 8 years at cooler altitudes.",
+    "NEMBA 2020 item 256 (category 2 in EC, GP, KZN, MP, LP, NW; not listed in urban areas of those provinces; not listed elsewhere; fruit for human consumption not listed). The catalogue's existing nemba '2' is consistent with this."
+  ]
+}

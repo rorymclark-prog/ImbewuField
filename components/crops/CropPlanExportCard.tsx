@@ -16,6 +16,7 @@ import { useLanguage } from '@/lib/i18n';
 import { Share2, CalendarPlus, Hourglass, Download, ClipboardList } from 'lucide-react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
+import type { PlacedTreeGroup } from '@/lib/perennial-harvest';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
 import {
   availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename,
@@ -39,12 +40,14 @@ export interface CropPlanExportCardProps {
   /** The planner's availability chart (veg, food forest, animals, field space), so the printed
    * "Food availability" page shows the same trays the farmer sees on screen. */
   availability?: CropPlanAvailability;
+  /** The design's trees with a harvest record, for the task summary's "pick" lines. */
+  treeGroups?: PlacedTreeGroup[];
 }
 
 type Busy = 'ics' | 'pdf' | null;
 const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
-export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability }: CropPlanExportCardProps) {
+export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups }: CropPlanExportCardProps) {
   const { lang } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -98,7 +101,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     setBusy('pdf');
     setStatus(null);
     try {
-      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, ...overrides };
+      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, ...overrides };
       // The availability page draws the app's own crop, tree and animal art. Only that page
       // needs pictures, so a print without it (quick print) never fetches any.
       const wantsIcons = !input.sections || input.sections.includes('availability');
