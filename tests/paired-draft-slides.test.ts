@@ -167,12 +167,11 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
     const drafted = slides.flatMap((slide: any) => slide.target.body
       .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
       .filter(Boolean));
-    // These added reflections are safe to draft because they ask about time,
-    // bare-soil cover, or state the exercise's purpose; operational advice
-    // and the adjacent permaculture terms remain explicit English holds.
+    // This added sentence is an ordinary People Care example. The surplus,
+    // sharing, safety and permission examples remain exact English holds.
     assert.deepEqual(drafted, lang === 've'
-      ? ['1:1', '1:4', '2:2', '2:4', '3:1', '4:1', '4:4', '5:1', '6:1', '9:1', '9:2', '9:3', '14:1', '16:4', '17:1', '18:4', '20:4']
-      : ['1:1', '1:4', '2:2', '2:4', '3:1', '4:1', '4:4', '5:1', '6:1', '9:3', '16:3', '16:4', '17:1']);
+      ? ['1:1', '1:4', '2:2', '2:4', '3:1', '4:1', '4:4', '5:1', '5:3', '6:1', '9:1', '9:2', '9:3', '14:1', '16:4', '17:1', '18:4', '20:4']
+      : ['1:1', '1:4', '2:2', '2:4', '3:1', '4:1', '4:4', '5:1', '5:3', '6:1', '9:3', '16:3', '16:4', '17:1']);
     assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
       .map((slide: any) => slide.n), lang === 've'
       ? [2, 4, 5, 6, 8, 9, 11, 12, 13, 14, 18, 19, 20, 21, 22]
@@ -198,9 +197,15 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
       `slide 3 ${lang}: ethics, principles, zones and sectors must remain English`);
     for (const n of [4, 5, 6]) {
       assert.ok(slides[n - 1].target.body.slice(1).every((part: any, index: number) =>
-        part.status === 'english-hold' || (n === 4 && index === 2)),
-        `slide ${n} ${lang}: examples and care advice stay held; only the bare-soil reflection may be drafted`);
+        part.status === 'english-hold' || (n === 4 && index === 2) || (n === 5 && index === 1)),
+        `slide ${n} ${lang}: examples and care advice stay held apart from the ordinary reflections and People Care example`);
     }
+    assert.match(slides[4].target.body[2].text, /People Care/,
+      `slide 5 ${lang}: keep the named ethic visible in English`);
+    assert.notEqual(slides[4].target.body[2].text, slides[4].english.body[2],
+      `slide 5 ${lang}: a draft label cannot disguise unchanged English as a translation`);
+    for (const index of [1, 2]) assert.equal(slides[5].target.body[index].status, 'english-hold',
+      `slide 6 ${lang}: keep the uncertain surplus/mielies example paired in English`);
     for (const n of [7, 8]) {
       assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
         `slide ${n} ${lang}: work, zones, water and permission claims must remain English`);
