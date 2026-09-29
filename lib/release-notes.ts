@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', sha: '40fae706', changes: [
+  { when: '29 September 2026', sha: 'e8be1de8', changes: [
     'The bed calendar has Fruit, nuts & berries and Animal products rows under your beds.',
     'Each month shows the fruit, nut or egg itself. Hover or tap it for a written list.',
     'Crops you pick by name, like pumpkin, now get a bed, or the plan says why they cannot.',
