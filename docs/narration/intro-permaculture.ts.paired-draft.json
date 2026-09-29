@@ -3,9 +3,9 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slide 1 heading: Masungulo ya Permaculture. Slides 4–6: ethics label openings. Slides 9 and 16: three short orientation/reflection lines selected after independent Flash Low candidate and Pro Low backcheck. Unreviewed machine candidates; exact English source remains visible.",
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slide 1 heading: Masungulo ya Permaculture. Slides 4–6: ethics label openings. Slides 9 and 16: three short orientation/reflection lines selected after independent Flash Low candidate and Pro Low backcheck. Unreviewed machine candidates; exact English source remains visible. Slides 2 and 4: ordinary reflective questions; slide 17: short transition. These are unreviewed machine drafts paired with the unchanged English source.",
     "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
-    "holds": "Slides 7–8 and 10–15, 17–22 remain exact English. Water, borehole, permission, swale, earthworks, overflow, manure, edible-crop, farming, ethics, named-principle, zone-number, windbreak and field-action wording remains held; uncertain edge, consequence and site-specific wind questions also remain exact English."
+    "holds": "Slides 7–8, 10–15, and slides 17–22 apart from the slide 17 opening transition remain exact English. Water, borehole, permission, swale, earthworks, overflow, manure, edible-crop, farming, ethics, named-principle, zone-number, windbreak and field-action wording remains held; uncertain edge, consequence and site-specific wind questions also remain exact English."
   },
   "reviewNotes": [
     "A fluent standard written Xitsonga speaker should check the dig/plot wording, smallholding and work terms, register, ethics term and named labels before classroom reliance.",
@@ -82,7 +82,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ehleketa hi ntirho wun'we epurasini ra wena lowu tekaka nkarhi wo tala ku nga ri na xilaveko. Nkarhi wolowo wu ya kwihi hakunene?",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           }
         ]
       }
@@ -156,7 +158,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta xiphemu xin'we xa misava leyi nga funengetiwangiki epurasini ra wena. Xana ku na lexi xi yi sirhelelaka sweswi?",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           }
         ]
       }
@@ -556,7 +560,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi xona xikongomelo xa ntirho lowu hinkwawo.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
             "status": "english-hold"

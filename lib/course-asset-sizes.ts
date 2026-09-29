@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1780 files, 646.8 MB total.
+// 1780 files, 647.9 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -755,9 +755,9 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/st/slide-21.webp': 208754,
   '/course-decks/intro-permaculture/st/slide-22.webp': 231466,
   '/course-decks/intro-permaculture/ts/slide-01.webp': 235480,
-  '/course-decks/intro-permaculture/ts/slide-02.webp': 230072,
+  '/course-decks/intro-permaculture/ts/slide-02.webp': 298716,
   '/course-decks/intro-permaculture/ts/slide-03.webp': 211694,
-  '/course-decks/intro-permaculture/ts/slide-04.webp': 407858,
+  '/course-decks/intro-permaculture/ts/slide-04.webp': 568930,
   '/course-decks/intro-permaculture/ts/slide-05.webp': 373602,
   '/course-decks/intro-permaculture/ts/slide-06.webp': 422726,
   '/course-decks/intro-permaculture/ts/slide-07.webp': 282362,
@@ -770,16 +770,16 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/ts/slide-14.webp': 330720,
   '/course-decks/intro-permaculture/ts/slide-15.webp': 261704,
   '/course-decks/intro-permaculture/ts/slide-16.webp': 403976,
-  '/course-decks/intro-permaculture/ts/slide-17.webp': 214006,
+  '/course-decks/intro-permaculture/ts/slide-17.webp': 652470,
   '/course-decks/intro-permaculture/ts/slide-18.webp': 259382,
   '/course-decks/intro-permaculture/ts/slide-19.webp': 444504,
   '/course-decks/intro-permaculture/ts/slide-20.webp': 350508,
   '/course-decks/intro-permaculture/ts/slide-21.webp': 174406,
   '/course-decks/intro-permaculture/ts/slide-22.webp': 208802,
   '/course-decks/intro-permaculture/ve/slide-01.webp': 264220,
-  '/course-decks/intro-permaculture/ve/slide-02.webp': 267170,
+  '/course-decks/intro-permaculture/ve/slide-02.webp': 302336,
   '/course-decks/intro-permaculture/ve/slide-03.webp': 243938,
-  '/course-decks/intro-permaculture/ve/slide-04.webp': 474430,
+  '/course-decks/intro-permaculture/ve/slide-04.webp': 573948,
   '/course-decks/intro-permaculture/ve/slide-05.webp': 433796,
   '/course-decks/intro-permaculture/ve/slide-06.webp': 487870,
   '/course-decks/intro-permaculture/ve/slide-07.webp': 378226,
@@ -792,7 +792,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/ve/slide-14.webp': 395332,
   '/course-decks/intro-permaculture/ve/slide-15.webp': 358746,
   '/course-decks/intro-permaculture/ve/slide-16.webp': 559500,
-  '/course-decks/intro-permaculture/ve/slide-17.webp': 285486,
+  '/course-decks/intro-permaculture/ve/slide-17.webp': 649218,
   '/course-decks/intro-permaculture/ve/slide-18.webp': 335928,
   '/course-decks/intro-permaculture/ve/slide-19.webp': 611040,
   '/course-decks/intro-permaculture/ve/slide-20.webp': 500438,
