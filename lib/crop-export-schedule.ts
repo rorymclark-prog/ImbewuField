@@ -30,6 +30,12 @@ import {
   taskMonthsFromNow,
 } from '@/lib/crop-plan';
 
+/** A crop name mid-sentence: only the first letter drops, so "True spinach (English spinach)"
+ *  reads "true spinach (English spinach)", not "(english spinach)". */
+export function inSentence(name: string): string {
+  return /^[A-Z]{2,}/.test(name) ? name : name.charAt(0).toLowerCase() + name.slice(1);
+}
+
 export const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
@@ -180,7 +186,7 @@ export function taskPhrase(t: CropTask): string {
   // Prep wording is per-ground: tasksForPlan says plough/rip for a staple PLOT and
   // soil-assessment wording for a bed (CropTask.prepText); the static verb is the fallback.
   const verb = (t.action === 'prep' && t.prepText) ? `${t.prepText} for` : TASK_VERB[t.action];
-  return `${verb} ${t.cropName.toLowerCase()}${instruction} (${t.bedLabel})`;
+  return `${verb} ${inSentence(t.cropName)}${instruction} (${t.bedLabel})`;
 }
 
 /**
@@ -455,7 +461,18 @@ export function buildBuyingSchedule(
     // seed has no invented one-month procurement lead: its note says to source
     // it before the named sow month without pretending the source gives an
     // exact earlier month.
-    const buyMonth = crop.transplant ? bedMonth : sowMonth;
+    //
+    // A tray cohort sown in the month BEFORE the plan starts (an August nursery on a September
+    // plan) is next year's August sowing in every other part of the plan — the calendar and the
+    // field sheets put its trays in August of year 2 and its transplant after the plan ends. Its
+    // seedling month, though, wraps round to THIS month, which put "buy tomato seedlings for Bed 4"
+    // at the top of the first shopping month for a bed the calendar shows full of another crop.
+    // Inside the plan's twelve months the only purchase that cohort needs is the seed for its
+    // trays, so it is filed under the sowing month. A settled starter still in the nursery
+    // (inNursery) has its trays already sown, so its seedling month stays.
+    const seedlingsAfterPlanEnds = crop.transplant && !boq.inNursery
+      && monthsAhead(bedMonth, nowMonth) < monthsAhead(sowMonth, nowMonth);
+    const buyMonth = crop.transplant && !seedlingsAfterPlanEnds ? bedMonth : sowMonth;
     const bedLabels = boq.bedIds
       .map((bedId) => beds.find((bed) => bed.id === bedId)?.label)
       .filter((label): label is string => label !== undefined);
@@ -503,6 +520,10 @@ export function buildBuyingSchedule(
         b.finalPlantPositions - a.finalPlantPositions || a.cropName.localeCompare(b.cropName)),
     }))
     .filter((m) => m.items.length > 0);
+}
+
+function monthsAhead(month: number, fromMonth: number): number {
+  return (((month - fromMonth) % 12) + 12) % 12;
 }
 
 /**

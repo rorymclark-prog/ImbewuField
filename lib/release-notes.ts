@@ -42,6 +42,25 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', changes: [
+    'The crop-plan PDF was checked at eight sites across South Africa and tidied.',
+    'A first-year gap is no longer called yearly when next year\'s crops fill it.',
+    'Buying lists group beds (Beds 2, 4, 8, 9); the workload chart has round steps.',
+  ], tour: [
+    { title: 'Read the gap notes', where: 'Crop plan → Download PDF → page 2', href: '/facilitator/crops',
+      detail: 'Under Ground with no new sowing, a first-year gap only is bare this year and filled from next year. A first-year rest repeats every year unless you change the plan.' },
+    { title: 'Check the buying list', where: 'Crop plan → Download PDF → Seed and seedling buying schedule', href: '/facilitator/crops',
+      detail: 'Each line names its beds in order, grouped as Beds 2, 4, 8, 9. The crop-code key under the bed calendar lists only the colours your plan uses.' },
+  ] },
+  { when: '29 September 2026', changes: [
+    'Parsley, sorghum, bambara, sweetcorn and cowpea now have recommended prices.',
+    'A recommended price is an average of prices found; its badge says so.',
+  ], tour: [
+    { title: 'See a recommended price', where: 'Prices → Cowpea', href: '/prices',
+      detail: 'Open cowpea, sorghum, bambara groundnut, sweetcorn or parsley. The badge reads Recommended price — average of prices found, with the date the prices were collected. Confirm it locally before you agree a price.' },
+    { title: 'Count them in your plan', where: 'Crop plan → Plan-cycle value', href: '/facilitator/crops',
+      detail: 'Plant one of the five crops and it now counts in the value figures. Under Review and edit price assumptions its badge says recommended price, and you can type your own local price.' },
+  ] },
   { when: '29 September 2026', sha: 'a0f103d1', changes: [
     'Seeds now has silent Sesotho, Tshivenda and Xitsonga slide decks for review.',
     'Early drafts pair with English; later technical steps remain English.',

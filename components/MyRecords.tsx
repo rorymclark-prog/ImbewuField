@@ -556,7 +556,9 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
                 )}{' '}
                 {guide.confidence === 'estimated'
                   ? t('myRecordsGuideEstimated')
-                  : t('myRecordsGuideSourced')}
+                  : guide.confidence === 'recommended'
+                    ? t('myRecordsGuideRecommended')
+                    : t('myRecordsGuideSourced')}
               </>
             ) : (
               <>{t('myRecordsGuideMissing')}</>

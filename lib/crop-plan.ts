@@ -1922,8 +1922,9 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
       const others = otherBeds > 0
         ? `; ${otherBeds} other bed${otherBeds > 1 ? 's also have' : ' also has'} crops in multiple sowing months`
         : '';
-      const bedLabel = beds.find((bed) => bed.id === staggeredExample.bedId)?.label ?? 'one bed';
-      paragraphs.push(`${crop.name} appears in ${staggeredExample.months.size} different sowing months on ${bedLabel}${others}. This is a month-level timing pattern, not a guarantee of uninterrupted harvest.`);
+      const bedLabel = beds.find((bed) => bed.id === staggeredExample.bedId)?.label ?? 'One bed';
+      // Bed-first, so a plural crop name ("Peppers") never needs a singular verb.
+      paragraphs.push(`${bedLabel} has ${crop.name.charAt(0).toLowerCase() + crop.name.slice(1)} sown in ${staggeredExample.months.size} different months${others}. This is a month-level timing pattern, not a guarantee of uninterrupted harvest.`);
     }
   }
 

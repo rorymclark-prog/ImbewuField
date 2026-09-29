@@ -1,0 +1,342 @@
+{
+  "fetched": "2026-09-29",
+  "note": "Recommended (averaged) prices for crops with no single fitting source. Values in lib/crop-prices.ts with confidence 'recommended'.",
+  "recommended": {
+    "parsley": {
+      "retailPerKg": 243.64,
+      "wholesalePerKg": 20.27,
+      "method": "wholesale = mean(Cape Town 24.62, Joburg 15.91 from _prices-2026-09-28.json); retail = mean(PnP Parsley Bunch 100g 149.90, Woolworths Fresh Parsley 80 g 337.38 from _prices-2026-09-28.json); 20-30 g packs excluded as a different (garnish) product"
+    },
+    "sorghum": {
+      "retailPerKg": 32.5,
+      "wholesalePerKg": 4.12,
+      "method": "wholesale = FAOSTAT farm-gate via Selina Wamucii (only grain figure; accio.com AI aggregator excluded); retail = mean(Pure and Whole 40, Manolis Munchies 24.99); milled mabele meal excluded"
+    },
+    "bambara-groundnut": {
+      "retailPerKg": 97.37,
+      "wholesalePerKg": 37.0,
+      "method": "retail = mean(130, 76.5, 75, 107.99); wholesale = retail x 0.38 (no bambara-named wholesale/producer price; KZN survey row is labelled Groundnut)"
+    },
+    "sweetcorn": {
+      "retailPerKg": 74.47,
+      "wholesalePerKg": 28.3,
+      "method": "wholesale = Cape Town SWEETCORN PREPACK mean of 4 count rows; Joburg SWEET CORN 69.55 excluded (pack unit unconfirmed); baby corn and mini cobs excluded; shelf packs carry no weight so retail = 28.30 / 0.38"
+    },
+    "cowpea": {
+      "retailPerKg": 56.0,
+      "wholesalePerKg": 12.5,
+      "method": "wholesale = mean(KZN survey R9, R16); retail = mean(60, 60, 55, 60, 45)"
+    }
+  },
+  "crops": [
+    {
+      "crop": "parsley",
+      "points": [
+        {
+          "kind": "wholesale/market",
+          "valuePerKg": 24.62,
+          "quote": "HEPS | PARSLEY | Decon (2.5kg) | 2.50 | | | 40 | 80 | 61.54 (page: Daily Statistical Prices For 28/09/2026 Run at 11:21:35)",
+          "url": "https://www.ctmarket.co.za/daily-prices/",
+          "date": "2026-09-28 (page 'Daily Statistical Prices For 28/09/2026'); accessed 2026-09-29",
+          "arithmetic": "61.54 / 2.50 kg = R24.62/kg (low R40/2.5 = R16.00/kg; high R80/2.5 = R32.00/kg)",
+          "note": "Cape Town Market daily average, one day, one grade-less row. Container mass 2.5 kg is stated in the table."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 749.5,
+          "quote": "Parsley 20g ... R14.99",
+          "url": "https://www.checkers.co.za/product/parsley-20g-10151602EA",
+          "date": "2026-09-29",
+          "arithmetic": "14.99 / 0.020 kg = R749.50/kg",
+          "note": "Supermarket herb pack, not bunch price."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 749.5,
+          "quote": "Italian Parsley 20g ... R14.99",
+          "url": "https://www.checkers.co.za/product/italian-parsley-20g-10163225EA",
+          "date": "2026-09-29",
+          "arithmetic": "14.99 / 0.020 = R749.50/kg",
+          "note": "Flat-leaf variety; supermarket pack."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 499.67,
+          "quote": "Fresh Parsley 30 g ... R14.99",
+          "url": "https://www.woolworths.co.za/prod/_/A-20004255",
+          "date": "2026-09-29",
+          "arithmetic": "14.99 / 0.030 = R499.67/kg",
+          "note": "Supermarket pack."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 499.67,
+          "quote": "Fresh Italian Parsley 30 g ... R14.99",
+          "url": "https://www.woolworths.co.za/prod/_/A-20128104",
+          "date": "2026-09-29",
+          "arithmetic": "14.99 / 0.030 = R499.67/kg",
+          "note": "Supermarket pack."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 666.67,
+          "quote": "Fresh Parsley (30g-50g) ... R20.00 (product text: Fresh Parsley (30g))",
+          "url": "https://www.defarmer.co.za/product/fresh-parsley-30g/",
+          "date": "2026-05-19 (page modified); accessed 2026-09-29",
+          "arithmetic": "20.00 / 0.030 = R666.67/kg (would be R400/kg if 50 g)",
+          "note": "Weight given as a 30-50 g range; 30 g used per product text."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 149.9,
+          "quote": "PnP Herbs Parsley Bunch 100g ... price 14.99 (JSON-LD, ZAR); page shows 'From R14.99'",
+          "url": "https://www.mrd.com/delivery/groceries/products/672902_EA/pnp-herbs-parsley-bunch-100g",
+          "date": "2026-09-29",
+          "arithmetic": "14.99 / 0.100 = R149.90/kg",
+          "note": "Mr D delivery-platform listing of a PnP product. A search snippet for the PnP site said R44.99 for the same product; PnP page itself could not be read, so the two conflict and this point is medium-low confidence. Not in the recommended average unless confirmed."
+        }
+      ],
+      "gaps": "PnP, Spar and Food Lover's pages not readable (JS shell / unreachable); Tshwane and Durban market sites fail TLS so no data; no farmers-market per-bunch weight found. Retail pack prices (R150-750/kg) are 6-30x the wholesale R24.62/kg because packs are 20-100 g; for a farmer selling bunches, wholesale plus the user's Joburg R15.91/kg are the relevant producer-side references."
+    },
+    {
+      "crop": "sweetcorn",
+      "points": [
+        {
+          "kind": "wholesale/market",
+          "valuePerKg": 28.3,
+          "quote": "SECP | SWEETCORN PREPACK | Prepack Punnet (10kg) rows by count 10/12/14/18: averages 270.59, 278.25, 170.88, 412.16 (Daily Statistical Prices For 28/09/2026)",
+          "url": "https://www.ctmarket.co.za/daily-prices/",
+          "date": "2026-09-28 (page 'Daily Statistical Prices For 28/09/2026'); accessed 2026-09-29",
+          "arithmetic": "Per row /10 kg: 27.06, 27.83, 17.09, 41.22 R/kg. Unweighted mean of four averages = (270.59+278.25+170.88+412.16)/4 = R282.97 per 10 kg = R28.30/kg",
+          "note": "Volumes not given so unweighted; prepack punnet (shucked/prepacked corn), counts are cobs per punnet."
+        },
+        {
+          "kind": "wholesale/market",
+          "valuePerKg": 38.4,
+          "quote": "SEBA | SWEETCORN BABY | Punnet (5kg) | avg 192.00 (28/09/2026)",
+          "url": "https://www.ctmarket.co.za/daily-prices/",
+          "date": "2026-09-28 (page 'Daily Statistical Prices For 28/09/2026'); accessed 2026-09-29",
+          "arithmetic": "192.00 / 5 kg = R38.40/kg",
+          "note": "Baby corn, a different product; second row Punnet 10kg count 20 avg 318.82 = R31.88/kg. Exclude from sweetcorn average."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": null,
+          "quote": "Sweetcorn 4s ... R34.99",
+          "url": "https://www.checkers.co.za/product/sweetcorn-4s-10151615EA",
+          "date": "2026-09-29",
+          "arithmetic": "Page states no weight; not converted. Per cob 34.99/4 = R8.75/cob",
+          "note": "If a cob is 181-272 g (cropfarming.org: 'Once shucked, the edible ear drops to 0.4 to 0.6 lb'), R/kg would be about R32-48; low confidence, weak weight source."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": null,
+          "quote": "Sweetcorn 2s ... R24.99",
+          "url": "https://www.checkers.co.za/product/sweetcorn-2s-10144939EA",
+          "date": "2026-09-29",
+          "arithmetic": "No weight stated; R24.99/2 = R12.50/cob",
+          "note": "Not converted."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": null,
+          "quote": "Woolworths sweetcorn 4 pk ... R36.99",
+          "url": "https://www.woolworths.co.za/prod/_/A-20008789",
+          "date": "2026-09-29",
+          "arithmetic": "No weight stated; R36.99/4 = R9.25/cob",
+          "note": "Not converted."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 50.65,
+          "quote": "Sweetcorn Mini Cobs 750g ... R37.99",
+          "url": "https://www.checkers.co.za/product/sweetcorn-mini-cobs-750g-10146454EA",
+          "date": "2026-09-29",
+          "arithmetic": "37.99 / 0.750 = R50.65/kg",
+          "note": "Mini cobs, not full cobs; exclude from recommended average."
+        }
+      ],
+      "gaps": "No weight on retail cob-count packs; no producer/farm-gate price found; Tshwane/Durban unavailable; PriceCheck listing 403 (unverified). Cape Town punnet prices are variable by count and one day only."
+    },
+    {
+      "crop": "sorghum",
+      "points": [
+        {
+          "kind": "producer",
+          "valuePerKg": 4.12,
+          "quote": "Farmgate US$0.21 = 4.12 ZAR/kg (Price as of: January 2024; Checked: Jun 7, 2026)",
+          "url": "https://www.selinawamucii.com/insights/prices/south-africa/sorghum/",
+          "date": "2024-01 data; page checked 2026-06-07; accessed 2026-09-29",
+          "arithmetic": "R4.12/kg = R4,120/t (as stated, US$0.21 already converted by page)",
+          "note": "Aggregator citing FAOSTAT producer prices; modelled, dated Jan 2024; low-medium confidence."
+        },
+        {
+          "kind": "wholesale/market",
+          "valuePerKg": 6.4,
+          "quote": "Current wholesale prices range between ZAR 5,500-7,300 per ton for food-grade sorghum, with animal feed varieties at ZAR 2,200-3,300",
+          "url": "https://www.accio.com/plp/sorghum-price-per-ton-in-south-africa",
+          "date": "undated; accessed 2026-09-29",
+          "arithmetic": "midpoint (5,500+7,300)/2 = R6,400/t = R6.40/kg (range R5.50-7.30/kg)",
+          "note": "AI-generated aggregator, no primary source cited; low confidence. Feed grade R2.20-3.30/kg."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 40.0,
+          "quote": "Red Sorghum 250g R10 / 500g R20 / 1kg R30 (variation prices from page JSON)",
+          "url": "https://pureandwhole.co.za/product/red-sorghum/",
+          "date": "2026-09-29",
+          "arithmetic": "250 g: 10/0.25 = R40/kg; 500 g: 20/0.5 = R40/kg; 1 kg: R30/kg",
+          "note": "Bulk health store, whole grain; R30/kg at 1 kg."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 24.99,
+          "quote": "Red Sorghum 1kg R24.99",
+          "url": "https://www.manolismunchies.co.za/product/sorghum-seeds-red/",
+          "date": "page modified 2026-09-28; accessed 2026-09-29",
+          "arithmetic": "24.99 / 1 kg = R24.99/kg",
+          "note": "Listing shows out of stock ('Notify me when available'); price still listed."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 29.0,
+          "quote": "King Korn Fine Mabele Meal 2kg R57.99",
+          "url": "https://www.shoprite.co.za/product/king-korn-fine-mabele-meal-2kg-10127391EA",
+          "date": "2026-09-29",
+          "arithmetic": "57.99 / 2 = R29.00/kg",
+          "note": "Milled sorghum meal, not dry grain; Shoprite prices store-specific."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 32.99,
+          "quote": "King Korn Fine Mabele Meal 1kg R32.99",
+          "url": "https://www.shoprite.co.za/product/king-korn-fine-mabele-meal-1kg-10138583EA",
+          "date": "2026-09-29",
+          "arithmetic": "32.99 / 1 = R32.99/kg",
+          "note": "Milled."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 27.5,
+          "quote": "Tops Mabele Fine Sorghum Porridge 2kg R54.99",
+          "url": "https://www.shoprite.co.za/product/tops-mabele-fine-sorghum-porridge-2kg-10170521EA",
+          "date": "2026-09-29",
+          "arithmetic": "54.99 / 2 = R27.50/kg",
+          "note": "Milled."
+        }
+      ],
+      "gaps": "No numeric SAGIS, Grain SA or BFAP R/t farm-gate price found; Grain SA 25 Sep 2026 chart has no numeric labels; USDA GAIN 2025 has no sorghum price."
+    },
+    {
+      "crop": "bambara-groundnut",
+      "points": [
+        {
+          "kind": "retail",
+          "valuePerKg": 130.0,
+          "quote": "R 65.00 ... 1 x 500g Bambara Beans",
+          "url": "https://localvillage.africa/product/bambara-ground-nuts/",
+          "date": "2026-09-29",
+          "arithmetic": "65.00 / 0.5 = R130.00/kg",
+          "note": ""
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 76.5,
+          "quote": "Jugo Beans 1kg ... R76.50",
+          "url": "https://www.matumidistributors.co.za/products/jugo-beans-1kg",
+          "date": "2026-09-29",
+          "arithmetic": "76.50 / 1 = R76.50/kg",
+          "note": "Jugo bean = bambara."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 75.0,
+          "quote": "Bambara Beans/Round Nuts-1kg ... R75.00",
+          "url": "https://www.veggiesbasket.co.za/product/bambara-beans-round-nuts-1kg/",
+          "date": "page modified 2026-09-10; accessed 2026-09-29",
+          "arithmetic": "75.00 / 1 = R75.00/kg",
+          "note": ""
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 107.99,
+          "quote": "Bambara Groundnut 5kg R539.95",
+          "url": "https://www.vicfame.com/products/bambara-groundnut",
+          "date": "2026-09-29",
+          "arithmetic": "539.95 / 5 = R107.99/kg",
+          "note": "Bulk pack; 1 kg option sold out."
+        },
+        {
+          "kind": "producer",
+          "valuePerKg": 18.0,
+          "quote": "Groundnut | Price per kg (ZAR) 12.00 18.00 +6.00 (Table 12)",
+          "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2026.1745284/full",
+          "date": "published 2026-08-13; survey 2025; accessed 2026-09-29",
+          "arithmetic": "Non-participants R12/kg, participants R18/kg; midpoint R15/kg",
+          "note": "KZN smallholder survey n=319; table says 'Groundnut' though crop list names Bambara groundnut, so ambiguity; likely shelled/dry farm-gate price."
+        }
+      ],
+      "gaps": "Aggregator Selina Wamucii (ZAR 19.08/kg retail, US$0.69/kg wholesale 2026) contradicts shelf prices and is excluded. Excluded: IndiZA R149.90 (no weight), Glen Seeds (seed packets), Nutting But Goodness (no price). No wholesale-market or NAMC price found."
+    },
+    {
+      "crop": "cowpea",
+      "points": [
+        {
+          "kind": "producer",
+          "valuePerKg": 16.0,
+          "quote": "Cowpeas gross margin budget: Yield (kg) 1,030 2,370 +1,340; Price per kg (ZAR) 9.00 16.00 +7.00 (Table 10)",
+          "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2026.1745284/full",
+          "date": "published 2026-08-13; survey 2025; accessed 2026-09-29",
+          "arithmetic": "Non-participants R9/kg, participants R16/kg; midpoint R12.50/kg",
+          "note": "KZN smallholder survey n=319; farm-gate price received."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 60.0,
+          "quote": "Black Eye Beans 500g R35.00 / 1000g R60.00; Price range: R35.00 through R60.00",
+          "url": "https://www.spice-bazaar.co.za/product/black-eye-beans/",
+          "date": "2026-09-29",
+          "arithmetic": "500 g: 35/0.5 = R70/kg; 1 kg: R60/kg",
+          "note": ""
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 60.0,
+          "quote": "Black eyed beans 250g R20 / 500g R35 / 1kg R60 (variation prices)",
+          "url": "https://pureandwhole.co.za/product/black-eyed-beans/",
+          "date": "2026-09-29",
+          "arithmetic": "250 g: R80/kg; 500 g: R70/kg; 1 kg: R60/kg",
+          "note": ""
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 55.0,
+          "quote": "Black Eye Beans R 13.75 - R 55.00 including VAT (250g/500g/1kg)",
+          "url": "https://therefillery.co.za/product/black-eye-beans/",
+          "date": "page modified 2022-08-12 (possibly stale); accessed 2026-09-29",
+          "arithmetic": "1 kg: R55/kg; 250 g: 13.75/0.25 = R55/kg",
+          "note": "Possibly outdated."
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 60.0,
+          "quote": "Black Eyed Beans 1kg R60.00",
+          "url": "https://shop.thedeli.co.za/products/black-eyed-beans-1kg",
+          "date": "2026-09-29",
+          "arithmetic": "60.00 / 1 = R60.00/kg",
+          "note": ""
+        },
+        {
+          "kind": "retail",
+          "valuePerKg": 45.0,
+          "quote": "Natural Strength 1kg Black Eyed Beans R45.00 (weight 1 KGM)",
+          "url": "https://www.multisnack.co.za/shop-online/beans/black-eyed-beans/",
+          "date": "page modified 2026-09-14; accessed 2026-09-29",
+          "arithmetic": "45.00 / 1 = R45.00/kg",
+          "note": "Probably same supplier as The Deli."
+        }
+      ],
+      "gaps": "No ARC or NAMC price; NAMC SMAE report covers fresh produce only; no Makro/Checkers listing; PnP page JS shell; PriceCheck Wellness R67.95/kg snippet unverified."
+    }
+  ]
+}

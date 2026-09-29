@@ -36,13 +36,13 @@ import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import { planNotesDateLabel } from '@/lib/crop-plan';
 import type { PlanNote, PlanNoteKind } from '@/lib/crop-autosuggest';
-import type { FoodGroup } from '@/lib/crop-groups';
+import { foodGroupOf, type FoodGroup } from '@/lib/crop-groups';
 import {
   buildBuyingSchedule, buildTaskMonths, monthShort, monthYearLabel, positionRangeLabel, rollingMonths,
   SUCCESSION_TIMING_GUIDANCE, taskPhrase,
 } from '@/lib/crop-export-schedule';
 import {
-  buildFieldSheet, buildOccupancyCalendar, buildPlanDashboard,
+  buildFieldSheet, buildOccupancyCalendar, compactPlaces, buildPlanDashboard,
   buildPlanTableRows, buildTopCrops, buildWorkloadSeries, cropAbbreviations,
   type CalendarRow, type MonthCount,
 } from '@/lib/crop-export-benchmark';
@@ -209,12 +209,12 @@ const GROUP_INK: Record<FoodGroup, readonly number[]> = {
   staple_grain: INK.brown,
 };
 
-const GROUP_LEGEND: { label: string; ink: readonly number[] }[] = [
-  { label: 'Leafy crops', ink: INK.green },
-  { label: 'Roots and alliums', ink: INK.gold },
-  { label: 'Legumes', ink: INK.teal },
-  { label: 'Fruiting crops', ink: INK.terracotta },
-  { label: 'Staples', ink: INK.brown },
+const GROUP_LEGEND: { label: string; ink: readonly number[]; groups: readonly FoodGroup[] }[] = [
+  { label: 'Leafy crops', ink: INK.green, groups: ['leafy_green'] },
+  { label: 'Roots and alliums', ink: INK.gold, groups: ['root_tuber', 'allium_aromatic'] },
+  { label: 'Legumes', ink: INK.teal, groups: ['legume'] },
+  { label: 'Fruiting crops', ink: INK.terracotta, groups: ['fruiting_veg'] },
+  { label: 'Staples', ink: INK.brown, groups: ['staple_grain'] },
 ];
 
 type Doc = import('jspdf').jsPDF;
@@ -399,9 +399,8 @@ function panel(
   const innerW = w - pad * 2 - (opts.accent ? 4 : 0);
 
   s.font(8.5);
-  const bodyLines: string[] = [];
-  for (const b of opts.body) bodyLines.push(...(s.doc.splitTextToSize(pdfSafe(b), innerW) as string[]));
-  const h = pad * 2 + (opts.title ? 14 : 0) + bodyLines.length * 11.5;
+  const paras = opts.body.map((b) => s.doc.splitTextToSize(pdfSafe(b), innerW) as string[]);
+  const h = pad * 2 + (opts.title ? 14 : 0) + panelBodyHeight(paras.map((p) => p.length));
 
   s.fill(opts.bg);
   s.doc.rect(x, s.y, w, h, 'F');
@@ -419,8 +418,21 @@ function panel(
   }
   s.font(8.5);
   s.ink(INK.text);
-  s.doc.text(bodyLines, tx, ty);
+  // Drawn at the same 11.5pt leading the height was measured with, a small gap between paragraphs.
+  // doc.text(lines) used jsPDF's own ~9.8pt leading, so every panel ended in a blank band as tall
+  // as its text was short, and six paragraphs of the trust panel read as one block.
+  for (const lines of paras) {
+    s.doc.text(lines, tx, ty, { lineHeightFactor: PANEL_LEADING / 8.5 });
+    ty += lines.length * PANEL_LEADING + PANEL_PARA_GAP;
+  }
   return h;
+}
+
+const PANEL_LEADING = 11.5;
+const PANEL_PARA_GAP = 3;
+function panelBodyHeight(lineCounts: number[]): number {
+  const lines = lineCounts.reduce((a, b) => a + b, 0);
+  return lines * PANEL_LEADING + Math.max(0, lineCounts.filter((n) => n > 0).length - 1) * PANEL_PARA_GAP;
 }
 
 // ── 1. Plan dashboard ───────────────────────────────────────────────────────
@@ -433,10 +445,16 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   s.ink(INK.gold);
   s.doc.text(pdfSafe('A PRACTICAL PLAN FOR THE GARDEN TEAM'), s.margin, s.y);
   s.y += 18;
+  // A farm name plus a place ("Ubhejane Creche - KZN Midlands (Pietermaritzburg)") ran straight
+  // off the right edge at 21pt; wrap to two lines and only then truncate.
   s.font(21, true);
   s.ink(INK.text);
-  s.doc.text(pdfSafe(`Crop plan - ${meta.planTitle}`), s.margin, s.y);
-  s.y += 18;
+  const titleLines = s.doc.splitTextToSize(pdfSafe(`Crop plan - ${meta.planTitle}`), s.contentWidth) as string[];
+  const shownTitle = titleLines.length > 2
+    ? [titleLines[0], truncateToWidth(s.doc, titleLines.slice(1).join(' '), s.contentWidth)]
+    : titleLines;
+  s.doc.text(shownTitle, s.margin, s.y);
+  s.y += 18 + (shownTitle.length - 1) * 23;
   const months = rollingMonths(nowMonth);
   const period = `${monthYearLabel(months[0], now)} to ${monthYearLabel(months[11], now)}`;
   s.font(10);
@@ -465,11 +483,11 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     const lines = s.doc.splitTextToSize(pdfSafe(f.v), factW - 18) as string[];
     s.doc.text(lines.slice(0, 2), x, s.y + 26);
   });
-  s.y += stripH + 18;
+  s.y += stripH + 14;
 
   s.paragraph(
     'A crop plan should reduce uncertainty. It should show the garden team what to prepare, plant, harvest and buy - without making them decode the system behind it.',
-    { size: 9.5, gap: 14 },
+    { size: 9.5, gap: 8 },
   );
 
   const dash = buildPlanDashboard(input.plantings, input.beds, input.tasks, {
@@ -484,9 +502,25 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   // the width and the palette index both cycle off the real count instead.
   const tileGap = 8;
   const tileW = (s.contentWidth - (dash.stats.length - 1) * tileGap) / dash.stats.length;
-  const tileH = 74;
   const tints = [INK.panelGrey, INK.panelCream, INK.panelGreen, INK.panelPink];
   const values = [INK.text, INK.gold, INK.teal, INK.terracotta];
+  // Label and detail wrap inside the tile and every tile takes the height of the tallest one.
+  // Printing the label on one line and the detail cut to two let "known total after 10% loss"
+  // run under the next tile's fill and dropped the end of "uses the loss allowance you
+  // confirmed" without a mark.
+  const textW = tileW - 20;
+  const wrapped = dash.stats.map((stat) => {
+    s.font(8, true);
+    const label = s.doc.splitTextToSize(pdfSafe(stat.label), textW) as string[];
+    s.font(7.5);
+    const detail = s.doc.splitTextToSize(pdfSafe(stat.detail), textW) as string[];
+    return { label, detail };
+  });
+  const maxLabel = Math.max(...wrapped.map((w) => w.label.length));
+  const maxDetail = Math.max(...wrapped.map((w) => w.detail.length));
+  const labelY = 47;
+  const detailY = labelY + maxLabel * 10 + 2;
+  const tileH = detailY + (maxDetail - 1) * 9 + 12;
   dash.stats.forEach((stat, i) => {
     const x = s.margin + i * (tileW + tileGap);
     s.fill(tints[i % tints.length]);
@@ -496,7 +530,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     // over the overflow) — the fallback strings ("Not shown", "Not
     // calculated") are exactly as long regardless of how many tiles the row
     // has to share its width with.
-    const valueMaxW = tileW - 20;
+    const valueMaxW = textW;
     let valueSize = 17;
     s.font(valueSize, true);
     while (valueSize > 10 && s.doc.getTextWidth(pdfSafe(stat.value)) > valueMaxW) {
@@ -507,13 +541,12 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     s.doc.text(pdfSafe(stat.value), x + 10, s.y + 30);
     s.font(8, true);
     s.ink(INK.text);
-    s.doc.text(pdfSafe(stat.label), x + 10, s.y + 47);
+    s.doc.text(wrapped[i].label, x + 10, s.y + labelY, { lineHeightFactor: 1.2 });
     s.font(7.5);
     s.ink(INK.muted);
-    const d = s.doc.splitTextToSize(pdfSafe(stat.detail), tileW - 20) as string[];
-    s.doc.text(d.slice(0, 2), x + 10, s.y + 59);
+    s.doc.text(wrapped[i].detail, x + 10, s.y + detailY, { lineHeightFactor: 1.2 });
   });
-  s.y += tileH + 16;
+  s.y += tileH + 12;
 
   // Two columns: what the plan says, and what the reader must decide.
   const colW = (s.contentWidth - 10) / 2;
@@ -525,7 +558,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     title: 'DECISIONS TO MAKE', bg: INK.panelCream, width: colW, x: s.margin + colW + 10,
     body: dash.decisions.map((t) => `- ${t}`),
   });
-  s.y += Math.max(signalsH, decisionsH) + 14;
+  s.y += Math.max(signalsH, decisionsH) + 10;
 
   const totalExplanation = dash.areaConflictBedLabels.length
     ? [
@@ -555,7 +588,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     bg: INK.panelCream,
     body: totalExplanation,
   });
-  s.y += h + 12;
+  s.y += h + 10;
 
   // HOW MUCH TO TRUST THIS — on page one, not in small print at the back.
   //
@@ -565,11 +598,15 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   // here: the crop plan, the site report and the in-app view must not each grow
   // their own version, because the weakest one becomes the promise the product
   // is judged on. See lib/plan-assurance.ts for the full reasoning.
+  const assuranceBody = [...ASSURANCE_PARAGRAPHS.map(pdfSafe), pdfSafe(SUCCESSION_TIMING_GUIDANCE)];
+  // panel() never checks the page; a long title and a wrapped tile row once pushed this panel's
+  // last line under the footer.
+  s.need(panelHeight(s, assuranceBody, true, true));
   const assuranceH = panel(s, {
     title: ASSURANCE_TITLE.toUpperCase(),
     accent: INK.gold,
     bg: INK.panelCream,
-    body: [...ASSURANCE_PARAGRAPHS.map(pdfSafe), pdfSafe(SUCCESSION_TIMING_GUIDANCE)],
+    body: assuranceBody,
   });
   s.y += assuranceH + 12;
 
@@ -580,6 +617,12 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     (p) => !/^For crops with a verified kg\/m² benchmark/.test(p) && !/^Within the benchmark comparison/.test(p),
   );
   if (extra.length) {
+    // Keep the heading with its first paragraph (and ideally the next): printed alone it sat at the
+    // foot of page 1 with the text it introduces starting page 2 unheaded.
+    s.font(8.8);
+    const firstLines = extra.slice(0, 2)
+      .reduce((n, para) => n + (s.doc.splitTextToSize(pdfSafe(para), s.contentWidth) as string[]).length, 0);
+    s.need(10 * 1.4 + 6 + firstLines * 8.8 * 1.4 + 5);
     s.paragraph('Also worth knowing', { size: 10, bold: true, ink: INK.green, gap: 6 });
     for (const para of extra) s.paragraph(para, { size: 8.8, ink: INK.muted, gap: 5 });
   }
@@ -592,9 +635,8 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
 function panelHeight(s: Sheet, body: string[], hasTitle: boolean, accent: boolean): number {
   const innerW = s.contentWidth - 20 - (accent ? 4 : 0);
   s.font(8.5);
-  let lines = 0;
-  for (const b of body) lines += (s.doc.splitTextToSize(pdfSafe(b), innerW) as string[]).length;
-  return 20 + (hasTitle ? 14 : 0) + lines * 11.5;
+  const counts = body.map((b) => (s.doc.splitTextToSize(pdfSafe(b), innerW) as string[]).length);
+  return 20 + (hasTitle ? 14 : 0) + panelBodyHeight(counts);
 }
 
 const PLAN_NOTE_PANEL_TITLES: Record<PlanNoteKind, string> = {
@@ -655,27 +697,37 @@ function barChart(
   },
 ): void {
   const h = opts.height ?? 108;
-  s.need(h + 46);
+  s.need(h + 52);
   s.font(11, true);
   s.ink(INK.text);
   s.doc.text(pdfSafe(opts.title), s.margin, s.y);
-  s.y += 12;
+  // The unit sits on the title line, clear of the tick labels: drawn above the value axis it
+  // collided with the chart title (2026-09-29 regional PDF audit).
+  const titleW = s.doc.getTextWidth(pdfSafe(opts.title));
+  s.font(7.5);
+  s.ink(INK.faint);
+  s.doc.text(pdfSafe(`(${opts.axis})`), s.margin + titleW + 5, s.y);
+  // Headroom so the tallest bar's value label never touches the title.
+  s.y += 18;
 
   const plotX = s.margin + 30;
   const plotW = s.contentWidth - 30;
   const top = s.y;
   const base = top + h;
-  const max = Math.max(1, ...opts.values);
+  // Round gridline steps (1, 2, 5 × 10ⁿ): quarters of the busiest month gave ticks like 5, 9, 14.
+  const step = niceStep(Math.max(1, ...opts.values) / 4);
+  const gridlines = Math.max(1, Math.ceil(Math.max(1, ...opts.values) / step));
+  const max = step * gridlines;
 
-  // Four faint gridlines and a value axis, so a bar can be read, not guessed.
+  // Faint gridlines and a value axis, so a bar can be read, not guessed.
   s.stroke(INK.hair);
   s.doc.setLineWidth(0.5);
-  for (let i = 0; i <= 4; i++) {
-    const gy = base - (h * i) / 4;
+  for (let i = 0; i <= gridlines; i++) {
+    const gy = base - (h * i) / gridlines;
     s.doc.line(plotX, gy, plotX + plotW, gy);
     s.font(6.5);
     s.ink(INK.faint);
-    s.doc.text(pdfSafe(String(Math.round((max * i) / 4))), plotX - 5, gy + 2, { align: 'right' });
+    s.doc.text(pdfSafe(String(Number((step * i).toFixed(2)))), plotX - 5, gy + 2, { align: 'right' });
   }
 
   const slot = plotW / opts.values.length;
@@ -693,10 +745,13 @@ function barChart(
     s.doc.text(pdfSafe(opts.labels[i]), x + barW / 2, base + 11, { align: 'center' });
   });
 
-  s.font(6.5);
-  s.ink(INK.faint);
-  s.doc.text(pdfSafe(opts.axis), plotX - 5, top - 8, { align: 'right' });
   s.y = base + 26;
+}
+
+/** The smallest of 1, 2 or 5 × 10ⁿ that is at least `raw`. */
+function niceStep(raw: number): number {
+  const magnitude = 10 ** Math.floor(Math.log10(raw));
+  return [1, 2, 5, 10].map((m) => m * magnitude).find((v) => v >= raw)!;
 }
 
 function drawYearInNumbers(
@@ -832,7 +887,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     // than let the two run together into unreadable overlapping text.
     s.font(6.5);
     s.ink(INK.faint);
-    const areaText = pdfSafe(`${row.areaM2.toFixed(1)} m2`);
+    const areaText = pdfSafe(`${row.areaM2.toFixed(1)} m²`);
     const areaW = s.doc.getTextWidth(areaText);
     s.font(8, true);
     s.ink(INK.text);
@@ -859,23 +914,19 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
   }
 
   s.y += 12;
-  // Colour key.
-  const keyW = s.contentWidth / GROUP_LEGEND.length;
-  GROUP_LEGEND.forEach((g, i) => {
-    const x = s.margin + i * keyW;
-    s.fill(g.ink);
-    s.doc.rect(x, s.y, keyW - 6, 8, 'F');
-    s.font(7.5);
-    s.ink(INK.muted);
-    s.doc.text(pdfSafe(g.label), x, s.y + 20);
-  });
-  s.y += 32;
-
-  // Code key — a derived abbreviation is only honest if the page decodes it.
+  // Colour key with each crop code filed under its own colour. The codes used to run in five
+  // alphabetical columns directly under the five colour bars, so "To = Tomatoes" sat under
+  // Staples and "Ca = Cabbage" under Leafy crops by accident of the alphabet, not by group.
   const abbr = cropAbbreviations(input.plantings);
-  const pairs = [...abbr.entries()]
+  const keyW = s.contentWidth / GROUP_LEGEND.length;
+  const columns = GROUP_LEGEND.map((g) => [...abbr.entries()]
+    .filter(([key]) => {
+      const crop = cropByKey(key);
+      return crop !== undefined && g.groups.includes(foodGroupOf(crop));
+    })
     .map(([key, code]) => `${code} = ${cropByKey(key)?.name ?? key}`)
-    .sort();
+    .sort());
+  s.need(38 + Math.max(1, ...columns.map((c) => c.length)) * 9);
   s.font(8, true);
   s.ink(INK.green);
   s.doc.text(pdfSafe('Crop codes'), s.margin, s.y);
@@ -885,16 +936,24 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     pdfSafe(`Read left to right from ${monthShort(nowMonth)}. A star marks the months a crop is being picked; nursery dates and exact spacing are in the full plan.`),
     s.margin + 58, s.y,
   );
-  s.y += 11;
-  const cols = 5;
-  const perCol = Math.ceil(pairs.length / cols);
-  s.font(6.8);
-  s.ink(INK.muted);
-  for (let c = 0; c < cols; c++) {
-    const slice = pairs.slice(c * perCol, (c + 1) * perCol);
-    s.doc.text(slice.map(pdfSafe), s.margin + c * (s.contentWidth / cols), s.y);
-  }
-  s.y += perCol * 9 + 6;
+  s.y += 10;
+  // Only the colours this plan uses: a Staples bar with nothing under it (maize did not fit at
+  // the Western Cape site) reads as a missing list. Column width stays a fifth, packed left.
+  const used = GROUP_LEGEND.map((g, i) => ({ g, lines: columns[i] })).filter((c) => c.lines.length);
+  (used.length ? used : GROUP_LEGEND.map((g, i) => ({ g, lines: columns[i] }))).forEach(({ g, lines }, i) => {
+    const x = s.margin + i * keyW;
+    s.fill(g.ink);
+    s.doc.rect(x, s.y, keyW - 6, 6, 'F');
+    s.font(7.5, true);
+    s.ink(INK.muted);
+    s.doc.text(pdfSafe(g.label), x, s.y + 17);
+    s.font(6.8);
+    lines.forEach((line, j) => {
+      const fitted = truncateToWidth(s.doc, pdfSafe(line), keyW - 8);
+      s.doc.text(fitted, x, s.y + 28 + j * 9);
+    });
+  });
+  s.y += 28 + Math.max(1, ...columns.map((c) => c.length)) * 9;
 }
 
 // ── Compact task summary (quick print) ──────────────────────────────────────
@@ -1127,7 +1186,7 @@ function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: numb
           : !item.transplant && item.unit !== 'seeds'
           ? 'Living pieces; confirm loss allowance'
           : item.transplant ? `Ready seedlings; own seed before ${monthShort(item.sowMonth)} nursery` : `Direct sow; ~${positionRangeLabel(item.finalPlantPositionsRange)} final positions`,
-        forWhat: item.bedLabels.join(', '),
+        forWhat: compactPlaces(item.bedLabels),
         when: item.transplant
           ? `Source own seed before ${monthShort(item.sowMonth)}; nursery ${monthShort(item.sowMonth)}; check/transplant ${monthShort(item.bedMonth)}-${monthShort(item.bedMonthLatest)}`
           : `Sow ${monthShort(item.sowMonth)}`,
@@ -1164,7 +1223,7 @@ function drawFieldSheets(
     // Month header stats.
     const stats = [
       { v: String(sheet.workRows), l: 'jobs this month', ink: INK.text, bg: INK.panelGrey },
-      { v: String(sheet.plantingFocus), l: 'sowing / planting', ink: INK.gold, bg: INK.panelCream },
+      { v: String(sheet.plantingFocus), l: 'sowing / planting jobs', ink: INK.gold, bg: INK.panelCream },
       { v: String(sheet.harvestFocus), l: 'harvest jobs', ink: INK.teal, bg: INK.panelGreen },
       { v: String(sheet.sections.length), l: 'kinds of work', ink: INK.terracotta, bg: INK.panelPink },
     ];
