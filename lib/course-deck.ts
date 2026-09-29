@@ -87,14 +87,16 @@ const SEEDS_ANIMATIONS: Record<number, DeckAnimation> = {
   // fails on any difference. These were hand-rounded before, which meant re-encoding the clips
   // turned every play button into a wrong promise about somebody's data allowance — the one number
   // on this screen a farmer is asked to trust.
-  5:  { src: 'imbewu_isiZulu_video_01', poster: 'imbewu_isiZulu_video_01', bytes: 420_204,   seconds: 10 }, // uniform vs varied seedlings
-  7:  { src: 'imbewu_isiZulu_video_02', poster: 'imbewu_isiZulu_video_02', bytes: 738_328,   seconds: 10 }, // households exchanging packets
-  8:  { src: 'seed-selecting-parents', poster: 'seed-selecting-parents', bytes: 248_394, seconds: 5 }, // walking the rows, choosing, harvesting
-  10: { src: 'imbewu_isiZulu_video_03', poster: 'imbewu_isiZulu_video_03', bytes: 399_404,   seconds: 10 }, // maize tassels, crossing
-  13: { src: 'seed-dry-processing', poster: 'seed-dry-processing', bytes: 311_237,   seconds: 5 }, // threshing, winnowing, drying on the mat
-  15: { src: 'imbewu_isiZulu_video_05', poster: 'imbewu_isiZulu_video_05', bytes: 1_377_407, seconds: 20 }, // tomato in a jar — the long one
-  18: { src: 'new_seed-storage-jar-vs-bag', poster: 'new_seed-storage-jar-vs-bag', bytes: 474_949, seconds: 10 },
-  21: { src: 'imbewu_isiZulu_video_06', poster: 'imbewu_isiZulu_video_06', bytes: 439_958,   seconds: 10 }, // germination test on cloth
+  // The regional stills carry English sources beside drafts. An animation poster would cover
+  // those panels and make the learner lose the wording they need to compare.
+  5:  { src: 'imbewu_isiZulu_video_01', poster: 'imbewu_isiZulu_video_01', bytes: 420_204,   seconds: 10, unavailableLanguages: ['st', 've', 'ts'] }, // uniform vs varied seedlings
+  7:  { src: 'imbewu_isiZulu_video_02', poster: 'imbewu_isiZulu_video_02', bytes: 738_328,   seconds: 10, unavailableLanguages: ['st', 've', 'ts'] }, // households exchanging packets
+  8:  { src: 'seed-selecting-parents', poster: 'seed-selecting-parents', bytes: 248_394, seconds: 5, unavailableLanguages: ['st', 've', 'ts'] }, // walking the rows, choosing, harvesting
+  10: { src: 'imbewu_isiZulu_video_03', poster: 'imbewu_isiZulu_video_03', bytes: 399_404,   seconds: 10, unavailableLanguages: ['st', 've', 'ts'] }, // maize tassels, crossing
+  13: { src: 'seed-dry-processing', poster: 'seed-dry-processing', bytes: 311_237,   seconds: 5, unavailableLanguages: ['st', 've', 'ts'] }, // threshing, winnowing, drying on the mat
+  15: { src: 'imbewu_isiZulu_video_05', poster: 'imbewu_isiZulu_video_05', bytes: 1_377_407, seconds: 20, unavailableLanguages: ['st', 've', 'ts'] }, // tomato in a jar — the long one
+  18: { src: 'new_seed-storage-jar-vs-bag', poster: 'new_seed-storage-jar-vs-bag', bytes: 474_949, seconds: 10, unavailableLanguages: ['st', 've', 'ts'] },
+  21: { src: 'imbewu_isiZulu_video_06', poster: 'imbewu_isiZulu_video_06', bytes: 439_958,   seconds: 10, unavailableLanguages: ['st', 've', 'ts'] }, // germination test on cloth
 };
 
 /**
@@ -314,7 +316,11 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('plant-guilds', GUILD_ANIMATIONS),
   },
   'seeds-sovereignty': {
-    slideLanguages: ['en', 'zu'],
+    // Regional frames are silent source-paired review drafts. Slides 1–3 have learner-language
+    // candidates; later technical seed-saving instruction remains visibly exact English.
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     // ALL 24 SLIDES NOW EXIST IN BOTH LANGUAGES. The history is kept because the failure was
     // invisible and the next deck can fail the same way.
     //
