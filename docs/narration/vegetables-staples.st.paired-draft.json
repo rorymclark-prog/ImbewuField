@@ -47,7 +47,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hobaneng sena se le bohlokoa"
         },
         "body": [
           {
@@ -55,16 +56,19 @@
             "text": "A re qaleng ka bothata."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho jala haholo ka nako e le ’ngoe ho hlahisa kotulo e ngata ka nako e le ’ngoe. Tsohle li loketse ka nako e le ’ngoe. Le ja seo le ka se jang, le fane ka se seng, ’me se setseng sea senyeha."
+          },
+          {
+            "status": "draft",
+            "text": "Joale ho latela nako ea khaello. Ha ho letho le loketseng ho kotuloa. Serapa se tletse limela, empa ha ho lijo tse ho sona."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke morethetho oo o fepang lelapa. Eseng boholo ba serapa."
           }
         ]
       }
@@ -85,7 +89,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Liphetho tsa ho ithuta"
         },
         "body": [
           {
@@ -620,7 +625,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mosebetsi oa tšimong"
         },
         "body": [
           {
@@ -662,7 +668,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ketso ea tšimong"
         },
         "body": [
           {

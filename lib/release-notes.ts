@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'a6afc841', changes: [
+    'Vegetables Study adds regional harvest-gap drafts and activity headings.',
+    'Silent slides pair each unreviewed draft with English; field steps stay English.',
+  ], tour: [
+    { title: 'Compare the Vegetables slides', where: 'Study → Vegetables and Staple Crops → slides 2, 3, 17 and 18', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Slide 2 shows bounded unreviewed drafts; slides 3, 17 and 18 add short headings. The full English source remains beside each draft. No regional narration is selected.' },
+  ] },
   { when: '29 September 2026', sha: 'b6fca276', changes: [
     'Food Forest adds regional care and local-plant headings on silent slides 8 and 13.',
     'Unreviewed drafts sit beside English; planting and grassland guidance stays English.',

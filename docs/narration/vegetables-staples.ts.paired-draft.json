@@ -56,13 +56,15 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani ku landzela nkarhi wa ku pfumala ntshovelo. Ku hava lexi lunghekeleke ku tshoveriwa. Nsimu yi tele hi swibyariwa, kambe a ku na swakudya eka yona."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi rhithimi wolowo ndyangu wu kuma swakudya. A hi vukulu bya nsimu."
           }
         ]
       }
@@ -83,7 +85,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Leswi u nga ta swi dyondza"
         },
         "body": [
           {
@@ -619,7 +622,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ntirho wa le nsinini"
         },
         "body": [
           {
@@ -661,7 +665,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Xiendlo xa le nsinini"
         },
         "body": [
           {
