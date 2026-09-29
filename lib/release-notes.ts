@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '4db18c3f', changes: [
+    'Market Gardening L1 adds unreviewed harvest and season-end record-keeping drafts.',
+    'Other instructions stay in English beside the exact source.',
+  ], tour: [
+    { title: 'Compare the Market Gardening record-keeping drafts', where: 'Study → Market Gardening & Community → lesson 1', href: '/student',
+      detail: 'Choose Xitsonga or Tshivenda and open lesson 1. The new sentences are marked unreviewed beside exact English. Other record-keeping steps and business guidance stay in English.' },
+  ] },
   { when: '29 September 2026', sha: '090437e2', changes: [
     'Pawpaw now shows in the bed calendar, April to January, from the KZN fruit guide.',
     'Honey still does not show: no source yet gives honey harvest months. The note says so.',

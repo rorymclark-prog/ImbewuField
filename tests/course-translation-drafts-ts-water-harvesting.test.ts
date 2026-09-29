@@ -51,6 +51,7 @@ test('Xitsonga Market drafts change only descriptive lesson text and keep decisi
     assert.ok(sourceLesson);
     assert.equal(draftLesson.title.sourceEnglish, sourceLesson.title);
     assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
+    assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
     assert.equal(draftLesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
     assert.deepEqual(draftLesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
     assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
@@ -62,10 +63,23 @@ test('Xitsonga Market drafts change only descriptive lesson text and keep decisi
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
-    const translatedIndex = draftLesson.id === 'market-community-l1' ? 0 : 9;
+    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 3, 6] : [9];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
-      if (index === translatedIndex) assert.notEqual(draftParagraphs[index], paragraph);
+      if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
       else assert.equal(draftParagraphs[index], paragraph);
+    }
+    if (draftLesson.id === 'market-community-l1') {
+      const draftParagraphsSource = draftLesson.body.xitsongaDraft.split('\n\n');
+      assert.equal(draftParagraphs[0], draftParagraphsSource[0],
+        'select the Xitsonga source-paired learner draft');
+      assert.equal(draftParagraphs[3], draftParagraphsSource[3],
+        'select the source-paired sentence about recording each harvest as it happens');
+      assert.equal(draftParagraphs[6], draftParagraphsSource[6],
+        'select the source-paired end-of-season memory reminder');
+      assert.equal(draftParagraphs[1], sourceParagraphs[1],
+        'keep the unreviewed sentence about reaching customers in English');
+      assert.equal(draftParagraphs[7], sourceParagraphs[7],
+        'keep the phrase about practical questions in English until reviewed');
     }
     const changedSource: Lesson = { ...sourceLesson, body: `${sourceLesson.body} Changed.` };
     assert.equal(resolveLearnerLessonPresentation(changedSource, 'ts').status, 'english-fallback');
