@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '43e5f5f3', changes: [
+    'Food Forest opens with more Sesotho study prompts on three silent slides.',
+    'Unreviewed drafts sit beside English. Planting guidance stays in English.',
+  ], tour: [
+    { title: 'Compare the Food Forest opening', where: 'Study → Food Forest Design → slides 1–3', href: '/student',
+      detail: 'Choose Sesotho. The first three silent slides pair the new opening drafts with exact English. Detailed planting advice remains in English.' },
+  ] },
   { when: '29 September 2026', sha: '81cdc282', changes: [
     'Introduction adds family-priority and food reflections in Tshivenda and Xitsonga.',
     'The farm-purpose sentence and other advice stay in English beside each draft.',

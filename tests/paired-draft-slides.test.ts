@@ -256,7 +256,7 @@ test('Food Forest Xitsonga media pairs every unreviewed sentence with its curren
   }
 });
 
-test('Food Forest Sesotho slides show only the three existing unreviewed concept sentences', () => {
+test('Food Forest Sesotho slides pair low-risk orientation drafts with exact English and hold technical guidance', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/food-forest.st.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'st');
@@ -264,8 +264,24 @@ test('Food Forest Sesotho slides show only the three existing unreviewed concept
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
-  assert.deepEqual(slides.flatMap((slide: any) => slide.target.heading.status), Array(20).fill('english-hold'));
+  assert.deepEqual(drafted, ['1:1', '1:4', '2:1', '4:1', '4:2', '8:2']);
+  assert.equal(slides[1].target.heading.status, 'draft');
+  assert.equal(slides[2].target.heading.status, 'draft');
+  assert.ok(slides.filter((slide: any) => ![2, 3].includes(slide.n))
+    .every((slide: any) => slide.target.heading.status === 'english-hold'));
+  for (const [slideIndex, paragraphIndex] of [[0, 0], [0, 3], [1, 0]]) {
+    const slide = slides[slideIndex];
+    const draft = slide.target.body[paragraphIndex];
+    assert.equal(draft.status, 'draft');
+    assert.ok(draft.text && draft.text !== slide.english.body[paragraphIndex]);
+    assert.ok(draft.provenance?.includes('unreviewed-draft'));
+  }
+  assert.equal(slides[0].target.body[1].status, 'english-hold',
+    'canopy-to-root-crop claim needs local language and farming review');
+  assert.equal(slides[1].target.body[1].status, 'english-hold',
+    'plant competition and soil-cover guidance remains exact English');
+  assert.ok(slides[2].target.body.every((part: any) => part.status === 'english-hold'),
+    'layers, approved species and establishment timing must not be improvised');
   assert.deepEqual([
     slides[3].target.body[0].text,
     slides[3].target.body[1].text,

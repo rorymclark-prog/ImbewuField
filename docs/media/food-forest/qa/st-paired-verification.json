@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/food-forest.st.paired-draft.json",
-  "pairedSourceSha256": "4c3bc6339c0cae10d4a9933d851bd1b9ea888ae8a06561cf26bc34a2edf2f659",
+  "pairedSourceSha256": "d044ada98445e54553b26aeb0ba635d5bfbd3963c672a04d595947b77f53576f",
   "englishSource": "docs/narration/food-forest.en.md",
   "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
   "slides": [
@@ -14,22 +14,22 @@
       "slide": 1,
       "path": "public/course-decks/food-forest/st/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 337804,
-      "sha256": "7f68257bb96e6ed24a1472e94c2ad9f9e6c8aac3faedffc9bc974b81717ca78e"
+      "bytes": 333580,
+      "sha256": "5b343bd8f216481ff0e117008bbb6192e2e7ad38f526ad014e9d240c0b4abbe0"
     },
     {
       "slide": 2,
       "path": "public/course-decks/food-forest/st/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 217048,
-      "sha256": "4dac551f82188a079a2cf1c22b46e2f07c164ab2b5d9783469dff929de402ebf"
+      "bytes": 220196,
+      "sha256": "2033a1f71fe34f500d6ad3adb590381f301463b136864f717428c088712130a9"
     },
     {
       "slide": 3,
       "path": "public/course-decks/food-forest/st/slide-03.webp",
       "pixels": "1440x5400",
-      "bytes": 226212,
-      "sha256": "6428a747e1cff6241d19a373a0923e41cc80338b507c621425c553fe2c446ee2"
+      "bytes": 226742,
+      "sha256": "5d3f5ffdd1eb7e249a0f8c806f631d57068bcbf1ca544b367fdd5873a62639e7"
     },
     {
       "slide": 4,
@@ -154,6 +154,24 @@
   "contactSheet": "docs/media/food-forest/qa/st-paired-contact-sheet.jpg",
   "phoneSamples": [
     {
+      "slide": 1,
+      "path": "docs/media/food-forest/qa/st-slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "d08d3f3784232c4f7b0d464aa9a3fdf9761e774b76cec98129e80be50d9c8235"
+    },
+    {
+      "slide": 2,
+      "path": "docs/media/food-forest/qa/st-slide-02-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "e85a3e338e127196bdf363c25f772938d8ae0af5f3eb6141fb4a4885a99b5f1a"
+    },
+    {
+      "slide": 3,
+      "path": "docs/media/food-forest/qa/st-slide-03-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "ee39c6c4945d8faaff0aa221123fa41007dc6e06a79e3d9b50105bfa38b47659"
+    },
+    {
       "slide": 4,
       "path": "docs/media/food-forest/qa/st-slide-04-390.jpg",
       "pixels": "390x1463",
@@ -166,5 +184,5 @@
       "sha256": "b98fe6bcb14c10312032177b3d70d20fa4a9f50a65a128662cc0f7a8b21c43b1"
     }
   ],
-  "note": "All 20 silent frames pair the unchanged English illustration and exact English source with the existing three marked Sesotho machine-draft sentences. Every other heading and passage is held in English. No Sesotho narration or farming approval is claimed."
+  "note": "All 20 silent frames pair the unchanged English illustration and exact English source with marked Sesotho machine drafts. Technical or uncertain passages remain exact-English holds. No Sesotho narration or fluent/local farming approval is claimed."
 }
