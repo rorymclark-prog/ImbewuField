@@ -131,6 +131,25 @@ export interface PlanNote {
 }
 
 /** The "chosen but didn't fit" warning for exactly these crops; null when none are left. */
+const CALENDAR_NAME: Record<RainPattern, string> = {
+  summer: 'the summer-rainfall, hard-frost calendar',
+  winter: 'the winter-rainfall calendar',
+  'all-year': 'the frost-free calendar',
+  'mild-frost': 'the summer-rainfall, light-frost calendar',
+};
+
+/** Chosen crops this farm's sowing calendar gives no month at all — not a room problem. */
+export function chosenWithNoSowingMonthNote(crops: readonly CropDef[], pattern: RainPattern): PlanNote | null {
+  if (!crops.length) return null;
+  const names = crops.map((crop) => crop.name).join(', ');
+  const one = crops.length === 1;
+  return {
+    kind: 'warning',
+    unplacedCropKeys: crops.map((crop) => crop.key),
+    text: `${names} ${one ? 'was' : 'were'} chosen, but ${one ? 'it has' : 'they have'} no sowing month on ${CALENDAR_NAME[pattern]} this farm uses — the sowing guides this plan follows give none for this calendar (frost or the rainfall season, usually), so making room would not help. Ask your extension officer before trying ${one ? 'it' : 'them'} here.`,
+  };
+}
+
 export function chosenButUnplacedNote(crops: readonly CropDef[]): PlanNote | null {
   if (!crops.length) return null;
   const names = crops.map((crop) => crop.name).join(', ');
@@ -3801,12 +3820,18 @@ function autoSuggestPlanUnderGate(
       added.push(...outcome.plantings);
       notes.push(planNote('choice', `${crop.name} gets ${plot.label} to itself — a staple plot is exactly the dedicated sprawling room it wants.`, [plot.id]));
     }
-    if (vinesStillWanting.length && !answers.allowVinesInBeds) {
-      const names = vinesStillWanting.map((c) => c.name).join(', ');
-      notes.push(planNote('warning', `${names} want more room to sprawl than a veg bed can give — grow them in a dedicated plot, along your property edges, or in a food forest area instead. Turn on "Grow big vines in a veg bed anyway" if you'd rather use one of your beds for them.`));
+    // A vine the farmer ticked BY NAME is its own opt-in. Rory, 2026-09-29: "i selected pumpkin
+    // theres no pumpkin". The toggle exists so the planner never hands a precious veg bed to a vine
+    // nobody asked for; a farmer who picked pumpkin out of the list did ask, and a plan without it
+    // read as the app ignoring them. It still gets the review note below about the vine path.
+    const vineMayTakeBed = (crop: CropDef) => answers.allowVinesInBeds || explicitCropKeys.has(crop.key);
+    const vinesKeptOut = vinesStillWanting.filter((crop) => !vineMayTakeBed(crop));
+    if (vinesKeptOut.length) {
+      const names = vinesKeptOut.map((c) => c.name).join(', ');
+      notes.push(planNote('warning', `${names} ${vinesKeptOut.length === 1 ? 'wants' : 'want'} more room to sprawl than a veg bed can give — grow ${vinesKeptOut.length === 1 ? 'it' : 'them'} in a dedicated plot, along your property edges, or in a food forest area instead. Turn on "Grow big vines in a veg bed anyway" if you'd rather use one of your beds for ${vinesKeptOut.length === 1 ? 'it' : 'them'}.`));
     }
     for (const crop of vinesStillWanting) {
-      if (!answers.allowVinesInBeds) continue;
+      if (!vineMayTakeBed(crop)) continue;
       const bed = beds.filter((b) => !dedicated.has(b.id) && b.kind !== 'plot').sort((a, b) => b.areaM2 - a.areaM2)[0];
       if (!bed) { notes.push(planNote('warning', `${crop.name} wants a whole bed to itself — none free this round.`)); continue; }
       // The farmer explicitly opted into using a veg bed. Do not replace that
@@ -4145,7 +4170,13 @@ function autoSuggestPlanUnderGate(
     && !selectedWithoutScheduleKeys.has(crop.key)
     && !climateRuledOut.has(crop.key)
     && !isSpaceHungry(crop));
-  const unplacedNote = chosenButUnplacedNote(explicitlyChosenButAbsent);
+  // "Didn't fit — every window was committed" was also said of a crop that has NO sowing month on
+  // this farm's calendar at all (amadumbe on the hard-frost interior; bambara off the summer-rain
+  // calendar), which sent the farmer hunting for room that would never have helped.
+  const noSowingMonth = explicitlyChosenButAbsent.filter((crop) => (crop.sowMonths[pattern] ?? []).length === 0);
+  const noMonthNote = chosenWithNoSowingMonthNote(noSowingMonth, pattern);
+  if (noMonthNote) notes.push(noMonthNote);
+  const unplacedNote = chosenButUnplacedNote(explicitlyChosenButAbsent.filter((crop) => !noSowingMonth.includes(crop)));
   if (unplacedNote) notes.push(unplacedNote);
 
   const plantings = consolidatePlantings(added);
