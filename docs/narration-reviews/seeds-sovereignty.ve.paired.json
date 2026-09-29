@@ -215,7 +215,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Humbulani uri zwenezwi zwi amba mini musi ni tshi nanga mbeu ine na ḓo i vhulunga.",
+            "backTranslation": "Think about what this means when you choose seed to save."
           },
           {
             "status": "english-hold"
@@ -252,7 +254,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi mbeu ifhio ine muṱa waṋu wa i vhulunga zwavhuḓi zwino?",
+            "backTranslation": "Which seed does your household already save well?"
           },
           {
             "status": "english-hold"
@@ -290,7 +294,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Humbulani nga mbeu ine na nga kovhana ngayo na mbeu ine na nga i wana kha muvhahura. Mbeu i a tshimbila. Nḓivho na fulufhelo zwi fanela u tshimbila nayo.",
+            "backTranslation": "Think about seed you could share and seed you could receive from a neighbour. Seed moves. Knowledge and trust should move with it."
           }
         ]
       }
@@ -320,13 +326,19 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lavhelesani tshimela tshoṱhe.",
+            "backTranslation": "Look at the whole plant."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsho vha tshi na mutakalo wavhuḓi?",
+            "backTranslation": "Was it healthy?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsho vhibva nga tshifhinga tsho teaho?",
+            "backTranslation": "Did it mature at the right time?"
           },
           {
             "status": "english-hold"

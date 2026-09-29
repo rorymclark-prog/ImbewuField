@@ -203,7 +203,14 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba mahlakore ka bobeli.",
+            "backTranslation": "Look at both sides."
+          },
+          {
+            "status": "draft",
+            "text": "Mefuta ka bobeli ea peo ea mela.",
+            "backTranslation": "Both kinds of seed germinate."
           },
           {
             "status": "english-hold"
@@ -212,10 +219,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nahana hore na see se bolela eng ha u khetha peo eo u tla e boloka.",
+            "backTranslation": "Think about what this means when you choose seed to save."
           },
           {
             "status": "english-hold"
@@ -252,7 +258,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke peo efe eo lelapa la heno le seng le e boloka hantle?",
+            "backTranslation": "Which seed does your household already save well?"
           },
           {
             "status": "english-hold"
@@ -290,7 +298,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nahana ka peo eo u ka e arolelanang le eo u ka e fumanang ho moahisani. Peo ea tsamaea. Tsebo le tšepo le tsona li lokela ho tsamaea le eona.",
+            "backTranslation": "Think about seed you could share and seed you could receive from a neighbour. Seed moves. Knowledge and trust should move with it."
           }
         ]
       }
@@ -320,7 +330,19 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba semela sohle.",
+            "backTranslation": "Look at the whole plant."
+          },
+          {
+            "status": "draft",
+            "text": "Na se ne se phetse hantle?",
+            "backTranslation": "Was it healthy?"
+          },
+          {
+            "status": "draft",
+            "text": "Na se ile sa butsoa ka nako e loketseng?",
+            "backTranslation": "Did it mature at the right time?"
           },
           {
             "status": "english-hold"
@@ -329,13 +351,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke eng e neng e ka etsa hore u se ke ua khetha semela sa peo, leha tholoana ea sona e ne e le kholo?",
+            "backTranslation": "What could make you reject a seed plant, even if its fruit was large?"
           },
           {
             "status": "english-hold"
