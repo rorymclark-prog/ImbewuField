@@ -9,7 +9,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { buildCropPlanPdf, cropPlanPdfFilename, type CropPlanPdfInput } from '@/lib/crop-export-pdf';
+import { PNG } from 'pngjs';
+
+import {
+  availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename, resolveAvailability, type CropPlanPdfInput,
+} from '@/lib/crop-export-pdf';
 import { tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
 
@@ -128,5 +132,80 @@ test('a busy plan with long custom bed/plot names does not overflow the task sum
     beds, plantings, tasks: tasksForPlan(plantings, beds), sections: ['calendar', 'taskSummary'],
   }));
   assert.ok(blob instanceof Blob);
+  assert.ok(blob.size > 5_000);
+});
+
+// ── The printed food-availability page ─────────────────────────────────────
+// Rory, 2026-09-29: "i want in the crop plan printed a version of the calendar we have in the app
+// with the veg and other icons that show availability during the month".
+
+function tinyPng(): string {
+  const png = new PNG({ width: 4, height: 4 });
+  for (let i = 0; i < png.data.length; i += 4) png.data.set([46, 107, 58, 255], i);
+  return `data:image/png;base64,${PNG.sync.write(png).toString('base64')}`;
+}
+
+const pdfText = async (blob: Blob) => Buffer.from(await blob.arrayBuffer()).toString('latin1');
+
+const FOREST_AND_HENS = {
+  forest: Array.from({ length: 12 }, (_, i) => i < 4 ? [{ iconKey: 'tree:mangifera-indica', label: 'Mango' }] : []),
+  animals: Array.from({ length: 12 }, () => [{ iconKey: 'animal:chicken-layer', label: 'Laying hens - eggs' }]),
+};
+
+test('the full export carries the availability page, and it can be printed on its own', async () => {
+  const alone = await buildCropPlanPdf(input({ sections: ['availability'] }));
+  assert.equal(alone.type, 'application/pdf');
+  assert.ok(alone.size > 5_000, `the availability page looked empty (${alone.size} bytes)`);
+  const full = await buildCropPlanPdf(input());
+  const withoutIt = await buildCropPlanPdf(input({ sections: ['dashboard', 'numbers', 'calendar', 'plan', 'buying', 'fieldsheets', 'record'] }));
+  assert.ok(full.size > withoutIt.size, 'the default export did not add the availability page');
+});
+
+test('with no chart data handed in, the page builds an established year from the plan itself', () => {
+  const resolved = resolveAvailability(input(), 8);
+  assert.equal(resolved.yearMode, 'established');
+  assert.equal(resolved.utilization.length, 12);
+  // Only veg rows exist without a canvas; empty forest and animal trays are left off, as on screen.
+  assert.deepEqual(resolved.bands.map((b) => b.key).filter((k) => k === 'forest' || k === 'animals'), []);
+  const fresh = resolved.bands.find((b) => b.key === 'fresh');
+  assert.ok(fresh && fresh.cells.length === 12);
+  assert.ok(fresh.cells.flat().some((c) => c.iconKey === 'crop:cabbage'), 'the plan\'s cabbage never shows as fresh veg');
+  for (const cell of fresh.cells.flat()) assert.ok(cell.code.length > 0, `${cell.label} has no fallback code`);
+});
+
+test('food forest and animal trays appear when the chart hands them in, and their icons are asked for', () => {
+  const withRows = input({ availability: FOREST_AND_HENS });
+  const keys = resolveAvailability(withRows, 8).bands.map((b) => b.key);
+  assert.ok(keys.includes('forest') && keys.includes('animals'), `bands were ${keys.join(', ')}`);
+  const icons = availabilityIconKeys(withRows);
+  assert.ok(icons.includes('tree:mangifera-indica'));
+  assert.ok(icons.includes('animal:chicken-layer'));
+  assert.ok(icons.includes('crop:cabbage'));
+  assert.equal(new Set(icons).size, icons.length, 'an icon key was asked for twice');
+});
+
+test('each picture is embedded once however many months it appears in, and a missing one prints its code', async () => {
+  const icon = tinyPng();
+  const withIcons = await buildCropPlanPdf(input({
+    sections: ['availability'],
+    availability: FOREST_AND_HENS,
+    // Laying hens appear in all twelve months; cabbage and mango get no picture at all.
+    icons: { 'animal:chicken-layer': icon },
+  }));
+  const raw = await pdfText(withIcons);
+  const images = raw.match(/\/Subtype \/Image/g)?.length ?? 0;
+  assert.ok(images >= 1 && images <= 2, `expected one image (plus at most its mask), found ${images}`);
+
+  const noIcons = await buildCropPlanPdf(input({ sections: ['availability'], availability: FOREST_AND_HENS }));
+  assert.equal((await pdfText(noIcons)).match(/\/Subtype \/Image/g)?.length ?? 0, 0);
+});
+
+test('a picture jsPDF cannot read falls back to the code instead of breaking the export', async () => {
+  const blob = await buildCropPlanPdf(input({
+    sections: ['availability'],
+    availability: FOREST_AND_HENS,
+    icons: { 'animal:chicken-layer': 'data:image/png;base64,bm90IGEgcG5n' },
+  }));
+  assert.equal(blob.type, 'application/pdf');
   assert.ok(blob.size > 5_000);
 });

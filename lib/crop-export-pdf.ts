@@ -33,8 +33,9 @@
 // computes a quantity — it only decides what things look like.
 
 import { numberLabel } from '@/lib/format-figures';
-import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
-import { planNotesDateLabel } from '@/lib/crop-plan';
+import type { CropTask, FoodAvailabilityItem, PlanBed, Planting } from '@/lib/crop-plan';
+import { buildFieldUtilizationByMonth, buildFoodAvailability, planNotesDateLabel, recurringPlanPlantings } from '@/lib/crop-plan';
+import { monthAxisSlots } from '@/lib/month-axis';
 import type { PlanNote, PlanNoteKind } from '@/lib/crop-autosuggest';
 import { foodGroupOf, type FoodGroup } from '@/lib/crop-groups';
 import {
@@ -121,9 +122,35 @@ export interface CropPlanPdfInput {
    * at true scale and pinned on a wall, so a facilitator can pick A3 or A2
    * instead of A4. Omitted = 'a4', matching every existing caller exactly. */
   pageFormat?: CropPlanPageFormat;
+  /** What the app's availability chart shows, for the printed food-availability page. Omitted =
+   * the page builds the veg and field-space rows from the plan itself (an established year) and
+   * prints no food-forest or animal rows. */
+  availability?: CropPlanAvailability;
+  /** Small PNG data URLs keyed 'crop:<key>' / 'tree:<speciesId>' / 'animal:<enterpriseId>'
+   * (lib/pdf-icons.ts). A key without one prints as its short code. */
+  icons?: Record<string, string>;
 }
 
-export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'plan' | 'buying' | 'fieldsheets' | 'record' | 'taskSummary';
+/** One picture on the availability page: which art to use, and the name the key gives it. */
+export interface AvailabilityEntry {
+  iconKey: string;
+  label: string;
+}
+
+/** The app chart's first twelve slots, starting at the plan's "now" month. */
+export interface CropPlanAvailability {
+  /** Which of the chart's two years these rows were built for. */
+  yearMode?: 'established' | 'fromToday';
+  veg?: FoodAvailabilityItem[][];
+  /** Food-forest kinds in their sourced season. Omit when the orchard is switched out. */
+  forest?: AvailabilityEntry[][];
+  /** One entry per animal enterprise giving a product that month. Omit when animals are out. */
+  animals?: AvailabilityEntry[][];
+  /** Share of mapped growing area occupied, 0–1+ per month. */
+  utilization?: number[];
+}
+
+export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'availability' | 'plan' | 'buying' | 'fieldsheets' | 'record' | 'taskSummary';
 
 export type CropPlanPageFormat = 'a4' | 'a3' | 'a2';
 
@@ -132,7 +159,7 @@ export type CropPlanPageFormat = 'a4' | 'a3' | 'a2';
 // The full document already covers every month in detail via 'fieldsheets';
 // including both there would print the same tasks twice.
 export const ALL_SECTIONS: CropPlanSection[] = [
-  'dashboard', 'numbers', 'calendar', 'plan', 'buying', 'fieldsheets', 'record',
+  'dashboard', 'numbers', 'calendar', 'availability', 'plan', 'buying', 'fieldsheets', 'record',
 ];
 
 /**
@@ -956,6 +983,279 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
   s.y += 28 + Math.max(1, ...columns.map((c) => c.length)) * 9;
 }
 
+// ── Food availability (the app's chart, on paper) ───────────────────────────
+
+/**
+ * Rory, 2026-09-29: "i want in the crop plan printed a version of the calendar we have in the app
+ * with the veg and other icons that show availability during the month". The bed calendar before
+ * this page says where each crop GROWS; this one says what there is to EAT, month by month, in the
+ * same boxes the app draws: fresh veg, stored veg, the food forest and animal products, each with
+ * its picture, and a last row for how much of the growing space each month uses.
+ *
+ * Nothing here is counted in kilograms or rand, for the reason the app chart gives none: the
+ * sources give a picking window, not a monthly curve.
+ */
+type AvailabilityCell = AvailabilityEntry & { code: string };
+
+interface AvailabilityBand {
+  key: 'fresh' | 'stored' | 'forest' | 'animals';
+  title: string;
+  sub: string;
+  /** The app tray's colour; the print uses it as a pale fill and a mid border. */
+  rgb: readonly number[];
+  cells: AvailabilityCell[][];
+}
+
+export interface ResolvedAvailability {
+  yearMode: 'established' | 'fromToday';
+  bands: AvailabilityBand[];
+  utilization: number[];
+}
+
+const mixWithWhite = (rgb: readonly number[], share: number): number[] =>
+  rgb.map((c) => Math.round(255 - (255 - c) * share));
+
+/** Short code for an item without art: the crop code the bed calendar uses, else two letters. */
+function fallbackCode(label: string): string {
+  const letters = pdfSafe(label).replace(/\([^)]*\)/g, ' ').replace(/[^A-Za-z ]/g, ' ').trim().split(/\s+/);
+  const code = letters.length > 1 ? `${letters[0][0]}${letters[1][0]}` : (letters[0] ?? '?').slice(0, 2);
+  return code ? code.charAt(0).toUpperCase() + code.slice(1).toLowerCase() : '?';
+}
+
+/**
+ * The page's rows, from what the app passed or, without that, from the plan itself: the same
+ * established-year fold the chart defaults to (recurring rows only, every planting mod 12).
+ */
+export function resolveAvailability(input: CropPlanPdfInput, nowMonth: number): ResolvedAvailability {
+  const months = rollingMonths(nowMonth);
+  const given = input.availability;
+  const recurring = recurringPlanPlantings(input.plantings);
+  const veg = given?.veg ?? (() => {
+    const annual = buildFoodAvailability(recurring, input.beds);
+    return months.map((m) => annual[m] ?? []);
+  })();
+  const utilization = given?.utilization ?? (() => {
+    const annual = buildFieldUtilizationByMonth(recurring, input.beds);
+    return months.map((m) => annual[m] ?? 0);
+  })();
+  const codes = cropAbbreviations([...input.plantings, ...veg.flat().map((v) => ({ id: v.cropKey, bedId: '', cropKey: v.cropKey, sowMonth: 1 }))]);
+  const vegCells = (status: 'fresh' | 'stored') => months.map((_, i) => (veg[i] ?? [])
+    .filter((v) => v.status === status)
+    .map((v) => ({ iconKey: `crop:${v.cropKey}`, label: v.name, code: codes.get(v.cropKey) ?? fallbackCode(v.name) })));
+  const entryCells = (rows?: AvailabilityEntry[][]) => months.map((_, i) => (rows?.[i] ?? [])
+    .map((e) => ({ ...e, code: fallbackCode(e.label) })));
+  const bands: AvailabilityBand[] = [
+    { key: 'fresh', title: 'Fresh veg', sub: 'picked from the beds', rgb: [127, 174, 110], cells: vegCells('fresh') },
+    { key: 'stored', title: 'Stored veg', sub: 'kept under named conditions', rgb: [212, 160, 23], cells: vegCells('stored') },
+    { key: 'forest', title: 'Food forest', sub: 'trees in their SA season', rgb: [46, 107, 58], cells: entryCells(given?.forest) },
+    { key: 'animals', title: 'Animal products', sub: 'eggs, milk, meat, honey', rgb: [192, 122, 30], cells: entryCells(given?.animals) },
+  ];
+  return {
+    yearMode: given?.yearMode ?? 'established',
+    // A band with nothing in any month is left off, as the app hides an empty tray row; the
+    // fresh row always prints, so an empty plan still shows a grid that says so.
+    bands: bands.filter((b) => b.key === 'fresh' || b.cells.some((c) => c.length > 0)),
+    utilization,
+  };
+}
+
+/** Every icon key the availability page will draw, so a caller can load exactly those. */
+export function availabilityIconKeys(input: CropPlanPdfInput): string[] {
+  const nowMonth = (input.now ?? new Date()).getMonth() + 1;
+  const { bands } = resolveAvailability(input, nowMonth);
+  return [...new Set(bands.flatMap((b) => b.cells.flat().map((e) => e.iconKey)))];
+}
+
+function drawIconOrCode(s: Sheet, entry: { iconKey: string; code: string }, x: number, y: number, size: number, icons?: Record<string, string>): void {
+  const data = icons?.[entry.iconKey];
+  if (data) {
+    try {
+      // The alias makes jsPDF embed each picture once, however many months it appears in.
+      s.doc.addImage(data, 'PNG', x, y, size, size, entry.iconKey, 'FAST');
+      return;
+    } catch {
+      // A picture jsPDF cannot read prints as its code, like one that never loaded.
+    }
+  }
+  s.fill(INK.white);
+  s.stroke(INK.rule);
+  s.doc.setLineWidth(0.4);
+  s.doc.roundedRect(x, y, size, size, 1.5, 1.5, 'FD');
+  s.font(Math.max(4.5, size * 0.42), true);
+  s.ink(INK.text);
+  s.doc.text(pdfSafe(entry.code), x + size / 2, y + size / 2 + size * 0.15, { align: 'center' });
+}
+
+function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
+  const resolved = resolveAvailability(input, nowMonth);
+  const months = rollingMonths(nowMonth);
+  const axis = monthAxisSlots(nowMonth, now.getFullYear(), 12);
+  const last = axis[11];
+  masthead(s, 'Food availability');
+  pageTitle(
+    s,
+    resolved.yearMode === 'fromToday' ? 'Food availability - from today' : 'Food availability - an established year',
+    `What there is to eat: ${monthShort(nowMonth)} ${now.getFullYear()} - ${monthShort(last.month)} ${last.year}`,
+    'The availability chart from the app, on paper: veg from the beds, the food forest, animal products, and how much bed space each month uses.',
+  );
+
+  const labelW = 104;
+  const colW = (s.contentWidth - labelW) / 12;
+  const headH = 24;
+  const maxInCell = Math.max(1, ...resolved.bands.flatMap((b) => b.cells.map((c) => c.length)));
+  const perRow = maxInCell > 15 ? 4 : 3;
+  const gap = 2;
+  const icon = Math.min(14, (colW - 8 - (perRow - 1) * gap) / perRow);
+  const pad = 4;
+  const bandH = (b: AvailabilityBand) => {
+    const rows = Math.max(1, Math.ceil(Math.max(0, ...b.cells.map((c) => c.length)) / perRow));
+    return Math.max(24, pad * 2 + 4 + rows * icon + (rows - 1) * gap);
+  };
+  const utilH = 34;
+  const gridH = headH + resolved.bands.reduce((sum, b) => sum + bandH(b), 0) + utilH;
+  s.need(gridH);
+  const gridTop = s.y;
+
+  // Header: the month, and under it "NOW" on the first column and the year on each January, the
+  // same tags the app's axis carries, so a column always reads as one real month.
+  s.fill(INK.green);
+  s.doc.rect(s.margin, s.y, s.contentWidth, headH, 'F');
+  s.fill([46, 107, 58]);
+  s.doc.rect(s.margin + labelW, s.y, colW, headH, 'F');
+  s.font(7.5, true);
+  s.ink(INK.white);
+  s.doc.text('MONTH', s.margin + 8, s.y + 14);
+  months.forEach((m, i) => {
+    const cx = s.margin + labelW + i * colW + colW / 2;
+    s.font(8, true);
+    s.ink(INK.white);
+    s.doc.text(pdfSafe(monthShort(m)), cx, s.y + 11, { align: 'center' });
+    const slot = axis[i];
+    const tag = slot.isNow ? `NOW ${slot.year}` : slot.showYear ? String(slot.year) : '';
+    if (tag) {
+      s.font(6, true);
+      s.ink([168, 216, 138]);
+      s.doc.text(tag, cx, s.y + 19.5, { align: 'center' });
+    }
+  });
+  s.y += headH;
+
+  for (const band of resolved.bands) {
+    const h = bandH(band);
+    const light = mixWithWhite(band.rgb, 0.18);
+    const edge = mixWithWhite(band.rgb, 0.45);
+    s.fill(INK.white);
+    s.doc.rect(s.margin, s.y, s.contentWidth, h, 'F');
+    s.fill(edge);
+    s.doc.rect(s.margin, s.y + 3, 3, h - 6, 'F');
+    s.font(8.5, true);
+    s.ink(INK.text);
+    s.doc.text(pdfSafe(band.title), s.margin + 9, s.y + 12);
+    s.font(6.5);
+    s.ink(INK.muted);
+    s.doc.text(truncateToWidth(s.doc, pdfSafe(band.sub), labelW - 14), s.margin + 9, s.y + 21);
+    band.cells.forEach((cell, i) => {
+      const x = s.margin + labelW + i * colW;
+      if (cell.length === 0) {
+        s.font(8);
+        s.ink(INK.faint);
+        s.doc.text('-', x + colW / 2, s.y + h / 2 + 3, { align: 'center' });
+        return;
+      }
+      s.fill(light);
+      s.stroke(edge);
+      s.doc.setLineWidth(0.5);
+      s.doc.roundedRect(x + 2, s.y + 2, colW - 4, h - 4, 3, 3, 'FD');
+      const inRow = Math.min(perRow, cell.length);
+      const rowW = inRow * icon + (inRow - 1) * gap;
+      cell.forEach((entry, j) => {
+        const col = j % perRow;
+        const row = Math.floor(j / perRow);
+        drawIconOrCode(s, entry, x + (colW - rowW) / 2 + col * (icon + gap), s.y + pad + 2 + row * (icon + gap), icon, input.icons);
+      });
+    });
+    s.stroke(INK.hair);
+    s.doc.setLineWidth(0.4);
+    s.doc.line(s.margin, s.y + h, s.margin + s.contentWidth, s.y + h);
+    s.y += h;
+  }
+
+  // Field space: the app's "Field utilization" view, as a bar and a figure per month.
+  s.fill(INK.panelGrey);
+  s.doc.rect(s.margin, s.y, s.contentWidth, utilH, 'F');
+  s.font(8.5, true);
+  s.ink(INK.text);
+  s.doc.text('Field space used', s.margin + 9, s.y + 13);
+  s.font(6.5);
+  s.ink(INK.muted);
+  s.doc.text('share of mapped beds and plots', s.margin + 9, s.y + 22);
+  const water = [35, 94, 134];
+  const over = [179, 58, 58];
+  resolved.utilization.slice(0, 12).forEach((v, i) => {
+    const x = s.margin + labelW + i * colW;
+    const value = Number.isFinite(v) ? Math.max(0, v) : 0;
+    s.font(8, true);
+    s.ink(value > 1.001 ? over : INK.text);
+    s.doc.text(`${Math.round(value * 100)}%`, x + colW / 2, s.y + 13, { align: 'center' });
+    const trackW = colW - 14;
+    s.fill(INK.hair);
+    s.doc.rect(x + 7, s.y + 19, trackW, 6, 'F');
+    if (value > 0) {
+      s.fill(value > 1.001 ? over : water);
+      s.doc.rect(x + 7, s.y + 19, trackW * Math.min(1, value), 6, 'F');
+    }
+  });
+  s.y += utilH;
+
+  // Column rules over every row, with the year seam in ochre at each January.
+  months.forEach((m, i) => {
+    const x = s.margin + labelW + i * colW;
+    const seam = i > 0 && m === 1;
+    s.stroke(seam ? [192, 122, 30] : INK.hair);
+    s.doc.setLineWidth(seam ? 1.2 : 0.4);
+    s.doc.line(x, gridTop + (seam ? 0 : headH), x, s.y);
+  });
+
+  // What the pictures are. A printed icon with no name is a guess; this names every one on the page.
+  const seen = new Map<string, AvailabilityCell>();
+  for (const band of resolved.bands) {
+    const inBand = new Map<string, AvailabilityCell>();
+    for (const e of band.cells.flat()) if (!seen.has(e.iconKey)) inBand.set(e.iconKey, e);
+    [...inBand.values()].sort((a, b) => a.label.localeCompare(b.label)).forEach((e) => seen.set(e.iconKey, e));
+  }
+  const keyItems = [...seen.values()];
+  const keyColW = 127;
+  const perKeyRow = Math.max(1, Math.floor(s.contentWidth / keyColW));
+  const keyRows = Math.ceil(keyItems.length / perKeyRow);
+  s.y += 14;
+  if (keyItems.length > 0) {
+    if (s.need(16 + keyRows * 13)) masthead(s, 'Food availability');
+    s.font(8, true);
+    s.ink(INK.green);
+    s.doc.text('What the pictures are', s.margin, s.y);
+    s.y += 8;
+    keyItems.forEach((e, idx) => {
+      const x = s.margin + (idx % perKeyRow) * keyColW;
+      const y = s.y + Math.floor(idx / perKeyRow) * 13;
+      drawIconOrCode(s, e, x, y, 10, input.icons);
+      s.font(7);
+      s.ink(INK.text);
+      s.doc.text(truncateToWidth(s.doc, pdfSafe(e.label), keyColW - 18), x + 14, y + 7.5);
+    });
+    s.y += keyRows * 13 + 6;
+  }
+
+  const notes = [
+    'Veg: fresh-picking windows from this plan; stored only where a source gives the shelf life and the conditions it needs. No kilograms: the sources give a picking window, not a monthly amount.',
+    ...(resolved.bands.some((b) => b.key === 'forest')
+      ? ['Food forest: the season South African sources give across all growing regions. Your own weeks depend on your area and cultivar.'] : []),
+    ...(resolved.bands.some((b) => b.key === 'animals')
+      ? ['Animal products: the months the sources give for what each kind is kept for. Nothing here counts animals or sets a herd size.'] : []),
+    'Field space: share of the mapped growing area occupied each month. Each crop is held to the upper end of its maturity and picking range, so a bed is never double-booked; red means more is planned than the ground holds.',
+  ];
+  for (const note of notes) s.paragraph(note, { size: 7, ink: INK.muted, gap: 1 });
+}
+
 // ── Compact task summary (quick print) ──────────────────────────────────────
 
 /**
@@ -1453,6 +1753,7 @@ export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = fa
   if (want.has('numbers')) { startPage('portrait'); drawYearInNumbers(s, input, nowMonth, workload); }
   if (!want.has('dashboard') && want.has('plan') && input.planNotes?.length) { startPage('portrait'); masthead(s, 'Plan notes'); drawPlanNotes(s, input); }
   if (want.has('calendar')) { startPage('landscape'); drawCalendar(s, input, nowMonth, calendar); }
+  if (want.has('availability')) { startPage('landscape'); drawAvailability(s, input, now, nowMonth); }
   if (want.has('taskSummary')) { startPage('portrait'); drawTaskSummary(s, input, nowMonth); }
   if (want.has('plan')) { startPage('landscape'); drawFullPlan(s, input); }
   if (want.has('buying')) { startPage('landscape'); drawBuying(s, input, now, nowMonth); }
