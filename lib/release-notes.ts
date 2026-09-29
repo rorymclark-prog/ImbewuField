@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', sha: 'f00dcafe', changes: [
+  { when: '29 September 2026', sha: '090437e2', changes: [
     'Pawpaw now shows in the bed calendar, April to January, from the KZN fruit guide.',
     'Honey still does not show: no source yet gives honey harvest months. The note says so.',
   ], tour: [
