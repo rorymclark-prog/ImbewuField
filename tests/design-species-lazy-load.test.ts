@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-// lib/species-catalog.ts is 197 species / ~224KB, and DesignCanvas.tsx + DesignPalette.tsx are
+// lib/species-catalog.ts is 200 species / ~224KB, and DesignCanvas.tsx + DesignPalette.tsx are
 // statically imported by app/design/page.tsx — so a plain top-level `import { SPECIES } from
 // '@/lib/species-catalog'` in either file ships that whole catalogue to every farmer who opens
 // /design, whether or not they ever open the species picker. Both real reads (placing a species
@@ -23,7 +23,7 @@ test('DesignCanvas.tsx does not statically import the species catalogue', () => 
   assert.doesNotMatch(
     canvasSrc,
     staticSpeciesImport,
-    'a top-level SPECIES import ships all 197 species to every /design visit, not just the ones who place a species',
+    'a top-level SPECIES import ships all 200 species to every /design visit, not just the ones who place a species',
   );
   assert.match(
     canvasSrc,
@@ -36,7 +36,7 @@ test('DesignPalette.tsx does not statically import the species catalogue', () =>
   assert.doesNotMatch(
     paletteSrc,
     staticSpeciesImport,
-    'a top-level SPECIES import ships all 197 species to every /design visit, not just the ones who open the species picker',
+    'a top-level SPECIES import ships all 200 species to every /design visit, not just the ones who open the species picker',
   );
   assert.match(
     paletteSrc,

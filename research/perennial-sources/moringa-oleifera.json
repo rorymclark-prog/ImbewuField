@@ -1,0 +1,47 @@
+{
+  "speciesId": "moringa-oleifera",
+  "commonName": "Moringa",
+  "botanicalName": "Moringa oleifera",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": [
+      0.5,
+      1
+    ],
+    "evidence": {
+      "quote": "Leaves can be harvested after plants grow 1.5– 2.0 m, which usually takes 6 to 12 months after planting depending on the growth conditions",
+      "url": "https://dard.nwpg.gov.za/wp-content/uploads/2022/05/Moringa-production-for-food-security.pdf",
+      "doc": "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges",
+      "page": 33
+    },
+    "notes": "First LEAF harvest only. The same North West DARD guide says flowers and pods come in the second year (quote in gaps). Mabapa et al. (2017, Limpopo farmer survey) report farmers harvesting foliage 3-12 months after planting and 35.2%/32.3% of farmers at 5 and 6 months; not used as the value. Years = 6/12 to 12/12. PDF page (printed page 32)."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched SA source. Mabapa et al. (2017) state 'Farmers have no idea of leaf yield'."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found per plant. The North West DARD guide gives only '20 metric tons of moringa pods per hectare per year' with no plant density, so a per-plant figure would be a derivation and is not made."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No chill requirement figure found. North West DARD guide: tolerates light frost; the same guide recommends Bojanala because of non-occurrence of frost in winter."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No statement about self-fertility found in a fetched SA source. North West DARD guide only says honey bees are the dominant pollinators (not sufficient to assign a union value)."
+  },
+  "harvestProduct": "leaves",
+  "gaps": [
+    "Harvest months not sourced: Mabapa et al. (2017) report SA farmers 'harvest the tree foliage when necessary' and plant 'throughout the year except during winter' (no months given). Leaf harvest is not seasonal in the sources found, so harvestMonths is left empty rather than invented.",
+    "Flowering/pod timing: North West DARD guide says 'Flowers and pods are normally produced during the second year of growth.' No calendar months given. (Du Toit, Univ. of Pretoria pruning abstract seen only as a search snippet, not fetched, so not used.)",
+    "Years to full bearing, per-plant yield, chill and pollination behaviour: no fetched SA source.",
+    "Mabapa et al. (2017, Int. J. Agron., Wiley), MDPI Pretoria 2025 paper and jarts.info paper were blocked or contained no months.",
+    "NEMBA 2020: Moringa is not listed (checked GN 1003 of 18 Sept 2020) so 'none'."
+  ]
+}

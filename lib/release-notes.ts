@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '1e495413', changes: [
+    'Strawberry, blueberry, raspberry and Cape gooseberry are in the design species picker.',
+    'Berries, granadilla and moringa show sourced picking months or years to first crop.',
+    'Crop-plan tasks list what your standing trees give each month, on screen and in the PDF.',
+  ], tour: [
+    { title: 'Add a berry to your design', where: 'Design → Pick species', href: '/design',
+      detail: 'On a Fynbos or Grassland site, tap Pick species: strawberry, blueberry, raspberry and Cape gooseberry sit with the fruit and shrubs, most with sourced South African picking months. They are marked not yet reviewed.' },
+    { title: 'See this month\'s picking', where: 'Crop plan → Tasks', href: '/facilitator/crops',
+      detail: 'Under each month\'s jobs, From your trees lists the standing trees in their sourced South African season, such as Pick Raspberry (2) — SA season Nov–Jan. Trees drawn as proposed are left out until they bear.' },
+  ] },
   { when: '29 September 2026', sha: 'a835dc28', changes: [
     'Food availability now shows fruit trees and animal products as picture trays.',
     'Each chart names this month (Now) and the year, so you know which column is which.',

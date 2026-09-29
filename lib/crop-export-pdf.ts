@@ -48,6 +48,7 @@ import {
   type CalendarRow, type MonthCount,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
+import { treePickingByMonth, treePickingPhrase, type PlacedTreeGroup } from '@/lib/perennial-harvest';
 import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 
 export interface CropPlanPdfMeta {
@@ -129,6 +130,9 @@ export interface CropPlanPdfInput {
   /** Small PNG data URLs keyed 'crop:<key>' / 'tree:<speciesId>' / 'animal:<enterpriseId>'
    * (lib/pdf-icons.ts). A key without one prints as its short code. */
   icons?: Record<string, string>;
+  /** The design's trees with a harvest record. The task summary adds a "pick" line in each month
+   * a standing tree's sourced SA season covers. Omitted = bed tasks only. */
+  treeGroups?: PlacedTreeGroup[];
 }
 
 /** One picture on the availability page: which art to use, and the name the key gives it. */
@@ -1282,11 +1286,24 @@ function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): v
   // / drawCalendar): buildTaskMonths does not cap monthsAway, and a slow
   // crop's next occurrence can be well over a year out. This page must never
   // show a month the calendar on page 1 didn't draw.
-  const months = buildTaskMonths(input.tasks, nowMonth).filter((m) => m.monthsAway < 12);
+  const taskMonths = buildTaskMonths(input.tasks, nowMonth).filter((m) => m.monthsAway < 12);
+  // Standing trees in their sourced SA season, per month of the same window. Not bed work, so they
+  // follow each month's tasks rather than joining them.
+  const picking = treePickingByMonth(input.treeGroups ?? [], Array.from({ length: 12 }, (_, i) => ((nowMonth - 1 + i) % 12) + 1));
+  const months = Array.from({ length: 12 }, (_, monthsAway) => ({
+    month: ((nowMonth - 1 + monthsAway) % 12) + 1,
+    lines: [
+      ...(taskMonths.find((m) => m.monthsAway === monthsAway)?.tasks.map(taskPhrase) ?? []),
+      ...picking[monthsAway].map(treePickingPhrase),
+    ],
+  })).filter((m) => m.lines.length > 0);
 
   if (!months.length) {
     s.paragraph('No plantings yet, so there is nothing to print here.', { size: 9.5, ink: INK.muted });
     return;
+  }
+  if (picking.some((slot) => slot.length > 0)) {
+    s.paragraph('"Pick" lines are standing trees in their sourced South African season, all regions together.', { size: 7.5, ink: INK.muted });
   }
 
   const monthColW = 34;
@@ -1302,9 +1319,9 @@ function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): v
 
   for (const group of months) {
     let first = true;
-    for (const task of group.tasks) {
+    for (const phrase of group.lines) {
       s.font(7.5);
-      const lines = s.doc.splitTextToSize(pdfSafe(taskPhrase(task)), textColW) as string[];
+      const lines = s.doc.splitTextToSize(pdfSafe(phrase), textColW) as string[];
       const rowH = Math.max(11, lines.length * 10.5);
       if (s.need(rowH + (first ? 4 : 0))) { continued(); first = true; }
 

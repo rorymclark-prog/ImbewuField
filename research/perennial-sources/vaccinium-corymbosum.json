@@ -1,0 +1,100 @@
+{
+  "speciesId": "vaccinium-corymbosum",
+  "commonName": "Blueberry (southern highbush)",
+  "botanicalName": "Vaccinium corymbosum (southern highbush hybrids)",
+  "harvestMonths": [
+    {
+      "region": "Western Cape (Hex River and Wolseley trial sites)",
+      "months": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "evidence": {
+        "quote": "Cropping occurred from early August to mid-November, and volumes peaked in October, at both sites.",
+        "url": "https://scholar.sun.ac.za/server/api/core/bitstreams/47824860-fa96-4626-b2b2-da6439d6a8f4/content",
+        "doc": "Steyn, J. (2022) 'Investigating plant growth dynamics of selected southern highbush blueberry (V. corymbosum L. interspecific hybrids) cultivars under South African growing conditions', MSc(Agric) thesis, University of Stellenbosch",
+        "page": 45
+      },
+      "notes": "Steyn (2022), cultivar '8-42'; abstract adds that more than 90% of the crop fell between late September and mid-November. Two southern highbush selections only. PDF page."
+    },
+    {
+      "region": "South Africa (national, USDA FAS GAIN)",
+      "months": [
+        9,
+        10,
+        11,
+        12,
+        1,
+        2
+      ],
+      "evidence": {
+        "quote": "The South African blueberry harvest season traditionally starts in September and ends in mid-February.",
+        "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=The+Budding+Blueberry+Industry+in+South+Africa_Pretoria_South+Africa+-+Republic+of_10-05-2017",
+        "doc": "USDA FAS GAIN report, 'The Budding Blueberry Industry in South Africa' (5 Oct 2017)",
+        "page": 2
+      },
+      "notes": "'starts in September and ends in mid-February' stored as Sep-Feb. Report covers all blueberry types nationally (Western Cape produces the majority). PDF page."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      2,
+      3
+    ],
+    "evidence": {
+      "quote": "Blueberry plants take up to two to three years to start producing fruits of export quality.",
+      "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=The+Budding+Blueberry+Industry+in+South+Africa_Pretoria_South+Africa+-+Republic+of_10-05-2017",
+      "doc": "USDA FAS GAIN report, 'The Budding Blueberry Industry in South Africa' (5 Oct 2017)",
+      "page": 3
+    },
+    "notes": "Source wording is 'up to two to three years' for fruit of EXPORT quality, so it is an upper-ish estimate; earlier light fruiting is not excluded. USDA FAS GAIN 2017, PDF page."
+  },
+  "yearsToFullBearing": {
+    "value": [
+      6,
+      7
+    ],
+    "evidence": {
+      "quote": "Productive lifetime of 20-30 years. Time to full production: 6-7 years",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+      "page": 38
+    },
+    "notes": "KZN advisory notes for 'Blueberry (Vaccinium spp.)' with rabbiteye cultivars listed (Tifblue, Beckyblue, Climax), so not specific to southern highbush. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Per plant yield not found for South African southern highbush. KZN notes give 'Conservative: 4 Average: 6-7 Good: 10 +' t/ha at 4444 to 2500 plants/ha (spacing 3.0-4.0 m x 0.75-1.0 m); a per-plant figure would be derived and is not stored. Swart (2015) literature review quotes per-plant yields from an eastern Australian farm (not SA) and is not used."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "SHB- and RE blueberry cultivars require chilling hours ranging from 100-800 h and 300-700 h, respectively",
+      "url": "https://scholar.sun.ac.za/server/api/core/bitstreams/47824860-fa96-4626-b2b2-da6439d6a8f4/content",
+      "doc": "Steyn, J. (2022) 'Investigating plant growth dynamics of selected southern highbush blueberry (V. corymbosum L. interspecific hybrids) cultivars under South African growing conditions', MSc(Agric) thesis, University of Stellenbosch",
+      "page": 26
+    },
+    "notes": "Source gives chill HOURS, not chill units: southern highbush 100-800 h. The schema field is chill units, so no value is stored rather than mixing units. UNIT IS CHILL HOURS (0-7 C), not Utah/Positive chill units. Southern highbush range from a Stellenbosch MSc literature review (citing Darnell & Davies 1990; Williamson et al. 2002). Swart (2015) gives 150 to 600 hours at 0 to 7 C for modern SHB (PDF p.17). KZN notes give rabbiteye 300-600 PCUs and 'high' for highbush. PDF page."
+  },
+  "pollination": {
+    "value": "partly-self-fertile",
+    "evidence": {
+      "quote": "Cross-pollination increased fruit weight, seed number per fruit, as well as shortened the fruit development period.",
+      "url": "https://scholar.sun.ac.za/server/api/core/bitstreams/47824860-fa96-4626-b2b2-da6439d6a8f4/content",
+      "doc": "Steyn, J. (2022) 'Investigating plant growth dynamics of selected southern highbush blueberry (V. corymbosum L. interspecific hybrids) cultivars under South African growing conditions', MSc(Agric) thesis, University of Stellenbosch",
+      "page": 31
+    },
+    "notes": "Mapped from a study of 'Sharpblue' SHB self- versus cross-pollination cited in the thesis: self-pollinated fruit still develops, cross-pollination improves size, seed and ripening time. KZN notes are more cautious: 'Plant two or more compatible cultivars to ensure cross pollination and adequate fruit set.' PDF page."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Limpopo/Mpumalanga May-September early window: only a search-result claim, no fetched source, so not stored.",
+    "Per-plant mature yield and yield by age not sourced for SA.",
+    "Swart (2015): most lucrative Western Cape export window is early to mid spring (market window, not the harvest season); George region has too few chill units for some cultivars.",
+    "NEMBA 2020: Vaccinium is not listed, so 'none'.",
+    "Chill requirement is published in hours (100-800 h for southern highbush), not chill units; left null."
+  ]
+}

@@ -12,6 +12,8 @@ import {
   placedTreeGroups,
   sourcedSeasonMonths,
   speciesIdForPlaced,
+  treePickingByMonth,
+  treePickingPhrase,
 } from '@/lib/perennial-harvest';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { harvestFromDossier, loadDossiers } from '../scripts/build-perennial-harvest.mjs';
@@ -141,4 +143,39 @@ test('trees never reach a per-m² figure', () => {
     try { src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'); } catch { continue; }
     assert.doesNotMatch(src, /perennial-harvest/, `${file} must not read tree harvests`);
   }
+});
+
+test('the crop plan\'s pick lines: standing trees only, one per in-season month, with the SA season', () => {
+  const raspberry = PERENNIAL_HARVEST['rubus-idaeus'];
+  assert.ok(raspberry, 'raspberry dossier missing');
+  const groups = placedTreeGroups([
+    { defId: 'tree_other', speciesId: 'rubus-idaeus', status: 'existing' },
+    { defId: 'tree_other', speciesId: 'rubus-idaeus', status: 'existing' },
+    { defId: 'tree_other', speciesId: 'rubus-idaeus', status: 'proposed' },
+  ]);
+  // KZN DARD: "1st week November to late January".
+  const lines = treePickingByMonth(groups, [10, 11, 12, 1, 2]);
+  assert.deepEqual(lines.map((slot) => slot.length), [0, 1, 1, 1, 0]);
+  assert.equal(lines[1][0].trees, 2, 'a proposed cane is not picking this year');
+  assert.equal(treePickingPhrase(lines[1][0]), 'Pick Raspberry (2) — SA season Nov–Jan');
+  assert.deepEqual(treePickingByMonth(placedTreeGroups([{ defId: 'tree_other', speciesId: 'rubus-idaeus', status: 'proposed' }]), [11]), [[]]);
+});
+
+test('berries and moringa: harvest records only for what a primary source gave', () => {
+  // Rory, 2026-09-29: "what about berries and other food forest crops can we add them to the design
+  // studio etc? what about moringa". Blackberry is not here: NEMBA category 2.
+  for (const id of ['fragaria-x-ananassa', 'vaccinium-corymbosum', 'rubus-idaeus', 'passiflora-edulis']) {
+    assert.ok(PERENNIAL_HARVEST[id]?.windows.length, `${id} has no sourced window`);
+  }
+  assert.equal(PERENNIAL_HARVEST['rubus-fruticosus'], undefined);
+  // Moringa: first leaves 6-12 months after planting (North West DARD), but no sourced SA months,
+  // so it stays off the month chart and out of the pick lines rather than borrowing another
+  // country's calendar.
+  const moringa = PERENNIAL_HARVEST['moringa-oleifera'];
+  assert.ok(moringa);
+  assert.deepEqual(moringa.yearsToFirstCrop?.value, [0.5, 1]);
+  assert.equal(moringa.product, 'leaves');
+  assert.equal(speciesIdForPlaced({ defId: 'tree_moringa' }), 'moringa-oleifera');
+  // Blueberry's chill figure is in hours, which the chill-units field must not carry.
+  assert.equal(PERENNIAL_HARVEST['vaccinium-corymbosum'].chillUnits, null);
 });

@@ -16,6 +16,7 @@ export const SPECIES_ART = {
   'coffea-arabica': { picker: 'tree_arabica_coffee.png', plan: 'arabica-coffee-tree-v1.png' },
   'musa-acuminata-aaa-group': { picker: 'tree_banana_dwarf_cavendish_williams.png', plan: 'banana-dwarf-cavendish-williams-v1.png' },
   'morus-nigra': { picker: 'tree_black_mulberry.png', plan: 'black-mulberry-tree-v1.png' },
+  'moringa-oleifera': { picker: 'tree_moringa.png', plan: 'moringa-tree-v1.png' },
   'ceratonia-siliqua': { picker: 'tree_carob.png', plan: 'carob-tree-v1.png' },
   'phoenix-dactylifera': { picker: 'tree_date_palm.png', plan: 'date-palm-v1.png' },
   'carya-illinoinensis': { picker: 'tree_pecan.png', plan: 'pecan-tree-v1.png' },

@@ -10,6 +10,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import { PNG } from 'pngjs';
+import { PERENNIAL_HARVEST, sourcedSeasonMonths } from '@/lib/perennial-harvest';
 
 import {
   availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename, resolveAvailability, type CropPlanPdfInput,
@@ -208,4 +209,22 @@ test('a picture jsPDF cannot read falls back to the code instead of breaking the
   }));
   assert.equal(blob.type, 'application/pdf');
   assert.ok(blob.size > 5_000);
+});
+
+// ── Food-forest picking in the task summary ────────────────────────────────
+// Rory, 2026-09-29: "maybe have it even show in the monthly crop plan? harvest period etc etc".
+
+test('the task summary adds a pick line in each month a standing tree is in its sourced season', async () => {
+  const blueberry = PERENNIAL_HARVEST['vaccinium-corymbosum'];
+  assert.ok(blueberry, 'blueberry dossier missing');
+  const standing = [{ harvest: blueberry, existing: 3, proposed: 0 }];
+  const withTrees = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'], treeGroups: standing })));
+  // One line per month of the sourced season (every region together) — jsPDF escapes the "(3)".
+  const season = sourcedSeasonMonths(blueberry);
+  assert.equal(withTrees.match(/\(Pick Blueberry \\+\(3\\+\)/g)?.length ?? 0, season.length);
+  const without = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'] })));
+  assert.ok(!without.includes('Pick Blueberry'));
+  // Proposed bushes are years from a crop: nothing to pick from today.
+  const young = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'], treeGroups: [{ harvest: blueberry, existing: 0, proposed: 3 }] })));
+  assert.ok(!young.includes('Pick Blueberry'));
 });

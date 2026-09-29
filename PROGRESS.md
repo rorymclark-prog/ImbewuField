@@ -52,6 +52,35 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 29 Sep 2026 — Berries and moringa in the design studio; tree picking in the monthly plan
+Rory: "what about berries and other food forest crops can we add them to the design studio etc?
+what about moringa put all these things in there… and maybe have it even show in the monthly crop
+plan? harvest period etc etc".
+- **Catalogue** (`lib/species-catalog.ts`, now 200): strawberry (groundcover; Fynbos + Grassland),
+  southern highbush blueberry (Fynbos), raspberry (Fynbos + Grassland), Cape gooseberry (seven
+  biomes, rank 5). All `reviewed: false`, NEMBA checked against GN 1003 of 2020. Height, frost
+  class and biome ranks are editor placeholders and each `source` says so; Cape gooseberry's
+  facts rest on seed-company/trade pages only (said in its source). **Blackberry left out**:
+  *Rubus fruticosus* agg. is NEMBA category 2.
+- **Harvest dossiers** (`research/perennial-sources/`): strawberry (Acta Hort. 265, SASGA, KZN
+  DARD), blueberry (Stellenbosch MSc 2022, USDA GAIN 2017, KZN DARD; its chill figure is in
+  hours so the chill-units field stays null), raspberry (KZN DARD Nov–Jan), purple granadilla
+  (KZN DARD Nov–Jan + Jun–Jul, first crop 6–8 months), moringa (first leaves 6–12 months, North
+  West DARD; **no sourced SA months**, so it stays off the chart). Cape gooseberry has no harvest
+  record: the only SA month table found is a seed company's sowing calendar.
+- **Art:** moringa mapped in `lib/species-art.ts`; `tree_moringa` → `moringa-oleifera` in
+  `ELEMENT_SPECIES`. The four berries have no painted art yet (Lucide fallback) — Codex batch needed.
+- **Monthly plan** (`app/facilitator/crops/page.tsx` Tasks card): under each month (this, next,
+  Looking ahead for 12 months) a **From your trees** box lists standing trees in their sourced SA
+  season — "Pick Raspberry (2) — SA season Nov–Jan" — with a note that seasons are every region
+  together. Proposed trees are left out (years from a crop); follows the food-forest switch; the
+  WhatsApp share carries the lines too. `treePickingByMonth` / `treePickingPhrase` in
+  `lib/perennial-harvest.ts`.
+- **Printed task summary** (`lib/crop-export-pdf.ts`): the same pick lines per month, via the
+  export card's new `treeGroups` prop.
+- Tests: pick-line and berry/moringa cases in `tests/perennial-harvest.test.ts`, task-summary case
+  in `tests/crop-plan-pdf-build.test.ts`, species count 196 → 200.
+
 ### 29 Sep 2026 — Food availability: tree and animal picture trays, month labels, printed page
 Rory, looking at the availability chart: "i would prefer icons of fruoit and berrues just like the
 others so a 3rd, 4th litle box after staple crops animal products and food forest pruducts etc with
@@ -76,8 +105,7 @@ calendar we have in the app with the veg and other icons".
   layer coop + tilapia pond with icons from `public/`; all 16 site/water PDFs rebuilt and the
   page checked. Picture cost ~10 KB each (~290 KB for a busy plan).
 - Guava, pawpaw and honey have no sourced months yet, so they stay off the chart and the page.
-- **Next (PR2):** berries (strawberry, blueberry, raspberry, cape gooseberry; dossiers drafted,
-  Codex art needed), moringa and mulberry harvest data, food-forest harvest rows in the monthly plan.
+- **Next (PR2):** berries, moringa and tree picking in the monthly plan — done, see the entry above.
 - Tests: `tests/print-availability.test.ts` (new), availability cases in `tests/crop-plan-pdf-build.test.ts`.
 
 ### 29 Sep 2026 — Crop-plan PDF audited at eight SA sites

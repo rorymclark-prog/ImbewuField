@@ -26,7 +26,7 @@ import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
-import { buildTreeAvailability, formatMonthSpan, formatRange, placedTreeGroups, sourcedSeasonMonths, type PlacedTreeGroup, type TreeAvailabilityItem } from '@/lib/perennial-harvest';
+import { buildTreeAvailability, formatMonthSpan, formatRange, placedTreeGroups, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
@@ -186,6 +186,31 @@ function HarvestShareRow({
  * stated once. taskSentence() stays for the WhatsApp share and the PDF, where a
  * flat line is the right shape.
  */
+/**
+ * Standing trees in their sourced SA picking season this month. Not a bed task — no bed, no
+ * sowing date — so it sits under the month's jobs rather than inside TaskList's action groups.
+ */
+function TreePickingList({ lines }: { lines: TreePickingLine[] }) {
+  const { lang } = useLanguage();
+  if (lines.length === 0) return null;
+  return (
+    <div className="rounded-xl mt-2" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', padding: '7px 9px' }}>
+      <div className="flex items-baseline gap-1.5">
+        <Trees size={14} aria-hidden style={{ flexShrink: 0, color: 'var(--emerald)' }} />
+        <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{cropUi(lang, 'From your trees', 'Ezihlahleni zakho')}</span>
+      </div>
+      <div className="space-y-0.5 mt-1">
+        {lines.map((line) => (
+          <div key={line.speciesId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>{treePickingPhrase(line)}</div>
+        ))}
+      </div>
+      <div className="font-sans mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
+        {cropUi(lang, 'Sourced South African seasons, all regions together — your own trees may start or finish a month either side.', 'Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.')}
+      </div>
+    </div>
+  );
+}
+
 function TaskList({ tasks }: { tasks: CropTask[] }) {
   const { lang } = useLanguage();
   const groups = groupTasksByAction(tasks);
@@ -1276,6 +1301,12 @@ function FacilitatorCropsPageInner() {
   const monthAxis = useMemo(() => monthAxisSlots(currentMonth, currentYear, DISPLAY_MONTHS), [currentMonth, currentYear]);
   // Keep the task list concise; the charts use monthOrder to align with the beds.
   const lookAheadMonthOrder = useMemo(() => Array.from({ length: LOOK_AHEAD_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
+  // Tree picking by look-ahead slot, only for the first twelve: a season repeats every year, so
+  // "(next year)" slots would only say the same thing again. Follows the chart's food-forest switch.
+  const treePicking = useMemo(
+    () => (includeTrees ? treePickingByMonth(canvasTrees, lookAheadMonthOrder.slice(0, 12)) : []),
+    [includeTrees, canvasTrees, lookAheadMonthOrder],
+  );
 
   const benchmarkPlantings = useMemo(
     () => plantings.filter((planting) => plantingIsActiveOrPlanned(planting, currentMonth)),
@@ -1449,7 +1480,8 @@ function FacilitatorCropsPageInner() {
   }, [beds, canvasSite, placeName, designTitle, region, pattern, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   function shareTasks() {
-    const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
+    const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line)}`).join('');
+    const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 
@@ -2083,6 +2115,7 @@ function FacilitatorCropsPageInner() {
                       </span>
                     </div>
                     <TaskList tasks={t} />
+                    <TreePickingList lines={treePicking[idx] ?? []} />
                   </div>
                 ))}
                 <div className="font-sans rounded-lg px-2.5 py-2 mb-3" style={{ fontSize: 11.5, color: 'var(--gold-dim)', lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(154,96,24,0.3)' }}>
@@ -2110,13 +2143,15 @@ function FacilitatorCropsPageInner() {
                       {lookAheadMonthOrder.map((m, i) => {
                         if (i < 2) return null;
                         const t = allTasks.filter((task) => taskMonthsFromNow(task, currentMonth) === i);
-                        if (t.length === 0) return null;
+                        const picking = treePicking[i] ?? [];
+                        if (t.length === 0 && picking.length === 0) return null;
                         return (
                           <div key={i} className="mb-2">
                             <div className="font-display font-semibold mb-1" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>
                               {monthLabel(m)}{i >= 12 ? ' (next year)' : ''}
                             </div>
-                            <TaskList tasks={t} />
+                            {t.length > 0 && <TaskList tasks={t} />}
+                            <TreePickingList lines={picking} />
                           </div>
                         );
                       })}
@@ -2307,6 +2342,7 @@ function FacilitatorCropsPageInner() {
               planNotesAt={plan?.planNotesAt}
               meta={exportMeta}
               availability={printAvailability}
+              treeGroups={includeTrees ? canvasTrees : undefined}
             />
 
             {/* Seed BOQ + year-ahead report */}

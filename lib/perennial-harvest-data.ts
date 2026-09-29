@@ -323,6 +323,100 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
       "note": "More precisely 'parthenocarpic' (fruit sets without any pollination at all, i.e. requires neither a wasp nor cross-pollen) for the common-type fig cultivars grown commercially in South Africa; mapped to the closest schema option 'self-fertile'. Other fig types (Smyrna, Capri, San Pedro) do need pollination/caprification but are not the type commercially grown in SA per this source."
     }
   },
+  "fragaria-x-ananassa": {
+    "speciesId": "fragaria-x-ananassa",
+    "name": "Strawberry",
+    "product": "fruit",
+    "windows": [
+      {
+        "region": "Western Cape",
+        "months": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "source": {
+          "quote": "In the western Cape the season is September to December.",
+          "url": "https://ishs.org/ishs-article/265_125/",
+          "doc": "J.P. Human & E.P. Evans, 'STRAWBERRY PRODUCTION IN SOUTH AFRICA', Acta Horticulturae 265 (International Strawberry Symposium), abstract (article 265_125)",
+          "page": 757
+        }
+      },
+      {
+        "region": "Transvaal (now Gauteng/Limpopo/Mpumalanga/North West), grown in tunnels",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "source": {
+          "quote": "In the Transvaal some farmers grow strawberries in tunnels (10–15 ha). This enalbes them to produce fruit from late May until mid-December.",
+          "url": "https://ishs.org/ishs-article/265_125/",
+          "doc": "J.P. Human & E.P. Evans, 'STRAWBERRY PRODUCTION IN SOUTH AFRICA', Acta Horticulturae 265 (International Strawberry Symposium), abstract (article 265_125)",
+          "page": 757
+        }
+      },
+      {
+        "region": "South Africa (industry body overview, all regions)",
+        "months": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "source": {
+          "quote": "Depending on the variety of the strawberry and the production region, strawberries are planted from March to April, and harvested from June to December.",
+          "url": "https://strawberries.org.za/an-overview-of-strawberry-cultivation-in-south-africa/",
+          "doc": "South African Strawberry Growers Association (SASGA), An overview of strawberry cultivation in South Africa",
+          "page": null
+        }
+      },
+      {
+        "region": "KwaZulu-Natal, frost-free areas",
+        "months": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "source": {
+          "quote": "In KwaZulu-Natal, flower and fruit production occurs in late autumn/winter in frost-free areas, in spring to early summer where light frosts occur",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+          "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+          "page": 34
+        }
+      },
+      {
+        "region": "KwaZulu-Natal, areas with light frosts",
+        "months": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "source": {
+          "quote": "In KwaZulu-Natal, flower and fruit production occurs in late autumn/winter in frost-free areas, in spring to early summer where light frosts occur",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+          "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+          "page": 34
+        }
+      }
+    ],
+    "yearsToFirstCrop": null,
+    "yearsToFullBearing": null,
+    "yieldKgPerTree": null,
+    "chillUnits": null,
+    "pollination": null
+  },
   "garcinia-livingstonei": {
     "speciesId": "garcinia-livingstonei",
     "name": "African mangosteen",
@@ -530,6 +624,29 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
     "chillUnits": null,
     "pollination": null
   },
+  "moringa-oleifera": {
+    "speciesId": "moringa-oleifera",
+    "name": "Moringa",
+    "product": "leaves",
+    "windows": [],
+    "yearsToFirstCrop": {
+      "value": [
+        0.5,
+        1
+      ],
+      "source": {
+        "quote": "Leaves can be harvested after plants grow 1.5– 2.0 m, which usually takes 6 to 12 months after planting depending on the growth conditions",
+        "url": "https://dard.nwpg.gov.za/wp-content/uploads/2022/05/Moringa-production-for-food-security.pdf",
+        "doc": "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges",
+        "page": 33
+      },
+      "note": "First LEAF harvest only. The same North West DARD guide says flowers and pods come in the second year (quote in gaps). Mabapa et al. (2017, Limpopo farmer survey) report farmers harvesting foliage 3-12 months after planting and 35.2%/32.3% of farmers at 5 and 6 months; not used as the value. Years = 6/12 to 12/12. PDF page (printed page 32)."
+    },
+    "yearsToFullBearing": null,
+    "yieldKgPerTree": null,
+    "chillUnits": null,
+    "pollination": null
+  },
   "musa-acuminata-aaa-group": {
     "speciesId": "musa-acuminata-aaa-group",
     "name": "Banana",
@@ -589,6 +706,58 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
     ],
     "yearsToFirstCrop": null,
     "yearsToFullBearing": null,
+    "yieldKgPerTree": null,
+    "chillUnits": null,
+    "pollination": null
+  },
+  "passiflora-edulis": {
+    "speciesId": "passiflora-edulis",
+    "name": "Purple granadilla",
+    "product": "fruit",
+    "windows": [
+      {
+        "region": "KwaZulu-Natal (Bioresource Groups 3 and 5, cool subtropical)",
+        "months": [
+          11,
+          12,
+          1,
+          6,
+          7
+        ],
+        "source": {
+          "quote": "Heaviest crop in November to January, secondary crop in June to July, with light cropping in between.",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+          "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+          "page": 14
+        }
+      }
+    ],
+    "yearsToFirstCrop": {
+      "value": [
+        0.5,
+        0.67
+      ],
+      "source": {
+        "quote": "First harvests are obtained 6 to 8 months after transplanting, with full bearing within 18 months.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+        "page": 14
+      },
+      "note": "6 to 8 months after transplanting = 0.5 to 0.67 years (rounded). Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    },
+    "yearsToFullBearing": {
+      "value": [
+        1.5,
+        1.5
+      ],
+      "source": {
+        "quote": "First harvests are obtained 6 to 8 months after transplanting, with full bearing within 18 months.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+        "page": 14
+      },
+      "note": "'within 18 months' is an upper bound, stored as 1.5. Same sentence as the first-crop figure. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    },
     "yieldKgPerTree": null,
     "chillUnits": null,
     "pollination": null
@@ -1033,6 +1202,32 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
     "chillUnits": null,
     "pollination": null
   },
+  "rubus-idaeus": {
+    "speciesId": "rubus-idaeus",
+    "name": "Raspberry",
+    "product": "fruit",
+    "windows": [
+      {
+        "region": "KwaZulu-Natal (spring-bearing cultivars: Glen Prosen, Glen Lyon, Tulameen)",
+        "months": [
+          11,
+          12,
+          1
+        ],
+        "source": {
+          "quote": "Flowering 3-4 weeks later, with fruit maturity & harvest 8 weeks later (1st week November to late January).",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+          "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+          "page": 37
+        }
+      }
+    ],
+    "yearsToFirstCrop": null,
+    "yearsToFullBearing": null,
+    "yieldKgPerTree": null,
+    "chillUnits": null,
+    "pollination": null
+  },
   "sclerocarya-birrea-subsp-caffra": {
     "speciesId": "sclerocarya-birrea-subsp-caffra",
     "name": "Marula",
@@ -1160,6 +1355,83 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
     "yieldKgPerTree": null,
     "chillUnits": null,
     "pollination": null
+  },
+  "vaccinium-corymbosum": {
+    "speciesId": "vaccinium-corymbosum",
+    "name": "Blueberry",
+    "product": "fruit",
+    "windows": [
+      {
+        "region": "Western Cape (Hex River and Wolseley trial sites)",
+        "months": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "source": {
+          "quote": "Cropping occurred from early August to mid-November, and volumes peaked in October, at both sites.",
+          "url": "https://scholar.sun.ac.za/server/api/core/bitstreams/47824860-fa96-4626-b2b2-da6439d6a8f4/content",
+          "doc": "Steyn, J. (2022) 'Investigating plant growth dynamics of selected southern highbush blueberry (V. corymbosum L. interspecific hybrids) cultivars under South African growing conditions', MSc(Agric) thesis, University of Stellenbosch",
+          "page": 45
+        }
+      },
+      {
+        "region": "South Africa (national, USDA FAS GAIN)",
+        "months": [
+          9,
+          10,
+          11,
+          12,
+          1,
+          2
+        ],
+        "source": {
+          "quote": "The South African blueberry harvest season traditionally starts in September and ends in mid-February.",
+          "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=The+Budding+Blueberry+Industry+in+South+Africa_Pretoria_South+Africa+-+Republic+of_10-05-2017",
+          "doc": "USDA FAS GAIN report, 'The Budding Blueberry Industry in South Africa' (5 Oct 2017)",
+          "page": 2
+        }
+      }
+    ],
+    "yearsToFirstCrop": {
+      "value": [
+        2,
+        3
+      ],
+      "source": {
+        "quote": "Blueberry plants take up to two to three years to start producing fruits of export quality.",
+        "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=The+Budding+Blueberry+Industry+in+South+Africa_Pretoria_South+Africa+-+Republic+of_10-05-2017",
+        "doc": "USDA FAS GAIN report, 'The Budding Blueberry Industry in South Africa' (5 Oct 2017)",
+        "page": 3
+      },
+      "note": "Source wording is 'up to two to three years' for fruit of EXPORT quality, so it is an upper-ish estimate; earlier light fruiting is not excluded. USDA FAS GAIN 2017, PDF page."
+    },
+    "yearsToFullBearing": {
+      "value": [
+        6,
+        7
+      ],
+      "source": {
+        "quote": "Productive lifetime of 20-30 years. Time to full production: 6-7 years",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+        "page": 38
+      },
+      "note": "KZN advisory notes for 'Blueberry (Vaccinium spp.)' with rabbiteye cultivars listed (Tifblue, Beckyblue, Climax), so not specific to southern highbush. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    },
+    "yieldKgPerTree": null,
+    "chillUnits": null,
+    "pollination": {
+      "value": "partly-self-fertile",
+      "source": {
+        "quote": "Cross-pollination increased fruit weight, seed number per fruit, as well as shortened the fruit development period.",
+        "url": "https://scholar.sun.ac.za/server/api/core/bitstreams/47824860-fa96-4626-b2b2-da6439d6a8f4/content",
+        "doc": "Steyn, J. (2022) 'Investigating plant growth dynamics of selected southern highbush blueberry (V. corymbosum L. interspecific hybrids) cultivars under South African growing conditions', MSc(Agric) thesis, University of Stellenbosch",
+        "page": 31
+      },
+      "note": "Mapped from a study of 'Sharpblue' SHB self- versus cross-pollination cited in the thesis: self-pollinated fruit still develops, cross-pollination improves size, seed and ripening time. KZN notes are more cautious: 'Plant two or more compatible cultivars to ensure cross pollination and adequate fruit set.' PDF page."
+    }
   },
   "vangueria-infausta": {
     "speciesId": "vangueria-infausta",
