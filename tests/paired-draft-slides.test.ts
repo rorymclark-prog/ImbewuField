@@ -30,6 +30,29 @@ test('the Sesotho pilot pairs all 22 actual English introduction slides in autho
   assert.equal(validatePairedDraft(completeHold(), source).length, 22);
 });
 
+test('silent Small Livestock drafts keep animal-care text exact and ship the reviewed still bytes', () => {
+  const english = englishSlideRecords(readFileSync('docs/narration/small-livestock.en.md', 'utf8'));
+  assert.equal(english.length, 20);
+  for (const lang of ['st', 've', 'ts']) {
+    const packet = JSON.parse(readFileSync(`docs/study-translation-reviews/small-livestock-regional/small-livestock.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, english, lang);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    assert.equal(slides.length, 20);
+    for (const number of [12, 13, 14, 15, 16, 18, 19, 20]) {
+      assert.ok(slides[number - 1].target.body.every((part: any) => part.status === 'english-hold'),
+        `${lang} slide ${number}: husbandry, safety, manure and field-action advice stays exact English`);
+    }
+    for (const slide of slides) {
+      const name = `slide-${String(slide.n).padStart(2, '0')}.webp`;
+      assert.deepEqual(
+        readFileSync(`public/course-decks/small-livestock/${lang}/${name}`),
+        readFileSync(`docs/media/small-livestock-regional/${lang}/${name}`),
+        `${lang} ${name}: learner still must match the source-paired review frame`,
+      );
+    }
+  }
+});
+
 test('Sesotho Introduction review slides keep uncertain field steps paired in English beside backchecked draft lines', () => {
   const packet = JSON.parse(readFileSync('docs/narration/intro-permaculture.st.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'st');

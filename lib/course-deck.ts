@@ -224,9 +224,11 @@ const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
 // Keep the real footage and Flow results. The bee close-up shows one continuous move between two
 // blossoms; the lesson still retains the wider hive-to-crops context. The nutrient diagram waits.
 const LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
-  7: { src: 'flow-ducks-understorey', poster: 'flow-ducks-understorey', bytes: 7613902, seconds: 8 },
-  4: { src: 'hens-pecking-pexels-5563939', poster: 'hens-pecking-pexels-5563939', bytes: 5058477, seconds: 8 },
-  9: { src: 'flow-bee-between-blossoms', poster: 'flow-bee-between-blossoms', bytes: 2126645, seconds: 8, playOnce: true },
+  // Regional stills show each unreviewed draft beside its exact English source. An English
+  // animation poster would cover that comparison during a silent lesson.
+  7: { src: 'flow-ducks-understorey', poster: 'flow-ducks-understorey', bytes: 7613902, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
+  4: { src: 'hens-pecking-pexels-5563939', poster: 'hens-pecking-pexels-5563939', bytes: 5058477, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
+  9: { src: 'flow-bee-between-blossoms', poster: 'flow-bee-between-blossoms', bytes: 2126645, seconds: 8, playOnce: true, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Keep the Flow seed-sharing film; locally drawn market diagrams await visual clearance.
@@ -247,7 +249,10 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('market-community', MARKET_ANIMATIONS),
   },
   'small-livestock': {
-    slideLanguages: ['en', 'zu'],
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    missingSlides: { st: [], ve: [], ts: [] },
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
   },
   'food-forest': {

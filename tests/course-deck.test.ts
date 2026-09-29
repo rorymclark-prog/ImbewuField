@@ -106,6 +106,24 @@ test('regional Reading the Landscape decks expose all 21 paired WebPs with Engli
   }
 });
 
+test('silent Small Livestock review decks keep every paired frame visible and claim no regional voice', () => {
+  const deck = deckFor('small-livestock')!;
+  for (const lang of ['st', 've', 'ts']) {
+    assert.ok(deck.slideLanguages.includes(lang));
+    assert.equal(deck.slideFormatsByLanguage?.[lang], 'webp');
+    assert.equal(COURSE_NARRATION['small-livestock'].languages.includes(lang), false);
+    for (let slide = 1; slide <= 20; slide++) {
+      const selected = slideImageFor('small-livestock', lang, slide);
+      assert.ok(selected?.exact, `${lang} slide ${slide} must show its source-paired still`);
+      assert.ok(onDisk(selected.url), `${lang} slide ${slide} must be downloadable offline`);
+    }
+    for (const slide of [4, 7, 9]) {
+      assert.equal(animationUrls('small-livestock', slide, lang), null,
+        'an English animation poster would hide the source-paired review text');
+    }
+  }
+});
+
 test('Sesotho Plant Guilds exposes every paired slide without claiming a Sesotho voice', () => {
   const deck = deckFor('plant-guilds')!;
   assert.ok(deck.slideLanguages.includes('st'));
