@@ -1,0 +1,184 @@
+{
+  "module": "small-livestock",
+  "language": "ve",
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "narration": null,
+  "pairedSource": "docs/study-translation-reviews/small-livestock-regional/small-livestock.ve.paired-draft.json",
+  "pairedSourceSha256": "36eb2d5e30835ea6c67e4a3b5cb0c8446084889c9d1c0e450b4f20426ac9ed89",
+  "englishSource": "docs/narration/small-livestock.en.md",
+  "englishSourceSha256": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+  "xitsongaScope": null,
+  "slides": [
+    {
+      "slide": 1,
+      "path": "docs/media/small-livestock-regional/ve/slide-01.webp",
+      "pixels": "1440x5400",
+      "bytes": 125384,
+      "sha256": "c43b723eae8940aac98079a9bf261a4b8f6cecafc150b47fc096d7778459b36f"
+    },
+    {
+      "slide": 2,
+      "path": "docs/media/small-livestock-regional/ve/slide-02.webp",
+      "pixels": "1440x5400",
+      "bytes": 127246,
+      "sha256": "18e94d7f454df5fc90e82da8cd0df45f57628de82aa6536e3b457ffa5db64233"
+    },
+    {
+      "slide": 3,
+      "path": "docs/media/small-livestock-regional/ve/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 123362,
+      "sha256": "20445c1c96550be452a6aaba523c6068cac18e5f446f17deeb52a82f013a1420"
+    },
+    {
+      "slide": 4,
+      "path": "docs/media/small-livestock-regional/ve/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 116278,
+      "sha256": "9bb33d1d7ad67735c839c047c804e7ea123737d5d681b7f19018660b72cff31b"
+    },
+    {
+      "slide": 5,
+      "path": "docs/media/small-livestock-regional/ve/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 126646,
+      "sha256": "90fabfaab79ba33eb8c12540e730a73eab9a41c77d469b710f30458d569bdd66"
+    },
+    {
+      "slide": 6,
+      "path": "docs/media/small-livestock-regional/ve/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 122628,
+      "sha256": "1ec1eda7606776ec8c285355cc2a6b1d7c1c2cd8cea6c67860182e3b546dd92b"
+    },
+    {
+      "slide": 7,
+      "path": "docs/media/small-livestock-regional/ve/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 132744,
+      "sha256": "cc4d7b02bf5233f03ca0df80330d068c41c100ebb74c66c124857afcc57d5b70"
+    },
+    {
+      "slide": 8,
+      "path": "docs/media/small-livestock-regional/ve/slide-08.webp",
+      "pixels": "1440x5400",
+      "bytes": 129500,
+      "sha256": "ebd230faa63ea11e0448bffdaa8c4e3747cd8e0e99d35a413455b30507c7b48b"
+    },
+    {
+      "slide": 9,
+      "path": "docs/media/small-livestock-regional/ve/slide-09.webp",
+      "pixels": "1440x5400",
+      "bytes": 91068,
+      "sha256": "bd69e6bab8234a782bb977213969cdc13d65cc64383011612ba39ea946aa59c2"
+    },
+    {
+      "slide": 10,
+      "path": "docs/media/small-livestock-regional/ve/slide-10.webp",
+      "pixels": "1440x5400",
+      "bytes": 130622,
+      "sha256": "b25113c67a15818736c8b2b9e2db8fa8f86e210c61d9a6af7c19ca089723922b"
+    },
+    {
+      "slide": 11,
+      "path": "docs/media/small-livestock-regional/ve/slide-11.webp",
+      "pixels": "1440x5400",
+      "bytes": 149604,
+      "sha256": "6ee9bbbddd0411eaef091fa99447921037e79ef43ffd64495b876ed42d2f0ed4"
+    },
+    {
+      "slide": 12,
+      "path": "docs/media/small-livestock-regional/ve/slide-12.webp",
+      "pixels": "1440x5400",
+      "bytes": 115150,
+      "sha256": "ce57ce9e1509a7dce532b3a4023b0ffcd565c2fb56036b0f5280f27067448507"
+    },
+    {
+      "slide": 13,
+      "path": "docs/media/small-livestock-regional/ve/slide-13.webp",
+      "pixels": "1440x5400",
+      "bytes": 196742,
+      "sha256": "be50004032f190963d3a482dc1d4865f29d0e89b44332c4afbde9b52ddeca611"
+    },
+    {
+      "slide": 14,
+      "path": "docs/media/small-livestock-regional/ve/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 113344,
+      "sha256": "08d45a39c81e1cf6316e9d1d812ef7b72b581f2125ce94631ca31ef118eb75aa"
+    },
+    {
+      "slide": 15,
+      "path": "docs/media/small-livestock-regional/ve/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 160836,
+      "sha256": "260a1bc881fb67ecf285a35e3a514a1dc326589e3144e2dff335d36941f4b220"
+    },
+    {
+      "slide": 16,
+      "path": "docs/media/small-livestock-regional/ve/slide-16.webp",
+      "pixels": "1440x5400",
+      "bytes": 128836,
+      "sha256": "396841fc542d0ecbdca63d5338d1f34d12c8013f882624ee081450f648f993bb"
+    },
+    {
+      "slide": 17,
+      "path": "docs/media/small-livestock-regional/ve/slide-17.webp",
+      "pixels": "1440x5400",
+      "bytes": 495068,
+      "sha256": "1b9fe900127d8eb982ce5ad6d096c46e997451a28e90ad11503c329252f8a158"
+    },
+    {
+      "slide": 18,
+      "path": "docs/media/small-livestock-regional/ve/slide-18.webp",
+      "pixels": "1440x5400",
+      "bytes": 129146,
+      "sha256": "fb425b3c126a97cdb526b72ad7d9827a4cc8c60db017224a86183d769f45bc8c"
+    },
+    {
+      "slide": 19,
+      "path": "docs/media/small-livestock-regional/ve/slide-19.webp",
+      "pixels": "1440x5400",
+      "bytes": 154066,
+      "sha256": "0d102fb37707f96ad71fe89dc23f6d8f18dee533d216336b67ef90e72599d3cc"
+    },
+    {
+      "slide": 20,
+      "path": "docs/media/small-livestock-regional/ve/slide-20.webp",
+      "pixels": "1440x5400",
+      "bytes": 129678,
+      "sha256": "9cbe0d2be16a2354c80f842e3bdd1cddd5734d45e47d77cc55ad6fd2dce8284c"
+    }
+  ],
+  "contactSheet": "docs/media/small-livestock-regional/ve/contact-sheet.jpg",
+  "phoneSamples": [
+    {
+      "slide": 2,
+      "path": "docs/media/small-livestock-regional/ve/slide-02-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "c330d867e0c3bfcb1e946cfeda98cc82e56b841c316f639a49818f60620d14b7"
+    },
+    {
+      "slide": 13,
+      "path": "docs/media/small-livestock-regional/ve/slide-13-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "e1c6ff112980436cb85aa22d5aaed1a3b32ef4bf88c2be8225d9bc0f3b37874c"
+    },
+    {
+      "slide": 15,
+      "path": "docs/media/small-livestock-regional/ve/slide-15-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "06c3f4c13c4cbe848abd719276272cdbb6666d27b0bb2e68a71ef79d68d8d352"
+    },
+    {
+      "slide": 17,
+      "path": "docs/media/small-livestock-regional/ve/slide-17-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "68d3870087031c6e1f2f067b6c01d2c148c0f95499e256fc003bfff7572dcbd7"
+    }
+  ],
+  "draftPassageCount": 1,
+  "note": "All 20 silent frames use the validated existing Tshivenda paired packet and exact English narration. Only packet passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending; no pseudo-translation or repeated English artwork is shown. Animal-care, bee/hive safety, disease, manure, pesticide, registration, crop consumption, water/feed plans and site-specific advice remain exact English holds. No narration or farming approval is claimed."
+}
