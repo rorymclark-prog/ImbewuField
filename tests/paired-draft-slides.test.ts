@@ -344,14 +344,14 @@ test('Tshivenda Food Forest drafts pair habitat context while field care and gra
     'the healthy-grassland protection instruction cannot silently become an unreviewed draft');
 });
 
-test('Vegetables slides pair only existing Xitsonga resilience concepts with exact English', () => {
+test('Vegetables slides pair Xitsonga harvest-gap and resilience drafts with exact English', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'ts');
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  assert.deepEqual(drafted, ['13:6', '14:1', '14:2', '14:5']);
+  assert.deepEqual(drafted, ['2:3', '2:5', '13:6', '14:1', '14:2', '14:5']);
   const lesson = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body;
   const english = lesson.sourceEnglish.split('\n\n');
   const translated = lesson.xitsongaDraft.split('\n\n');
@@ -361,6 +361,10 @@ test('Vegetables slides pair only existing Xitsonga resilience concepts with exa
   }
   assert.equal(slides[13].target.body[2].status, 'english-hold');
   assert.equal(slides[13].target.body[3].status, 'english-hold');
+  assert.equal(slides[1].target.body[1].status, 'english-hold',
+    'the Xitsonga glut wording still needs fluent review');
+  assert.equal(slides[1].target.body[3].status, 'english-hold',
+    'coming ready must not become already ready to harvest');
 });
 
 test('Sesotho Market records slides reuse six exact existing learner draft sentences', () => {
@@ -404,7 +408,11 @@ test('Tshivenda staples media holds the unresolved staple placeholder in English
   const slides = validatePairedDraft(packet, source, 've');
   assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
     .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-    .filter(Boolean)), ['14:2']);
+    .filter(Boolean)), ['2:2', '14:2']);
+  assert.equal(slides[1].target.body[2].status, 'english-hold',
+    'the Tshivenda harvest verb must not become the word for drinking');
+  assert.equal(slides[1].target.body[3].status, 'english-hold');
+  assert.equal(slides[1].target.body[4].status, 'english-hold');
   assert.equal(slides[11].target.body[0].status, 'english-hold',
     'the literal [staple] placeholder cannot be shown as a learner draft');
   assert.equal(slides[13].english.body[1], TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.sourceEnglish);
@@ -413,9 +421,26 @@ test('Tshivenda staples media holds the unresolved staple placeholder in English
   assert.equal(slides[13].target.body[3].status, 'english-hold');
 });
 
+test('Vegetables study headings never turn field tasks into translated instructions', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
+  for (const lang of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/vegetables-staples.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    for (const n of [3, 17, 18]) {
+      assert.equal(slides[n - 1].target.heading.status, 'draft', `${lang} slide ${n} has a visibly unreviewed heading`);
+      assert.equal(slides[n - 1].english.heading, source[n - 1].heading, `${lang} slide ${n} preserves the exact heading source`);
+      assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+        `${lang} slide ${n} keeps the field instructions in English`);
+    }
+    assert.equal(slides[1].english.heading, 'Why This Matters');
+    assert.equal(slides[1].target.body[3].status, 'english-hold',
+      `${lang} must not imply food is already ready to harvest`);
+  }
+});
+
 test('the next regional Study frames keep safety and business advice as exact English holds', () => {
   const cases = [
-    { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '8:1', '8:4', '9:1'], held: ['8:2', '8:3', '8:5', '8:6'] },
+    { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '2:2', '2:3', '2:5', '8:1', '8:4', '9:1'], held: ['2:4', '8:2', '8:3', '8:5', '8:6'] },
     { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '3:4'], held: ['1:1', '2:3', '18:1'] },
     { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '2:1', '3:1', '5:1'], held: ['1:3', '4:1', '4:2', '5:2'] },
     { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '2:1', '5:1'], held: ['1:2', '1:3', '2:2', '3:3', '4:1', '5:2'] },

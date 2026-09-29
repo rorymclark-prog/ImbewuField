@@ -46,14 +46,16 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ndi ngani zwi zwa ndeme"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U tavha zwinzhi nga tshifhinga tshithihi zwi ita uri hu vhe na zwibveledzwa zwinzhi nga tshifhinga tshithihi. Zwoṱhe zwi lugela nga tshifhinga tshithihi. Niḽa zwine na kona, ni ṋea vhaṅwe zwiṅwe, nahone zwo salaho zwi a sina."
           },
           {
             "status": "english-hold"
@@ -83,7 +85,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Zwine na ḓo guda"
         },
         "body": [
           {
@@ -616,7 +619,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mushumo wa tsimuni"
         },
         "body": [
           {
@@ -658,7 +662,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nyito ya tsimuni"
         },
         "body": [
           {
