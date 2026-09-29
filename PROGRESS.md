@@ -52,6 +52,15 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 29 Sep 2026 — Recommended prices for the last five unpriced catalogue crops
+- New price confidence level `'recommended'` (`lib/crop-prices.ts`): the plain average of the
+  like-for-like cited prices found, for crops no single source fits. Labelled "Recommended price —
+  average of prices found" on the price card, sales log, invoice and planner price editor.
+- Parsley R243.64/R20.27, sorghum R32.50/R4.12, bambara R97.37/R37, sweetcorn R74.47/R28.30,
+  cowpea R56/R12.50 (retail/wholesale per kg). Quotes + method: `research/crop-sources/_prices-2026-09-29.json`.
+- `UNPRICED_CROPS` is down to coriander and true spinach. Test: every recommended price carries
+  `pricedAt` and wholesale < retail.
+
 ### 28 Sep 2026 — Variety guidance by growing zone; yield benchmarks checked; crop prices
 - **Growing zones (`lib/growing-zones.ts`):** the site's own monthly temperature and rain → the
   zone(s) `research/crop-sources/_zones.json` files the variety research under, using the Köppen

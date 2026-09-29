@@ -145,6 +145,37 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
   // Sunflower: SAFEX spot "Sunflower 10,106.00" R/ton = R10.11/kg. The only retail is roasted
   // snack seed (Woolworths 250 g, R195.96/kg), not oilseed, so 10.11 / 0.38 ≈ R26.60/kg.
   sunflower: { retailPerKg: 26.6, wholesalePerKg: 10.11, confidence: 'estimated', pricedAt: '25 September 2026' },
+
+  // RECOMMENDED PRICES, 2026-09-29 pass. These five had no single source that fits the crop as a
+  // farmer sells it (the 2026-09-28 exclusions below the object). Rory, 2026-09-29: "just give an
+  // avg ... find a recommended price and say it that way in the app". So each side is the plain
+  // AVERAGE of the like-for-like cited prices found, and the app labels it "Recommended price —
+  // average of prices found". Points of a different product (herb impulse packs, milled meal,
+  // baby corn, mini cobs) are left out of the average, not blended in. Every quote and URL:
+  // research/crop-sources/_prices-2026-09-29.json.
+  //
+  // Parsley. Wholesale: Cape Town Market PARSLEY 2.5 kg R61.54 = R24.62 (28 Sep) and Joburg Market
+  // R15.91 (28 Sep pass) → R20.27. Retail: the bunch-sized packs only — PnP "Parsley Bunch 100g"
+  // R14.99 = R149.90 and Woolworths "Fresh Parsley 80 g" R26.99 = R337.38 → R243.64. The 20-30 g
+  // packs (R500-750/kg) price a garnish, not a bed of parsley, and are excluded.
+  parsley: { retailPerKg: 243.64, wholesalePerKg: 20.27, confidence: 'recommended', pricedAt: '29 September 2026' },
+  // Sorghum (dry grain). Wholesale: the one grain figure, FAOSTAT's SA farm-gate US$0.21 = R4.12
+  // (via Selina Wamucii, Jan 2024 — old, a floor). Retail: whole red sorghum, Pure and Whole R40
+  // and Manolis Munchies 1 kg R24.99 → R32.50. Mabele meal (R27.50-32.99) is milled, excluded.
+  sorghum: { retailPerKg: 32.5, wholesalePerKg: 4.12, confidence: 'recommended', pricedAt: '29 September 2026' },
+  // Bambara groundnut (jugo beans). Retail: Local Village 500 g R65 = R130, Matumi 1 kg R76.50,
+  // Veggies Basket 1 kg R75, VicFame 5 kg R539.95 = R107.99 → R97.37. No market or producer price
+  // names bambara (the KZN survey row is "Groundnut"), so wholesale is 97.37 × 0.38 = R37.00.
+  'bambara-groundnut': { retailPerKg: 97.37, wholesalePerKg: 37, confidence: 'recommended', pricedAt: '29 September 2026' },
+  // Sweetcorn. Wholesale: Cape Town Market SWEETCORN PREPACK 10 kg punnet, mean of the four count
+  // rows = R28.30 (28 Sep). Joburg's SWEET CORN R69.55 is left out — its pack unit could not be
+  // confirmed. Shelf packs (Checkers 4s R34.99, Woolworths 4 pk R36.99) give no weight, so retail
+  // is 28.30 / 0.38 = R74.47. That is probably high: sold by the cob, confirm locally.
+  sweetcorn: { retailPerKg: 74.47, wholesalePerKg: 28.3, confidence: 'recommended', pricedAt: '29 September 2026' },
+  // Cowpea (dry black-eyed beans). Wholesale: the KZN smallholder survey (Frontiers in Sustainable
+  // Food Systems 2026, Table 10, n=319) sold at R9 and R16/kg → R12.50. Retail 1 kg: Spice Bazaar
+  // R60, Pure and Whole R60, The Refillery R55, The Deli R60, MultiSnack R45 → R56.00.
+  cowpea: { retailPerKg: 56, wholesalePerKg: 12.5, confidence: 'recommended', pricedAt: '29 September 2026' },
 };
 
 // Herbs are sold and valued completely differently from bulk vegetables —
@@ -175,28 +206,12 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
 // would misrepresent a field planting rather than estimate it. No
 // bunch-form or field-crop per-kg price for true spinach specifically could
 // be found. Honest exclusion, same pattern as coriander.
-// parsley: unlike coriander a per-kg figure exists on both sides, and they are 21x apart —
-// Joburg Market PARSLEY R2,800.00 / 176 kg = R15.91/kg on thin volume, Woolworths "Fresh Parsley
-// 80 g" R26.99 = R337.38/kg (both fetched 2026-09-28). A herb pack is priced as a pack; no ratio
-// bridges that, and either figure alone would misstate a bed of parsley. Same exclusion as coriander.
-//
-// Crop-catalog batch 1 crops still without a usable price after the 2026-09-28 price pass
-// (research/crop-sources/_prices-2026-09-28.json):
-// - sorghum: not a SAFEX contract and not on the fresh-produce market; the one retail listing is a
-//   500 g speciality pack (R75.98/kg), and deriving wholesale from it would put sorghum at ~6x the
-//   price of maize.
-// - bambara-groundnut: no formal market; the one retail listing is a niche online grocer (R119.90/kg).
-// - sweetcorn: Joburg Market's SWEET CORN traded R69.55/kg and GREEN MEALIES R3.87/kg the same day —
-//   18x apart, the pack unit behind each unclear, and the one retail page gives no weight.
-// - cowpea: on no market list, SAFEX or SA retail shelf found (and it has no planning yield).
+// parsley, sorghum, bambara-groundnut, sweetcorn and cowpea were excluded here after the
+// 2026-09-28 pass (no single source fitted). They now carry 'recommended' average prices in
+// DEFAULT_CROP_PRICES above — see the 2026-09-29 note there.
 export const UNPRICED_CROPS = new Set<string>([
   'coriander',
   'true-spinach',
-  'parsley',
-  'sorghum',
-  'sweetcorn',
-  'cowpea',
-  'bambara-groundnut',
 ]);
 
 const PRICE_OVERRIDES_KEY = 'imbewu_crop_price_overrides_v1';

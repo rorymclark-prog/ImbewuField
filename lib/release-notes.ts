@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', changes: [
+    'Parsley, sorghum, bambara, sweetcorn and cowpea now have recommended prices.',
+    'A recommended price is an average of prices found; its badge says so.',
+  ], tour: [
+    { title: 'See a recommended price', where: 'Prices → Cowpea', href: '/prices',
+      detail: 'Open cowpea, sorghum, bambara groundnut, sweetcorn or parsley. The badge reads Recommended price — average of prices found, with the date the prices were collected. Confirm it locally before you agree a price.' },
+    { title: 'Count them in your plan', where: 'Crop plan → Plan-cycle value', href: '/facilitator/crops',
+      detail: 'Plant one of the five crops and it now counts in the value figures. Under Review and edit price assumptions its badge says recommended price, and you can type your own local price.' },
+  ] },
   { when: '29 September 2026', sha: '0f47d957', changes: [
     'Market Gardening has 20 silent Sesotho and Xitsonga review slides.',
     'Existing drafts pair with English; held text stays in one English source card.',
