@@ -6,6 +6,7 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-st-seeds-sovereignty.ts';
+import { XITSONGA_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-ts-seeds-sovereignty.ts';
 
 const STUDENT_PAGE = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
 
@@ -55,6 +56,29 @@ test('Sesotho Seeds learner prose is paired, visibly unreviewed, and source chan
     'changed English module description withdraws the paired card draft');
   assert.match(STUDENT_PAGE, /regionalDraft && <span[\s\S]*?AI draft · review pending/,
     'the visible review-pending learner label remains in place');
-  assert.match(STUDENT_PAGE, /<p className="font-semibold">Exact English source<\/p>\s*<p><span className="font-semibold">Title:<\/span> \{lesson\.title\}</p>/,
+  assert.ok(STUDENT_PAGE.includes('<p className="font-semibold">Exact English source</p>') &&
+    STUDENT_PAGE.includes('<p><span className="font-semibold">Title:</span> {lesson.title}</p>'),
     'learners can see the exact English title beside the draft');
+});
+
+test('the Xitsonga Seeds lesson shows its draft while genetics quizzes remain exact English', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'seeds-sovereignty');
+  assert.ok(source);
+  const draft = XITSONGA_SEEDS_SOVEREIGNTY_DRAFT;
+  assert.equal(draft.reviewStatus, 'machine-draft');
+  assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(resolveCourseModulePresentation(source, 'ts').title, draft.title.xitsongaDraft);
+  const lesson = source.lessons[0];
+  const paired = draft.lessons[0];
+  assert.equal(paired.body.sourceEnglish, lesson.body);
+  const shown = resolveLearnerLessonPresentation(lesson, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, paired.body.xitsongaDraft);
+  assert.deepEqual(shown.content.quiz, lesson.quiz);
+  for (const term of ['open-pollinated', 'stable variety', 'F1 hybrid', 'pollination']) {
+    assert.ok(shown.content.body.includes(term), `${term} remains English`);
+  }
+  assert.ok(!shown.content.body.includes('thyakisa'), 'pollination must not read as pollution');
+  assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: lesson.body + ' Changed.' }, 'ts').status,
+    'english-fallback', 'a changed English source withdraws the draft');
 });
