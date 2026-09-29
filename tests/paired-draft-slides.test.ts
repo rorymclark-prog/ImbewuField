@@ -254,6 +254,12 @@ test('Food Forest Xitsonga media pairs every unreviewed sentence with its curren
       }
     }
   }
+  assert.equal(slides[7].target.heading.status, 'draft');
+  assert.equal(slides[12].target.heading.status, 'draft');
+  assert.equal(slides[12].target.body[0].status, 'english-hold',
+    'the candidate narrowed habitat support to habitat protection');
+  assert.equal(slides[12].target.body[2].status, 'english-hold',
+    'healthy grassland advice remains exact English pending local review');
 });
 
 test('Food Forest Sesotho slides pair low-risk orientation drafts with exact English and hold technical guidance', () => {
@@ -264,11 +270,19 @@ test('Food Forest Sesotho slides pair low-risk orientation drafts with exact Eng
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  assert.deepEqual(drafted, ['1:1', '1:4', '2:1', '4:1', '4:2', '8:2']);
+  for (const field of ['1:1', '1:4', '2:1', '4:1', '4:2', '8:2', '13:1']) {
+    assert.ok(drafted.includes(field), `the source-paired draft at ${field} should remain available`);
+  }
   assert.equal(slides[1].target.heading.status, 'draft');
   assert.equal(slides[2].target.heading.status, 'draft');
-  assert.ok(slides.filter((slide: any) => ![2, 3].includes(slide.n))
-    .every((slide: any) => slide.target.heading.status === 'english-hold'));
+  for (const n of [8, 13]) {
+    assert.equal(slides[n - 1].target.heading.status, 'draft',
+      `slide ${n} offers an unreviewed orientation heading beside exact English`);
+  }
+  assert.equal(slides[12].target.body[1].status, 'english-hold',
+    'ecosystem and percentage guidance remains exact English');
+  assert.equal(slides[12].target.body[2].status, 'english-hold',
+    'healthy-grassland protection remains exact English');
   for (const [slideIndex, paragraphIndex] of [[0, 0], [0, 3], [1, 0]]) {
     const slide = slides[slideIndex];
     const draft = slide.target.body[paragraphIndex];
@@ -306,7 +320,7 @@ test('Food Forest Sesotho slides pair low-risk orientation drafts with exact Eng
     part.status === 'draft' || part.status === 'english-hold')));
 });
 
-test('Tshivenda Food Forest orientation is drafted while care, ground-cover and habitat claims stay in English', () => {
+test('Tshivenda Food Forest drafts pair habitat context while field care and grassland guidance stay English', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/food-forest.ve.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 've');
@@ -322,7 +336,12 @@ test('Tshivenda Food Forest orientation is drafted while care, ground-cover and 
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
   }
   assert.equal(slides[5].target.body[1].status, 'english-hold');
-  assert.equal(slides[12].target.body[0].status, 'english-hold');
+  assert.equal(slides[7].target.heading.status, 'draft');
+  assert.equal(slides[12].target.heading.status, 'draft');
+  assert.equal(slides[12].target.body[0].status, 'draft');
+  assert.equal(slides[12].target.body[1].status, 'english-hold');
+  assert.equal(slides[12].target.body[2].status, 'english-hold',
+    'the healthy-grassland protection instruction cannot silently become an unreviewed draft');
 });
 
 test('Vegetables slides pair only existing Xitsonga resilience concepts with exact English', () => {

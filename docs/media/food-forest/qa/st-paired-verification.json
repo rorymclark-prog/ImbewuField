@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/food-forest.st.paired-draft.json",
-  "pairedSourceSha256": "d044ada98445e54553b26aeb0ba635d5bfbd3963c672a04d595947b77f53576f",
+  "pairedSourceSha256": "6e63b13f86231284cfe68c0dde38e9c0f6cfa51d179168eaf98d1a8ae6bf469b",
   "englishSource": "docs/narration/food-forest.en.md",
   "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
   "slides": [
@@ -63,8 +63,8 @@
       "slide": 8,
       "path": "public/course-decks/food-forest/st/slide-08.webp",
       "pixels": "1440x5400",
-      "bytes": 650546,
-      "sha256": "6deed214b7c3cd9b99cdf176702bcb307e8cd356eee3054649f109a0cd48cc83"
+      "bytes": 653946,
+      "sha256": "003e9c1e09f2259ee8b2250ace756ecba6c75cd305516067fdb9fb0ac9dbefa1"
     },
     {
       "slide": 9,
@@ -98,8 +98,8 @@
       "slide": 13,
       "path": "public/course-decks/food-forest/st/slide-13.webp",
       "pixels": "1440x5400",
-      "bytes": 600822,
-      "sha256": "2b4709b4e6210a8ff1564f05708713199b9a7dfdf35df57d0085d9b9c0ef23b1"
+      "bytes": 603492,
+      "sha256": "f17fbd306a4215f78aec4ad7b4c9e39fba8f4e268682cac3caec3c752ece69ce"
     },
     {
       "slide": 14,
@@ -181,7 +181,7 @@
       "slide": 8,
       "path": "docs/media/food-forest/qa/st-slide-08-390.jpg",
       "pixels": "390x1463",
-      "sha256": "b98fe6bcb14c10312032177b3d70d20fa4a9f50a65a128662cc0f7a8b21c43b1"
+      "sha256": "9ba940eb583fe44e2ebdbc5fe25769a07ffa65775029d2bde00adce6d7e7111a"
     }
   ],
   "note": "All 20 silent frames pair the unchanged English illustration and exact English source with marked Sesotho machine drafts. Technical or uncertain passages remain exact-English holds. No Sesotho narration or fluent/local farming approval is claimed."

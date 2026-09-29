@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'b6fca276', changes: [
+    'Food Forest adds regional care and local-plant headings on silent slides 8 and 13.',
+    'Unreviewed drafts sit beside English; planting and grassland guidance stays English.',
+  ], tour: [
+    { title: 'Compare the Food Forest slides', where: 'Study → Food Forest Design → slides 8 and 13', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. New headings are visibly unreviewed and paired with exact English. Sesotho and Tshivenda also show a short habitat draft; planting and healthy-grassland guidance remains English.' },
+  ] },
   { when: '29 September 2026', sha: '19d4fb26', changes: [
     'Seeds adds community-sharing prompts in Sesotho, Tshivenda and Xitsonga.',
     'Drafts stay beside English; seed-selection advice stays in English.',

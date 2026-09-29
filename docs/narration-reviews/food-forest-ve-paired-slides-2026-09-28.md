@@ -2,7 +2,7 @@
 
 **Status: unreviewed machine draft.** These 20 static comparison frames keep the exact English slide source beside each Tshivenda draft or English hold. They reuse the existing English Food Forest slide illustrations; no new art or narration was created. This deck is for fluent-language and local farming review, not approved learner instruction.
 
-The existing source-paired record is `docs/narration/food-forest.ve.paired-draft.json`, checked against `docs/narration/food-forest.en.md`. It contains four Tshivenda body fragments: three on slide 4 and one on slide 6. Every heading and the other 66 body fragments remain exact English holds. Plant names, restrictions, spacing, site selection, establishment and ongoing care guidance stay in English. Keep the English terms visible until a fluent speaker and local farming practitioner review the source pairs.
+The existing source-paired record is `docs/narration/food-forest.ve.paired-draft.json`, checked against `docs/narration/food-forest.en.md`. It originally contained four Tshivenda body fragments: three on slide 4 and one on slide 6. A 29 September batch adds slide 8 and 13 headings and slide 13's first habitat paragraph as unreviewed drafts. Every remaining held field displays exact English. Plant names, restrictions, spacing, site selection, establishment and ongoing care guidance stay in English. Keep the English terms visible until a fluent speaker and local farming practitioner review the source pairs.
 
 ## Render and visual check
 

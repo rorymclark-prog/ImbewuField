@@ -17,7 +17,7 @@ Only three existing concept sentences are drafted:
 - Slide 8: the second body passage about shade and leaf litter changing conditions below as plants
   grow.
 
-All headings and every other passage remain exact English. In particular, species identity and
+The 29 September update adds unreviewed Xitsonga headings on slides 8 and 13. Other held passages remain exact English. In particular, species identity and
 legality, regional examples, site suitability, water, establishment, pruning, and field actions
 remain held in English. No species name, farming figure, recommendation, or lesson wording was
 added or changed.
