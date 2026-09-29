@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '1e495413', changes: [
+    'Small Livestock has silent Sesotho, Tshivenda and Xitsonga slides.',
+    'Draft words sit beside English; animal-care advice needing review stays English.',
+    'Download slides to read offline. English narration is optional.',
+  ], tour: [
+    { title: 'Read the Small Livestock slides', where: 'Study → Small Livestock Integration', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The unreviewed draft slides retain source pictures and English wording; use Next to read at your own pace.' },
+  ] },
   { when: '29 September 2026', sha: 'a835dc28', changes: [
     'Food availability now shows fruit trees and animal products as picture trays.',
     'Each chart names this month (Now) and the year, so you know which column is which.',
