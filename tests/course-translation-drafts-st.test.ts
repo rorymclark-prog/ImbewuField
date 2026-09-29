@@ -154,7 +154,7 @@ test('Sesotho Introduction L2 drafts the general learning prompt while retaining
   assert.notEqual(presentation.content.title, source.title);
 });
 
-test('Sesotho seed terms stay held while only generic lesson headings are draft', () => {
+test('Sesotho Seeds prose stays paired to English while genetics assessment remains held', () => {
   const draft = SESOTHO_SEEDS_SOVEREIGNTY_DRAFT;
   const source = COURSE_MODULES.find(module => module.id === draft.id);
   assert.ok(source);
@@ -163,46 +163,42 @@ test('Sesotho seed terms stay held while only generic lesson headings are draft'
   assert.deepEqual(draft.sourceMetadata, { durationMins: source.durationMins, category: source.category });
   assert.deepEqual(draft.lessons.map(lesson => lesson.id), source.lessons.map(lesson => lesson.id));
 
-  assert.equal(draft.title.sourceEnglish, source.title);
-  assert.equal(draft.title.reviewStatus, 'hold');
-  assert.equal(draft.title.sesothoDraft, source.title, 'the technical Seed Sovereignty term remains exact English');
-  assert.equal(draft.description.sourceEnglish, source.description);
-
-  const checkHold = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string) => {
-    assert.equal(pair.sourceEnglish, english);
-    assert.equal(pair.sesothoDraft, english);
-    assert.equal(pair.reviewStatus, 'hold');
+  const checkPair = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string, path: string) => {
+    assert.equal(pair.sourceEnglish, english, `${path}: preserve the exact English source`);
+    assert.ok(['machine-draft', 'hold'].includes(pair.reviewStatus), `${path}: mark review state`);
+    assert.ok(pair.sesothoDraft.trim(), `${path}: include translated copy or an explicit English hold`);
+    if (pair.reviewStatus === 'hold') assert.equal(pair.sesothoDraft, english, `${path}: a hold stays exact English`);
   };
-
-  checkHold(draft.description, source.description);
-  checkHold(draft.title, source.title);
+  checkPair(draft.title, source.title, 'module.title');
+  checkPair(draft.description, source.description, 'module.description');
+  assert.notEqual(draft.title.sesothoDraft, source.title);
+  assert.notEqual(draft.description.sesothoDraft, source.description);
 
   for (const [lessonIndex, lesson] of draft.lessons.entries()) {
     const original: (typeof source.lessons)[number] = source.lessons[lessonIndex];
-    assert.equal(lesson.title.sourceEnglish, original.title);
-    if (lesson.id === 'seeds-sovereignty-l2') {
-      checkHold(lesson.title, original.title);
-    } else {
-      assert.equal(lesson.title.reviewStatus, 'machine-draft');
-      assert.ok(lesson.title.sesothoDraft.trim());
+    assert.equal(lesson.id, original.id);
+    checkPair(lesson.title, original.title, `${lesson.id}.title`);
+    checkPair(lesson.body, original.body, `${lesson.id}.body`);
+    if (lesson.id === 'seeds-sovereignty-l1') {
+      assert.notEqual(lesson.body.sesothoDraft, original.body, 'translate the complete learner prose for lesson one');
+      assert.equal(lesson.body.sesothoDraft.split('\n\n').length, original.body.split('\n\n').length,
+        'keep the source paragraph boundaries for review');
+      assert.match(lesson.body.sesothoDraft, /F1 hybrid/, 'retain the technical F1 term in the translated explanation');
     }
     if (original.infographicAlt) {
       assert.ok(lesson.infographicAlt);
-      checkHold(lesson.infographicAlt, original.infographicAlt);
-    } else {
-      assert.equal(lesson.infographicAlt, undefined);
+      checkPair(lesson.infographicAlt, original.infographicAlt, `${lesson.id}.infographicAlt`);
     }
-    checkHold(lesson.body, original.body);
     assert.equal(lesson.keyPoints.length, original.keyPoints.length);
-    lesson.keyPoints.forEach((point, index) => checkHold(point, original.keyPoints[index]));
+    lesson.keyPoints.forEach((point, index) => checkPair(point, original.keyPoints[index], `${lesson.id}.keyPoints[${index}]`));
     assert.equal(lesson.quiz.length, original.quiz.length);
     lesson.quiz.forEach((question, index) => {
       const originalQuestion = original.quiz[index];
-      checkHold(question.question, originalQuestion.q);
+      checkPair(question.question, originalQuestion.q, `${lesson.id}.quiz[${index}].question`);
       assert.equal(question.options.length, originalQuestion.options.length);
-      question.options.forEach((option, optionIndex) => checkHold(option, originalQuestion.options[optionIndex]));
+      question.options.forEach((option, optionIndex) => checkPair(option, originalQuestion.options[optionIndex], `${lesson.id}.quiz[${index}].options[${optionIndex}]`));
       assert.equal(question.sourceCorrectIndex, originalQuestion.correct);
-      checkHold(question.rationale, originalQuestion.rationale);
+      checkPair(question.rationale, originalQuestion.rationale, `${lesson.id}.quiz[${index}].rationale`);
     });
   }
 });

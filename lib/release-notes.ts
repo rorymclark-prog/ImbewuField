@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '3216aa11', changes: [
+    'Seeds lesson 1 has more Sesotho, Tshivenda and Xitsonga draft teaching beside English.',
+    'Seed genetics quizzes and the slide narration stay in English.',
+  ], tour: [
+    { title: 'Compare the Seeds draft', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga and open lesson 1. New text is marked unreviewed beside exact English. The quizzes and slides still use English where the technical meaning needs review.' },
+  ] },
   { when: '29 September 2026', sha: '499d6913', changes: [
     'Food Forest slides 1–4 add Tshivenda and Xitsonga drafts beside English.',
     'These slides are silent. Technical terms remain in English.',
