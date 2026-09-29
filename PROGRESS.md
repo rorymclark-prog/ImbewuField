@@ -350,6 +350,13 @@ calendar we have in the app with the veg and other icons".
   kg-per-bed-month ranking, "few big harvests" packing, rain-fed mode, existing-crop double-booking in
   the whole-year plan, potato/frost-tail windows, missing heat-season crops.
 
+### 2026-09-29 (Permaculture Manual — Sesotho uses moroho; nasturtium line)
+- Sesotho chapters now say *moroho* (Sesotho for leafy greens, as in *papa le moroho*) instead of
+  *morogo*, the Setswana/Sepedi form. English keeps *morogo*. Decision noted in
+  `research/manual/glossary-st.md`. Fluent-speaker review of the translations is deferred for now.
+- Chapter 10 trap crops: the unsupported "we have seen nasturtiums…" line replaced with general
+  advice (nasturtiums draw aphids, especially black aphids), in all five languages.
+
 ### 2026-09-27 (Permaculture Manual — second edition in Rory's voice)
 - **What:** the English manual rewritten in Rory's teaching voice (`research/manual/VOICE.md`,
   from his Style Engine) and cut from 55,370 to 37,858 words (print: 257 → 214 A4 pages). Every

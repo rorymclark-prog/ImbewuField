@@ -178,7 +178,7 @@ Ti-trap crop, swiluva swa ti-predator na ku byala loku hlanganeke swi kamberiwil
 
 **Ku byala loku hlanganeke.** Ku hlangana ka swibyariwa ku dyisa vutomi bya le misaveni byo tala na ti-predator to tala. Swivungwana swo tala swi kuma ximilana xa swakudya swa swona hi xivumbeko, muvala na nun'hwelo wa xona, naswona mubhedhi lowu nga na swivumbeko na mivala yo tala wu swi pfilunganya, hikwalaho swin'wana swa famba.
 
-**Ti-trap crop.** Trap crop yi byariwa kusuhi na xibyariwa xa swakudya ku koka xivungu xo onha xi suka. Ti-aphid hakanyingi ti rhandza ti-nasturtium ku tlula khavichi, broccoli na cauliflower. Hi vonile ti-nasturtium leti byariweke etlhelweni ka cauliflower na broccoli ti tala hi ti-aphid kasi xibyariwa xi siyiwile xi nga khumbiwanga. Ku tirhisa yin'we:
+**Ti-trap crop.** Trap crop yi byariwa kusuhi na xibyariwa xa swakudya ku koka xivungu xo onha xi suka. Ti-nasturtium leti byariweke kusuhi na xibyariwa hakanyingi ti koka ti-aphid, ngopfu-ngopfu ti-aphid ta ntima, ti suka eka xibyariwa. Ku tirhisa yin'we:
 
 1. Byala ti-nasturtium etlhelweni ka mubhedhi, ku nga ri exikarhi.
 2. Ti kambele kambirhi hi vhiki.

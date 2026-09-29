@@ -96,7 +96,7 @@ Hore o tsamaya hole hakae ho etsa qeto ya seo o se hlokomelang. Serapa se qetell
 | 4 | Naha e batlang e le ya tlhaho, e laolwang hanyane | Ka dinako tse ding | Moru wa patsi, makgulo |
 | 5 | Naha ya tlhaho | Ka seoelo, ho shebella le ho ithuta | Naha ya tlhaho kapa moru |
 
-**Zone 1** e fana ka kotulo e kgolo ka ho fetisisa ho tswa sebakeng se senyane ka ho fetisisa. Beha mona meroho ya **annual** (dimela tse phelang sehla se le seng) le morogo oo o o kgang hangata, ditlama tsa kitjhene, difate tsa ditholwana tse kgutshwane, diphoofolo tse nyane tse kang dikwekwe le mebutla, le dipolokelo tse nyane tsa metsi. Kwahela tanka le sediba se seng le se seng, mme o kwalle kapa o kwahele matangwana, e le hore ho se be le ngwana ya ka wela ka hare.
+**Zone 1** e fana ka kotulo e kgolo ka ho fetisisa ho tswa sebakeng se senyane ka ho fetisisa. Beha mona meroho ya **annual** (dimela tse phelang sehla se le seng) le moroho oo o o kgang hangata, ditlama tsa kitjhene, difate tsa ditholwana tse kgutshwane, diphoofolo tse nyane tse kang dikwekwe le mebutla, le dipolokelo tse nyane tsa metsi. Kwahela tanka le sediba se seng le se seng, mme o kwalle kapa o kwahele matangwana, e le hore ho se be le ngwana ya ka wela ka hare.
 
 **Zone 2** e kgolo mme e sebetswa hanyane. **Food forest** ya yona (serapa se lenngweng ka mekgahlelo jwaloka moru wa tlhaho) e ka kenyeletsa difate tsa **coppicing**: ho poma sefate ho fihla kutung e tlase e le hore se hlahise dithupa tse ntjha. Bakeng sa patsi le dithupa, lema mooka (*Vachellia karroo*), sefate sa **tlhaho** (se holang ka tlhaho mona), ho ena le wattle kapa gum, tse hasanang nahang ya tlhaho le melatswaneng.
 
@@ -113,7 +113,7 @@ Metsi a phalla ho theosa mahala. Moralo wa letswapo, ho latela mokgwa wa Bill Mo
 - **Dibethe tsa serapa, ditsela le di-swale ho latela contour** di boloka metsi naheng.
 - **Diqubu tsa compost le matlo a diphoofolo a bulehela ho theosa,** e le hore compost le manyolo di theohele serapeng.
 - **Metsi a ho nwa a dula a hlwekile.** Boloka manyolo, compost le masaka a diphoofolo ka tlase, le hole haholo, ho di-borehole, diliba le metsi a tswang fatshe.
-- **Greywater e theohela difateng.** **Greywater**, metsi a sebedisitsweng a ho hlatswa, a bate le a disinki, a phalla ka matla a ho hohela fatshe ho ya dibesineng tsa difate tse nang le mulch kapa di-swale tse ka tlase ho ntlo, le ka mohla e seng hodima morogo kapa meroho e meng eo o e jang e le tala (kgaolo ya 7).
+- **Greywater e theohela difateng.** **Greywater**, metsi a sebedisitsweng a ho hlatswa, a bate le a disinki, a phalla ka matla a ho hohela fatshe ho ya dibesineng tsa difate tse nang le mulch kapa di-swale tse ka tlase ho ntlo, le ka mohla e seng hodima moroho kapa meroho e meng eo o e jang e le tala (kgaolo ya 7).
 
 ## Leka sena
 

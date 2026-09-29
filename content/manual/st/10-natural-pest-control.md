@@ -116,7 +116,7 @@ Dikgofu (le tse se nang dikgaketla) di phela dibakeng tse mongobo mme di ja makg
 4. Kgothaletsa dihwaswa, mafaru, dinonyana le di-ground beetle.
 5. Hula mulch ho e tlosa dimeleng tse nyane ho fihlela di tiile.
 
-Dikgofu di ka jara rat lungworm, seboko se senyane se phelang ka ditweba Afrika Borwa se ka kudisang batho haholo. Rwala ditlelafo kapa o hlatswe matsoho kamora ho di bokella, mme o hlatswe morogo hantle pele o o ja. Ha re sebedise di-pellet tsa dikgofu: di kgoba dintja le dikatse chefo hammoho le dikgofu.
+Dikgofu di ka jara rat lungworm, seboko se senyane se phelang ka ditweba Afrika Borwa se ka kudisang batho haholo. Rwala ditlelafo kapa o hlatswe matsoho kamora ho di bokella, mme o hlatswe moroho hantle pele o o ja. Ha re sebedise di-pellet tsa dikgofu: di kgoba dintja le dikatse chefo hammoho le dikgofu.
 
 ### Dinonyana
 
@@ -178,7 +178,7 @@ Di-trap crop, dipalesa bakeng sa di-predator le temo e kopantsweng di lekilwe ha
 
 **Temo e kopantsweng.** Motswako wa dijalo o fepa ditshedi tsa mobu le di-predator tse ngata. Dikokonyana tse ngata di fumana semela sa tsona sa dijo ka sebopeho, mmala le monko wa sona, mme bethe e nang le dibopeho le mebala e mengata e a di ferekanya, kahoo tse ding di a feta.
 
-**Di-trap crop.** Trap crop e lengwa haufi le sejalo sa dijo ho hohela sesenyi hole. Di-aphid hangata di rata di-nasturtium ho feta khabetjhe, broccoli le cauliflower. Re bone di-nasturtium tse lenngweng pela cauliflower le broccoli di tlala di-aphid ha sejalo se ne se siuwa se sa tshwenngwe. Ho e sebedisa:
+**Di-trap crop.** Trap crop e lengwa haufi le sejalo sa dijo ho hohela sesenyi hole. Di-nasturtium tse lenngweng haufi le sejalo hangata di hohela di-aphid, haholoholo di-aphid tse ntsho, hole le sona. Ho e sebedisa:
 
 1. Lema di-nasturtium mathokong a bethe ya serapa, e seng bohareng.
 2. Di hlahlobe habedi ka beke.
@@ -266,7 +266,7 @@ Sena se loketse balemi ba lemang sejalo se le seng bething ka nngwe.
 | Lelapa la khabetjhe | Khabetjhe, cauliflower, broccoli, kale, rape, mustard greens, turnip, radish |
 | Lelapa la tamati | Ditamati, ditapole, pelepele e monate, pelepele e bohale, di-brinjal |
 | Lelapa la sehwete | Dihwete, celery, parsley, coriander, dill |
-| Lelapa la beteruti | Swiss chard, beteruti, sepinatjhe, theepe (morogo) |
+| Lelapa la beteruti | Swiss chard, beteruti, sepinatjhe, theepe (moroho) |
 | Lelapa la mokopu | Dikomkomere, mekopu, butternut, squash, dimelone, mahapu |
 | Lelapa la dinawa (di-legume) | Dierekisi, dinawa, cowpea, matokomane, ditloo, soya |
 | Lelapa la eie | Dieie, di-leek, konofolo, eie e tala, chives |

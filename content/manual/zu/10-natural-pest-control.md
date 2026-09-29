@@ -178,7 +178,7 @@ Ama-trap crop, izimbali zama-predator nokutshala okuxubile kuhlolwe kahle. Eziny
 
 **Ukutshala okuxubile.** Ingxube yezitshalo yondla izidalwa zomhlabathi eziningi nama-predator amaningi. Izinambuzane eziningi zithola isitshalo sazo sokudla ngokuma kwaso, umbala waso nephunga laso, futhi umbhede onezimo nemibala eminingi uyazididayo, ngakho ezinye ziyadlula.
 
-**Ama-trap crop.** I-trap crop itshalwa eduze kwesitshalo sokudla ukuze idonsele isinambuzane kude. Ama-aphid avame ukukhetha ama-nasturtium kuneklabishi, i-broccoli ne-cauliflower. Sesike sabona ama-nasturtium atshalwe eceleni kwe-cauliflower ne-broccoli egcwala ama-aphid ngenkathi isitshalo siyekwa. Ukuze uyisebenzise:
+**Ama-trap crop.** I-trap crop itshalwa eduze kwesitshalo sokudla ukuze idonsele isinambuzane kude. Ama-nasturtium atshalwe eduze kwesitshalo avame ukudonsela ama-aphid, ikakhulukazi ama-aphid amnyama, kude naso. Ukuze uyisebenzise:
 
 1. Tshala ama-nasturtium emaphethelweni ombhede, hhayi maphakathi.
 2. Wahlole kabili ngesonto.
