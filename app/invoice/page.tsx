@@ -1150,7 +1150,7 @@ export default function InvoicePage() {
                           </div>
                         )}
                         <strong style={{ color: 'var(--text-primary)' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
-                        {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : 'Sourced guide.'}
+                        {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : guide.confidence === 'recommended' ? 'Recommended price (average of prices found); confirm locally.' : 'Sourced guide.'}
                       </div>
                     );
                   })()}

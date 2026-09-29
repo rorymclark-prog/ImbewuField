@@ -40,8 +40,12 @@ export interface CropPrice {
   /** 'sourced' = both figures traced to a real, dated source. 'estimated' =
    *  at least one figure is derived (via the wholesale/retail ratio, a
    *  same-food-group proxy, or general knowledge) rather than directly
-   *  found — a real number, but a rougher one; expect to correct it. */
-  confidence: 'sourced' | 'estimated';
+   *  found — a real number, but a rougher one; expect to correct it.
+   *  'recommended' = no single source fits the crop as a farmer sells it, so the figure
+   *  is the AVERAGE of the cited prices that were found (research/crop-sources/), and
+   *  the app says so ("Recommended price — average of prices found"). Always carries
+   *  `pricedAt`. A starting point to confirm locally, never a quoted market price. */
+  confidence: 'sourced' | 'estimated' | 'recommended';
   /** The date THIS price is from — its market trading day where one applies, else the
    *  day it was researched — when that is not the shared snapshot date
    *  (PRICE_SNAPSHOT_DATE in components/prices/CropPriceGuide.format.ts). Set it on any

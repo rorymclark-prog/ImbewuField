@@ -1,6 +1,6 @@
 'use client';
 
-import { AlertTriangle, CheckCircle2, ChevronLeft } from 'lucide-react';
+import { AlertTriangle, Calculator, CheckCircle2, ChevronLeft } from 'lucide-react';
 import { formatPrice, priceDateLabel, type PricedCrop } from './CropPriceGuide.format';
 import { getCropArt } from '@/lib/crop-art';
 import { translate, useLanguage } from '@/lib/i18n';
@@ -16,6 +16,11 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
   const { t, lang } = useLanguage();
   const { price } = crop;
   const sourced = price.confidence === 'sourced';
+  // 'recommended' = the average of the cited prices found (lib/crop-prices.ts). It gets its own
+  // badge: calling it a "real market price" overclaims, and "rough estimate" undersells a figure
+  // that is built from real, dated prices — the farmer needs to know which one they are holding.
+  const recommended = price.confidence === 'recommended';
+  const confidenceKey = sourced ? 'priceConfidenceSourced' : recommended ? 'priceConfidenceRecommended' : 'priceConfidenceEstimate';
   const pricedDate = priceDateLabel(price);
   const dateForDisplay = lang === 'zu' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => ({
     January: 'Januwari', February: 'Februwari', March: 'Mashi', April: 'Ephreli', May: 'Meyi', June: 'Juni', July: 'Julayi', August: 'Agasti', September: 'Septhemba', October: 'Okthoba', November: 'Novemba', December: 'Disemba',
@@ -61,13 +66,13 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
           marginTop: 16,
           padding: '8px 16px',
           borderRadius: 999,
-          background: sourced ? 'rgba(31,77,43,0.10)' : 'rgba(192,122,30,0.16)',
-          color: sourced ? 'var(--color-forest-800)' : 'var(--color-harvest)',
+          background: sourced ? 'rgba(31,77,43,0.10)' : recommended ? 'rgba(35,94,134,0.12)' : 'rgba(192,122,30,0.16)',
+          color: sourced ? 'var(--color-forest-800)' : recommended ? 'var(--blue)' : 'var(--color-harvest)',
         }}
       >
-        {sourced ? <CheckCircle2 size={17} strokeWidth={2.2} /> : <AlertTriangle size={17} strokeWidth={2.2} />}
+        {sourced ? <CheckCircle2 size={17} strokeWidth={2.2} /> : recommended ? <Calculator size={17} strokeWidth={2.2} /> : <AlertTriangle size={17} strokeWidth={2.2} />}
         <span className="font-sans font-bold" style={{ fontSize: 13.5 }}>
-          {lang === 'zu' ? <><span className="block">{t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}</span><span className="block mt-1" style={{ fontSize: 11, fontWeight: 500 }}>{translate('en', sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}</span></> : t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}
+          {lang === 'zu' ? <><span className="block">{t(confidenceKey)}</span><span className="block mt-1" style={{ fontSize: 11, fontWeight: 500 }}>{translate('en', confidenceKey)}</span></> : t(confidenceKey)}
         </span>
       </div>
       {/* Methodology/freshness footnote — the confidence badge above already carries the safety-
