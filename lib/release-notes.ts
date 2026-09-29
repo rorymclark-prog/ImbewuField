@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', changes: [
+  { when: '29 September 2026', sha: '0b83fcbb', changes: [
     'The crop-plan PDF was checked at eight sites across South Africa and tidied.',
     'A first-year gap is no longer called yearly when next year\'s crops fill it.',
     'Buying lists group beds (Beds 2, 4, 8, 9); the workload chart has round steps.',
@@ -52,7 +52,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Check the buying list', where: 'Crop plan → Download PDF → Seed and seedling buying schedule', href: '/facilitator/crops',
       detail: 'Each line names its beds in order, grouped as Beds 2, 4, 8, 9. The crop-code key under the bed calendar lists only the colours your plan uses.' },
   ] },
-  { when: '29 September 2026', changes: [
+  { when: '29 September 2026', sha: '0b83fcbb', changes: [
     'Parsley, sorghum, bambara, sweetcorn and cowpea now have recommended prices.',
     'A recommended price is an average of prices found; its badge says so.',
   ], tour: [
