@@ -16,20 +16,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Pulane ya Ḓaka ḽa Zwiḽiwa"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fhaṱani sisiteme ya zwiḽiwa i tshilaho nga miṱaṱo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱavhani zwiḽiwa u bva kha canopy ya miri milapfu u swika kha zwimela zwa midzi (root crops)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani tshikhala tsha nṱha na fhasi, vhutshilo ha mavu, murunzi na moisture zwo ṱangana."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Gudani u pulana na u thoma ḓaka ḽa zwiḽiwa kha bulasi ḽaṋu."
           }
         ]
       }
@@ -46,17 +51,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ndi ngani hezwi zwi zwa ndeme"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ḓaka ḽa zwiḽiwa ḽi alusa zwimela zwi vhuyedzaho kha vhulapfu ho fhambanaho."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulane yavhuḓi i nga ṱanganya khaṋo, murunzi na u fukedza mavu. Zwimela zwi kha ḓi ṱaṱisana nga tshedza, maḓi na soil nutrients."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulani ṱhogomelo ine na nga i ita, ni dzule ni tshi sedza uri zwimela zwi khou shanduka hani."
           }
         ]
       }
@@ -73,17 +82,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Zwine na ḓo kona u zwi ita"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bulani miṱaṱo ya supa ya ḓaka ḽa zwiḽiwa ine ya anzela u ṱalutshedzwa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱolani zwimela no sedza fhethu haṋu, ecology yapo na approved project list."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulani u thoma na u dzula ni tshi ṱhogomela, ni sa humbuli uri hu na ḓuvha ḽo tiwaho ḽa khaṋo kana ḽa u valwa ha canopy."
           }
         ]
       }
@@ -101,7 +114,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ḓaka ḽi shumisa miṱaṱo yoṱhe"
         },
         "body": [
           {
@@ -109,7 +123,8 @@
             "text": "Ḓaka ḽa mupo ḽi ḓadza fhethu u bva kha maṱavhi a nṱhesa u swika kha midzi."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwimela zwo fhambanaho zwi shumisa tshedza na moisture zwi re hone kha tshiimo tshazwo."
           },
           {
             "status": "draft",

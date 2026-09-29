@@ -16,20 +16,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ku Hlela Food Forest"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Aka sisiteme ya swakudya leyi hanyaka hi swiyenge swo hambana."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Byala swakudya ku suka eka canopy ya mirhi yo leha ku fika eka root crops."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa ndhawu ya le henhla ni le hansi, leswi hanyaka emisaveni, ndzhuti na moisture swin’we."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dyondza ku hlela ni ku sungula food forest epurasini ra wena."
           }
         ]
       }
@@ -46,17 +51,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ha yini leswi swi ri swa nkoka"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Food forest yi kurisa swimilana leswi pfunaka eka ku leha ko hambana."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nkunguhato lowunene wu nga hlanganisa ntshovelo, ndzhuti ni ku funengeta misava. Swimilana swa ha phikizana hi ku vonakala, mati ni soil nutrients."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlela nhlayiso lowu u nga kotaka ku wu endla, kutani u languta ndlela leyi swimilana swi cincaka ha yona."
           }
         ]
       }
@@ -73,17 +82,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Leswi u nga ta kota ku swi endla"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boxa swiyenge swa nkombo leswi tolovelekeke ku hlamusela food forest."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kambela swimilana hi ku ya hi ndhawu ya wena, ecology ya laha kaya, ni approved project list."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlela ku sungula ni ku ya mahlweni u hlayisa swimilana u nga ringanyeti siku leri tiyeke ra ntshovelo kumbe ku pfaleka ka canopy."
           }
         ]
       }
@@ -101,7 +114,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nhova yi tirhisa swiyenge hinkwato"
         },
         "body": [
           {
@@ -113,10 +127,12 @@
             "text": "Swimilana swo hambana swi tirhisa ku vonakala na ku tsakama loku kumekaka eka xiyenge xa swona."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Food forest yi landzela xivumbeko lexi hi productive species."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vuyelo a hi xibyariwa xin’we eka layini yin’we, kambe i swiyenge swo tala leswi pfunaka swi ri karhi swi kula swin’we."
           }
         ]
       }

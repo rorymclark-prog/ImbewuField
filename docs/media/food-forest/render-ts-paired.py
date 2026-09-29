@@ -96,7 +96,7 @@ def main() -> None:
         "slides": rows,
         "contactSheet": str(contact_path.relative_to(ROOT)),
         "phoneSamples": phone_samples,
-        "note": "All 20 silent frames pair the unchanged English illustration and exact English source with the existing three marked Xitsonga machine-draft sentences. Every other heading and passage is held in English. No Xitsonga narration or farming approval is claimed.",
+        "note": "All 20 silent frames pair the unchanged English illustration and exact English source. Slides 1–4 now carry fuller marked Xitsonga machine-draft wording; later held passages remain visibly English. No Xitsonga narration or farming approval is claimed.",
     }
     (QA / "ts-paired-verification.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
