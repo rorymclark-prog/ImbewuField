@@ -633,3 +633,25 @@ test('Sesotho Plant Guilds learner draft keeps exact source pairing, labeled fie
   assert.ok(slide34.includes('Ha e le hantle kokonyana ena e etsa eng?'));
   assert.ok(slides[48].target.body[0].text.includes('ENGLISH HOLD — Write down what will trigger pruning or thinning.'));
 });
+
+test('Tshivenda and Xitsonga Plant Guilds frames keep every narration line in exact English', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/plant-guilds.en.md', 'utf8'));
+  for (const language of ['ve', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/plant-guilds.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, language);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    assert.equal(slides.length, 51);
+    assert.ok(slides.every((slide: any) => slide.target.heading.status === 'english-hold'),
+      `${language} headings stay in exact English`);
+    assert.deepEqual(slides.filter((slide: any) => slide.target.body.some((part: any) => part.status === 'draft'))
+      .map((slide: any) => slide.n), []);
+    assert.equal(slides.flatMap((slide: any) => slide.target.body)
+      .filter((part: any) => part.status === 'draft').length, 0);
+    assert.equal(slides[26].english.body[0], 'Watch the branch fall onto the cut leaves.');
+    assert.deepEqual(slides[26].target.body, [{ status: 'english-hold' }]);
+    for (const slide of slides) {
+      assert.ok(slide.target.body.every((part: any) => part.status === 'english-hold'),
+        `${language} slide ${slide.n} must visibly retain exact-English body holds`);
+    }
+  }
+});
