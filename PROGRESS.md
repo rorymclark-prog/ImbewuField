@@ -65,11 +65,31 @@ plan? harvest period etc etc".
 - **Harvest dossiers** (`research/perennial-sources/`): strawberry (Acta Hort. 265, SASGA, KZN
   DARD), blueberry (Stellenbosch MSc 2022, USDA GAIN 2017, KZN DARD; its chill figure is in
   hours so the chill-units field stays null), raspberry (KZN DARD Nov–Jan), purple granadilla
-  (KZN DARD Nov–Jan + Jun–Jul, first crop 6–8 months), moringa (first leaves 6–12 months, North
-  West DARD; **no sourced SA months**, so it stays off the chart). Cape gooseberry has no harvest
-  record: the only SA month table found is a seed company's sowing calendar.
+  (KZN DARD Nov–Jan + Jun–Jul, first crop 6–8 months), moringa (leaves and pods; first leaves
+  6–12 months and pods Mar–Apr, North West DARD p.7), Cape gooseberry (picking late Oct–Jan in one
+  Stellenbosch University tunnel trial; the seed company's sowing calendar is not used). Mulberry
+  still has no SA harvest record.
 - **Art:** moringa mapped in `lib/species-art.ts`; `tree_moringa` → `moringa-oleifera` in
-  `ELEMENT_SPECIES`. The four berries have no painted art yet (Lucide fallback) — Codex batch needed.
+  `ELEMENT_SPECIES`. The four berries have no painted picker art yet (Lucide fallback) — Codex batch
+  needed.
+- **Fruit, not trees** (Rory: "instead of fruit trees as the icons make them actual fruit"): flat
+  placeholder fruit icons for all 36 harvest species in `public/fruit-art/*.svg`
+  (`scripts/build-fruit-placeholder-art.mjs`), served by `speciesFruitArtworkUrl` in
+  `lib/species-art.ts`. The food chart's tree tray uses them. Painted PNGs: `docs/FRUIT-ART-BRIEF.md`.
+- **Bed calendar rows** (Rory: "include fruit and nuts and berries (also add for animal products)
+  into this calendar … if you hover … a written version of what's in that month"): under the beds,
+  **Fruit, nuts & berries** and **Animal products** rows show each month's fruit icons or Lucide
+  product icons (egg, milk, fish); hover, focus or tap opens a fixed-position card listing each
+  line ("Mango — fruit · 3 plants on your map · 1 of them proposed"). Whole design, proposed faded
+  and said not cropping yet. Footnotes name what is on the map but not shown (no sourced months,
+  e.g. Pawpaw, honey; or a structure with no "what for"). `lib/calendar-produce.ts`. Follows the
+  orchard/animal switches.
+- **Chosen crops** (Rory: "i selected pumin theres no pumkin or amadumbe or peanuts bambara"): a
+  vine picked by name (pumpkin, butternut, watermelon) now takes a bed even with vines kept out of
+  beds; a picked crop with no sowing month on the farm's calendar (amadumbe on hard frost; bambara
+  off the summer calendar) gets a note saying so instead of a false "didn't fit". Groundnuts were
+  already placed. `lib/crop-autosuggest.ts`; the family/steady ideal anchor re-pinned March →
+  November from the re-read sweep (`tests/crop-plan-ideal.test.ts`).
 - **Monthly plan** (`app/facilitator/crops/page.tsx` Tasks card): under each month (this, next,
   Looking ahead for 12 months) a **From your trees** box lists standing trees in their sourced SA
   season — "Pick Raspberry (2) — SA season Nov–Jan" — with a note that seasons are every region
@@ -79,7 +99,8 @@ plan? harvest period etc etc".
 - **Printed task summary** (`lib/crop-export-pdf.ts`): the same pick lines per month, via the
   export card's new `treeGroups` prop.
 - Tests: pick-line and berry/moringa cases in `tests/perennial-harvest.test.ts`, task-summary case
-  in `tests/crop-plan-pdf-build.test.ts`, species count 196 → 200.
+  in `tests/crop-plan-pdf-build.test.ts`, species count 196 → 200, `tests/calendar-produce.test.ts`,
+  and a chosen-crops case in `tests/crop-autosuggest.test.ts`.
 
 ### 29 Sep 2026 — Food availability: tree and animal picture trays, month labels, printed page
 Rory, looking at the availability chart: "i would prefer icons of fruoit and berrues just like the

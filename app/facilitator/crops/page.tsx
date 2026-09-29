@@ -34,7 +34,8 @@ import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
 import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
 import { printableAvailability } from '@/lib/crop-export-availability';
 import { animalArtUrl } from '@/lib/animal-art';
-import { speciesPickerArtworkUrl } from '@/lib/species-art';
+import { speciesFruitArtworkUrl } from '@/lib/species-art';
+import { animalLineText, animalsNotShownNote, calendarProduceByMonth, treeLineText, type CalendarProduceMonth } from '@/lib/calendar-produce';
 import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
 import { climateGateFrom } from '@/lib/crop-climate-gate';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
@@ -1405,6 +1406,19 @@ function FacilitatorCropsPageInner() {
     () => buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, yearMode === 'fromToday'),
     [canvasAnimals, animalChoices, monthOrder, yearMode],
   );
+  // The bed calendar's own food-forest and animal rows: the whole design, proposed kept apart
+  // (lib/calendar-produce.ts), over the same rolling columns as the beds above them.
+  const calendarProduce = useMemo(
+    () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder),
+    [canvasTrees, canvasAnimals, animalChoices, monthOrder],
+  );
+  // Plants on the map whose harvest record has no sourced picking month yet: named under the row,
+  // so a pawpaw that never appears is explained rather than silently missing.
+  const treesWithoutSeason = useMemo(
+    () => canvasTrees.filter((g) => sourcedSeasonMonths(g.harvest).length === 0).map((g) => g.harvest.name),
+    [canvasTrees],
+  );
+  const animalsNotShown = useMemo(() => animalsNotShownNote(canvasAnimals, animalChoices), [canvasAnimals, animalChoices]);
   // The year of food folds the chart's own first twelve slots into one verdict per month, so it
   // follows the year mode and the orchard/animal switches exactly as the chart does.
   const yearOfFood = useMemo(
@@ -1992,6 +2006,24 @@ function FacilitatorCropsPageInner() {
                       simple={simple}
                     />
                   ))}
+                  {includeTrees && (
+                    <ProduceCalendarRow
+                      kind="trees"
+                      months={calendarProduce}
+                      axis={monthAxis}
+                      emptyText="No fruit, nut or berry plant with a sourced season is on your map yet. Add them in the Design Studio and their picking months show here."
+                      footnote={treesWithoutSeason.length ? `On your map with no sourced picking months yet, so not shown: ${treesWithoutSeason.join(', ')}.` : null}
+                    />
+                  )}
+                  {includeAnimals && (
+                    <ProduceCalendarRow
+                      kind="animals"
+                      months={calendarProduce}
+                      axis={monthAxis}
+                      emptyText="No animals giving food on your map yet. Place a coop, hive or pen in the Design Studio, then say what it is for under Animals on your map."
+                      footnote={animalsNotShown}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -3006,9 +3038,11 @@ function animalTrayItems(slot: AnimalAvailabilityItem[]): AnimalAvailabilityItem
  *
  * Rory, 2026-09-29: "i would prefer icons of fruit and berries just like the others so a 3rd, 4th
  * little box … food forest products etc with icons". It used to be a count of tree kinds beside a
- * Lucide tree, which said how many but not which. Each kind in season now shows its own studio
- * artwork. Still no kilograms: the sources give a picking span, not a monthly curve, the same
- * reason the bars above carry none. The tray is a button onto the same month detail as its bar.
+ * Lucide tree, which said how many but not which. Each kind in season now shows what it gives —
+ * the fruit, nut or berry (lib/species-art.ts speciesFruitArtworkUrl), not the tree: "instead of
+ * fruit trees as the icons make them actual fruit" (Rory, 2026-09-29). Still no kilograms: the
+ * sources give a picking span, not a monthly curve, the same reason the bars above carry none.
+ * The tray is a button onto the same month detail as its bar.
  */
 function TreeAvailabilityRow({ slots, axis, openMonth, onToggleMonth }: {
   slots: TreeAvailabilityItem[][];
@@ -3030,7 +3064,7 @@ function TreeAvailabilityRow({ slots, axis, openMonth, onToggleMonth }: {
           >
             <IconTray count={slot.length} tint="46,107,58" rows={rows}>
               {slot.map((tree) => (
-                <TrayArt key={tree.speciesId} src={speciesPickerArtworkUrl(tree.speciesId)} label={`${tree.name} × ${tree.trees}`} Fallback={Trees} color="var(--emerald)" />
+                <TrayArt key={tree.speciesId} src={speciesFruitArtworkUrl(tree.speciesId)} label={`${tree.name} × ${tree.trees}`} Fallback={Trees} color="var(--emerald)" />
               ))}
             </IconTray>
           </button>
@@ -3676,6 +3710,177 @@ function OrganicGuideCard() {
 }
 
 // ── Bed row + planting bars ─────────────────────────────────────────────
+
+/**
+ * The food forest's and the animals' rows in the bed calendar, under the beds.
+ *
+ * Rory, 2026-09-29: "include fruit and nuts and berries (also add for animal products) into this
+ * calendar … instead of fruit trees as the icons make them actual fruit and if you hover … it opens
+ * up as a written version of what's in that month." Each month shows what is picked — the fruit,
+ * nut, berry or pod, or the egg, milk or honey — never the tree or the animal. Hover, focus or tap a
+ * month for the written list. A plant or coop drawn as PROPOSED is shown faded and said to be
+ * proposed: it is in the plan, but it is not cropping this year.
+ */
+const PRODUCE_ICON = 20;
+const PRODUCE_VISIBLE = 3;
+
+function ProduceCalendarRow({ kind, months, axis, emptyText, footnote }: {
+  kind: 'trees' | 'animals';
+  months: CalendarProduceMonth[];
+  axis: MonthAxisSlot[];
+  emptyText: string;
+  footnote: string | null;
+}) {
+  const [open, setOpen] = useState<{ index: number; left: number; top: number; above: boolean } | null>(null);
+  const pinned = useRef(false);
+  useEffect(() => {
+    if (!open) return;
+    const close = () => { pinned.current = false; setOpen(null); };
+    window.addEventListener('scroll', close, true);
+    window.addEventListener('resize', close);
+    return () => { window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close); };
+  }, [open]);
+
+  const lines = (m: CalendarProduceMonth) => (kind === 'trees' ? m.trees : m.animals);
+  const any = months.some((m) => lines(m).length > 0);
+  const show = (index: number, el: HTMLElement) => {
+    const r = el.getBoundingClientRect();
+    const width = 280;
+    const above = r.bottom + 200 > window.innerHeight && r.top > 220;
+    setOpen({ index, left: Math.max(8, Math.min(r.left, window.innerWidth - width - 8)), top: above ? r.top - 6 : r.bottom + 6, above });
+  };
+  const hide = () => { if (!pinned.current) setOpen(null); };
+  const title = kind === 'trees' ? 'Fruit, nuts & berries' : 'Animal products';
+  const LabelIcon = kind === 'trees' ? Grape : PawPrint;
+
+  return (
+    <div className="flex" style={{ borderBottom: '1px solid var(--border)' }} data-crop-calendar-produce={kind}>
+      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: 'var(--bg-1)', borderRight: '1px solid var(--border)', padding: '10px 10px' }}>
+        <div className="font-display font-semibold" style={{ fontSize: 'clamp(13px, 1vw, 15px)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 5, lineHeight: 1.2 }}>
+          <LabelIcon size={14} aria-hidden style={{ color: kind === 'trees' ? 'var(--emerald)' : 'var(--gold-dim)', flexShrink: 0 }} />
+          {title}
+        </div>
+        <div className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.3 }}>
+          From your map · hover or tap a month
+        </div>
+      </div>
+      <div style={{ flex: '1 1 auto', minWidth: 0, position: 'relative' }}>
+        {any ? (
+          <div style={MONTH_COLUMNS}>
+            {months.map((m, i) => {
+              const items = lines(m);
+              const extra = items.length - PRODUCE_VISIBLE;
+              const monthTitle = monthAxisTitle(axis[i], axis[i]?.month ?? 1);
+              const spoken = items.length === 0
+                ? `${monthTitle}: nothing from ${kind === 'trees' ? 'the food forest' : 'the animals'}`
+                : `${monthTitle}: ${(kind === 'trees' ? m.trees.map(treeLineText) : m.animals.map(animalLineText)).join('; ')}`;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  aria-label={spoken}
+                  aria-expanded={open?.index === i}
+                  onMouseEnter={(e) => { if (items.length && !pinned.current) show(i, e.currentTarget); }}
+                  onMouseLeave={hide}
+                  onFocus={(e) => { if (items.length) show(i, e.currentTarget); }}
+                  onBlur={() => { pinned.current = false; setOpen(null); }}
+                  onClick={(e) => {
+                    if (!items.length) return;
+                    if (open?.index === i && pinned.current) { pinned.current = false; setOpen(null); return; }
+                    pinned.current = true;
+                    show(i, e.currentTarget);
+                  }}
+                  style={{
+                    minWidth: 0, minHeight: 48, padding: '6px 2px', border: 'none', cursor: items.length ? 'pointer' : 'default',
+                    borderRight: i < DISPLAY_MONTHS - 1 ? '1px solid var(--bg-2)' : 'none',
+                    borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
+                    background: open?.index === i ? 'var(--bg-2)' : i === 0 ? 'rgba(31,77,43,0.05)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
+                    display: 'flex', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center', gap: 2,
+                  }}
+                >
+                  {kind === 'trees'
+                    ? m.trees.slice(0, PRODUCE_VISIBLE).map((t) => {
+                      const src = speciesFruitArtworkUrl(t.speciesId);
+                      const faded = t.standing === 0 ? 0.45 : 1;
+                      return src ? (
+                        // eslint-disable-next-line @next/next/no-img-element -- 20px sprite
+                        <img key={t.speciesId} src={src} alt="" width={PRODUCE_ICON} height={PRODUCE_ICON} style={{ width: PRODUCE_ICON, height: PRODUCE_ICON, opacity: faded }} />
+                      ) : (
+                        <Grape key={t.speciesId} size={16} aria-hidden style={{ color: 'var(--emerald)', opacity: faded }} />
+                      );
+                    })
+                    : m.animals.slice(0, PRODUCE_VISIBLE).map((a) => {
+                      const Icon = PRODUCT_ICON[a.product];
+                      return <Icon key={a.enterpriseId} size={16} aria-hidden style={{ color: 'var(--gold-dim)', opacity: a.standing === 0 ? 0.45 : 1 }} />;
+                    })}
+                  {extra > 0 && (
+                    <span className="font-sans" style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)' }}>+{extra}</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+            {emptyText}
+          </div>
+        )}
+        {footnote && (
+          <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+            {footnote}
+          </div>
+        )}
+      </div>
+      {open && (() => {
+        const m = months[open.index];
+        const monthTitle = monthAxisTitle(axis[open.index], axis[open.index]?.month ?? 1);
+        return (
+          <div
+            role="tooltip"
+            className="font-sans"
+            style={{
+              position: 'fixed', left: open.left, top: open.top, transform: open.above ? 'translateY(-100%)' : undefined,
+              width: 280, zIndex: 60, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '1px solid var(--border-strong)',
+              borderRadius: 10, boxShadow: '0 8px 24px rgba(32,25,15,0.18)', padding: '10px 12px', pointerEvents: 'none',
+            }}
+          >
+            <div className="font-display font-semibold" style={{ fontSize: 15, marginBottom: 2 }}>{monthTitle}</div>
+            <div style={{ fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 6 }}>
+              {kind === 'trees' ? 'In season from your food forest' : 'From your animals'}
+            </div>
+            <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 5 }}>
+              {kind === 'trees'
+                ? m.trees.map((t) => {
+                  const src = speciesFruitArtworkUrl(t.speciesId);
+                  return (
+                    <li key={t.speciesId} style={{ display: 'flex', gap: 7, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.35, color: t.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
+                      {src
+                        // eslint-disable-next-line @next/next/no-img-element -- 18px sprite
+                        ? <img src={src} alt="" width={18} height={18} style={{ width: 18, height: 18, flexShrink: 0 }} />
+                        : <Grape size={16} aria-hidden style={{ color: 'var(--emerald)', flexShrink: 0 }} />}
+                      <span>{treeLineText(t)}</span>
+                    </li>
+                  );
+                })
+                : m.animals.map((a) => {
+                  const Icon = PRODUCT_ICON[a.product];
+                  return (
+                    <li key={a.enterpriseId} style={{ display: 'flex', gap: 7, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.35, color: a.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
+                      <Icon size={16} aria-hidden style={{ color: 'var(--gold-dim)', flexShrink: 0 }} />
+                      <span>{animalLineText(a)}</span>
+                    </li>
+                  );
+                })}
+            </ul>
+            <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 7, lineHeight: 1.35 }}>
+              Months from the sourced South African season. No kilograms: the sources give a span, not a monthly amount.
+            </div>
+          </div>
+        );
+      })()}
+    </div>
+  );
+}
 
 function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple }: {
   bed: PlanBed;

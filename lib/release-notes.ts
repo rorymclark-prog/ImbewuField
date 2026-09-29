@@ -43,14 +43,17 @@ export interface UpdateTourStop {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '29 September 2026', sha: '1e495413', changes: [
+    'The bed calendar has Fruit, nuts & berries and Animal products rows under your beds.',
+    'Each month shows the fruit, nut or egg itself. Hover or tap it for a written list.',
+    'Crops you pick by name, like pumpkin, now get a bed, or the plan says why they cannot.',
     'Strawberry, blueberry, raspberry and Cape gooseberry are in the design species picker.',
-    'Berries, granadilla and moringa show sourced picking months or years to first crop.',
-    'Crop-plan tasks list what your standing trees give each month, on screen and in the PDF.',
   ], tour: [
+    { title: 'See the food forest by month', where: 'Crop plan → bed calendar', href: '/facilitator/crops',
+      detail: 'Under the beds, Fruit, nuts & berries shows what your trees and bushes give each month, and Animal products shows eggs, milk or fish. Hover or tap a month for the written list. Plants drawn as proposed are faded and marked not cropping yet.' },
+    { title: 'Check a crop you chose', where: 'Crop plan → Auto-suggest a plan', href: '/facilitator/crops',
+      detail: 'Name pumpkin, groundnuts, amadumbe or bambara. Pumpkin gets a bed to itself even with vines kept out of beds. A crop with no sowing month on your farm\'s calendar, like amadumbe in a hard-frost area, gets a note saying so.' },
     { title: 'Add a berry to your design', where: 'Design → Pick species', href: '/design',
       detail: 'On a Fynbos or Grassland site, tap Pick species: strawberry, blueberry, raspberry and Cape gooseberry sit with the fruit and shrubs, most with sourced South African picking months. They are marked not yet reviewed.' },
-    { title: 'See this month\'s picking', where: 'Crop plan → Tasks', href: '/facilitator/crops',
-      detail: 'Under each month\'s jobs, From your trees lists the standing trees in their sourced South African season, such as Pick Raspberry (2) — SA season Nov–Jan. Trees drawn as proposed are left out until they bear.' },
   ] },
   { when: '29 September 2026', sha: 'a835dc28', changes: [
     'Food availability now shows fruit trees and animal products as picture trays.',
