@@ -69,7 +69,7 @@ def main() -> None:
         contact.save(contact_path, quality=92, optimize=True)
 
         phone_samples = []
-        for n in (4, 8):
+        for n in (1, 2, 3, 4, 8):
             path = OUT / f"slide-{n:02d}.webp"
             with Image.open(path) as source:
                 sample = source.convert("RGB").resize((390, 1463), Image.Resampling.LANCZOS)
@@ -96,7 +96,7 @@ def main() -> None:
         "slides": rows,
         "contactSheet": str(contact_path.relative_to(ROOT)),
         "phoneSamples": phone_samples,
-        "note": "All 20 silent frames pair the unchanged English illustration and exact English source with the existing three marked Sesotho machine-draft sentences. Every other heading and passage is held in English. No Sesotho narration or farming approval is claimed.",
+        "note": "All 20 silent frames pair the unchanged English illustration and exact English source with marked Sesotho machine drafts. Technical or uncertain passages remain exact-English holds. No Sesotho narration or fluent/local farming approval is claimed.",
     }
     (QA / "st-paired-verification.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

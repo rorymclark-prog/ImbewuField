@@ -21,7 +21,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Haha tsamaiso ya dijo e phelang ka layers.",
+            "provenance": "independently-semantics-checked-unreviewed-draft; layers retained in English; source paired"
           },
           {
             "status": "english-hold"
@@ -30,7 +32,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ithute ho rala le ho qala food forest polasing ya hao.",
+            "provenance": "independently-semantics-checked-unreviewed-draft; food forest retained in English; source paired"
           }
         ]
       }
@@ -48,11 +52,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hobaneng Sena se le Bohlokwa",
+          "provenance": "independently-semantics-checked-unreviewed-draft; source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Food forest e hodisa dimela tse molemo bophahamong bo fapaneng.",
+            "provenance": "independently-semantics-checked-unreviewed-draft; food forest retained in English; source paired"
           },
           {
             "status": "english-hold"
@@ -76,7 +84,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Seo U Tla Ithutang Sona",
+          "provenance": "independently-semantics-checked-unreviewed-draft; source paired"
         },
         "body": [
           {
