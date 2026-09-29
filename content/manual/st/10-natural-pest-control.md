@@ -178,7 +178,7 @@ Di-trap crop, dipalesa bakeng sa di-predator le temo e kopantsweng di lekilwe ha
 
 **Temo e kopantsweng.** Motswako wa dijalo o fepa ditshedi tsa mobu le di-predator tse ngata. Dikokonyana tse ngata di fumana semela sa tsona sa dijo ka sebopeho, mmala le monko wa sona, mme bethe e nang le dibopeho le mebala e mengata e a di ferekanya, kahoo tse ding di a feta.
 
-**Di-trap crop.** Trap crop e lengwa haufi le sejalo sa dijo ho hohela sesenyi hole. Di-aphid hangata di rata di-nasturtium ho feta khabetjhe, broccoli le cauliflower. Re bone di-nasturtium tse lenngweng pela cauliflower le broccoli di tlala di-aphid ha sejalo se ne se siuwa se sa tshwenngwe. Ho e sebedisa:
+**Di-trap crop.** Trap crop e lengwa haufi le sejalo sa dijo ho hohela sesenyi hole. Di-nasturtium tse lenngweng haufi le sejalo hangata di hohela di-aphid, haholoholo di-aphid tse ntsho, hole le sona. Ho e sebedisa:
 
 1. Lema di-nasturtium mathokong a bethe ya serapa, e seng bohareng.
 2. Di hlahlobe habedi ka beke.

@@ -117,3 +117,11 @@ Rewrite to REWRITE.md (6,209 → 3,974 words). Safety boxes, legal notes and "as
 - Cutworm collar depth 2 cm → 3 to 5 cm.
 - Fruit-fly bag in the sun: "for a week" → "until the maggots are dead".
 - Slug pellets: "dogs, birds and children" → "dogs and cats".
+
+## Third pass (29 Sep 2026) — nasturtium trap crop
+
+- "Aphids often prefer nasturtiums to cabbage, broccoli and cauliflower. We have seen…" →
+  "Nasturtiums planted near the crop often draw aphids, especially black aphids, away from it."
+  Nasturtium is a well-supported trap for black bean aphid; evidence that it pulls cabbage aphid
+  off brassicas is mixed and mostly anecdotal. The "We have seen" line was not Rory's own
+  observation, so it was dropped (all five languages). The check-and-remove steps below it stay.

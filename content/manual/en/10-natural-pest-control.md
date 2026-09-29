@@ -178,7 +178,7 @@ Trap crops, flowers for predators and mixed plantings are well tested. Many othe
 
 **Mixed planting.** A mix of crops feeds more soil life and more predators. Many insects find their food plant by its shape, colour and smell, and a bed of many shapes and colours confuses them, so some move on.
 
-**Trap crops.** A trap crop is grown near the food crop to draw the pest away. Aphids often prefer nasturtiums to cabbage, broccoli and cauliflower. We have seen nasturtiums planted beside cauliflower and broccoli fill with aphids while the crop was left alone. To use one:
+**Trap crops.** A trap crop is grown near the food crop to draw the pest away. Nasturtiums planted near the crop often draw aphids, especially black aphids, away from it. To use one:
 
 1. Plant nasturtiums along the edge of the bed, not in the middle.
 2. Check them twice a week.
