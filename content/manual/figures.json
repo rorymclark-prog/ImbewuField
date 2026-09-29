@@ -23,11 +23,11 @@
     "width": 1400,
     "height": 1050,
     "caption": {
-      "en": "A base map: an aerial photo of the property with contour lines, the buildings and a north arrow. Map what is already there before you plan anything new.",
-      "zu": "Imephu eyisisekelo: isithombe sendawo esithathwe phezulu, sinemigqa ye-contour, izakhiwo nomcibisholo okhomba inyakatho. Dweba okukhona kakade ngaphambi kokuhlela okusha.",
-      "st": "Mmapa wa motheo: setshwantsho sa sebaka se nkuweng hodimo, se nang le mela ya contour, meaho le motsu o supang leboya. Taka se seng se le teng pele o rala se setjha.",
-      "ve": "Mmapa wa fhethu: tshifanyiso tsha fhethu tsho dzhiiwaho u bva nṱha, tshi na mitalo ya contour, zwifhaṱo na musevhe u sumbaho devhula. Olani zwine zwa vha hone phanḓa ha u pulana zwiswa.",
-      "ts": "Mepe wa masungulo: xifaniso xa ndhawu lexi tekiweke ehenhla, xi ri na tilayini ta contour, swakiwa na museve lowu kombaka n'walungu. Dirowa leswi nga kona u nga si pulana swilo leswintshwa."
+      "en": "A base map: an illustrated view of the property with contour lines, the buildings and a north arrow. Map what is already there before you plan anything new.",
+      "zu": "Imephu eyisisekelo: isithombe sendawo, sinemigqa ye-contour, izakhiwo nomcibisholo okhomba inyakatho. Dweba okukhona kakade ngaphambi kokuhlela okusha.",
+      "st": "Mmapa wa motheo: setshwantsho sa sebaka, se nang le mela ya contour, meaho le motsu o supang leboya. Taka se seng se le teng pele o rala se setjha.",
+      "ve": "Mmapa wa fhethu: tshifanyiso tsha fhethu, tshi na mitalo ya contour, zwifhaṱo na musevhe u sumbaho devhula. Olani zwine zwa vha hone phanḓa ha u pulana zwiswa.",
+      "ts": "Mepe wa masungulo: xifaniso xa ndhawu, xi ri na tilayini ta contour, swakiwa na museve lowu kombaka n'walungu. Dirowa leswi nga kona u nga si pulana swilo leswintshwa."
     },
     "credit": "Illustration: made with AI for this manual"
   },
@@ -1271,11 +1271,11 @@
     "width": 1400,
     "height": 1050,
     "caption": {
-      "en": "Filling a small wildlife pond made from an old tyre, a blanket and plastic, edged with stones. Frogs and dragonflies soon move in.",
-      "zu": "Ukugcwalisa ichibi elincane lezilwane zasendle elenziwe ngethayi elidala, ingubo nepulasitiki, elizungezwe amatshe. Amaxoxo nojekamanzi basheshe bafike.",
-      "st": "Ho tlatsa letangwana le lenyane la diphoofolo tsa naha le entsweng ka thaere ya kgale, kobo le polasetiki, le potolohilweng ke majwe. Dihwaswa le di-dragonfly di fihla kapele.",
-      "ve": "U ḓadza tshidziva tshiṱuku tsha zwipuka zwa ḓaka tsho itwaho nga thaere ya kale, gumbelo na pulasitiki, tsho kombetshedzwaho nga matombo. Matsheke na dzi-dragonfly zwi swika nga u ṱavhanya.",
-      "ts": "Ku tata xidziva lexitsongo xa swiharhi swa nhova lexi endliweke hi thayere ya khale, kumbesi na pulasitiki, lexi rhendzeriweke hi maribye. Swiketlane na ti-dragonfly swi fika hi ku hatlisa."
+      "en": "Filling a small wildlife pond edged with stones. Frogs and dragonflies soon move in.",
+      "zu": "Ukugcwalisa ichibi elincane lezilwane zasendle elizungezwe amatshe. Amaxoxo nojekamanzi basheshe bafike.",
+      "st": "Ho tlatsa letangwana le lenyane la diphoofolo tsa naha le potolohilweng ke majwe. Dihwaswa le di-dragonfly di fihla kapele.",
+      "ve": "U ḓadza tshidziva tshiṱuku tsha zwipuka zwa ḓaka tsho kombetshedzwaho nga matombo. Matsheke na dzi-dragonfly zwi swika nga u ṱavhanya.",
+      "ts": "Ku tata xidziva lexitsongo xa swiharhi swa nhova lexi rhendzeriweke hi maribye. Swiketlane na ti-dragonfly swi fika hi ku hatlisa."
     },
     "credit": "Illustration: made with AI for this manual"
   },
