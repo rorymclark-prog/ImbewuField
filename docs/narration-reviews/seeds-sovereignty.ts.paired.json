@@ -261,7 +261,9 @@
             "backTranslation": "Which seed does your household already save well?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dirowa mepe lowutsongo wa miti leyi nga kusuhi na wena. Etlhelo ka muti wun’wana ni wun’wana, tsala ximilana xin’we (crop) lexi ndyangu wolowo wu nga xi tiselaka ku cincana mbewu.",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -293,7 +295,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eku heteleleni, ndyangu wun’wana ni wun’wana wu va ni mixaka yo tala ya mbewu (varieties) ku hundza leyi a wu ri na yona eku sunguleni.",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "draft",

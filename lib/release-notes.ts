@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '19d4fb26', changes: [
+    'Seeds adds community-sharing prompts in Sesotho, Tshivenda and Xitsonga.',
+    'Drafts stay beside English; seed-selection advice stays in English.',
+  ], tour: [
+    { title: 'Compare the Seeds community slides', where: 'Study → Seeds and Seed Sovereignty → slides 6–7', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Slides 6–7 show unreviewed household and sharing drafts beside exact English. Seed genetics and selection guidance remain in English.' },
+  ] },
   { when: '29 September 2026', sha: '43e5f5f3', changes: [
     'Food Forest opens with more Sesotho study prompts on three silent slides.',
     'Unreviewed drafts sit beside English. Planting guidance stays in English.',

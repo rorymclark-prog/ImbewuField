@@ -255,7 +255,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lelapa la heno le qala sena. Baahelani ba se atolosa. Ha linako tsa selemo li ntse li feta, pokello ea peo ea sebakeng seo e ba molemo haholoanyane.",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "draft",
@@ -263,7 +265,9 @@
             "backTranslation": "Which seed does your household already save well?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thala ’mapa o monyenyane oa matlo a haufi le uena. Haufi le ntlo ka ’ngoe, ngola sejalo se le seng seo lelapa leo le ka se tlisang phapanyetsanong ea peo.",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -295,7 +299,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qetellong, lelapa ka leng le na le mefuta e mengata ea peo (varieties) ho feta eo le neng le e-na le eona pele.",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "draft",
