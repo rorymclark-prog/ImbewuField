@@ -61,6 +61,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Count them in your plan', where: 'Crop plan → Plan-cycle value', href: '/facilitator/crops',
       detail: 'Plant one of the five crops and it now counts in the value figures. Under Review and edit price assumptions its badge says recommended price, and you can type your own local price.' },
   ] },
+  { when: '29 September 2026', sha: 'a0f103d1', changes: [
+    'Seeds now has silent Sesotho, Tshivenda and Xitsonga slide decks for review.',
+    'Early drafts pair with English; later technical steps remain English.',
+  ], tour: [
+    { title: 'Compare the Seeds slides', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga and open the slides. The first three are marked unreviewed drafts; later technical steps show English holds. The slide-only offline pack needs no narration.' },
+  ] },
   { when: '29 September 2026', sha: '3216aa11', changes: [
     'Seeds lesson 1 has more Sesotho, Tshivenda and Xitsonga draft teaching beside English.',
     'Seed genetics quizzes and the slide narration stay in English.',

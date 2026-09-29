@@ -43,6 +43,7 @@ const brandingFlag = argv.indexOf('--branding');
 const sourceFlag = argv.indexOf('--source');
 const pairedFlag = argv.indexOf('--paired-draft');
 const pairedArtFlag = argv.indexOf('--paired-art');
+const pairedNativeFlag = argv.indexOf('--paired-native-source');
 const validateOnly = argv.includes('--validate-only');
 const overridesPath = overrideFlag >= 0 ? resolve(argv[overrideFlag + 1]) : null;
 const brandingPath = brandingFlag >= 0 ? resolve(argv[brandingFlag + 1]) : null;
@@ -51,7 +52,8 @@ const pairedPath = pairedFlag >= 0 && argv[pairedFlag + 1] ? resolve(argv[paired
 const pairedArtPath = pairedArtFlag >= 0 && argv[pairedArtFlag + 1] ? resolve(argv[pairedArtFlag + 1]) : null;
 if (pairedFlag >= 0 && !pairedPath) throw new Error('--paired-draft requires a JSON file');
 if (pairedArtFlag >= 0 && !pairedArtPath) throw new Error('--paired-art requires a JSON file');
-const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--paired-art', '--validate-only']);
+if (pairedNativeFlag >= 0 && !pairedPath) throw new Error('--paired-native-source requires --paired-draft');
+const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--paired-art', '--paired-native-source', '--validate-only']);
 const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag, pairedFlag, pairedArtFlag].filter((i) => i >= 0).map((i) => i + 1));
 const positional = argv.filter((a, i) => !skipped.has(a) && !valueFlags.has(i));
 const [moduleId, lang, outRaw] = positional;
@@ -65,6 +67,9 @@ if (pairedPath && (!pairedDraftLanguageLabel(lang) || sourcePath || brandingPath
 }
 if (pairedArtPath && !pairedPath) throw new Error('--paired-art requires --paired-draft');
 if (validateOnly && !pairedPath) throw new Error('--validate-only requires --paired-draft');
+if (pairedNativeFlag >= 0 && moduleId !== 'seeds-sovereignty') {
+  throw new Error('--paired-native-source is currently limited to Seeds and Seed Sovereignty');
+}
 const scriptPath = sourcePath || resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${pairedPath ? 'en' : lang}.md`));
 if (!existsSync(scriptPath)) {
   console.error(`\n  ✗ no narration script at ${scriptPath}\n`);
@@ -257,6 +262,7 @@ writeFileSync(
     pairedSlides,
     pairedLanguageLabel: pairedPath ? pairedDraftLanguageLabel(lang) : null,
     pairedSourceSlides,
+    pairedNativeSource: pairedNativeFlag >= 0,
     pairedArtSlides: Object.keys(pairedArt).map(Number),
     validateOnly,
     footer: branding.footer || 'ImbewuField · Imbewu Yoshintso',
@@ -272,6 +278,7 @@ from PIL import Image, ImageDraw, ImageFont
 cfg = json.load(open(sys.argv[1]))
 PAIRED = cfg.get('pairedSlides')
 PAIRED_LANGUAGE = cfg.get('pairedLanguageLabel') or 'TARGET LANGUAGE'
+PAIRED_NATIVE_SOURCE = cfg.get('pairedNativeSource', False)
 W, H = (1440, 5400) if PAIRED else (1920, 1080)
 
 # Palette read off the produced Seeds deck, which is the standard the rest of the course is
@@ -390,7 +397,12 @@ if PAIRED:
     paired_plans = []
     for pair, source_image in zip(PAIRED, cfg['pairedSourceSlides']):
         with Image.open(source_image) as original:
-            if original.width < 1000 or original.height < 560:
+            # Seeds' authored JPEGs are 960x540. The explicit native mode places those pixels
+            # whole at 1:1 on the tall frame; it never resamples them to fill the illustration box.
+            native_seed_source = PAIRED_NATIVE_SOURCE and original.size == (960, 540)
+            if PAIRED_NATIVE_SOURCE and not native_seed_source:
+                raise ValueError('slide %d native Seeds illustration must be exactly 960x540' % pair['n'])
+            if not native_seed_source and (original.width < 1000 or original.height < 560):
                 raise ValueError('slide %d English illustration is too small for the paired proof' % pair['n'])
         target = pair['target']
         held = target['heading']['status'] == 'english-hold' or any(
@@ -437,7 +449,8 @@ if PAIRED:
         draw.text((96, 220), art_label, font=F_PAIR_LABEL, fill=AMBER)
         with Image.open(source_image) as original:
             original = original.convert('RGB')
-            original.thumbnail((1280, 720), Image.Resampling.LANCZOS)
+            if not PAIRED_NATIVE_SOURCE:
+                original.thumbnail((1280, 720), Image.Resampling.LANCZOS)
             image.paste(original, ((W - original.width) // 2, 290))
         target = pair['target']
         target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
