@@ -1,0 +1,1027 @@
+{
+  "language": "ts",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "n": 1,
+        "heading": "Seeds and Seed Sovereignty",
+        "body": [
+          "Seed is where the next season begins.",
+          "When your household can save, store and share good seed, it carries more than a crop forward. It also carries the freedom to choose.",
+          "In this lesson, you will follow seed from the parent plant to the packet, the germination test and a neighbour’s hand.",
+          "Think about the crops in your area. Which ones do you already save seed from? Which seed do you buy? Which seed do you exchange?",
+          "Try to name at least one crop whose seed is already being saved in your area."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mbewu hi laha nguva leyi landzelaka yi sungulaka kona."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mbewu hi laha nguva leyi landzelaka yi sungulaka kona."
+          },
+          {
+            "status": "draft",
+            "text": "Loko ndyangu wa ka n'wina wu kota ku hlengeleta, ku hlayisa ni ku avelana mbewu leyinene, wu yisa swilo swo tala ku hundza ntshovelo ntsena. Wu tlhela wu yisa ntshunxeko wa ku hlawula."
+          },
+          {
+            "status": "draft",
+            "text": "Eka dyondzo leyi, u ta landzelela mbewu ku suka eka ximilana xa mutswari ku ya eka nkwama, eka xikambelo xa ku mila, ni le voko ra muakelani."
+          },
+          {
+            "status": "draft",
+            "text": "Anakanya hi swimilana swa le ndhawini ya ka n'wina. Hi swihi leswi mi se mi hlengeletaka mbewu ya swona? Hi yihi mbewu leyi mi yi xavaka? Hi yihi leyi mi yi cincanaka?"
+          },
+          {
+            "status": "draft",
+            "text": "Ringeta ku vula ximilana xin’we lexi se ku hlengeletiwaka mbewu ya xona endhawini ya ka n'wina."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "n": 2,
+        "heading": "Why Saving Seed Matters",
+        "body": [
+          "Saving seed does not mean rejecting all bought seed. It means building practical choices.",
+          "Each crop you learn to save well removes one repeated purchase. It also begins a local record of what performs well in your soil and your season.",
+          "Think about the seed you buy again and again. Which repeated seed purchase costs your household the most each year?",
+          "Choose one crop from your planting list. Make it your practical starting point for seed saving. Do not try to save everything at once."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ha Yini Ku Hlengeleta Mbewu Swi Ri Swa Nkoka"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ku hlengeleta mbewu a swi vuli ku ala mbewu leyi xaviweke. Swi vula ku va ni tindlela leti u nga ti hlawulaka."
+          },
+          {
+            "status": "draft",
+            "text": "Ximilana xin’wana ni xin’wana lexi u dyondzaka ku hlengeleta mbewu ya xona kahle xi hunguta ku xava loku phindha-phindhiwaka. Xi tlhela xi sungula rhekhodo ya le ndhawini ya ka n'wina ya leswi kulaka kahle emaribyeni ya wena ni hi nguva ya wena."
+          },
+          {
+            "status": "draft",
+            "text": "Anakanya hi mbewu leyi u yi xavaka nkarhi ni nkarhi. Hi yihi mbewu leyi durhaka ngopfu ndyangu wa ka n'wina lembe rin’wana ni rin’wana?"
+          },
+          {
+            "status": "draft",
+            "text": "Hlawula ximilana xin’we eka nxaxamelo wa wena wo byala. Xi endle ximilana xa wena xo sungula ku hlengeleta mbewu ya xona. U nga ringeti ku hlayisa swilo hinkwaswo hi nkarhi wun’we."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "n": 3,
+        "heading": "Learning Outcomes",
+        "body": [
+          "This lesson ends with a working seed store, not a list of facts.",
+          "You will make four decisions.",
+          "What will you save?",
+          "How will you process it?",
+          "How will you protect it?",
+          "And how will you know it is still alive before you depend on it?",
+          "Which of these four decisions is least familiar to you?",
+          "Say them again in your own words: select, process, protect and verify."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leswi U Nga Ta Swi Dyondza"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dyondzo leyi yi hela hi vuhlayiselo bya mbewu byo tirha, ku nga ri nxaxamelo wa timhaka ntsena."
+          },
+          {
+            "status": "draft",
+            "text": "U ta endla swiboho swa mune."
+          },
+          {
+            "status": "draft",
+            "text": "U ta hlayisa yini?"
+          },
+          {
+            "status": "draft",
+            "text": "U ta yi lulamisa hi ndlela yihi?"
+          },
+          {
+            "status": "draft",
+            "text": "U ta yi sirhelela hi ndlela yihi?"
+          },
+          {
+            "status": "draft",
+            "text": "Naswona u ta swi tivisa ku yini leswaku ya ha hanya u nga si yi tshemba?"
+          },
+          {
+            "status": "draft",
+            "text": "Hi xihi eka swiboho leswi swa mune lexi u nga xi tolovelangiki ngopfu?"
+          },
+          {
+            "status": "draft",
+            "text": "Vula nakambe hi marito ya wena: hlawula, lulamisa, sirhelela, kutani u tiyisisa."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "n": 4,
+        "heading": "Open-Pollinated Seed and F1 Seed",
+        "body": [
+          "Open-pollinated seed is not magic.",
+          "A stable variety can produce similar generations when it is properly isolated or self-pollinated.",
+          "F1 seed usually remains alive. But the next generation separates into different combinations of the parent traits.",
+          "The problem is unpredictability, not failure to germinate.",
+          "Think about one small bed on your own plot. Why could unpredictable plants be a risk when space is limited?",
+          "If you have seed packets, check whether they are marked open-pollinated or F1. Which would you choose for saving dependable seed?",
+          "Remember: the next F1 generation varies. It does not automatically die."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "n": 5,
+        "heading": "Watch: Open-Pollinated Seed and F1 Seed",
+        "body": [
+          "Watch both sides.",
+          "Both kinds of seed germinate.",
+          "Open-pollinated seed produces similar plants when the variety is stable and pollination is properly managed.",
+          "Seed saved from an F1 plant also germinates. But its next generation varies. Some plants may be tall. Others may be short. Their vigour and yield may differ.",
+          "Ask yourself what this means when choosing seed to save.",
+          "If you understand the difference, you can explain it in one sentence: both germinate, but the next F1 generation is unpredictable."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "n": 6,
+        "heading": "Seed Sovereignty",
+        "body": [
+          "Seed sovereignty does not live in a slogan.",
+          "It lives in a dry packet, a written record and knowledge of how the seed behaves.",
+          "Your household begins it. Neighbours extend it. The seasons make the local seed collection more useful.",
+          "Which seed does your household already save best?",
+          "Draw a small map of the homes near you. Beside each home, write one crop that household could bring to a seed exchange.",
+          "Sovereignty needs three things: usable seed, written information and exchange."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "n": 7,
+        "heading": "Watch: Household Seed Network",
+        "body": [
+          "Well-saved seed becomes more powerful when it is known and shared.",
+          "Watch one household begin by saving seed well from one crop. Dry seed goes into clean packets. Some packets move to neighbouring homes. The neighbours share different seed in return.",
+          "By the end, each household holds more varieties than it had before.",
+          "Think about which seed you could share and which seed you might receive from a neighbour. Seed moves. Knowledge and trust must move with it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "n": 8,
+        "heading": "Select Several Parent Plants",
+        "body": [
+          "The largest fruit is not always the best seed parent.",
+          "Look at the whole plant.",
+          "Was it healthy?",
+          "Did it mature at the right time?",
+          "Was it true to type?",
+          "Save from several good plants, especially in cross-pollinated crops. This prevents the next generation from coming from only one parent.",
+          "What would make you reject a seed plant even if its fruit were large?",
+          "Go to your own plot. Point out the plants you would select and the plants you would reject. Choose several healthy, true-to-type plants. Reject diseased plants and those that are not true to type."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "n": 9,
+        "heading": "Control Pollination",
+        "body": [
+          "Some crops mostly self-pollinate. A small garden can therefore keep the variety similar.",
+          "Crops pollinated by wind or insects can cross over long distances.",
+          "The distance needed depends on the crop, the place and the purpose of the seed. Do not promise varietal purity until you have checked the crop.",
+          "How can you separate two varieties without using distance?",
+          "You can plant them at different times so they do not flower together. You can also control pollination by hand or with covers.",
+          "Remember the three tools: distance, flowering time or controlled pollination."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "n": 10,
+        "heading": "Watch: Self-Pollination and Crossing",
+        "body": [
+          "Follow the path of the pollen.",
+          "In self-pollination, pollen moves within one flower from the part that produces it to the part that receives it. This often helps the variety remain similar.",
+          "In a maize field, wind carries pollen from the tassels to the silks. If two varieties are close together and flower at the same time, they can cross.",
+          "Think about how distance or different flowering times could prevent that on your own plot."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "n": 11,
+        "heading": "Dry and Wet Processing",
+        "body": [
+          "There are two broad ways to process seed.",
+          "Dry seed matures in a pod, head or cob. It is collected when fully mature.",
+          "Seed inside a fleshy fruit must first be separated from the flesh.",
+          "Brief fermentation is especially useful for tomato seed. It is not a rule for every wet-seeded crop.",
+          "Think about the crops in your area. Which fit the dry method? Which fit the wet method?",
+          "If you have seed or fruit nearby, sort the examples into these two types. Explain the difference by describing what the seed is like at harvest."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "n": 12,
+        "heading": "Process Dry Seed",
+        "body": [
+          "Leave dry-seeded crops on the plant until the seed is fully mature.",
+          "Collect it before weather, birds or bursting pods take the harvest.",
+          "Remove chaff and damaged seed.",
+          "Then spread the clean seed in a single layer in moving air and shade.",
+          "What tells you that dry seed is mature enough to collect?",
+          "If you have a dry pod or seed head, handle it. Listen for the seed. Compare green, flexible plant material with brown, brittle material.",
+          "Wait for maturity. For final drying, use shade and airflow."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "n": 13,
+        "heading": "Watch: Dry Processing",
+        "body": [
+          "Allow the seed to mature on the plant before collecting it.",
+          "Watch how it is collected once mature. Chaff and debris are removed. Damaged seed is taken out.",
+          "The clean seed is then spread in a single layer in moving air and shade.",
+          "Follow the steps in order: mature, collect, clean, dry.",
+          "Think about where you could carry out each part of this process."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "n": 14,
+        "heading": "Wet Processing for Tomato Seed",
+        "body": [
+          "Scoop tomato seed and flesh into a clean jar with a little water.",
+          "Leave it open or loosely covered. Keep it out of direct sun.",
+          "After two to three days, a light film and a sour smell may appear.",
+          "Rinse promptly. Remove debris. Then spread the clean seed thinly to dry.",
+          "Do not seal an actively fermenting jar.",
+          "Think about the signs that tell you the process has begun. Also think about signs that would make you discard the batch.",
+          "Find a jar, a sieve and a drying plate. When you are ready, start a small batch. Remember the order: scoop, ferment briefly, rinse and dry completely."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "n": 15,
+        "heading": "Watch: Wet Processing for Tomato Seed",
+        "body": [
+          "Watch the whole process in order.",
+          "A ripe tomato is opened. The seed and gel are scooped into a clean jar. Only a little water is added.",
+          "The jar is left open or loosely covered for two to three days.",
+          "When a light film and sour smell appear, the contents are poured through a sieve. The seed is rinsed until it is clean.",
+          "Finally, the seed is spread in a single layer in the shade until completely dry.",
+          "Repeat the steps to yourself: scoop, ferment briefly, rinse, dry completely."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "n": 16,
+        "heading": "Practical Activity",
+        "body": [
+          "This is where the lesson leaves the screen and reaches your hands.",
+          "Start one real batch of wet-processed seed.",
+          "Use one ripe, healthy fruit, a clean jar, a spoon, a little water, a sieve and a drying plate.",
+          "Put the seed, flesh and a little water into the jar. Add a label with the date.",
+          "You will look after this jar after the lesson. Decide now when you will inspect it, when you will rinse it and when you will dry the seed.",
+          "Your jar needs a date and a return plan. Write down the date when you will inspect it after two days."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "n": 17,
+        "heading": "Dry First, Seal Later",
+        "body": [
+          "Drying is not a decorative final step.",
+          "Moist seed keeps breathing. It can heat, rot or die in storage.",
+          "Use shade, moving air and time.",
+          "Seal seed only when you are sure it is dry.",
+          "Which place in your home has shade and airflow, but is protected from rain and cooking steam?",
+          "Choose one safe drying place. Then identify one unsafe place.",
+          "Repeat this to check your understanding: dry first, seal later."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "n": 18,
+        "heading": "Protect Seed from Heat, Light and Moisture",
+        "body": [
+          "Paper packets breathe and organise seed. But they are not enough in a humid climate.",
+          "Once the seed is completely dry, place the labelled packets inside a sealed, moisture-proof container. If available, include a food-safe desiccant.",
+          "Keep the container as cool and dark as possible in your home.",
+          "Which room or cupboard in your home stays coolest and driest?",
+          "Compare a paper envelope on its own with an envelope inside a sealed container.",
+          "Safe storage has two layers: a labelled paper packet inside a dry, sealed container."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "n": 19,
+        "heading": "Label Every Packet",
+        "body": [
+          "Storage protects the seed physically. Written information protects its meaning.",
+          "The packet must tell the next person what crop it is.",
+          "It must give the variety or local name.",
+          "It must say when the seed was saved and where it came from.",
+          "Which local names could be lost if you write only the crop name?",
+          "Take a blank packet. Practise writing the four pieces of information: crop, variety or local name, date and source.",
+          "Check again that all four are present."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "n": 20,
+        "heading": "Ten-Seed Germination Test",
+        "body": [
+          "A seed packet can look perfect even when the seed is losing life.",
+          "Ten seeds make the calculation easy.",
+          "Keep them warm and moist. Do not submerge them in water.",
+          "Then count the normal seedlings.",
+          "Six out of ten is about sixty percent. That tells you to sow more heavily, use the seed only as a trial, or replace it.",
+          "If eight seeds out of ten germinate, what percentage is that?",
+          "The answer is eighty percent.",
+          "Start a ten-seed test with an old packet. Write down the date and the day when you will count."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "n": 21,
+        "heading": "Watch: Ten-Seed Germination Test",
+        "body": [
+          "Count exactly ten seeds.",
+          "Place them in two rows of five.",
+          "Keep them on moist paper or cloth. Do not submerge them in water.",
+          "After some time, count again.",
+          "Here, six have germinated. Four have not. The total is still ten.",
+          "The germination rate is therefore sixty percent.",
+          "Check yourself. Did you count ten at the start, six germinated seeds and four ungerminated seeds at the end?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "n": 22,
+        "heading": "Share Seed with Its Information",
+        "body": [
+          "A seed exchange is not a table of unknown packets.",
+          "A good exchange moves information with the seed.",
+          "It tells you what the seed is. Where it came from. When it was saved. And whether it has been tested.",
+          "This honesty strengthens the whole network.",
+          "What information would help you trust seed from another household?",
+          "Take one of your packets. Practise describing it before sharing it. Give the seed and its basic history together."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 23,
+      "english": {
+        "n": 23,
+        "heading": "Field Assignment",
+        "body": [
+          "This task is small enough to finish. It is important enough to matter.",
+          "Build one working seed-storage container.",
+          "Put labelled paper packets inside a dry, sealed container.",
+          "Take a photograph of it.",
+          "Then name the crop whose seed you will save this season.",
+          "The photograph is evidence. The packet is a beginning.",
+          "What do you still need to finish this at home?",
+          "Write a short materials list. Choose a completion date.",
+          "Before sealing the container, check your work: the seed is completely dry; every packet has the crop, variety and date; the container is cool, dark and protected from moisture; and you selected several healthy parent plants."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 24,
+      "english": {
+        "n": 24,
+        "heading": "Field Action",
+        "body": [
+          "Select.",
+          "Process.",
+          "Protect.",
+          "Verify.",
+          "Those four actions carry a seed collection from this field into the next season.",
+          "Begin with one crop and do it well.",
+          "Which crop will you begin with?",
+          "Say it aloud. Then choose one action you will take next.",
+          "The next season is already inside the seed you choose today."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    }
+  ]
+}
