@@ -3,14 +3,15 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible. Slides 8–14: six concept headings, factual attribution and framing statements; independently back-checked candidates. Actionable farm, water, safety, permission, windbreak, zone/sector field instructions and uncertain ecological claims remain exact English. Slides 16–22: selected reflective question and headings, plus slide 20 closing sentence; generated with Agy Gemini 3.8 Flash Low and independently back-checked with Agy Gemini 3.1 Pro Low. Slide 15 heading and slide 17 reflective question remain held after back-check. Slides 2 and 4: ordinary reflective questions; slide 17: short transition. These are unreviewed machine drafts paired with the unchanged English source. One unreviewed AI draft for the farmer example on slide 5 body paragraph 3; exact English source stays visible.",
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible. Slides 8–14: six concept headings, factual attribution and framing statements; independently back-checked candidates. Actionable farm, water, safety, permission, windbreak, zone/sector field instructions and uncertain ecological claims remain exact English. Slides 16–22: selected reflective question and headings, plus slide 20 closing sentence; generated with Agy Gemini 3.8 Flash Low and independently back-checked with Agy Gemini 3.1 Pro Low. Slide 15 heading and slide 17 reflective question remain held after back-check. Slides 2 and 4: ordinary reflective questions; slide 17: short transition. These are unreviewed machine drafts paired with the unchanged English source. One unreviewed AI draft for the farmer example on slide 5 body paragraph 3; exact English source stays visible. Slide 5 body paragraphs 2 and 5 now have unreviewed, source-paired ordinary-language candidates; the purpose sentence in paragraph 4 remains an English hold pending fluent review.",
     "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
     "holds": "Unverified spade wording, the land-works-with-you contrast, the shared-spring example, ethics decision scenarios, site and crop advice, money claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English. The slide 6 example passages and every slide 8 body passage remain exact English. All zone examples and frequencies, farm layout suggestions, observation or sketching steps, weather directions, shelter claims and site-specific field actions on slides 15–22 remain exact English."
   },
   "reviewNotes": [
     "A fluent Tshivenda speaker should check the dig/plot wording, smallholding and work terms, register, ethics term and named labels before classroom reliance.",
     "This is an unreviewed machine draft, not local farming approval.",
-    "Slides 15–22 contain only a few Agy machine candidates: slide 16 reflection, slide 18 heading and reflection, slide 19 heading, slide 20 heading and closing sentence, and slides 21–22 headings. Agy Pro Low rejected the slide 15 heading for changing visit frequency to timing and rejected slide 17 question for changing “without thinking” to “without thinking anymore”; both remain exact English. Every practical zone, sector, windbreak and field instruction is held in exact English. Fluent Tshivenda and local farming review remains required. The slide 5 farmer example is an unreviewed AI draft; fluent Tshivenda review must check register and whether “nothing back for the family table” is clear. Slide 6 and slide 8 examples remain exact English holds."
+    "Slides 15–22 contain only a few Agy machine candidates: slide 16 reflection, slide 18 heading and reflection, slide 19 heading, slide 20 heading and closing sentence, and slides 21–22 headings. Agy Pro Low rejected the slide 15 heading for changing visit frequency to timing and rejected slide 17 question for changing “without thinking” to “without thinking anymore”; both remain exact English. Every practical zone, sector, windbreak and field instruction is held in exact English. Fluent Tshivenda and local farming review remains required. The slide 5 farmer example is an unreviewed AI draft; fluent Tshivenda review must check register and whether “nothing back for the family table” is clear. Slide 6 and slide 8 examples remain exact English holds.",
+    "Slide 5 body paragraphs 2 and 5 are semantic-only unreviewed drafts paired with the unchanged English. The purpose sentence in paragraph 4 remains held because the available candidate wording for feeding and operating the farm needs fluent review. Do not treat any candidate as fluent or local approval."
   ],
   "slides": [
     {
@@ -184,7 +185,9 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱhoḓea dza muṱa waṋu dzi ḓa u thoma, nga murahu hu tevhela dza tshitshavha tsha haṋu.",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
           },
           {
             "status": "draft",
@@ -195,7 +198,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi mini zwine zwa bva shangoni ḽaṋu zwine muṱa waṋu wa sa vhuye wa zwiḽa?",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
           }
         ]
       }
