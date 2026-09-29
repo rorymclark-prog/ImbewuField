@@ -45,6 +45,7 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     assert.ok(draft);
     assert.equal(draft.title.sourceEnglish, source.title);
     assert.equal(draft.body.sourceEnglish, source.body);
+    assert.equal(draft.body.reviewStatus, 'machine-draft');
     assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
     assert.deepEqual(draft.keyPoints.map(point => point.tshivendaDraft), source.keyPoints);
     assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
@@ -55,10 +56,23 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
-    const translatedIndex = lessonId === 'market-community-l1' ? 0 : 9;
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 3, 6] : [9];
     for (const [index, paragraph] of originalParagraphs.entries()) {
-      if (index === translatedIndex) assert.notEqual(shownParagraphs[index], paragraph);
+      if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);
+    }
+    if (lessonId === 'market-community-l1') {
+      const draftParagraphs = draft.body.tshivendaDraft.split('\n\n');
+      assert.equal(shownParagraphs[0], draftParagraphs[0],
+        'select the Tshivenda source-paired learner draft');
+      assert.equal(shownParagraphs[3], draftParagraphs[3],
+        'select the source-paired sentence about recording each harvest as it happens');
+      assert.equal(shownParagraphs[6], draftParagraphs[6],
+        'select the source-paired end-of-season memory reminder');
+      assert.equal(shownParagraphs[1], originalParagraphs[1],
+        'keep the unreviewed sentence about reaching customers in English');
+      assert.equal(shownParagraphs[7], originalParagraphs[7],
+        'keep the phrase about practical questions in English until reviewed');
     }
     assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed.` }, 've').status,
       'english-fallback');
