@@ -416,7 +416,7 @@ Lesotho spelling of a term; the app now uses the SA spelling given in the Sesoth
 | marigold / nasturtium | marigold / nasturtium | Loan words; no common Sesotho names. |
 | fodder | furu / dijo tsa diphoofolo | app: `st.ts` (`cropFodder` "Lijo tsa liphoofolo"). |
 | grain (cereal) | dijothollo | (check) Never *lehlaka* (reed). |
-| amaranth (morogo) | theepe | (check) |
+| amaranth (morogo) | theepe (moroho) | English *morogo* → Sesotho *moroho* (leafy greens, as in *papa le moroho*). |
 | sunflower | sonobolomo | (check) |
 | calabash / bottle gourd | mohope (pl. mehope) | (check) |
 | quince / apricot / plum | kwepere / apolekose / plamu | (check) Loan words. |
@@ -867,6 +867,8 @@ sireletsang mobu le naha ya temo); National Veld and Forest Fire Act (molao wa m
 meru); NEMBA Alien and Invasive Species Lists (manane a molao a mefuta e tswang kantle e hlaselang
 naha); National Forests Act (molao wa naha wa meru). Every reference line was copied unchanged.
 
-**Left as Rory's words (for the reviewer).** *morogo* was kept as written in the English (Sesotho
-*moroho* would sit very close to *meroho*, "vegetables", used throughout); *pikmatok* was kept; *veld*
-is "naha ya tlhaho"; *mielies* are "poone". Switch *morogo* → *moroho* if the reviewer prefers.
+**Left as Rory's words (for the reviewer).** *pikmatok* was kept; *veld* is "naha ya tlhaho"; *mielies* are "poone".
+
+**morogo → moroho (decided 29 Sep 2026).** Rory left the choice to us. *Morogo* is the
+Setswana/Sepedi form; Sesotho says *moroho* (plural *meroho*, "vegetables"), as in *papa le moroho*.
+All Sesotho chapters now use *moroho*; the English text keeps *morogo*, the common SA English word.

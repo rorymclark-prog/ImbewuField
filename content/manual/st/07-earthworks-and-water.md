@@ -393,7 +393,7 @@ Bate le shawara e nngwe le e nngwe di romela metsi a matle ka phaepheng ya ditsh
 ### Melao
 
 1. **Mobung, ka tlasa mulch.** Isa greywater besineng ya sefate e nang le mulch, swale kapa bethe ya sekoti, ka phaephe e felang ka tlasa mulch. Le ka mohla o se ke wa e fafatsa.
-2. **Le ka mohla e seng dijong tse jewang di le tala.** E boloke hole le morogo, lettuce le dijalo tsa metso tse kang dihwete. E sebedise difateng tsa ditholwana, dibanana, dihlahla le dipalesa.
+2. **Le ka mohla e seng dijong tse jewang di le tala.** E boloke hole le moroho, lettuce le dijalo tsa metso tse kang dihwete. E sebedise difateng tsa ditholwana, dibanana, dihlahla le dipalesa.
 3. **Ha ho madibana.** E tlameha ho kena kapele, moo batho le diphoofolo di ke keng tsa e ama.
 4. **E sebedise ka lona letsatsi leo.** Greywater e bolokilweng e a senyeha mme e atisa dikokwanahloko le menwang.
 5. **Hole le metsi a ho nwa.** Le ka mohla e seng haufi, kapa ka hodimo, ho sediba, borehole kapa metsi a tswang fatshe.

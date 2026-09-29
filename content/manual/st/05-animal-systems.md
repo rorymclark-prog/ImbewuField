@@ -144,7 +144,7 @@ Seo matata a se hlokang:
 
 1. **Ntlo e bolokehileng bosiu**, jwaloka dikgoho.
 2. **Metsi a tebileng ka ho lekana ho qwela hlooho yohle.** Matata a hlatswa dijo mahlong le dinkong tsa ona. Sejana se tebileng kapa emere di a lekana; ha a hloke letangwana.
-3. **Metsi a hlwekileng hangata.** Matata a silafatsa metsi a ona kapele. A fetole letsatsi le letsatsi mme o tshele a kgale difateng tsa ditholwana le dijalong tseo o di phehang. A jara manyolo, kahoo a boloke hole le morogo le ntho e nngwe le e nngwe e jewang e le tala.
+3. **Metsi a hlwekileng hangata.** Matata a silafatsa metsi a ona kapele. A fetole letsatsi le letsatsi mme o tshele a kgale difateng tsa ditholwana le dijalong tseo o di phehang. A jara manyolo, kahoo a boloke hole le moroho le ntho e nngwe le e nngwe e jewang e le tala.
 4. **Terata.** Boholo ba matata a polasi, a kang Pekin, runner le Khaki Campbell, a tswa ho mallard wa naha. Di-mallard tse balehang di tswalana le matata a naha a tlhaho a kang letata le molomo o mosehla (yellow-billed duck) mme di a leleka. Boloka matata a hao a kwaletswe ka terata, hole haholo le dinoka, matamo le mehlaba. Muscovy ke mofuta o mong o arohaneng.
 
 Boholo ba matata a na le lerata. Muscovy ke yona e sa etseng jwalo: tse tona boholo di a hwasa feela.

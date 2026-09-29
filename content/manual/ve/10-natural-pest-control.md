@@ -178,7 +178,7 @@ Dzi-trap crop, maluvha a dzi-predator na u ṱavha zwo ṱanganyiswaho zwo lingw
 
 **U ṱavha zwo ṱanganyiswaho.** U ṱangana ha zwiliṅwa hu ṋea vhutshilo ha mavuni vhunzhi na dzi-predator nnzhi zwiḽiwa. Zwikukumi zwinzhi zwi wana tshimela tshazwo tsha zwiḽiwa nga tshivhumbeo, muvhala na munukho zwatsho, nahone ndima i re na zwivhumbeo na mivhala minzhi i a zwi dzinginyisa, ngauralo zwiṅwe zwi a ṱuwa.
 
-**Dzi-trap crop.** Trap crop i limiwa tsini na tshiliṅwa tsha zwiḽiwa u kokodza tshikukumi kule. Aphids kanzhi dzi funa nasturtiums u fhira khabishi, brokholi na kholifulawa. Ro vhona nasturtiums dzo ṱavhiwaho tsini na kholifulawa na brokholi dzi tshi ḓala aphids musi tshiliṅwa tshi tshi siiwa tshi tshi ḓo ralo. U i shumisa:
+**Dzi-trap crop.** Trap crop i limiwa tsini na tshiliṅwa tsha zwiḽiwa u kokodza tshikukumi kule. Nasturtiums dzo ṱavhiwaho tsini na tshiliṅwa kanzhi dzi kokodza aphids, zwihuluhulu aphids ntswu, kule na tshiliṅwa. U i shumisa:
 
 1. Ṱavhani nasturtiums tsini na magumo a ndima, hu si vhukati.
 2. Dzi sedzeni luvhili nga vhege.
