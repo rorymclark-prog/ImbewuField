@@ -19,10 +19,12 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku hlanganisa swifuwo leswitsongo swo fana na tihuku, masekwe na tinyoxi swi endla leswaku swi tirha swin’we na purasi."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dyondza ndlela leyi swifuwo swi nga lawulaka pests, swi antswisaka soil fertility, swi pfunaka pollination ni ku tlherisela nkoka emisaveni."
           },
           {
             "status": "english-hold"
@@ -54,7 +56,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Masekwe ma cela misava katsongo ku hundza tihuku, kambe ma nga ha onha swimilana."
           },
           {
             "status": "english-hold"
@@ -78,7 +81,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko module leyi yi hela, u ta twisisa ndlela leyi tihuku, masekwe, tinyoxi na guinea fowl swi tirhaka ha yona eka sisiteme leyi tirhaka."
           },
           {
             "status": "english-hold"
@@ -195,7 +199,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Masekwe ma dya slugs na snails, kambe a ma cela-celi misava hi ndlela yo tika ku fana na tihuku."
           },
           {
             "status": "english-hold"
@@ -255,7 +260,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta nyoxi yin’we yi suka eka xiluva yi ya eka xin’wana."
           },
           {
             "status": "english-hold"

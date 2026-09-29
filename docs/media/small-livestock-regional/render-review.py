@@ -6,6 +6,7 @@ import hashlib
 import json
 import subprocess
 import tempfile
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -14,8 +15,9 @@ ROOT = Path(__file__).resolve().parents[3]
 MEDIA = Path(__file__).resolve().parent
 W, H = 1440, 5400
 SLIDES = 20
-PHONE_SLIDES = (2, 13, 15, 17)
+PHONE_SLIDES = (1, 2, 13, 15, 17)
 LANGS = {
+    "st": ("Sesotho", "SESOTHO REVIEW · MOSTLY ENGLISH · UNREVIEWED"),
     "ve": ("Tshivenda", "TSHIVENḒA REVIEW · MOSTLY ENGLISH · UNREVIEWED"),
     "ts": ("standard written Xitsonga", "XITSONGA REVIEW · MOSTLY ENGLISH · UNREVIEWED"),
 }
@@ -67,7 +69,7 @@ def wrap(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont,
     return lines
 
 
-def source_only_card(record: dict, slide_number: int, language: str) -> Image.Image:
+def source_only_card(record: dict, slide_number: int, language: str, source_image: Path) -> Image.Image:
     """Keep an English hold to one source block, never an English pseudo-translation."""
     name, banner = LANGS[language]
     image = Image.new("RGB", (W, H), PAPER)
@@ -78,11 +80,17 @@ def source_only_card(record: dict, slide_number: int, language: str) -> Image.Im
     body_font = review_font((("Avenir Next.ttc", 0), ("Arial.ttf", 0)), 58)
     draw.rounded_rectangle([64, 40, W - 64, 175], radius=20, fill=RUST)
     draw.text((96, 75), banner, font=status_font, fill=(255, 255, 255))
-    draw.text((96, 220), f"{name} translation pending; English source",
+    draw.text((96, 220), "TRANSLATION PENDING · ENGLISH HOLD",
               font=label_font, fill=AMBER)
     draw.rounded_rectangle([64, 290, W - 64, 5080], radius=26,
                            fill=(255, 252, 246), outline=RULE, width=4)
-    x, max_width, y = 96, 1248, 390
+    x, max_width, y = 96, 1248, 1080
+    draw.text((96, 292), "EXISTING ENGLISH SOURCE SLIDE IMAGE", font=label_font, fill=AMBER)
+    if source_image.is_file():
+        with Image.open(source_image) as source:
+            source = source.convert("RGB")
+            source.thumbnail((1248, 702), Image.Resampling.LANCZOS)
+            image.paste(source, ((W - source.width) // 2, 350))
     for line in wrap(draw, record["heading"], title_font, max_width):
         draw.text((x, y), line, font=title_font, fill=GREEN)
         y += 92
@@ -134,7 +142,9 @@ def render(language: str) -> dict:
                     part["status"] == "draft" for part in target["body"]
                 )
                 if not has_draft:
-                    image = source_only_card(packet["slides"][n - 1]["english"], n, language)
+                    source_image = ROOT / f"public/course-decks/small-livestock/en/slide-{n:02d}.jpg"
+                    image.close()
+                    image = source_only_card(packet["slides"][n - 1]["english"], n, language, source_image)
                 output = out / f"slide-{n:02d}.webp"
                 image.save(output, "WEBP", quality=88, method=6)
                 thumb = image.copy()
@@ -188,5 +198,8 @@ def render(language: str) -> dict:
 
 
 if __name__ == "__main__":
-    for lang in ("ve", "ts"):
+    selected = sys.argv[1:] or ["st", "ve", "ts"]
+    for lang in selected:
+        if lang not in LANGS:
+            raise SystemExit(f"unsupported language: {lang}")
         render(lang)

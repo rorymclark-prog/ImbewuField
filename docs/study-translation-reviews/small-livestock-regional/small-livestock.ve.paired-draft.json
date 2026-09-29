@@ -22,7 +22,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Gudani uri zwifuwo zwi nga langa pests, zwa engedza soil fertility, zwa thusa pollination, na u vhuedzedza ndeme mavuni."
           },
           {
             "status": "english-hold"
@@ -254,10 +255,12 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhonani ṋotshi nthihi i tshi bva kha luvha i tshi ya kha ḽiṅwe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dziṋotshi dzi nga hwala pollen musi dzi tshi dalela maluvha."
           }
         ]
       }
