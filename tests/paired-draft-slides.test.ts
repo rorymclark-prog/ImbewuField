@@ -432,6 +432,52 @@ test('the CLI preflights all supported paired languages and rejects unsupported 
   }
 });
 
+test('Seeds native-source proof is explicit, exact-size, and does not relax the shared illustration gate', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'imbewu-seeds-native-paired-'));
+  try {
+    const output = join(temp, 'slides');
+    const args = ['scripts/make-lesson-slides.mjs', 'seeds-sovereignty', 'st', output,
+      '--paired-draft', 'docs/narration-reviews/seeds-sovereignty.st.paired.json', '--validate-only'];
+    const defaultGate = spawnSync(process.execPath, args, { cwd: process.cwd(), encoding: 'utf8' });
+    assert.notEqual(defaultGate.status, 0);
+    assert.match(defaultGate.stderr, /slide 1 English illustration is too small/);
+    assert.equal(existsSync(output), false);
+
+    const native = spawnSync(process.execPath, [...args, '--paired-native-source'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.equal(native.status, 0, native.stderr);
+    assert.match(native.stdout, /validated 24 source-paired slides; no images written/);
+    assert.equal(existsSync(output), false);
+
+    const wrongModule = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'food-forest', 'st', output,
+        '--paired-draft', 'docs/narration/food-forest.st.paired-draft.json',
+        '--paired-native-source', '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.notEqual(wrongModule.status, 0);
+    assert.match(wrongModule.stderr, /currently limited to Seeds and Seed Sovereignty/);
+    assert.equal(existsSync(output), false);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('Seeds regional study drafts stay on the three opening slides with exact English holds after them', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/seeds-sovereignty.en.md', 'utf8'));
+  for (const language of ['st', 've', 'ts']) {
+    const packet = JSON.parse(readFileSync(
+      `docs/narration-reviews/seeds-sovereignty.${language}.paired.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, language);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    assert.ok(slides.slice(0, 3).every((slide: any) =>
+      slide.target.heading.status === 'draft' && slide.target.body.every((part: any) => part.status === 'draft')),
+    `${language}: the packet's first three study slides carry the supplied learner drafts`);
+    assert.ok(slides.slice(3).every((slide: any) =>
+      slide.target.heading.status === 'english-hold' && slide.target.body.every((part: any) => part.status === 'english-hold')),
+    `${language}: F1, pollination, processing, storage and field instructions stay exact English`);
+  }
+});
+
 test('a paired illustration override must name an existing repository image before rendering', () => {
   const temp = mkdtempSync(join(tmpdir(), 'imbewu-paired-art-'));
   try {

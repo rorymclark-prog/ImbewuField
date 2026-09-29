@@ -125,8 +125,9 @@ test('a declared-missing slide is really absent, and nothing else is', () => {
   const deck = deckFor('seeds-sovereignty')!;
   for (const lang of deck.slideLanguages) {
     const declared = new Set(deck.missingSlides?.[lang] ?? []);
+    const format = deck.slideFormatsByLanguage?.[lang] ?? 'jpg';
     for (const s of deck.slides) {
-      const path = `/course-decks/seeds-sovereignty/${lang}/slide-${String(s.slide).padStart(2, '0')}.jpg`;
+      const path = `/course-decks/seeds-sovereignty/${lang}/slide-${String(s.slide).padStart(2, '0')}.${format}`;
       assert.equal(
         onDisk(path), !declared.has(s.slide),
         declared.has(s.slide)
@@ -299,8 +300,18 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
     .filter((r) => r && !r.exact);
   assert.deepEqual(stillInexact, [], 'Seeds is complete in isiZulu — no slide should fall back');
 
-  // A language with no deck at all still falls back wholesale, which is the right behaviour there.
-  assert.deepEqual(resolveDeckLang('seeds-sovereignty', 'st'), { lang: 'en', exact: false });
+  // The new regional files are source-paired review frames, so selection must not fall back to
+  // a bare English picture or let an animation poster obscure their comparison panels.
+  for (const lang of ['st', 've', 'ts']) {
+    assert.deepEqual(resolveDeckLang('seeds-sovereignty', lang), { lang, exact: true });
+    for (const { slide } of deck.slides) {
+      const still = slideImageFor('seeds-sovereignty', lang, slide);
+      assert.equal(still?.lang, lang);
+      assert.ok(still && onDisk(still.url), `${lang} slide ${slide} is missing`);
+      assert.equal(animationUrls('seeds-sovereignty', slide, lang), null,
+        `${lang} slide ${slide} must keep its paired source text visible`);
+    }
+  }
 
   // The narration is isiZulu on every slide, including the one whose picture is English.
   assert.equal(slideAudioUrl('seeds-sovereignty', 'zu', 13), '/course-audio/seeds-sovereignty/zu/slide-13.mp3');

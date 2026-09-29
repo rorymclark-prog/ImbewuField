@@ -1,0 +1,259 @@
+{
+  "module": "seeds-sovereignty",
+  "language": "ve",
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "narration": null,
+  "pairedSource": "docs/narration-reviews/seeds-sovereignty.ve.paired.json",
+  "pairedSourceSha256": "82c46d965b20ef98060ae07eb110100f2558b0bd4863067748ef255bac839837",
+  "englishSource": "docs/narration/seeds-sovereignty.en.md",
+  "englishSourceSha256": "0f93ad6a9584bdf63b0a5280acb1fe181f5f1645b806527dbdb5a8520d5f2278",
+  "nativeSourceMode": true,
+  "slides": [
+    {
+      "slide": 1,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-01.webp",
+      "pixels": "1440x5400",
+      "bytes": 422816,
+      "sha256": "041bae729b77b51ef4815e57bb445130dc60385d22b7ed8f928b332ff4d12a38",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 2,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-02.webp",
+      "pixels": "1440x5400",
+      "bytes": 353170,
+      "sha256": "719344ac0df1250e7fc58ea72dcc9ec26a08fb826c1e96920c8003e864d34235",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 3,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 248032,
+      "sha256": "ea927c1192ec951a3d341cad15966072e2043b4b2cd404edd3916e70c0aa36b7",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 4,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 422590,
+      "sha256": "a92b9db8e4894eacc6b5d687db23d37112e0894f5c6cd8e0583382cf162d8e26",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 5,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 368106,
+      "sha256": "5a90e5d57040f475120cedab6dadb5f9ebb72e99737de8a82430643b7befc91c",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 6,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 356532,
+      "sha256": "777c04acc456da368dd7c61a64e45dae341e7151546118e0a303982ce24fc31e",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 7,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 378634,
+      "sha256": "b91f7f6a825f00f3288dde6ac58d4adb38155401787636048aa3adfdfb5caa3e",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 8,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-08.webp",
+      "pixels": "1440x5400",
+      "bytes": 415012,
+      "sha256": "df2330797a97e5562a0ee5cc80edf97d7d21bd20a05ccf9ae05fb86c4b1c674c",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 9,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-09.webp",
+      "pixels": "1440x5400",
+      "bytes": 400070,
+      "sha256": "8b07d57b326c5bfe88fab8b595edf359281b0a445e9690b70af2d0dada896a4c",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 10,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-10.webp",
+      "pixels": "1440x5400",
+      "bytes": 318186,
+      "sha256": "7f651b268e7ff5b48ad3469b6b9b763193b464bc3e4fc86bd5fdfa8f3738f1cb",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 11,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-11.webp",
+      "pixels": "1440x5400",
+      "bytes": 363856,
+      "sha256": "6a22453ca1e7ec49112e3e6458f91d18fc79a54c664c4f47ddaf6f9314c13b23",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 12,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-12.webp",
+      "pixels": "1440x5400",
+      "bytes": 356014,
+      "sha256": "000a3b56affe4b6f426c09166861be3c1589b9949c63b1c6cc38ae893e54d135",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-13.webp",
+      "pixels": "1440x5400",
+      "bytes": 296206,
+      "sha256": "2d856bd7f912e9ab5ae9bc0274c9902ed76e3c539a2a8fa1109d5921b54bf526",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 14,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 403476,
+      "sha256": "fc1749798017ddfffc58a3ab52449ef20030ad741bae3b1e41aa289ae070d1a7",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 15,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 354666,
+      "sha256": "59ff74a22ba89e690288597e72d2106eb487666d7548899b44b7c54e3f0a61c9",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 16,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-16.webp",
+      "pixels": "1440x5400",
+      "bytes": 351512,
+      "sha256": "28fd6bfd3518bc9fdeefe623f506b2ad81c7020e03a1b2315288c1c1eb9a0577",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 17,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-17.webp",
+      "pixels": "1440x5400",
+      "bytes": 295600,
+      "sha256": "abb4d7115cd7920eb4c0d7d361f951bc1f6612b737bdcaa09683d37dd987520b",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-18.webp",
+      "pixels": "1440x5400",
+      "bytes": 381870,
+      "sha256": "8bb45abf461cbf868d4a3748d645f36c573ff597b98288d1dc73dd4fc3517675",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 19,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-19.webp",
+      "pixels": "1440x5400",
+      "bytes": 344100,
+      "sha256": "f8f3545eb01083ae30a246938cb0b6d9c677df9fa343e884e716785bbb92e25e",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 20,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-20.webp",
+      "pixels": "1440x5400",
+      "bytes": 358746,
+      "sha256": "059c334d70ebaf8011211715e8b941d0bf55b013899b2f690292b9b047acd462",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 21,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-21.webp",
+      "pixels": "1440x5400",
+      "bytes": 305670,
+      "sha256": "ab88b7ca0c5d7997b4ac7afdb0100faa14326fcc74732d501ae7cb9b217d7733",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 22,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-22.webp",
+      "pixels": "1440x5400",
+      "bytes": 390760,
+      "sha256": "4a298853565a5a1137f784e8b1facd916ec6d3a1d244ef21b37382137c84ec40",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 23,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-23.webp",
+      "pixels": "1440x5400",
+      "bytes": 414988,
+      "sha256": "4ae59db1df68e8954e0b6c2158fee061d8e53b64c84f683246ba7c29efdb4a26",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 24,
+      "path": "public/course-decks/seeds-sovereignty/ve/slide-24.webp",
+      "pixels": "1440x5400",
+      "bytes": 240538,
+      "sha256": "b00b4e31845eb6a06bdef7aedc9e3053a8b7c9a5871b9aa63b644adfad461752",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    }
+  ],
+  "contactSheet": "docs/media/seeds-sovereignty/regional-paired-qa/ve-contact-sheet.jpg",
+  "phoneSamples": [
+    {
+      "slide": 1,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/ve-slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "ac3856b150d2a7c064fc75f3082f149764694e3bf7b38e6c57da6f53c264006b"
+    },
+    {
+      "slide": 2,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/ve-slide-02-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "656112dabc5f62d35a6a23acf83691959f700a0a4b7e2c4a1d5e91e304dc8833"
+    },
+    {
+      "slide": 3,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/ve-slide-03-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "d2f17f6a265149ea7958c7ef4632d1be847a48dae3333f867c354b387b390278"
+    },
+    {
+      "slide": 4,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/ve-slide-04-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "a40b47fee71c3cec53c48ef5fe925a09a9ddaf877a8d9ebdd9af682ee1f92da6"
+    }
+  ],
+  "note": "Slides 1–3 use only the machine-draft sentences in the paired review packet. Every other heading and paragraph remains exact English, visibly marked as an English hold. The 960x540 English illustrations are shown at native pixels with no resampling. No translation approval or narration is claimed."
+}
