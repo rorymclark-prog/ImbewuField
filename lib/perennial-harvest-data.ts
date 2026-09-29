@@ -8,7 +8,29 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
     "speciesId": "carica-papaya",
     "name": "Pawpaw",
     "product": "fruit",
-    "windows": [],
+    "windows": [
+      {
+        "region": "KwaZulu-Natal",
+        "months": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          1
+        ],
+        "source": {
+          "quote": "The cropping season usually extends from about April to January, with a peak from September to November.",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+          "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), section 1.6 Papaya, 'Bearing age'",
+          "page": 18
+        }
+      }
+    ],
     "yearsToFirstCrop": {
       "value": [
         0.75,
