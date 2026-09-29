@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
 import { XITSONGA_SMALL_LIVESTOCK_DRAFT } from '../lib/course-translation-drafts-ts-small-livestock.ts';
+import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
 const sourceModule = COURSE_MODULES.find(module => module.id === 'small-livestock')!;
@@ -16,10 +17,17 @@ test('Small Livestock L2 exposes only the two source-paired Xitsonga concept sen
   assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.id, sourceModule.id);
   assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.language, 'ts');
   assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.reviewStatus, 'machine-draft');
+  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.title.sourceEnglish, sourceModule.title);
+  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.title.xitsongaDraft, 'Ku Hlanganisa Swifuwo Leswitsongo');
+  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.title.reviewStatus, 'machine-draft');
+  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.description.sourceEnglish, sourceModule.description);
+  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.description.xitsongaDraft,
+    'Tihuku, masekwe na tinyoxi i swiphemu swa sisiteme — a hi swilo leswi ehleketiwaka endzhaku.');
+  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.description.reviewStatus, 'machine-draft');
   assert.equal(draft.id, sourceLesson.id);
   assert.equal(draft.title.sourceEnglish, sourceLesson.title);
-  assert.equal(draft.title.xitsongaDraft, sourceLesson.title);
-  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.title.xitsongaDraft, 'Tinyoxi: Pollination, Vulombe, na Ecology ya Sisiteme');
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
   assert.equal(draft.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(draft.infographicAlt?.xitsongaDraft, sourceLesson.infographicAlt);
   assert.equal(draft.body.sourceEnglish, sourceLesson.body);
@@ -52,9 +60,21 @@ test('Small Livestock L2 exposes only the two source-paired Xitsonga concept sen
 
   const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
   assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.title, draft.title.xitsongaDraft);
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
   assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
   assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
+});
+
+test('Small Livestock Xitsonga card resolves only against its exact module source pair', () => {
+  const shown = resolveCourseModulePresentation(sourceModule, 'ts');
+  assert.deepEqual(shown, {
+    title: XITSONGA_SMALL_LIVESTOCK_DRAFT.title.xitsongaDraft,
+    description: XITSONGA_SMALL_LIVESTOCK_DRAFT.description.xitsongaDraft,
+    status: 'draft',
+  });
+  assert.equal(resolveCourseModulePresentation({ ...sourceModule, description: `${sourceModule.description} Changed.` }, 'ts').status,
+    'english-fallback');
 });
 
 test('Small Livestock L2 source drift and other lessons stay English', () => {
