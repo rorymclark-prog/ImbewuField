@@ -34,13 +34,13 @@ export const TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT: TshivendaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
-        "tshivendaDraft": "Mbeu ya open-pollinated (ine ya dovha ya dzhia pollen kha tshimela tshenetsho kana kha zwiṅwe zwimela zwa lushaka lwo teaho) i bvaho kha lushaka lwo khwaṱhaho i nga alusa zwimela zwi fanaho arali u dzhia na u fhirisela pollen zwi tshi langulwa zwavhuḓi. F1 hybrid (murafho wa u thoma wo bveledzwaho nga u ṱanganyisa vhabebi vho nangiwaho) i bva kha zwimela zwa vhabebi vho khethwaho. Mbeu yo vhulungwaho kha tshimela tsha F1 i nga kha ḓi mela, fhedzi zwimela zwa murafho u tevhelaho zwi a fhambana; zwi nga si vhulunge mutanganyiso wa zwivhumbeo zwe na vha ni tshi zwi ṱoḓa.\n\nU vha na maanḓa kha mbeu zwi katela nḓivho na khetho zwine zwa ni thusa u alusa, u vhulunga na u kovhela vhaṅwe mbeu yo teaho. Ṅwalani dzina ḽa tshimela na lushaka kha tshigwada tshiṅwe na tshiṅwe tsha mbeu.\n\nNangani zwimela zwo takalaho zwi re na zwivhumbeo zwavhuḓi. Thomani nga tshimela tshine na tshi ḓivha, ni vhudzise muthu a re na tshenzhemo ya u vhulunga mbeu uri u dzhia na u fhirisela pollen na u khetha zwimela zwi langulwa hani.",
+        "tshivendaDraft": "Mbeu ya open-pollinated i bvaho kha stable variety i nga alusa zwimela zwi fanaho arali pollination i tshi langulwa zwavhuḓi. F1 hybrid i bva kha zwimela zwa vhabebi vho khethwaho. Mbeu yo vhulungwaho kha tshimela tsha F1 i nga kha ḓi mela, fhedzi zwimela zwa murafho u tevhelaho zwi a fhambana; zwi nga si vhulunge mutanganyiso wa zwivhumbeo zwe na vha ni tshi zwi ṱoḓa.\n\nU vha na maanḓa kha mbeu zwi katela nḓivho na khetho zwine zwa ni thusa u alusa, u vhulunga na u kovhela vhaṅwe mbeu yo teaho. Ṅwalani dzina ḽa tshimela na lushaka kha tshigwada tshiṅwe na tshiṅwe tsha mbeu.\n\nNangani zwimela zwo takalaho zwi re na zwivhumbeo zwavhuḓi. Thomani nga tshimela tshine na tshi ḓivha, ni vhudzise muthu a re na tshenzhemo ya u vhulunga mbeu uri pollination na u khetha zwimela zwi langulwa hani.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Stable open-pollinated varieties need suitable pollination management",
-          "tshivendaDraft": "Mbeu ya lushaka lwo khwaṱhaho lwa open-pollinated i ṱoḓa u langulwa zwavhuḓi ha u dzhia pollen.",
+          "tshivendaDraft": "Kha stable variety ya open-pollinated, pollination i fanela u langulwa nga nḓila yo teaho.",
           "reviewStatus": "machine-draft"
         },
         {

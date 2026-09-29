@@ -34,13 +34,13 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
-        "sesothoDraft": "Peo e bolokiloeng ho mofuta oa open-pollinated (o tsamaisoang ke phofshoana ka tsela ea tlhaho) o tsitsitseng e ka hlahisa limela tse tšoanang ha phetiso ea phofshoana e laoloa hantle. F1 hybrid (moloko oa pele o hlahisoang ka ho kopanya batsoali ba khethiloeng) e tsoa limeleng tsa batsoali tse khethiloeng. Peo e bolokiloeng ho F1 e ntse e ka mela, empa limela tsa moloko o latelang lia fapana; li ka ’na tsa se boloke motsoako oa litšobotsi oo u neng u o batla.\n\nHo ba le taolo holim’a peo ho akarelletsa tsebo le khetho tse u thusang ho lema, ho boloka le ho arolelana peo e u tšoanelang. Ngola lebitso la sejalo le la mofuta holim’a sehlopha ka seng sa peo.\n\nKhetha limela tse phetseng hantle tse nang le litšobotsi tse molemo. Qala ka sejalo seo u se tsebang, ’me u botse motho ea nang le boiphihlelo ba ho boloka peo hore na phetiso ea phofshoana le khetho ea limela li laoloa joang.",
+        "sesothoDraft": "Peo ea open-pollinated e tsoang ho stable variety e ka hlahisa limela tse tšoanang ha tulafatso (ho tsamaisoa ha modula) e laoloa hantle. F1 hybrid e tsoa ho batsoali ba khethiloeng. Peo e bolokiloeng ho semela sa F1 e ntse e ka mela, empa limela tsa moloko o latelang lia fapana; li ka ’na tsa se boloke motsoako oa litšobotsi oo u neng u o batla.\n\nHo ba le taolo holim’a peo ho akarelletsa tsebo le khetho tse u thusang ho lema, ho boloka le ho arolelana peo e u tšoanelang. Ngola lebitso la sejalo le la mofuta holim’a sehlopha ka seng sa peo.\n\nKhetha limela tse phetseng hantle tse nang le litšobotsi tse molemo. Qala ka sejalo seo u se tsebang, ’me u botse motho ea nang le boiphihlelo ba ho boloka peo hore na tulafatso le khetho ea limela li laoloa joang.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Stable open-pollinated varieties need suitable pollination management",
-          "sesothoDraft": "Mefuta e tsitsitseng ea open-pollinated e hloka taolo e loketseng ea phetiso ea phofshoana.",
+          "sesothoDraft": "Bakeng sa stable variety ea open-pollinated, tulafatso e lokela ho laoloa ka tsela e loketseng.",
           "reviewStatus": "machine-draft"
         },
         {

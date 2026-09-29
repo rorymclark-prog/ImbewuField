@@ -34,13 +34,13 @@ export const XITSONGA_SEEDS_SOVEREIGNTY_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
-        "xitsongaDraft": "Mbewu ya open-pollinated (leyi nga thyakisiwaka hi phoyini ya yona kumbe ya swimilana swa muxaka lowu fanaka) leyi humaka eka muxaka lowu tiyeke yi nga humesa swimilana leswi fanaka loko ku thyakisa hi phoyini ku lawuriwa kahle. F1 hybrid (mbewu ya xitukulwana xo sungula lexi humaka eka vatswari lava hlawuriweke) yi huma eka swimilana swa vatswari lava hlawuriweke. Mbewu leyi hlengeletiweke eka F1 ya ha nga mila, kambe swimilana swa ntlawa lowu landzelaka swi hambana; swi nga ka swi nga hlayisi ku hlangana ka timfanelo loku a wu ku lava.\n\nKu va na vulawuri bya mbewu swi katsa vutivi ni ku kota ku hlawula leswaku u ta byala, u hlayisa ni ku avelana mbewu leyi faneleke. Tsala vito ra ximilana ni ra muxaka eka ntlawa wun’wana ni wun’wana wa mbewu.\n\nHlawula swimilana leswi hanyeke kahle naswona swi nga ni timfanelo leti pfunaka. Sungula hi ximilana lexi u xi tivaka, kutani u vutisa munhu loyi a nga ni ntokoto wo hlayisa mbewu leswaku ku thyakisa hi phoyini ni ku hlawula swimilana swi fanele swi endliwa hi ndlela yihi.",
+        "xitsongaDraft": "Mbewu ya open-pollinated leyi humaka eka stable variety yi nga humesa swimilana leswi fanaka loko pollination yi lawuriwa kahle. F1 hybrid yi huma eka vatswari lava hlawuriweke. Mbewu leyi hlengeletiweke eka ximilana xa F1 ya ha nga mila, kambe swimilana swa xitukulwana lexi landzelaka swa hambana; swi nga ka swi nga hlayisi ku hlangana ka timfanelo loku a wu ku lava.\n\nKu va na vulawuri bya mbewu swi katsa vutivi ni ku kota ku hlawula leswaku u ta byala, u hlayisa ni ku avelana mbewu leyi faneleke. Tsala vito ra ximilana ni ra muxaka eka ntlawa wun’wana ni wun’wana wa mbewu.\n\nHlawula swimilana leswi hanyeke kahle naswona swi nga ni timfanelo leti pfunaka. Sungula hi ximilana lexi u xi tivaka, kutani u vutisa munhu loyi a nga ni ntokoto wo hlayisa mbewu leswaku pollination ni ku hlawula swimilana swi fanele swi endliwa hi ndlela yihi.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Stable open-pollinated varieties need suitable pollination management",
-          "xitsongaDraft": "Muxaka lowu tiyeke wa open-pollinated wu lava vulawuri byo faneleka bya ku thyakisa hi phoyini.",
+          "xitsongaDraft": "Eka stable variety ya open-pollinated, pollination yi fanele ku lawuriwa hi ndlela leyi faneleke.",
           "reviewStatus": "machine-draft"
         },
         {
@@ -358,7 +358,17 @@ export const XITSONGA_SEEDS_SOVEREIGNTY_DRAFT: XitsongaCourseModuleDraft = {
     }
   ],
   "holds": [
-    {"lessonId":"seeds-sovereignty-l2","field":"title, body, keyPoints, quiz and infographicAlt","sourceText":"The English source is retained in each paired field.","reason":"The seed processing and pollination instructions need a complete local-language review before drafting them."},
-    {"lessonId":"seeds-sovereignty-l3","field":"title, body, keyPoints, quiz and infographicAlt","sourceText":"The English source is retained in each paired field.","reason":"Storage and germination instructions need a complete local-language review before drafting them."}
+    {
+      "lessonId": "seeds-sovereignty-l2",
+      "field": "title, body, keyPoints, quiz and infographicAlt",
+      "sourceText": "The English source is retained in each paired field.",
+      "reason": "The seed processing and pollination instructions need a complete local-language review before drafting them."
+    },
+    {
+      "lessonId": "seeds-sovereignty-l3",
+      "field": "title, body, keyPoints, quiz and infographicAlt",
+      "sourceText": "The English source is retained in each paired field.",
+      "reason": "Storage and germination instructions need a complete local-language review before drafting them."
+    }
   ]
 };
