@@ -47,7 +47,7 @@ const FOREST = '#1F4D2B';
 
 const BOOK_CSS = `
 @page { size: A4; margin: 14mm; }
-#manual-book { background: ${PAPER}; color: ${INK}; font-size: 11.5pt; line-height: 1.55; }
+#manual-book { background: ${PAPER}; color: ${INK}; font-size: 11.5pt; line-height: 1.55; overflow-wrap: anywhere; }
 #manual-book, #manual-book * { --text-primary: ${INK}; --text-secondary: #4A3F30; --border: #E2D8C4; --bg-1: ${PAPER}; --bg-2: #F3EEE2; --gold: #C07A1E; }
 #manual-book .sheet { break-after: page; page-break-after: always; }
 #manual-book .chapter { break-before: page; page-break-before: always; }

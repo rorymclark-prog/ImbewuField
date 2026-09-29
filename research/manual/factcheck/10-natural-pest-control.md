@@ -75,3 +75,45 @@ Note on method: the session's web-search budget ran out part-way through this ch
 - Most rows of the "good and poor neighbours" table (other than same-family separation) are gardening lore; the chapter says so.
 - Specific control details not re-checked online after the search budget ran out: cutworm collars; fruit-fly burial depth (text says only "deep" via sealed bag or burial, at least 50 cm); porcupine fence depth (number removed); soap concentration and phytotoxicity; metaldehyde toxicity; rue phototoxicity; aphid live birth; ant–honeydew biology. These are standard extension/biology facts and were written conservatively.
 - The source line "Many hundred-year-old strategies" was kept only in general form ("many old methods").
+
+## Second pass (27 Sep 2026)
+
+Rewrite to REWRITE.md (6,209 → 3,974 words). Safety boxes, legal notes and "ask your extension officer / report to the Department" lines moved to `research/manual/rewrite/10-natural-pest-control-endnote.md`.
+
+### Verified
+
+| Claim | Result | Source |
+|---|---|---|
+| Aphids give birth to live young without mating in warm weather; winged forms disperse | Verified. | https://www.britannica.com/animal/aphid ; https://aphidsonworldsplants.info/cloning_experts_3/ |
+| Ants guard honeydew-producing sap suckers from predators; honeydew grows sooty mould that blocks light | Verified. | https://ipm.ucanr.edu/home-and-landscape/sooty-mold/ |
+| Cutworm collar | Verified, **changed**: collars should go 1–2 inches into the soil, so "about 2 cm" → "3 to 5 cm". | https://www.almanac.com/pest/cutworms |
+| Fruit-fly burial "at least 50 cm" | Verified: larvae can burrow up to about 18 in (46 cm) through loose soil, so bury at least that deep (CTAHR Hawaii, via search summary; page not fetchable). | https://www3.ctahr.hawaii.edu/UHMG/EastHI/fruit-fly.asp |
+| Sealed bag in the sun kills larvae in infested fruit | Verified in general; the "for a week" duration was **not** found, so the text now says "leave it in hot sun until the maggots are dead". | https://extension.umn.edu/yard-and-garden-insects/spotted-wing-drosophila |
+| Soap concentration (2 tbsp in 3 L ≈ 1%) and patch test 1–2 days before | Verified: commercial insecticidal soaps are 1–2%; test a small area a day or two before. | https://extension.colostate.edu/resource/insect-control-insecticidal-soap/ ; https://ucanr.edu/sites/default/files/2015-05/212467.pdf |
+| Slug pellets (metaldehyde) poison dogs and cats | Verified. "Birds and children" narrowed to "dogs and cats". | https://www.merckvetmanual.com/toxicology/metaldehyde-poisoning/metaldehyde-poisoning-in-animals |
+| Rat lungworm in SA rats; snails/slugs are hosts; wash produce | Verified. | https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0256-95742011000300016 ; https://cdc.gov/angiostrongylus/prevention/index.html |
+| Leaf-eating ladybirds on potatoes and pumpkins in SA | Verified (*Epilachna dregei*, potato ladybird; cucurbit and nightshade ladybirds widespread in SA). | https://www.biodiversityexplorer.info//beetles/coccinellidae/epilachna_dregei.htm |
+| Poisoning quelea kills raptors and owls (secondary poisoning); netting and scaring are smallholder options | Verified. | https://www.fao.org/one-health/highlights/quelea-birds-and-the-case-for-safer-control/en ; https://www.cambridge.org/core/journals/environmental-conservation/article/abs/review-of-the-impacts-of-control-operations-against-the-redbilled-quelea-quelea-quelea-on-nontarget-organisms/9B3E884EFA1ABCACC089485008C5DC76 |
+| Nicotine passes through skin; low lethal dose in children | Verified. | https://www.cdc.gov/niosh/ershdb/emergencyresponsecard_29750028.html ; https://en.wikipedia.org/wiki/Nicotine_poisoning |
+| Golden moles eat invertebrates; several SA species are endangered | Verified. **Correction to the first-pass log:** SANBI assessment 1823 is the Cape dune mole-rat (a plant-eating mole-rat, Least Concern, a local pest), not a golden mole. | https://speciesstatus.sanbi.org/assessment/last-assessment/1823/ ; https://en.wikipedia.org/wiki/Juliana%27s_golden_mole ; https://www.encyclopedia.com/science/encyclopedias-almanacs-transcripts-and-maps/golden-moles-chrysochloridae |
+| Onions and carrots mixed cropping reduces carrot fly | Verified (Uvah & Coaker 1984). | https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1570-7458.1984.tb03422.x |
+| Marigold nematode suppression needs a dense cover crop | Verified. | https://ask.ifas.ufl.edu/publication/NG045 ; https://www.ctahr.hawaii.edu/oc/freepubs/pdf/pd-35.pdf |
+| Cosmos invasive in Lesotho but not NEMBA-listed in SA | Verified (Kobisi et al. 2019, Bothalia). | https://journals.abcjournal.aosis.co.za/index.php/abc/article/view/2453 |
+| Push-pull (climate-adapted) cut fall armyworm larvae by ~83% and damage by ~87% in East African trials | Verified, but the NEMBA status of *Desmodium intortum* and *Brachiaria* in SA still could not be confirmed, so push-pull was **cut** from the chapter (endnote bullet kept). | https://www.sciencedirect.com/science/article/pii/S0261219417303216 |
+
+### Cut
+
+- Push-pull paragraph (plant status unverified; see above).
+- Fennel from the neighbours table and the Tip (NEMBA status uncertain; not to be recommended for planting). The Tip now names sunflowers only.
+- Borage–strawberry pairing (unverified): the strawberry row is gone; borage stays only in the flowers-for-predators list.
+- *Azolla* by name (the history is kept as "a small floating fern"); its NEMBA listing moved to the endnote.
+- Rue/pyrethrum note, catnip, stinging nettle, and most rows of the repellent and attractor tables (reduced to short lists of the better-supported plants).
+- Neighbours table cut from 22 to 10 rows, labelled as gardeners' experience; same-family separation kept as the proven rule.
+- "Clear weeds at least two weeks before planting" → "a few weeks" (the exact interval was not checked).
+- "If someone swallows a spray, go to a clinic" (a "consult" line) → endnote.
+
+### Changed
+
+- Cutworm collar depth 2 cm → 3 to 5 cm.
+- Fruit-fly bag in the sun: "for a week" → "until the maggots are dead".
+- Slug pellets: "dogs, birds and children" → "dogs and cats".

@@ -969,3 +969,65 @@ Left in Tshivenḓa on purpose (check):
   (bare soil, ch. 3), *u kuvhanganya maḓi a mvula* (water harvesting), *Lushaka lwa nawa (Fabaceae)*
   as a plant-family name (ch. 10), *mukhwama* for a plain bag or oven bag.
 - *Wonderbag* (brand name) kept as written in ch. 11.
+
+## Second edition (27 Sep 2026)
+
+Chapters 00–11 and the new chapter 13 were re-translated from the rewritten English (see
+`research/manual/RETRANSLATE.md`). Machine draft, **not reviewed by a fluent speaker**; every row below
+is **(check)**. The "Kept in English" rules above still apply (bold English word + short Tshivenḓa gloss on
+first use in a chapter, *dzi-* plural).
+
+| English | Tshivenḓa chosen | Notes |
+|---|---|---|
+| "By the end of this chapter you will be able to:" | Musi ni tshi fhedza ino ndima ni ḓo kona u: | Chapter 00 uses "uyu mathomo". |
+| "Try it" (activity heading) | Lingani | Referred to in ch. 00 and 07 as the "Lingani" activity. |
+| Notes and references (ch. 13 title) | Zwiṅwalwa na zwiko | "References" = Zwiko; "Safety and the law" = Tsireledzo na mulayo. |
+| Chapter N (ch. 13 headings) | Ndima ya N | Followed by the chapter's own Tshivenḓa title. |
+| one principle (singular of *maitele*) | ḽiṅwe ḽa maitele | No clean singular of *maitele*; a reviewer may prefer *mutheo*. |
+| principle sayings | italic line only | The old "Murero:" label was dropped to match the English. |
+| Hydrology (ch. 3 heading) | Maḓi kha mavu aṋu | "Hydrology" explained in the paragraph. |
+| living sponge | tshiponndo tshi tshilaho (living sponge) | *tshiponndo* = sponge; unsure of the everyday word. |
+| runoff coefficient | tshikalo tsha runoff | Uses the kept word *runoff*. |
+| infiltration basin | beseni ḽa infiltration | |
+| diversion drain / mound | mugero / tshiluvhi tsha u shandukisa nḓila ya maḓi | |
+| spillway | spillway (nḓila ya u bva ha maḓi a fhiraho) | Ch. 7 keeps "spillway" after the first gloss. |
+| sand dam | damu ḽa muṱavha | As in the table above. |
+| trench bed / pit bed / banana circle | ndima ya mugero / ndima ya mulindi / tshitendeledzi tsha miomva | |
+| stale seedbed | ndima ya mbeu yo ṱahalaho (stale seedbed) | |
+| plough pan, sheet mulching, solarisation, tarping, broadfork, rotavator | kept in English | Explained in the sentence. |
+| lifestyle audit | tsedzuluso ya vhutshilo haṋu | |
+| market garden | ngade ya u rengisa | |
+| retail / wholesale price | mutengo wa retail / wholesale | English kept, glossed once. |
+| open-pollinated / hybrid seed | kept in English | Glossed once in ch. 4. |
+| samp | tshidzimba | Ch. 11; *tshidzimba* may mean samp-and-beans. |
+| omnivore | omnivore | Kept, explained. |
+| grit (for hens) | mateya (grit) | |
+| dust bath | u ḓiṱamba nga mavu | |
+| pecking order | mutevhe wa u phupha | |
+| layers / broilers | dza u ikhela / dza nama | |
+| mongoose, genet | dzi-mongoose, dzi-genet | Loans; a reviewer may know the Tshivenḓa names. |
+| wild cat(s) | dzikatsi dza ḓaka | |
+| throat / tongue | mukulo / lulimi | *mukulo* also = stream in this glossary. |
+| dizzy | u pfa ṱhoho i tshi mona | Descriptive. |
+| cellphone | selefouni | Replaces a garbled phrase in the first edition of ch. 5. |
+| taproot | mudzi muhulwane (taproot) | |
+| soil profile | muṱaṱo wa mavu | |
+| ribbon test / jar test | ndingo ya lutambo / ndingo ya khali | |
+| micro-organisms, nodules, rhizobium inoculant, compost tea | kept in English | |
+| mulch bank | ṱhanga ya mulch | |
+| worm castings | manyaga a zwivhungu | |
+| bedding (worm farm) | mandalo (bedding) | |
+| worm cocoons | makumba a zwivhungu (cocoons) | |
+| teaspoon / tablespoon | lebula ḽa ṱii / lebula ḽihulwane | |
+| sap suckers / plant eaters | zwi mamaho maḓi a zwimela / zwi ḽaho zwimela | Ch. 10. |
+| solar geyser (indirect / direct) | giza ḽa ḓuvha (indirect / direct) | *indirect*, *direct*, *inverter*, *aflatoxin* kept in English. |
+| box / panel / parabolic cooker | tshibikisi tsha bokisi / tsha phanele / tsha parabolic | |
+| hay box | bokisi ḽa mahatsi | |
+| LED lights | tshedza tsha LED | |
+| kettle | ketele (dziketele) | |
+| compass needle | tshisumbi tsha khamphasi | |
+| matchstick | lutanda lwa matshisi | |
+| horseshoe (shape) | tshisumbe tsha bere | |
+| gum tree | mukalipitasi (mikalipitasi) | "wattle" kept in English. |
+| wild plum / jackalberry / buffalo thorn | mutavhatsindi / musuma / mukhalu | Given with the English and Latin names. |
+| wide (hole) | pfalandavhu | "Dig wide, not deep" = gwani ho pfalandavhu, hu si ho dzikaho. |

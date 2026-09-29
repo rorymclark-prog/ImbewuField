@@ -1,179 +1,148 @@
 # Dijalo tsa meroho le dijalo tsa sehlooho
 
-## Ho lema dijo boemong ba lehodimo ba Afrika e ka Borwa
+Lelapa le ja letsatsi le letsatsi, kahoo serapa se lokela ho le fepa letsatsi le letsatsi. Dijo tse ding re di kga ka letsoho le le leng ka nako: morogo, parsley, sekotlolo sa dinawa. Dijo tse ding re di kotula hang ka sehla mme re a di boloka: poone e omileng, dinawa, patata.
 
-Afrika Borwa e na le mefuta e mmalwa ya boemo ba lehodimo (climate), ka hona ha ho na khalendara e le nngwe feela ya ho jala e sebetsang hohle.
+Mofuta ka mong wa dijo o hloka serapa sa ona, sebakeng sa sona. Beha ka nngwe moo e lokelang ho ba teng mme polasi yohle e sebetsa ka boitekitso bo fokolang.
 
-- **Bokahare bo nang le dipula tsa lehlabula** (Highveld, Foreistata, boholo ba Kapa Botjhabela, KwaZulu-Natal Midlands, Lesotho): pula e ngata e na ho tloha hoo e ka bang ka Mphalane (October) ho fihlela ka Hlakubele (March). Mariha a omme mme a a bata, mme dibakeng tse ngata ho na le serame (frost). Sehla se seholo sa ho lema ke nako ya selemo (spring) le lehlabula.
-- **Kapa Bophirima e nang le dipula tsa mariha**: pula e ngata e na ho tloha hoo e ka bang ka Motsheanong (May) ho fihlela ka Lwetse (September). Lehlabula le a tjhesa ebile le omme, ka hona dijalo tsa lehlabula di hloka nosetso.
-- **Lowveld le lebopo la lewatle tse se nang serame** (ka mohlala lebopo la KwaZulu-Natal le lowveld ya Limpopo le Mpumalanga): o ka lema dijalo tse ngata boholo ba selemo haeba o na le metsi.
+**Qetellong ya kgaolo ena o tla kgona ho:**
 
-Dibakeng tse batang, sehla sa ho lema se sekgutshwane mme serame sa mariha ke kotsi e kgolo ka ho fetisisa. Ha o rala diserapa tsa hao tsa dijo, nahana ka dintho tse latelang.
+- Beha diserapa tsa hao ho ya ka boemo ba lehodimo ba heno mme o boloke dijalo hole le serame
+- Lekanya boholo ba serapa sa hao le nako le tjhelete eo o nang le yona ka nnete
+- Rala serapa sa kitjhene, serapa sa meroho, serapa sa mmaraka le serapa sa dijalo tsa sehlooho
+- Lema poone, mabele, dinawa tse omileng, patata le kasava ka nako le sebaka se nepahetseng
 
-### Sireletsa dijalo seramong
+## Ho lema dijo maemong a lehodimo a Borwa ba Afrika
 
-Moya o batang o boima. Bosiung bo kgutsitseng, bo hlakileng, o phallela tlase letswapong jwaloka metsi mme o bokellana dibakeng tse tlase. Dibaka tsena di bitswa **di-frost pocket** (dikoti tsa serame).
+Ha ho na khalendara e le nngwe ya ho jala mona. Tseba boemo ba lehodimo ba heno:
 
-- O se ke wa kwallela moya o batang ka mora mabota, meaho kapa dihlahla tse teteaneng tse etsang terata (hedges) ka lehlakoreng le kahodimo la serapa sa hao. Siya sekgeo tlase e le hore moya o batang o tswelle ho phallela tlase le ho feta.
-- Lema dijalo tse sa mamelleng serame hodimo letswapong, e seng tlase phuleng.
-- Matswapo a shebileng leboya a fumana letsatsi le lengata mariha, mme ke dibaka tse futhumetseng ka ho fetisisa bakeng sa dijalo tse jalwang pele le tse jalwang morao.
+- **Ka hare ho naha moo pula e nang hlabula** (Highveld, Free State, boholo ba Kapa Botjhabela, dibaka tse bohareng tsa KwaZulu-Natal, Lesotho): pula e na ho tloha hoo e ka bang Mphalane ho ya Hlakubele; mariha a omile mme a a bata, hangata a na le serame.
+- **Kapa Bophirima moo pula e nang mariha**: pula e na ho tloha hoo e ka bang Motsheanong ho ya Loetse. Dijalo tsa hlabula di hloka nosetso.
+- **Lowveld le lebopo tse se nang serame** (lebopo la KwaZulu-Natal, lowveld ya Limpopo le Mpumalanga): ha o na le metsi, o ka lema boholo ba selemo.
 
-### Atolosa sehla sa ho lema
+Dibakeng tse batang, serame ke kotsi e kgolo. Moya o batang o boima. Bosiu bo kgutsitseng, bo hlakileng o phallela tlase jwaloka metsi mme o bokellana dibakeng tse tlase tse bitswang **di-frost pocket** (dikoti tsa serame). Sebetsa le ona:
 
-Tonele ya polasetiki (tunnel) kapa ntlo ya dimela (greenhouse) e boloka dimela di futhumetse, mme e o dumella ho lema nako e telele hwetleng (autumn) le mariheng. Kgalase e bitsa tjhelete e ngata haholo; polasetiki e theko e tlase.
+1. Siya sekgeo tlase marakong le magoreng ka lehlakoreng le ka hodimo, e le hore moya o batang o tswele pele o feta o tsamaye.
+2. Lema dijalo tse sa mameleng serame hodimo letswapong, le ka mohla e seng botlaaseng ba phula.
+3. Sebedisa matswapo a shebileng leboya bakeng sa dijalo tsa pele le tsa morao. A fumana letsatsi le lengata la mariha.
+4. Atolosa sehla ka tonele ya polasetiki, e theko e tlase ho feta kgalase. Ha e hahilwe pela lerako le ka leboya la ntlo, e thusa ho futhumatsa ntlo hape. Balemi ba bang ba boloka dikgoho tse mmalwa mariha khutlong e kwaletsweng ka terata ya yona bakeng sa mofuthu le manyolo; di fe moya o motjha o mongata, hobane manyolo a ntsha ammonia.
 
-- Tonele kapa ntlo ya dimela e hahilweng pela lebota la ntlo le shebileng leboya e boloka mocheso wa letsatsi, mme e ka thusa ho boloka ntlo e futhumetse mariha le yona.
-- Balemi ba bang ba boloka dikgoho tse mmalwa mariha karolong e arohaneng ya tonele, e kampetsweng ka terata. Mocheso wa mmele ya tsona o eketsa mofuthu o monyenyane, mme manyolo a tsona a nontsha mobu. Etsa hore moya o hlwekileng o kene hantle sebakeng seo, hobane manyolo a dikgoho a ntsha ammonia, e leng kgase e kotsi ho dinonyana le ho dimela.
+## Rala ho ya ka bophelo boo o nang le bona
 
-## Rala ho ya ka bophelo boo o bo phelang
+Serapa se seholo seo o sa kgoneng ho se hlokomela kapele se fetoha se tletseng mefoka, se senyehileng. Pele o tjheka, bua nnete ka **nako**, **tjhelete** le **thahasello** ya hao.
 
-Pele o qala, etsa bonnete ba hore seo o se hahang ke seo o se batlang ka nnete. Bua nnete ka hore o na le **nako**, **tjhelete** le **thahasello** e kae bakeng sa temo.
+1. Etsa **tlhahlobo ya bophelo** e bonolo. Ngola hore na o ka fa serapa dihora tse kae ka beke, hore na o batla eng ho sona (dijo, lekeno kapa ka bobedi) le hore na o ka sebedisa bokae.
+2. Haeba nako e le kgutshwane, e etse bonolo. Lema **di-perennial** tse ngata, dimela tse phelang dilemo, tse kang difate tsa ditholwana, ditlama le asparagus. Boloka mosebetsi ka **drip irrigation** (nosetso ya marothodi), diphaephe tse rothisetsang metsi butle semeleng ka seng, le sebaka sa nako sa pompo (tap timer).
+3. Haeba o batla lekeno mme o na le nako le matla, eya ho e kgolwanyane le e sebetswang haholo.
 
-1. Etsa **tlhahlobo e bonolo ya mokgwa wa hao wa bophelo** (lifestyle audit). Ngola hore o ka fa serapa dihora tse kae ka beke, hore o batla eng ho sona (dijo tsa lelapa, lekeno, kapa bobedi) le hore o ka sebedisa tjhelete e kae.
-2. Haeba o na le nako e nyane, etsa hore tsamaiso ya hao e dule e le bonolo. Lema **di-perennial** (dimela tse phelang dilemo tse ngata) tse ngata, jwaloka difate tsa ditholwana, ditlama le asparagase, mme o fokotse mosebetsi ka disebediswa tse kang **drip irrigation** (nosetso ya marothodi) le sebadi sa nako se kwalang pompo (tap timer).
-3. Haeba o batla ho lema bakeng sa lekeno mme o na le nako, matla le mehlodi, serapa se seholo se sebetswang haholo se ka o lokela.
-
-Rala diserapa tsa hao ho ya ka dikarabo tsa hao. Serapa se seholo seo o sa kgoneng ho se hlokomela kapelenyana se tla tlala mefoka mme se senyehe.
-
-Mefuta e mene ya diserapa tsa dijo e ka tlase e latela **di-Zone** tsa permaculture (dibaka tse arotsweng ho ya ka hore o di etela hangata hakae): dikarolo tsa polasi tseo o di etelang hangata di behwa haufi haholo le ntlo.
+Diserapa tse nne tse ka tlase di latela **di-zone** tsa permaculture: dikarolo tsa polasi tseo o di etelang haholo di haufi ka ho fetisisa le ntlo.
 
 ## 1. Serapa sa kitjhene (Zone 1)
 
-Serapa sa kitjhene (kitchen garden) ke karolo ya **Zone 1**, sebaka se potapotileng ntlo hang-hang, hangata ka hare ho dimitara tse mmalwa ho tloha monyako wa kitjhene. Ke serapa sa dijo se haufi haholo le kitjhene, mme ke sona seo o se etelang hangata ka ho fetisisa, ka hona o tlameha ho fihla ho sona kapele le habonolo.
+Serapa sa kitjhene se ho **Zone 1**, dikgato tse mmalwa ho tloha monyako wa kitjhene. O se feta makgetlo a mangata ka letsatsi, kahoo kga ho sona makgetlo a mangata ka letsatsi.
 
-Lema dimela tseo o di kgang letsatsi le letsatsi:
+Lema seo o se sebedisang letsatsi le letsatsi:
 
-- meroho ya salate eo o ka e **kutang mme ya boela ya hola** (cut and come again: kga makgasi a mmalwa, mme o tlohele semela se hole hape), jwaloka lettuce, sepinatjhe le Swiss chard
+- morogo le makgasi a salate ao o ka a **kgang mme a mele hape** (kga makgasi a mmalwa mme o tlohele semela se mele hape): sepinatjhe, Swiss chard, lettuce
 - dinawa le dierekisi
 - ditamati tse nyane (cherry tomatoes)
-- ditlama tseo o phehang ka tsona, jwaloka parsley, koriandere, dieie tse tala (spring onions) le thyme
+- ditlama tsa ho pheha: parsley, coriander, eie e tala, thyme
 
-Boholo ba dimela mona ke **di-annual** (dimela tse phelang sehla se le seng feela), le ditlama tse mmalwa tseo e leng di-perennial.
+Boholo ba tsona ke **di-annual**, dimela tse phelang sehla se le seng, le ditlama tse mmalwa tse phelang dilemo tse ngata.
 
-### Lema ka ho teteana, o hlokomele ka hloko
+Lema di le haufi haholo. Sebedisa sekgetjhana se seng le se seng sa mobu, mme o leme ho ya hodimo hape, ka dinawa terateng. Ka square metre ena ke serapa sa hao se hlahisang ka ho fetisisa, kahoo se hloka tlhokomelo e kgolo: ho jala, ho hlaola, ho **kwahela ka mulch** (ho kwahela mobu ka dintho tse omileng tsa dimela), ho fepa mobu le ho kga disenyi.
 
-Serapa sa kitjhene se lengwa ka ho atamelana haholo, ho sebediswa sebaka sohle, fatshe le ho ya hodimo (ka mohlala dinawa terateng kapa mohahong wa ho palamisa dimela, trellis). Ho ya ka sekwere-mitara se le seng, ke sona serapa se hlahisang dijo tse ngata ho feta diserapa tsohle tsa hao, ka hona se boetse se hloka tlhokomelo e ngata ka ho fetisisa. Ho hlaola, ho jala, ho hloma, ho kwahela mobu ka mulch, ho kotula, ho laola disenyi le ho nontsha mobu kaofela ke karolo ya mosebetsi wa kamehla.
-
-### Se etse se be molemo mme se be setle
-
-Diserapa tsa kitjhene di na le dibopeho le mekgwa (patterns) e mengata. Se bohlokwa ka ho fetisisa ke hore serapa se sebetse hantle. Hobane se haufi le ntlo hang-hang, etsa hore se shebahale se le setle le sona. Sebaka sena se senyane, ka hona o ka nka nako e eketsehileng ho kgabisa mathoko a dibethe tsa serapa ka dikutu tsa difate, ditena tsa kgale kapa majwe, le ho kwahela ditsela ka gravel kapa diphatsa tsa patsi (wood chips).
+Se etse se setle. Se senyane mme se pela ntlo, kahoo nka nako ho etsa mathoko a dibethe tsa serapa ka dikutu, ditene tsa kgale kapa majwe, mme o kwahele ditselana ka gravel kapa dikgaba tsa patsi.
 
 ## 2. Serapa sa meroho (Zone 2)
 
-Serapa sa meroho se seholo ho feta serapa sa kitjhene. Mona o lema meroho e hlokang sebaka se seholo kapa e nkang nako e telele pele e kotulwa, ka mohlala khabetjhe, beteruti, leeks, dieie, pelepele e kgolo (peppers), ditamati le okra.
+Serapa sa meroho se seholo. Se na le dijalo tse hlokang sebaka se seholo kapa tse holang nako e telele: khabetjhe, beteruti, leeks, dieie, pelepele, ditamati le okra. O se etela hang ka letsatsi kapa kamora matsatsi a mmalwa, kahoo se ya hole hanyane, ho **Zone 2**. Ditonele tsa lelapa le matlo a lesela la moriti le tsona di mona.
 
-O se etela hanyane ho feta serapa sa kitjhene, mohlomong hang ka letsatsi kapa ka mora matsatsi a mmalwa, ka hona se behwa hole hanyane le ntlo, ho **Zone 2**.
+1. Rala dibethe tsa serapa tse hlakileng le ditselana pakeng tsa tsona. Letswapong, tsamaisa dibethe le ditselana ho latela **contour** (mola o tshelang letswapo o dulang bophahamong bo le bong), e le hore metsi a kene mobung ho ena le ho phalla.
+2. Lema dijalo tse ngata mmoho. Eketsa letangwana le lenyane bakeng sa dihwaswa le dipalesa tse fepang dikokonyana tse thusang (Kgaolo ya 10).
+3. O se ke wa etsa mathoko. Bopa dibethe hape ka letsoho makgetlo a mmalwa ka selemo.
 
-### Kamoo se hlophiswang kateng
+Mosebetsi o tsitsitse: ho hlahloba mela ya drip, ho kwahela ka mulch, ho eketsa **compost** (masalla a dimela le diphoofolo a bodileng), ho hlaola le ho jala.
 
-- Lema mefuta e mengata ya dijalo mmoho. Eketsa dintho tse thusang ho laola disenyi, jwaloka letangwana le lenyane (bakeng sa disehwaswa le **di-predator** tse ding, e leng diphoofolo tse jang disenyi) le dimela tse thunyang dipalesa tse hohelang dikokonyana tse thusang.
-- Hlophisa dibethe tsa serapa tse hlakileng tse nang le ditsela pakeng tsa tsona. Letswapong, etsa hore dibethe tsa serapa le ditsela di latele **contour** (mola o tshelang letswapo o le bophahamong bo lekanang), e le hore metsi a kene mobung ho ena le ho phalla a tsamaye.
-- Hobane sebaka se seholo, ha o hloke ho kgabisa mathoko a dibethe tsa serapa. O mpe o di bope botjha ka letsoho makgetlo a mmalwa ka selemo.
+## 3. Temo e nyane ya meroho ya kgwebo (Zone 3)
 
-Mosebetsi o ntse o le mongata: ho sutisa difafatsi kapa ho hlahloba diphaephe tsa drip irrigation, ho kwahela mobu ka mulch, ho eketsa **compost** (manyolo a bodileng), ho laola disenyi, ho hlaola, le ho jala dipeo kamehla kapa ho hloma dimela tse nyane.
+Serapa sa meroho se lengwang haholo bakeng sa ho rekisa ke **serapa sa mmaraka** (market garden). Ho tloha hoo e ka bang 0.4 hectare (acre e le nngwe) ho ya hodimo, se ho **Zone 3**, sebaka se seholo sa temo.
 
-Ditonele tse kgolo tsa polasetiki, matlo a dimela le ditonele tsa lesela la moriti (shade-net) tsa lelapa le tsona di behwa ho Zone 2, haufi le serapa sa meroho.
+1. Lema sejalo se le seng bething ka nngwe ya serapa. Ho jala, ho hlaola le ho kotula ho potlaka. Fetola sejalo bething ka nngwe sehla se seng le se seng (Kgaolo ya 10).
+2. Lema dimela di le haufi dibetheng tse tebileng tse nang le compost e ngata. Ho lema haufi ho fana ka dijo tse ngata ka square metre mme ho thibela mefoka ka moriti.
+3. Sebedisa disebediswa tse bolokang nako: sejadi se sutuwang (push-seeder) le **broadfork**, fereko e pharaletseng e nang le ditshwaro tse pedi e bulelang mobu ntle le ho o phetla. Polasi e kgolwanyane e ka eketsa terekere e nyane ya mabidi a mabedi e tsamaiswang ka maoto.
 
-Serapa sa meroho sa lelapa ha se a tlameha ho ba seholo haholo. O ka se holisa hamorao haeba o batla ho rekisa tse setseng (surplus) le ho eketsa lekeno la hao.
+Diserapa tsa mmaraka di a sebetsa hobane bareki ba batla dijo tse ntjha tse lenngweng haufi. Rekisetsa bareki ka kotloloho, hekeng ya polasi, mmarakeng, dikolong, dispazeng kapa direstoranteng, mme o fumana theko ya **retail** (ya ho rekisa ka bonngwe), e seng theko e tlase ya **wholesale** (ya ho rekisa ka bongata) eo morekisi a e lefang. Ditjeo tsa ho qala di tlase, mme mefuta e fapaneng ya dihlahiswa (meroho, ditholwana, mahe, mahe a dinotshi, jeme) e boloka tjhelete e tswela pele e kena.
 
-## 3. Temo e nyane ya meroho bakeng sa kgwebo (Zone 3)
-
-Serapa se seholo sa meroho se lengwang haholoholo bakeng sa ho rekisa hangata se bitswa **serapa sa mmaraka** (market garden). Ho tloha hoo e ka bang 0.4 hectare (acre e le nngwe) ho ya hodimo, sebaka se loketseng sona ke **Zone 3**, sebaka se seholo sa temo.
-
-### Hlophisa bakeng sa tlhahiso
-
-Serapa sa mmaraka se hlophiswa hore se hlahise ka hohle kamoo ho ka kgonehang, ka mosebetsi o senyehang o monyane ka ho fetisisa.
-
-- Lema mofuta o le mong feela wa meroho bethe ka nngwe ya serapa. Sena se etsa hore ho jala, ho kotula le mesebetsi e meng ho potlake. Fetola sejalo bethe ka nngwe ya serapa ho tloha sehleng se seng ho ya ho se latelang (**crop rotation**, phetolo ya dijalo).
-- Lema ka ho atamelana dibetheng tsa serapa tse lokisitsweng hantle, tse nang le compost e ngata. Ho lema ka ho atamelana ho fana ka dijo tse ngata ka sekwere-mitara, mme moriti wa dimela o thibela mefoka.
-- Sebedisa disebediswa tse bonolo tse bolokang nako, jwaloka setjadi se sututswang ka letsoho (hand push-seeder) le **broadfork** (fereko e sephara e nang le mefeng e mmedi, e bulang mobu ntle le ho o phethola). Polasi e kgolo e ka sebedisa terekere e nyane ya mabili a mabedi, eo motho a tsamayang ka mora yona, bakeng sa ho tjhekolla mobu hanyane le ho kuta dijalo tse sireletsang mobu (cover crops).
-
-### Hobaneng diserapa tsa mmaraka di ka atleha
-
-Diserapa tsa mmaraka di se di tumme lefatsheng ka bophara, ho kenyeletswa Afrika e ka Borwa, hobane bareki ba bangata kajeno ba batla dijo tse ntjha tse lengwang haufi le hae.
-
-- **Rekisa ka kotloloho.** Ha o rekisetsa bareki ka kotloloho (hekeng ya polasi, mmarakeng wa lehae, ho baahisani, dikolong, dispaza kapa direstoranteng) o fumana theko ya **ho rekisa ka bonngwe** (retail) ho ena le theko e tlase ya **ho rekisa ka bongata** (wholesale) eo bahwebi ba e lefang.
-- **Ditjeho tse tlase tsa ho qala.** Sebaka se senyane se nang le disebediswa tsa letsoho se bitsa tjhelete e nyane haholo ho qala ho feta polasi e kgolo e sebedisang metjhini.
-- **Fana ka mefutafuta.** Balemi ba atlehang ba diserapa tsa mmaraka hangata ba rekisa dihlahiswa tse ngata: meroho, ditholwana, monokotshwai (berries), mahe, mahe a dinotshi, nama kapa lebese. Ba bang ba boetse ba eketsa boleng ka ho etsa jeme, di-pickle, ditholwana tse omisitsweng le dihlahiswa tse ding.
-
-> **Keletso:** Pele o lema bakeng sa ho rekisa, bua le bareki ba hao. Fumana hore ba batla eng, bokae, hangata hakae le ka theko efe. Lemela mmaraka oo o o tsebang, e seng oo o o tshepang feela.
+> **Keletso:** Bua le bareki ba hao pele o lema. Fumana hore na ba batla eng, bokae, hangata hakae le ka theko efe. Lemela mmaraka oo o o tsebang, e seng oo o o tshepang feela.
 
 ## 4. Serapa sa dijalo tsa sehlooho (Zone 3)
 
-**Dijalo tsa sehlooho** (staple crops) ke dijo tse etsang boholo ba dijo tseo lelapa le di jang, jwaloka poone, mabele, dinawa le patata (sweet potato).
+**Dijalo tsa sehlooho** ke dijo tse tlatsang poleiti ya lelapa matsatsi a mangata. Dijothollo, ditapole le metso e meng di fana ka matla. Dinawa le **di-legume** tse ding, lelapa la dinawa, di fana ka protheine.
 
-- **Dijothollo, ditapole le dijalo tse ding tsa metso** di fana ka **dikhabohaedreite** (carbohydrates): dijo tse fanang ka matla.
-- **Dinawa le di-legume tse ding** (dimela tsa lelapa la dinawa le dierekisi) di fana ka **protheine** (protein): dijo tse hahang mmele.
-
-Dijalo tsa sehlooho di hloka sebaka se seholo bakeng sa kotulo e mahareng feela. Tse ngata di nka dikgwedi tse mmalwa ho butswa, mme hangata di kotulwa kaofela ka nako e le nngwe, jwaloka poone e omileng kapa dinawa tse omileng. Ka hona re beha serapa sa dijalo tsa sehlooho sebakeng sa temo, **Zone 3**.
-
-Serapa sa dijalo tsa sehlooho se hloka mosebetsi o monyane ho feta serapa sa kitjhene kapa serapa sa meroho, mme o se etela hanyane. Dijalo tse ding di nosetswa ka nako e nngwe, empa boholo ba tsona di lengwa ka pula feela. Kgetha dijalo tse loketseng boemo ba lehodimo ba hao, mme o di jale ka nako e nepahetseng e le hore di sebedise pula hantle ka ho fetisisa.
-
-### Dijalo tsa sehlooho tsa Afrika e ka Borwa
+Dijalo tsa sehlooho di hloka sebaka se seholo bakeng sa kotulo e mahareng, di nka dikgwedi ho butswa mme di tla kaofela ka nako e le nngwe, kahoo di ya Zone 3. Se hloka mosebetsi o fokolang mme se hola haholo ka pula, kahoo kgetha dijalo tse loketseng boemo ba lehodimo ba heno mme o di leme ka tsela e tshwarang pula.
 
 | Sehlopha | Dijalo |
 |---|---|
 | Dijothollo | poone, mabele, leotsa (pearl millet); koro, habore le harese (haholoholo dijalo tsa mariha) |
-| Dinawa le di-legume tse ding | dinawa tse omileng jwaloka sugar beans, cowpea, ditloo (jugo bean, Bambara groundnut), matokomane (groundnut), soya, pigeon pea, mung bean, chickpea |
-| Dijalo tsa metso le tsa ditapole (tubers) | tapole, patata, amadumbe (taro), kasava (cassava; dibakeng tse se nang serame feela) |
-| Meroho e hlokang sebaka se seholo | mokopu, butternut, lehapu (watermelon), dimelone tse ding le mopotse (gourds) |
+| Dinawa le di-legume tse ding | sugar beans le dinawa tse ding tse omileng, cowpea, ditloo (jugo bean), matokomane, soya, pigeon pea, mung bean, chickpea |
+| Metso le ditapole (tubers) | ditapole, patata, amadumbe, kasava (dibakeng tse se nang serame feela) |
+| Meroho e hlokang sebaka se seholo | mekopu, butternut, mahapu, dimelone le mepotse |
 
 ### Poone
 
-Poone ke sejalo se seholo sa sehlooho karolong e kgolo ya Afrika Borwa.
-
-- Dibakeng tsa dipula tsa lehlabula, jala ka mora hore dipula tse ntle di kolobise mobu mme kotsi ya serame e fetile, hangata ho tloha ka Mphalane ho fihlela ka Tshitwe (December).
-- Jala ka mela e arohaneng ka hoo e ka bang 90 cm. Dibakeng tse omileng, arohanya dimela haholo (hoo e ka bang semela se le seng 50 cm e nngwe le e nngwe moleng) e le hore semela ka seng se fumane metsi a lekaneng. Ha pula e le ngata, ho na le nosetso kapa mobu o nonne, dimela di ka atamelana (hoo e ka bang 30 cm).
-- Mefuta ya **peo e tswalang se tshwanang** (open-pollinated) e ka lengwa hape ka peo eo o e bolokileng. Poone ya hybrid e fana ka kotulo e phahameng ka peo e rekilweng, empa peo e bolokilweng ho tswa ho hybrid ha e hlahise dimela tse tshwanang le tsa pele, mme e fana ka kotulo e nyane.
+1. Dibakeng tsa pula ya hlabula, lema kamora hore dipula tse ntle di kolobise mobu mme serame se fedile, hangata ho tloha Mphalane ho ya Tshitwe.
+2. Lema ka mela e ka bang 90 cm ho tloha ho o mong. Dibakeng tse omileng siya hoo e ka bang 50 cm pakeng tsa dimela molaeng, e le hore e nngwe le e nngwe e be le metsi a lekaneng. Ha pula e le ntle, ho na le nosetso kapa mobu o nonne, di leme hoo e ka bang 30 cm ho tloha ho e nngwe.
+3. Kgetha peo ya **open-pollinated** (peo eo o ka e bolokang mme wa e jala hape) haeba o batla ho boloka ya hao. Peo ya hybrid e hlahisa hantle la pele, empa peo e bolokilweng ho tswa sejalong sa hybrid e hlahisa hoo e ka bang karolo ya boraro ka tlase.
 
 ### Mabele
 
-Mabele a mamella mocheso le komello hantle ho feta poone, mme ke kgetho e ntle dibakeng tse omileng. Moo metsi a haellang, a jale ka **mela e arohaneng haholo** (hoo e ka bang 0.9 m ho isa ho 2.3 m pakeng tsa mela, ho ya ka pula le mobu wa hao) e le hore semela ka seng se be le sebaka se seholo sa mobu seo se ka hulang metsi ho sona. Dibakeng tse nang le pula e ngata, mela e atamelaneng e lokile.
+Mabele a mamella mocheso le komello ho feta poone. Moo metsi a fokolang, a leme ka mela e pharaletseng, hoo e ka bang 0.9 m ho isa ho 2.3 m ho tloha ho o mong ho ya ka pula le mobu, e le hore semela ka seng se be le mobu o mongata oo se ka nwang ho ona.
 
-### Dinawa tse omileng le cowpea
+### Dinawa tse omileng, cowpea le ditloo
 
-- Jala dinawa tse omileng ha mobu o se o futhumetse (ho feta hoo e ka bang 15 °C) ka mora dipula tsa pele tse ntle: dibakeng tse ngata tsa dipula tsa lehlabula sena ke ho tloha bohareng ba Mphalane ho fihlela ka Tshitwe, mme dibakeng tse nang le serame ho fihlela hoo e ka bang bohareng ba Pherekgong (January).
-- Dinawa di hola hantle ka mela pakeng tsa poone kapa pela yona. Jwaloka di-legume tse ding, di thusa ho nontsha mobu ka naetrojene (nitrogen).
-- Cowpea le ditloo (jugo bean) di mamella mocheso le komello hantle ho feta dinawa tse omileng.
+1. Lema dinawa tse omileng kamora dipula tsa pele tse ntle, ha mobu o se o futhumetse ho feta hoo e ka bang 15 °C: bohareng ba Mphalane ho ya Tshitwe dibakeng tse ngata tsa pula ya hlabula, le ho fihla hoo e ka bang bohareng ba Pherekgong moo ho nang le serame.
+2. Di leme pela poone kapa pakeng tsa yona. Di fepa mobu ka naetrojene.
+3. Dibakeng tse tjhesang, tse omileng, lema cowpea le ditloo, tse mamellang komello hantle.
 
 ### Patata
 
-Patata (sweet potato) e lengwa ka **dikotwana tsa methapo** (vine cuttings), e seng ka peo.
+1. Seha dikotwana tsa methapo tse 20 ho isa ho 30 cm ho tswa dimeleng tse phetseng hantle.
+2. Di leme hodima mela e phahamisitsweng ya mobu (ridges) e ka bang 1 m ho tloha ho o mong, 30 cm ho tloha ho e nngwe molaeng.
+3. Moo ho nang le serame, lema ho tloha bohareng ba Pudungwana ho ya qalong ya Tshitwe. Dibakeng tse se nang serame, lema ho tloha Phato ho ya Hlakubele.
 
-1. Seha dikotwana tsa methapo tse bolelele ba 20–30 cm ho tswa dimeleng tse phetseng hantle.
-2. Di leme hodima mela e phahamisitsweng ya mobu (ridges) kapa diqubu tse nyane tsa mobu (mounds) tse arohaneng ka hoo e ka bang 1 m, dikotwana di arohane ka hoo e ka bang 30 cm hodima mola.
-3. Dibakeng tse nang le serame, di leme ho tloha hoo e ka bang bohareng ba Pudungwana (November) ho fihlela qalong ya Tshitwe. Dibakeng tse se nang serame o ka lema ho tloha hoo e ka bang ka Phato (August) ho fihlela ka Hlakubele.
-
-Patata e nang le nama e mmala wa lamunu (orange-fleshed) e na le vitamin A e ngata, mme e molemo haholoholo ho bana.
+Lema mofuta o nang le nama e mmala wa lamunu. O na le vitamin A e ngata mme o molemo ho bana.
 
 ### Kasava
 
-Kasava (cassava) e hola hantle feela dibakeng tse futhumetseng, **tse se nang serame**, jwaloka dikarolo tsa KwaZulu-Natal le lowveld ya Mpumalanga le Limpopo. Ha e se e tiile, e mamella komello haholo.
-
-> **Polokeho:** Metso le makgasi a kasava a na le dikhemikhale tsa tlhaho tse ntshang **saenaete** (cyanide), e leng chefo. Mefuta e "babang" (bitter) e na le yona e ngata haholo ho feta e "monate" (sweet), mme dimela tse sithabetseng ke komello di na le yona e ngata. O se ke wa ja kasava e tala. Ebola metso mme o e phehe ho fihlela e butswa ka ho feletseng. Kasava e babang e boetse e tlameha ho inwa metsing matsatsi a mmalwa (mme metsi ao a lahlwe), kapa e hohlwe (grated) mme e sebetswe, pele e phehwa. Botsa moeletsi wa temo (extension officer) hore o na le mofuta ofe.
+Kasava e hola feela dibakeng tse futhumetseng, tse se nang serame, tse kang lebopo la KwaZulu-Natal le lowveld, mme e mamella komello hantle ha e se e tiile. Metso ya yona e ntsha cyanide, chefo, kahoo le ka mohla ha re je kasava e le tala: ebola metso mme o e phehe hantle, mme o kolobetse mefuta e babang ka metsing matsatsi a mmalwa pele, o lahla metsi ao.
 
 ### Melao-motheo ya serapa sa dijalo tsa sehlooho
 
-Ho na le mekgwa e mengata ya ho lema dijalo tsa sehlooho. Mokgwa o molemo ka ho fetisisa ho wena o itshetlehile ka boemo ba lehodimo ba hao, meetlo ya temo ya lehae, disebediswa tseo o nang le tsona le dijalo tseo o di kgethang. Melao-motheo ena e thusa maemong ohle:
+1. **Kopanya dijalo.** Lema poone le dinawa le mekopu, e seng sejalo se le seng feela.
+2. **Tshwenya mobu hanyane kamoo ho ka kgonehang.**
+3. **Siya dikutu le makgasi hodima mobu e le mulch.** E sireletsa mobu mme e o fepa ha e ntse e bola.
+4. **Lema cover crops** (dijalo tse sireletsang mobu) pakeng tsa dijalo tse kgolo.
+5. **Lema ho latela contour** e le hore pula e kene mme mobu o dule moo o leng teng.
+6. **Fetola dijalo** (crop rotation) e le hore ho se be le sejalo se kgutlelang sebakeng se le seng selemo le selemo.
+7. **Phomotsa naha** ka tlasa cover crop kapa makgulo kamora dihla tse mmalwa.
 
-1. **Lema dijalo tse fapaneng mmoho (polycultures), e seng sejalo se le seng feela (monocultures).** Lema dijalo tse mmalwa mmoho, ka mohlala poone le dinawa le mokopu.
-2. **Sitisa mobu hanyane kamoo ho ka kgonehang.** Qoba ho lema ka mohoma ho tebileng moo o ka kgonang.
-3. **Siya masalla a dijalo hodima mobu e le mulch.** Dikutu le makgasi di sireletsa mobu, mme di o nontsha ha di ntse di bola.
-4. **Lema dijalo tse sireletsang mobu** (cover crops) ho sireletsa le ho nontsha mobu pakeng tsa dijalo tse kgolo.
-5. **Lema ho latela contour** e le hore pula e kene mobung mme mobu o dule sebakeng sa wona.
-6. **Fetola dijalo.** O se ke wa lema sejalo se tshwanang sebakeng se le seng selemo le selemo.
-7. **Phomotsa naha.** Ka mora dihla tse mmalwa, tlohela tshimo e phomole ka tlasa dijalo tse sireletsang mobu kapa makgulo.
+## Leka sena
 
-> **Hlokomela:** Dinawa ke dijo tsa letsatsi le letsatsi dikarolong tse ngata tsa Afrika. Rwanda le Burundi, motho ka mong o ja ka karolelano dinawa tse ka bang 27–31 kg ka selemo, e leng bongata bo phahameng ka ho fetisisa lefatsheng.
+Taka mmapa wa diserapa tsa hao tse nne bekeng ena.
+
+1. Taka ntlo ya hao le naha e e potolohileng leqepheng la pampiri.
+2. Ema monyako wa kitjhene mme o bale dikgato tse 10. Tshwaya sebaka se molemo ka ho fetisisa sa serapa sa kitjhene ka hara bohole boo.
+3. Tshwaya sebaka sa serapa sa meroho, se fihlellehang habonolo ka maoto mme se haufi le metsi.
+4. Tshwaya sebaka sa dijalo tsa sehlooho, mme o ngole hore na naha e theohela ka lehlakoreng lefe.
+5. Mantsiboya a kgutsitseng, a batang, utlwa moo moya o batang o dulang teng. Tshwaya frost pocket eo.
+6. Pela serapa ka seng, ngola dihora tseo o ka se fang tsona ka beke.
 
 ## Dintlha tsa bohlokwa
 
-- Tseba boemo ba lehodimo ba hao: pula ya lehlabula bokahare, pula ya mariha Kapa Bophirima, lowveld le lebopo tse se nang serame.
-- Tlohela moya o batang o phallele tlase; boloka dijalo tse sa mamelleng serame hole le di-frost pocket.
-- Rala diserapa ho ya ka nako, tjhelete le thahasello eo o nang le yona ka nnete.
-- Serapa sa kitjhene (Zone 1): se senyane, se lenngweng ka ho teteana, meroho le ditlama tsa letsatsi le letsatsi, haufi haholo le kitjhene.
-- Serapa sa meroho (Zone 2): dijalo tse kgolo, dibethe tsa serapa le ditsela tse latelang contour.
-- Serapa sa mmaraka (Zone 3): sejalo se le seng bethe ka nngwe ya serapa, ho lema ka ho atamelana, rekisa ka kotloloho bakeng sa theko e betere.
-- Serapa sa dijalo tsa sehlooho (Zone 3): poone, mabele, dinawa, patata le dijalo tse ding tsa matla le tsa protheine, tse lengwang haholo ka pula.
-- O se ke wa ja kasava e tala; e ebole, e ine metsing mme o e phehe hantle.
-- Kopanya dijalo, sitisa mobu hanyane, kwahela ka mulch, fetola dijalo, lema ho latela contour mme o phomotse naha.
+- Tseba boemo ba lehodimo ba heno, mme o dumelle moya o batang ho phallela hole le dijalo tse sa mameleng serame.
+- Lekanya diserapa tsa hao le nako, tjhelete le thahasello eo o nang le yona ka nnete.
+- Serapa sa kitjhene se haufi mme se lenngwe haufi haholo; serapa sa meroho ho latela contour; serapa sa mmaraka ka dibethe tsa sejalo se le seng, se rekisetswa bareki ka kotloloho.
+- Lema dijalo tsa sehlooho ho tshwara pula, mme le ka mohla o se je kasava e le tala.
+- Kopanya dijalo, tshwenya mobu hanyane, kwahela ka mulch, fetola dijalo mme o phomotse naha.
+
+Qala ka serapa se pela monyako wa kitjhene. Ha se o fepa letsatsi le letsatsi, o tla tseba hore o se o loketse se latelang.

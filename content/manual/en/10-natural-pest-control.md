@@ -1,480 +1,315 @@
 # Natural Pest Control
 
-## A different way to think about pests
+A caterpillar on a cabbage is not an enemy. It is food. Birds, frogs, lizards, spiders, ladybirds and tiny wasps all live on the creatures we call pests. Kill every pest and we starve the helpers too, and the garden becomes less stable, not more.
 
-In permaculture we manage pests the way nature does. A "pest" is not an enemy to wipe out. It is part of the whole ecosystem. Pests are food for the animals that control them: birds, frogs, lizards, spiders, ladybirds and small wasps. If we kill every pest, we also starve these helpers, and the whole system becomes unstable.
+So when pests suddenly explode, we read it as a message. Something is out of balance: tired soil, plants stressed by drought, too much of one crop in one place. A quick organic fix can save this season's harvest. The lasting work is to treat the cause.
 
-A sudden pest outbreak is usually a sign that something in the garden is out of balance. For example, the soil may be poor, the plants may be stressed by drought, or there may be too much of one crop in one place. Quick organic measures can reduce the damage now. But in the long run we must treat the cause, not only the symptom.
+This is not sitting back. "Obtain a yield" is one of our principles, and the family must eat. We protect the crops that are always at risk, such as cabbages and seedlings. But we do not expect every plant to survive. A small share goes back to the system, and the system does much of the pest control for us.
 
-Our aim is a farm that becomes healthier and more self-regulating every year. Self-regulating means we let nature do much of the work. For example, insect-eating birds help to control caterpillars for us.
+**By the end of this chapter you will be able to:**
 
-This does not mean we sit back and do nothing when pests attack. The permaculture principle "obtain a yield" matters: we must still harvest food. Some crops, such as cabbages and young seedlings, are always more at risk than others, and we protect them with natural methods. But we do not expect 100% of every crop. It is realistic to accept small losses and to share a little with the system.
+- Recognise the main garden pests of Southern Africa and deal with each one without poison
+- Bring predators into your garden with flowers, water and shelter
+- Use trap crops and good neighbours, and know which companion claims are proven
+- Make a garlic, onion and chilli spray and use it without harming bees
+- Plan a rotation so that no crop family returns to the same bed for three to four years
 
 ## Why avoid chemical poisons
 
-Industrial farming often uses chemical pesticides. These cost money every season, can harm people and animals, and need a lot of management. Natural pest control costs little once it is set up, is safer, and needs less work over time.
+Chemical pesticides cost money every season and harm people and animals. Natural pest control costs little once it is set up, and gets easier every year.
 
-Spraying poison often creates a cycle of more and more pests:
+Poison also traps the farmer in a cycle:
 
-1. The poison kills the pests, but it also kills the insects that eat the pests (the predators).
+1. The spray kills the pests, and also the **predators**, the animals and insects that hunt and eat pests.
 2. Pests breed much faster than their predators.
 3. The pests come back first, and now nothing is there to eat them.
-4. The farmer sprays again, and the problem gets worse. Many pests also become resistant to the poison.
+4. The farmer sprays again. The problem grows, and many pests become resistant to the poison.
 
-Before chemical farming there was no word for "organic" farming, because all farming was organic. Many old methods of managing pests still work today. They are especially useful while a new permaculture garden is being established, before its natural balance has developed.
-
-In the previous chapter we looked at how to build a healthy, diverse ecosystem. That is the most important long-term strategy. This chapter looks at practical ways to protect crops, especially vegetables.
-
-## Natural ways to control pests
-
-The main tools are:
-
-- **Plant diversity.** Mix many different plants rather than growing large blocks of one crop.
-- **Healthy soil.** Strong plants in fertile soil resist pests better (see Chapter 8).
-- **Trap crops (sacrificial crops).** Plant something the pest likes more than your food crop, so it attacks that instead.
-- **Companion planting.** Grow plants together that help each other.
-- **Crop rotation.** Do not grow the same crop family in the same bed year after year.
-- **Soil inoculants.** These are products that add useful living organisms to the soil or seed, for example rhizobium bacteria for beans and groundnuts, or good compost.
-- **Natural predators.** Give birds, frogs, lizards, snakes and predatory insects a place to live.
-- **Chickens and ducks.** After a harvest, or in a moveable pen (see Chapter 5), they clean up slugs, snails and insects. Keep them away from young seedlings, which they scratch up.
-- **Intercropping.** Grow two or more crops in the same bed at the same time.
-- **Hedges and fences.** Protect the garden from animals and wind.
-- **A wild area (Zone 5).** Leave a strip of natural vegetation as a home for wildlife and predators.
-- **Home-made sprays.** Use them only as a last resort, for certain crops.
-
-## What are pests?
-
-Most pests are insects, but other animals that damage crops, such as mole-rats, porcupines, birds and rodents, are also called pests.
-
-We can divide pests into two groups by the way they feed: sap suckers and plant eaters.
-
-### Sap-sucking pests
-
-These pests pierce the plant and suck its juices, above or below the ground. A few do little harm, but large numbers weaken the plant. Many also spread plant diseases, especially viruses, from plant to plant.
-
-Examples:
-
-- aphids
-- scale insects
-- mealybugs
-- leafhoppers and planthoppers
-- whiteflies
-- thrips
-- mites, such as red spider mite (mites are tiny relatives of spiders, not insects)
-- nematodes (microscopic worms in the soil that feed on roots; root-knot nematodes cause lumps, called galls, on the roots)
-
-### Plant-eating pests
-
-These pests chew leaves, stems, fruit or roots. They are usually bigger and easy to see. Because they are big, you can often pick them off by hand.
-
-Examples:
-
-- caterpillars (such as cutworm, bollworm, diamond-back moth and fall armyworm)
-- beetles
-- slugs and snails
-- birds
-- rodents and mole-rats
-
-## Common pests in Southern Africa and how to deal with them
-
-> **Tip:** Walk through your garden at least twice a week and look under the leaves. Pests are much easier to control when you find them early. If you cannot identify a pest, take a clear photo and ask your extension officer or mentor.
-
-### Aphids
-
-Aphids are small, soft, pear-shaped insects, green, black or grey, that cluster on young shoots and under leaves. They attack many crops, especially cabbage-family crops, beans and peas. Large numbers make plants weak and stunted, with curled leaves and lower yields. Aphids also carry plant viruses from one plant to another. Insects that spread disease in this way are called vectors.
-
-Aphids breed very fast. In warm weather the females give birth to live young without mating, and one aphid can have many thousands of descendants within a few weeks if nothing eats them. When a colony becomes crowded, some aphids grow wings and fly to new plants.
-
-What to do:
-
-1. Squash small colonies with your fingers, or wash them off with a strong spray of water.
-2. Protect ladybirds, hoverflies, lacewings and small parasitic wasps. They eat or parasitise aphids. A colony of aphids that has turned brown and papery has usually been killed by parasitic wasps, so leave it alone.
-3. Control ants (see below), because ants guard aphids from their enemies.
-4. Plant nasturtiums nearby as a trap crop, and remove the infested nasturtium leaves.
-5. Avoid too much fresh manure or nitrogen fertiliser. Soft, fast, leafy growth attracts aphids.
-
-### Cutworms
-
-Cutworms are fat, grey-brown caterpillars that curl into a C-shape when disturbed. They hide in the soil by day and come out at night to cut young seedlings off at ground level. Tomatoes, cabbages, maize and beans are often attacked.
-
-What to do:
-
-1. Clear weeds from the bed at least two weeks before planting, so the young caterpillars have nothing to eat.
-2. When you find a cut seedling, dig gently in the soil around it. The cutworm is usually within a few centimetres. Remove it.
-3. Put a collar around each seedling: a cardboard tube, or a plastic bottle with the top and bottom cut off, pushed about 2 cm into the soil.
-4. Birds and chickens eat cutworms when the soil is turned before planting.
-
-### African bollworm
-
-The African bollworm (*Helicoverpa armigera*) is a caterpillar, green, brown or pinkish with stripes along its sides, that bores into fruit and cobs. It attacks tomatoes, maize cobs, beans, peas, peppers, sorghum and cotton. A small round hole in a tomato is a common sign.
-
-What to do:
-
-1. Check plants often while they are flowering and fruiting, and pick off the caterpillars and eggs.
-2. Pick and destroy damaged fruit, so the caterpillars inside do not complete their life cycle.
-3. Protect natural enemies such as parasitic wasps, predatory bugs and birds.
-4. If you need a spray, a product based on Bt (*Bacillus thuringiensis*, a natural bacterium that kills only caterpillars) works best on young caterpillars before they enter the fruit.
-
-### Diamond-back moth
-
-The diamond-back moth (*Plutella xylostella*) is the most serious pest of cabbage, broccoli, cauliflower, rape and other cabbage-family crops. The caterpillar is small (about 1 cm), pale green and pointed at both ends. When you touch it, it wriggles backwards very fast and drops from the leaf on a silk thread. Young caterpillars eat the underside of the leaf and leave "windows" of thin see-through skin. Older ones eat holes right through the leaf.
-
-This pest has become resistant to many chemical insecticides, so natural control is especially important.
-
-What to do:
-
-1. Check the undersides of leaves and remove caterpillars by hand.
-2. Protect the small parasitic wasps that attack the caterpillars. Spraying poison kills them and often makes the problem worse.
-3. Cover young plants with fine netting or shade cloth where you can.
-4. Do not plant cabbage-family crops in the same bed all year round. Leave a break so that the pest's life cycle is broken.
-5. Rain and overhead watering knock many small caterpillars off the leaves.
-6. If needed, spray a Bt product on young caterpillars.
-
-### Fall armyworm
-
-Fall armyworm (*Spodoptera frugiperda*) comes from the Americas. It was first confirmed in South Africa in February 2017, in Limpopo, and quickly spread to other provinces. It mainly attacks maize, but also sorghum and other grasses and some vegetables.
-
-How to recognise it:
-
-- The caterpillar has a pale upside-down "Y" shape on the front of its head.
-- On the second-last segment of its body there are four dark spots arranged in a square.
-- Young caterpillars scrape the leaf and leave see-through "windows". Older ones eat ragged holes and fill the funnel (whorl) of the young maize plant with sawdust-like droppings.
-
-What to do:
-
-1. Scout the maize field twice a week from the time the plants come up. Check the funnel of the plant and look for fresh droppings.
-2. Crush egg masses (fluffy clusters on the leaves) and young caterpillars by hand.
-3. Plant early and at the same time as your neighbours, so the maize is not young when fall armyworm numbers are high.
-4. Intercrop maize with beans, cowpeas or pumpkins. Diverse fields support more natural enemies, such as ants, earwigs, predatory bugs and parasitic wasps.
-5. Some farmers in Africa use "push-pull" systems, with a repellent plant between the maize rows and an attractive grass around the field. Ask your extension officer which plants are suitable and allowed in your area.
-6. If you need a spray, choose a Bt product or another product registered for fall armyworm, and spray into the funnel of the plant when the caterpillars are young.
-
-> **Note:** Report a new or unusual pest outbreak to your provincial Department of Agriculture or extension officer. New invasive pests spread quickly, and early reports help everyone.
-
-### Fruit flies
-
-Fruit flies lay their eggs under the skin of ripening fruit. The maggots feed inside and the fruit rots and drops. Important species in South Africa include the Mediterranean fruit fly and the Natal fruit fly, and the Oriental fruit fly (*Bactrocera dorsalis*), which was first found in Limpopo in 2010 and has since become established in several northern provinces. Pumpkin flies attack pumpkins, melons and other cucurbits in the same way.
-
-What to do:
-
-1. Pick up all fallen and damaged fruit every few days. Destroy it: seal it in a black plastic bag in the sun for a week, or bury it at least 50 cm deep.
-2. Harvest fruit as soon as it is ripe.
-3. Put paper or cloth bags over fruit such as guavas, mangoes and peaches while they are still small.
-4. Hang bait traps in fruit trees to catch flies. You can buy them or ask your extension officer how to make them.
-5. Work with your neighbours. Fruit flies move between gardens, so one untidy orchard can reinfest all the others.
-
-### Slugs and snails
-
-Slugs and snails are soft-bodied animals found in damp places. Snails carry a shell made mainly of calcium. They eat leaves, and cause real losses when there are many of them or when they eat seedlings.
-
-Mulch and other organic matter near crops can encourage them, because it keeps the soil damp and gives them food and shelter. The type of mulch matters: coarse, dry, scratchy mulch is less attractive to them than wet, soft material.
-
-What to do:
-
-1. Pick them off by torchlight in the evening, especially after rain.
-2. Lay a flat board or an old sack on damp ground. Snails hide under it by day, and you can collect them in the morning.
-3. Let ducks or chickens clean up the beds between crops.
-4. Encourage frogs, toads, birds and ground beetles.
-5. Pull mulch back a little from young seedlings until they are stronger.
-
-> **Safety:** Wear gloves or wash your hands well after handling snails and slugs. They can carry the rat lungworm parasite, which has been found in rats in South Africa and can infect people. Wash leafy vegetables well before eating them. Do not use slug pellets (poison bait). They can kill dogs, birds and children who eat them.
-
-### Birds
-
-Most birds are good for the farm. Insect-eating birds should be encouraged. However, some seed-eating birds, such as the red-billed quelea, fly in huge flocks and can destroy grain crops like sorghum, millet and wheat. They do most damage when their natural food (grass seed) is scarce, because a field of grain is a large, easy food supply. Plenty of food can also help them breed more.
-
-What to do:
-
-1. Protect small plots of grain with netting.
-2. Scare birds in the early morning and late afternoon, when they feed, using noise, flags or shiny tape.
-3. Harvest as soon as the grain is ripe.
-4. Report very large quelea flocks to your provincial Department of Agriculture. Do not use poison: it also kills eagles, owls and other useful birds.
-
-### Ants
-
-Ants do not usually eat crops. They cause harm indirectly. Ants feed on honeydew, the sugary liquid that aphids, scale insects and mealybugs release. In return the ants guard these sap suckers from ladybirds and parasitic wasps. Honeydew also lets a black fungus called sooty mould grow on the leaves, which reduces the plant's growth.
-
-When you control the ants, the natural enemies of the sap suckers can do their work again.
-
-Ants are also useful. Many ants are predators of other pests, including termites and caterpillars, and they help to recycle dead material.
-
-What to do:
-
-1. On fruit trees, wrap a band of sticky material or grease around the trunk, on a strip of cloth or tape rather than directly on young bark, so ants cannot climb up.
-2. Cut away branches that touch the ground or walls, as ants use these as bridges.
-3. Control the aphids and scale that the ants are farming.
-
-### Mole-rats and moles
-
-In South Africa, the "moles" that eat bulbs, potatoes, sweet potatoes and roots are usually mole-rats. Mole-rats are rodents that live in deep tunnels and push up mounds of soil. Golden moles are a different animal. They tunnel just under the surface and eat insects and earthworms, not plants. Several golden mole species are rare and protected, so leave them alone.
-
-What to do about mole-rats:
-
-1. Line the bottom of raised beds, or planting holes for valuable plants, with strong wire mesh.
-2. Plant bulbs and small trees in wire baskets.
-3. Encourage mole snakes, owls and other natural predators.
-4. Do not use poison. Poisoned mole-rats can kill the owls, snakes, dogs and cats that eat them.
-
-### Porcupines and other animals
-
-Porcupines dig up roots and tubers and strip bark from trees. A strong fence, with wire mesh buried well into the ground so they cannot dig under it, is the best protection. Check the local rules before trapping or killing any wild animal.
+Before chemical farming there was no word for "organic", because all farming was organic. The old methods still work, and a young garden needs them most.
 
 ## How to manage pests: step by step
 
-Natural pest management uses the systems of nature. For example, predators of crop pests can reduce pest numbers for us. Work through these steps in order:
+Most pest control happens before a pest arrives. Strong plants in fertile soil (Chapter 8) resist attack. **Biodiversity**, a wide variety of plants, insects, birds and soil life, gives every pest an enemy (Chapter 9). A large block of one crop does the opposite: the pest finds its food easily and multiplies.
 
-1. **Observe.** Check crops often and act early.
+When pests do come, work through these steps in order:
+
+1. **Observe.** Walk the garden at least twice a week and look under the leaves. Pests are easiest to control when you find them early.
 2. **Encourage predators.** Give them food, water and shelter.
-3. **Remove pests by hand.** Pick off caterpillars, snails and beetles.
+3. **Remove pests by hand.** Pick off caterpillars, snails and beetles. Crush aphid colonies.
 4. **Use barriers.** Netting, shade cloth, collars and fences keep pests out.
-5. **Spray only as a last resort.** Use home-made sprays or registered organic products, carefully and only on the plants that need them.
+5. **Bring in the birds.** Between crops, chickens or ducks in a moveable pen, an **animal tractor** (Chapter 5), clean up slugs, snails and grubs. Keep them off young seedlings, which they scratch up.
+6. **Spray only as a last resort**, and only the plants under attack.
 
-It may take a few seasons for a natural balance to develop, depending on the place and on how the garden was managed before. The more we avoid poisons and increase diversity, the faster the balance comes.
+The balance may take a few seasons to form. The less poison and the more diversity, the faster it comes.
 
-In Chapter 9 we saw how flowers, ponds, rock piles and logs create homes for many creatures. These attract birds, frogs, lizards, small wasps (which are harmless to people), praying mantises, ladybirds, spiders and more. The rule is simple: grow many different plants and create many different habitats, and a variety of useful predators will come to help you.
+## Common pests in Southern Africa
 
-Large blocks of one crop (monocultures) make it very easy for pests to find their food and multiply. Mixing crops, and including strong-smelling herbs and plants with rough or hairy leaves, makes it harder for pests to find their target.
+Know your enemy before you act. Most pests are insects, and they feed in one of two ways. **Sap suckers** pierce the plant and drink its juice: aphids, scale insects, mealybugs, whiteflies, thrips, red spider mites (tiny spider relatives) and root-knot nematodes (microscopic worms that make lumps on roots). In large numbers they weaken the plant, and many carry viruses from plant to plant. **Plant eaters** chew leaves, stems, fruit or roots: caterpillars, beetles, slugs and snails. They are bigger, so you can often pick them off by hand. Mole-rats, porcupines and some birds are pests too.
+
+### Aphids
+
+Aphids are small, soft, pear-shaped insects, green, black or grey, that crowd onto young shoots and under leaves. Cabbages, beans and peas suffer most. They stunt plants, curl leaves and carry viruses. In warm weather the females give birth to live young without mating, so a colony can explode within weeks. When it gets crowded, winged aphids fly off to new plants.
+
+1. Squash small colonies with your fingers, or wash them off with a strong jet of water.
+2. Protect ladybirds, hoverflies, lacewings and parasitic wasps. They eat aphids or breed inside them.
+3. Control the ants that guard them (see Ants, below).
+4. Plant nasturtiums along the edge of the bed as a **trap crop**, a plant the pest likes better than your food (see Companion planting).
+5. Go easy on fresh manure and nitrogen. Soft, fast, sappy growth draws aphids.
+
+> **Tip:** An aphid colony that has turned brown and papery has been killed by parasitic wasps. Leave it alone. The next wasps are hatching from it.
+
+### Cutworms
+
+Cutworms are fat, grey-brown caterpillars that curl into a C when disturbed. They hide in the soil by day and come out at night to cut seedlings off at ground level: tomatoes, cabbages, mielies and beans.
+
+1. Clear the weeds from the bed a few weeks before planting, so the young caterpillars have nothing to eat.
+2. When you find a cut seedling, dig gently around it. The cutworm is usually within a few centimetres. Remove it.
+3. Put a collar round each seedling: a cardboard tube, or a plastic bottle with its top and bottom cut off, pushed 3 to 5 cm into the soil.
+4. Turn the soil before planting and let birds and chickens pick through it.
+
+### African bollworm
+
+The African bollworm (*Helicoverpa armigera*) is a striped caterpillar, green, brown or pinkish, that bores into tomatoes, mielie cobs, beans, peas, peppers and sorghum. A small round hole in a tomato is the usual sign.
+
+1. Check plants often while they flower and fruit. Pick off eggs and caterpillars.
+2. Pick and destroy damaged fruit, so the caterpillars inside cannot finish their life cycle.
+3. Protect parasitic wasps, predatory bugs and birds.
+4. If you must spray, use Bt (*Bacillus thuringiensis*), a natural bacterium that kills only caterpillars. It works on young caterpillars, before they enter the fruit.
+
+### Diamond-back moth
+
+The diamond-back moth (*Plutella xylostella*) is the worst pest of cabbage, broccoli, cauliflower, rape and their relatives. The caterpillar is about 1 cm long, pale green and pointed at both ends. Touch it and it wriggles backwards and drops on a silk thread. Young caterpillars leave see-through "windows" in the leaf; older ones eat holes right through. This moth has beaten many chemical insecticides, so natural control matters most here.
+
+1. Check under the leaves and remove caterpillars by hand.
+2. Protect the tiny wasps that breed inside the caterpillars. Poison kills the wasps first.
+3. Cover young plants with fine netting or shade cloth.
+4. Give the bed a break from cabbage-family crops, so the moth's life cycle is broken.
+5. Overhead watering knocks many small caterpillars off. If needed, spray Bt on young caterpillars.
+
+### Fall armyworm
+
+Fall armyworm (*Spodoptera frugiperda*) came from the Americas. It was first confirmed in South Africa, in Limpopo, in February 2017, and spread quickly. It mainly attacks mielies, also sorghum and other grasses. Look for a pale upside-down "Y" on the head, and four dark spots in a square on the second-last body segment. Older caterpillars eat ragged holes and fill the funnel of young mielies with droppings like sawdust.
+
+1. From the day the mielies come up, scout twice a week. Look into the funnel for fresh droppings.
+2. Crush egg masses (fluffy clusters on the leaves) and young caterpillars.
+3. Plant early, at the same time as your neighbours, so your mielies are not young when armyworm numbers peak.
+4. Intercrop mielies with beans, cowpeas or pumpkins. Mixed fields hold more of the ants, earwigs, predatory bugs and parasitic wasps that eat armyworm.
+5. If you must spray, put Bt into the funnel while the caterpillars are small.
+
+### Fruit flies
+
+Fruit flies lay their eggs under the skin of ripening fruit. The maggots feed inside, and the fruit rots and drops. South Africa has the Mediterranean and Natal fruit flies, and the Oriental fruit fly (*Bactrocera dorsalis*), first found in Limpopo in 2010 and now established in several northern provinces. Pumpkin flies do the same to pumpkins, melons and cucumbers.
+
+1. Every few days, pick up all fallen and damaged fruit. Seal it in a plastic bag and leave it in hot sun until the maggots are dead, or bury it at least 50 cm deep.
+2. Harvest fruit as soon as it is ripe.
+3. Tie paper or cloth bags over young guavas, mangoes and peaches.
+4. Hang bait traps in the trees.
+5. Work with your neighbours. Fruit flies move between gardens, and one neglected orchard reinfests all the others.
+
+### Slugs and snails
+
+Slugs and snails live in damp places and eat leaves, doing real damage when there are many or when they reach seedlings. **Mulch**, the cover of dry plant material we spread on the soil, keeps them damp and sheltered, but coarse, dry, scratchy mulch suits them far less than wet, soft material.
+
+1. Pick them off by torchlight in the evening, especially after rain.
+2. Lay a board or an old sack on damp ground. Collect the snails hiding under it in the morning.
+3. Let ducks or chickens clean up the beds between crops.
+4. Encourage frogs, toads, birds and ground beetles.
+5. Pull the mulch back from young seedlings until they are stronger.
+
+Snails and slugs can carry rat lungworm, a parasite found in rats in South Africa that can make people very ill. Wear gloves or wash your hands after collecting them, and wash morogo well before you eat it. We do not use slug pellets: they poison dogs and cats as well as snails.
+
+### Birds
+
+Most birds are friends. The red-billed quelea is the exception: it flies in huge flocks and can strip sorghum, millet and wheat, worst when grass seed in the veld is scarce.
+
+1. Net small plots of grain.
+2. Scare the birds in the early morning and late afternoon, when they feed, with noise, flags or shiny tape.
+3. Harvest as soon as the grain is ripe.
+4. Never put out poison. The eagles and owls that eat the dead birds die too.
+
+### Ants
+
+Ants seldom eat crops. They feed on honeydew, the sugary liquid that aphids, scale insects and mealybugs give off, and in return they guard those sap suckers from ladybirds and wasps. Honeydew also grows black sooty mould on the leaves, which blocks the light. Elsewhere ants hunt termites and caterpillars, so we act only where they are farming sap suckers.
+
+1. On fruit trees, wrap a band of grease or sticky material round the trunk, on a strip of cloth or tape rather than on the bark.
+2. Cut away branches that touch the ground or a wall. Ants use them as bridges.
+3. Deal with the aphids and scale, and the ants lose interest.
+
+### Mole-rats and porcupines
+
+The "moles" that eat bulbs, potatoes and sweet potatoes in South Africa are usually mole-rats: rodents that push up mounds of soil from deep tunnels. Golden moles are a different animal. They tunnel just under the surface and eat insects and earthworms, not plants. Several kinds are rare, so leave them be.
+
+1. Line the bottom of raised beds, and the planting holes of valuable plants, with strong wire mesh.
+2. Plant bulbs and young trees in wire baskets.
+3. Welcome mole snakes and owls. Never use poison: a poisoned mole-rat kills the owl, snake, dog or cat that eats it.
+4. Porcupines dig up roots and strip bark. A strong fence, with mesh buried well into the ground, stops them digging under.
 
 ## Encourage predators
 
-A healthy food garden needs natural predators. More predators usually means fewer pests.
+Give the hunters a **habitat**, a place with the food, water and shelter they need, and they move in: rocks and logs for lizards, a small pond for frogs, mulch for ground beetles, flowers for wasps and hoverflies.
 
-- **Chameleons and lizards** eat insects. They shelter among rocks and warm stones in the garden.
-- **Frogs and toads** eat large numbers of slugs and insects. They need a damp place or a small pond to live and breed.
+- **Chameleons and lizards** eat insects and shelter among warm rocks.
+- **Frogs and toads** eat slugs and insects. They need a damp place or a small pond.
 - **Ladybirds** and their larvae eat large numbers of aphids.
-- **Hoverflies** look like small bees. Their larvae eat aphids. The adults feed on flowers.
+- **Hoverflies** look like small bees. Their larvae eat aphids.
 - **Lacewings** are delicate green insects. Their larvae eat aphids, mites and small caterpillars.
-- **Parasitic wasps** are tiny wasps that lay their eggs inside pests such as caterpillars and aphids. They cannot sting people. The adults feed on nectar from small flowers.
-- **Ground beetles** are fast-running black beetles with strong legs. They hunt anything smaller than themselves, often at night. They are more common where soil is covered with mulch or plants. Some climb plants to hunt aphids and caterpillars.
-- **Praying mantises** catch insects with their strong front legs. They eat nearly any creature smaller than themselves, including other mantises.
-- **Spiders** catch many flying and crawling insects.
-- **Insect-eating birds** control caterpillars, aphids, termites, moths, scale insects and even snails.
+- **Parasitic wasps** are tiny and cannot sting people. They lay their eggs inside caterpillars and aphids.
+- **Ground beetles, praying mantises and spiders** hunt almost any insect smaller than themselves.
+- **Insect-eating birds** take caterpillars, moths, termites, scale insects and even snails.
 
-> **Tip:** Not every ladybird is a friend. Most shiny ladybirds eat aphids. But some dull orange ladybirds with many black spots and a slightly hairy back, and their spiny yellow larvae, eat the leaves of pumpkins, potatoes and related crops. Learn to tell them apart.
+> **Tip:** Not every ladybird is a friend. The shiny ones eat aphids. Dull orange ladybirds with many black spots and a slightly hairy back, and their spiny yellow larvae, eat the leaves of pumpkins, potatoes and their relatives. Learn to tell them apart.
+
+### Flowers that feed predators
+
+Adult wasps, hoverflies and lacewings live on nectar and pollen, and small open flowers like those of the carrot family suit them best. Grow a mix that flowers through the year:
+
+- Herbs in flower: dill, coriander, parsley and caraway, and a few carrots left to flower
+- Yarrow, calendula, chamomile, zinnia, sunflower, borage and lemon verbena
+- French and African marigolds, and cosmos (near veld, cut the heads before they drop seed, because cosmos spreads into grassland)
+- **Indigenous** flowers, the ones that belong here naturally: gazania, African daisies (*Arctotis*, *Osteospermum*, *Dimorphotheca*), pincushion (*Scabiosa*) and everlastings (*Helichrysum*)
+
+Let a few herbs and vegetables go to flower in every bed. The helpers stay where the food is.
 
 ## Companion planting
 
-Companion planting means growing different crops, flowers and herbs together so they help each other. It creates a polyculture (many crops growing in the same space).
+**Companion planting** means growing crops, herbs and flowers together so that they help each other. It is very old. Farmers in China grew a small floating fern with their rice for centuries, because it adds nitrogen to the water. In the Americas, maize, beans and squash grew together as the "three sisters": the maize holds up the beans, the beans add nitrogen, and the big squash leaves shade the soil and smother weeds.
 
-People have grown crops together for a very long time. In China, farmers have grown a small floating water fern, *Azolla*, in rice paddies for centuries, because it adds nitrogen to the water and soil. In the Americas, Indigenous farmers grew maize, beans and squash together, a system known as the "three sisters". The maize gives the beans something to climb, the beans add nitrogen to the soil, and the large squash leaves shade the ground and smother weeds.
+Trap crops, flowers for predators and mixed plantings are well tested. Many other claims are farmers' reports only. Try them, watch closely and keep what works on your land.
 
-> **Note:** Do not introduce *Azolla filiculoides* to dams or ponds in South Africa. It is a listed invasive plant under national law.
+**Mixed planting.** A mix of crops feeds more soil life and more predators. Many insects find their food plant by its shape, colour and smell, and a bed of many shapes and colours confuses them, so some move on.
 
-Companion planting can help with:
+**Trap crops.** A trap crop is grown near the food crop to draw the pest away. Aphids often prefer nasturtiums to cabbage, broccoli and cauliflower. We have seen nasturtiums planted beside cauliflower and broccoli fill with aphids while the crop was left alone. To use one:
 
-- **Pest control.** Some plants distract, confuse or repel pests.
-- **Pollination.** Flowers attract bees and other pollinators for your main crop.
-- **Feeding predators.** Flowers give nectar and pollen to hoverflies, parasitic wasps and other helpers.
-- **Using space well.** Crops with different root depths or growth speeds share one bed, for example fast radishes between slow lettuces or carrots.
-- **Support.** Maize can hold up climbing beans.
+1. Plant nasturtiums along the edge of the bed, not in the middle.
+2. Check them twice a week.
+3. When the leaves fill with aphids, pick those leaves and feed them to the chickens.
 
-> **Note:** Many companion-planting claims come from gardeners' experience and have not been tested scientifically. Some are well supported, such as trap crops, flowers for predators and the three sisters. Others are only reported by farmers. Try them, observe carefully and keep what works in your garden.
+A trap crop you never check becomes a breeding ground.
 
-### Companion planting methods
+**Scent disrupters.** A strong smell can hide the crop the pest is hunting for. Gardeners plant onions around carrots against carrot fly. Research in England found it works only with many more onions than carrots, and only while the onions are young and leafy, before they form bulbs.
 
-**Polycultures.** Growing a mix of crops supports more soil life and more predators, and makes it harder for pests to find their food. Over time this helps the garden to regulate its own pests.
+**Tonic plants.** Basil grown with tomatoes reduced thrips and whitefly a little in some trials. The claim that it improves their taste is not proven.
 
-**Trap crops.** Some plants are more attractive to a pest than your main crop. Plant them near the crop so the pest attacks them instead. For example, aphids often prefer nasturtiums to cabbage, broccoli and cauliflower. Plant nasturtiums along the edge of the bed. When their leaves fill with aphids, pick those leaves and feed them to your chickens, or destroy them. A trap crop only works if you check it and remove the pests. Otherwise it becomes a breeding place.
+### Plants that may repel pests
 
-**Scent disrupters.** Some plants have a strong smell that may hide the smell of the crop the pest is looking for. For example, gardeners plant onions around and between carrots to protect them from carrot fly. Research in England found this only works when there are many more onion plants than carrots, and only while the onions are young and leafy, not once they start forming bulbs.
-
-**Tonic plants.** Farmers report that some plants improve the health of a neighbouring crop. Basil is often grown with tomatoes. Some trials found basil can reduce thrips and whitefly near tomatoes a little. The popular claim that basil improves the taste of tomatoes has not been proven.
-
-**Pattern confusers.** Many pest insects find their food plant by its shape, colour and smell. A bed with many different shapes and colours can make this harder, so some pests move on.
-
-**Predator attractors.** Some plants attract the insects that control pests. Tiny parasitic wasps, for example, feed on nectar and pollen and lay their eggs in pest caterpillars and aphids. Plants with many small flowers, such as yarrow, dill, coriander and flowering carrots and parsley, feed them well. Let a few herbs and vegetables go to flower in every bed.
-
-## Plants that may repel pests
-
-The table below lists plants that farmers use to repel pests. The evidence is given where it is known. Treat the others as worth trying, not as guaranteed.
-
-| Plant | What farmers report | What the evidence says |
-|---|---|---|
-| French and African marigold (*Tagetes patula*, *T. erecta*) | Fewer whitefly and aphids; fewer root nematodes | Reduced whitefly on tomatoes in greenhouse trials. Suppresses root-knot nematodes only when grown thickly as a cover crop for 2 to 4 months before the vegetable crop, not as a few scattered plants. |
-| Nasturtium | Draws aphids away from vegetables | Works as a trap crop if the infested leaves are removed. |
-| Basil | Fewer flies, thrips and whitefly near tomatoes | Small effect on thrips and whitefly in some trials. |
-| Onion, garlic, chives, leeks | Protect carrots and cabbages by masking their smell | Limited. Needs many alliums, and works best while they are young. |
-| Mint and spearmint | Fewer ants, aphids and cabbage moths | Farmers' reports only. Mint spreads fast: grow it in a pot or tin. |
-| Rosemary and sage | Fewer cabbage moths and carrot pests | Farmers' reports only. |
-| Wild wormwood (*Artemisia afra*, an indigenous plant) and southernwood | Fewer aphids and cabbage moths; used traditionally to keep insects away | Farmers' reports and traditional use. |
-| Lavender | General insect repellent | Farmers' reports only. It strongly attracts bees, which is useful. |
-| Catnip | Fewer aphids and beetles | Its oil repels some insects in tests; the effect in gardens is not proven. |
-| Stinging nettle | Aphids gather on it early in the season and feed the first ladybirds | Farmers' reports only. Wear gloves. |
-
-> **Note:** Older lists (including the first version of this handbook) name plants that repel Japanese beetles, Mexican bean beetles, Colorado potato beetles, squash bugs and tomato hornworms. These are North American pests that are not found in Southern Africa, so they are left out here. Rue and pyrethrum are also left out: rue can cause painful skin burns in sunlight, and pyrethrum flowers are the source of an insecticide that is toxic to bees and fish.
-
-## Plants that attract useful insects
-
-Flowers feed the insects that control pests. Grow a mix that flowers at different times of the year, so there is always food. Many indigenous South African flowers are excellent for this.
-
-| Plant | Useful insects it attracts |
-|---|---|
-| Dill, coriander, caraway, anise and parsley in flower | Parasitic wasps, hoverflies, ladybirds, lacewings |
-| Carrots allowed to flower | Parasitic wasps, hoverflies |
-| Yarrow | Parasitic wasps, hoverflies, ladybirds |
-| Calendula (pot marigold) | Hoverflies and many other useful insects |
-| French and African marigold | Hoverflies, parasitic wasps, ladybirds, spiders |
-| Cosmos | Parasitic wasps, hoverflies, tachinid flies, bees |
-| Zinnia | Ladybirds, parasitic wasps and flies, bees |
-| Sunflower | Hoverflies, lacewings, parasitic wasps, bees, ladybirds |
-| Borage | Bees and other pollinators, wasps, praying mantises |
-| Chamomile | Hoverflies, parasitic wasps |
-| Lemon verbena | Praying mantises, ladybirds, parasitic wasps and flies |
-| Lovage | Wasps; shelters ground beetles |
-| Lavender | Bees |
-| Spearmint in flower | Predatory wasps and flies; shelters spiders |
-| Purple coneflower (*Echinacea*) | Wasps, useful flies, spiders, praying mantises |
-| Dandelion | Ladybirds, bees, parasitic wasps and flies |
-| Land cress | Bees; shelters ground beetles and spiders |
-| Nasturtium | Shelters ground beetles and spiders; draws aphids away |
-| Gazania (indigenous) | Ladybirds, predatory bugs, bees |
-| African daisies (indigenous *Arctotis*, *Osteospermum*, *Dimorphotheca*) | Nectar for many useful insects |
-| Pincushion flower (indigenous *Scabiosa*) | Hoverflies, tachinid flies, bees |
-| Indigenous everlastings (*Helichrysum*) | Parasitic wasps and flies, spiders |
-
-> **Note:** Cosmos is not a listed invader in South Africa, but it spreads easily into veld and roadsides. Cut the flower heads before they drop seed if you live near natural grassland. Goldenrod, tansy, sweet Annie and calliopsis from the older list are left out because they can become weeds, and a close relative of calliopsis (*Coreopsis lanceolata*) is a listed invader.
+- **French and African marigolds** cut whitefly on greenhouse tomatoes in trials. They suppress root-knot nematodes only when grown thickly as a cover crop for 2 to 4 months before the vegetables. A few scattered plants do little.
+- **Mint, rosemary, sage, lavender and wild wormwood** (*Artemisia afra*, used traditionally to keep insects away) are said by farmers to reduce aphids and cabbage moths. Worth trying. Grow mint in a tin, because it spreads fast.
 
 ## Good and poor neighbours
 
-The table below comes from gardeners' experience. Most of it has not been tested scientifically. The best-supported advice is to keep crops of the **same family** apart, because they share pests and diseases. For example, potatoes, tomatoes, brinjals and peppers all suffer from the same blights, wilts and nematodes.
+The best-proven rule is simple: keep crops of the **same family** apart. Potatoes, tomatoes, brinjals and peppers all suffer from the same blights, wilts and nematodes, so a row of one beside another hands the problem along. The rest of the table comes from gardeners' experience. Start with it, and trust your own notes over time.
 
 | Crop | Good neighbours | Keep apart from |
 |---|---|---|
-| Amaranth (imifino, morogo) | Onions, potatoes, maize | — |
-| Asparagus | Tomatoes, parsley, basil | Onions |
-| Beans (bush) | Potatoes, cucumbers, maize, celery, cabbage | Onions, garlic, leeks, chives |
-| Beans (climbing) | Maize, carrots, spinach, lettuce | Onions, garlic, leeks, chives, beetroot, sunflowers |
-| Beetroot | Onions, cabbage, broccoli, lettuce, kohlrabi | Climbing beans |
-| Cabbage family (cabbage, broccoli, cauliflower, Brussels sprouts, kohlrabi) | Onions, garlic, celery, beetroot, potatoes, lettuce, spinach, aromatic herbs, bush beans, peas | Strawberries, tomatoes, climbing beans |
-| Brinjal (eggplant) | Beans, peas, onions, lettuce | Potatoes, tomatoes (same family) |
-| Carrots | Peas, lettuce, chives, onions, leeks | — |
-| Celery | Leeks, tomatoes, onions, cauliflower, lettuce | — |
-| Chillies and sweet peppers | Carrots, onions, garlic, basil, parsley, lettuce | Fennel, cabbage family, potatoes |
-| Cucumber | Beans, maize, peas, radishes, celery | Potatoes, sunflowers |
-| Maize | Pumpkins, cucumbers, beans, peas, potatoes | — |
-| Onions, garlic, leeks, chives | Carrots, lettuce, celery, beetroot, cabbage family, tomatoes | Peas, beans |
-| Lettuce | Carrots, onions, garlic, radishes, bush beans, cowpeas | — |
-| Peas | Carrots, radishes, turnips, maize, cucumbers | Onions, garlic, leeks |
-| Potatoes | Beans, maize, cabbage | Tomatoes, brinjals, peppers (same family); pumpkins, squash, cucumbers, sunflowers |
-| Pumpkin, squash, butternut | Maize, beans, radishes, okra, peas | Potatoes |
-| Radish | Peas, lettuce, cucumbers, squash, cabbage | — |
-| Spinach and Swiss chard | Peas, celery, onions, leeks, cabbage family | — |
-| Strawberries | Beans, borage, spinach, lettuce, onions | Cabbage family |
-| Tomatoes | Basil, chives, onions, asparagus, carrots, parsley, marigolds | Potatoes, brinjals (same family); fennel |
-| Turnips | Peas | — |
+| Beans | Mielies, potatoes, carrots, cabbage, cucumbers | Onions, garlic, leeks |
+| Cabbage family | Onions, celery, beetroot, potatoes, lettuce, herbs | Tomatoes, strawberries |
+| Carrots | Onions, leeks, chives, peas, lettuce | — |
+| Chillies and peppers | Carrots, onions, basil, parsley | Potatoes, cabbage family |
+| Mielies | Pumpkins, beans, peas, cucumbers | — |
+| Onion family | Carrots, lettuce, beetroot, cabbage family, tomatoes | Peas, beans |
+| Peas | Carrots, radishes, turnips, mielies, cucumbers | Onion family |
+| Potatoes | Beans, mielies, cabbage | Tomatoes, brinjals, peppers, pumpkins, cucumbers |
+| Pumpkin, squash, butternut | Mielies, beans, radishes | Potatoes |
+| Tomatoes | Basil, onions, chives, carrots, parsley, marigolds | Potatoes, brinjals |
 
-> **Tip:** Farmers report that fennel and sunflowers can slow the growth of some plants close to them. Grow them at the edge of the garden rather than in the middle of a vegetable bed.
+> **Tip:** Farmers find that sunflowers slow the growth of plants close to them. Grow them at the edge of the garden, where they still feed the bees.
 
 ## Home-made pest sprays
 
-Home-made sprays are a last resort. Even "natural" sprays can kill the ladybirds, bees and other helpers you have worked hard to attract. Spray only the plants that are attacked, and only when hand-picking and other methods are not enough.
-
-Many strong-smelling plants can be grown around the garden and used either in sprays or as a "smelly mulch" laid around vegetables. Garlic, onion and chilli are the most common. They mostly repel pests rather than kill them, and the smell wears off, so the spray must be repeated.
+A spray is a last resort. Even a "natural" spray kills the ladybirds, hoverflies and bees you have worked to attract. Garlic, onion and chilli mostly drive pests away rather than kill them, and the smell fades, so the spray must be repeated.
 
 ### Garlic, onion and chilli spray
 
-This spray is mainly a repellent for soft insects such as aphids and young caterpillars. The soap helps the spray stick to the leaves.
+This spray repels soft insects such as aphids and young caterpillars. The soap helps it stick to the leaves.
 
 You need:
 
 - 1 medium onion
 - 4 cloves garlic
-- 2 cups of fresh mint leaves (or 20 drops of peppermint oil)
+- 2 cups of fresh mint leaves, or 20 drops of peppermint oil
 - 2 tablespoons of chilli powder or cayenne pepper, or a handful of fresh hot chillies
-- 2 tablespoons (30 ml) of mild liquid soap or plain dissolved bar soap
+- 2 tablespoons (30 ml) of mild liquid soap, or plain bar soap dissolved in water, with no bleach, degreaser or strong perfume
 - 3 litres of water
 
 Method:
 
-1. Put on rubber gloves and protect your eyes.
+1. Put on rubber gloves and keep your hands away from your eyes. Chilli and garlic burn.
 2. Chop the onion, garlic, mint and chillies. Crush them in a mortar and pestle, or blend them with about 1 litre of the water.
-3. Leave the mixture to soak for a few hours, covered.
-4. Strain it through a fine cloth or sieve.
-5. Add the rest of the water (about 2 litres) and stir in the soap gently.
-6. Pour it into a clearly labelled spray bottle.
-7. Test it first on a few leaves. Wait one to two days. If the leaves show burnt or yellow patches, add more water before using it.
-8. Spray the tops and undersides of the leaves of affected plants.
+3. Cover and leave to soak for a few hours.
+4. Strain through a fine cloth or sieve.
+5. Add the other 2 litres of water and stir in the soap gently.
+6. Pour it into a spray bottle and label it. Never keep spray in a cooldrink or milk bottle.
+7. Test it on a few leaves and wait one to two days. If the leaves show burnt or yellow patches, add more water.
+8. Spray the tops and undersides of the leaves of the attacked plants only, in the late afternoon or evening when bees have stopped flying. Do not spray open flowers, or plants wilting in the heat of the day.
 
-Use it once or twice a week, and again after heavy rain. Make a fresh batch each time; it spoils within a few days.
+Use it once or twice a week, and after heavy rain. Make a fresh batch each time, and wash sprayed vegetables before you eat them.
 
-> **Safety:** Chilli and garlic sprays burn the eyes and skin. Wear gloves and eye protection (sunglasses or goggles) and do not touch your face while working. Do not spray on a windy day. Keep children and animals away. Store the spray in a labelled bottle, out of reach of children, and never in a cooldrink or milk bottle. Wash all sprayed vegetables well before eating them.
-
-> **Safety:** Protect bees. Spray in the late afternoon or evening, when bees have stopped flying, and do not spray open flowers. Soap and chilli can also kill ladybird and hoverfly larvae, so spray only the attacked plants.
-
-> **Tip:** Use a mild, plain soap without bleach, degreaser or strong perfume. Strong dishwashing liquids can burn leaves. Do not spray in the heat of the day or on plants that are wilting from drought.
-
-### Do not make tobacco spray
-
-Some gardeners soak tobacco, snuff or cigarette ends in water to make a spray. **Do not do this.** The nicotine in tobacco is a strong poison. It passes easily through the skin and can seriously poison, or even kill, the person spraying, and especially a child who drinks it. It is also very toxic to bees and other useful insects, pets and fish. Nicotine is no longer allowed as a pesticide in many countries because it is so dangerous.
-
-> **Safety:** Never make sprays from tobacco, syringa berries, moonflower (*Datura*) or other poisonous plants. If someone swallows any garden spray, go to a clinic at once and take the bottle with you.
+Nicotine poisons people and animals as well as insects, so we do not make tobacco or snuff spray. It passes through the skin of the person spraying, and a child who drinks it can die. Nor do we make sprays from syringa berries or moonflower (*Datura*), which are poisonous too.
 
 ## Crop rotation
 
-Crop rotation means changing the crop grown on the same piece of land from one season to the next. In organic farming, rotation is one of the main ways to prevent pests and diseases.
-
-If you grow the same crop in the same place year after year:
-
-- the soil loses the same nutrients every time
-- pests and diseases that live in the soil build up, and carry over from one season to the next
-
-Rotating crops breaks the life cycle of pests and diseases, lets the soil recover, and uses the nitrogen that legumes leave behind.
-
-There are two main ways to plan a rotation.
+**Crop rotation** means moving each family of crops to a different bed every season, so that pests and diseases do not build up. Grow the same crop in the same place year after year and the soil loses the same nutrients every time, while soil pests simply wait for their food to return. Rotation breaks their life cycle and lets the soil recover.
 
 ### Rotation by plant family
 
-Plants in the same family usually need similar nutrients and suffer from the same pests and diseases. So we move each family to a new bed every season, and wait at least three years, or better four, before the same family returns to the same bed.
-
-Include a legume (bean family) crop at least once every four seasons. A simple four-bed rotation could be:
+Plants of one family need similar food and suffer the same pests. Wait at least three years, better four, before a family returns to a bed. A simple four-bed rotation:
 
 1. **Year 1:** cabbage family (for example cabbage)
 2. **Year 2:** carrot family or roots (for example carrots)
-3. **Year 3:** legumes (for example beans)
+3. **Year 3:** bean family (for example beans)
 4. **Year 4:** onion family (for example onions)
 
-This method works well for commercial growers who plant one type of vegetable in each bed.
+This suits growers who plant one crop per bed.
 
 | Family | Crops |
 |---|---|
-| Cabbage family (Brassicaceae) | Cabbage, cauliflower, broccoli, Chinese cabbage, kale, rape, mustard greens, turnip, radish |
-| Tomato family (Solanaceae) | Tomatoes, potatoes, sweet peppers, chillies, brinjals (eggplant) |
-| Carrot family (Apiaceae) | Carrots, celery, parsley, coriander, dill |
-| Beet and amaranth family (Amaranthaceae) | Swiss chard, beetroot, spinach, amaranth (imifino, morogo) |
-| Pumpkin family (Cucurbitaceae) | Cucumbers, pumpkins, butternut, squash, melons, watermelons |
-| Legume or bean family (Fabaceae) | Peas, beans, cowpeas, groundnuts, jugo beans (Bambara groundnuts), soya beans |
-| Onion family (Amaryllidaceae) | Onions, leeks, garlic, spring onions, chives |
-| Grass family (Poaceae) | Maize, sweetcorn, sorghum, millet |
-| Other families | Lettuce (daisy family), sweet potato (morning-glory family), okra (hibiscus family), asparagus |
+| Cabbage family | Cabbage, cauliflower, broccoli, kale, rape, mustard greens, turnip, radish |
+| Tomato family | Tomatoes, potatoes, peppers, chillies, brinjals |
+| Carrot family | Carrots, celery, parsley, coriander, dill |
+| Beet family | Swiss chard, beetroot, spinach, amaranth (morogo) |
+| Pumpkin family | Cucumbers, pumpkins, butternut, squash, melons, watermelons |
+| Bean family (legumes) | Peas, beans, cowpeas, groundnuts, jugo beans, soya beans |
+| Onion family | Onions, leeks, garlic, spring onions, chives |
+| Grass family | Mielies, sweetcorn, sorghum, millet |
 
-> **Tip:** Potatoes belong to the tomato family. Do not plant potatoes where tomatoes, peppers or brinjals grew last season, or the other way round. Where bacterial wilt or nematodes are a problem, leave an even longer break.
+Potatoes belong to the tomato family. Never follow tomatoes, peppers or brinjals with potatoes, or the other way round. Where bacterial wilt or nematodes are a problem, leave an even longer break.
 
 ### Rotation by feeding needs
 
-We can also group crops by how much food they take from the soil:
+We can also group crops by how hungry they are:
 
-- **Heavy feeders** need rich soil. Examples: cabbage, broccoli, cauliflower, maize, tomatoes, potatoes, pumpkins and butternut.
-- **Medium and light feeders** need less. Examples: lettuce, Swiss chard, carrots, beetroot, onions, garlic and radishes.
-- **Soil builders** are the legumes: beans, peas, cowpeas, groundnuts and broad beans. Bacteria in small lumps (nodules) on their roots take nitrogen from the air and make it available to plants.
+- **Heavy feeders** need rich soil: cabbage, broccoli, cauliflower, mielies, tomatoes, potatoes, pumpkins and butternut.
+- **Light and medium feeders** need less: lettuce, Swiss chard, carrots, beetroot, onions, garlic and radishes.
+- **Soil builders** are the **legumes**, plants of the bean family: beans, peas, cowpeas, groundnuts and broad beans. Bacteria in small lumps (nodules) on their roots take nitrogen from the air and make it available to plants.
 
-A simple three-step rotation is:
+Rotate in three steps:
 
-1. Grow heavy feeders after a legume crop, or after adding plenty of compost or manure.
-2. Then grow light feeders.
+1. Grow heavy feeders after legumes, or after plenty of compost (rotted plant and animal waste) or manure.
+2. Follow them with light feeders.
 3. Then grow legumes to rebuild the soil, and start again.
 
-This stops the same nutrients being used up every season. It also suits mixed beds with several crops (intercropping). Choose a group of companions from each category and move the group through a 3-step or 4-step rotation.
+This suits mixed beds: move a group of companions through the steps together.
 
-> **Note:** Most of the nitrogen that legumes fix goes into their seeds. When you harvest dry beans or groundnuts, much of it leaves the field. To feed the soil, leave the roots in the ground and return the leaves and stems to the bed or the compost heap.
+Most of the nitrogen a legume fixes goes into its seeds and leaves with the harvest. Leave the roots in the ground and return the stems and leaves to the bed or the compost heap.
+
+## Try it
+
+Scout one bed this week, and meet the creatures who share it with you.
+
+1. Choose one vegetable bed. Take a notebook.
+2. Walk slowly along it in the early morning or evening. Turn over ten leaves of each crop.
+3. Write down every creature you see, pest or helper. Draw the ones you cannot name.
+4. Note any damage: holes, windows, curled leaves, cut seedlings, droppings in a mielie funnel.
+5. For each pest, choose a first step from this chapter and do it today.
+6. Sow a short row of coriander, dill or marigolds at the end of the bed.
+7. Scout the same bed again in a week and compare your notes.
 
 ## Key points
 
-- Pests are part of the ecosystem. An outbreak is a sign of imbalance: treat the cause, not only the symptom.
-- Poison sprays kill the predators as well as the pests, and often make pest problems worse.
-- Scout your crops twice a week, identify pests early, and remove them by hand where you can.
-- Learn the main local pests: aphids, cutworm, African bollworm, diamond-back moth, fall armyworm, fruit flies, snails and mole-rats.
-- Encourage predators with flowers, water, mulch, rocks and a wild area.
-- Companion planting helps, but many claims are only farmers' reports. Trap crops and flowers for predators have the best evidence.
-- Keep crops of the same family apart, and rotate families so none returns to the same bed for three to four years.
-- Use home-made sprays only as a last resort, wear gloves and eye protection, and spray in the evening away from flowers.
-- Never make or use tobacco (nicotine) spray.
+- An outbreak is a sign of imbalance. Treat the cause, not only the symptom.
+- Poison kills the predators as well as the pests, and often makes the problem worse.
+- Scout twice a week, find pests early and remove them by hand, with barriers or with a trap crop.
+- Feed the helpers with flowers, water, mulch and rocks, and keep the same crop family apart and on the move.
+- Spray only as a last resort, in the evening and away from flowers. We never make tobacco spray.
+
+Season by season, the list of helpers in your notebook grows longer. Watch it grow, and let the sprayer gather dust.

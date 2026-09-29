@@ -1,0 +1,49 @@
+# 08-soil — references
+
+- Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
+- African Conservation Trust (2014). *Introduction to Permaculture and Homestead Gardening*. African Conservation Trust.
+- Darwin, C. (1881). *The Formation of Vegetable Mould through the Action of Worms, with Observations on their Habits*. John Murray, London. https://darwin-online.org.uk/EditorialIntroductions/Chancellor_Earthworms.html
+- FAO (2019). *Global Symposium on Soil Erosion: key messages*. Food and Agriculture Organization of the United Nations. https://www.fao.org/about/meetings/soil-erosion-symposium/key-messages/en/
+- Colorado State University Extension (n.d.). *Estimating Soil Texture: Sandy, Loamy or Clayey?* (CMG GardenNotes #214). Colorado Master Gardener program. https://cmg.extension.colostate.edu/Gardennotes/214.pdf
+- Clemson Cooperative Extension (n.d.). *Soil Texture Analysis: The Jar Test*. Home & Garden Information Center. https://hgic.clemson.edu/factsheet/soil-texture-analysis-the-jar-test/
+- Oregon State University Extension (n.d.). *Analyze your garden soil with a home jar test*. OSU Extension Service. https://extension.oregonstate.edu/gardening/techniques/analyze-your-garden-soil-home-jar-test
+- Montana State University (n.d.). *Soil Texture Jar Test*. Land Resources and Environmental Sciences. https://landresources.montana.edu/soilfertility/html/SoilTextureJarTest.html
+- Agriculture Victoria (n.d.). *Determining soil texture using ribboning*. Victorian Government. https://agriculture.vic.gov.au/farm-management/water/irrigation/irrigation-factsheets-and-resources/determining-soil-texture-using-ribboning
+- NSW Department of Primary Industries (n.d.). *Determining soil texture using the ribboning technique*. NSW DPI. https://www.dpi.nsw.gov.au/__data/assets/pdf_file/0005/164615/determining_soil_texture_using_-ribboning_technique.pdf
+- Grain SA (n.d.). *Soil acidity and its management in crop production*. Grain SA. https://www.grainsa.co.za/soil-acidity-and-its-management-in-crop-production
+- Grain SA (n.d.). *Manage soil acidity with lime*. Grain SA. https://www.grainsa.co.za/manage-soil-acidity-with-lime
+- Grain SA (n.d.). *Analyse soil to get a better crop yield*. Grain SA. https://www.grainsa.co.za/analyse-soil-to-get-a-better-crop-yield
+- Senwes (2007). *Soil acidity: what really takes place in acidic soil?* Senwes Scenario. http://www2.senwes.co.za/Files/main_Scenario/archive_articles/2007/2007-04-01_Soil_acidity_What_really_takes_place_acidic_soil.htm
+- Canadian Journal of Soil Science (1981). *Conversion of organic soil pH values measured in water, 0.01M CaCl2 or 1N KCl*. Canadian Science Publishing. https://cdnsciencepub.com/doi/10.4141/cjss81-067
+- Garden Organic (n.d.). *Green manures*. Garden Organic. https://www.gardenorganic.org.uk/expert-advice/garden-management/soil/green-manures
+- CCARDESA (n.d.). *Green manure*. Centre for Coordination of Agricultural Research and Development for Southern Africa. https://www.ccardesa.org/green-manure
+- CIMMYT (n.d.). *Green manure cover crops reduce the need for mineral fertilizer in Africa*. CIMMYT news. https://www.cimmyt.org/news/green-manure-cover-crops-reduce-the-need-for-mineral-fertilizer-in-africa/
+- AGT Foods Africa (2018). *Sunn Hemp – Crotalaria juncea*. AGT Foods. https://agtfoods.co.za/wp-content/uploads/2018/07/17.-Sunn-Hemp.pdf
+- ARC Plant Protection Research (n.d.). *Tithonia species*. Agricultural Research Council. https://www.arc.agric.za/arc-ppri/Pages/Tithonia-species.aspx
+- Invasive Species South Africa (n.d.). *NEMBA Alien and Invasive Species Regulations and Lists*. invasives.org.za. https://invasives.org.za/nemba-alien-and-invasive-species-regulations-and-lists/
+- University of Maine Cooperative Extension (n.d.). *Guidelines for Using Manure on Vegetable Gardens* (Bulletin #2510). UMaine Extension. https://extension.umaine.edu/publications/2510e/
+- US Food and Drug Administration (n.d.). *Raw Manure under the FSMA Final Rule on Produce Safety*. FDA. https://www.fda.gov/food/food-safety-modernization-act-fsma/raw-manure-under-fsma-final-rule-produce-safety
+- Cornell University National GAPs Program (n.d.). *Decision tree: soil amendments*. Cornell CALS. https://cals.cornell.edu/national-good-agricultural-practices-program/resources/educational-materials/decision-trees/soil-amendments
+- Emerging Infectious Diseases (2015). *Ascariasis in Humans and Pigs on Small-Scale Farms, Maine, USA, 2010–2013*. Vol. 21, no. 2. US Centers for Disease Control and Prevention. https://wwwnc.cdc.gov/eid/article/21/2/14-0048_article
+- Royal Horticultural Society (n.d.). *Weedkiller in manure*. RHS. https://www.rhs.org.uk/soil-composts-mulches/weedkiller-in-manure
+- Oregon State University Small Farms (n.d.). *Aminopyralid residues in compost*. OSU. https://smallfarms.oregonstate.edu/smallfarms/aminopyralid-residues-compost
+- National Pesticide Information Center (n.d.). *Compost FAQ*. Oregon State University. https://npic.orst.edu/faq/compost.html
+- Rutgers NJAES (n.d.). *Problems With Over-Mulching Trees and Shrubs* (FS099). Rutgers Cooperative Extension. https://njaes.rutgers.edu/fs099/
+- International Society of Arboriculture (n.d.). *Proper Mulching Techniques*. TreesAreGood.org. https://www.treesaregood.org/Portals/0/TreesAreGood_Proper%20Mulch%20Tech_0321.pdf
+- Vetiver South Africa (n.d.). *Vetiver grass FAQ*. vetiver.co.za. https://www.vetiver.co.za/vetiver-grass-faq/
+- Cornell Waste Management Institute (n.d.). *Compost Chemistry*. Cornell Composting. https://compost.css.cornell.edu/chemistry.html
+- Cornell Waste Management Institute (n.d.). *C/N ratio calculations*. Cornell Composting. https://compost.css.cornell.edu/calc/cn_ratio.html
+- University of New Hampshire Extension (n.d.). *Composting for the Home Gardener* (fact sheet). UNH Extension. https://extension.unh.edu/resource/composting-home-gardener-fact-sheet
+- Oregon State University Extension (n.d.). *Slow composting works when you have more time than labor*. OSU Extension Service. https://extension.oregonstate.edu/news/slow-composting-works-when-you-have-more-time-labor
+- US EPA (n.d.). *40 CFR Part 503, Appendix B: Pathogen treatment processes*. Electronic Code of Federal Regulations. https://www.ecfr.gov/current/title-40/chapter-I/subchapter-O/part-503/appendix-Appendix%20B%20to%20Part%20503
+- NDSU Extension (2011). *Composting reduces manure volume*. North Dakota State University news release, 16 May 2011. https://www.ag.ndsu.edu/news/newsreleases/2011/may-16-2011/composting-reduces-manure-volume
+- Viljoen, S.A. and Reinecke, A.J. (1992). *The suitability of Eudrilus eugeniae, Perionyx excavatus and Eisenia fetida (Oligochaeta) for vermicomposting in southern Africa in terms of their temperature requirements*. Soil Biology and Biochemistry. https://www.sciencedirect.com/science/article/abs/pii/003807179290109B
+- NC State Extension (n.d.). *Raising Earthworms (Eisenia fetida) for a Commercial Enterprise*. NC State University. https://content.ces.ncsu.edu/raising-earthworms-successfully
+- UCSB Associated Students Department of Public Worms (n.d.). *Vermicomposting: Feeding & Maintenance*. UC Santa Barbara. https://worms.as.ucsb.edu/vermicomposting-feeding-maintenance/
+- Urban Worm Company (n.d.). *How many worms should I buy for a worm compost bin?* urbanwormcompany.com. https://urbanwormcompany.com/how-many-worms-need-compost-bin/
+- Urban Worm Company (n.d.). *Can I use worms I find in my garden for vermicomposting?* urbanwormcompany.com. https://urbanwormcompany.com/can-use-worms-find-garden-vermicompost/
+- Compost Revolution (n.d.). *Worm farming tutorial* (lesson 6). compostrevolution.com.au. https://compostrevolution.com.au/tutorial/wormfarming/6/
+- Syers, J.K. and Springett, J.A. (1984). *Earthworms and soil fertility*. In Tinsley, J. and Darbyshire, J.F. (eds), Biological Processes and Soil Fertility. Springer, Dordrecht. https://link.springer.com/content/pdf/10.1007/978-94-009-6101-2_8.pdf
+- Compost Science & Utilization (2004). *Effect of Molasses on Regrowth of E. coli O157:H7 and Salmonella in Compost Teas*. Vol. 12, no. 1. Taylor & Francis. https://www.tandfonline.com/doi/abs/10.1080/1065657X.2004.10702163
+- PubMed (n.d.). *Factors affecting compost tea as a potential source of Escherichia coli and Salmonella on fresh produce*. US National Library of Medicine. https://pubmed.ncbi.nlm.nih.gov/17477249/
+- UConn Soil Nutrient Analysis Laboratory (n.d.). *Compost, compost tea and manure*. University of Connecticut. https://soiltesting.cahnr.uconn.edu/compost_compost_tea_and_manure/

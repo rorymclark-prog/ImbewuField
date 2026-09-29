@@ -77,3 +77,48 @@ The compass figure ("Fig 3: Sample of a compass", printed page 14) sits in the c
 - Firebreak width: the Act sets no fixed width; no number given. Readers are sent to their FPA.
 - Whether the Act's "owner" duties fall on communal-land users or tenants was not confirmed; the text tells such readers to ask the owner, traditional council or FPA.
 - Fire-resistant plant list is from SANBI and South African gardening sources; spekboom frost-sensitivity is general knowledge and flagged in the text.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to 2,981 words in Rory's voice (REWRITE.md). Removed: the whole "The law: National Veld and Forest Fire Act" section, the firebreak-burning Safety box (its content kept as one plain line inside step 2 of "Ways to reduce fire risk"), the National Water Act note, the NEMBA note on guava / granadilla / tree tomato / white mulberry, the Lesotho climate note, the botulism Safety box (kept as one plain line inside the preserving step), and every "ask your Fire Protection Association / Department" line. All legal points are in `research/manual/rewrite/03-sector-planning-endnote.md`. "Micro-climate" respelt "microclimate" to match the Glossary.
+
+### "Not verified / softened" items from the first pass
+
+| Item | Result | Source |
+|---|---|---|
+| Lesotho temperature extremes and 85% Oct–Apr rainfall | Already removed; the remaining labelled Lesotho note (">30 °C lowlands, below freezing, snow above 2,000 m") was also **cut** (unverified, and SA framing covers it). | — |
+| Lesotho fire hazard "high" | Already gone. | — |
+| "High potash" fire trait | Already gone. | — |
+| August-wind direction (W/NW) | **Generalised**: direction dropped; now "dry, gusty winds over dry veld" in late winter and early spring. | SAWS Gauteng regional climate note (first pass) |
+| IPCC fire danger for southern Africa | **Verified**: AR6 WGI Africa fact sheet projects increases in fire weather for southern Africa (medium–high confidence, by 2050 under RCP4.5 or above). | https://www.ipcc.ch/report/ar6/wg1/downloads/factsheets/IPCC_AR6_WGI_Regional_Fact_Sheet_Africa.pdf (search summary) |
+| Aridity bands (arid < 250 mm, semi-arid 250–500 mm) | **Generalised**: now "the Karoo and much of the Northern Cape get well under 500 mm of rain a year, and parts less than 200 mm". Nama Karoo gets about 100–500 mm; the Great Karoo about 100–400 mm, averaging about 200 mm. The "more evaporates than falls" sentence was cut for length. | One Earth, *Nama Karoo Shrublands* https://www.oneearth.org/ecoregions/nama-karoo-shrublands/ ; Wikipedia *Great Karoo* (search summaries) |
+| Köppen tropical definition (coldest month ≥ 18 °C) | **Verified**, then cut for length (the chapter now just describes warm, frost-free areas). | Wikipedia *Köppen climate classification*; Oregon State *Permaculture Design* appendix C (search summaries) |
+| Black frost | **Verified**: frost in air too dry for ice crystals to form; tissue freezes and blackens with no white warning. | Wikipedia *Frost*; Britannica *radiation frost* (search summaries) |
+| Mulch makes frost worse on low plants | **Verified**: mulch keeps soil heat below ground on radiation-frost nights; bare, firm, moist soil releases more heat. | UC ANR *Frost protection for sensitive plants*; University of Arizona Extension *Frost protection*; FAO (2005) *Frost protection* vol. 1 (search summaries) |
+| Firebreak width; communal land duties | Legal points; **moved to the endnote**. | — |
+| Spekboom frost sensitivity | **Verified**: frost causes severe leaf and stem necrosis in spekboom; it survives frost only under canopy cover. | Duker, Cowling, du Preez & Potts (2015), *S. Afr. J. Bot.* 101: 112–119 (search summary) |
+
+Other first-pass rows marked "not re-verified online", checked now:
+- Thermal belt / cold-air drainage / hedges trapping cold air (rows 25, 38): **verified** — AMS *Glossary of Meteorology*, "thermal belt"; hedges across a slope can create frost pockets (search summaries).
+- Botulism from home-bottled low-acid food (row 45): **verified** — only pressure canning is safe for low-acid foods (vegetables, meat); boiling-water bottling does not kill *C. botulinum* spores. NCHFP *For safety's sake*; USDA FSIS (search summaries).
+- Cape Town 2015–2017 drought about three times more likely (row 41): **verified** — Otto et al. (2018), *Environ. Res. Lett.* 13: 124010 (factor 3, 95% CI 1.5–6).
+- Interior warming about twice the global rate (row 41): **verified** — Engelbrecht et al. (2015), *Environ. Res. Lett.* 10: 085004 (parts of subtropical Africa warmed at more than twice the global rate); CSAG (2019).
+- Benguela sea-wind/fog row (row 10): **cut** for length, not re-checked.
+- Nguni cattle as a hardy local breed (row 44): kept, not re-checked this pass.
+- Trees uphill slow and deflect cold air (row 26): kept; consistent with the cold-air drainage sources above.
+
+### Cut for length (not for accuracy)
+
+- The sector list folded into one sentence.
+- Wind-cause paragraph shortened; the "cold fronts come from the ocean" paragraph after the wind table (the table row keeps the fact); the Benguela "sea winds" row.
+- West-window advice; the "plants can get too much sun" paragraph shortened.
+- Climate: region bullets folded into one paragraph; "all-year rainfall" kept. Microclimate examples shortened ("use deciduous plants" and "plants cool the air" bullets dropped as repeats of "Using the sun").
+- Climate types: Köppen explanation, coffee, custard apple, kiwi fruit, strawberry, blueberry and the cool-season / warm-season vegetable lines dropped (vegetables are covered in chapter 4).
+- Hydrology bullets folded into one sentence; roof-harvest worked example kept.
+- Frost: "how badly frost hits depends on altitude, latitude..." sentence and "sun trap" and "store heat" steps merged.
+- Climate change: bullet list folded into a short paragraph.
+
+### Facts changed
+
+- Tropical/subtropical plant list: guava, granadilla, tree tomato and (white) mulberry stay out; **black mulberry** (not NEMBA-listed, per first pass) added to the temperate list as the alternative.
+- Firebreak burning: the "get training" instruction removed; the conditions (cool, still day, low fire danger, never alone, enough people, water and beaters) kept.

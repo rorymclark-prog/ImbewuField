@@ -1,480 +1,315 @@
 # U lwisana na zwikukumi nga nḓila ya mupo
 
-## Nḓila i fhambanaho ya u humbula nga zwikukumi
+Tshivhungu tsha maṱari kha khabishi a si muswobi. Ndi zwiḽiwa. Zwiṋoni, maḓula, maṅwavhi, ṱhavhavhi, ladybird na wasepe ṱhukhu zwoṱhe zwi tshila nga zwivhumbwa zwine ra zwi vhidza zwikukumi zwi tshinyadzaho. Vhulahani zwikukumi zwoṱhe, ri ḓo ṱhahelisa zwiḽiwa na vhathusi, nahone ngade i ḓo sa dzikama, hu si u dzikama nga u engedzea.
 
-Kha **permaculture** (vhulimi ha tshoṱhe vhu tevhelaho mupo) ri langa zwikukumi zwi tshinyadzaho (pests) nga nḓila ine mupo wa zwi langa ngayo. "Tshikukumi tshi tshinyadzaho" a si tshiswina tshine ra tea u tshi fhelisa. Ndi tshipiḓa tsha **ecosystem** (sisiteme ya mupo) yoṱhe. Zwikukumi ndi zwiḽiwa zwa zwipuka zwine zwa zwi langa: zwiṋoni, maḓula, maṅwavhi, ṱhavhavhi (spiders), ladybird na wasepe ṱhukhu. Arali ra vhulaha zwikukumi zwoṱhe, ri dovha ra ṱhupha vhathusi avho nga nḓala, nahone sisiteme yoṱhe i a thoma u sa dzikama.
+Ngauralo musi zwikukumi zwi tshi anda nga u ṱavhanya, ri zwi vhala sa mulaedza. Hu na tshithu tshi songo linganaho: mavu o netaho, zwimela zwo tambudzwaho nga gomelelo, tshiliṅwa tshithihi tshinzhi fhethu huthihi. Thandululo ya u ṱavhanya ya mupo i nga tshidza khaṋo ya ino khalaṅwaha. Mushumo wa tshoṱhe ndi u lafha tshiitisi.
 
-Musi zwikukumi zwi tshi anda nga u ṱavhanya, kanzhi ndi tshiga tsha uri hu na zwiṅwe zwi songo linganaho ngadeni. Sa tsumbo, mavu a nga vha a si na zwiḽiwa, zwimela zwi nga vha zwo neta nga gomelelo, kana hu nga vha na tshiliṅwa tshithihi tshinzhi fhethu huthihi. Maitele a u ṱavhanya a mupo a nga fhungudza tshinyalo zwino. Fhedzi tshifhinga tshilapfu ri tea u lafha zwi ḓisaho thaidzo, hu si zwiga zwayo fhedzi.
+Izwi a si u tou dzula. "Wanani khaṋo" ndi ḽiṅwe ḽa maitele ashu, nahone muṱa u fanela u ḽa. Ri tsireledza zwiliṅwa zwine zwa dzula zwi khombo, zwi ngaho khabishi na zwimela zwiṱuku. Fhedzi a ri lavheleli uri tshimela tshiṅwe na tshiṅwe tshi tshile. Tshipiḓa tshiṱuku tshi vhuyelela kha sisiteme, nahone sisiteme i ri langela vhunzhi ha zwikukumi.
 
-Tshipikwa tshashu ndi bulasi ine ya vha na mutakalo nahone ya ḓilanga nga yoṱhe ṅwaha muṅwe na muṅwe. U ḓilanga zwi amba uri ri litsha mupo u tshi ita mushumo munzhi. Sa tsumbo, zwiṋoni zwi ḽaho zwikukumi zwi ri thusa u langa zwivhungu zwa maṱari (caterpillars).
+**Musi ni tshi fhedza ino ndima ni ḓo kona u:**
 
-Hezwi a zwi ambi uri ri dzula fhasi ra sa ite tshithu musi zwikukumi zwi tshi rwa. Maitele a permaculture "Wanani khaṋo" (obtain a yield) a ya ndeme: ri kha ḓi tea u kaṋa zwiḽiwa. Zwiṅwe zwiliṅwa, zwi ngaho khabishi na zwimela zwiṱuku, zwi dzula zwi khomboni u fhira zwiṅwe, nahone ri zwi tsireledza nga nḓila dza mupo. Fhedzi a ri lavheleli u kaṋa 100% ya tshiliṅwa tshiṅwe na tshiṅwe. Ndi zwa vhukuma u ṱanganedza u xelelwa hu si hunzhi na u kovhela sisiteme zwiṱuku.
+- Ḓivha zwikukumi zwihulwane zwi tshinyadzaho ngade kha Tshipembe tsha Afrika na u lwa na tshiṅwe na tshiṅwe hu si na tshivhulahi
+- Ḓisa dzi-predator ngadeni yaṋu nga maluvha, maḓi na vhudzulo
+- Shumisa dzi-trap crop na vhahura vhavhuḓi, na u ḓivha uri ndi mafhungo afhio a companion planting o khwaṱhisedzwaho
+- Ita mushonga wa u pfafadza wa galiki, anyanisi na phiriphiri na u u shumisa hu si na u huvhadza ṋotshi
+- Pulana crop rotation uri hu si vhe na lushaka lwa zwiliṅwa lu vhuyaho kha ndima i fanaho lwa miṅwaha miraru u swika miṋa
 
-## Ndi ngani ri tshi ila zwivhulahi zwa khemikhali
+## Ndi ngani ri sa shumisi zwivhulahi zwa khemikhali
 
-Vhulimi ha vhubindudzi vhuhulwane kanzhi vhu shumisa zwivhulahi zwa zwikukumi zwa khemikhali (pesticides). Zwi ṱoḓa masheleni khalaṅwaha iṅwe na iṅwe, zwi nga huvhadza vhathu na zwipuka, nahone zwi ṱoḓa ndango nnzhi. U lwisana na zwikukumi nga nḓila ya mupo zwi ṱoḓa masheleni maṱuku musi zwo no dzudzanywa, zwo tsireledzea u fhira, nahone zwi ṱoḓa mushumo muṱuku musi tshifhinga tshi tshi khou ya.
+Zwivhulahi zwa zwikukumi zwa khemikhali zwi ḓura tshelede khalaṅwaha iṅwe na iṅwe nahone zwi huvhadza vhathu na zwipuka. U lwisana na zwikukumi nga nḓila ya mupo zwi ḓura zwiṱuku musi zwo no dzudzanywa, nahone zwi a leluwa ṅwaha muṅwe na muṅwe.
 
-U pfafadza zwivhulahi kanzhi zwi thoma mutevhe une zwikukumi zwa dzula zwi tshi khou anda:
+Tshivhulahi tshi dovha tsha fara mulimi kha mutevhe:
 
-1. Tshivhulahi tshi vhulaha zwikukumi zwi tshinyadzaho, fhedzi tshi dovha tsha vhulaha zwikukumi zwine zwa ḽa zwikukumi zwi tshinyadzaho (**dzi-predator**, zwipuka zwi ḽaho zwiṅwe).
-2. Zwikukumi zwi tshinyadzaho zwi aṅwa nga u ṱavhanya vhukuma u fhira zwipuka zwi zwi ḽaho.
-3. Zwikukumi zwi tshinyadzaho zwi vhuya u thoma, nahone zwino a hu tsheena tshithu tshine tsha zwi ḽa.
-4. Mulimi u pfafadza hafhu, nahone thaidzo i a hula. Zwikukumi zwinzhi zwi dovha zwa vha na maanḓa a u konḓelela tshivhulahi (resistant) zwa sa tsha fa.
+1. Mushonga wa u pfafadza u vhulaha zwikukumi zwi tshinyadzaho, na **dzi-predator** (zwipuka na zwikukumi zwi zwingelaho na u ḽa zwikukumi zwi tshinyadzaho).
+2. Zwikukumi zwi tshinyadzaho zwi aṱa nga u ṱavhanya vhukuma u fhira dzi-predator dzazwo.
+3. Zwikukumi zwi tshinyadzaho zwi vhuya u thoma, nahone zwino a hu tsha vha na tshine tsha zwi ḽa.
+4. Mulimi u pfafadza hafhu. Thaidzo i a hula, nahone zwikukumi zwinzhi zwi a **konḓelela tshivhulahi** (resistant).
 
-Phanḓa ha vhulimi ha khemikhali, a ho ngo vha na ipfi ḽa vhulimi "ha mupo" (organic), ngauri vhulimi hoṱhe ho vha vhu ha mupo. Nḓila nnzhi dza kale dza u langa zwikukumi dzi kha ḓi shuma na ṋamusi. Dzi ya ndeme nga maanḓa musi ngade ntswa ya permaculture i tshi khou thomiwa, phanḓa ha uri mulingano wayo wa mupo u vhe hone.
+Phanḓa ha vhulimi ha khemikhali ho vha hu si na ipfi ḽa "organic", ngauri vhulimi hoṱhe ho vha vhu ha mupo. Nḓila dza kale dzi kha ḓi shuma, nahone ngade ntswa i dzi ṱoḓa vhukuma.
 
-Kha ndima yo fhiraho ro sedza nḓila ya u fhaṱa ecosystem i re na mutakalo nahone i re na u fhambana. Heyo ndi nḓila ya ndeme vhukuma ya tshifhinga tshilapfu. Ndima ino i sedza nḓila dza u shuma dza u tsireledza zwiliṅwa, nga maanḓa miroho.
+## Nḓila ya u langa zwikukumi: lwendo nga lwendo
 
-## Nḓila dza mupo dza u langa zwikukumi
+Vhunzhi ha u langa zwikukumi hu itea phanḓa ha musi tshikukumi tshi tshi swika. Zwimela zwo khwaṱhaho kha mavu o nonaho (Ndima ya 8) zwi a konḓelela u ṱaselwa. **Biodiversity** (u fhambana ha zwimela, zwikukumi, zwiṋoni na vhutshilo ha mavuni) i ṋea tshikukumi tshiṅwe na tshiṅwe tshi tshinyadzaho muswobi (Ndima ya 9). Tshipiḓa tshihulwane tsha tshiliṅwa tshithihi tshi ita zwi fhambanaho: tshikukumi tshi wana zwiḽiwa zwatsho nga u leluwa tsha anda.
 
-Zwishumiswa zwihulwane ndi:
+Musi zwikukumi zwi tshi ḓa, shumani nga maga aya nga mutevhe:
 
-- **U fhambana ha zwimela.** Ṱanganyani zwimela zwinzhi zwo fhambanaho nṱhani ha u lima tshiliṅwa tshithihi fhethu huhulwane.
-- **Mavu a re na mutakalo.** Zwimela zwi re na maanḓa kha mavu o nonaho zwi konḓelela zwikukumi zwavhuḓi (sedzani Ndima ya 8).
-- **Dzi-trap crop** (zwimela zwa u kokodza zwikukumi, sacrificial crops). Ṱavhani tshimela tshine tshikukumi tsha tshi funa u fhira tshiliṅwa tshaṋu tsha zwiḽiwa, uri tshi rwe tshenetsho nṱhani ha tshiliṅwa tshaṋu.
-- **Companion planting** (u ṱavha zwimela zwi thusanaho). Limani khathihi zwimela zwine zwa thusana.
-- **Crop rotation** (u reidzana ha zwiliṅwa). Ni songo lima lushaka lwa zwiliṅwa lu fanaho kha ndima i fanaho ṅwaha nga ṅwaha.
-- **Phaudara ya bakitheria (soil inoculants).** Hezwi ndi zwibveledzwa zwine zwa engedza zwitshili zwi thusaho mavuni kana kha mbeu, sa tsumbo bakitheria dza rhizobium dza nawa na nḓuhu, kana **compost** (zwithu zwo vholaho zwi nontshisaho mavu) yavhuḓi.
-- **Dzi-predator dza mupo.** Ṋeani zwiṋoni, maḓula, maṅwavhi, ṋowa na zwikukumi zwi ḽaho zwiṅwe fhethu ha u dzula.
-- **Khuhu na madada.** Nga murahu ha khaṋo, kana kha **animal tractor** (danga ḽi pfukiswaho, sedzani Ndima ya 5), zwi kunakisa khumba (slugs na snails) na zwikukumi. Zwi tshini kule na zwimela zwiṱuku, ngauri zwi a zwi kwakwatha zwa zwi bvisa.
-- **U ṱanganya zwiliṅwa (intercropping).** Limani zwiliṅwa zwivhili kana u fhira kha ndima nthihi nga tshifhinga tshithihi.
-- **Lufhenḓe lwa zwimela na lufhenḓe.** Tsireledzani ngade kha zwipuka na muya.
-- **Fhethu ha ḓaka (Zone 5, zone ya mupo ya bulasi).** Siani mutalo wa zwimela zwa mupo sa hayani ha zwipuka zwa ḓaka na dzi-predator.
-- **Mushonga wa u pfafadza wo itwaho hayani.** U shumiseni fhedzi sa nḓila ya u fhedzisela, kha zwiṅwe zwiliṅwa.
+1. **Sedzani.** Tshimbilani ngade lu si luṱuku ha luvhili nga vhege ni sedze fhasi ha maṱari. Zwikukumi zwi a leluwa u langwa musi ni tshi zwi wana nga u ṱavhanya.
+2. **Ṱuṱuwedzani dzi-predator.** Dzi ṋeeni zwiḽiwa, maḓi na vhudzulo.
+3. **Bvisani zwikukumi nga zwanḓa.** Kani zwivhungu zwa maṱari, khumba na zwikhokhonono. Pwashani zwigwada zwa aphids.
+4. **Shumisani zwithivheli.** Neṱe, neṱe ya murunzi, zwikolara na mafhenḓe zwi thivhela zwikukumi.
+5. **Ḓisani zwiṋoni.** Vhukati ha zwiliṅwa, khuhu kana dada kha danga ḽi pfukiswaho, **animal tractor** (Ndima ya 5), dzi kunakisa khumba na zwivhungu. Dzi vheeni kule na zwimela zwiṱuku-ṱuku, zwine dza zwi kwenya.
+6. **Pfafadzani sa nḓila ya u fhedzisa fhedzi**, nahone kha zwimela zwo ṱaselwaho fhedzi.
 
-## Zwikukumi zwi tshinyadzaho ndi mini?
+Ndinganyo i nga dzhia khalaṅwaha dzi si gathi u vhumbea. Musi tshivhulahi tshi tshiṱuku na u fhambana hu hunzhi, i ḓa nga u ṱavhanya.
 
-Zwinzhi zwi tshinyadzaho ndi zwikukumi, fhedzi zwiṅwe zwipuka zwine zwa tshinyadza zwiliṅwa, zwi ngaho mbevha dza fhasi ha mavu (mole-rats), nungu (porcupines), zwiṋoni na mbevha, na zwone zwi vhidzwa zwi tshinyadzaho (pests).
+## Zwikukumi zwi tshinyadzaho zwi ḓivhiwaho kha Tshipembe tsha Afrika
 
-Ri nga kovhekanya zwikukumi zwi tshinyadzaho zwigwada zwivhili nga nḓila ine zwa ḽa ngayo: zwi mamaho maḓi a zwimela na zwi ḽaho zwimela.
+Ḓivhani muswobi waṋu phanḓa ha u ita tshithu. Vhunzhi ha zwikukumi zwi tshinyadzaho ndi zwikukumi, nahone zwi ḽa nga nḓila nthihi kha mbili. **Zwi mamaho maḓi a zwimela** (sap suckers) zwi bowa tshimela zwa nwa maḓi atsho: aphids, scale insects, mealybugs, whiteflies, thrips, red spider mites (zwiṱhavhavhi zwiṱuku-zwiṱuku) na root-knot nematodes (zwivhungu zwiṱuku zwi sa vhonali nga maṱo zwi itaho zwiṱumba midzini). Musi zwo anda, zwi neta tshimela, nahone zwinzhi zwi hwala dzivirasi u bva kha tshimela u ya kha tshiṅwe. **Zwi ḽaho zwimela** (plant eaters) zwi tafuna maṱari, thanda, mitshelo kana midzi: zwivhungu zwa maṱari, zwikhokhonono, khumba. Zwi a hula, ngauralo kanzhi ni nga zwi ka nga zwanḓa. Mbevha dza fhasi ha mavu (mole-rats), nungu na zwiṅwe zwiṋoni na zwone zwi a tshinyadza.
 
-### Zwikukumi zwi mamaho maḓi a zwimela
+### Aphids
 
-Zwikukumi izwi zwi dzhenisa mulomo tshimelani zwa mama maḓi atsho, nṱha kana fhasi ha mavu. Zwi si gathi a zwi tshinyadzi zwihulu, fhedzi musi zwi zwinzhi zwi ita uri tshimela tshi neṱe. Zwinzhi zwi dovha zwa phaḓaladza malwadze a zwimela, nga maanḓa vairasi, u bva kha tshimela tshiṅwe u ya kha tshiṅwe.
+Aphids (zwikukumi zwiṱuku zwi mamaho maṱari) ndi zwikukumi zwiṱuku, zwi ṱhoṱhomaho, zwi re na tshivhumbeo tsha phera, zwitala, zwitswu kana mutobvu, zwine zwa kuvhangana kha mavhonzhe maswa na fhasi ha maṱari. Khabishi, nawa na phizi zwi tambula vhukuma. Zwi thivhela zwimela u aluwa, zwa monya maṱari nahone zwa hwala dzivirasi. Kha mutsho u dudelaho, dza tshisadzi dzi beba vhana vha tshilaho dzi sa ṱangani na dza tshinnani, ngauralo tshigwada tshi nga anda nga vhege dzi si gathi. Musi dzo ṱanganesa, aphids dzi re na mafhafhu dzi fhufha dza ya kha zwimela zwiswa.
 
-Tsumbo:
+1. Pwashani zwigwada zwiṱuku nga ṋala, kana ni zwi ṱanzwe nga maḓi a maanḓa.
+2. Tsireledzani ladybird, hoverflies (nzhinzhi dza maluvha), lacewings na wasepe ṱhukhu dzi ikhelaho makumba kha zwiṅwe zwikukumi. Dzi ḽa aphids kana dza aṱa ngomu hadzo.
+3. Langani zwisusu zwine zwa dzi tsireledza (sedzani Zwisusu, afho fhasi).
+4. Ṱavhani nasturtiums tsini na magumo a ndima sa **trap crop** (tshimela tshine tshikukumi tsha tshi funa u fhira zwiḽiwa zwaṋu) (sedzani Companion planting).
+5. Ṱhogomelani nga manyaga maswa na naiṱirodzheni. U aluwa hu ṱhoṱhomaho, ha u ṱavhanya, hu re na maḓi manzhi hu kokodza aphids.
 
-- zwikukumi zwiṱuku zwi mamaho maṱari (aphids)
-- scale insects (zwikukumi zwiṱuku zwi namatelaho kha maṱavhi na maṱari zwi re na goko)
-- mealybugs (zwikukumi zwiṱuku zwo fukwaho nga zwiṅwe zwi ngaho lukunda lutshena)
-- leafhoppers na planthoppers (zwikukumi zwiṱuku zwi fhufhaho zwi mamaho maṱari)
-- nzhinzhi ṱhukhu tshena (whiteflies)
-- thrips (zwikukumi zwiṱuku-ṱuku zwi re na muvhili mulapfu)
-- mites, sa red spider mite (mites ndi zwiṱhavhavhi zwiṱuku-ṱuku, a si zwikukumi)
-- nematodes (zwivhungu zwiṱuku-ṱuku zwa mavuni zwi sa vhonali nga maṱo zwine zwa ḽa midzi; root-knot nematodes dzi ita mathutha midzini, ane a vhidzwa galls)
-
-### Zwikukumi zwi ḽaho zwimela
-
-Zwikukumi izwi zwi ḽa maṱari, thanda dza zwimela (stems), mitshelo kana midzi. Kanzhi zwi zwihulwane nahone zwi vhonala nga u leluwa. Samusi zwi zwihulwane, kanzhi ni nga zwi ṱumula nga zwanḓa.
-
-Tsumbo:
-
-- zwivhungu zwa maṱari (caterpillars, zwi ngaho cutworm, bollworm, diamond-back moth na fall armyworm)
-- zwikhokhonono (beetles)
-- khumba (slugs na snails)
-- zwiṋoni
-- mbevha na mbevha dza fhasi ha mavu (mole-rats)
-
-## Zwikukumi zwi tshinyadzaho zwi ḓivhiwaho kha Tshipembe tsha Afrika na nḓila ya u lwisana nazwo
-
-> **Tsevhedzo:** Tshimbilani ngadeni yaṋu luvhili nga vhege nga u ṱukusa, ni sedze fhasi ha maṱari. Zwikukumi zwi tshinyadzaho zwi leluwa u langwa musi ni tshi zwi wana zwi sa athu u anda. Arali ni sa ḓivhi tshikukumi, dzhiani tshifanyiso tshi vhonalaho zwavhuḓi ni vhudzise mueletshedzi wa zwa vhulimi (extension officer) kana mueletshedzi waṋu.
-
-### Zwikukumi zwiṱuku zwi mamaho maṱari (aphids)
-
-Zwikukumi zwiṱuku zwi mamaho maṱari ndi zwikukumi zwiṱuku, zwi sa khwaṱhi, zwi re na tshivhumbeo tsha pere, zwitala, zwitswu kana zwa muvhala wa milora, zwine zwa kuvhangana kha mahuri maswa na fhasi ha maṱari. Zwi rwa zwiliṅwa zwinzhi, nga maanḓa zwa lushaka lwa khabishi, nawa na phizi. Musi zwi zwinzhi zwi ita uri zwimela zwi neṱe nahone zwi sa aluwe, maṱari a monyoloswe, na khaṋo i fhungudzee. Zwi dovha zwa hwala vairasi dza zwimela u bva kha tshimela tshiṅwe u ya kha tshiṅwe. Zwikukumi zwine zwa phaḓaladza malwadze nga heyi nḓila zwi vhidzwa vectors (zwihwali zwa malwadze).
-
-Zwikukumi izwi zwi aṅwa nga u ṱavhanya vhukuma. Nga tshifhinga tsha mufhiso tshitshili tshi beba vhana vho tshilaho tshi sa ṱangani na tshinna, nahone tshikukumi tshithihi tshi nga vha na vhana na vhaḓuhulu vha swikaho zwigidi zwinzhi nga vhege dzi si gathi arali hu si na tshithu tshi zwi ḽaho. Musi tshigwada tsho no ḓala, zwiṅwe zwi mela mapapa zwa fhufhela kha zwimela zwiswa.
-
-Zwine na tea u zwi ita:
-
-1. Pwasheni zwigwada zwiṱuku nga minwe, kana ni zwi ṱanzwe nga maḓi a pfafadzwaho nga maanḓa.
-2. Tsireledzani ladybird, hoverflies (nzhinzhi dza maluvha), lacewings na wasepe ṱhukhu dzi ikhelaho makumba kha zwiṅwe zwikukumi (parasitic wasps). Zwi a ḽa kana zwa ikhela makumba kha zwikukumi zwi mamaho maṱari. Tshigwada tsha zwikukumi zwi mamaho maṱari tsho no vhaho tshi re na muvhala wa buraweni nahone tsho oma sa bammbiri kanzhi tsho vhulahwa nga wasepe ṱhukhu, ngauralo tshi litsheni.
-3. Langani zwisusu (sedzani afho fhasi), ngauri zwisusu zwi tsireledza zwikukumi zwi mamaho maṱari kha zwiswina zwazwo.
-4. Ṱavhani nasturtium tsini sa trap crop, ni bvise maṱari a nasturtium o ḓalaho zwikukumi.
-5. Ilani u shumisa manyaga maswa manzhi kana manyoro a naiṱirodzheni manzhi. U aluwa ho kuneaho, ha u ṱavhanya ha maṱari manzhi hu kokodza zwikukumi zwi mamaho maṱari.
+> **Tsevhedzo:** Tshigwada tsha aphids tsho no vha burau tsha nga bammbiri tsho vhulahwa nga wasepe ṱhukhu. Tshi litsheni. Wasepe dzi tevhelaho dzi khou bva khatsho.
 
 ### Zwivhungu zwi remaho zwimela (cutworms)
 
-Zwivhungu zwi remaho zwimela ndi zwivhungu zwa maṱari zwo nonaho, zwa muvhala wa milora na buraweni, zwine zwa monyolosea zwa ita tshivhumbeo tsha C musi zwo kwashiwa. Zwi dzumbama mavuni nga masiari zwa bva nga vhusiku u rema zwimela zwiṱuku tsini na mavu. Matamati, khabishi, mavhele na nawa kanzhi zwi a rwiwa.
+Cutworms ndi zwivhungu zwa maṱari zwo nonaho, zwa mutobvu-burau, zwine zwa ḓimona zwa vha C musi zwi tshi kwamiwa. Zwi dzumbama mavuni nga masiari zwa bva nga vhusiku u rema zwimela zwiṱuku tsini na mavu: matamati, khabishi, mavhele na nawa.
 
-Zwine na tea u zwi ita:
-
-1. Bvisani zwimela zwi sa ṱoḓei ndimani nga u ṱukusa vhege mbili phanḓa ha u ṱavha, uri zwivhungu zwiṱuku zwi sa wane zwiḽiwa.
-2. Musi ni tshi wana tshimela tsho remiwaho, gwani nga vhuronwane mavuni a re u mona natsho. Tshivhungu kanzhi tshi tsini, kha sentimitha dzi si gathi. Tshi bviseni.
-3. Vhekani tshitendeledzi (collar) u mona na tshimela tshiṅwe na tshiṅwe: thumbu ya khadibodo, kana bodelo ḽa pulasiṱiki ḽo remiwaho nṱha na fhasi, ḽo dzheniswaho mavuni nga 2 cm.
-4. Zwiṋoni na khuhu zwi ḽa zwivhungu izwi musi mavu a tshi pfulutshedzwa phanḓa ha u ṱavha.
+1. Kunakisani zwimela zwi sa ṱoḓei kha ndima vhege dzi si gathi phanḓa ha u ṱavha, uri zwivhungu zwiṱuku zwi si wane zwa u ḽa.
+2. Musi ni tshi wana tshimela tshiṱuku tsho remiwaho, gwani zwiṱuku u tshi mona. Cutworm kanzhi i kha sentimitha dzi si gathi. I bviseni.
+3. Vhewani kolara u mona tshimela tshiṅwe na tshiṅwe tshiṱuku: tshubu ya khadibodo, kana bodelo ḽa plastiki ḽo remiwaho nṱha na fhasi, ḽo dzheniswaho mavuni nga 3 u swika 5 cm.
+4. Pendelani mavu phanḓa ha u ṱavha ni litshe zwiṋoni na khuhu zwi ṱoḓe khao.
 
 ### Tshivhungu tsha mitshelo tsha Afrika (African bollworm)
 
-Tshivhungu tsha mitshelo tsha Afrika (*Helicoverpa armigera*) ndi tshivhungu tsha maṱari, tshitala, tsha buraweni kana tsha muvhala wa pinki tshi re na mitalo kha mahlakore atsho, tshine tsha bvula mitshelo na magumbu. Tshi rwa matamati, magumbu a mavhele, nawa, phizi, phiriphiri, mafhi na khotoni. Mukwita muṱuku wo tendelekanaho kha tamati ndi tshiga tshi ḓivhiwaho.
+African bollworm (*Helicoverpa armigera*) ndi tshivhungu tsha maṱari tshi re na mitalo, tshitala, burau kana pinki, tshine tsha bowa matamati, mavhele, nawa, phizi, phiriphiri na mafhi. Buranngo ṱhukhu ḽa tshitendeledzi kha tamati ndi tshiga tshi ḓivhiwaho.
 
-Zwine na tea u zwi ita:
-
-1. Sedzani zwimela lunzhi musi zwi tshi vha na maluvha na mitshelo, ni ṱumule zwivhungu na makumba.
-2. Kaṋani ni fhelise mitshelo yo tshinyalaho, uri zwivhungu zwi re ngomu zwi sa fhedze mutevhe wa vhutshilo hazwo.
-3. Tsireledzani zwiswina zwazwo zwa mupo zwi ngaho wasepe ṱhukhu, zwikukumi zwi ḽaho zwiṅwe na zwiṋoni.
-4. Arali ni tshi ṱoḓa u pfafadza, tshibveledzwa tsho itwaho nga Bt (*Bacillus thuringiensis*, bakitheria ya mupo ine ya vhulaha zwivhungu zwa maṱari fhedzi) tshi shuma zwavhuḓi kha zwivhungu zwiṱuku phanḓa ha uri zwi dzhene mitshelo.
+1. Sedzani zwimela kanzhi musi zwi na maluvha na mitshelo. Kani makumba na zwivhungu.
+2. Kani ni tshinyadze mitshelo yo tshinyadzwaho, uri zwivhungu zwi re ngomu zwi si kone u fhedzisa mutevhe wa vhutshilo hazwo.
+3. Tsireledzani wasepe ṱhukhu, zwikukumi zwi ḽaho zwiṅwe na zwiṋoni.
+4. Arali ni tshi fanela u pfafadza, shumisani Bt (*Bacillus thuringiensis*), bakitheria ya mupo i vhulahaho zwivhungu zwa maṱari fhedzi. I shuma kha zwivhungu zwiṱuku, zwi sa athu u dzhena mitshelong.
 
 ### Diamond-back moth
 
-Diamond-back moth (*Plutella xylostella*) ndi tshikukumi tshi tshinyadzaho vhukuma tsha khabishi, brokholi, kholifulawa, rape na zwiṅwe zwiliṅwa zwa lushaka lwa khabishi. Tshivhungu tshatsho tshi ṱuku (tsini na 1 cm), tshitala tshi songo tsha, nahone tsho sema kha magumo oṱhe mavhili. Musi ni tshi tshi kwama, tshi a monyolosea tsha humela murahu nga u ṱavhanya vhukuma tsha wa ṱarini tsho fara lutambo lwa silika. Zwivhungu zwiṱuku zwi ḽa fhasi ha ṱari zwa sia "mafasiṱere" a lukanda lu si na maanḓa lune lwa vhonela. Zwihulwane zwi ḽa miṱuli i dzhenaho ṱari ḽoṱhe.
-
-Tshikukumi itshi tsho no konḓelela zwivhulahi zwinzhi zwa khemikhali, ngauralo u tshi langa nga nḓila ya mupo zwi ya ndeme nga maanḓa.
-
-Zwine na tea u zwi ita:
+Diamond-back moth (*Plutella xylostella*) ndi tshikukumi tshi tshinyadzaho vhukuma kha khabishi, brokholi, kholifulawa, rape na zwiṅwe zwa lushaka lwazwo. Tshivhungu tshi na vhulapfu ha hu ḓo nga 1 cm, ndi tshitala tshi si na muvhala munzhi nahone tshi na zwiṱhoho kha magumo oṱhe. Tshi kwameni tshi ḓo ḓinyanyula tshi tshi ya murahu tsha wela fhasi kha lutambo lwa silika. Zwivhungu zwiṱuku zwi sia "mafasiṱere" a vhonalelaho kha ṱari; zwihulwane zwi ḽa maburanngo zwa pfuka. Iyi tshipfufu yo kunda mishonga minzhi ya khemikhali ya zwikukumi, ngauralo u langa nga nḓila ya mupo ndi ha ndeme vhukuma fhano.
 
 1. Sedzani fhasi ha maṱari ni bvise zwivhungu nga zwanḓa.
-2. Tsireledzani wasepe ṱhukhu dzine dza rwa zwivhungu. U pfafadza zwivhulahi zwi a dzi vhulaha nahone kanzhi zwi hulisa thaidzo.
-3. Fukedzani zwimela zwiṱuku nga neṱe ṱhukhu kana neṱe ya murunzi (shade cloth) hune zwa konadzea.
-4. Ni songo ṱavha zwiliṅwa zwa lushaka lwa khabishi kha ndima nthihi ṅwaha woṱhe. Siani tshifhinga tshi si na zwone uri mutevhe wa vhutshilo ha tshikukumi u vhe wo tshinyadzwa.
-5. Mvula na u sheledza u bva nṱha zwi wisa zwivhungu zwiṱuku zwinzhi maṱarini.
-6. Arali zwi tshi ṱoḓea, pfafadzani tshibveledzwa tsha Bt kha zwivhungu zwiṱuku.
+2. Tsireledzani wasepe ṱhukhu dzine dza aṱa ngomu ha zwivhungu. Tshivhulahi tshi vhulaha wasepe u thoma.
+3. Fukedzani zwimela zwiṱuku nga neṱe ṱhukhu kana neṱe ya murunzi.
+4. Ṋeani ndima tshifhinga tsha u awela kha zwiliṅwa zwa lushaka lwa khabishi, uri mutevhe wa vhutshilo ha tshipfufu u kwashee.
+5. U sheledza u bva nṱha zwi wisa zwivhungu zwiṱuku zwinzhi. Arali zwi tshi ṱoḓea, pfafadzani Bt kha zwivhungu zwiṱuku.
 
-### Zwivhungu zwa mmbi (fall armyworm)
+### Fall armyworm
 
-Zwivhungu zwa mmbi (fall armyworm, *Spodoptera frugiperda*) zwi bva Amerika. Zwo tou khwaṱhisedzwa lwa u thoma Afrika Tshipembe nga Luhuhi (February) 2017, ngei Limpopo, nahone zwa phaḓalala nga u ṱavhanya zwa ya kha maṅwe mavundu. Zwi rwa nga maanḓa mavhele, fhedzi na mafhi na maṅwe mahatsi na miroho miṅwe.
+Fall armyworm (*Spodoptera frugiperda*, zwivhungu zwa mmbi) zwo bva Amerika. Zwo thoma u khwaṱhisedzwa Afrika Tshipembe, ngei Limpopo, nga Luhuhi (February) 2017, nahone zwa phaḓalala nga u ṱavhanya. Zwi ṱasela nga maanḓa mavhele, na mafhi na maṅwe mahatsi. Ṱoḓani "Y" yo dzhenisaho ṱhoho fhasi i si na muvhala munzhi kha ṱhoho, na zwiṱhavhi zwiṋa zwitswu zwi re kha tshikwea kha tshipiḓa tsha muvhili tshi re phanḓa ha tsha u fhedza. Zwivhungu zwihulwane zwi ḽa maburanngo a si o lugaho zwa ḓadza mulomo wa mavhele maṱuku nga manyaga a ngaho vhukhopfu ha mapulanga.
 
-Nḓila ya u zwi ḓivha:
+1. U bva ḓuvha ḽe mavhele a bva ngaḽo, sedzani luvhili nga vhege. Sedzani ngomu ha mulomo ni ṱoḓe manyaga maswa.
+2. Pwashani zwigwada zwa makumba (zwiṱumba zwi ngaho malu kha maṱari) na zwivhungu zwiṱuku.
+3. Ṱavhani nga u ṱavhanya, nga tshifhinga tshithihi na vhahura vhaṋu, uri mavhele aṋu a songo vha maṱuku musi armyworm i tshi anda vhukuma.
+4. Ṱanganyani mavhele na nawa, nawa dza sialala kana phuri. Tsimu dzo ṱanganyiswaho dzi na zwisusu zwinzhi, earwigs, zwikukumi zwi ḽaho zwiṅwe na wasepe ṱhukhu zwine zwa ḽa armyworm.
+5. Arali ni tshi fanela u pfafadza, vhewani Bt mulomoni musi zwivhungu zwi zwiṱuku.
 
-- Tshivhungu tshi na tshivhumbeo tsha "Y" yo tou thetshelwaho tsha muvhala u songo tsha phanḓa ha ṱhoho yatsho.
-- Kha tshipiḓa tsha muvhili tsha vhuvhili u bva murahu hu na mavhala maṋa a swifhalaho o dzudzanywaho sa sikwea.
-- Zwivhungu zwiṱuku zwi kherula ṱari zwa sia "mafasiṱere" ane a vhonela. Zwihulwane zwi ḽa miṱuli i si na nḓila nahone zwa ḓadza vhukati ha tshimela tshiṱuku tsha mavhele (whorl) nga mashika a ngaho lupfumbu lwa mapulanga.
+### Nzhinzhi dza mitshelo
 
-Zwine na tea u zwi ita:
+Nzhinzhi dza mitshelo dzi ikhela makumba fhasi ha lukanda lwa mitshelo i khou vhibva. Zwivhungu zwi ḽela ngomu, nahone mutshelo wa vhola wa wa. Afrika Tshipembe ḽi na nzhinzhi dza mitshelo dza Mediterranean na Natal, na Oriental fruit fly (*Bactrocera dorsalis*), ye ya thoma u wanala Limpopo nga 2010 nahone zwino i kha mavunḓu manzhi a devhula. Nzhinzhi dza phuri dzi ita zwi fanaho kha phuri, mamelone na khukhamba.
 
-1. Sedzani tsimu ya mavhele luvhili nga vhege u bva musi zwimela zwi tshi mela. Sedzani vhukati ha tshimela ni ṱoḓe mashika maswa.
-2. Pwasheni zwigwada zwa makumba (zwigwada zwi ngaho lukunda kha maṱari) na zwivhungu zwiṱuku nga zwanḓa.
-3. Ṱavhani nga u ṱavhanya nahone nga tshifhinga tshithihi na vhahura vhaṋu, uri mavhele a sa vhe maṱuku musi zwivhungu zwa mmbi zwo anda.
-4. Ṱanganyani mavhele na nawa, nawa dza sialala (cowpeas) kana phuri. Masimu o fhambanaho a tikedza zwiswina zwinzhi zwa mupo, zwi ngaho zwisusu, zwikukumi zwa earwig, zwikukumi zwi ḽaho zwiṅwe na wasepe ṱhukhu.
-5. Vhaṅwe vhalimi vha Afrika vha shumisa nḓila ya "push-pull" (u tuṱuwedza na u kokodza), hune tshimela tshi pandelaho zwikukumi tsha ṱavhiwa vhukati ha mitalo ya mavhele, na hatsi hu kokodzaho zwikukumi u mona na tsimu. Vhudzisani mueletshedzi wa zwa vhulimi uri ndi zwimela zwifhio zwo teaho nahone zwo tendelwaho fhethu haṋu.
-6. Arali ni tshi ṱoḓa u pfafadza, khethani tshibveledzwa tsha Bt kana tshiṅwe tshibveledzwa tsho ṅwaliswaho u lwa na zwivhungu zwa mmbi, ni pfafadze vhukati ha tshimela musi zwivhungu zwi tshee zwiṱuku.
-
-> **Ḓivhani:** Vhigani u anda ha zwikukumi zwiswa kana zwi sa ḓoweleaho kha Muhasho wa Vhulimi wa vundu ḽaṋu kana kha mueletshedzi wa zwa vhulimi. Zwikukumi zwiswa zwa **invasive species** (zwi phaḓaladzeaho zwi tshinyadzaho) zwi phaḓalala nga u ṱavhanya, nahone mivhigo ya u thoma i thusa muthu muṅwe na muṅwe.
-
-### Nzhinzhi dza mitshelo (fruit flies)
-
-Nzhinzhi dza mitshelo dzi ikhela makumba fhasi ha lukanda lwa mitshelo i no khou vhibva. Zwivhungu zwadzo (maggots) zwi ḽa ngomu nahone mutshelo wa vunda wa wa. Tshaka dza ndeme Afrika Tshipembe dzi katela Mediterranean fruit fly na Natal fruit fly, na Oriental fruit fly (*Bactrocera dorsalis*), ye ya wanala lwa u thoma ngei Limpopo nga 2010 nahone u bva zwenezwo ya dzula kha mavundu manzhi a devhula. Nzhinzhi dza phuri (pumpkin flies) dzi rwa phuri, mamelone na zwiṅwe zwiliṅwa zwa lushaka lwa phuri nga nḓila i fanaho.
-
-Zwine na tea u zwi ita:
-
-1. Kuvhanganyani mitshelo yoṱhe yo wiswaho na yo tshinyalaho maḓuvha maṅwe na maṅwe mavhili kana mararu. I fheliseni: i valeleni kha tshikwama tshitswu tsha pulasiṱiki ḓuvhani lwa vhege, kana ni i vhulunge nga u dzika ha 50 cm nga u ṱukusa.
-2. Kaṋani mitshelo musi i tshi tou vhibva.
-3. Fukedzani mitshelo i ngaho magwavha, mango na mapitshi nga zwikwama zwa bammbiri kana zwa lappi musi i tshee miṱuku.
-4. Fhanyedzani zwiteo zwa nzhinzhi (bait traps) kha miri ya mitshelo. Ni nga zwi renga kana na vhudzisa mueletshedzi wa zwa vhulimi nḓila ya u zwi ita.
-5. Shumisanani na vhahura vhaṋu. Nzhinzhi dza mitshelo dzi a tshimbila vhukati ha ngade, ngauralo ngade ya miri ya mitshelo i songo kunakiswaho i nga dovha ya ḓisa nzhinzhi kha dziṅwe dzoṱhe.
+1. Nga murahu ha maḓuvha mashoni, kuvhanganyani mitshelo yoṱhe yo waho na yo tshinyalaho. I valeleni kha mukhwama wa plastiki ni i litshe ḓuvhani ḽi fhisaho u swikela zwivhungu zwo fa, kana ni i vhulunge nga vhudzivha vhu si vhuṱuku ha 50 cm.
+2. Kaṋani mitshelo nga u ṱavhanya musi yo no vhibva.
+3. Vhofhani mikhwama ya bammbiri kana ya lappi nṱha ha magwavha, mango na mapitshi maṱuku.
+4. Fhaṱekani zwifari zwa zwiḽiwa (bait traps) mirini.
+5. Shumani na vhahura vhaṋu. Nzhinzhi dza mitshelo dzi tshimbila vhukati ha ngade, nahone ngade ya miri ya mitshelo i sa ṱhogomelwi i ḓisa hafhu nzhinzhi kha dziṅwe dzoṱhe.
 
 ### Khumba (slugs na snails)
 
-Khumba ndi zwipuka zwi re na muvhili u sa khwaṱhi zwine zwa wanala fhethu ho dudelaho. Khumba dza snail dzi hwala goko ḽo itwaho nga maanḓa nga khalisiamu, ngeno slugs dzi si na goko. Dzi ḽa maṱari, nahone dzi ḓisa u xelelwa ha vhukuma musi dzi dzinzhi kana musi dzi tshi ḽa zwimela zwiṱuku.
+Khumba dzi tshila fhethu ho nowaho nahone dzi ḽa maṱari, dzi tshi ita tshinyalelo ya vhukuma musi dzi nnzhi kana dzi tshi swika kha zwimela zwiṱuku. **Mulch** (tshifukedzi tsha zwimela zwo omaho zwine ra zwi phaḓaladza mavuni) i ita uri dzi dzule dzo nowa nahone dzo tsireledzea, fhedzi mulch i sa ṱhukhuwi, yo omaho, i hoḓaho a i dzi tei u fana na zwithu zwo nowaho, zwi ṱhoṱhomaho.
 
-**Mulch** (tshifukedzi tsha mavu) na **organic matter** (zwithu zwa mupo zwo vholaho) tsini na zwiliṅwa zwi nga dzi kokodza, ngauri zwi ita uri mavu a dzule o dudela nahone zwa dzi ṋea zwiḽiwa na fhethu ha u dzumbama. Lushaka lwa mulch lu a ṱoḓea: mulch i songo ṱhoḓaho, yo omaho nahone i ṱhavhaho a i dzi takadzi u fhira zwithu zwo nwaho nahone zwi sa khwaṱhi.
+1. Dzi kuvhanganyeni nga tshedza tsha thotshi nga madekwana, nga maanḓa nga murahu ha mvula.
+2. Vhewani pulanga kana mukhwama wa kale kha mavu o nowaho. Kuvhanganyani khumba dzo dzumbamaho fhasi haḽo nga matsheloni.
+3. Litshani dada kana khuhu dzi kunakise ndima vhukati ha zwiliṅwa.
+4. Ṱuṱuwedzani maḓula, maḓula mahulwane a mavuni (toads), zwiṋoni na zwikhokhonono zwa fhasi.
+5. Bvisani mulch kule na zwimela zwiṱuku-ṱuku u swikela zwo khwaṱha.
 
-Zwine na tea u zwi ita:
-
-1. Dzi ṱumuleni nga tshedza tsha ṱotshi nga madekwana, nga maanḓa nga murahu ha mvula.
-2. Vhekani bodo ḽo leluwaho kana saga ḽa kale fhethu ho dudelaho. Khumba dzi dzumbama fhasi haḽo nga masiari, nahone ni nga dzi kuvhanganya nga matsheloni.
-3. Litshani madada kana khuhu zwi tshi kunakisa ndima vhukati ha zwiliṅwa.
-4. Tuṱuwedzani maḓula, maḓula mahulwane a mavuni (toads), zwiṋoni na zwikhokhonono zwa fhasi (ground beetles).
-5. Kokodzani mulch zwiṱuku kule na zwimela zwiṱuku u swika zwi tshi khwaṱha.
-
-> **Tsireledzo:** Ambarani magavhelo kana ni ṱanzwe zwanḓa zwavhuḓi musi no fara khumba. Dzi nga hwala tshitshili tsha rat lungworm, tsho no wanalaho kha mbevha Afrika Tshipembe nahone tshi nga dzhena vhathu. Ṱanzwani miroho ya maṱari zwavhuḓi phanḓa ha u i ḽa. Ni songo shumisa zwiḽiwa zwa u vhulaha khumba (slug pellets). Zwi nga vhulaha mmbwa, zwiṋoni na vhana vhane vha zwi ḽa.
+Khumba dzi nga hwala rat lungworm, tshivhungu tshi tshilaho nga zwiṅwe tshi wanalaho kha mbevha kha Afrika Tshipembe tshine tsha nga lwadza vhathu vhukuma. Ambarani magilavu kana ni ṱanzwe zwanḓa nga murahu ha u dzi kuvhanganya, ni ṱanzwe muroho zwavhuḓi phanḓa ha u u ḽa. A ri shumisi zwiṱhavhi zwa u vhulaha khumba (slug pellets): zwi vhulaha mmbwa na dzikatsi khathihi na khumba.
 
 ### Zwiṋoni
 
-Zwiṋoni zwinzhi ndi zwavhuḓi kha bulasi. Zwiṋoni zwi ḽaho zwikukumi zwi tea u tuṱuwedzwa. Naho zwo ralo, zwiṅwe zwiṋoni zwi ḽaho mbeu, zwi ngaho ṱhoho (red-billed quelea), zwi fhufha zwi zwigwada zwihulwane vhukuma nahone zwi nga fhelisa zwiliṅwa zwa thoro zwi ngaho mafhi, mufhoho na goroi. Zwi tshinyadza nga maanḓa musi zwiḽiwa zwazwo zwa mupo (mbeu dza hatsi) zwi si zwinzhi, ngauri tsimu ya thoro ndi zwiḽiwa zwinzhi zwi leluwaho u wanala. Zwiḽiwa zwinzhi zwi dovha zwa zwi thusa u aṅwa u fhira.
+Vhunzhi ha zwiṋoni ndi khonani. Red-billed quelea ndi yone i sa ngo ralo: i fhufha nga zwigwada zwihulwane vhukuma nahone i nga fhelisa mafhi, mhuṱa na goroi, nga maanḓa musi mbeu ya mahatsi kha ḓaka ḽa mupo i tshi konḓa u wanala.
 
-Zwine na tea u zwi ita:
-
-1. Tsireledzani masimu maṱuku a thoro nga neṱe.
-2. Tshoisani zwiṋoni nga matsheloni na nga masiari a ṱhaṱhawedzi, musi zwi tshi ḽa, nga phosho, mafulaga kana theiphi i penyaho.
-3. Kaṋani musi thoro i tshi tou vhibva.
-4. Vhigani zwigwada zwihulwane vhukuma zwa ṱhoho kha Muhasho wa Vhulimi wa vundu ḽaṋu. Ni songo shumisa zwivhulahi: zwi dovha zwa vhulaha magondo, zwikhovha na zwiṅwe zwiṋoni zwi thusaho.
+1. Fukedzani tsimu ṱhukhu dza thoro nga neṱe.
+2. Shushedzani zwiṋoni nga matsheloni a vhukuma na nga madekwana, musi zwi tshi ḽa, nga phosho, mbendera kana theiphi i penyaho.
+3. Kaṋani nga u ṱavhanya musi thoro yo vhibva.
+4. Ni songo vhuya na vhea tshivhulahi. Magondo na zwikhovha zwine zwa ḽa zwiṋoni zwo faho na zwone zwi a fa.
 
 ### Zwisusu
 
-Zwisusu kanzhi a zwi ḽi zwiliṅwa. Zwi tshinyadza nga nḓila i songo livhaho. Zwisusu zwi ḽa maḓi a swigiri (honeydew), maḓi a swiri ane zwikukumi zwi mamaho maṱari, scale insects na mealybugs zwa a bvisa. Sa mbuelo zwisusu zwi tsireledza zwikukumi izwi zwi mamaho maḓi a zwimela kha ladybird na wasepe ṱhukhu. Maḓi a swigiri a dovha a ita uri khowa ntswu i vhidzwaho sooty mould i mele kha maṱari, zwine zwa fhungudza u aluwa ha tshimela.
+Zwisusu a zwi anzeli u ḽa zwiliṅwa. Zwi ḽa **maḓi a swigiri** (honeydew), maḓi a swigiri ane aphids, scale insects na mealybugs zwa a bvisa, nahone nga u ralo zwi tsireledza izwo zwi mamaho maḓi a zwimela kha ladybird na wasepe. Maḓi a swigiri a dovha a melisa **khowa ntswu** (sooty mould) kha maṱari, ine ya thivhela tshedza. Huṅwe fhethu zwisusu zwi zwingela matshwa na zwivhungu zwa maṱari, ngauralo ri ita tshithu fhedzi hune zwa khou fuwa zwi mamaho maḓi a zwimela.
 
-Musi ni tshi langa zwisusu, zwiswina zwa mupo zwa zwikukumi zwi mamaho maḓi a zwimela zwi nga dovha zwa shuma mushumo wazwo.
+1. Kha miri ya mitshelo, monani thanda nga tshibanḓa tsha giriisi kana tshithu tshi namatelaho, kha lappi kana theiphi hu si kha makwati.
+2. Remani maṱavhi a kwamaho mavu kana luvhondo. Zwisusu zwi a shumisa sa mabuḓo.
+3. Langani aphids na scale, zwisusu zwi ḓo xelelwa nga dzangalelo.
 
-Zwisusu zwi dovha zwa thusa. Zwisusu zwinzhi zwi ḽa zwiṅwe zwikukumi zwi tshinyadzaho, zwi ngaho matshwa na zwivhungu zwa maṱari, nahone zwi thusa u vholisa zwithu zwo faho.
+### Mbevha dza fhasi ha mavu na nungu
 
-Zwine na tea u zwi ita:
+"Moles" dzine dza ḽa zwikumbu, zwiṱambi na patata kha Afrika Tshipembe kanzhi ndi **mbevha dza fhasi ha mavu** (mole-rats): zwipuka zwi re na mano a u tafuna zwine zwa gonyisa zwiṱumba zwa mavu u bva kha zwiṱhoni zwi dzikaho. Golden moles ndi zwipuka zwo fhambanaho. Zwi gwa fhasi-fhasi ha nṱha ha mavu nahone zwi ḽa zwikukumi na zwivhungu zwa mavu, hu si zwimela. Tshaka nnzhi a dzi wanali nga u leluwa, ngauralo dzi litsheni.
 
-1. Kha miri ya mitshelo, vhofhani lukanda lwa zwithu zwi namatelaho kana giris u mona na thanda, kha lappi kana theiphi hu si kha makwati maswa a muri, uri zwisusu zwi sa kone u gonya.
-2. Remani maṱavhi ane a kwama mavu kana luvhondo, ngauri zwisusu zwi a shumisa sa buroho.
-3. Langani zwikukumi zwi mamaho maṱari na scale insects zwine zwisusu zwa khou zwi fuwa.
+1. Vhewani neṱe ya waya yo khwaṱhaho fhasi ha ndima dzo gonyiswaho, na kha maburanngo a u ṱavha a zwimela zwa ndeme.
+2. Ṱavhani zwikumbu na miri miṱuku kha zwiṱundu zwa waya.
+3. Ṱanganedzani ṋowa dzi ḽaho mbevha dza fhasi ha mavu (mole snakes) na zwikhovha. Ni songo vhuya na shumisa tshivhulahi: mbevha ya fhasi ha mavu yo ṋewaho tshivhulahi i vhulaha tshikhovha, ṋowa, mmbwa kana katsi i i ḽaho.
+4. **Nungu** (porcupines) dzi gwa midzi dza fhala makwati. Lufhenḓe lwo khwaṱhaho, lu re na neṱe yo vhulungwaho zwavhuḓi mavuni, lu dzi thivhela u gwa dzi tshi dzhena nga fhasi.
 
-### Mbevha dza fhasi ha mavu na golden moles
+## Ṱuṱuwedzani dzi-predator
 
-Afrika Tshipembe, "moles" dzine dza ḽa magumbu a zwimela (bulbs), zwiṱambi, patata na midzi kanzhi ndi mbevha dza fhasi ha mavu (mole-rats). Mbevha dza fhasi ha mavu ndi zwipuka zwi ngaho mbevha zwine zwa dzula kha migero i dzikaho nahone zwa ṱuṱuwedza milundu ya mavu nṱha. Golden moles ndi tshipuka tshi fhambanaho. Dzi gwa migero nga fhasi fhedzi ha mavu nahone dzi ḽa zwikukumi na zwivhungu zwa mavu, hu si zwimela. Tshaka dzinzhi dza golden moles a dzi wanali nahone dzo tsireledzwa nga mulayo, ngauralo dzi litsheni.
+Ṋeani vhazwingeli **habitat** (fhethu hu re na zwiḽiwa, maḓi na vhudzulo zwine vha zwi ṱoḓa), vha ḓo dzhena: matombo na zwiṱumbu zwa maṅwavhi, tshidziva tshiṱuku tsha maḓula, mulch ya zwikhokhonono zwa fhasi, maluvha a wasepe na hoverflies.
 
-Zwine na tea u zwi ita nga mbevha dza fhasi ha mavu:
+- **Khameleoni na maṅwavhi** zwi ḽa zwikukumi nahone zwi dzumbama vhukati ha matombo a dudelaho.
+- **Maḓula na maḓula mahulwane a mavuni** a ḽa khumba na zwikukumi. A ṱoḓa fhethu ho nowaho kana tshidziva tshiṱuku.
+- **Ladybird** na zwivhungu zwadzo zwi ḽa aphids nnzhi vhukuma.
+- **Hoverflies** (nzhinzhi dza maluvha) dzi vhonala sa ṋotshi ṱhukhu. Zwivhungu zwadzo zwi ḽa aphids.
+- **Lacewings** ndi zwikukumi zwitala zwi si na maanḓa. Zwivhungu zwadzo zwi ḽa aphids, zwiṱhavhavhi zwiṱuku-zwiṱuku (mites) na zwivhungu zwiṱuku zwa maṱari.
+- **Wasepe ṱhukhu** (parasitic wasps) ndi ṱhukhu-ṱhukhu nahone a dzi nga lumi vhathu. Dzi ikhela makumba adzo ngomu ha zwivhungu zwa maṱari na aphids.
+- **Zwikhokhonono zwa fhasi, mantisi na ṱhavhavhi** zwi zwingela hu ḓo nga tshikukumi tshiṅwe na tshiṅwe tshiṱuku u fhira zwone.
+- **Zwiṋoni zwi ḽaho zwikukumi** zwi dzhia zwivhungu zwa maṱari, zwipfufu, matshwa, scale insects na khumba.
 
-1. Vhekani neṱe ya waya i khwaṱhaho fhasi ha ndima dzo gonyiswaho, kana kha mikwita ya u ṱavha zwimela zwa ndeme.
-2. Ṱavhani magumbu a zwimela na miri miṱuku kha zwiṱundu zwa waya.
-3. Tuṱuwedzani ṋowa dzi ḽaho mbevha dza fhasi ha mavu (mole snakes), zwikhovha na dziṅwe dzi-predator dza mupo.
-4. Ni songo shumisa zwivhulahi. Mbevha dza fhasi ha mavu dzo ḽaho tshivhulahi dzi nga vhulaha zwikhovha, ṋowa, mmbwa na kaṱe zwine zwa dzi ḽa.
+> **Tsevhedzo:** A si ladybird yoṱhe i re khonani. Dzi penyaho dzi ḽa aphids. Ladybird dza orenzhi i si na u penya dzi re na zwiṱhavhi zwinzhi zwitswu na murahu u re na mavhudzi maṱuku, na zwivhungu zwadzo zwa tshiṱaḓa zwi re na mipfa, dzi ḽa maṱari a phuri, zwiṱambi na zwiṅwe zwa lushaka lwazwo. Gudani u dzi fhambanya.
 
-### Nungu na zwiṅwe zwipuka
+### Maluvha a ṋeaho dzi-predator zwiḽiwa
 
-Nungu dzi gwa midzi na magumbu a fhasi ha mavu (tubers) nahone dzi kwakwatha makwati a miri. Lufhenḓe lu khwaṱhaho, lune neṱe ya waya yalwo ya vhulungwa nga u dzika mavuni uri dzi sa kone u gwa nga fhasi halwo, ndi tsireledzo yavhuḓi. Sedzani milayo ya fhethu haṋu phanḓa ha u tea kana u vhulaha tshipuka tshiṅwe na tshiṅwe tsha ḓaka.
+Wasepe, hoverflies na lacewings dzo aluwaho dzi tshila nga **nekhitha** (nectar) na mupfumbu, nahone maluvha maṱuku o vuleaho a ngaho a lushaka lwa kherotsi a dzi tea vhukuma. Limani u ṱangana ha maluvha a vhaho hone ṅwaha woṱhe:
 
-## Nḓila ya u langa zwikukumi: ḓanḓa nga ḓanḓa
+- Mihaṱa i re na maluvha: dill, coriander, parsley na caraway, na kherotsi dzi si gathi dzo litshwaho dzi vhe na maluvha
+- Yarrow, calendula, chamomile, zinnia, sonobolomo, borage na lemon verbena
+- French na African marigolds, na cosmos (tsini na ḓaka ḽa mupo, remani ṱhoho dzi sa athu u wisa mbeu, ngauri cosmos i phaḓalala kha mavu a mahatsi)
+- Maluvha a **indigenous** (a sialala, a re hayani fhano nga mupo): gazania, African daisies (*Arctotis*, *Osteospermum*, *Dimorphotheca*), pincushion (*Scabiosa*) na everlastings (*Helichrysum*)
 
-U langa zwikukumi nga nḓila ya mupo hu shumisa dzi-ecosystem. Sa tsumbo, zwipuka zwi ḽaho zwikukumi zwi tshinyadzaho zwiliṅwa zwi nga ri fhungudzela tshivhalo tsha zwikukumi. Tevhelani maḓanḓa aya nga u tevhekana:
-
-1. **Sedzani.** Sedzani zwiliṅwa lunzhi ni ite zwithu zwi sa athu u hula.
-2. **Tuṱuwedzani dzi-predator.** Dzi ṋeeni zwiḽiwa, maḓi na fhethu ha u dzumbama.
-3. **Bvisani zwikukumi nga zwanḓa.** Ṱumulani zwivhungu zwa maṱari, khumba na zwikhokhonono.
-4. **Shumisani zwithivheli.** Neṱe, neṱe ya murunzi, zwitendeledzi (collars) na lufhenḓe zwi thivhela zwikukumi uri zwi sa dzhene.
-5. **Pfafadzani fhedzi sa nḓila ya u fhedzisela.** Shumisani mushonga wa u pfafadza wo itwaho hayani kana zwibveledzwa zwa mupo zwo ṅwaliswaho, nga vhuronwane nahone kha zwimela zwi zwi ṱoḓaho fhedzi.
-
-Zwi nga dzhia khalaṅwaha dzi si gathi uri mulingano wa mupo u vhe hone, zwi tshi ya nga fhethu na nga nḓila ye ngade ya vha i tshi langwa ngayo kale. Musi ri tshi ila zwivhulahi nga maanḓa nahone ra engedza u fhambana, mulingano u ḓa nga u ṱavhanya.
-
-Kha Ndima ya 9 ro vhona uri maluvha, zwidziva, milundu ya matombo na mapulanga zwi ita hayani ha zwivhumbwa zwinzhi. Zwenezwi zwi kokodza zwiṋoni, maḓula, maṅwavhi, wasepe ṱhukhu (dzine dza sa vhe na khombo kha vhathu), mantisi (praying mantises), ladybird, ṱhavhavhi na zwiṅwe. Mulayo u leluwa: limani zwimela zwinzhi zwo fhambanaho ni ite **dzi-habitat** (vhudzulo ha zwipuka na zwimela) nnzhi dzo fhambanaho, nahone dzi-predator dzi thusaho dza tshaka nnzhi dzi ḓo ḓa u ni thusa.
-
-Masimu mahulwane a tshiliṅwa tshithihi (u lima tshiliṅwa tshithihi fhedzi, monoculture) a ita uri zwikukumi zwi wane zwiḽiwa zwazwo nga u leluwa nahone zwi ande. U ṱanganya zwiliṅwa, na u katela mihaṱa i nukhaho nga maanḓa na zwimela zwi re na maṱari a ṱhoḓaho kana a re na malelwa, zwi ita uri zwi konḓe kha zwikukumi u wana zwine zwa khou zwi ṱoḓa.
-
-## Tuṱuwedzani dzi-predator
-
-Ngade ya zwiḽiwa i re na mutakalo i ṱoḓa dzi-predator dza mupo. Musi dzi-predator dzi nnzhi, kanzhi zwikukumi zwi tshinyadzaho zwi a fhungudzea.
-
-- **Khameleoni (chameleons) na maṅwavhi** zwi ḽa zwikukumi. Zwi dzumbama vhukati ha matombo na matombo a dziaho ngadeni.
-- **Maḓula na maḓula mahulwane a mavuni (toads)** a ḽa khumba na zwikukumi zwinzhi vhukuma. A ṱoḓa fhethu ho dudelaho kana tshidziva tshiṱuku uri a dzule nahone a aṅwe.
-- **Ladybird** na zwivhungu zwadzo zwi ḽa zwikukumi zwinzhi vhukuma zwi mamaho maṱari.
-- **Hoverflies (nzhinzhi dza maluvha)** dzi vhonala sa ṋotshi ṱhukhu. Zwivhungu zwadzo zwi ḽa zwikukumi zwi mamaho maṱari. Dzo aluwaho dzi ḽa kha maluvha.
-- **Lacewings** ndi zwikukumi zwitala zwi sa khwaṱhi zwi re na mapapa a ngaho neṱe. Zwivhungu zwazwo zwi ḽa zwikukumi zwi mamaho maṱari, mites na zwivhungu zwa maṱari zwiṱuku.
-- **Wasepe ṱhukhu dzi ikhelaho makumba kha zwiṅwe zwikukumi (parasitic wasps)** ndi wasepe ṱhukhu-ṱhukhu dzine dza ikhela makumba ngomu ha zwikukumi zwi tshinyadzaho zwi ngaho zwivhungu zwa maṱari na zwikukumi zwi mamaho maṱari. A dzi koni u luma vhathu. Dzo aluwaho dzi ḽa nekhitha (nectar, maḓi a swiri a maluvha) kha maluvha maṱuku.
-- **Zwikhokhonono zwa fhasi (ground beetles)** ndi zwikhokhonono zwitswu zwi gidimaho nga u ṱavhanya zwi re na milenzhe i khwaṱhaho. Zwi zingela tshithu tshiṅwe na tshiṅwe tshiṱuku u fhira zwone, kanzhi nga vhusiku. Zwi wanala nga maanḓa hune mavu a fukedzwa nga mulch kana zwimela. Zwiṅwe zwi gonya zwimela u zingela zwikukumi zwi mamaho maṱari na zwivhungu zwa maṱari.
-- **Mantisi (praying mantises)** dzi fara zwikukumi nga milenzhe yadzo ya phanḓa i khwaṱhaho. Dzi ḽa zwivhumbwa zwinzhi zwoṱhe zwiṱuku u fhira dzone, hu tshi katelwa na dziṅwe mantisi.
-- **Ṱhavhavhi** dzi fara zwikukumi zwinzhi zwi fhufhaho na zwi gugumaho.
-- **Zwiṋoni zwi ḽaho zwikukumi** zwi langa zwivhungu zwa maṱari, zwikukumi zwi mamaho maṱari, matshwa, zwipfufu (moths), scale insects na khumba.
-
-> **Tsevhedzo:** A si ladybird yoṱhe ine ya vha khonani. Ladybird nnzhi dzi penyaho dzi ḽa zwikukumi zwi mamaho maṱari. Fhedzi dziṅwe ladybird dza muvhala wa orenzhi u sa penyi dzi re na mavhala manzhi matswu na murahu u re na malelwa maṱuku, na zwivhungu zwadzo zwitswuku-tswuku zwi re na mitshetshe, dzi ḽa maṱari a phuri, zwiṱambi na zwiliṅwa zwa lushaka lwazwo. Gudani u dzi fhambanya.
+Litshani mihaṱa na miroho i si minzhi i vhe na maluvha kha ndima iṅwe na iṅwe. Vhathusi vha dzula hune zwiḽiwa zwa vha hone.
 
 ## Companion planting
 
-Companion planting i amba u lima zwiliṅwa, maluvha na mihaṱa zwo fhambanaho khathihi uri zwi thusane. I ita polyculture (zwiliṅwa zwinzhi zwi melaho fhethu huthihi).
+**Companion planting** (u ṱavha zwimela zwi thusanaho) zwi amba u lima zwiliṅwa, mihaṱa na maluvha khathihi uri zwi thusane. Ndi zwa kale vhukuma. Vhalimi vha China vho lima tshimela tshiṱuku tshi ṱahaho maḓini na raisi lwa maḓana a miṅwaha, ngauri tshi engedza naiṱirodzheni maḓini. Amerika, mavhele, nawa na squash zwo aluwa khathihi sa "vhakomana vhararu": mavhele a fara nawa, nawa dza engedza naiṱirodzheni, nahone maṱari mahulwane a squash a ita murunzi kha mavu a kwatisa zwimela zwi sa ṱoḓei.
 
-Vhathu vho lima zwiliṅwa khathihi lwa tshifhinga tshilapfu vhukuma. Ngei China, vhalimi vho lima tshimela tshiṱuku tsha maḓini tshi sumaho, *Azolla*, kha masimu a raisi lwa maḓana a miṅwaha, ngauri tshi engedza naiṱirodzheni maḓini na mavuni. Ngei Amerika, vhalimi vha sialala vho lima mavhele, nawa na squash (zwi ngaho phuri) khathihi, sisiteme i ḓivhiwaho sa "vhakomana vhararu" (three sisters). Mavhele a ṋea nawa tshithu tsha u gonya, nawa dzi engedza naiṱirodzheni mavuni, nahone maṱari mahulwane a squash a ita murunzi mavuni a thivhela zwimela zwi sa ṱoḓei.
+Dzi-trap crop, maluvha a dzi-predator na u ṱavha zwo ṱanganyiswaho zwo lingwa zwavhuḓi. Mafhungo maṅwe manzhi ndi mivhigo ya vhalimi fhedzi. A lingeni, ni sedze nga vhuronwane ni fare zwi shumaho kha mavu aṋu.
 
-> **Ḓivhani:** Ni songo ḓisa *Azolla filiculoides* kha madamu kana zwidziva Afrika Tshipembe. Ndi invasive species yo ṅwalwaho nga mulayo wa lushaka.
+**U ṱavha zwo ṱanganyiswaho.** U ṱangana ha zwiliṅwa hu ṋea vhutshilo ha mavuni vhunzhi na dzi-predator nnzhi zwiḽiwa. Zwikukumi zwinzhi zwi wana tshimela tshazwo tsha zwiḽiwa nga tshivhumbeo, muvhala na munukho zwatsho, nahone ndima i re na zwivhumbeo na mivhala minzhi i a zwi dzinginyisa, ngauralo zwiṅwe zwi a ṱuwa.
 
-Companion planting i nga thusa kha:
+**Dzi-trap crop.** Trap crop i limiwa tsini na tshiliṅwa tsha zwiḽiwa u kokodza tshikukumi kule. Aphids kanzhi dzi funa nasturtiums u fhira khabishi, brokholi na kholifulawa. Ro vhona nasturtiums dzo ṱavhiwaho tsini na kholifulawa na brokholi dzi tshi ḓala aphids musi tshiliṅwa tshi tshi siiwa tshi tshi ḓo ralo. U i shumisa:
 
-- **U langa zwikukumi.** Zwiṅwe zwimela zwi fhambula, zwi dzinginyisa kana zwi pandela zwikukumi.
-- **U phaḓaladza mupfumbu wa maluvha (pollination).** Maluvha a kokodza ṋotshi na zwiṅwe zwi phaḓaladzaho mupfumbu kha tshiliṅwa tshaṋu tshihulwane.
-- **U ṋea dzi-predator zwiḽiwa.** Maluvha a ṋea nekhitha na mupfumbu kha hoverflies, wasepe ṱhukhu na vhaṅwe vhathusi.
-- **U shumisa fhethu zwavhuḓi.** Zwiliṅwa zwi re na midzi ya u dzika hu fhambanaho kana zwi aluwaho nga u ṱavhanya hu fhambanaho zwi shumisa ndima nthihi, sa tsumbo radishi dzi melaho nga u ṱavhanya vhukati ha letisi kana kherotsi dzi aluwaho zwiṱuku-zwiṱuku.
-- **Thikhedzo.** Mavhele a nga fara nawa dzi gonyaho.
+1. Ṱavhani nasturtiums tsini na magumo a ndima, hu si vhukati.
+2. Dzi sedzeni luvhili nga vhege.
+3. Musi maṱari o ḓala aphids, kani ayo maṱari ni a ṋee khuhu.
 
-> **Ḓivhani:** Zwinzhi zwine zwa ambiwa nga companion planting zwi bva kha tshenzhemo ya vhalimi nahone a zwi athu u lingwa nga saintsi. Zwiṅwe zwo khwaṱhisedzwa zwavhuḓi, zwi ngaho dzi-trap crop, maluvha a dzi-predator na vhakomana vhararu. Zwiṅwe zwi ambiwa nga vhalimi fhedzi. Zwi lingeni, ni sedze nga vhuronwane, ni vhulunge zwine zwa shuma ngadeni yaṋu.
+Trap crop ine na sa i sedze i vha fhethu ha u aṱa.
 
-### Nḓila dza companion planting
+**Zwi dzumbaho munukho.** Munukho wa maanḓa u nga dzumba tshiliṅwa tshine tshikukumi tsha tshi ṱoḓa. Vhalimi vha ngade vha ṱavha anyanisi u mona kherotsi u lwa na carrot fly. Ṱhoḓisiso ngei England yo wana uri zwi shuma fhedzi musi hu na anyanisi nnzhi vhukuma u fhira kherotsi, nahone fhedzi musi anyanisi dzi tshi kha ḓi vha ṱhukhu dzi na maṱari, dzi sa athu u vha na zwiṱumba.
 
-**Polycultures.** U lima zwiliṅwa zwo ṱanganyiswaho zwi tikedza zwitshili zwinzhi zwa mavuni na dzi-predator nnzhi, nahone zwi ita uri zwi konḓe kha zwikukumi u wana zwiḽiwa zwazwo. Musi tshifhinga tshi tshi khou ya hezwi zwi thusa ngade u ḓilangela zwikukumi zwayo.
+**Zwimela zwi khwaṱhisaho.** Basil yo limiwaho na matamati yo fhungudza thrips na whitefly zwiṱuku kha dziṅwe ndingo. Mafhungo a uri i khwinisa u tapa hazwo a a ngo khwaṱhisedzwa.
 
-**Dzi-trap crop.** Zwiṅwe zwimela zwi kokodza tshikukumi u fhira tshiliṅwa tshaṋu tshihulwane. Zwi ṱavheni tsini na tshiliṅwa uri tshikukumi tshi rwe zwone nṱhani ha tshiliṅwa. Sa tsumbo, zwikukumi zwi mamaho maṱari kanzhi zwi funa nasturtium u fhira khabishi, brokholi na kholifulawa. Ṱavhani nasturtium kha magumo a ndima. Musi maṱari ayo o ḓala zwikukumi, a ṱumuleni ni a ṋee khuhu dzaṋu, kana ni a fhelise. Trap crop i shuma fhedzi arali na i sedza nahone na bvisa zwikukumi. Arali zwi songo ralo, i vha fhethu ha u aṅwela zwikukumi.
+### Zwimela zwine zwa nga pandela zwikukumi
 
-**Zwimela zwi dzumbaho muṅo.** Zwiṅwe zwimela zwi na muṅo u nukhaho nga maanḓa une wa nga dzumba muṅo wa tshiliṅwa tshine tshikukumi tsha khou tshi ṱoḓa. Sa tsumbo, vhalimi vha ṱavha anyanisi u mona na vhukati ha kherotsi u dzi tsireledza kha carrot fly (nzhinzhi ya kherotsi). Ṱhoḓisiso ngei England yo wana uri hezwi zwi shuma fhedzi musi anyanisi dzi dzinzhi vhukuma u fhira kherotsi, nahone fhedzi musi anyanisi dzi tshee ṱhukhu dzi na maṱari manzhi, hu si musi dzo no thoma u vha na magumbu.
+- **French na African marigolds** dzo fhungudza whitefly kha matamati a nnḓu ya zwimela kha ndingo. Dzi thivhela root-knot nematodes fhedzi musi dzo limiwa dzo ṱanganesa sa tshiliṅwa tsha u fukedza lwa miṅwedzi 2 u swika 4 phanḓa ha miroho. Zwimela zwi si gathi zwo phaḓalalaho a zwi iti zwinzhi.
+- **Minti, rosemary, sage, lavender na wild wormwood** (*Artemisia afra*, i shumiswaho nga sialala u pandela zwikukumi) vhalimi vha ri zwi fhungudza aphids na zwipfufu zwa khabishi. Zwi a tea u lingwa. Limani minti kha thini, ngauri i phaḓalala nga u ṱavhanya.
 
-**Zwimela zwi khwaṱhisaho.** Vhalimi vha amba uri zwiṅwe zwimela zwi khwinisa mutakalo wa tshiliṅwa tshi re tsini. Basil kanzhi i limiwa na matamati. Ṱhoḓisiso dziṅwe dzo wana uri basil i nga fhungudza thrips na nzhinzhi ṱhukhu tshena tsini na matamati zwiṱuku. Zwine vhanzhi vha amba uri basil i khwinisa u naka ha matamati a zwi athu u khwaṱhisedzwa.
+## Vhahura vhavhuḓi na vha si vhavhuḓi
 
-**Zwimela zwi dzinginyisaho tshivhumbeo.** Zwikukumi zwinzhi zwi tshinyadzaho zwi wana tshimela tsha zwiḽiwa zwazwo nga tshivhumbeo, muvhala na muṅo watsho. Ndima i re na zwivhumbeo na mivhala minzhi yo fhambanaho i nga ita uri hezwi zwi konḓe, ngauralo zwiṅwe zwikukumi zwi a ṱuwa.
+Mulayo wo khwaṱhisedzwaho zwavhuḓi vhukuma u a leluwa: fhambanyani zwiliṅwa zwa **lushaka lu fanaho**. Zwiṱambi, matamati, brinjals na phiriphiri zwoṱhe zwi tambula nga malwadze a fanaho a maṱari, u oma na nematodes, ngauralo mutalo wa tshiṅwe tsini na tshiṅwe u fhirisela thaidzo. Zwo salaho kha ṱafula zwi bva kha tshenzhemo ya vhalimi vha ngade. Thomani ngazwo, nahone nga tshifhinga ni fulufhele zwiṅwalwa zwaṋu.
 
-**Zwimela zwi kokodzaho dzi-predator.** Zwiṅwe zwimela zwi kokodza zwikukumi zwine zwa langa zwikukumi zwi tshinyadzaho. Wasepe ṱhukhu-ṱhukhu, sa tsumbo, dzi ḽa nekhitha na mupfumbu nahone dzi ikhela makumba kha zwivhungu zwa maṱari na zwikukumi zwi mamaho maṱari. Zwimela zwi re na maluvha manzhi maṱuku, zwi ngaho yarrow, dill, coriander, na kherotsi na parsley zwi re na maluvha, zwi dzi ṋea zwiḽiwa zwavhuḓi. Litshani mihaṱa na miroho i si gathi i tshi vha na maluvha kha ndima iṅwe na iṅwe.
-
-## Zwimela zwine zwa nga pandela zwikukumi
-
-Tafula ḽi re fhasi ḽi ṅwala zwimela zwine vhalimi vha zwi shumisa u pandela zwikukumi. Vhuṱanzi ho ṋewa hune ha ḓivhiwa. Zwiṅwe zwi dzhieni sa zwi fanelaho u lingwa, hu si sa zwi re na khwaṱhisedzo.
-
-| Tshimela | Zwine vhalimi vha amba | Zwine vhuṱanzi ha amba |
+| Tshiliṅwa | Vhahura vhavhuḓi | Zwi vheeni kule na |
 |---|---|---|
-| Marigold ya French na ya African (*Tagetes patula*, *T. erecta*) | Nzhinzhi ṱhukhu tshena na zwikukumi zwi mamaho maṱari zwi a fhungudzea; nematodes dza midzi dzi a fhungudzea | Nzhinzhi ṱhukhu tshena dzo fhungudzea kha matamati kha ndingo dza nnḓu ya zwimela. Dzi fhungudza root-knot nematodes fhedzi musi dzo ṱavhiwa dzo ṱanganana sa zwiliṅwa zwa u fukedza (cover crop) lwa miṅwedzi ya 2 u swika 4 phanḓa ha tshiliṅwa tsha miroho, hu si zwimela zwi si gathi zwo phaḓalalaho. |
-| Nasturtium | I kokodza zwikukumi zwi mamaho maṱari kule na miroho | I shuma sa trap crop arali maṱari o ḓalaho zwikukumi a tshi bviswa. |
-| Basil | Nzhinzhi, thrips na nzhinzhi ṱhukhu tshena zwi a fhungudzea tsini na matamati | Mvelelo ṱhukhu kha thrips na nzhinzhi ṱhukhu tshena kha ndingo dziṅwe. |
-| Anyanisi, galiki, chives, leeks | Zwi tsireledza kherotsi na khabishi nga u dzumba muṅo wazwo | Zwi shuma zwiṱuku. Zwi ṱoḓa zwimela zwinzhi zwa lushaka lwa anyanisi, nahone zwi shuma zwavhuḓi musi zwi tshee zwiṱuku. |
-| Minti na spearmint | Zwisusu, zwikukumi zwi mamaho maṱari na zwipfufu zwa khabishi zwi a fhungudzea | Mivhigo ya vhalimi fhedzi. Minti i phaḓalala nga u ṱavhanya: i limeni kha poto kana thini. |
-| Rosemary na sage | Zwipfufu zwa khabishi na zwikukumi zwa kherotsi zwi a fhungudzea | Mivhigo ya vhalimi fhedzi. |
-| Wild wormwood (*Artemisia afra*, tshimela tsha sialala) na southernwood | Zwikukumi zwi mamaho maṱari na zwipfufu zwa khabishi zwi a fhungudzea; zwi shumiswa nga sialala u pandela zwikukumi | Mivhigo ya vhalimi na u shumiswa nga sialala. |
-| Lavender | I pandela zwikukumi nga u angaredza | Mivhigo ya vhalimi fhedzi. I kokodza ṋotshi nga maanḓa, zwine zwa thusa. |
-| Catnip | Zwikukumi zwi mamaho maṱari na zwikhokhonono zwi a fhungudzea | Mapfura ayo a pandela zwiṅwe zwikukumi kha ndingo; mvelelo ngadeni a i athu u khwaṱhisedzwa. |
-| Stinging nettle (tshimela tshi lumaho) | Zwikukumi zwi mamaho maṱari zwi kuvhangana khatsho mathomoni a khalaṅwaha zwa ṋea ladybird dza u thoma zwiḽiwa | Mivhigo ya vhalimi fhedzi. Ambarani magavhelo. |
+| Nawa | Mavhele, zwiṱambi, kherotsi, khabishi, khukhamba | Anyanisi, galiki, leeks |
+| Lushaka lwa khabishi | Anyanisi, seleri, bitiruthu, zwiṱambi, letisi, mihaṱa | Matamati, sitiroberi |
+| Kherotsi | Anyanisi, leeks, chives, phizi, letisi | — |
+| Phiriphiri | Kherotsi, anyanisi, basil, parsley | Zwiṱambi, lushaka lwa khabishi |
+| Mavhele | Phuri, nawa, phizi, khukhamba | — |
+| Lushaka lwa anyanisi | Kherotsi, letisi, bitiruthu, lushaka lwa khabishi, matamati | Phizi, nawa |
+| Phizi | Kherotsi, radishi, thanipi, mavhele, khukhamba | Lushaka lwa anyanisi |
+| Zwiṱambi | Nawa, mavhele, khabishi | Matamati, brinjals, phiriphiri, phuri, khukhamba |
+| Phuri, squash, bathanathi | Mavhele, nawa, radishi | Zwiṱambi |
+| Matamati | Basil, anyanisi, chives, kherotsi, parsley, marigolds | Zwiṱambi, brinjals |
 
-> **Ḓivhani:** Mitevhe ya kale (hu tshi katelwa na ya u thoma ya bugu ino) i ṅwala zwimela zwi pandelaho Japanese beetles, Mexican bean beetles, Colorado potato beetles, squash bugs na tomato hornworms. Hezwi ndi zwikukumi zwa Amerika Devhula zwi sa wanali Tshipembe tsha Afrika, ngauralo a zwo ngo ṅwalwa fhano. Rue na pyrethrum na zwone a zwo ngo ṅwalwa: rue i nga fhisa lukanda nga u vhavha musi hu na ḓuvha, nahone maluvha a pyrethrum ndi one ane tshivhulahi tsha zwikukumi tshi na khombo kha ṋotshi na khovhe tsha bva khao.
+> **Tsevhedzo:** Vhalimi vha wana uri sonobolomo dzi ongolowisa u aluwa ha zwimela zwi re tsini nadzo. Dzi limeni magumoni a ngade, hune dza kha ḓi ṋea ṋotshi zwiḽiwa.
 
-## Zwimela zwi kokodzaho zwikukumi zwi thusaho
+## Mishonga ya u pfafadza zwikukumi yo itwaho hayani
 
-Maluvha a ṋea zwiḽiwa zwikukumi zwine zwa langa zwikukumi zwi tshinyadzaho. Limani zwimela zwo ṱanganyiswaho zwine zwa vha na maluvha nga zwifhinga zwo fhambanaho zwa ṅwaha, uri hu dzule hu na zwiḽiwa. Maluvha manzhi a sialala a Afrika Tshipembe a shuma zwavhuḓi vhukuma kha hezwi.
+U pfafadza ndi nḓila ya u fhedzisa. Na mushonga wa u pfafadza "wa mupo" u vhulaha ladybird, hoverflies na ṋotshi zwe na shuma u zwi kokodza. Galiki, anyanisi na phiriphiri nga maanḓa zwi pandela zwikukumi nṱhani ha u zwi vhulaha, nahone munukho u a fhela, ngauralo mushonga u fanela u dovholwa.
 
-| Tshimela | Zwikukumi zwi thusaho zwine tsha zwi kokodza |
-|---|---|
-| Dill, coriander, caraway, anise na parsley zwi re na maluvha | Wasepe ṱhukhu, hoverflies, ladybird, lacewings |
-| Kherotsi dzo litshelwaho dzi tshi vha na maluvha | Wasepe ṱhukhu, hoverflies |
-| Yarrow | Wasepe ṱhukhu, hoverflies, ladybird |
-| Calendula (pot marigold) | Hoverflies na zwiṅwe zwikukumi zwinzhi zwi thusaho |
-| Marigold ya French na ya African | Hoverflies, wasepe ṱhukhu, ladybird, ṱhavhavhi |
-| Cosmos | Wasepe ṱhukhu, hoverflies, tachinid flies, ṋotshi |
-| Zinnia | Ladybird, wasepe ṱhukhu na nzhinzhi dzi thusaho, ṋotshi |
-| Sonobolomo (sunflower) | Hoverflies, lacewings, wasepe ṱhukhu, ṋotshi, ladybird |
-| Borage | Ṋotshi na zwiṅwe zwi phaḓaladzaho mupfumbu, wasepe, mantisi |
-| Chamomile | Hoverflies, wasepe ṱhukhu |
-| Lemon verbena | Mantisi, ladybird, wasepe ṱhukhu na nzhinzhi dzi thusaho |
-| Lovage | Wasepe; i ṋea zwikhokhonono zwa fhasi fhethu ha u dzumbama |
-| Lavender | Ṋotshi |
-| Spearmint i re na maluvha | Wasepe na nzhinzhi zwi ḽaho zwiṅwe; i ṋea ṱhavhavhi fhethu ha u dzumbama |
-| Purple coneflower (*Echinacea*) | Wasepe, nzhinzhi dzi thusaho, ṱhavhavhi, mantisi |
-| Dandelion | Ladybird, ṋotshi, wasepe ṱhukhu na nzhinzhi dzi thusaho |
-| Land cress | Ṋotshi; i ṋea zwikhokhonono zwa fhasi na ṱhavhavhi fhethu ha u dzumbama |
-| Nasturtium | I ṋea zwikhokhonono zwa fhasi na ṱhavhavhi fhethu ha u dzumbama; i kokodza zwikukumi zwi mamaho maṱari kule |
-| Gazania (ya sialala) | Ladybird, zwikukumi zwi ḽaho zwiṅwe, ṋotshi |
-| African daisies (*Arctotis*, *Osteospermum*, *Dimorphotheca* dza sialala) | Nekhitha ya zwikukumi zwinzhi zwi thusaho |
-| Pincushion flower (*Scabiosa* ya sialala) | Hoverflies, tachinid flies, ṋotshi |
-| Everlastings dza sialala (*Helichrysum*) | Wasepe ṱhukhu na nzhinzhi dzi thusaho, ṱhavhavhi |
+### Mushonga wa u pfafadza wa galiki, anyanisi na phiriphiri
 
-> **Ḓivhani:** Cosmos a si invasive species yo ṅwalwaho nga mulayo Afrika Tshipembe, fhedzi i phaḓalala nga u leluwa kha ḓaka ḽa mupo (veld) na tsini na dzibada. Remani ṱhoho dza maluvha phanḓa ha uri dzi wise mbeu arali ni tshi dzula tsini na mavu a mahatsi (grassland) a mupo. Goldenrod, tansy, sweet Annie na calliopsis zwa mutevhe wa kale a zwo ngo ṅwalwa ngauri zwi nga vha zwimela zwi sa ṱoḓei, nahone tshimela tsha lushaka lwa tsini lwa calliopsis (*Coreopsis lanceolata*) ndi tshimela tshi phaḓaladzeaho tsho ṅwalwaho nga mulayo.
+Uyu mushonga u pandela zwikukumi zwi ṱhoṱhomaho zwi ngaho aphids na zwivhungu zwiṱuku zwa maṱari. Sopho i u thusa u namatela kha maṱari.
 
-## Vhahura vhavhuḓi na vhahura vha si vhavhuḓi
-
-Tafula ḽi re fhasi ḽi bva kha tshenzhemo ya vhalimi. Zwinzhi zwaḽo a zwi athu u lingwa nga saintsi. Nyeletshedzo i re na vhuṱanzi vhunzhi ndi u fhambanya zwiliṅwa zwa **lushaka lu fanaho**, ngauri zwi kovhelana zwikukumi na malwadze. Sa tsumbo, zwiṱambi, matamati, brinjal na phiriphiri zwoṱhe zwi farwa nga malwadze a fanaho a maṱari (blights), a u shwa (wilts) na nematodes.
-
-| Tshiliṅwa | Vhahura vhavhuḓi | Zwi fhambanyeni na |
-|---|---|---|
-| Vowa (imifino, morogo) | Anyanisi, zwiṱambi, mavhele | — |
-| Asparagus | Matamati, parsley, basil | Anyanisi |
-| Nawa (dzi sa gonyi) | Zwiṱambi, khukhamba, mavhele, seleri, khabishi | Anyanisi, galiki, leeks, chives |
-| Nawa (dzi gonyaho) | Mavhele, kherotsi, sipinashi, letisi | Anyanisi, galiki, leeks, chives, bitiruthu, sonobolomo |
-| Bitiruthu | Anyanisi, khabishi, brokholi, letisi, kohlrabi | Nawa dzi gonyaho |
-| Lushaka lwa khabishi (khabishi, brokholi, kholifulawa, Brussels sprouts, kohlrabi) | Anyanisi, galiki, seleri, bitiruthu, zwiṱambi, letisi, sipinashi, mihaṱa i nukhaho, nawa dzi sa gonyi, phizi | Sitiroberi, matamati, nawa dzi gonyaho |
-| Brinjal (eggplant) | Nawa, phizi, anyanisi, letisi | Zwiṱambi, matamati (lushaka lu fanaho) |
-| Kherotsi | Phizi, letisi, chives, anyanisi, leeks | — |
-| Seleri | Leeks, matamati, anyanisi, kholifulawa, letisi | — |
-| Phiriphiri na phiriphiri i sa fhisi (sweet peppers) | Kherotsi, anyanisi, galiki, basil, parsley, letisi | Fennel, lushaka lwa khabishi, zwiṱambi |
-| Khukhamba | Nawa, mavhele, phizi, radishi, seleri | Zwiṱambi, sonobolomo |
-| Mavhele | Phuri, khukhamba, nawa, phizi, zwiṱambi | — |
-| Anyanisi, galiki, leeks, chives | Kherotsi, letisi, seleri, bitiruthu, lushaka lwa khabishi, matamati | Phizi, nawa |
-| Letisi | Kherotsi, anyanisi, galiki, radishi, nawa dzi sa gonyi, nawa dza sialala (cowpeas) | — |
-| Phizi | Kherotsi, radishi, thanipi, mavhele, khukhamba | Anyanisi, galiki, leeks |
-| Zwiṱambi | Nawa, mavhele, khabishi | Matamati, brinjal, phiriphiri (lushaka lu fanaho); phuri, squash, khukhamba, sonobolomo |
-| Phuri, squash, bathanathi | Mavhele, nawa, radishi, okhura, phizi | Zwiṱambi |
-| Radishi | Phizi, letisi, khukhamba, squash, khabishi | — |
-| Sipinashi na Swiss chard | Phizi, seleri, anyanisi, leeks, lushaka lwa khabishi | — |
-| Sitiroberi | Nawa, borage, sipinashi, letisi, anyanisi | Lushaka lwa khabishi |
-| Matamati | Basil, chives, anyanisi, asparagus, kherotsi, parsley, marigold | Zwiṱambi, brinjal (lushaka lu fanaho); fennel |
-| Thanipi | Phizi | — |
-
-> **Tsevhedzo:** Vhalimi vha amba uri fennel na sonobolomo zwi nga ita uri zwiṅwe zwimela zwi re tsini nazwo zwi aluwe zwiṱuku-zwiṱuku. Zwi limeni kha magumo a ngade nṱhani ha vhukati ha ndima ya miroho.
-
-## Mushonga wa u pfafadza zwikukumi wo itwaho hayani
-
-Mushonga wa u pfafadza wo itwaho hayani ndi nḓila ya u fhedzisela. Na mushonga wa "mupo" u nga vhulaha ladybird, ṋotshi na vhaṅwe vhathusi vhe na shuma nga maanḓa u vha kokodza. Pfafadzani zwimela zwo rwiwaho fhedzi, nahone fhedzi musi u ṱumula nga zwanḓa na dziṅwe nḓila zwi sa lingani.
-
-Zwimela zwinzhi zwi nukhaho nga maanḓa zwi nga limiwa u mona na ngade nahone zwa shumiswa kha mushonga wa u pfafadza kana sa "mulch i nukhaho" i vhewaho u mona na miroho. Galiki, anyanisi na phiriphiri ndi zwone zwi shumiswaho nga maanḓa. Kanzhi zwi pandela zwikukumi nṱhani ha u zwi vhulaha, nahone muṅo u a fhela, ngauralo mushonga u tea u pfafadzwa hafhu.
-
-### Mushonga wa galiki, anyanisi na phiriphiri
-
-Mushonga uyu nga maanḓa u pandela zwikukumi zwi sa khwaṱhi zwi ngaho zwikukumi zwi mamaho maṱari na zwivhungu zwa maṱari zwiṱuku. Tshisibe tshi thusa mushonga uri u namatele kha maṱari.
-
-Zwine na zwi ṱoḓa:
+Ni ṱoḓa:
 
 - anyanisi 1 ya vhukati
-- zwipiḓa zwa galiki (cloves) 4
-- khapu 2 dza maṱari maswa a minti (kana marotholi a 20 a mapfura a peppermint)
-- sipuni khulwane 2 dza phiriphiri yo kuyiwaho kana cayenne pepper, kana tshanḓa tsho ḓalaho tsha phiriphiri ntswa dzi fhisaho
-- sipuni khulwane 2 (30 ml) dza tshisibe tsha maḓi tshi sa fhisi kana tshisibe tsha bara tsho no nokiswaho maḓini
-- lithara dza 3 dza maḓi
+- zwipiḓa zwa 4 zwa galiki
+- khomishi 2 dza maṱari maswa a minti, kana maḓontsi a 20 a mapfura a peppermint
+- malebula mahulwane 2 a phaudara ya phiriphiri kana cayenne pepper, kana tshanḓa tshithihi tsha phiriphiri ntswa dzi fhisaho
+- malebula mahulwane 2 (30 ml) a sopho ya maḓi i si na maanḓa, kana tshisibe tshi songo ṱanganywaho tsho nyokedzwaho maḓini, tshi si na bleach, tshibvisa-mafhuṱa kana munukho wa maanḓa
+- litha dza 3 dza maḓi
 
 Nḓila:
 
-1. Ambarani magavhelo a raba nahone ni tsireledze maṱo aṋu.
-2. Remani anyanisi, galiki, minti na phiriphiri. Zwi pwasheni nga mutuli na mutsi, kana ni zwi pwashe nga tshipwashi (blender) na maḓi a lithara 1.
-3. Litshani zwo ṱanganyiswaho zwi tshi nwa lwa awara dzi si gathi, zwo fukwa.
-4. Zwi seseni nga lappi ṱhukhu kana tshisesi.
-5. Engedzani maḓi o salaho (tsini na lithara dza 2) ni ṱanganye tshisibe nga vhuronwane.
-6. Shelani kha bodelo ḽa u pfafadza ḽo ṅwaliwaho zwavhuḓi.
-7. Lingani u thoma kha maṱari a si gathi. Lindelani ḓuvha ḽithihi u swika maḓuvha mavhili. Arali maṱari a sumbedza mavhala o fhiswaho kana matswuku, engedzani maḓi phanḓa ha u u shumisa.
-8. Pfafadzani nṱha na fhasi ha maṱari a zwimela zwo rwiwaho.
+1. Ambarani magilavu a rabara ni vhee zwanḓa kule na maṱo. Phiriphiri na galiki zwi a swa.
+2. Ṱhukhulani anyanisi, galiki, minti na phiriphiri. Zwi kwasheni kha mutuli na mutsi, kana ni zwi ṱanganye nga mutshini na hu ḓo nga litha 1 ya maḓi.
+3. Fukedzani ni litshe zwi nwe lwa awara dzi si gathi.
+4. Sefani nga lappi ṱhukhu kana tshisefi.
+5. Engedzani litha dziṅwe dza 2 dza maḓi ni ṱanganye sopho zwiṱuku-zwiṱuku.
+6. Zwi sheleni kha bodelo ḽa u pfafadza ni ṅwale dzina. Ni songo vhuya na vhulunga mushonga kha bodelo ḽa zwinwiwa kana ḽa mafhi.
+7. U lingeni kha maṱari a si gathi ni lindele ḓuvha ḽithihi u swika mavhili. Arali maṱari a tshi vha na fhethu ho swaho kana ho seaho, engedzani maḓi.
+8. Pfafadzani nṱha na fhasi ha maṱari a zwimela zwo ṱaselwaho fhedzi, nga madekwana musi ṋotshi dzo no litsha u fhufha. Ni songo pfafadza maluvha o vulea, kana zwimela zwi khou swaba nga mufhiso wa ḓuvha.
 
-U shumiseni luthihi kana luvhili nga vhege, na hafhu nga murahu ha mvula khulwane. Itani mushonga muswa tshifhinga tshiṅwe na tshiṅwe; u a tshinyala nga maḓuvha a si gathi.
+U shumiseni luthihi kana luvhili nga vhege, na nga murahu ha mvula khulwane. Itani muswa tshifhinga tshiṅwe na tshiṅwe, ni ṱanzwe miroho yo pfafadzwaho phanḓa ha u i ḽa.
 
-> **Tsireledzo:** Mushonga wa phiriphiri na galiki u fhisa maṱo na lukanda. Ambarani magavhelo na zwa u tsireledza maṱo (maṱo a ḓuvha kana goggles) nahone ni songo kwama tshifhaṱuwo musi ni tshi khou shuma. Ni songo pfafadza nga ḓuvha ḽi re na muya. Vhana na zwipuka zwi tshini kule. Vhulungani mushonga kha bodelo ḽo ṅwaliwaho, kule na vhana, nahone ni songo u vhulunga kha bodelo ḽa cooldrink kana ḽa mafhi. Ṱanzwani miroho yoṱhe yo pfafadzwaho zwavhuḓi phanḓa ha u i ḽa.
-
-> **Tsireledzo:** Tsireledzani ṋotshi. Pfafadzani nga masiari a ṱhaṱhawedzi kana nga madekwana, musi ṋotshi dzo no litsha u fhufha, nahone ni songo pfafadza maluvha o vulaeaho. Tshisibe na phiriphiri zwi nga dovha zwa vhulaha zwivhungu zwa ladybird na zwa hoverflies, ngauralo pfafadzani zwimela zwo rwiwaho fhedzi.
-
-> **Tsevhedzo:** Shumisani tshisibe tshi sa fhisi, tshi si na bleach, zwa u bvisa mafhura kana muṅo u nukhaho nga maanḓa. Tshisibe tsha maḓi tsha u ṱanzwa ndilo tshi re na maanḓa tshi nga fhisa maṱari. Ni songo pfafadza nga tshifhinga tsha mufhiso wa ḓuvha kana kha zwimela zwo shwaho nga gomelelo.
-
-### Ni songo ita mushonga wa fola
-
-Vhaṅwe vhalimi vha nwisa fola, fola ḽa u fema (snuff) kana zwiṱuḓana zwa sigarete maḓini u ita mushonga wa u pfafadza. **Ni songo ita hezwi.** Nikhotini ine ya vha kha fola ndi tshivhulahi tshi re na maanḓa. I dzhena lukandani nga u leluwa nahone i nga vhaisa nga maanḓa, kana ya vhulaha, muthu ane a khou pfafadza, nga maanḓa ṅwana ane a i nwa. I dovha ya vha na khombo khulwane kha ṋotshi na zwiṅwe zwikukumi zwi thusaho, zwifuwo zwa hayani na khovhe. Nikhotini a i tsha tendelwa sa tshivhulahi tsha zwikukumi kha mashango manzhi ngauri i na khombo khulwane.
-
-> **Tsireledzo:** Ni songo vhuya na ita mushonga wa u pfafadza nga fola, mitshelo ya syringa, moonflower (*Datura*) kana zwiṅwe zwimela zwi re na tshivhulahi. Arali muṅwe a mila mushonga muṅwe na muṅwe wa ngade, iyani kiliniki nga u ṱavhanya ni hwale bodelo naḽo.
+**Nikhotini** i vhulaha vhathu na zwipuka khathihi na zwikukumi, ngauralo a ri iti mushonga wa u pfafadza wa fola kana wa fola ya u daha. I pfuka lukanda lwa muthu a pfafadzaho, nahone ṅwana a u nwaho a nga fa. Nahone a ri iti mishonga ya u pfafadza nga mbeu dza syringa kana moonflower (*Datura*), zwine na zwone zwa vha zwivhulahi.
 
 ## Crop rotation
 
-Crop rotation i amba u shandukisa tshiliṅwa tshi limiwaho kha tshipiḓa tshithihi tsha mavu u bva kha khalaṅwaha iṅwe u ya kha i tevhelaho. Kha vhulimi ha mupo, crop rotation ndi iṅwe ya nḓila khulwane dza u thivhela zwikukumi na malwadze.
+**Crop rotation** (u shandukisa zwiliṅwa nga khalaṅwaha kha ndima) zwi amba u pfukisela lushaka luṅwe na luṅwe lwa zwiliṅwa kha ndima yo fhambanaho khalaṅwaha iṅwe na iṅwe, uri zwikukumi na malwadze zwi songo kuvhangana. Limani tshiliṅwa tshi fanaho fhethu hu fanaho ṅwaha nga ṅwaha, mavu a ḓo xelelwa nga zwiḽiwa zwi fanaho tshifhinga tshoṱhe, musi zwikukumi zwa mavuni zwi tshi tou lindela zwiḽiwa zwazwo zwi tshi vhuya. Rotation i kwasha mutevhe wa vhutshilo hazwo nahone i litsha mavu a tshi vusuluwa.
 
-Arali na lima tshiliṅwa tshi fanaho fhethu hu fanaho ṅwaha nga ṅwaha:
+### Rotation nga lushaka lwa zwimela
 
-- mavu a xelelwa nga zwiḽiwa zwa zwimela zwi fanaho tshifhinga tshiṅwe na tshiṅwe
-- zwikukumi na malwadze zwi dzulaho mavuni zwi a anda, nahone zwa fhira u bva kha khalaṅwaha iṅwe u ya kha i tevhelaho
+Zwimela zwa lushaka luthihi zwi ṱoḓa zwiḽiwa zwi fanaho nahone zwi tambula nga zwikukumi zwi fanaho. Lindelani miṅwaha i si ṱhukhu ha miraru, zwavhuḓi miṋa, phanḓa ha musi lushaka lu tshi vhuyelela kha ndima. Rotation i leluwaho ya ndima nṋa:
 
-Crop rotation i tshinyadza mutevhe wa vhutshilo wa zwikukumi na malwadze, i ita uri mavu a ḓivhuedzedze, nahone i shumisa naiṱirodzheni ine **dzi-legume** (zwimela zwa lushaka lwa nawa) dza i sia mavuni.
+1. **Ṅwaha wa 1:** lushaka lwa khabishi (tsumbo, khabishi)
+2. **Ṅwaha wa 2:** lushaka lwa kherotsi kana midzi (tsumbo, kherotsi)
+3. **Ṅwaha wa 3:** lushaka lwa nawa (tsumbo, nawa)
+4. **Ṅwaha wa 4:** lushaka lwa anyanisi (tsumbo, anyanisi)
 
-Hu na nḓila mbili khulwane dza u pulana crop rotation.
-
-### Crop rotation nga lushaka lwa zwimela
-
-Zwimela zwa lushaka lu fanaho kanzhi zwi ṱoḓa zwiḽiwa zwi fanaho nahone zwi farwa nga zwikukumi na malwadze zwi fanaho. Ngauralo ri pfukisela lushaka luṅwe na luṅwe kha ndima ntswa khalaṅwaha iṅwe na iṅwe, ra lindela miṅwaha miraru nga u ṱukusa, kana miṋa zwi khwiṋe, phanḓa ha uri lushaka lu fanaho lu vhuyelele kha ndima i fanaho.
-
-Katelani legume luthihi nga u ṱukusa kha khalaṅwaha iṅwe na iṅwe dza 4. Crop rotation i leluwaho ya ndima 4 i nga vha:
-
-1. **Ṅwaha wa 1:** lushaka lwa khabishi (sa tsumbo khabishi)
-2. **Ṅwaha wa 2:** lushaka lwa kherotsi kana zwimela zwa midzi (sa tsumbo kherotsi)
-3. **Ṅwaha wa 3:** dzi-legume (sa tsumbo nawa)
-4. **Ṅwaha wa 4:** lushaka lwa anyanisi (sa tsumbo anyanisi)
-
-Nḓila iyi i shuma zwavhuḓi kha vhalimi vha u rengisa vhane vha ṱavha lushaka luthihi lwa miroho kha ndima iṅwe na iṅwe.
+Izwi zwi tea vhalimi vha ṱavhaho tshiliṅwa tshithihi kha ndima.
 
 | Lushaka | Zwiliṅwa |
 |---|---|
-| Lushaka lwa khabishi (Brassicaceae) | Khabishi, kholifulawa, brokholi, khabishi ya China, kale, rape, mustard greens, thanipi, radishi |
-| Lushaka lwa tamati (Solanaceae) | Matamati, zwiṱambi, phiriphiri i sa fhisi, phiriphiri, brinjal (eggplant) |
-| Lushaka lwa kherotsi (Apiaceae) | Kherotsi, seleri, parsley, coriander, dill |
-| Lushaka lwa bitiruthu na vowa (Amaranthaceae) | Swiss chard, bitiruthu, sipinashi, vowa (imifino, morogo) |
-| Lushaka lwa phuri (Cucurbitaceae) | Khukhamba, phuri, bathanathi, squash, mamelone, khavhe |
-| Lushaka lwa nawa (Fabaceae) | Phizi, nawa, nawa dza sialala (cowpeas), nḓuhu, phonḓa (jugo beans, Bambara groundnuts), soya |
-| Lushaka lwa anyanisi (Amaryllidaceae) | Anyanisi, leeks, galiki, anyanisi ṱhukhu (spring onions), chives |
-| Lushaka lwa hatsi (Poaceae) | Mavhele, mavhele a swiri (sweetcorn), mafhi, mufhoho |
-| Dziṅwe tshaka | Letisi (lushaka lwa daisy), patata (lushaka lwa morning-glory), okhura (lushaka lwa hibiscus), asparagus |
+| Lushaka lwa khabishi | Khabishi, kholifulawa, brokholi, kale, rape, mustard greens, thanipi, radishi |
+| Lushaka lwa tamati | Matamati, zwiṱambi, phiriphiri, phiriphiri dzi fhisaho, brinjals |
+| Lushaka lwa kherotsi | Kherotsi, seleri, parsley, coriander, dill |
+| Lushaka lwa bitiruthu | Swiss chard, bitiruthu, sipinashi, vowa (muroho) |
+| Lushaka lwa phuri | Khukhamba, phuri, bathanathi, squash, mamelone, khavhe |
+| Lushaka lwa nawa (dzi-legume) | Phizi, nawa, nawa dza sialala, nḓuhu, phonḓa, soya |
+| Lushaka lwa anyanisi | Anyanisi, leeks, galiki, anyanisi dza ṱhaṱula, chives |
+| Lushaka lwa mahatsi | Mavhele, mavhele a swigiri, mafhi, mhuṱa |
 
-> **Tsevhedzo:** Zwiṱambi ndi zwa lushaka lwa tamati. Ni songo ṱavha zwiṱambi hune ha vha ho mela matamati, phiriphiri kana brinjal khalaṅwaha yo fhiraho, kana zwa ita nga iṅwe nḓila. Hune malwadze a bakitheria a u shwa (bacterial wilt) kana nematodes zwa vha thaidzo, siani tshifhinga tshilapfu u fhira.
+Zwiṱambi ndi zwa lushaka lwa tamati. Ni songo vhuya na tevhelisa matamati, phiriphiri kana brinjals nga zwiṱambi, kana nga iṅwe nḓila. Hune malwadze a bakitheria a u swaba kana nematodes zwa vha thaidzo, siani tshifhinga tshilapfu u fhira.
 
-### Crop rotation nga ṱhoḓea dza zwiḽiwa
+### Rotation u ya nga ṱhoḓea dza zwiḽiwa
 
-Ri nga dovha ra kovhekanya zwiliṅwa nga zwiḽiwa zwine zwa zwi dzhia mavuni:
+Ri nga dovha ra ṱanganya zwiliṅwa u ya nga uri zwi ṱoḓa zwiḽiwa zwingafhani:
 
-- **Zwi ḽaho nga maanḓa** zwi ṱoḓa mavu o nonaho. Tsumbo: khabishi, brokholi, kholifulawa, mavhele, matamati, zwiṱambi, phuri na bathanathi.
-- **Zwi ḽaho zwa vhukati na zwi ḽaho zwiṱuku** zwi ṱoḓa zwiṱuku. Tsumbo: letisi, Swiss chard, kherotsi, bitiruthu, anyanisi, galiki na radishi.
-- **Zwi fhaṱaho mavu** ndi dzi-legume: nawa, phizi, nawa dza sialala (cowpeas), nḓuhu na broad beans. Bakitheria dzi re kha mathutha maṱuku (nodules) kha midzi yazwo dzi dzhia naiṱirodzheni muyani dza i ita uri i wanale kha zwimela.
+- **Zwi ḽaho zwinzhi** zwi ṱoḓa mavu o nonaho: khabishi, brokholi, kholifulawa, mavhele, matamati, zwiṱambi, phuri na bathanathi.
+- **Zwi ḽaho zwiṱuku na zwa vhukati** zwi ṱoḓa zwiṱuku: letisi, Swiss chard, kherotsi, bitiruthu, anyanisi, galiki na radishi.
+- **Zwi fhaṱaho mavu** ndi **dzi-legume** (zwimela zwa lushaka lwa nawa): nawa, phizi, nawa dza sialala, nḓuhu na broad beans. Bakitheria kha zwiṱumba zwiṱuku (nodules) zwi re midzini yazwo zwi dzhia naiṱirodzheni muyani zwa i ita uri i wanale kha zwimela.
 
-Crop rotation i leluwaho ya maḓanḓa mararu ndi:
+Shandukisani nga maga mararu:
 
-1. Limani zwi ḽaho nga maanḓa nga murahu ha legume, kana nga murahu ha u engedza compost kana manyaga manzhi.
-2. Nga murahu limani zwi ḽaho zwiṱuku.
-3. Nga murahu limani dzi-legume u fhaṱa hafhu mavu, ni thome hafhu.
+1. Limani zwi ḽaho zwinzhi nga murahu ha dzi-legume, kana nga murahu ha **compost** (malaṱwa a zwimela na zwipuka o vholaho) nnzhi kana manyaga.
+2. Zwi tevhelisani nga zwi ḽaho zwiṱuku.
+3. Nga murahu limani dzi-legume u fhaṱa mavu hafhu, ni thome hafhu.
 
-Hezwi zwi thivhela uri zwiḽiwa zwa zwimela zwi fanaho zwi fhele khalaṅwaha iṅwe na iṅwe. Zwi dovha zwa tea ndima dzo ṱanganyiswaho dzi re na zwiliṅwa zwinzhi (u ṱanganya zwiliṅwa, intercropping). Khethani tshigwada tsha zwimela zwi thusanaho kha tshigwada tshiṅwe na tshiṅwe ni pfukise tshigwada kha crop rotation ya maḓanḓa a 3 kana a 4.
+Izwi zwi tea ndima dzo ṱanganyiswaho: pfukisani tshigwada tsha zwiliṅwa zwi thusanaho nga maga khathihi.
 
-> **Ḓivhani:** Naiṱirodzheni nnzhi ine dzi-legume dza i dzhia muyani i ya kha mbeu dzadzo. Musi ni tshi kaṋa nawa dzo omaho kana nḓuhu, nnzhi yayo i bva tsimuni. U ṋea mavu zwiḽiwa, litshani midzi mavuni ni humisele maṱari na thanda kha ndima kana kha mulundu wa compost.
+Vhunzhi ha naiṱirodzheni ine legume ya i engedza i ya kha mbeu dzayo nahone i bva na khaṋo. Siani midzi mavuni ni vhuise thanda na maṱari kha ndima kana kha mulundu wa compost.
+
+## Lingani
+
+Sedzani ndima nthihi ino vhege, ni ṱangane na zwivhumbwa zwine zwa i kovhela na inwi.
+
+1. Nangani ndima nthihi ya miroho. Dzhiani bugwana.
+2. Tshimbilani nayo zwiṱuku-zwiṱuku nga matsheloni a vhukuma kana nga madekwana. Pendelani maṱari a fumi a tshiliṅwa tshiṅwe na tshiṅwe.
+3. Ṅwalani tshivhumbwa tshiṅwe na tshiṅwe tshine na tshi vhona, tshi tshinyadzaho kana tshi thusaho. Olani zwine na sa ḓivhe madzina azwo.
+4. Ṅwalani tshinyalelo iṅwe na iṅwe: maburanngo, mafasiṱere, maṱari o monyeaho, zwimela zwiṱuku zwo remiwaho, manyaga kha mulomo wa mavhele.
+5. Kha tshikukumi tshiṅwe na tshiṅwe tshi tshinyadzaho, nangani lwendo lwa u thoma u bva kha ino ndima ni lu ite ṋamusi.
+6. Zwalani mutalo mupfufhi wa coriander, dill kana marigolds magumoni a ndima.
+7. Sedzani ndima i fanaho hafhu nga murahu ha vhege ni vhambedze zwiṅwalwa zwaṋu.
 
 ## Zwithu zwa ndeme
 
-- Zwikukumi zwi tshinyadzaho ndi tshipiḓa tsha ecosystem. U anda hazwo ndi tshiga tsha u sa lingana: lafhani zwi ḓisaho thaidzo, hu si zwiga fhedzi.
-- Mishonga ya u pfafadza ya tshivhulahi i vhulaha dzi-predator khathihi na zwikukumi zwi tshinyadzaho, nahone kanzhi i hulisa thaidzo dza zwikukumi.
-- Sedzani zwiliṅwa zwaṋu luvhili nga vhege, ni ḓivhe zwikukumi zwi sa athu u anda, nahone ni zwi bvise nga zwanḓa hune zwa konadzea.
-- Ḓivhani zwikukumi zwihulwane zwa fhethu haṋu: zwikukumi zwi mamaho maṱari, zwivhungu zwi remaho zwimela, tshivhungu tsha mitshelo tsha Afrika, diamond-back moth, zwivhungu zwa mmbi, nzhinzhi dza mitshelo, khumba na mbevha dza fhasi ha mavu.
-- Tuṱuwedzani dzi-predator nga maluvha, maḓi, mulch, matombo na fhethu ha ḓaka.
-- Companion planting i a thusa, fhedzi zwinzhi zwine zwa ambiwa ndi mivhigo ya vhalimi fhedzi. Dzi-trap crop na maluvha a dzi-predator ndi zwone zwi re na vhuṱanzi vhunzhi.
-- Fhambanyani zwiliṅwa zwa lushaka lu fanaho, nahone ni reidzane tshaka uri na luthihi lu sa vhuyelele kha ndima i fanaho lwa miṅwaha miraru u swika miṋa.
-- Shumisani mushonga wa u pfafadza wo itwaho hayani fhedzi sa nḓila ya u fhedzisela, ni ambare magavhelo na zwa u tsireledza maṱo, nahone ni pfafadze nga madekwana kule na maluvha.
-- Ni songo vhuya na ita kana na shumisa mushonga wa fola (nikhotini).
+- U anda ha zwikukumi ndi tshiga tsha u sa linganela. Lafhani tshiitisi, hu si zwiga fhedzi.
+- Tshivhulahi tshi vhulaha dzi-predator khathihi na zwikukumi zwi tshinyadzaho, nahone kanzhi tshi ita uri thaidzo i vhe khulwane.
+- Sedzani luvhili nga vhege, wanani zwikukumi nga u ṱavhanya ni zwi bvise nga zwanḓa, nga zwithivheli kana nga trap crop.
+- Ṋeani vhathusi zwiḽiwa nga maluvha, maḓi, mulch na matombo, ni fhambanye lushaka lwa zwiliṅwa lu fanaho nahone ni lu pfukise.
+- Pfafadzani sa nḓila ya u fhedzisa fhedzi, nga madekwana nahone kule na maluvha. A ri vhuyi ra ita mushonga wa u pfafadza wa fola.
+
+Khalaṅwaha nga khalaṅwaha, mutevhe wa vhathusi kha bugwana yaṋu u a lapfa. U sedzeni u tshi aluwa, ni litshe tshipfafadzi tshi tshi dzula tshi tshi ḓala mafhuri.
