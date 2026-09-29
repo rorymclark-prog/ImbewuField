@@ -121,7 +121,7 @@ Tlhahong ha ho matlakala: seo karolo e nngwe e se ntshang ke seo e latelang e se
 
 - **Masalla a kitjhene** a fepa diboko, mme ke motswako wa bohlokwa o "motala" (o nang le naetrojene e ngata) qubung ya compost. Compost ke masalla a dimela le diphoofolo a bodileng ho fetoha dijo tse ntsho, tse qhalakanang tsa mobu.
 - **Jwang bo kutilweng** bo etsa mulch ho potoloha dimela tse nyane. Bo boloka mobu o pholile o le mongobo mme bo thibela mefoka. Bo hasanye ka mokato o mosesane kapa o bo tlohele bo ome pele, hobane mokato o motenya wa jwang bo botala o a kgomarelana mme o a futhumala.
-- **Greywater** ke metsi a sebedisitsweng a tswang bateng, shawareng le disinking. A ya ka tlasa mulch difateng tsa ditholwana, le ka mohla e seng hodima morogo oo o o jang o le tala, mme metsi a kitjhene kapa a ho hlatswa dinapi ha a kenngwe ho ona le ka mohla. Sebedisa disepa tse bonolo tse nang le letswai le lenyane.
+- **Greywater** ke metsi a sebedisitsweng a tswang bateng, shawareng le disinking. A ya ka tlasa mulch difateng tsa ditholwana, le ka mohla e seng hodima moroho oo o o jang o le tala, mme metsi a kitjhene kapa a ho hlatswa dinapi ha a kenngwe ho ona le ka mohla. Sebedisa disepa tse bonolo tse nang le letswai le lenyane.
 
 ### 7. Rala ho tloha mekgweng ho ya dintlheng
 

@@ -150,7 +150,7 @@ O ka reka digester kapa wa e aha ka ditanka, diphaephe le dikopanyi tsa lebenkel
 4. E boloke e futhumetse. Dibaktheria di sebetsa hantle ka ho fetisisa ho hoo e ka bang 30 ho isa ho 38 °C mme di etsa kgase e nyane haholo ka tlase ho hoo e ka bang 15 °C. Highveld le Lesotho, e pate, e kenye insulation kapa o behe tonele e nyane ya polasetiki hodima yona.
 5. Leka dikopano hore na ha di dutle ka metsi a sesepa, moo dibudulana di bontshang ho dutla. Boloka malakabe hole le digester le diphaephe, pheha ka kitjheneng e kenang moya hantle, mme o kwale pompo ya kgase kamora ho pheha.
 6. Kwahela dikoti tsa ho kenya le tsa ho ntsha. Le ka mohla o se ke wa kena ka hara digester kapa sekoti, esita le se se nang letho: dikgase tse ka hare di ka bolaya.
-7. Tlohela slurry e eme kapa o e etse compost dibeke tse mmalwa. Ebe o e beha difateng tsa ditholwana le dijalong tseo o di phehang, le ka mohla e seng hodima morogo oo o o jang o le tala.
+7. Tlohela slurry e eme kapa o e etse compost dibeke tse mmalwa. Ebe o e beha difateng tsa ditholwana le dijalong tseo o di phehang, le ka mohla e seng hodima moroho oo o o jang o le tala.
 
 ## Leka sena
 

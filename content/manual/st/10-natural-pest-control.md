@@ -116,7 +116,7 @@ Dikgofu (le tse se nang dikgaketla) di phela dibakeng tse mongobo mme di ja makg
 4. Kgothaletsa dihwaswa, mafaru, dinonyana le di-ground beetle.
 5. Hula mulch ho e tlosa dimeleng tse nyane ho fihlela di tiile.
 
-Dikgofu di ka jara rat lungworm, seboko se senyane se phelang ka ditweba Afrika Borwa se ka kudisang batho haholo. Rwala ditlelafo kapa o hlatswe matsoho kamora ho di bokella, mme o hlatswe morogo hantle pele o o ja. Ha re sebedise di-pellet tsa dikgofu: di kgoba dintja le dikatse chefo hammoho le dikgofu.
+Dikgofu di ka jara rat lungworm, seboko se senyane se phelang ka ditweba Afrika Borwa se ka kudisang batho haholo. Rwala ditlelafo kapa o hlatswe matsoho kamora ho di bokella, mme o hlatswe moroho hantle pele o o ja. Ha re sebedise di-pellet tsa dikgofu: di kgoba dintja le dikatse chefo hammoho le dikgofu.
 
 ### Dinonyana
 
@@ -266,7 +266,7 @@ Sena se loketse balemi ba lemang sejalo se le seng bething ka nngwe.
 | Lelapa la khabetjhe | Khabetjhe, cauliflower, broccoli, kale, rape, mustard greens, turnip, radish |
 | Lelapa la tamati | Ditamati, ditapole, pelepele e monate, pelepele e bohale, di-brinjal |
 | Lelapa la sehwete | Dihwete, celery, parsley, coriander, dill |
-| Lelapa la beteruti | Swiss chard, beteruti, sepinatjhe, theepe (morogo) |
+| Lelapa la beteruti | Swiss chard, beteruti, sepinatjhe, theepe (moroho) |
 | Lelapa la mokopu | Dikomkomere, mekopu, butternut, squash, dimelone, mahapu |
 | Lelapa la dinawa (di-legume) | Dierekisi, dinawa, cowpea, matokomane, ditloo, soya |
 | Lelapa la eie | Dieie, di-leek, konofolo, eie e tala, chives |

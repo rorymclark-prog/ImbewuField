@@ -1,6 +1,6 @@
 # Dijalo tsa meroho le dijalo tsa sehlooho
 
-Lelapa le ja letsatsi le letsatsi, kahoo serapa se lokela ho le fepa letsatsi le letsatsi. Dijo tse ding re di kga ka letsoho le le leng ka nako: morogo, parsley, sekotlolo sa dinawa. Dijo tse ding re di kotula hang ka sehla mme re a di boloka: poone e omileng, dinawa, patata.
+Lelapa le ja letsatsi le letsatsi, kahoo serapa se lokela ho le fepa letsatsi le letsatsi. Dijo tse ding re di kga ka letsoho le le leng ka nako: moroho, parsley, sekotlolo sa dinawa. Dijo tse ding re di kotula hang ka sehla mme re a di boloka: poone e omileng, dinawa, patata.
 
 Mofuta ka mong wa dijo o hloka serapa sa ona, sebakeng sa sona. Beha ka nngwe moo e lokelang ho ba teng mme polasi yohle e sebetsa ka boitekitso bo fokolang.
 
@@ -42,7 +42,7 @@ Serapa sa kitjhene se ho **Zone 1**, dikgato tse mmalwa ho tloha monyako wa kitj
 
 Lema seo o se sebedisang letsatsi le letsatsi:
 
-- morogo le makgasi a salate ao o ka a **kgang mme a mele hape** (kga makgasi a mmalwa mme o tlohele semela se mele hape): sepinatjhe, Swiss chard, lettuce
+- moroho le makgasi a salate ao o ka a **kgang mme a mele hape** (kga makgasi a mmalwa mme o tlohele semela se mele hape): sepinatjhe, Swiss chard, lettuce
 - dinawa le dierekisi
 - ditamati tse nyane (cherry tomatoes)
 - ditlama tsa ho pheha: parsley, coriander, eie e tala, thyme
