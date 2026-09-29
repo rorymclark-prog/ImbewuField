@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/food-forest.ts.paired-draft.json",
-  "pairedSourceSha256": "3420881ae56d25c48ff7293656f9fa6cf611e4635aa21481b8f2ca0c570f5ab0",
+  "pairedSourceSha256": "845248d6166fe2b7e332f8a23940af9feb45c0975ae9cb04b0a30b7248bf3c74",
   "englishSource": "docs/narration/food-forest.en.md",
   "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
   "slides": [
@@ -63,8 +63,8 @@
       "slide": 8,
       "path": "public/course-decks/food-forest/ts/slide-08.webp",
       "pixels": "1440x5400",
-      "bytes": 652682,
-      "sha256": "104a2b9608b56fe07a9961ec5a90a35cef2d1117b82faadf6c0dffbc8bf445a1"
+      "bytes": 659646,
+      "sha256": "a6a7ebf152801b2e72d0cd5481e03d5f8ea5d6cb14e19a3b07e62423b901734a"
     },
     {
       "slide": 9,
@@ -98,8 +98,8 @@
       "slide": 13,
       "path": "public/course-decks/food-forest/ts/slide-13.webp",
       "pixels": "1440x5400",
-      "bytes": 601906,
-      "sha256": "2781876147d33c9fc7b093edceebbde6adfcb3f9dbd616e8f27c9d3b054d10f9"
+      "bytes": 602956,
+      "sha256": "ed5fc8ed00aa2005d69fcaf4ccf3f0b73c840b9a2eab670fc2a53f07d9c16789"
     },
     {
       "slide": 14,
@@ -163,7 +163,7 @@
       "slide": 8,
       "path": "docs/media/food-forest/qa/ts-slide-08-390.jpg",
       "pixels": "390x1463",
-      "sha256": "3bae96bc816b9656d0c9a9612f378afaa42f5ea9908efefdde8408e4d29aad76"
+      "sha256": "43321becee56d4391aac5c597798c5dc37503a0b856e9eaefcdc4ba78de09f94"
     }
   ],
   "note": "All 20 silent frames pair the unchanged English illustration and exact English source. Slides 1–4 now carry fuller marked Xitsonga machine-draft wording; later held passages remain visibly English. No Xitsonga narration or farming approval is claimed."

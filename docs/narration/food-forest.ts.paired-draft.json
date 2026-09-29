@@ -254,7 +254,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nhlayiso ya cinca loko swimilana swi ri karhi swi kula.",
+          "provenance": "unreviewed-machine-draft; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -390,7 +392,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Katsa indigenous plants leti faneleke ndhawu ya wena.",
+          "provenance": "unreviewed-machine-draft; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {

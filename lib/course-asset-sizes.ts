@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1780 files, 647.9 MB total.
+// 1780 files, 648.1 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -637,12 +637,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/st/slide-05.webp': 406198,
   '/course-decks/food-forest/st/slide-06.webp': 343362,
   '/course-decks/food-forest/st/slide-07.webp': 298174,
-  '/course-decks/food-forest/st/slide-08.webp': 650546,
+  '/course-decks/food-forest/st/slide-08.webp': 653946,
   '/course-decks/food-forest/st/slide-09.webp': 290062,
   '/course-decks/food-forest/st/slide-10.webp': 234194,
   '/course-decks/food-forest/st/slide-11.webp': 311936,
   '/course-decks/food-forest/st/slide-12.webp': 320918,
-  '/course-decks/food-forest/st/slide-13.webp': 600822,
+  '/course-decks/food-forest/st/slide-13.webp': 603492,
   '/course-decks/food-forest/st/slide-14.webp': 321500,
   '/course-decks/food-forest/st/slide-15.webp': 588690,
   '/course-decks/food-forest/st/slide-16.webp': 644240,
@@ -657,12 +657,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/ts/slide-05.webp': 407032,
   '/course-decks/food-forest/ts/slide-06.webp': 344152,
   '/course-decks/food-forest/ts/slide-07.webp': 298870,
-  '/course-decks/food-forest/ts/slide-08.webp': 652682,
+  '/course-decks/food-forest/ts/slide-08.webp': 659646,
   '/course-decks/food-forest/ts/slide-09.webp': 290810,
   '/course-decks/food-forest/ts/slide-10.webp': 235004,
   '/course-decks/food-forest/ts/slide-11.webp': 312658,
   '/course-decks/food-forest/ts/slide-12.webp': 321670,
-  '/course-decks/food-forest/ts/slide-13.webp': 601906,
+  '/course-decks/food-forest/ts/slide-13.webp': 602956,
   '/course-decks/food-forest/ts/slide-14.webp': 322376,
   '/course-decks/food-forest/ts/slide-15.webp': 589304,
   '/course-decks/food-forest/ts/slide-16.webp': 645092,
@@ -677,12 +677,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/ve/slide-05.webp': 443944,
   '/course-decks/food-forest/ve/slide-06.webp': 379332,
   '/course-decks/food-forest/ve/slide-07.webp': 321608,
-  '/course-decks/food-forest/ve/slide-08.webp': 713612,
+  '/course-decks/food-forest/ve/slide-08.webp': 660890,
   '/course-decks/food-forest/ve/slide-09.webp': 315780,
   '/course-decks/food-forest/ve/slide-10.webp': 253782,
   '/course-decks/food-forest/ve/slide-11.webp': 336944,
   '/course-decks/food-forest/ve/slide-12.webp': 346026,
-  '/course-decks/food-forest/ve/slide-13.webp': 660398,
+  '/course-decks/food-forest/ve/slide-13.webp': 600814,
   '/course-decks/food-forest/ve/slide-14.webp': 351796,
   '/course-decks/food-forest/ve/slide-15.webp': 642332,
   '/course-decks/food-forest/ve/slide-16.webp': 706124,

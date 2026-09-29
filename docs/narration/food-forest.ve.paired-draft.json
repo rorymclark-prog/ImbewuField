@@ -255,7 +255,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱhogomelo i a shanduka musi zwimela zwi tshi khou aluwa.",
+          "provenance": "unreviewed-machine-draft; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -390,11 +392,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Katelani indigenous plants dzine dza tea fhethu haṋu.",
+          "provenance": "unreviewed-machine-draft; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Indigenous plants dzi fanaho na fhethu haṋu dzi nga tikedza habitat sa tshipiḓa tsha pulane.",
+            "provenance": "unreviewed-machine-draft; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
