@@ -627,8 +627,22 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
   "moringa-oleifera": {
     "speciesId": "moringa-oleifera",
     "name": "Moringa",
-    "product": "leaves",
-    "windows": [],
+    "product": "leaves and pods",
+    "windows": [
+      {
+        "region": "North West Province (pods)",
+        "months": [
+          3,
+          4
+        ],
+        "source": {
+          "quote": "Fruits production mainly occurs in March and April.",
+          "url": "https://dard.nwpg.gov.za/wp-content/uploads/2022/05/Moringa-production-for-food-security.pdf",
+          "doc": "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges",
+          "page": 7
+        }
+      }
+    ],
     "yearsToFirstCrop": {
       "value": [
         0.5,
@@ -640,7 +654,7 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
         "doc": "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges",
         "page": 33
       },
-      "note": "First LEAF harvest only. The same North West DARD guide says flowers and pods come in the second year (quote in gaps). Mabapa et al. (2017, Limpopo farmer survey) report farmers harvesting foliage 3-12 months after planting and 35.2%/32.3% of farmers at 5 and 6 months; not used as the value. Years = 6/12 to 12/12. PDF page (printed page 32)."
+      "note": "First LEAF harvest. Pods come later: 'Flowers and pods are normally produced during the second year of growth.' (same guide, p.34). Mabapa et al. (2017, Limpopo farmer survey) report farmers harvesting foliage 3-12 months after planting and 35.2%/32.3% of farmers at 5 and 6 months; not used as the value. Years = 6/12 to 12/12. PDF page (printed page 32)."
     },
     "yearsToFullBearing": null,
     "yieldKgPerTree": null,
@@ -920,6 +934,33 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
       },
       "note": "Corroborated by PROTA's structural description: 'Dioecious, usually clustering, rarely solitary tree up to 15 m tall...' (https://uses.plantnet-project.org/en/Phoenix_reclinata_(PROTA)). Both sources independently and directly confirm dioecy (separate male and female plants), which maps cleanly onto the schema's 'separate-male-female-plants' category."
     }
+  },
+  "physalis-peruviana": {
+    "speciesId": "physalis-peruviana",
+    "name": "Cape gooseberry",
+    "product": "fruit",
+    "windows": [
+      {
+        "region": "Stellenbosch, Western Cape (tunnel trial, planted June 2021)",
+        "months": [
+          10,
+          11,
+          12,
+          1
+        ],
+        "source": {
+          "quote": "only the matured fruits were harvested (Lovelli et al., 2017; Patidar et al., 2018) from late October 2021 to January 2022.",
+          "url": "http://hdl.handle.net/10019.1/127165",
+          "doc": "Tuaandi D (2023) The response of two Cape gooseberry varieties to organic amendments on degraded soils in the Western Cape, South Africa. MSc thesis, Stellenbosch University",
+          "page": 28
+        }
+      }
+    ],
+    "yearsToFirstCrop": null,
+    "yearsToFullBearing": null,
+    "yieldKgPerTree": null,
+    "chillUnits": null,
+    "pollination": null
   },
   "prunus-persica": {
     "speciesId": "prunus-persica",

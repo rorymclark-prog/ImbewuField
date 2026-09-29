@@ -164,17 +164,25 @@ test('the crop plan\'s pick lines: standing trees only, one per in-season month,
 test('berries and moringa: harvest records only for what a primary source gave', () => {
   // Rory, 2026-09-29: "what about berries and other food forest crops can we add them to the design
   // studio etc? what about moringa". Blackberry is not here: NEMBA category 2.
-  for (const id of ['fragaria-x-ananassa', 'vaccinium-corymbosum', 'rubus-idaeus', 'passiflora-edulis']) {
+  for (const id of ['fragaria-x-ananassa', 'vaccinium-corymbosum', 'rubus-idaeus', 'passiflora-edulis', 'physalis-peruviana']) {
     assert.ok(PERENNIAL_HARVEST[id]?.windows.length, `${id} has no sourced window`);
   }
   assert.equal(PERENNIAL_HARVEST['rubus-fruticosus'], undefined);
-  // Moringa: first leaves 6-12 months after planting (North West DARD), but no sourced SA months,
-  // so it stays off the month chart and out of the pick lines rather than borrowing another
-  // country's calendar.
+  // Cape gooseberry's only SA months are one Stellenbosch tunnel trial's picking dates; its
+  // "120 days after transplanting" is not a years-to-first-crop figure.
+  assert.deepEqual(PERENNIAL_HARVEST['physalis-peruviana'].windows.map((w) => w.months), [[10, 11, 12, 1]]);
+  assert.equal(PERENNIAL_HARVEST['physalis-peruviana'].yearsToFirstCrop, null);
+  // Moringa: first leaves 6-12 months after planting (North West DARD). The only sourced months
+  // are that guide's pod months ("Fruits production mainly occurs in March and April."); leaf
+  // harvest has no SA calendar, so the window names pods rather than borrowing one.
   const moringa = PERENNIAL_HARVEST['moringa-oleifera'];
   assert.ok(moringa);
   assert.deepEqual(moringa.yearsToFirstCrop?.value, [0.5, 1]);
-  assert.equal(moringa.product, 'leaves');
+  assert.equal(moringa.product, 'leaves and pods');
+  assert.deepEqual(moringa.windows.map((w) => w.months), [[3, 4]]);
+  assert.match(moringa.windows[0].region, /pods/);
+  // Mulberry: no SA primary source gave fruiting months, so no record at all.
+  assert.equal(PERENNIAL_HARVEST['morus-nigra'], undefined);
   assert.equal(speciesIdForPlaced({ defId: 'tree_moringa' }), 'moringa-oleifera');
   // Blueberry's chill figure is in hours, which the chill-units field must not carry.
   assert.equal(PERENNIAL_HARVEST['vaccinium-corymbosum'].chillUnits, null);
