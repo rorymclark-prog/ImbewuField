@@ -33,7 +33,7 @@ import { homedir, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } from './paired-draft-slides.mjs';
+import { englishSlideRecords, pairedDraftLanguageLabel, pairedTargetHasEnglishHolds, validatePairedDraft } from './paired-draft-slides.mjs';
 
 const argv = process.argv.slice(2);
 const imgFlag = argv.indexOf('--images');
@@ -259,7 +259,10 @@ writeFileSync(
     artPlan,
     lessonArt,
     moduleNumber,
-    pairedSlides,
+    pairedSlides: pairedSlides?.map((pair) => ({
+      ...pair,
+      hasEnglishHolds: pairedTargetHasEnglishHolds(pair.target),
+    })) ?? null,
     pairedLanguageLabel: pairedPath ? pairedDraftLanguageLabel(lang) : null,
     pairedSourceSlides,
     pairedNativeSource: pairedNativeFlag >= 0,
@@ -383,9 +386,15 @@ if PAIRED:
         y = top + 120 + len(heading_lines) * 92 + 22
         paragraphs = []
         for para in body:
-            lines = paired_lines(draw, para, F_PAIR_BODY, width, n)
-            paragraphs.append(lines)
-            y += len(lines) * 66 + 12
+            segments = para if isinstance(para, list) else [para]
+            segment_plans = []
+            for segment in segments:
+                text = segment['text'] if isinstance(segment, dict) else segment
+                lines = paired_lines(draw, text, F_PAIR_BODY, width, n)
+                segment_plans.append({'lines': lines, 'status': segment.get('status') if isinstance(segment, dict) else None})
+                y += len(lines) * 66 + 8
+            paragraphs.append(segment_plans)
+            y += 4
         if y > bottom - 48:
             raise ValueError('slide %d paired text needs %d px but panel has %d px at phone-readable type size' %
                              (n, y - top, bottom - 48 - top))
@@ -405,11 +414,17 @@ if PAIRED:
             if not native_seed_source and (original.width < 1000 or original.height < 560):
                 raise ValueError('slide %d English illustration is too small for the paired proof' % pair['n'])
         target = pair['target']
-        held = target['heading']['status'] == 'english-hold' or any(
-            part['status'] == 'english-hold' for part in target['body'])
+        held = pair.get('hasEnglishHolds', False)
         target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
-        target_body = [(source if part['status'] == 'english-hold' else part['text'])
-                       for source, part in zip(pair['english']['body'], target['body'])]
+        target_body = []
+        for source, part in zip(pair['english']['body'], target['body']):
+            if part['status'] == 'mixed':
+                target_body.append([{
+                    'status': segment['status'],
+                    'text': segment['sourceEnglish'] if segment['status'] == 'english-hold' else segment['text'],
+                } for segment in part['segments']])
+            else:
+                target_body.append(source if part['status'] == 'english-hold' else part['text'])
         paired_plans.append((
             panel_plan(probe, target_heading, target_body, 1070, 3060, pair['n']),
             panel_plan(probe, pair['english']['heading'], pair['english']['body'], 3090, 5080, pair['n']),
@@ -426,12 +441,19 @@ if PAIRED:
             draw.text((96, y), line, font=F_PAIR_TITLE, fill=title_color)
             y += 92
         y += 22
-        for index, lines in enumerate(paragraphs):
-            color = RUST if target and target['body'][index]['status'] == 'english-hold' else INK
-            for line in lines:
-                draw.text((96, y), line, font=F_PAIR_BODY, fill=color)
-                y += 66
-            y += 12
+        for index, segment_plans in enumerate(paragraphs):
+            part = target['body'][index] if target else None
+            for segment_index, segment_plan in enumerate(segment_plans):
+                if part and part['status'] == 'mixed':
+                    status = part['segments'][segment_index]['status']
+                else:
+                    status = part['status'] if part else None
+                color = RUST if status == 'english-hold' else INK
+                for line in segment_plan['lines']:
+                    draw.text((96, y), line, font=F_PAIR_BODY, fill=color)
+                    y += 66
+                y += 8
+            y += 4
 
     if cfg.get('validateOnly'):
         print('  validated %d source-paired slides; no images written' % len(PAIRED))
@@ -454,8 +476,15 @@ if PAIRED:
             image.paste(original, ((W - original.width) // 2, 290))
         target = pair['target']
         target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
-        target_body = [(source if part['status'] == 'english-hold' else part['text'])
-                       for source, part in zip(pair['english']['body'], target['body'])]
+        target_body = []
+        for source, part in zip(pair['english']['body'], target['body']):
+            if part['status'] == 'mixed':
+                target_body.append([{
+                    'status': segment['status'],
+                    'text': segment['sourceEnglish'] if segment['status'] == 'english-hold' else segment['text'],
+                } for segment in part['segments']])
+            else:
+                target_body.append(source if part['status'] == 'english-hold' else part['text'])
         draw_panel(draw, PAIRED_LANGUAGE + ' · RUST TEXT = ENGLISH HOLD' if held else PAIRED_LANGUAGE + ' · AI DRAFT',
                    target_heading, target_body, 1070, 3060, target_plan, target)
         draw_panel(draw, 'ENGLISH SOURCE · EXACT TEXT', pair['english']['heading'],

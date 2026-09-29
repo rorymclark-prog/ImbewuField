@@ -124,6 +124,27 @@ test('silent Small Livestock review decks keep every paired frame visible and cl
   }
 });
 
+test('Water Harvesting regional review decks register all 24 silent paired frames and only English narration', () => {
+  const deck = deckFor('water-harvesting')!;
+  assert.deepEqual(deck.slideLanguages, ['en', 'zu', 'st', 've', 'ts']);
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(deck.slideFormatsByLanguage?.[lang], 'webp');
+    assert.equal(deck.slideAspectRatioByLanguage?.[lang], 1440 / 5400);
+    assert.equal(COURSE_NARRATION['water-harvesting'].languages.includes(lang), false,
+      `${lang} paired stills must not imply a regional recording`);
+    for (let slide = 1; slide <= 24; slide++) {
+      const selected = slideImageFor('water-harvesting', lang, slide);
+      assert.ok(selected?.exact, `${lang} slide ${slide} must stay on its paired review frame`);
+      assert.ok(selected.url.endsWith('.webp'));
+      assert.ok(onDisk(selected.url), `missing silent review frame: ${selected.url}`);
+    }
+    assert.equal(animationUrls('water-harvesting', 14, lang), null,
+      'the English animation poster must not cover the paired review text');
+  }
+  assert.equal(COURSE_NARRATION['water-harvesting'].languages.includes('en'), true,
+    'English source narration remains available as an explicit choice');
+});
+
 test('Sesotho Plant Guilds exposes every paired slide without claiming a Sesotho voice', () => {
   const deck = deckFor('plant-guilds')!;
   assert.ok(deck.slideLanguages.includes('st'));
