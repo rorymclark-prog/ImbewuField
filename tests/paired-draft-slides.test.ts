@@ -588,6 +588,25 @@ test('Seeds regional drafts pair the English source and hold technical seed-sele
       assert.equal(slides[7].target.body[6].status, 'english-hold',
         'Tshivenda seed-parent rejection remains English after an ambiguous draft reversed its meaning');
     }
+    const communityFields: Record<string, readonly (readonly [number, number])[]> = {
+      st: [[6, 2], [6, 4], [7, 2]],
+      ve: [[7, 2]],
+      ts: [[6, 4], [7, 2]],
+    };
+    for (const [slideNumber, bodyIndex] of communityFields[language]) {
+      const slide = slides[slideNumber - 1];
+      const paragraph = slide.target.body[bodyIndex];
+      assert.equal(paragraph.status, 'draft',
+        `${language} slide ${slideNumber}: household and sharing context must remain visibly marked`);
+      assert.ok(paragraph.text && paragraph.text !== slide.english.body[bodyIndex]);
+      assert.match(paragraph.provenance ?? '', /unreviewed-machine-draft/);
+    }
+    assert.match(slides[6].target.body[2].text, /\(varieties\)/,
+      `${language}: the seed-variety meaning must remain explicit beside the regional draft`);
+    if (language === 'ts') {
+      assert.match(slides[5].target.body[4].text, /\(crop\)/,
+        'the Xitsonga word for plant must be disambiguated as a crop');
+    }
   }
 });
 

@@ -105,7 +105,7 @@ def main() -> None:
             "slides": rows,
             "contactSheet": str(contact_path.relative_to(ROOT)),
             "phoneSamples": samples,
-            "note": "Slides 1–3 and selected ordinary-language sentences on slides 5–9 use machine drafts from the paired review packet. Technical and unreviewed meanings remain exact English, visibly marked as English holds. The 960x540 English illustrations are shown at native pixels with no resampling. No translation approval or narration is claimed.",
+            "note": "Slides 1–3 and selected ordinary-language sentences on slides 5–9 use machine drafts from the paired review packet, including household and seed-exchange context on slides 6–7. Technical and uncertain meanings remain exact English holds. The 960x540 English illustrations are shown at native pixels without resampling. No translation approval or narration is claimed.",
         }
         (QA / f"{language}-verification.json").write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

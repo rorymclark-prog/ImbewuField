@@ -291,7 +291,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mafheleloni, muṱa muṅwe na muṅwe u vha na tshaka nnzhi dza mbeu (varieties) u fhira dze wa vha nadzo mathomoni.",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "draft",
