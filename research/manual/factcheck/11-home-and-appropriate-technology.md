@@ -75,3 +75,25 @@ Note on method: the web-search budget ran out part-way through this chapter and 
 - Wonderbag origin in South Africa (~2008) — widely reported, not re-verified.
 - Gas yield per cow is approximate and depends on feed, temperature and digester design (the "one cow, one hour of cooking" figure comes from an Indonesian household-digester study); the text calls it a rough guide.
 - Dried-fruit moisture of ~15–20% (used in the log to explain removing "10%") is from memory of US extension guidance; the chapter itself uses feel-based dryness tests, not a percentage, for fruit and vegetables.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to the REWRITE.md brief (3,336 → 2,397 words). All Safety boxes and legal remarks removed; the few lines that prevent serious harm or poisoned food stay once, plainly, in the steps. Everything else is listed in `research/manual/rewrite/11-home-and-appropriate-technology-endnote.md`.
+
+Verified:
+- Coal share of SA electricity: now given as "about 83% … in 2024" (Stats SA, *A breakdown of South Africa's energy mix*, https://www.statssa.gov.za/?p=19502 — via search summary). Replaces the unquantified "most".
+- Geyser share of household electricity: an Eskom survey put it at 39% — cited in LBNL-6725E (*An International Survey of Electric Storage Tank Water Heater Efficiency and Standards*, https://eta-publications.lbl.gov/sites/default/files/lbnl-6725e.pdf, via search summary). Text now says "an Eskom survey put it at about 39%" instead of "surveys suggest 35 to 40%".
+- PV tilt ≈ latitude: Le Roux (2016, University of Pretoria) found optimum tilt within about 2.6° of latitude at most SA sites. Text now gives worked examples (about 26° Johannesburg, 34° Cape Town) instead of "25 to 35 degrees". https://repository.up.ac.za/bitstream/2263/53117/1/LeRoux_Optimum_2016.pdf
+- Wonderbag developed in South Africa in 2008 by Sarah Collins (Wikipedia *Wonderbag*; SA Country Life; CNN Money 2016). Year added.
+- "One hour of sunshine ≈ a year of world energy use": MIT News (2011) *Shining brightly* gives 173,000 TW reaching Earth; the arithmetic in the first pass stands. Kept as "roughly as much".
+- Rocket-stove fuel saving: Aprovecho (MacCarty et al., 2008) field and lab study re-confirmed by title/summary (rocket stoves about 1.5 kg wood vs 2.2 kg for traditional stoves on a standard meal). "Roughly 30 to 50% less" kept.
+- Grain below about 13% moisture: FAO *Mycotoxin prevention and control in foodgrains* re-confirmed (mould growth negligible below 13%).
+
+Cut or generalised:
+- "Dung of one cow ≈ one hour of cooking on one burner" — cut (single Indonesian study, highly variable); text keeps "a family usually needs the fresh dung of several cattle or pigs each day".
+- "Southern Africa has some of the best sunshine in the world" — kept in softer form ("some of the strongest sunshine anywhere"); not re-checked with a number.
+- Certificate of Compliance, grid registration, SANS 10106, battery safety, tempering valve, parabolic-cooker eye safety, 60 °C food-safety detail, paraffin poisoning, petrol, methane explosive range — moved to the endnote list.
+- "Appropriate technology" and "Renewable energy" sections merged into "The home is Zone 0" and "Solar energy".
+- Passive-solar design steps kept without numbers (general, well-established guidance); not re-checked online.
+
+Facts changed: coal share now numeric (83%, 2024); geyser share now the single Eskom survey figure (39%); PV tilt now given as "about your latitude" with two city examples.

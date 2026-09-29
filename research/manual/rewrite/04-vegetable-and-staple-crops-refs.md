@@ -1,0 +1,22 @@
+# References — 04-vegetable-and-staple-crops
+
+- Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
+- African Conservation Trust (2014). *Introduction to Permaculture and Homestead Gardening*. African Conservation Trust.
+- Mollison, B. (1988). *Permaculture: A Designers' Manual*. Tagari Publications.
+- ARC Vegetable, Industrial and Medicinal Plants (n.d.). *Production guidelines*. Agricultural Research Council. https://www.arc.agric.za/arc-vopi/Pages/Production-Guidelines.aspx
+- ARC Grain Crops Institute (n.d.). *Maize production* (fact sheet). Agricultural Research Council. https://www.arc.agric.za/arc-gci/fact%20sheets%20library/maize%20production.pdf
+- Grain SA (n.d.). *Do row spacing and plant density influence maize productivity under reduced tillage?* Grain SA. https://www.grainsa.co.za/do-row-spacing-and-plant-density-influence-maize-productivity-under-reduced-tillage
+- Grain SA (n.d.). *The how's and why's of yield estimation*. Grain SA. https://www.grainsa.co.za/the-how-s-and-why-s-of-yield-estimation
+- Haarhoff, S.J. and Swanepoel, P.A. (2022). *Plant Population and Row Spacing Affects Growth and Yield of Rainfed Maize in Semi-arid Environments*. Frontiers in Plant Science 13: 761121. https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2022.761121/full
+- CIMMYT (n.d.). *Genetic change in farmer-recycled maize seed: a review of the evidence*. CIMMYT repository. https://repository.cimmyt.org/entities/publication/025ae55d-8285-41e0-a407-aee2d8ee74e1
+- Sorghum Trust (n.d.). *Cultivation*. The Sorghum Trust. https://sorghumtrust.co.za/cultivation/
+- South African Journal of Science (2022). *Sorghum as a household food and livelihood security crop under climate change in South Africa: a review*. SAJS 118(9/10). https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0038-23532022000600014
+- Department of Agriculture, Land Reform and Rural Development (n.d.). *Dry beans* (production brochure). DALRRD. https://www.dalrrd.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Brochure%20Dry%20beans.pdf
+- Food For Mzansi (n.d.). *A guide to sustainable dry bean farming*. Food For Mzansi. https://www.foodformzansi.co.za/a-guide-to-sustainable-dry-bean-farming/
+- CGIAR (n.d.). *Harnessing cowpea and Bambara groundnut for a resilient future*. CGIAR. https://www.cgiar.org/news-events/news/harnessing-cowpea-and-bambara-groundnut-for-a-resilient-future/
+- Water Research Commission (n.d.). *Screening of cowpea, bambara groundnut and Amaranthus germplasm for drought tolerance and testing of the selected plant material in participation with targeted communities*. WRC. http://www.fwr.org/wrcsa/944104.htm
+- National Department of Agriculture (n.d.). *Sweet potato* (production brochure). NDA. https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Brochure%20Sweet%20potato.pdf
+- ACCI (n.d.). *High hopes for South African cassava project*. African Centre for Crop Improvement. https://acci.org.za/high-hopes-for-south-african-cassava-project/
+- Osman, G., Maleta, W., Masamba, K., Ng'ong'ola-Manani, T. and Kalimbira, A.A. (2025). *Cyanide in cassava: unveiling health risks in the lens of unsustainable food systems in Sub-Saharan Africa – a systematic review*. Frontiers in Sustainable Food Systems. https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2025.1636177/full
+- Nyaika et al. (2024). *Cyanide in cassava: understanding the drivers, impacts of climate variability, and strategies for food security*. Food and Energy Security. https://onlinelibrary.wiley.com/doi/full/10.1002/fes3.573
+- FAO (n.d.). *Small-scale poultry production* (housing and ventilation chapter). Food and Agriculture Organization of the United Nations. https://www.fao.org/4/y5169e/y5169e05.htm

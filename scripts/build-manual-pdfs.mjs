@@ -16,8 +16,8 @@ import { mkdirSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-// The public languages (lib/manual.ts MANUAL_LANGS; Xitsonga is paused, see #697).
-const LANGS = ['en', 'zu', 'st', 've'];
+// The public languages (lib/manual.ts MANUAL_LANGS).
+const LANGS = ['en', 'zu', 'st', 've', 'ts'];
 const [base = 'http://localhost:3000', ...picked] = process.argv.slice(2);
 const langs = picked.length ? picked : LANGS;
 

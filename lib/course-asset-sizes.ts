@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1576 files, 587.8 MB total.
+// 1576 files, 587.7 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -650,10 +650,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/st/slide-18.webp': 560150,
   '/course-decks/food-forest/st/slide-19.webp': 232890,
   '/course-decks/food-forest/st/slide-20.webp': 225206,
-  '/course-decks/food-forest/ts/slide-01.webp': 338370,
-  '/course-decks/food-forest/ts/slide-02.webp': 218040,
-  '/course-decks/food-forest/ts/slide-03.webp': 227042,
-  '/course-decks/food-forest/ts/slide-04.webp': 263022,
+  '/course-decks/food-forest/ts/slide-01.webp': 343056,
+  '/course-decks/food-forest/ts/slide-02.webp': 217798,
+  '/course-decks/food-forest/ts/slide-03.webp': 220636,
+  '/course-decks/food-forest/ts/slide-04.webp': 260322,
   '/course-decks/food-forest/ts/slide-05.webp': 407032,
   '/course-decks/food-forest/ts/slide-06.webp': 344152,
   '/course-decks/food-forest/ts/slide-07.webp': 298870,
@@ -670,10 +670,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/ts/slide-18.webp': 560256,
   '/course-decks/food-forest/ts/slide-19.webp': 233728,
   '/course-decks/food-forest/ts/slide-20.webp': 226278,
-  '/course-decks/food-forest/ve/slide-01.webp': 369762,
-  '/course-decks/food-forest/ve/slide-02.webp': 234628,
-  '/course-decks/food-forest/ve/slide-03.webp': 243844,
-  '/course-decks/food-forest/ve/slide-04.webp': 270872,
+  '/course-decks/food-forest/ve/slide-01.webp': 344464,
+  '/course-decks/food-forest/ve/slide-02.webp': 214188,
+  '/course-decks/food-forest/ve/slide-03.webp': 212186,
+  '/course-decks/food-forest/ve/slide-04.webp': 249152,
   '/course-decks/food-forest/ve/slide-05.webp': 443944,
   '/course-decks/food-forest/ve/slide-06.webp': 379332,
   '/course-decks/food-forest/ve/slide-07.webp': 321608,

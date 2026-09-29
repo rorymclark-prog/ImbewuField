@@ -54,3 +54,23 @@ Printed page = `===== page N =====` marker minus 1. If Fig 88 is re-used, check 
 - **Forest extent**: sources give about 0.1% (forest biome, 1 062 km²) to 0.56% (Afromontane forest). The text says "less than 1%", which covers both.
 - **Frog insect consumption**: no reliable figure found; figure removed.
 - **Firebreak obligation** refers to the National Veld and Forest Fire Act 101 of 1998; not re-checked online in this session.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to the REWRITE.md brief (2,761 → 1,999 words). "Learning from nature" folded into the opening; "How ecosystems work" merged into "What is an ecosystem?". Safety boxes and legal remarks removed; see `research/manual/rewrite/09-balanced-ecology-endnote.md`.
+
+Verified:
+- "Grasslands … catch the water that feeds our main rivers": WWF-SA *Grasslands* page (grassland biome holds most of SA's strategic water source areas) and Stats SA *Safeguarding every drop: Profiling South Africa's Strategic Water Source Areas* (SWSAs cover about 8% of land and feed rivers and dams supplying half the population) — via search summaries. Kept.
+- Bush encroachment and fynbos fire interval: source titles confirmed (Plant Ecology & Diversity 2025, 18(1–2); Phil. Trans. R. Soc. B 2016, 371(1703); Smit, Baard & van Wilgen 2024, Fire Ecology). Figures unchanged from first pass.
+
+Cut / generalised:
+- NEMBA wording for black wattle, *Leucaena*, red sesbania, pines and mosquitofish replaced by plain statements ("spread out of control in South Africa", "spread out into grassland and fynbos", "eat the tadpoles too"); the legal points moved to the endnote list.
+- "Some people call these plantations 'green deserts'" — cut for length.
+- Firebreak obligation (National Veld and Forest Fire Act) — moved to the endnote list.
+- Snake/scorpion and pet-poisoning remarks — moved to the endnote list; rock and log piles now simply sit "away from the house and where children play".
+
+Still open:
+- Pigeon pea (*Cajanus cajan*) NEMBA status: searched again, no listing found (it has an entry in the SANBI Red List of South African Plants, status not read; KZN landraces are studied as a crop); still not confirmed against the 2020 list PDF, which is blocked. Kept as a recommended support crop (it is also in figure 09-legume-trees).
+- *Sesbania sesban* status: still unconfirmed; still not recommended.
+
+Facts changed: none.

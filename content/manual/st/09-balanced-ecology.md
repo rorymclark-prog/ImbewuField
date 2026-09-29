@@ -1,174 +1,133 @@
 # Ho aha tikoloho ya tlhaho e leka-lekaneng, e hlahisang
 
-## Ho ithuta ho tlhaho
+Tlhaho e lemile naha ena nako e telele pele ho rona, ntle le mokotla wa manyolo. Jwang bo tshwara letsatsi le pula. Dikgomo le dipudumo di ja jwang. Bolokwe bo fepa mobu, mme mobu o fepa jwang. Ha ho letho le senyehang, mme ha ho motho ya fafatsang.
 
-Ho permaculture sepheo ke ho aha dipolasi le diserapa tse sebetsang jwaloka ditsamaiso tsa tlhaho: di hlahisa dijo, furu, patsi le mapolanka, di dula di phetse hantle, mme di hloka dintho tse fokolang tse tswang kantle ha nako e ntse e ya.
+Ha re hloke ho ba ramahlale ho lema ka tsela ena. Re hloka ho utlwisisa enjene ya tlhaho hantle ka ho lekana ho hokela polasi ya rona matleng a yona a mahala ho ena le ho lwantshana le yona. Sesebediswa se molemo ka ho fetisisa e ntse e le sa kgale ka ho fetisisa: nako e qetwang o shebella.
 
-Ha o hloke ho ba rasaense ho sebedisa ekoloji polasing ya hao. Empa o hloka ho utlwisisa hore tlhaho e sebetsa jwang, le ho dula o sheba tlhaho bakeng sa mehopolo le ditharollo. Sesebediswa sa bohlokwa ka ho fetisisa ke **ho shebella**: nka nako o shebella naha ya hao, naha e hlaha (veld) e e potolohileng, le kamoo dimela, diphoofolo, metsi le maemo a lehodimo di fetohang kateng ho ya ka dihla.
+**Qetellong ya kgaolo ena o tla kgona ho:**
 
-Ha re utlwisisa se tsamaisang tlhaho, re ka rala polasi ya rona hore dikarolo tsa yona di leka-lekane hantle mme di hokahane le dipotoloho tsa tlhaho (natural cycles). Jwale re sebedisa matla a mahala a letsatsi, pula, ditshedi tsa mobu le diphoofolo tsa naha, ho e na le ho di loantsha.
+- Hlalosa hore ecosystem ke eng le kamoo piramiti ya bophelo e sebetsang kateng
+- Sebedisa succession ho fodisa naha e se nang letho kapa e kgathetseng
+- Haha mahae polasing ya hao bakeng sa bathusi ba naha ba kang dihwaswa, mekgodutswane le diphooko
+- Eketsa mefutafuta e le hore polasi ya hao e arole kotsi ya yona mme e laole disenyi
 
 ## Ecosystem ke eng?
 
-**Ekoloji** (ecology) ke thuto ya kamoo dintho tse phelang di amanang kateng le tse ding le le tikoloho ya tsona.
+**Ecology** ke thuto ya kamoo dintho tse phelang di amanang kateng le ka tsona le le tikoloho ya tsona. **Ecosystem** ke setjhaba sa dimela, diphoofolo le ditshedi tsa mobu tse phelang mmoho le mobu, metsi, moya le kganya ya letsatsi tse di potolohileng. E ka ba nyane jwaloka letangwana kapa qubu ya compost, kapa ya ba kgolo jwaloka naha ya jwang ya Highveld.
 
-**Ecosystem** (tikoloho ya tlhaho) ke dintho tsohle tse phelang sebakeng se le seng, hammoho le dintho tse sa pheleng tse di potolohileng, le ditsela tsohle tseo di amanang ka tsona.
+Ecosystem e nngwe le e nngwe e na le dihlopha tse tharo tse sebetsang:
 
-- **Dintho tse phelang** di kenyelletsa dimela, diphoofolo, dikokonyana, di-fungi (dintho tse kang di-mushroom) le ditshedi tse nyenyane (micro-organisms, dintho tse phelang tse nyenyane haholo hoo di sa bonweng ka mahlo).
-- **Dintho tse sa pheleng** di kenyelletsa mobu, metsi, moya, kganya ya letsatsi, majwe le boemo ba lehodimo.
+- **Bahlahisi:** dimela tse tala. Di tshwara kganya ya letsatsi mme di fepa tsohle tse ding.
+- **Baji:** diphoofolo, ho tloha ho di-aphid ho ya ho dikgomo ho ya ho batho. Di ja dimela kapa di jana.
+- **Babodisi:** di-fungi, dibaktheria, diboko le ditshedi tse ding tsa mobu. Di bodisa dimela tse shweleng, bolokwe le ditopo mme di kgutlisetsa phepo mobung.
 
-Dikarolo tse phelang le tse sa pheleng di itshetleha hodima tse ding. Hammoho di etsa dipotoloho le diketane tsa dijo (food chains). Ecosystem e ka ba nyane jwaloka letangwana kapa qubu ya **compost** (manyolo a bodileng), kapa ya ba kgolo jwaloka naha ya jwang ya Highveld kapa lewatle. Di-ecosystem tsohle Lefatsheng hammoho di etsa **biosphere** (karolo yohle ya lefatshe moo bophelo bo leng teng).
+Mekgwa e mene e e boloka e sebetsa:
 
-Ecosystem e nngwe le e nngwe e na le dihlopha tse tharo tse kgolo tsa dintho tse phelang:
+- **Potoloho ya metsi.** Pula e a kena kapa e a phalla, dimela di a e sebedisa, mme e kgutlela moyeng.
+- **Potoloho ya phepo.** Phepo e tloha mobung ho ya semeleng ho ya phoofolong, mme e kgutlela mobung ka bolokwe le ho bola.
+- **Phallo ya matla.** Dimela di tshwara matla a letsatsi mme di a fetisetsa hodimo ketaneng ya dijo. Matla ha a sebediswe hape: makgasi a matala a tlameha ho a tshwara a matjha letsatsi le letsatsi.
+- **Phetoho ha nako e ntse e ya.** Motswako wa dimela le diphoofolo o fetoha ho tloha selemong se seng ho ya ho se seng (bona Succession ka tlase).
 
-- **Bahlahisi** (producers): dimela tse tala. Di sebedisa kganya ya letsatsi ho iketsetsa dijo, mme di fepa tsohle tse ding.
-- **Baji** (consumers): diphoofolo, ho tloha dikokonyaneng ho ya dinonyaneng ho ya bathong. Di ja dimela kapa diphoofolo tse ding.
-- **Babolisi** (decomposers): di-fungi, dibaktheria, diboko le ditshedi tse ding tsa mobu. Di bolisa dimela tse shweleng, bolokwe le ditopo, mme di kgutlisetsa phepo mobung.
+Ha tsena di sebetsa hantle, naha e re fa metsi a hlwekileng, mobu o nonneng, tsamaiso ya phofo, taolo ya disenyi le makgulo mahala.
 
-Hore tsamaiso ya permaculture e sebetse, re hloka ho tshehetsa bophelo maemong ana ohle. Mohlala, haeba re fa dinonyana tse jang dikokonyana sebaka sa ho dula, di re thusa ho fokotsa disenyi.
+## Diketane tsa dijo le piramiti ya tikoloho
 
-## Diketane tsa dijo le piramidi ya ekoloji
+Nahana ka bophelo polasing e le piramiti.
 
-Re ka taka bophelo ba ecosystem jwaloka **piramidi**.
+- Motheong ke **dimela**, tse tshwarang matla a letsatsi. Di itshetlehile ka **mobu** le babodisi ba ona.
+- Ka hodima tsona ke **baji ba dimela**, ba kang diboko tse senyang (caterpillars), di-aphid, ditweba le dikgomo.
+- Hodimo ho feta ke **di-predator** (diphoofolo tse jang diphoofolo tse ding) tse di jang, tse kang di-ladybird, dikgo, dinonyana le mekgodutswane.
+- Tlhorong ke **di-predator tse kgolo** tse mmalwa, tse kang diphooko, ntsu le diphokojwe.
 
-- Ka tlase ho na le **dimela**, tse tshwarang matla a letsatsi. Di itshetlehile hodima **mobu** le babolisi ba ona, ba sebedisang phepo hape hore dimela di tswele pele di hola.
-- Ka hodima tsona ho na le **baji ba dimela**, jwaloka diboko tse senyang (caterpillars), di-aphid, ditweba le dikgomo.
-- Hodimo ho feta ho na le **di-predator** (dibatana) tse di jang, jwaloka di-ladybird, dikgo, dinonyana le mekgodutswane.
-- Ka hodimodimo ho na le **di-predator tse kgolo** tse mmalwa, jwaloka diphooko, dintsu le diphokojwe.
+Mokgahlelo ka mong o ka hodimo o na le dintho tse phelang tse fokolang, hobane matla a lahleha mohatong o mong le o mong. Ho hloka jwang bo bongata ho fepa kgomo e le nngwe, le ditweba tse ngata ho fepa sephooko se le seng.
 
-Boemo bo bong le bo bong ho ya hodimo bo na le dintho tse phelang tse fokolang, hobane matla a lahleha mohatong o mong le o mong. Ho hlokahala jwang bo bongata ho fepa kgomo e le nngwe, le ditweba tse ngata ho fepa sephooko se le seng.
+Seo sena se se bolelang polasing:
 
-Ke ka hona re sa lokelang ho leka ho bolaya disenyi tsohle. Haeba re tjhefa di-aphid le diboko tse senyang kaofela, di-ladybird le dinonyana tse di jang di sala di lapile mme di a tsamaya. Jwale, ha disenyi di kgutla, ha ho letho le setseng ho di laola, mme ho qhoma ha disenyi ho ba hobe le ho feta.
-
-Hobane piramidi yohle e itshetlehile hodima dimela le mobu, **bophelo bo botle ba mobu bo etsa qeto ya hore naha e ka jara bophelo bo bokae** le hore e ka hlahisa kotulo e kae.
-
-## Di-ecosystem di sebetsa jwang
-
-Mekgwa e mene e boloka ecosystem e nngwe le e nngwe e ntse e sebetsa:
-
-- **Potoloho ya metsi.** Pula e a na, e kena mobung kapa e a phalla, e sebediswa ke dimela, mme e kgutlela moyeng.
-- **Potoloho ya diminerale (phepo).** Phepo e tloha mobung ho ya dimeleng ho ya diphoofolong, mme e kgutlela mobung ka bolokwe le ka ho bola.
-- **Phallo ya matla.** Matla a tswang letsatsing a tshwarwa ke dimela mme a nyoloha ka ketane ya dijo. Ho fapana le metsi le diminerale, matla ha a sebediswe hape. A tlameha ho tshwarwa botjha letsatsi le leng le le leng ke makgasi a matala.
-- **Diphetoho tsa setjhaba sa dimela le diphoofolo** (community dynamics). Motswako wa dimela le diphoofolo o fetoha ha nako e ntse e ya. **Succession** (tatellano ya tlhaho, ka tlase) ke karolo ya sena.
-
-Ha mekgwa ena e sebetsa hantle, naha e re fa **ditshebeletso tsa ecosystem** (ecosystem services): metsi a hlwekileng, mobu o nonneng, ho tsamaisa phofo ya dipalesa (pollination), taolo ya disenyi, makgulo, patsi, le boemo ba lehodimo ba sebaka bo tsitsitseng ho feta.
-
-Karolong e setseng ya kgaolo ena re sheba mehopolo e meraro ya ekoloji e thusang moralong: **succession**, **habitat** (bodulo) le **biodiversity** (mefutafuta ya dintho tse phelang). E sebedise hammoho le melao-motheo ya permaculture e kgaolong ya pele.
+1. O se ke wa leka ho bolaya sesenyi se seng le se seng. Kgoba di-aphid tsohle chefo, mme di-ladybird le dinonyana tse di jang di a lapa mme di a tloha. Ha di-aphid di kgutla, ha ho letho le di thibelang.
+2. Fepa motheo. Piramiti yohle e itshetlehile ka dimela le mobu, kahoo bophelo bo botle ba mobu bo etsa qeto ya hore na naha ya hao e ka jara bophelo bo bokae, le kotulo e kae.
+3. Fa di-predator lehae (bona Habitat ka tlase).
 
 ## Succession
 
-### Kamoo naha e iphodisang kateng
+**Succession** ke phetoho, mohato ka mohato, ya dimela le diphoofolo tsa sebaka ha nako e ntse e ya. Ke kamoo naha e folang kateng. Kamora ho lengwa ka mohoma, ho fulwa ho feta tekano, mollo kapa morwallo:
 
-Kamora hore naha e senyehe, mohlala ka ho lengwa ka mohoma, ho fula ho feta tekano, mollo kapa morwallo, tlhaho e qala ho e kwahela le ho e lokisa. Setjhaba sa dimela se fetoha mohato ka mohato ha nako e ntse e ya. Sena se bitswa **succession** (tatellano ya tlhaho).
-
-1. **Dimela tsa pele** (pioneer plants) di tla pele. Hangata ke mefoka ya **annual** (e phelang sehla se le seng) eo balemi ba sa e rateng. Di hola kapele, di kwahela mobu o se nang letho, mme di o tshwara hore o se ke wa kgohola. Ha di shwa, metso le makgasi a tsona di fepa mobu.
-2. **Dimela tse tiileng di a latela.** Jwang ba **perennial** (bo phelang dilemo tse ngata), ditlama le dihlahla di a kena. Tse ngata tsa tsona ke **di-legume** (dimela tsa lelapa la dinawa) tse kenyang naetrojene mobung. Di fa dimela tse nyane setshabelo, mme di fa dikokonyana, dinonyana le diphoofolo tse ding dijo le mahae.
-3. **Setjhaba sa dimela tse phelang nako e telele** se hola qetellong. Mobu o ba o tebileng le o nonneng, mme naha e tshehetsa bophelo bo bongata le mefuta e mengata ya bophelo.
-
-Qetello ya succession ha e tshwane hohle. E itshetlehile hodima pula, serame, mobu, mollo le ho fula.
+1. **Dimela tsa pele** (pioneer plants) di tla pele, hangata mefoka ya selemo se le seng eo balemi ba sa e rateng. Di hola kapele, di kwahela mobu o se nang letho mme di o tshwara. Ha di shwa, di a o fepa.
+2. **Dimela tse thata di a latela:** jwang bo phelang dilemo tse ngata, ditlama le dihlahla, tse ngata tsa tsona e le **di-legume** (lelapa la dinawa le dierekisi) tse kenyang naetrojene mobung. Di sireletsa dimela tse nyane mme di fepa dikokonyana le dinonyana.
+3. **Setjhaba se phelang nako e telele** se dula qetellong. Mobu o teba mme o a nona, mme naha e jara bophelo bo bongata, le mefuta e mengata ya bophelo.
 
 ### Hase naha yohle e fetohang moru
 
-Dibuka tse ngata, tse ngotsweng dinaheng tse nang le pula e ngata, di re naha yohle ka tlhaho e hola ho ba moru. **Borwa ba Afrika sena hase nnete.**
+Dibuka tse ngotsweng dinaheng tse nang le pula e ngata di re naha yohle e hola ho ba moru. Borwa ba Afrika ha ho jwalo. Moru wa tlhaho o kwahela ka tlase ho 1% ya Afrika Borwa, ka dikgetjhana tse nyane moo pula e leng ngata mme serame se le seng kae, tse kang Garden Route le escarpment e mongobo ya botjhabela. Boholo ba naha ya rona bo dula e le ntho e nngwe, ya kgale ka ho tshwanang ebile e ruile ka mefuta:
 
-Meru ya tlhaho e kwahela ka tlase ho 1% ya Afrika Borwa. E hola feela dibakeng tse nyane moo pula e nang haholo mme serame se sa tlwaeleha, jwaloka Garden Route le dithaba tsa botjhabela tse nang le mongobo (eastern escarpment). Boholo ba naha ya rona ka tlhaho bo kwahetswe ke di-ecosystem tse ding tse kgale, tse tsitsitseng le tse nang le mefuta e mengata ka ho lekana:
+- **Naha ya jwang** e kwahela boholo ba Highveld, Drakensberg le Lesotho. Serame, mollo le ho fula di boloka difate kantle. Dinaha tsena tsa kgale tsa jwang di na le dimela tse ngata tse sa fumaneheng habonolo mme di tshwara metsi a fepang dinoka tsa rona tse kgolo.
+- **Savanna** (bushveld), jwang bo nang le difate tse hasaneng, e kwahela boholo ba leboya le botjhabela. Mollo, ho fula le ho ja makgasi a difate di boloka tekano pakeng tsa jwang le difate.
+- **Fynbos**, Kapa Bophirima moo pula e nang mariha, e hloka mollo hoo e ka bang dilemo tse ding le tse ding tse 10 ho isa ho 15. Dimela tse ngata tsa fynbos, tse kang di-protea, di ntsha le ho medisa peo ya tsona feela kamora mollo.
+- **Karoo** e omileng ka tlhaho ke naha ya dihlahla.
 
-- **Naha ya jwang** (grassland) e kwahela boholo ba Highveld, Drakensberg le Lesotho. Serame, mollo le ho fula di thibela difate. Naha ena ya jwang ke ya kgale haholo mme e na le dimela tse ngata tse sa fumaneheng habonolo. E boetse e tshwara le ho boloka metsi a fepang dinoka tsa rona tse kgolo.
-- **Savanna** (bushveld), jwang bo nang le difate tse hasaneng, e kwahela boholo ba leboya le botjhabela. Mollo, ho fula le ho ja makala (browsing) di boloka tekano pakeng tsa jwang le difate.
-- **Fynbos**, Kapa Bophirima moo pula e nang mariha, e hloka mollo hoo e ka bang dilemong tse ding le tse ding tse 10 ho isa ho tse 15. Dimela tse ngata tsa fynbos, jwaloka di-protea, di lokolla peo ya tsona mme e mela feela kamora mollo. Ntle le mollo, fynbos e lahlehelwa ke mefuta ya dimela.
-- **Karoo** e omileng le dibaka tse ding tse omileng ka tlhaho ke naha ya dihlahla.
+Thibela mollo mme o fudise ho feta tekano, mme naha ya jwang le savanna di tetebala ka dihlahla tsa meutlwa. **Bush encroachment** ena (ho tetebala ha dihlahla) e se e kwahela ho feta dihekthere tse dimilione tse 7 tsa Afrika Borwa mme e bitsa makgulo le metsi.
 
-Dibakeng tsena, mollo le ho fula ke karolo ya kamoo tsamaiso ya tlhaho e dulang e phetse hantle kateng. Ha mollo o thibelwa mme naha e fuliswa ho feta tekano, naha ya jwang le savanna di ka tlala dihlahla tse meutlwa. Sena se bitswa **ho hlaselwa ke dihlahla** (bush encroachment). Se se se hasane hodima dihekthere tse fetang dimilione tse 7 tsa Afrika Borwa, mme se fokotsa makgulo le metsi.
-
-> **Hlokomela:** Ho lema difate nahang ya jwang ya tlhaho kapa fynbos ha ho e "ntlafatse". Ho senya ecosystem e sa fumaneheng habonolo, e hlahisang metsi. Lema difate ho potoloha lehae la hao le ho **food forest** (moru wa dijo) ya hao, empa o tlohele naha ya tlhaho e polasing ya hao e dule e le naha ya jwang, savanna kapa fynbos.
+> **Hlokomela:** Ho lema difate naheng ya jwang ya tlhaho kapa fynbos ha ho e ntlafatse. Ho senya ecosystem e sa fumaneheng habonolo, e fanang ka metsi. Lema difate ho potoloha lehae le ho food forest, mme o tlohele naha ya hao ya tlhaho e dule e le naha ya jwang, savanna kapa fynbos.
 
 ### Ho sebedisa succession polasing ya hao
 
-Polasing, re sebedisa mohopolo wa succession meralong ya rona:
+1. **Dimela tsa pele pele.** Mobung o se nang letho, o fokolang, jala cover crops tse thata le **di-green manure** (dijalo tse lengwang ho fepa mobu), tse kang cowpea. Lema dijalo tse hlokang haholo kamora tsona.
+2. **Rala food forest ya hao ka mehato.** Lema dimela tsa tshehetso tse holang kapele pakeng tsa difate tse nyane tsa ditholwana, mme o di kgaole e le mulch ha difate di ntse di nka sebaka.
+3. **Kgetha dimela tsa tshehetso tse dulang moo di leng teng.** "Difate tse ngata tse lokisang naetrojene" dibukeng tsa mose ho mawatle, tse kang black wattle, *Leucaena* le red sesbania, di hasana ntle le taolo Afrika Borwa. Lema pigeon pea ho ena le tsona, le mooka wa tlhaho (*Vachellia karroo*) moo o loketseng setsha. Mooka o hasanela makgulong a fuleditsweng ho feta tekano, kahoo o boloke ka hara dibaka tsa hao tse lenngweng.
+4. **Hlompha qetello ya tlhaho ya sebaka sa heno.** Nahang ya jwang, zone ya hao ya naha ya tlhaho (Zone 5) e lokela ho ba naha ya jwang e phetseng hantle, e seng moru o lenngweng.
 
-- **Dimela tsa pele pele.** Mobung o se nang letho, o fokolang, qala ka dimela tsa pele tse tiileng, **green manure** (manyolo a matala) le di-legume tse lokisang naetrojene, ho kwahela le ho fepa mobu. Ebe o lema dijalo tse hlokang ho feta.
-- **Mehato ho food forest.** Food forest e lenngweng haufi le lehae e etsisa mehato ya succession: dimela tsa tshehetso tse holang kapele pele, ebe difate tsa ditholwana le tsa dinate tse butle di nkang sebaka. Di-legume di hola pakeng tsa difate tse nyane ho fepa mobu.
-- **Kgetha dimela tsa tshehetso ka hloko.** "Difate tse lokisang naetrojene" tse ngata tsa pele tse dibukeng tsa permaculture tsa mose ho mawatle, jwaloka black wattle, *Leucaena* le red sesbania, di phatlaladitswe e le **invasive species** (dimela tse tswang kantle tse hlaselang naha) Afrika Borwa. Sebedisa dijalo jwaloka pigeon pea, le di-legume tsa tlhaho jwaloka mooka (sweet thorn, *Vachellia karroo*), moo di loketseng setsha. Mooka o hasana habonolo nahang e fulisitsweng ho feta tekano, kahoo o boloke ka hare ho dibaka tseo o di lemileng.
-- **Hlompha qetello ya tlhaho ya sebaka.** Sebakeng sa naha ya jwang, sebaka sa hao se hlaha (Zone 5, sebaka se hole le lehae seo o se etelang ka seoelo) se lokela ho ba naha ya jwang e phetseng hantle, e seng moru o lenngweng.
+### Ho lema kgahlanong le tlhaho, kapa le yona
 
-### Ho lema kgahlanong le tlhaho, kapa hammoho le yona
+Temo e ngata ya sejwale-jwale e tshwara naha mohatong wa pele o se nang letho: lema ka mohoma, fafatsa, nontsha, sejalo se le seng, pheta. Tlhaho e kwahela mobu o se nang letho ka mefoka ho qala ho fola, mme molemi o a e fafatsa. Sena se bitsa nako, dibeso le dikhemikhale, mme se siya naha e sa tsitsang, e futsanehileng ka bophelo mme e utlwiswang bohloko habonolo ke komello, disenyi le erosion.
 
-Temo e ngata ya sejwalejwale e sebetsa kgahlanong le succession. Mobu o lengwa ka mohoma, o fafatswa ka dibolayamefoka le dibolayadisenyi, o fuwa manyolo a dikhemikhale mme o lengwa ka sejalo se le seng feela, sehla ka mora sehla. Tlhaho e tswela pele e leka ho kwahela mobu o se nang letho ka mefoka ho qala ho fodisa, mme molemi o tswela pele a e fafatsa.
-
-Ho boloka naha mohatong ona wa pele, o se nang letho, ho ja nako e ngata, mafura le dikhemikhale. Tsamaiso e dula e sa tsitsa mme e na le mefutafuta e fokolang, mme e senngwa habonolo ke komello, disenyi le **erosion** (kgoholeho ya mobu).
-
-Ho permaculture re lebisa ho se fapaneng. Re batla ho aha mobu le mefutafuta, hore polasi ya rona e be e nonneng le e tsitsitseng ho feta ha nako e ntse e ya. Tsamaisong e jwalo, dipotoloho tsa phepo di a sebetsa mme ho na le bophelo bo lekaneng ho laola disenyi le mafu. E ntse e fetoha ka dinako tsohle, empa e ka fana ka kotulo e ntle ka ditshenyehelo tse tlase le ka boiteko bo fokolang.
+Permaculture e ya ka tsela e nngwe. Re haha mobu le mefutafuta, e le hore polasi e none le ho tsitsa selemo se seng le se seng, e na le bophelo bo lekaneng ka hare ho yona ho laola disenyi le mafu.
 
 ## Habitat
 
-**Habitat** ke lehae la semela kapa phoofolo. Ke sebaka se e fang tsohle tseo e di hlokang ho phela: dijo, metsi, setshabelo, sebaka, le sebaka se bolokehileng sa ho tswala.
+**Habitat** ke lehae la semela kapa phoofolo: sebaka se e fang dijo, metsi, setshabelo, sebaka le moo e ka tswalelang teng ka polokeho. Sehwaswa se hloka metsi bakeng sa mahe a sona, jwang bo bolelele le majwe ho potoloha letangwana ho ipata ho dinonyana le dinoha, le dikokonyana tseo se di jang. Letangwana leo ke habitat ya sona. Ho lahleha ha habitat ke le leng la mabaka a maholo a etsang hore dimela le diphoofolo di fele.
 
-### Mohlala: habitat ya sehwaswa
+Nahana ka habitat e le papatso ya mosebetsi. Polasi e na le mesebetsi e mengata: ho ja disenyi, ho tsamaisa phofo ya dipalesa, ho sebedisa masalla hape. Ho ena le ho e lefella, re bapatsa bathusi ba naha, mme papatso e tlameha ho fana ka dijo, metsi le bethe e bolokehileng.
 
-- Dihwaswa tse ngata di behela mahe a tsona metsing, kahoo di hloka letangwana, mohlaba (wetland) kapa molatswana.
-- Di hloka setshabelo ho di-predator tse kang dinonyana le dinoha. Jwang bo bolelele, majwe le dimela tse leketlileng ho potoloha letangwana di di fa dibaka tsa ho ipata.
-- Di hloka dijo: dikokonyana, mme bakeng sa mefuta e meng, dikgofu tse se nang dikgaketla (slugs) le dikgofu (snails).
-
-Tikoloho ena ya letangwana ke **habitat** ya sehwaswa. Dimela le diphoofolo tse fapaneng di hloka di-habitat tse fapaneng. Ho lahlehelwa ke habitat ke le leng la mabaka a maholo a etsang hore dimela le diphoofolo di fokotsehe mme di fele lefatsheng.
-
-### Habitat jwaloka papatso ya mosebetsi
-
-Re ka boela ra nahana ka habitat jwaloka **niche**: mosebetsi o hlokang ho etswa. Ho na le mesebetsi e mengata polasing, jwaloka ho ja disenyi, ho tsamaisa phofo ya dipalesa le ho sebedisa ditshila hape. Haeba re ne re tlameha ho e etsa kaofela ka borona, kapa ho e lefella, e ne e tla bitsa tjhelete e ngata. Ho bohlale ho etsa di-habitat tse "phatlalatsang mosebetsi" bakeng sa bathusi ba tlhaho hore ba tle ba arolelane mosebetsi le rona. Papatso e tlameha ho hohela: dijo tse lekaneng, metsi le sebaka se bolokehileng sa ho dula.
-
-Mona ke ditsela tse ding tse bonolo tsa ho etsa habitat.
-
-**Fana ka metsi.** Ntho e nngwe le e nngwe e phelang e hloka metsi. Sejana sa metsi sa dinonyana, letangwana le lenyane kapa letamo di tlisa dinonyana, dihwaswa, di-dragonfly le bathusi ba bang kapele. Dihwaswa, dihwaswa tse kgolo (toads) le di-dragonfly di ja dikokonyana tse ngata haholo. Kenya majwe kapa dithupa tse mmalwa metsing hore dinotshi le dikokonyana tse ding di kgone ho dula mme di nwe ntle le ho qwela.
-
-> **Polokeho:** Bana ba banyane ba ka qwela metsing a manyane haholo. Kampela matangwana kapa o a kwahele ka letlooa le tiileng, mme o kwahele ditanka le didiba tsohle. Ho thibela menang ho ata, boloka metsi a hlwekile mme o tlohele dihwaswa, dihwaswa tse nyane (tadpoles) le masea a di-dragonfly di je masea a menang. O se ke wa kenya tlhapi ya mosquitofish (*Gambusia*) matangwaneng a serapa: ke tlhapi eo e leng invasive species e ngodisitsweng Afrika Borwa, mme e ja le dihwaswa tse nyane.
-
-**Tlohela dibaka tse hlaha.** Haeba o na le naha e hlaha, moru o monyane (bush) kapa mohlaba polasing ya hao, o boloke. Ena ke **Zone 5** ya hao. Haeba ho se jwalo, kgutlisetsa sebaka se senyane, le dikhutlo tse ding tse sa lengweng, ho dimela tsa tlhaho. Mohlomong ena ke ntho ya bohlokwa ka ho fetisisa eo o ka e etsang bakeng sa habitat. Dimela tsa tlhaho tsa sebaka di tshehetsa dikokonyana, dinonyana le diphoofolo tse ding tsa moo tse ngata haholo ho feta dimela tse tswang kantle. Laola naha ya jwang ka mollo le ho fula ho ya ka melao ya sebaka, mme o boloke **di-firebreak** (mabanta a thibelang mollo) tse nepahetseng.
-
-**Lema mela ya dihlahla (hedgerows).** Lema mela e kopaneng ya difate, dihlahla le ditlama pela diterata, mathokong a masimo le pela ditsela. Dimela tsa tlhaho tsa mela ya dihlahla di kenyelletsa Cape honeysuckle (*Tecoma capensis*), plumbago (*Plumbago auriculata*), sand olive (*Dodonaea viscosa*), kei apple (*Dovyalis caffra*) le karee le mefuta e meng ya *Searsia*. Mela ya dihlahla e fa setshabelo, dijo le dibaka tsa ho aha dihlaha, mme hape e sebetsa jwaloka **di-windbreak** (disireletsi tsa moya).
-
-**Etsa diqubu tsa majwe le dikutu.** Diqubu tsa majwe di etsa mahae a matle a mekgodutswane. Mekgodutswane e ota letsatsi majweng a futhumetseng motshehare mme e ja dikokonyana tse ngata. Diqubu tsa dikutu di fa dikokonyana tse nang le dikgaketla (beetles), dihwaswa le di-fungi setshabelo.
-
-> **Polokeho:** Dinoha le diphepheng le tsona di ka ipata diqubung tsa majwe le dikutu. Di etse hole le ntlo, ditsela le dibaka tseo bana ba bapalang ho tsona, mme o apare ditlelafo le dibuti ha o sutisa majwe kapa dikutu.
-
-**Beha mabokose a diphooko.** Diphooko tsa barn owl di aha dihlaha ka masobeng, mme di tla dula ka lebokoseng la lepolanka la diphooko. Le kgomaretse palong, sefateng kapa moahong, bonyane 3 m ka hodima fatshe, hole le dikatse le batho. Lelapa la diphooko tsa barn owl le ka ja dikgoto le ditweba tse 1 000 kapa ho feta ka selemo, kahoo diphooko di thusa haholo ho laola dikgoto le ditweba.
-
-> **Temoso:** Tjhefo ya dikgoto e bolaya diphooko. Diphooko, dintsu, dikatse le dintja di a shwa ha di ja dikgoto le ditweba tse jeleng tjhefo. Haeba o batla hore diphooko di laole dikgoto le ditweba, o se ke wa sebedisa tjhefo ya dikgoto. Metseng e meng diphooko di a tshajwa, ho thwe ke pontsho ya bomadimabe. Buisana le baahisani ba hao ka kamoo diphooko di thusang polasi kateng.
+1. **Fana ka metsi.** Sejana sa metsi sa dinonyana kapa letangwana le lenyane kapele di tlisa dinonyana, dihwaswa le dintsintsi tsa metsi (dragonflies), tse jang dikokonyana tse ngata. Beha majwe kapa dithupa ka metsing e le hore dinotshi di kgone ho nwa ntle le ho qwela. Kampela matangwana ka terata kapa o a kwahele ka letlowa le matla e le hore bana ba banyane ba se ke ba wela ka hare. Dihwaswa, dikgwiritsana le diboko tsa dintsintsi tsa metsi di ja diboko tsa menwang; o se ke wa kenya mosquitofish, e jang le dikgwiritsana.
+2. **Siya dibaka tsa naha.** Boloka naha efe kapa efe ya tlhaho kapa mohlaba o naheng ya hao. Ena ke **Zone 5** ya hao (karolo ya polasi e siuwang e le naha ya tlhaho). Haeba o se na yona, kgutlisetsa khutlo e le nngwe ho dimela tsa tlhaho. Mohlomong ke ntho ya bohlokwa ka ho fetisisa eo o ka e etsang bakeng sa habitat, hobane dimela tsa heno di fepa dikokonyana le dinonyana tsa heno tse ngata haholo ho feta dimela tsa kantle.
+3. **Lema magora.** Lema mela e kopaneng ho latela diterata le mathoko a masimo: Cape honeysuckle (*Tecoma capensis*), plumbago (*Plumbago auriculata*), sand olive (*Dodonaea viscosa*), Kei apple (*Dovyalis caffra*), le karee le mefuta e meng ya *Searsia*. Di fana ka setshabelo, dijo le dibaka tsa ho aha dihlaha, mme di roba moya.
+4. **Qubella majwe le dikutu** hole le ntlo le moo bana ba bapalang teng. Mekgodutswane e othela letsatsi hodima majwe a futhumetseng mme e ja dikokonyana tse ngata. Dikutu di fa setshabelo dikgohlopane, dihwaswa le di-fungi.
+5. **Emisa lebokose la sephooko** palong, sefateng kapa moahong bonyane 3 m ho tloha fatshe, moo dikatse di sa kgoneng ho fihla teng. Lelapa la diphooko tsa barn owl le ka ja dikgoto tse 1 000 kapa ho feta ka selemo. Diphooko di shwa ka ho ja dikgoto tse jeleng chefo, kahoo haeba o batla diphooko, kgaotsa ho sebedisa chefo ya dikgoto. Moo diphooko di tshajwang e le pontsho e mpe, bua le baahisane ba hao ka mosebetsi oo di o etsang.
 
 ## Biodiversity
 
-**Biodiversity** e bolela mefuta e mengata ya bophelo: mefuta e mengata e fapaneng ya dimela, diphoofolo, dikokonyana, di-fungi le ditshedi tse nyenyane sebakeng se le seng, le diphapang ka hara mofuta ka mong.
+**Biodiversity** ke mefuta e fapaneng ya bophelo sebakeng: mefuta e mengata ya dimela, diphoofolo, dikokonyana, di-fungi le ditshedi tsa mobu, le diphapang ka hare ho mofuta ka mong. Tsamaya ka hara naha ya tlhaho kapa fynbos e phetseng hantle mme o tla e bona. Moru o lenngweng wa diphaene o bontsha se fapaneng: dihekthere ka dihekthere tsa sefate se le seng, ho sa hole letho ka tlase. Mefuta e mmalwa ya diphaene e boetse e hasanela naheng ya jwang le fynbos, mme e sebedisa metsi a mangata.
 
-Mefutafuta ke senotlolo sa polasi ya permaculture e phetseng hantle le e hlahisang. Ke se fapaneng le **monoculture**, e leng mola ka mora mola wa sejalo se le seng feela.
+Mefutafuta e a buseletsa:
 
-O bona biodiversity ya nnete ha o tsamaya ka hara naha e hlaha e phetseng hantle, fynbos kapa moru wa tlhaho: mefuta e mengata ya jwang, dipalesa, difate, dihlahla, dikokonyana, dinonyana le di-fungi, kaofela di phela hammoho.
+- **E arola kotsi.** Haeba sejalo se le seng se hloleha ka lebaka la komello, disenyi kapa mafu, tse ding di ntse di fana ka kotulo.
+- **E thusa ho laola disenyi.** Motswako wa dimela o fepa le ho fa setshabelo di-predator tse jang disenyi, mme disenyi di sokola ho fumana semela seo di se ratang hara tse ngata. Diserapa tse nang le mefutafuta ha di atise ho ba le ho phatloha ho hoholo ha disenyi, le hoja di sa kgone ho hloka disenyi ho hang.
+- **E haha mobu o phetseng hantle.** Metso e fapaneng le masalla a dimela di fepa ditshedi tsa mobu tse fapaneng haholo.
 
-### Ha mefutafuta e lahleha
+Ho e haha:
 
-Polasi ya difate tsa phaene ke mohlala wa mefutafuta e tlase haholo. Ho na le difate tsa phaene feela, hekthere ka mora hekthere, mme ho hola ho honyenyane haholo ka tlasa tsona. Batho ba bang ba bitsa dipolasi tse jwalo "mahwatata a matala" (green deserts). Afrika Borwa, mefuta e mmalwa ya phaene le yona e phatlaladitswe e le invasive species: di hasana nahang ya jwang le fynbos mme di sebedisa metsi a mangata.
+1. Lema **di-polyculture**: dijalo tse ngata mmoho bething e le nngwe kapa tshimong, ho ena le sejalo se le seng ka mela e melelele.
+2. Lema **di-perennial** (dimela tse phelang dilemo, tse kang difate tsa ditholwana, ditlama le meroho e phelang dilemo tse ngata) pela dijalo tsa hao tsa selemo se le seng.
+3. Lema **food forest**, serapa sa mekgahlelo ho tloha difateng tse telele ho ya ho di-groundcover le dijalo tsa metso.
+4. Rua motswako wa diphoofolo, e nngwe le e nngwe e na le mosebetsi: dikgoho di ja disenyi, mme manyolo a dikgomo a fepa compost.
+5. Lema dipalesa, ho kenyeletswa le tsa tlhaho, ho fepa dinotshi le dikokonyana tse ding tse thusang selemo kaofela.
 
-### Hobaneng mefutafuta e thusa
+Ha seo karolo e nngwe e se hlahisang se fepa e nngwe (bolokwe mobung, masalla a dijalo diphoofolong, disenyi dinonyaneng), polasi e qala ho itlhokomela.
 
-- **E arola kotsi.** Haeba sejalo se le seng se hloleha ka lebaka la komello, disenyi kapa mafu, dijalo tse ding di ntse di fana ka kotulo.
-- **E thusa ho laola disenyi.** Motswako wa dimela o fa di-predator le dikokonyana tse phelang ka hara disenyi (parasites) dijo le setshabelo. Disenyi le tsona di thatafallwa ke ho fumana semela seo di se ratang hara tse ding tse ngata. Diserapa tse nang le mefutafuta ha di hlaselwe habonolo ke disenyi tse ngata haholo, le hoja di sa kang di hloka disenyi ho hang.
-- **E boloka ho na le seo o ka se kotulang selemo kaofela.** Dimela tse fapaneng di thunya, di beha ditholwana mme di butswa ka dinako tse fapaneng. Difate tse fapaneng di lahla makgasi ka dihla tse fapaneng, kahoo kamehla ho na le dijo bakeng sa batho le ditshedi tsa mobu.
-- **E aha mobu o phetseng hantle.** Metso e fapaneng le masalla a dimela a fapaneng di fepa mefuta e mengata ya ditshedi tsa mobu.
+## Leka sena
 
-### Ho aha mefutafuta polasing ya hao jwang
+Etsa khutlo ya habitat bekeng ena.
 
-- Lema **dijalo tse kopaneng** (polycultures): dijalo tse ngata tse fapaneng hammoho betheng e le nngwe ya serapa kapa tshimong, ho e na le sejalo se le seng meleng e melelele.
-- Lema **di-perennial**, jwaloka difate tsa ditholwana, ditlama le meroho ya perennial, pela dijalo tsa annual.
-- Lema **food forest** e nang le mekgahlelo e mengata, ho tloha difateng tse telele ho ya ho **di-groundcover** (dimela tse kwahelang mobu) le dijalo tsa metso.
-- Rua **diphoofolo** tsa mefuta e fapaneng, mme o di tlohele di phethe karolo ya tsona tsamaisong, jwaloka dikgoho tse jang disenyi le manyolo a dikgomo a fepang compost.
-- Siya sebaka bakeng sa **dimela le diphoofolo tsa naha** meleng ya dihlahla, matangwaneng le dibakeng tse hlaha.
-- Lema **dipalesa**, ho kenyeletswa dipalesa tsa tlhaho, ho fepa dinotshi le dikokonyana tse ding tse thusang selemo kaofela.
-
-Ha dikarolo tsa polasi di hokahantswe hore seo karolo e nngwe e se hlahisang se fepe e nngwe, polasi yohle e ba matla ho feta. Bolokwe bo fepa mobu, masalla a dijalo a fepa diphoofolo, mme dikokonyana le dinonyana di laola disenyi. Ke kamoo re ahang ecosystem ya polasi e matla, e mamellang (resilient), e iphepang boholo ba ditlhoko tsa yona.
+1. Kgetha khutlo e sa sebediswang haufi le dibethe tsa hao tsa meroho, bonyane 2 m ka 2 m, hole le moo bana ba bapalang teng.
+2. Tebisa sekotlolo sa kgale, moropa o kgaotsweng kapa lebidi le aletsweng ka polasetiki mobung. Le tlatse ka metsi mme o le pote ka majwe. Beha majwe kapa dithupa tse mmalwa ka hare e le hore dikokonyana di kgone ho tswa. Le kwahele ka letlowa le matla haeba bana ba banyane ba dula haufi.
+3. Haha qubu e nyane ya majwe ka lehlakoreng le nang le letsatsi (leboya) le qubu ya dikutu ka lehlakoreng le nang le moriti.
+4. Lema, kapa o tlohele, dimela tsa tlhaho le jwang bo bolelele ho e potoloha.
+5. E etele mafube le mantsiboya hang ka beke. Ngola sebopuwa se seng le se seng seo o se bonang.
 
 ## Dintlha tsa bohlokwa
 
-- Ecosystem ke dintho tsohle tse phelang le tse sa pheleng sebakeng se le seng le kamoo di amanang kateng. E na le bahlahisi, baji le babolisi.
-- Piramidi ya bophelo e itshetlehile hodima dimela le mobu. O se ke wa leka ho bolaya disenyi tsohle, ho seng jwalo o bolaya ka tlala di-predator tse o thusang.
-- Di-ecosystem di sebetsa ka potoloho ya metsi, potoloho ya phepo, phallo ya matla a tswang letsatsing, le diphetoho tsa setjhaba sa dimela le diphoofolo ha nako e ntse e ya.
-- Succession ke kamoo naha e senyehileng e fodang kateng. Borwa ba Afrika naha e ngata ha e qetelle e le moru: naha ya jwang, savanna le fynbos ke ditsamaiso tsa tlhaho tse tsitsitseng, tse hlokang mollo le ho fula.
-- O se ke wa lema difate nahang ya jwang ya tlhaho kapa fynbos, mme le ka mohla o se ke wa sebedisa difate tsa "pele" tseo e leng invasive species.
-- Etsa habitat ka metsi, dibaka tse hlaha, mela ya dihlahla ya tlhaho, diqubu tsa majwe le dikutu, le mabokose a diphooko. Kampela kapa o kwahele matangwana, mme o se ke wa sebedisa tjhefo ya dikgoto haeba o batla diphooko.
-- Biodiversity e arola kotsi, e fokotsa ho qhoma ha disenyi mme e boloka polasi e hlahisa selemo kaofela.
+- Piramiti ya bophelo e itshetlehile ka dimela le mobu. Bolaya sesenyi se seng le se seng mme o bolaya ka tlala di-predator tse o thusang.
+- Succession ke kamoo naha e folang kateng. Borwa ba Afrika hangata e qetella e le naha ya jwang, savanna kapa fynbos, e seng moru.
+- Metsi, dikhutlo tsa naha, magora, diqubu tsa majwe le mabokose a diphooko di tlisa bathusi ba naha ho tla sebetsa polasing ya hao.
+- Mefutafuta e arola kotsi mme e laola disenyi.
+
+Kamora kgwedi, dula pela letangwana mme o bale se fallileng ho lona. Moeti e mong le e mong e motjha ke mosebetsi eo o sa kang wa hloka ho mo hira.

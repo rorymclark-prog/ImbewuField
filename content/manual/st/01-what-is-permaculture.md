@@ -1,262 +1,207 @@
 # Permaculture ke eng?
 
+Boholo ba rona re ithutile ho lema ka ho lwana: le mefoka, le disenyi, le maemo a lehodimo. Re a lema ka mohoma, re a fafatsa, re reka manyolo, mme selemo se seng le se seng mobu o fana ka hanyane ho feta.
+
+**Permaculture** (mokgwa wa ho rala polasi le lehae o sebetsang le tlhaho, e seng kgahlanong le yona) e qala sebakeng se seng. E botsa hore na naha e se e ntse e etsa eng, le hore na re ka sebetsa le yona jwang. Ke mokgwa wa ho nahana, o theilweng hodima melao ya boitshwaro e meraro le melao-motheo e leshome le metso e mmedi, oo o ka o isang sekgetjhaneng sefe kapa sefe sa naha, ho tloha jareteng ya ka morao lokeishineng ho ya tshimong e thabeng.
+
+**Qetellong ya kgaolo ena o tla kgona ho:**
+
+- Hlalosa ka mantswe a bonolo hore permaculture ke eng le hore lentswe lena le tswa kae
+- Bolela melao ya boitshwaro e meraro mme o e sebedise ho leka qeto polasing ya hao
+- Bolela melao-motheo e leshome le metso e mmedi ya moralo ya David Holmgren mme o fane ka mohlala wa polasi wa e nngwe le e nngwe
+- Qala ho shebella naha ya hao kamoo moradi a e shebellang kateng
+
 ## Lentswe lena le bolela eng
 
-Lentswe **permaculture** le kopanya mantswe a mabedi a Senyesemane: **perma**nent (e tswelang pele ka ho sa feleng) le agri**culture** (temo). Le ka bolela temo (tlhahiso ya dijo) e ka tswelang pele ho fihlela meloko e mengata. Le ka bolela hape **setso** (culture) — tsela ya ho phela le ya ho etsa dintho — e tshwarellang.
+**Permaculture** e kopanya mantswe a mabedi a Senyesemane: **perma**nent (e sa feleng) le agri**culture** (temo). E bolela temo e ka fepang lelapa ho fihlela meloko e mengata. E boetse e bolela **culture** (setso), tsela ya ho phela, e tshwarellang.
 
-Lentswe lena le qapilwe bohareng ba dilemo tsa bo-1970 ke Maaustralia a mabedi, **Bill Mollison** (1928–2016) le **David Holmgren**, eo ka nako eo e neng e le moithuti wa hae Tasmania. Ka 1978 ba phatlalatsa buka ya pele ka yona, *Permaculture One*. Ho tloha ka nako eo permaculture e se e hasane dipolasing, dirapeng le metseng lefatshe ka bophara, ho kenyeletsa le Borwa ba Afrika.
+Maaustralia a mabedi a qapile lentswe lena bohareng ba dilemo tsa bo-1970: **Bill Mollison** (1928–2016) le **David Holmgren**, eo ka nako eo e neng e le moithuti wa hae Tasmania. Buka ya bona ya pele, *Permaculture One*, e hlahile ka 1978. Ho tloha ka nako eo permaculture e se e hasane lefatshe ka bophara, ho kenyeletswa le Borwa ba Afrika.
 
-## Ditlhaloso
+Mollison o hlalositse permaculture e le "moralo o etswang ka boomo le tlhokomelo ya di-ecosystem tsa temo tse hlahisang, tse nang le mefutafuta, botsitso le matla a ho iphodisa a di-ecosystem tsa tlhaho".
 
-Bill Mollison o hlalositse permaculture e le "moralo o etswang ka boomo le tlhokomelo ya **di-ecosystem** (ditikoloho tsa tlhaho) tse hlahisang dijo, tse nang le mefutafuta, botsitso le matla a ho iphodisa a di-ecosystem tsa tlhaho".
-
-Ka mantswe a bonolo: permaculture ke tsela ya ho rala le ho tsamaisa polasi kapa serapa e le hore se sebetse jwaloka tlhaho. Moru wa tlhaho kapa thota ya jwang e na le mefuta e mengata ya dimela le diphoofolo (**mefutafuta**, diversity), e tswela pele selemo le selemo (**botsitso**, stability), mme e a iphodisa kamora komello, mollo kapa tshenyo (**matla a ho iphodisa**, resilience). Polasi ya permaculture e leka ho etsa se tshwanang, mme ka nako e tshwanang e fepe batho.
-
-Permaculture e hokahanya naha, metsi, dimela, diphoofolo le batho e le hore karolo ka nngwe e thuse tse ding. Jwaloka tsamaiso ya tlhaho, e leka ho se senye letho: seo karolo e nngwe e se ntshang, karolo e nngwe e a se sebedisa.
+Ka mantswe a bonolo: re rala le ho tsamaisa polasi e le hore e sebetse jwaloka tlhaho. **Ecosystem** (setjhaba sa dintho tse phelang le tikoloho ya tsona) ke setjhaba sa dimela, diphoofolo le ditshedi tsa mobu tse phelang mmoho le mobu, metsi le moya o di potolohileng. Naha ya tlhaho (veld) e phetseng hantle e na le mefuta e mengata ya bophelo (**mefutafuta**, diversity). E tswela pele selemo le selemo (**botsitso**, stability). E a iphodisa kamora komello, mollo kapa tshenyo (**matla a ho iphodisa**, resilience). Polasi ya permaculture e batla dintho tsena tse tharo, mme e fepa batho hape.
 
 ## Hobaneng permaculture e le bohlokwa Borwa ba Afrika
 
-Malapa a mangata Borwa ba Afrika a itshetlehile ka naha bakeng sa dijo le lekeno la wona. Ke ona hape batho ba leng kotsing haholo ya mathata a mabedi a maholo.
+Malapa a phelang ka naha a utlwa maemo a lehodimo pele. Dikgatello tse pedi di ntse di hola.
 
-- **Climate change** (phetoho ya boemo ba lehodimo). Balemi ba se ba bona matsatsi a tjhesang haholo, pula eo ho leng thata ho e bolela esale pele, dikomello tse telele, le difefo tse matla le merwallo e mengata. Boholo ba balemi ba banyane ba itshetleha ka pula ho ena le nosetso, kahoo diphetoho tsena di ba otla ka ho fetisisa.
-- **Ho senyeha ha naha.** Ha mobu o siuwa o se na sekwahelo, o fulwa ho feta tekano kapa o lengwa matswapong a thellang haholo, pula le moya di a o hohola le ho o foka. Dipatlisiso di bontsha hore **erosion** (kgoholeho ya mobu) e amme karolo e fetang 70% ya naha ya Afrika Borwa. Lesotho, moo bukana ena e ngotsweng la pele, le lona le na le erosion e matla le dikgohlo.
+- **Climate change** ke phetoho ya nako e telele ya maemo a lehodimo e bakwang haholo ke batho. Balemi ba se ba bona matsatsi a tjhesang haholo, pula e tlang morao kapa e nang kaofela ka nako e le nngwe, dikomello tse telele le difefo tse matla. Boholo ba balemi ba banyane ba lema ka pula, e seng ka nosetso, kahoo ke bona ba jarang kotsi e kgolo.
+- **Erosion** (kgoholeho ya mobu) ke mobu o hoholwang ke metsi kapa o fefolwang ke moya. Naha e se nang sekwahelo, e fuleditsweng ho feta tekano kapa letswapo le lemilweng le thellang di lahlehelwa ke **topsoil** (mobu o ka hodimo, o nonneng) ka sefefo se seng le se seng. Erosion e amme karolo e fetang 70% ya naha ya Afrika Borwa. Lesotho, moo bukana ena e qadileng teng, le lona le na le erosion e matla le dikgohlo tse tebileng.
 
-Afrika Borwa ke naha e ommeng hape. Ka kakaretso e fumana pula e ka bang 450 mm ka selemo, e ka bang halofo ya pula eo lefatshe ka kakaretso le e fumanang, e ka bang 860 mm. Lerothodi le leng le le leng la bohlokwa.
+Afrika Borwa ke naha e omileng hape. Ka kakaretso e fumana pula e ka bang 450 mm ka selemo, e ka bang halofo ya karolelano ya lefatshe ya hoo e ka bang 860 mm. Lerothodi le leng le le leng le bohlokwa.
 
-Ha naha e lahlehelwa ke mobu le metsi a yona, e se e sa kgone ho fepa batho ba phelang ho yona, mme malapa a qobellwa ho tloha. Matshwao a temoso a se a le teng. Re ke ke ra tswela pele ho lema ka tsela e tshwanang ya kgale.
+Naha e lahlehelwang ke mobu le metsi a yona e kgaotsa ho fepa batho ba yona, mme ba a tloha. Re ke ke ra lema ka tsela ya kgale mme ra lebella sephetho se fapaneng.
 
-Permaculture e re fa mmapa le sete ya disebediswa ho fetola sena. E re ruta ho sireletsa mobu, ho tshwara le ho boloka pula, ho lema mefuta e mengata ya dijalo le ho sebetsa le tlhaho ho ena le ho sebetsa kgahlanong le yona. E re thusa ho ba karolo ya tharollo.
+Permaculture e re fa mmapa le disebediswa: sireletsa mobu, tshwara pula, lema dijalo tse ngata, sebetsa le tlhaho. E a buseletsa bophelong ba letsatsi le letsatsi.
 
-## Melemo ya permaculture
+- **Dijo selemo kaofela.** Meroho, ditholwana, dijothollo le **di-legume** (lelapa la dinawa le dierekisi), tse lengwang ntle le chefo. Poleiti e nang le mefuta e mengata ke poleiti e phetseng hantle.
+- **Tjhelete e bolokwang le tjhelete e fumanwang.** Dintho tse fokolang tse rekwang, le dihlahiswa tse ngata, e le hore sejalo se le seng se hlolehang se se ke sa wisa lelapa. Tse setseng di ka rekiswa, tsa omiswa kapa tsa kenngwa dinkgong.
 
-Permaculture e feta sete ya mekgwa ya temo. Ha re sebetsa haufi le naha re boela re hokahana le yona, mme sena se ka fetola maphelo a rona hore a be betere.
+## Melao ya boitshwaro e meraro
 
-Lehae le polasi ya permaculture di ka fana ka dijo selemo kaofela, ditanka le matangwana a tletseng metsi a pula, le dirapa tse tletseng bophelo. E thusa lelapa ho tloha ho phela ka thata feela ho ya ho phela hantle, le ho arolelana sena le ba bang.
-
-- **Bophelo bo botle le phepo e ntle.** O ka lema mefuta e mengata ya meroho e metjha, ditholwana, **di-legume** (dijalo tsa dinawa) le dijothollo ntle le dibolaya-disenyi le dibolaya-mefoka tsa dikhemikhale tse kotsi. Dijo tse fapaneng ke dijo tse phetseng hantle.
-- **Mehopolo e metjha le kgothatso.** Permaculture e o thusa ho bona dikamano pakeng tsa dikarolo tse fapaneng tsa polasi ya hao, le hore o ka di sebedisa jwang molemong wa hao.
-- **Mosebetsi o nang le moelelo.** Batho ba bangata ba fumana sepheo sa nnete ho hlokomeleng naha.
-- **Lekeno le ho boloka tjhelete.** Ho lema dihlahiswa tse ngata tse fapaneng ho etsa hore lekeno la lelapa le se be kotsing haholo: ha sejalo se seng se hloleha, tse ding di ntse di hlahisa. O sebedisa tjhelete e nyane ho reka dintho tse kang peo le manyolo, mme o ka rekisa tse setseng kapa wa di eketsa boleng (mohlala, ka ho di omisa, ho di kenya dinkgong kapa ho di sebetsa).
-
-## Melao ya boitshwaro e meraro ya permaculture
-
-Permaculture e theilwe hodima **melao ya boitshwaro** (ethics) e meraro — dintho tseo re di nkang di le bohlokwa, tse tataisang qeto e nngwe le e nngwe. Bill Mollison le David Holmgren ba di beile bohareng ba permaculture.
+Kgetho e nngwe le e nngwe polasing ya permaculture e lekwa ka **melao ya boitshwaro** (ethics) e meraro, e leng mekgwa e re tataisang. Bill Mollison le David Holmgren ba e beile bohareng ba permaculture.
 
 ### 1. Tlhokomelo ya Lefatshe
 
-Tlhokomelo ya Lefatshe e bolela ho hlokomela dintho tsohle tse phelang, jwaloka dimela, diphoofolo le bophelo bo ka hara mobu. E bolela hape ho hlokomela dintho tse sa pheleng, jwaloka naha, metsi le moya. Re itshetlehile ka tsena tsohle hore re phele.
+Hlokomela dintho tsohle tse phelang (dimela, diphoofolo, bophelo bo ka hara mobu) le naha, metsi le moya o tshehetsang bophelo. Re itshetlehile ka tsona kaofela.
 
 ### 2. Tlhokomelo ya Batho
 
-Tlhokomelo ya Batho e bolela ho fihlela ditlhoko tsa batho — dijo, metsi, bodulo, bophelo bo botle, thuto le setswalle — e le hore ba phele bophelo bo botle, ntle le ho senya Lefatshe. E mabapi le ho ithuta ho ikemela, le ho nka boikarabelo bakeng sa malapa a rona le setjhaba sa rona ka bophara.
+Fihlela ditlhoko tsa batho tsa dijo, metsi, bodulo, bophelo bo botle, thuto le setswalle ntle le ho senya Lefatshe. Aha boitshepo lelapeng la hao le setjhabeng sa heno.
 
 ### 3. Karolelano e Lokileng
 
-Lefatshe le na le mehlodi e lekanyeditsweng. Ho arolelana ka toka (hangata ho bitswa **Karolelano e Lokileng**, fair share) ho bolela ho lekanyetsa seo re se sebedisang, le ho arolelana tse setseng — dijo, peo, nako, tsebo le tjhelete — e le hore di kgutlele ho hlokomeleng Lefatshe le batho.
+Lefatshe le na le meedi. Ho arolelana ka toka, hangata ho bitswang **Karolelano e Lokileng** (fair share), ho bolela ho nka seo re se hlokang le ho kgutlisetsa tse setseng (dijo, peo, nako, tsebo le tjhelete) ho hlokomeleng Lefatshe le batho.
 
-Ha re hlokomela Lefatshe le batho ba lona mme re arolelana ka toka, re boela re qala ho sebetsana le mathata a maholo jwaloka bofuma, tlala le erosion. Mefuta yohle ya bophelo e na le tokelo ya ho ba teng, kahoo rona ba ralang ka permaculture re sebetsa ho sireletsa le ho tshehetsa bophelo ka mefuta yohle ya bona.
-
-> **Hlokomela:** "Tlhaho ha e etse letho ntle le sepheo." — Aristotle, rafilosofi wa Mogerike. Ho permaculture re batla sepheo le tshebediso ya karolo e nngwe le e nngwe ya tsamaiso.
+Sebedisa melao ya boitshwaro e le teko. Pele o lema letswapo ka mohoma, o reka sefafatsi kapa o kwalla sediba ka terata, botsa dipotso tse tharo. Na ho lokile bakeng sa naha? Na ho lokile bakeng sa batho? Na ho na le toka? Haeba karabo efe kapa efe e le tjhe, batla tsela e nngwe.
 
 ## Melao-motheo ya moralo ya permaculture
 
-Melao-motheo ya moralo ke sete ya ditataiso tse re thusang ho rala le ho tsamaisa polasi ya permaculture. Re e sebedisa ho rala polasi, ho utlwisisa dikamano pakeng tsa dikarolo tsa yona, le ho fumana ditharollo tse tshwarellang tsa mathata. Melao-motheo e hokahane mme e sebetsa hammoho.
+Melao ya boitshwaro e re bolella se bohlokwa. Melao-motheo ke disebediswa tsa ho nahana tsa ho se rala: ho rala polasi, ho bona kamoo dikarolo tsa yona di hokahaneng kateng le ho rarolla mathata ka ho sa feleng.
 
-Matitjhere a fapaneng a permaculture a sebedisa manane a fapaneng hanyane a melao-motheo. Melao-motheo e leshome le metso e mmedi e ka tlase e tswa ho David Holmgren, e mong wa bathehi ba permaculture, bukeng ya hae *Permaculture: Principles and Pathways Beyond Sustainability* (2002). Holmgren o hokahantse e mengata ya yona le maele a tsebahalang, mme a mang a wona a fanwe ka tlase. Melao-motheo e sebetsa le kantle ho temo, mohlala bophelong bo botle, kahong, le ho tsamaiseng lelapa kapa kgwebo.
+Matitjhere a sebedisa manane a fapaneng hanyane. A leshome le metso e mmedi a mona a tswa bukeng ya David Holmgren *Permaculture: Principles and Pathways Beyond Sustainability* (2002). Holmgren o hokahantse molao-motheo ka mong le maele a kgale, mme re fana ka a mang a wona mona.
 
 ### 1. Shebella mme o sebedisane le tlhaho
 
-Nka nako o shebella tlhaho, haholoholo naha e potapotileng lehae la hao. Pele re etsa letho, re hloka ho utlwisisa se seng se etsahala: moo metsi a phallang teng, moo serame se wang teng, dimela tse holang hantle, le diphoofolo tse etelang. Moralo o motle o tswa ho shebelleng ka hloko le ka mamello.
+O ke ke wa ralla naha eo o sa e tsebeng. Metsi a phalla kae? Serame se wela kae? Ke eng se holang hantle ntle le thuso? Dibuka le matitjhere di a thusa, empa ha ho letho le nkang sebaka sa nako ya hao naheng ya hao.
 
-Dibuka, dithupelo le matitjhere di ka thusa, empa ha ho letho le nkang sebaka sa boiphihlelo ba hao ba ho iponela naha ya hao. Ha o tseba naha ya hao hantle, diqeto tsa hao di tla ba betere.
+1. Tsamaya naheng ya hao, le naheng ya tlhaho e e potolohileng, sehleng se seng le se seng.
+2. Dula o kgutsitse o shebelle dimela, dinonyana, dikokonyana le diphoofolo.
+3. Boloka bukana ya pula, serame sa pele le sa ho qetela, le hore dintho di thunya neng. Balemi ba bangata ba ngola le diphetoho tsa kgwedi.
+4. Tswela kantle nakong ya pula e matla le kamora yona. Bona moo metsi a phallang teng le moo a bokellanang teng.
 
-Mekgwa ya ho ikwetlisa ho shebella:
-
-- Tsamaya naheng ya hao, le naheng kapa morung o haufi, dihleng tse fapaneng.
-- Dula o kgutsitse o shebelle dimela, dinonyana, dikokonyana le diphoofolo naheng ya hao kapa tikolohong ya heno.
-- Boloka bukana e bonolo moo o ngolang maemo a lehodimo, pula, serame sa pele le sa ho qetela, le dihla. Balemi ba bangata ba boetse ba ngola diphetoho tsa kgwedi.
-- Tsamaya naheng ya hao nakong ya pula e matla le kamora yona ho bona moo metsi a phallang teng le moo a bokellanang teng.
+Kamora selemo sa ho shebella, o tla tseba naha ya hao ho feta moeti ofe kapa ofe. Moralo wa hao o tla e lekana ho ena le ho lwantshana le yona.
 
 ### 2. Tshwara mme o boloke matla
 
-Maele: *Kotula jwang ha letsatsi le ntse le tjhaba.*
+*Kotula jwang ha letsatsi le ntse le tjhaba.*
 
-Tlhaho e tsamaya ka dipotoloho (cycles): dinako tsa bongata di latelwa ke dinako tsa tlhaelo. O ka bona sena dihleng. Boholo ba bohare ba naha ya Afrika Borwa bo na le sehla sa ho hola hlabula le futhumetseng, le nang le pula, le mariha a batang, a omileng, moo dimela di sa holeng haholo. Kapa Bophirima, pula e na mariha mme hlabula ho a oma.
+Tlhaho e tsamaya ka dipotoloho: bongata, ebe tlhaelo. Boholo ba bohare ba naha ya Afrika Borwa, hlabula le futhumetseng, le nang le pula, ke sehla sa ho hola, mme mariha a a bata, a omile ebile a dieha. Kapa Bophirima pula e na mariha mme hlabula ho a oma. Re tshwara se ngata re se bolokele nako ya tlhaelo.
 
-Ho permaculture re tshwara le ho boloka matla le mehlodi ha di le ngata, e le hore re be le tsona hamorao ha di fokola. Ho jwalo le ka matla a rona: sebedisa hantle dinako tseo o nang le matla a mangata ka tsona, mme o rale bakeng sa dinako tseo o tla ba le matla a fokolang.
+- Tshwara letsatsi la hlabula ka dijalo: meroho, ditholwana, dinate, furu, patsi le nama.
+- Tshwara pula ditankeng, matangwaneng le mobung ka bowona, ka **mulch** (sekwahelo sa jwang bo omileng kapa makgasi hodima mobu) le ka **di-swale** (diforo tse lekaneng tse tjhekwang ho latela letswapo ho monya pula).
+- Omisa, kenya dinkgong mme o boloke tse setseng tsa hlabula bakeng sa mariha.
 
-Mehlala:
-
-- Sehleng sa ho hola, ha letsatsi le le matla ka ho fetisisa, re tshwara matla a letsatsi ka mokgwa wa dijalo — meroho, ditholwana, dinate, patsi, furu le nama.
-- Ha pula e na, tshwara mme o boloke metsi ditankeng, matangwaneng le mobung ka bowona (mohlala ka **mulch**, e leng sekwahelo sa mobu, le ka **di-swale**, e leng diforo tse tshwarang metsi a pula).
-- Omisa, kenya dinkgong kapa o boloke ka tsela e nngwe meroho le ditholwana tse setseng bakeng sa sehla seo dijo tse ntjha di fokolang ka sona.
+Polasi e bolokang hantle ha e tshohe ha pula e kgaotsa.
 
 ### 3. Fumana kotulo
 
-Maele: *O ke ke wa sebetsa ka mpa e se nang letho.*
+*O ke ke wa sebetsa ka mpa e se nang letho.*
 
-Etsa hore nako le mosebetsi wa hao di be le molemo. **Kotulo** (yield) ke eng kapa eng e nang le thuso eo tsamaiso ya hao e e hlahisang: dijo, furu, patsi, bodulo, mofuthu, meriana, peo kapa lekeno.
+**Kotulo** (yield) ke eng kapa eng e nang le thuso eo naha e o fang yona: dijo, furu, patsi, moriti, meriana, peo kapa lekeno. Sefate sa ditholwana se ka hloka dihla tse mmalwa pele se beha, kahoo lema dikotulo tse potlakileng le tse diehang mmoho, mme kamehla ho tla ba le seo o se bonang ka lebaka la mosebetsi wa sehla sena. Re ralla tse setseng: tse lekaneng lelapa, mobu, diphoofolo, baahisane le mmaraka.
 
-Dikotulo tse ding di nka dilemo. Sefate sa ditholwana se ka nka dilemo tse mmalwa pele se beha. Kahoo rala motswako wa dikotulo tse potlakileng le tse diehang, e le hore kamehla o be le seo o se bonang ka lebaka la mosebetsi le mehlodi eo o e kenyang jwale. Re rala ka boomo bakeng sa tse setseng (surplus) — tse lekaneng lelapa la rona, dimela le diphoofolo, ho arolelana le baahisane le ho rekisa.
-
-Mehlala:
-
-- Dipeo tse melang (sprouts) tsa mung beans, lentils kapa dipeo tse ding di loketse ho jewa ka mora matsatsi a ka bang 2 ho isa ho 5, mme di na le phepo.
-- Difate tsa ditholwana ke peeletso ya nako e telele, empa di fana ka kotulo dilemo tse ngata ha di se di qadile ho beha.
-- Lema dimela tse thunyang tse fanang ka lero la dipalesa (nectar) le phofo (pollen) ho dinotshi le dikokonyana tse ding tse thusang. Mohlala, makgala (aloes) a mangata a tlhaho a thunya mariha, ha ho se ho sa thunye letho le leng. Jwale dinotshi di tsamaisa phofo dijalong tsa hao mme di ka o fa mahe a dinotshi.
-
-> **Polokeho:** Dipeo tse melang di hola maemong a mofuthu, a mongobo, a loketseng le dikokwanahloko tse kotsi. Sebedisa metsi a hlwekileng, hlatswa sprouts bonyane habedi ka letsatsi, mme o lahle tse nkgang hampe kapa tse thellang jwaloka mamina. Pheha sprouts pele o di fa bana ba banyane, basadi ba imileng, batho ba baholo kapa mang kapa mang ya kulang.
+- Dipeo tse melang (sprouts) tsa mung beans kapa lentils di loketse ho jewa kamora matsatsi a ka bang 2 ho isa ho 5. Sebedisa metsi a hlwekileng, di hlatswe habedi ka letsatsi, mme o lahle tse nkgang hampe kapa tse thellang.
+- Difate tsa ditholwana di dieha ho qala, empa di fana ka kotulo dilemo tse ngata ha di se di beha.
+- Lema dipalesa bakeng sa dinotshi. Makgala (aloes) a mangata a tlhaho a thunya mariha, ha ho se ho sa thunye letho le leng. Jwale dinotshi di tsamaisa phofo dijalong tsa hao mme di ka o fa mahe a dinotshi.
 
 ### 4. Itaole mme o amohele dipontsho (feedback)
 
-Tlhaho e ipoloka e le tekatekanong. Morung kapa thoteng e phetseng hantle, ha ho semela kapa phoofolo e le nngwe e busang nako e telele. Empa batho hangata ba nka ho feta haholo seo ba se hlokang. Ho sebedisa mehlodi ho feta tekano ke sesosa se seholo sa climate change le sa ho lahleha ha dimela le diphoofolo.
+Ditsamaiso tsa tlhaho di ipoloka di leka-lekane. Nahang ya tlhaho e phetseng hantle ha ho semela kapa phoofolo e le nngwe e busang nako e telele. Batho ba fapane: hangata re nka ho feta haholo seo re se hlokang, mme tshebediso eo e fetang tekano e kganna climate change le ho lahleha ha dimela le diphoofolo tsa naha.
 
-Molao-motheo ona o re kopa ho **ipehela meedi** — ho phela ka bonolo le ho se nke ho feta seo re se hlokang — e le hore bana ba rona ba futse naha e phetseng hantle.
+Kahoo re **ipehela meedi**: re phela ka bonolo mme re nka seo re se hlokang, e le hore bana ba rona ba futse naha e phelang. Mme re **amohela dipontsho**, matshwao a re bolellang hore na seo re se etsang se a sebetsa. Diphoso ke karolo ya ho ithuta. Mamela dijalo, mobu, diphoofolo le batho ba bang, mme o fetole se sa sebetseng.
 
-> **Hlokomela:** "Lefatshe le fana ka ho lekaneng ho kgotsofatsa ditlhoko tsa motho e mong le e mong, empa e seng meharo ya motho e mong le e mong." — maele ao hangata ho thwe ke a Mahatma Gandhi.
-
-O boetse o re kopa ho **amohela dipontsho** (feedback). Diphoso ke karolo ya ho ithuta. Dipontsho ke seo naha, dijalo le batho ba re bontshang sona ka mora seo re se entseng — ke tsebo e re bolellang hore na seo re se etsang se a sebetsa. Di tswa dijalong tsa rona, mobung wa rona, diphoofolong tsa rona, le ho batho ba bang. Re hloka ho di mamela ka kelello e bulehileng mme re fetole se sa sebetseng, le ha seo se le thata.
-
-Mehlala:
-
-- Qoba maeto a sa hlokahaleng ka koloi kapa ka tekesi. Kopanya mesebetsi e mengata leetong le le leng, tsamaya ka maoto, kapa o sebedise baesekele. Sena se boloka tjhelete le dibeso.
-- Nahana habedi pele o reka dintho tse ntjha, jwaloka mohala o motjha, ha wa kgale o ntse o sebetsa. Ho di etsa ho sebedisa mehlodi e mengata ya tlhaho.
-- Ha batho ba bua le wena, kapa ha o shebella masimong, kgutsisa kelello ya hao mme o mamele ka kgutso. O tla hlokomela dintho tse ngata mme o ithute haholo.
-- Shebella dimela tsa hao: makgasi a mosehla, disenyi kapa ho hola hampe ke dipontsho tsa hore ho na le ntho mobung, metsing kapa kgethong ya dimela e hlokang ho fetolwa.
+- Kopanya mesebetsi e mengata leetong le le leng, tsamaya ka maoto, kapa o palame baesekele.
+- Bala dimela tsa hao. Makgasi a mosehla, kgolo e fokolang kapa ho phatloha ha disenyi ke naha e o bolellang hore ho na le ntho mobung, metsing kapa kgethong ya hao ya dimela e hlokang ho fetoha.
 
 ### 5. Sebedisa mme o ananele mehlodi le ditshebeletso tse ntjhafalang
 
-Batla ho tlhaho dintho tseo re di hlokang. Dimela, diphoofolo, kganya ya letsatsi, moya le pula di a intjhafatsa — ha di fele, di boela di ba teng hape. Mehlodi e sa ntjhafaleng jwaloka peterole, diesel le manyolo a dikhemikhale e sebediswa hang feela ebe e a fela, e bitsa tjhelete, mme ho tjhesa dibeso tsa fossil (tse kang peterole le mashala) ho eketsa climate change.
+Kganya ya letsatsi, moya, pula, dimela le diphoofolo di a intjhafatsa. Peterole, diesel le manyolo a dikhemikhale di sebediswa hang ebe di a fela. Di bitsa tjhelete, mme ho tjhesa dibeso tsa fossil ho eketsa climate change.
 
-Dimela le diphoofolo di ka re fa dibeso le manyolo, mme tsa re thusa ho laola dikokonyana, mefoka le mollo, ho thibela erosion, ho kgutlisa phepo mobung le ho bulela mobu. Di ka nka sebaka sa diterekere le metjhini ya ho kuta jwang (brush cutters le lawnmowers) e tjhesang dibeso.
+Dimela le diphoofolo di ka etsa boholo ba mosebetsi wa terekere kapa motjhini wa ho kuta jwang. Di fana ka dibeso le manyolo, di laola mefoka le dikokonyana, di thibela erosion, di kgutlisa phepo mobung mme di bulela mobu. Di nka nako ho hodiswa, empa ha nako e ntse e ya di a ikatisa mme di iphepa.
 
-Ho nka nako ho aha mehlodi ena e phelang, kahoo e nke e le peeletso ya nako e telele. Ha nako e ntse e ya, e tla ikatisa mme e iphepe.
-
-Mehlala:
-
-- **Di-animal tractor** (diterekere tsa diphoofolo). Dikgoho le dikolobe ka tlhaho di a fata le ho tjheka ho batla diboko, metso le dikokonyana. Di boloke matsatsi a mmalwa sebakeng se thibetsweng ka terata, se hodileng mefoka, mme di tla hlwekisa mefoka le ho nontsha mobu, mme mobu o be o loketse ho jalwa.
-- **Manyolo a tswang diphoofolong.** Diphoofolo di ja dimela mme di kgutlisetsa phepo mobung ka manyolo a tsona. Manyolo a diphoofolo le metsi a manyolo (liquid manure, kapa manure tea) di fepa dimela tsa serapeng.
-- **Magora a phelang le di-windbreak** (disireletsi tsa moya). Magora (hedges) a dimela tse nang le thuso, tse sa hlaseleng naha, a fana ka bodulo, furu le patsi ntle le dibeso kapa terata.
-
-> **Polokeho:** Manyolo a diphoofolo a matjha a ka tshwara dikokwanahloko tse bakang mafu a matla. A etse **compost** (manyolo a bodileng) hantle pele o a sebedisa dijalong tse jewang di le tala, jwaloka lettuce, sepinatjhe le ditlama. Haeba o sebedisa manyolo a matjha, a kopanye le mobu bonyane dikgwedi tse 4 (matsatsi a 120) pele o kotula dijalo tse amang mobu. Hlatswa matsoho kamora ho tshwara manyolo. Boloka dikolobe ka hara terata e matla e le hore di se ke tsa baleha tsa kena dijalong tsa baahisane.
+- **Di-animal tractor.** **Animal tractor** ke lesaka le sutiswang la dikgoho kapa dikolobe, tse fatang le ho tjheka ho batla diboko, metso le dikokonyana. Di kwalle matsatsi a mmalwa sebakeng se hodileng mefoka mme di tla se hlwekisa le ho se nontsha, se be se loketse ho lengwa.
+- **Manyolo.** Diphoofolo di ja dimela mme di kgutlisa phepo e le manyolo le metsi a manyolo (manure tea). Bodisa manyolo qubung a fetohe **compost** (dijo tse ntsho, tse qhalakanang tsa mobu) pele a atamela dijalo tseo o di jang di le tala.
+- **Magora a phelang.** Legora la dimela tse nang le thuso, tse sa hlaseleng naha, le fana ka setshabelo, furu le patsi ntle le terata kapa dibeso.
 
 ### 6. O se ke wa hlahisa ditshila
 
-Maele: *Ya sa senyeng ha a hloke.*
+*Ya sa senyeng ha a hloke.*
 
-Ho permaculture re batla **dipotoloho tse kwetsweng** (closed loops), moo seo karolo e nngwe ya tsamaiso e se hlahisang e leng seo karolo e nngwe e se sebedisang. Matla le phepo di potoloha polasing mme di fetolwa kotulo kapa tshebeletso. Re nka boikarabelo bakeng sa seo ho thwang ke ditshila mme re se fetola mohlodi. Eng kapa eng e qetellang e tloha polasing e lokela ho ba e hlwekileng, e se nang kotsi.
+Tlhahong ha ho matlakala: seo karolo e nngwe e se ntshang ke seo e latelang e se sebedisang. Polasing re batla **dipotoloho tse kwetsweng** (closed loops), moo phepo le matla di potolohang mme di hlahang e le kotulo. Se qetellang se tloha polasing se lokela ho hlweka. Molao o motle: **nahana botjha, fokotsa, lokisa, sebedisa hape, sebetsa botjha (recycle).**
 
-Molao o motle ke: **nahana botjha, fokotsa, lokisa, sebedisa hape, sebetsa botjha (recycle).** Nahana hore o ka sebedisa masalla a kitjhene, masalla a dijalo le manyolo a diphoofolo jwang serapeng. Sena se boloka nako le tjhelete.
-
-Mehlala:
-
-- **Masalla a kitjhene.** Makgapetla, matlalo le masalla a meroho ke dijo tse ntle tsa diboko, mme ke motswako wa bohlokwa o "motala" (o nang le naetrojene e ngata) qubung ya compost.
-- **Jwang bo kutilweng.** Bo sebedise e le mulch ho potoloha dimela tse nyane ho boloka mobu o pholile o le mongobo, ho thibela mefoka le ho eketsa phepo butle ha bo ntse bo bola. Bo hasanye ka mekato e tshesane, kapa o bo tlohele bo ome pele, hobane mokato o motenya wa jwang bo botala o a kgomarelana mme o a futhumala. O se ke wa sebedisa jwang bo kutilweng jareteng e fafaditsweng ka sebolaya-mefoka.
-- **Greywater** (metsi a ditshila a malapeng). Ho ena le ho lahla metsi a ho hlatswa diaparo le a ho hlapa, a sebedise ho nosetsa difate tsa ditholwana le dimela tsa mokgabiso. Sebedisa disepa le diphofo tsa ho hlatswa tse bonolo, tse bolang (biodegradable), tse nang le letswai le lenyane.
-
-> **Polokeho:** Greywater e ka tshwara dikokwanahloko. Sebedisa metsi a bafo, a shawara le a sekotlolo sa ho hlatswa matsoho ho ena le metsi a kitjhene, a nang le mafura mme a tletseng dikokwanahloko. Le ka mohla o se ke wa sebedisa metsi a ho hlatswa dinapi. Tshela greywater mobung kapa mulch ho potoloha difate, e seng makgasing, mme le ka mohla o se ke wa e tshela meroho e jewang e le tala, jwaloka lettuce le sepinatjhe. O se ke wa e tlohela e eme e le madibana, mme o se ke wa e sebedisa haeba motho e mong lapeng a na le lefu la mala. Ka dinako tse ding nosetsa ka metsi a hlwekileng ho hlatswa letswai.
+- **Masalla a kitjhene** a fepa diboko, mme ke motswako wa bohlokwa o "motala" (o nang le naetrojene e ngata) qubung ya compost. Compost ke masalla a dimela le diphoofolo a bodileng ho fetoha dijo tse ntsho, tse qhalakanang tsa mobu.
+- **Jwang bo kutilweng** bo etsa mulch ho potoloha dimela tse nyane. Bo boloka mobu o pholile o le mongobo mme bo thibela mefoka. Bo hasanye ka mokato o mosesane kapa o bo tlohele bo ome pele, hobane mokato o motenya wa jwang bo botala o a kgomarelana mme o a futhumala.
+- **Greywater** ke metsi a sebedisitsweng a tswang bateng, shawareng le disinking. A ya ka tlasa mulch difateng tsa ditholwana, le ka mohla e seng hodima morogo oo o o jang o le tala, mme metsi a kitjhene kapa a ho hlatswa dinapi ha a kenngwe ho ona le ka mohla. Sebedisa disepa tse bonolo tse nang le letswai le lenyane.
 
 ### 7. Rala ho tloha mekgweng ho ya dintlheng
 
-Tlhaho e tletse mekgwa (patterns) — tsela eo noka kapa sefate se arohanang ka makala ka yona, sebopeho se potolohang (spiral) sa kgaketla ya kgofu, tsela eo metsi kamehla a phallang ho theosa ka yona. Ho permaculture re leka ho fumana mokgwa o molemo ka ho fetisisa bakeng sa setsha sa rona pele, ebe feela re tlatsa dintlha.
+Tlhaho e tletse mekgwa (patterns): kamoo noka kapa sefate se arohanang ka makala kateng, spiral ya kgaketla, metsi a phallang ho theosa. Re fumana mokgwa o moholo wa setsha pele, ebe re tlatsa dintlha. Mollison o ne a nka mokgwa o le bohlokwa hoo a o neileng kgaolo e feletseng bukeng ya hae *Permaculture: A Designers' Manual* (1988).
 
-Qala ka setshwantsho se seholo: sebopeho sa naha (matswapo le mela ya yona ya contour), moo metsi a tswang teng le moo a yang teng (**catchment**, sebaka se bokellang metsi), le boemo ba lehodimo. Taka mokgwa o moholo wa moralo wa hao ho tswa ho tsena. Ebe o sebetsa dintlha, jwaloka hore ke dijalo dife tse lengwang bething efe ya serapa. Bill Mollison o ne a nka mekgwa e le bohlokwa hoo a e neileng kgaolo e feletseng bukeng ya hae *Permaculture: A Designers' Manual* (1988).
+1. Qala ka sebopeho sa naha: matswapo a yona le **di-contour**, mela e tshelang letswapo e dulang bophahamong bo le bong.
+2. Fumana **catchment**, sebaka seo metsi a hao a tswang ho sona, mme o latele moo a yang teng.
+3. Ngola boemo ba lehodimo le tsela ya letsatsi. Borwa ba Afrika letsatsi le ka leboya, mme le tlase mariha.
+4. Ke hona feela o behang dintlha: bethe efe ya serapa, sefate sefe, sejalo sefe.
 
-O ka boela wa alima mekgwa ya tlhaho ka kotloloho: ditsela tse kgopamang butle jwaloka noka, kapa dibethe tsa serapa tse bopehileng jwaloka spiral kapa lesoba la senotlolo (keyhole). Sheba dibopeho tse o potapotileng ho fumana mehopolo.
-
-Mehlala:
-
-- Sebedisa **mela ya contour** ya naha ya hao (mela e kopanyang dintlha tse bophahamong bo lekanang) ho aha mesebetsi ya ho tjheka mobu, jwaloka **swale** — foro e tjhekwang ho latela contour ho tshwara le ho kenya **runoff** (metsi a pula a phallang hodima mobu) mobung. Contour ke mokgwa; swale ke ntlha.
-- Latela tsela ya letsatsi selemo kaofela. Borwa ba Afrika letsatsi le ka leboya, mme le tlase mariha. Beha dijalo, difate le meaho moo di tla fumana letsatsi leo di le hlokang.
-- Shebella dipotoloho tse o potapotileng, jwaloka dihla le dipula. Hlokomela hore di ama dimela le diphoofolo jwang, mme o rale ho jala le tlhokomelo ya diphoofolo ho ya ka tsona.
+Contour ke mokgwa; swale e tjhekilweng ho e latela ke ntlha. Alima le dibopeho tsa tlhaho: ditsela tse kgopamang jwaloka molatswana, dibethe tsa serapa tse bopehileng jwaloka spiral kapa lesoba la senotlolo.
 
 ### 8. Kopanya ho e na le ho arola
 
-Maele: *Mesebetsi e bobebe ha matsoho a le mangata.*
+*Mesebetsi e bobebe ha matsoho a le mangata.*
 
-Ha dikarolo tsa polasi ya hao di hokahane hoo e nngwe le e nngwe e thusang tse ding, tsamaiso yohle e ba matla, e hlahisa haholo mme e kgona ho mamella dinako tse thata. Hammoho, dikarolo di fihlella ho feta seo di ka se fihlellang ha e nngwe le e nngwe e le mong.
+Ha karolo e nngwe le e nngwe ya polasi e thusa tse ding, kaofela di ba matla ho feta dikarolo tsa tsona. Ho beha ntho ka nngwe (ntlo, serapa, dikgoho, tanka, difate) moo e ka sebeletsang tse ding ke pelo ya moralo wa permaculture. Le batho: bana le batho ba baholo ba na le ho hongata hoo ba ka ho fanang le hoo ba ka ho ithutang, mme ke ba bophelo ba polasi.
 
-Ho beha karolo ka nngwe — ntlo, serapa, dikgoho, tanka ya metsi, difate — sebakeng se nepahetseng, moo e ka tshehetsang tse ding, ke pelo ya moralo wa permaculture.
-
-Ho jwalo le ka batho. Setjhaba se matla ha bohle ba nka karolo. Bana le batho ba baholo ba na le ho hongata hoo ba ka ho fanang le hoo ba ka ho ithutang, mme ba lokela ho kenyeletswa bophelong ba polasi, e seng ho behwa ka thoko.
-
-Mehlala:
-
-- Etsa dibaka tse bolokehileng moo bana le batho ba baholo ba ka thusang le ho ithuta serapeng.
-- Kopanya difate, dijalo le diphoofolo (**agroforestry**, temo e kopanyang difate, dijalo le diphoofolo) e le hore e nngwe le e nngwe e fane ka dihlahiswa le ditshebeletso tsa yona ho tse ding. Mohlala, difate di fana ka moriti le furu, diphoofolo di fana ka manyolo, mme dijalo di fana ka dijo le masalla a dijalo bakeng sa diphoofolo.
-- Etsa **di-guild** (dihlopha tsa dimela) — dihlopha tsa dimela tse holang hantle hammoho mme di thusana ho laola disenyi, ho nontsha mobu, ho fana ka moriti kapa ho tshehetsa tse ding.
+- Kopanya difate, dijalo le diphoofolo (**agroforestry**, temo e kopanyang difate, dijalo le diphoofolo). Difate di fana ka moriti le furu, diphoofolo di fana ka manyolo, mme dijalo di fana ka dijo le masalla bakeng sa diphoofolo.
+- Etsa **di-guild** (dihlopha tsa dimela tse thusanang): dihlopha tsa dimela tse behwang ho potoloha semela se seholo, hangata sefate sa ditholwana, tse se thusang ka taolo ya disenyi, monono kapa moriti.
+- Etsa dibaka tse bolokehileng moo bana le bontatemoholo ba ka sebetsang le ho ithuta serapeng.
 
 ### 9. Sebedisa ditharollo tse nyane le tse diehang
 
-Maele: *Ya tsamayang butle o fihla hole.*
+*Ya tsamayang butle o fihla hole.*
 
-Ho a hohela ho qala ka ntho e kgolo. Empa ho bohlale haholo ho qala ka seo o ka se kgonang. Sebaka se senyane se hlokomelwang hantle se fana ka ho feta sebaka se seholo se o hlolang. Qala monyako wa hao wa ka morao, etsa ntho e le nngwe ka nako mme o hahe hodima mohato o mong le o mong. Qala mohato o latelang feela ha wa pele o se o sebetsa.
+Balemi ba bangata ba qala ka ntho e kgolo, ba tletse tjheseho, mme ba nyahama ha sebaka se le seholo haholo hore ba se hlokomele. Sebaka se senyane se hlokomelwang hantle se fana ka ho feta se seholo se hlaha.
 
-Balemi ba bangata ba qala ka tjheseho e kgolo ebe ba nyahama hobane sebaka seo ba se kgethileng se seholo haholo hore ba se hlokomele. Ditsamaiso tsa tlhaho di fetoha butle, ka nako, mme di nona ho feta le ho hlahisa haholo ha di ntse di fetoha.
+1. Qala monyako wa hao wa ka morao ka serapa se senyane sa kitjhene.
+2. Se etse hore se sebetse pele o qala mohato o latelang.
+3. Kenya naha e nyane e eketsehileng tlhahisong selemo se seng le se seng.
+4. Aha mobu sehla ka sehla ka compost, mulch le dijalo tse sireletsang mobu (cover crops).
 
-Ho nka nako ho o dumella ho shebella naha, dihla, le hore naha e arabela mosebetsi wa hao jwang. Diphetoho tseo o di etsang ka tsela ena di tla tshwarella. Permaculture e hloka mamello. Leha ho le jwalo, eba le moralo oo o sebetsang ho o fihlella, le hoja o tla fetoha ha nako e ntse e tsamaya.
-
-Mehlala:
-
-- Qala ka serapa se senyane sa kitjhene (serapa se haufi le ntlo), haholoholo haeba o so ka o lema meroho pele. Kenya karolo e kgolwanyane ya naha ya hao tlhahisong selemo se seng le se seng.
-- Sebedisa disebediswa le metjhini e lekanang le boholo ba naha ya hao. Terekere e kgolo tshimong e nyane e a bitsa, e kitlanya mobu mme ho thata ho e kgutlisa. Dikgoho ka lesakeng le sutiswang (**animal tractor**, *chicken tractor*) di sebetsa butle, empa di hlwekisa le ho nontsha mobu ka theko e tlase.
-- Aha mobu butle, sehla ka sehla, ka compost, mulch le dijalo tse sireletsang mobu (cover crops).
+Terekere e kgolo tshimong e nyane e a bitsa mme e kitlanya mobu; dikgoho ka lesakeng le sutiswang di sebetsa butle empa di hlwekisa le ho nontsha mobu ka theko e tlase haholo. Phetoho e butle e o fa nako ya ho bona kamoo naha e arabelang kateng, mme diphetoho tse etswang ka tsela eo di a tshwarella. Eba le moralo, mme o lebelle hore o tla fetoha.
 
 ### 10. Sebedisa mme o ananele mefutafuta
 
-Maele: *O se ke wa kenya mahe ohle a hao ka basketeng e le nngwe.*
+*O se ke wa kenya mahe ohle a hao basketeng e le nngwe.*
 
-Mefutafuta ke matla. Tlhaho e na le mefutafuta e mengata, mme ke ka hona e kgonang ho tswela pele ho sebetsa le kamora tshenyo e kgolo. Nahana ka dikarolo tsa tsamaiso e nang le mefutafuta jwaloka dikgwele tsa thapo: kgwele e le nngwe e kgaoha habonolo, empa dikgwele tse ngata tse lohilweng hammoho di matla haholo.
+Mefutafuta ke matla. Nahana ka thapo: kgwele e le nngwe e a kgaoha, empa dikgwele tse ngata tse lohilweng mmoho di a tshwarella. **Monoculture**, sejalo se le seng sebakeng se seholo mme hangata ka peo e batlang e tshwana ka ho fetisisa, e futsanehile ka bophelo mme e bulehetse sesenyi se seng le se seng, lefu le leng le le leng le sehla se seng le se seng se sebe. Polasi e nang le mefutafuta e a kobeha mme e a iphodisa.
 
-Re sebedisa molao-motheo ona ka ho ba le mefuta e mengata ya dijalo, diphoofolo, le mekgwa ya ho kotula metsi le matla polasing ya rona. Ha sejalo se seng se hloleha, se seng se tla ntse se fana ka kotulo, kahoo lelapa ha le kotsing haholo.
+Mefutafuta e sebetsa feela ha dikarolo di hokahane. Sejalo le phoofolo ka nngwe di hloka sebaka le tshebediso.
 
-Mefutafuta e sebetsa hantle ka ho fetisisa ha dikarolo di hokahane. Ho eketsa feela dintho tse ngata tse fapaneng ha ho a lekana; e nngwe le e nngwe e lokela ho ba le sebaka le tshebediso, mme e tshehetse tse ding.
-
-Dipolasi tse kgolo tse lemang sejalo se le seng feela sebakeng se seholo (**monoculture**, temo ya sejalo se le seng), hangata ka peo e batlang e tshwana ka ho fetisisa ka ditlhaho (genetically), di na le diphoofolo tsa naha tse fokolang mme di kotsing e kgolo ya disenyi, mafu le maemo a mabe a lehodimo. Polasi ya permaculture e raletsweng hantle e na le bophelo bo bongata haholo mme e kgona ho mamella ditshitiso (shocks) hantle.
-
-Mehlala:
-
-- Lema motswako wa dijalo — meroho, dijothollo, di-legume (dinawa, dierekisi le matokomane), difate tsa ditholwana le tsa dinate — tse fanang ka dijo dinakong tse fapaneng tsa selemo. Sena se aha tshireletso ya dijo (food security) mme se o thusa ho mamella komello le boemo ba lehodimo bo fetohang.
-- Boloka peo ho tswa dimeleng tsa hao tse ntle ka ho fetisisa, tse phetseng hantle, sehla ka seng. Ha dilemo di ntse di feta, peo ya hao e tlwaela maemo a sebakeng sa heno, mme ho boloka peo ho tswa dimeleng tse ngata ho e boloka e na le mefutafuta ka ditlhaho.
-- Rua diphoofolo tse thusanang. Mohlala, dikgoho tse latelang dikgomo di fata bolokwe, di bo hasanya mme di ja diboko tsa dintsi (fly larvae).
+- Lema meroho, dijothollo, di-legume, le difate tsa ditholwana le dinate tse fanang ka dijo dinakong tse fapaneng tsa selemo. Haeba sejalo se seng se hloleha, se seng se ntse se o fepa.
+- Boloka peo ho tswa dimeleng tse ngata tsa hao tse phetseng hantle ka ho fetisisa sehla se seng le se seng. Peo e tlwaela naha ya hao, mme ho boloka ho tswa dimeleng tse ngata ho e boloka e na le mefutafuta.
+- Rua diphoofolo tse thusanang. Dikgoho tse latelang dikgomo di fata bolokwe mme di je diboko tsa dintsi tse ho bona.
 
 ### 11. Sebedisa mathoko mme o ananele tse ka thoko
 
-**Edge** (mathoko) ke sebaka moo dibaka tse pedi tse fapaneng tsa tlhaho di kopanang teng — mohlala, moo letangwana le kopanang le naha e omileng, kapa moo moru o kopanang le thota ya jwang. Di-edge hangata di phathahane haholo, di hlahisa haholo mme ke lehae la mefuta e mengata ya dimela le diphoofolo ho feta sebaka ka seng se le seng. Di fumana melemo ya mahlakore ka bobedi mme di etelwa ke dibopuwa tse tswang mahlakoreng ka bobedi.
+**Edge** (mathoko) ke moo dibaka tse pedi tse fapaneng di kopanang teng: letangwana le naha e omileng, moru le naha ya jwang. Di-edge hangata ke dibaka tse phathahaneng ka ho fetisisa le tse hlahisang haholo, tse etelwang ke dibopuwa tse tswang mahlakoreng ka bobedi. Jwalo ka ha Holmgren a boletse, "Moo dintho di kopanang teng ke moo diketsahalo tse kgahlisang ka ho fetisisa di etsahalang teng."
 
-> **Hlokomela:** "Moo dintho di kopanang teng ke moo diketsahalo tse kgahlisang ka ho fetisisa di etsahalang teng. Hangata tsena ke dikarolo tsa bohlokwa ka ho fetisisa tsa tsamaiso, tse nang le mefutafuta e mengata le tse hlahisang haholo." — David Holmgren
+Dibaka tse ka thoko (dikhutlo, diterata, marako, mabopo a thellang le dibaka tse metsi) hangata ha di natswe. Di sebedise.
 
-Dibaka **tse ka thoko** (marginal) — dikhutlo, diterata, marako, mabopo a thellang le dibaka tse metsi tseo hangata di sa natswang — le tsona di ka hlahisa. Re sebedisa molao-motheo ona ka ho eketsa dimela le **di-habitat** (bodulo ba diphoofolo le dimela) tse nang le thuso ho di-edge le dibakeng tse ka thoko.
-
-Mehlala:
-
-- Lema magora a dimela tsa tlhaho mathokong a masimo a dijalo. Mohlala, Kei apple (*Dovyalis caffra*) e etsa legora le nang le meutlwa le behang ditholwana, mme Cape honeysuckle (*Tecoma capensis*) le plumbago (*Plumbago auriculata*) di hohela dinonyana le dikokonyana tse thusang.
-- Etsa ditsela tse fetang pakeng tsa dibaka tse pedi tsa ho lema, jwaloka **food forest** (moru wa dijo) le serapa sa meroho, e le hore o kgone ho hlokomela tsohle ka nako e le nngwe.
-- Beha masaka a diphoofolo haufi le dibaka tsa dijalo e le hore di kgone ho arolelana seo di se hlahisang. Mohlala, mefoka le dimela tse senyehileng tse tswang serapeng di ka fepuwa dikgoho, mme manyolo a tsona a kgutlela serapeng.
-- Lema dijo marakong le diterateng (**serapa se emeng**, vertical gardening). Dinawa tse palamang, dikomkomere le mepotse (gourds) di fetola mathoko a sa sebediswang hore e be sebaka se hlahisang.
+- Lema magora a dimela tsa tlhaho mathokong a masimo a dijalo. Kei apple (*Dovyalis caffra*) e etsa legora le nang le meutlwa le behang ditholwana. Cape honeysuckle (*Tecoma capensis*) le plumbago (*Plumbago auriculata*) di tlisa dinonyana le dikokonyana tse thusang.
+- Etsa tsela pakeng tsa dibaka tse pedi tsa ho lema, jwaloka **food forest** (serapa se lenngweng ka mekgahlelo jwaloka moru wa tlhaho) le dibethe tsa meroho, e le hore o di hlokomele ka bobedi ka nako e le nngwe.
+- Beha lebala la dikgoho pela serapa. Mefoka e a kena; manyolo a a tswa.
+- Lema marakong le diterateng. Dinawa tse palamang, dikomkomere le mepotse di fetola mathoko a se nang letho dijo.
 
 ### 12. Sebedisa phetoho ka bohlale mme o arabele ho yona
 
-Maele: *Pono ha se ho bona dintho kamoo di leng kateng, empa ke ho di bona kamoo di tla ba kateng.*
+*Pono ha se ho bona dintho kamoo di leng kateng, empa ke ho di bona kamoo di tla ba kateng.*
 
-Ntho e nngwe le e nngwe e dula e fetoha e bile e hola. Tlhaho ha e eme tulo. Haeba re hlokomoloha phetoho, re a hloleha. Ho ena le hoo, re lokela ho lebella phetoho, ho batla menyetla eo e e tlisang, le ho nka kgato ka nako e nepahetseng.
+Ha ho letho tlhahong le emang tulo. Re ke ke ra emisa phetoho, empa re ka e lebella mme ra nka kgato ka nako e nepahetseng. Seboko se senyang (caterpillar) se hloka dijo tse fapaneng le tsa serurubele seo se fetohang sona; le polasi e hloka tlhokomelo e fapaneng mohatong ka mong.
 
-Polasi ya rona ya permaculture le yona e tla dula e fetoha, mme re tlameha ho fetola merero ya rona ha e ntse e fetoha. Seboko se senyang (caterpillar) se hloka dijo tse fapaneng le tsa serurubele seo se fetohang sona. Ka tsela e tshwanang, ditlhoko tsa polasi ya rona di fetoha mohatong ka mong, mme re tlameha ho fana ka mehlodi le mosebetsi o nepahetseng mohatong ka mong.
+- Food forest e hola ho tloha difateng tse nyane le dimeleng tse holang kapele ho ya morung o hodileng o nang le moriti. Seo o se lemang le kamoo o se hlokomelang kateng di tlameha ho fetoha le yona.
+- Pula le themperetjha di fetoha ho tloha selemong se seng ho ya ho se seng. Dumella dikgetho tsa hao tsa dijalo ho fetoha le tsona.
 
-Mehlala:
+## Leka sena
 
-- Food forest e fetoha ka dilemo tse ngata, ho tloha difateng tse nyane le dimeleng tse holang kapele ho ya morung o hodileng o nang le moriti. Seo o se lemang le kamoo o se hlokomelang ka teng di tlameha ho fetoha le yona.
-- Diphoofolo tsa polasi di hloka tlhokomelo e fapaneng mehatong e fapaneng ya bophelo, ho tloha bonyaneng ho ya boholong le botsofeng.
-- Dihla, le diphetoho tsa pula le themperetjha ho tloha selemong se seng ho ya ho se seng, di ama hore o ka lema dijalo dife le hore di hlahisa ho hokae. Rala dikgetho tsa hao tsa dijalo ho ya ka tsona.
-
-> **Keletso:** Maele a tlwaelehileng a re hopotsa: "Ha o hloleha ho rala, o rala ho hloleha." Kgaolo e latelang e o bontsha kamoo o ka ralang polasi ya hao ka teng.
+1. Kgetha sebaka se le seng moo o ka bonang boholo ba naha ya hao. Dula moo metsotso e 20 mafube kapa mantsiboya, hararo bekeng ena.
+2. Ngola tsohle tseo o di hlokomelang: dinonyana, dikokonyana, moo letsatsi le wang teng pele, moo moya o tswang teng, dimela tse shebahalang di le matla le tse sokolang.
+3. Nakong e latelang ha pula e na haholo, tsamaya naheng ya hao. Latela metsi. Tshwaya moo a kenang teng, moo a phallang kapele teng le moo a bokellanang teng.
+4. Taka mmapa o bonolo wa naha ya hao kamoo nonyana e ka e bonang kateng: ntlo, ditsela, phallo ya metsi, dibaka tse matla le tse fokolang.
+5. Pela mmapa, ngola ntho e le nngwe eo molao ka mong wa boitshwaro o e kopang naheng ena, le molao-motheo o le mong oo o ka qalang ka wona.
 
 ## Dintlha tsa bohlokwa
 
-- Permaculture e bolela "temo e tswelang pele ka ho sa feleng" (permanent agriculture) le "setso se tswelang pele" (permanent culture): ho lema le ho phela ka ditsela tse tshwarellang.
-- Lentswe lena le qapilwe bohareng ba dilemo tsa bo-1970 ke Bill Mollison le David Holmgren; buka ya bona *Permaculture One* e hlahile ka 1978.
-- Permaculture e rala dipolasi tse sebetsang jwaloka di-ecosystem tsa tlhaho: di na le mefutafuta, di tsitsitse mme di kgona ho iphodisa.
-- E thusa balemi ba Borwa ba Afrika ho mamella komello, climate change le erosion, mme ka nako e tshwanang e ntlafatsa dijo, bophelo bo botle le lekeno.
-- Melao ya boitshwaro e meraro ke: Tlhokomelo ya Lefatshe, Tlhokomelo ya Batho, le Karolelano e Lokileng.
-- Melao-motheo e leshome le metso e mmedi ya David Holmgren ke: shebella mme o sebedisane le tlhaho; tshwara mme o boloke matla; fumana kotulo; itaole mme o amohele dipontsho; sebedisa mme o ananele mehlodi le ditshebeletso tse ntjhafalang; o se ke wa hlahisa ditshila; rala ho tloha mekgweng ho ya dintlheng; kopanya ho e na le ho arola; sebedisa ditharollo tse nyane le tse diehang; sebedisa mme o ananele mefutafuta; sebedisa mathoko mme o ananele tse ka thoko; sebedisa phetoho ka bohlale mme o arabele ho yona.
-- Qala ka tse nyane, shebella ka hloko, mme o dumelle naha ho o ruta.
+- Permaculture, e tswang ho permanent agriculture le permanent culture, e rehilwe lebitso ke Bill Mollison le David Holmgren bohareng ba dilemo tsa bo-1970.
+- E rala dipolasi tse sebetsang jwaloka di-ecosystem tsa tlhaho: tse nang le mefutafuta, tse tsitsitseng le tse kgonang ho iphodisa.
+- Melao ya boitshwaro e meraro e leka qeto e nngwe le e nngwe: tlhokomelo ya Lefatshe, tlhokomelo ya batho, karolelano e lokileng.
+- Melao-motheo e leshome le metso e mmedi ya Holmgren e fetola melao eo ya boitshwaro moralo, mme wa pele ho yona ke ho shebella.
+
+Boloka bukana eo haufi. Naha e ntse e bua nako yohle; ho latelang, re ithuta ho fetola seo e se buang moralo.

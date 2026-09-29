@@ -10,7 +10,7 @@ import { resolveCourseModulePresentation } from '../lib/course-module-translatio
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-ve-seeds-sovereignty.ts';
 
-test('Tshivenda Seeds lesson keeps F1, pollination, seed identity and quizzes exact English', () => {
+test('Tshivenda Seeds draft keeps source pairing, English genetics terms and quiz answers', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'seeds-sovereignty');
   assert.ok(sourceModule);
   const source = sourceModule.lessons[0];
@@ -19,15 +19,16 @@ test('Tshivenda Seeds lesson keeps F1, pollination, seed identity and quizzes ex
   assert.equal(draft.title.sourceEnglish, source.title);
   assert.equal(draft.body.sourceEnglish, source.body);
   assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
-  assert.deepEqual(draft.keyPoints.map(point => point.tshivendaDraft), source.keyPoints);
+  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
   const shown = resolveLearnerLessonPresentation(source, 've');
   assert.equal(shown.status, 'draft');
-  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.tshivendaDraft));
   assert.deepEqual(shown.content.quiz, source.quiz);
-  const originalSentence = 'Seed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed.';
-  const draftSentence = 'Seed sovereignty i katela nḓivho na khetho zwine zwa ṱoḓea u alusa, u vhulunga na u kovhela vhaṅwe mbeu yo teaho.';
-  assert.equal(shown.content.body.replace(draftSentence, originalSentence), source.body);
+  assert.equal(shown.content.body, draft.body.tshivendaDraft);
+  for (const term of ['open-pollinated', 'stable variety', 'F1 hybrid', 'pollination']) {
+    assert.ok(shown.content.body.includes(term), `${term} stays English until its meaning is reviewed`);
+  }
   assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed.` }, 've').status,
     'english-fallback');
 });

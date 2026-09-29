@@ -1,4 +1,4 @@
-/** Unpublished Sesotho machine draft: display labels only; all teaching and assessment copy remains exact English. */
+/** Unreviewed source-paired Sesotho learner draft for the opening Seeds lesson. */
 import type { SesothoCourseModuleDraft } from './course-translation-drafts-st.ts';
 
 export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
@@ -11,13 +11,13 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
   },
   "title": {
     "sourceEnglish": "Seeds and Seed Sovereignty",
-    "sesothoDraft": "Seeds and Seed Sovereignty",
-    "reviewStatus": "hold"
+    "sesothoDraft": "Peo le Tokoloho ea ho Khetha Peo",
+    "reviewStatus": "machine-draft"
   },
   "description": {
     "sourceEnglish": "Save, store and share seed — freedom from buying seed every season.",
-    "sesothoDraft": "Save, store and share seed — freedom from buying seed every season.",
-    "reviewStatus": "hold"
+    "sesothoDraft": "Boloka, baballa le ho arolelana peo — u ikhethele hore u se ke ua reka peo sehleng se seng le se seng.",
+    "reviewStatus": "machine-draft"
   },
   "lessons": [
     {
@@ -29,34 +29,34 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "Why Seed Saving Matters",
-        "sesothoDraft": "Bohlokoa ba ho Boloka Lipeo",
+        "sesothoDraft": "Bohlokoa ba ho Boloka Peo",
         "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
-        "sesothoDraft": "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
-        "reviewStatus": "hold"
+        "sesothoDraft": "Peo ea open-pollinated e tsoang ho stable variety e ka hlahisa limela tse tšoanang ha tulafatso (ho tsamaisoa ha modula) e laoloa hantle. F1 hybrid e tsoa ho batsoali ba khethiloeng. Peo e bolokiloeng ho semela sa F1 e ntse e ka mela, empa limela tsa moloko o latelang lia fapana; li ka ’na tsa se boloke motsoako oa litšobotsi oo u neng u o batla.\n\nHo ba le taolo holim’a peo ho akarelletsa tsebo le khetho tse u thusang ho lema, ho boloka le ho arolelana peo e u tšoanelang. Ngola lebitso la sejalo le la mofuta holim’a sehlopha ka seng sa peo.\n\nKhetha limela tse phetseng hantle tse nang le litšobotsi tse molemo. Qala ka sejalo seo u se tsebang, ’me u botse motho ea nang le boiphihlelo ba ho boloka peo hore na tulafatso le khetho ea limela li laoloa joang.",
+        "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Stable open-pollinated varieties need suitable pollination management",
-          "sesothoDraft": "Stable open-pollinated varieties need suitable pollination management",
-          "reviewStatus": "hold"
+          "sesothoDraft": "Bakeng sa stable variety ea open-pollinated, tulafatso e lokela ho laoloa ka tsela e loketseng.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Seed sovereignty means freedom from depending on a seed company every season",
-          "sesothoDraft": "Seed sovereignty means freedom from depending on a seed company every season",
-          "reviewStatus": "hold"
+          "sesothoDraft": "Taolo ea peo e bolela ho ba le bolokolohi ba ho lema, ho boloka le ho arolelana peo ntle le ho itšetleha ka k’hamphani ea peo nako le nako.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Crop and variety diversity can support adaptation to climate change when varieties are suited to local conditions",
-          "sesothoDraft": "Crop and variety diversity can support adaptation to climate change when varieties are suited to local conditions",
-          "reviewStatus": "hold"
+          "sesothoDraft": "Mefuta e fapaneng ea lijalo le mefuta ea tsona e ka thusa ho ikamahanya le maemo a leholimo ha e loketse maemo a sebaka.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Select healthy plants with useful traits; use crop-specific seed-saving guidance",
-          "sesothoDraft": "Select healthy plants with useful traits; use crop-specific seed-saving guidance",
-          "reviewStatus": "hold"
+          "sesothoDraft": "Khetha limela tse phetseng hantle tse nang le litšobotsi tse molemo; latela tataiso ea ho boloka peo ea sejalo seo.",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [

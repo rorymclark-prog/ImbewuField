@@ -61,6 +61,29 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Count them in your plan', where: 'Crop plan → Plan-cycle value', href: '/facilitator/crops',
       detail: 'Plant one of the five crops and it now counts in the value figures. Under Review and edit price assumptions its badge says recommended price, and you can type your own local price.' },
   ] },
+  { when: '29 September 2026', sha: '3216aa11', changes: [
+    'Seeds lesson 1 has more Sesotho, Tshivenda and Xitsonga draft teaching beside English.',
+    'Seed genetics quizzes and the slide narration stay in English.',
+  ], tour: [
+    { title: 'Compare the Seeds draft', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga and open lesson 1. New text is marked unreviewed beside exact English. The quizzes and slides still use English where the technical meaning needs review.' },
+  ] },
+  { when: '29 September 2026', sha: '499d6913', changes: [
+    'Food Forest slides 1–4 add Tshivenda and Xitsonga drafts beside English.',
+    'These slides are silent. Technical terms remain in English.',
+  ], tour: [
+    { title: 'Compare Food Forest opening slides', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga and open slides 1–4. The drafts are marked unreviewed and paired with exact English. Other held passages remain in English; English narration is optional.' },
+  ] },
+  { when: '29 September 2026', sha: '60dfeb6', changes: [
+    'The Permaculture Manual second edition: shorter, clearer, in Rory’s own voice.',
+    'A new last chapter gathers the safety notes and the references for every chapter.',
+    'Xitsonga is back: the manual reads in English and all four home languages.',
+    'Long web addresses now wrap, so printed pages come out full size.',
+  ], tour: [
+    { title: 'Open the second edition', where: 'Manual', href: '/manual',
+      detail: 'Pick a language and open any chapter: each starts with why it matters, has one Try it activity and ends with key points. Chapter 13 holds the notes and references. The four home-language versions are machine drafts awaiting review by fluent speakers.' },
+  ] },
   { when: '29 September 2026', sha: '0f47d957', changes: [
     'Market Gardening has 20 silent Sesotho and Xitsonga review slides.',
     'Existing drafts pair with English; held text stays in one English source card.',

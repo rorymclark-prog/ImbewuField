@@ -1,438 +1,261 @@
 # Sisiteme dza miri
 
-Miri na zwiṱaka zwi tshilaho miṅwaha minzhi zwi nga ni ṋea zwiḽiwa, khuni, **fodder** (zwiḽiwa zwa zwifuwo), vhudzulo na mishonga tshifhinga tshoṱhe tsha vhutshilo haṋu. Ndima iyi i amba nga ha sisiteme tharu dza miri: **food forest** (ḓaka ḽa zwiḽiwa), **windbreak** (tshithivhela-muya) na nḓila ya u **ṱavha muri muthihi** zwavhuḓi.
+Miri ndi mutambo mulapfu. Ndima ya miroho i ni ṋea zwiḽiwa lwa khalaṅwaha nthihi. Muri wo ṱavhiwaho zwavhuḓi u ṋea zwiḽiwa vhana vhaṋu na vhana vhavho, nga mitshelo, khuni, **fodder** (zwiḽiwa zwa zwifuwo), murunzi na mishonga, nahone a u tsha fanela u gwelwa kana u zwalwa hafhu.
 
-> **Ḓivhani:** Miri minzhi ine ya funwa kha bugu dza permaculture dza maṅwe mashango **yo ambiwa sa invasive species** (zwimela zwi phaḓaladzeaho zwi tshinyadzaho) **Afrika Tshipembe**. Ndi u pfuka mulayo u i ṱavha. Ndima iyi i themendela fhedzi zwimela zwa sialala (zwine zwa wanala nga mupo kha Afrika ya Tshipembe) kana zwi si kho kha mitevhe ya invasive species ya Afrika Tshipembe. Musi ni sa athu u renga tshimela, humbelani nasari (fhethu ha u aluwisa zwimela zwiṱuku) dzina ḽa tshimela ḽa saintsi (ḽa Latin), ni sedze uri a tshi ho kha mutevhe wa invasive species.
+Miri i dovha ya ita mushumo wo fhumulaho. Midzi yayo i fara mavu nahone i swikela maḓi ane miroho ya sa kone u a swikela. Maṱari ayo a a wa a ṋea mavu zwiḽiwa. Maṱavhi ayo a kwasha muya nahone a tsireledza zwiṋoni zwine zwa ḽa zwikukumi zwaṋu. Ḓaka ḽi fhaṱwa nṱha ha ḓaka: tshimela tshiṅwe na tshiṅwe tshi khwinisa mavu kha tshi tevhelaho.
+
+Sisiteme tharu dza miri dzi hwala vhunzhi ha uyu mushumo kha bulasi ṱhukhu: **food forest** (ngade yo ṱavhiwaho nga miṱaṱo sa ḓaka ḽa mupo); **windbreak** (mutalo wa miri na zwiṱaka u ongolowisaho muya); na muri muthihi, wo ṱavhiwaho zwavhuḓi. Tshimela tshiṅwe na tshiṅwe tshi eletshedzwaho fhano ndi tsha **indigenous** (sialala, tshi melaho kha Tshipembe tsha Afrika nga mupo) kana a tsho ngo ṱaluswa sa tshi phaḓaladzeaho kha Afrika Tshipembe. Miri minzhi i rendwaho kha bugu dza permaculture dza mashango a nnḓa ndi **invasive species** (zwimela zwi bvaho huṅwe zwi phaḓaladzeaho zwi sa langei) fhano. Rengani nga dzina ḽa Lulatini.
+
+**Musi ni tshi fhedza ino ndima ni ḓo kona u:**
+
+- Nanga fhethu ha food forest na u nanga miri ya mitshelo i teaho tshando na mahalwa a vhuria fhethu haṋu
+- Ṱavha food forest nga mutevhe wo teaho, ni tshi thoma nga zwimela zwa u thoma zwi engedzaho naiṱirodzheni
+- Pulana windbreak i pfukaho muya une wa tshinyadza, nga miri na zwiṱaka zwa indigenous
+- Ṱavha muri muthihi uri midzi yawo i dzike nahone u tshile khalaṅwaha yawo ya u thoma yo omaho
 
 ## Dzi-food forest
 
-### Food forest ndi mini
+Miroho na zwiliṅwa zwa ndeme zwi ri humbela zwinzhi: u gwa, u zwala na u sheledza, khalaṅwaha nga khalaṅwaha. Samusi mavu a tshi pendelwa na u ṱavhiwa hafhu ṅwaha muṅwe na muṅwe, a a ngo fhira tshiimo tsha u thoma tsha **succession** (tshanduko ya mupo, lwendo nga lwendo, u bva kha mavu a si na tshithu u ya kha mahatsi, zwiṱaka na miri). Zwiliṅwa zwa annual zwi dovha zwa tambula vhukuma nga zwikukumi na zwifhinga zwo omaho.
 
-Food forest (ḓaka ḽa zwiḽiwa, ine ya dovha ya vhidzwa **ngade ya ḓaka**, forest garden) a si ngade ya miri ya mitshelo ya misi yoṱhe (orchard). I edzisa nḓila ine ḓaka ḽa mupo ḽa vha ngayo: zwimela zwinzhi zwa vhulapfu ho fhambanaho zwi aluwa zwoṱhe nga **miṱaṱo** (layers), u bva kha miri milapfu u swika kha **dzi-groundcover** (zwimela zwi fukedzaho mavu) na midzi. Zwinzhi zwa zwimela izwi ndi **dzi-perennial** (zwimela zwi tshilaho u fhira miṅwaha mivhili).
+Food forest ndi ngade yo ṱavhiwaho sa ḓaka ḽa mupo, nga miṱaṱo, u bva kha miri mirapfu u swika kha zwimela zwa fhasi na midzi. A si ngade ya miri ya mitshelo yo imaho kha mavu a si na tshithu. Vhunzhi ha zwimela zwayo ndi **dzi-perennial** (zwimela zwi tshilaho u fhira miṅwaha mivhili). Musi yo no khwaṱha, food forest:
 
-Musi yo no aluwa zwavhuḓi, food forest yo pulanwaho zwavhuḓi i ṱoḓa mushumo muṱuku u fhira ngade ya miroho. Maṱari a welaho fhasi na maṱavhi o ṱahelwaho zwi ṋea mavu zwiḽiwa. Zwiṋoni, zwikukumi na zwiṅwe zwipuka zwi dzulaho henefho zwi thusa u lwisana na zwikukumi zwi tshinyadzaho. Nahone i ni ṋea na zwiḽiwa.
+- a i ṱoḓi u ṱavhiwa hafhu khalaṅwaha iṅwe na iṅwe
+- i vha na midzi i dzikaho i swikelaho maḓi na zwiḽiwa zwa zwimela zwine miroho i si na midzi i dzikaho ya sa kone u zwi swikela
+- i dzula yo fukedza mavu ṅwaha woṱhe
+- i ḓiṋea zwiḽiwa nga maṱari ayo o waho na maṱavhi o ṱahelwaho
+- i ṋea vhudzulo zwiṋoni na zwikukumi zwine zwa langa zwikukumi zwi tshinyadzaho
 
-Vhathu vho no aluwisa dzi-food forest lwa miṅwaha ya zwigidi. Sa tsumbo, vhasaintsi vho wana uri vhathu vha vhubvaḓuvha ha Amazon vho vha vha tshi ṱhogomela zwipiḓa zwa ḓaka u itela zwimela zwa zwiḽiwa lwa miṅwaha i swikaho 4,500.
+U bva kha food forest nthihi ni nga kaṋa mitshelo, nḓuhu dza miri, zwiṱaka zwa berry, mihaṱa, zwinukhiso, khuni, matanda, fodder, zwiliṅwa zwa midzi na **mulch** (zwithu zwi phaḓaladzwaho nṱha ha mavu uri a dzule o nowa nahone o tsireledzea). Mushumo wo salaho ndi u ṱahela maṱavhi nga khalaṅwaha, **chop and drop** (u rema zwimela na u zwi sia mavuni sa mulch), u aṱisa zwimela zwiswa na u pfukisa **animal tractor** (danga ḽa khuhu ḽi pfukiswaho) lwa zwiṅwe zwifhinga. Miri miṱuku i kha ḓi ṱoḓa maḓi kha khalaṅwaha yayo ya u thoma kana mbili dzo omaho, nahone kha fhethu ho omaho vhunzhi ha miri ya mitshelo i ṱoḓa maḓi maṱuku ṅwaha muṅwe na muṅwe.
 
-Kha food forest nthihi ni nga ka mitshelo, nḓuhu dza miri (nuts), mitshelo miṱuku (berries), mihaṱa, zwa u nukhedza zwiḽiwa (spices), khuni, zwiṱanda, **mulch** (tshifukedzi tsha mavu), fodder, zwimela zwi gonyaho, zwimela zwa midzi na khowa. Kha food forest ya hayani, mishumo mihulwane musi yo no aluwa ndi:
+Vhathu vho lima nga yeneyi nḓila tshifhinga tshilapfu vhukuma. Vhubvaḓuvha ha Amazon, vhathu vho ṱhogomela ḓaka u itela zwimela zwa zwiḽiwa lwa miṅwaha i si ṱhukhu ha 4,500, nahone ḓaka ḽa henefho ḽi kha ḓi ḓala miri i ḽiwaho ye vha i funa.
 
-- u ṱahela maṱavhi nga khalaṅwaha
-- **chop and drop** (u rema maṱavhi ni a sia fhasi sa mulch)
-- u aluwisa zwimela zwiswa
-- u pfukisa **chicken tractor** (danga ḽa khuhu ḽine ḽa nga pfukiswa, animal tractor) nga ḓakani tshifhinga tshi tshi ya
+### Hune na nga ṱavha food forest hone
 
-Food forest i nga dovha ya aluwiswa sa mutalo mutete u tevhela lufhenḓe, hune ya nga shuma sa windbreak.
+Kha vhunzhi ha Afrika Tshipembe, ḓaka a si magumo a mupo a succession. Mavu a mahatsi, fynbos, zwiṱaka zwa Karoo na savanna ndi sisiteme dza kale, dzo fhelelaho nga dzone dzine, a si ḓaka ḽi lindelaho u vha hone. Miri yo ṱavhiwaho kha mavu a mahatsi kana fynbos zwo takalaho i pandela zwimela zwi sa wanalesi nahone i shumisa maḓi manzhi.
 
-### Ndi ngani ri tshi ṱavha miri khathihi na miroho?
+1. Ṱavhani kha mavu **o no tshinyadzwaho**: tsimu dza kale, mavhala a si na tshithu, mavu o khukhulwaho, mavu a u mona mudi, kana mavu o kunakiswaho zwimela zwi phaḓaladzeaho.
+2. Litshani ḓaka ḽa mupo, mavu a mahatsi, fynbos na mavu a re na maḓi (wetlands) zwo takalaho zwi tshi ḓo ralo.
+3. Vhewani miri kule na milambo na mavu a re na maḓi, nga nnḓa ha arali i miri ya indigenous ya mabommbini a milambo.
 
-Miroho na zwiliṅwa zwa ndeme zwi ṱoḓa tshifhinga, maḓi na zwishumiswa zwinzhi. Mavu a gwiwa na u dovha a zwaliwa khalaṅwaha iṅwe na iṅwe, ngauralo a si tsha aluwa u fhira tshiimo tsha u thoma. **Dzi-annual** (zwimela zwa ṅwaha muthihi) kanzhi dzi tshinyadzwa vhukuma nga zwikukumi na malwadze, nahone dzi ṱoḓa u sheledzwa kanzhi.
+### Tshaka mbili dza food forest
 
-Sisiteme dza dzi-perennial, sa dzi-food forest:
+Permaculture i pulana bulasi nga **dzi-zone** (zwipiḓa zwo kovhiwaho nga u ya nga uri ni tshi dalela tshipiḓa tshiṅwe na tshiṅwe lunzhi hani).
 
-- a zwi ṱoḓi u dovha u ṱavhiwa khalaṅwaha iṅwe na iṅwe
-- zwi vha na midzi mile, ngauralo musi zwo no aluwa zwi nga swikelela maḓi na zwiḽiwa zwa zwimela zwine miroho ya midzi ya nṱha i sa kone u zwi swikelela
-- zwi tikedza zwitshili zwa mashaka manzhi kha vhuimo vhunzhi
-- zwi tsireledza mavu ṅwaha woṱhe
-- zwi nga bveledza lwa miṅwaha minzhi
+**Food forest ya mudini (Zone 2).** Tsini na nnḓu, hune na fhira hone luthihi kana luvhili nga ḓuvha. I ṋea muṱa zwiḽiwa: mitshelo, nḓuhu dza miri, berry, mihaṱa ya u bika na ya mishonga, na dzi-annual dzi ḓizwalaho. I na tshaka nnzhi. Hune tshikhala tsha vha tshiṱuku, ṱavhani miri mihulwane i si minzhi fhedzi.
 
-Miri miṱuku i kha ḓi ṱoḓa u sheledzwa tshifhinga tshoṱhe kha tshifhinga tsha gomelelo tsha u thoma kana tsha vhuvhili. Fhethu ho omaho, miri minzhi ya mitshelo i ḓo ṱoḓa u sheledzwa zwiṱuku ṅwaha muṅwe na muṅwe.
-
-### Ni ṱavhe ngafhi food forest
-
-Kha ḓaka ḽa mupo, tshiimo tshiṅwe tsha vhutshilo ha zwimela tshi tevhela tshiṅwe lwa miṅwaha minzhi. Hezwi zwi vhidzwa **succession** (tshanduko ya zwimela nga tshifhinga). Zwimela zwa u thoma (pioneer plants, zwimela zwa u thoma u mela kha mavu o ṱalalaho) zwi khwinisa mavu na u ṋea vhudzulo, nahone miri i tshilaho tshifhinga tshilapfu i tevhela nga murahu.
-
-Afrika Tshipembe, ḓaka a si ḽone magumo a mupo hoṱhe. Mavu a mahatsi (grassland), fynbos, zwiṱaka zwa Karoo na savanna ndi **dzi-ecosystem** (sisiteme dza mupo) dzo fhelelaho nahone dza kale. A si "ḓaka ḽi sa athu fhela". U ṱavha miri kha mavu a mahatsi a sialala o takalaho kana kha fynbos zwi tshinyadza zwimela zwi wanalaho nga ho kalulaho, zwi shumisa maḓi manzhi nahone zwi nga fhungudza maḓi a elelaho mikuloni.
-
-- Ṱavhani food forest yaṋu kha mavu **o no dzhenelelwaho**: masimu a kale, mavu o ṱalalaho a mudini, mavu a re tsini na mudi, mavu o khukhulwaho, kana mavu o kunakiswaho invasive species.
-- **Ni songo** lima kana u ṱavha miri kha ḓaka ḽa mupo (veld) ḽo takalaho, mavu a mahatsi, fynbos kana mavu a re na maḓi (wetland).
-- Ṱavhani miri kule na mikulo na mavu a re na maḓi, nga nnḓa ha musi i miri ya sialala ya khunzi dza milambo.
-
-### Dzi-food forest dza mashaka mavhili
-
-**Food forest ya mudini (Zone 2).** I aluwiswa tsini na nnḓu, kha **zone** (tshipiḓa tsha bulasi) ine na i dalela lunwe kana luvhili nga ḓuvha. I kha muṱa nga maanḓa: mitshelo, nḓuhu dza miri, mitshelo miṱuku, mihaṱa ya mishonga na ya u bika, zwinzhi zwa dzi-perennial dzaṋu na dziṅwe dzi-annual dzine dza ḓi-zwala. I na mashaka manzhi a zwimela. Arali fhethu hu huṱuku, ṱavhani miri mihulwane i si gathi fhedzi. Ni nga dovha na aluwisa khuni dza **coppicing** (miri ine ya remiwa tsini na mavu ya ṱumbula hafhu) kha Zone 2.
-
-**Food forest khulwane (Zone 3).** Food forest ya Zone 2 i nga bveledza zwinzhi, fhedzi i nga vha ṱhukhu u itela u rengisa zwibveledzwa. Kha Zone 3 ni nga ṱavha food forest khulwane i re na miri mihulwane, kana **ngade ya miri ya mitshelo ya permaculture**.
-
-Ngade ya miri ya mitshelo ya permaculture ndi food forest yo leluwaho i re na mashaka a zwimela a si manzhi, yo ṱavhiwaho nga vhuhulwane u itela u rengisa. I kha ḓi vha na zwimela zwi thusaho, sa **dzi-nitrogen fixer** (miri i engedzaho naiṱirodzheni mavuni) na maluvha a zwikukumi. Kanzhi i ṱhogomelwa nga maanḓa nahone kanzhi i a sheledzwa. Ni nga i ṱavha nga mitalo i re na madambaya vhukati hayo, zwine zwa dovha zwa leludza u kaṋa.
+**Food forest khulwane kana ngade ya miri ya mitshelo (Zone 3).** Kule zwiṱuku, i na miri mihulwane, u itela u rengisa. **Ngade ya miri ya mitshelo ya permaculture** ndi food forest i leluwaho i re na tshaka dzi si nnzhi, yo ṱavhiwaho nga tshikalo tshihulwane nahone kanzhi i sheledzwaho. I kha ḓi vha na **dzi-nitrogen fixer** (zwimela zwi engedzaho naiṱirodzheni i bvaho muyani mavuni) na maluvha a zwikukumi. I ṱavheni nga mitalo i re na madambaya vhukati hayo, zwine zwa dovha zwa leludza u kaṋa.
 
 ### Coppicing
 
-Coppicing zwi amba u rema muri tsini na mavu uri u ṱumbule maṱavhi maswa manzhi. Ni nga dovha na rema maṱavhi aya miṅwaha miṅwe na miṅwe i si gathi ni sa vhulahi muri. Kha mashaka manzhi, u rema hoyu hu thusa na uri muri u tshile tshifhinga tshilapfu.
-
-- Maṱavhi maswa a bvaho kha muri wo remiwaho a ṋea khuni, zwiṱanda zwa lufhenḓe, zwiṱanda zwa u swaya na mipinyi ya zwishumiswa.
-- Maṱavhi aya a aluwa nga u ṱavhanya u fhira muri muswa une wa mela u bva kha mbeu, ngauri midzi yo no vha mihulwane.
-- A si miri yoṱhe ine ya ṱumbula hafhu. Miri ya sialala ine ya ṱumbula zwavhuḓi i katela muṱwari (wild olive, *Olea europaea* subsp. *cuspidata*).
+**Coppicing** (u rema muri tsini na mavu uri u ṱumbule matanda maswa manzhi) zwi amba u rema muri tsini na mavu uri u bvise maṱavhi maswa manzhi. Ni rema maṱavhi hafhu nga murahu ha miṅwaha mishoni u itela khuni, matanda a lufhenḓe, zwiṱanda na zwifaro zwa zwishumiswa, nahone muri u bvela phanḓa u tshi tshila. Maṱavhi a vhuya a mela nga u ṱavhanya vhukuma u fhira muri muswa u bvaho kha mbeu, ngauri midzi yo no hula. A si miri yoṱhe i ṱumbulaho. Wild olive (*Olea europaea* subsp. *cuspidata*) ndi muri wa indigenous u ṱumbulaho zwavhuḓi, nahone tshipiḓa tsha coppicing tshawo kha Zone 2 tshi ṋea khuni ṅwaha nga ṅwaha.
 
 ## U pulana food forest
 
-1. **Ṅwalani zwine na zwi ṱoḓa.** Muṱa waṋu, bulasi yaṋu, zwifuwo zwaṋu na zwipuka zwa ḓaka zwa henefho zwi ṱoḓa mini? Hezwi zwi ni thusa u nanga zwimela zwine na ḓo zwi aluwisa.
-2. **Nangani zwimela zwi tshimbilelanaho na mutsho waṋu.** Nangani zwimela zwa sialala na zwa maṅwe mashango zwi tshimbilelanaho na mvula, tshando na mufhiso zwa fhethu haṋu. Engedzani zwiṅwe zwi si gathi zwine zwa kona u konḓelela mutsho waṋu nga u ṱoḓa u tou fhedza. Musi mutsho u tshi khou shanduka, izwi zwi ḓo ni tsireledza kha khalaṅwaha dzi sa ḓoweleaho.
-3. **Nangani zwimela zwa mashaka o fhambanaho:** mitshelo, nḓuhu dza miri, mitshelo miṱuku, dzi-nitrogen fixer, zwimela zwa mishonga, zwimela zwi ṋeaho ṋotshi na zwiṋoni zwiḽiwa, na zwimela zwa mulch.
-4. **Phaḓaladzani khaṋo ṅwaha woṱhe.** Sedzani uri tshimela tshiṅwe na tshiṅwe tshi kaṋwa lini. Sa tsumbo, miri ya lushaka lwa namuni i kaṋwa nga maanḓa nga ṱhanḓalaṅwaha na vhuria, na avokhado nga ṱhanḓalaṅwaha na vhuria, ngeno mirara (grapes) na phitshisi (peaches) zwi tshi kaṋwa nga tshilimo, na alimonde (almonds) nga magumo a tshilimo. Mitshelo minzhi i na mashaka a u thoma, a vhukati ha khalaṅwaha na a u fhedza. Ṱavhani maṅwe kha oṱhe.
-5. **Humbulani nga ha pfushi.** Pulanani mutanganyiko une wa ṋea muṱa waṋu mavithamini na minerala dzo fhambanaho ṅwaha woṱhe.
-6. **Sedzani mavu aṋu.** Miri ya mitshelo i ṱumanywa nga **grafting** (u ṱumanya tshipiḓa tsha muri kha midzi ya muṅwe) kha **dzi-rootstock** (tshipiḓa tsha midzi tsha muri wo ṱumanywaho) dzo teaho mavu o fhambanaho. Vhudzisani nasari uri ndi rootstock ifhio yo teaho mavu aṋu.
-7. **Sedzani uri tshimela tshiṅwe na tshiṅwe a si invasive species.** Zwimela zwinzhi zwa maṅwe mashango zwi re na mushumo zwo ambiwa sa invasive species Afrika Tshipembe. U zwi ṱavha ndi u pfuka mulayo.
-8. **Takalelani zwimela zwa sialala zwi thusaho.** Kha dzi-nitrogen fixer, dzi-groundcover na zwimela zwa zwipuka zwa ḓaka, thomani nga u nanga mashaka a sialala.
+Pulanani kha bammbiri u thoma. Muri u re fhethu ho khakheaho u ḓura miṅwaha.
 
-> **Tsevhedzo:** Dalelani ḓaka kana tshiṱaka tsha mupo tsini na ni, ni dzhie tshifhinga tshaṋu. Sedzani uri ndi dzi-groundcover dzifhio dzine dza mela murunzini na ḓuvhani, na uri ndi miri ifhio ya u thoma ine ya thoma u mela kha mavu o dzhenelelwaho. Ni nga kuvhanganya mbeu ya ḓaka i si nnzhi fhedzi nga thendelo ya muṋe wa mavu. Ni ṱoḓa phemithi (permit) u kuvhanganya zwimela kana mbeu kha fhethu ho tsireledzwaho ha mupo (nature reserves) na u kuvhanganya mashaka o tsireledzwaho. Nasari ya tsini na ni i nga ni ṋea mitengo na nyeletshedzo musi ni tshi ṅwala mutevhe waṋu wa zwimela.
+1. **Ṅwalani ṱhoḓea dzaṋu.** Muṱa waṋu, zwifuwo zwaṋu na zwipuka zwa ḓaka zwa henefho zwi ṱoḓa mini? Zwiḽiwa, khuni, fodder, mishonga, murunzi?
+2. **Nangani zwimela zwi teaho mutsho waṋu.** Nangani zwimela zwa indigenous na zwa nnḓa zwi teaho mvula, tshando na mufhiso zwaṋu. Engedzani zwi si gathi zwine zwa tou kona u konḓelela hune na dzula hone. Samusi mutsho u tshi shanduka, izwi zwi ni ṋea tsireledzo.
+3. **Ṱanganyani tshaka:** mitshelo, nḓuhu dza miri, berry, dzi-nitrogen fixer, zwimela zwa mishonga, maluvha a ṋotshi na zwiṋoni, na zwimela zwa mulch.
+4. **Phaḓaladzani khaṋo.** Kha Afrika Tshipembe avokhado dzi wanala nga maanḓa u bva hu ḓo nga Ṱhafamuhwe (March) u swika Khubvumedzi (September) na miri ya lushaka lwa namuni nga ṱhanḓalaṅwaha na vhuria, musi gerepe na mapitshi zwi tshi vhibva nga tshilimo na alimondi magumoni a tshilimo. Vhunzhi ha mitshelo i na tshaka dza u ṱavhanya, dza vhukati ha khalaṅwaha na dza u lenga. Ṱavhani iṅwe ya tshiṅwe na tshiṅwe.
+5. **Humbulani nga ha phushi.** Pulanani uri muṱa u ḽe mitshelo na muroho zwo fhambanaho ṅwaha woṱhe.
+6. **Nangani rootstock i teaho mavu aṋu.** Miri ya mitshelo i itwa nga **grafting** (u ṱumanya tshaka yavhuḓi ya mitshelo kha midzi ya tshiṅwe tshimela). **Rootstock** (midzi ya fhasi ya muri wo ṱumanywaho) ndi tshenetsho tshipiḓa tsha midzi, nahone dzi-rootstock dzo fhambanaho dzi tea mavu o fhambanaho. Vhudzisani nasari uri ndi rootstock ifhio i teaho mavu aṋu.
+7. **Nangani zwimela zwa thikhedzo zwa indigenous.** Kha dzi-nitrogen fixer, **dzi-groundcover** (zwimela zwa fhasi zwi phaḓalalaho nṱha ha mavu) na zwimela zwa zwipuka zwa ḓaka, nangani tshaka dza indigenous u thoma.
 
-### Tshimbidzanyani miri ya mitshelo na mutsho waṋu
+> **Tsevhedzo:** Phanḓa ha u ṅwala mutevhe waṋu wa zwimela, tshimbilani zwiṱuku-zwiṱuku kha ḓaka ḽa mupo ḽi re tsini. Sedzani uri ndi dzi-groundcover dzifhio dzi melaho murunzini na dzifhio dzi melaho ḓuvhani, na uri ndi miri ifhio ya u thoma i melaho u thoma kha mavu o tshinyadzwaho. Ḓaka ḽa mupo ndi mudededzi wavhuḓi vhukuma wa zwine zwa ḓo aluwa zwavhuḓi kha mavu aṋu.
 
-Afrika Tshipembe i na mitsho yo fhambanaho vhukuma. Mbudziso khulwane kha miri ya mitshelo ndi ya **tshando** (frost).
+### Nangani miri ya mitshelo i teaho mutsho waṋu
 
-| Mutsho | Mitshelo ine kanzhi ya bvelela zwavhuḓi | Zwa u ḓivha |
+Mbudziso khulwane kha miri ya mitshelo kha Afrika Tshipembe ndi **tshando** (frost).
+
+| Mutsho | Mitshelo ine kanzhi ya ita zwavhuḓi | Zwiṅwalwa |
 |---|---|---|
-| Highveld ya mahalwa, Free State, Lesotho, mavu a nṱha a Kapa Vhubvaḓuvha (tshando tshihulwane nga vhuria) | Apula, pere, kwepere (quince), phitshisi, nekitarini, phuramu, apurikoto, feiye, phesimeni (persimmon), murara, phikani (pecan) | Miri iyi i laṱaho maṱari nga vhuria i ṱoḓa vhuria ha mahalwa. Tshando tsha magumo a ṱhaṱula tshi nga vhulaha maluvha a apurikoto, alimonde na phitshisi dza u thoma, ngauralo i ṱavheni kha u sendama ha mavu, hu si kha **frost pocket** (mulindi wa tshando). |
-| Kapa Vhukovhela (mvula ya vhuria, tshilimo tsho omaho) | Apula, pere, phuramu, apurikoto, phitshisi, feiye, murara, alimonde, kharoba (carob), miri ya lushaka lwa namuni, pomegranate | Hu ṱoḓea u sheledza nga tshilimo. Alimonde na kharoba zwi tshimbilelana na tshilimo tsho omaho. |
-| Lowveld na lupfumo lwa lwanzhe hu si na tshando (lowveld ya Limpopo na Mpumalanga, lupfumo lwa KwaZulu-Natal) | Mango, muomva, phopho, avokhado, litshi, miri ya lushaka lwa namuni, black sapote, custard apple, musuma (jackalberry), turmeric | Miri minzhi ya mitshelo i laṱaho maṱari a i wani mahalwa o linganaho nga vhuria henefha. Nangani mashaka a ṱoḓaho mahalwa maṱuku (low-chill). |
-| Fhethu hu re na tshando tshiṱuku (vhukati ha KwaZulu-Natal, zwipiḓa zwa Gauteng) | Miri ya lushaka lwa namuni, avokhado (mashaka a konḓelelaho mahalwa sa Fuerte), feiye, phikani, phesimeni, phitshisi na phuramu dza mahalwa maṱuku | Tsireledzani miri miṱuku ya lushaka lwa namuni na ya avokhado kha tshando lwa vhuria ha u thoma vhuvhili kana vhuraru. |
+| Highveld i rotholaho, Free State, Lesotho, fhethu ha nṱha ha Kapa Vhubvaḓuvha (tshando tsha maanḓa) | Apula, phera, quince, phitshi, nectarine, pulamu, apurikhoto, muhuyu, persimmon, gerepe, pecan | Iyi miri i laṱaho maṱari nga vhuria i ṱoḓa vhuria vhu rotholaho. Tshando tsha u lenga tshi vhulaha maluvha a apurikhoto, alimondi na phitshi ya u ṱavhanya, ngauralo i ṱavheni fhethu ho sendamaho, hu si kha **frost pocket** (fhethu ha fhasi hune muya u rotholaho wa dzula hone). |
+| Kapa Vhukovhela (mvula ya vhuria, tshilimo tsho omaho) | Apula, phera, pulamu, apurikhoto, phitshi, muhuyu, gerepe, alimondi, carob, miri ya lushaka lwa namuni, pomegranate | I ṱoḓa maḓi nga tshilimo. Alimondi na carob zwi tea tshilimo tsho omaho. |
+| Lowveld na lwanzhe hu si na tshando (Lowveld ya Limpopo na Mpumalanga, lwanzhe lwa KwaZulu-Natal) | Mango, muomva, phopho (papaya), avokhado, litchi, miri ya lushaka lwa namuni, black sapote, musuma (jackalberry) | Vhunzhi ha mitshelo i laṱaho maṱari nga vhuria a i wani mahalwa a vhuria o linganaho fhano. Nangani tshaka dza low-chill. |
+| Tshando tshi si tsha maanḓa (vhukati ha KwaZulu-Natal, zwiṅwe zwipiḓa zwa Gauteng) | Miri ya lushaka lwa namuni, avokhado, muhuyu, pecan, persimmon, phitshi na pulamu dza low-chill | Avokhado ya Fuerte i konḓelela mahalwa u fhira Hass. Tsireledzani miri miṱuku ya namuni na avokhado kha tshando lwa vhuria vhuvhili kana vhuraru. |
 
-> **Tsevhedzo:** Mashaka a miri ya mitshelo i laṱaho maṱari a rengiswa nga u ya nga mahalwa ane a a ṱoḓa (chill requirement, uri a ṱoḓa awara nngana dza mahalwa nga vhuria). Humbelani nasari mashaka o teaho fhethu haṋu.
+Tshaka dza mitshelo i laṱaho maṱari dzi rengiswa u ya nga mahalwa ane dza a ṱoḓa (chill requirement): uri dzi ṱoḓa awara nngana dza mahalwa nga vhuria. Humbelani tshaka dzi teaho vhupo haṋu.
 
-### Nḓila dza u vhekanya na tshikhala vhukati ha zwimela
+### Mivhumbeleo ya u ṱavha na tshikhala
 
-Hu na nḓila nnzhi dza u vhekanya food forest: zwigwada zwa zwimela zwo phaḓalalaho, mafhenḓe a zwimela, mitalo yo lugaho, u lima zwiliṅwa vhukati ha mitalo ya miri (alley cropping) kana mitalo ya zwiṱaka (hedgerows). Nangani nḓila yo teaho fhethu haṋu na zwine na zwi ṱoḓa.
-
-- Vhonani uri miri yoṱhe i wana ḓuvha ḽo linganaho. Kha Afrika ya Tshipembe ḓuvha ḽi kha **devhula**, ngauralo vhekani miri milapfu i sa laṱi maṱari thungo ya **tshipembe** ya food forest, hune murunzi wayo wa wela nnḓa ha ngade.
-- Ni nga dovha na vhea miri i sa laṱi maṱari vhukati ha miri i laṱaho maṱari nga vhuria (deciduous trees).
-- Shumisani **edge** (magumo) ya ḓaka i re na ḓuvha kha mihaṱa na dzi-perennial dzi funaho ḓuvha, u fana na kha edge ya ḓaka ḽa mupo.
-
-Wanani uri muri muṅwe na muṅwe u ḓo ṱoḓa tshikhala tshi ngafhani musi wo no aluwa nga vhuḓalo.
+Dzudzanyani ḓaka sa zwiṱumba, mafhenḓe a zwimela, mitalo yo lugaho, kana mitalo ya zwiliṅwa vhukati ha mitalo ya miri. Nangani zwi teaho fhethu haṋu. Naho muvhumbeleo u ufhio, muri muṅwe na muṅwe u ṱoḓa ḓuvha. Kha Tshipembe tsha Afrika ḓuvha ḽi **devhula**, ngauralo vhewani miri mirapfu i sa laṱi maṱari thungo ya **tshipembe**, hune murunzi wayo wa wela nnḓa ha ngade, kana vhukati ha miri i laṱaho maṱari nga vhuria. Shumisani **edge** (hune fhethu huvhili ha ṱangana hone) i re na ḓuvha kha mihaṱa i funaho ḓuvha, sa zwine ḓaka ḽa mupo ḽa ita.
 
 1. Elani fhethu haṋu.
-2. Wanani vhuphara ha **canopy** (tshiṱoho tsha maṱari a nṱha) ha muri muṅwe na muṅwe musi wo no aluwa.
-3. Olani pulane yo leluwaho kha bammbiri, kana ni swaye fhethu nga zwiṱanda.
-4. Siani tshikhala tshinzhi vhukati ha miri. Sa tsumbo, muri une maṱavhi awo a vha na vhuphara ha 4 m u ṱoḓa u swika 6 u ya 7 m vhukati hawo na muri u tevhelaho, nga nnḓa ha musi ni tshi khou ṱavha lufhenḓe lwa zwimela. Tshikhala tshi re vhukati tshi shumiswa kha nḓila, dzi-nitrogen fixer na zwimela zwiṱuku.
-5. U bva kha pulane yaṋu, ṅwalani mutevhe waṋu wa zwimela zwine na ḓo zwi renga.
+2. Wanani vhuphara hoṱhe ha **canopy** (mutombo wa maṱari) ya muri muṅwe na muṅwe: vhuphara ha ṱhoho yawo ya maṱari musi wo aluwa.
+3. Olani pulane kha bammbiri, kana ni swaye fhethu nga zwiṱanda.
+4. Siani tshikhala. Muri u re na canopy ya 4 m u ṱoḓa hu ḓo nga 6 u swika 7 m u swika kha muri u tevhelaho, nga nnḓa ha arali ni tshi khou ṱavha lufhenḓe lwa zwimela. Tshikhala tshi re vhukati tshi na nḓila, dzi-nitrogen fixer na zwimela zwiṱuku.
+5. Itani mutevhe waṋu wa u renga u bva kha pulane.
 
 ## U ṱavha food forest
 
-### Thomani nga dzi-nitrogen fixer
+Ḓaka ḽa mupo ḽi dzhia mahumi a miṅwaha, na maḓana a miṅwaha, u aluwa. Ri ḽi ṱavhanyisa nga u ṱavha zwimela zwa u thoma (pioneers) u thoma.
 
-Ḓaka ḽa mupo ḽi dzhia mahumi a miṅwaha kana miḓana ya miṅwaha u aluwa. Ri nga ṱavhanyisa hezwi nga u thoma u ṱavha **zwimela zwa u thoma** (pioneer plants) zwinzhi.
+Humbulani u gotsha mulilo. Mahatsi o omaho a gotsha zwiṱavhi, zwiṱavhi zwa gotsha maṱavhi, nahone magumoni khuni khulwane dza swa. Kha food forest zwimela zwa u thoma zwi aluwaho nga u ṱavhanya zwi fhaṱa u nona ha mavu u thoma, nahone miri ya mitshelo i dzhia vhudzulo musi i tshi aluwa.
 
-Zwi nga u vhasa mulilo. Tsha u thoma ni vhasa hatsi na zwiṱanda zwiṱuku zwo omaho, zwine zwa vhasa zwiṱanda, nga murahu maṱavhi, nga u fhedza khuni khulwane dza swa. Nga nḓila i fanaho, ri thoma nga u khwinisa u nona ha mavu nga zwimela zwa u thoma zwi aluwaho nga u ṱavhanya. Nga murahu miri mihulwane ya mitshelo i dzhia vhuimo musi i tshi aluwa.
+Zwimela zwavhuḓi vhukuma zwa u thoma ndi **dzi-legume** (zwimela zwa lushaka lwa nawa na phizi). Vhunzhi hazwo zwi engedza naiṱirodzheni: midzi yazwo i shuma na bakitheria u dzhia naiṱirodzheni muyani na u i engedza mavuni. Zwi dovha zwa ita **biomass** (maṱari na maṱavhi manzhi) nnzhi ya mulch.
 
-Zwimela zwa u thoma zwa khwine ndi **dzi-legume** (zwimela zwa lushaka lwa nawa). Dzi-legume nnzhi dzi shuma na bakitheria dzi re midzini yadzo u dzhia naiṱirodzheni kha muya na u i engedza mavuni. Hezwi zwi vhidzwa **u engedza naiṱirodzheni mavuni** (nitrogen fixing). Dzi-legume dza vhuhulwane hoṱhe dzi dovha dza bveledza **biomass** (maṱari na maṱavhi manzhi) ya mulch.
-
-| Tshimela | Mushumo | Zwa u ḓivha |
+| Tshimela | Mushumo | Zwiṅwalwa |
 |---|---|---|
-| Muunga (sweet thorn) *Vachellia karroo* | Nitrogen fixer, fodder, khuni, gamu (gum) | Wa sialala nahone u konḓelela vhukuma. U nga phaḓalala kha ḓaka ḽo fuliswaho u fhira tshikalo, ngauralo ni songo u ṱavha kha mavu a mahatsi o takalaho. |
-| Common hook thorn *Senegalia caffra* | Nitrogen fixer, fodder, khuni, lufhenḓe lwa zwimela | Wa sialala; fhethu ha mvula ya tshilimo. |
-| Paperbark thorn *Vachellia sieberiana* | Muri wa murunzi, nitrogen fixer, fodder | Wa sialala; muri muhulwane wa fhethu hu hulwane. |
-| Keurboom *Virgilia oroboides* | Tshimela tsha u thoma tshi aluwaho nga u ṱavhanya, nitrogen fixer, maluvha a ṋotshi | Wa sialala tshipembe na Kapa Vhukovhela; a u tshili tshifhinga tshilapfu. |
-| Pigeon pea *Cajanus cajan* | Nitrogen fixer, nawa dzi ḽiwaho, mulch ya chop and drop | Tshiṱaka tshi sa tshili tshifhinga tshilapfu (miṅwaha i si gathi); tshi vhulahwa nga tshando tshihulwane. |
-| Nawa (cowpea) *Vigna unguiculata* | Groundcover ya annual, nitrogen fixer, zwiḽiwa | Tshiliṅwa tsha tshilimo. |
-| Lablab bean *Lablab purpureus* | Tshimela tshi gonyaho tsha **annual** (tshi tshilaho ṅwaha muthihi) kana tshi sa tshili tshifhinga tshilapfu, nitrogen fixer, fodder | Tshiliṅwa tsha tshilimo; a tshi konḓeleli tshando. |
-| Lupin *Lupinus angustifolius* | Groundcover ya vhuria, nitrogen fixer | Tshi tshimbilelana na vhuria ha Kapa Vhukovhela. Iṅwe mbeu ya lupin i a vhava nahone i na khombo i nga vhulaha; ni songo i ḽa kana u i ṋea zwifuwo nga nnḓa ha musi i lushaka lu ṱapfaho (lu ḽiwaho). |
+| Muunga *Vachellia karroo* | Nitrogen fixer, fodder, khuni, tshigomu | Ndi wa indigenous nahone wo khwaṱhesa. U a anda kha ḓaka ḽa mupo ḽo fuliswaho zwi fhiraho, ngauralo u ṱavheni kha food forest yaṋu, hu si kha mavu a mahatsi o takalaho. |
+| Common hook thorn *Senegalia caffra* | Nitrogen fixer, fodder, khuni, lufhenḓe lwa zwimela | Ndi wa indigenous; fhethu hune mvula ya na nga tshilimo. |
+| Keurboom *Virgilia oroboides* | Nitrogen fixer i aluwaho nga u ṱavhanya, maluvha a ṋotshi | Ndi wa indigenous kha Kapa Tshipembe na Kapa Vhukovhela; u tshila tshifhinga tshipfufhi. |
+| Pigeon pea *Cajanus cajan* | Nitrogen fixer, phizi dzi ḽiwaho, chop and drop | Tshiṱaka tshi tshilaho miṅwaha mishoni; tshi vhulahwa nga tshando tsha maanḓa. |
+| Nawa dza sialala, cowpea *Vigna unguiculata* | Groundcover i engedzaho naiṱirodzheni, zwiḽiwa | Annual ya tshilimo. |
+| Lablab bean *Lablab purpureus* | Nitrogen fixer i gonyaho, fodder | Tshilimo; i sa konḓeleli tshando. |
+| Lupin *Lupinus angustifolius* | Groundcover ya vhuria i engedzaho naiṱirodzheni | I tea vhuria ha Kapa Vhukovhela. Mbeu ya lupin i vhavhaho ndi tshivhulahi, ngauralo ḽani kana ni ṋee zwifuwo tshaka dza sweet fhedzi. |
 
-> **Ḓivhani:** Ni songo ṱavha dzi-nitrogen fixer idzi dzi ḓivhiwaho kha permaculture Afrika Tshipembe. Dzo ambiwa sa invasive species: black wattle na maṅwe mawattle (*Acacia mearnsii* na maṅwe mashaka a *Acacia* a Australia), leucaena (*Leucaena leucocephala*), red sesbania (*Sesbania punicea*), black locust (*Robinia pseudoacacia*) na stinkbean (*Paraserianthes lophantha*). Shumisani miri ya sialala ya mipfa yo ambiwaho afho nṱha.
+Wattle, leucaena na sesbania zwi ita uyu mushumo kha bugu nnzhi dza mashango a nnḓa, fhedzi fhano ndi zwimela zwi phaḓaladzeaho. Miri ya mipfa ya indigenous i re nṱha i ita mushumo u fanaho.
 
-### Maitele a u ṱavha
+### Maga a u ṱavha
 
-1. **Vhekanyani zwimela zwaṋu.** Elani tshikhala vhukati hazwo u ya nga vhuphara ha maṱavhi azwo musi zwo no aluwa. Swayani fhethu nga zwiṱanda kana nga phaudara ya layime i si nnzhi. Siani tshikhala tshihulwane vhukati ha miri.
-2. **Swayani zwoṱhe nga madzina.** Vhekani tshiswayo tsha T kana ḽeibele ḽi re na dzina tsini na tshimela tshiṅwe na tshiṅwe tsha ndeme. Arali na sa ita nga u ralo, ni nga hangwa uri ndi mini hune ha vha ngafhi.
-3. **Gwani mikwita yoṱhe na zwidziva zwa u ṱavha (planting basins).**
-4. **Lugiselani compost** (zwithu zwo vholaho zwi nontshisaho mavu)**, mulch na zwiṅwe zwine zwa khwinisa mavu.**
-5. **Thomani nga u ṱavha miri mihulwane ya mitshelo na iṅwe miri i tshilaho tshifhinga tshilapfu.** Nga murahu ṱavhani miri ya nitrogen fixer.
-6. **Ṱavhani miri ya vhukati** vhukati ha miri i re na maṱavhi mahulwane.
-7. **Ṱavhani zwiṱaka na mihaṱa**, kule nga 1 m na miri mihulwane ya mitshelo.
-8. **Ṱavhani zwimela zwa midzi zwa perennial.**
-9. **Ṱavhani dzi-groundcover dza perennial** vhukati ha zwidziva zwa u ṱavha.
-10. **Zwalani dzi-legume dza annual dzi fukedzaho mavu** nga u fhedza, sa nawa (cowpea) nga tshilimo kana lupin nga vhuria. Musi ni sa athu u zwala, nyorovhisani mbeu zwiṱuku ni i ṱanganye na **phaudara ya bakitheria** (inoculant) yo teaho (phaudara ya bakitheria dzi engedzaho naiṱirodzheni dza lushaka lwonolwo lwa tshimela; i rengiswa khathihi na mbeu ya dzi-legume kana mavhengeleni a zwa vhulimi). Vhulungani mbeu yo ṱanganywaho na phaudara iyi murunzini. Phaḓaladzani mbeu nnzhi nṱha ha mavu ni i fukedze zwiṱuku nga mulch.
-11. **Sheledzani** miri, zwimela na mbeu zwavhuḓi.
+1. **Swayani zwimela nga zwiṱanda.** Elani zwikhala u ya nga vhuhulu ha canopy ni swaye fhethu huṅwe na huṅwe nga tshiṱanda kana layime ṱhukhu. Siani zwikhala zwihulwane vhukati ha miri mihulwane.
+2. **Ṅwalani madzina kha zwoṱhe.** Vhewani tshiswayo tsha dzina tsini ha tshimela tshiṅwe na tshiṅwe tsha ndeme. Ni ḓo hangwa uri ndi mini tshi re ngafhi.
+3. **Gwani maburanngo oṱhe na mabeseni a u ṱavha.**
+4. **Vhani na compost na mulch zwo lugiswa.** **Compost** (malaṱwa a zwimela na zwipuka o vholaho a vha zwiḽiwa zwa mavu zwi re swifhala zwi kukumaho).
+5. **Ṱavhani miri mihulwane i tshilaho tshifhinga tshilapfu u thoma,** nga murahu miri i engedzaho naiṱirodzheni.
+6. **Ṱavhani miri ya vhukati** vhukati ha mihulwane.
+7. **Ṱavhani zwiṱaka na mihaṱa** kule ha hu ḓo nga 1 m na miri mihulwane ya mitshelo.
+8. **Ṱavhani zwiliṅwa zwa midzi zwa perennial,** nga murahu **dzi-groundcover dza perennial** vhukati ha mabeseni.
+9. **Zwalani dzi-groundcover dza legume dza annual magumoni:** nawa dza sialala (cowpea) nga tshilimo, lupin nga vhuria. Musi ni tshi ḓo zwala, nowisani mbeu zwiṱuku ni i ṱanganye na **phaudara ya bakitheria** (inoculant) yo teaho (phaudara ya bakitheria dzi engedzaho naiṱirodzheni dza iyo legume, i rengiswaho na mbeu kana kha mavhengele a zwa vhulimi). Vhewani mbeu yo ṱanganyiswaho na inoculant kule na ḓuvha. I phaḓaladzeni nga vhunzhi ni i fukedze zwiṱuku nga mulch.
+10. **Sheledzani** zwoṱhe zwavhuḓi.
 
 ## Nḓila ine food forest ya aluwa ngayo
 
-Food forest yaṋu i ḓo pfuka kha zwiimo zwinzhi i sa athu u vha sisiteme yo khwaṱhaho. Ri nga ṱalusa zwiimo zwivhili zwihulwane.
+Food forest i pfuka zwiimo zwinzhi phanḓa ha musi i tshi dzika. Ri nga humbula zwipiḓa zwivhili.
 
-### Tshiimo tsha 1: U thoma (miṅwaha 0 u ya 5)
+**Tshipiḓa tsha 1: u thoma (miṅwaha 0 u swika 5).** Dzi-legume dza u thoma dzi aluwaho nga u ṱavhanya ndi dzone dzi rangaho phanḓa. Dzi ḓadza zwikhala zwo vuleaho, dza ita murunzi une wa thivhela zwimela zwi sa ṱoḓei nahone dza tsireledza miri miṱuku ya mitshelo. Nga khalaṅwaha ya mvula, musi dzo no hula nga u lingana, itani chop and drop: remani maṱavhi adzo nga maanḓa ni sie zwo remiwaho mavuni sa mulch. Zwi a vhola zwa ṋea zwiḽiwa mavu na khowa dzine miri ya ḓaka ya dzi ṱoḓa. Miṅwe midzi mituku na zwiṱumba zwa legume zwi dovha zwa fa nga murahu ha u remiwa zwa bvisa naiṱirodzheni ṱhukhu. A ni nga ki mitshelo minzhi zwazwino, fhedzi nga murahu ha ṅwaha wa u thoma hu na berry, muroho u ḓizwalaho, zwiliṅwa zwa midzi, mihaṱa na khuni u bva kha maṱavhi o ṱahelwaho.
 
-- Dzi-legume dza u thoma dzi aluwaho nga u ṱavhanya ndi dzone zwimela zwihulwane. Dzi khwinisa u nona ha mavu na u bveledza biomass, dzi ḓadza fhethu ho ṱalalaho, dzi thivhela zwimela zwi sa ṱoḓei nga murunzi, nahone dzi tsireledza miri miṱuku ya mitshelo.
-- Nga tshifhinga tsha mvula, musi miri ya u thoma yo no hula zwo linganaho, **itani chop and drop**: remani maṱavhi ayo nga maanḓa ni sie maṱavhi o remiwaho na maṱari fhasi.
-- Mulch i a vhola ya ṋea mavu zwiḽiwa na zwithu zwiṱuku zwa khowa zwi re mavuni (fungi), zwine miri ya ḓaka ya zwi ṱoḓa uri i aluwe zwavhuḓi. Midzi miṱuku na zwiṱumbu zwiṱuku zwa midzi (root nodules) zwiṅwe zwa dzi-legume zwi dovha zwa fa musi zwo no ṱahelwa, zwa bvisela naiṱirodzheni iṅwe mavuni.
-- A ni nga kaṋi nḓuhu dza miri nnzhi kana mitshelo minzhi zwazwino. Fhedzi nga murahu ha ṅwaha wa u thoma ni nga ka mitshelo miṱuku i aluwaho nga u ṱavhanya, miroho i ḓi-zwalaho, zwimela zwa midzi zwa perennial, mihaṱa na khuni u bva kha chop and drop.
+**Tshipiḓa tsha 2: yo khwaṱha (u bva kha ṅwaha wa 5).** Miri yo ṱumanywaho i nga bveledza kha miṅwaha yayo miraru ya u thoma; miṅwe fhedzi nga ṅwaha wa 5 u swika 7. Vhunzhi ha dzi-food forest dzi thoma u vhibva tsini na ṅwaha wa 5.
 
-### Tshiimo tsha 2: Ḓaka ḽo aluwaho (u bva kha ṅwaha wa 5)
+1. Musi miri ya mitshelo i tshi hula, remani zwimela zwa u thoma nga maanḓa ṅwaha muṅwe na muṅwe, u swikela hu tshi sala miri mi si gathi i engedzaho naiṱirodzheni i tshilaho tshifhinga tshilapfu.
+2. Litshani khuhu, nguluvhe kana zwiṅwe zwifuwo zwi ṱoḓe zwiḽiwa ngomu lwa zwifhinga zwipfufhi. Tsireledzani mavhonzhe maṱuku kha mbudzi na nguluvhe, dzine dza fhala makwati.
+3. Ṱahelani maṱavhi u dzhenisa tshedza hune tsha ṱoḓea hone, ni shumise **dzi-microclimate** (fhethu huṱuku hu re na mutsho waho) dzo tsireledzeaho dzo no vhumbea.
+4. Thomani u rema miri ya coppicing u itela khuni.
 
-- Miri ya mitshelo yo ṱumanywaho i nga thoma u bveledza kha miṅwaha miraru ya u thoma. Miṅwe i thoma fhedzi kha ṅwaha wa 5 u ya 7. Nga vhukati, food forest i thoma u aluwa nga vhuḓalo tsini na ṅwaha wa vhuṱanu.
-- Musi miri ya mitshelo i tshi hula, fhungudzani miri ya u thoma zwiṱuku-zwiṱuku. Kha magumo, hu sala fhedzi dzi-nitrogen fixer dzi si gathi dzi tshilaho tshifhinga tsha vhukati na tshilapfu.
-- Zwino ni nga litsha nguluvhe, khuhu kana zwiṅwe zwifuwo zwi tshi ṱoḓa zwiḽiwa ḓakani lwa tshifhinga tshipfufhi u thusa kha u ṱhogomela. Tsireledzani matanda a miri miṱuku kha mbudzi na nguluvhe.
-- Ni ḓo vhona zwipuka zwa ḓaka zwinzhi vhukuma musi zwimela zwaṋu zwi tshi ṋea zwiḽiwa na vhudzulo.
-- Ṱahelani maṱavhi u itela uri tshedza tshinzhi tshi dzhene hune tsha ṱoḓea hone, nahone ni shumise **dzi-microclimate** (zwipiḓa zwiṱuku zwi re na mutsho wazwo) dzo tsireledzwaho dzo no vhumbea.
-- Mitshelo, nḓuhu dza miri na mitshelo miṱuku zwi a engedzea musi miri i tshi aluwa, nahone miri ya coppicing zwino i nga remelwa khuni.
+Zwipuka zwa ḓaka zwi ḓa zwoṱhe. Zwiṋoni, maṅwavhi na zwikukumi zwi dzhena musi miṱaṱo i tshi vala, nahone mitshelo, nḓuhu dza miri na berry zwi a engedzea ṅwaha nga ṅwaha.
 
 ## Miṱaṱo ya food forest
 
-Kanzhi food forest i ṱaluswa nga **miṱaṱo ya sumbe**. Zwimela zwi re afho fhasi ndi tsumbo. Nangani zwine zwa tshimbilelana na mutsho waṋu. Zwimela zwo swayiwaho sa zwa sialala zwi wanala nga mupo kha Afrika ya Tshipembe.
+Food forest kanzhi i ṱalutshedzwa nga miṱaṱo ya sumbe. Nangani zwimela zwa muṱaṱo muṅwe na muṅwe zwi teaho mutsho waṋu. **Understorey** (miri miṱuku na zwiṱaka zwi re fhasi ha miri mirapfu) ndi muṱaṱo wa miri miṱuku na zwiṱaka zwi re fhasi ha miri mirapfu-rapfu.
 
-### Mutaṱo wa 1: Canopy (miri milapfu)
-
-Iyi ndi miri milapfu u fhira yoṱhe. Kha food forest ṱhukhu ya mudini, ṱavhani i si gathi fhedzi.
-
-| Tshimela | Mushumo | Zwa u ḓivha |
+| Muṱaṱo | Zwine zwa mela hone | Tsumbo |
 |---|---|---|
-| Wild plum *Harpephyllum caffrum* | Mitshelo ya dzhemu, zwiḽiwa zwa zwiṋoni, murunzi | Wa sialala. Miri miṱuku a i konḓeleli tshando. Maluvha a tshinna na a tshisadzi a kha miri yo fhambanaho. |
-| Musuma (jackalberry) *Diospyros mespiliformis* | Mitshelo, mapulanga, murunzi, mushonga | Wa sialala; bushveld na lowveld dzi fhisaho dzi si na tshando. Muri muhulwane. |
-| Black sapote *Diospyros digyna* | Mitshelo | Fhethu ha subtropiki hu si na tshando fhedzi. |
-| Phikani (pecan) *Carya illinoinensis* | Nḓuhu dza miri, murunzi | U ṱoḓa mavu mahulu na maḓi; muri muhulwane vhukuma. |
-| Cape chestnut *Calodendrum capense* | Mapfura a mbeu, murunzi, maluvha a zwikukumi | Wa sialala. |
+| 1. Miri mirapfu (canopy) | Miri mirapfu-rapfu. Ṱavhani i si minzhi fhedzi kha food forest ṱhukhu. | Mutavhatsindi (wild plum) *Harpephyllum caffrum*, Cape chestnut *Calodendrum capense*, pecan; musuma (jackalberry) *Diospyros mespiliformis* na black sapote kha fhethu hu fhisaho hu si na tshando |
+| 2. Miri miṱuku (understorey) | Vhunzhi ha miri ya mitshelo, i dzulaho i miṱuku nga u ṱahelwa | Apula, phera, quince, phitshi, pulamu, apurikhoto, muhuyu, persimmon, miri ya lushaka lwa namuni, avokhado, carob; Kei apple ya indigenous *Dovyalis caffra*, sour plum *Ximenia caffra*, mukhalu (buffalo thorn) *Ziziphus mucronata*, monkey plum *Diospyros lycioides*, red ivory *Berchemia zeyheri* |
+| 3. Zwiṱaka | Zwimela zwi re na thanda zwa hu ḓo nga 0.5 u swika 3 m | Forest num-num *Carissa bispinosa*, pigeon pea, wilde als *Artemisia afra*, wild rosemary *Eriocephalus africanus*, spekboom *Portulacaria afra*, krantz aloe *Aloe arborescens*, rosemary, lavender, Cape gooseberry |
+| 4. Mihaṱa na miroho | Zwimela zwi re na thanda dzi si khwaṱhaho, zwinzhi zwazwo ndi **dzi-annual** (zwi tshilaho khalaṅwaha nthihi) | Vowa (amaranth) ya muroho na thoro, okhura, mafhi, sonobolomo, kale, Swiss chard, broad bean, basil, sage, oregano, yarrow, French marigold |
+| 5. Groundcover | Zwimela zwa fhasi zwi fukedzaho mavu | Phuri, tsamma melon *Citrullus lanatus*, sour fig *Carpobrotus dimidiatus*, wild garlic *Tulbaghia violacea*, pennywort *Centella asiatica*, sitiroberi, thyme, nasturtium, minti kha ndima yo valelwaho |
+| 6. Midzi | Midzi, zwiṱambi na zwikumbu | Patata, zwiṱambi, anyanisi, kherotsi, bitiruthu; turmeric kha fhethu hu dudelaho hu si na tshando |
+| 7. Zwimela zwi gonyaho | Mivhino i gonyaho miri, mafhenḓe na trellis | Gerepe, mukumbu *Lagenaria siceraria*, lablab bean |
 
-### Mutaṱo wa 2: Miri miṱuku (mutaṱo wa miri mipfufhi)
-
-Miri minzhi ya mitshelo i wela fhano. Minzhi i dzula i miṱuku nga u ṱahelwa.
-
-| Tshimela | Mushumo | Zwa u ḓivha |
-|---|---|---|
-| Apula *Malus domestica* | Mitshelo | U ṱoḓa vhuria ha mahalwa. Nangani mashaka a ṱoḓaho mahalwa maṱuku kha fhethu hu fhisaho zwiṱuku. |
-| Pere *Pyrus communis* | Mitshelo | U ṱoḓa vhuria ha mahalwa. |
-| Kwepere (quince) *Cydonia oblonga* | Mitshelo ya dzhemu na ya u bika | U konḓelela tshando vhukuma. |
-| Phitshisi na nekitarini *Prunus persica* | Mitshelo | Nangani lushaka lu tshimbilelanaho na mahalwa a vhuria ha fhethu haṋu. |
-| Phuramu *Prunus salicina* na *Prunus domestica* | Mitshelo | Minzhi i ṱoḓa lushaka lwa vhuvhili tsini u itela u phaḓaladza mupfumbu wa maluvha (pollination). |
-| Apurikoto *Prunus armeniaca* | Mitshelo | I vhala maluvha nga u ṱavhanya, ngauralo tshando tsha magumo tshi nga tshinyadza khaṋo. |
-| Alimonde (almond) *Prunus dulcis* | Nḓuhu dza miri | I bvelela zwavhuḓi kha Kapa Vhukovhela ine tshilimo tshayo tsha oma. |
-| Feiye (fig) *Ficus carica* | Mitshelo | I konḓelela vhukuma. Zwiṋoni zwi phaḓaladza mbeu yayo ḓakani, ngauralo ṱumulani zwimela zwiṱuku zwa feiye zwine na zwi wana kule na ngade. |
-| Phesimeni (persimmon) *Diospyros kaki* | Mitshelo | I laṱa maṱari nga vhuria; i konḓelela tshando. |
-| Namuni, ḽamuni, grapefruit *Citrus* spp. | Mitshelo, vithamini C | Tsireledzani miri miṱuku kha tshando. Rengani miri yo ṋewaho ṱhanziela ya uri a i na malwadze. |
-| Avokhado *Persea americana* | Mitshelo | Fhethu hu si na tshando kana hu na tshando tshiṱuku fhedzi. Fuerte i konḓelela mahalwa u fhira Hass. I ṱoḓa mavu ane maḓi a bva nga u leluwa. |
-| Kharoba (carob) *Ceratonia siliqua* | Mitshelo i ṱapfaho ya zwiḽiwa na fodder, khuni | I tshimbilelana na fhethu ho omaho hu fhisaho na Kapa Vhukovhela. I ṱoḓa miri ya tshinna na ya tshisadzi, nga nnḓa ha musi no renga lushaka lu ḓi-bveledzaho. |
-| Mukhalu (buffalo thorn) *Ziziphus mucronata* | Mitshelo i ḽiwaho, mushonga, fodder | Wa sialala. Mipfa yo kombaho: yavhuḓi kha lufhenḓe lwa zwimela. |
-| Kei apple *Dovyalis caffra* | Mitshelo ya dzhemu, lufhenḓe lwa zwimela lu re na mipfa | Wa sialala. Ni ṱoḓa muri wa tshisadzi u itela mitshelo na wa tshinna tsini u itela khaṋo yavhuḓi. |
-| Muthanzwa (sour plum) *Ximenia caffra* | Mitshelo i vhavhaho i re na vithamini C nnzhi, lufhenḓe lwa zwimela | Wa sialala. |
-| Red ivory *Berchemia zeyheri* | Mitshelo (miswa kana yo omiswaho), mapulanga | Wa sialala; bushveld. |
-| Monkey plum *Diospyros lycioides* | Mitshelo, mushonga; maṱavhi maṱuku a shumiswa sa bulasho ya maṋo | Wa sialala nahone u a konḓelela. |
-| Muembe (wild custard apple) *Annona senegalensis* | Mitshelo, mushonga | Wa sialala; fhethu hu fhisaho hu si na tshando. |
-| Mulanga (pepperbark) *Warburgia salutaris* | Mushonga wa sialala | Wa sialala nahone **u kha khombo ya u fhela ḓakani**. Rengani fhedzi miri yo aluwiswaho nasari. A u konḓeleli tshando. |
-
-> **Ḓivhani:** Ni songo ṱavha elderberry (*Sambucus*) kana white mulberry (*Morus alba*), zwine kanzhi zwa rengiswa sa zwimela zwa mitshelo. American elderberry ndi invasive species ya Khethekanyo ya 1b (Category 1b) nahone white mulberry ndi invasive species ya Khethekanyo ya 3 (Category 3) Afrika Tshipembe, ngauralo ndi u pfuka mulayo u zwi ṱavha. Zwimela zwa sialala zwa mitshelo miṱuku sa Kei apple, cross-berry na num-num ndi khwine u fhira.
-
-### Mutaṱo wa 3: Zwiṱaka
-
-Zwiṱaka ndi zwimela zwi re na thanda zwa vhulapfu ha 50 cm u swika 3 m.
-
-| Tshimela | Mushumo | Zwa u ḓivha |
-|---|---|---|
-| Forest num-num *Carissa bispinosa* | Mitshelo ya dzhemu, lufhenḓe lwa zwimela | Tsha sialala; tshi na mipfa. |
-| Cape gooseberry *Physalis peruviana* | Mitshelo ya u ḽa i miswa na ya dzhemu | A tshi tshili tshifhinga tshilapfu; a tshi konḓeleli tshando. |
-| Globe artichoke *Cynara cardunculus* (Scolymus group) | Zwiṱumbu zwa maluvha zwi ḽiwaho | Kaṋani zwiṱumbu zwi sa athu vhala maluvha. Ni songo tendela zwimela zwi tshi bveledza mbeu: wild cardoon, ine ya vha lushaka lu fanaho, ndi tshimela tshi sa ṱoḓei kha mitsho ya Mediterranean, u katela na zwipiḓa zwa Kapa Vhukovhela. |
-| Pigeon pea *Cajanus cajan* | Nitrogen fixer, nawa dzi ḽiwaho | Sedzani thebulu ya dzi-nitrogen fixer i re afho nṱha. |
-| Wilde als *Artemisia afra* | Mushonga, mushonga wa u pfafadza u tshuvhaho zwikukumi | Tsha sialala; tshi konḓelela vhukuma. |
-| Wild rosemary *Eriocephalus africanus* | Muhaṱa, maluvha a ṋotshi | Tsha sialala. |
-| Rosemary *Salvia rosmarinus* | Muhaṱa wa u bika, maluvha a ṋotshi | Tshi a konḓelela nahone tshi konḓelela gomelelo. |
-| Lavender *Lavandula* spp. | Muhaṱa, maluvha a ṋotshi | Tshi ṱoḓa mavu ane maḓi a bva nga u leluwa. |
-| Pineapple sage *Salvia elegans* | Muhaṱa, maluvha a zwiṋoni na ṋotshi | Tshando tshi nga tshi fhungudza. |
-| Spekboom (porkbush) *Portulacaria afra* | Maṱari a vhavhaho a ḽiwaho, fodder, u thivhela **erosion** (u khukhulwa ha mavu) | Tshimela tsha sialala tshi vhulungaho maḓi maṱarini (succulent). Tshi konḓelela tshando tshiṱuku fhedzi. |
-| Krantz aloe *Aloe arborescens* | Mushonga, maluvha a vhuria a zwiṋoni na ṋotshi | Tsha sialala. |
-| Brinjal (eggplant) *Solanum melongena* | Muroho | Tshi nga vha perennial hune ha si vhe na tshando. |
-| Phiriphiri *Capsicum frutescens* | Zwa u nukhedza zwiḽiwa | Tshi nga vha perennial hune ha si vhe na tshando. |
-
-### Mutaṱo wa 4: Mihaṱa na miroho (zwimela zwi si na thanda)
-
-Zwimela zwi re na makuṋe maṱete, zwinzhi zwazwo ndi dzi-annual (zwi tshilaho khalaṅwaha nthihi).
-
-| Tshimela | Mushumo | Zwa u ḓivha |
-|---|---|---|
-| Vowa ya mbeu na ya maṱari *Amaranthus cruentus*, *A. caudatus* | Muroho wa maṱari (morogo), mbeu | Annual; tshi a ḓi-zwala. |
-| Delele (okra) *Abelmoschus esculentus* | Muroho | Annual ya tshilimo. |
-| Mafhi (sorghum) *Sorghum bicolor* | Mbeu ya zwiḽiwa | Annual ya tshilimo; i konḓelela gomelelo. |
-| Sunflower *Helianthus annuus* | Mbeu, maluvha a zwikukumi | Annual ya tshilimo. |
-| Jerusalem artichoke *Helianthus tuberosus* | Midzi i ḽiwaho (tubers) | Perennial. Tshi phaḓalala nga midzi yatsho, ngauralo tshi ṱavheni hune tsha nga valelwa. |
-| Kale, khabishi, mustard greens, Swiss chard, sipinashi, letisi (lettuce) | Miroho ya maṱari | Kanzhi zwi aluwiswa sa dzi-annual. |
-| Broad bean *Vicia faba* | Nawa, **green manure** (zwimela zwa u nontshisa mavu), nitrogen fixer | Annual ya vhuria. |
-| Oats, barley, rye | Mbeu ya zwiḽiwa, green manure, fodder | Dzi-annual dza vhuria. |
-| Buckwheat *Fagopyrum esculentum* | Tshiliṅwa tsha u fukedza (cover crop), mbeu ya zwiḽiwa, maluvha a zwikukumi | Annual ya tshilimo i aluwaho nga u ṱavhanya; a i konḓeleli tshando. |
-| Sesame *Sesamum indicum* | Mbeu, tshiliṅwa tsha u fukedza | Annual ya tshilimo. |
-| Tamati, pepere (sweet pepper) | Miroho | Zwi aluwiswa sa dzi-annual dza tshilimo. |
-| Basil *Ocimum basilicum* | Muhaṱa wa u bika | Annual ya tshilimo; dziṅwe basil dza perennial dzi tshila tshifhinga tshilapfu hune ha si vhe na tshando. |
-| Fennel *Foeniculum vulgare* | Muhaṱa | Perennial. Remani ṱhoho dza maluvha mbeu i sa athu vhumbea; fennel yo no phaḓalala ḓakani kha zwipiḓa zwa Kapa Vhubvaḓuvha. |
-| Sage *Salvia officinalis* | Muhaṱa wa u bika | Perennial. |
-| Oregano *Origanum vulgare* | Muhaṱa wa u bika | Perennial. |
-| Rocket *Eruca sativa* | Muhaṱa wa saladi | Annual ya khalaṅwaha ya mahalwa. |
-| French marigold *Tagetes patula* | Maluvha a thusaho u tshuvha zwiṅwe zwikukumi | Annual. |
-| Yarrow *Achillea millefolium* | Muhaṱa, maluvha a zwikukumi zwi thusaho | Perennial. |
-| Leek *Allium ampeloprasum* | Muroho | Tshi tshila miṅwaha mivhili (khalaṅwaha mbili). |
-| Aloe vera *Aloe vera* | Mushonga wa lukanda | A tshi konḓeleli tshando. |
-| Turmeric *Curcuma longa* | Zwa u nukhedza zwiḽiwa, mushonga | Fhethu hu si na tshando, hu fhisaho zwiṱuku, hu nyorovhaho fhedzi. |
-
-### Mutaṱo wa 5: Groundcover
-
-Zwimela zwipfufhi zwi phaḓalalaho zwine zwa fukedza na u tsireledza mavu.
-
-| Tshimela | Mushumo | Zwa u ḓivha |
-|---|---|---|
-| Phuri, butternut, squash *Cucurbita* spp. | Mitshelo na maṱari a ḽiwaho | Dzi-annual dza tshilimo. |
-| Khavhe ya ḓaka (tsamma) *Citrullus lanatus* | Mitshelo, groundcover | Tsha sialala; annual ya tshilimo. |
-| Sour fig *Carpobrotus dimidiatus* | Mitshelo ya dzhemu, mushonga | Tshimela tsha sialala tshi vhulungaho maḓi maṱarini; tshi dovha tsha ongolisa mulilo. |
-| Wild garlic *Tulbaghia violacea* | Muhaṱa, mushonga, tshi nga dzhenisa zwikukumi khakhathini | Tsha sialala. |
-| Pennywort (gotu kola) *Centella asiatica* | Mushonga | Tsha sialala; tshi funa fhethu ho nyorovhaho. |
-| Strawberry *Fragaria × ananassa* | Mitshelo | Perennial. |
-| Thyme *Thymus vulgaris* | Muhaṱa wa u bika | Perennial. |
-| Mint na peppermint *Mentha* spp. | Muhaṱa, tie | Perennial. Tshi phaḓalala nga u ṱavhanya; tshi aluwiseni kha ndima yo valelwaho. |
-| Lemon balm *Melissa officinalis* | Muhaṱa, tie | Perennial. |
-| Chives *Allium schoenoprasum* | Muhaṱa | Perennial. |
-| Parsley *Petroselinum crispum* | Muhaṱa | Tshi tshila miṅwaha mivhili. |
-| Coriander *Coriandrum sativum* | Muhaṱa | Annual ya khalaṅwaha ya mahalwa. |
-| Marjoram *Origanum majorana* | Muhaṱa | Perennial. |
-| Nasturtium *Tropaeolum majus* | Maṱari na maluvha a ḽiwaho; **trap crop** (tshimela tsha u kokodza zwikukumi kule na zwiliṅwa) ya zwikukumi zwiṱuku zwi mamaho maṱari (aphids) | Annual; tshi a ḓi-zwala. |
-| Pot marigold *Calendula officinalis* | Maluvha a ḽiwaho, mushonga | Annual ya vhuria. |
-
-### Mutaṱo wa 6: Midzi
-
-Zwimela zwi aluwiswaho nga ṅwambo wa midzi, midzi mihulwane (tubers) na zwiṱumbu (bulbs) zwazwo.
-
-| Tshimela | Mushumo | Zwa u ḓivha |
-|---|---|---|
-| Patata (sweet potato) *Ipomoea batatas* | Midzi mihulwane na maṱari a ḽiwaho | Tshi vha perennial hune ha si vhe na tshando; hu ṅwe fhethu tshi aluwiswa sa tshiliṅwa tsha tshilimo. Shumisani mashaka a vhuthuwaho nga u ṱavhanya kha fhethu ha mahalwa. |
-| Zwiṱambi (potato) *Solanum tuberosum* | Midzi mihulwane | Tshi aluwiswa sa annual. |
-| Beetroot, kherotsi, radish, anyanisi | Miroho ya midzi | Zwi aluwiswa sa dzi-annual. |
-| African potato *Hypoxis hemerocallidea* | Mushonga wa sialala | Tsha sialala. Tsho kaṋwa u fhira tshikalo ḓakani: rengani fhedzi zwimela zwo aluwiswaho nasari. |
-
-### Mutaṱo wa 7: Zwimela zwi gonyaho (mutaṱo wa zwimela zwi gonyaho)
-
-Zwimela zwi gonyaho zwi shumisa miri, mafhenḓe na zwiṱanda zwa u gonya (trellises) u swikelela tshedza.
-
-| Tshimela | Mushumo | Zwa u ḓivha |
-|---|---|---|
-| Murara *Vitis vinifera* (sa tsumbo Hanepoot) | Mitshelo, murunzi nṱha ha tshiṱanda tsha u gonyela (pergola) | U laṱa maṱari nga vhuria; u bvelela zwavhuḓi hune tshilimo tsha oma. |
-| Murara wa lushaka lwa Catawba (*Vitis labrusca* hybrids) | Mitshelo | U konḓelela mvula ya tshilimo na malwadze u fhira. |
-| Calabash *Lagenaria siceraria* | Mitshelo miṱuku na maṱari sa zwiḽiwa; mikumbu (gourds) yo omaho sa zwiḽaho | Annual ya tshilimo. |
-| Lablab bean *Lablab purpureus* | Nawa, nitrogen fixer | Tshimela tshi gonyaho tsha tshilimo. |
-
-> **Tsireledzo:** Zwimela zwa mishonga zwi nga tshinyadza arali zwo shumiswa nga vhunzhi, musi muthu o ḓihwala na kha vhana vhaṱuku. Zwiṅwe zwi nga ṱangana zwa sa tshimbilelana na mishonga ya kiliniki. Ni songo zwi shumisa u dzhia vhuimo ha kalafho ya dokotela. Vhudzisani mushumi wa zwa mutakalo ni sa athu u zwi shumisa.
+Kha berry, limani Kei apple, cross-berry kana num-num hu si elderberry kana white mulberry, zwine zwa vha zwimela zwi phaḓaladzeaho fhano. Zwiṋoni zwi hwala mbeu ya muhuyu zwa i isa ḓakani, ngauralo ṱumulani zwimela zwiṱuku zwa muhuyu zwine na zwi wana kule na ngade. Kha mishonga, pepperbark *Warburgia salutaris* i tea ngade dzi si na tshando; rengani zwimela zwo aluwiswaho nasari, ngauri muri wo fhaliwa nga maanḓa ḓakani u itela makwati awo.
 
 ## Dzi-windbreak
 
-### Windbreak i ita mini
+Muya u omisa zwiliṅwa, u kwasha miri miṱuku nahone u hwala mavu a si na tshifukedzi. Kha Karoo, Kapa Vhukovhela na kha fhethu ha nṱha ha vhukati ha shango, ndi tshiṅwe tsha zwithu zwi konḓaho vhukuma zwine ngade ya ṱangana nazwo.
 
-Windbreak (tshithivhela-muya, kana **mutalo wa tsireledzo**, shelter belt) ndi mutalo kana lupfumo lwa miri, zwiṱaka na zwiṅwe zwimela zwine zwa tsireledza nnḓu, zwiliṅwa na zwifuwo kha muya. A hu na pulane nthihi ine ya tea fhethu hoṱhe. Pulanani windbreak yaṋu u ya nga mavu aṋu na zwine na zwi ṱoḓa.
+Windbreak ndi mutalo kana lutenga lwa miri, zwiṱaka kana mahatsi malapfu zwi ongolowisaho muya zwa tsireledza zwiliṅwa, zwifuwo na nnḓu. A hu na pulane nthihi; fhethu huṅwe na huṅwe hu ṱoḓa yaho. Windbreak yavhuḓi:
 
-Dzi-windbreak dzi thusa nga maanḓa fhethu hu re na muya munzhi nahone ho omaho, sa zwipiḓa zwa Kapa Vhukovhela, Karoo na vhukati ha shango ḽa nṱha ḽa Afrika ya Tshipembe, hune muya wa omisa zwiliṅwa na u fhufhisa mavu.
-
-Windbreak yavhuḓi i nga:
-
-- ongolisa muya une wa vhuhwa nga maanḓa nahone nga u vhanda-vhanda
-- fhungudza erosion nga muya
-- tsireledza miri miṱuku ya mitshelo, zwimela zwa food forest na miroho
-- ṋea fodder i engedzeaho: zwifuwo zwihulwane zwi nga fula magumoni, nahone khuhu dzi nga ṱoḓa zwiḽiwa fhasi hayo (thivhelani zwifuwo musi windbreak i tshi kha ḓi vha ṱhukhu)
-- ṋea khuni na zwiṱanda musi maṱavhi a fhasi a tshi ṱahelwa
-- bvisa zwiḽiwa zwa zwimela fhasi-fhasi mavuni nga midzi yayo, zwine zwa vhuyelela nṱha ha mavu nga maṱari a welaho fhasi
-- ṋea mitshelo na nḓuhu dza miri, fhedzi sa mbuyelo ya thungo fhedzi, ngauri muya u fhungudza vhuhulu na vhuḓi ha khaṋo
-- ṋea vhudzulo, nekhitha (nectar) na mupfumbu (pollen) kha ṋotshi, zwikukumi na zwiṋoni
+- i ongolowisa miya ya maanḓa, i vhuvhaho nga dzipfufho nahone i thivhela **erosion** (u khukhulwa ha mavu nga muya kana maḓi) ya muya
+- i tsireledza miri miṱuku ya mitshelo, food forest na miroho
+- i ṋea fodder kha magumo ayo (vhewani zwifuwo nnḓa i tshi kha ḓi vha ṱhukhu) na khuni u bva kha u ṱahela
+- i ḓisa zwiḽiwa zwa zwimela nṱha nga midzi i dzikaho, zwine zwa vhuyelela nṱha nga maṱari o waho
+- i ṋea ṋotshi, zwikukumi na zwiṋoni zwiḽiwa na vhudzulo
+- i ṋea mitshelo na nḓuhu dza miri zwiṱuku, naho muya u tshi fhungudza khaṋo, ngauralo dzhiani mitshelo sa bonasi
 
 ### Nḓila ya u pulana windbreak
 
-1. **Wanani muya u tshinyadzaho.** Sedzani uri muya une wa vhuhwa nga maanḓa u fhira woṱhe nahone u omisaho u bva ngafhi kha khalaṅwaha iṅwe na iṅwe. Shumisani khamphasi kana fhethu hune ḓuvha ḽa vha hone u ḓivha thungo. Muya u nga shanduka nga khalaṅwaha; sa tsumbo, kha Kapa Vhukovhela muya muhulwane wa tshipembe-vhubvaḓuvha u vhuhwa nga tshilimo, nahone muya wa devhula-vhukovhela u ḓisa mvula ya vhuria.
-2. **Ṱavhani nga u pfuka muya.** Ṱavhani windbreak yo lavhelesana na muya u tshinyadzaho, thungo ya ngade ine muya wa bva khayo.
-3. **I iteni ndapfu nahone i si na zwikhala.** Muya u a ṱavhanya musi u tshi pfuka nga zwikhala na u tshi mona magumoni a windbreak.
-4. **Tendelani muya muṅwe u pfuke.** Windbreak ine ya tendela muya muṅwe u pfuka (yo ṱatamana nga hafu ya luvhondo lwo khwaṱhaho) i shuma zwavhuḓi u fhira luvhondo lwo khwaṱhaho. Tshithivheli tsho valaho tshoṱhe tshi vhumba muya u monaho thungo yo tsireledzwaho.
-5. **Shumisani mitalo minzhi.** Ṱavhani miri milapfu murahu (thungo ine muya wa bva khayo), miri ya vhukati vhukati, na zwiṱaka zwo ṱatamanaho phanḓa.
-6. **Siani tshikhala tsha tshedza.** Fhethu ho tsireledzwaho hu phaḓalala thungo ine muya wa ya khayo lwa lunzhi lwa vhulapfu ha windbreak. Ngauralo a zwi ṱoḓei u i ṱavha yo nambatela ngade. Midzi ya miri i dovha ya lwela maḓi na zwiliṅwa. Kha Afrika ya Tshipembe ḓuvha ḽi kha devhula, ngauralo windbreak i re thungo ya **devhula** ya ngade i i fhedza nga murunzi. Thungo ya tshipembe i ita murunzi muṱuku.
+1. **Wanani muya u tshinyadzaho.** Sedzani hune miya ya maanḓa vhukuma, yo omesaho ya bva hone kha khalaṅwaha iṅwe na iṅwe. Kapa Vhukovhela, sa tsumbo, muya wa tshipembe-vhubvaḓuvha u vhuvha nga tshilimo nahone muya wa devhula-vhukovhela u ḓisa mvula ya vhuria.
+2. **Ṱavhani ni tshi u pfuka,** u ita khona ya 90° na muya u tshinyadzaho, thungo ya ngade ine wa bva khayo.
+3. **I itani ndapfu, i si na zwikhala.** Muya u ṱavhanya musi u tshi pfuka zwikhala na u mona magumo.
+4. **Litshani muya muṅwe u pfuke.** Windbreak ine ya vha yo ṱanganana nga hafu ya luvhondo i tsireledza fhethu hulapfu u fhira luvhondo lwo valaho, lune lwa ita uri muya u ṱhanyanye na u monamona murahu halwo.
+5. **Ṱavhani mitalo minzhi:** miri mirapfu murahu (thungo ine muya wa bva khayo), miri ya vhukati vhukati, zwiṱaka zwo ṱanganaho phanḓa.
+6. **Siani tshikhala tsha tshedza.** Tsireledzo i swika kule thungo ine muya wa ya khayo lunzhi u fhira vhulapfu ha windbreak, kanzhi lwa 10 u swika 20, ngauralo a i ṱoḓi u ima i tshi kwamana na ngade. Midzi ya miri i dovha ya lwela maḓi na zwiliṅwa. Samusi ḓuvha ḽi devhula, windbreak i re thungo ya **devhula** i ita murunzi kha ngade; thungo ya tshipembe i ita murunzi muṱuku.
 
-> **Ḓivhani:** Dzibulasi dza bindu kanzhi dzi ṱavha beefwood (*Casuarina* spp.), miri ya gamu (*Eucalyptus*) kana miri ya phaini sa dzi-windbreak. Beefwood (*Casuarina cunninghamiana* na *C. equisetifolia*) na mashaka manzhi a gamu na phaini ndi **invasive species ya Khethekanyo ya 2** (Category 2). Zwi nga aluwiswa fhedzi nga phemithi ya muvhuso, fhethu ho swayiwaho, nahone zwi songo vha tsini ha 30 m ha mulambo, damu kana mavu a re na maḓi. Vhalimi vhaṱuku vha tea u shumisa zwimela zwa sialala zwa dzi-windbreak.
+Beefwood (*Casuarina*), mikalipitasi na phaini ndi dzi-windbreak dzi ḓivhiwaho dza bulasi, fhedzi zwi a phaḓalala zwa dzhena ḓakani na milamboni. Miri na zwiṱaka zwa indigenous zwi ita mushumo nahone zwa dovha zwa ṋea zwipuka zwa ḓaka zwiḽiwa.
 
 ### Dzi-windbreak na mulilo
 
-Windbreak i re ntala nahone yo sheledzwaho zwavhuḓi i nga ongolisa mulilo. Fhedzi **a si** **firebreak** (mutalo wa mavu o kunakiswaho u thivhelaho mulilo), nahone i nga ḓisa mulilo mudini waṋu. Zwimela zwinzhi zwi nukhaho zwavhuḓi, sa wilde als, wild rosemary, rosemary, lavender na camphor bush, zwi na mapfura ane a swa nga maanḓa. Zwimela zwi vhulungaho maḓi maṱarini sa spekboom, zwikhopha (aloes) na sour fig a zwi swi nga u leluwa.
+Windbreak i re tshitala, i sheledzwaho, i nga ongolowisa mulilo, fhedzi a si **firebreak** (tshipiḓa tsho kunakiswaho tshine mulilo wa ḓaka wa sa kone u tshi pfuka), nahone i nga hwala mulilo wa u isa nnḓuni yaṋu. Zwimela zwi nukhaho zwi ngaho wilde als, wild rosemary, rosemary, lavender na camphor bush zwo ḓala mapfura a swaho nga maanḓa. Zwimela zwi vhulungaho maḓi maṱarini (succulents) zwi ngaho spekboom, zwikhopha na sour fig a zwi swi nga u leluwa.
 
-- Hune ha vha na khombo ya mulilo, dzulani ni na firebreak yo kunakiswaho vhukati ha ḓaka ḽa mupo na windbreak yaṋu.
-- Bvisani zwithu zwo omaho zwo faho fhasi ha windbreak.
-- Nga fhasi ha National Veld and Forest Fire Act (Mulayo wa Mulilo wa Ḓaka na Maḓaka), vhaṋe vha mavu kha fhethu hu re na khombo ya mulilo vha tea u ita na u ṱhogomela dzi-firebreak kha mikano yavho. Vhudzisani Fire Protection Association (Dzangano ḽa u Tsireledza kha Mulilo) ya fhethu haṋu.
+1. Hune mililo ya ḓaka ya pfuka hone, dzulani ni na firebreak yo kunakiswaho vhukati ha ḓaka na windbreak.
+2. Kunakisani zwithu zwo omaho, zwo faho fhasi ha windbreak phanḓa ha khalaṅwaha ya mulilo.
+3. Vhewani zwiṱaka zwi nukhaho kule na thungo ine mililo ya bva khayo.
 
-### Zwimela zwiṋa zwavhuḓi zwa sialala zwa dzi-windbreak
+### Zwimela zwa dzi-windbreak
 
-**Wild dagga** (*Leonotis leonurus*). Tshiṱaka tshi aluwaho nga u ṱavhanya, kanzhi tshi na vhulapfu ha 2 u ya 3 m, tshi re na maluvha a muvhala wa orenzhi ane a kokodza zwiṋoni zwiṱuku zwi mamaho maluvha (sunbirds). Tshi konḓelela gomelelo na muya nahone tshi vha tshiṱaka tsho ṱatamanaho tsho ḓalaho. Tshi nga ṱavhiwa tsini na ngade. Tshi shumiswa kha mushonga wa sialala. Arali tsho remiwa kana tsho fhiswa, tshi dovha tsha mela u bva fhasi.
+**Wild dagga** (*Leonotis leonurus*) ndi tshiṱaka tshi aluwaho nga u ṱavhanya, tsha 2 u swika 5 m, tshi re na maluvha a orenzhi a kokodzaho zwiṋoni zwa sunbird. Tshi konḓelela gomelelo na muya, tshi vhumba tshiṱaka tsho ṱanganaho, nahone tshi nga vha tsini na ngade. Tsho remiwa kana tsho swa, tshi mela hafhu u bva fhasi.
 
-**False olive** (*Buddleja saligna*). Muri muṱuku wo ṱatamanaho u re na maluvha maṱuku a muvhala wa kheremu a nukhaho zwavhuḓi u bva kha magumo a vhuria u swika tshilimo. Ṋotshi na zwiṅwe zwikukumi zwi dalela maluvha ayo. U mela kha mavu manzhi nahone u konḓelela muya, tshando na gomelelo. U nga swika 4 m kana u fhira arali u sa ṱahelwi, ngauralo u shumiseni kha mutalo wa murahu. U nga dovha wa ṱahelwa wa vha lufhenḓe lwa zwimela lwo lugaho lwo ṱatamanaho.
+**False olive** (*Buddleja saligna*) ndi muri muṱuku wo ṱanganaho, kanzhi wa 4 u swika 5 m kha Highveld, u re na maluvha a tshena a nukhaho sa ṋotshi u bva magumoni a vhuria u swika tshilimo ane ṋotshi dza a funesa. U konḓelela muya, tshando na gomelelo, nahone u nga ṱahelwa wa vha lufhenḓe lwa zwimela lwo ṱanganaho.
 
-**Karee** (*Searsia lancea*, hu ṱhoma ho vha *Rhus lancea*). Ndi muṅwe wa miri i konḓelelaho vhukuma kha Afrika ya Tshipembe. U mela kha vhudzulo vhunzhi, u konḓelela tshando na gomelelo, nahone u na midzi i sa tshinyadzi. U nga swika 7 u ya 9 m, ngauralo u ṱavheni kha mutalo wa murahu. U ṋea murunzi, fodder na khuni.
+**Karee** (*Searsia lancea*) ndi muṅwe wa miri yo khwaṱhesaho ya Tshipembe tsha Afrika. U konḓelela tshando na gomelelo, u aluwa u swika hu ḓo nga 8 m, nahone midzi yawo a i tshinyadzi. U vheeni kha mutalo wa murahu u itela murunzi, fodder na khuni.
 
-**King protea** (*Protea cynaroides*), kha fhethu ha fynbos fhedzi. Dziprotea dzi mela nga mupo kha Kapa i re na muya munzhi nahone dzi konḓelela muya zwavhuḓi. King protea ndi tshiṱaka tshiṱuku tsho ṱatamanaho, kanzhi tshi na vhulapfu ha 0.5 u ya 2 m, tshi re na maṱari mahulwane na maluvha mahulwane vhukuma. Tshi ṱavheni kha mutalo wa vhukati. Tshi ṱoḓa mavu a re na asidi ane maḓi a bva nga u leluwa, ḓuvha ḽoṱhe na muya u tshimbilaho zwavhuḓi, ngauralo a tshi nga aluwi zwavhuḓi kha mavu a vumba a dzibulasi nnzhi dza mvula ya tshilimo. Maluvha o remiwaho a nga ḓisa mbuelo i engedzeaho, fhedzi ni ṱoḓa phemithi ya vhulanguli ha u tsireledza mupo ha vunḓu ḽaṋu u ka maluvha ḓakani kana u rengisa zwimela zwo tsireledzwaho. Zwimela zwo aluwaho zwi dovha zwa mela musi mulilo wa ḓaka wo fhira.
+Zwimela zwoṱhe zwi re kha ṱafula ndi zwa indigenous, nga nnḓa ha rosemary na lavender, zwine zwa sa phaḓalale.
 
-### Zwimela zwa dzi-windbreak: zwiṱaka
-
-Zwimela zwoṱhe zwi re kha thebulu iyi ndi zwa sialala Afrika Tshipembe, nga nnḓa ha rosemary na lavender, zwine zwa si vhe invasive species.
-
-| Tshimela | Vhulapfu | Mushumo | Zwa u ḓivha |
+| Tshimela | Mutalo | Mushumo | Zwiṅwalwa |
 |---|---|---|---|
-| Wilde als *Artemisia afra* | 1 u ya 2 m | Mushonga, mushonga wa u pfafadza u tshuvhaho zwikukumi | Tshi nukha zwavhuḓi; tshi swa nga u leluwa. |
-| Bush-tick berry *Chrysanthemoides monilifera* | 2 u ya 3 m | Mitshelo miṱuku i ḽiwaho, mushonga, zwiḽiwa zwa zwiṋoni, biomass | Tshi konḓelela muya vhukuma, u katela na lupfumoni lwa lwanzhe. |
-| Confetti bush *Coleonema pulchellum* | Tsini na 1 m | Windbreak ipfufhi, mulch, maluvha a ṋotshi | Tshimela tsha fynbos. |
-| Wild rosemary *Eriocephalus africanus* | Tsini na 1 m | Windbreak ipfufhi, mulch, maluvha a ṋotshi | Tshi nukha zwavhuḓi. |
-| Wild dagga *Leonotis leonurus* | 2 u ya 3 m | Mushonga, mulch, maluvha a zwiṋoni | Tshi aluwa nga u ṱavhanya. |
-| Plumbago *Plumbago auriculata* | 2 u ya 3 m | Lufhenḓe lwa zwimela, maluvha a bataflai (butterflies), biomass | Tshi konḓelela tshando tshiṱuku. |
-| Cape honeysuckle *Tecoma capensis* (tshi vhidzwa na *Tecomaria capensis*) | 2 u ya 3 m | Lufhenḓe lwa zwimela, maluvha a zwiṋoni zwiṱuku zwi mamaho maluvha | Tshi aluwa nga u ṱavhanya; tshi konḓelela tshando tshiṱuku. |
-| Sand olive *Dodonaea viscosa* var. *angustifolia* | 2 u ya 5 m | Lufhenḓe lwa zwimela, u thivhela erosion, mushonga | Tshi konḓelela vhukuma nahone tshi konḓelela muya. |
-| Blue mountain sage *Salvia stenophylla* | Tsini na 1 m | Mushonga, maluvha a ṋotshi | Tshi nukha zwavhuḓi. |
-| Rosemary *Salvia rosmarinus* | Tsini na 1 m | Muhaṱa wa u bika, maluvha a ṋotshi, zwa u vhasa mulilo | A si tsha sialala; a si invasive species. |
-| Lavender *Lavandula* spp. | Fhasi ha 1 m | Mushonga, maluvha a ṋotshi, mulch | A si tsha sialala; a si invasive species. |
-| Vetiver *Chrysopogon zizanioides* | 1 u ya 1.5 m | U thivhela erosion, mulch, hatsi ha u rulela | Ṱavhani fhedzi lushaka lu sa bveledzi mbeu (sterile), lu aluwiswaho nga zwiṱumbu. |
-| Climbing flat-bean *Dalbergia obovata* | Tshimela tshi gonyaho kana tshiṱaka tshi nambatelaho | Legume; tshimela tsha u thoma, zwiṱanda, fodder | Maḓaka a lupfumo lwa lwanzhe na a vhubvaḓuvha; a tshi konḓeleli tshando. |
-
-> **Tsireledzo:** Rue (*Ruta graveolens*), ine kanzhi ya ṱavhiwa u tshuvha zwikukumi, a i ho kha mutevhe uyu. Maḓi a yone a nga vhanga maṱuluwa mahulwane kha lukanda lune lwa vho wana ḓuvha, nahone i na khombo i nga vhulaha arali yo ḽiwa, nga maanḓa musi muthu o ḓihwala. Arali ni tshi i aluwisa, ambarani magilavu (gloves) na zwiambaro zwi re na zwanḓa zwilapfu musi ni tshi i fara, ni i vhee kule na vhana.
-
-### Zwimela zwa dzi-windbreak: miri
-
-Miri yoṱhe i re kha thebulu iyi ndi ya sialala kha Afrika ya Tshipembe.
-
-| Tshimela | Vhulapfu | Mushumo | Zwa u ḓivha |
-|---|---|---|---|
-| White pear *Apodytes dimidiata* | 5 u ya 20 m | Mapulanga, zwiḽiwa zwa zwiṋoni | Muri wa ḓaka; u bvelela zwavhuḓi fhethu ho nyorovhaho. |
-| Torchwood *Balanites maughamii* | 10 u ya 20 m | Mapfura a mbeu, fodder, mushonga | Lowveld i fhisaho i si na tshando fhedzi. |
-| Pride-of-De Kaap *Bauhinia galpinii* | 3 u ya 5 m | Lufhenḓe lwa zwimela, maluvha a bataflai | Tshiṱaka tshi nambatelaho; tshi konḓelela gomelelo na tshando tshiṱuku. |
-| Coast silver oak *Brachylaena discolor* | 4 u ya 10 m | Mapulanga, lufhenḓe lwa zwimela, maluvha a ṋotshi | Windbreak yavhuḓi vhukuma lupfumoni lwa lwanzhe; u konḓelela muya u re na muṱuwa. |
-| False olive *Buddleja saligna* | 3 u ya 7 m | Chop and drop, fodder, maluvha a zwikukumi | U konḓelela tshando na gomelelo. |
-| Sagewood *Buddleja salviifolia* | 3 u ya 8 m | U khwaṱhisa mavu, maluvha a zwikukumi na zwiṋoni | U konḓelela tshando; u funa fhethu ho nyorovhaho. |
-| Cape chestnut *Calodendrum capense* | 7 u ya 20 m | Mapfura a mbeu, murunzi, maluvha a zwikukumi | U aluwa zwiṱuku-zwiṱuku mathomoni. |
-| Monkey plum (bluebush) *Diospyros lycioides* | 2 u ya 7 m | Mitshelo, mushonga, fodder, biomass | U a konḓelela. |
-| Puzzle bush *Ehretia rigida* | 2 u ya 6 m | Mitshelo ya zwiṋoni, fodder, mushonga | U konḓelela gomelelo na tshando. |
-| Blue guarri *Euclea crispa* | 2 u ya 8 m | Mitshelo, mushonga, fodder | U a konḓelela. |
-| Cross-berry *Grewia occidentalis* | 2 u ya 5 m | Mitshelo i ḽiwaho, fodder, mushonga | U a konḓelela. |
-| Wild peach *Kiggelaria africana* | 6 u ya 13 m | Mapulanga, zwiḽiwa zwa zwiṋoni na bataflai, biomass | Zwivhungu zwa bataflai zwi nga ḽa maṱari oṱhe; muri u a vhuelela. |
-| Ouhout *Leucosidea sericea* | 4 u ya 7 m | Khuni, zwiṱanda zwa lufhenḓe, fodder | Muri wa fhethu ha nṱha u konḓelelaho tshando. U phaḓalala kha mavu a mahatsi a thavhani o fuliswaho u fhira tshikalo, ngauralo u ṱavheni fhedzi sa windbreak yo pulanwaho, hu si kha mavu a mahatsi o takalaho. |
-| Muṱwari (wild olive) *Olea europaea* subsp. *cuspidata* | 5 u ya 10 m | Khuni, fodder, tie, u shuma zwavhuḓi kha coppicing | Ndi muṅwe wa miri yavhuḓi vhukuma i konḓelelaho ya dzi-windbreak. |
-| Mountain hard-pear *Olinia emarginata* | 5 u ya 15 m | Mapulanga, zwiḽiwa zwa zwiṋoni | Fhethu ha nṱha na ha thavhani. |
-| African wattle *Peltophorum africanum* | 5 u ya 10 m | Khuni, fodder, murunzi | Ndi legume, fhedzi a u ḓivhiwi sa nitrogen fixer. A u na vhushaka na mawattle ane a vha invasive species. U konḓelela tshando tshiṱuku. |
-| Outeniqua yellowwood *Afrocarpus falcatus* (hu ṱhoma ho vha *Podocarpus falcatus*) | 20 m na u fhira | Muri wa murunzi wa tshifhinga tshilapfu, mushonga | U aluwa zwiṱuku-zwiṱuku wa vha muri muhulwane vhukuma; ndi wa mavu mahulwane fhedzi. |
-| Cape willow *Salix mucronata* subsp. *capensis* | 6 u ya 12 m | U khwaṱhisa khunzi dza mikulo, fodder | U ṱavheni fhedzi tsini ha maḓi. Ni songo u khakha na weeping willow ine ya vha invasive species na maṅwe mawillow a maṅwe mashango. |
-| Thorn pear *Scolopia zeyheri* | 5 u ya 10 m | Zwiḽiwa zwa zwiṋoni, fodder | U na mipfa; wavhuḓi kha lufhenḓe lwa zwimela. |
-| Karee *Searsia lancea* | 7 u ya 9 m | Murunzi, fodder, maluvha a ṋotshi, u khwaṱhisa mavu | U konḓelela tshando na gomelelo vhukuma. |
-| Blinkblaar-taaibos *Searsia lucida* | 1 u ya 5 m | Khuni, mitshelo i ḽiwaho, zwiḽiwa zwa zwiṋoni, u thivhela erosion | Tshimela tsha u thoma; u konḓelela muya. |
-| Common hook thorn *Senegalia caffra* | 3 u ya 10 m | Nitrogen fixer, lufhenḓe lwa zwimela, fodder, khuni | Fhethu ha mvula ya tshilimo. |
-| Camphor bush *Tarchonanthus camphoratus* | 3 u ya 9 m | Mushonga; mavhoya a mbeu a u ḓadza mitsamelo | U konḓelela gomelelo na muya vhukuma; u nukha zwavhuḓi, ngauralo u swa nga u leluwa. |
-| Mususu (silver cluster-leaf) *Terminalia sericea* | 5 u ya 12 m | Khuni, fodder, mushonga | Mavu a muṱavha mahulu kha bushveld. |
-| Muunga (sweet thorn) *Vachellia karroo* | 5 u ya 12 m | Nitrogen fixer, gamu, fodder, khuni | U aluwa nga u ṱavhanya. Ni songo u ṱavha kha mavu a mahatsi o takalaho. |
-| Muthanzwa (sour plum) *Ximenia caffra* | 2 u ya 6 m | Mitshelo i vhavhaho i re na vithamini C nnzhi, lufhenḓe lwa zwimela, fodder | U a konḓelela. |
-
-> **Ḓivhani:** Miri minzhi ya sialala yo tsireledzwa nga mulayo. Ni ṱoḓa laisentsi u rema, u tshinyadza kana u bvisa muri wo tsireledzwaho ḓakani. Rengani miri nasari u fhira u i gwa ḓakani.
+| Karee *Searsia lancea* | Murahu | Murunzi, fodder, khuni | U konḓelela tshando na gomelelo vhukuma. |
+| Wild olive *Olea europaea* subsp. *cuspidata* | Murahu | Khuni, fodder, coppicing | Muṅwe wa miri yavhuḓi vhukuma yo khwaṱhaho ya windbreak. |
+| False olive *Buddleja saligna* | Murahu | Chop and drop, maluvha a ṋotshi | Wo khwaṱha; u ita lufhenḓe lwa zwimela lwavhuḓi. |
+| Common hook thorn *Senegalia caffra* | Murahu | Nitrogen fixer, fodder, khuni | Fhethu hune mvula ya na nga tshilimo. |
+| Coast silver oak *Brachylaena discolor* | Murahu | Lufhenḓe lwa zwimela, maluvha a ṋotshi | U konḓelela muya wa muṋo lwanzheni. |
+| Camphor bush *Tarchonanthus camphoratus* | Murahu | Mushonga | U konḓelela gomelelo na muya vhukuma; u swa nga u leluwa. |
+| Ouhout *Leucosidea sericea* | Murahu | Khuni, matanda a lufhenḓe, fodder | Muri wa fhethu ha nṱha u konḓelelaho tshando. U a anda kha mavu a mahatsi a thavhani o fuliswaho zwi fhiraho, ngauralo u ṱavheni sa windbreak yo pulanwaho fhedzi. |
+| Blinkblaar-taaibos *Searsia lucida* | Vhukati | Khuni, mitshelo i ḽiwaho, zwiḽiwa zwa zwiṋoni | Tshimela tsha u thoma; tshi konḓelela muya. |
+| Cross-berry *Grewia occidentalis* | Vhukati | Mitshelo i ḽiwaho, fodder | Tsho khwaṱha. |
+| Blue guarri *Euclea crispa* | Vhukati | Mitshelo, fodder | Tsho khwaṱha. |
+| Puzzle bush *Ehretia rigida* | Vhukati | Mitshelo ya zwiṋoni, fodder | Tshi konḓelela gomelelo na tshando. |
+| Sand olive *Dodonaea viscosa* var. *angustifolia* | Vhukati | Lufhenḓe lwa zwimela, u thivhela erosion | Tsho khwaṱhesa nahone tshi konḓelela muya. |
+| Bush-tick berry *Chrysanthemoides monilifera* | Vhukati | Berry dzi ḽiwaho, zwiḽiwa zwa zwiṋoni | Tshi konḓelela muya vhukuma, na lwanzheni. |
+| Wild dagga *Leonotis leonurus* | Vhukati | Mushonga, maluvha a zwiṋoni zwa sunbird | Tshi aluwa nga u ṱavhanya. |
+| Plumbago *Plumbago auriculata* | Vhukati | Lufhenḓe lwa zwimela, maluvha a dzibataflai | Tshi konḓelela tshando tshi si tsha maanḓa. |
+| Cape honeysuckle *Tecoma capensis* | Vhukati | Lufhenḓe lwa zwimela, maluvha a zwiṋoni zwa sunbird | Tshi aluwa nga u ṱavhanya; tshi konḓelela tshando tshi si tsha maanḓa. |
+| King protea *Protea cynaroides* | Vhukati | Maluvha | Fhethu ha fynbos fhedzi: tshi ṱoḓa mavu a re na asidi, hune maḓi a bva zwavhuḓi. Tshi ṱumbula hafhu nga murahu ha mulilo. |
+| Wilde als *Artemisia afra* | Phanḓa | Mushonga, mushonga wa u pfafadza u pandelaho zwikukumi | Tshi a nukha; tshi swa nga u leluwa. |
+| Wild rosemary *Eriocephalus africanus* | Phanḓa | Mulch, maluvha a ṋotshi | Tshi a nukha. |
+| Confetti bush *Coleonema pulchellum* | Phanḓa | Mulch, maluvha a ṋotshi | Tshimela tsha fynbos. |
+| Rosemary *Salvia rosmarinus*, lavender *Lavandula* spp. | Phanḓa | Mihaṱa, maluvha a ṋotshi | Zwi a nukha. |
+| Mahatsi a vetiver *Chrysopogon zizanioides* | Phanḓa | U thivhela erosion, mulch, mahatsi a u fulela | Ṱavhani lushaka lu sa ṋei mbeu (sterile) fhedzi, nga zwiṱumba zwo kovhiwaho. |
 
 ## U ṱavha muri
 
-Ṱavhani mathomoni a tshifhinga tsha mvula. Kha fhethu ha mvula ya tshilimo, kanzhi hoyu ndi Tshimedzi (October) u ya Nyendavhusiku (December), nga murahu ha mvula dza u thoma dzavhuḓi. Kha Kapa Vhukovhela, ṱavhani magumoni a ṱhanḓalaṅwaha na nga vhuria (tsini na Lambamai (April) u ya Fulwana (July)). Ṱavhani miri i sa konḓeleli tshando nga murahu ha tshando tsha u fhedza. Miri ya mitshelo i laṱaho maṱari i nga dovha ya ṱavhiwa vhukati ha vhuria musi i si na maṱari.
+Tshifhinga tshi konḓesaho tsha muri muṱuku ndi khalaṅwaha yawo ya u thoma yo omaho. Buranngo ḽiṱukusa, kana maḓi a nowisaho nṱha fhedzi, zwi a lingana u u vhulaha. U ṱavheni zwavhuḓi luthihi, muri u ḓo ḓiṱhogomela lwa mahumi a miṅwaha.
 
-1. **Nangani muri wavhuḓi.** Rengani nasari i ḓivhiwaho zwavhuḓi. Nangani muri wo khwaṱhaho u re na thanda i re khulu na maṱari o takalaho. Ni songo renga miri ine midzi yayo ya mona ngomu ha bege. Rengani miri yo ṋewaho ṱhanziela ya uri a i na malwadze hune na nga kona, nga maanḓa miri ya lushaka lwa namuni.
-2. **U ṱavheni nga u ṱavhanya.** Ṱavhani nga u ṱavhanya musi no no renga, uri midzi i thome u aluwa.
-3. **Bvisani zwi lwelaho maḓi na zwiḽiwa.** Bvisani zwimela zwi sa ṱoḓei na mahatsi, nga maanḓa hatsi ha kikuyu, kha tshitendeledzi tshi re na vhuphara ha 1 m, uri zwi songo lwela maḓi na zwiḽiwa. (Kikuyu yone ine ndi invasive species yo ṅwaliwaho kha fhethu ho tsireledzwaho na kha mavu a re na maḓi.)
-4. **Gwani mukwita.** U iteni wa vha na vhuphara **ha luvhili u ya luraru** ha vhuhulu ha mavu a re na midzi (root ball), nahone u vhe mulapfu u fana na mavu a re na midzi. Kha mavu o oma kana o tikanaho, gwani mukwita wa vhuphara na vhulapfu ha 60 cm ni vunḓe mavu a re fhasi na a re thungo.
-5. **Fhambanyani mavu.** Vhekani **topsoil** (mavu a nṱha a re mutswu) thungo nthihi na mavu a fhasi a si mutswu thungo iṅwe.
-6. **Vhekani tshiṱanda (fhethu hu re na muya).** Rwani tshiṱanda tsha u swika 50 cm mavuni, thungo ine muya wa bva khayo, **ni sa athu** u ṱavha, uri ni songo tshinyadza midzi.
-7. **Linganyani u bva ha maḓi.** Ḓadzani mukwita nga maḓi ni a litshe a tshi bva. Arali maḓi a kha ḓi ima nga ḓuvha ḽi tevhelaho, maḓi a bva zwi si zwavhuḓi: ṱavhani muri nṱha ha mulundu wa mavu wo gonyiswaho.
-8. **Ṱanganyani mavu a u ḓadza.** Ṱanganyani topsoil na compost i si nnzhi, manyaga o vholaho zwavhuḓi a si manzhi na manyaga a zwivhungu (worm castings), tsini na tshipiḓa tshithihi tsha compost kha zwipiḓa zwiraru zwa mavu. Compost nnzhi mukwitani i nga ita uri midzi i dzule ngomu ha mukwita.
-9. **Bvisani muri kha bege yawo.** Farani mavu a re na midzi nga vhuleli. Vhofhololani midzi i monaho nnḓa.
-10. **Linganyani vhulapfu.** Imisani muri mukwitani uri nṱha ha mavu a re na midzi hu lingane na mavu a u mona. Vhekani fhethu ho ṱumanywaho (graft union, tshiṱumbu fhethu hune muri wa mitshelo wa ṱumanywa hone) nṱha ha mavu zwavhuḓi.
-11. **Ḓadzani mukwita.** Ḓadzani nga mavu o ṱanganywaho ni a tikise zwiṱuku u mona na midzi nga zwanḓa kana milenzhe. Ni songo a tikisa nga maanḓa.
-12. **Vhofhani muri.** Vhofhani thanda ya muri kha tshiṱanda nga u leluwa nga tshivhofho tshi sa konḓi nga tshivhumbeo tsha 8, uri u kone u tshimbila zwiṱuku. Bvisani tshivhofho nga murahu ha ṅwaha muthihi.
-13. **Itani tshidziva.** Itani tshidziva tshi sa ngo dzika u mona na muri, tshi re na vhuphara ha 1 m, tshi re na ṱhanga ya mavu i si ndapfu u mona natsho u vhulunga maḓi. Tshi engedzeni vhuphara musi muri u tshi aluwa.
-14. **Fukedzani mavu.** Fukedzani tshidziva nga mulch i re khulu (5 u ya 10 cm), fhedzi i vhe kule nga 10 cm na thanda, u thivhela u vhola.
-15. **Sheledzani zwavhuḓi.** Sheledzani nga maanḓa musi no tou fhedza u ṱavha, bakede ḽo ḓalaho (20 L) kana u fhira.
-16. **Bvelani phanḓa ni tshi sheledza nga maanḓa.** Arali hu si na mvula, sheledzani nga murahu ha maḓuvha mavhili u ya mararu lwa vhege mbili dza u thoma. Nga murahu ni ṋee maḓi manzhi luthihi nga vhege lwa tshifhinga tsha gomelelo tsha u thoma, kanzhi u fhira kha mavu a muṱavha kana musi hu tshi fhisa vhukuma. Dzhenisani munwe mavuni tsini na muri: sheledzani musi a tshi pfala o oma 5 u ya 10 cm fhasi. U sheledza nga maanḓa lwa tshifhinga tshi tshi ya zwi aluwisa midzi mile; maḓi maṱuku ḓuvha ḽiṅwe na ḽiṅwe a aluwisa midzi i si ndapfu nahone a nga vhodza midzi kha mavu a vumba.
+Ṱavhani mathomoni a mvula: Tshimedzi (October) u swika Nyendavhusiku (December) nga murahu ha mvula yavhuḓi ya u thoma kha fhethu hune mvula ya na nga tshilimo, na hu ḓo nga Lambamai (April) u swika Fulwana (July) Kapa Vhukovhela. Ṱavhani miri i sa konḓeleli tshando nga murahu ha tshando tsha u fhedza. Miri ya mitshelo i laṱaho maṱari i nga ṱavhiwa vhukati ha vhuria, musi i si na maṱari.
+
+1. **Nangani muri wavhuḓi.** Rengani muri wo khwaṱhaho u re na thanda yo hulaho na maṱari o takalaho. Ni songo renga miri ine midzi yayo ya monamona ngomu ha mukhwama. Kha miri ya lushaka lwa namuni, rengani miri yo khwaṱhisedzwaho uri a i na malwadze.
+2. **U ṱavheni nga u ṱavhanya** nga murahu ha u u renga.
+3. **Kunakisani tshitendeledzi** tsha hu ḓo nga 1 m nga vhuphara u bvisa zwimela zwi sa ṱoḓei na mahatsi, nga maanḓa kikuyu, uri zwi songo tswa maḓi.
+4. **Gwani ho pfalandavhu, hu si ho dzikaho.** Itani buranngo ḽi vhe pfalandavhu lu ḓo nga luvhili kana luraru ha tshiṱumba tsha midzi, na vhudzivha vhu ḓo nga vhu fanaho. Kha mavu o khwaṱhaho, gwani hu ḓo nga 60 cm nga vhuphara na vhudzivha ni vhofholole fhasi na thungo. Vhewani **topsoil** (tshiṱaṱo tsha nṱha, tsho swifhalesaho tsha mavu) thungo nthihi na mavu a fhasi a si na muvhala thungo iṅwe.
+5. **Lingani u bva ha maḓi.** Ḓadzani buranngo nga maḓi. Arali maḓi a tshi kha ḓi vha hone nga ḓuvha ḽi tevhelaho, ṱavhani muri kha tshiluvhi tsho gonyiswaho nṱhani ha zwenezwo.
+6. **U vhofheleni kha tshiṱanda fhethu hu re na muya.** Rwelani tshiṱanda mavuni hu ḓo nga 50 cm thungo ine muya wa bva khayo phanḓa ha u ṱavha, uri ni songo huvhadza midzi.
+7. **Ṱanganyani mavu a u vhulunga:** hu ḓo nga tshipiḓa tshithihi tsha compost kha zwipiḓa zwiraru zwa topsoil, na manyaga maṱuku o vholaho zwavhuḓi. Compost nnzhi i ita uri midzi i dzule ngomu ha buranngo, sa khali.
+8. **Vhewani vhulapfu.** Vhofhololani midzi yoṱhe i monamonaho. Imisani muri uri nṱha ha tshiṱumba tsha midzi hu lingane na mavu a u mona, nahone fhethu ho ṱumanywaho (tshiluvhi hune muri wa mitshelo wa ṱumanywa hone) hu dzule nṱha vhukuma ha mavu.
+9. **Ḓadzani ni khwaṱhise** zwiṱuku nga zwanḓa kana milenzhe. Ni songo tambalela nga maanḓa.
+10. **U vhofheni** zwi si nga maanḓa kha tshiṱanda nga tshivhofho tshi si tshi khwaṱhaho tsho vhumbwaho sa 8, uri thanda i kone u tshimbila zwiṱuku. Bvisani tshivhofho nga murahu ha hu ḓo nga ṅwaha.
+11. **Itani beseni** ḽa hu ḓo nga 1 m nga vhuphara ḽi re na ṱhanga ṱhukhu ya mavu u fara maḓi. Ḽi engedzeni musi muri u tshi aluwa.
+12. **Fukedzani nga mulch** beseni nga vhuhulu ha 5 u swika 10 cm, ni tshi vhea mulch kule ha hu ḓo nga 10 cm na thanda uri i songo vhola.
+13. **Sheledzani nga vhudzivha:** bakede ḽo ḓalaho ḽa 20 L kana u fhira nga u ṱavhanya nga murahu ha u ṱavha. Arali mvula i sa ḓi, sheledzani nga murahu ha maḓuvha mavhili kana mararu lwa vhege mbili, nga murahu ni ṋee u nowisa nga vhudzivha hu ḓo nga luthihi nga vhege kha khalaṅwaha yoṱhe ya u thoma yo omaho, lunzhi kha muṱavha kana kha mufhiso muhulwane. Dzhenisani ṋala mavuni: sheledzani musi o oma 5 u swika 10 cm fhasi.
+
+U nowisa nga vhudzivha lwa zwiṅwe zwifhinga zwi ita uri midzi i ye fhasi i tshi tevhela maḓi. Maḓi maṱuku ḓuvha ḽiṅwe na ḽiṅwe a ita uri midzi i dzule tsini na nṱha, hune ya oma kha mufhiso wa u thoma, nahone kha vumba a nga i vhodza.
+
+## Lingani
+
+Swayani tshipiḓa tshaṋu tsha u thoma tsha food forest nga zwiṱanda ino vhege.
+
+1. Nangani tshipiḓa tsha mavu o tshinyadzwaho tsini na nnḓu, tshi si ṱhukhu ha 10 m nga 10 m, tshi re na ḓuvha ḽi bvaho devhula.
+2. Imani khatsho nga masiari a re na muya ni ṅwale hune muya u tshinyadzaho wa bva hone.
+3. Nangani miri ya mitshelo mivhili kana miraru i teaho tshando tshaṋu, ni ṅwale vhuphara ha canopy ya muṅwe na muṅwe musi wo aluwa.
+4. Swayani fhethu hayo nga zwiṱanda, zwo fhambana nga 6 u swika 7 m kha miri i re na canopy ya 4 m. Vhewani tshiṱanda tsha nitrogen fixer vhukati ha zwivhili zwiṅwe na zwiṅwe.
+5. Gwani buranngo ḽithihi ḽa u ṱavha, ḽi re pfalandavhu lu ḓo nga luvhili kana luraru ha mukhwama wa nasari, ni ite ndingo ya u bva ha maḓi.
+6. Olani tshipiḓa kha bugwana: zwiṱanda, thungo ya muya, devhula, na zwe ndingo ya u bva ha maḓi ya sumbedza.
 
 ## Zwithu zwa ndeme
 
-- Food forest i edzisa ḓaka ḽa mupo, i na miṱaṱo ya miri, zwiṱaka, mihaṱa, dzi-groundcover, midzi na zwimela zwi gonyaho.
-- Ṱavhani dzi-food forest kha mavu o no dzhenelelwaho. Mavu a mahatsi na fynbos zwa Afrika Tshipembe ndi dzi-ecosystem, a si ḓaka ḽi sa athu fhela; ni songo ṱavha miri kha ḓaka ḽa mupo ḽo takalaho.
-- Tshimbidzanyani miri ya mitshelo na tshando na mahalwa a vhuria a fhethu haṋu: mitshelo i laṱaho maṱari kha fhethu ha mahalwa, mitshelo ya subtropiki kha fhethu hu si na tshando fhedzi.
-- Thomani nga dzi-nitrogen fixer dza u thoma sa muunga (sweet thorn), hook thorn, pigeon pea na nawa (cowpea), nga murahu ni ite chop and drop musi miri ya mitshelo i tshi aluwa.
-- Ni songo vhuya na ṱavha invasive species yo ṅwaliwaho sa mawattle, leucaena, sesbania, elderberry, beefwood kana white mulberry. Nangani zwimela zwa sialala kha mishumo ya u thusa, ya dzi-windbreak na ya zwipuka zwa ḓaka.
-- Ṱavhani dzi-windbreak nga u pfuka muya u tshinyadzaho, nga mitalo minzhi, dzi si na zwikhala nahone dzo vulea zwiṱuku. Dzi vheeni kule na thungo ya devhula ya ngade, hune dza ita murunzi.
-- Windbreak a si firebreak. Zwiṱaka zwi nukhaho zwavhuḓi zwi swa nga maanḓa.
-- Ṱavhani muri kha mukwita wo pharamaho, nga vhulapfu vhu fanaho na vhune wa vha wo mela ngaho begeni, ni u fukedze nga mulch, ni u sheledze nga maanḓa luthihi nga vhege u fhira u ṋea maḓi maṱuku ḓuvha ḽiṅwe na ḽiṅwe.
+- Ṱavhani dzi-food forest kha mavu o tshinyadzwaho tsini na hayani. Mavu a mahatsi na fynbos zwo takalaho ndi sisiteme dzo fhelelaho, a si ḓaka ḽi sa athu u fhela.
+- Nangani miri ya mitshelo i teaho tshando na mahalwa a vhuria fhethu haṋu, ni phaḓaladze khaṋo ṅwaha woṱhe.
+- Thomani nga zwimela zwa u thoma zwi engedzaho naiṱirodzheni, ni zwi ite chop and drop musi miri ya mitshelo i tshi aluwa, ni nange zwimela zwa thikhedzo zwa indigenous u fhira zwimela zwi phaḓaladzeaho.
+- Ṱavhani dzi-windbreak ni tshi pfuka muya u tshinyadzaho, nga mitalo minzhi, i si na zwikhala, yo vulea zwiṱuku, ni dzi vhee kule na thungo ya devhula ya ngade.
+- Gwani ho pfalandavhu, ṱavhani nga vhudzivha he muri wa aluwa khaho, fukedzani nga mulch, ni sheledze nga vhudzivha luthihi nga vhege nṱhani ha maḓi maṱuku ḓuvha ḽiṅwe na ḽiṅwe.
+
+Ṱavhani zwimela zwa u thoma ino khalaṅwaha na miri ya mitshelo murahu hazwo. Nga miṅwaha miṱanu ni nga tshimbila murunzini hune ha vha hu si na tshithu, zwiṋoni zwi tshi ḓisa mbeu ya ḓaka ḽi tevhelaho.
