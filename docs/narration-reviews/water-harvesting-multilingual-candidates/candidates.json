@@ -1,0 +1,103 @@
+{
+  "title": "Water Harvesting ordinary-language translation candidates",
+  "status": "unreviewed-candidate-only",
+  "source": {
+    "path": "docs/narration/water-harvesting.en.md",
+    "scope": "Slides 1–20 only, per task request",
+    "source_slide_count": 24,
+    "note": "The repository source contains 24 slides. Slides 21–24 are outside this packet; this packet does not claim to cover a 20-slide source file."
+  },
+  "review_policy": {
+    "translation_status": "No text here is approved for publication or learner use.",
+    "back_translation": "Independent manual back-translation from each candidate, not checked by a first-language reviewer.",
+    "hold_rule": "Keep earthworks, water-safety, greywater, potable-water, legal, measurement, quantity and sizing instructions in exact English wherever meaning or terminology is uncertain."
+  },
+  "candidates": [
+    {
+      "id": "wh-10-rainfall-seasons",
+      "slide": 10,
+      "sourceEnglish": "Rainfall seasons differ across South Africa.",
+      "translations": {
+        "st": {
+          "candidate": "Dihla tsa dipula di fapana ho pholletsa le Afrika Borwa.",
+          "backTranslation": "The rainy seasons differ throughout South Africa.",
+          "ambiguity": "Check whether 'dihla tsa dipula' is the most familiar local phrasing for rainy seasons."
+        },
+        "ve": {
+          "candidate": "Zwifhinga zwa mvula zwi a fhambana kha Afrika Tshipembe.",
+          "backTranslation": "Rain periods/seasons differ in South Africa.",
+          "ambiguity": "Check local preference for 'zwifhinga zwa mvula' and the standard written country name."
+        },
+        "ts": {
+          "candidate": "Tinguva ta mpfula ta hambana eAfrika Dzonga.",
+          "backTranslation": "Rainy seasons differ in South Africa.",
+          "ambiguity": "Check spacing and local style for the country name."
+        }
+      },
+      "risk": "Low factual risk; geography wording still needs first-language review."
+    },
+    {
+      "id": "wh-14-roof-collects-rain",
+      "slide": 14,
+      "sourceEnglish": "Your roof can collect rainwater.",
+      "translations": {
+        "st": {
+          "candidate": "Marulelo a hao a ka bokella metsi a pula.",
+          "backTranslation": "Your roof can collect rainwater.",
+          "ambiguity": "Check the familiar term for roof in the intended Sesotho variety."
+        },
+        "ve": {
+          "candidate": "Ṱhanga yaṋu i nga kuvhanganya maḓi a mvula.",
+          "backTranslation": "Your roof can collect rainwater.",
+          "ambiguity": "The existing Tshivenda draft uses 'mutombo' for roof in a lesson title; a native reviewer should choose the local term and confirm the respectful/plural 'yaṋu'."
+        },
+        "ts": {
+          "candidate": "Lwangu ra wena ri nga hlengeleta mati ya mpfula.",
+          "backTranslation": "Your roof can collect rainwater.",
+          "ambiguity": "Check noun-class agreement and whether 'hlengeleta' is the clearest everyday verb here."
+        }
+      },
+      "risk": "Low factual risk; roof terminology and agreement need first-language review."
+    },
+    {
+      "id": "wh-17-plan-for-low-stored-water",
+      "slide": 17,
+      "sourceEnglish": "Plan what you will do when stored water runs low.",
+      "translations": {
+        "st": {
+          "candidate": "Rala seo o tla se etsa ha metsi a bolokilweng a qala ho fela.",
+          "backTranslation": "Plan what you will do when saved water starts to run out.",
+          "ambiguity": "Check whether 'metsi a bolokilweng' is a natural way to say stored water and whether 'a qala ho fela' clearly means the supply is getting low."
+        },
+        "ve": {
+          "candidate": "Pulani uri ni ḓo ita mini musi maḓi o vhulungwaho a tshi fhungudzea.",
+          "backTranslation": "Plan what you will do when stored water becomes less.",
+          "ambiguity": "Check 'pulani' as an everyday imperative and confirm that 'a tshi fhungudzea' conveys a low remaining supply, rather than any decrease."
+        },
+        "ts": {
+          "candidate": "Kunguhata leswi u nga ta swi endla loko mati lama hlayisiweke ma hunguteka.",
+          "backTranslation": "Plan what you will do when the stored water decreases.",
+          "ambiguity": "Check whether 'ma hunguteka' naturally conveys that only a little water remains."
+        }
+      },
+      "risk": "Moderate meaning risk: 'runs low' is relative, not 'is completely finished'. Confirm this distinction before use."
+    }
+  ],
+  "holds": [
+    {
+      "slides": "2–9, 11–13",
+      "topic": "Swales, contour, berms, dams, spillways, overflow routes, erosion, soil and slope assessment, watercourse authorisation and earthworks.",
+      "handling": "Keep the exact English source wording pending qualified language and technical review."
+    },
+    {
+      "slides": "14–18",
+      "topic": "Roof-area measurements, rainfall records, collection losses, first-flush sizing, tank sizing, potable-water separation, water quality, testing and treatment.",
+      "handling": "Keep the exact English source wording pending qualified language and water-safety review. Slide 14's single ordinary sentence above is only a candidate; the remaining instructions are held."
+    },
+    {
+      "slides": "19–20",
+      "topic": "Greywater sources, local rules, discharge, mulch, contact with people/animals, food planting and wastewater safety.",
+      "handling": "Keep the exact English source wording pending qualified language and local sanitation review."
+    }
+  ]
+}
