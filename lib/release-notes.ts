@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 September 2026', sha: '1e495413', changes: [
+  { when: '29 September 2026', sha: '40fae706', changes: [
     'The bed calendar has Fruit, nuts & berries and Animal products rows under your beds.',
     'Each month shows the fruit, nut or egg itself. Hover or tap it for a written list.',
     'Crops you pick by name, like pumpkin, now get a bed, or the plan says why they cannot.',
@@ -54,6 +54,22 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Name pumpkin, groundnuts, amadumbe or bambara. Pumpkin gets a bed to itself even with vines kept out of beds. A crop with no sowing month on your farm\'s calendar, like amadumbe in a hard-frost area, gets a note saying so.' },
     { title: 'Add a berry to your design', where: 'Design → Pick species', href: '/design',
       detail: 'On a Fynbos or Grassland site, tap Pick species: strawberry, blueberry, raspberry and Cape gooseberry sit with the fruit and shrubs, most with sourced South African picking months. They are marked not yet reviewed.' },
+  ] },
+  { when: '29 September 2026', sha: 'd833f08d', changes: [
+    'Water Harvesting has silent Sesotho, Tshivenda and Xitsonga draft slides.',
+    'Only one rainfall sentence is drafted; water and safety instructions stay English.',
+    'English narration is optional; regional wording still needs local review.',
+  ], tour: [
+    { title: 'Read the Water Harvesting slides', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Every slide keeps the exact English source; one rainfall sentence is an unreviewed draft. English narration is optional.' },
+  ] },
+  { when: '29 September 2026', sha: '1e495413', changes: [
+    'Small Livestock has silent Sesotho, Tshivenda and Xitsonga slides.',
+    'Draft words sit beside English; animal-care advice needing review stays English.',
+    'Download slides to read offline. English narration is optional.',
+  ], tour: [
+    { title: 'Read the Small Livestock slides', where: 'Study → Small Livestock Integration', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The unreviewed draft slides retain source pictures and English wording; use Next to read at your own pace.' },
   ] },
   { when: '29 September 2026', sha: 'a835dc28', changes: [
     'Food availability now shows fruit trees and animal products as picture trays.',

@@ -220,7 +220,8 @@ test('Sesotho chicken lesson preserves animal-care and manure guidance beside a 
     'english-fallback', 'source drift must withdraw the complete paired draft');
   assert.equal(resolveCourseModulePresentation({ ...source, title: `${source.title} Changed.` }, 'st').status,
     'english-fallback');
-  assert.deepEqual(resolveDeckLang(source.id, 'st'), { lang: 'en', exact: false });
+  assert.deepEqual(resolveDeckLang(source.id, 'st'), { lang: 'st', exact: true },
+    'the silent Sesotho Small Livestock deck pairs its unreviewed text with the exact English source');
   assert.deepEqual(resolveNarrationLang(source.id, 'st'), { lang: 'en', exact: false });
 });
 

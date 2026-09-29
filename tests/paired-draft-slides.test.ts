@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { englishSlideRecords, pairedDraftLanguageLabel, pairedTargetHasEnglishHolds, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
@@ -28,6 +28,66 @@ test('the Sesotho pilot pairs all 22 actual English introduction slides in autho
   assert.equal(source[0].body.length, 4);
   assert.ok(source.every((slide) => slide.body.every((paragraph: string) => paragraph !== '---' && !paragraph.includes('[pause]'))));
   assert.equal(validatePairedDraft(completeHold(), source).length, 22);
+});
+
+test('Water Harvesting regional decks translate only one source-paired rainfall sentence', () => {
+  const waterSource = englishSlideRecords(readFileSync('docs/narration/water-harvesting.en.md', 'utf8'));
+  const candidates = {
+    st: 'Dihla tsa dipula di fapana ho pholletsa le Afrika Borwa.',
+    ve: 'Zwifhinga zwa mvula zwi a fhambana kha Afrika Tshipembe.',
+    ts: 'Tinguva ta mpfula ta hambana eAfrika Dzonga.',
+  };
+  assert.equal(waterSource.length, 24);
+  for (const [language, candidate] of Object.entries(candidates)) {
+    const packet = JSON.parse(readFileSync(`docs/narration/water-harvesting.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, waterSource, language);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    assert.equal(slides.length, 24);
+    const drafted = [];
+    for (const slide of slides) {
+      assert.equal(slide.target.heading.status, 'english-hold', `${language} slide ${slide.n}: title remains English`);
+      for (const [index, part] of slide.target.body.entries()) {
+        if (part.status === 'mixed') {
+          assert.equal(slide.n, 10);
+          assert.equal(index, 1);
+          assert.deepEqual(part.segments.map(({ status }: { status: string }) => status), ['draft', 'english-hold']);
+          assert.equal(pairedTargetHasEnglishHolds(slide.target), true,
+            'a mixed passage with held English text must retain the visible English-hold label');
+          assert.equal(part.segments[0].sourceEnglish, 'Rainfall seasons differ across South Africa.');
+          assert.equal(part.segments[0].text, candidate);
+          assert.equal(part.segments.map(({ sourceEnglish }: { sourceEnglish: string }) => sourceEnglish).join(''), slide.english.body[index]);
+          drafted.push(slide.n);
+        } else {
+          assert.equal(part.status, 'english-hold');
+          assert.equal(part.text, undefined);
+        }
+      }
+    }
+    assert.deepEqual(drafted, [10], `${language}: every technical or actionable passage stays held`);
+  }
+});
+
+test('silent Small Livestock drafts keep animal-care text exact and ship the reviewed still bytes', () => {
+  const english = englishSlideRecords(readFileSync('docs/narration/small-livestock.en.md', 'utf8'));
+  assert.equal(english.length, 20);
+  for (const lang of ['st', 've', 'ts']) {
+    const packet = JSON.parse(readFileSync(`docs/study-translation-reviews/small-livestock-regional/small-livestock.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, english, lang);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    assert.equal(slides.length, 20);
+    for (const number of [12, 13, 14, 15, 16, 18, 19, 20]) {
+      assert.ok(slides[number - 1].target.body.every((part: any) => part.status === 'english-hold'),
+        `${lang} slide ${number}: husbandry, safety, manure and field-action advice stays exact English`);
+    }
+    for (const slide of slides) {
+      const name = `slide-${String(slide.n).padStart(2, '0')}.webp`;
+      assert.deepEqual(
+        readFileSync(`public/course-decks/small-livestock/${lang}/${name}`),
+        readFileSync(`docs/media/small-livestock-regional/${lang}/${name}`),
+        `${lang} ${name}: learner still must match the source-paired review frame`,
+      );
+    }
+  }
 });
 
 test('Sesotho Introduction review slides keep uncertain field steps paired in English beside backchecked draft lines', () => {

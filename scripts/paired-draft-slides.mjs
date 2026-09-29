@@ -32,6 +32,12 @@ export function pairedDraftLanguageLabel(language) {
     : null;
 }
 
+export function pairedTargetHasEnglishHolds(target) {
+  return target?.heading?.status === 'english-hold' || (target?.body ?? []).some((part) =>
+    part.status === 'english-hold' ||
+    (part.status === 'mixed' && part.segments?.some((segment) => segment.status === 'english-hold')));
+}
+
 export function validatePairedDraft(draft, source, language = 'st') {
   if (!pairedDraftLanguageLabel(language)) {
     throw new Error(`Paired draft language is unsupported: ${language}`);
@@ -60,8 +66,27 @@ export function validatePairedDraft(draft, source, language = 'st') {
       throw new Error(`Paired draft slide ${slide.n}: target paragraph count differs from English narration`);
     }
     const checkPart = (part, location, english) => {
-      if (!part || !['draft', 'english-hold'].includes(part.status)) {
+      if (!part || !['draft', 'english-hold', 'mixed'].includes(part.status)) {
         throw new Error(`Paired draft slide ${slide.n} ${location}: review status is missing or invalid`);
+      }
+      if (part.status === 'mixed') {
+        if (!Array.isArray(part.segments) || part.segments.length < 2 ||
+            part.segments.some((segment) => !segment || !['draft', 'english-hold'].includes(segment.status) ||
+              typeof segment.sourceEnglish !== 'string' || !segment.sourceEnglish)) {
+          throw new Error(`Paired draft slide ${slide.n} ${location}: mixed text needs source-paired segments`);
+        }
+        if (part.segments.map((segment) => segment.sourceEnglish).join('') !== english) {
+          throw new Error(`Paired draft slide ${slide.n} ${location}: mixed segments do not preserve exact English`);
+        }
+        for (const segment of part.segments) {
+          if (segment.status === 'draft' && (typeof segment.text !== 'string' || !segment.text.trim())) {
+            throw new Error(`Paired draft slide ${slide.n} ${location}: mixed draft segment is empty`);
+          }
+          if (segment.status === 'english-hold' && segment.text !== undefined) {
+            throw new Error(`Paired draft slide ${slide.n} ${location}: English hold segment must not have target text`);
+          }
+        }
+        return;
       }
       if (part.status === 'draft' && (typeof part.text !== 'string' || !part.text.trim())) {
         throw new Error(`Paired draft slide ${slide.n} ${location}: target draft text is missing`);
