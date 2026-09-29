@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '60dfeb6', changes: [
+    'The Permaculture Manual second edition: shorter, clearer, in Rory’s own voice.',
+    'A new last chapter gathers the safety notes and the references for every chapter.',
+    'Xitsonga is back: the manual reads in English and all four home languages.',
+    'Long web addresses now wrap, so printed pages come out full size.',
+  ], tour: [
+    { title: 'Open the second edition', where: 'Manual', href: '/manual',
+      detail: 'Pick a language and open any chapter: each starts with why it matters, has one Try it activity and ends with key points. Chapter 13 holds the notes and references. The four home-language versions are machine drafts awaiting review by fluent speakers.' },
+  ] },
   { when: '29 September 2026', sha: '0f47d957', changes: [
     'Market Gardening has 20 silent Sesotho and Xitsonga review slides.',
     'Existing drafts pair with English; held text stays in one English source card.',
