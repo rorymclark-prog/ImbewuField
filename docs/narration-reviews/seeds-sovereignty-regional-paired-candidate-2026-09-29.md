@@ -6,11 +6,15 @@ These three JSON files are **unreviewed, source-paired slide candidates** for Se
 - `seeds-sovereignty.ve.paired.json`
 - `seeds-sovereignty.ts.paired.json`
 
-Each file retains the exact English heading and every English paragraph for all 24 slides. Slides 1–3 have complete regional draft text. Slides 4–24 are explicit English holds while the review covers F1 genetics, pollen control, seed processing, storage and germination. No slide deck or narration audio was produced or approved.
+Each file retains the exact English heading and every English paragraph for all 24 slides. Slides 1–3 have regional draft text. Selected ordinary-language prompts on slides 5–9 are also unreviewed drafts; the other passages remain explicit English holds, especially F1 genetics, pollen control, seed processing, storage and germination. Silent source-paired review decks are available in the learner app. No regional narration or fluent-language approval is claimed.
+
+The slide 8 Tshivenda candidate for “reject a seed plant” was held in exact English because a back-check could not establish that the draft meant reject. Sesotho slide 9’s distance wording and Tshivenda slide 5’s distinction between two *kinds* of seed are also held in English until their meanings can be checked. Those holds prevent a misleading seed-selection or pollination instruction.
+
+Silent-deck visual QA corrected the English and isiZulu source stills for slide 13 (dry pod collection, replacing a wet tomato sieve image) and slide 21 (exactly ten seeds in two rows of five, with six germinated and four not). The regional paired decks inherit those English source illustrations. The original slide wording and layout were retained outside the illustration area. These are static teaching pictures; the visible paragraphs carry the full sequence, and learners turn pages manually without narration.
 
 The Sesotho and Tshivenda learner review modules also pair the complete lesson-one body and key points with the canonical English source. Xitsonga has a new module review packet with lesson one drafted and lessons two and three held. All outputs remain `machine-draft` / `unreviewed`; they need fluent first-language and local farming review.
 
-Source pairing was checked against `docs/narration/seeds-sovereignty.en.md` and the canonical module. The slide renderer cannot currently produce the candidate from the checked-in source deck because its English slide images are 960×540 and the renderer requires at least 1000×560. This is an existing artwork size gate; no upscaled or altered images are included.
+Source pairing was checked against `docs/narration/seeds-sovereignty.en.md` and the canonical module. The Seeds-only native-source renderer places the checked-in 960×540 English illustration without resampling, then adds the paired text cards. No source image is upscaled or altered.
 
 ## Terminology check
 

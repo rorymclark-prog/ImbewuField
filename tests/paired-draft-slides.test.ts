@@ -462,7 +462,7 @@ test('Seeds native-source proof is explicit, exact-size, and does not relax the 
   }
 });
 
-test('Seeds regional study drafts stay on the three opening slides with exact English holds after them', () => {
+test('Seeds regional drafts pair the English source and hold technical seed-selection claims', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/seeds-sovereignty.en.md', 'utf8'));
   for (const language of ['st', 've', 'ts']) {
     const packet = JSON.parse(readFileSync(
@@ -472,9 +472,24 @@ test('Seeds regional study drafts stay on the three opening slides with exact En
     assert.ok(slides.slice(0, 3).every((slide: any) =>
       slide.target.heading.status === 'draft' && slide.target.body.every((part: any) => part.status === 'draft')),
     `${language}: the packet's first three study slides carry the supplied learner drafts`);
-    assert.ok(slides.slice(3).every((slide: any) =>
-      slide.target.heading.status === 'english-hold' && slide.target.body.every((part: any) => part.status === 'english-hold')),
-    `${language}: F1, pollination, processing, storage and field instructions stay exact English`);
+    // Ordinary prompts can now be translated after the opening slides. Keep the F1 comparison,
+    // seed-parent selection and pollination instructions in exact English until their conditions
+    // have been checked: a reversal here could lead a learner to save the wrong seed.
+    for (const [slideNumber, bodyIndexes] of [
+      [5, [2, 3, 5]],
+      [8, [4, 5, 7]],
+      [9, [0, 1, 2, 4, 5]],
+    ] as const) {
+      const slide = slides[slideNumber - 1];
+      for (const bodyIndex of bodyIndexes) {
+        assert.equal(slide.target.body[bodyIndex].status, 'english-hold',
+          `${language} slide ${slideNumber} paragraph ${bodyIndex + 1}: technical condition stays English`);
+      }
+    }
+    if (language === 've') {
+      assert.equal(slides[7].target.body[6].status, 'english-hold',
+        'Tshivenda seed-parent rejection remains English after an ambiguous draft reversed its meaning');
+    }
   }
 });
 

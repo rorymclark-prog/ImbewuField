@@ -203,7 +203,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta matlhelo hamambirhi.",
+            "backTranslation": "Look at both sides."
           },
           {
             "status": "english-hold"
@@ -215,7 +217,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tivutise leswaku leswi swi vula yini loko u hlawula mbewu leyi u nga ta yi hlayisa.",
+            "backTranslation": "Ask yourself what this means when you choose seed to save."
           },
           {
             "status": "english-hold"
@@ -252,7 +256,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi yihi mbewu leyi ndyangu wa ka n'wina wu yi hlayisaka kahle sweswi?",
+            "backTranslation": "Which seed does your household already save well?"
           },
           {
             "status": "english-hold"
@@ -290,7 +296,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Anakanya hi mbewu leyi u nga yi avelanaka ni mbewu leyi u nga yi amukelaka eka muakelani. Mbewu ya famba. Vutivi ni ku tshemba swi fanele swi famba na yona.",
+            "backTranslation": "Think about seed you could share and seed you could receive from a neighbour. Seed moves. Knowledge and trust should move with it."
           }
         ]
       }
@@ -320,7 +328,19 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta ximilana hinkwaxo.",
+            "backTranslation": "Look at the whole plant."
+          },
+          {
+            "status": "draft",
+            "text": "Xana a xi hanye kahle?",
+            "backTranslation": "Was it healthy?"
+          },
+          {
+            "status": "draft",
+            "text": "Xana xi vupfe hi nkarhi lowu faneleke?",
+            "backTranslation": "Did it mature at the right time?"
           },
           {
             "status": "english-hold"
@@ -329,13 +349,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I yini lexi nga ku endla u ala ximilana xa mbewu, hambiloko mihandzu ya xona yi ri leyikulu?",
+            "backTranslation": "What could make you reject a seed plant, even if its fruit was large?"
           },
           {
             "status": "english-hold"
@@ -372,7 +388,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga hambanisa mixaka yimbirhi hi ndlela yihi handle ko tirhisa mpfhuka?",
+            "backTranslation": "How can you separate two varieties without using distance?"
           },
           {
             "status": "english-hold"

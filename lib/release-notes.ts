@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'd18aaaec', changes: [
+    'Seeds slides 5–9 add Sesotho, Tshivenda and Xitsonga draft prompts beside English.',
+    'The dry-seed and ten-seed stills now match their lessons in silent reading mode.',
+    'Seed science stays in English where wording needs review. Regional decks remain silent.',
+  ], tour: [
+    { title: 'Compare the Seeds prompts', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga and open slides 5–9. Draft text is marked unreviewed; held technical advice stays in English. The slide-only download works without narration.' },
+  ] },
   { when: '29 September 2026', sha: '0b83fcbb', changes: [
     'The crop-plan PDF was checked at eight sites across South Africa and tidied.',
     'A first-year gap is no longer called yearly when next year\'s crops fill it.',
