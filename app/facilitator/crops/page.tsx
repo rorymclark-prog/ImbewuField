@@ -3844,7 +3844,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote }: {
               borderRadius: 10, boxShadow: '0 8px 24px rgba(32,25,15,0.18)', padding: '10px 12px', pointerEvents: 'none',
             }}
           >
-            <div className="font-display font-semibold" style={{ fontSize: 15, marginBottom: 2 }}>{monthTitle}</div>
+            <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.1vw, 16px)', marginBottom: 2 }}>{monthTitle}</div>
             <div style={{ fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 6 }}>
               {kind === 'trees' ? 'In season from your food forest' : 'From your animals'}
             </div>
