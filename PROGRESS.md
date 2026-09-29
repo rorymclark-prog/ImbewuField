@@ -52,6 +52,23 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 29 Sep 2026 — Pawpaw picking months sourced; honey searched again
+Rory: "please search deep the answers will be out there!" (about honey and pawpaw showing only
+"not shown" notes in the bed calendar).
+- **Pawpaw** (`research/perennial-sources/carica-papaya.json`): KZN DARD "Fruit and Nut
+  Production in KZN", §1.6 Papaya, PDF p.18: "The cropping season usually extends from about April
+  to January, with a peak from September to November." Now charted April–January for KZN. Quote
+  checked against the PDF text. The DAFF papaya brochure (nda.gov.za) still 503s from the sandbox;
+  year-round picking appears only in trade press (FreshPlaza, Food For Mzansi), so not used.
+- **Honey** (`research/animal-sources/bees.json`): still no months. The round-2 rule stands: chart
+  honey only when a source states a region's harvest or main-flow months. Found and recorded in
+  gaps, not charted: Buys 2019 (Zululand, "March … the middle of the honey flow", plus bar charts
+  of kg harvested by month, roughly Mar–Jul), Masehela 2017 (beekeeper-reported bloom months of
+  honey-crop plants by province), Human 2006 and Hutton-Squire 2014 (nectar-plant months).
+  Unread: DFFE "The Honey Trade" (2005) and Johannsmeier's ARC-PPRI handbook.
+- Rebuilt `lib/perennial-harvest-data.ts`; `lib/animal-enterprises-data.ts` unchanged. Release
+  note added (placeholder sha).
+
 ### 29 Sep 2026 — Berries and moringa in the design studio; tree picking in the monthly plan
 Rory: "what about berries and other food forest crops can we add them to the design studio etc?
 what about moringa put all these things in there… and maybe have it even show in the monthly crop

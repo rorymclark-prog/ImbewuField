@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'f00dcafe', changes: [
+    'Pawpaw now shows in the bed calendar, April to January, from the KZN fruit guide.',
+    'Honey still does not show: no source yet gives honey harvest months. The note says so.',
+  ], tour: [
+    { title: 'Find pawpaw in the calendar', where: 'Crop plan → bed calendar', href: '/facilitator/crops',
+      detail: 'With a pawpaw on your design map, the Fruit, nuts & berries row shows it from April to January. February and March stay empty: the guide says the season runs April to January, busiest September to November.' },
+    { title: 'Check the honey note', where: 'Crop plan → bed calendar', href: '/facilitator/crops',
+      detail: 'With a hive on your map set to honey, the Animal products row still has no honey months. The line under it says why: no source we have read gives the months honey is taken off.' },
+  ] },
   { when: '29 September 2026', sha: 'e8be1de8', changes: [
     'The bed calendar has Fruit, nuts & berries and Animal products rows under your beds.',
     'Each month shows the fruit, nut or egg itself. Hover or tap it for a written list.',

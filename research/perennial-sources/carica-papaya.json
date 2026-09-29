@@ -2,7 +2,30 @@
   "speciesId": "carica-papaya",
   "commonName": "Pawpaw / papaya",
   "botanicalName": "Carica papaya",
-  "harvestMonths": [],
+  "harvestMonths": [
+    {
+      "region": "KwaZulu-Natal",
+      "months": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        1
+      ],
+      "evidence": {
+        "quote": "The cropping season usually extends from about April to January, with a peak from September to November.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), section 1.6 Papaya, 'Bearing age'",
+        "page": 18
+      },
+      "notes": "April to January runs across the year end, so February and March are outside the stated season. The same sentence gives a peak of September to November. The paragraph mentions the Makhathini Flats only for how soon the first crop comes, so the season is for KZN in general. The guide has no in-text citation for this sentence (its reference list includes De Villiers 1999, 'The cultivation of Papaya', ARC). Page is the PDF page."
+    }
+  ],
   "yearsToFirstCrop": {
     "value": [
       0.75,
@@ -38,7 +61,7 @@
   },
   "harvestProduct": "fruit",
   "gaps": [
-    "No South Africa-specific harvest-month/season data could be verified: nda.gov.za's own 'Brochure Papaya.pdf' and nda.agric.za/docs/papaya/papaya.htm (both direct DAFF/NDA production guideline documents) returned HTTP 503 Service Unavailable on every fetch attempt during this pass, so harvestMonths was left as an empty array rather than filled with an unverified figure.",
+    "Round 3 2026-09-29: harvestMonths filled from the KZN DARD 'Fruit and Nut Production in KZN' guide (April to January, peak September to November), quote checked against the PDF text. DAFF's own 'Brochure Papaya.pdf' (nda.gov.za) and nda.agric.za/docs/papaya/papaya.htm still returned 503 or a reset from this sandbox, so no national or other-province window yet. A trade report (FreshPlaza, on Neofresh) and Food For Mzansi describe year-round picking by a large grower; neither is a primary source, so 12 months was not used. No Limpopo or Mpumalanga window was found.",
     "ISHS 'OVERVIEW OF THE SOUTH AFRICAN PAPAYA INDUSTRY' (Connolly) was fetched but only its abstract was accessible; it confirmed papaya is a 'small but lucrative industry' with 'very limited papaya production areas within the country' and that South Africa's climate 'is not ideal' for papaya, but gave no harvest months, yields or bearing-age figures in the accessible text.",
     "No South Africa-specific yield-per-plant or yield-per-hectare figure, nor a matching planting density, was found; all yield figures located were for other countries (Mexico, unspecified 48.6 t/ha reference).",
     "No SA-specific years-to-full-bearing or productive-lifespan figure was independently verified verbatim (an unverified AI search summary claimed '3 to 5 years' productive life, not used as evidence).",
