@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: '499d6913', changes: [
+    'Food Forest slides 1–4 add Tshivenda and Xitsonga drafts beside English.',
+    'These slides are silent. Technical terms remain in English.',
+  ], tour: [
+    { title: 'Compare Food Forest opening slides', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga and open slides 1–4. The drafts are marked unreviewed and paired with exact English. Other held passages remain in English; English narration is optional.' },
+  ] },
   { when: '29 September 2026', sha: '60dfeb6', changes: [
     'The Permaculture Manual second edition: shorter, clearer, in Rory’s own voice.',
     'A new last chapter gathers the safety notes and the references for every chapter.',

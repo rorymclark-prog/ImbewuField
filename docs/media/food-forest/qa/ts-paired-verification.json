@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/food-forest.ts.paired-draft.json",
-  "pairedSourceSha256": "c9f0b0112c16f5ce570def17dc48bf40c443c971d2d6adc06a2cad7f2c55e924",
+  "pairedSourceSha256": "3420881ae56d25c48ff7293656f9fa6cf611e4635aa21481b8f2ca0c570f5ab0",
   "englishSource": "docs/narration/food-forest.en.md",
   "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
   "slides": [
@@ -14,29 +14,29 @@
       "slide": 1,
       "path": "public/course-decks/food-forest/ts/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 338370,
-      "sha256": "f681ac2bbc6f4baf1ac57132d886cc704a9d862144c03dfeb0f8dab8ce1e1a9a"
+      "bytes": 343056,
+      "sha256": "32e44b087e3d4bbb2a6dbf8e817b567b64769efdac02b72d3598642e2f9eb88c"
     },
     {
       "slide": 2,
       "path": "public/course-decks/food-forest/ts/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 218040,
-      "sha256": "3306a3b11d63e12b8f4a2805a43f1af5cf0ddc3dcdf1a498c716e4e8f4b67ec5"
+      "bytes": 217798,
+      "sha256": "42c67ee78b96bc13bc6da2673e054467df96c70dd6792821a46de545610e2b59"
     },
     {
       "slide": 3,
       "path": "public/course-decks/food-forest/ts/slide-03.webp",
       "pixels": "1440x5400",
-      "bytes": 227042,
-      "sha256": "c72bf52a92fc897f6269f676df32b115205a5f67b2b82ea309793670111c2122"
+      "bytes": 220636,
+      "sha256": "2a42d41436fa2684e51a379276538a76ad9f75bbe383a2086fdf65bf968d54e8"
     },
     {
       "slide": 4,
       "path": "public/course-decks/food-forest/ts/slide-04.webp",
       "pixels": "1440x5400",
-      "bytes": 263022,
-      "sha256": "f12e5b0cc9f604c4cf7b266f839969f481495136a534dc367ebdd7edb253f07b"
+      "bytes": 260322,
+      "sha256": "4c3de814e26bcb26c225c84fd3f0b6bffe961e955033affc451d584333491103"
     },
     {
       "slide": 5,
@@ -157,7 +157,7 @@
       "slide": 4,
       "path": "docs/media/food-forest/qa/ts-slide-04-390.jpg",
       "pixels": "390x1463",
-      "sha256": "864476873c950184b7b65b6fa3fe687a19923f6404b38f87391e2718e37e3991"
+      "sha256": "3359f8f02f793f6643274f7358b89b5babddb0458e49fe251b773c0833651c60"
     },
     {
       "slide": 8,
@@ -166,5 +166,5 @@
       "sha256": "3bae96bc816b9656d0c9a9612f378afaa42f5ea9908efefdde8408e4d29aad76"
     }
   ],
-  "note": "All 20 silent frames pair the unchanged English illustration and exact English source with the existing three marked Xitsonga machine-draft sentences. Every other heading and passage is held in English. No Xitsonga narration or farming approval is claimed."
+  "note": "All 20 silent frames pair the unchanged English illustration and exact English source. Slides 1–4 now carry fuller marked Xitsonga machine-draft wording; later held passages remain visibly English. No Xitsonga narration or farming approval is claimed."
 }
