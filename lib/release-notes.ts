@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 September 2026', sha: 'ccf8cec0', changes: [
+    'Small Livestock shows unreviewed Xitsonga module and bee-lesson labels.',
+    'Animal-care and pollination guidance stays in English.',
+  ], tour: [
+    { title: 'Check the Xitsonga livestock labels', where: 'Study → Small Livestock Integration', href: '/student',
+      detail: 'Choose Xitsonga in Study. Compare the marked module and L2 labels with their English source.' },
+  ] },
   { when: '29 September 2026', sha: '864dd861', changes: [
     'Introduction to Permaculture adds three Tshivenda and Xitsonga reflection drafts.',
     'Each draft stays beside English; the slides remain silent and unreviewed.',
