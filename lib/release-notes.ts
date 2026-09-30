@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '2713e4e0', changes: [
+    'Study adds a few more regional drafts about rain, seed sharing and crop resilience.',
+    'Uncertain water, seed and farming guidance stays in English beside the marked drafts.',
+  ], tour: [
+    { title: 'Compare the new Study lines', where: 'Study → Water Harvesting, Seeds and Vegetables', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Compare the unreviewed lines with exact English; regional decks open with No narration.' },
+  ] },
   { when: '30 September 2026', sha: 'd26f49a7', changes: [
     'Study adds regional drafts on selling surplus and plant layers.',
     'Uncertain prices, plant identity and care advice stay in English.',

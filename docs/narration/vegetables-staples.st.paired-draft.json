@@ -512,7 +512,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang."
           },
           {
             "status": "english-hold"

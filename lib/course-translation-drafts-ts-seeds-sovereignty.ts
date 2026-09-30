@@ -258,8 +258,8 @@ export const XITSONGA_SEEDS_SOVEREIGNTY_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture. Storage life varies by crop and conditions, so test germination before relying on saved seed.\n\nLabel every envelope with crop, variety, and date saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. Sealing damp seed can trap moisture and damage it.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
-        "xitsongaDraft": "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture. Storage life varies by crop and conditions, so test germination before relying on saved seed.\n\nLabel every envelope with crop, variety, and date saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. Sealing damp seed can trap moisture and damage it.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture. Storage life varies by crop and conditions, so test germination before relying on saved seed.\n\nLabel every envelope with crop, variety, and date saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. Sealing damp seed can trap moisture and damage it.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nLulamisa ku cincana mbewu ni vaakelani va wena eka nguva leyi. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
+        "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
@@ -366,8 +366,8 @@ export const XITSONGA_SEEDS_SOVEREIGNTY_DRAFT: XitsongaCourseModuleDraft = {
     },
     {
       "lessonId": "seeds-sovereignty-l3",
-      "field": "title, body, keyPoints, quiz and infographicAlt",
-      "sourceText": "The English source is retained in each paired field.",
+      "field": "title, body seed-storage and germination guidance, keyPoints, quiz and infographicAlt",
+      "sourceText": "Storage and germination guidance stays exact English in the source-paired body; the seed-swap invitation is an unreviewed draft.",
       "reason": "Storage and germination instructions need a complete local-language review before drafting them."
     }
   ]

@@ -69,7 +69,6 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
   assert.deepEqual(holds, [
     'lessons[0] vegetables-staples-l1.quiz[1].options[1]',
     'lessons[1] vegetables-staples-l2.quiz[0].question',
-    'lessons[2] vegetables-staples-l3.body',
     'lessons[2] vegetables-staples-l3.keyPoints[2]',
     'lessons[3] vegetables-staples-l4.infographicAlt',
     'lessons[3] vegetables-staples-l4.quiz[0].options[1]',
@@ -86,5 +85,13 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
   const pestDraft = draft.lessons[3].body.sesothoDraft.split('\n\n');
   for (const index of [0, 1, 2, 5, 8, 9, 10, 11]) {
     assert.equal(pestDraft[index], pestSource[index], `pest paragraph ${index + 1}: unreviewed treatment advice stays exact English`);
+  }
+  const staplesSource = source.lessons[2].body.split('\n\n');
+  const staplesDraft = draft.lessons[2].body.sesothoDraft.split('\n\n');
+  assert.equal(staplesDraft[11], 'Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.',
+    'the draft retains the original negation about resilience');
+  for (const [index, paragraph] of staplesSource.entries()) {
+    if (index !== 11) assert.equal(staplesDraft[index], paragraph,
+      `staple paragraph ${index + 1}: technical, crop and household advice stays exact English`);
   }
 });
