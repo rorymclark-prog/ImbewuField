@@ -130,7 +130,29 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Look at roots, ",
+                "text": "Languta timitsu, ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "soil structure"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " and water movement as well as ",
+                "text": " ni ndlela leyi mati ma fambaka ha yona, swin’we ni ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "visible soil life."
+              }
+            ]
           }
         ]
       }
@@ -167,7 +189,41 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Use several clues together. ",
+                "text": "Tirhisa swikombiso swo hlayanyana swin’we. ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": "Colour alone cannot tell you ",
+                "text": "Muhlovo ntsena a wu nge ku byeli hi ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "soil health."
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " Check ",
+                "text": "Kambisisa ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "moisture,"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " plant growth and how water enters the ground.",
+                "text": " ku kula ka swimilani ni ndlela leyi mati ma nghenaka ha yona emhlabeni.",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              }
+            ]
           }
         ]
       }

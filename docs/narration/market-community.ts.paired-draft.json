@@ -55,12 +55,13 @@
         "body": [
           {
             "status": "draft",
-            "text": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka."
+            "text": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
             "status": "draft",
-            "text": "Ku tsala matirhiselo lawa yo hambana swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikaka eka vaxavi.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "text": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -154,20 +155,18 @@
           {
             "status": "draft",
             "text": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "english-hold"
           },
           {
             "status": "english-hold"
           },
           {
             "status": "draft",
-            "text": "Tirhisa mukhuva lowu wo olova eka swakudya leswi hlayisiwaka ekaya, leswi xavisiwaka, leswi nyikiwaka van'wana, ni leswi endliwaka compost.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-          },
-          {
-            "status": "draft",
-            "text": "U nga titshegi hi ku tsundzuka loko nguva yi hela.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "text": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           }
         ]
       }

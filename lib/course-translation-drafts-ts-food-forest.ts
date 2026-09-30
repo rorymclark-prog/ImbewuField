@@ -1,4 +1,4 @@
-/** Unreviewed source-paired Xitsonga Food Forest lesson one draft. */
+/** Unreviewed source-paired Xitsonga Food Forest learner drafts. */
 import type { XitsongaCourseModuleDraft } from './course-translation-drafts-ts.ts';
 
 export const XITSONGA_FOOD_FOREST_DRAFT: XitsongaCourseModuleDraft = {
@@ -239,6 +239,118 @@ export const XITSONGA_FOOD_FOREST_DRAFT: XitsongaCourseModuleDraft = {
           "rationale": {
             "sourceEnglish": "Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability.",
             "xitsongaDraft": "Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability.",
+            "reviewStatus": "hold"
+          }
+        }
+      ]
+    },
+    {
+      "id": "food-forest-l3",
+      "infographicAlt": {
+        "sourceEnglish": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+        "xitsongaDraft": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+        "reviewStatus": "hold"
+      },
+      "title": {
+        "sourceEnglish": "Establishing a Food Forest: Observe and Adjust",
+        "xitsongaDraft": "Establishing a Food Forest: Observe and Adjust",
+        "reviewStatus": "hold"
+      },
+      "body": {
+        "sourceEnglish": "Start by checking the site, water supply and care available. Protect exposed soil early.\n\nTemporary support plants may provide shelter and useful cut material where appropriate.\n\nMain trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.\n\nBegin with an area you can water and maintain. Check existing vegetation before clearing.\n\nWhere appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.\n\nPlan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.\n\nWatch how shade, roots and available water affect neighbouring plants.\n\nComfrey and wild garlic appear in the original underplanting example; check their local suitability before use.\n\nPrune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.\n\nChoose a planting opportunity when soil moisture and expected weather support establishment.\n\nRain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.\n\nCheck young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.",
+        "xitsongaDraft": "Start by checking the site, water supply and care available. Protect exposed soil early.\n\nTemporary support plants may provide shelter and useful cut material where appropriate.\n\nMain trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.\n\nBegin with an area you can water and maintain. Check existing vegetation before clearing.\n\nWhere appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.\n\nPlan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.\n\nWatch how shade, roots and available water affect neighbouring plants.\n\nComfrey and wild garlic appear in the original underplanting example; check their local suitability before use.\n\nPrune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.\n\nChoose a planting opportunity when soil moisture and expected weather support establishment.\n\nRain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.\n\nKambisisa swimilana leswitsongo endzhaku ko swi byala. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.",
+        "reviewStatus": "machine-draft"
+      },
+      "keyPoints": [
+        {
+          "sourceEnglish": "Protect exposed soil early",
+          "xitsongaDraft": "Protect exposed soil early",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Plan the sequence around conditions and available care",
+          "xitsongaDraft": "Plan the sequence around conditions and available care",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Check root-zone moisture even during the rainy season",
+          "xitsongaDraft": "Check root-zone moisture even during the rainy season",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Manage competition as it develops; harvest dates are not guaranteed",
+          "xitsongaDraft": "Manage competition as it develops; harvest dates are not guaranteed",
+          "reviewStatus": "hold"
+        }
+      ],
+      "quiz": [
+        {
+          "question": {
+            "sourceEnglish": "A farmer puts plain cardboard under suitable mulch where grass is growing. What can it help do?",
+            "xitsongaDraft": "A farmer puts plain cardboard under suitable mulch where grass is growing. What can it help do?",
+            "reviewStatus": "hold"
+          },
+          "options": [
+            {
+              "sourceEnglish": "Creating a moisture barrier that blocks water from the soil",
+              "xitsongaDraft": "Creating a moisture barrier that blocks water from the soil",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Block light and help suppress grass while it breaks down; check for regrowth",
+              "xitsongaDraft": "Block light and help suppress grass while it breaks down; check for regrowth",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Providing a stable base so wood chips don't shift",
+              "xitsongaDraft": "Providing a stable base so wood chips don't shift",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Reflecting heat upward to warm the soil",
+              "xitsongaDraft": "Reflecting heat upward to warm the soil",
+              "reviewStatus": "hold"
+            }
+          ],
+          "sourceCorrectIndex": 1,
+          "rationale": {
+            "sourceEnglish": "Cardboard under suitable mulch can block light and reduce grass growth. Existing grass may regrow, so check the area. Keep water able to enter the soil and mulch clear of trunks.",
+            "xitsongaDraft": "Cardboard under suitable mulch can block light and reduce grass growth. Existing grass may regrow, so check the area. Keep water able to enter the soil and mulch clear of trunks.",
+            "reviewStatus": "hold"
+          }
+        },
+        {
+          "question": {
+            "sourceEnglish": "When should a grower consider pruning or thinning temporary support plants?",
+            "xitsongaDraft": "When should a grower consider pruning or thinning temporary support plants?",
+            "reviewStatus": "hold"
+          },
+          "options": [
+            {
+              "sourceEnglish": "Only on a fixed anniversary",
+              "xitsongaDraft": "Only on a fixed anniversary",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "When observed competition requires it, using methods suited to the species",
+              "xitsongaDraft": "When observed competition requires it, using methods suited to the species",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "As soon as any leaf falls",
+              "xitsongaDraft": "As soon as any leaf falls",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Never, because support plants cannot compete",
+              "xitsongaDraft": "Never, because support plants cannot compete",
+              "reviewStatus": "hold"
+            }
+          ],
+          "sourceCorrectIndex": 1,
+          "rationale": {
+            "sourceEnglish": "Temporary support plants can become competitors. Observe light, water and growth, then choose suitable management rather than relying on a fixed year.",
+            "xitsongaDraft": "Temporary support plants can become competitors. Observe light, water and growth, then choose suitable management rather than relying on a fixed year.",
             "reviewStatus": "hold"
           }
         }

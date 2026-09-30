@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '8a8c5b23', changes: [
+    'Study adds soil observation and harvest record drafts in Sesotho, Tshivenda and Xitsonga.',
+    'Food Forest adds one Xitsonga plant check; technical guidance stays in English.',
+  ], tour: [
+    { title: 'Compare soil and record slides', where: 'Study → Soil Health and Market Gardening', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Read the marked drafts beside exact English; regional slides remain silent.' },
+    { title: 'Compare the Xitsonga Food Forest draft', where: 'Study → Food Forest', href: '/student',
+      detail: 'Choose Xitsonga to see the unreviewed plant-checking sentence beside its exact English source.' },
+  ] },
   { when: '30 September 2026', sha: '55bcd6ff', changes: [
     'Study adds marked Food Forest closing steps and more Market Gardening record lines.',
     'The follow-up checks and uncertain farming advice stay paired with exact English.',

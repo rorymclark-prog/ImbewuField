@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.ve.paired-draft.json",
-  "pairedSourceSha256": "01ca004ee6ea8f2bd730b6afdb35ded2c4a96490773b2eec4f20092007de0516",
+  "pairedSourceSha256": "c898f0a52c77659c18185fb894cfcab297ed90db429aa39afe2b7a393bff508a",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -21,8 +21,8 @@
       "slide": 2,
       "path": "public/course-decks/market-community/ve/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 236800,
-      "sha256": "9591d3011538526e3f543dd5740c1cbf77fb43d115bdda03fc17ed01f6332fdd"
+      "bytes": 239110,
+      "sha256": "0dcb3482eb26f176ab8347646516cb48109659c0d178cf236358d03d018ca2ec"
     },
     {
       "slide": 3,
@@ -42,8 +42,8 @@
       "slide": 5,
       "path": "public/course-decks/market-community/ve/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 396518,
-      "sha256": "ee34a15f6d059b22d3b2623f97f13c2b6671d8017826d22e397ca4428f00834b"
+      "bytes": 380206,
+      "sha256": "4e376822e01b6038eb88e83be69d95788ab65a98ed8a0954a43139540e875531"
     },
     {
       "slide": 6,
@@ -163,7 +163,7 @@
       "slide": 2,
       "path": "docs/media/market-community/ve-paired-review/slide-02-390.jpg",
       "pixels": "390x1463",
-      "sha256": "c72cc014d08c8d376afb51e0b72235d146e386b65a94cde0f3f280ead040a3f3"
+      "sha256": "6c895677e43dfb8923ec67f0a90c39e263de0afd6dfe0563219b44dd3c556fe0"
     },
     {
       "slide": 3,
@@ -181,7 +181,7 @@
       "slide": 5,
       "path": "docs/media/market-community/ve-paired-review/slide-05-390.jpg",
       "pixels": "390x1463",
-      "sha256": "c82d307b07e27479dd88d86f92a3f0e0c5d537de7d2918069f706af5367c4fbe"
+      "sha256": "d2d9cde965f3c24f7c717b4cad24dfc4146a68d99c8ad028fd24a045adefc7b1"
     },
     {
       "slide": 6,
@@ -220,5 +220,5 @@
       "sha256": "54ca886eb06ca0f27c786b9bf7b2788fb27d9872ab6bc68fb791a694ddc709c2"
     }
   ],
-  "note": "All 20 silent frames are source-paired. Only passages marked draft appear beside their exact English source. Slides with no target draft show one English source block labelled Tshivenda translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No Tshivenda narration, fluent review or local farming approval is claimed."
+  "note": "All 20 silent Tshivenda frames use the paired packet. Only passages marked draft appear beside their exact English source. The business-decision line, quantity examples, and household/sold/gifted/composted destination sentence on slides 2 and 5 remain exact English holds. Price calculations, planting and local trading rules remain exact English holds. No regional narration, fluent review or local farming approval is claimed."
 }

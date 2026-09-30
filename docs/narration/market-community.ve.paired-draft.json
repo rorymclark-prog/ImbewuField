@@ -56,12 +56,12 @@
           {
             "status": "draft",
             "text": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
-            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1 body"
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
             "status": "draft",
-            "text": "U rekhoda kushumisele kwo fhambanaho zwi ni thusa u vhona zwine bulasi yaṋu ya bveledza na zwine zwa swika kha vharengi.",
-            "provenance": "new-machine-draft-proposal; not reused from learner draft"
+            "text": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -156,21 +156,19 @@
         "body": [
           {
             "status": "draft",
-            "text": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi bvelela.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "text": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "english-hold"
           },
           {
             "status": "english-hold"
           },
           {
             "status": "draft",
-            "text": "Shumisani nḓowelo yeneyo yo leluwaho kha zwiḽiwa zwe zwa vhulungelwa hayani, zwibveledzwa zwo rengiswaho, zwe zwa fhiwa vhaṅwe, na zwibveledzwa zwe zwa vhewa kha compost.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-          },
-          {
-            "status": "draft",
-            "text": "Ni songo ḓitika nga u humbula fhedzi musi khalaṅwaha i tshi fhela.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "text": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           }
         ]
       }
