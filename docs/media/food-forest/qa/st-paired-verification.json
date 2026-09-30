@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/food-forest.st.paired-draft.json",
-  "pairedSourceSha256": "6e63b13f86231284cfe68c0dde38e9c0f6cfa51d179168eaf98d1a8ae6bf469b",
+  "pairedSourceSha256": "5c704e793d390628fcde9e6a89e57990ff64632918bc6e9b70d8c4ee69e2780f",
   "englishSource": "docs/narration/food-forest.en.md",
   "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
   "slides": [
@@ -35,8 +35,8 @@
       "slide": 4,
       "path": "public/course-decks/food-forest/st/slide-04.webp",
       "pixels": "1440x5400",
-      "bytes": 254304,
-      "sha256": "969a6b1b50f6c5c6daa21cde6bfe7a8a152ddf718d4e3cf6132a494d0f5d47be"
+      "bytes": 253488,
+      "sha256": "c73b3b3fc572df5543eb74f8ed02d30b923132dd18a786844682c9436ffb2f3f"
     },
     {
       "slide": 5,
@@ -175,7 +175,7 @@
       "slide": 4,
       "path": "docs/media/food-forest/qa/st-slide-04-390.jpg",
       "pixels": "390x1463",
-      "sha256": "8e691541fe530f3ae0fb3d2810e7d0042baaa8944437a4304f8abacb787ad859"
+      "sha256": "60294dc76e6c15a5215e9cfba294a0e2f69faf1b47be97cea1237bc957415ec6"
     },
     {
       "slide": 8,

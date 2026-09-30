@@ -633,7 +633,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/st/slide-01.webp': 333580,
   '/course-decks/food-forest/st/slide-02.webp': 220196,
   '/course-decks/food-forest/st/slide-03.webp': 226742,
-  '/course-decks/food-forest/st/slide-04.webp': 254304,
+  '/course-decks/food-forest/st/slide-04.webp': 253488,
   '/course-decks/food-forest/st/slide-05.webp': 406198,
   '/course-decks/food-forest/st/slide-06.webp': 343362,
   '/course-decks/food-forest/st/slide-07.webp': 298174,

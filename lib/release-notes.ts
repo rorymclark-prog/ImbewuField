@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '1d36f255', changes: [
+    'Food Forest adds two Sesotho pattern explanations in the lesson and silent slide.',
+    'Technical terms stay in English beside the unreviewed draft and exact source.',
+  ], tour: [
+    { title: 'Compare a layered food forest', where: 'Study → Food Forest Design → lesson 1 and slide 4', href: '/student',
+      detail: 'Choose Sesotho. Two forest-pattern sentences now match in the lesson and silent slide; planting and species advice stays English.' },
+  ] },
   { when: '30 September 2026', sha: '2f58cffb', changes: [
     'Soil Health adds Sesotho, Tshivenda and Xitsonga observation drafts.',
     'Treatment and weather guidance stays English beside the silent draft slides.',
