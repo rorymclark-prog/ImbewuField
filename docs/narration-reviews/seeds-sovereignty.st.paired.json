@@ -926,7 +926,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Phapanyetsano e ntle ea peo e tsamaisa tlhahisoleseding hammoho le peo.",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -935,7 +937,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke tlhahisoleseding efe e ka u thusang ho tšepa peo e tsoang lelapeng le leng?",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -984,7 +988,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke eng hape eo o e hlokang hore o phethe mosebetsi ona lapeng?",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -1036,7 +1042,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O tla qala ka sejalo sefe?",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
