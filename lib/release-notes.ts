@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: 'd26f49a7', changes: [
+    'Study adds regional drafts on selling surplus and plant layers.',
+    'Uncertain prices, plant identity and care advice stay in English.',
+  ], tour: [
+    { title: 'Compare the new Study drafts', where: 'Study → Market Gardening, Food Forest and Plant Guilds', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The marked draft text is paired with exact English; regional slides open with No narration.' },
+  ] },
   { when: '30 September 2026', sha: 'a1d5a2db', changes: [
     'Study adds more Sesotho, Tshivenda and Xitsonga text about beds, soil and reading a site.',
     'Uncertain farming and earthworks advice stays in English beside the drafts.',

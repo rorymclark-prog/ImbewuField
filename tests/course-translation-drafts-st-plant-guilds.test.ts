@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_PLANT_GUILDS_DRAFT } from '../lib/course-translation-drafts-st-plant-guilds.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
 test('Plant Selection & Guilds Sesotho draft keeps exact sources, holds and quiz answers', () => {
   const source = COURSE_MODULES.find(module => module.id === 'plant-guilds');
@@ -66,7 +67,6 @@ test('Plant Selection & Guilds Sesotho draft keeps exact sources, holds and quiz
 
   assert.deepEqual(holds, [
     'lessons[0] plant-guilds-l1.infographicAlt',
-    'lessons[0] plant-guilds-l1.body',
     'lessons[0] plant-guilds-l1.keyPoints[1]',
     'lessons[0] plant-guilds-l1.keyPoints[2]',
     'lessons[0] plant-guilds-l1.keyPoints[3]',
@@ -83,7 +83,22 @@ test('Plant Selection & Guilds Sesotho draft keeps exact sources, holds and quiz
     'lessons[2] plant-guilds-l3.body',
     'lessons[2] plant-guilds-l3.quiz[0].options[1]',
     'lessons[2] plant-guilds-l3.quiz[0].rationale',
-  ], 'species, body and unscreened advice stay exact English');
+  ], 'species and unscreened advice stay exact English');
+
+  const guildOpening = draft.lessons[0].body;
+  assert.equal(guildOpening.reviewStatus, 'machine-draft');
+  assert.ok(guildOpening.sesothoDraft.startsWith('Dibaktheria tsena di fetola nitrogen'),
+    'the screened nitrogen concept reaches the learner');
+  for (const safetyHold of [
+    'Sesbania punicea is the invasive red sesbania.',
+    'Check the full name before planting.',
+    'There is no universal number per fruit tree.',
+  ]) assert.ok(guildOpening.sesothoDraft.includes(safetyHold),
+    `plant identity and density guidance remains exact English: ${safetyHold}`);
+  const shown = resolveLearnerLessonPresentation(source.lessons[0], 'st');
+  assert.equal(shown.content.body, guildOpening.sesothoDraft);
+  assert.equal(resolveLearnerLessonPresentation({ ...source.lessons[0], body: `${source.lessons[0].body} ` }, 'st').status,
+    'english-fallback', 'a changed English source withdraws the machine draft');
 
   for (const point of [...draft.lessons[1].keyPoints.slice(0, 2), ...draft.lessons[2].keyPoints]) {
     assert.equal(point.reviewStatus, 'machine-draft', 'screened guild concepts remain visibly unreviewed');

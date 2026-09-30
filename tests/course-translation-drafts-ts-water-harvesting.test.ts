@@ -46,11 +46,11 @@ test('Food Forest Xitsonga draft keeps species caution and crop care exact Engli
     'english-fallback');
 });
 
-test('Xitsonga Market drafts change only descriptive lesson text and keep decisions and quizzes in English', () => {
+test('Xitsonga Market drafts pair bounded sales text and keep uncertain decisions and quizzes in English', () => {
   const market = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(market);
   assert.deepEqual(XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.map(lesson => lesson.id),
-    ['market-community-l1', 'market-community-l3']);
+    ['market-community-l1', 'market-community-l2', 'market-community-l3']);
 
   for (const draftLesson of XITSONGA_MARKET_COMMUNITY_DRAFT.lessons) {
     const sourceLesson: Lesson | undefined = market.lessons.find(lesson => lesson.id === draftLesson.id);
@@ -69,10 +69,15 @@ test('Xitsonga Market drafts change only descriptive lesson text and keep decisi
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
-    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 3, 6, 7] : [9];
+    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 3, 6, 7]
+      : draftLesson.id === 'market-community-l2' ? [0] : [9];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
       else assert.equal(draftParagraphs[index], paragraph);
+    }
+    if (draftLesson.id === 'market-community-l2') {
+      for (const index of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
+        'market costs, box terms, reliable supply and fixed delivery stay exact English');
     }
     if (draftLesson.id === 'market-community-l1') {
       const draftParagraphsSource = draftLesson.body.xitsongaDraft.split('\n\n');
