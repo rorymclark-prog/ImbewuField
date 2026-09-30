@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'c0dd57f4', changes: [
+    'Soil Health adds marked Sesotho, Tshivenda and Xitsonga cover and erosion slides.',
+    'One unclear Tshivenda storm line stays in English; these slides remain silent.',
+  ], tour: [
+    { title: 'Compare the soil cover slides', where: 'Study → Soil Health & Composting → slides 15 and 18', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The new unreviewed drafts sit beside the exact English source; the deck has no regional narration.' },
+  ] },
   { when: '1 October 2026', sha: '4495d6a4', changes: [
     'Soil Health picture description now matches the soil layers, worms and jar.',
   ], tour: [
