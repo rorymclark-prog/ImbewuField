@@ -227,14 +227,17 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  for (const index of [4, 5, 8, 9, 11, 12, 13, 14, 15, 16]) {
+  for (const index of [4, 5, 8, 9, 11, 12, 13, 15, 16]) {
     assert.equal(draftParagraphs[index], sourceParagraphs[index], `held source paragraph ${index + 1} must remain exact English`);
   }
-  for (const index of [0, 1, 2, 3, 6, 7, 10]) {
+  for (const index of [0, 1, 2, 3, 6, 7, 10, 14]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index], `selected record-keeping paragraph ${index + 1} should be a visible draft`);
   }
   assert.equal(draftParagraphs[10],
     'Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.');
+  assert.equal(draftParagraphs[14],
+    'Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.',
+    'the household food-gap prompt is a screened draft, while crop and price decisions stay exact English');
 
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.deepEqual(lesson.keyPoints.slice(1).map(point => [point.sesothoDraft, point.reviewStatus]),

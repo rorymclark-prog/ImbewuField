@@ -63,7 +63,7 @@ test('Xitsonga Market drafts change only descriptive lesson text and keep decisi
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
-    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 3, 6] : [9];
+    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 3, 6, 7] : [9];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
       else assert.equal(draftParagraphs[index], paragraph);
@@ -76,10 +76,10 @@ test('Xitsonga Market drafts change only descriptive lesson text and keep decisi
         'select the source-paired sentence about recording each harvest as it happens');
       assert.equal(draftParagraphs[6], draftParagraphsSource[6],
         'select the source-paired end-of-season memory reminder');
-      assert.equal(draftParagraphs[1], sourceParagraphs[1],
-        'keep the unreviewed sentence about reaching customers in English');
-      assert.equal(draftParagraphs[7], sourceParagraphs[7],
-        'keep the phrase about practical questions in English until reviewed');
+      assert.equal(draftParagraphs[1], 'Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.',
+        'the distinct harvest uses remain visible beside the exact English source');
+      assert.equal(draftParagraphs[7], 'Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.',
+        'the season-of-records concept is screened while crop and price decisions stay in English');
     }
     const changedSource: Lesson = { ...sourceLesson, body: `${sourceLesson.body} Changed.` };
     assert.equal(resolveLearnerLessonPresentation(changedSource, 'ts').status, 'english-fallback');

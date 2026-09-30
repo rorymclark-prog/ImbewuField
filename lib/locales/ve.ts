@@ -55,6 +55,8 @@ const dict: Dict = {
   studentContinueHere: 'Bvelani phanḓa hafha',
   studentTshivendaUiDraftNotice: 'Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.',
   // Short update-guide controls are machine drafts; the guide displays their exact English source.
+  // Unreviewed Study interface drafts; English source stays in the shared dictionary.
+  studentOpenDesignStudio: "Vulani Design Studio",
   updateGuideContinue: 'Bvelani phanḓa na nyendedzi · {index}/{total}',
   updateGuideOfferTitle: 'Ni khou ṱoḓa u vhona zwe zwa shanduka?',
   updateGuideNotNow: 'Hu si zwino',

@@ -70,7 +70,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Before setting a price, record production, packing and selling costs, including labour and transport.',
           'Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.',
           'Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.',
-          'Use your record to find when household food runs short.',
+          'Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.',
           'Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.',
           'A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.',
         ].join('\n\n'),

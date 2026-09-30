@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '3a0e346e', changes: [
+    'Study adds more Sesotho and Xitsonga controls, and a Tshivenda Design Studio link.',
+    'Market Gardening adds a few record-keeping prompts in local languages beside English.',
+  ], tour: [
+    { title: 'Read a farm record', where: 'Study → Market Gardening & Community → lesson 1', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. New draft lines are paired with exact English; farming and price advice remains in English where wording is uncertain.' },
+  ] },
   { when: '30 September 2026', sha: '1e670dcb', changes: [
     'Market Gardening adds more Sesotho, Tshivenda and Xitsonga slide text.',
     'Farm records show English beside drafts; sensitive advice stays English.',
