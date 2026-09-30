@@ -352,6 +352,15 @@ test('an isiZulu lesson cannot reach learners with missing review or a changed q
   assert.equal(learnerLessonForLanguage(lesson, 'zu', record).title, published.title);
 });
 
+test('Reading the Landscape learner copy excludes the reviewer terminology checklist', () => {
+  const lesson = LESSON_INDEX.get('reading-landscape-l2')?.lesson;
+  assert.ok(lesson, 'Reading the Landscape L2 source lesson exists');
+  const presentation = resolveLearnerLessonPresentation(lesson, 'zu');
+  assert.equal(presentation.status, 'draft');
+  assert.doesNotMatch(presentation.content.body, /Terminology questions:|Please check whether/,
+    'reviewer questions belong in the handoff packet, not in the learner-facing lesson body');
+});
+
 test('owner-authorized isiZulu drafts remain labelled drafts after their English source is cleared', () => {
   const lessons = COURSE_MODULES.flatMap(module => module.lessons);
   const draftIds = lessons.filter(lesson => courseTranslationReviewState(lesson.id).status === 'review-draft').map(lesson => lesson.id);

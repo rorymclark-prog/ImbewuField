@@ -151,6 +151,9 @@ test('Soil Health Tshivenda L1 pairs observations while holding the jar procedur
   const translated = new Map([
     ['module.title', 'Mutakalo wa Mavu na U Ita Khomposo (Composting)'],
     ['lessons[0].title', 'U Pfesesa Mavu Aṋu: Mutheo wa Zwoṱhe'],
+    ['lessons[0].keyPoints[0]', 'Shumisani zwiṱalusi zwo vhalaho u ṱola vhuimo ha mavu.'],
+    ['lessons[0].keyPoints[1]', 'Muvhala wa mavu na tshivhalo tsha zwivhungu fhedzi a zwi sumbedzi uri thaidzo yo vhangwa nga mini.'],
+    ['lessons[0].keyPoints[2]', 'U lingedza nga jar zwi sumbedza texture nga u anganyela fhedzi, a si soil test yo fhelelaho.'],
     ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
   ]);
   const soilConceptSentences = new Map([
@@ -170,7 +173,7 @@ test('Soil Health Tshivenda L1 pairs observations while holding the jar procedur
     assert.equal(pair.sourceEnglish, english, `${path}: preserve the exact English source`);
     assert.ok(pair.tshivendaDraft.trim(), `${path}: include translated wording or an exact-English hold`);
     assert.deepEqual(numberTokens(pair.tshivendaDraft), numberTokens(english), `${path}: preserve numeric tokens`);
-    if (shouldTranslate) {
+    if (shouldTranslate || translated.has(path)) {
       assert.equal(pair.reviewStatus, 'machine-draft', `${path}: label AI text as an unreviewed draft`);
       assert.equal(pair.tshivendaDraft, translated.get(path), `${path}: keep the pinned (glossary-aligned) draft wording`);
     } else {
@@ -232,7 +235,7 @@ test('Soil Health Tshivenda L1 pairs observations while holding the jar procedur
     }
   }
 
-  assert.equal(heldFields, 55, 'hold the module summary, L3 title and every illustration description, other body, key point and quiz field');
+  assert.equal(heldFields, 52, 'hold the module summary, all illustration descriptions, diagnostic key point and other body and quiz fields');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');
@@ -247,10 +250,13 @@ test('Soil Health Tshivenda L1 pairs observations while holding the jar procedur
     assert.equal(presentation.content.title, paired.title.tshivendaDraft, `${lesson.id}: show the paired title draft`);
     assert.equal(presentation.content.body, paired.body.tshivendaDraft,
       `${lesson.id}: show only its exact-source-paired body draft or exact-English hold`);
-    assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints, `${lesson.id}: hold safety summaries in exact English`);
+    const expectedKeyPoints = lesson.keyPoints.map((point, pointIndex) =>
+      translated.get(`lessons[${index}].keyPoints[${pointIndex}]`) ?? point);
+    assert.deepEqual(presentation.content.keyPoints, expectedKeyPoints,
+      `${lesson.id}: show only the three bounded Tshivenda observation summaries`);
     assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: keep questions and answers in exact English`);
     assert.equal(presentation.content.infographicAlt, lesson.infographicAlt,
-      `${lesson.id}: hold image description in exact English`);
+      `${lesson.id}: image descriptions stay exact English holds`);
 
     assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
       'english-fallback', `${lesson.id}: changed source withdraws the whole paired draft`);

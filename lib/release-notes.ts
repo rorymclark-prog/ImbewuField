@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'c7b4286c', changes: [
+    'Study removes a reviewer checklist from an isiZulu learner lesson.',
+    'Three Tshivenda soil concepts now show marked drafts beside English.',
+  ], tour: [
+    { title: 'Read the Tshivenda soil concepts', where: 'Study → Soil Health & Composting → lesson 1', href: '/student',
+      detail: 'Choose Tshivenda to compare three marked soil key points with their exact English source. The image description, diagnostic advice and quiz remain in English.' },
+  ] },
   { when: '1 October 2026', sha: 'b4d86dd9', changes: [
     'Study adds marked farm-record drafts in Sesotho, Tshivenda and Xitsonga.',
     'Compost, pricing, crop choices and quizzes stay in English.',

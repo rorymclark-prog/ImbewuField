@@ -40,18 +40,18 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Use several clues to assess soil condition",
-          "tshivendaDraft": "Use several clues to assess soil condition",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Shumisani zwiṱalusi zwo vhalaho u ṱola vhuimo ha mavu.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Soil colour and worm counts alone do not diagnose the cause of a problem",
-          "tshivendaDraft": "Soil colour and worm counts alone do not diagnose the cause of a problem",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Muvhala wa mavu na tshivhalo tsha zwivhungu fhedzi a zwi sumbedzi uri thaidzo yo vhangwa nga mini.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "A jar exercise gives a rough indication of texture, not a complete soil test",
-          "tshivendaDraft": "A jar exercise gives a rough indication of texture, not a complete soil test",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "U lingedza nga jar zwi sumbedza texture nga u anganyela fhedzi, a si soil test yo fhelelaho.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
