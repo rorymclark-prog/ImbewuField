@@ -4,7 +4,7 @@
 // (lib/crop-autosuggest.ts) expands a group into its member crops.
 
 import type { LucideIcon } from 'lucide-react';
-import { Wheat, Bean, Leaf, Carrot, Sprout, Apple, Clover, Shrub, Compass } from 'lucide-react';
+import { Wheat, Bean, Leaf, Carrot, Sprout, Apple, Citrus, Clover, Shrub, Compass } from 'lucide-react';
 import type { CropDef } from './crop-catalog';
 
 export type FoodGroup =
@@ -15,6 +15,7 @@ export type FoodGroup =
   | 'allium'
   | 'herb'
   | 'fruiting_veg'
+  | 'squash_melon'
   | 'less_common'
   | 'cover_crop';
 
@@ -37,6 +38,7 @@ export const FOOD_GROUP_META: Record<FoodGroup, { label: string; Icon: LucideIco
   allium: { label: 'Onions & garlic', Icon: Sprout },
   herb: { label: 'Herbs', Icon: Clover },
   fruiting_veg: { label: 'Fruiting veg', Icon: Apple },
+  squash_melon: { label: 'Squashes & melons', Icon: Citrus },
   less_common: { label: 'Less common crops', Icon: Compass },
   cover_crop: { label: 'Cover crops', Icon: Shrub },
 };
@@ -59,13 +61,21 @@ export const FOOD_GROUP_META: Record<FoodGroup, { label: string; Icon: LucideIco
  */
 export const COVER_CROP_GROUP: FoodGroup = 'cover_crop';
 
+/*
+ * Rory, 2026-09-30: "should we have squashes and melons as categories too?" 'squash_melon' holds
+ * the rambling cucurbits (pumpkin, butternut, gem squash, baby marrow, watermelon, spanspek), so a
+ * farmer short of room can switch the sprawling vines off without losing tomatoes and peppers.
+ * Cucumber stays in 'fruiting_veg': it is trellised and picked like a bed vegetable. As food the
+ * group still counts as fruiting veg, so it shares that turn in the breadth-first loop.
+ */
+
 // Priority order for the family/hybrid breadth-first selection loop: fast
 // leafy crops + nitrogen-fixing legumes + storable roots claim scarce beds
 // first; grain last (most bed-space per calorie, least dietary urgency).
 // Every group the crop-mix filter offers. The breadth-first loop takes its turns
 // from BREADTH_SLOTS below, which folds herbs and less common crops back into the
 // nutrition group they feed.
-export const GROUP_PRIORITY: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'staple_grain', 'less_common', 'cover_crop'];
+export const GROUP_PRIORITY: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'squash_melon', 'staple_grain', 'less_common', 'cover_crop'];
 
 export const FOOD_GROUP: Record<string, FoodGroup> = {
   maize: 'staple_grain',
@@ -104,13 +114,13 @@ export const FOOD_GROUP: Record<string, FoodGroup> = {
   amadumbe: 'root_tuber',
   onions: 'allium',
   garlic: 'allium',
-  butternut: 'fruiting_veg',
-  pumpkin: 'fruiting_veg',
+  butternut: 'squash_melon',
+  pumpkin: 'squash_melon',
   tomatoes: 'fruiting_veg',
   peppers: 'fruiting_veg',
   chilli: 'fruiting_veg',
   cucumber: 'fruiting_veg',
-  watermelon: 'fruiting_veg',
+  watermelon: 'squash_melon',
 
   // 2026-09-28 batch — see research/crop-sources/<key>.json for citations.
   amaranth: 'leafy_green',
@@ -119,9 +129,9 @@ export const FOOD_GROUP: Record<string, FoodGroup> = {
   sorghum: 'staple_grain',
   soybean: 'less_common', // a pulse, but a field/commercial crop rarely grown in a home garden
   brinjal: 'fruiting_veg',
-  'gem-squash': 'fruiting_veg',
-  'baby-marrow': 'fruiting_veg',
-  spanspek: 'fruiting_veg',
+  'gem-squash': 'squash_melon',
+  'baby-marrow': 'squash_melon',
+  spanspek: 'squash_melon',
   // Dossier's own foodGroup is "fruiting_veg" (grown/picked like a vegetable
   // fruit, not milled like maize) — kept as sourced rather than forced into
   // maize's staple_grain bucket despite the shared species.
@@ -164,7 +174,8 @@ const LESS_COMMON_NUTRITION: Record<string, FoodGroup> = {
  */
 export function nutritionGroupOf(crop: CropDef): FoodGroup {
   const group = foodGroupOf(crop);
-  return group === 'less_common' ? LESS_COMMON_NUTRITION[crop.key] ?? 'fruiting_veg' : group;
+  if (group === 'less_common') return LESS_COMMON_NUTRITION[crop.key] ?? 'fruiting_veg';
+  return group === 'squash_melon' ? 'fruiting_veg' : group;
 }
 
 /**
