@@ -49,6 +49,16 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Compare Soil Health observations', where: 'Study → Soil Health → slides 2, 5, 14 and 20', href: '/student',
       detail: 'Choose Sesotho, Tshivenda or Xitsonga. Screened observations are visibly unreviewed and paired with exact English; remaining instructions stay English.' },
   ] },
+  { when: '30 September 2026', sha: 'c074ef30', changes: [
+    'Squashes & melons is its own crop-mix switch, apart from tomatoes and peppers.',
+    'Save your crop mix for a map; auto-suggest starts from it every time you plan there.',
+    'Fruit and animal products show as bars across their months, like bed plantings.',
+  ], tour: [
+    { title: 'Save your crop mix', where: 'Crop plan → Auto-suggest → Optional: change the recommended crop mix', href: '/facilitator/crops',
+      detail: 'Switch off Herbs or Squashes & melons, then tap Save this crop mix for this map. Reset to recommended forgets it.' },
+    { title: 'Read the fruit bars', where: 'Crop plan → bed calendar → Fruit, nuts & berries', href: '/facilitator/crops',
+      detail: 'Each tree kind on your map has its own bar over its picking months. Hover or tap a bar for the plants and months.' },
+  ] },
   { when: '30 September 2026', sha: '289676a6', changes: [
     'Landscape Study adds Sesotho, Tshivenda and Xitsonga drafts on silent slides.',
     'Exact English sits beside each draft; technical land and water guidance stays English.',

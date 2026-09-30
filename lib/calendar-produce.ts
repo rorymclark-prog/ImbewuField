@@ -78,6 +78,47 @@ export function calendarProduceByMonth(
   }));
 }
 
+/**
+ * One product's lane in the calendar: the product and the runs of columns it is picked in.
+ *
+ * Rory, 2026-09-30: "I want the avocado like a cabbage planting … this makes it more clearly
+ * visible." So each tree kind and each animal product gets its own row of bars, drawn like a bed's
+ * planting bars, in place of a stack of icons in every month.
+ *
+ * A run is cut at column `seamAt` (the start of year two), as the chart draws the second year
+ * as the same cycle coming round again, not as one unbroken season.
+ */
+export interface ProduceLane<L> {
+  key: string;
+  line: L;
+  runs: { start: number; end: number }[];
+}
+
+export function produceLanes(
+  months: readonly CalendarProduceMonth[],
+  kind: 'trees' | 'animals',
+  seamAt = 12,
+): ProduceLane<CalendarTreeLine>[] | ProduceLane<CalendarAnimalLine>[] {
+  return kind === 'trees'
+    ? lanesOf(months.map((m) => m.trees), (t) => t.speciesId, seamAt)
+    : lanesOf(months.map((m) => m.animals), (a) => a.enterpriseId, seamAt);
+}
+
+function lanesOf<L>(columns: readonly (readonly L[])[], keyOf: (line: L) => string, seamAt: number): ProduceLane<L>[] {
+  const lanes = new Map<string, ProduceLane<L>>();
+  columns.forEach((lines, col) => {
+    for (const line of lines) {
+      const key = keyOf(line);
+      let lane = lanes.get(key);
+      if (!lane) { lane = { key, line, runs: [] }; lanes.set(key, lane); }
+      const last = lane.runs[lane.runs.length - 1];
+      if (last && last.end === col - 1 && col !== seamAt) last.end = col;
+      else lane.runs.push({ start: col, end: col });
+    }
+  });
+  return [...lanes.values()];
+}
+
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 /** One written line per tree kind, e.g. "Mango — fruit · 3 plants, 1 of them proposed". */

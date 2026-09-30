@@ -52,6 +52,26 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 30 Sep 2026 — Squashes & melons tile; saved crop mix per map; fruit and animal bars
+- **Squashes & melons** (`lib/crop-groups.ts`, `squash_melon`): pumpkin, butternut, gem squash,
+  baby marrow, watermelon and spanspek moved out of Fruiting veg into their own crop-mix tile.
+  Cucumber stays in Fruiting veg (trellised, bed-sized). `nutritionGroupOf` maps it back to
+  fruiting veg, so the breadth-first turns (`BREADTH_SLOTS`) are unchanged. PDF: same terracotta
+  ink and legend swatch as Fruiting crops.
+- **Saved crop mix** (`lib/crop-mix-preference.ts`): ticked tiles plus exact crops, saved per map
+  (canvas site, or `design:<id>`) and per goal, in account-scoped localStorage like the animal
+  choices. Auto-suggest opens with it; "Reset to recommended" clears it. A tile added to the app
+  after a save comes back on for family/hybrid and stays off for commercial. Not synced across
+  devices. Tests: `tests/crop-mix-preference.test.ts` (added to `npm test`).
+- **Fruit and animal rows as bars**: Rory wanted "the avocado like a cabbage planting". Each tree
+  kind or animal product is now its own lane of bars over its sourced months (`produceLanes` in
+  `lib/calendar-produce.ts`, runs cut at the year-two seam), in place of up to 3 icons per month.
+  Names stick just right of the bed labels while scrolling. Proposed plants stay faded and say
+  "(proposed)". Hover/tap a bar for the written line.
+- Not done, on purpose: fruit and animals as crop-mix tiles. The mix only steers bed auto-suggest;
+  trees and animals come from the Design Studio map, have their own calendar switches, and animals
+  are chosen per coop/hive under "Animals on your map".
+
 ### 30 Sep 2026 — Crop-mix switches for herbs, fringe crops and cover crops; one-bed vine fix; honey flows
 - **Crop mix** (`lib/crop-groups.ts`): "Alliums & herbs" split into **Onions & garlic** and
   **Herbs** (coriander, parsley). Added **Less common crops** (soybean, bambara, mung bean, spider

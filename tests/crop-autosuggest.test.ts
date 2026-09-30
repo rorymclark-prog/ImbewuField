@@ -22,7 +22,7 @@ import {
 } from '../lib/crop-autosuggest.ts';
 import { buildFieldUtilizationByMonth, buildFoodAvailability, isSpaceHungry, occupiedMonthsForPlanting, type PlanBed } from '../lib/crop-plan.ts';
 import { cropByKey, CROPS, hasAutomaticPlanningBasis, hasVerifiedFieldPlan, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
-import { foodGroupOf, rotationFamilyOf } from '../lib/crop-groups.ts';
+import { foodGroupOf, nutritionGroupOf, rotationFamilyOf } from '../lib/crop-groups.ts';
 import { isStapleCrop } from '../lib/staple-crops.ts';
 
 /** `AutoSuggestResult.notes` became `{ kind, bedIds?, text }[]` in the Notes
@@ -43,7 +43,7 @@ const FOUR_PLOTS: PlanBed[] = Array.from({ length: 4 }, (_, i) => ({
 const FAMILY: AutoSuggestAnswers = {
   goal: 'family',
   householdSize: 'medium',
-  groups: ['staple_grain', 'legume', 'leafy_green', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'less_common', 'cover_crop'],
+  groups: ['staple_grain', 'legume', 'leafy_green', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'squash_melon', 'less_common', 'cover_crop'],
   rhythm: 'steady',
   rotateCrops: true,
   allowVinesInBeds: false,
@@ -820,7 +820,7 @@ test('a crop the farmer picked by name is placed, or the plan says truthfully wh
   }
   // A vine nobody asked for still waits for the toggle.
   const broad = autoSuggestPlan({
-    goal: 'family', groups: ['fruiting_veg'], rhythm: 'steady', rotateCrops: true,
+    goal: 'family', groups: ['fruiting_veg', 'squash_melon'], rhythm: 'steady', rotateCrops: true,
     allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
   }, 'summer', beds, [], 9);
   assert.ok(!broad.plantings.some((p) => isSpaceHungry(cropByKey(p.cropKey)!)));
@@ -849,5 +849,26 @@ test('herbs, less common crops and cover crops each switch off from the crop mix
     assert.deepEqual(covers(res), [], `${pattern}: a plot got a winter cover with Cover crops off`);
     assert.ok(noteText(res).some((t) => /Cover crops is switched off/.test(t)));
     assert.ok(!noteText(full).some((t) => /Cover crops is switched off/.test(t)));
+  }
+});
+
+test('squashes and melons are their own crop-mix tile', () => {
+  // Rory, 2026-09-30: "should we have squashes and melons as categories too?"
+  for (const key of ['pumpkin', 'butternut', 'gem-squash', 'baby-marrow', 'watermelon', 'spanspek']) {
+    const crop = cropByKey(key)!;
+    assert.equal(foodGroupOf(crop), 'squash_melon', key);
+    // Still fruiting veg as food, so it shares that breadth-first turn rather than adding one.
+    assert.equal(nutritionGroupOf(crop), 'fruiting_veg', key);
+  }
+  assert.equal(foodGroupOf(cropByKey('cucumber')!), 'fruiting_veg');
+  const plots = [...NINE_BEDS, ...FOUR_PLOTS];
+  const withVines = { ...FAMILY, allowVinesInBeds: true };
+  const narrowed = { ...withVines, groups: withVines.groups.filter((g) => g !== 'squash_melon') };
+  for (const pattern of ['summer', 'mild-frost'] as const) {
+    const full = autoSuggestPlan(withVines, pattern, plots, [], 8);
+    const squash = (r: typeof full) => r.plantings.filter((p) => foodGroupOf(cropByKey(p.cropKey)!) === 'squash_melon');
+    assert.ok(squash(full).length > 0, `${pattern}: test premise — a squash or melon is placed with the tile on`);
+    assert.deepEqual(squash(autoSuggestPlan(narrowed, pattern, plots, [], 8)).map((p) => p.cropKey), [],
+      `${pattern}: a squash or melon was placed with its tile off`);
   }
 });
