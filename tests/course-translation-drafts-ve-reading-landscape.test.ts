@@ -56,7 +56,7 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 3, 6, 14] : [9];
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 3, 6, 14] : [9];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);
@@ -69,8 +69,8 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
         'select the source-paired sentence about recording each harvest as it happens');
       assert.equal(shownParagraphs[6], draftParagraphs[6],
         'select the source-paired end-of-season memory reminder');
-      assert.equal(shownParagraphs[1], originalParagraphs[1],
-        'keep the unreviewed sentence about reaching customers in English');
+      assert.equal(shownParagraphs[1], draftParagraphs[1],
+        'show the paired sentence about recording uses and what reaches customers');
       assert.equal(shownParagraphs[7], originalParagraphs[7],
         'keep the phrase about practical questions in English until reviewed');
       assert.equal(shownParagraphs[14], 'Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.',

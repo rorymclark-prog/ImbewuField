@@ -62,6 +62,7 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
         [2, 'Food forest e etsisa mokgwa ona ka productive species.'],
         [3, 'Phello ha se sejalo se le seng moleng o le mong, empa ke mekhahlelo (layers) e mengata e molemo e melang hammoho.'],
         [4, 'Nahana ka canopy e telele, difate tse nyane, dihlahla le dimela tsa herbaceous.'],
+        [6, 'Bophahamo ba dimela le dibaka tsa ho di jala di itshetlehile ka mofuta wa semela le sebaka. Mekgahlelo ena ke ya ho rala; ha e bolele meedi e behilweng ya bophahamo.'],
         [7, 'Mohlala wa pele wa Highveld o kenyelletsa Wild Fig kapa pecan tse hodimo ho lemon, naartjie le black mulberry.'],
         [8, 'Mohlala oo o beha Cape gooseberry le Wild Medlar mmoho le vegetables, wild garlic, sweet potato le granadilla.'],
         [11, 'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.'],

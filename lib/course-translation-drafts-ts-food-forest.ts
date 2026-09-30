@@ -131,6 +131,118 @@ export const XITSONGA_FOOD_FOREST_DRAFT: XitsongaCourseModuleDraft = {
           }
         }
       ]
+    },
+    {
+      "id": "food-forest-l2",
+      "infographicAlt": {
+        "sourceEnglish": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
+        "xitsongaDraft": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
+        "reviewStatus": "hold"
+      },
+      "title": {
+        "sourceEnglish": "Species Selection for South African Food Forests",
+        "xitsongaDraft": "Species Selection for South African Food Forests",
+        "reviewStatus": "hold"
+      },
+      "body": {
+        "sourceEnglish": "Check local rainfall, frost, heat, soil and water availability before choosing plants.\n\nMango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.\n\nA regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.\n\nThe original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.\n\nThis list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.\n\nKeep existing legal and project restrictions in force. Do not plant from a picture alone.\n\nThe original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.\n\nMarula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.\n\nUseful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.\n\nLocally appropriate indigenous plants can support habitat as part of the design.\n\nChoose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.\n\nProtect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.",
+        "xitsongaDraft": "Check local rainfall, frost, heat, soil and water availability before choosing plants.\n\nMango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.\n\nA regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.\n\nThe original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.\n\nThis list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.\n\nKeep existing legal and project restrictions in force. Do not plant from a picture alone.\n\nThe original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.\n\nMarula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.\n\nUseful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.\n\nSwimilana swa ndzhavuko leswi faneleke laha swi nga seketela habitat tani hi xiphemu xa pulani.\n\nHlawula hi ku ya hi ecosystem ya wena na xiave xa nkoka xa ximilana xin’wana ni xin’wana. Dyondzo leyi a yi nyiki phesente leyi seketeriwaka hi xihlovo.\n\nProtect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.",
+        "reviewStatus": "machine-draft"
+      },
+      "keyPoints": [
+        {
+          "sourceEnglish": "Match each plant and variety to the actual site",
+          "xitsongaDraft": "Match each plant and variety to the actual site",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Check identity, safe use and current local restrictions",
+          "xitsongaDraft": "Check identity, safe use and current local restrictions",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "A regional example is not approval for every species on its list",
+          "xitsongaDraft": "A regional example is not approval for every species on its list",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Use locally appropriate indigenous plants and protect existing natural habitat",
+          "xitsongaDraft": "Use locally appropriate indigenous plants and protect existing natural habitat",
+          "reviewStatus": "hold"
+        }
+      ],
+      "quiz": [
+        {
+          "question": {
+            "sourceEnglish": "A grower wants to plant a young mango where hard frost occurs. What risk needs attention?",
+            "xitsongaDraft": "A grower wants to plant a young mango where hard frost occurs. What risk needs attention?",
+            "reviewStatus": "hold"
+          },
+          "options": [
+            {
+              "sourceEnglish": "It thrives — the position offsets frost",
+              "xitsongaDraft": "It thrives — the position offsets frost",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "It fruits early from the temperature swings",
+              "xitsongaDraft": "It fruits early from the temperature swings",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "It's likely killed or badly damaged by frost, especially as a young tree",
+              "xitsongaDraft": "It's likely killed or badly damaged by frost, especially as a young tree",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "It survives with heavy mulch but needs annual replacement",
+              "xitsongaDraft": "It survives with heavy mulch but needs annual replacement",
+              "reviewStatus": "hold"
+            }
+          ],
+          "sourceCorrectIndex": 2,
+          "rationale": {
+            "sourceEnglish": "Young mango can be damaged by frost. Check actual site conditions and reliable local guidance rather than assuming a sheltered spot removes the risk.",
+            "xitsongaDraft": "Young mango can be damaged by frost. Check actual site conditions and reliable local guidance rather than assuming a sheltered spot removes the risk.",
+            "reviewStatus": "hold"
+          }
+        },
+        {
+          "question": {
+            "sourceEnglish": "Why include locally appropriate indigenous plants in a design?",
+            "xitsongaDraft": "Why include locally appropriate indigenous plants in a design?",
+            "reviewStatus": "hold"
+          },
+          "options": [
+            {
+              "sourceEnglish": "They always yield more food per square metre",
+              "xitsongaDraft": "They always yield more food per square metre",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "They can support local habitat, pollinators and other wildlife",
+              "xitsongaDraft": "They can support local habitat, pollinators and other wildlife",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Every introduced species is illegal",
+              "xitsongaDraft": "Every introduced species is illegal",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "They never need establishment care",
+              "xitsongaDraft": "They never need establishment care",
+              "reviewStatus": "hold"
+            }
+          ],
+          "sourceCorrectIndex": 1,
+          "rationale": {
+            "sourceEnglish": "Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability.",
+            "xitsongaDraft": "Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability.",
+            "reviewStatus": "hold"
+          }
+        }
+      ]
     }
   ],
   "holds": []

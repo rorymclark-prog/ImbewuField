@@ -294,10 +294,19 @@ test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated
   const originalParagraphs = lesson.body.split('\n\n');
   const draftParagraphs = lessonDraft.body.tshivendaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, 13, 'the body keeps all thirteen original paragraph boundaries');
-  for (const index of [0, 2, 3, 4, 5, 6]) {
+  for (const index of [0, 1, 2, 3, 4, 5, 6]) {
     assert.notEqual(draftParagraphs[index], originalParagraphs[index], `paragraph ${index + 1} carries its machine draft`);
   }
-  for (const index of [1, 7, 8, 9, 10, 11, 12]) {
+  assert.equal(draftParagraphs[1],
+    'Zwimela zwo fhambanaho zwi shumisa tshedza na u tsakama zwine zwa vha hone hune zwi aluwa hone.',
+    'describe the light and moisture available at each layer for Tshivenda learners');
+  assert.equal(draftParagraphs[10],
+    'Zwimela zwiṱuku zwi ṱoḓa ṱhogomelo musi zwi tshi thoma u ḓowela fhethu: sedzani u tsakama ha mavu, ni lange tsheṋe, ni zwi tsireledze kha u huvhala.',
+    'pair the bounded establishment-care sentence with its English source');
+  assert.equal(draftParagraphs[11],
+    'Musi zwimela zwi tshi aluwa, murunzi na matoko a maṱari zwi shandula nyimele fhasi hazwo.',
+    'describe the changing conditions below growing plants');
+  for (const index of [7, 8, 9, 12]) {
     assert.equal(draftParagraphs[index], originalParagraphs[index], `paragraph ${index + 1} stays exact English`);
   }
   assert.equal(lessonDraft.keyPoints.length, lesson.keyPoints.length);
