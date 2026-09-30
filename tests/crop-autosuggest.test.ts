@@ -43,7 +43,7 @@ const FOUR_PLOTS: PlanBed[] = Array.from({ length: 4 }, (_, i) => ({
 const FAMILY: AutoSuggestAnswers = {
   goal: 'family',
   householdSize: 'medium',
-  groups: ['staple_grain', 'legume', 'leafy_green', 'root_tuber', 'allium_aromatic', 'fruiting_veg'],
+  groups: ['staple_grain', 'legume', 'leafy_green', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'less_common', 'cover_crop'],
   rhythm: 'steady',
   rotateCrops: true,
   allowVinesInBeds: false,
@@ -824,4 +824,30 @@ test('a crop the farmer picked by name is placed, or the plan says truthfully wh
     allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
   }, 'summer', beds, [], 9);
   assert.ok(!broad.plantings.some((p) => isSpaceHungry(cropByKey(p.cropKey)!)));
+});
+
+test('herbs, less common crops and cover crops each switch off from the crop mix', () => {
+  // Rory, 2026-09-30: separate herbs so they can be turned off, a category for fringe crops such
+  // as mung bean, and cover crops as their own choice.
+  assert.equal(foodGroupOf(cropByKey('parsley')!), 'herb');
+  assert.equal(foodGroupOf(cropByKey('coriander')!), 'herb');
+  assert.equal(foodGroupOf(cropByKey('onions')!), 'allium');
+  assert.equal(foodGroupOf(cropByKey('mung-bean')!), 'less_common');
+  assert.equal(foodGroupOf(cropByKey('sunn-hemp')!), 'cover_crop');
+  const plots = [...NINE_BEDS, ...FOUR_PLOTS];
+  const off = new Set(['herb', 'less_common', 'cover_crop']);
+  const narrowed = { ...FAMILY, groups: FAMILY.groups.filter((g) => !off.has(g)) };
+  for (const pattern of ['summer', 'mild-frost'] as const) {
+    const full = autoSuggestPlan(FAMILY, pattern, plots, [], 8);
+    const res = autoSuggestPlan(narrowed, pattern, plots, [], 8);
+    for (const p of res.plantings) {
+      const group = foodGroupOf(cropByKey(p.cropKey)!);
+      assert.ok(group !== 'herb' && group !== 'less_common', `${pattern}: ${p.cropKey} (${group}) placed with its tile off`);
+    }
+    const covers = (r: typeof res) => r.plantings.filter((p) => FOUR_PLOTS.some((b) => b.id === p.bedId) && (p.cropKey === 'oats' || p.cropKey === 'broad-beans'));
+    assert.ok(covers(full).length > 0, `${pattern}: test premise — plots take a winter cover with the tile on`);
+    assert.deepEqual(covers(res), [], `${pattern}: a plot got a winter cover with Cover crops off`);
+    assert.ok(noteText(res).some((t) => /Cover crops is switched off/.test(t)));
+    assert.ok(!noteText(full).some((t) => /Cover crops is switched off/.test(t)));
+  }
 });

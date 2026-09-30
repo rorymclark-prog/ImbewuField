@@ -5,7 +5,7 @@
   "botanicalName": "Allium ampeloprasum var. porrum",
   "family": "Amaryllidaceae (Alliaceae)",
   "role": "food",
-  "foodGroup": "allium_aromatic",
+  "foodGroup": "allium",
   "harvestProduct": "blanched leaf stem (pseudostem)",
   "frostTender": null,
   "frostTenderNotes": "Not stated directly by the sourced KZN DARD documents. Leeks are grown through the coldest 'Cold areas / Moderate frosts' window (Nov-Apr, spanning the hard-frost May-Aug period's lead-up and tail) per Table 6, implying meaningful cold tolerance, but no explicit minimum-temperature or frost-damage statement was found, so left null rather than inferred.",

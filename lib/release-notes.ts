@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '0da02501', changes: [
+    'Crop mix splits herbs, less common crops and cover crops into their own switches.',
+    'One ticked vine no longer takes over a single bed; the other crops still get planted.',
+    'Honey shows in the bed calendar without months, with recorded SA honey flows on hover.',
+  ], tour: [
+    { title: 'Switch off herbs or cover crops', where: 'Crop plan → Auto-suggest → Optional: change the recommended crop mix', href: '/facilitator/crops',
+      detail: 'Turn off Herbs, Less common crops or Cover crops and suggest again. Those crops are left out.' },
+    { title: 'Hover the honey line', where: 'Crop plan → bed calendar → Animals row', href: '/facilitator/crops',
+      detail: 'With a hive for honey on the map, hover "recorded flows" to see each flow and its source.' },
+  ] },
   { when: '30 September 2026', sha: 'd488b7db', changes: [
     'Introduction adds six short Tshivenda and Xitsonga reflections on silent slides.',
     'Each unreviewed draft sits beside exact English; water and field guidance stays English.',

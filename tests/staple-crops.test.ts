@@ -436,14 +436,27 @@ test("a plot that spends its course on a starter may still take a catalog winter
   // (cover crops are soil management, not an answer to the food-group
   // question — see poolForBed's own comment) but must stay pinned so nobody
   // "fixes" it back out as an unintended side effect of the bug fix.
+  //
+  // 2026-09-30: Rory asked for Cover crops as its own tile in the crop mix so it can be switched
+  // off. The catalog-wide draw above still holds (broad beans and oats are a legume and a grain,
+  // neither ticked here) but only while that tile is on; unticked, the plot rests instead.
   const fill = fillFirstSeasonGaps(
-    { ...FILL_ANSWERS, groups: ['root_tuber'] },
+    { ...FILL_ANSWERS, groups: ['root_tuber', 'cover_crop'] },
     'summer', FILL_BEDS, FILL_CYCLE, [], 5, 2026,
   );
   const keys = fill.starters.filter((s) => s.bedId === 'plot-1').map((s) => s.cropKey);
   assert.deepEqual(coursesOn(fill.starters, 'plot-1'), ['tuber']);
   assert.ok(
     keys.some((k) => isPlotWinterCover(cropByKey(k)!)),
-    'a cover is soil management, not an answer to the food-group question',
+    'a cover is soil management, not an answer to which food groups to eat',
+  );
+  const off = fillFirstSeasonGaps(
+    { ...FILL_ANSWERS, groups: ['root_tuber'] },
+    'summer', FILL_BEDS, FILL_CYCLE, [], 5, 2026,
+  );
+  assert.deepEqual(coursesOn(off.starters, 'plot-1'), ['tuber']);
+  assert.ok(
+    !off.starters.some((s) => s.bedId === 'plot-1' && isPlotWinterCover(cropByKey(s.cropKey)!)),
+    'with the Cover crops tile off the plot rests after its course',
   );
 });
