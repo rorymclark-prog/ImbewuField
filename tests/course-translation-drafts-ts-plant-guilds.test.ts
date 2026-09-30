@@ -11,12 +11,16 @@ const selectedParagraphs: Record<string, Record<number, string>> = {
   },
   'plant-guilds-l3': {
     0: "Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Swimilana swin'wana swi tirha mintirho yo hlayanyana.",
+    1: "Siyisani ndhawu leyi rhendzeleke nsinya ni ndlela swi pfulekile. Tlhela u kambisisa ximilana xin'wana ni xin'wana loko mango ni swimilana leswi nga ekusuhi swi ri karhi swi kula.",
+    5: "Sungula hi nhlayo ya swimilana leswi pfunaka leyi u nga kotaka ku yi khathalela. Languta leswaku swa hanya ni ku kula ku fikela kwihi u nga si engetela swin'wana.",
+    8: 'Tlherisela swilo leswi tsemiweke leswi nga tirhisiwaka eminsinyeni leyi se yi dzimeke kahle. Hlayisa swimilana swa le kusuhi ntsena laha swa ha tirhaka kahle.',
+    11: 'Tirhisa leswi u swi voneke ku cinca ndlela leyi swimilana swi vekiwaka ha yona ni ndlela leyi u swi khathalelaka ha yona. Ximilana xi fanele ku sala laha ntsena loko xi pfuna eka ndhawu leyi.',
   },
 };
 
 const sourceLessonById = new Map(sourceModule.lessons.map(lesson => [lesson.id, lesson]));
 
-test('Plant Guilds Xitsonga drafts replace only two selected concept sentences, with source paired', () => {
+test('Plant Guilds Xitsonga drafts replace screened concepts while preserving every source paragraph', () => {
   assert.equal(XITSONGA_PLANT_GUILDS_DRAFT.id, sourceModule.id);
   assert.equal(XITSONGA_PLANT_GUILDS_DRAFT.language, 'ts');
   assert.equal(XITSONGA_PLANT_GUILDS_DRAFT.reviewStatus, 'machine-draft');

@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '6d3152ac', changes: [
+    'Food Forest and Plant Guilds add more Sesotho and Xitsonga site-care drafts.',
+    'Uncertain cutting and material advice remains in English beside the marked text.',
+  ], tour: [
+    { title: 'Read and compare site care', where: 'Study → Food Forest and Plant Guilds', href: '/student',
+      detail: 'Choose Sesotho or Xitsonga. The new AI drafts show exact English alongside them; regional slides open with No narration.' },
+  ] },
   { when: '30 September 2026', sha: '9834b317', changes: [
     'Plant Guilds and Food Forest add more Sesotho, Tshivenda and Xitsonga lesson drafts.',
     'Uncertain care wording stays in English beside the marked drafts.',
