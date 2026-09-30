@@ -60,16 +60,27 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
     assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
     assert.equal(draftLesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
     assert.deepEqual(draftLesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
-    assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
+    if (draftLesson.id === 'market-community-l1') {
+      assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), [
+        'Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali',
+        sourceLesson.keyPoints[1], sourceLesson.keyPoints[2], sourceLesson.keyPoints[3],
+      ]);
+      assert.equal(draftLesson.keyPoints[0].reviewStatus, 'machine-draft');
+      assert.deepEqual(draftLesson.keyPoints.slice(1).map(point => point.reviewStatus), ['hold', 'hold', 'hold']);
+    } else {
+      assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
+    }
     assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), sourceLesson.quiz.map(question => question.correct));
     const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
     assert.equal(shown.status, 'draft');
     assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
-    assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
+    assert.deepEqual(shown.content.keyPoints, draftLesson.id === 'market-community-l1'
+      ? ['Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali', ...sourceLesson.keyPoints.slice(1)]
+      : sourceLesson.keyPoints);
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
-    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 3, 6, 7]
+    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 6, 7, 14]
       : draftLesson.id === 'market-community-l2' ? [0] : [9];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
@@ -91,6 +102,14 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
         'the distinct harvest uses remain visible beside the exact English source');
       assert.equal(draftParagraphs[7], 'Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.',
         'the season-of-records concept is screened while crop and price decisions stay in English');
+      assert.equal(draftParagraphs[2], 'Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.');
+      assert.equal(draftParagraphs[4], 'Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin\'wana ni xin\'wana xi yeke kona.',
+        'unit labels and produce names stay exact while the recording action is drafted');
+      assert.equal(draftParagraphs[14], 'Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.');
+      for (const index of [5, 8, 9, 10, 11, 12, 13, 15, 16]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
+        'crop comparisons, prices, financial examples and planting timing remain exact English');
+      assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), [2, 1],
+        'the held quizzes keep their original answer keys');
     }
     const changedSource: Lesson = { ...sourceLesson, body: `${sourceLesson.body} Changed.` };
     assert.equal(resolveLearnerLessonPresentation(changedSource, 'ts').status, 'english-fallback');

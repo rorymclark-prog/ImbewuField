@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'b4d86dd9', changes: [
+    'Study adds marked farm-record drafts in Sesotho, Tshivenda and Xitsonga.',
+    'Compost, pricing, crop choices and quizzes stay in English.',
+  ], tour: [
+    { title: 'Compare the farm-record lesson', where: 'Study → Market Gardening & Community → lesson 1', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Read the marked harvest-record lines beside the exact English source.' },
+  ] },
   { when: '30 September 2026', sha: 'a77b4a20', changes: [
     'Study adds marked Sesotho drafts for Market Gardening lesson 3.',
     'Seed permissions and selling-return guidance stay paired with exact English.',

@@ -56,7 +56,7 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 3, 6, 14] : [9];
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 3, 4, 6, 10, 14] : [9];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);
@@ -73,8 +73,20 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
         'show the paired sentence about recording uses and what reaches customers');
       assert.equal(shownParagraphs[7], originalParagraphs[7],
         'keep the phrase about practical questions in English until reviewed');
+      assert.equal(shownParagraphs[4],
+        'Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.',
+        'keep unit labels and morogo exact while recording where each item went');
+      assert.equal(shownParagraphs[5],
+        originalParagraphs[5],
+        'keep the compost destination exact until its meaning is confirmed');
+      assert.equal(shownParagraphs[10],
+        'Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.',
+        'state only which months the household buys food');
       assert.equal(shownParagraphs[14], 'Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.',
         'the household food-gap prompt is screened while crop and price decisions stay in English');
+      assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), market.lessons[0].keyPoints);
+      assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'hold' && point.tshivendaDraft === point.sourceEnglish),
+        'cash, cost, price and local crop timing key points remain exact English');
     }
     assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed.` }, 've').status,
       'english-fallback');
