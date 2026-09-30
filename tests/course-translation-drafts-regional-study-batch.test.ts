@@ -125,3 +125,53 @@ test('new Xitsonga Food Forest L2 lesson preserves its full English shell and qu
   assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} changed` }, 'ts').status,
     'english-fallback', 'a changed canonical lesson must withdraw the paired machine draft');
 });
+
+test('the Xitsonga Food Forest closing lesson pairs every learner field and holds uncertain care in English', () => {
+  const source = sourceLesson('food-forest', 'food-forest-l3');
+  const draft = XITSONGA_FOOD_FOREST_DRAFT.lessons.find(item => item.id === source.id);
+  assert.ok(draft, 'Study needs a source-paired Xitsonga closing lesson');
+  assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(draft.title.xitsongaDraft, source.title);
+  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.ok(source.infographicAlt);
+  assert.deepEqual(draft.infographicAlt, {
+    sourceEnglish: source.infographicAlt,
+    xitsongaDraft: source.infographicAlt,
+    reviewStatus: 'hold',
+  });
+
+  const sourceParagraphs = source.body.split('\n\n');
+  const draftParagraphs = draft.body.xitsongaDraft.split('\n\n');
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+  assert.equal(draftParagraphs[11],
+    'Kambisisa swimilana leswitsongo endzhaku ko swi byala. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.');
+  sourceParagraphs.forEach((paragraph, index) => {
+    if (index !== 11) assert.equal(draftParagraphs[index], paragraph, `paragraph ${index + 1} stays exact English`);
+  });
+
+  assert.deepEqual(draft.keyPoints.map(point => [point.sourceEnglish, point.xitsongaDraft, point.reviewStatus]),
+    source.keyPoints.map(text => [text, text, 'hold']));
+  assert.equal(draft.quiz.length, source.quiz.length);
+  draft.quiz.forEach((question, index) => {
+    const original = source.quiz[index];
+    assert.equal(question.sourceCorrectIndex, original.correct);
+    const heldPairs = [
+      [question.question, original.q] as const,
+      ...question.options.map((option, optionIndex) => [option, original.options[optionIndex]] as const),
+      [question.rationale, original.rationale] as const,
+    ];
+    for (const [pair, english] of heldPairs) {
+      assert.equal(pair.sourceEnglish, english);
+      assert.equal(pair.xitsongaDraft, english, `quiz ${index + 1} remains an exact English hold`);
+      assert.equal(pair.reviewStatus, 'hold');
+    }
+  });
+
+  const shown = resolveLearnerLessonPresentation(source, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.xitsongaDraft);
+  assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} changed` }, 'ts').status,
+    'english-fallback', 'a changed canonical lesson must withdraw this paired draft');
+});

@@ -10,10 +10,12 @@ import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
+import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
+const marketSource = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
 const completeHold = (language = 'st') => ({
   language, sourceLanguage: 'en', reviewStatus: 'unreviewed',
   slides: source.map((english) => ({
@@ -29,6 +31,50 @@ test('the Sesotho pilot pairs all 22 actual English introduction slides in autho
   assert.equal(source[0].body.length, 4);
   assert.ok(source.every((slide) => slide.body.every((paragraph: string) => paragraph !== '---' && !paragraph.includes('[pause]'))));
   assert.equal(validatePairedDraft(completeHold(), source).length, 22);
+});
+
+test('Market record slides reuse L1 wording and hold business, quantity and produce-destination advice', () => {
+  const batches = [
+    { language: 'st' },
+    { language: 've' },
+    { language: 'ts' },
+  ];
+  const l1English = SESOTHO_MARKET_COMMUNITY_DRAFT.lessons
+    .find(({ id }) => id === 'market-community-l1')!.body.sourceEnglish.split('\n\n');
+  const l1ByLanguage = new Map([
+    ['st', SESOTHO_MARKET_COMMUNITY_DRAFT.lessons.find(({ id }) => id === 'market-community-l1')!.body.sesothoDraft.split('\n\n')],
+    ['ve', TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.find(({ id }) => id === 'market-community-l1')!.body.tshivendaDraft.split('\n\n')],
+    ['ts', XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(({ id }) => id === 'market-community-l1')!.body.xitsongaDraft.split('\n\n')],
+  ]);
+  const translated = [
+    { slide: 2, body: 0, lesson: 0 },
+    { slide: 2, body: 1, lesson: 1 },
+    { slide: 5, body: 0, lesson: 3 },
+    { slide: 5, body: 3, lesson: 6 },
+  ];
+  const held = [{ slide: 2, body: 2 }, { slide: 5, body: 1 }, { slide: 5, body: 2 }];
+
+  assert.equal(marketSource.length, 20);
+  for (const { language } of batches) {
+    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, marketSource, language);
+    const lessonParagraphs = l1ByLanguage.get(language)!;
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    for (const item of translated) {
+      const slide = slides[item.slide - 1];
+      assert.equal(slide.english.body[item.body], l1English[item.lesson], `${language} slide ${item.slide}: retain the exact L1 English clause`);
+      assert.equal(slide.target.body[item.body].status, 'draft');
+      assert.equal(slide.target.body[item.body].text, lessonParagraphs[item.lesson],
+        `${language} slide ${item.slide}: reuse the existing L1 machine candidate verbatim`);
+    }
+    for (const item of held) {
+      const part = slides[item.slide - 1].target.body[item.body];
+      assert.equal(part.status, 'english-hold', `${language} slide ${item.slide}: sensitive wording stays in English`);
+      assert.equal(part.text, undefined, `${language} slide ${item.slide}: do not present a held passage as translated`);
+    }
+    assert.equal(pairedTargetHasEnglishHolds(slides[1].target), true);
+    assert.equal(pairedTargetHasEnglishHolds(slides[4].target), true);
+  }
 });
 
 test('Water Harvesting regional decks translate only one source-paired rainfall sentence', () => {

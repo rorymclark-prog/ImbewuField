@@ -57,16 +57,16 @@
         "body": [
           {
             "status": "draft",
-            "text": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha)."
+            "text": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
             "status": "draft",
-            "text": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki."
+            "text": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
-            "status": "draft",
-            "text": "Sebedisa tlhahisoleseding eo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "status": "english-hold"
           }
         ]
       }
@@ -164,19 +164,19 @@
         "body": [
           {
             "status": "draft",
-            "text": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala."
+            "text": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "english-hold"
           },
           {
             "status": "english-hold"
           },
           {
             "status": "draft",
-            "text": "Sebedisa mokgwa ona o bonolo ka ho tshwana bakeng sa dijo tse bolokwang hae, dijo tse rekiswang, tse fanwang e le dimpho, le tse kenngwang compost.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-          },
-          {
-            "status": "draft",
-            "text": "O se ke wa itshetleha ka mohopolo qetellong ya sehla."
+            "text": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           }
         ]
       }

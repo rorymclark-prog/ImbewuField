@@ -82,7 +82,10 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "sourceEnglish": "Look for several clues about soil condition.",
+            "text": "Sheba matshwao a mmalwa a boemo ba mobu.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -117,7 +120,29 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Look at roots, ",
+                "text": "Sheba metso, ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "soil structure"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " and water movement as well as ",
+                "text": " le motsamao wa metsi hammoho le ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "visible soil life."
+              }
+            ]
           }
         ]
       }
@@ -156,7 +181,41 @@
             "text": "Sheba se kwahetseng bokahodimo. Mohlala o mong o kwahetswe ke mulch e hlephileng."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Use several clues together. ",
+                "text": "Sebelisa matshwao a mmalwa mmoho. ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": "Colour alone cannot tell you ",
+                "text": "Mmala feela o ke ke wa o bolella ka ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "soil health."
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " Check ",
+                "text": "Hlahloba ",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "moisture,"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " plant growth and how water enters the ground.",
+                "text": " kgolo ya dimela le tsela eo metsi a kenang ka yona mobung.",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              }
+            ]
           }
         ]
       }

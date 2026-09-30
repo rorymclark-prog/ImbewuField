@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.st.paired-draft.json",
-  "pairedSourceSha256": "677014849ee7dfd58a2298b586fa9170b075457d6d429496d649f6f5185fedad",
+  "pairedSourceSha256": "2cc946b8009f5f915b91e0d4593febba53e8e987135eed52be635e6deb3efda6",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -21,8 +21,8 @@
       "slide": 2,
       "path": "public/course-decks/market-community/st/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 232242,
-      "sha256": "97002787590c5f7ce2ca8b597d77998339157cfa386686828140baba52d17a41"
+      "bytes": 238940,
+      "sha256": "69dcb125d2fa5e03e0628d4449168840f833e2bc07dfdea9f01fe7d493da128a"
     },
     {
       "slide": 3,
@@ -42,8 +42,8 @@
       "slide": 5,
       "path": "public/course-decks/market-community/st/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 390168,
-      "sha256": "176020fcceb772fcbce29662820d83890d42bac8ce808a7a68f6790703705383"
+      "bytes": 381434,
+      "sha256": "e200ee5ec88a51ef8f523338dfcbe7d7523b80346679e7dcf9dab2214893bcc9"
     },
     {
       "slide": 6,
@@ -163,7 +163,7 @@
       "slide": 2,
       "path": "docs/media/market-community/st-paired-review/slide-02-390.jpg",
       "pixels": "390x1463",
-      "sha256": "f68dd04e0aba4adffae89bf985b92bc8e22135291aec7a3ecf3657b114067af5"
+      "sha256": "5f7e6bb87af80701aa1257b69811d6e6ded492cf710c3d72075777de0f9b0d50"
     },
     {
       "slide": 3,
@@ -181,7 +181,7 @@
       "slide": 5,
       "path": "docs/media/market-community/st-paired-review/slide-05-390.jpg",
       "pixels": "390x1463",
-      "sha256": "8f6fba035da6fa2b227c4195bf39aee56dfcbff8e201f40f8ca4681039340f09"
+      "sha256": "8b44e882d657097a3f1768fedd8f02f135f027eaffdff40f738b452d44575ffc"
     },
     {
       "slide": 6,
@@ -220,6 +220,6 @@
       "sha256": "10adb5391515ab8478dc2f46c59ce9a487cf78f55a24ae704ddef997af68b692"
     }
   ],
-  "draftPassageCount": 46,
-  "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No regional narration, fluent review or local farming approval is claimed."
+  "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. The business-decision line, quantity examples, and household/sold/gifted/composted destination sentence on slides 2 and 5 remain exact English holds. Price calculations, planting and local trading rules remain exact English holds. No regional narration, fluent review or local farming approval is claimed.",
+  "draftPassageCount": 44
 }

@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/soil-health.st.paired-draft.json",
-  "pairedSourceSha256": "bb748948749673fb784801b1d7cee7ce4b9a6c0f4400153edf26a016c8acabdd",
+  "pairedSourceSha256": "63f7a2a23875403b1179f23569ea23b2698247cf5a47e65e9f4c27bc65e9c553",
   "englishSource": "docs/narration/soil-health.en.md",
   "englishSourceSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
   "slides": [
@@ -21,29 +21,29 @@
       "slide": 2,
       "path": "public/course-decks/soil-health/st/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 220490,
-      "sha256": "ab3c70353c849567708c29df8a38066a1e9d98db67a04ac1140dc2a3e928a74f"
+      "bytes": 183018,
+      "sha256": "c2f35962414322d38ca5949bd542d5de151312e980f64411d3ae77dac55f39c4"
     },
     {
       "slide": 3,
       "path": "public/course-decks/soil-health/st/slide-03.webp",
       "pixels": "1440x5400",
-      "bytes": 206574,
-      "sha256": "a17482567939e10ac9e422b516e4416e197716d88871e9cb7ae7e25d29b984af"
+      "bytes": 203852,
+      "sha256": "e02dd6969d85e9518e09438825b36404dedef0e9bfdf76c2420dbe1c5320c81d"
     },
     {
       "slide": 4,
       "path": "public/course-decks/soil-health/st/slide-04.webp",
       "pixels": "1440x5400",
-      "bytes": 231954,
-      "sha256": "97a821b5b15af2cbb53b1166b43cfc3e01a9195d2cbe196f593592f0fe4234d6"
+      "bytes": 229520,
+      "sha256": "6e5ffba8ddc3b7d946b80e158104321785dd7e5e1f77e676038b2e659193bb53"
     },
     {
       "slide": 5,
       "path": "public/course-decks/soil-health/st/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 495984,
-      "sha256": "17c90b5b62ed4d0547967dc1e47106fc448b0007c93ac9d1f34fee9bcad1e693"
+      "bytes": 496186,
+      "sha256": "91751ae6bdd061c9855a4a3a0c0df2d26ad77de3dabddb3d376bb5191220fee8"
     },
     {
       "slide": 6,
@@ -105,8 +105,8 @@
       "slide": 14,
       "path": "public/course-decks/soil-health/st/slide-14.webp",
       "pixels": "1440x5400",
-      "bytes": 235234,
-      "sha256": "b762dcdffd1326b9d0ad68f173e38df4c52b38ae76ef306a002476754f3a8c49"
+      "bytes": 199802,
+      "sha256": "da2ad348a5f179d9cad3e1b173c7c6d20da9577695629b5a1bff128137da5950"
     },
     {
       "slide": 15,
@@ -147,8 +147,8 @@
       "slide": 20,
       "path": "public/course-decks/soil-health/st/slide-20.webp",
       "pixels": "1440x5400",
-      "bytes": 241146,
-      "sha256": "82def4243385fa3c95dadea23cf10c6dc34e02ec23dde0ce1698e343a3b6a934"
+      "bytes": 202150,
+      "sha256": "b46730f43fcb36386762e9960d4762af60b9d6e7fed3bc8cdb806cce8121c206"
     }
   ],
   "contactSheet": "docs/media/soil-health/qa/st-source-paired-contact-sheet.jpg",
@@ -160,10 +160,22 @@
       "sha256": "eb66a0f369419698cd32ec7a83e32fa21d157d996c306c05b941f4882fbb8ccb"
     },
     {
+      "slide": 3,
+      "path": "docs/media/soil-health/qa/st-slide-03-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "befee81c033f8723e28d47e1e64b5d33da47f3f5c9b25ac3fe29fe2d96289c7e"
+    },
+    {
+      "slide": 4,
+      "path": "docs/media/soil-health/qa/st-slide-04-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "84e922be46e6da73453c4d3649047ad4641f3eb68b4e1ccfbcbb8d6004a8dce4"
+    },
+    {
       "slide": 5,
       "path": "docs/media/soil-health/qa/st-slide-05-390.jpg",
       "pixels": "390x1463",
-      "sha256": "81c6458ce153fd7f13c0b255ff694d5a2d48138f09c661c1abc7846cc9399957"
+      "sha256": "727d659df63b25915d622ec1a755943c9278705e048f0f8f11fa5f66634ce5cd"
     },
     {
       "slide": 6,
@@ -220,5 +232,6 @@
       "sha256": "16f3adbfc8a905c3dbff3c1e802ef9c64dc85728d5d90685e1a3abf7a67b687d"
     }
   ],
-  "note": "All 20 silent frames pair the unchanged English illustration and exact English source with only the existing marked Sesotho machine drafts. Every other heading and passage is held in English. No Sesotho narration or local farming approval is claimed."
+  "draftPassageCount": 15,
+  "note": "All 20 silent Sesotho frames pair each displayed draft or English hold with the exact English source. The updated slides carry observation drafts only; soil structure, soil health and moisture remain exact English where their technical wording is held, and jar and compost procedures stay English. No fluent language review or local farming approval is claimed."
 }
