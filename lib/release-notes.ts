@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '1ed267a1', changes: [
+    'Study names regional slides and narration choices.',
+    'English lessons no longer mislabel regional slides.',
+  ], tour: [
+    { title: 'Check a lesson language', where: 'Study → open a Sesotho, Tshivenda or Xitsonga lesson', href: '/student',
+      detail: 'The notice names the slide and narration choices separately; source-paired drafts remain marked unreviewed.' },
+  ] },
   { when: '30 September 2026', sha: '1d36f255', changes: [
     'Food Forest adds two Sesotho pattern explanations in the lesson and silent slide.',
     'Technical terms stay in English beside the unreviewed draft and exact source.',
