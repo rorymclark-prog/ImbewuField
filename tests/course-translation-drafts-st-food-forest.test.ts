@@ -58,6 +58,9 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
       const translatedParagraphs = new Map([
         [0, 'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.'],
         [1, 'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.'],
+        // The two descriptive forest-pattern lines now accompany the silent slide; planting advice stays held.
+        [2, 'Food forest e etsisa mokgwa ona ka productive species.'],
+        [3, 'Phello ha se sejalo se le seng moleng o le mong, empa ke mekhahlelo (layers) e mengata e molemo e melang hammoho.'],
         [7, 'Mohlala wa pele wa Highveld o kenyelletsa Wild Fig kapa pecan tse hodimo ho lemon, naartjie le black mulberry.'],
         [8, 'Mohlala oo o beha Cape gooseberry le Wild Medlar mmoho le vegetables, wild garlic, sweet potato le granadilla.'],
         [11, 'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.'],

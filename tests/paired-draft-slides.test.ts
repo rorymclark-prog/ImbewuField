@@ -276,7 +276,7 @@ test('Food Forest Sesotho slides pair low-risk orientation drafts with exact Eng
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  for (const field of ['1:1', '1:4', '2:1', '4:1', '4:2', '8:2', '13:1']) {
+  for (const field of ['1:1', '1:4', '2:1', '4:1', '4:2', '4:3', '4:4', '8:2', '13:1']) {
     assert.ok(drafted.includes(field), `the source-paired draft at ${field} should remain available`);
   }
   assert.equal(slides[1].target.heading.status, 'draft');
@@ -316,7 +316,8 @@ test('Food Forest Sesotho slides pair low-risk orientation drafts with exact Eng
   const lessonBody = SESOTHO_FOOD_FOREST_DRAFT.lessons[0].body;
   const lessonEnglish = lessonBody.sourceEnglish.split('\n\n');
   const lessonSesotho = lessonBody.sesothoDraft.split('\n\n');
-  for (const [slideIndex, slideParagraph, lessonParagraph] of [[3, 0, 0], [3, 1, 1], [7, 1, 11]]) {
+  // These two forest-pattern sentences now appear in both the learner text and silent slide.
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[3, 0, 0], [3, 1, 1], [3, 2, 2], [3, 3, 3], [7, 1, 11]]) {
     assert.equal(slides[slideIndex].english.body[slideParagraph], lessonEnglish[lessonParagraph],
       `slide ${slideIndex + 1} must use the exact lesson source sentence`);
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, lessonSesotho[lessonParagraph],
