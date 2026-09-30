@@ -115,7 +115,7 @@ test('Tshivenda Water Harvesting keeps lesson instruction English and shows its 
     'Tshivenda narration remains explicitly identified as English');
 });
 
-test('Soil Health Tshivenda L1 pairs selected concepts and holds every procedure and recommendation', () => {
+test('Soil Health Tshivenda L1 pairs observations while holding the jar procedure and uncertain diagnosis', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health');
   assert.ok(source, 'Soil Health draft must remain paired to its canonical English module');
   const draft = TSHIVENDA_SOIL_HEALTH_DRAFT;
@@ -139,6 +139,9 @@ test('Soil Health Tshivenda L1 pairs selected concepts and holds every procedure
     ['Worm channels can help water and air enter soil.', 'Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.'],
     ['Compaction, poor drainage and loss of organic matter can limit roots and soil life.', 'Compaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.'],
     ['Worm activity also changes with moisture and season.', 'U shuma ha worms na hone hu a shanduka u ya nga moisture na season.'],
+    ['Look at roots, soil structure and water movement as well as visible soil life.', 'Sedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.'],
+    ['Compare the settled layers and feel the soil in the field.', 'Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.'],
+    ['Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.', 'Ṅwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.'],
   ]);
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   let heldFields = 0;
@@ -174,7 +177,7 @@ test('Soil Health Tshivenda L1 pairs selected concepts and holds every procedure
         expectedBody = expectedBody.replace(english, tshivenda);
       }
       assert.equal(paired.body.tshivendaDraft, expectedBody,
-        `${path}.body: only six selected concept sentences change; procedures, advice and the complex negation stay exact English`);
+        `${path}.body: only screened concepts and observations change; procedure and complex diagnosis stay exact English`);
       assert.deepEqual(numberTokens(paired.body.tshivendaDraft), numberTokens(lesson.body),
         `${path}.body: preserve every numeric source token`);
       assert.equal(paired.body.tshivendaDraft.split('\n\n').length, lesson.body.split('\n\n').length,

@@ -15,7 +15,7 @@ const sourceParagraphs = sourceLesson.body.split('\n\n');
 const draftParagraphs = [...sourceParagraphs];
 draftParagraphs[10] = 'Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.';
 draftParagraphs[11] = 'Resilience a swi vuli leswaku a ku na lexi tsandzekaka.';
-draftParagraphs[12] = 'Swi vula leswaku ku tsandzeka kun\'we a ku herisi pulani ya swakudya ya ndyangu wa wena.';
+draftParagraphs[12] = sourceParagraphs[12];
 draftParagraphs[13] = 'Xibyariwa xin\'we i "point of failure" yin\'we.';
 // Keep the whole quantity-and-staples claim in English until its scope is reviewed.
 draftParagraphs[14] = sourceParagraphs[14];

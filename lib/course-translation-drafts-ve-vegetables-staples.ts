@@ -61,7 +61,7 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
     'module title and description',
     'lesson title',
     'infographicAlt',
-    'body paragraph 3 sentence 2, paragraphs 4–11 and 15–16',
+    'body paragraph 3 sentence 2, paragraphs 4–10 and 15–16',
     'keyPoints',
     'quiz questions, options, and rationales',
   ],

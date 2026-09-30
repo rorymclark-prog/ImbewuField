@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/vegetables-staples.ts.paired-draft.json",
-  "pairedSourceSha256": "61bc51f238adbbbee0dd867421159b1320f2e32c9bdae56aab33afeb4d36ecc9",
+  "pairedSourceSha256": "e5cb6bae5bcbbc64357f0e19d38b18404f1d05d9ba01bd9f8dade1ff0122a992",
   "englishSource": "docs/narration/vegetables-staples.en.md",
   "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
   "slides": [
@@ -21,15 +21,15 @@
       "slide": 2,
       "path": "public/course-decks/vegetables-staples/ts/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 312712,
-      "sha256": "e79c3115794c458e7419c8a7e3c804fb88f836c1cfd519e013d5f8a6fd7934fa"
+      "bytes": 315916,
+      "sha256": "487ddf3b3fe5e0133e98f04bc61e19fa58b8dd8f88970cbb53854c025f308bf8"
     },
     {
       "slide": 3,
       "path": "public/course-decks/vegetables-staples/ts/slide-03.webp",
       "pixels": "1440x5400",
-      "bytes": 372478,
-      "sha256": "82bbafc23ab62eeeab9c738d888f8f094dc93865d4c2810ba499840112fde51f"
+      "bytes": 374554,
+      "sha256": "f7c04f1f925652b4505b085124b3837360158c55387c3b19de51e560760896ba"
     },
     {
       "slide": 4,
@@ -105,8 +105,8 @@
       "slide": 14,
       "path": "public/course-decks/vegetables-staples/ts/slide-14.webp",
       "pixels": "1440x5400",
-      "bytes": 259100,
-      "sha256": "b641f76546c804bf481ac30a15241acd301eac983e652cc8a57bfc112151f91b"
+      "bytes": 256414,
+      "sha256": "af85f7d7e2cbd2e8d0f9bdd529a63c73e52a0c5161f4e09da968732888dd958a"
     },
     {
       "slide": 15,
@@ -126,15 +126,15 @@
       "slide": 17,
       "path": "public/course-decks/vegetables-staples/ts/slide-17.webp",
       "pixels": "1440x5400",
-      "bytes": 373912,
-      "sha256": "3c82d2e1c204e1d26e4d443822cbd6ac10db55602f5be16095c4d32a61de66ce"
+      "bytes": 373382,
+      "sha256": "fc4c5c8f0573e4beab0193ba1f4f957e9aa69fe75da5df57d0228d0f76ea13b3"
     },
     {
       "slide": 18,
       "path": "public/course-decks/vegetables-staples/ts/slide-18.webp",
       "pixels": "1440x5400",
-      "bytes": 344448,
-      "sha256": "d6874a8f0e8ac8e9db68b530e6bd531f873d40b76ea23a49a1f3889cc0eb39c4"
+      "bytes": 347150,
+      "sha256": "5f25ad345a87f09fe5d6268f589c1df348807655e59d93824dd2c8682d470c23"
     }
   ],
   "contactSheet": "docs/media/vegetables-staples/ts-paired-review/contact-sheet.jpg",
@@ -155,13 +155,13 @@
       "slide": 14,
       "path": "docs/media/vegetables-staples/ts-paired-review/slide-14-390.jpg",
       "pixels": "390x1463",
-      "sha256": "e0e658690307102744a38232811a3d9d4f9d8a32cbd0d1095a3ef84f8919eb1d"
+      "sha256": "63d7d78bfd43d95db2d92b2d39fa441131c86ee2c3b13f2f2ab0ec97d2a4ab1e"
     },
     {
       "slide": 18,
       "path": "docs/media/vegetables-staples/ts-paired-review/slide-18-390.jpg",
       "pixels": "390x1463",
-      "sha256": "facfd9962be96aae910129954603386995d9d9b6e6ef97f3c2fdcd2807b0ade4"
+      "sha256": "368818b4f25cebe6819a480817b0aa8d71bc4b3c1a1714c70097cbbce6fea154"
     }
   ],
   "note": "Each frame pairs existing English artwork, the explicit draft/hold panel, and exact English narration. No audio is generated or registered."

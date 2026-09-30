@@ -14,10 +14,10 @@ test('Reading the Landscape Sesotho draft stays paired to every exact source fie
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
   assert.equal(draft.sourceMetadata.category, source.category);
   assert.equal(draft.title.sourceEnglish, source.title);
-  assert.equal(draft.title.sesothoDraft, source.title, 'uncertain “Bala” card title must stay exact English');
-  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.title.sesothoDraft, 'Ho Bala Ponahalo ea Naha');
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
   const moduleCard = resolveCourseModulePresentation(source, 'st');
-  assert.equal(moduleCard.title, source.title, 'the Sesotho Study card must use the held English title');
+  assert.equal(moduleCard.title, draft.title.sesothoDraft, 'the source-paired Sesotho title must reach the Study card');
   assert.equal(moduleCard.description, draft.description.sesothoDraft);
   assert.equal(draft.description.sourceEnglish, source.description);
   assert.deepEqual(draft.lessons.map(lesson => lesson.id), source.lessons.map(lesson => lesson.id));

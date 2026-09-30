@@ -9,7 +9,7 @@ const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'vegetabl
 const selectedDraftParagraphs = [
   'Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.',
   'Resilience a swi vuli leswaku a ku na lexi tsandzekaka.',
-  "Swi vula leswaku ku tsandzeka kun'we a ku herisi pulani ya swakudya ya ndyangu wa wena.",
+  "It means one failure doesn't finish your household's food plan.",
   'Xibyariwa xin\'we i "point of failure" yin\'we.',
   'Two or more staples give you more ways to keep eating.',
   'Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.',
@@ -23,7 +23,7 @@ const selectedEnglishParagraphs = [
   'Different crops use water, soil and seasons differently. That difference is the protection.',
 ];
 
-test('Vegetables & Staple Crops L3 shows seven source-paired resilience sentences and holds the staple-count claim', () => {
+test('Vegetables & Staple Crops L3 holds the one-failure and staple-count claims when draft scope is uncertain', () => {
   const draft = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0];
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.id, sourceModule.id);
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.language, 'ts');
@@ -40,6 +40,7 @@ test('Vegetables & Staple Crops L3 shows seven source-paired resilience sentence
   assert.deepEqual(localizedParagraphs.slice(0, 10), sourceParagraphs.slice(0, 10),
     'species-specific crop claims and farming instructions stay exact English');
   assert.deepEqual(localizedParagraphs.slice(10), selectedDraftParagraphs);
+  assert.equal(localizedParagraphs[12], sourceParagraphs[12], 'the one-failure limit remains exact English');
   assert.equal(localizedParagraphs[14], sourceParagraphs[14], 'the full staple-count sentence remains exact English');
 
   assert.equal(draft.title.sourceEnglish, sourceLesson.title);
@@ -84,10 +85,10 @@ test('Vegetables & Staple Crops L3 source drift and undrafted lesson sources fal
   }
 });
 
-test('Vegetables & Staple Crops L3 preserves negation and keeps the full staple-count claim held', () => {
+test('Vegetables & Staple Crops L3 preserves negation while holding the full one-failure and staple-count claims', () => {
   const paragraphs = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
   assert.match(paragraphs[11], /Resilience a swi vuli leswaku a ku na lexi tsandzekaka/);
-  assert.match(paragraphs[12], /ku tsandzeka kun'we a ku herisi/);
+  assert.equal(paragraphs[12], sourceLesson.body.split('\n\n')[12]);
   assert.match(paragraphs[13], /point of failure/);
   assert.equal(paragraphs[14], sourceLesson.body.split('\n\n')[14]);
   assert.match(paragraphs[14], /^Two or more staples give you more ways to keep eating\.$/);

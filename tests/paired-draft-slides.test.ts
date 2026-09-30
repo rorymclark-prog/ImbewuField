@@ -358,14 +358,17 @@ test('Vegetables slides pair Xitsonga harvest-gap and resilience drafts with exa
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  assert.deepEqual(drafted, ['2:3', '2:5', '13:6', '14:1', '14:2', '14:5']);
+  assert.deepEqual(drafted, ['2:3', '2:5', '13:6', '14:1', '14:5']);
   const lesson = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body;
   const english = lesson.sourceEnglish.split('\n\n');
   const translated = lesson.xitsongaDraft.split('\n\n');
-  for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 1, 12], [13, 4, 15]]) {
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 4, 15]]) {
     assert.equal(slides[slideIndex].english.body[slideParagraph], english[lessonParagraph]);
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
   }
+  assert.equal(slides[13].target.body[1].status, 'english-hold',
+    'the one-failure limit stays exact English in the deck as well as the lesson');
+  assert.equal(translated[12], english[12], 'the one-failure limit stays exact English in the lesson');
   assert.equal(slides[13].target.body[2].status, 'english-hold');
   assert.equal(slides[13].target.body[3].status, 'english-hold');
   assert.equal(slides[1].target.body[1].status, 'english-hold',

@@ -11,7 +11,7 @@ const selectedParagraphs = [
   "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
 ];
 
-test('Soil Health L1 shows only source-paired concept sentences as an unreviewed Xitsonga draft', () => {
+test('Soil Health L1 pairs observations while jar procedure and diagnosis stay exact English', () => {
   const draft = XITSONGA_SOIL_HEALTH_DRAFT.lessons[0];
   assert.equal(XITSONGA_SOIL_HEALTH_DRAFT.id, sourceModule.id);
   assert.equal(XITSONGA_SOIL_HEALTH_DRAFT.language, 'ts');
@@ -29,8 +29,14 @@ test('Soil Health L1 shows only source-paired concept sentences as an unreviewed
   const candidateParagraphs = draft.body.xitsongaDraft.split('\n\n');
   assert.equal(candidateParagraphs.length, sourceParagraphs.length);
   assert.deepEqual(candidateParagraphs.slice(0, 2), selectedParagraphs);
-  assert.deepEqual(candidateParagraphs.slice(2), sourceParagraphs.slice(2),
-    'all soil observation, jar-test interpretation, uncertainty and remedy advice stays exact English');
+  for (const index of [3, 4, 5, 6, 9, 10, 11]) {
+    assert.equal(candidateParagraphs[index], sourceParagraphs[index],
+      `paragraph ${index + 1}: jar procedure, interpretation limits and diagnostic cause stay exact English`);
+  }
+  for (const index of [2, 7, 8]) {
+    assert.notEqual(candidateParagraphs[index], sourceParagraphs[index],
+      `paragraph ${index + 1}: screened observation is visible beside exact English`);
+  }
 
   assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.deepEqual(draft.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);

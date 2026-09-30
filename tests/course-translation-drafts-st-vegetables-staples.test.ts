@@ -67,15 +67,24 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
     }
   }
   assert.deepEqual(holds, [
-    'lessons[0] vegetables-staples-l1.body',
     'lessons[0] vegetables-staples-l1.quiz[1].options[1]',
     'lessons[1] vegetables-staples-l2.quiz[0].question',
     'lessons[2] vegetables-staples-l3.body',
     'lessons[2] vegetables-staples-l3.keyPoints[2]',
     'lessons[3] vegetables-staples-l4.infographicAlt',
-    'lessons[3] vegetables-staples-l4.body',
     'lessons[3] vegetables-staples-l4.quiz[0].options[1]',
     'lessons[3] vegetables-staples-l4.quiz[0].rationale',
     'lessons[3] vegetables-staples-l4.quiz[1].question',
   ], 'uncertain crop and pest passages stay exact English until reviewed');
+
+  const bedSource = source.lessons[0].body.split('\n\n');
+  const bedDraft = draft.lessons[0].body.sesothoDraft.split('\n\n');
+  for (const index of [1, 2, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19]) {
+    assert.equal(bedDraft[index], bedSource[index], `bed paragraph ${index + 1}: unreviewed crop, measure and soil guidance stays exact English`);
+  }
+  const pestSource = source.lessons[3].body.split('\n\n');
+  const pestDraft = draft.lessons[3].body.sesothoDraft.split('\n\n');
+  for (const index of [0, 1, 2, 5, 8, 9, 10, 11]) {
+    assert.equal(pestDraft[index], pestSource[index], `pest paragraph ${index + 1}: unreviewed treatment advice stays exact English`);
+  }
 });

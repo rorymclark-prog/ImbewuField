@@ -14,6 +14,9 @@ const sourceParagraphs = sourceBody.split('\n\n');
 const draftParagraphs = [...sourceParagraphs];
 draftParagraphs[0] = 'Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria and fungi help break down organic matter and cycle nutrients.';
 draftParagraphs[1] = "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.";
+draftParagraphs[2] = 'Languta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.';
+draftParagraphs[7] = "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.";
+draftParagraphs[8] = 'Tsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.';
 
 export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
   id: 'soil-health',
