@@ -914,11 +914,13 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Leswi u swi vonaka a swi ku pfuna ku endla xiboho."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala rhekhodo yo koma ya ndlela leyi guild yi tirhaka ha yona."
           }
         ]
       }
@@ -934,11 +936,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Leswi u swi vonaka a swi ku pfuna ku endla xiboho."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "english-hold",
+                "sourceEnglish": "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. "
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": "What evidence would make you change the guild?",
+                "text": "Hi vumbhoni byihi byi nga ku endla u cinca guild?"
+              }
+            ]
           }
         ]
       }

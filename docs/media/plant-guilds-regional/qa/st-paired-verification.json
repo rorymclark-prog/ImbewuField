@@ -1,0 +1,390 @@
+{
+  "module": "plant-guilds",
+  "language": "st",
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "narration": null,
+  "pairedSource": "docs/narration/plant-guilds.st.paired-draft.json",
+  "pairedSourceSha256": "7ca63065b8c8848150d78576cb79a9fc90d2e730cb95da6fbfd10aec204f42b2",
+  "englishSource": "docs/narration/plant-guilds.en.md",
+  "englishSourceSha256": "d0bee6137098ddeafaca5332db7dd0d85ccae212e65be641e19e57828f4a8b5b",
+  "translatedScope": [
+    46,
+    47
+  ],
+  "slides": [
+    {
+      "slide": 1,
+      "path": "public/course-decks/plant-guilds/st/slide-01.webp",
+      "pixels": "1440x5400",
+      "bytes": 442016,
+      "sha256": "84c5d715469204b3f83affef5528700a6daf5e94d3d43a9244c58e8dc5aa7b22"
+    },
+    {
+      "slide": 2,
+      "path": "public/course-decks/plant-guilds/st/slide-02.webp",
+      "pixels": "1440x5400",
+      "bytes": 249724,
+      "sha256": "cd141a32c40af577a9fa81e0ae8bac40ed7c68d63a4a848e8d11edc235b1f405"
+    },
+    {
+      "slide": 3,
+      "path": "public/course-decks/plant-guilds/st/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 326842,
+      "sha256": "4b92dded4a3bf8267283567a5eb5f92c4a897e2cd7d7a1822cbf2f6b7b86b58e"
+    },
+    {
+      "slide": 4,
+      "path": "public/course-decks/plant-guilds/st/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 213062,
+      "sha256": "2892efa326fdef2aa7b189f12370c8df7d62ddd1e3742c7f44fbdd8f92f20981"
+    },
+    {
+      "slide": 5,
+      "path": "public/course-decks/plant-guilds/st/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 340098,
+      "sha256": "291a7d5f488e1ae9e11c9777387e27de08165934b6f6d5339b3e58ef93b932dd"
+    },
+    {
+      "slide": 6,
+      "path": "public/course-decks/plant-guilds/st/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 221462,
+      "sha256": "2a637ba88a4b28015cf1d9aa9c95ca0ef5bca604fed2945f26d779b9eae65203"
+    },
+    {
+      "slide": 7,
+      "path": "public/course-decks/plant-guilds/st/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 283516,
+      "sha256": "82745a292518f781d32d5ab5a75c32a4cbd640267d066229a523f9777899f7b7"
+    },
+    {
+      "slide": 8,
+      "path": "public/course-decks/plant-guilds/st/slide-08.webp",
+      "pixels": "1440x5400",
+      "bytes": 209234,
+      "sha256": "11849d5a04281ae18f5f13126485038a229762beb9801375f1b80939409dbb4e"
+    },
+    {
+      "slide": 9,
+      "path": "public/course-decks/plant-guilds/st/slide-09.webp",
+      "pixels": "1440x5400",
+      "bytes": 349232,
+      "sha256": "bb96b947adb58d381a29321ce1e4a58808ca02d45fb2ba8ffdfca2315f57dbc2"
+    },
+    {
+      "slide": 10,
+      "path": "public/course-decks/plant-guilds/st/slide-10.webp",
+      "pixels": "1440x5400",
+      "bytes": 228482,
+      "sha256": "a78a1cac2034eb10fb2056e9fff5a3a2e75af4b78dc29cb657e6e0ea10861331"
+    },
+    {
+      "slide": 11,
+      "path": "public/course-decks/plant-guilds/st/slide-11.webp",
+      "pixels": "1440x5400",
+      "bytes": 385638,
+      "sha256": "4897e74cfbed318d4ea640e606667ff9e6d504495cc3c7a0d36babb647c8f540"
+    },
+    {
+      "slide": 12,
+      "path": "public/course-decks/plant-guilds/st/slide-12.webp",
+      "pixels": "1440x5400",
+      "bytes": 243426,
+      "sha256": "5cadec763c78ee2c3599157cdce28be255434a90a72f597c8185c4699d40e5a7"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-decks/plant-guilds/st/slide-13.webp",
+      "pixels": "1440x5400",
+      "bytes": 292982,
+      "sha256": "c66dfd9e90e0cab0a298d26e491bfac71eeee56f812671208172c323fbe31c68"
+    },
+    {
+      "slide": 14,
+      "path": "public/course-decks/plant-guilds/st/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 262406,
+      "sha256": "29df0160d75f21c48281b432e67c18cf11034f36da658113efed8f7bcfca801e"
+    },
+    {
+      "slide": 15,
+      "path": "public/course-decks/plant-guilds/st/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 373506,
+      "sha256": "3692cba77bf5c2139887cc957b93c36bdeac2f426c6ce6795ceba073ed666a69"
+    },
+    {
+      "slide": 16,
+      "path": "public/course-decks/plant-guilds/st/slide-16.webp",
+      "pixels": "1440x5400",
+      "bytes": 258140,
+      "sha256": "5d3703866ac9bf4c5f300c9ba0a449dde59c5016af692c3c4f27a6308d429169"
+    },
+    {
+      "slide": 17,
+      "path": "public/course-decks/plant-guilds/st/slide-17.webp",
+      "pixels": "1440x5400",
+      "bytes": 381796,
+      "sha256": "37f452276953fe01b78bca866ba0f47a974ca595d597c2c719c67332905d7c11"
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/plant-guilds/st/slide-18.webp",
+      "pixels": "1440x5400",
+      "bytes": 246666,
+      "sha256": "8b08890c7714ee66f6c81d01d5ef9194ecab4479fcb38c10a4c9dc1dec35e23f"
+    },
+    {
+      "slide": 19,
+      "path": "public/course-decks/plant-guilds/st/slide-19.webp",
+      "pixels": "1440x5400",
+      "bytes": 386986,
+      "sha256": "7508a97833b15716f3af7289c95cf7692261e6029eb5c82ec7434d4ca5ea21c0"
+    },
+    {
+      "slide": 20,
+      "path": "public/course-decks/plant-guilds/st/slide-20.webp",
+      "pixels": "1440x5400",
+      "bytes": 244252,
+      "sha256": "3a698cc52cf8bf6ad99547add3e22e0fac3a21f83dce608028b435e05a5fb877"
+    },
+    {
+      "slide": 21,
+      "path": "public/course-decks/plant-guilds/st/slide-21.webp",
+      "pixels": "1440x5400",
+      "bytes": 361870,
+      "sha256": "fd2cddecbd08b03e7c5b943321d9736de16faae660b899cdca54efc44b29da2f"
+    },
+    {
+      "slide": 22,
+      "path": "public/course-decks/plant-guilds/st/slide-22.webp",
+      "pixels": "1440x5400",
+      "bytes": 260366,
+      "sha256": "ef680c3d784ea7437ff64337657ac9562ef2c952ba21aa59db3b8413a722bdd8"
+    },
+    {
+      "slide": 23,
+      "path": "public/course-decks/plant-guilds/st/slide-23.webp",
+      "pixels": "1440x5400",
+      "bytes": 321612,
+      "sha256": "d47c9023776e481462145e6dc4bb62f342b1f5a5ae537725c17ad47907dc4132"
+    },
+    {
+      "slide": 24,
+      "path": "public/course-decks/plant-guilds/st/slide-24.webp",
+      "pixels": "1440x5400",
+      "bytes": 260502,
+      "sha256": "6eec3b9e492969dda2a1a963a498abb8adf360a3e4513d5b1513b2221482de18"
+    },
+    {
+      "slide": 25,
+      "path": "public/course-decks/plant-guilds/st/slide-25.webp",
+      "pixels": "1440x5400",
+      "bytes": 406428,
+      "sha256": "e35fbe5057e319ea47c43e4f9182d3f175c11c658981009c64006099c1e73345"
+    },
+    {
+      "slide": 26,
+      "path": "public/course-decks/plant-guilds/st/slide-26.webp",
+      "pixels": "1440x5400",
+      "bytes": 237022,
+      "sha256": "c4951fbda5c18681a09017dc046df65fda339cac9e374ccc8518e74e21b73ca8"
+    },
+    {
+      "slide": 27,
+      "path": "public/course-decks/plant-guilds/st/slide-27.webp",
+      "pixels": "1440x5400",
+      "bytes": 400914,
+      "sha256": "84a7b6bbc292509b06efa192009798f5efb390756881672b292bc2cad8c36b87"
+    },
+    {
+      "slide": 28,
+      "path": "public/course-decks/plant-guilds/st/slide-28.webp",
+      "pixels": "1440x5400",
+      "bytes": 281152,
+      "sha256": "79cf19ead9f6ea01b4d1e5823eb2389af86617073c2488930f33e4243eb27399"
+    },
+    {
+      "slide": 29,
+      "path": "public/course-decks/plant-guilds/st/slide-29.webp",
+      "pixels": "1440x5400",
+      "bytes": 377698,
+      "sha256": "61a9a682549ce24a7420390209d407d66519d6787ad548e5d1d9c9c3864c63a2"
+    },
+    {
+      "slide": 30,
+      "path": "public/course-decks/plant-guilds/st/slide-30.webp",
+      "pixels": "1440x5400",
+      "bytes": 230956,
+      "sha256": "f7e18446089b7fbf049e78ad5927c777a121aab2409a23a6597d4fbcbf1ae689"
+    },
+    {
+      "slide": 31,
+      "path": "public/course-decks/plant-guilds/st/slide-31.webp",
+      "pixels": "1440x5400",
+      "bytes": 358400,
+      "sha256": "ed170e7226e6cbe353d8f0f24261b892025f12db61bee8671feacb32e8e58590"
+    },
+    {
+      "slide": 32,
+      "path": "public/course-decks/plant-guilds/st/slide-32.webp",
+      "pixels": "1440x5400",
+      "bytes": 237728,
+      "sha256": "fb3e511b6ff6fa8efe1364282cdb1bf4e9cd7b17d1e74efca37b68860e467dd5"
+    },
+    {
+      "slide": 33,
+      "path": "public/course-decks/plant-guilds/st/slide-33.webp",
+      "pixels": "1440x5400",
+      "bytes": 263486,
+      "sha256": "0559f3abc4e8fe7f64a626dffcc3bcac0addbea9ec7f6ee6917633e0c9963e51"
+    },
+    {
+      "slide": 34,
+      "path": "public/course-decks/plant-guilds/st/slide-34.webp",
+      "pixels": "1440x5400",
+      "bytes": 248004,
+      "sha256": "feeff6c5999147cc5236bfb7b36eefd2ba69a8bc876e6a0aa0ead38b9f82bf0a"
+    },
+    {
+      "slide": 35,
+      "path": "public/course-decks/plant-guilds/st/slide-35.webp",
+      "pixels": "1440x5400",
+      "bytes": 353122,
+      "sha256": "34c72f15b13f8d5bc6607fac5f824c34753f58690eea401812eed6e1aedeffb8"
+    },
+    {
+      "slide": 36,
+      "path": "public/course-decks/plant-guilds/st/slide-36.webp",
+      "pixels": "1440x5400",
+      "bytes": 229490,
+      "sha256": "4e00ebd70f707ddb4df9e14b634191b8da7fbbc0b54e80419ddf035213b26a2b"
+    },
+    {
+      "slide": 37,
+      "path": "public/course-decks/plant-guilds/st/slide-37.webp",
+      "pixels": "1440x5400",
+      "bytes": 403624,
+      "sha256": "1b48c4610869c294a81440cb4dc05c3cca67635ddb9b1679a3580d2d15ce49cc"
+    },
+    {
+      "slide": 38,
+      "path": "public/course-decks/plant-guilds/st/slide-38.webp",
+      "pixels": "1440x5400",
+      "bytes": 249764,
+      "sha256": "ef4f0f47d93a13e5b1c58e6df3b437777d0268826ec738a74ba0a0f8f2ef3bc3"
+    },
+    {
+      "slide": 39,
+      "path": "public/course-decks/plant-guilds/st/slide-39.webp",
+      "pixels": "1440x5400",
+      "bytes": 375992,
+      "sha256": "db4328ef85d35e9e87f6b7046e2db1bc525bba9e35bd9f7a09f87bafb1ccd4b7"
+    },
+    {
+      "slide": 40,
+      "path": "public/course-decks/plant-guilds/st/slide-40.webp",
+      "pixels": "1440x5400",
+      "bytes": 225914,
+      "sha256": "ed7540e93107439c74d629f18f5460854bf6ca2ed99697fe8d7adcbe35e34509"
+    },
+    {
+      "slide": 41,
+      "path": "public/course-decks/plant-guilds/st/slide-41.webp",
+      "pixels": "1440x5400",
+      "bytes": 407470,
+      "sha256": "6a7bfa94fa950a6b672e058ffd9064c93cb60fbff315f9ad8ccea5bc4cc9480d"
+    },
+    {
+      "slide": 42,
+      "path": "public/course-decks/plant-guilds/st/slide-42.webp",
+      "pixels": "1440x5400",
+      "bytes": 247912,
+      "sha256": "5698c212c24fe2ce4e28b9788eabcb4f848b02bd08675b1d4f2b2b32ab8dc089"
+    },
+    {
+      "slide": 43,
+      "path": "public/course-decks/plant-guilds/st/slide-43.webp",
+      "pixels": "1440x5400",
+      "bytes": 301088,
+      "sha256": "cbb7e388d8fc9c9f825617da6ec7d9da64bb82718a32b7449eb6261dddb46c68"
+    },
+    {
+      "slide": 44,
+      "path": "public/course-decks/plant-guilds/st/slide-44.webp",
+      "pixels": "1440x5400",
+      "bytes": 417488,
+      "sha256": "1387b345b1945715c4f73aa6374c69f069546911d4d04288cd3c964e3cbaa5b0"
+    },
+    {
+      "slide": 45,
+      "path": "public/course-decks/plant-guilds/st/slide-45.webp",
+      "pixels": "1440x5400",
+      "bytes": 250002,
+      "sha256": "64ef97a24bd68eb29186e90055ebf1a6cdd24ae5d7fa5ab109045dfd3a577ff6"
+    },
+    {
+      "slide": 46,
+      "path": "public/course-decks/plant-guilds/st/slide-46.webp",
+      "pixels": "1440x5400",
+      "bytes": 390604,
+      "sha256": "bef75ed8292a951165f4704d1fcba3f915efb00083c012bff8fedba74c95e094"
+    },
+    {
+      "slide": 47,
+      "path": "public/course-decks/plant-guilds/st/slide-47.webp",
+      "pixels": "1440x5400",
+      "bytes": 280356,
+      "sha256": "5b560ebd5df51e8e5cc1c285b7b1adc8561d065b5804f58c5afaf1edcebff531"
+    },
+    {
+      "slide": 48,
+      "path": "public/course-decks/plant-guilds/st/slide-48.webp",
+      "pixels": "1440x5400",
+      "bytes": 416190,
+      "sha256": "abb55524b2cb02f3ba68688160c4cd897f2a29257c4d49f9d2b69721c0d9008a"
+    },
+    {
+      "slide": 49,
+      "path": "public/course-decks/plant-guilds/st/slide-49.webp",
+      "pixels": "1440x5400",
+      "bytes": 256626,
+      "sha256": "13854b4aaa233838a33abd7caa2e1581d462794b5ee669fcbeda99073a675cb2"
+    },
+    {
+      "slide": 50,
+      "path": "public/course-decks/plant-guilds/st/slide-50.webp",
+      "pixels": "1440x5400",
+      "bytes": 365318,
+      "sha256": "5eefaafb043245b77953c8dec73a1b1fae76e21ffab236a98946327674514b45"
+    },
+    {
+      "slide": 51,
+      "path": "public/course-decks/plant-guilds/st/slide-51.webp",
+      "pixels": "1440x5400",
+      "bytes": 251682,
+      "sha256": "ebac05f5ab3d01ceef57929d309da7cacff6d3fe615d7e3af80b57403544f7f4"
+    }
+  ],
+  "phoneSamples": [
+    {
+      "slide": 46,
+      "path": "docs/media/plant-guilds-regional/qa/st-slide-46-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "b9ff40f9c03f68ea8f4904ac7cb650081d37af7b97300efc7e0a784aca462d97"
+    },
+    {
+      "slide": 47,
+      "path": "docs/media/plant-guilds-regional/qa/st-slide-47-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "70035b162eab0efcc6bdadbc9163e3673bff638880d2e780f57991dcaf5aa2ff"
+    }
+  ],
+  "note": "All 51 silent frames show the unchanged English illustration and exact English source. Only observation framing and a reflection prompt on slides 46–47 carry marked language drafts. Plant-growth observations and management advice remain in English. The word guild is retained. No regional narration or fluent/local farming approval is claimed."
+}
