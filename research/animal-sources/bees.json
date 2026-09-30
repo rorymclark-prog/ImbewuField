@@ -20,6 +20,73 @@
   },
   "productionMonths": [],
   "seasonalPattern": null,
+  "flowNote": {
+    "value": "Honey flows depend on local plants and rain, so no months are marked.",
+    "evidence": {
+      "quote": "The extent and timing of honey flows is primarily dependent on rainfall.",
+      "url": "https://archive.org/details/Beeplants-of-South-Africa",
+      "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+      "page": 3
+    },
+    "notes": "Round 4 2026-09-30. Shown on the calendar's honey line in place of a month bar."
+  },
+  "flowRecords": [
+    {
+      "region": "Western Cape (Stellenbosch, Cape Peninsula)",
+      "when": "April–May",
+      "plant": "Blue gum (Eucalyptus globulus)",
+      "evidence": {
+        "quote": "A light April–May honey flow is on record from Stellenbosch as well as the Cape Peninsula.",
+        "url": "https://archive.org/details/Beeplants-of-South-Africa",
+        "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+        "page": 65
+      }
+    },
+    {
+      "region": "North West",
+      "when": "March–April",
+      "plant": "Verbena bonariensis, with a smaller share of another plant",
+      "evidence": {
+        "quote": "This species, together with fewer numbers of the next species, gave a honey surplus during March to April in NW.",
+        "url": "https://archive.org/details/Beeplants-of-South-Africa",
+        "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+        "page": 376
+      }
+    },
+    {
+      "region": "Southern Free State",
+      "when": "April",
+      "plant": "Honey thorn (Lycium)",
+      "evidence": {
+        "quote": "Of the pollen pellets trapped in April during a honey flow from honey thorn in the southern FS, 68% belonged to this species.",
+        "url": "https://archive.org/details/Beeplants-of-South-Africa",
+        "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+        "page": 183
+      }
+    },
+    {
+      "region": "Eastern Cape",
+      "when": "December, after October rains",
+      "plant": "Mesembryanthemum aitonis",
+      "evidence": {
+        "quote": "October rains are best for a December honey flow in the EC.",
+        "url": "https://archive.org/details/Beeplants-of-South-Africa",
+        "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+        "page": 415
+      }
+    },
+    {
+      "region": "Pienaars River",
+      "when": "Early September, as the winter aloe flow ended",
+      "plant": "Aloe davyana",
+      "evidence": {
+        "quote": "…as was the case at the end of the davyana aloe flow at Pienaars River: an average of 47% Argemone pollen was trapped on three colonies during the first week of September.",
+        "url": "https://archive.org/details/Beeplants-of-South-Africa",
+        "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+        "page": 347
+      }
+    }
+  ],
   "timeToFirstProductWeeks": {
     "value": null,
     "evidence": null,
@@ -132,6 +199,7 @@
     "Editor review 2026-09-28: four welfare/legal quotes were extended to the full passage of GN R.858 so each summary point is stated by its quote (inspection targets, record contents, the Cape bee line, disease reporting and destruction).",
     "Round 2 2026-09-28: Fetched the full text of Johannsmeier, M.F. 2016, Beeplants of South Africa (SANBI Strelitzia 37) direct from archive.org's scan of the SANBI-published book (sanbi.org itself only serves a sales/summary page for this title, no free full PDF) and searched its ~560 pages for sentences that name explicit months and tie a flowering/nectar event to honey for a named SA region. Found two: Western Cape (Eucalyptus globulus/Blue gum entry, p.65/PDF p.75) and Eastern Cape (Mesembryanthemum aitonis/Ganna mesemb entry, p.415/PDF p.425) - both added to productionMonths with seasonalPattern summarising them. The book also gives numeric 'Flowering Time' codes (e.g. sugar gum E. cladocalyx, WC/SC/EC, coded 10-5 main (1-2); saligna gum E. grandis, LIM/C/MP/KZN/EC - the document's own 'eastern South Africa' honey source - coded 1-8 main (4-5)) for essentially every listed species including the two eucalypts the book itself names as SA's main commercial honey sources, and its own legend (p.5/PDF p.15) defines these numbers as calendar months, but no single quoted sentence spells the corresponding month names out in prose for those two entries, so - per the round-2 rule against stitching a season/notation from one part of a source onto a figure from another - they were left out rather than converted. Also checked: UCT/CSSR beekeeping survey (open.uct.ac.za, already cited in this file) - no month or seasonal data anywhere in its 22 pages, only annual yield figures. SANBI 'Gums & Bees' roadmap (already cited) and SANBI's separate 'Eucalyptus trees as honey bee forage' and 'Indigenous plants as honey bee forage' infosheets (sanbi.org/wp-content/uploads) - all name forage species and say flowering happens 'at different times of the year' but give no months. elsenburg.com and dard.gov.za (Limpopo) were unreachable (elsenburg.com: HTTP 503; dard.gov.za: proxy CONNECT tunnel failed, 502), consistent with round 1's notes on these domains. journals.co.za (African Entomology, home of Allsopp's Cape honeybee/fynbos forage papers) returned HTTP 403 on every attempt, so no full text could be checked there for KZN, Limpopo/Lowveld or summer-rainfall-interior month data; ajol.info and scielo.org.za had no full-text SA paper specifically on honey-flow calendars. KZN, Limpopo and a general 'summer-rainfall areas' region are therefore left with no productionMonths entry rather than guessed. timeToFirstProductWeeks: no new primary source found stating this cleanly; left as in round 1.",
     "Editor review 2026-09-28 (round 2): withdrew both Johannsmeier (Strelitzia 37) month records. Each is one plant's flow, not a region's honey season: the Western Cape quote is 'a light April-May honey flow' from Eucalyptus globulus alone (the same entry codes its main flowering 7-10), and the Eastern Cape quote is a December flow from one mesemb (M. aitonis), which the seasonal summary had widened to 'Eastern Cape veld'. Charting either as the region's honey months would misstate when a hive gives honey. Honey stays unchartable until a source states a region's harvest or main-flow months.",
-    "Round 3 2026-09-29: searched again. Still no source states a region's honey harvest or main-flow months in text, so productionMonths stays empty under the round-2 rule. What was found: (1) Buys 2019, 'Honey from the Rock', In die Skriflig 53(1), PDF p.2: 'This project started in March of 2016 (the middle of the honey flow – see Figure 1).' (uMfolozi, Zululand) - one mid-flow month, start and end not stated (https://scielo.org.za/pdf/ids/v53n1/33.pdf). The same paper's Fig. 1 and Fig. 24 bar charts show kg harvested by month for that project (roughly March to July, most in April to June), but those are read off an image, not stated in text. (2) Masehela 2017 (PhD, Stellenbosch, Appendix C, https://scholar.sun.ac.za/handle/10019.1/100915) lists beekeeper-reported BLOOM months of honey-crop plants by province (e.g. KZN saligna gum Jan-Jul, Limpopo macadamia May-Oct, Western Cape sugar gum Dec-Mar). These are flowering windows of single forage plants, not harvest months, and hives migrate between them, so they were not charted. (3) Human 2006 (PhD, Pretoria) and Hutton-Squire 2014 (MSc, Stellenbosch) give nectar-plant months from the literature, likewise not harvest months. Unread and likeliest to settle it: DFFE 'The Honey Trade' (Forestry Sub-Sector Briefing 9, 2005) and Johannsmeier's 'Beekeeping in South Africa' (ARC-PPRI Handbook 14), both unreachable or not free from this sandbox."
+    "Round 3 2026-09-29: searched again. Still no source states a region's honey harvest or main-flow months in text, so productionMonths stays empty under the round-2 rule. What was found: (1) Buys 2019, 'Honey from the Rock', In die Skriflig 53(1), PDF p.2: 'This project started in March of 2016 (the middle of the honey flow – see Figure 1).' (uMfolozi, Zululand) - one mid-flow month, start and end not stated (https://scielo.org.za/pdf/ids/v53n1/33.pdf). The same paper's Fig. 1 and Fig. 24 bar charts show kg harvested by month for that project (roughly March to July, most in April to June), but those are read off an image, not stated in text. (2) Masehela 2017 (PhD, Stellenbosch, Appendix C, https://scholar.sun.ac.za/handle/10019.1/100915) lists beekeeper-reported BLOOM months of honey-crop plants by province (e.g. KZN saligna gum Jan-Jul, Limpopo macadamia May-Oct, Western Cape sugar gum Dec-Mar). These are flowering windows of single forage plants, not harvest months, and hives migrate between them, so they were not charted. (3) Human 2006 (PhD, Pretoria) and Hutton-Squire 2014 (MSc, Stellenbosch) give nectar-plant months from the literature, likewise not harvest months. Unread and likeliest to settle it: DFFE 'The Honey Trade' (Forestry Sub-Sector Briefing 9, 2005) and Johannsmeier's 'Beekeeping in South Africa' (ARC-PPRI Handbook 14), both unreachable or not free from this sandbox.",
+    "Round 4 2026-09-30: searched SA beekeeping books and online sources again for a region's honey harvest months. None states one in text. Farmer's Weekly (Phillips 2012, apiarist Craig Campbell, Hilton KZN) says 'the honey production season from September to May', but it is trade press with no source for the sentence, and the brief bars farmersweekly.co.za, so it is not used. DFFE Briefing 9 'The Honey Trade' (2005) gives no months. The Strelitzia 37 entries each record one plant's flow in one place and year; the round-2 rule still keeps them out of productionMonths. Rory chose (2026-09-30) to show them as flowRecords instead: a honey line with no month bar, the book's rainfall sentence (p.3) as its note, and each record with its quote in the hover. Season-word-only records (spring flow NW p.371, early autumn Tugela Valley p.307, autumn flow SC p.100, fynbos autumn flow p.147) are left out because they name no month. Disclosure: during this round one research agent ran a single curl with TLS verification disabled against the dffe.gov.za home page; the output was discarded and no data from it is used."
   ]
 }

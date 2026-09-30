@@ -43,6 +43,14 @@ export interface SourcedPoint {
   source: HarvestCitation;
 }
 
+export interface FlowRecord {
+  region: string;
+  /** The source's own timing words, e.g. "April–May". */
+  when: string;
+  plant: string | null;
+  source: HarvestCitation;
+}
+
 export interface AnimalEnterprise {
   enterpriseId: string;
   name: string;
@@ -56,6 +64,10 @@ export interface AnimalEnterprise {
   /** Months the product is taken, with the source's region label. */
   windows: HarvestWindow[];
   seasonalPattern: { text: string; source: HarvestCitation } | null;
+  /** Why the product has no months, when the dossier's sources say why (honey: rainfall). */
+  flowNote: { text: string; source: HarvestCitation } | null;
+  /** Single recorded flows, each one plant in one place. Listed with their source, never charted. */
+  flowRecords: FlowRecord[];
   weeksToFirstProduct: SourcedRange | null;
   productiveLifeYears: SourcedRange | null;
   feedKgPerDay: SourcedRange | null;

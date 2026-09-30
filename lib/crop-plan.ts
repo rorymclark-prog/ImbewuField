@@ -1,6 +1,6 @@
 import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
-import { foodGroupOf } from './crop-groups';
+import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
   isSampleMode,
   getSandboxCropPlan, setSandboxCropPlan,
@@ -1524,16 +1524,19 @@ export function bedHasUnverifiedTiming(
 export function suggestSubstituteCrop(planting: Planting, allPlantings: Planting[]): CropDef | null {
   const current = cropByKey(planting.cropKey);
   if (!current) return null;
-  const group = foodGroupOf(current);
+  const group = nutritionGroupOf(current);
   const usedKeys = new Set(allPlantings.filter((p) => p.id !== planting.id).map((p) => p.cropKey));
-  const candidates = CROPS.filter((c) => c.key !== current.key && hasPlanningYield(c) && foodGroupOf(c) === group);
+  const candidates = CROPS.filter((c) => c.key !== current.key && hasPlanningYield(c) && nutritionGroupOf(c) === group);
   if (!candidates.length) return null;
   const fresh = candidates.filter((c) => !usedKeys.has(c.key));
   const pool = fresh.length ? fresh : candidates;
   return [...pool].sort((a, b) => {
     const aYield = hasPlanningYield(a) ? a.yieldKgPerM2 : -1;
     const bYield = hasPlanningYield(b) ? b.yieldKgPerM2 : -1;
-    return bYield - aYield;
+    // A less common crop (mung bean, soybean…) is offered only when no familiar one fits.
+    const aRare = Number(foodGroupOf(a) === 'less_common');
+    const bRare = Number(foodGroupOf(b) === 'less_common');
+    return aRare - bRare || bYield - aYield;
   })[0];
 }
 

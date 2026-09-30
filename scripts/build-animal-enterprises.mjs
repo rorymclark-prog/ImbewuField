@@ -46,6 +46,14 @@ export function enterpriseFromDossier(d) {
     seasonalPattern: d.seasonalPattern && d.seasonalPattern.value && d.seasonalPattern.evidence
       ? { text: d.seasonalPattern.value, source: cite(d.seasonalPattern.evidence) }
       : null,
+    // Honey only, so far: one plant's flow in one place, never charted as months — see
+    // CalendarHoneyLine in lib/calendar-produce.ts and the round-4 line in bees.json's gaps.
+    flowNote: d.flowNote && d.flowNote.value && d.flowNote.evidence
+      ? { text: d.flowNote.value, source: cite(d.flowNote.evidence) }
+      : null,
+    flowRecords: (d.flowRecords || [])
+      .filter((r) => r && r.region && r.when && r.evidence)
+      .map((r) => ({ region: r.region, when: r.when, plant: r.plant ?? null, source: cite(r.evidence) })),
     weeksToFirstProduct: range(d.timeToFirstProductWeeks),
     productiveLifeYears: range(d.productiveLifeYears),
     feedKgPerDay: range(d.feedKgPerAnimalPerDay),

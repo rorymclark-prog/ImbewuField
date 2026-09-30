@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { animalLineText, animalsNotShownNote, calendarProduceByMonth, treeLineText } from '@/lib/calendar-produce';
+import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, treeLineText, unmarkedAnimalLines, unmarkedLineText } from '@/lib/calendar-produce';
 import { ANIMAL_ENTERPRISES, sourcedProductMonths } from '@/lib/animal-enterprises';
 import { PERENNIAL_HARVEST, sourcedSeasonMonths } from '@/lib/perennial-harvest';
 import { FRUIT_ART_SPECIES, speciesFruitArtworkUrl } from '@/lib/species-art';
@@ -73,7 +73,8 @@ test('an animal that gives nothing in the calendar is explained, not silently mi
   const groups = [{ housing: 'bee' as const, existing: 2, proposed: 0 }, { housing: 'kraal' as const, existing: 1, proposed: 0 }];
   const bees = ANIMAL_ENTERPRISES.bees;
   const note = animalsNotShownNote(groups, { bee: 'bees' });
-  if (sourcedProductMonths(bees).length === 0) assert.ok(note!.includes(`no sourced months yet for honey from ${bees.name}`), note!);
+  // Honey has no months but is shown as its own line (see the honey test below), so it is not listed here.
+  assert.ok(!note!.includes('honey'), note!);
   assert.match(note!, /say what it is for under Animals on your map: Kraal/);
   assert.equal(animalsNotShownNote([{ housing: 'chicken', existing: 1, proposed: 0 }], { chicken: 'chicken-layer' }), null);
 });
@@ -84,4 +85,29 @@ test('the bed calendar carries the produce rows and hover card', () => {
   assert.match(page, /<ProduceCalendarRow\s+kind="animals"/);
   assert.match(page, /role="tooltip"/);
   assert.doesNotMatch(page, /speciesPickerArtworkUrl\(tree\.speciesId\)/, 'the tray shows fruit, not tree art');
+});
+
+test('honey shows as a line with no month bar, with each recorded flow and its source', () => {
+  // Rory, 2026-09-30, option 1: no month bar, "honey flows depend on local plants and rain", and
+  // the verified Strelitzia 37 flow records in the hover.
+  const bees = ANIMAL_ENTERPRISES.bees;
+  const groups = [{ housing: 'bee' as const, existing: 2, proposed: 1 }];
+  if (sourcedProductMonths(bees).length > 0) return; // a sourced season would chart normally
+  assert.ok(calendarProduceByMonth([], groups, { bee: 'bees' }, MONTHS).every((m) => m.animals.length === 0),
+    'no month is claimed for honey');
+  const [line, ...rest] = unmarkedAnimalLines(groups, { bee: 'bees' });
+  assert.equal(rest.length, 0);
+  assert.equal(line.product, 'honey');
+  assert.equal(unmarkedLineText(line), `Honey — ${bees.name} · 3 hives · 1 of them proposed`);
+  assert.match(line.note!.text, /depend on local plants and rain/);
+  assert.match(line.note!.source.quote, /primarily dependent on rainfall/);
+  assert.ok(line.records.length >= 5);
+  for (const r of line.records) {
+    assert.ok(r.source.quote.length > 20 && /^https:\/\//.test(r.source.url) && r.source.page !== null, flowRecordText(r));
+  }
+  assert.ok(line.records.some((r) => flowRecordText(r) === 'Western Cape (Stellenbosch, Cape Peninsula): April–May, Blue gum (Eucalyptus globulus)'));
+  assert.equal(animalsNotShownNote(groups, { bee: 'bees' }), null, 'honey is shown, so not listed as missing');
+  assert.deepEqual(unmarkedAnimalLines(groups, {}), [], 'nothing until the farmer says the hive is for honey');
+  const page = readFileSync(join(process.cwd(), 'app/facilitator/crops/page.tsx'), 'utf8');
+  assert.match(page, /unmarked=\{animalsUnmarked\}/);
 });

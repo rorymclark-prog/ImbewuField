@@ -940,3 +940,22 @@ test('the whole-year plan never overbooks a bed holding an already-growing crop'
   }
   assert.deepEqual(offenders, []);
 });
+
+test('on a one-bed map a ticked vine does not crowd out every other chosen crop', () => {
+  // Rory, 2026-09-30: "even though I selected a whole lot of vegetables … it only came up with
+  // three plantings". On one bed a named vine used to claim the whole bed for months. It is now
+  // left out with a note, and the rest of the chosen crops fill the bed as they would without it.
+  const one: PlanBed[] = [{ id: 'solo', label: 'Bed 1', areaM2: 10, minDimM: 1.2 }];
+  const chosen = ['cabbage', 'carrots', 'true-spinach', 'onions', 'beetroot', 'lettuce', 'tomatoes', 'green-beans', 'swiss-chard'];
+  const answers = (cropKeys: string[]): AutoSuggestAnswers => ({
+    goal: 'family', householdSize: 'medium', groups: [], cropKeys, rhythm: 'steady', rotateCrops: true,
+    allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+  } as AutoSuggestAnswers);
+  const without = suggestIdealYearPlan(answers(chosen), 'summer', one, [], 9, REAL_NOW_YEAR).best.result;
+  const withVine = suggestIdealYearPlan(answers([...chosen, 'butternut']), 'summer', one, [], 9, REAL_NOW_YEAR).best.result;
+  assert.ok(!withVine.plantings.some((p) => p.cropKey === 'butternut'), 'butternut took the only bed');
+  assert.equal(withVine.plantings.length, without.plantings.length, 'the vine still changed what else fits');
+  assert.ok(withVine.plantings.length > 3, `only ${withVine.plantings.length} plantings on the bed`);
+  assert.ok(withVine.notes.some((n) => /Butternut was left out: .*your only veg bed/.test(n.text)),
+    withVine.notes.map((n) => n.text).join('\n'));
+});
