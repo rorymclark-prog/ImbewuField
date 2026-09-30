@@ -60,9 +60,9 @@ export const TSHIVENDA_FOOD_FOREST_DRAFT: TshivendaCourseModuleDraft = {
     },
     keyPoints: [
       pair('Seven planning layers can combine useful plants at different heights', 'Miṱaṱo ya supa ya u pulana i nga ṱanganya zwimela zwi re na mushumo kha vhulapfu ho fhambanaho'),
-      hold('Plants can compete for light, water and nutrients'),
+      pair('Plants can compete for light, water and nutrients', 'Zwimela zwi nga ṱaṱisana nga ha tshedza, maḓi na pfushi.'),
       hold('Establishment and ongoing care depend on observed conditions'),
-      hold('Confirm local suitability before copying any example planting'),
+      pair('Confirm local suitability before copying any example planting', 'Khwaṱhisedzani uri zwimela zwo tea fhethu haṋu musi ni sa athu edzisa tsumbo ya u ṱavha.'),
     ],
     quiz: [
       {
@@ -70,11 +70,11 @@ export const TSHIVENDA_FOOD_FOREST_DRAFT: TshivendaCourseModuleDraft = {
         options: [
           hold('Wait until the fifth year'),
           hold('Add more plants regardless of water'),
-          hold('Check the affected plants and manage competition'),
-          hold('Assume all seven layers take care of themselves'),
+          pair('Check the affected plants and manage competition', 'Ṱolani zwimela zwo kwameaho nahone ni lange u ṱaṱisana hazwo.'),
+          pair('Assume all seven layers take care of themselves', 'Humbulani uri miṱaṱo yoṱhe ya supa i a ḓiṱhogomela.'),
         ],
         sourceCorrectIndex: 2,
-        rationale: hold('Observe actual competition and plant condition. A fixed establishment calendar cannot tell you which plants need care now.'),
+        rationale: pair('Observe actual competition and plant condition. A fixed establishment calendar cannot tell you which plants need care now.', 'Sedzani u ṱaṱisana hune ha khou itea na nyimele ya zwimela. Khalenda yo tiwaho ya u thoma u aluwa a i nga ni vhudzi uri ndi zwifhio zwimela zwi ṱoḓaho u ṱhogomelwa zwino.'),
       },
       {
         question: hold('How can leaf litter and shade help protect soil moisture?'),

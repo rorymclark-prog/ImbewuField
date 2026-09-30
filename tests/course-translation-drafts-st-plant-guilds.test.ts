@@ -74,8 +74,6 @@ test('Plant Selection & Guilds Sesotho draft keeps exact sources, holds and quiz
     'lessons[0] plant-guilds-l1.quiz[1].rationale',
     'lessons[1] plant-guilds-l2.infographicAlt',
     'lessons[1] plant-guilds-l2.body',
-    'lessons[1] plant-guilds-l2.keyPoints[0]',
-    'lessons[1] plant-guilds-l2.keyPoints[1]',
     'lessons[1] plant-guilds-l2.keyPoints[2]',
     'lessons[1] plant-guilds-l2.keyPoints[3]',
     'lessons[1] plant-guilds-l2.quiz[0].options[1]',
@@ -83,14 +81,18 @@ test('Plant Selection & Guilds Sesotho draft keeps exact sources, holds and quiz
     'lessons[1] plant-guilds-l2.quiz[1].options[1]',
     'lessons[2] plant-guilds-l3.infographicAlt',
     'lessons[2] plant-guilds-l3.body',
-    'lessons[2] plant-guilds-l3.keyPoints[0]',
-    'lessons[2] plant-guilds-l3.keyPoints[1]',
-    'lessons[2] plant-guilds-l3.keyPoints[2]',
-    'lessons[2] plant-guilds-l3.keyPoints[3]',
     'lessons[2] plant-guilds-l3.quiz[0].options[1]',
     'lessons[2] plant-guilds-l3.quiz[0].rationale',
-    'lessons[2] plant-guilds-l3.quiz[1].rationale',
-  ], 'operational guidance and source-sensitive fields stay exact English');
+  ], 'species, body and unscreened advice stay exact English');
+
+  for (const point of [...draft.lessons[1].keyPoints.slice(0, 2), ...draft.lessons[2].keyPoints]) {
+    assert.equal(point.reviewStatus, 'machine-draft', 'screened guild concepts remain visibly unreviewed');
+    assert.notEqual(point.sesothoDraft, point.sourceEnglish);
+  }
+  assert.equal(draft.lessons[2].quiz[1].rationale.reviewStatus, 'machine-draft');
+  assert.equal(draft.lessons[2].quiz[1].options[2].sourceEnglish,
+    source.lessons[2].quiz[1].options[source.lessons[2].quiz[1].correct],
+    'the screened rationale cannot change which answer is correct');
 
   assert.ok(draft.lessons[0].body.sesothoDraft.includes('Sesbania punicea'));
   assert.ok(draft.lessons[0].body.sesothoDraft.includes('Sesbania sesban'));

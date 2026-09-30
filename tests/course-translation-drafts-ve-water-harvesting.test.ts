@@ -279,7 +279,7 @@ test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated
   assert.equal(lessonDraft.keyPoints.length, lesson.keyPoints.length);
   for (const [index, point] of lessonDraft.keyPoints.entries()) {
     checkPair(point, lesson.keyPoints[index], `keyPoints[${index}]`);
-    assert.equal(point.reviewStatus, index === 0 ? 'machine-draft' : 'hold');
+    assert.equal(point.reviewStatus, index === 0 || index === 1 || index === 3 ? 'machine-draft' : 'hold');
   }
   assert.equal(lessonDraft.quiz.length, lesson.quiz.length);
   for (const [index, question] of lessonDraft.quiz.entries()) {
@@ -311,8 +311,20 @@ test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated
   assert.equal(learnerPresentation.content.title, lessonDraft.title.tshivendaDraft);
   assert.equal(learnerPresentation.content.body, lessonDraft.body.tshivendaDraft);
   assert.equal(learnerPresentation.content.keyPoints[0], lessonDraft.keyPoints[0].tshivendaDraft);
-  assert.deepEqual(learnerPresentation.content.keyPoints.slice(1), lesson.keyPoints.slice(1));
-  assert.deepEqual(learnerPresentation.content.quiz, lesson.quiz, 'all quiz fields stay English');
+  assert.equal(learnerPresentation.content.keyPoints[1], lessonDraft.keyPoints[1].tshivendaDraft);
+  assert.equal(learnerPresentation.content.keyPoints[2], lesson.keyPoints[2],
+    'ambiguous establishment wording stays exact English');
+  assert.equal(learnerPresentation.content.keyPoints[3], lessonDraft.keyPoints[3].tshivendaDraft);
+  assert.equal(learnerPresentation.content.quiz[0].q, lesson.quiz[0].q,
+    'the unclear next-action question stays exact English');
+  assert.deepEqual(learnerPresentation.content.quiz[0].options.slice(0, 2), lesson.quiz[0].options.slice(0, 2));
+  assert.equal(learnerPresentation.content.quiz[0].options[2], lessonDraft.quiz[0].options[2].tshivendaDraft);
+  assert.equal(learnerPresentation.content.quiz[0].options[3], lessonDraft.quiz[0].options[3].tshivendaDraft);
+  assert.equal(learnerPresentation.content.quiz[0].correct, lesson.quiz[0].correct,
+    'the translated options must not move the correct answer');
+  assert.equal(learnerPresentation.content.quiz[0].rationale, lessonDraft.quiz[0].rationale.tshivendaDraft);
+  assert.deepEqual(learnerPresentation.content.quiz[1], lesson.quiz[1],
+    'the water-demand question remains exact English');
   assert.equal(learnerPresentation.content.infographicAlt, lessonDraft.infographicAlt.tshivendaDraft);
   assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
     'english-fallback', 'a changed English source withdraws the whole paired lesson draft');

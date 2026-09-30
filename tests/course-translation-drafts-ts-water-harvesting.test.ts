@@ -33,9 +33,15 @@ test('Food Forest Xitsonga draft keeps species caution and crop care exact Engli
   const shownParagraphs: string[] = shown.content.body.split('\n\n');
   assert.equal(shownParagraphs.length, sourceParagraphs.length);
   for (const [index, paragraph] of sourceParagraphs.entries()) {
-    if ([0, 1, 7, 8, 11].includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
+    if ([0, 1, 2, 3, 4, 5, 6, 7, 8, 11].includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
     else assert.equal(shownParagraphs[index], paragraph);
   }
+  assert.equal(shownParagraphs[9], sourceParagraphs[9],
+    'local species suitability and permission remain exact English');
+  assert.equal(shownParagraphs[10], sourceParagraphs[10],
+    'establishment care remains exact English');
+  assert.equal(shownParagraphs[12], sourceParagraphs[12],
+    'competition and care guidance remain exact English');
   assert.equal(resolveLearnerLessonPresentation({ ...sourceLesson, body: `${sourceLesson.body} Changed.` }, 'ts').status,
     'english-fallback');
 });
