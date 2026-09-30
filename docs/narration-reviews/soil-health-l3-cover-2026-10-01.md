@@ -1,0 +1,7 @@
+# Soil Health L3 cover and erosion slides — 1 October 2026
+
+**Status: unreviewed machine drafts.** Slides 15 and 18 have updated silent, source-paired frames in Sesotho, Tshivenda and Xitsonga. Every frame retains the exact English source below the regional draft or English hold. The translated lines describe mulch reducing evaporation, seasonal wind removing dry topsoil, and soil cover helping to limit erosion. Technical terms including *mulch*, *Highveld*, *maize*, *topsoil*, *cover crops* and *organic matter* remain in English where needed for facilitator explanation.
+
+The Tshivenda storm/runoff paragraph on slide 18 remains an exact English hold because the candidate's reference to the soil surface was unclear. The mulch line was changed from “prevent weeds” to “reduce weeds” in all three drafts to preserve the source's qualified claim. Procedures, crop examples, worm and leachate safety, nitrogen claims, quizzes and the other slides were not translated in this batch.
+
+The paired renderer validated all 20 English source records for each language. Six affected frames were rendered at 1440 × 5400 and inspected for the unreviewed label, exact English source, visible holds and unclipped target text. Only frames 15 and 18 were copied into each existing regional deck. These are silent stills; no regional narration or audio manifest entry was added. Fluent speakers and local farming practitioners still need to review the drafts, including whether standard written Xitsonga fits the Shangani-speaking group.

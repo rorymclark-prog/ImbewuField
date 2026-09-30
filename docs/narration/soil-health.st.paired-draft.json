@@ -485,7 +485,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka wona, hape ya fokotsa mefoka."
           },
           {
             "status": "english-hold"
@@ -567,16 +568,20 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshimo ya Highveld e siilweng e sa kwahelwa ka mora kotulo ya maize e tobana le dikotsi tse pedi tse kgolo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Moya wa mariha o ka fefola topsoil e ommeng wa e tlosa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa kwahelwang, sa senya bokahodimo le sebopeho sa wona. Ha metsi a phalla a feta tshimong, a ka nka mobu o hlephileng a o tlosa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Cover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela."
           }
         ]
       }
@@ -642,5 +647,12 @@
         ]
       }
     }
+  ],
+  "provenance": {
+    "newDrafts": "New unreviewed L3 concept drafts: slide 15 body[1] and slide 18 body[0–3]. Each keeps its exact English source beside the target draft; mulch, Highveld, maize, topsoil, cover crops and organic matter remain in English where needed. No procedures, crop examples, worm/leachate safety, nitrogen claims or quizzes were translated.",
+    "holds": "All other target passages remain exact English holds; no audio or local farming approval is claimed."
+  },
+  "reviewNotes": [
+    "The new L3 concept passages are unreviewed machine drafts only. A fluent speaker and local farming practitioner must review them before learner use."
   ]
 }

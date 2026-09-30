@@ -3,9 +3,9 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1–2 first sentence, slide 3 heading/first sentence, slide 4 heading, slide 5 first sentence, slide 7 heading, and slides 19–20 activity headings are unreviewed machine drafts with exact English source. All other headings and bodies remain explicit English holds.",
+    "newDrafts": "Slides 1–2 first sentence, slide 3 heading/first sentence, slide 4 heading, slide 5 first sentence, slide 7 heading, and slides 19–20 activity headings are unreviewed machine drafts with exact English source. All other headings and bodies remain explicit English holds. New unreviewed L3 concept drafts: slide 15 body[1] and slide 18 body[0–3]. Each keeps its exact English source beside the target draft; mulch, Highveld, maize, topsoil, cover crops and organic matter remain in English where needed. No procedures, crop examples, worm/leachate safety, nitrogen claims or quizzes were translated.",
     "reusedDrafts": "None in learner frames. Slide 4 existing technical paragraph was held after semantic cross-check.",
-    "holds": "All other narration and uncertain soil, jar, compost, water and diagnostic guidance remain exact English."
+    "holds": "All other narration and uncertain soil, jar, compost, water and diagnostic guidance remain exact English. All other target passages remain exact English holds; no audio or local farming approval is claimed."
   },
   "reviewNotes": [
     "Slide 1 uses the broad word “Misava” for soil/ground; a fluent Xitsonga reviewer should check that the sentence is natural and preserves the source distinction.",
@@ -16,8 +16,9 @@
     "Slides 6–10 retain the jar method, particle settling, diagnostic caveats, compost claims and heap-building instructions in exact English. The slide 7 heading draft only says to look at the jar carefully; check its naturalness and intended meaning with a fluent Xitsonga reviewer. These frames are still-only drafts and do not include Xitsonga narration.",
     "Slides 6 and 10 localize only broad heading words (“Explore”; “Watch”). Soil Texture, Jar and the full heap-building instruction remain English. Check these mixed-language headings for natural Xitsonga with a fluent reviewer; all related procedures and claims remain held.",
     "The mixed-language slide 6 heading “Kambisisa Soil Texture hi Jar” and slide 10 label “Languta” are not fluency-checked. Confirm that the English technical terms and word order sound natural in the intended Xitsonga variety; these are not approved learner translations.",
-    "Slides 11–20 keep all bodies and operational or technical headings in exact English. Only the simple activity labels “Field Assignment” (slide 19) and “Field Action” (slide 20) are machine-draft Xitsonga: “Ntirho wa le nsinini” and “Xiendlo xa le nsinini.” Check these labels with a fluent Xitsonga facilitator; all associated field instructions remain English.",
-    "The slide 6 mixed heading draft was withdrawn and is now an exact English hold because the mixed-language word order was not defensible. Slide 10’s Watch/build heading is also held in full. Slide 7’s earlier simple heading remains an unreviewed draft and needs fluent review."
+    "Slides 11–20 keep other bodies and operational or technical headings in exact English except the selected conceptual drafts on slide 18 body[0–3]. Only the simple activity labels “Field Assignment” (slide 19) and “Field Action” (slide 20) are machine-draft Xitsonga: “Ntirho wa le nsinini” and “Xiendlo xa le nsinini.” Check these labels with a fluent Xitsonga facilitator; all associated field instructions remain English.",
+    "The slide 6 mixed heading draft was withdrawn and is now an exact English hold because the mixed-language word order was not defensible. Slide 10’s Watch/build heading is also held in full. Slide 7’s earlier simple heading remains an unreviewed draft and needs fluent review.",
+    "The new L3 concept passages are unreviewed machine drafts only. A fluent speaker and local farming practitioner must review them before learner use."
   ],
   "slides": [
     {
@@ -484,7 +485,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mulch yi nga hunguta evaporation, yi olovisa ku ba ka mpfula naswona yi hunguta nhova."
           },
           {
             "status": "english-hold"
@@ -563,16 +565,20 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nsimu ya le Highveld leyi siyiweke yi nga pfaleriwangi endzhaku ka ntshovelo wa maize yi langutane ni makhombo mambirhi lamakulu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Moya wa xixika wu nga rhwala topsoil leyi omeke wu yi susa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Storm ya ximun’wana yo tika yo sungula yi nga ba misava leyi nga pfaleriwangi, yi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga rhwala misava leyi ntshunxekeke ma yi susa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Cover crops, mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya."
           }
         ]
       }

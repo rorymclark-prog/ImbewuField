@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1882 files, 687.6 MB total.
+// 1882 files, 687.8 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -1557,10 +1557,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/soil-health/st/slide-12.webp': 311318,
   '/course-decks/soil-health/st/slide-13.webp': 279812,
   '/course-decks/soil-health/st/slide-14.webp': 199802,
-  '/course-decks/soil-health/st/slide-15.webp': 525280,
+  '/course-decks/soil-health/st/slide-15.webp': 526996,
   '/course-decks/soil-health/st/slide-16.webp': 555086,
   '/course-decks/soil-health/st/slide-17.webp': 534468,
-  '/course-decks/soil-health/st/slide-18.webp': 489330,
+  '/course-decks/soil-health/st/slide-18.webp': 495908,
   '/course-decks/soil-health/st/slide-19.webp': 234032,
   '/course-decks/soil-health/st/slide-20.webp': 202150,
   '/course-decks/soil-health/ts/slide-01.webp': 304324,
@@ -1577,10 +1577,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/soil-health/ts/slide-12.webp': 311954,
   '/course-decks/soil-health/ts/slide-13.webp': 280750,
   '/course-decks/soil-health/ts/slide-14.webp': 203436,
-  '/course-decks/soil-health/ts/slide-15.webp': 526062,
+  '/course-decks/soil-health/ts/slide-15.webp': 522880,
   '/course-decks/soil-health/ts/slide-16.webp': 556034,
   '/course-decks/soil-health/ts/slide-17.webp': 535128,
-  '/course-decks/soil-health/ts/slide-18.webp': 490098,
+  '/course-decks/soil-health/ts/slide-18.webp': 507096,
   '/course-decks/soil-health/ts/slide-19.webp': 234234,
   '/course-decks/soil-health/ts/slide-20.webp': 244612,
   '/course-decks/soil-health/ve/slide-01.webp': 246338,
@@ -1597,10 +1597,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/soil-health/ve/slide-12.webp': 259924,
   '/course-decks/soil-health/ve/slide-13.webp': 233342,
   '/course-decks/soil-health/ve/slide-14.webp': 202276,
-  '/course-decks/soil-health/ve/slide-15.webp': 425534,
+  '/course-decks/soil-health/ve/slide-15.webp': 525636,
   '/course-decks/soil-health/ve/slide-16.webp': 445382,
   '/course-decks/soil-health/ve/slide-17.webp': 431786,
-  '/course-decks/soil-health/ve/slide-18.webp': 396074,
+  '/course-decks/soil-health/ve/slide-18.webp': 497588,
   '/course-decks/soil-health/ve/slide-19.webp': 198984,
   '/course-decks/soil-health/ve/slide-20.webp': 202384,
   '/course-decks/soil-health/zu/slide-01.jpg': 217341,
