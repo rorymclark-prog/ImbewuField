@@ -20,7 +20,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nsimu ya wena yi ku nyika swakudya, mali leyi nghenaka, ni vutivi byo pfuna.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -44,7 +46,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ha Yini Leswi Swi Ri Swa Nkoka",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -52,7 +56,9 @@
             "text": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku tsala matirhiselo lawa yo hambana swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikaka eka vaxavi.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -74,11 +80,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Swikongomelo Swa Dyondzo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko dyondzo yi hela, u ta kota ku tsala ntshovelo ni laha wu yaka kona.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -104,11 +114,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vona: Leswi Rekhodo Ya Purasi Yi Swi Kombisaka",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekhodo yi landzelerisa ntshovelo wun'wana ni wun'wana ku ya eka swakudya swa ndyangu, ku xavisiwa, tinyiko kumbe compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -130,20 +144,28 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tsala Ntshovelo Wun'wana Ni Wun'wana",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa mukhuva lowu wo olova eka swakudya leswi hlayisiwaka ekaya, leswi xavisiwaka, leswi nyikiwaka van'wana, ni leswi endliwaka compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga titshegi hi ku tsundzuka loko nguva yi hela.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -162,7 +184,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tshika Nguva Yin'wana Yi Hlamula Swivutiso",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -175,7 +199,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekhodo yi tlhela yi komba tin'wana ta tin'hweti leti ndyangu wu xava swakudya.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -221,11 +247,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kunguhata Nkarhi Wa Ku Kayivela Ka Swakudya",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa rekhodo ya wena ku kuma nkarhi lowu swakudya swa ndyangu swi kayivelaka.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -248,14 +278,18 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vona: Laha Surplus Yi Nga Yaka Kona",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Miseve yi komba ndlela yin'wana ni yin'wana.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -273,7 +307,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tiva Muxavi Wa Wena",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
