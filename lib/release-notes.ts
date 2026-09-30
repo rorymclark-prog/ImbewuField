@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '30 September 2026', sha: '0da02501', changes: [
+  { when: '30 September 2026', sha: 'a83b9838', changes: [
     'Crop mix splits herbs, less common crops and cover crops into their own switches.',
     'One ticked vine no longer takes over a single bed; the other crops still get planted.',
     'Honey shows in the bed calendar without months, with recorded SA honey flows on hover.',
