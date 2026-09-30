@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.st.paired-draft.json",
-  "pairedSourceSha256": "3f4feced5b6f5d26cb3ea282d321ee58342893cb2b67982dbfc00c7b79f2739e",
+  "pairedSourceSha256": "677014849ee7dfd58a2298b586fa9170b075457d6d429496d649f6f5185fedad",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -133,8 +133,8 @@
       "slide": 18,
       "path": "public/course-decks/market-community/st/slide-18.webp",
       "pixels": "1440x5400",
-      "bytes": 535994,
-      "sha256": "7acca1e67bb7fd76de0636ff9d270a920573fa8761deaa094a6023d6990e1402"
+      "bytes": 534566,
+      "sha256": "5bee5b887062b1f76d21059b032459a7baf71fa97cb99f71ee1ab9f986e5ca10"
     },
     {
       "slide": 19,
@@ -220,6 +220,6 @@
       "sha256": "10adb5391515ab8478dc2f46c59ce9a487cf78f55a24ae704ddef997af68b692"
     }
   ],
-  "draftPassageCount": 45,
+  "draftPassageCount": 46,
   "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No regional narration, fluent review or local farming approval is claimed."
 }

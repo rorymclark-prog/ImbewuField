@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '55bcd6ff', changes: [
+    'Study adds marked Food Forest closing steps and more Market Gardening record lines.',
+    'The follow-up checks and uncertain farming advice stay paired with exact English.',
+  ], tour: [
+    { title: 'Compare the new closing steps and records', where: 'Study → Food Forest and Market Gardening', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Read the marked drafts beside the unchanged English source; regional slides have no narration.' },
+  ] },
   { when: '30 September 2026', sha: '92da51e3', changes: [
     'Study adds Tshivenda lines for observing wind and rain on a farm.',
     'Other site and crop-health guidance remains in English beside the marked drafts.',

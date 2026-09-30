@@ -579,7 +579,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ngola mokgwa, maemo le sephetho hore ba bang ba kgone ho bona hore na o ka tshwanelana le naha ya bona.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"

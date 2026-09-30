@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/food-forest.st.paired-draft.json",
-  "pairedSourceSha256": "5c704e793d390628fcde9e6a89e57990ff64632918bc6e9b70d8c4ee69e2780f",
+  "pairedSourceSha256": "d27290f69c495d9885b3215533bfea1f323f8db6d24460257ec48eaced23e079",
   "englishSource": "docs/narration/food-forest.en.md",
   "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
   "slides": [
@@ -147,8 +147,8 @@
       "slide": 20,
       "path": "public/course-decks/food-forest/st/slide-20.webp",
       "pixels": "1440x5400",
-      "bytes": 225206,
-      "sha256": "7a7a9c757f32db77aa4014f181d97fd1a19509e21b4d52be694a964bfe941cc4"
+      "bytes": 231032,
+      "sha256": "c7285bad90e784b927f31b572c0249e8ef70b04e6fc1c818d130f18df04c6f76"
     }
   ],
   "contactSheet": "docs/media/food-forest/qa/st-paired-contact-sheet.jpg",

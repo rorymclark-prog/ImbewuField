@@ -595,13 +595,27 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta ndhawu leyi u nga kotaka ku yi hlayisa, kutani u hlawula goza rin’we leri landzelaka.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Plant only when conditions and follow-up care are suitable.",
+                "text": "Byala ntsena loko swiyimo swi lulamile naswona u ta kota ku ya mahlweni u hlayisa swimilana.",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Return to the same spot to check survival, soil moisture and competition."
+              }
+            ]
           }
         ]
       }

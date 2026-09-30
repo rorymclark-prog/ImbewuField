@@ -25,7 +25,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Modulu uyu u sumbedza nḓila ya u vhulunga rekhodo, u rengisa zwo salaho, na u fhaṱa vhukwamani ha zwiḽiwa ha henefho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -193,7 +195,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Khalaṅwaha nthihi ya rekhodo i fhindula mbudziso dzine dza thusa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -551,7 +555,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṅwalani maitele, nyimele na mvelelo uri vhaṅwe vha kone u vhona arali zwi tshi nga tea mavu avho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"

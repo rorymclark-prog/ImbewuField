@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.ts.paired-draft.json",
-  "pairedSourceSha256": "4d665e543ba043fac48a1599948ea9f68b6320e34a2d42ce58940a563695bdb1",
+  "pairedSourceSha256": "fde49d6e87fbb4da74b4c816e83688c1e1c79d34fb9a2445e68615e5fd0c2f43",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -14,8 +14,8 @@
       "slide": 1,
       "path": "public/course-decks/market-community/ts/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 315642,
-      "sha256": "3abfe4d76785ef1180c1f6d3cb5dbd819a3176d4599407a7a0fe7384c5cf796a"
+      "bytes": 321148,
+      "sha256": "e52e17d11d55ebeca4906d3986d82e84ace6756f940043effc6bb74e7b5a3122"
     },
     {
       "slide": 2,
@@ -49,8 +49,8 @@
       "slide": 6,
       "path": "public/course-decks/market-community/ts/slide-06.webp",
       "pixels": "1440x5400",
-      "bytes": 261760,
-      "sha256": "81571b9b4e12129b070662c01be570c54a4cf0612a717f4254bccd472a49d0b3"
+      "bytes": 260702,
+      "sha256": "9121c0553faa1ef40b3bd430f9dae8b6116a0cc44a9ee0f23e2ed59b394bc8f9"
     },
     {
       "slide": 7,
@@ -133,8 +133,8 @@
       "slide": 18,
       "path": "public/course-decks/market-community/ts/slide-18.webp",
       "pixels": "1440x5400",
-      "bytes": 537284,
-      "sha256": "5527a9351094bcfeb46b9fac06024ef2e593390312848fc34f75d5ec4c816056"
+      "bytes": 542064,
+      "sha256": "c734bc78bc057cf63d830633a1de23f5420f803a6c8be00068a7e42a3905ca50"
     },
     {
       "slide": 19,
@@ -157,7 +157,7 @@
       "slide": 1,
       "path": "docs/media/market-community/ts-paired-review/slide-01-390.jpg",
       "pixels": "390x1463",
-      "sha256": "5d00cd81ee5812969aed3f08b9e416daffd21fd084a94be6a01ac38b73cc8894"
+      "sha256": "2d28a4cbe6059d65e2cc21614d5cdb2ccebae21a46a6c64531e86cca0d667641"
     },
     {
       "slide": 2,
@@ -187,7 +187,7 @@
       "slide": 6,
       "path": "docs/media/market-community/ts-paired-review/slide-06-390.jpg",
       "pixels": "390x1463",
-      "sha256": "231fa6039e3e49f85071b69f37478e85179a186833bf9be51890e1d696b59768"
+      "sha256": "0d62eb62e69c874434cad800c0595e60034b1b1ec58a19001b802b68fb76d40d"
     },
     {
       "slide": 7,
@@ -220,6 +220,6 @@
       "sha256": "114b674fa23a4678c76526c66d2290eaa1a3af7f0afe44299ff9252b118012ee"
     }
   ],
-  "draftPassageCount": 30,
+  "draftPassageCount": 33,
   "note": "All 20 silent Xitsonga frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No regional narration, fluent review or local farming approval is claimed."
 }
