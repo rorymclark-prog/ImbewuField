@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '30 September 2026', sha: 'c074ef30', changes: [
+  { when: '30 September 2026', sha: 'ecbdaf15', changes: [
     'Squashes & melons is its own crop-mix switch, apart from tomatoes and peppers.',
     'Save your crop mix for a map; auto-suggest starts from it every time you plan there.',
     'Fruit and animal products show as bars across their months, like bed plantings.',
