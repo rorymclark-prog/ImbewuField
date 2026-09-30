@@ -705,15 +705,15 @@ test('Sesotho Plant Guilds learner draft keeps exact source pairing, labeled fie
   assert.equal(packet.reviewStatus, 'unreviewed');
   assert.equal(slides.length, 51);
   assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
-    .map((slide: any) => slide.n), [1, 2, 3, 4, 5, 6, 7, 8, 33, 34, 37, 38, 48, 49]);
+    .map((slide: any) => slide.n), [1, 2, 3, 4, 5, 6, 7, 8, 33, 34, 37, 38, 46, 47, 48, 49]);
 
   const draftedBodySlides = slides.filter((slide: any) => slide.target.body.some((part: any) => part.status === 'draft'))
     .map((slide: any) => slide.n);
-  assert.deepEqual(draftedBodySlides, [1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 20, 22, 24, 27, 33, 34, 36, 38, 42, 46, 47, 48, 49]);
-  assert.equal(slides.flatMap((slide: any) => slide.target.body).filter((part: any) => part.status === 'draft').length, 23);
+  assert.deepEqual(draftedBodySlides, [1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 20, 22, 24, 27, 33, 34, 36, 38, 42, 46, 48, 49]);
+  assert.equal(slides.flatMap((slide: any) => slide.target.body).filter((part: any) => part.status === 'draft').length, 22);
   assert.equal(slides.flatMap((slide: any) => slide.target.body)
-    .filter((part: any) => part.status === 'draft' && part.text.includes('ENGLISH HOLD —')).length, 13,
-  'mixed Sesotho and English paragraphs explicitly mark every held sentence for facilitator review');
+    .filter((part: any) => part.status === 'draft' && part.text.includes('ENGLISH HOLD —')).length, 12,
+  'legacy Sesotho and English paragraphs explicitly mark every held sentence for facilitator review');
   assert.equal(slides.flatMap((slide: any) => slide.target.body)
     .filter((part: any) => part.status === 'english-hold').length, 28,
   'uncertain field guidance stays fully in English instead of being presented as Sesotho');
@@ -733,26 +733,65 @@ test('Sesotho Plant Guilds learner draft keeps exact source pairing, labeled fie
   assert.ok(slide34.includes('ENGLISH HOLD — Many ladybirds eat aphids; some parasitoid wasps attack crop pests.'));
   assert.ok(slide34.includes('Ha e le hantle kokonyana ena e etsa eng?'));
   assert.ok(slides[48].target.body[0].text.includes('ENGLISH HOLD — Write down what will trigger pruning or thinning.'));
+  assert.equal(slides[45].target.heading.text, 'Etsa qeto ka seo o se bonang');
+  assert.equal(slides[45].target.body[0].text,
+    'Boloka rekoto e kgutshwane ya kamoo sehlopha sa dimela tse tshehetsanang (guild) se sebetsang kateng.');
+  assert.equal(slides[46].target.heading.text, 'Etsa qeto ka seo o se bonang');
+  assert.equal(slides[46].target.body[0].status, 'mixed');
+  assert.equal(slides[46].target.body[0].segments.map((segment: any) => segment.sourceEnglish).join(''),
+    slides[46].english.body[0], 'the field observations remain exact-English and source-paired');
+  assert.equal(slides[46].target.body[0].segments[1].text,
+    'Ke bopaki bofe bo ka etsang hore o fetole sehlopha sena sa dimela tse tshehetsanang (guild)?');
 });
 
-test('Tshivenda and Xitsonga Plant Guilds frames keep every narration line in exact English', () => {
+test('Tshivenda and Xitsonga Plant Guilds localise only observation prompts in silent paired decks', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/plant-guilds.en.md', 'utf8'));
+  const headingDrafts = {
+    ve: 'Ni tendele zwe na zwi vhona zwi ni thuse u dzhia phetho.',
+    ts: 'Leswi u swi vonaka a swi ku pfuna ku endla xiboho.',
+  };
+  const recordDrafts = {
+    ve: null,
+    ts: 'Tsala rhekhodo yo koma ya ndlela leyi guild yi tirhaka ha yona.',
+  };
+  const questionDrafts = {
+    ve: 'Ndi vhuṱanzi vhufhio vhune ha nga ita uri ni shandule guild?',
+    ts: 'Hi vumbhoni byihi byi nga ku endla u cinca guild?',
+  };
   for (const language of ['ve', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/plant-guilds.${language}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
     assert.equal(slides.length, 51);
-    assert.ok(slides.every((slide: any) => slide.target.heading.status === 'english-hold'),
-      `${language} headings stay in exact English`);
-    assert.deepEqual(slides.filter((slide: any) => slide.target.body.some((part: any) => part.status === 'draft'))
-      .map((slide: any) => slide.n), []);
-    assert.equal(slides.flatMap((slide: any) => slide.target.body)
-      .filter((part: any) => part.status === 'draft').length, 0);
+    assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
+      .map((slide: any) => slide.n), [46, 47], `${language} only localises observation headings`);
+    assert.equal(slides[45].target.heading.text, headingDrafts[language]);
+    assert.equal(slides[46].target.heading.text, headingDrafts[language]);
+    if (recordDrafts[language]) {
+      assert.equal(slides[45].target.body[0].status, 'draft');
+      assert.equal(slides[45].target.body[0].text, recordDrafts[language]);
+    } else {
+      assert.deepEqual(slides[45].target.body, [{ status: 'english-hold' }],
+        'Tshivenda keeps the record-over-time instruction exact English until its wording is clear');
+    }
+    assert.equal(slides[46].target.body[0].status, 'mixed');
+    assert.equal(slides[46].target.body[0].segments.map((segment: any) => segment.sourceEnglish).join(''),
+      slides[46].english.body[0], `${language} preserves exact source for all held observations`);
+    assert.equal(slides[46].target.body[0].segments[1].sourceEnglish,
+      'What evidence would make you change the guild?');
+    assert.equal(slides[46].target.body[0].segments[1].text, questionDrafts[language]);
+    for (const slide of slides.filter((item: any) => item.n !== 46 && item.n !== 47)) {
+      assert.equal(slide.target.heading.status, 'english-hold', `${language} slide ${slide.n} heading stays English`);
+      assert.ok(slide.target.body.every((part: any) => part.status === 'english-hold'),
+        `${language} slide ${slide.n} body stays English`);
+    }
     assert.equal(slides[26].english.body[0], 'Watch the branch fall onto the cut leaves.');
     assert.deepEqual(slides[26].target.body, [{ status: 'english-hold' }]);
     for (const slide of slides) {
-      assert.ok(slide.target.body.every((part: any) => part.status === 'english-hold'),
-        `${language} slide ${slide.n} must visibly retain exact-English body holds`);
+      assert.ok(slide.target.body.every((part: any) => ['draft', 'mixed', 'english-hold'].includes(part.status)),
+        `${language} slide ${slide.n} has an explicit draft or hold marker`);
+      assert.ok(existsSync(`public/course-decks/plant-guilds/${language}/slide-${String(slide.n).padStart(2, '0')}.webp`),
+        `${language} silent slide ${slide.n} exists for Study and offline use`);
     }
   }
 });

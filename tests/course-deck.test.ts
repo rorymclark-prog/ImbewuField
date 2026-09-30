@@ -145,15 +145,18 @@ test('Water Harvesting regional review decks register all 24 silent paired frame
     'English source narration remains available as an explicit choice');
 });
 
-test('Sesotho Plant Guilds exposes every paired slide without claiming a Sesotho voice', () => {
+test('Sesotho, Tshivenda and Xitsonga Plant Guilds expose paired stills without claiming regional voices', () => {
   const deck = deckFor('plant-guilds')!;
-  assert.ok(deck.slideLanguages.includes('st'));
-  assert.equal(COURSE_NARRATION['plant-guilds'].languages.includes('st'), false);
-  for (let slide = 1; slide <= 51; slide++) {
-    const selected = slideImageFor('plant-guilds', 'st', slide);
-    assert.ok(selected?.exact, `slide ${slide} should keep its source-paired Sesotho frame`);
-    assert.ok(selected.url.endsWith('.webp'));
-    assert.ok(onDisk(selected.url), `offline frame missing: ${selected.url}`);
+  for (const language of ['st', 've', 'ts']) {
+    assert.ok(deck.slideLanguages.includes(language));
+    assert.equal(COURSE_NARRATION['plant-guilds'].languages.includes(language), false,
+      `${language} still has no claimed regional voice`);
+    for (let slide = 1; slide <= 51; slide++) {
+      const selected = slideImageFor('plant-guilds', language, slide);
+      assert.ok(selected?.exact, `slide ${slide} should keep its source-paired ${language} frame`);
+      assert.ok(selected.url.endsWith('.webp'));
+      assert.ok(onDisk(selected.url), `offline frame missing: ${selected.url}`);
+    }
   }
 });
 

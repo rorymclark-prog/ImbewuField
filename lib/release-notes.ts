@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: 'cd04623c', changes: [
+    'Plant Guilds adds unreviewed observation prompts in Sesotho, Tshivenda and Xitsonga.',
+    'Plant-care checks stay English; English narration remains a separate choice.',
+  ], tour: [
+    { title: 'Compare Plant Guilds observation prompts', where: 'Study → Plant Selection & Guilds → slides 46–47', href: '/student',
+      detail: 'Choose a regional language to compare marked observation drafts with the exact English source.' },
+  ] },
   { when: '29 September 2026', sha: 'a6afc841', changes: [
     'Vegetables Study adds regional harvest-gap drafts and activity headings.',
     'Silent slides pair each unreviewed draft with English; field steps stay English.',

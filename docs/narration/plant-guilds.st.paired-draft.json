@@ -945,12 +945,13 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Etsa qeto ka seo o se bonang"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Boloka rekoto e kgutshwane ya kamoo sehlopha sa dimela tse tshehetsanang se sebetsang kateng."
+            "text": "Boloka rekoto e kgutshwane ya kamoo sehlopha sa dimela tse tshehetsanang (guild) se sebetsang kateng."
           }
         ]
       }
@@ -966,12 +967,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Etsa qeto ka seo o se bonang"
         },
         "body": [
           {
-            "status": "draft",
-            "text": "ENGLISH HOLD — Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage.\n\nENGLISH HOLD — Note what was cut, returned or removed.\n\nENGLISH HOLD — Use these observations to change the layout and care.\n\nENGLISH HOLD — A plant earns its place through what it does here.\n\nKe bopaki bofe bo ka etsang hore o fetole sehlopha sena sa dimela tse tshehetsanang (guild)?"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "english-hold",
+                "sourceEnglish": "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. "
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": "What evidence would make you change the guild?",
+                "text": "Ke bopaki bofe bo ka etsang hore o fetole sehlopha sena sa dimela tse tshehetsanang (guild)?"
+              }
+            ]
           }
         ]
       }
