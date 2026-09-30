@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '9834b317', changes: [
+    'Plant Guilds and Food Forest add more Sesotho, Tshivenda and Xitsonga lesson drafts.',
+    'Uncertain care wording stays in English beside the marked drafts.',
+  ], tour: [
+    { title: 'Compare plant lessons', where: 'Study → Plant Guilds and Food Forest', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Read the unreviewed local-language concepts beside exact English; regional slides can be read with No narration.' },
+  ] },
   { when: '30 September 2026', sha: '3a0e346e', changes: [
     'Study adds more Sesotho and Xitsonga controls, and a Tshivenda Design Studio link.',
     'Market Gardening adds a few record-keeping prompts in local languages beside English.',
