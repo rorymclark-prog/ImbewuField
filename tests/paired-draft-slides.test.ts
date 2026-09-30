@@ -444,7 +444,7 @@ test('Vegetables study headings never turn field tasks into translated instructi
 test('regional Study frames draft screened observations while risky advice stays in exact English', () => {
   const cases = [
     { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '2:2', '2:3', '2:5', '8:1', '8:4', '9:1'], held: ['2:4', '8:2', '8:3', '8:5', '8:6'] },
-    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '3:4'], held: ['2:3', '18:1'] },
+    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '3:4', '18:1'], held: ['2:3', '18:3'] },
     { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '2:1', '3:1', '5:1', '5:3', '14:1'], held: ['1:3', '2:3', '4:1', '4:2', '5:2', '5:4', '19:2', '20:4'] },
     { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '2:1', '2:3', '5:1', '5:3', '5:4', '14:1', '20:4'], held: ['1:2', '1:3', '2:2', '3:3', '4:1', '5:2', '19:2'] },
     { moduleId: 'soil-health', lang: 've', drafted: ['1:1', '2:1', '2:3', '5:1', '5:3', '14:1'], held: ['1:3', '4:1', '4:2', '5:2', '5:4', '19:2', '20:4'] },
@@ -465,17 +465,24 @@ test('regional Study frames draft screened observations while risky advice stays
   }
 });
 
-test('regional Market slides keep prices, planting choice and local rules in exact English', () => {
+test('regional Market slides keep financial, seed, tool and specialist advice in exact English', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   for (const lang of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
-    for (const n of [7, 10]) {
+    for (const n of [7, 10, 11, 12, 15, 16, 17]) {
       assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
-        `${lang} slide ${n} keeps pricing or local trading advice in English`);
+        `${lang} slide ${n} keeps action or trading advice in English`);
     }
     assert.equal(slides[7].target.body[1].status, 'english-hold',
       `${lang} slide 8 keeps crop choice and harvest timing advice in English`);
+    assert.equal(slides[17].target.body[2].status, 'english-hold',
+      `${lang} slide 18 keeps specialist disease and technical advice in English`);
+    assert.equal(slides[18].target.body[3].status, 'english-hold',
+      `${lang} slide 19 keeps the crop-return conclusion in English`);
+    for (const part of slides[19].target.body.slice(1)) {
+      assert.equal(part.status, 'english-hold', `${lang} slide 20 keeps financial and seed-swap decisions in English`);
+    }
   }
 });
 
