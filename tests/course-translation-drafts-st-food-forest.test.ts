@@ -100,17 +100,21 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
         ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
         ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
       ], 'retain all pre-existing L3 quiz draft and hold statuses');
+      assert.equal(draftParagraphs[0],
+        'Qala ka ho hlahloba site, phepelo ya metsi le tlhokomelo e fumanehang. Sireletsa mobu o pepesitsweng esale pele.');
       assert.equal(draftParagraphs[2],
         'Difate tsa sehlooho (main trees) le mekgahlelo e ka tlase (lower layers) di ka kenngwa ha maemo a dumela. ' +
         'Ground cover ha e hloke ho ema ho fihlela qetellong; qoba dimela tse qothisanang le difate tse nyane.');
       assert.equal(draftParagraphs[3],
-        'Qala ka sebaka seo o ka se nosetsang le ho se hlokomela. Check existing vegetation before clearing.');
+        'Qala ka sebaka seo o ka se nosetsang le ho se hlokomela. Hlahloba dimela tse seng di le teng pele o di tlosa.');
+      assert.equal(draftParagraphs[6],
+        'Sheba kamoo moriti, metso le metsi a fumanehang di amang dimela tse haufi kateng.');
       assert.equal(draftParagraphs[9],
         'Kgetha monyetla wa ho lema ha mongobo wa mobu le maemo a lehodimo a lebelletsweng di tshehetsa establishment.');
       assert.equal(draftParagraphs[10],
-        'Pula e ka thusa, empa hlahloba root zone mme o boloke leano la nosetso la backup. Avoid planting into waterlogged ground.');
+        'Pula e ka thusa, empa hlahloba root zone mme o boloke leano la nosetso la backup. Qoba ho lema mobung o tletseng metsi.');
       sourceParagraphs.forEach((paragraph, index) => {
-        if (![2, 3, 9, 10].includes(index)) assert.equal(draftParagraphs[index], paragraph, `Food Forest L3 paragraph ${index + 1} stays English`);
+        if (![0, 2, 3, 6, 9, 10].includes(index)) assert.equal(draftParagraphs[index], paragraph, `Food Forest L3 paragraph ${index + 1} stays English`);
       });
     }
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: keep key-point count/order`);
@@ -163,6 +167,24 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
   ];
   const heldEnglish = draft.lessons.map(lesson => lesson.body.sesothoDraft).join('\n');
   for (const name of namesAndClaims) assert.ok(heldEnglish.includes(name), `held source must preserve ${name}`);
+});
+
+test('Sesotho Food Forest site-care draft keeps uncertain material and pruning guidance in English', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'food-forest')!;
+  const lesson = source.lessons.find(item => item.id === 'food-forest-l3')!;
+  const draft = SESOTHO_FOOD_FOREST_DRAFT.lessons.find(item => item.id === lesson.id)!;
+  assert.equal(draft.body.sourceEnglish, lesson.body);
+  const shown = resolveLearnerLessonPresentation(lesson, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.sesothoDraft);
+  assert.equal(draft.body.sesothoDraft.split('\n\n').length, lesson.body.split('\n\n').length);
+  for (const held of [
+    'Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth.',
+    'Prune or thin support plants when needed, using methods suited to each species.',
+    'Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.',
+  ]) assert.ok(draft.body.sesothoDraft.includes(held), `keep meaning-sensitive guidance exact English: ${held}`);
+  assert.match(draft.body.sesothoDraft, /Sireletsa mobu o pepesitsweng esale pele/);
+  assert.match(draft.body.sesothoDraft, /Qoba ho lema mobung o tletseng metsi/);
 });
 
 test('Sesotho chicken lesson preserves animal-care and manure guidance beside a narrow draft', () => {
