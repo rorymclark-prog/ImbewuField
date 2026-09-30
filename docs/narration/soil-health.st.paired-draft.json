@@ -58,7 +58,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba mobu wa hao, ebe o kgetha ditsela tsa ho o sireletsa le ho o ntlafatsa."
           }
         ]
       }
@@ -147,10 +148,12 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba metso le dikgeo tse e potolohileng."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba se kwahetseng bokahodimo. Mohlala o mong o kwahetswe ke mulch e hlephileng."
           },
           {
             "status": "english-hold"
@@ -394,7 +397,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bapisa mobu o sa kwahelwang le mobu o kwahetsweng ka mulch."
           },
           {
             "status": "english-hold"
@@ -573,7 +577,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Aha bophelo ba mobu kgato ka kgato."
           }
         ]
       }

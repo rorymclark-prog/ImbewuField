@@ -68,7 +68,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lavhelesani mavu anu, ni kone u nanga nḓila dza u a tsireledza na u a khwinisa."
           }
         ]
       }
@@ -157,7 +158,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lavhelesani midzi na zwikhala zwi re nga u i mona."
           },
           {
             "status": "english-hold"
@@ -395,7 +397,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhambedzani mavu a songo fukedzwaho na mavu o fukedzwaho nga mulch."
           },
           {
             "status": "english-hold"
