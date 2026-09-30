@@ -428,7 +428,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bulasi ḽithihi ḽi nga bveledza zwiḽiwa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -544,7 +546,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhahura vha nga sumbedza vhukoni vhu thusaho na u vhambedza zwe zwa bvelela kha mabulasini avho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -569,17 +573,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mushumo wa Masimuni: Itani Rekhodo ya Bulasi",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekhodani kilogram, dozen, kana bundle iṅwe na iṅwe musi zwi tshi bva bulasini.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Katelani zwiḽiwa zwe zwa vhulungelwa muṱani, zwibveledzwa zwo rengiswaho, zwe zwa fhiwa vhaṅwe, na zwibveledzwa zwo vhewa kha compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -600,11 +610,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nyito ya Masimuni: Shumisani Rekhodo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nangani tsheo nthihi ya vhukuma ine ya bva kha rekhodo ya bulasi yaṋu.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"

@@ -352,7 +352,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Bala mosebetsi wa ho rekisa ka kotloloho",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -380,7 +382,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Rera ho ya ka diotara tsa sebele",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -408,7 +412,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Bapisa mokgwa wa thekiso le phepelo ya hao",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -436,17 +442,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Kamoo baahisani ba matlafatsang kotulo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Polasi e le nngwe e ka hlahisa dijo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sehlopha se ka arolelana peo, disebediswa, bokgoni le dipalangoang.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Balemi ba arohaneng ba ka theha marangrang a matla a dijo a lehae, lelapa ka leng le kenya letsoho ka seo le ka se kgonang.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -524,7 +538,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fokotsa tahlehelo pakeng tsa kotulo le thekiso",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -552,11 +568,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Arolelana bokgoni mme o hlahlobe diphetho",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Baahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -581,17 +601,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mosebetsi wa tshimo: Etsa rekoto ya polasi",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebelisa dihlooho tsa kotulo, moo e yang teng, ditjeo le mosebetsi.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekota kilogram, dazene kapa ngata e nngwe le e nngwe ha e tloha polasing.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kenyelletsa dijo tse bolokwang ke lelapa, tse rekiswang, tse fanwang e le dimpho le tse kenngwang compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -612,11 +640,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ketso ya tshimo: Sebedisa rekoto",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kgetha qeto e le nngwe ya sebele ho tswa rekotong ya polasi ya hao.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"

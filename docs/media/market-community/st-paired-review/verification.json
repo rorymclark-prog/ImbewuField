@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.st.paired-draft.json",
-  "pairedSourceSha256": "284da5a9b99b0a8dccd689f5551dabfb6bc48d1360258c17fb9eb89b5240b735",
+  "pairedSourceSha256": "3f4feced5b6f5d26cb3ea282d321ee58342893cb2b67982dbfc00c7b79f2739e",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -84,29 +84,29 @@
       "slide": 11,
       "path": "public/course-decks/market-community/st/slide-11.webp",
       "pixels": "1440x5400",
-      "bytes": 134604,
-      "sha256": "f822b5a346091b7548a8583634bc01067a5671d0974f9204a3e1f407657ea2f8"
+      "bytes": 293782,
+      "sha256": "bf9ab7786ca70777eba081e5df09bdff387b3a58b36409f5af1b54ddf8099a2c"
     },
     {
       "slide": 12,
       "path": "public/course-decks/market-community/st/slide-12.webp",
       "pixels": "1440x5400",
-      "bytes": 114900,
-      "sha256": "4c6bfdaeb2ee6aaba5e723b0b43e41bf6b91205c833e1a8293654536068e032c"
+      "bytes": 243316,
+      "sha256": "957633cbb0a8ee846f9a68f2c1d4ddb7eff0bceb79f1380500072f23a515db10"
     },
     {
       "slide": 13,
       "path": "public/course-decks/market-community/st/slide-13.webp",
       "pixels": "1440x5400",
-      "bytes": 122554,
-      "sha256": "3d4d3c968d0b5011238a7a4382431d4c413584a664de18dfd64f1ddb7618c43a"
+      "bytes": 269716,
+      "sha256": "2b2b65522d9f7abf39434ae09527d073d5dd20cff2ac808c4fccc46fb5b2a230"
     },
     {
       "slide": 14,
       "path": "public/course-decks/market-community/st/slide-14.webp",
       "pixels": "1440x5400",
-      "bytes": 107528,
-      "sha256": "9fcd397384c4278b4e4ee5e37037f965f76132af98eefd49b8099c39f77557e3"
+      "bytes": 221786,
+      "sha256": "312d23c2c119543582a12cb9832c94a5b9c8dec20f3407767ef988935f668be5"
     },
     {
       "slide": 15,
@@ -126,29 +126,29 @@
       "slide": 17,
       "path": "public/course-decks/market-community/st/slide-17.webp",
       "pixels": "1440x5400",
-      "bytes": 135562,
-      "sha256": "7ea421f1ce8935216882009115bce89e4b6280c36556c6b8d085a5933413b7c1"
+      "bytes": 295312,
+      "sha256": "070b87f204fbdac282dc0276d8043c47309f43bc3fa5e5e62ae4f24c7ddc053d"
     },
     {
       "slide": 18,
       "path": "public/course-decks/market-community/st/slide-18.webp",
       "pixels": "1440x5400",
-      "bytes": 127818,
-      "sha256": "f5dab38eed9f64ed0c58867ce5c3544f03138ca7d37689705527ef762cc29cd3"
+      "bytes": 535994,
+      "sha256": "7acca1e67bb7fd76de0636ff9d270a920573fa8761deaa094a6023d6990e1402"
     },
     {
       "slide": 19,
       "path": "public/course-decks/market-community/st/slide-19.webp",
       "pixels": "1440x5400",
-      "bytes": 130968,
-      "sha256": "de9e29cb49ad8ae184ebc9a31b7ba16c5a30e5246d2ad9247b8cf6e771412385"
+      "bytes": 285668,
+      "sha256": "ae0f2dc5820426d171d95c63e6878edb3dcc1b64cadf40f4b8d7f36e010b0efa"
     },
     {
       "slide": 20,
       "path": "public/course-decks/market-community/st/slide-20.webp",
       "pixels": "1440x5400",
-      "bytes": 149480,
-      "sha256": "fbad9521e98a8a32886ac9290093e267c951929fe334942fb48523c74593c342"
+      "bytes": 369290,
+      "sha256": "48f1132437f49470572af71a5437357f9aa69dd162c5c89d73bc1e76a61af1c6"
     }
   ],
   "contactSheet": "docs/media/market-community/st-paired-review/contact-sheet.jpg",
@@ -217,9 +217,9 @@
       "slide": 20,
       "path": "docs/media/market-community/st-paired-review/slide-20-390.jpg",
       "pixels": "390x1463",
-      "sha256": "25c3a0f8c32d6516f839de29f43fcea6a73a7ca9f059f2a59e3abecfc31d649e"
+      "sha256": "10adb5391515ab8478dc2f46c59ce9a487cf78f55a24ae704ddef997af68b692"
     }
   ],
-  "draftPassageCount": 29,
+  "draftPassageCount": 45,
   "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No regional narration, fluent review or local farming approval is claimed."
 }

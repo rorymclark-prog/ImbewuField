@@ -421,17 +421,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vona: Ndlela Leyi Vaakelani Va Tiyisaka Ntshovelo Ha Yona",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Purasini rin’we ri nga humesa swakudya.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Varimi vo hambana-hambana va vumba food network ya laha kaya leyi tiyeke, laha ndyangu wun’wana ni wun’wana wu hoxaka xandla hi leswi wu kotaka.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -537,7 +543,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Avelana Vuswikoti U Kambela Mivuyelo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -567,17 +575,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ntirho Wa Le Nsimini: Endla Rekhodo Ya Purasi",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa tinhlokomhaka ta ntshovelo, laha wu yeke kona, costs ni labour.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala kilogram, dozen kumbe bundle yin’wana ni yin’wana loko yi suka epurasini.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Katsa swakudya leswi hlayisiweke hi ndyangu, leswi xavisiweke, leswi nyikiweke van’wana, ni leswi endliweke compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -598,11 +614,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ntirho Wa Le Nsimini: Tirhisa Rekhodo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula xiboho xin’we xa xiviri lexi humaka eka rekhodo ya purasi ra wena.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
