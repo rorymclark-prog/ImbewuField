@@ -49,7 +49,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Compare Soil Health observations', where: 'Study → Soil Health → slides 2, 5, 14 and 20', href: '/student',
       detail: 'Choose Sesotho, Tshivenda or Xitsonga. Screened observations are visibly unreviewed and paired with exact English; remaining instructions stay English.' },
   ] },
-  { when: '30 September 2026', sha: 'c074ef30', changes: [
+  { when: '30 September 2026', sha: 'ecbdaf15', changes: [
     'Squashes & melons is its own crop-mix switch, apart from tomatoes and peppers.',
     'Save your crop mix for a map; auto-suggest starts from it every time you plan there.',
     'Fruit and animal products show as bars across their months, like bed plantings.',
