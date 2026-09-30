@@ -444,12 +444,13 @@ test('Vegetables study headings never turn field tasks into translated instructi
   }
 });
 
-test('the next regional Study frames keep safety and business advice as exact English holds', () => {
+test('regional Study frames draft screened observations while risky advice stays in exact English', () => {
   const cases = [
     { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '2:2', '2:3', '2:5', '8:1', '8:4', '9:1'], held: ['2:4', '8:2', '8:3', '8:5', '8:6'] },
     { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '3:4'], held: ['1:1', '2:3', '18:1'] },
-    { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '2:1', '3:1', '5:1'], held: ['1:3', '4:1', '4:2', '5:2'] },
-    { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '2:1', '5:1'], held: ['1:2', '1:3', '2:2', '3:3', '4:1', '5:2'] },
+    { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '2:1', '3:1', '5:1', '5:3', '14:1'], held: ['1:3', '2:3', '4:1', '4:2', '5:2', '5:4', '19:2', '20:4'] },
+    { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '2:1', '2:3', '5:1', '5:3', '5:4', '14:1', '20:4'], held: ['1:2', '1:3', '2:2', '3:3', '4:1', '5:2', '19:2'] },
+    { moduleId: 'soil-health', lang: 've', drafted: ['1:1', '2:1', '2:3', '5:1', '5:3', '14:1'], held: ['1:3', '4:1', '4:2', '5:2', '5:4', '19:2', '20:4'] },
   ] as const;
   for (const { moduleId, lang, drafted, held } of cases) {
     const source = englishSlideRecords(readFileSync(`docs/narration/${moduleId}.en.md`, 'utf8'));

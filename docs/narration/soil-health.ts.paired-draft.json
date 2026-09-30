@@ -160,7 +160,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta timitsu ni swivandla leswi ti rhendzeleke."
           },
           {
             "status": "english-hold"
@@ -399,7 +400,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fananisa misava leyi nga funengetiwangiki ni misava leyi funengetiweke hi mulch."
           },
           {
             "status": "english-hold"

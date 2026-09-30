@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '2f58cffb', changes: [
+    'Soil Health adds Sesotho, Tshivenda and Xitsonga observation drafts.',
+    'Treatment and weather guidance stays English beside the silent draft slides.',
+  ], tour: [
+    { title: 'Compare Soil Health observations', where: 'Study → Soil Health → slides 2, 5, 14 and 20', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Screened observations are visibly unreviewed and paired with exact English; remaining instructions stay English.' },
+  ] },
   { when: '30 September 2026', sha: 'ecbdaf15', changes: [
     'Squashes & melons is its own crop-mix switch, apart from tomatoes and peppers.',
     'Save your crop mix for a map; auto-suggest starts from it every time you plan there.',
