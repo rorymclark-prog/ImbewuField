@@ -290,7 +290,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hezwi ndi zwone zwine milayo ya vhuḓifari ya itelwa zwone."
           },
           {
             "status": "english-hold"
@@ -588,7 +589,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Imani muṋangoni wa khishini. Ndi zwifhio zwine na swikelela khazwo ni sa humbuli?"
           }
         ]
       }
@@ -690,7 +692,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bammbiri iḽi ndi mutheo wa pulane yaṋu. Zwiṅwe zwoṱhe kha ngudo iyi zwi fhaṱiwa khaḽo."
           },
           {
             "status": "draft",
