@@ -75,7 +75,7 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
         'keep the phrase about practical questions in English until reviewed');
       assert.equal(shownParagraphs[4],
         'Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.',
-        'keep each unit and produce name exact while recording where it went');
+        'keep unit labels and morogo exact while recording where each item went');
       assert.equal(shownParagraphs[5],
         originalParagraphs[5],
         'keep the compost destination exact until its meaning is confirmed');

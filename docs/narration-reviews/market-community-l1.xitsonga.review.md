@@ -10,7 +10,7 @@ This is an unreviewed machine draft, not fluent or local-farming approval. The l
 
 ## Exact English holds
 
-- Body paragraphs 6, 11–14 remain exact English because the compost category, month wording, crop yield/input comparisons, prices and costs, the R18/R15 teaching example, and customer demand need review or local context.
+- Body paragraphs 6, 9–14 remain exact English because the compost category, month wording, crop yield/input comparisons, prices and costs, the R18/R15 teaching example, and customer demand need review or local context.
 - Body paragraphs 16–17 remain exact English because local crop suitability, planting conditions, harvest timing, and contingency advice depend on local conditions.
 - Key points 2–4 and both complete quiz questions, options, answer indices, and rationales remain exactly in English. The lesson title, module title/description, image description, and other lessons' fields are unchanged.
 
