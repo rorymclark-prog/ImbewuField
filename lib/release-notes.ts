@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: 'd488b7db', changes: [
+    'Introduction adds six short Tshivenda and Xitsonga reflections on silent slides.',
+    'Each unreviewed draft sits beside exact English; water and field guidance stays English.',
+  ], tour: [
+    { title: 'Compare the Introduction reflections', where: 'Study → Introduction to Permaculture → slides 2, 8, 11, 17 and 20', href: '/student',
+      detail: 'Choose Tshivenda for slides 8, 17 and 20, or Xitsonga for slides 2, 11 and 17. No regional narration is selected; English audio remains an optional choice.' },
+  ] },
   { when: '30 September 2026', sha: 'cd04623c', changes: [
     'Plant Guilds adds unreviewed observation prompts in Sesotho, Tshivenda and Xitsonga.',
     'Plant-care checks stay English; English narration remains a separate choice.',
