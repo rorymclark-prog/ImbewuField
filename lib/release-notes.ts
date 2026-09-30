@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '92da51e3', changes: [
+    'Study adds Tshivenda lines for observing wind and rain on a farm.',
+    'Other site and crop-health guidance remains in English beside the marked drafts.',
+  ], tour: [
+    { title: 'Compare the new Tshivenda lines', where: 'Study → Introduction and Reading the Landscape', href: '/student',
+      detail: 'Choose Tshivenda to compare the marked observation lines with their English source.' },
+  ] },
   { when: '30 September 2026', sha: '00bca002', changes: [
     'Study adds food forest and farm record lines in Sesotho, Tshivenda and Xitsonga.',
     'Unreviewed care and market text stays beside its English source.',

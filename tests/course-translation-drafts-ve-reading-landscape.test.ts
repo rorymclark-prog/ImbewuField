@@ -121,6 +121,23 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     checkPair(lesson.body, original.body, `${path}.body`);
     assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, original.body.split('\n\n').length,
       `${path}.body: preserve paragraph breaks`);
+    if (original.id === 'reading-landscape-l3') {
+      assert.equal(lesson.body.reviewStatus, 'machine-draft');
+      const sourceParagraphs = original.body.split('\n\n');
+      const draftParagraphs = lesson.body.tshivendaDraft.split('\n\n');
+      assert.equal(draftParagraphs[0], sourceParagraphs[0]
+        .replace('Walk the land on windy days.', 'Tshimbilani kha shango nga maḓuvha a re na muya.')
+        .replace('Record where the wind comes from and what it affects.', 'Ṅwalani hune muya wa bva hone na zwine wa kwama.'),
+      'only the checked wind-observation sentences change');
+      assert.equal(draftParagraphs[1], sourceParagraphs[1]
+        .replace('On a clear, still night, cold air can flow downhill and collect in low places.',
+          'Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho.'),
+      'preserve the earlier cold-air draft and all adjoining frost guidance');
+      assert.deepEqual(draftParagraphs.slice(2), sourceParagraphs.slice(2),
+        'keep frost identification and late-blight guidance exact English');
+      assert.equal(resolveLearnerLessonPresentation({ ...original, body: `${original.body} changed` }, 've').status,
+        'english-fallback', 'changed source wording withdraws the whole paired learner draft');
+    }
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: preserve key-point count and order`);
     lesson.keyPoints.forEach((point, pointIndex) => {
       checkPair(point, original.keyPoints[pointIndex], `${path}.keyPoints[${pointIndex}]`);
