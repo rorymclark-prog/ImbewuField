@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '30 September 2026', sha: 'eff1871f', changes: [
+  { when: '30 September 2026', sha: '0da02501', changes: [
     'Crop mix splits herbs, less common crops and cover crops into their own switches.',
     'One ticked vine no longer takes over a single bed; the other crops still get planted.',
     'Honey shows in the bed calendar without months, with recorded SA honey flows on hover.',
@@ -51,6 +51,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Turn off Herbs, Less common crops or Cover crops and suggest again. Those crops are left out.' },
     { title: 'Hover the honey line', where: 'Crop plan → bed calendar → Animals row', href: '/facilitator/crops',
       detail: 'With a hive for honey on the map, hover "recorded flows" to see each flow and its source.' },
+  ] },
+  { when: '30 September 2026', sha: 'd488b7db', changes: [
+    'Introduction adds six short Tshivenda and Xitsonga reflections on silent slides.',
+    'Each unreviewed draft sits beside exact English; water and field guidance stays English.',
+  ], tour: [
+    { title: 'Compare the Introduction reflections', where: 'Study → Introduction to Permaculture → slides 2, 8, 11, 17 and 20', href: '/student',
+      detail: 'Choose Tshivenda for slides 8, 17 and 20, or Xitsonga for slides 2, 11 and 17. No regional narration is selected; English audio remains an optional choice.' },
   ] },
   { when: '30 September 2026', sha: 'cd04623c', changes: [
     'Plant Guilds adds unreviewed observation prompts in Sesotho, Tshivenda and Xitsonga.',

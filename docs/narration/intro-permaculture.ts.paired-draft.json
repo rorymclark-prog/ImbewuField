@@ -80,7 +80,8 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Permaculture i ndlela yo teka swiboho hi laha swilo swi faneleke ku vekiwa kona, leswaku misava yi tirha na wena ku nga ri ku lwisana na wena."
           },
           {
             "status": "draft",
@@ -394,7 +395,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vula xilo xin'we lexi fikaka epurasini ra wena mahala, kutani xi tlhela xi suka xi nga tirhisiwanga."
           }
         ]
       }
@@ -578,7 +580,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yima enyangweni ya khixi. I yini lexi u nga xi fikeleraka handle ko ehleketa?"
           }
         ]
       }
