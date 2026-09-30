@@ -933,7 +933,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi byihi vuxokoxoko byi nga ku pfunaka ku tshemba mbewu leyi humaka eka ndyangu wun'wana?",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -982,7 +984,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi yini swin'wana leswi u swi lavaka leswaku u heta ntirhu lowu ekaya?",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"

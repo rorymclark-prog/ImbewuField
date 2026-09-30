@@ -78,7 +78,7 @@ def main() -> None:
             contact.save(contact_path, quality=92, optimize=True)
 
             samples = []
-            for n in (1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 21):
+            for n in (1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 21, 22, 23, 24):
                 with Image.open(output_dir / f"slide-{n:02d}.webp") as source:
                     sample = source.convert("RGB").resize((390, 1463), Image.Resampling.LANCZOS)
                 sample_path = QA / f"{language}-slide-{n:02d}-390.jpg"
@@ -105,7 +105,7 @@ def main() -> None:
             "slides": rows,
             "contactSheet": str(contact_path.relative_to(ROOT)),
             "phoneSamples": samples,
-            "note": "Slides 1–3 and selected ordinary-language sentences on slides 5–9 use machine drafts from the paired review packet, including household and seed-exchange context on slides 6–7. Technical and uncertain meanings remain exact English holds. The 960x540 English illustrations are shown at native pixels without resampling. No translation approval or narration is claimed.",
+            "note": "Slides 1–3 and selected ordinary-language sentences on slides 5–9 and 22–24 use machine drafts from the paired review packet. Technical and uncertain meanings remain exact English holds. The 960x540 English illustrations are shown at native pixels without resampling. No translation approval or narration is claimed.",
         }
         (QA / f"{language}-verification.json").write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1882 files, 681.6 MB total.
+// 1882 files, 680.7 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -1325,9 +1325,9 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/seeds-sovereignty/st/slide-19.webp': 342442,
   '/course-decks/seeds-sovereignty/st/slide-20.webp': 357092,
   '/course-decks/seeds-sovereignty/st/slide-21.webp': 308578,
-  '/course-decks/seeds-sovereignty/st/slide-22.webp': 389290,
-  '/course-decks/seeds-sovereignty/st/slide-23.webp': 413488,
-  '/course-decks/seeds-sovereignty/st/slide-24.webp': 239112,
+  '/course-decks/seeds-sovereignty/st/slide-22.webp': 386302,
+  '/course-decks/seeds-sovereignty/st/slide-23.webp': 421878,
+  '/course-decks/seeds-sovereignty/st/slide-24.webp': 235828,
   '/course-decks/seeds-sovereignty/ts/slide-01.webp': 427548,
   '/course-decks/seeds-sovereignty/ts/slide-02.webp': 369248,
   '/course-decks/seeds-sovereignty/ts/slide-03.webp': 260678,
@@ -1349,8 +1349,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/seeds-sovereignty/ts/slide-19.webp': 343272,
   '/course-decks/seeds-sovereignty/ts/slide-20.webp': 357976,
   '/course-decks/seeds-sovereignty/ts/slide-21.webp': 309512,
-  '/course-decks/seeds-sovereignty/ts/slide-22.webp': 389988,
-  '/course-decks/seeds-sovereignty/ts/slide-23.webp': 414288,
+  '/course-decks/seeds-sovereignty/ts/slide-22.webp': 390296,
+  '/course-decks/seeds-sovereignty/ts/slide-23.webp': 423416,
   '/course-decks/seeds-sovereignty/ts/slide-24.webp': 239920,
   '/course-decks/seeds-sovereignty/ve/slide-01.webp': 422816,
   '/course-decks/seeds-sovereignty/ve/slide-02.webp': 353170,
@@ -1373,8 +1373,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/seeds-sovereignty/ve/slide-19.webp': 344100,
   '/course-decks/seeds-sovereignty/ve/slide-20.webp': 358746,
   '/course-decks/seeds-sovereignty/ve/slide-21.webp': 310180,
-  '/course-decks/seeds-sovereignty/ve/slide-22.webp': 390760,
-  '/course-decks/seeds-sovereignty/ve/slide-23.webp': 414988,
+  '/course-decks/seeds-sovereignty/ve/slide-22.webp': 385828,
+  '/course-decks/seeds-sovereignty/ve/slide-23.webp': 425914,
   '/course-decks/seeds-sovereignty/ve/slide-24.webp': 240538,
   '/course-decks/seeds-sovereignty/zu/hi/slide-01.jpg': 479728,
   '/course-decks/seeds-sovereignty/zu/hi/slide-02.jpg': 238013,

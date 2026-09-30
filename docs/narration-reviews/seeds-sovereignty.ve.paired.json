@@ -925,7 +925,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi mafhungo afhio ane a nga ni thusa u fulufhela mbeu i bvaho muṱani muṅwe?",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -974,7 +976,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi zwifhio zwiṅwe zwine na kha ḓi zwi ṱoḓa uri ni fhedzise mushumo uyu hayani?",
+            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
           },
           {
             "status": "english-hold"
