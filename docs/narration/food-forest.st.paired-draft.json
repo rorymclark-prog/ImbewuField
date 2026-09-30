@@ -613,13 +613,29 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlahloba karolo ya sebaka seo o ka se hlokomelang, ebe o kgetha mohato o le mong o latelang.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sireletsa mobu o pepeneneng, hlahloba hore dimela di loketse sebaka, kapa lokisa dimela tsa nursery.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Plant only when conditions and follow-up care are suitable.",
+                "text": "Jala feela ha maemo a loketse le ha o ka kgona ho hlokomela dimela kamora moo.",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Return to the same spot to check survival, soil moisture and competition."
+              }
+            ]
           }
         ]
       }

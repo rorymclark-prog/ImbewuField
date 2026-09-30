@@ -155,9 +155,13 @@ test('Food Forest Xitsonga orientation is drafted while site-specific field guid
       }
     }
   }
-  assert.ok(slides.filter((slide: any) => slide.n === 7 || slide.n >= 9).every((slide: any) =>
+  assert.ok(slides.filter((slide: any) => slide.n === 7 || (slide.n >= 9 && slide.n < 20)).every((slide: any) =>
     slide.target.body.every((part: any) => part.status === 'english-hold')),
-  'species, site, water, legal and field-action slides retain all teaching text in English');
+  'species, site, water and legal guidance slides retain all teaching text in English');
+  assert.equal(slides[19].target.body[0].status, 'draft');
+  assert.equal(slides[19].target.body[1].status, 'english-hold');
+  assert.equal(slides[19].target.body[2].status, 'mixed',
+    'the closing action draft keeps its follow-up checks paired in English');
 });
 
 test('regional Introduction drafts stay source-paired while uncertain farming, safety and permission advice stays English', () => {
@@ -267,6 +271,13 @@ test('Food Forest Xitsonga media pairs every unreviewed sentence with its curren
     'the candidate narrowed habitat support to habitat protection');
   assert.equal(slides[12].target.body[2].status, 'english-hold',
     'healthy grassland advice remains exact English pending local review');
+  const closing = slides[19].target.body[2];
+  assert.equal(closing.status, 'mixed');
+  assert.deepEqual(closing.segments.map((segment: any) => segment.status), ['draft', 'english-hold']);
+  assert.equal(closing.segments.map((segment: any) => segment.sourceEnglish).join(''),
+    slides[19].english.body[2], 'the follow-up checks remain the exact English source');
+  assert.equal(closing.segments[0].text,
+    'Byala ntsena loko swiyimo swi lulamile naswona u ta kota ku ya mahlweni u hlayisa swimilana.');
 });
 
 test('Food Forest Sesotho slides pair low-risk orientation drafts with exact English and hold technical guidance', () => {
@@ -313,7 +324,7 @@ test('Food Forest Sesotho slides pair low-risk orientation drafts with exact Eng
     'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.',
   ]);
   assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
-    part.status === 'draft' || (part.status === 'english-hold' && part.text === undefined))));
+    part.status === 'draft' || part.status === 'mixed' || (part.status === 'english-hold' && part.text === undefined))));
   const lessonBody = SESOTHO_FOOD_FOREST_DRAFT.lessons[0].body;
   const lessonEnglish = lessonBody.sourceEnglish.split('\n\n');
   const lessonSesotho = lessonBody.sesothoDraft.split('\n\n');
@@ -324,8 +335,17 @@ test('Food Forest Sesotho slides pair low-risk orientation drafts with exact Eng
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, lessonSesotho[lessonParagraph],
       `slide ${slideIndex + 1} must reuse the existing Sesotho draft sentence`);
   }
+  assert.equal(slides[19].target.body[0].text,
+    'Hlahloba karolo ya sebaka seo o ka se hlokomelang, ebe o kgetha mohato o le mong o latelang.');
+  assert.equal(slides[19].target.body[1].text,
+    'Sireletsa mobu o pepeneneng, hlahloba hore dimela di loketse sebaka, kapa lokisa dimela tsa nursery.');
+  const closing = slides[19].target.body[2];
+  assert.equal(closing.status, 'mixed');
+  assert.deepEqual(closing.segments.map((segment: any) => segment.status), ['draft', 'english-hold']);
+  assert.equal(closing.segments.map((segment: any) => segment.sourceEnglish).join(''),
+    slides[19].english.body[2], 'the return visit and checks remain exact English');
   assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
-    part.status === 'draft' || part.status === 'english-hold')));
+    part.status === 'draft' || part.status === 'english-hold' || part.status === 'mixed')));
 });
 
 test('Tshivenda Food Forest drafts pair habitat context while field care and grassland guidance stay English', () => {
@@ -350,6 +370,15 @@ test('Tshivenda Food Forest drafts pair habitat context while field care and gra
   assert.equal(slides[12].target.body[1].status, 'english-hold');
   assert.equal(slides[12].target.body[2].status, 'english-hold',
     'the healthy-grassland protection instruction cannot silently become an unreviewed draft');
+  assert.equal(slides[19].target.body[0].text,
+    'Ṱolisisani fhethu hune na nga kona u hu ṱhogomela, ni nange vhukando vhuthihi vhu tevhelaho.');
+  assert.equal(slides[19].target.body[1].text,
+    'Tsireledzani mavu o vuleaho, sedzani arali zwimela zwi tshi fanelea fhethu, kana ni lugise zwimela zwa nursery.');
+  const closing = slides[19].target.body[2];
+  assert.equal(closing.status, 'mixed');
+  assert.deepEqual(closing.segments.map((segment: any) => segment.status), ['draft', 'english-hold']);
+  assert.equal(closing.segments.map((segment: any) => segment.sourceEnglish).join(''),
+    slides[19].english.body[2], 'the follow-up checks remain exact English');
 });
 
 test('Vegetables slide 14 pairs both regional resilience drafts while keeping the one-crop limit exact', () => {
@@ -413,7 +442,7 @@ test('Xitsonga Market media retains two established learner concepts beside exac
     assert.equal(slides[n - 1].english.body[p - 1], body.sourceEnglish.split('\n\n')[paragraphIndex]);
     assert.equal(slides[n - 1].target.body[p - 1].text, body.xitsongaDraft.split('\n\n')[paragraphIndex]);
   }
-  assert.equal(slides[17].target.body[1].status, 'english-hold');
+  assert.equal(slides[17].target.body[2].status, 'english-hold');
 });
 
 test('Tshivenda staples media holds the unresolved staple placeholder in English', () => {
@@ -489,10 +518,46 @@ test('regional Market slides keep financial, seed, tool and specialist advice in
       `${lang} slide 8 keeps crop choice and harvest timing advice in English`);
     assert.equal(slides[17].target.body[2].status, 'english-hold',
       `${lang} slide 18 keeps specialist disease and technical advice in English`);
+    assert.equal(slides[0].target.body[1].status, 'draft', `${lang} slide 1 pairs its records overview`);
+    assert.equal(slides[5].target.body[0].status, 'draft', `${lang} slide 6 pairs its records prompt`);
+    assert.equal(slides[17].target.body[1].status, 'draft', `${lang} slide 18 pairs its records method`);
     assert.equal(slides[18].target.body[3].status, 'english-hold',
       `${lang} slide 19 keeps the crop-return conclusion in English`);
     for (const part of slides[19].target.body.slice(1)) {
       assert.equal(part.status, 'english-hold', `${lang} slide 20 keeps financial and seed-swap decisions in English`);
+    }
+  }
+});
+
+test('regional closing records passages keep their stated source meaning and exact source pairing', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
+  const expected = {
+    st: [
+      [1, 1, 'Thuto ena e bontsha kamoo o ka bolokang direkoto, wa rekisa masalla, le ho haha marangrang a dijo a lehae.'],
+      [6, 0, 'Sehla se le seng sa direkoto se araba dipotso tse sebetsang.'],
+      [18, 1, 'Ngola mokgwa, maemo le sephetho hore ba bang ba kgone ho bona hore na o ka tshwanelana le naha ya bona.'],
+    ],
+    ve: [
+      [1, 1, 'Modulu uyu u sumbedza nḓila ya u vhulunga rekhodo, u rengisa zwo salaho, na u fhaṱa vhukwamani ha zwiḽiwa ha henefho.'],
+      [6, 0, 'Khalaṅwaha nthihi ya rekhodo i fhindula mbudziso dzine dza thusa.'],
+      [18, 1, 'Ṅwalani maitele, nyimele na mvelelo uri vhaṅwe vha kone u vhona arali zwi tshi nga tea mavu avho.'],
+    ],
+    ts: [
+      [1, 1, 'Dyondzo leyi yi komba ndlela yo hlayisa tirhekhodo, ku xavisa leswi saleke, ni ku aka vuxaka bya swakudya bya laha kaya.'],
+      [6, 0, 'Nguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.'],
+      [18, 1, 'Tsala ndlela leyi tirhisiweke, swiyimo ni mbuyelo leswaku van’wana va kota ku kambisisa loko swi nga va fanelerile eka misava ya vona.'],
+    ],
+  } as const;
+  for (const lang of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    for (const [slideNumber, paragraphIndex, text] of expected[lang]) {
+      const part = slides[slideNumber - 1].target.body[paragraphIndex];
+      assert.equal(part.status, 'draft', `${lang} slide ${slideNumber} shows the records draft`);
+      assert.equal(part.text, text);
+      if (lang !== 'st' || slideNumber === 18) {
+        assert.equal(part.provenance, 'unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired');
+      }
     }
   }
 });

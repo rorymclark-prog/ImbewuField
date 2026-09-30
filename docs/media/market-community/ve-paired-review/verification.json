@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.ve.paired-draft.json",
-  "pairedSourceSha256": "cb692b31374481cb6c120cce5ae2d77a213785c6cff0aa1f4ef96836807cfc1c",
+  "pairedSourceSha256": "01ca004ee6ea8f2bd730b6afdb35ded2c4a96490773b2eec4f20092007de0516",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -14,8 +14,8 @@
       "slide": 1,
       "path": "public/course-decks/market-community/ve/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 314872,
-      "sha256": "33aca65a940d18047cff04fbc3f9d2090f600708ebd91918e475f1e06154c052"
+      "bytes": 318880,
+      "sha256": "597443b71ecebb54fcf8dbf417656128b6896004932884a00ec351832f8189e2"
     },
     {
       "slide": 2,
@@ -49,8 +49,8 @@
       "slide": 6,
       "path": "public/course-decks/market-community/ve/slide-06.webp",
       "pixels": "1440x5400",
-      "bytes": 260462,
-      "sha256": "56f1a28edd2a3ebb695e12ea1193eb764703a02d3832ef8655bdaeac96fc9476"
+      "bytes": 259238,
+      "sha256": "54e94d4b6dbbc2835c2c9aae521b5d13b7bfa7c7090366f15628371d6936bf6b"
     },
     {
       "slide": 7,
@@ -133,8 +133,8 @@
       "slide": 18,
       "path": "public/course-decks/market-community/ve/slide-18.webp",
       "pixels": "1440x5400",
-      "bytes": 535144,
-      "sha256": "89eb250ab5a1eedf3c0032b5e1178777330a6e8664a49ba50f29ea7cad5311f8"
+      "bytes": 529268,
+      "sha256": "0be646eaacc903358a3de3d9ca5d84dfe1c54814843fe4bf6c25a7e6810b1cb4"
     },
     {
       "slide": 19,
@@ -157,7 +157,7 @@
       "slide": 1,
       "path": "docs/media/market-community/ve-paired-review/slide-01-390.jpg",
       "pixels": "390x1463",
-      "sha256": "12d0fd2a5cae6b7b3ed2dfaa791b6027fe43e7e1a5648a54fd2996d33327a061"
+      "sha256": "dfb51b2f8768bdb20ac6bda58725271645473687fe50ede288c3e7e71c3d9c70"
     },
     {
       "slide": 2,
@@ -187,7 +187,7 @@
       "slide": 6,
       "path": "docs/media/market-community/ve-paired-review/slide-06-390.jpg",
       "pixels": "390x1463",
-      "sha256": "3d9753d675e9e28d30ab643965b3eda9586a9b38a847a5a3ba8d7f2245eb41a9"
+      "sha256": "83db5be4a90d161fec9780e043709020546d00b68c2a05d59cbdc107eade7294"
     },
     {
       "slide": 7,

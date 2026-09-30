@@ -597,13 +597,29 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱolisisani fhethu hune na nga kona u hu ṱhogomela, ni nange vhukando vhuthihi vhu tevhelaho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsireledzani mavu o vuleaho, sedzani arali zwimela zwi tshi fanelea fhethu, kana ni lugise zwimela zwa nursery.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Plant only when conditions and follow-up care are suitable.",
+                "text": "Ṱavhani fhedzi musi nyimele dzi tshi fanelea nahone ni tshi kona u bvela phanḓa na u ṱhogomela zwimela.",
+                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Return to the same spot to check survival, soil moisture and competition."
+              }
+            ]
           }
         ]
       }
