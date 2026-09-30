@@ -139,20 +139,27 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     });
   }
   assert.deepEqual(holds, [
-    'lessons[0] reading-landscape-l1.body',
     'lessons[0] reading-landscape-l1.keyPoints[1]',
     'lessons[0] reading-landscape-l1.quiz[0].options[0]',
     'lessons[0] reading-landscape-l1.quiz[0].options[2]',
     'lessons[0] reading-landscape-l1.quiz[0].rationale',
     'lessons[1] reading-landscape-l2.keyPoints[1]',
-    'lessons[1] reading-landscape-l2.quiz[1].question',
-    'lessons[2] reading-landscape-l3.body',
     'lessons[2] reading-landscape-l3.keyPoints[1]',
     'lessons[2] reading-landscape-l3.quiz[0].rationale',
     'lessons[2] reading-landscape-l3.quiz[1].rationale',
     'lessons[3] reading-landscape-l4.keyPoints[2]',
     'lessons[3] reading-landscape-l4.quiz[1].options[1]',
   ], 'uncertain wording stays held until checked by a fluent Tshivenda speaker');
+
+  const waterEnglish = source.lessons[0].body.split('\n\n');
+  const waterDraft = draft.lessons[0].body.tshivendaDraft.split('\n\n');
+  assert.equal(waterDraft[1], waterEnglish[1], 'all A-frame and earthworks guidance stays exact English');
+  for (const sentence of [
+    'When it is safe afterward, walk your land.',
+    'Look for rills, places where water fans out, where it ponds, and where it leaves your property.',
+    'Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.',
+  ]) assert.ok(draft.lessons[0].body.tshivendaDraft.includes(sentence), `held site guidance stays exact English: ${sentence}`);
+  assert.equal(draft.lessons[1].keyPoints[1].reviewStatus, 'hold', 'winter-sun position stays English');
 });
 
 test('Tshivenda Small Livestock shows only the checked module description draft and keeps lesson copy English', () => {

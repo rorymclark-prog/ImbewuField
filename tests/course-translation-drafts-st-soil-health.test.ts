@@ -114,7 +114,7 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     'the visible summary must retain the exact sanitation claim until its Sesotho wording is reviewed');
 });
 
-test('Soil L1 drafts only the soil-life introduction while jar conclusions and treatment cautions stay English', () => {
+test('Soil L1 keeps jar interpretation and diagnostic cautions English beside selected observation drafts', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health')!.lessons[0];
   const draft = SESOTHO_SOIL_HEALTH_DRAFT.lessons[0];
   const english = source.body.split('\n\n');
@@ -128,8 +128,14 @@ test('Soil L1 drafts only the soil-life introduction while jar conclusions and t
   for (let index = 0; index < 3; index++) {
     assert.notEqual(localized[index], english[index], `paragraph ${index} must show a Sesotho draft`);
   }
-  assert.deepEqual(localized.slice(3), english.slice(3),
-    'jar procedure, interpretation limits, water advice and remedies need exact English');
+  for (const index of [3, 4, 5, 6, 9, 10]) {
+    assert.equal(localized[index], english[index],
+      `paragraph ${index + 1}: jar procedure and diagnostic cause claims need exact English`);
+  }
+  for (const index of [7, 8, 11]) {
+    assert.notEqual(localized[index], english[index],
+      `paragraph ${index + 1}: screened observation must be visible beside its exact English source`);
+  }
 
   const shown = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(shown.status, 'draft');

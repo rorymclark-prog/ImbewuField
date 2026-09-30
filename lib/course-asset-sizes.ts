@@ -1672,7 +1672,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/ts/slide-11.webp': 412568,
   '/course-decks/vegetables-staples/ts/slide-12.webp': 460462,
   '/course-decks/vegetables-staples/ts/slide-13.webp': 446686,
-  '/course-decks/vegetables-staples/ts/slide-14.webp': 259100,
+  '/course-decks/vegetables-staples/ts/slide-14.webp': 256414,
   '/course-decks/vegetables-staples/ts/slide-15.webp': 572762,
   '/course-decks/vegetables-staples/ts/slide-16.webp': 556238,
   '/course-decks/vegetables-staples/ts/slide-17.webp': 373382,
