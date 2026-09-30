@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '4495d6a4', changes: [
+    'Soil Health picture description now matches the soil layers, worms and jar.',
+  ], tour: [
+    { title: 'Check the Soil Health picture', where: 'Study → Soil Health & Composting → lesson 1', href: '/student',
+      detail: 'The image description now matches the soil cross-section and jar. The lesson and quiz wording has not changed.' },
+  ] },
   { when: '1 October 2026', sha: 'c7b4286c', changes: [
     'Study removes a reviewer checklist from an isiZulu learner lesson.',
     'Three Tshivenda soil concepts now show marked drafts beside English.',

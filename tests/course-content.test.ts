@@ -9,6 +9,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES, LESSON_INDEX } from '../lib/course-modules.ts';
+import { COURSE_IMAGE_BRIEFS } from '../lib/course-image-briefs.ts';
 import { courseTranslationReviewState, isCourseTranslationLearnerReady, learnerLessonForLanguage, resolveLearnerLessonPresentation, type CourseTranslationRecord } from '../lib/course-localization.ts';
 import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
 import { COURSE_MODULE_TRANSLATION_DRAFTS, resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
@@ -200,8 +201,6 @@ test('Sesotho Vegetables and Staple Crops keeps held crop and pest wording in En
   assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'english-fallback',
     'paused Xitsonga remains English for this module');
 });
-import { COURSE_IMAGE_BRIEFS } from '../lib/course-image-briefs.ts';
-
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);
   assert.equal(new Set(ids).size, ids.length, 'duplicate module id found in COURSE_MODULES');
