@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '289676a6', changes: [
+    'Landscape Study adds Sesotho, Tshivenda and Xitsonga drafts on silent slides.',
+    'Exact English sits beside each draft; technical land and water guidance stays English.',
+  ], tour: [
+    { title: 'Compare the landscape opening slides', where: 'Study → Reading the Landscape → slides 1–3', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The slides show bounded draft text beside exact English, with no regional narration selected.' },
+  ] },
   { when: '30 September 2026', sha: 'd488b7db', changes: [
     'Introduction adds six short Tshivenda and Xitsonga reflections on silent slides.',
     'Each unreviewed draft sits beside exact English; water and field guidance stays English.',
