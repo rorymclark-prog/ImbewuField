@@ -217,6 +217,15 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const lessonContent = presentation.content;
   const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'draft';
   const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
+  const regionalDeck = resolveDeckLang(moduleId, lang);
+  const regionalNarration = resolveNarrationLang(moduleId, lang);
+  const regionalMediaNotice = `${regionalDeck?.exact
+    ? 'Source-paired draft slides are available; some text remains in English.'
+    : 'Slides remain in English.'} ${regionalNarration?.exact
+    ? 'Narration in your chosen language is available.'
+    : regionalNarration?.lang === 'en'
+      ? 'English narration is an optional choice.'
+      : 'No narration is available.'}`;
   const infographicAltDraft = regionalDraft && lessonContent.infographicAlt &&
     lessonContent.infographicAlt !== lesson.infographicAlt
     ? lessonContent.infographicAlt
@@ -278,9 +287,9 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {t('studentZuluLessonEnglishFallbackNotice')}
             </div>
           )}
-          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {lang === 'st' && moduleId === 'intro-permaculture' ? 'Slides and narration pair Sesotho drafts with exact English holds; the English source track is also available.' : 'Slides and narration remain in English.'}</div>}
-          {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson, its slides and narration are still in English.</div>}
-          {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
+          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
+          {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson is in English. {regionalMediaNotice}</div>}
+          {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
