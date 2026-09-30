@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: 'b456b7f0', changes: [
+    'Squashes & melons is its own crop-mix switch, apart from tomatoes and peppers.',
+    'Save your crop mix for a map; auto-suggest starts from it every time you plan there.',
+    'Fruit and animal products show as bars across their months, like bed plantings.',
+  ], tour: [
+    { title: 'Save your crop mix', where: 'Crop plan → Auto-suggest → Optional: change the recommended crop mix', href: '/facilitator/crops',
+      detail: 'Switch off Herbs or Squashes & melons, then tap Save this crop mix for this map. Reset to recommended forgets it.' },
+    { title: 'Read the fruit bars', where: 'Crop plan → bed calendar → Fruit, nuts & berries', href: '/facilitator/crops',
+      detail: 'Each tree kind on your map has its own bar over its picking months. Hover or tap a bar for the plants and months.' },
+  ] },
   { when: '30 September 2026', sha: 'a83b9838', changes: [
     'Crop mix splits herbs, less common crops and cover crops into their own switches.',
     'One ticked vine no longer takes over a single bed; the other crops still get planted.',
