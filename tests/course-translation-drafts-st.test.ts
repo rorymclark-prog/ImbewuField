@@ -218,7 +218,8 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   assert.equal(draft.description.sesothoDraft,
     'Ho boloka direkoto, ho rekisa dihlahiswa tse fetang tlhoko le ho aha marang-rang a dijo tsa lehae.');
   assert.equal(draft.description.reviewStatus, 'machine-draft');
-  assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['market-community-l1', 'market-community-l2']);
+  assert.deepEqual(draft.lessons.map(lesson => lesson.id), sourceModule.lessons.map(lesson => lesson.id),
+    'all Market source lessons must be represented, including the closing community lesson');
 
   const lesson = draft.lessons[0];
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);

@@ -255,9 +255,10 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         "Zones and Sectors: Organising Your Farm by Energy",
         "Zoune na Sekithara: U Dzudzanya Bulasi Yaṋu nga Maanḓa",
       ),
-      body: pair(
+      // Its observation steps are field instructions, and the wind wording has
+      // not had a fluent check; keep the whole paragraph pair source-exact.
+      body: hold(
         "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
-        "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Vhonani uri muya wa maanḓa u bva ngafhi kha bulasi yaṋu. Nearby weather-station records can help you check wind direction. Ṱhogomelani hune maḓi a mvula a dzhena na hune a elela hone kha mavu aṋu. Olani misevhe ya zwine na zwi vhona.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
       ),
       keyPoints: [
         pair(
@@ -308,30 +309,28 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
           ),
         },
         {
+          // The north-west scenario depends on direction being read correctly;
+          // keep the entire answer set paired in English until fluent review.
           question: hold(
             "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?"
           ),
           options: [
-            pair(
+            hold(
               "South-east boundary",
-              "Mukano wa tshipembe-vhubvaḓuvha (south-east)",
             ),
             hold(
               "North-west boundary, between the wind and the crops"
             ),
-            pair(
+            hold(
               "Centre of the property",
-              "Vhukati ha tshitentsi",
             ),
-            pair(
+            hold(
               "Windbreaks aren't needed since winds are seasonal",
-              "Zwithivhela-muya a zwi ṱoḓei ngauri mimiya ndi ya zwifhinga zwa khalaṅwaha",
             ),
           ],
           sourceCorrectIndex: 1,
-          rationale: pair(
+          rationale: hold(
             "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
-            "Tshithivhela-muya tshi shuma nga u ima vhukati ha tshiko tsha muya na zwine zwa nga tshinyala — ngauralo tshi fanela u vha kha thungo ine muya wa khou bva khayo.",
           ),
         },
       ],

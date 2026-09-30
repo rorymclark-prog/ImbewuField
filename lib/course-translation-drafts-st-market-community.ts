@@ -180,5 +180,71 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         },
       ],
     },
+    {
+      id: 'market-community-l3',
+      infographicAlt: machineDraft(
+        'Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.',
+        'Dibethe tse hlano tse nyane tse jetsweng, tse nang le metsu e lebang lebokoseng la bohareng le tletseng dihlahiswa; kharafu e nyane ya letsoho le nkgo ya dipeo di behilwe ka tlase.',
+      ),
+      title: machineDraft(
+        'Building Community Food Networks: Strength in Numbers',
+        'Ho Aha Marang-rang a Dijo tsa Setjhaba: Matla a Kopanelo',
+      ),
+      body: hold(
+        [
+          'Neighbours can share different varieties and the work of saving seed.',
+          'Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.',
+          'Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.',
+          'Tool sharing puts expensive equipment within reach of the group.',
+          'A water pump or grain mill may be beyond one household’s budget.',
+          'Shared use spreads the value across the group and helps each farm do work it could not do alone.',
+          'Handle produce gently and keep suitable shade, packaging and storage through delivery.',
+          'A nearby buyer may reduce the journey, but losses and selling costs still need measuring.',
+          'Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.',
+          'Neighbours can demonstrate useful skills and compare what happened on their own farms.',
+          'Record the method, conditions and result so others can judge whether it may suit their land.',
+          'Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.',
+        ].join('\n\n'),
+      ),
+      keyPoints: [
+        hold('Record seed identity, source and quality, and check if permission is needed before sharing'),
+        machineDraft(
+          'Agree care, booking and repair responsibilities for shared tools',
+          'Dumellanang ka boikarabelo ba tlhokomelo, ho behela nako le ho lokisa disebediswa tse arolelwanwang',
+        ),
+        hold('Measure losses and net returns for each selling route'),
+        hold('Combine shared experience with qualified help when needed'),
+      ],
+      quiz: [
+        {
+          question: machineDraft(
+            'Neighbours want to share saved seed. What helps make the shared seed useful?',
+            'Baahelani ba batla ho arolelana dipeo tseo ba di bolokileng. Ke eng e thusang hore peo e arolelwanwang e be molemo?',
+          ),
+          options: [
+            hold('Mix all varieties without labels'),
+            hold('Agree seed-quality checks and check whether permission is needed to share the variety'),
+            hold('Assume sharing automatically improves every seed lot'),
+            hold('Rely only on the size of the group'),
+          ],
+          sourceCorrectIndex: 1,
+          rationale: hold('Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.'),
+        },
+        {
+          question: machineDraft(
+            'A grower is comparing a distant market with nearby customers. What should guide the decision?',
+            'Molemi o bapisa mmaraka o hole le bareki ba haufi. Ke eng e lokelang ho tataisa qeto?',
+          ),
+          options: [
+            hold('Always choose the highest headline price'),
+            hold('Always choose the shortest journey'),
+            hold('Compare money received after fees, transport, unsold produce and losses'),
+            hold('Assume joining a group removes all costs'),
+          ],
+          sourceCorrectIndex: 2,
+          rationale: hold('Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.'),
+        },
+      ],
+    },
   ],
 };

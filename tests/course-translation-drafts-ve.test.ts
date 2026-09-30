@@ -64,6 +64,46 @@ test('the Tshivenda Introduction draft stays paired to the English Study source'
   }
 });
 
+test('Introduction field and wind-direction advice stay exact English until Tshivenda review', async () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_INTRO_PERMACULTURE_DRAFT.id);
+  assert.ok(sourceModule);
+  const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'intro-permaculture-l3');
+  const draftLesson = TSHIVENDA_INTRO_PERMACULTURE_DRAFT.lessons.find(lesson => lesson.id === 'intro-permaculture-l3');
+  assert.ok(sourceLesson);
+  assert.ok(draftLesson);
+
+  assert.equal(draftLesson.body.reviewStatus, 'hold');
+  assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
+  assert.equal(draftLesson.body.tshivendaDraft, sourceLesson.body,
+    'field observations and practical wind or water instructions must not leak unreviewed wording');
+
+  const sourceWindQuestion = sourceLesson.quiz[1];
+  const draftWindQuestion = draftLesson.quiz[1];
+  assert.equal(draftWindQuestion.sourceCorrectIndex, sourceWindQuestion.correct,
+    'keep the canonical answer key while holding wind-direction wording');
+  for (const [name, pair, source] of [
+    ['question', draftWindQuestion.question, sourceWindQuestion.q],
+    ...draftWindQuestion.options.map((option, index) => [`option ${index}`, option, sourceWindQuestion.options[index]] as const),
+    ['rationale', draftWindQuestion.rationale, sourceWindQuestion.rationale],
+  ] as const) {
+    assert.equal(pair.reviewStatus, 'hold', `${name}: direction-dependent quiz wording stays held`);
+    assert.equal(pair.sourceEnglish, source, `${name}: exact canonical English source remains paired`);
+    assert.equal(pair.tshivendaDraft, source, `${name}: no unreviewed compass-direction wording is shown`);
+  }
+
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const presentation = resolveLearnerLessonPresentation(sourceLesson, 've');
+  assert.equal(presentation.content.body, sourceLesson.body);
+  assert.deepEqual(presentation.content.quiz[1], sourceLesson.quiz[1]);
+  assert.equal(presentation.status, 'draft', 'other existing Tshivenda lesson fields remain visibly labelled drafts');
+
+  const changedSource = { ...sourceLesson, body: `${sourceLesson.body}\nChanged English source.` };
+  const staleDraft = resolveLearnerLessonPresentation(changedSource, 've');
+  assert.equal(staleDraft.status, 'english-fallback', 'source drift must hide the complete stale lesson draft');
+  assert.equal(staleDraft.content.body, changedSource.body);
+  assert.deepEqual(staleDraft.content.quiz, changedSource.quiz);
+});
+
 test('Tshivenda Study control drafts stay paired to review text and sensitive controls stay English', async () => {
   const { readFileSync } = await import('node:fs');
   const review = readFileSync(new URL('../docs/study-translation-reviews/STUDY-CONTROLS-VE-AI-DRAFT-REVIEW.md', import.meta.url), 'utf8');

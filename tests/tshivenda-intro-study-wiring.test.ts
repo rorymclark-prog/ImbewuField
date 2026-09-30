@@ -38,24 +38,17 @@ test('Tshivenda Introduction Study keeps source pairs, held L2 semantic risks an
   const finalPresentation = resolveLearnerLessonPresentation(finalSourceLesson, 've');
   assert.equal(finalDraftLesson.body.sourceEnglish, finalSourceLesson.body,
     'the observation draft must stay paired to the exact Study source');
-  assert.equal(finalDraftLesson.body.reviewStatus, 'machine-draft');
-  const introSourceParagraphs = finalSourceLesson.body.split('\n\n');
-  const introDraftParagraphs = finalPresentation.content.body.split('\n\n');
-  assert.equal(introDraftParagraphs.length, introSourceParagraphs.length,
-    'the observation draft must preserve source paragraph breaks');
-  assert.equal(introDraftParagraphs[0], introSourceParagraphs[0]);
-  assert.equal(introDraftParagraphs[1], introSourceParagraphs[1]
-    .replace('Watch where strong wind comes from on your farm.', 'Vhonani uri muya wa maanḓa u bva ngafhi kha bulasi yaṋu.')
-    .replace('Watch where rainwater enters and flows across your land.', 'Ṱhogomelani hune maḓi a mvula a dzhena na hune a elela hone kha mavu aṋu.')
-    .replace('Draw arrows for what you observe.', 'Olani misevhe ya zwine na zwi vhona.'),
-  'only the three checked observation sentences change in the learner paragraph');
-  assert.equal(introDraftParagraphs[2], introSourceParagraphs[2]);
+  assert.equal(finalDraftLesson.body.reviewStatus, 'hold',
+    'unreviewed field and compass instructions must remain exact English');
+  assert.equal(finalDraftLesson.body.tshivendaDraft, finalSourceLesson.body);
+  assert.equal(finalPresentation.content.body, finalSourceLesson.body);
   assert.equal(finalDraftLesson.quiz[1].question.reviewStatus, 'hold');
-  assert.equal(finalDraftLesson.quiz[1].options[1].reviewStatus, 'hold');
+  assert.ok(finalDraftLesson.quiz[1].options.every(option => option.reviewStatus === 'hold'));
+  assert.equal(finalDraftLesson.quiz[1].rationale.reviewStatus, 'hold');
   assert.equal(finalPresentation.content.quiz[1].q, finalSourceLesson.quiz[1].q,
     'the held compass question must stay English');
-  assert.equal(finalPresentation.content.quiz[1].options[1], finalSourceLesson.quiz[1].options[1],
-    'the held compass option must stay English');
+  assert.deepEqual(finalPresentation.content.quiz[1], finalSourceLesson.quiz[1],
+    'the complete direction-dependent quiz item must stay exact English');
 
   const principleSource = module.lessons[1];
   const principleDraft = draft.lessons[1];
