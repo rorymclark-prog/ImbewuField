@@ -9,7 +9,8 @@
 // still shown — it is part of the plan — but kept apart and never passed off as cropping. The
 // months are the sourced ones only; nothing here invents a season or a quantity.
 
-import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, HOUSING_LABEL, PRODUCT_LABEL, buildAnimalAvailability, isFoodProduct, sourcedProductMonths, type AnimalKind, type AnimalProduct, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
+import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, HOUSING_ANIMALS, HOUSING_LABEL, PRODUCT_LABEL, buildAnimalAvailability, isFoodProduct, sourcedProductMonths, type AnimalEnterprise, type AnimalKind, type AnimalProduct, type FlowRecord, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
+import type { HarvestCitation } from './perennial-harvest';
 import { PERENNIAL_HARVEST, buildTreeAvailability, formatRange, type PlacedTreeGroup } from './perennial-harvest';
 
 export interface CalendarTreeLine {
@@ -118,6 +119,62 @@ export function animalLineText(line: CalendarAnimalLine): string {
 }
 
 /**
+ * A product on the map that the sources cannot put in months, shown as a line with no month bar.
+ *
+ * Rory, 2026-09-30, choosing option 1 for honey: show the honey row with no bar, say that honey
+ * flows depend on local plants and rain, and list the recorded flows with their sources on hover.
+ * Each record is one plant's flow in one place (Strelitzia 37), so none of them is a region's
+ * honey season and none is drawn as months — see the round-2 and round-4 lines in bees.json.
+ */
+export interface CalendarUnmarkedLine {
+  enterpriseId: string;
+  name: string;
+  animal: AnimalKind;
+  product: AnimalProduct;
+  standing: number;
+  proposed: number;
+  note: { text: string; source: HarvestCitation } | null;
+  records: FlowRecord[];
+}
+
+function hasUnmarkedStory(e: AnimalEnterprise): boolean {
+  return isFoodProduct(e.product) && sourcedProductMonths(e).length === 0 && (e.flowRecords.length > 0 || e.flowNote !== null);
+}
+
+export function unmarkedAnimalLines(
+  groups: readonly PlacedAnimalGroup[],
+  choices: Readonly<Partial<Record<HousingKind, string>>>,
+): CalendarUnmarkedLine[] {
+  const lines: CalendarUnmarkedLine[] = [];
+  for (const g of groups) {
+    if (g.existing + g.proposed === 0) continue;
+    const e = choices[g.housing] ? ANIMAL_ENTERPRISES[choices[g.housing]!] : undefined;
+    if (!e || !HOUSING_ANIMALS[g.housing].includes(e.animal) || !hasUnmarkedStory(e)) continue;
+    lines.push({
+      enterpriseId: e.enterpriseId,
+      name: e.name,
+      animal: e.animal,
+      product: e.product,
+      standing: g.existing,
+      proposed: g.proposed,
+      note: e.flowNote,
+      records: e.flowRecords,
+    });
+  }
+  return lines;
+}
+
+/** "Honey — Honeybee (managed hives) · 2 hives", the same shape as animalLineText. */
+export function unmarkedLineText(line: CalendarUnmarkedLine): string {
+  return animalLineText({ ...line });
+}
+
+/** One recorded flow as a farmer reads it: "Western Cape (Stellenbosch, Cape Peninsula): April–May, Blue gum (Eucalyptus globulus)". */
+export function flowRecordText(record: FlowRecord): string {
+  return `${record.region}: ${record.when}${record.plant ? `, ${record.plant}` : ''}`;
+}
+
+/**
  * Why an animal structure on the map gives nothing in the calendar, so honey that never shows is
  * explained, not silently missing: either the farmer has not said what the structure is for, or the
  * chosen enterprise's months are unsourced. Wool is left out on purpose (not food), so not listed.
@@ -132,7 +189,8 @@ export function animalsNotShownNote(
     if (g.existing + g.proposed === 0) continue;
     const e = choices[g.housing] ? ANIMAL_ENTERPRISES[choices[g.housing]!] : undefined;
     if (!e) unchosen.push(HOUSING_LABEL[g.housing]);
-    else if (isFoodProduct(e.product) && sourcedProductMonths(e).length === 0) noMonths.push(`${PRODUCT_LABEL[e.product].toLowerCase()} from ${e.name}`);
+    // Honey has its own line with no month bar (unmarkedAnimalLines), so it is shown, not missing.
+    else if (isFoodProduct(e.product) && sourcedProductMonths(e).length === 0 && !hasUnmarkedStory(e)) noMonths.push(`${PRODUCT_LABEL[e.product].toLowerCase()} from ${e.name}`);
   }
   const parts: string[] = [];
   if (noMonths.length) parts.push(`no sourced months yet for ${noMonths.join(', ')}`);

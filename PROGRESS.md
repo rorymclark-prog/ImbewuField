@@ -52,6 +52,26 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 30 Sep 2026 — Crop-mix switches for herbs, fringe crops and cover crops; one-bed vine fix; honey flows
+- **Crop mix** (`lib/crop-groups.ts`): "Alliums & herbs" split into **Onions & garlic** and
+  **Herbs** (coriander, parsley). Added **Less common crops** (soybean, bambara, mung bean, spider
+  plant, African nightshade) and **Cover crops** (sunn hemp, medic, fodder radish). Rory: many
+  farmers won't grow coriander, parsley or mung beans, so each can be switched off.
+  - Breadth-first turns still go by nutrition (`BREADTH_SLOTS` / `breadthSlotOf`), so the split
+    doesn't change what a family plan fits. Less common crops queue last within their slot.
+    `suggestSubstituteCrop` uses `nutritionGroupOf` and offers them last.
+  - With Cover crops off (`winterCoversWanted`), plots rest after summer instead of getting
+    broad beans or oats, and the plan says so. A named crop list still gets covers.
+  - PDF legend: 6 swatches ("Less common, cover" share the muted one).
+- **"Only three plantings"**: Rory was on a one-bed map. On one bed a ticked vine (butternut) used
+  to take the whole bed. It is now left out with a note, and the other chosen crops fill the bed
+  (7 plantings). There's a regression test in `tests/crop-plan-ideal.test.ts`.
+- **Honey** (option 1): no month bar. The Animals row shows a honey line with "Honey flows depend
+  on local plants and rain" and a hover/pin tooltip. The tooltip lists 5 regional flow records
+  quoted from Johannsmeier 2016 (SANBI Strelitzia 37), with page numbers
+  (`research/animal-sources/bees.json` → `flowNote`, `flowRecords`; `unmarkedAnimalLines` in
+  `lib/calendar-produce.ts`).
+
 ### 29 Sep 2026 — Pawpaw picking months sourced; honey searched again
 Rory: "please search deep the answers will be out there!" (about honey and pawpaw showing only
 "not shown" notes in the bed calendar).

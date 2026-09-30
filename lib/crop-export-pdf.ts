@@ -233,19 +233,23 @@ const INK = {
 /** One colour per food group, shared by the calendar grid and the crop bars. */
 const GROUP_INK: Record<FoodGroup, readonly number[]> = {
   leafy_green: INK.green,
+  herb: INK.green,
   root_tuber: INK.gold,
-  allium_aromatic: INK.gold,
+  allium: INK.gold,
   legume: INK.teal,
   fruiting_veg: INK.terracotta,
   staple_grain: INK.brown,
+  less_common: INK.muted,
+  cover_crop: INK.muted,
 };
 
 const GROUP_LEGEND: { label: string; ink: readonly number[]; groups: readonly FoodGroup[] }[] = [
-  { label: 'Leafy crops', ink: INK.green, groups: ['leafy_green'] },
-  { label: 'Roots and alliums', ink: INK.gold, groups: ['root_tuber', 'allium_aromatic'] },
+  { label: 'Leafy crops and herbs', ink: INK.green, groups: ['leafy_green', 'herb'] },
+  { label: 'Roots and onions', ink: INK.gold, groups: ['root_tuber', 'allium'] },
   { label: 'Legumes', ink: INK.teal, groups: ['legume'] },
   { label: 'Fruiting crops', ink: INK.terracotta, groups: ['fruiting_veg'] },
   { label: 'Staples', ink: INK.brown, groups: ['staple_grain'] },
+  { label: 'Less common, cover', ink: INK.muted, groups: ['less_common', 'cover_crop'] },
 ];
 
 type Doc = import('jspdf').jsPDF;
@@ -969,7 +973,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
   );
   s.y += 10;
   // Only the colours this plan uses: a Staples bar with nothing under it (maize did not fit at
-  // the Western Cape site) reads as a missing list. Column width stays a fifth, packed left.
+  // the Western Cape site) reads as a missing list. Column width stays one legend slot, packed left.
   const used = GROUP_LEGEND.map((g, i) => ({ g, lines: columns[i] })).filter((c) => c.lines.length);
   (used.length ? used : GROUP_LEGEND.map((g, i) => ({ g, lines: columns[i] }))).forEach(({ g, lines }, i) => {
     const x = s.margin + i * keyW;

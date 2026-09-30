@@ -5,7 +5,7 @@
   "botanicalName": "Allium fistulosum (also sold in SA as young-harvested Allium cepa)",
   "family": "Amaryllidaceae (Alliaceae)",
   "role": "food",
-  "foodGroup": "allium_aromatic",
+  "foodGroup": "allium",
   "harvestProduct": "whole young plant (leaves and unswollen/lightly-swollen stem), sold in bunches",
   "botanicalNameNotes": "No dedicated SA government or KZN DARD document for spring/bunching onion was found in this research pass. KZN DARD's general 'Onion' chapter (for bulb onion, Allium cepa) notes: 'A small portion of the crop is sometimes harvested when the bulbs are sufficiently sized and are marketed as green onions, usually in bunches.' (kzndard.gov.za, Onion, p.4) — i.e. in SA commercial practice 'spring onion'/'green onion' is often just an early-pulled bulb-onion crop, not a separate botanical species. A Starke Ayres home-garden catalogue separately sells a distinct 'Broad-leaved spring onion... Perennial' product, consistent with true non-bulbing Allium fistulosum (Welsh onion). Both usages exist in the SA market; this file could not determine which one the source data actually describes for most fields, and treats the two as separate lines of evidence.",
   "frostTender": null,

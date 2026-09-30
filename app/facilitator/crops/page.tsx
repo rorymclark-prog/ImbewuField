@@ -35,7 +35,7 @@ import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
 import { printableAvailability } from '@/lib/crop-export-availability';
 import { animalArtUrl } from '@/lib/animal-art';
 import { speciesFruitArtworkUrl } from '@/lib/species-art';
-import { animalLineText, animalsNotShownNote, calendarProduceByMonth, treeLineText, type CalendarProduceMonth } from '@/lib/calendar-produce';
+import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, treeLineText, unmarkedAnimalLines, unmarkedLineText, type CalendarProduceMonth, type CalendarUnmarkedLine } from '@/lib/calendar-produce';
 import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
 import { climateGateFrom } from '@/lib/crop-climate-gate';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
@@ -79,7 +79,7 @@ import {
   taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE,
 } from '@/lib/crop-export-schedule';
 
-const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
+const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'staple_grain', 'less_common', 'cover_crop'];
 
 // This route has sourced crop timing, climate, price and task claims mixed with
 // ordinary controls. Only pass interface labels through this helper; keep the
@@ -1419,6 +1419,8 @@ function FacilitatorCropsPageInner() {
     [canvasTrees],
   );
   const animalsNotShown = useMemo(() => animalsNotShownNote(canvasAnimals, animalChoices), [canvasAnimals, animalChoices]);
+  // Honey: on the map, but no source puts it in months — a line with no bar (see unmarkedAnimalLines).
+  const animalsUnmarked = useMemo(() => unmarkedAnimalLines(canvasAnimals, animalChoices), [canvasAnimals, animalChoices]);
   // The year of food folds the chart's own first twelve slots into one verdict per month, so it
   // follows the year mode and the orchard/animal switches exactly as the chart does.
   const yearOfFood = useMemo(
@@ -2022,6 +2024,7 @@ function FacilitatorCropsPageInner() {
                       axis={monthAxis}
                       emptyText="No animals giving food on your map yet. Place a coop, hive or pen in the Design Studio, then say what it is for under Animals on your map."
                       footnote={animalsNotShown}
+                      unmarked={animalsUnmarked}
                     />
                   )}
                 </div>
@@ -3724,12 +3727,14 @@ function OrganicGuideCard() {
 const PRODUCE_ICON = 20;
 const PRODUCE_VISIBLE = 3;
 
-function ProduceCalendarRow({ kind, months, axis, emptyText, footnote }: {
+function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked = [] }: {
   kind: 'trees' | 'animals';
   months: CalendarProduceMonth[];
   axis: MonthAxisSlot[];
   emptyText: string;
   footnote: string | null;
+  /** Products shown as a line with no month bar — honey, whose flows the sources tie to plants and rain. */
+  unmarked?: CalendarUnmarkedLine[];
 }) {
   const [open, setOpen] = useState<{ index: number; left: number; top: number; above: boolean } | null>(null);
   const pinned = useRef(false);
@@ -3820,11 +3825,12 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote }: {
               );
             })}
           </div>
-        ) : (
+        ) : unmarked.length ? null : (
           <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
             {emptyText}
           </div>
         )}
+        {unmarked.map((line) => <UnmarkedProduceLine key={line.enterpriseId} line={line} />)}
         {footnote && (
           <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
             {footnote}
@@ -3878,6 +3884,101 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote }: {
           </div>
         );
       })()}
+    </div>
+  );
+}
+
+/**
+ * Honey's line in the Animal products row: what is on the map, the rain note in place of a month
+ * bar, and the recorded flows — each with its region, timing words and source — on hover, focus
+ * or tap. Rory, 2026-09-30, option 1. No month is drawn, because every record is one plant's flow
+ * in one place and year, not a region's honey season.
+ */
+function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
+  const [open, setOpen] = useState<{ left: number; top: number; above: boolean } | null>(null);
+  const pinned = useRef(false);
+  useEffect(() => {
+    if (!open) return;
+    const close = () => { pinned.current = false; setOpen(null); };
+    window.addEventListener('scroll', close, true);
+    window.addEventListener('resize', close);
+    return () => { window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close); };
+  }, [open]);
+  const width = 320;
+  const show = (el: HTMLElement) => {
+    const r = el.getBoundingClientRect();
+    const above = r.bottom + 320 > window.innerHeight && r.top > 340;
+    setOpen({ left: Math.max(8, Math.min(r.left, window.innerWidth - width - 8)), top: above ? r.top - 6 : r.bottom + 6, above });
+  };
+  const Icon = PRODUCT_ICON[line.product];
+  const docs = [...new Set(line.records.map((r) => r.source.doc))];
+  const noteText = line.note?.text ?? 'No source puts this in months, so none are marked.';
+
+  return (
+    <div
+      className="font-sans"
+      data-crop-calendar-unmarked={line.enterpriseId}
+      style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 640, padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
+    >
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: line.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
+        <Icon size={16} aria-hidden style={{ color: 'var(--gold-dim)', opacity: line.standing === 0 ? 0.45 : 1, flexShrink: 0 }} />
+        {unmarkedLineText(line)}
+      </span>
+      <span style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>{noteText}</span>
+      {line.records.length > 0 && (
+        <button
+          type="button"
+          aria-expanded={!!open}
+          onMouseEnter={(e) => { if (!pinned.current) show(e.currentTarget); }}
+          onMouseLeave={() => { if (!pinned.current) setOpen(null); }}
+          onFocus={(e) => show(e.currentTarget)}
+          onBlur={() => { pinned.current = false; setOpen(null); }}
+          onClick={(e) => {
+            if (open && pinned.current) { pinned.current = false; setOpen(null); return; }
+            pinned.current = true;
+            show(e.currentTarget);
+          }}
+          className="font-sans"
+          style={{ fontSize: 11.5, fontWeight: 600, color: 'var(--gold-dim)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 2 }}
+        >
+          {line.records.length} recorded flow{line.records.length === 1 ? '' : 's'}
+        </button>
+      )}
+      {open && (
+        <div
+          role="tooltip"
+          className="font-sans"
+          style={{
+            position: 'fixed', left: open.left, top: open.top, transform: open.above ? 'translateY(-100%)' : undefined,
+            width, maxHeight: '60vh', overflowY: 'auto', zIndex: 60, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '1px solid var(--border-strong)',
+            borderRadius: 10, boxShadow: '0 8px 24px rgba(32,25,15,0.18)', padding: '10px 12px', pointerEvents: 'none',
+          }}
+        >
+          <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.1vw, 16px)', marginBottom: 2 }}>Recorded honey flows</div>
+          <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 7, lineHeight: 1.35 }}>
+            Each is one plant&apos;s flow in one place, not a season for your area, so no months are marked.
+          </div>
+          <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 8 }}>
+            {line.records.map((r) => (
+              <li key={`${r.region}-${r.source.page}`} style={{ fontSize: 12.5, lineHeight: 1.35 }}>
+                <div style={{ fontWeight: 600 }}>{flowRecordText(r)}</div>
+                <div style={{ fontSize: 11, color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: 2 }}>
+                  &ldquo;{r.source.quote}&rdquo;{r.source.page !== null ? ` (p. ${r.source.page})` : ''}
+                </div>
+                {docs.length > 1 && <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 2 }}>{r.source.doc}</div>}
+              </li>
+            ))}
+          </ul>
+          {docs.length === 1 && (
+            <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 8, lineHeight: 1.35 }}>Source: {docs[0]}</div>
+          )}
+          {line.note && (
+            <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 4, lineHeight: 1.35 }}>
+              &ldquo;{line.note.source.quote}&rdquo;{line.note.source.page !== null ? ` (p. ${line.note.source.page})` : ''}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

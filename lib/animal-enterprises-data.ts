@@ -26,6 +26,72 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     },
     "windows": [],
     "seasonalPattern": null,
+    "flowNote": {
+      "text": "Honey flows depend on local plants and rain, so no months are marked.",
+      "source": {
+        "quote": "The extent and timing of honey flows is primarily dependent on rainfall.",
+        "url": "https://archive.org/details/Beeplants-of-South-Africa",
+        "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+        "page": 3
+      }
+    },
+    "flowRecords": [
+      {
+        "region": "Western Cape (Stellenbosch, Cape Peninsula)",
+        "when": "April–May",
+        "plant": "Blue gum (Eucalyptus globulus)",
+        "source": {
+          "quote": "A light April–May honey flow is on record from Stellenbosch as well as the Cape Peninsula.",
+          "url": "https://archive.org/details/Beeplants-of-South-Africa",
+          "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+          "page": 65
+        }
+      },
+      {
+        "region": "North West",
+        "when": "March–April",
+        "plant": "Verbena bonariensis, with a smaller share of another plant",
+        "source": {
+          "quote": "This species, together with fewer numbers of the next species, gave a honey surplus during March to April in NW.",
+          "url": "https://archive.org/details/Beeplants-of-South-Africa",
+          "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+          "page": 376
+        }
+      },
+      {
+        "region": "Southern Free State",
+        "when": "April",
+        "plant": "Honey thorn (Lycium)",
+        "source": {
+          "quote": "Of the pollen pellets trapped in April during a honey flow from honey thorn in the southern FS, 68% belonged to this species.",
+          "url": "https://archive.org/details/Beeplants-of-South-Africa",
+          "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+          "page": 183
+        }
+      },
+      {
+        "region": "Eastern Cape",
+        "when": "December, after October rains",
+        "plant": "Mesembryanthemum aitonis",
+        "source": {
+          "quote": "October rains are best for a December honey flow in the EC.",
+          "url": "https://archive.org/details/Beeplants-of-South-Africa",
+          "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+          "page": 415
+        }
+      },
+      {
+        "region": "Pienaars River",
+        "when": "Early September, as the winter aloe flow ended",
+        "plant": "Aloe davyana",
+        "source": {
+          "quote": "…as was the case at the end of the davyana aloe flow at Pienaars River: an average of 47% Argemone pollen was trapped on three colonies during the first week of September.",
+          "url": "https://archive.org/details/Beeplants-of-South-Africa",
+          "doc": "Johannsmeier, M.F. 2016. Beeplants of South Africa: Sources of nectar, pollen, honeydew and propolis for honeybees. Strelitzia 37. South African National Biodiversity Institute, Pretoria (also https://opus.sanbi.org/handle/20.500.12143/5562)",
+          "page": 347
+        }
+      }
+    ],
     "weeksToFirstProduct": null,
     "productiveLifeYears": null,
     "feedKgPerDay": null,
@@ -130,6 +196,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     },
     "windows": [],
     "seasonalPattern": null,
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": null,
     "productiveLifeYears": {
       "value": [
@@ -287,6 +355,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "page": 239
       }
     },
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": {
       "value": [
         121.8,
@@ -457,6 +527,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     },
     "windows": [],
     "seasonalPattern": null,
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": {
       "value": [
         4.57,
@@ -591,6 +663,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     },
     "windows": [],
     "seasonalPattern": null,
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": {
       "value": [
         15.74,
@@ -739,6 +813,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "page": 15
       }
     },
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": {
       "value": [
         16,
@@ -900,6 +976,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     },
     "windows": [],
     "seasonalPattern": null,
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": {
       "value": [
         7,
@@ -1051,6 +1129,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "page": 75
       }
     },
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": {
       "value": [
         43.5,
@@ -1156,6 +1236,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "page": null
       }
     },
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": null,
     "productiveLifeYears": null,
     "feedKgPerDay": null,
@@ -1247,6 +1329,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "page": null
       }
     },
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": {
       "value": [
         69.6,
@@ -1371,6 +1455,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "page": 36
       }
     },
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": null,
     "productiveLifeYears": null,
     "feedKgPerDay": null,
@@ -1454,6 +1540,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "outputPerAnimal": null,
     "windows": [],
     "seasonalPattern": null,
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": null,
     "productiveLifeYears": null,
     "feedKgPerDay": null,
@@ -1596,6 +1684,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "page": 79
       }
     },
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": null,
     "productiveLifeYears": {
       "value": [
@@ -1706,6 +1796,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     },
     "windows": [],
     "seasonalPattern": null,
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": null,
     "productiveLifeYears": null,
     "feedKgPerDay": null,
@@ -1868,6 +1960,8 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "page": null
       }
     },
+    "flowNote": null,
+    "flowRecords": [],
     "weeksToFirstProduct": null,
     "productiveLifeYears": null,
     "feedKgPerDay": null,

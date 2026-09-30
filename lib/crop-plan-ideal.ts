@@ -277,13 +277,13 @@ function insertNoteOrdered(notes: readonly PlanNote[], note: PlanNote): PlanNote
  * starters exist. A crop a starter then places printed as "didn't fit anywhere" in the same PDF
  * that sowed it in four beds, so it moves to its own, true sentence: in this year as a starter,
  * absent from the repeating plan. */
-function reconcileUnplacedNote(notes: readonly PlanNote[], starters: readonly Planting[]): PlanNote[] {
+function reconcileUnplacedNote(notes: readonly PlanNote[], starters: readonly Planting[], beds: readonly PlanBed[]): PlanNote[] {
   const starterKeys = new Set(starters.map((planting) => planting.cropKey));
   const out: PlanNote[] = [];
   for (const note of notes) {
     if (!note.unplacedCropKeys?.some((key) => starterKeys.has(key))) { out.push(note); continue; }
     const crops = note.unplacedCropKeys.map((key) => cropByKey(key)).filter((crop) => crop !== undefined);
-    const still = chosenButUnplacedNote(crops.filter((crop) => !starterKeys.has(crop.key)));
+    const still = chosenButUnplacedNote(crops.filter((crop) => !starterKeys.has(crop.key)), beds);
     if (still) out.push(still);
     const starterOnly = crops.filter((crop) => starterKeys.has(crop.key));
     const one = starterOnly.length === 1;
@@ -397,7 +397,7 @@ export function suggestIdealYearPlan(
   const finalPlantings = [...winner.result.plantings, ...fill.starters];
 
   // ---- truthfulness pass (on copies — the raw engine result is not mutated)
-  let notes = reconcileUnplacedNote(winner.result.notes, fill.starters);
+  let notes = reconcileUnplacedNote(winner.result.notes, fill.starters, beds);
   for (const note of fill.notes) notes = insertNoteOrdered(notes, note);
   let laterThisYear = winner.result.laterThisYear;
   if (winner.result.plantings.length) {
