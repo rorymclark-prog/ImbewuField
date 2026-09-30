@@ -28,7 +28,7 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
   lessons: [
     {
       id: 'soil-health-l1',
-      infographicAlt: hold('A spade cut through the ground showing dark crumbly topsoil above pale subsoil, with worm channels. Beside it, a jar of soil settled into three layers — sand, silt and clay.'),
+      infographicAlt: hold('A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.'),
       title: hold('Understanding Your Soil: The Foundation of Everything'),
       body: pair(sourceBody, draftParagraphs.join('\n\n')),
       keyPoints: [

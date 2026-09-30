@@ -60,7 +60,7 @@ export const COURSE_IMAGE_BRIEFS: CourseImageBrief[] = [
   { lessonId: 'vegetables-staples-l3', moduleId: 'vegetables-staples', subject: 'Three generic staple forms grouped together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below ground in cutaway.' },
   { lessonId: 'vegetables-staples-l4', moduleId: 'vegetables-staples', subject: 'A leaf with a small pest on it, and beside it three non-chemical responses as icons: a beneficial insect, a physical barrier, and a hand picking the pest off.' },
 
-  { lessonId: 'soil-health-l1', moduleId: 'soil-health', subject: 'A spade-cut through the ground showing dark crumbly topsoil above pale subsoil, with worm channels. Beside it, a glass jar with three settled layers of sand, silt and clay.' },
+  { lessonId: 'soil-health-l1', moduleId: 'soil-health', subject: 'A soil cross-section showing dark topsoil above pale subsoil, with two worms. Beside it, a glass jar with three settled layers of sand, silt and clay.' },
   { lessonId: 'soil-health-l2', moduleId: 'soil-health', subject: 'A compost heap in cross-section with alternating dry-brown and fresh-green layers, a curved arrow showing turning, and faint heat lines rising from the middle.' },
   { lessonId: 'soil-health-l3', moduleId: 'soil-health', subject: 'Two soil surfaces side by side under the same sun: one bare and cracked, one under thick mulch staying dark and moist.' },
 

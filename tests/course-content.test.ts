@@ -9,6 +9,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES, LESSON_INDEX } from '../lib/course-modules.ts';
+import { COURSE_IMAGE_BRIEFS } from '../lib/course-image-briefs.ts';
 import { courseTranslationReviewState, isCourseTranslationLearnerReady, learnerLessonForLanguage, resolveLearnerLessonPresentation, type CourseTranslationRecord } from '../lib/course-localization.ts';
 import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
 import { COURSE_MODULE_TRANSLATION_DRAFTS, resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
@@ -200,7 +201,6 @@ test('Sesotho Vegetables and Staple Crops keeps held crop and pest wording in En
   assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'english-fallback',
     'paused Xitsonga remains English for this module');
 });
-
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);
   assert.equal(new Set(ids).size, ids.length, 'duplicate module id found in COURSE_MODULES');
@@ -243,6 +243,21 @@ test('infographicUrl is always paired with a non-empty infographicAlt', () => {
       }
     }
   }
+});
+
+test('soil-health-l1 image description matches the visible soil profile and jar', () => {
+  const lesson = LESSON_INDEX.get('soil-health-l1')?.lesson;
+  const brief = COURSE_IMAGE_BRIEFS.find((entry) => entry.lessonId === 'soil-health-l1');
+  assert.ok(lesson?.infographicAlt);
+  assert.match(lesson.infographicAlt, /soil cross-section/i);
+  assert.match(lesson.infographicAlt, /topsoil above pale subsoil/i);
+  assert.match(lesson.infographicAlt, /two worms/i);
+  assert.match(lesson.infographicAlt, /jar of soil.*sand, silt and clay/i);
+  assert.doesNotMatch(lesson.infographicAlt, /spade/i);
+  assert.ok(brief, 'the lesson has an image brief');
+  assert.match(brief.subject, /soil cross-section/i);
+  assert.match(brief.subject, /two worms/i);
+  assert.doesNotMatch(brief.subject, /spade/i);
 });
 
 test('no lesson lists itself in relatedLessonIds', () => {
