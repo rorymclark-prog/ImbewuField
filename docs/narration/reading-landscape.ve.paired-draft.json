@@ -34,7 +34,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhalani shango ni sa athu uḽi shandula. Wanani hune maḓi a elela hone, hune ḓuvha ḽa penya hone, hune muya wa fhufha hone, na hune muya u rotholaho wa dzula hone."
           },
           {
             "status": "english-hold"
@@ -61,7 +62,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bulasi ḽiṅwe na ḽiṅwe ḽi na maitele ane a shuma musi ri sa athu engedza tshithu."
           },
           {
             "status": "english-hold"
@@ -98,7 +100,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni ḓo shumisa A-frame level u tevhela contours."
           },
           {
             "status": "english-hold"
