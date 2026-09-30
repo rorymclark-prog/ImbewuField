@@ -3,14 +3,14 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Unreviewed machine drafts for selected explanatory text on slides 1–5. Every learner frame keeps the exact English source beside the Tshivenda draft. New unreviewed L3 concept drafts: slide 15 body[1] and slide 18 body[0–3]. Each keeps its exact English source beside the target draft; mulch, Highveld, maize, topsoil, cover crops and organic matter remain in English where needed. No procedures, crop examples, worm/leachate safety, nitrogen claims or quizzes were translated.",
+    "newDrafts": "Unreviewed machine drafts for selected explanatory text on slides 1–5. Every learner frame keeps the exact English source beside the Tshivenda draft. New unreviewed L3 concept drafts: slide 15 body[1] and slide 18 body[0–1, 3]. Each keeps its exact English source beside the target draft; mulch, Highveld, maize, topsoil, cover crops and organic matter remain in English where needed. No procedures, crop examples, worm/leachate safety, nitrogen claims or quizzes were translated.",
     "reusedDrafts": "None.",
-    "holds": "All soil-science, compost, jar-test, diagnostic, safety and practical farming guidance remains exact English. Slides 6–20 remain exact English holds except the selected conceptual drafts on slide 15 body[1] and slide 18 body[0–3]. No narration or audio is provided. All other target passages remain exact English holds; no audio or local farming approval is claimed."
+    "holds": "All soil-science, compost, jar-test, diagnostic, safety and practical farming guidance remains exact English. Slides 6–20 remain exact English holds except the selected conceptual drafts on slide 15 body[1] and slide 18 body[0–1, 3]. Slide 18 body[2] is held in English because the surface-damage phrasing was unclear. No narration or audio is provided; no local farming approval is claimed."
   },
   "reviewNotes": [
     "Every Tshivenda phrase is an unreviewed machine draft. A fluent Tshivenda speaker should check natural wording, register and comprehension before learner use.",
     "A local farming practitioner should review all teaching content. Technical soil and farming guidance is held in exact English.",
-    "Slides 6–20 remain exact English holds except the selected conceptual drafts on slide 15 body[1] and slide 18 body[0–3]; no Tshivenda narration or audio is included.",
+    "Slides 6–20 remain exact English holds except the selected conceptual drafts on slide 15 body[1] and slide 18 body[0–1, 3]; no Tshivenda narration or audio is included.",
     "The new L3 concept passages are unreviewed machine drafts only. A fluent speaker and local farming practitioner must review them before learner use."
   ],
   "slides": [
@@ -486,7 +486,7 @@
           },
           {
             "status": "draft",
-            "text": "Mulch i nga fhungudza evaporation, ya fhungudza maandafhadzo a mvula, ya thivhela weeds."
+            "text": "Mulch i nga fhungudza evaporation, ya fhungudza maandafhadzo a mvula, ya fhungudza weeds."
           },
           {
             "status": "english-hold"
@@ -573,8 +573,7 @@
             "text": "Muya wa vhuria u nga hwala topsoil yo omaho wa i bvisa."
           },
           {
-            "status": "draft",
-            "text": "Storm ya u thoma khulwane ya tshimedzi i nga rwa mavu a si na tshifukadzhi, ya tshinya nṱha hao na tshivhumbeo tshaho. Arali maḓi a tshi elela kha tsimu, a nga hwala mavu o vundekanaho a tshi bva."
+            "status": "english-hold"
           },
           {
             "status": "draft",
