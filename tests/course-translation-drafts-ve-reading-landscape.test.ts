@@ -56,7 +56,7 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 3, 6] : [9];
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 3, 6, 14] : [9];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);
@@ -73,6 +73,8 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
         'keep the unreviewed sentence about reaching customers in English');
       assert.equal(shownParagraphs[7], originalParagraphs[7],
         'keep the phrase about practical questions in English until reviewed');
+      assert.equal(shownParagraphs[14], 'Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.',
+        'the household food-gap prompt is screened while crop and price decisions stay in English');
     }
     assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed.` }, 've').status,
       'english-fallback');
