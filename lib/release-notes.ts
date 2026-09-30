@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: 'a83e35f8', changes: [
+    'Seeds adds regional reflection drafts near the end of the silent slides.',
+    'Exact English and seed-handling instructions remain beside them.',
+  ], tour: [
+    { title: 'Read the seed exchange', where: 'Study → Seeds and Seed Sovereignty → slides 22–24', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Eight short drafts are paired with exact English; uncertain seed advice stays English.' },
+  ] },
   { when: '30 September 2026', sha: '1ed267a1', changes: [
     'Study names regional slides and narration choices.',
     'English lessons no longer mislabel regional slides.',
