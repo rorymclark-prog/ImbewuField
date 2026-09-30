@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: 'a77b4a20', changes: [
+    'Study adds marked Sesotho drafts for Market Gardening lesson 3.',
+    'Seed permissions and selling-return guidance stay paired with exact English.',
+    'Tshivenda Introduction holds uncertain wind-direction and field steps in English.',
+  ], tour: [
+    { title: 'Compare the Sesotho community lesson', where: 'Study → Market Gardening & Community → lesson 3', href: '/student',
+      detail: 'Read the marked image description, heading, key points and prompts beside their exact English source.' },
+    { title: 'Check the Tshivenda wind lesson', where: 'Study → Introduction → lesson 3', href: '/student',
+      detail: 'The field instructions and direction-dependent quiz remain exact English until a fluent review.' },
+  ] },
   { when: '30 September 2026', sha: '8a8c5b23', changes: [
     'Study adds soil observation and harvest record drafts in Sesotho, Tshivenda and Xitsonga.',
     'Food Forest adds one Xitsonga plant check; technical guidance stays in English.',
