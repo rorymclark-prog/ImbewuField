@@ -65,3 +65,34 @@ test('Sesotho Market L3 pairs safe prompts and keeps seed and return guidance ex
   assert.equal(stalePresentation.status, 'english-fallback', 'source edits withdraw stale paired fields');
   assert.equal(stalePresentation.content.title, changedSource.title);
 });
+
+test('Sesotho Market L1 records four destinations while keeping units and business advice source-paired', () => {
+  const market = COURSE_MODULES.find(module => module.id === 'market-community');
+  assert.ok(market);
+  const source = market.lessons.find(lesson => lesson.id === 'market-community-l1');
+  assert.ok(source);
+  const draft = SESOTHO_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === source.id);
+  assert.ok(draft);
+
+  const sourceParagraphs = source.body.split('\n\n');
+  const draftParagraphs = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(draft.body.sourceEnglish, source.body, 'every draft stays paired to the exact lesson source');
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+  assert.equal(draftParagraphs[4],
+    'Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.');
+  assert.equal(draftParagraphs[5],
+    sourceParagraphs[5], 'keep compost destination wording exact until its meaning is reviewed');
+  for (const index of [5, 8, 9, 11, 12, 13, 15, 16]) {
+    assert.equal(draftParagraphs[index], sourceParagraphs[index],
+      `body paragraph ${index + 1}: yield, cost, price and crop timing guidance stays exact English`);
+  }
+
+  const shown = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.sesothoDraft);
+  assert.equal(draft.keyPoints[0].sourceEnglish, source.keyPoints[0]);
+  assert.equal(draft.keyPoints[0].reviewStatus, 'machine-draft');
+  assert.ok(draft.keyPoints.slice(1).every(point => point.reviewStatus === 'hold'),
+    'price, worked-example and crop-timing key points remain held');
+});

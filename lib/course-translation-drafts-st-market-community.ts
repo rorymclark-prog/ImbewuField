@@ -33,8 +33,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         'Record-Keeping: Knowing What Your Farm Is Actually Producing',
         'Ho Boloka Direkoto: Ho Tseba Hantle Seo Polasi ya Hao e se Hlahisang',
       ),
-      // Paragraphs 1–4, 7–8 and 11 are proposed. Ambiguous units and downstream
-      // yield, cost, pricing and timing claims stay in English for review.
+      // Paragraphs 1–5, 7–8 and 11 are proposed. Risky farming/business guidance stays English.
       body: machineDraft(
         [
           'A harvest can feed the household, be sold, be shared, or be lost.',
@@ -60,7 +59,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.',
           'Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.',
           "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
-          'Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.',
+          'Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.',
           'Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.',
           'O se ke wa itshetleha ka mohopolo qetellong ya sehla.',
           'Sehla se le seng sa direkoto se araba dipotso tse sebetsang.',

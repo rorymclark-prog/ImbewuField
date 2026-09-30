@@ -203,7 +203,7 @@ test('Sesotho Seeds prose stays paired to English while genetics assessment rema
   }
 });
 
-test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance in English', () => {
+test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky guidance held', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(sourceModule);
   const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l1');
@@ -228,12 +228,15 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  for (const index of [4, 5, 8, 9, 11, 12, 13, 15, 16]) {
+  for (const index of [5, 8, 9, 11, 12, 13, 15, 16]) {
     assert.equal(draftParagraphs[index], sourceParagraphs[index], `held source paragraph ${index + 1} must remain exact English`);
   }
-  for (const index of [0, 1, 2, 3, 6, 7, 10, 14]) {
+  for (const index of [0, 1, 2, 3, 4, 6, 7, 10, 14]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index], `selected record-keeping paragraph ${index + 1} should be a visible draft`);
   }
+  assert.equal(draftParagraphs[4],
+    'Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.',
+    'retain source units and produce names in the paired Sesotho draft');
   assert.equal(draftParagraphs[10],
     'Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.');
   assert.equal(draftParagraphs[14],
