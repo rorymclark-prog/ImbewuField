@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, treeLineText, unmarkedAnimalLines, unmarkedLineText } from '@/lib/calendar-produce';
+import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, produceLanes, treeLineText, unmarkedAnimalLines, unmarkedLineText } from '@/lib/calendar-produce';
 import { ANIMAL_ENTERPRISES, sourcedProductMonths } from '@/lib/animal-enterprises';
 import { PERENNIAL_HARVEST, sourcedSeasonMonths } from '@/lib/perennial-harvest';
 import { FRUIT_ART_SPECIES, speciesFruitArtworkUrl } from '@/lib/species-art';
@@ -110,4 +110,25 @@ test('honey shows as a line with no month bar, with each recorded flow and its s
   assert.deepEqual(unmarkedAnimalLines(groups, {}), [], 'nothing until the farmer says the hive is for honey');
   const page = readFileSync(join(process.cwd(), 'app/facilitator/crops/page.tsx'), 'utf8');
   assert.match(page, /unmarked=\{animalsUnmarked\}/);
+});
+
+test('each tree kind is one lane of bars over its picking months, cut at year two', () => {
+  const axis = [...MONTHS, ...MONTHS];
+  const season = new Set(sourcedSeasonMonths(mango));
+  const out = calendarProduceByMonth([{ harvest: mango, existing: 1, proposed: 0 }, { harvest: moringa, existing: 0, proposed: 2 }], [], {}, axis);
+  const lanes = produceLanes(out, 'trees');
+  assert.deepEqual(lanes.map((l) => l.key).sort(), ['mangifera-indica', 'moringa-oleifera']);
+  const mangoLane = lanes.find((l) => l.key === 'mangifera-indica')!;
+  const covered = new Set<number>();
+  for (const run of mangoLane.runs) {
+    assert.ok(run.start <= run.end);
+    assert.ok(!(run.start < 12 && run.end >= 12), 'a bar ran across the year-two seam');
+    for (let c = run.start; c <= run.end; c++) covered.add(c);
+  }
+  // Exactly the sourced months, in both years — no month added or dropped by the bars.
+  axis.forEach((m, col) => assert.equal(covered.has(col), season.has(m), `column ${col} (month ${m})`));
+  // Adjacent runs are merged: no two bars in a lane touch except across the seam.
+  mangoLane.runs.slice(1).forEach((run, i) => {
+    assert.ok(run.start > mangoLane.runs[i].end + 1 || run.start === 12, 'two touching bars were not merged');
+  });
 });

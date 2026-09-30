@@ -15,7 +15,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSPr
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
-import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2, Plus, PawPrint } from 'lucide-react';
+import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2, Plus, PawPrint, Save, Check } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
@@ -35,7 +35,7 @@ import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
 import { printableAvailability } from '@/lib/crop-export-availability';
 import { animalArtUrl } from '@/lib/animal-art';
 import { speciesFruitArtworkUrl } from '@/lib/species-art';
-import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, treeLineText, unmarkedAnimalLines, unmarkedLineText, type CalendarProduceMonth, type CalendarUnmarkedLine } from '@/lib/calendar-produce';
+import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, produceLanes, treeLineText, unmarkedAnimalLines, unmarkedLineText, type CalendarAnimalLine, type CalendarProduceMonth, type CalendarTreeLine, type CalendarUnmarkedLine, type ProduceLane } from '@/lib/calendar-produce';
 import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
 import { climateGateFrom } from '@/lib/crop-climate-gate';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
@@ -60,6 +60,7 @@ import {
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
+import { clearCropMix, loadCropMix, saveCropMix, type CropMix } from '@/lib/crop-mix-preference';
 import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HarvestRhythm, PlanNote } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan, PLAN_NOTES_PANEL_COPY } from '@/lib/crop-autosuggest';
 import type { IdealYearPlan, PlanTiming } from '@/lib/crop-plan-ideal';
@@ -79,7 +80,12 @@ import {
   taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE,
 } from '@/lib/crop-export-schedule';
 
-const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'staple_grain', 'less_common', 'cover_crop'];
+/** Same ticked tiles and exact crops, ignoring order. */
+function sameMix(a: CropMix, b: CropMix): boolean {
+  const same = (x: readonly string[], y: readonly string[]) => x.length === y.length && x.every((v) => y.includes(v));
+  return same(a.groups, b.groups) && same(a.cropKeys, b.cropKeys);
+}
+const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'squash_melon', 'staple_grain', 'less_common', 'cover_crop'];
 
 // This route has sourced crop timing, climate, price and task claims mixed with
 // ordinary controls. Only pass interface labels through this helper; keep the
@@ -758,6 +764,9 @@ function FacilitatorCropsPageInner() {
   const [aFocusCount, setAFocusCount] = useState(1);
   const [aGroups, setAGroups] = useState<FoodGroup[]>(ALL_GROUPS);
   const [aCropKeys, setACropKeys] = useState<string[]>([]);
+  // The farmer's saved crop mix for this map and goal (lib/crop-mix-preference.ts), or null when
+  // they have not saved one and the recommended mix applies.
+  const [savedMix, setSavedMix] = useState<CropMix | null>(null);
   const [aRhythm, setARhythm] = useState<HarvestRhythm>('steady');
   // Default on — prevents an immediate repeat of the same botanical family.
   // This one-year plan does not claim to hold a complete multi-year history.
@@ -789,8 +798,7 @@ function FacilitatorCropsPageInner() {
   function openAutoSuggest() {
     setAGoal('family');
     setAFocusCount(1);
-    setAGroups(ALL_GROUPS); // family default = all checked (diversify); commercial flips this on toggle
-    setACropKeys([]);
+    applyGoalMix('family');
     setARhythm('steady');
     setARotateCrops(true);
     setAAllowVinesInBeds(false);
@@ -804,7 +812,25 @@ function FacilitatorCropsPageInner() {
   }
   function chooseGoal(g: GardenGoal) {
     setAGoal(g);
-    setAGroups(g === 'commercial' ? [] : ALL_GROUPS); // commercial starts empty — must actively concentrate
+    applyGoalMix(g);
+  }
+  // A saved mix for this map and goal wins; otherwise family and hybrid start with every tile
+  // on (diversify) and commercial starts empty (must actively concentrate).
+  function applyGoalMix(g: GardenGoal) {
+    const saved = mixSiteKey ? loadCropMix(mixSiteKey, g) : null;
+    setSavedMix(saved);
+    setAGroups(saved?.groups ?? (g === 'commercial' ? [] : ALL_GROUPS));
+    setACropKeys(saved?.cropKeys ?? []);
+  }
+  function saveMix() {
+    if (!mixSiteKey) return;
+    saveCropMix(mixSiteKey, aGoal, { groups: aGroups, cropKeys: aCropKeys });
+    setSavedMix(loadCropMix(mixSiteKey, aGoal));
+  }
+  function resetMix() {
+    if (mixSiteKey) clearCropMix(mixSiteKey, aGoal);
+    setSavedMix(null);
+    setAGroups(aGoal === 'commercial' ? [] : ALL_GROUPS);
     setACropKeys([]);
   }
   function toggleGroup(g: FoodGroup) {
@@ -912,6 +938,8 @@ function FacilitatorCropsPageInner() {
   // local design, same as before this feature existed).
   const [myDesignsList, setMyDesignsList] = useState<Design[] | null>(null);
   const [chosenDesignId, setChosenDesignId] = useState<string | null>(null);
+  // Which map a saved crop mix belongs to: the Design Studio site, or the chosen facilitator design.
+  const mixSiteKey = canvasSite ?? (chosenDesignId ? `design:${chosenDesignId}` : null);
   // Reopened on demand (e.g. "switch site") so the picker acts as a proper
   // crop-planning landing page you can always get back to, not just a
   // one-time gate on first load.
@@ -2555,6 +2583,8 @@ function FacilitatorCropsPageInner() {
           focusCount={aFocusCount} onFocusCount={setAFocusCount}
           groups={aGroups} onToggleGroup={toggleGroup}
           cropKeys={aCropKeys} onToggleCrop={toggleAutoCrop} onSetCrops={setACropKeys}
+          mixState={!mixSiteKey ? 'unavailable' : !savedMix ? 'none' : sameMix(savedMix, { groups: aGroups, cropKeys: aCropKeys }) ? 'saved' : 'changed'}
+          onSaveMix={saveMix} onResetMix={resetMix}
           rhythm={aRhythm} onRhythm={setARhythm}
           planTiming={aPlanTiming} onPlanTiming={setAPlanTiming}
           generating={autoGenerating} idealMeta={idealMeta}
@@ -3724,8 +3754,13 @@ function OrganicGuideCard() {
  * month for the written list. A plant or coop drawn as PROPOSED is shown faded and said to be
  * proposed: it is in the plan, but it is not cropping this year.
  */
-const PRODUCE_ICON = 20;
-const PRODUCE_VISIBLE = 3;
+// Rory, 2026-09-30: "I want the avocado like a cabbage planting … this makes it more clearly
+// visible." Each tree kind and each animal product is its own lane of bars across the months it
+// is picked, drawn like a bed's planting bars. Hover, focus or tap a bar for the written line.
+const PRODUCE_ICON = 16;
+// Fills under white type, fixed like the bed bars' colours: mid-green for the food forest, the
+// deep ochre fill for animals.
+const PRODUCE_FILL = { trees: '#2E6B3A', animals: 'var(--color-ochre-dark)' } as const;
 
 function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked = [] }: {
   kind: 'trees' | 'animals';
@@ -3736,7 +3771,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
   /** Products shown as a line with no month bar — honey, whose flows the sources tie to plants and rain. */
   unmarked?: CalendarUnmarkedLine[];
 }) {
-  const [open, setOpen] = useState<{ index: number; left: number; top: number; above: boolean } | null>(null);
+  const [open, setOpen] = useState<{ id: string; left: number; top: number; above: boolean } | null>(null);
   const pinned = useRef(false);
   useEffect(() => {
     if (!open) return;
@@ -3746,17 +3781,39 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
     return () => { window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close); };
   }, [open]);
 
-  const lines = (m: CalendarProduceMonth) => (kind === 'trees' ? m.trees : m.animals);
-  const any = months.some((m) => lines(m).length > 0);
-  const show = (index: number, el: HTMLElement) => {
+  const lanes: { key: string; name: string; text: string; standing: number; runs: { start: number; end: number }[]; art: ReactNode }[] =
+    kind === 'trees'
+      ? (produceLanes(months, 'trees') as ProduceLane<CalendarTreeLine>[]).map(({ key, line, runs }) => {
+        const src = speciesFruitArtworkUrl(line.speciesId);
+        return {
+          key, runs, name: line.name, text: treeLineText(line), standing: line.standing,
+          art: src
+            // eslint-disable-next-line @next/next/no-img-element -- 18px sprite
+            ? <img src={src} alt="" width={PRODUCE_ICON} height={PRODUCE_ICON} style={{ width: PRODUCE_ICON, height: PRODUCE_ICON, flexShrink: 0 }} />
+            : <Grape size={14} aria-hidden style={{ flexShrink: 0 }} />,
+        };
+      })
+      : (produceLanes(months, 'animals') as ProduceLane<CalendarAnimalLine>[]).map(({ key, line, runs }) => {
+        const Icon = PRODUCT_ICON[line.product];
+        return {
+          key, runs, name: `${PRODUCT_LABEL[line.product]} · ${line.name}`, text: animalLineText(line), standing: line.standing,
+          art: <Icon size={14} aria-hidden style={{ flexShrink: 0 }} />,
+        };
+      });
+  const show = (id: string, el: HTMLElement) => {
     const r = el.getBoundingClientRect();
     const width = 280;
-    const above = r.bottom + 200 > window.innerHeight && r.top > 220;
-    setOpen({ index, left: Math.max(8, Math.min(r.left, window.innerWidth - width - 8)), top: above ? r.top - 6 : r.bottom + 6, above });
+    const above = r.bottom + 180 > window.innerHeight && r.top > 200;
+    setOpen({ id, left: Math.max(8, Math.min(r.left, window.innerWidth - width - 8)), top: above ? r.top - 6 : r.bottom + 6, above });
   };
   const hide = () => { if (!pinned.current) setOpen(null); };
   const title = kind === 'trees' ? 'Fruit, nuts & berries' : 'Animal products';
   const LabelIcon = kind === 'trees' ? Grape : PawPrint;
+  const monthName = (col: number) => monthAxisTitle(axis[col], axis[col]?.month ?? 1);
+  const span = (run: { start: number; end: number }) =>
+    run.start === run.end ? monthName(run.start) : `${monthName(run.start)} to ${monthName(run.end)}`;
+  const openLane = open ? lanes.find((l) => open.id.startsWith(`${l.key}@`)) : undefined;
+  const openRun = openLane?.runs[Number(open!.id.split('@')[1])];
 
   return (
     <div className="flex" style={{ borderBottom: '1px solid var(--border)' }} data-crop-calendar-produce={kind}>
@@ -3766,64 +3823,74 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
           {title}
         </div>
         <div className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.3 }}>
-          From your map · hover or tap a month
+          From your map · hover or tap a bar
         </div>
       </div>
       <div style={{ flex: '1 1 auto', minWidth: 0, position: 'relative' }}>
-        {any ? (
-          <div style={MONTH_COLUMNS}>
-            {months.map((m, i) => {
-              const items = lines(m);
-              const extra = items.length - PRODUCE_VISIBLE;
-              const monthTitle = monthAxisTitle(axis[i], axis[i]?.month ?? 1);
-              const spoken = items.length === 0
-                ? `${monthTitle}: nothing from ${kind === 'trees' ? 'the food forest' : 'the animals'}`
-                : `${monthTitle}: ${(kind === 'trees' ? m.trees.map(treeLineText) : m.animals.map(animalLineText)).join('; ')}`;
-              return (
-                <button
+        {lanes.length > 0 ? (
+          <div style={{ position: 'relative', padding: '6px 0' }}>
+            <div style={{ ...MONTH_COLUMNS, position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+              {Array.from({ length: DISPLAY_MONTHS }, (_, i) => i).map((i) => (
+                <div
                   key={i}
-                  type="button"
-                  aria-label={spoken}
-                  aria-expanded={open?.index === i}
-                  onMouseEnter={(e) => { if (items.length && !pinned.current) show(i, e.currentTarget); }}
-                  onMouseLeave={hide}
-                  onFocus={(e) => { if (items.length) show(i, e.currentTarget); }}
-                  onBlur={() => { pinned.current = false; setOpen(null); }}
-                  onClick={(e) => {
-                    if (!items.length) return;
-                    if (open?.index === i && pinned.current) { pinned.current = false; setOpen(null); return; }
-                    pinned.current = true;
-                    show(i, e.currentTarget);
-                  }}
                   style={{
-                    minWidth: 0, minHeight: 48, padding: '6px 2px', border: 'none', cursor: items.length ? 'pointer' : 'default',
+                    minWidth: 0,
                     borderRight: i < DISPLAY_MONTHS - 1 ? '1px solid var(--bg-2)' : 'none',
                     borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
-                    background: open?.index === i ? 'var(--bg-2)' : i === 0 ? 'rgba(31,77,43,0.05)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
-                    display: 'flex', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center', gap: 2,
+                    background: i === 0 ? 'rgba(31,77,43,0.05)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
                   }}
-                >
-                  {kind === 'trees'
-                    ? m.trees.slice(0, PRODUCE_VISIBLE).map((t) => {
-                      const src = speciesFruitArtworkUrl(t.speciesId);
-                      const faded = t.standing === 0 ? 0.45 : 1;
-                      return src ? (
-                        // eslint-disable-next-line @next/next/no-img-element -- 20px sprite
-                        <img key={t.speciesId} src={src} alt="" width={PRODUCE_ICON} height={PRODUCE_ICON} style={{ width: PRODUCE_ICON, height: PRODUCE_ICON, opacity: faded }} />
-                      ) : (
-                        <Grape key={t.speciesId} size={16} aria-hidden style={{ color: 'var(--emerald)', opacity: faded }} />
-                      );
-                    })
-                    : m.animals.slice(0, PRODUCE_VISIBLE).map((a) => {
-                      const Icon = PRODUCT_ICON[a.product];
-                      return <Icon key={a.enterpriseId} size={16} aria-hidden style={{ color: 'var(--gold-dim)', opacity: a.standing === 0 ? 0.45 : 1 }} />;
-                    })}
-                  {extra > 0 && (
-                    <span className="font-sans" style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)' }}>+{extra}</span>
-                  )}
-                </button>
-              );
-            })}
+                />
+              ))}
+            </div>
+            {lanes.map((lane) => (
+              <div key={lane.key} style={{ position: 'relative', height: 30, marginBottom: 3 }}>
+                {lane.runs.map((run, r) => {
+                  const id = `${lane.key}@${r}`;
+                  // Proposed plants are faded, as the month list did; year two is quieter, as a bed's is.
+                  const opacity = lane.standing === 0 ? (run.start >= 12 ? 0.35 : 0.45) : run.start >= 12 ? 0.55 : 1;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      className="font-sans"
+                      aria-label={`${lane.text} · ${span(run)}`}
+                      aria-expanded={open?.id === id}
+                      onMouseEnter={(e) => { if (!pinned.current) show(id, e.currentTarget); }}
+                      onMouseLeave={hide}
+                      onFocus={(e) => show(id, e.currentTarget)}
+                      onBlur={() => { pinned.current = false; setOpen(null); }}
+                      onClick={(e) => {
+                        if (open?.id === id && pinned.current) { pinned.current = false; setOpen(null); return; }
+                        pinned.current = true;
+                        show(id, e.currentTarget);
+                      }}
+                      style={{
+                        position: 'absolute', left: `${leftPct(run.start)}%`, width: `${(run.end - run.start + 1) * COL_PCT}%`, top: 2, bottom: 2,
+                        background: PRODUCE_FILL[kind], color: '#fff', border: 'none', borderRadius: 6, opacity,
+                        fontSize: 11, fontWeight: 600, textAlign: 'left', padding: '0 4px 0 5px', cursor: 'pointer',
+                        // clip-path, not overflow: an overflow-hidden button would become the scroll
+                        // box and stop the name below from sticking.
+                        display: 'flex', alignItems: 'center', clipPath: 'inset(0 round 6px)', whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {/* The name sticks just right of the bed labels, so a bar that starts
+                          off-screen to the left still says what it is. */}
+                      <span style={{ position: 'sticky', left: BED_LABEL_WIDTH + 4, display: 'inline-flex', alignItems: 'center', gap: 4, maxWidth: '100%', minWidth: 0, overflow: 'hidden' }}>
+                      {kind === 'trees' ? (
+                        // A light chip, so a small fruit picture still reads on the dark bar.
+                        <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(255,255,255,0.92)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--emerald)' }}>
+                          {lane.art}
+                        </span>
+                      ) : lane.art}
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {lane.name}{lane.standing === 0 ? ' (proposed)' : ''}
+                      </span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
           </div>
         ) : unmarked.length ? null : (
           <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
@@ -3837,53 +3904,29 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
           </div>
         )}
       </div>
-      {open && (() => {
-        const m = months[open.index];
-        const monthTitle = monthAxisTitle(axis[open.index], axis[open.index]?.month ?? 1);
-        return (
-          <div
-            role="tooltip"
-            className="font-sans"
-            style={{
-              position: 'fixed', left: open.left, top: open.top, transform: open.above ? 'translateY(-100%)' : undefined,
-              width: 280, zIndex: 60, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '1px solid var(--border-strong)',
-              borderRadius: 10, boxShadow: '0 8px 24px rgba(32,25,15,0.18)', padding: '10px 12px', pointerEvents: 'none',
-            }}
-          >
-            <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.1vw, 16px)', marginBottom: 2 }}>{monthTitle}</div>
-            <div style={{ fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 6 }}>
-              {kind === 'trees' ? 'In season from your food forest' : 'From your animals'}
-            </div>
-            <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 5 }}>
-              {kind === 'trees'
-                ? m.trees.map((t) => {
-                  const src = speciesFruitArtworkUrl(t.speciesId);
-                  return (
-                    <li key={t.speciesId} style={{ display: 'flex', gap: 7, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.35, color: t.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
-                      {src
-                        // eslint-disable-next-line @next/next/no-img-element -- 18px sprite
-                        ? <img src={src} alt="" width={18} height={18} style={{ width: 18, height: 18, flexShrink: 0 }} />
-                        : <Grape size={16} aria-hidden style={{ color: 'var(--emerald)', flexShrink: 0 }} />}
-                      <span>{treeLineText(t)}</span>
-                    </li>
-                  );
-                })
-                : m.animals.map((a) => {
-                  const Icon = PRODUCT_ICON[a.product];
-                  return (
-                    <li key={a.enterpriseId} style={{ display: 'flex', gap: 7, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.35, color: a.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
-                      <Icon size={16} aria-hidden style={{ color: 'var(--gold-dim)', flexShrink: 0 }} />
-                      <span>{animalLineText(a)}</span>
-                    </li>
-                  );
-                })}
-            </ul>
-            <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 7, lineHeight: 1.35 }}>
-              Months from the sourced South African season. No kilograms: the sources give a span, not a monthly amount.
-            </div>
+      {open && openLane && openRun && (
+        <div
+          role="tooltip"
+          className="font-sans"
+          style={{
+            position: 'fixed', left: open.left, top: open.top, transform: open.above ? 'translateY(-100%)' : undefined,
+            width: 280, zIndex: 60, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '1px solid var(--border-strong)',
+            borderRadius: 10, boxShadow: '0 8px 24px rgba(32,25,15,0.18)', padding: '10px 12px', pointerEvents: 'none',
+          }}
+        >
+          <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.1vw, 16px)', marginBottom: 2 }}>{span(openRun)}</div>
+          <div style={{ fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 6 }}>
+            {kind === 'trees' ? 'In season from your food forest' : 'From your animals'}
           </div>
-        );
-      })()}
+          <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.35, color: openLane.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
+            <span style={{ color: kind === 'trees' ? 'var(--emerald)' : 'var(--gold-dim)', display: 'inline-flex' }}>{openLane.art}</span>
+            <span>{openLane.text}</span>
+          </div>
+          <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 7, lineHeight: 1.35 }}>
+            Months from the sourced South African season. No kilograms: the sources give a span, not a monthly amount.
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -4678,7 +4721,7 @@ const TIMING_OPTIONS: { key: PlanTiming; label: string; blurb: string }[] = [
 ];
 function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
-  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm,
+  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
   pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
@@ -4689,6 +4732,9 @@ function AutoSuggestModal({
   focusCount: number; onFocusCount: (n: number) => void;
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
   cropKeys: string[]; onToggleCrop: (cropKey: string) => void; onSetCrops: (cropKeys: string[]) => void;
+  /** 'unavailable' when no map is chosen to save against; 'changed' = saved mix exists but the tiles differ. */
+  mixState: 'unavailable' | 'none' | 'saved' | 'changed';
+  onSaveMix: () => void; onResetMix: () => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
   planTiming: PlanTiming; onPlanTiming: (t: PlanTiming) => void;
   /** True while the whole-year sweep runs — the Suggest button shows its busy label. */
@@ -4768,7 +4814,9 @@ function AutoSuggestModal({
 
             <details className="rounded-xl px-3 py-2.5" style={{ border: '1px solid var(--border)', background: 'var(--bg-1)' }}>
               <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)', cursor: 'pointer' }}>
-                Optional: change the recommended crop mix
+                {mixState === 'saved' || mixState === 'changed'
+                  ? 'Crop mix: your saved mix for this map'
+                  : 'Optional: change the recommended crop mix'}
               </summary>
               <div className="mt-3 space-y-3">
             <div>
@@ -4845,7 +4893,27 @@ function AutoSuggestModal({
                     : 'Only these crops will be used. The planner balances supported sowing slots, variety and your harvest rhythm; it will not substitute an unchosen crop or claim a guaranteed maximum.')
                   : 'No exact list selected: the family plan will use a diverse supported mix, including the mapped staple plots. Open this section only when you want to exclude crops or name exact household choices.'}
               </p>
+            </div>
+
+            {mixState !== 'unavailable' && (
+              <div className="flex flex-wrap items-center gap-2 pt-2" style={{ borderTop: '1px solid var(--border)' }}>
+                {mixState !== 'saved' && (
+                  <button type="button" onClick={onSaveMix} className="font-sans font-semibold rounded-lg px-2.5 py-1.5 inline-flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', cursor: 'pointer' }}>
+                    <Save size={13} aria-hidden /> {mixState === 'changed' ? 'Save changes to my crop mix' : 'Save this crop mix for this map'}
+                  </button>
+                )}
+                {mixState === 'saved' && (
+                  <span className="font-sans inline-flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                    <Check size={13} aria-hidden /> Saved for this map. Used every time you plan here.
+                  </span>
+                )}
+                {mixState !== 'none' && (
+                  <button type="button" onClick={onResetMix} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, color: 'var(--text-secondary)', background: 'var(--bg-1)', border: '1px solid var(--border)', cursor: 'pointer' }}>
+                    Reset to recommended
+                  </button>
+                )}
               </div>
+            )}
               </div>
             </details>
 

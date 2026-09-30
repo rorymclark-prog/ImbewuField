@@ -238,6 +238,7 @@ const GROUP_INK: Record<FoodGroup, readonly number[]> = {
   allium: INK.gold,
   legume: INK.teal,
   fruiting_veg: INK.terracotta,
+  squash_melon: INK.terracotta,
   staple_grain: INK.brown,
   less_common: INK.muted,
   cover_crop: INK.muted,
@@ -247,7 +248,7 @@ const GROUP_LEGEND: { label: string; ink: readonly number[]; groups: readonly Fo
   { label: 'Leafy crops and herbs', ink: INK.green, groups: ['leafy_green', 'herb'] },
   { label: 'Roots and onions', ink: INK.gold, groups: ['root_tuber', 'allium'] },
   { label: 'Legumes', ink: INK.teal, groups: ['legume'] },
-  { label: 'Fruiting crops', ink: INK.terracotta, groups: ['fruiting_veg'] },
+  { label: 'Fruiting crops', ink: INK.terracotta, groups: ['fruiting_veg', 'squash_melon'] },
   { label: 'Staples', ink: INK.brown, groups: ['staple_grain'] },
   { label: 'Less common, cover', ink: INK.muted, groups: ['less_common', 'cover_crop'] },
 ];
