@@ -200,6 +200,7 @@ test('Sesotho Vegetables and Staple Crops keeps held crop and pest wording in En
   assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'english-fallback',
     'paused Xitsonga remains English for this module');
 });
+import { COURSE_IMAGE_BRIEFS } from '../lib/course-image-briefs.ts';
 
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);
@@ -243,6 +244,21 @@ test('infographicUrl is always paired with a non-empty infographicAlt', () => {
       }
     }
   }
+});
+
+test('soil-health-l1 image description matches the visible soil profile and jar', () => {
+  const lesson = LESSON_INDEX.get('soil-health-l1')?.lesson;
+  const brief = COURSE_IMAGE_BRIEFS.find((entry) => entry.lessonId === 'soil-health-l1');
+  assert.ok(lesson?.infographicAlt);
+  assert.match(lesson.infographicAlt, /soil cross-section/i);
+  assert.match(lesson.infographicAlt, /topsoil above pale subsoil/i);
+  assert.match(lesson.infographicAlt, /two worms/i);
+  assert.match(lesson.infographicAlt, /jar of soil.*sand, silt and clay/i);
+  assert.doesNotMatch(lesson.infographicAlt, /spade/i);
+  assert.ok(brief, 'the lesson has an image brief');
+  assert.match(brief.subject, /soil cross-section/i);
+  assert.match(brief.subject, /two worms/i);
+  assert.doesNotMatch(brief.subject, /spade/i);
 });
 
 test('no lesson lists itself in relatedLessonIds', () => {
