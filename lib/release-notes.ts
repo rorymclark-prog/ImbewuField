@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 September 2026', sha: '1e670dcb', changes: [
+    'Market Gardening adds more Sesotho, Tshivenda and Xitsonga slide text.',
+    'Farm records show English beside drafts; sensitive advice stays English.',
+  ], tour: [
+    { title: 'Try a farm record', where: 'Study → Market Gardening & Community → slides 11–20', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The new AI drafts are unreviewed and paired with exact English; choose No narration to read at your own pace.' },
+  ] },
   { when: '30 September 2026', sha: '44296706', changes: [
     'Market Gardening adds more Sesotho, Tshivenda and Xitsonga text on silent slides.',
     'Price, planting and local trading advice stays in English beside the unreviewed drafts.',
