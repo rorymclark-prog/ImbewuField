@@ -53,8 +53,27 @@ test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer ma
     if (titles[original.id]) assert.equal(lesson.title.tshivendaDraft, titles[original.id]);
     else assert.equal(lesson.title.reviewStatus, 'hold', 'greywater reuse title stays English');
     checkPair(lesson.body, original.body, `${path}.body`);
-    assert.equal(lesson.body.reviewStatus, 'hold', `${path}: engineering, water quality and sanitation guidance stays English`);
-    assert.deepEqual(lesson.body.tshivendaDraft.split('\n\n'), original.body.split('\n\n'), `${path}: retain paragraph boundaries`);
+    const bodySentences: Record<string, string> = lesson.id === 'water-harvesting-l2'
+      ? {
+          'Rainfall seasons differ across South Africa.': 'Tshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe.',
+        }
+      : lesson.id === 'water-harvesting-l3'
+        ? {
+            'Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.': 'Ṱhanga ya ṋu i nga kuvhanganya madi a mvula. Madi ane a wanala a bva kha vhuhulwane ha ṱhanga, mvula na madi a xelaho.',
+            'An annual total does not tell you how much water will be available during a dry spell.': 'Tshivhalo tsha ṅwaha woṱhe a tshi ni vhudzi uri hu ḓo vha na madi mangana nga tshifhinga tsha gomelelo.',
+          }
+        : {};
+    let expectedBody = original.body;
+    for (const [english, tshivenda] of Object.entries(bodySentences)) {
+      assert.equal(original.body.split(english).length - 1, 1, `${path}.body: selected sentence occurs once in the source`);
+      expectedBody = expectedBody.replace(english, tshivenda);
+    }
+    assert.equal(lesson.body.reviewStatus, Object.keys(bodySentences).length ? 'machine-draft' : 'hold',
+      `${path}: only screened concept sentences are translated`);
+    assert.equal(lesson.body.tshivendaDraft, expectedBody,
+      `${path}: retain exact source English outside the selected sentences`);
+    assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, original.body.split('\n\n').length,
+      `${path}: retain paragraph boundaries`);
     assert.equal(lesson.keyPoints.length, original.keyPoints.length);
     for (const [j, point] of lesson.keyPoints.entries()) {
       checkPair(point, original.keyPoints[j], `${path}.keyPoints[${j}]`);
@@ -74,13 +93,14 @@ test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer ma
   }
 
   const held = [draft.description, ...draft.lessons.flatMap(l => [l.body, ...l.keyPoints, ...l.quiz.flatMap(q => [q.question, ...q.options, q.rationale])])]
-    .filter(p => p.reviewStatus === 'hold').map(p => p.sourceEnglish).join('\n');
+    .filter(p => p.reviewStatus === 'hold' || p.sourceEnglish !== p.tshivendaDraft)
+    .map(p => `${p.sourceEnglish}\n${p.tshivendaDraft}`).join('\n');
   for (const criticalClaim of ['safe overflow', 'earth dam wall', 'first-flush diverter', 'not make the remaining water safe to drink', 'qualified local sanitation adviser', 'soil and mulch do not disinfect']) {
     assert.ok(held.toLowerCase().includes(criticalClaim.toLowerCase()), `critical claim stays held in English: ${criticalClaim}`);
   }
 });
 
-test('Tshivenda Water Harvesting keeps lesson instruction English and shows its source-paired slide draft', () => {
+test('Tshivenda Water Harvesting keeps technical lesson instructions English and shows source-paired concept drafts', () => {
   const source = COURSE_MODULES.find(module => module.id === TSHIVENDA_WATER_HARVESTING_DRAFT.id);
   assert.ok(source, 'the canonical Water Harvesting module must exist');
   const modulePresentation = resolveCourseModulePresentation(source, 've');
@@ -97,7 +117,8 @@ test('Tshivenda Water Harvesting keeps lesson instruction English and shows its 
       `${lesson.id}: report a draft only while at least one source-paired field is translated`);
     assert.equal(presentation.content.title, draft.title.reviewStatus === 'hold'
       ? lesson.title : draft.title.tshivendaDraft, `${lesson.id}: only explicitly drafted titles change`);
-    assert.equal(presentation.content.body, lesson.body, `${lesson.id}: safety instruction remains English`);
+    assert.equal(presentation.content.body, draft.body.tshivendaDraft,
+      `${lesson.id}: show only exact-source-paired body wording, with technical instructions retained`);
     assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints, `${lesson.id}: safety summary remains English`);
     assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: water-safety quiz remains English`);
     assert.equal(draft.title.sourceEnglish, lesson.title, `${lesson.id}: title is paired to exact English source`);

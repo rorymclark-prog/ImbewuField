@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { englishSlideRecords, pairedDraftLanguageLabel, pairedTargetHasEnglishHolds, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
+import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
@@ -351,25 +352,32 @@ test('Tshivenda Food Forest drafts pair habitat context while field care and gra
     'the healthy-grassland protection instruction cannot silently become an unreviewed draft');
 });
 
-test('Vegetables slides pair Xitsonga harvest-gap and resilience drafts with exact English', () => {
+test('Vegetables slide 14 pairs both regional resilience drafts while keeping the one-crop limit exact', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
+  const sesothoPacket = JSON.parse(readFileSync('docs/narration/vegetables-staples.st.paired-draft.json', 'utf8'));
+  const sesothoSlides = validatePairedDraft(sesothoPacket, source, 'st');
+  const sesothoLesson = SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons[2].body;
+  const sesothoEnglish = sesothoLesson.sourceEnglish.split('\n\n');
+  const sesothoDraft = sesothoLesson.sesothoDraft.split('\n\n');
+  assert.equal(sesothoSlides[13].target.body[0].status, 'draft');
+  assert.equal(sesothoSlides[13].english.body[0], sesothoEnglish[11]);
+  assert.equal(sesothoSlides[13].target.body[0].text, sesothoDraft[11]);
+
   const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'ts');
   const drafted = slides.flatMap((slide: any) => slide.target.body
     .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
     .filter(Boolean));
-  assert.deepEqual(drafted, ['2:3', '2:5', '13:6', '14:1', '14:5']);
+  assert.deepEqual(drafted, ['2:3', '2:5', '13:6', '14:1', '14:2', '14:5']);
   const lesson = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body;
   const english = lesson.sourceEnglish.split('\n\n');
   const translated = lesson.xitsongaDraft.split('\n\n');
-  for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 4, 15]]) {
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 1, 12], [13, 4, 15]]) {
     assert.equal(slides[slideIndex].english.body[slideParagraph], english[lessonParagraph]);
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
   }
-  assert.equal(slides[13].target.body[1].status, 'english-hold',
-    'the one-failure limit stays exact English in the deck as well as the lesson');
-  assert.equal(translated[12], english[12], 'the one-failure limit stays exact English in the lesson');
-  assert.equal(slides[13].target.body[2].status, 'english-hold');
+  assert.equal(slides[13].target.body[2].status, 'english-hold',
+    'the one-crop point-of-failure claim remains exact English in this slide packet');
   assert.equal(slides[13].target.body[3].status, 'english-hold');
   assert.equal(slides[1].target.body[1].status, 'english-hold',
     'the Xitsonga glut wording still needs fluent review');

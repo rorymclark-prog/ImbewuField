@@ -10,6 +10,23 @@ import { XITSONGA_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-draf
 
 const STUDENT_PAGE = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
 
+test('seed-swap invitation drafts leave all storage and germination instructions in exact English', () => {
+  const sourceLesson = COURSE_MODULES.find(module => module.id === 'seeds-sovereignty')!.lessons.find(lesson => lesson.id === 'seeds-sovereignty-l3')!;
+  for (const [language, draftText] of [
+    ['st', SESOTHO_SEEDS_SOVEREIGNTY_DRAFT.lessons.find(lesson => lesson.id === sourceLesson.id)!.body.sesothoDraft],
+    ['ts', XITSONGA_SEEDS_SOVEREIGNTY_DRAFT.lessons.find(lesson => lesson.id === sourceLesson.id)!.body.xitsongaDraft],
+  ] as const) {
+    const source = sourceLesson.body.split('\n\n');
+    const draft = draftText.split('\n\n');
+    assert.equal(draft.length, source.length);
+    assert.deepEqual(draft.slice(0, 3), source.slice(0, 3), `${language}: seed storage guidance stays exact English`);
+    assert.ok(draft[3].endsWith("What one household saves well, several households can share — and the whole group's variety diversity grows with every swap."),
+      `${language}: the adjacent seed-diversity claim stays exact English`);
+    assert.equal(resolveLearnerLessonPresentation(sourceLesson, language).content.body, draftText,
+      `${language}: the selected sentence is visible to learners as an unreviewed draft`);
+  }
+});
+
 test('Sesotho Seeds learner prose is paired, visibly unreviewed, and source changes withdraw it', () => {
   const draft = SESOTHO_SEEDS_SOVEREIGNTY_DRAFT;
   const module = COURSE_MODULES.find(candidate => candidate.id === draft.id);
