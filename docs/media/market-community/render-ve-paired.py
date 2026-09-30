@@ -18,7 +18,7 @@ PAIRED = ROOT / "docs/narration/market-community.ve.paired-draft.json"
 ENGLISH = ROOT / "docs/narration/market-community.en.md"
 W, H = 1440, 5400
 SLIDES = 20
-PHONE_SLIDES = (2, 3, 7, 20)
+PHONE_SLIDES = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20)
 PAPER = (245, 240, 228)
 INK = (32, 25, 15)
 GREEN = (31, 77, 43)
@@ -199,7 +199,7 @@ def main() -> None:
         "slides": rows,
         "contactSheet": str(contact_path.relative_to(ROOT)),
         "phoneSamples": phone_samples,
-        "note": "All 20 silent frames are source-paired. Slides 2 and 3 pair the unchanged English illustration and exact English source with only the three existing Tshivenda machine-draft passages. Slides with no target draft show one English source block labelled Tshivenda translation pending; English source; no translation-like target panel or English slide artwork is repeated. No English business, price, household food, or other farming guidance is presented as translated. No Tshivenda narration or farming approval is claimed.",
+        "note": "All 20 silent frames are source-paired. Only passages marked draft appear beside their exact English source. Slides with no target draft show one English source block labelled Tshivenda translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No Tshivenda narration, fluent review or local farming approval is claimed.",
     }
     report_path = QA / "verification.json"
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

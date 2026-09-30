@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[3]
 MEDIA = Path(__file__).resolve().parent
 W, H = 1440, 5400
 SLIDES = 20
-PHONE_SLIDES = (2, 3, 7, 20)
+PHONE_SLIDES = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20)
 LANGS = {
     "st": ("Sesotho", "SESOTHO REVIEW · TRANSLATION PENDING"),
     "ts": ("Xitsonga", "XITSONGA REVIEW · TRANSLATION PENDING"),
@@ -175,8 +175,8 @@ def render(language: str) -> dict:
         "slides": rows, "contactSheet": str(contact_path.relative_to(ROOT)),
         "phoneSamples": phone_samples,
         "draftPassageCount": draft_count,
-        "note": (f"All 20 silent frames use the validated existing {name} paired packet and exact English narration. "
-                 "Only packet passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending; no pseudo-translation or repeated English artwork is shown. Business, prices, household-food guidance and seed or legal guidance remain English unless the existing packet marks a draft. No narration or farming approval is claimed."),
+        "note": (f"All 20 silent {name} frames use the paired packet. Only passages marked draft appear beside their exact English source. "
+                 "Slides with no draft show one English source card labelled translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No regional narration, fluent review or local farming approval is claimed."),
     }
     report_path = qa / "verification.json"
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

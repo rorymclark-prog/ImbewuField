@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.ve.paired-draft.json",
-  "pairedSourceSha256": "1ab2309146faa1cb6fa20d283b3b5fab9d88f6db46b861d76b685db91a5c14c3",
+  "pairedSourceSha256": "b9106bcd16d0df3070829ddf73f2286cd8d708e10223de277ba7c7e8793501b5",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -14,43 +14,43 @@
       "slide": 1,
       "path": "public/course-decks/market-community/ve/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 109900,
-      "sha256": "5d012a4f332a97d5b523e73eb765877223a4d775a082e1c93dd7dd3fea5187b5"
+      "bytes": 314872,
+      "sha256": "33aca65a940d18047cff04fbc3f9d2090f600708ebd91918e475f1e06154c052"
     },
     {
       "slide": 2,
       "path": "public/course-decks/market-community/ve/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 232500,
-      "sha256": "04441454debbccd2324f1c5be85c8e6e63289aaa0b42ab37d6e7ffab8059f7f9"
+      "bytes": 236800,
+      "sha256": "9591d3011538526e3f543dd5740c1cbf77fb43d115bdda03fc17ed01f6332fdd"
     },
     {
       "slide": 3,
       "path": "public/course-decks/market-community/ve/slide-03.webp",
       "pixels": "1440x5400",
-      "bytes": 232710,
-      "sha256": "f78f1195f185e7512a0fcccc5c657c5a5507262efc172931d657813c489e7f6a"
+      "bytes": 229222,
+      "sha256": "dc04c25334a805d5d7c820fd78db9a7d50d22175607ed70a6b1abd83d1669603"
     },
     {
       "slide": 4,
       "path": "public/course-decks/market-community/ve/slide-04.webp",
       "pixels": "1440x5400",
-      "bytes": 101320,
-      "sha256": "af3c5a0e834942a84e44cba8780a420fcc4571a23844815c84ad23cdc1ed3669"
+      "bytes": 225200,
+      "sha256": "85352676ae8294019998522f93cee4aed99476ce26924bf114438aeefbb26da4"
     },
     {
       "slide": 5,
       "path": "public/course-decks/market-community/ve/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 122358,
-      "sha256": "a96b3fe8888819b8a4ce371c9bad4c6bf0e919206a03dc86adf2200b502a1bde"
+      "bytes": 396518,
+      "sha256": "ee34a15f6d059b22d3b2623f97f13c2b6671d8017826d22e397ca4428f00834b"
     },
     {
       "slide": 6,
       "path": "public/course-decks/market-community/ve/slide-06.webp",
       "pixels": "1440x5400",
-      "bytes": 124084,
-      "sha256": "0a4a3787f9031a35173b6273cf155c05dbf93e195ba4c77585b92686ec509f4a"
+      "bytes": 260462,
+      "sha256": "56f1a28edd2a3ebb695e12ea1193eb764703a02d3832ef8655bdaeac96fc9476"
     },
     {
       "slide": 7,
@@ -63,22 +63,22 @@
       "slide": 8,
       "path": "public/course-decks/market-community/ve/slide-08.webp",
       "pixels": "1440x5400",
-      "bytes": 121928,
-      "sha256": "015724671e3eefcf23eb4632b3f26c70ba3139639fc17d4957b41c57959d1a08"
+      "bytes": 264194,
+      "sha256": "4a45c5172a348c43aac95124f327545996a01e376f0ff4f3342367bad273cbcc"
     },
     {
       "slide": 9,
       "path": "public/course-decks/market-community/ve/slide-09.webp",
       "pixels": "1440x5400",
-      "bytes": 93056,
-      "sha256": "4283b399105ba0254a992e15e0039a33c3970796a37d5407e53eeadb6a7ae1b2"
+      "bytes": 200774,
+      "sha256": "69ce8b3f1aa51dc18c54780d7f58a8ab37560d5f8a5b7fccc2772100a834cb43"
     },
     {
       "slide": 10,
       "path": "public/course-decks/market-community/ve/slide-10.webp",
       "pixels": "1440x5400",
-      "bytes": 123390,
-      "sha256": "9a533441a76bfbb10b7fb9e520a1fcf6879d61dfccb9fc3fafe11dc962eac812"
+      "bytes": 512362,
+      "sha256": "413fd826fc21190f140c2f030e1a43e910cdde19d5367461ff6d5746eff9c4dd"
     },
     {
       "slide": 11,
@@ -154,16 +154,40 @@
   "contactSheet": "docs/media/market-community/ve-paired-review/contact-sheet.jpg",
   "phoneSamples": [
     {
+      "slide": 1,
+      "path": "docs/media/market-community/ve-paired-review/slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "12d0fd2a5cae6b7b3ed2dfaa791b6027fe43e7e1a5648a54fd2996d33327a061"
+    },
+    {
       "slide": 2,
       "path": "docs/media/market-community/ve-paired-review/slide-02-390.jpg",
       "pixels": "390x1463",
-      "sha256": "9ffc5edfff22ab16e2744cff6aea15906c482880f71ef7ab036881fa3341bdd7"
+      "sha256": "c72cc014d08c8d376afb51e0b72235d146e386b65a94cde0f3f280ead040a3f3"
     },
     {
       "slide": 3,
       "path": "docs/media/market-community/ve-paired-review/slide-03-390.jpg",
       "pixels": "390x1463",
-      "sha256": "822a775df235d1f0424a4a04008173e3378343a20c244483ae75ba5f54aad9df"
+      "sha256": "43a4dfe6ce6cce562751256d2622aa77d944f008f2e428e15395245d0f0c6d76"
+    },
+    {
+      "slide": 4,
+      "path": "docs/media/market-community/ve-paired-review/slide-04-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "70e15ea06a475202946293e6e665dbb038f6ba448cc8f3a3dec9e06ceb40b57c"
+    },
+    {
+      "slide": 5,
+      "path": "docs/media/market-community/ve-paired-review/slide-05-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "c82d307b07e27479dd88d86f92a3f0e0c5d537de7d2918069f706af5367c4fbe"
+    },
+    {
+      "slide": 6,
+      "path": "docs/media/market-community/ve-paired-review/slide-06-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "3d9753d675e9e28d30ab643965b3eda9586a9b38a847a5a3ba8d7f2245eb41a9"
     },
     {
       "slide": 7,
@@ -172,11 +196,29 @@
       "sha256": "01dcbc94080bc84f2023854af20e5f7edb1be9b7a9a7194b2db404319001af10"
     },
     {
+      "slide": 8,
+      "path": "docs/media/market-community/ve-paired-review/slide-08-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "2cf7fdc0aa1b62e33f1371a0545409f8e025a21f7938ec92c6b7f159dc77210f"
+    },
+    {
+      "slide": 9,
+      "path": "docs/media/market-community/ve-paired-review/slide-09-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "c4f0fd895bc4dc1a5484c8379ed43466369a4f71ec9a4da69a919f80da8c6f92"
+    },
+    {
+      "slide": 10,
+      "path": "docs/media/market-community/ve-paired-review/slide-10-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "7c79689d30c1c5867268b816ad8e63cea471774d8aea6c6aa6a8809234121cda"
+    },
+    {
       "slide": 20,
       "path": "docs/media/market-community/ve-paired-review/slide-20-390.jpg",
       "pixels": "390x1463",
       "sha256": "c58a00d2c7c2c6955aed4e5b9418fd024cd36bd2ebb7bb144f03cd58fd12ae0f"
     }
   ],
-  "note": "All 20 silent frames are source-paired. Slides 2 and 3 pair the unchanged English illustration and exact English source with only the three existing Tshivenda machine-draft passages. Slides with no target draft show one English source block labelled Tshivenda translation pending; English source; no translation-like target panel or English slide artwork is repeated. No English business, price, household food, or other farming guidance is presented as translated. No Tshivenda narration or farming approval is claimed."
+  "note": "All 20 silent frames are source-paired. Only passages marked draft appear beside their exact English source. Slides with no target draft show one English source block labelled Tshivenda translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No Tshivenda narration, fluent review or local farming approval is claimed."
 }

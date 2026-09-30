@@ -16,14 +16,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ho lema serapeng bakeng sa mmaraka le setjhaba",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Serapa sa hao se fana ka dijo, lekeno le tsebo e molemo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thuto ena e bontsha kamoo o ka bolokang direkoto, wa rekisa masalla, le ho haha marangrang a dijo a lehae.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -44,7 +50,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lebaka leo sena se leng bohlokwa ka lona",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -56,7 +64,9 @@
             "text": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa tlhahisoleseding eo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -75,20 +85,30 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dintho tseo o tla kgona ho di etsa",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qetellong o tla kgona ho rekota dikotulo le moo di yang teng.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O tla kgona ho fumana ditjeo tsa nnete tsa tlhahiso pele o beha theko.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O tla kgona ho bapisa masalla le moreki kapa mokgwa o loketseng wa ho rekisa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O tla kgona ho haha marangrang a lehae bakeng sa dipeo, disebediswa, bokgoni le dijo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -105,14 +125,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Seo rekoto ya polasi e se bontshang",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekoto e latela kotulo ka nngwe ho ya dijong tsa lelapa, thekisong, dimphong kapa compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bala rekoto ho pholletsa le sehla ho bona polasi e le moruo pele o etsa qeto ya kgwebo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -131,7 +157,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Rekota kotulo e nngwe le e nngwe",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -142,7 +170,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa mokgwa ona o bonolo ka ho tshwana bakeng sa dijo tse bolokwang hae, dijo tse rekiswang, tse fanwang e le dimpho, le tse kenngwang compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "draft",
@@ -165,7 +195,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Etsa hore sehla se le seng se arabe dipotso",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -173,7 +205,9 @@
             "text": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke dijalo dife tse fanang ka kotulo e ntle ka ho fetisisa beteng ka nngwe? Ke dife tse fanang ka puseletso e ngata ka hora ka nngwe ya mosebetsi?",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -226,17 +260,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Rera bakeng sa nako ya kgaello ya dijo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa rekoto ya hao ho fumana hore na dijo tsa lelapa di haella neng.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Letsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -253,14 +293,18 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Moo masalla a ka yang teng",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Metsu e bontsha tsela ka nngwe.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -278,7 +322,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tseba moreki wa hao",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {

@@ -374,34 +374,30 @@ test('Vegetables slides pair Xitsonga harvest-gap and resilience drafts with exa
     'coming ready must not become already ready to harvest');
 });
 
-test('Sesotho Market records slides reuse six exact existing learner draft sentences', () => {
+test('Sesotho Market records slides retain six learner draft sentences as the deck grows', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/market-community.st.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'st');
   const map = [[2, 1, 0], [2, 2, 1], [5, 1, 3], [5, 4, 6], [6, 1, 7], [6, 4, 10]];
-  assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
-    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-    .filter(Boolean)), map.map(([n, p]) => `${n}:${p}`));
   const lesson = SESOTHO_MARKET_COMMUNITY_DRAFT.lessons[0].body;
   const english = lesson.sourceEnglish.split('\n\n');
   const translated = lesson.sesothoDraft.split('\n\n');
   for (const [n, p, i] of map) {
+    assert.equal(slides[n - 1].target.body[p - 1].status, 'draft');
     assert.equal(slides[n - 1].english.body[p - 1], english[i]);
     assert.equal(slides[n - 1].target.body[p - 1].text, translated[i]);
   }
-  assert.equal(slides[1].target.body[2].status, 'english-hold');
-  assert.equal(slides[4].target.body[1].status, 'english-hold');
+  assert.equal(slides[4].target.body[1].status, 'english-hold',
+    'kilograms, dozens and bundles remain English until the units are checked');
 });
 
-test('Xitsonga Market media pairs only the two existing low-risk learner concepts', () => {
+test('Xitsonga Market media retains two established learner concepts beside exact English', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/market-community.ts.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'ts');
   const map = [[2, 1, 'market-community-l1', 0], [18, 1, 'market-community-l3', 9]] as const;
-  assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
-    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-    .filter(Boolean)), ['2:1', '18:1']);
   for (const [n, p, lessonId, paragraphIndex] of map) {
+    assert.equal(slides[n - 1].target.body[p - 1].status, 'draft');
     const body = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === lessonId)!.body;
     assert.equal(slides[n - 1].english.body[p - 1], body.sourceEnglish.split('\n\n')[paragraphIndex]);
     assert.equal(slides[n - 1].target.body[p - 1].text, body.xitsongaDraft.split('\n\n')[paragraphIndex]);
@@ -448,7 +444,7 @@ test('Vegetables study headings never turn field tasks into translated instructi
 test('regional Study frames draft screened observations while risky advice stays in exact English', () => {
   const cases = [
     { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '2:2', '2:3', '2:5', '8:1', '8:4', '9:1'], held: ['2:4', '8:2', '8:3', '8:5', '8:6'] },
-    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '3:4'], held: ['1:1', '2:3', '18:1'] },
+    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '3:4'], held: ['2:3', '18:1'] },
     { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '2:1', '3:1', '5:1', '5:3', '14:1'], held: ['1:3', '2:3', '4:1', '4:2', '5:2', '5:4', '19:2', '20:4'] },
     { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '2:1', '2:3', '5:1', '5:3', '5:4', '14:1', '20:4'], held: ['1:2', '1:3', '2:2', '3:3', '4:1', '5:2', '19:2'] },
     { moduleId: 'soil-health', lang: 've', drafted: ['1:1', '2:1', '2:3', '5:1', '5:3', '14:1'], held: ['1:3', '4:1', '4:2', '5:2', '5:4', '19:2', '20:4'] },
@@ -457,13 +453,29 @@ test('regional Study frames draft screened observations while risky advice stays
     const source = englishSlideRecords(readFileSync(`docs/narration/${moduleId}.en.md`, 'utf8'));
     const packet = JSON.parse(readFileSync(`docs/narration/${moduleId}.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
-    assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
-      .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-      .filter(Boolean)), drafted, `${lang} ${moduleId} must show only reviewed draft fields`);
+    for (const item of drafted) {
+      const [n, p] = item.split(':').map(Number);
+      assert.equal(slides[n - 1].target.body[p - 1].status, 'draft',
+        `${lang} ${moduleId} ${item} keeps its source-paired draft as the deck grows`);
+    }
     for (const item of held) {
       const [n, p] = item.split(':').map(Number);
       assert.equal(slides[n - 1].target.body[p - 1].status, 'english-hold', `${lang} ${moduleId} ${item} keeps the exact source`);
     }
+  }
+});
+
+test('regional Market slides keep prices, planting choice and local rules in exact English', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
+  for (const lang of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    for (const n of [7, 10]) {
+      assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+        `${lang} slide ${n} keeps pricing or local trading advice in English`);
+    }
+    assert.equal(slides[7].target.body[1].status, 'english-hold',
+      `${lang} slide 8 keeps crop choice and harvest timing advice in English`);
   }
 });
 

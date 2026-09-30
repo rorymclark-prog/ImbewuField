@@ -20,7 +20,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsimu yaṋu i ni ṋea zwiḽiwa, tshelede (income), na nḓivho ine ya thusa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -44,7 +46,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ndi ngani hezwi zwi zwa ndeme",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -77,11 +81,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Zwine na ḓo guda",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Musi ni tshi fhedza, ni ḓo kona u rekhoda khaṋo na hune ya ya hone.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -109,11 +117,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱolisisani: Zwine Rekhodo ya Bulasi ya Sumbedza",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekhodo i tevhela khaṋo iṅwe na iṅwe u swika kha zwiḽiwa zwa muṱa, zwo rengiswaho, zwifhiwa, kana compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -135,20 +147,28 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Rekhodani Khaṋo Iṅwe na Iṅwe",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi bvelela.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani nḓowelo yeneyo yo leluwaho kha zwiḽiwa zwe zwa vhulungelwa hayani, zwibveledzwa zwo rengiswaho, zwe zwa fhiwa vhaṅwe, na zwibveledzwa zwe zwa vhewa kha compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni songo ḓitika nga u humbula fhedzi musi khalaṅwaha i tshi fhela.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -167,7 +187,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Khaḽaṅwaha Iṅwe I Nga Fhindula Mbudziso",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
@@ -180,7 +202,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa tea u renga zwiḽiwa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -226,11 +250,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzudzanyelani Tshifhinga Tshine Zwiḽiwa zwa Ṱhaela",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani rekhodo yaṋu u wana uri zwiḽiwa zwa muṱa zwi ṱhaela lini.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "english-hold"
@@ -253,14 +281,18 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱolisisani: Hune Zwo Salaho (Surplus) zwa Nga Ya Hone",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Misevhe i sumbedza nzila iṅwe na iṅwe.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
       }
@@ -278,7 +310,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzulani Ni Tshi Ḓivha Murengi Waṋu",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
           {
