@@ -274,7 +274,7 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   assert.equal(stalePresentation.content.body, changedSource.body);
 });
 
-test('Sesotho Market L2 shows the cost comparison draft while held selling advice stays English', () => {
+test('Sesotho Market L2 pairs screened sales concepts while uncertain advice stays English', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(sourceModule);
   const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l2');
@@ -282,8 +282,15 @@ test('Sesotho Market L2 shows the cost comparison draft while held selling advic
   const lesson = SESOTHO_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === sourceLesson.id);
   assert.ok(lesson);
 
-  assert.equal(lesson.body.reviewStatus, 'hold');
+  assert.equal(lesson.body.reviewStatus, 'machine-draft');
   assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  const sourceParagraphs = sourceLesson.body.split('\n\n');
+  const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+  for (const index of [0, 4, 9]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
+    'the screened customer, box and variable-supply concepts reach the learner');
+  for (const index of [1, 2, 3, 5, 6, 7, 8, 10, 11]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
+    'price, legal, income and uncertain reliability advice stays exact English');
   assert.equal(lesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft');
   assert.equal(lesson.infographicAlt?.sesothoDraft,
@@ -304,7 +311,7 @@ test('Sesotho Market L2 shows the cost comparison draft while held selling advic
   assert.equal(presentation.content.keyPoints[0], sourceLesson.keyPoints[0]);
   assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
   assert.equal(presentation.content.infographicAlt, lesson.infographicAlt?.sesothoDraft);
-  assert.equal(presentation.content.body, sourceLesson.body);
+  assert.equal(presentation.content.body, lesson.body.sesothoDraft);
   assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
 
   const changedSource = {

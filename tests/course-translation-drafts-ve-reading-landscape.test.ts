@@ -199,7 +199,7 @@ test('Tshivenda Small Livestock shows only the checked module description draft 
     'english-fallback', 'changed module metadata withdraws the paired draft');
 });
 
-test('Tshivenda Market L2 shows only the checked cost comparison draft and falls back if its source changes', () => {
+test('Tshivenda Market L2 pairs bounded customer text and holds uncertain terms in English', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(sourceModule);
   const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l2');
@@ -212,8 +212,13 @@ test('Tshivenda Market L2 shows only the checked cost comparison draft and falls
   assert.equal(lesson.title.reviewStatus, 'hold');
   assert.equal(lesson.title.tshivendaDraft, sourceLesson.title);
   assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
-  assert.equal(lesson.body.reviewStatus, 'hold');
-  assert.equal(lesson.body.tshivendaDraft, sourceLesson.body);
+  assert.equal(lesson.body.reviewStatus, 'machine-draft');
+  const sourceParagraphs = sourceLesson.body.split('\n\n');
+  const draftParagraphs = lesson.body.tshivendaDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+  for (const index of [0, 6]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
+  for (const index of [1, 2, 3, 4, 5, 7, 8, 9, 10, 11]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
+    'price, box promises and uncertain delivery wording stay exact English');
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
   assert.equal(lesson.keyPoints[1].tshivendaDraft, 'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.');
@@ -228,7 +233,7 @@ test('Tshivenda Market L2 shows only the checked cost comparison draft and falls
   assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].tshivendaDraft);
   assert.equal(presentation.content.keyPoints[0], sourceLesson.keyPoints[0]);
   assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
-  assert.equal(presentation.content.body, sourceLesson.body);
+  assert.equal(presentation.content.body, lesson.body.tshivendaDraft);
   assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
 
   const changedSource = {
