@@ -3,15 +3,15 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Only selected introductory and lesson headings remain unreviewed machine-draft candidates from the existing Xitsonga packet branch; exact English remains paired below.",
-    "holds": "Water movement, contour/scale, wind, frost, safety, and other instructional or ambiguous wording remains exact English. The back-check flagged “patterns” as potentially meaning human procedures; the water-movement sentence was also kept in English under the conservative water-guidance boundary.",
+    "newDrafts": "Selected introductory and lesson headings, plus two bounded orientation sentences on slides 2 and 3, are unreviewed machine drafts; exact English remains paired below.",
+    "holds": "Directional water movement, contour measurement and scale, wind, frost, safety, and other instructional or ambiguous wording remain exact English. Earlier pattern terminology was flagged as potentially meaning human procedures; the new slide 2 orientation draft uses mavumbeko with a separate machine backcheck.",
     "backCheck": "A separate Agy CLI 1.2.12 Gemini 3.1 Pro high-effort semantic back-check reviewed candidate meaning against its paired English. This is a machine check only, not human language review.",
-    "descriptiveHeadingScreen": "Ten new heading candidates were generated with Agy Gemini 3.8 Flash Low and checked independently with Gemini 3.1 Pro Low. Two passed the machine semantic screen and remain unreviewed drafts; eight failed and remain exact-English holds. One existing Sesotho heading was also flagged and returned to English hold. See the facilitator review packet."
+    "descriptiveHeadingScreen": "Ten earlier heading candidates were generated with Agy Gemini 3.8 Flash Low and checked independently with Gemini 3.1 Pro Low. Two passed that machine semantic screen and remain unreviewed drafts; eight failed and remain exact-English holds. The 2026-09-30 orientation sentences had a separate Codex machine backcheck; it is not fluent review. See the facilitator review packet."
   },
   "reviewNotes": [
     "A fluent Xitsonga speaker and local agriculture adviser must review each candidate for meaning, register, and dialect fit before classroom use. This draft has not established comprehension for a Shangani-speaking cohort. No fluent-language or farming approval is implied.",
     "English source text is paired sentence by sentence and checked against docs/narration/reading-landscape.en.md.",
-    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. Machine checks are not fluent-speaker approval."
+    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. The separate 2026-09-30 orientation screen kept ambiguous water direction, sun angles, ridges, hollows and frost pockets in exact English. Machine checks are not fluent-speaker approval."
   ],
   "slides": [
     {
@@ -65,7 +65,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Purasi rin’wana ni rin’wana ri ni mavumbeko lama se ma tirhaka hi nkarhi lowu hi nga si engetela xin’wana."
           },
           {
             "status": "english-hold"
@@ -102,7 +103,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ta tirhisa A-frame level ku landzelerisa contours."
           },
           {
             "status": "english-hold"
