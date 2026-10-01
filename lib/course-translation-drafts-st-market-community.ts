@@ -189,7 +189,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         'Building Community Food Networks: Strength in Numbers',
         'Ho Aha Marang-rang a Dijo tsa Setjhaba: Matla a Kopanelo',
       ),
-      body: hold(
+      body: machineDraft(
         [
           'Neighbours can share different varieties and the work of saving seed.',
           'Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.',
@@ -197,6 +197,20 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Tool sharing puts expensive equipment within reach of the group.',
           'A water pump or grain mill may be beyond one household’s budget.',
           'Shared use spreads the value across the group and helps each farm do work it could not do alone.',
+          'Handle produce gently and keep suitable shade, packaging and storage through delivery.',
+          'A nearby buyer may reduce the journey, but losses and selling costs still need measuring.',
+          'Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.',
+          'Neighbours can demonstrate useful skills and compare what happened on their own farms.',
+          'Record the method, conditions and result so others can judge whether it may suit their land.',
+          'Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.',
+        ].join('\n\n'),
+        [
+          'Neighbours can share different varieties and the work of saving seed.',
+          'Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.',
+          'Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.',
+          'Ho arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.',
+          'Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.',
+          'Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.',
           'Handle produce gently and keep suitable shade, packaging and storage through delivery.',
           'A nearby buyer may reduce the journey, but losses and selling costs still need measuring.',
           'Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.',
