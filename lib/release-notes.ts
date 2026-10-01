@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '8bd7b4b6', changes: [
+    'The zones and sectors lesson now has complete marked Tshivenda and Xitsonga text drafts.',
+  ], tour: [
+    { title: 'Read zones and sectors in your language', where: 'Study → Introduction → lesson 3', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Read the three paragraphs, key points and both quizzes beside their exact English source. Technical terms and compass names remain English where needed; facilitator review is pending.' },
+  ] },
   { when: '1 October 2026', sha: 'de1a7538', changes: [
     'Tshivenda and Xitsonga principles key points and quizzes now have marked drafts.',
   ], tour: [
