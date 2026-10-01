@@ -2,8 +2,8 @@
   "lessonId": "intro-permaculture-l2",
   "language": "st",
   "sourceMainSha": "fcd303095ad647b9a775d4b143f5e60fda2ca8f5",
-  "status": "unwired-machine-draft",
-  "review": "Independent model semantic backcheck accepted material faithfulness. Not fluent-speaker or local-farming approval. Keypoint 3 retains technical English edges/margins; rationale separates inspection list from adviser consultation.",
+  "status": "learner-wired-machine-draft",
+  "review": "Independent model semantic backcheck accepted material faithfulness. Not fluent-speaker or local-farming approval. Keypoint 3 retains technical English edges/margins; rationale separates inspection list from adviser consultation. Quiz2 independent backcheck accepted meaning and corrected a weaker help-clean-up claim to the source direct pest-cleanup statement. Safety timing, manure/germ risk and technical terms retained.",
   "keyPoints": [
     {
       "sourceEnglish": "Observe your land for a full season before major earthworks",
@@ -61,7 +61,42 @@
         "sesothoDraft": "Sehla sa dipula se bontsha difefo tse fetang se le seng, empa ho shebella ke mohato wa pele feela. Pele o cheka, hlahloba mobu, moepa, drainage le safe overflow route. Etsa sena le moeletsi wa lehae ya kwetlisitsweng.",
         "reviewStatus": "machine-draft"
       }
+    },
+    {
+      "question": {
+        "sourceEnglish": "Which layout best applies 'integrate rather than segregate'?",
+        "sesothoDraft": "Ke tlhophiso efe e bontshang hantle molao-motheo wa integrate rather than segregate?",
+        "reviewStatus": "machine-draft"
+      },
+      "options": [
+        {
+          "sourceEnglish": "Chickens penned far from the garden",
+          "sesothoDraft": "Dikgoho tse kwalletsweng lesakeng hole le serapa.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
+          "sesothoDraft": "Serapa, difate tsa ditholwana le chicken run di hlophisitswe ka tsela eo dikgoho di sebedisang planting bed e se nang dijwalo ka mora kotulo; ebe molemi o hlahloba safe management pele edible crops di kgutla.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "Separate paddocks for each crop",
+          "sesothoDraft": "Paddocks tse arohaneng bakeng sa sejwalo ka seng.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "All animals kept off the cultivated zone",
+          "sesothoDraft": "Diphoofolo tsohle di thibelwa ho kena cultivated zone.",
+          "reviewStatus": "machine-draft"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
+        "sesothoDraft": "Integration e etsa hore karolo ka nngwe e thuse tse haufi le yona — mona, dikgoho di clean up pests mme di eketsa fertility ho e-na le ho dula di sa sebetse ka fixed pen. Fresh manure e ka jara germs, kahoo hlahloba safe management pele edible crops di kgutla.",
+        "reviewStatus": "machine-draft"
+      }
     }
   ],
-  "hold": "Quiz 2 remains English; candidate bed/pen/manure meanings need repair. Slides/audio unchanged and hash binding must be preserved."
+  "media": "Slides/audio unchanged; existing narration remains bound to its original slide text, not this lesson assessment."
 }
