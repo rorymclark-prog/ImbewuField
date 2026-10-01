@@ -83,7 +83,7 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
   }
 });
 
-test('a Sesotho learner sees the ethics concepts while water and drought examples remain exact English', () => {
+test('a Sesotho learner gets the full marked ethics draft and its unchanged English source', () => {
   const source = COURSE_MODULES.find(module => module.id === 'intro-permaculture')?.lessons[0];
   assert.ok(source);
   const draft = SESOTHO_INTRO_PERMACULTURE_DRAFT.lessons[0];
@@ -93,10 +93,16 @@ test('a Sesotho learner sees the ethics concepts while water and drought example
   const draftParagraphs = draft.body.sesothoDraft.split('\n\n');
   assert.equal(draftParagraphs.length, englishParagraphs.length);
   assert.notEqual(draftParagraphs[0], englishParagraphs[0], 'the first ethics explanation is a Sesotho machine draft');
-  assert.ok(draftParagraphs[0].endsWith('Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.'),
-    'the source sentence that names water as a surplus must remain exact English');
-  assert.deepEqual(draftParagraphs.slice(1), englishParagraphs.slice(1),
-    'shared spring, cattle after drought, flood and action examples remain exact English');
+  // The earlier draft held these examples wholesale. The reviewed model draft now
+  // preserves them as examples; the exact English remains the authority for review.
+  for (const [index, paragraph] of draftParagraphs.entries()) {
+    assert.notEqual(paragraph, englishParagraphs[index], `ethics paragraph ${index + 1} must not masquerade as a translated English copy`);
+  }
+  assert.ok(draftParagraphs[0].includes('(surplus)'));
+  assert.ok(draftParagraphs[1].includes('(shared spring)'));
+  assert.ok(draftParagraphs[2].includes('swales'));
+  assert.ok(!draftParagraphs[1].includes('sebediswang ke bohle'),
+    'a locally shared spring must not be broadened to a source used by everyone');
   const presentation = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.body, draft.body.sesothoDraft);
