@@ -1,0 +1,132 @@
+{
+  "lessonId": "soil-health-l1",
+  "sourceMainSha": "fafdeb2cf24f983fbf603e99f005968c343508fd",
+  "status": "unwired-machine-draft",
+  "scopeNote": "Complete 12-paragraph source-paired candidate. Existing drafted paragraphs 1–3, 8–9 and the second sentence of paragraph 11 are reused verbatim; candidates fill the English-only gaps. Not approved for learner wiring.",
+  "body": {
+    "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+    "draft": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.\n\nDziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.\n\nSedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.\n\nVheani soil na water kha clear jar, ni engedze little suitable dispersing detergent. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.\n\nSand i settles pele. Silt i settles nga murahu, ngeno clay i tshi nga sala i suspended much longer.\n\nHezwi ndi rough learning exercise. Clumps na clay i sa athu settled zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.\n\nThick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.\n\nVhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.\n\nṄwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.\n\nCompaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.\n\nPale colour kana few worms a zwi prove uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga moisture na season.\n\nSedzani patterns tsimuni. Sedzani management history, drainage na u aluwa ha plants ni sa athu khetha remedy."
+  },
+  "paragraphs": [
+    {
+      "index": 1,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "draft": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.",
+      "literalBacktranslation": "Soil has many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "uncertainty": "Existing local-language paragraph reused verbatim.",
+      "currentRegistryStatus": "translated; preserve existing wording"
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+      "draft": "Dziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.",
+      "literalBacktranslation": "Some fungi help roots take up nutrients. Worm channels can help water and air enter the soil.",
+      "uncertainty": "Existing local-language paragraph reused verbatim; can/may support remains conditional.",
+      "currentRegistryStatus": "translated; preserve existing wording"
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Look at roots, soil structure and water movement as well as visible soil life.",
+      "draft": "Sedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.",
+      "literalBacktranslation": "Look at roots, soil structure and water movement, and also look at living things visible in the soil.",
+      "uncertainty": "Existing local-language paragraph reused verbatim.",
+      "currentRegistryStatus": "translated; preserve existing wording"
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+      "draft": "Vheani soil na water kha clear jar, ni engedze little suitable dispersing detergent. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.",
+      "literalBacktranslation": "Put soil and water in a clear jar, and add a little suitable dispersing detergent. Close the jar, shake it, and leave it undisturbed.",
+      "uncertainty": "Jar, clear appearance, small amount, suitable dispersing detergent, close/shake/leave-undisturbed sequence are retained. Confirm `dzinginye` (shake) and `i sa tshintshwi` (undisturbed) idiom locally.",
+      "currentRegistryStatus": "English-only hold"
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+      "draft": "Sand i settles pele. Silt i settles nga murahu, ngeno clay i tshi nga sala i suspended much longer.",
+      "literalBacktranslation": "Sand settles first. Silt settles next, while clay may remain suspended for a long time.",
+      "uncertainty": "Settling order and may-remain-suspended distinction retained; sand, silt, clay, and suspended remain English to avoid confusing soil fractions.",
+      "currentRegistryStatus": "English-only hold"
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+      "draft": "Hezwi ndi rough learning exercise. Clumps na clay i sa athu settled zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.",
+      "literalBacktranslation": "This is a rough learning exercise. Clumps and clay that has not settled can mislead you; use a soil laboratory when accurate texture is needed.",
+      "uncertainty": "The exercise remains rough, clumps/unsettled clay may mislead, and laboratory use is conditional on needing accurate texture. Technical terms retained.",
+      "currentRegistryStatus": "English-only hold"
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+      "draft": "Thick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.",
+      "literalBacktranslation": "A thick sand layer beneath cloudy water does not tell you the final proportions yet. Fine particles may still be suspended.",
+      "uncertainty": "Thickness, cloudy water, not-yet-final proportions, and possibility of suspended fines are retained without estimating any proportions.",
+      "currentRegistryStatus": "English-only hold"
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "draft": "Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+      "literalBacktranslation": "Compare the parts that settled, and also feel the soil in the field.",
+      "uncertainty": "Existing local-language paragraph reused verbatim.",
+      "currentRegistryStatus": "translated; preserve existing wording"
+    },
+    {
+      "index": 9,
+      "sourceEnglish": "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.",
+      "draft": "Ṅwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.",
+      "literalBacktranslation": "Record what you saw and what is still unclear. Do not decide to water or treat the soil based only on one jar.",
+      "uncertainty": "Existing local-language paragraph reused verbatim; one-jar limitation and no-treatment conclusion preserved.",
+      "currentRegistryStatus": "translated; preserve existing wording"
+    },
+    {
+      "index": 10,
+      "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+      "draft": "Compaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.",
+      "literalBacktranslation": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+      "uncertainty": "Modal can and the three distinct limiting conditions are retained; technical soil terms remain English.",
+      "currentRegistryStatus": "English-only hold"
+    },
+    {
+      "index": 11,
+      "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+      "draft": "Pale colour kana few worms a zwi prove uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga moisture na season.",
+      "literalBacktranslation": "Pale colour or a few worms do not prove that chemicals killed the soil. Worm activity also changes according to moisture and season.",
+      "uncertainty": "Existing second sentence reused verbatim. First sentence retains “do not prove” in English to preserve the evidential limit; technical diagnostic terms remain English.",
+      "currentRegistryStatus": "partly translated; first sentence English, second sentence translated"
+    },
+    {
+      "index": 12,
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "draft": "Sedzani patterns tsimuni. Sedzani management history, drainage na u aluwa ha plants ni sa athu khetha remedy.",
+      "literalBacktranslation": "Look for patterns in the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "uncertainty": "Keeps the sequence: observe patterns, check history/drainage/growth, then choose a remedy.",
+      "currentRegistryStatus": "English-only hold"
+    }
+  ],
+  "preservation": {
+    "sourceParagraphCount": 12,
+    "currentRegistryParagraphCount": 12,
+    "existingLocalTextPreserved": [
+      1,
+      2,
+      3,
+      8,
+      9,
+      11
+    ],
+    "gapsFilled": [
+      4,
+      5,
+      6,
+      7,
+      10,
+      11,
+      12
+    ],
+    "allFiguresAndProportionsAdded": false
+  },
+  "note": "Technical jar, settling, lab, texture and diagnostic terms remain in English where a precise Tshivenda equivalent is uncertain. This is a machine-draft, not fluent approval.",
+  "independentBackcheck": "Independent semantic backcheck accepted source and preservation; root retains much longer English to preserve comparative duration, and adds explicit not-yet final-proportions wording. No fluent/local approval."
+}

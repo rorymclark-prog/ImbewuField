@@ -1,0 +1,140 @@
+{
+  "lessonId": "soil-health-l2",
+  "sourceMainSha": "fafdeb2cf24f983fbf603e99f005968c343508fd",
+  "status": "learner-wired-machine-draft",
+  "scopeNote": "Complete twelve-paragraph source-paired machine draft wired to Soil Health L2. Key points and both quizzes remain unchanged.",
+  "body": {
+    "sourceEnglish": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+    "draft": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.\n\nCompost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.\n\nNako ya hore compost e lokele ho sebediswa e fapana ho ya ka materials, mongobo, moya le thempereitjha. Lebitso la province kapa palo e behilweng ya dibeke ha se readiness test.\n\nKopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.\n\nHa qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.\n\nHlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; recipe e le nngwe ha e tshwanele motswako o mong le o mong wa materials.\n\nKarolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le management kaofela di bohlokwa.\n\nBoloka meat, dairy, diseased plants, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.\n\nU se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.\n\nBoloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.\n\nSebedisa materials tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.\n\nHlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged.",
+    "paragraphs": [
+      {
+        "index": 1,
+        "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+        "draft": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+        "literalBacktranslation": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+        "uncertainty": "“Managed conditions” has been rendered as “ka tsela e laolwang” (“in a managed/controlled way”); a Sesotho reviewer should check that this carries the intended composting process without implying a specific method.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 2,
+        "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+        "draft": "Compost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.",
+        "literalBacktranslation": "Finished compost can improve soil structure and provide nutrients.",
+        "uncertainty": "“Contribute nutrients” is rendered as “fana ka dimatlafatsi” (“provide nutrients”); it does not call compost a complete fertiliser.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 3,
+        "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+        "draft": "Nako ya hore compost e lokele ho sebediswa e fapana ho ya ka materials, mongobo, moya le thempereitjha. Lebitso la province kapa palo e behilweng ya dibeke ha se readiness test.",
+        "literalBacktranslation": "The time for compost to be ready for use varies according to materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+        "uncertainty": "“Readiness” and “readiness test” remain English as technical labels; no province, duration or completion threshold is added.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 4,
+        "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+        "draft": "Kopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.",
+        "literalBacktranslation": "Mix dry browns with fresh greens. Avoid thick, wet layers that prevent air from entering.",
+        "uncertainty": "Dry browns, fresh greens and layers remain English because they are material categories. The source air-blocking condition remains explicit.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 5,
+        "sourceEnglish": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+        "draft": "Ha qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.",
+        "literalBacktranslation": "If the compost heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+        "uncertainty": "“Slimy” and “dry browns” remain English. “Phethola” is intended as turning the heap; local review should confirm that this is the compost-turning action.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 6,
+        "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+        "draft": "Hlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; recipe e le nngwe ha e tshwanele motswako o mong le o mong wa materials.",
+        "literalBacktranslation": "Check moisture and air as the compost heap changes; one recipe does not suit every mix of materials.",
+        "uncertainty": "“Recipe” and “materials” remain English for the process and input mix; the candidate preserves that no single recipe suits all material mixes.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 7,
+        "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+        "draft": "Karolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le management kaofela di bohlokwa.",
+        "literalBacktranslation": "A hot centre of the heap does not prove that each part of it has been treated. Time, temperature and management all matter.",
+        "uncertainty": "“Treated” stays English because the source does not specify a treatment or make a sanitation claim; temperature/management terms stay explicit.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 8,
+        "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+        "draft": "Boloka meat, dairy, diseased plants, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.",
+        "literalBacktranslation": "Keep meat, dairy, diseased plants, pet waste and contaminated materials outside this simple household system.",
+        "uncertainty": "All five prohibited categories and the household-system limit are retained; the category terms remain English to avoid narrowing their meanings.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 9,
+        "sourceEnglish": "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.",
+        "draft": "U se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.",
+        "literalBacktranslation": "Do not assume that home composting eliminates every weed seed or every disease organism. Use a recognised process where sanitation is needed.",
+        "uncertainty": "Home composting, disease organism, recognised process and sanitation remain English technical terms; the negative assumption and condition for using a recognised process are retained.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 10,
+        "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+        "draft": "Boloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.",
+        "literalBacktranslation": "Keep wattle seed pods outside the compost heap. An ordinary heap may not make every seed non-viable.",
+        "uncertainty": "“Wattle seed pods” and “non-viable” remain English to preserve the exact species-specific material and seed-viability claim; “may not” remains conditional.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 11,
+        "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+        "draft": "Sebedisa materials tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.",
+        "literalBacktranslation": "Use only clean materials that have not been treated. Bark breaks down slowly; its name alone does not prove that it is free of contamination.",
+        "uncertainty": "“Materials”, “bark” and “contamination” remain English; “untreated” is rendered as not treated. The name-only caveat is preserved.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      },
+      {
+        "index": 12,
+        "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+        "draft": "Hlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged.",
+        "literalBacktranslation": "Check the compost heap and turn it when it needs more air or mixing. Keep it moist; do not let it become waterlogged.",
+        "uncertainty": "“Waterlogged” remains English to preserve the distinction from ordinary dampness; no moisture threshold or watering schedule is added.",
+        "currentStatus": "hold",
+        "currentDraftExactSource": true
+      }
+    ]
+  },
+  "preservation": {
+    "sourceParagraphCount": 12,
+    "currentRegistryParagraphCount": 12,
+    "allCurrentBodyParagraphsExactEnglishHolds": true,
+    "allCurrentParagraphsRemainSourceBound": true,
+    "keyPointsUnchanged": true,
+    "quizQuestionsOptionsRationalesAndIndicesUnchanged": true
+  },
+  "safetyChecks": [
+    "No week count, readiness date, recipe ratio, temperature, quantity or other numerical threshold added.",
+    "The source says finished compost can contribute nutrients; candidate does not claim it is a complete fertiliser.",
+    "Meat, dairy, diseased plants, pet waste and contaminated materials all remain prohibited in this simple household system.",
+    "No sanitation guarantee is made; home composting is not assumed to destroy every weed seed or disease organism.",
+    "Use a recognised process only where sanitation is required, as in the source.",
+    "Wattle seed pods remain excluded; ordinary heaps may not make every seed non-viable.",
+    "Only clean, untreated materials are allowed; bark name alone does not prove freedom from contamination.",
+    "Heap turning stays conditional on need for more air or mixing; moist is distinguished from waterlogged."
+  ],
+  "uncertaintySummary": "Unreviewed machine composition. Technical compost, process, sanitation, seed-viability and material-category phrases are retained in English where precision is uncertain. Per-paragraph notes flag “managed conditions”, wet-degree wording, heap-turning verbs and waterlogged meaning for independent Sesotho review. This is not fluent approval.",
+  "independentBackcheck": "Independent semantic review accepted all twelve source paragraphs and conditions. The extra wetness intensifier was removed; waterlogged stays English."
+}
