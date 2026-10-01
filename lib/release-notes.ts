@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '40a6f825', changes: [
+    'Vegetables adds three marked Tshivenda sentences beside the English lesson.',
+    'Introduction and Seeds add Sesotho descriptions of their lesson pictures.',
+  ], tour: [
+    { title: 'Compare the new Study drafts', where: 'Study → Vegetables L3, Introduction L3 or Seeds L3', href: '/student',
+      detail: 'Choose Tshivenda for Vegetables L3 or Sesotho for the two pictured lessons. The exact English source remains visible and the drafts await local review.' },
+  ] },
   { when: '1 October 2026', sha: '266b2265', changes: [
     'Study course cards now show more Tshivenda and Xitsonga headings in the selected language.',
     'Unreviewed drafts keep English farming guidance where needed.',
