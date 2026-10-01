@@ -119,7 +119,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshifanyiso itsho ndi mutheo wa pulane iṅwe na iṅwe ine na ḓo i ita nga murahu ha izwi.",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
           }
         ]
       }

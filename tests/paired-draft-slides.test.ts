@@ -170,6 +170,30 @@ test('Sesotho Introduction review slides keep uncertain field steps paired in En
     'ground checking, counting, crop relocation and wind direction stay exact English after semantic backcheck');
 });
 
+test('silent Xitsonga Introduction stills expose only source-paired, directionally checked drafts', () => {
+  const ts = validatePairedDraft(
+    JSON.parse(readFileSync('docs/narration/intro-permaculture.ts.paired-draft.json', 'utf8')),
+    source, 'ts');
+  const ve = validatePairedDraft(
+    JSON.parse(readFileSync('docs/narration/intro-permaculture.ve.paired-draft.json', 'utf8')),
+    source, 've');
+
+  assert.equal(ts[2].target.body[1].status, 'draft', 'the three ethics remain a marked learning goal');
+  assert.match(ts[2].target.body[1].text, /yinharhu/);
+  assert.equal(ts[6].target.body[2].status, 'draft', 'help-seeking question is a marked Xitsonga draft');
+  assert.match(ts[6].target.body[2].text, /milawu ni mphakelo wa mati/, 'question retains rules and water supply');
+  assert.ok(ts[6].target.body.slice(0, 2).every((part: any) => part.status === 'english-hold'),
+    'borehole access and supply instructions stay exact English');
+  assert.ok(ts[5].target.body.slice(1, 4).every((part: any) => part.status === 'english-hold'),
+    'uncertain Xitsonga Fair Share wording cannot reverse the teaching point');
+  assert.equal(ts[7].target.body[0].status, 'draft', 'ethics purpose is a marked Xitsonga orientation draft');
+  assert.ok(ts[7].target.body.slice(1).every((part: any) => part.status === 'english-hold'),
+    'grazing, swales, permission and building guidance stay exact English');
+  assert.equal(ve[2].target.body[4].status, 'draft', 'the later-plan sketch metaphor is a marked Tshivenda draft');
+  assert.ok(ve[2].target.body.slice(1, 4).every((part: any) => part.status === 'english-hold'),
+    'technical learning goals stay exact English');
+});
+
 test('standard written Xitsonga uses the same exact source and paragraph pairing as Sesotho', () => {
   const draft = completeHold('ts');
   assert.equal(validatePairedDraft(draft, source, 'ts').length, source.length);
@@ -249,6 +273,8 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
       for (const n of [7, 8, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22]) {
         assert.ok(slides[n - 1].target.body.every((part: any, index: number) =>
           part.status === 'english-hold' ||
+          (n === 7 && index === 2) ||
+          (n === 8 && index === 0) ||
           (n === 11 && index === 3) ||
           (n === 17 && [0, 3].includes(index)) ||
           (n === 20 && index === 3)),
@@ -265,8 +291,9 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
       'Tshivenda slide 2 land-work contrast remains an English hold');
     for (const [index, part] of slides[2].target.body.entries()) {
       if (index === 0) continue;
-      assert.equal(part.status, lang === 'ts' && index === 4 ? 'draft' : 'english-hold',
-        `slide 3 ${lang}: ethics, principles, zones and sectors stay English; only the closing sketch metaphor may be drafted`);
+      const checkedDraft = (lang === 'ts' && [1, 4].includes(index)) || (lang === 've' && index === 4);
+      assert.equal(part.status, checkedDraft ? 'draft' : 'english-hold',
+        `slide 3 ${lang}: only checked ethics and sketch reflections may replace English holds`);
     }
     for (const n of [4, 5, 6]) {
       assert.ok(slides[n - 1].target.body.slice(1).every((part: any, index: number) =>
@@ -291,11 +318,12 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
     }
     for (const index of [1, 2]) assert.equal(slides[5].target.body[index].status, 'english-hold',
       `slide 6 ${lang}: keep the uncertain surplus/mielies example paired in English`);
-    assert.ok(slides[6].target.body.every((part: any) => part.status === 'english-hold'),
-      `slide 7 ${lang}: water, permission and work claims must remain English`);
+    assert.ok(slides[6].target.body.every((part: any, index: number) =>
+      part.status === 'english-hold' || (lang === 'ts' && index === 2 && part.status === 'draft')),
+    `slide 7 ${lang}: water access and work claims stay English; only the checked Xitsonga help question may be drafted`);
     assert.ok(slides[7].target.body.every((part: any, index: number) =>
-      part.status === 'english-hold' || (lang === 've' && index === 0)),
-    `slide 8 ${lang}: only the Tshivenda ethics orientation may replace an English hold`);
+      part.status === 'english-hold' || (index === 0 && part.status === 'draft')),
+    `slide 8 ${lang}: only the checked ethics orientation may replace an English hold`);
     if (lang === 've') {
       const permittedReflectiveDrafts: Record<number, number[]> = { 16: [2, 3], 17: [0, 3], 18: [3], 20: [2, 3] };
       for (const n of [10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22]) {
