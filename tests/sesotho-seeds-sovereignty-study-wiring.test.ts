@@ -61,8 +61,9 @@ test('Sesotho Seeds learner prose is paired, visibly unreviewed, and source chan
     assert.deepEqual(presentation.content.keyPoints,
       sourceDraft.keyPoints.map((point, index) => point.reviewStatus === 'hold' ? lesson.keyPoints[index] : point.sesothoDraft));
 
-    if (lesson.infographicAlt) assert.equal(presentation.content.infographicAlt, lesson.infographicAlt,
-      'the unreviewed illustration description remains exact English');
+    if (lesson.infographicAlt) assert.equal(presentation.content.infographicAlt,
+      sourceDraft.infographicAlt?.reviewStatus === 'machine-draft' ? sourceDraft.infographicAlt.sesothoDraft : lesson.infographicAlt,
+      'the learner sees a paired Sesotho illustration description only when it is screened as a draft');
     const changedTitle = { ...lesson, title: `${lesson.title} changed` };
     assert.equal(resolveLearnerLessonPresentation(changedTitle, 'st').status, 'english-fallback',
       `${lesson.id}: changed English source withdraws the paired draft`);
