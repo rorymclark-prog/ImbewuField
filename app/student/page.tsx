@@ -32,7 +32,7 @@ import { allTracks, hasNarration, resolveNarrationLang, tracksForLesson } from '
 import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 import { APP_GUIDES } from '@/lib/course-app-guides';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
-import { resolveCourseModulePresentation } from '@/lib/course-module-translation-drafts';
+import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '@/lib/course-module-translation-drafts';
 import { guideScreens } from '@/components/studies/guide-screens';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import {
@@ -1025,6 +1025,8 @@ export default function StudentPage() {
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
             const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today, lang), lang, t) : null;
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
+            const moduleDraftBadge = lang === 'st' || lang === 'ts' || lang === 've'
+              ? regionalModuleDraftBadge(mod, lang) : null;
             const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
             const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
             const deck = deckFor(mod.id);
@@ -1067,7 +1069,7 @@ export default function StudentPage() {
                         {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
                           <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                             style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : (lang === 've' && mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'))}
+                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : moduleDraftBadge}
                           </span>
                         )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
@@ -1111,7 +1113,7 @@ export default function StudentPage() {
                     {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
                       <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : (lang === 've' && mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'))}
+                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : moduleDraftBadge}
                       </span>
                     )}
                     <div className="flex items-start gap-2 flex-wrap">

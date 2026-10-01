@@ -6,9 +6,38 @@ import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-draf
 import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
-import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
+import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveDeckLang } from '../lib/course-deck.ts';
 import { resolveNarrationLang } from '../lib/course-audio.ts';
+
+test('regional Study cards distinguish English module copy from available lesson drafts', () => {
+  const source = (id: string) => {
+    const module = COURSE_MODULES.find(candidate => candidate.id === id);
+    assert.ok(module, `missing source module ${id}`);
+    return module;
+  };
+  assert.equal(regionalModuleDraftBadge(source('seeds-sovereignty'), 've'),
+    'English module · 1 lesson draft available');
+  assert.equal(regionalModuleDraftBadge(source('soil-health'), 'ts'),
+    'English module · 2 lesson drafts available');
+  assert.equal(regionalModuleDraftBadge(source('market-community'), 've'),
+    'English module · 3 lesson drafts available');
+  assert.equal(regionalModuleDraftBadge(source('soil-health'), 've'),
+    'Tshivenda AI draft · review pending');
+  assert.equal(regionalModuleDraftBadge({ ...source('soil-health'), lessons: [] }, 'ts'),
+    'English module');
+
+  for (const language of ['st', 've', 'ts'] as const) {
+    for (const module of COURSE_MODULES) {
+      const lessonDrafts = module.lessons.filter(lesson =>
+        resolveLearnerLessonPresentation(lesson, language).status === 'draft').length;
+      if (resolveCourseModulePresentation(module, language).status === 'english-fallback' && lessonDrafts > 0) {
+        assert.match(regionalModuleDraftBadge(module, language), /lesson drafts? available$/,
+          `${language} ${module.id} has lesson drafts that must be discoverable`);
+      }
+    }
+  }
+});
 
 test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer mapping intact', () => {
   const source = COURSE_MODULES.find(module => module.id === 'water-harvesting');

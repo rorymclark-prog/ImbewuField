@@ -1,4 +1,5 @@
 import type { CourseModule } from './course-modules';
+import { resolveLearnerLessonPresentation } from './course-localization';
 import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-st.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-st-reading-landscape.ts';
 import { SESOTHO_WATER_HARVESTING_DRAFT } from './course-translation-drafts-st-water-harvesting.ts';
@@ -129,4 +130,17 @@ export function resolveCourseModulePresentation(module: CourseModule, language: 
     }
   }
   return { title: module.title, description: module.description, status: 'english-fallback' };
+}
+
+/** A module's English heading does not mean all its lessons are English. Count only drafts
+ * that still pass their exact-source check, so the card cannot advertise a stale translation. */
+export function regionalModuleDraftBadge(module: CourseModule, language: 'st' | 'ts' | 've'): string {
+  const modulePresentation = resolveCourseModulePresentation(module, language);
+  if (modulePresentation.status === 'draft') {
+    return `${language === 've' ? 'Tshivenda ' : ''}AI draft · review pending`;
+  }
+  const lessonDrafts = module.lessons.filter(lesson =>
+    resolveLearnerLessonPresentation(lesson, language).status === 'draft').length;
+  if (lessonDrafts === 0) return 'English module';
+  return `English module · ${lessonDrafts} ${lessonDrafts === 1 ? 'lesson draft' : 'lesson drafts'} available`;
 }
