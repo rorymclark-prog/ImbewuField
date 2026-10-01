@@ -2,7 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
+import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT as vegetablesL3Draft, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as learnerVegetablesDraft } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 
 test('the Tshivenda Introduction draft stays paired to the English Study source', () => {
@@ -62,6 +64,56 @@ test('the Tshivenda Introduction draft stays paired to the English Study source'
         `${questionPath}: correct index must still point to the canonical answer`);
       checkPair(question.rationale, sourceQuestion.rationale, `${questionPath}.rationale`);
     });
+  }
+});
+
+test('Tshivenda Soil L1 jar draft stays aligned and preserves diagnostic limits', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_SOIL_HEALTH_DRAFT.id);
+  assert.ok(sourceModule, 'Soil Health source module must exist');
+  const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'soil-health-l1');
+  const draftLesson = TSHIVENDA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === 'soil-health-l1');
+  assert.ok(sourceLesson, 'canonical Soil L1 source must exist');
+  assert.ok(draftLesson, 'Tshivenda Soil L1 draft must exist');
+
+  assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
+  assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body,
+    'the translation must remain paired to the exact canonical body');
+  const presentation = resolveLearnerLessonPresentation(sourceLesson, 've');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, draftLesson.body.tshivendaDraft,
+    'the matched complete body must reach the learner as a marked draft');
+  assert.equal(resolveLearnerLessonPresentation({ ...sourceLesson, body: `${sourceLesson.body} Changed source.` }, 've').status,
+    'english-fallback', 'source drift must fail closed to the canonical English body');
+  const sourceParagraphs = sourceLesson.body.split('\n\n');
+  const paragraphs = draftLesson.body.tshivendaDraft.split('\n\n');
+  assert.equal(sourceParagraphs.length, 12);
+  assert.equal(paragraphs.length, sourceParagraphs.length,
+    'every learner paragraph must remain aligned with its English source');
+
+  assert.equal(paragraphs[0], 'Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.');
+  assert.equal(paragraphs[1], 'Dziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.');
+  assert.equal(paragraphs[2], 'Sedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.');
+  assert.equal(paragraphs[7], 'Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.');
+  assert.equal(paragraphs[8], 'Ṅwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.');
+  assert.ok(paragraphs[10].endsWith('U shuma ha worms na hone hu a shanduka u ya nga moisture na season.'),
+    'the previously translated seasonal caveat must stay intact');
+
+  assert.match(paragraphs[3], /soil na water kha clear jar.*little suitable dispersing detergent.*vale jar.*dzinginye.*i sa tshintshwi/,
+    'the clear-jar procedure must retain the suitable small detergent amount and shake/rest sequence');
+  assert.match(paragraphs[4], /Sand.*settles pele.*Silt.*settles nga murahu.*clay.*suspended much longer/,
+    'the sand, silt and clay settling order and longer suspension must remain distinct');
+  assert.match(paragraphs[5], /rough learning exercise.*Clumps.*zwi nga ni xedza.*soil laboratory.*accurate texture/,
+    'the jar exercise must remain rough and defer accurate texture to a soil laboratory');
+  assert.match(paragraphs[6], /Thick sand layer.*cloudy water.*a i athu.*final proportions.*Fine particles.*nga kha ḓi.*suspended/,
+    'cloudy water must not be treated as final proportions while fine particles may remain suspended');
+  assert.match(paragraphs[9], /Compaction.*poor drainage.*loss ya organic matter.*zwi nga limit/,
+    'the three soil limitations must remain possible rather than certain outcomes');
+  assert.match(paragraphs[10], /few worms.*a zwi prove.*chemicals.*moisture na season/,
+    'pale colour or few worms must not prove chemical damage, and worm activity remains seasonal');
+  assert.match(paragraphs[11], /patterns.*management history.*drainage.*u aluwa ha plants.*ni sa athu khetha remedy/,
+    'management history, drainage and growth must be checked before choosing a remedy');
+  for (const [index, source] of sourceParagraphs.entries()) {
+    assert.notEqual(paragraphs[index], source, `paragraph ${index + 1} must not silently fall back to an English hold`);
   }
 });
 

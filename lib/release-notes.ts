@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'c13382d2', changes: [
+    'Soil Health lesson 1 now shows its complete Tshivenda body as a marked draft.',
+    'Jar and soil terms remain in English where needed, beside the exact English source.',
+  ], tour: [
+    { title: 'Read the Tshivenda soil body draft', where: 'Study → Soil Health → lesson 1', href: '/student',
+      detail: 'Choose Tshivenda. The unreviewed body appears beside its exact English source. This update covers the body only; the lesson questions, key points and media remain as they were.' },
+  ] },
   { when: '1 October 2026', sha: 'e1bdb1d1', changes: [
     'Sesotho Soil Health lessons 1 and 2 now show marked body drafts.',
     'The first soil-jar question also has a marked draft.',

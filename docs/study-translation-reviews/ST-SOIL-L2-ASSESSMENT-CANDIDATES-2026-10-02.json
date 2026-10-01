@@ -1,0 +1,112 @@
+{
+  "lessonId": "soil-health-l2",
+  "sourceMainSha": "d6e10183c4b166606115f2073903fda163844e82",
+  "status": "unwired-machine-draft",
+  "scopeNote": "Read-only candidate for keypoint 1 and both quiz items. Exact English source fields and correct indices are checked against the current soil-health-l2 entry in lib/course-modules.ts. Existing translated options for quiz 0 and question/options for quiz 1 are preserved where defensible; held English fields receive candidates. All Sesotho wording remains unreviewed and requires independent backcheck.",
+  "keyPoint": {
+    "index": 1,
+    "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
+    "currentStatus": "exact-English hold",
+    "draft": "Karolo e bohareng e chesang ha e pake hore qubu yohle e sanitised.",
+    "literalBacktranslation": "A hot central part does not prove that the whole heap is sanitised.",
+    "uncertainty": "Keeps sanitised in English to avoid treating heat as proof of a sanitation outcome. “Centre” is rendered as the central part; “does not prove” remains explicit."
+  },
+  "quizzes": [
+    {
+      "index": 0,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+        "currentStatus": "exact-English hold",
+        "draft": "Qubu ya compost ya molemi e nkha ammonia haholo mme e metsi ebile e slimy. Tharollo ke efe?",
+        "literalBacktranslation": "The farmer's compost heap smells strongly of ammonia and is wet and slimy. What is the fix?",
+        "uncertainty": "Retains ammonia and slimy as technical/sensory terms. Both the strong smell and wet, slimy condition remain in the question."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Add more nitrogen-rich green material",
+          "currentDraft": "Eketsa disebediswa tse tala tse nang le naetrojene e ngata",
+          "status": "retain existing translation"
+        },
+        {
+          "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+          "currentDraft": "Eketsa disebediswa tse omileng tsa khabone (carbon) jwalo ka jwang bo omileng (straw) mme o phethole qubu",
+          "status": "retain existing translation"
+        },
+        {
+          "sourceEnglish": "Stop turning it and let it cool",
+          "currentDraft": "Kgaotsa ho e phethola mme o e tlohele e fole",
+          "status": "retain existing translation"
+        },
+        {
+          "sourceEnglish": "Add more water — the smell means it's too dry",
+          "currentDraft": "Eketsa metsi a mangata — monko o bolela hore e omeletse haholo",
+          "status": "retain existing translation"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+        "currentStatus": "exact-English hold",
+        "draft": "Qubu e metsi, e slimy e ka hloka moya o mongata le material e ommeng ho feta. Eketsa dry browns mme o phethole qubu hore e bulehe mme moya o kene. Monko wa ammonia le wona o ka bontsha hore ho na le material e ngata haholo e nang le nitrogen. Hlahloba hore qubu e dule e le damp, e se be soggy.",
+        "literalBacktranslation": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap so it opens and air enters. An ammonia smell can also indicate that there is too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+        "uncertainty": "Preserves “may need,” the action of adding dry browns and turning to open the heap, and “can also suggest” rather than asserting excess nitrogen as certain. Damp/not soggy remains an explicit condition; technical moisture and compost-category terms stay English."
+      }
+    },
+    {
+      "index": 1,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "Why keep wattle seed pods out of an ordinary compost heap?",
+        "currentDraft": "Ke hobaneng ha o lokela ho boloka makgapha a dipeo tsa wattle kantle ho qubu e tlwaelehileng ya kompose?",
+        "status": "retain existing translation"
+      },
+      "options": [
+        {
+          "sourceEnglish": "Bark makes every heap too hot",
+          "currentDraft": "Makgapetla a difate a etsa hore qubu e nngwe le e nngwe e tjhese haholo",
+          "status": "retain existing translation"
+        },
+        {
+          "sourceEnglish": "Some seeds may survive and spread when the compost is used",
+          "currentDraft": "Dipeo tse ding di ka nna tsa pholoha mme tsa nama ha kompose e sebediswa",
+          "status": "retain existing translation"
+        },
+        {
+          "sourceEnglish": "Pods always attract termites",
+          "currentDraft": "Makgapha a dula a hulela mohlwa kamehla",
+          "status": "retain existing translation"
+        },
+        {
+          "sourceEnglish": "Pods release a gas that kills every soil organism",
+          "currentDraft": "Makgapha a lokolla kgase e bolayang setshedi se seng le se seng sa mobu",
+          "status": "retain existing translation"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
+        "currentStatus": "exact-English hold",
+        "draft": "Qubu e tlwaelehileng e ka nna ya se pepesetse peo e nngwe le e nngwe maemong a ka e etsang hore e se hlole e kgona ho mela (non-viable). Ho ntsha makgapha a dipeo ho thibela hore a se ke a nama mmoho le kompose.",
+        "literalBacktranslation": "An ordinary heap may not expose every seed to conditions that could make it no longer able to germinate (non-viable). Removing the seed pods prevents them from spreading together with the compost.",
+        "uncertainty": "“May not” and “every seed” remain explicit; the wording does not claim that every seed survives or that an ordinary heap never makes seeds non-viable. Keeps the source's reason for excluding pods: avoiding their spread with compost."
+      }
+    }
+  ],
+  "preservation": {
+    "sourceQuestionsOptionsRationalesMatchCanonical": true,
+    "sourceCorrectIndices": [
+      1,
+      1
+    ],
+    "quiz0OptionsRetained": true,
+    "quiz1QuestionAndOptionsRetained": true,
+    "noCanonicalOrRepositoryEdits": true,
+    "checkedAgainstCurrentCanonicalCourseModules": true
+  },
+  "semanticChecks": [
+    "Quiz 0 asks about both a strong ammonia smell and a wet, slimy heap; answer index 1 remains dry carbon material such as straw plus turning.",
+    "Quiz 0 rationale: a wet, slimy heap may need more air and drier material; add dry browns and turn to open it up; ammonia smell can also suggest too much nitrogen-rich material; check damp, not soggy. No certainty claim about excess nitrogen.",
+    "Quiz 1 retains the wattle seed pod exclusion and ordinary-heap uncertainty: every seed is not necessarily exposed to conditions that make it non-viable; exclusion avoids spread with compost.",
+    "No species, quantities, timings, sanitation guarantees or other conditions were added."
+  ],
+  "uncertaintySummary": "Machine candidate only; not fluent approval. Compost browns/greens, sanitation, seed viability and damp/soggy terminology remain in English where technical precision is uncertain. Request independent Sesotho semantic backcheck before wiring."
+}
