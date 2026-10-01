@@ -11,7 +11,7 @@
 import { numberLabel } from '@/lib/format-figures';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { Fragment, Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
@@ -2025,18 +2025,33 @@ function FacilitatorCropsPageInner() {
                 style={{ overflowX: 'auto' }}
               >
                 <div style={{ minWidth: GRID_MIN_WIDTH }}>
-                  {beds.map((bed) => (
-                    <BedRow
-                      key={bed.id}
-                      bed={bed}
-                      plantings={plantings.filter((p) => p.bedId === bed.id)}
-                      currentMonth={currentMonth}
-                      onAddCrop={() => openPicker(bed.id)}
-                      onTapPlanting={(p) => setActivePlanting(p)}
-                      simple={simple}
-                    />
+                  {/* Four fixed sections, each with its place whether or not anything is in
+                      it yet. Rory, 2026-10-01: "veg staple crops fruit nuts and berries and
+                      animal products must all have their place". */}
+                  {([['veg', beds.filter((b) => b.kind !== 'plot')], ['staple', beds.filter((b) => b.kind === 'plot')]] as const).map(([section, sectionBeds]) => (
+                    <Fragment key={section}>
+                      <CalendarSectionHeader section={section} />
+                      {sectionBeds.length === 0 ? (
+                        <CalendarSectionNote>
+                          {section === 'veg'
+                            ? 'No vegetable beds on your map yet. Draw beds in the Design Studio and they show here.'
+                            : 'No staple plots on your map yet. Draw a plot in the Design Studio for maize, beans, pumpkins or sweet potato.'}
+                        </CalendarSectionNote>
+                      ) : sectionBeds.map((bed) => (
+                        <BedRow
+                          key={bed.id}
+                          bed={bed}
+                          plantings={plantings.filter((p) => p.bedId === bed.id)}
+                          currentMonth={currentMonth}
+                          onAddCrop={() => openPicker(bed.id)}
+                          onTapPlanting={(p) => setActivePlanting(p)}
+                          simple={simple}
+                        />
+                      ))}
+                    </Fragment>
                   ))}
-                  {includeTrees && (
+                  <CalendarSectionHeader section="trees" />
+                  {includeTrees ? (
                     <ProduceCalendarRow
                       kind="trees"
                       months={calendarProduce}
@@ -2044,8 +2059,13 @@ function FacilitatorCropsPageInner() {
                       emptyText="No fruit, nut or berry plant with a sourced season is on your map yet. Add them in the Design Studio and their picking months show here."
                       footnote={treesWithoutSeason.length ? `On your map with no sourced picking months yet, so not shown: ${treesWithoutSeason.join(', ')}.` : null}
                     />
+                  ) : (
+                    <CalendarSectionNote action={{ label: 'Show fruit, nuts & berries', onClick: () => { setIncludeTrees(true); saveIncludePerennials(true); } }}>
+                      Hidden: the orchard switch is off. It is the same switch as on Money and Records, so showing them here counts the orchard there too.
+                    </CalendarSectionNote>
                   )}
-                  {includeAnimals && (
+                  <CalendarSectionHeader section="animals" />
+                  {includeAnimals ? (
                     <ProduceCalendarRow
                       kind="animals"
                       months={calendarProduce}
@@ -2054,6 +2074,10 @@ function FacilitatorCropsPageInner() {
                       footnote={animalsNotShown}
                       unmarked={animalsUnmarked}
                     />
+                  ) : (
+                    <CalendarSectionNote action={{ label: 'Show animal products', onClick: () => { setIncludeAnimals(true); saveIncludeAnimals(true); } }}>
+                      Hidden: the animals switch is off.
+                    </CalendarSectionNote>
                   )}
                 </div>
               </div>
@@ -2903,9 +2927,13 @@ function CropMonthViewport({ children, registerScroll, onMonthScroll }: {
       role="region" aria-label={cropUi(lang, 'Crop chart months, scroll to match the planting calendar', 'Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala')} tabIndex={0}
       data-crop-chart-scroll style={{ overflowX: 'auto', marginInline: -16 }}>
       {/* Undo the card padding and reserve the same bed-label gutter. The
-          plot, labels and calendar then have identical edges and scroll range. */}
-      <div style={{ display: 'flex', minWidth: GRID_MIN_WIDTH }}>
-        <div aria-hidden="true" style={{ width: BED_LABEL_WIDTH, flexShrink: 0, position: 'sticky', left: 0, zIndex: 1, background: 'var(--bg-1)' }} />
+          plot, labels and calendar then have identical edges and scroll range.
+          On a phone the gutter shrinks to a margin (globals.css .crop-chart-gutter):
+          Rory, 2026-10-01, "just for the phone can we get rid of that blank space on
+          the left it would give more space to show the crops". The months keep their
+          width, so the shared scroll still lands on the same columns. */}
+      <div className="crop-chart-track" style={{ display: 'flex', minWidth: `calc(${GRID_MIN_WIDTH}px - var(--crop-chart-gutter-cut, 0px))` }}>
+        <div aria-hidden="true" className="crop-chart-gutter" style={{ width: `calc(${BED_LABEL_WIDTH}px - var(--crop-chart-gutter-cut, 0px))`, flexShrink: 0, position: 'sticky', left: 0, zIndex: 1, background: 'var(--bg-1)' }} />
         <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
       </div>
     </div>
@@ -3269,7 +3297,9 @@ function FoodAvailabilityChart({
               style={{ fontSize: 12, fontWeight: includeTrees ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${includeTrees ? 'var(--emerald)' : 'var(--border)'}`, background: includeTrees ? 'var(--bg-2)' : 'transparent', color: includeTrees ? 'var(--text-primary)' : 'var(--text-muted)' }}
             >
               <Trees size={12} aria-hidden strokeWidth={includeTrees ? 2.2 : 1.6} />
-              {includeTrees ? `Orchard in · ${treeGroups.length} fruit tree kind${treeGroups.length === 1 ? '' : 's'} on your map` : 'Orchard out'}
+              {/* Named for what it shows. "Orchard out" read as a status, not a switch, and
+                  left a farmer asking where their fruit had gone. */}
+              {includeTrees ? `Fruit, nuts & berries shown · ${treeGroups.length} kind${treeGroups.length === 1 ? '' : 's'} on your map` : 'Fruit, nuts & berries hidden · tap to show'}
             </button>
           )}
           {chartableAnimals.length > 0 && (
@@ -3281,7 +3311,7 @@ function FoodAvailabilityChart({
               style={{ fontSize: 12, fontWeight: includeAnimals ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${includeAnimals ? 'var(--gold)' : 'var(--border)'}`, background: includeAnimals ? 'var(--bg-2)' : 'transparent', color: includeAnimals ? 'var(--text-primary)' : 'var(--text-muted)' }}
             >
               <PawPrint size={12} aria-hidden strokeWidth={includeAnimals ? 2.2 : 1.6} />
-              {includeAnimals ? `Animals in · ${chartableAnimals.map((a) => ANIMAL_LABEL[a].toLowerCase()).join(', ')}` : 'Animals out'}
+              {includeAnimals ? `Animal products shown · ${chartableAnimals.map((a) => ANIMAL_LABEL[a].toLowerCase()).join(', ')}` : 'Animal products hidden · tap to show'}
             </button>
           )}
           </div>
@@ -3296,7 +3326,7 @@ function FoodAvailabilityChart({
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-3 font-sans" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
                 <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh</span>
                 {hasStoredItems && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> Stored under named conditions</span>}
-                {showTreeRow && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: 'rgba(46,107,58,0.3)', border: '1px solid rgba(46,107,58,0.6)', display: 'inline-block' }} /> Food forest: your trees&apos; sourced season</span>}
+                {showTreeRow && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: 'rgba(46,107,58,0.3)', border: '1px solid rgba(46,107,58,0.6)', display: 'inline-block' }} /> Fruit, nuts &amp; berries: your plants&apos; sourced season</span>}
                 {showAnimalRow && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: 'rgba(192,122,30,0.3)', border: '1px solid rgba(192,122,30,0.6)', display: 'inline-block' }} /> Animal products: your animals&apos; sourced months</span>}
               </div>
               {showTreeRow && (
@@ -3341,13 +3371,11 @@ function FoodAvailabilityChart({
                           className="crop-availability-month"
                           style={{ display: 'block', width: '100%', background: openMonth === i ? 'var(--bg-2)' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
                         >
-                          {/* The bar's own number, on the bar. The icon rows
-                              below say WHICH crops; without this you had to
-                              count them to learn how many, which is the one
-                              thing the bar height is there to tell you. */}
-                          <div className="font-mono" style={{ fontSize: 12, fontWeight: 700, height: 16, color: total === 0 ? 'var(--text-muted)' : 'var(--text-primary)' }}>
-                            {total === 0 ? '–' : total}
-                          </div>
+                          {/* Month on top, count under the bar. Rory, 2026-10-01: "change the
+                              number of products with the month just switch them". The month
+                              heads the column the way it heads the calendar's. */}
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
+                          <MonthAxisTag slot={axis[i]} />
                           <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                             {total === 0 ? <div style={{ width: '68%', height: 3, background: 'var(--border)', borderRadius: 2 }} /> : (
                               <div title={[...stored, ...fresh].map((item) => `${item.icon} ${item.name} — ${item.status}`).join('\n')} style={{ width: '68%', display: 'flex', flexDirection: 'column', gap: split ? GAP : 0 }}>
@@ -3358,8 +3386,12 @@ function FoodAvailabilityChart({
                               </div>
                             )}
                           </div>
-                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 6 }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
-                          <MonthAxisTag slot={axis[i]} />
+                          {/* The bar's own number. The icon rows below say WHICH crops;
+                              without this you had to count them to learn how many, which is
+                              the one thing the bar height is there to tell you. */}
+                          <div className="font-mono" style={{ fontSize: 12, fontWeight: 700, height: 16, marginTop: 4, marginBottom: 2, color: total === 0 ? 'var(--text-muted)' : 'var(--text-primary)' }}>
+                            {total === 0 ? '–' : total}
+                          </div>
                           {/* Each month's crops sit in their own bounded tray,
                               two to a row. Rory, 2026-09-28, on an iPad: "the
                               veg needs to be clearly visible for that month".
@@ -3762,6 +3794,52 @@ const PRODUCE_ICON = 16;
 // deep ochre fill for animals.
 const PRODUCE_FILL = { trees: '#2E6B3A', animals: 'var(--color-ochre-dark)' } as const;
 
+const CALENDAR_SECTIONS = {
+  veg: { label: 'Vegetables', Icon: Salad, color: 'var(--emerald)' },
+  staple: { label: 'Staple crops', Icon: Wheat, color: 'var(--gold-dim)' },
+  trees: { label: 'Fruit, nuts & berries', Icon: Grape, color: 'var(--emerald)' },
+  animals: { label: 'Animal products', Icon: PawPrint, color: 'var(--gold-dim)' },
+} as const;
+
+/** The band that opens each of the calendar's four sections. The label sticks to the left edge,
+ * so it stays readable however far the months are scrolled. */
+function CalendarSectionHeader({ section }: { section: keyof typeof CALENDAR_SECTIONS }) {
+  const { label, Icon, color } = CALENDAR_SECTIONS[section];
+  return (
+    <div data-crop-calendar-section={section} style={{ background: 'var(--bg-2)', borderBottom: '1px solid var(--border)' }}>
+      <div
+        className="font-sans font-semibold uppercase"
+        style={{ position: 'sticky', left: 0, display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 10px', fontSize: 'clamp(10.5px, 0.8vw, 12px)', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}
+      >
+        <Icon size={13} aria-hidden style={{ color, flexShrink: 0 }} />
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/** A section with nothing to draw still keeps its place: one line saying why, and the one tap
+ * that fills it when a switch is all that is hiding it. */
+function CalendarSectionNote({ children, action }: { children: ReactNode; action?: { label: string; onClick: () => void } }) {
+  return (
+    <div style={{ borderBottom: '1px solid var(--border)' }}>
+      <div className="font-sans" style={{ position: 'sticky', left: 0, maxWidth: 'min(100vw - 32px, 560px)', padding: '10px 12px', fontSize: 12.5, lineHeight: 1.4, color: 'var(--text-muted)' }}>
+        {children}
+        {action && (
+          <button
+            type="button"
+            onClick={action.onClick}
+            className="font-sans font-semibold rounded-full"
+            style={{ display: 'block', marginTop: 8, fontSize: 12.5, padding: '6px 12px', cursor: 'pointer', border: '1px solid var(--border)', background: 'var(--bg-1)', color: 'var(--text-primary)' }}
+          >
+            {action.label}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked = [] }: {
   kind: 'trees' | 'animals';
   months: CalendarProduceMonth[];
@@ -3807,7 +3885,8 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
     setOpen({ id, left: Math.max(8, Math.min(r.left, window.innerWidth - width - 8)), top: above ? r.top - 6 : r.bottom + 6, above });
   };
   const hide = () => { if (!pinned.current) setOpen(null); };
-  const title = kind === 'trees' ? 'Fruit, nuts & berries' : 'Animal products';
+  // The section band above already says "Fruit, nuts & berries" / "Animal products".
+  const title = kind === 'trees' ? 'Your trees & bushes' : 'Your animals';
   const LabelIcon = kind === 'trees' ? Grape : PawPrint;
   const monthName = (col: number) => monthAxisTitle(axis[col], axis[col]?.month ?? 1);
   const span = (run: { start: number; end: number }) =>

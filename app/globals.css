@@ -807,6 +807,9 @@ body.is-sample-mode .pwa-update-notifier {
 /* The crop detail follows the month the farmer just tapped; its entrance is brief enough
    to keep the chart's numbers and bar heights visually steady. */
 @keyframes cropDetailReveal { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+/* Food chart on a phone: the bed-label gutter (128px, there to line the chart up under the
+   calendar) shrinks to an 8px margin. Same cut off the track, so each month keeps its width. */
+@media (max-width: 767px) { .crop-chart-track { --crop-chart-gutter-cut: 120px; } }
 .crop-availability-month { transition: background 180ms ease, transform 180ms ease; }
 .crop-availability-month:active { transform: scale(0.96); }
 .crop-availability-detail { animation: cropDetailReveal 230ms var(--ease-out); }

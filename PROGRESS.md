@@ -52,6 +52,19 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 1 Oct 2026 — Calendar sections; food chart month on top; phone gutter removed
+- **Four calendar sections** (`CalendarSectionHeader`, `CalendarSectionNote` in
+  `app/facilitator/crops/page.tsx`): Vegetables (beds), Staple crops (plots), Fruit, nuts &
+  berries, Animal products. Rory: "must all have their place". An empty section keeps its band and
+  says why; a section hidden by the orchard or animals switch says so, with a Show button
+  (the orchard switch is still the one shared with Money and Records).
+- **Food chart**: month name heads each column, count under the bar ("just switch them").
+  Switches renamed "Fruit, nuts & berries shown/hidden" and "Animal products shown/hidden": Rory
+  saw "Orchard out" and asked where the fruit was.
+- **Phone gutter**: below 768px the chart's 128px bed-label gutter shrinks to 8px
+  (`.crop-chart-track` in `globals.css`). Months keep their width, so the shared scroll still
+  lines up with the calendar.
+
 ### 30 Sep 2026 — Squashes & melons tile; saved crop mix per map; fruit and animal bars
 - **Squashes & melons** (`lib/crop-groups.ts`, `squash_melon`): pumpkin, butternut, gem squash,
   baby marrow, watermelon and spanspek moved out of Fruiting veg into their own crop-mix tile.
