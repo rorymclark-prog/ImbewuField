@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '48333384', changes: [
+    'Market lesson 3 adds marked tool-sharing drafts in three languages.',
+  ], tour: [
+    { title: 'Compare the community lesson', where: 'Study → Market Gardening → lesson 3', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Three tool-sharing paragraphs are unreviewed drafts; seed, selling and quiz guidance stays in English.' },
+  ] },
   { when: '1 October 2026', sha: '8a1047f8', changes: [
     'Introduction adds four Xitsonga and Tshivenda draft prompts.',
   ], tour: [
