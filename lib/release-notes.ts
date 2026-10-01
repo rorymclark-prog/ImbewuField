@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '26cfbd08', changes: [
+    'Food Forest adds marked regional descriptions for several illustrated planting layers.',
+    'Uncertain terms stay in English. These slides have no regional narration.',
+  ], tour: [
+    { title: 'Compare the Food Forest layers', where: 'Study → Food Forest → slide 5', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The new unreviewed descriptions appear beside the exact English source; other layers still show English.' },
+  ] },
   { when: '1 October 2026', sha: '068c4cf9', changes: [
     'Study adds marked regional headings on field and learning-outcome slides.',
     'Farming and water instructions remain beside their exact English source.',
