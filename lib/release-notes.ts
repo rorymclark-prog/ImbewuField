@@ -43,7 +43,7 @@ export interface UpdateTourStop {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '1 October 2026', sha: 'b0cd9613', changes: [
-    'Introduction adds four marked Xitsonga and Tshivenda orientation sentences to its silent slides.',
+    'Introduction adds four marked Xitsonga and Tshivenda slide sentences.',
     'The exact English source remains visible; technical field instructions stay in English.',
   ], tour: [
     { title: 'Compare the Introduction slides', where: 'Study → Introduction → slides 2, 3, 16 and 20', href: '/student',
