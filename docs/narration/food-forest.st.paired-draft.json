@@ -581,7 +581,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mosebetsi oa tšimong",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
         },
         "body": [
           {
@@ -609,7 +611,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ketso ea tšimong",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
         },
         "body": [
           {

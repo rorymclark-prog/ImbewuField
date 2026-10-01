@@ -541,7 +541,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ntirho wa le nsinini",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
         },
         "body": [
           {
@@ -569,7 +571,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Xiendlo xa le nsinini",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
         },
         "body": [
           {

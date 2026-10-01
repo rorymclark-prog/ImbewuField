@@ -77,12 +77,17 @@ test('Market record slides reuse L1 wording and hold business, quantity and prod
   }
 });
 
-test('Water Harvesting regional decks translate only one source-paired rainfall sentence', () => {
+test('Water Harvesting keeps technical teaching in English under localized generic headings', () => {
   const waterSource = englishSlideRecords(readFileSync('docs/narration/water-harvesting.en.md', 'utf8'));
   const candidates = {
     st: 'Dihla tsa dipula di fapana ho pholletsa le Afrika Borwa.',
     ve: 'Zwifhinga zwa mvula zwi a fhambana kha Afrika Tshipembe.',
     ts: 'Tinguva ta mpfula ta hambana eAfrika Dzonga.',
+  };
+  const safeHeadings = {
+    st: { 2: 'Liphetho tsa ho ithuta', 23: 'Mosebetsi oa tšimong' },
+    ve: { 2: 'Zwine na ḓo guda', 23: 'Mushumo wa tsimuni' },
+    ts: { 2: 'Leswi u nga ta swi dyondza', 23: 'Ntirho wa le nsinini' },
   };
   assert.equal(waterSource.length, 24);
   for (const [language, candidate] of Object.entries(candidates)) {
@@ -92,7 +97,15 @@ test('Water Harvesting regional decks translate only one source-paired rainfall 
     assert.equal(slides.length, 24);
     const drafted = [];
     for (const slide of slides) {
-      assert.equal(slide.target.heading.status, 'english-hold', `${language} slide ${slide.n}: title remains English`);
+      const genericHeading = safeHeadings[language as keyof typeof safeHeadings][slide.n as 2 | 23];
+      if (genericHeading) {
+        assert.equal(slide.target.heading.status, 'draft');
+        assert.equal(slide.target.heading.text, genericHeading);
+        assert.match(slide.target.heading.provenance, /unreviewed.*exact English source paired/);
+      } else {
+        assert.equal(slide.target.heading.status, 'english-hold',
+          `${language} slide ${slide.n}: technical or unreviewed title remains English`);
+      }
       for (const [index, part] of slide.target.body.entries()) {
         if (part.status === 'mixed') {
           assert.equal(slide.n, 10);

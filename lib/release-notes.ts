@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '068c4cf9', changes: [
+    'Study adds marked regional headings on field and learning-outcome slides.',
+    'Farming and water instructions remain beside their exact English source.',
+  ], tour: [
+    { title: 'Check the regional Study headings', where: 'Study → Water Harvesting → slide 2', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The heading is an unreviewed draft; the technical lesson text stays in English.' },
+  ] },
   { when: '1 October 2026', sha: 'c0dd57f4', changes: [
     'Soil Health adds marked Sesotho, Tshivenda and Xitsonga cover and erosion slides.',
     'One unclear Tshivenda storm line stays in English; these slides remain silent.',
