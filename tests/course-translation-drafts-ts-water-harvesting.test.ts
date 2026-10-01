@@ -81,7 +81,7 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
     const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 6, 7, 14]
-      : draftLesson.id === 'market-community-l2' ? [0] : [9];
+      : draftLesson.id === 'market-community-l2' ? [0] : [3, 4, 5, 9];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
       else assert.equal(draftParagraphs[index], paragraph);

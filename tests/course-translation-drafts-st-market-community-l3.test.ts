@@ -3,9 +3,11 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
+import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
+import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
-test('Sesotho Market L3 pairs safe prompts and keeps seed and return guidance exact English', () => {
+test('Sesotho Market L3 pairs tool sharing while keeping seed and return guidance exact English', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(sourceModule);
   const source = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l3');
@@ -21,8 +23,18 @@ test('Sesotho Market L3 pairs safe prompts and keeps seed and return guidance ex
   assert.equal(draft.title.reviewStatus, 'machine-draft');
 
   assert.equal(draft.body.sourceEnglish, source.body);
-  assert.equal(draft.body.sesothoDraft, source.body);
-  assert.equal(draft.body.reviewStatus, 'hold', 'seed, postharvest and selling guidance stay exact English');
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  const sourceParagraphs = source.body.split('\n\n');
+  const draftParagraphs = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+  for (const index of [0, 1, 2, 6, 7, 8, 9, 10, 11]) {
+    assert.equal(draftParagraphs[index], sourceParagraphs[index],
+      `paragraph ${index + 1}: seed, postharvest, selling and technical guidance stays exact English`);
+  }
+  for (const index of [3, 4, 5]) {
+    assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
+      `paragraph ${index + 1}: the source-paired tool-sharing concept is visible as a draft`);
+  }
 
   assert.deepEqual(draft.keyPoints.map(pair => pair.sourceEnglish), source.keyPoints);
   assert.deepEqual(draft.keyPoints.map(pair => pair.reviewStatus), ['hold', 'machine-draft', 'hold', 'hold']);
@@ -51,6 +63,7 @@ test('Sesotho Market L3 pairs safe prompts and keeps seed and return guidance ex
   const presentation = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.title, draft.title.sesothoDraft);
+  assert.equal(presentation.content.body, draft.body.sesothoDraft);
   assert.equal(presentation.content.infographicAlt, draft.infographicAlt?.sesothoDraft);
   assert.deepEqual(presentation.content.keyPoints, draft.keyPoints.map(pair => pair.sesothoDraft));
   assert.deepEqual(presentation.content.quiz, source.quiz.map((question, index) => ({
@@ -64,6 +77,39 @@ test('Sesotho Market L3 pairs safe prompts and keeps seed and return guidance ex
   const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
   assert.equal(stalePresentation.status, 'english-fallback', 'source edits withdraw stale paired fields');
   assert.equal(stalePresentation.content.title, changedSource.title);
+});
+
+test('regional Market L3 tool-sharing drafts do not release held seed, selling or technical advice', () => {
+  const market = COURSE_MODULES.find(module => module.id === 'market-community');
+  assert.ok(market);
+  const source = market.lessons.find(lesson => lesson.id === 'market-community-l3');
+  assert.ok(source);
+  const sourceParagraphs = source.body.split('\n\n');
+  const veDraft = TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === source.id);
+  const tsDraft = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === source.id);
+  assert.ok(veDraft);
+  assert.ok(tsDraft);
+  for (const [language, sourcePair, reviewStatus, translatedBody] of [
+    ['ve', veDraft.body.sourceEnglish, veDraft.body.reviewStatus, veDraft.body.tshivendaDraft],
+    ['ts', tsDraft.body.sourceEnglish, tsDraft.body.reviewStatus, tsDraft.body.xitsongaDraft],
+  ] as const) {
+    assert.equal(sourcePair, source.body);
+    assert.equal(reviewStatus, 'machine-draft');
+    const draftParagraphs = translatedBody.split('\n\n');
+    assert.equal(draftParagraphs.length, sourceParagraphs.length);
+    for (const index of [0, 1, 2, 6, 7, 8, 10, 11]) {
+      assert.equal(draftParagraphs[index], sourceParagraphs[index],
+        `${language} paragraph ${index + 1}: seed, postharvest, selling and technical guidance stays English`);
+    }
+    for (const index of [3, 4, 5]) {
+      assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
+        `${language} paragraph ${index + 1}: the tool-sharing draft is visible`);
+    }
+    const shown = resolveLearnerLessonPresentation(source, language);
+    assert.equal(shown.status, 'draft');
+    assert.equal(shown.content.body, translatedBody);
+    assert.deepEqual(shown.content.quiz, source.quiz, 'quiz and answer meanings remain exact English');
+  }
 });
 
 test('Sesotho Market L1 records four destinations while keeping units and business advice source-paired', () => {
