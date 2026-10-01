@@ -18,6 +18,7 @@ export const LEARNER_UI_ENGLISH: Record<string, string> = {
   courseDeckSeeSlide: 'See slide',
   courseDeckSlideNarration: 'Slide narration',
   courseDeckNoNarration: 'No narration',
+  courseDeckSilentStatus: 'No narration will play. Use Next to read at your own pace.',
   courseDiagramShow: 'Show diagram',
   courseDiagramFailed: 'Could not load this diagram — check your connection and try again.',
   courseDeckSlideImageSize: 'Slide size',

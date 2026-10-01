@@ -1374,6 +1374,7 @@ const dict: Dict = {
   studentGuidesDescription: 'Dweba imephu yendawo yakho, landela isivuno, gcina izindleko namarisidi, noma wenze i-invoyisi. Zilolonge epulazini lesibonelo ngaphambi kokusebenzisa amarekhodi akho.',
   courseNarrationLanguage: 'Ulimi lokulandisa',
   courseDeckNoNarration: 'Akukho kulandisa',
+  courseDeckSilentStatus: 'Akukho kulandisa okuzodlala. Sebenzisa okulandelayo ukuze ufunde ngokwakho.',
   courseDiagramShow: 'Bonisa umdwebo',
   courseDiagramFailed: 'Ayikwazanga ukulayisha lo mdwebo — hlola uxhumano bese uzama futhi.',
   courseAudioListen: 'Lalela',

@@ -43,7 +43,7 @@ export interface UpdateTourStop {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '1 October 2026', sha: 'bb21cd90', changes: [
-    'IsiZulu Study slides now label the silent choice in isiZulu.',
+    'IsiZulu Study slides can now be read without narration.',
     'Study diagram buttons and loading errors also use isiZulu.',
   ], tour: [
     { title: 'Check isiZulu Study controls', where: 'Study → Introduction → lesson 1', href: '/student',
