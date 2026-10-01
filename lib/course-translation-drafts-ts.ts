@@ -170,7 +170,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-        "xitsongaDraft": "David Holmgren u boxile misinya ya milawu ya khume-mbirhi yo endla pulani eka Essence of Permaculture. Bill Mollison na David Holmgren va sungurile miehleketo ya permaculture swin'we. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nSwin'wana leswi nga swa nkoka ku swi tiva: u nga humesi thyaka (masalela ma hundzuka khompositi, khompositi yi hundzuka misava), tirhisa swintlhantlho leswitsongo naswona swo nonoka (bakiti ri nga cheleta mubhedhi handle ka gezi), naswona tirhisa u tlhela u teka ku hambana-hambana ku ri ka nkoka. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nHlawula misinya ya milawu yimbirhi kumbe yinharhu leyi vulavulaka hi xiphiqo xa wena lexikulu kutani u yi tirhisa hi matimba. Leyin'wana yi ta va erivaleni loko u ri karhi u ya emahlweni.",
+        "xitsongaDraft": "David Holmgren u hlamuserile misinya ya milawu ya dizayini ya khume-mbirhi eka Essence of Permaculture. Bill Mollison na David Holmgren va sungule nongoti wa permaculture swin'we. Tindlela tinharhu to sungula leti pfunaka eka dyondzo leyi hi leti: observe and interact — languta ndhawu ya wena eka nguva leyi heleleke u nga si endla earthworks letikulu; catch and store energy — xiya mpfula, dyambu na biomass loko swi nga si suka eka ndhawu ya wena; na use edges and value the marginal — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip) xi nga va ndhawu leyi pfunaka ku xiyisisa.\n\nTin'wana leti faneleke ku tiviwa: produce no waste (masalela ma hundzuka compost, compost yi hundzuka misava), use small and slow solutions (bakiti ri nga cheleta planting bed handle ka gezi), na use and value diversity. Ku onhaka ka maize hi xihangu swi ya hi storm na growth stage ya xibyariwa.\n\nHlawula misinya ya milawu yimbirhi kumbe yinharhu leyi fambelanaka ni xiphiqo xa wena lexikulu, u yi tirhisa hi ku tiyimisela. Leyin'wana yi ta sungula ku vonaka loko u ri karhi u ya.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -388,18 +388,6 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       "field": "quiz[0].q",
       "sourceText": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
       "reason": "The maize term in this question is uncertain; keep the exact source until a fluent reviewer confirms it."
-    },
-    {
-      "lessonId": "intro-permaculture-l2",
-      "field": "body",
-      "sourceText": "Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.",
-      "reason": "Held in the exact English source pending fluent local review because changing this safety condition could mislead a learner."
-    },
-    {
-      "lessonId": "intro-permaculture-l2",
-      "field": "body",
-      "sourceText": "Hail injury to maize depends on the storm and the crop’s growth stage.",
-      "reason": "The hail and maize wording is kept exact so the storm and growth-stage condition cannot be broadened."
     },
     {
       "lessonId": "intro-permaculture-l2",

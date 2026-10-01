@@ -164,10 +164,11 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
       ),
       title: pair(
         "Twelve Principles: Designing with Nature",
-        "Maitele a Fumi na Mavhili: U Fhaṱa na Mupo",
+        "Maitele a Fumi na Mavhili: U Ita design na Mupo",
       ),
-      body: hold(
+      body: pair(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        "David Holmgren o vhea maitele a design a fumi na mavhili kha Essence of Permaculture. Bill Mollison na David Holmgren vho thoma muhumbulo wa permaculture vhoṱhe. Maitele mararu a vhuedzaho u thoma ngao kha hei ngudo ndi haya: observe and interact — sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu ita major earthworks; catch and store energy — ṱhogomelani mvula, ḓuvha na biomass zwi sa athu bva kha ndaka yaṋu; na use edges and value the marginal — muduba wa fence kana tshipiḓa tshi re tsini na nḓila (strip) tshi nga vha fhethu hu vhuedzaho ha u sedza.\n\nMaṅwe maitele ane zwa vhuedza u a ḓivha ndi haya: produce no waste (masalela a vha compost, compost ya vha mavu); use small and slow solutions (bakete ḽi nga sheledza planting bed hu si na muḓagasi); na use and value diversity. Hail injury kha maize i ya nga storm na growth stage ya crop.\n\nKhethani maitele mavhili kana mararu ane a tshimbidzana na thaidzo yaṋu khulwanesa, nahone ni a shumise nga mafulufulu. Maṅwe a ḓo tou vha khagala musi ni tshi khou bvela phanḓa.",
       ),
       keyPoints: [
         pair(
@@ -184,7 +185,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         ),
         pair(
           "Hail injury to maize depends on the storm and the crop’s growth stage",
-          "Tshenyo ya tshifhango kha mavhele (maize) i bva kha dumbu na vhuimo ha u aluwa ha zwimela",
+          "Hail injury kha maize i ya nga storm na growth stage ya crop.",
         ),
       ],
       quiz: [

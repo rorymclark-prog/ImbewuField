@@ -1,8 +1,8 @@
 {
   "lessonId": "intro-permaculture-l2",
-  "sourceMainSha": "7ae9765647ecae8c6d58c94a8ae343a4100b54f3",
-  "status": "unwired-machine-draft",
-  "review": "Machine drafts; not fluent-speaker or local-farming approved. Candidate wording and English technical phrases must be checked before learner wiring. First independent check identified design/building narrowing, starting-points/topics substitution, land/soil ambiguity, strip precision and Venda hail causation. Revised these specific meanings; second check pending. Second independent check accepted repaired core meanings. English land retained to avoid plot/soil narrowing; bakete noun-class concord corrected to ḽi nga. Original drafter confirmed revised land phrase meaning and class-5 bakete concord; not fluent-speaker approval.",
+  "sourceMainSha": "02d8682e6d15efc1ebbb4b03b7be292a44b290d4",
+  "status": "learner-wired-machine-draft",
+  "review": "Machine drafts; not fluent-speaker or local-farming approved. First independent check identified design/building narrowing, starting-points/topics substitution, land/soil ambiguity, strip precision and Venda hail causation. Revised these specific meanings; Second independent check accepted repaired core meanings. English land retained to avoid plot/soil narrowing; bakete noun-class concord corrected to ḽi nga. Original drafter confirmed revised land phrase meaning and class-5 bakete concord; not fluent-speaker approval. Same backcheck accepted title design scope and aligning hail keypoint with the repaired dependence clause; neither field adds a source claim.",
   "languages": {
     "ve": [
       {
@@ -32,5 +32,15 @@
         "draft": "Hlawula misinya ya milawu yimbirhi kumbe yinharhu leyi fambelanaka ni xiphiqo xa wena lexikulu, u yi tirhisa hi ku tiyimisela. Leyin'wana yi ta sungula ku vonaka loko u ri karhi u ya."
       }
     ]
+  },
+  "relatedTshivendaFields": {
+    "title": {
+      "sourceEnglish": "Twelve Principles: Designing with Nature",
+      "draft": "Maitele a Fumi na Mavhili: U Ita design na Mupo"
+    },
+    "keyPoints[3]": {
+      "sourceEnglish": "Hail injury to maize depends on the storm and the crop’s growth stage",
+      "draft": "Hail injury kha maize i ya nga storm na growth stage ya crop."
+    }
   }
 }
