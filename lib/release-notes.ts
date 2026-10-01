@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '8a1047f8', changes: [
+    'Introduction adds four Xitsonga and Tshivenda draft prompts.',
+  ], tour: [
+    { title: 'Compare the silent Introduction slides', where: 'Study → Introduction', href: '/student',
+      detail: 'Choose Xitsonga for slides 3, 7 and 8, or Tshivenda for slide 3. English guidance stays visible, and English narration is optional.' },
+  ] },
   { when: '1 October 2026', sha: 'a722fc6d', changes: [
     'Study cards now show when an English module contains regional lesson drafts.',
   ], tour: [

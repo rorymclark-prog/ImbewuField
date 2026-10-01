@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1882 files, 688.2 MB total.
+// 1882 files, 688.3 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -756,12 +756,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/st/slide-22.webp': 231466,
   '/course-decks/intro-permaculture/ts/slide-01.webp': 235480,
   '/course-decks/intro-permaculture/ts/slide-02.webp': 253290,
-  '/course-decks/intro-permaculture/ts/slide-03.webp': 240848,
+  '/course-decks/intro-permaculture/ts/slide-03.webp': 257772,
   '/course-decks/intro-permaculture/ts/slide-04.webp': 568930,
   '/course-decks/intro-permaculture/ts/slide-05.webp': 528788,
   '/course-decks/intro-permaculture/ts/slide-06.webp': 422726,
-  '/course-decks/intro-permaculture/ts/slide-07.webp': 282362,
-  '/course-decks/intro-permaculture/ts/slide-08.webp': 220948,
+  '/course-decks/intro-permaculture/ts/slide-07.webp': 333566,
+  '/course-decks/intro-permaculture/ts/slide-08.webp': 268590,
   '/course-decks/intro-permaculture/ts/slide-09.webp': 219498,
   '/course-decks/intro-permaculture/ts/slide-10.webp': 528100,
   '/course-decks/intro-permaculture/ts/slide-11.webp': 226746,
@@ -778,7 +778,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/ts/slide-22.webp': 208802,
   '/course-decks/intro-permaculture/ve/slide-01.webp': 264220,
   '/course-decks/intro-permaculture/ve/slide-02.webp': 302336,
-  '/course-decks/intro-permaculture/ve/slide-03.webp': 243938,
+  '/course-decks/intro-permaculture/ve/slide-03.webp': 247802,
   '/course-decks/intro-permaculture/ve/slide-04.webp': 573948,
   '/course-decks/intro-permaculture/ve/slide-05.webp': 523868,
   '/course-decks/intro-permaculture/ve/slide-06.webp': 487870,
