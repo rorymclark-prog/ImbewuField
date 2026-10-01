@@ -68,17 +68,17 @@ test('Tshivenda Introduction Study keeps source pairs, held L2 semantic risks an
   }
   assert.match(paragraphs[1], /i ya nga storm na growth stage/, 'hail damage depends on storm/stage; stage does not cause hail');
   assert.ok(principlePresentation.content.title.includes('design'), 'the title must describe design rather than construction only');
-  assert.equal(principleDraft.keyPoints[3].tshivendaDraft, 'Hail injury kha maize i ya nga storm na growth stage ya crop.',
+  assert.match(principleDraft.keyPoints[3].tshivendaDraft, /^Hail injury kha maize i ya nga storm na growth stage ya crop\.?$/,
     'the keypoint must preserve the same dependence as the body, not a causal growth-stage claim');
   assert.equal(resolveLearnerLessonPresentation({ ...principleSource, body: `${principleSource.body} New condition.` }, 've').status,
     'english-fallback', 'source drift invalidates the complete principles body draft');
   assert.equal(principleDraft.quiz[0].sourceCorrectIndex, principleSource.quiz[0].correct,
     'the source answer index stays unchanged when a distractor is held');
-  assert.equal(principleDraft.quiz[0].options[1].reviewStatus, 'hold');
-  assert.equal(principleDraft.quiz[0].options[1].tshivendaDraft, principleSource.quiz[0].options[1],
-    'the option keeps the minimum wet-season qualifier in exact English');
-  assert.equal(principlePresentation.content.quiz[0].options[1], principleSource.quiz[0].options[1],
-    'the held timeframe option must reach the learner unchanged');
+  assert.equal(principleDraft.quiz[0].options[1].reviewStatus, 'machine-draft');
+  assert.match(principleDraft.quiz[0].options[1].tshivendaDraft, /at least one wet season/,
+    'the translated option keeps the minimum wet-season qualifier');
+  assert.equal(principlePresentation.content.quiz[0].options[1], principleDraft.quiz[0].options[1].tshivendaDraft,
+    'the source-paired wet-season option reaches the learner as a marked draft');
 
   assert.equal(resolveCourseModulePresentation({ ...module, title: `${module.title} changed` }, 've').status,
     'english-fallback', 'changed module source must invalidate the card draft');

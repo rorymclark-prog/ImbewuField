@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'de1a7538', changes: [
+    'Tshivenda and Xitsonga principles key points and quizzes now have marked drafts.',
+  ], tour: [
+    { title: 'Try the regional principles questions', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Read the four key points and both questions with their exact English source. Difficult technical terms remain English; facilitator review is pending.' },
+  ] },
   { when: '1 October 2026', sha: 'ea414f48', changes: [
     'The principles body now has complete marked Tshivenda and Xitsonga drafts.',
   ], tour: [

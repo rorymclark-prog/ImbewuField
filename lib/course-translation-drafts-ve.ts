@@ -173,54 +173,55 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
       keyPoints: [
         pair(
           "Observe your land for a full season before major earthworks",
-          "Sedzani mavu aṋu tshifhinga tshoṱhe tsha khalaṅwaha musi ni sa athu ita mishumo mihulwane ya mavu",
+          "Sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu ita major earthworks",
         ),
         pair(
           "Catch and store rain, sun, and biomass before they leave your property",
-          "Farani nahone ni vhulunge mvula, ḓuvha, na biomass musi zwi sa athu bva tshitentsini tshaṋu",
+          "Farani nahone ni vhulunge mvula, ḓuvha na biomass zwi sa athu bva kha ndaka yaṋu",
         ),
         pair(
           "Edges and margins can be useful places to observe what grows well",
-          "Magumo na thungo zwi nga vha fhethu hu no vhuedza ha u sedza zwine zwa aluwa zwavhuḓi",
+          "Edges na margins zwi nga vha fhethu hu vhuedzaho ha u sedza zwine zwa aluwa zwavhuḓi",
         ),
         pair(
           "Hail injury to maize depends on the storm and the crop’s growth stage",
-          "Hail injury kha maize i ya nga storm na growth stage ya crop.",
+          "Hail injury kha maize i ya nga storm na growth stage ya crop",
         ),
       ],
       quiz: [
         {
           question: pair(
             "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
-            "Mulimi u ṱoḓa u bwa dzi-swale u itela u kuvhanganya maḓi a mvula. Ndi mini zwine a fanela u ranga u zwi ita a tshi tevhedza 'sedzani nahone ni shumisane' (observe and interact)?",
+            "Mulimi u ṱoḓa u bwa swales u itela u kuvhanganya maḓi a mvula. Ndi mini zwine a fanela u ranga u zwi ita a tshi tevhedza observe and interact?",
           ),
           options: [
             pair(
               "Dig immediately after the first good rain",
               "Bwani nga u ṱavhanya nga murahu ha mvula ya u ranga yavhuḓi",
             ),
-            hold(
+            pair(
               "Watch where water flows and pools across at least one wet season",
+              "Sedzani hune maḓi a elela hone na hune a kuvhangana hone kha at least one wet season",
             ),
             pair(
               "Copy a neighbour's swale layout",
-              "Kopisani kuitele kwa dzi-swale dza muhura",
+              "Kopisani kuitele kwa swale ya muhura",
             ),
             pair(
               "Assume the same swale design fits every site",
-              "Humbulani uri muvhumbeleo muthihi wa swale u lingana fhethu hoṱhe",
+              "Humbulani uri design nthihi ya swale i lingana na site iṅwe na iṅwe",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
-            "Khalaṅwaha ya mvula i sumbedza madumbu a no fhira ḽithihi, fhedzi u sedza ndi vhukando ha u ranga fhedzi. Tolani mavu, u sendama ha mavu (slope), u elela ha maḓi (drainage) na gondo ḽo tsireledzeaho ḽa maḓi o kalaho na mueletshedzi wa henefho o gudedzwaho musi ni sa athu bwa.",
+            "Khalaṅwaha ya mvula i sumbedza madumbu a no fhira ḽithihi, fhedzi u sedza ndi vhukando ha u ranga fhedzi. Musi ni sa athu bwa, na mueletshedzi wa henefho o gudedzwaho, tolani mavu, slope, drainage na safe overflow route.",
           ),
         },
         {
           question: pair(
             "Which layout best applies 'integrate rather than segregate'?",
-            "Ndi ufhio muvhumbeleo une wa shumisa zwavhuḓi 'ṱanganyani u fhira u fhambanya' (integrate rather than segregate)?",
+            "Ndi layout ifhio ine ya shumisa zwavhuḓi integrate rather than segregate?",
           ),
           options: [
             pair(
@@ -229,21 +230,21 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
             ),
             pair(
               "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
-              "Tsimu, miri ya mitshelo na danga ḽa khuhu zwo vhekanywaho uri khuhu dzi shumise ndima i si na tshithu nga murahu ha khaṋo, mulimi a kona u tola ndaulo yo tsireledzeaho musi zwimela zwi ḽiwaho zwi sa athu vhuya",
+              "Tsimu, miri ya mitshelo na chicken run zwo vhekanywa nga nḓila ine khuhu dza shumisa planting bed i si na zwimela nga murahu ha harvest; nga murahu mulimi u tola safe management musi edible crops dzi sa athu vhuya",
             ),
             pair(
               "Separate paddocks for each crop",
-              "Zwipiḓa zwo fhambanaho zwa tshimela tshiṅwe na tshiṅwe",
+              "Paddocks dzo fhambanaho dza crop iṅwe na iṅwe",
             ),
             pair(
               "All animals kept off the cultivated zone",
-              "Zwipuka zwoṱhe zwo thivhelwa kule ha fhethu hu no khou limiwa",
+              "Zwifuwo zwoṱhe zwi dzule nnḓa ha cultivated zone",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
-            "U ṱanganya zwi ita uri tshipiḓa tshiṅwe na tshiṅwe tshi shumele vhahura vhatsho — hafha, khuhu dzi laṱa zwikhokhonono nahone dza nontshisa mavu nṱhani ha u dzula zwo ralo dangani ḽo imaho. Manyaga maswa a nga hwalela zwitzhili, nga zwenezwo tolani ndaulo yo tsireledzeaho musi zwimela zwi ḽiwaho zwi sa athu vhuya.",
+            "Integration i ita uri element iṅwe na iṅwe i shumele zwine zwa vha tsini nayo — hafha, khuhu dzi clean up pests na u engedza fertility, nṱhani ha u dzula dzi sa shumi kha fixed pen. Fresh manure i nga hwalela germs, ngauralo tola safe management musi edible crops dzi sa athu vhuya.",
           ),
         },
       ],
