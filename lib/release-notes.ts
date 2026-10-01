@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'e1bdb1d1', changes: [
+    'Sesotho Soil Health lessons 1 and 2 now show marked body drafts.',
+    'The first soil-jar question also has a marked draft.',
+  ], tour: [
+    { title: 'Read the Sesotho soil drafts', where: 'Study → Soil Health → lessons 1 and 2', href: '/student',
+      detail: 'Choose Sesotho. The body and first jar question are unreviewed drafts beside exact English; technical terms stay English.' },
+  ] },
   { when: '1 October 2026', sha: '4d054145', changes: [
     'Soil Health lesson 1 now shows the remaining Sesotho body paragraphs as marked drafts.',
     'Jar and soil terms remain in English where needed, beside the exact English source.',
