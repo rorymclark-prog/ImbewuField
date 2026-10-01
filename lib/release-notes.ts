@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'cde1191d', changes: [
+    'Sesotho principles lesson adds the remaining marked body draft.',
+  ], tour: [
+    { title: 'Read the principles draft', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Sesotho. Read the complete body draft beside its English source; principle names and technical terms remain in English.' },
+  ] },
   { when: '1 October 2026', sha: 'fd0cee55', changes: [
     'Sesotho ethics lesson adds the remaining marked draft paragraphs.',
   ], tour: [

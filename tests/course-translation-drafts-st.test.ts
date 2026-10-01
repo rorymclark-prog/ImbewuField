@@ -112,7 +112,7 @@ test('a Sesotho learner gets the full marked ethics draft and its unchanged Engl
     'a changed English source invalidates the whole paired draft');
 });
 
-test('Sesotho Introduction L2 drafts the general learning prompt while retaining concrete farm guidance in English', () => {
+test('Sesotho Introduction L2 gives a complete source-paired principles body while detailed safety quizzes stay English', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture');
   assert.ok(sourceModule);
   const source = sourceModule.lessons.find(lesson => lesson.id === 'intro-permaculture-l2');
@@ -125,9 +125,15 @@ test('Sesotho Introduction L2 drafts the general learning prompt while retaining
   const sourceParagraphs = source.body.split('\n\n');
   const pairedParagraphs = draft.body.sesothoDraft.split('\n\n');
   assert.equal(pairedParagraphs.length, sourceParagraphs.length, 'each English paragraph has one aligned review paragraph');
-  assert.deepEqual(pairedParagraphs.slice(0, 2), sourceParagraphs.slice(0, 2),
-    'authorship, earthworks, water, compost, irrigation, crop and hail claims remain exact English');
-  assert.notEqual(pairedParagraphs[2], sourceParagraphs[2], 'the general learning prompt is proposed in Sesotho');
+  // Technical labels may stay English inside translated prose, but a source-only
+  // paragraph must never be presented as a completed regional body.
+  pairedParagraphs.forEach((paragraph, index) => assert.notEqual(paragraph, sourceParagraphs[index]));
+  for (const term of ['David Holmgren', 'Bill Mollison', 'Essence of Permaculture', 'earthworks', 'biomass']) {
+    assert.ok(pairedParagraphs[0].includes(term), `preserve attribution and technical source term: ${term}`);
+  }
+  assert.ok(pairedParagraphs[1].includes('(maize)'));
+  assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed source.` }, 'st').status,
+    'english-fallback', 'source edits invalidate the complete principles draft');
   draft.keyPoints.forEach((point, index) => {
     assert.equal(point.reviewStatus, 'hold');
     assert.equal(point.sesothoDraft, source.keyPoints[index]);
