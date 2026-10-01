@@ -1,0 +1,30 @@
+{
+  "lessonId": "soil-health-l1",
+  "sourceMainSha": "570064a1170457aed7c515e19c89501552e4c563",
+  "status": "unwired-machine-draft",
+  "scopeNote": "Complete twelve-paragraph source-bound body composition: preserve existing translated paragraphs 1–3,8–9,12; replace six exact-English held paragraphs4–7,10–11. Preserve existing keypoints except precise rough-indication jar limitation wording. Not learner wired.",
+  "body": {
+    "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+    "draft": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.\n\nFungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.\n\nSheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.\n\nKenya mobu le metsi ka clear jar, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.\n\nSand e dula fatshe pele. Silt e latela, athe clay e ka nna ya dula e suspended nako e telele haholo.\n\nEna ke rough learning exercise feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.\n\nLera le letenya la sand ka tlasa metsi a maru ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.\n\nBapisa likarolo tse lutseng, ’me u utloe mobu tšimong.\n\nNgola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.\n\nHo thatafala ha mobu (compaction), drainage e mpe le tahlehelo ya organic matter di ka sitisa metso le bophelo ba mobu.\n\nMmala o lerootho kapa palo e nyane ya diboko ha e pake hore dikhemikhale di bolaile mobu. Mosebetsi wa diboko le wona o a fetoha ho latela mongobo le sehla.\n\nBatla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, metsi a phallang le kholo ea limela pele u khetha tharollo."
+  },
+  "keyPoints": [
+    {
+      "sourceEnglish": "Use several clues to assess soil condition",
+      "draft": "Sebedisa dintlha le matshwao a mmalwa ho lekola boemo ba mobu"
+    },
+    {
+      "sourceEnglish": "Soil colour and worm counts alone do not diagnose the cause of a problem",
+      "draft": "Mmala wa mobu le palo ya diboko feela ha di fumane sesosa sa bothata"
+    },
+    {
+      "sourceEnglish": "A jar exercise gives a rough indication of texture, not a complete soil test",
+      "draft": "Boikwetliso ba jar bo fana ka rough indication ya soil texture, eseng complete soil test."
+    },
+    {
+      "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+      "draft": "Hlahloba drainage, metso le nalane ya tshebediso pele o kgetha pheko"
+    }
+  ],
+  "note": "Machine-draft candidate only. Technical terms are retained in English where needed; no numbers, test conditions, or source claims have been added.",
+  "review": "Independent semantic/source check accepted jar steps, suitable dispersing detergent, settling sequence/caveats/lab limits and no invented timing/proportions; source12paragraphs/4kp aligned. Root retained clear jar and rough learning exercise/rough indication in English where local precision uncertain. Existing alreadytranslated paragraphs preserved. Unreviewed machine draft, not fluent/local approval. Final independent composition check confirmed existing six translated paragraphs untouched and source12paragraph alignment. Root retained suspended in English to avoid floating-vs-suspension physical distinction."
+}
