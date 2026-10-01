@@ -1,0 +1,49 @@
+{
+  "lessonId": "soil-health-l1",
+  "sourceMainSha": "fafdeb2cf24f983fbf603e99f005968c343508fd",
+  "status": "learner-wired-machine-draft",
+  "scopeNote": "Machine-draft wiring for Soil Health L1: Quiz 0 question, source-correct option and rationale, plus the paragraph 7 cloudy-water wording repair. Other quiz options, Quiz 1 and all other body paragraphs remain unchanged.",
+  "quizzes": [
+    {
+      "index": 0,
+      "question": {
+        "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+        "draft": "Nkho ya mobu e sa ntse e na le cloudy water ka hodima lera la sand. Molemi o lokela ho fihlela qeto efe?"
+      },
+      "options": [
+        {
+          "sourceEnglish": "The soil definitely needs less water",
+          "draft": "Mobu o hloka metsi a fokolang ka nnete"
+        },
+        {
+          "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+          "draft": "Fine particles di ka nna tsa sala di suspended; ho hlokahala further observation"
+        },
+        {
+          "sourceEnglish": "All the clay has already settled",
+          "draft": "Letsopa lohle le se le dutse fatshe"
+        },
+        {
+          "sourceEnglish": "The crop definitely needs gypsum",
+          "draft": "Sejalo se hloka gypsum ka nnete"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+        "draft": "Cloudy water e ka ba le fine particles tse eso dule fatshe. Ho sheba hang feela qalong ho ke ke ha bontsha final proportions kapa treatment e loketseng."
+      }
+    }
+  ],
+  "note": "Candidate-only, source-bound Sesotho machine draft. It preserves the uncertainty that particles may remain suspended and that one early observation cannot establish proportions or treatment. It does not prescribe a treatment.",
+  "repairNote": "Root and independent backcheck retain cloudy water in English to avoid cloud-water ambiguity, and explicitly preserve sand layer. Mirror cloudy water in paragraph7 on later implementation; exact source unchanged.",
+  "bodyParagraphRepairs": [
+    {
+      "index": 6,
+      "sourceEnglish": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+      "draft": "Lera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.",
+      "reason": "Retain cloudy water in English to avoid cloud-water ambiguity and name the sand layer explicitly; source remains exact."
+    }
+  ],
+  "independentBackcheck": "Independent semantic review accepted question, correct option and rationale, preserving may/further observation/early observation limit and correct index 1. Cloudy water stays English and the sand layer is explicit."
+}
