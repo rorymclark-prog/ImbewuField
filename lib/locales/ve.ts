@@ -54,6 +54,9 @@ const dict: Dict = {
   studentSaveModule: 'Vhulungani {title} kha founu iyi',
   studentContinueHere: 'Bvelani phanḓa hafha',
   studentTshivendaUiDraftNotice: 'Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.',
+  courseDeckNoNarration: 'A hu na ṱhalutshedzo nga ipfi',
+  courseDeckZoomIn: 'Sendelani',
+  courseDeckZoomOut: 'Ṱutshelani',
   // Short update-guide controls are machine drafts; the guide displays their exact English source.
   // Unreviewed Study interface drafts; English source stays in the shared dictionary.
   studentOpenDesignStudio: "Vulani Design Studio",

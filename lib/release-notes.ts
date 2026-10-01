@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '72de4cc1', changes: [
+    'Study slides now label the silent-reading choice in Sesotho, Tshivenda and Xitsonga.',
+    'Slide zoom and some playback controls also use those languages.',
+  ], tour: [
+    { title: 'Read a regional Study deck silently', where: 'Study → Introduction → lesson 1', href: '/student', detail: 'Choose Sesotho, Tshivenda or Xitsonga. The no-narration choice is a marked language draft; the slide deck stays silent unless you select English source audio.' },
+  ] },
   { when: '1 October 2026', sha: 'bb21cd90', changes: [
     'IsiZulu Study slides can now be read without narration.',
     'Study diagram buttons and loading errors also use isiZulu.',
