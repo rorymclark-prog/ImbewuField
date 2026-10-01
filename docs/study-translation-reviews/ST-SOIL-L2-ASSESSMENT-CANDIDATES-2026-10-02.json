@@ -1,8 +1,8 @@
 {
   "lessonId": "soil-health-l2",
   "sourceMainSha": "d6e10183c4b166606115f2073903fda163844e82",
-  "status": "unwired-machine-draft",
-  "scopeNote": "Read-only candidate for keypoint 1 and both quiz items. Exact English source fields and correct indices are checked against the current soil-health-l2 entry in lib/course-modules.ts. Existing translated options for quiz 0 and question/options for quiz 1 are preserved where defensible; held English fields receive candidates. All Sesotho wording remains unreviewed and requires independent backcheck.",
+  "status": "learner-wired-machine-draft",
+  "scopeNote": "Source-paired candidates wired only to held keypoint 1, quiz 0 question and rationale, and quiz 1 rationale. Existing quiz options and the quiz 1 question remain unchanged. Both source answer indices remain 1. Independent semantic backcheck accepted the candidates; all Sesotho wording remains an unreviewed machine draft with no fluent approval claimed.",
   "keyPoint": {
     "index": 1,
     "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
@@ -99,7 +99,8 @@
     ],
     "quiz0OptionsRetained": true,
     "quiz1QuestionAndOptionsRetained": true,
-    "noCanonicalOrRepositoryEdits": true,
+    "canonicalCourseSourceUnchanged": true,
+    "onlyTheFourPairedDraftFieldsWereWired": true,
     "checkedAgainstCurrentCanonicalCourseModules": true
   },
   "semanticChecks": [
@@ -108,5 +109,5 @@
     "Quiz 1 retains the wattle seed pod exclusion and ordinary-heap uncertainty: every seed is not necessarily exposed to conditions that make it non-viable; exclusion avoids spread with compost.",
     "No species, quantities, timings, sanitation guarantees or other conditions were added."
   ],
-  "uncertaintySummary": "Machine candidate only; not fluent approval. Compost browns/greens, sanitation, seed viability and damp/soggy terminology remain in English where technical precision is uncertain. Request independent Sesotho semantic backcheck before wiring."
+  "uncertaintySummary": "Independent semantic backcheck accepted the source meaning and preserved indices/order. This remains a machine draft, not fluent approval. Compost browns/greens, sanitation, seed viability and damp/soggy terminology remain in English where technical precision is uncertain."
 }
