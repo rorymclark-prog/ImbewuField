@@ -165,7 +165,7 @@ test('Tshivenda Water Harvesting keeps technical lesson instructions English and
     'Tshivenda narration remains explicitly identified as English');
 });
 
-test('Soil Health Tshivenda L1 pairs observations while holding the jar procedure and uncertain diagnosis', () => {
+test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health');
   assert.ok(source, 'Soil Health draft must remain paired to its canonical English module');
   const draft = TSHIVENDA_SOIL_HEALTH_DRAFT;
@@ -184,17 +184,6 @@ test('Soil Health Tshivenda L1 pairs observations while holding the jar procedur
     ['lessons[0].keyPoints[1]', 'Muvhala wa mavu na tshivhalo tsha zwivhungu fhedzi a zwi sumbedzi uri thaidzo yo vhangwa nga mini.'],
     ['lessons[0].keyPoints[2]', 'U lingedza nga jar zwi sumbedza texture nga u anganyela fhedzi, a si soil test yo fhelelaho.'],
     ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
-  ]);
-  const soilConceptSentences = new Map([
-    ['Soil contains many kinds of living organisms.', 'Mavu a na mifuda minzhi ya living organisms.'],
-    ['Bacteria and fungi help break down organic matter and cycle nutrients.', 'Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.'],
-    ['Some fungi help roots take up nutrients.', 'Dziṅwe fungi dzi thusa midzi u dzhia nutrients.'],
-    ['Worm channels can help water and air enter soil.', 'Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.'],
-    ['Compaction, poor drainage and loss of organic matter can limit roots and soil life.', 'Compaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.'],
-    ['Worm activity also changes with moisture and season.', 'U shuma ha worms na hone hu a shanduka u ya nga moisture na season.'],
-    ['Look at roots, soil structure and water movement as well as visible soil life.', 'Sedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.'],
-    ['Compare the settled layers and feel the soil in the field.', 'Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.'],
-    ['Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.', 'Ṅwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.'],
   ]);
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   let heldFields = 0;
@@ -224,21 +213,15 @@ test('Soil Health Tshivenda L1 pairs observations while holding the jar procedur
     if (index === 0) {
       assert.equal(paired.body.sourceEnglish, lesson.body, `${path}.body: pair the complete canonical lesson exactly`);
       assert.equal(paired.body.reviewStatus, 'machine-draft', `${path}.body: identify the unreviewed learner draft`);
-      let expectedBody = lesson.body;
-      for (const [english, tshivenda] of soilConceptSentences) {
-        assert.equal(lesson.body.split(english).length - 1, 1, `${path}.body: selected English sentence occurs once`);
-        expectedBody = expectedBody.replace(english, tshivenda);
-      }
-      assert.equal(paired.body.tshivendaDraft, expectedBody,
-        `${path}.body: only screened concepts and observations change; procedure and complex diagnosis stay exact English`);
+      const sourceParagraphs = lesson.body.split('\n\n');
+      const bodyParagraphs = paired.body.tshivendaDraft.split('\n\n');
+      assert.equal(bodyParagraphs.length, sourceParagraphs.length, `${path}.body: preserve all source paragraph boundaries`);
+      sourceParagraphs.forEach((paragraph, paragraphIndex) => {
+        assert.notEqual(bodyParagraphs[paragraphIndex], paragraph,
+          `${path}.body paragraph ${paragraphIndex + 1}: don't show an English-only hold as translated`);
+      });
       assert.deepEqual(numberTokens(paired.body.tshivendaDraft), numberTokens(lesson.body),
         `${path}.body: preserve every numeric source token`);
-      assert.equal(paired.body.tshivendaDraft.split('\n\n').length, lesson.body.split('\n\n').length,
-        `${path}.body: preserve every paragraph boundary`);
-      assert.ok(paired.body.tshivendaDraft.includes('Pale colour or few worms do not prove that chemicals killed the soil.'),
-        `${path}.body: retain the uncertain negation in exact English`);
-      assert.ok(paired.body.tshivendaDraft.includes('Put soil and water in a clear jar, with a little suitable dispersing detergent.'),
-        `${path}.body: retain the full jar procedure in exact English`);
     } else {
       checkPair(paired.body, lesson.body, `${path}.body`);
       assert.deepEqual(paired.body.tshivendaDraft.split('\n\n'), lesson.body.split('\n\n'), `${path}: preserve paragraph boundaries`);
@@ -278,7 +261,7 @@ test('Soil Health Tshivenda L1 pairs observations while holding the jar procedur
       `${lesson.id}: status only claims a draft when at least one field is translated`);
     assert.equal(presentation.content.title, paired.title.tshivendaDraft, `${lesson.id}: show the paired title draft`);
     assert.equal(presentation.content.body, paired.body.tshivendaDraft,
-      `${lesson.id}: show only its exact-source-paired body draft or exact-English hold`);
+      `${lesson.id}: show its exact-source-paired body draft`);
     const expectedKeyPoints = lesson.keyPoints.map((point, pointIndex) =>
       translated.get(`lessons[${index}].keyPoints[${pointIndex}]`) ?? point);
     assert.deepEqual(presentation.content.keyPoints, expectedKeyPoints,
@@ -289,6 +272,10 @@ test('Soil Health Tshivenda L1 pairs observations while holding the jar procedur
 
     assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
       'english-fallback', `${lesson.id}: changed source withdraws the whole paired draft`);
+    if (index === 0) {
+      assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} changed` }, 've').status,
+        'english-fallback', `${lesson.id}: changed body withdraws the whole paired draft`);
+    }
   }
   assert.equal(resolveCourseModulePresentation({ ...source, description: `${source.description} changed` }, 've').status,
     'english-fallback', 'changed module source withdraws the card draft');
