@@ -137,7 +137,7 @@ test('Soil Health Sesotho L3 drafts only the screened seasonal risks and falls b
   assert.equal(resolveLearnerLessonPresentation(changedSource, 'st').status, 'english-fallback');
 });
 
-test('Soil L1 keeps jar interpretation and diagnostic cautions English beside selected observation drafts', () => {
+test('Soil L1 preserves the reviewed jar limits while completing its source-paired Sesotho body', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health')!.lessons[0];
   const draft = SESOTHO_SOIL_HEALTH_DRAFT.lessons[0];
   const english = source.body.split('\n\n');
@@ -146,23 +146,42 @@ test('Soil L1 keeps jar interpretation and diagnostic cautions English beside se
   assert.equal(draft.body.sourceEnglish, source.body);
   assert.equal(draft.body.reviewStatus, 'machine-draft');
   assert.equal(localized.length, english.length);
-  assert.equal(english.slice(0, 3).join(' ').match(/[.!?](?:\s|$)/g)?.length, 5,
-    'the selected introduction must remain five conceptual sentences');
-  for (let index = 0; index < 3; index++) {
-    assert.notEqual(localized[index], english[index], `paragraph ${index} must show a Sesotho draft`);
-  }
-  for (const index of [3, 4, 5, 6, 9, 10]) {
-    assert.equal(localized[index], english[index],
-      `paragraph ${index + 1}: jar procedure and diagnostic cause claims need exact English`);
-  }
-  for (const index of [7, 8, 11]) {
-    assert.notEqual(localized[index], english[index],
-      `paragraph ${index + 1}: screened observation must be visible beside its exact English source`);
-  }
+  assert.deepEqual(localized.slice(0, 3), [
+    'Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.',
+    'Fungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.',
+    'Sheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.',
+  ], 'the previously localized opening paragraphs must remain untouched');
+  assert.deepEqual(localized.slice(7, 9), [
+    'Bapisa likarolo tse lutseng, ’me u utloe mobu tšimong.',
+    'Ngola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.',
+  ], 'the existing field-comparison and one-jar caution must remain untouched');
+  assert.equal(localized[11],
+    'Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, metsi a phallang le kholo ea limela pele u khetha tharollo.',
+    'the existing remedy-selection paragraph must remain untouched');
+
+  assert.match(localized[3], /clear jar.*suitable dispersing detergent.*E kwale mme o e sisinye.*e sa sisinyehe/,
+    'jar procedure must keep the clear container, suitable dispersant, shaking and undisturbed steps');
+  assert.match(localized[4], /Sand.*pele.*Silt.*clay.*suspended/,
+    'settling order must distinguish sand, silt and clay that remains suspended');
+  assert.match(localized[5], /rough learning exercise.*clumps.*clay.*kgelosa.*soil laboratory.*soil texture/,
+    'the learning-only limit, misleading clumps and laboratory condition must remain');
+  assert.match(localized[6], /sand.*metsi a maru.*final proportions.*Fine particles.*suspended/,
+    'cloudy water and a thick sand layer must not be treated as final proportions');
+  assert.match(localized[9], /compaction.*drainage.*organic matter.*metso.*bophelo ba mobu/,
+    'all three possible limits to roots and soil life must remain represented');
+  assert.match(localized[10], /ha e pake.*dikhemikhale.*diboko.*mongobo.*sehla/,
+    'pale colour or few worms must not become proof of chemical damage, and seasonal variation must remain');
+
+  const jarPoint = draft.keyPoints[2];
+  assert.equal(jarPoint.sourceEnglish, source.keyPoints[2]);
+  assert.equal(jarPoint.sesothoDraft,
+    'Boikwetliso ba jar bo fana ka rough indication ya soil texture, eseng complete soil test.',
+    'the summary must say rough indication and not imply a complete soil test');
 
   const shown = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.sesothoDraft);
+  assert.equal(shown.content.keyPoints[2], jarPoint.sesothoDraft);
   assert.deepEqual(shown.content.quiz.map(question => question.correct), source.quiz.map(question => question.correct),
     'body localization must not change the answer mapping');
   const changedSource = { ...source, body: `${source.body}\n\nNew advice requires review.` };
