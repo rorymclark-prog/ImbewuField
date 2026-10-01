@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'f0784645', changes: [
+    'Sesotho principles key points and quizzes now have marked drafts.',
+  ], tour: [
+    { title: 'Try the principles questions', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Sesotho. Read the four key points and both questions with their exact English source. Difficult technical terms remain English; facilitator review is pending.' },
+  ] },
   { when: '1 October 2026', sha: 'cde1191d', changes: [
     'Sesotho principles lesson adds the remaining marked body draft.',
   ], tour: [
