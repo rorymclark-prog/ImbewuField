@@ -149,7 +149,7 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
 });
 
-test('Vegetables L3 shows eight bounded concept sentences and keeps farming answers in English', async () => {
+test('Vegetables L3 shows screened concept sentences while crop advice and answers stay English', async () => {
   const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
   const { resolveCourseModulePresentation } = await import('../lib/course-module-translation-drafts.ts');
   const module = COURSE_MODULES.find(candidate => candidate.id === vegetablesL3Draft.moduleId);
@@ -160,7 +160,7 @@ test('Vegetables L3 shows eight bounded concept sentences and keeps farming answ
   const draftLesson = learnerVegetablesDraft.lessons[0];
   assert.equal(paragraphs[0], vegetablesL3Draft.bodyConcept.sourceEnglish);
   assert.equal(paragraphs[vegetablesL3Draft.secondBodyConcept.paragraphIndex], vegetablesL3Draft.secondBodyConcept.sourceEnglish);
-  assert.equal(vegetablesL3Draft.additionalBodyConcepts.length, 6);
+  assert.equal(vegetablesL3Draft.additionalBodyConcepts.length, 9);
   assert.equal(draftLesson.body.sourceEnglish, lesson.body, 'source drift must invalidate the entire learner draft');
   assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
   const shown = resolveLearnerLessonPresentation(lesson, 've');
@@ -180,13 +180,12 @@ test('Vegetables L3 shows eight bounded concept sentences and keeps farming answ
   }
   assert.deepEqual(translated, expectedParagraphs,
     'preserve both existing drafts and every other body sentence exactly, including counts and crop guidance');
-  assert.equal(translated[2],
-    'Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Two or more give you options when weather or pests hit.',
-    'translate only the first paragraph-3 sentence; preserve the count-based benefit in English');
-  assert.equal(translated[14], paragraphs[14], 'keep the two-or-more staples benefit in English');
-  assert.equal(translated[15], paragraphs[15], 'keep water, soil, seasons and protection claims in English');
+  assert.match(translated[2], /zwivhili kana zwo engaho/, 'the two-or-more qualifier must survive the new draft');
+  assert.equal(translated[14], paragraphs[14], 'keep the two-or-more staples recommendation in English');
+  assert.ok(translated[15].endsWith('That difference is the protection.'),
+    'the separate protection claim remains exact English');
   paragraphs.forEach((paragraph, index) => {
-    if (![0, 1, 2, 11, 12, 13].includes(index)) {
+    if (![0, 1, 2, 5, 11, 12, 13, 15].includes(index)) {
       assert.equal(translated[index], paragraph, `paragraph ${index + 1} stays English`);
     }
   });

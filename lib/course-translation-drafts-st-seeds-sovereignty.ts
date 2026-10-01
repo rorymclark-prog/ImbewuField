@@ -248,8 +248,8 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
       "id": "seeds-sovereignty-l3",
       "infographicAlt": {
         "sourceEnglish": "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
-        "sesothoDraft": "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
-        "reviewStatus": "hold"
+        "sesothoDraft": "Lienfelopo tsa peo li bolokiloe ka setshelong se koetsoeng, sebakeng se pholileng, se lefifi le se ommeng. Haufi le sona, lipeo tse leshome li holim’a lesela le mongobo; tse ling li hlōmohile, tse ling ha lia hlōmela — ena ke teko ea ho mela ha lipeo.",
+        "reviewStatus": "machine-draft"
       },
       "title": {
         "sourceEnglish": "Drying, Storing, and Sharing Seed",

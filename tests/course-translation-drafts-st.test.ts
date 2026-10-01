@@ -49,10 +49,8 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
     assert.equal(lesson.id, original.id, `${path}: source ID/order must be unchanged`);
     if (original.infographicAlt) {
       assert.ok(lesson.infographicAlt, `${path}: source infographic alt needs a paired draft`);
-      // The replacement zones picture no longer depicts rings; its previous translated alt
-      // would misdescribe the actual lesson image until a fluent speaker rewrites it.
-      checkPair(lesson.infographicAlt, original.infographicAlt, `${path}.infographicAlt`,
-        original.id === 'intro-permaculture-l3' ? 'hold' : 'machine-draft');
+      // The new Zones description follows the numbered footpath in the replacement image.
+      checkPair(lesson.infographicAlt, original.infographicAlt, `${path}.infographicAlt`);
     } else {
       assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent image alt text`);
     }

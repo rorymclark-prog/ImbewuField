@@ -45,6 +45,24 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
       reviewStatus: 'machine-draft',
     },
     {
+      paragraphIndex: 2,
+      sourceEnglish: 'Two or more give you options when weather or pests hit.',
+      tshivendaDraft: 'Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 5,
+      sourceEnglish: 'Each staple protects you against something different.',
+      tshivendaDraft: 'Tshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 15,
+      sourceEnglish: 'Different crops use water, soil and seasons differently.',
+      tshivendaDraft: 'Zwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho.',
+      reviewStatus: 'machine-draft',
+    },
+    {
       paragraphIndex: 11,
       sourceEnglish: "Resilience doesn't mean nothing fails.",
       tshivendaDraft: 'Resilience a zwi ambi uri a hu na zwine zwa kundwa.',
@@ -61,7 +79,7 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
     'module title and description',
     'lesson title',
     'infographicAlt',
-    'body paragraph 3 sentence 2, paragraphs 4–10 and 15–16',
+    'body[3–4], body[6–10], body[14], and the remaining English sentence in body[15]',
     'keyPoints',
     'quiz questions, options, and rationales',
   ],

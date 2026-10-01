@@ -208,7 +208,10 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
     {
       id: "intro-permaculture-l3",
       // The earlier draft described rings that the replacement picture does not show.
-      infographicAlt: hold("Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances."),
+      infographicAlt: pair(
+        "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+        "Polasi ea mohlala e takiloeng: matšoao a nang le linomoro 0 ho isa ho 5 a latela tsela e kobehileng ea maoto ho tloha ntlong le serapeng se haufi, a feta likhohong le tšimong, a lebile lifateng le sebakeng se hlaha haholoanyane pela noka. Matšoao ke mehlala; ha a bolele meeli e tsitsitseng kapa bohole bo itseng.",
+      ),
       title: pair(
         "Zones and Sectors: Organising Your Farm by Energy",
         "Dibaka (Zones) le Makala (Sectors): Ho Hlophisa Polasi ya Hao ka Matla",
