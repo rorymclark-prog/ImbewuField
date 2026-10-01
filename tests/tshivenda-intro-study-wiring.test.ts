@@ -53,11 +53,25 @@ test('Tshivenda Introduction Study keeps source pairs, held L2 semantic risks an
   const principleSource = module.lessons[1];
   const principleDraft = draft.lessons[1];
   const principlePresentation = resolveLearnerLessonPresentation(principleSource, 've');
-  assert.equal(principleDraft.body.reviewStatus, 'hold');
-  assert.equal(principleDraft.body.tshivendaDraft, principleSource.body,
-    'the body stays whole and exact English because two phrases materially drifted');
-  assert.equal(principlePresentation.content.body, principleSource.body,
-    'the body hold must reach the learner unchanged');
+  assert.equal(principleDraft.body.reviewStatus, 'machine-draft');
+  assert.equal(principleDraft.body.sourceEnglish, principleSource.body);
+  const paragraphs = principleDraft.body.tshivendaDraft.split('\n\n');
+  const englishParagraphs = principleSource.body.split('\n\n');
+  assert.equal(paragraphs.length, englishParagraphs.length);
+  paragraphs.forEach((paragraph, index) => assert.notEqual(paragraph, englishParagraphs[index],
+    'a full-body draft must not present an English-only paragraph as translated'));
+  assert.equal(principlePresentation.content.body, principleDraft.body.tshivendaDraft);
+  // The previous hold caught construction-only design and a causal hail claim.
+  // Retain precise English terms inside local prose after repairing those meanings.
+  for (const term of ['David Holmgren', 'Bill Mollison', 'Essence of Permaculture', 'design', 'major earthworks', 'biomass', '(strip)', 'planting bed', 'maize', 'growth stage']) {
+    assert.ok(principleDraft.body.tshivendaDraft.includes(term), `retain source concept: ${term}`);
+  }
+  assert.match(paragraphs[1], /i ya nga storm na growth stage/, 'hail damage depends on storm/stage; stage does not cause hail');
+  assert.ok(principlePresentation.content.title.includes('design'), 'the title must describe design rather than construction only');
+  assert.equal(principleDraft.keyPoints[3].tshivendaDraft, 'Hail injury kha maize i ya nga storm na growth stage ya crop.',
+    'the keypoint must preserve the same dependence as the body, not a causal growth-stage claim');
+  assert.equal(resolveLearnerLessonPresentation({ ...principleSource, body: `${principleSource.body} New condition.` }, 've').status,
+    'english-fallback', 'source drift invalidates the complete principles body draft');
   assert.equal(principleDraft.quiz[0].sourceCorrectIndex, principleSource.quiz[0].correct,
     'the source answer index stays unchanged when a distractor is held');
   assert.equal(principleDraft.quiz[0].options[1].reviewStatus, 'hold');

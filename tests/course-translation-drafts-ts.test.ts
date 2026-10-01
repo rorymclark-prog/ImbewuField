@@ -153,3 +153,29 @@ test('Reading Landscape safety and terminology holds remain exact in their paire
     assert.ok(hold.reason.length > 0);
   }
 });
+
+
+test('the Xitsonga principles body translates every paragraph while remaining bound to the exact source', async () => {
+  const lesson = source.lessons.find(lesson => lesson.id === 'intro-permaculture-l2')!;
+  const paired = draft.lessons.find(candidate => candidate.id === lesson.id)!;
+  assert.equal(paired.body.sourceEnglish, lesson.body);
+  assert.equal(paired.body.reviewStatus, 'machine-draft');
+  const english = lesson.body.split('\n\n');
+  const paragraphs = paired.body.xitsongaDraft.split('\n\n');
+  assert.equal(paragraphs.length, english.length);
+  paragraphs.forEach((paragraph, index) => assert.notEqual(paragraph, english[index],
+    'English-only paragraphs must not masquerade as a completed regional body'));
+  assert.ok(!draft.holds.some(hold => hold.lessonId === lesson.id && hold.field === 'body'),
+    'body metadata must not claim already translated passages are English holds');
+  for (const term of ['David Holmgren', 'Bill Mollison', 'Essence of Permaculture', 'earthworks', 'biomass', '(strip)', 'planting bed', 'maize', 'growth stage']) {
+    assert.ok(paired.body.xitsongaDraft.includes(term), `retain source concept: ${term}`);
+  }
+  assert.ok(!paragraphs[0].includes('Tinhlokomhaka'), 'starting points must not become topics or headings');
+  assert.match(paragraphs[1], /swi ya hi storm na growth stage/, 'preserve the dependence of hail damage on storm and crop stage');
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const view = resolveLearnerLessonPresentation(lesson, 'ts');
+  assert.equal(view.status, 'draft');
+  assert.equal(view.content.body, paired.body.xitsongaDraft);
+  assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} New condition.` }, 'ts').status,
+    'english-fallback', 'changed English guidance invalidates the whole body draft');
+});
