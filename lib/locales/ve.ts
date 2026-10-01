@@ -47,6 +47,13 @@ const dict: Dict = {
   studentKeepGoing: 'Bvelani phanḓa',
   studentModulesComplete: 'Modulu dza {done} kha {total} dzo fhela',
   studentRemaining: 'dzo salaho',
+  // Course categories reuse words already present in this unreviewed locale draft.
+  studentCategoryFoundation: 'Mutheo',
+  studentCategoryWater: 'Maḓi',
+  studentCategorySoil: 'Mavu',
+  studentCategoryPlants: 'Zwimela',
+  studentCategoryDesign: 'Pulane',
+  studentCategorySeeds: 'Mbeu',
   studentYourCourse: 'Khoso yaṋu',
   studentStudyOffline: 'Guda u si na inthanethe',
   studentSaveBeforeSignal: 'Vhulungani ngudo kha founu iyi ni sa athu u bva fhethu hu re na inthanethe',
