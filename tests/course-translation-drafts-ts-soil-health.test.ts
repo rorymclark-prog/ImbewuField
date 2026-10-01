@@ -75,12 +75,48 @@ function sourceParagraphsForHold(): string[] {
   return sourceLesson.body.split('\n\n');
 }
 
-test('Soil Health lessons 2 and 3 stay exact English until separately reviewed', () => {
-  for (const lesson of sourceModule.lessons.slice(1)) {
-    const shown = resolveLearnerLessonPresentation(lesson, 'ts');
-    assert.equal(shown.status, 'english-fallback');
-    assert.equal(shown.content.body, lesson.body);
-  }
+test('Soil Health L2 stays English while L3 exposes only the screened seasonal risk draft', () => {
+  const l2 = sourceModule.lessons[1];
+  const l2Shown = resolveLearnerLessonPresentation(l2, 'ts');
+  assert.equal(l2Shown.status, 'english-fallback');
+  assert.equal(l2Shown.content.body, l2.body);
+
+  const source = sourceModule.lessons[2];
+  const draft = XITSONGA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === source.id);
+  assert.ok(draft, 'the paired L3 draft must be present without adding L2');
+  assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  const english = source.body.split('\n\n');
+  const localized = draft.body.xitsongaDraft.split('\n\n');
+  assert.equal(localized.length, english.length);
+  assert.deepEqual(localized.slice(0, 9), english.slice(0, 9));
+  assert.deepEqual(localized.slice(9, 12), [
+    'Nsimu ya Highveld leyi tshikiweke yi nga funengetiwangi endzhaku ka ntshovelo wa maize yi langutana ni makhombo mambirhi lamakulu.',
+    'Mheho wa xixika wu nga susa misava ya le henhla leyi omeke.',
+    'Xidzedze xo sungula xo tika xa ximun’wana xi nga hlasela misava leyi nga funengetiwangi, xi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma famba na yona.',
+  ]);
+  assert.equal(localized[12], english[12]);
+
+  const shown = resolveLearnerLessonPresentation(source, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.xitsongaDraft);
+  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+  assert.deepEqual(shown.content.quiz.map(question => question.correct), source.quiz.map(question => question.correct));
+  assert.equal(draft.keyPoints.length, source.keyPoints.length);
+  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+  assert.equal(draft.quiz.length, source.quiz.length);
+  draft.quiz.forEach((question, index) => {
+    assert.equal(question.question.sourceEnglish, source.quiz[index].q);
+    assert.deepEqual(question.options.map(option => option.sourceEnglish), source.quiz[index].options);
+    assert.equal(question.sourceCorrectIndex, source.quiz[index].correct);
+    assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
+  });
+  const changedSource = { ...source, body: source.body.replace('Winter wind', 'Cold wind') };
+  const changedShown = resolveLearnerLessonPresentation(changedSource, 'ts');
+  assert.equal(changedShown.status, 'english-fallback');
+  assert.equal(changedShown.content.body, changedSource.body);
 });
 
 test('Soil Health source drift falls back to exact English', () => {
