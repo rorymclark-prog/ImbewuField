@@ -137,6 +137,8 @@ test('Introduction L2 poultry assessment preserves the harvest, safety and crop-
     assert.ok(option.includes('chicken run'));
     assert.ok(option.includes('planting bed'));
     assert.ok(option.includes(afterHarvest), `${language}: chickens use the empty bed after harvest`);
+    assert.ok(option.includes(language === 've' ? 'i si na zwimela' : "leyi nga riki na swin'wana"), `${language}: the post-harvest bed remains empty`);
+    assertOrdered(option, [afterHarvest, 'safe management', beforeReturn], `${language}: harvest precedes checking safety before crop return`);
     assert.ok(option.includes('safe management'));
     assert.ok(option.includes(beforeReturn), `${language}: safety check precedes edible crop return`);
     assert.ok(rationale.includes(cleanup), `${language}: chickens directly clean up pests`);
@@ -147,6 +149,7 @@ test('Introduction L2 poultry assessment preserves the harvest, safety and crop-
     assert.match(rationale, /nga hwalela germs|yi nga rhwala germs/, `${language}: manure can carry germs`);
     assert.ok(rationale.includes('safe management'));
     assert.ok(rationale.includes(beforeReturn), `${language}: rationale keeps the crop-return safety condition`);
+    assertOrdered(rationale, ['Fresh manure', 'germs', 'safe management', beforeReturn], `${language}: the germ caveat leads to safety checking before crop return`);
   }
 });
 
