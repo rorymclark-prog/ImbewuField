@@ -65,7 +65,7 @@ test('the Tshivenda Introduction draft stays paired to the English Study source'
   }
 });
 
-test('Introduction field and wind-direction advice stay exact English until Tshivenda review', async () => {
+test('Tshivenda Introduction L3 preserves zone frequencies and the observed wind direction', async () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_INTRO_PERMACULTURE_DRAFT.id);
   assert.ok(sourceModule);
   const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'intro-permaculture-l3');
@@ -73,36 +73,91 @@ test('Introduction field and wind-direction advice stay exact English until Tshi
   assert.ok(sourceLesson);
   assert.ok(draftLesson);
 
-  assert.equal(draftLesson.body.reviewStatus, 'hold');
+  assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
   assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
-  assert.equal(draftLesson.body.tshivendaDraft, sourceLesson.body,
-    'field observations and practical wind or water instructions must not leak unreviewed wording');
+  const paragraphs = draftLesson.body.tshivendaDraft.split('\n\n');
+  assert.equal(paragraphs.length, 3, 'all three source paragraphs must be translated and aligned');
+  assert.match(paragraphs[0], /Zone 0 ndi nnḓu/);
+  assert.match(paragraphs[0], /Zone 1.*tsini na nnḓu.*herbs na muroho wa saladi/);
+  assert.match(paragraphs[0], /Zone 2.*serapa tshihulwane.*chicken run.*luthihi kana luvhili.*nga ḓuvha/);
+  assert.match(paragraphs[0], /Zone 3.*tsimu khulwane.*vhege iṅwe na iṅwe/);
+  assert.match(paragraphs[0], /Zone 4.*semi-wild.*miri ya mitshelo.*fodder.*zwiṅwe zwifhinga/);
+  assert.match(paragraphs[0], /Zone 5.*wild/);
+  assert.match(paragraphs[1], /Sectors.*energy.*ḓuvha, muya, mvula, mandindi na mulilo/);
+  assert.match(paragraphs[1], /weather station.*dzi nga thusa.*thungo ya muya/,
+    'nearby records can help check wind direction; they do not guarantee it');
+  assert.match(paragraphs[1], /Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha land yaṋu/);
+  assert.match(paragraphs[1], /Olani misevhe.*zwe na zwi vhona/);
+  assert.match(paragraphs[2], /Olani zones na sectors.*motheo wa pulane yaṋu/);
+
+  const herbPoint = draftLesson.keyPoints[0];
+  const designPoint = draftLesson.keyPoints[3];
+  assert.equal(herbPoint.sourceEnglish, sourceLesson.keyPoints[0]);
+  assert.equal(herbPoint.reviewStatus, 'machine-draft');
+  assert.match(herbPoint.tshivendaDraft, /Zone 1.*herbs.*ka lunzhi/);
+  assert.doesNotMatch(herbPoint.tshivendaDraft, /zwilavhele/,
+    'keep the ambiguous herb name in its exact English form');
+  assert.equal(designPoint.sourceEnglish, sourceLesson.keyPoints[3]);
+  assert.match(designPoint.tshivendaDraft, /design/);
+  assert.doesNotMatch(designPoint.tshivendaDraft, /mufhaṱo/,
+    'starting a design must not be narrowed to starting construction');
+
+  const sourceHerbQuiz = sourceLesson.quiz[0];
+  const draftHerbQuiz = draftLesson.quiz[0];
+  assert.equal(draftHerbQuiz.sourceCorrectIndex, sourceHerbQuiz.correct);
+  assert.equal(draftHerbQuiz.question.sourceEnglish, sourceHerbQuiz.q);
+  assert.match(draftHerbQuiz.question.tshivendaDraft, /herbs.*Zone 3.*kule na nnḓu/);
+  assert.match(draftHerbQuiz.options[1].tshivendaDraft, /nga amba.*herbs less often/,
+    'preserve the source possibility and frequency phrase instead of suggesting a smaller quantity');
+  assert.match(draftHerbQuiz.rationale.tshivendaDraft, /Bed.*less often/,
+    'keep the planting bed and lower visit frequency distinct');
+  assert.match(draftHerbQuiz.options[2].tshivendaDraft, /herbs.*cross-pollinate/i);
+  assert.doesNotMatch(draftHerbQuiz.options[2].tshivendaDraft, /nga.*cross-pollinate/,
+    'do not weaken the direct distractor into a possibility');
+  assert.equal(draftHerbQuiz.options[1].sourceEnglish, sourceHerbQuiz.options[1]);
 
   const sourceWindQuestion = sourceLesson.quiz[1];
   const draftWindQuestion = draftLesson.quiz[1];
-  assert.equal(draftWindQuestion.sourceCorrectIndex, sourceWindQuestion.correct,
-    'keep the canonical answer key while holding wind-direction wording');
+  assert.equal(draftWindQuestion.sourceCorrectIndex, sourceWindQuestion.correct);
   for (const [name, pair, source] of [
     ['question', draftWindQuestion.question, sourceWindQuestion.q],
     ...draftWindQuestion.options.map((option, index) => [`option ${index}`, option, sourceWindQuestion.options[index]] as const),
     ['rationale', draftWindQuestion.rationale, sourceWindQuestion.rationale],
   ] as const) {
-    assert.equal(pair.reviewStatus, 'hold', `${name}: direction-dependent quiz wording stays held`);
-    assert.equal(pair.sourceEnglish, source, `${name}: exact canonical English source remains paired`);
-    assert.equal(pair.tshivendaDraft, source, `${name}: no unreviewed compass-direction wording is shown`);
+    assert.equal(pair.reviewStatus, 'machine-draft', `${name}: learner text is visibly an unreviewed draft`);
+    assert.equal(pair.sourceEnglish, source, `${name}: exact canonical source remains paired`);
   }
+  assert.match(draftWindQuestion.question.tshivendaDraft,
+    /damaging wind coming from the north-west on a Highveld farm/,
+    'the source-direction condition stays explicit and compass wording remains exact');
+  assert.match(draftWindQuestion.options[0].tshivendaDraft, /South-east/);
+  assert.match(draftWindQuestion.options[1].tshivendaDraft, /North-west.*vhukati ha muya na zwimela/);
+  assert.equal(draftWindQuestion.sourceCorrectIndex, 1,
+    'the canonical answer remains the boundary between the observed wind source and crops');
+  assert.match(draftWindQuestion.rationale.tshivendaDraft, /muya wa bva khaḽo zwa vhukuma/,
+    'the rationale points to the side the observed wind actually comes from');
 
   const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 've');
-  assert.equal(presentation.content.body, sourceLesson.body);
-  assert.deepEqual(presentation.content.quiz[1], sourceLesson.quiz[1]);
-  assert.equal(presentation.status, 'draft', 'other existing Tshivenda lesson fields remain visibly labelled drafts');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, draftLesson.body.tshivendaDraft);
+  assert.deepEqual(presentation.content.quiz[1], {
+    q: draftWindQuestion.question.tshivendaDraft,
+    options: draftWindQuestion.options.map(option => option.tshivendaDraft),
+    correct: sourceWindQuestion.correct,
+    rationale: draftWindQuestion.rationale.tshivendaDraft,
+  });
 
-  const changedSource = { ...sourceLesson, body: `${sourceLesson.body}\nChanged English source.` };
-  const staleDraft = resolveLearnerLessonPresentation(changedSource, 've');
-  assert.equal(staleDraft.status, 'english-fallback', 'source drift must hide the complete stale lesson draft');
-  assert.equal(staleDraft.content.body, changedSource.body);
-  assert.deepEqual(staleDraft.content.quiz, changedSource.quiz);
+  const changedQuizSource = {
+    ...sourceLesson,
+    quiz: sourceLesson.quiz.map((question, index) => index === 1
+      ? { ...question, q: `${question.q} Changed English source.` }
+      : question),
+  };
+  const staleDraft = resolveLearnerLessonPresentation(changedQuizSource, 've');
+  assert.equal(staleDraft.status, 'english-fallback', 'quiz source drift invalidates the complete lesson candidate');
+  assert.equal(staleDraft.content.body, sourceLesson.body);
+  assert.deepEqual(staleDraft.content.quiz, changedQuizSource.quiz);
 });
 
 test('Tshivenda Study control drafts stay paired to review text and sensitive controls stay English', async () => {

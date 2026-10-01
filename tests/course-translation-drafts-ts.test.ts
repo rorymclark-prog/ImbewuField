@@ -85,6 +85,74 @@ test('the draft retains source digits and named authors in paired fields', () =>
   }
 });
 
+test('Introduction L3 candidate preserves visit frequencies, observed wind, and assessment pairing', async () => {
+  const sourceLesson = source.lessons.find(lesson => lesson.id === 'intro-permaculture-l3')!;
+  const lesson = draft.lessons.find(item => item.id === sourceLesson.id)!;
+  assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  assert.equal(lesson.body.reviewStatus, 'machine-draft');
+  const paragraphs = lesson.body.xitsongaDraft.split('\n\n');
+  assert.equal(paragraphs.length, 3);
+  assert.match(paragraphs[0], /Zone 0 i yindlu/);
+  assert.match(paragraphs[0], /Zone 1.*kusuhi na yindlu.*herbs na salad greens/);
+  assert.match(paragraphs[0], /Zone 2.*ntanga lowukulu na xivala xa tihuku.*kan’we kumbe kambirhi hi siku/);
+  assert.match(paragraphs[0], /Zone 3.*nsimu leyikulu.*vhiki na vhiki/);
+  assert.match(paragraphs[0], /Zone 4.*semi-wild.*mirhi ya mihandzu na fodder.*minkarhi yin’wana/);
+  assert.match(paragraphs[0], /Zone 5.*nhova/);
+  assert.match(paragraphs[1], /Sectors.*energy.*dyambu, moya, mpfula, flood na fire/);
+  assert.match(paragraphs[1], /weather station.*ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona/);
+  assert.match(paragraphs[1], /Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena/);
+  assert.match(paragraphs[1], /Dirowa miseve ya leswi u swi vonaka/);
+  assert.match(paragraphs[2], /Dirowa zones na sectors ephepheni.*motheo wa design ya wena/);
+
+  assert.equal(lesson.keyPoints[0].sourceEnglish, sourceLesson.keyPoints[0]);
+  assert.equal(lesson.keyPoints[0].reviewStatus, 'machine-draft');
+  assert.match(lesson.keyPoints[0].xitsongaDraft, /Zone 1.*herbs leti u ti tshovelaka nkarhi na nkarhi/);
+  assert.equal(lesson.keyPoints[2].sourceEnglish, sourceLesson.keyPoints[2]);
+  assert.equal(lesson.keyPoints[2].reviewStatus, 'machine-draft');
+  assert.match(lesson.keyPoints[2].xitsongaDraft, /dyambu, moya, mati ya mpfula, flood na ndzilo/);
+
+  for (const [quizIndex, item] of lesson.quiz.entries()) {
+    const original = sourceLesson.quiz[quizIndex];
+    assert.equal(item.question.sourceEnglish, original.q);
+    assert.equal(item.sourceCorrectIndex, original.correct);
+    assert.equal(item.rationale.sourceEnglish, original.rationale);
+    assert.deepEqual(item.options.map(option => option.sourceEnglish), original.options);
+    assert.equal(item.question.reviewStatus, 'machine-draft');
+    assert.ok(item.options.every(option => option.reviewStatus === 'machine-draft'));
+    assert.equal(item.rationale.reviewStatus, 'machine-draft');
+  }
+  assert.match(lesson.quiz[0].options[1].xitsongaDraft, /nga endla.*herbs hi minkarhi yitsongo|herbs less often/,
+    'the extra walk may reduce visit frequency rather than harvest quantity');
+  assert.equal(lesson.quiz[0].sourceCorrectIndex, 1);
+  assert.match(lesson.quiz[1].question.xitsongaDraft, /damaging wind coming from the North-west on a Highveld farm/,
+    'the windbreak question remains conditional on observed direction');
+  assert.match(lesson.quiz[1].options[0].xitsongaDraft, /South-east/);
+  assert.match(lesson.quiz[1].options[1].xitsongaDraft, /North-west.*vhukati ka moya na crops/);
+  assert.equal(lesson.quiz[1].sourceCorrectIndex, 1,
+    'the correct option keeps the boundary between the observed wind and crops');
+  assert.match(lesson.quiz[1].rationale.xitsongaDraft, /eka tlhelo leri moya wu humaka eka rona hakunene/,
+    'the rationale stays tied to where the observed wind actually comes from');
+
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const presentation = resolveLearnerLessonPresentation(sourceLesson, 'ts');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, lesson.body.xitsongaDraft);
+  assert.deepEqual(presentation.content.quiz[1], {
+    q: lesson.quiz[1].question.xitsongaDraft,
+    options: lesson.quiz[1].options.map(option => option.xitsongaDraft),
+    correct: sourceLesson.quiz[1].correct,
+    rationale: lesson.quiz[1].rationale.xitsongaDraft,
+  });
+  const changed = {
+    ...sourceLesson,
+    quiz: sourceLesson.quiz.map((item, index) => index === 1 ? { ...item, q: `${item.q} Changed source.` } : item),
+  };
+  const fallback = resolveLearnerLessonPresentation(changed, 'ts');
+  assert.equal(fallback.status, 'english-fallback', 'wind quiz source drift hides the complete stale candidate');
+  assert.equal(fallback.content.body, sourceLesson.body);
+  assert.deepEqual(fallback.content.quiz, changed.quiz);
+});
+
 test('Reading Landscape preserves source lesson fields and quiz answer indexes', () => {
   const readingSource = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
   assert.equal(readingDraft.reviewStatus, 'machine-draft');
