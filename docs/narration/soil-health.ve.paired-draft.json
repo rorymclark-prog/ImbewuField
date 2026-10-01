@@ -594,7 +594,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mushumo wa tsimuni",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
         },
         "body": [
           {
@@ -622,7 +624,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nyito ya tsimuni",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
         },
         "body": [
           {

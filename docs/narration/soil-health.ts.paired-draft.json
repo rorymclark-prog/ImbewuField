@@ -62,7 +62,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ha yini leswi swi ri swa nkoka",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
         },
         "body": [
           {
