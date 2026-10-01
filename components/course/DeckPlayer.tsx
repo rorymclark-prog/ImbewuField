@@ -516,7 +516,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                   color: narrationChoice === NO_NARRATION ? GREEN : MUTED,
                 }}
               >
-                No narration
+                {t('courseDeckNoNarration')}
               </button>
             )}
           </div>
