@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'a722fc6d', changes: [
+    'Study cards now show when an English module contains regional lesson drafts.',
+  ], tour: [
+    { title: 'Find the regional lesson drafts', where: 'Study → course modules', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. An English module card names the number of available lesson drafts without presenting the whole module as translated.' },
+  ] },
   { when: '1 October 2026', sha: '7c0d147c', changes: [
     'Soil Health adds marked Sesotho and Xitsonga winter wind and storm text.',
     'Other Soil Health guidance stays in English; the regional decks remain silent.',
