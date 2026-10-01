@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '1 October 2026', sha: 'fcd30302', changes: [
+  { when: '1 October 2026', sha: '7ae97656', changes: [
     'Crop calendar: vegetables, staple crops, fruit and animal products each get a section.',
     'A section that is switched off says so, with one tap to show it again.',
     'Food chart: month on top, count under the bar; on a phone the blank left strip is gone.',
@@ -51,6 +51,12 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Scroll the calendar. Vegetables, Staple crops, Fruit, nuts & berries and Animal products each have a band.' },
     { title: 'Read the food chart', where: 'Crop plan → Food, field & value → Availability', href: '/facilitator/crops',
       detail: 'Each month name heads its bar and the crop count sits under it. Tap a month for detail.' },
+  ] },
+  { when: '1 October 2026', sha: 'f0784645', changes: [
+    'Sesotho principles key points and quizzes now have marked drafts.',
+  ], tour: [
+    { title: 'Try the principles questions', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Sesotho. Read the four key points and both questions with their exact English source. Difficult technical terms remain English; facilitator review is pending.' },
   ] },
   { when: '1 October 2026', sha: 'cde1191d', changes: [
     'Sesotho principles lesson adds the remaining marked body draft.',

@@ -1,0 +1,102 @@
+{
+  "lessonId": "intro-permaculture-l2",
+  "language": "st",
+  "sourceMainSha": "fcd303095ad647b9a775d4b143f5e60fda2ca8f5",
+  "status": "learner-wired-machine-draft",
+  "review": "Independent model semantic backcheck accepted material faithfulness. Not fluent-speaker or local-farming approval. Keypoint 3 retains technical English edges/margins; rationale separates inspection list from adviser consultation. Quiz2 independent backcheck accepted meaning and corrected a weaker help-clean-up claim to the source direct pest-cleanup statement. Safety timing, manure/germ risk and technical terms retained.",
+  "keyPoints": [
+    {
+      "sourceEnglish": "Observe your land for a full season before major earthworks",
+      "sesothoDraft": "Shebella setsha sa hao sehleng sohle pele o qala earthworks tse kgolo.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "sourceEnglish": "Catch and store rain, sun, and biomass before they leave your property",
+      "sesothoDraft": "Bokella mme o boloke pula, letsatsi le biomass pele di tloha setsheng sa hao.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "sourceEnglish": "Edges and margins can be useful places to observe what grows well",
+      "sesothoDraft": "Edges le margins di ka ba dibaka tse molemo tsa ho shebella se melang hantle.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "sourceEnglish": "Hail injury to maize depends on the storm and the crop’s growth stage",
+      "sesothoDraft": "Tšenyo ya sefako pooneng (maize) e itshetlehile ka sefefo le boemo ba kgolo ya sejwalo.",
+      "reviewStatus": "machine-draft"
+    }
+  ],
+  "quiz": [
+    {
+      "question": {
+        "sourceEnglish": "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
+        "sesothoDraft": "Molemi o batla ho cheka swales hore a bokelle metsi a pula. O lokela ho qala ka ho etsa eng, a latela molao-motheo wa observe and interact?",
+        "reviewStatus": "machine-draft"
+      },
+      "options": [
+        {
+          "sourceEnglish": "Dig immediately after the first good rain",
+          "sesothoDraft": "Cheka hang ka mora pula ya pele e ntle.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "Watch where water flows and pools across at least one wet season",
+          "sesothoDraft": "Shebella moo metsi a phallang le moo a bokellanang teng nakong ya sehla se le seng sa dipula bonyane.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "Copy a neighbour's swale layout",
+          "sesothoDraft": "Kopitsa moralo wa swales wa moahisani.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "Assume the same swale design fits every site",
+          "sesothoDraft": "Nka hore moralo o tshwanang wa swales o loketse setsha se seng le se seng.",
+          "reviewStatus": "machine-draft"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
+        "sesothoDraft": "Sehla sa dipula se bontsha difefo tse fetang se le seng, empa ho shebella ke mohato wa pele feela. Pele o cheka, hlahloba mobu, moepa, drainage le safe overflow route. Etsa sena le moeletsi wa lehae ya kwetlisitsweng.",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "question": {
+        "sourceEnglish": "Which layout best applies 'integrate rather than segregate'?",
+        "sesothoDraft": "Ke tlhophiso efe e bontshang hantle molao-motheo wa integrate rather than segregate?",
+        "reviewStatus": "machine-draft"
+      },
+      "options": [
+        {
+          "sourceEnglish": "Chickens penned far from the garden",
+          "sesothoDraft": "Dikgoho tse kwalletsweng lesakeng hole le serapa.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
+          "sesothoDraft": "Serapa, difate tsa ditholwana le chicken run di hlophisitswe ka tsela eo dikgoho di sebedisang planting bed e se nang dijwalo ka mora kotulo; ebe molemi o hlahloba safe management pele edible crops di kgutla.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "Separate paddocks for each crop",
+          "sesothoDraft": "Paddocks tse arohaneng bakeng sa sejwalo ka seng.",
+          "reviewStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "All animals kept off the cultivated zone",
+          "sesothoDraft": "Diphoofolo tsohle di thibelwa ho kena cultivated zone.",
+          "reviewStatus": "machine-draft"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
+        "sesothoDraft": "Integration e etsa hore karolo ka nngwe e thuse tse haufi le yona — mona, dikgoho di clean up pests mme di eketsa fertility ho e-na le ho dula di sa sebetse ka fixed pen. Fresh manure e ka jara germs, kahoo hlahloba safe management pele edible crops di kgutla.",
+        "reviewStatus": "machine-draft"
+      }
+    }
+  ],
+  "media": "Slides/audio unchanged; existing narration remains bound to its original slide text, not this lesson assessment."
+}

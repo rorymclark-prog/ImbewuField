@@ -61,24 +61,24 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: key point count must match`);
     for (const [pointIndex, point] of lesson.keyPoints.entries()) {
       checkPair(point, original.keyPoints[pointIndex], `${path}.keyPoints[${pointIndex}]`,
-        original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
+        'machine-draft');
     }
     assert.equal(lesson.quiz.length, original.quiz.length, `${path}: quiz question count must match`);
     for (const [questionIndex, question] of lesson.quiz.entries()) {
       const english = original.quiz[questionIndex];
       const questionPath = `${path}.quiz[${questionIndex}]`;
       checkPair(question.question, english.q, `${questionPath}.question`,
-        original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
+        'machine-draft');
       assert.equal(question.options.length, english.options.length, `${questionPath}: option count/order must match`);
       for (const [optionIndex, option] of question.options.entries()) {
         checkPair(option, english.options[optionIndex], `${questionPath}.options[${optionIndex}]`,
-          original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
+          'machine-draft');
       }
       assert.equal(question.sourceCorrectIndex, english.correct, `${questionPath}: answer index must remain unchanged`);
       assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, english.options[english.correct],
         `${questionPath}: correct answer must still point to the exact English correct option`);
       checkPair(question.rationale, english.rationale, `${questionPath}.rationale`,
-        original.id === 'intro-permaculture-l2' ? 'hold' : 'machine-draft');
+        'machine-draft');
     }
   }
 });
@@ -112,7 +112,7 @@ test('a Sesotho learner gets the full marked ethics draft and its unchanged Engl
     'a changed English source invalidates the whole paired draft');
 });
 
-test('Sesotho Introduction L2 gives a complete source-paired principles body while detailed safety quizzes stay English', () => {
+test('Sesotho principles assessment retains every English safety condition beside its complete draft', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture');
   assert.ok(sourceModule);
   const source = sourceModule.lessons.find(lesson => lesson.id === 'intro-permaculture-l2');
@@ -135,32 +135,46 @@ test('Sesotho Introduction L2 gives a complete source-paired principles body whi
   assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed source.` }, 'st').status,
     'english-fallback', 'source edits invalidate the complete principles draft');
   draft.keyPoints.forEach((point, index) => {
-    assert.equal(point.reviewStatus, 'hold');
-    assert.equal(point.sesothoDraft, source.keyPoints[index]);
+    assert.equal(point.reviewStatus, 'machine-draft');
+    assert.equal(point.sourceEnglish, source.keyPoints[index]);
+    assert.notEqual(point.sesothoDraft, point.sourceEnglish, 'a translated key point cannot just copy English');
   });
-  assert.equal(draft.quiz[0].rationale.reviewStatus, 'hold');
-  assert.equal(draft.quiz[0].rationale.sourceEnglish, source.quiz[0].rationale);
-  assert.equal(draft.quiz[0].rationale.sesothoDraft, source.quiz[0].rationale);
-  assert.equal(draft.quiz[1].options[1].reviewStatus, 'hold');
-  assert.equal(draft.quiz[1].options[1].sourceEnglish, source.quiz[1].options[1]);
-  assert.equal(draft.quiz[1].options[1].sesothoDraft, source.quiz[1].options[1]);
-  assert.equal(draft.quiz[1].sourceCorrectIndex, source.quiz[1].correct);
+  draft.quiz.forEach((question, index) => {
+    const english = source.quiz[index];
+    for (const pair of [question.question, ...question.options, question.rationale]) {
+      assert.equal(pair.reviewStatus, 'machine-draft');
+      assert.notEqual(pair.sesothoDraft, pair.sourceEnglish);
+    }
+    assert.equal(question.sourceCorrectIndex, english.correct);
+  });
+  // Model checks caught dangerous narrowing and missing timing. Keep the technical
+  // terms explicit and the full source visible; these are still unreviewed drafts.
+  assert.match(draft.quiz[0].options[1].sesothoDraft, /bonyane/, 'at least one wet season must not become a shorter observation');
+  assert.match(draft.quiz[0].rationale.sesothoDraft, /mohato wa pele feela/, 'observation remains only a first step');
+  assert.match(draft.quiz[0].rationale.sesothoDraft, /Pele o cheka/, 'checks must happen before digging');
+  for (const term of ['drainage', 'safe overflow route', 'moeletsi wa lehae ya kwetlisitsweng']) {
+    assert.ok(draft.quiz[0].rationale.sesothoDraft.includes(term));
+  }
+  assert.match(draft.quiz[1].options[1].sesothoDraft, /ka mora kotulo; ebe.*safe management pele edible crops di kgutla/,
+    'harvest, safety check and edible crop return must remain in that order');
+  for (const term of ['clean up pests', 'fertility', 'fixed pen', 'Fresh manure', 'germs', 'safe management', 'pele edible crops di kgutla']) {
+    assert.ok(draft.quiz[1].rationale.sesothoDraft.includes(term));
+  }
+  assert.ok(!draft.quiz[1].rationale.sesothoDraft.includes('thusa ho clean up'), 'do not weaken the source pest-cleanup claim');
 
   const presentation = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.body, draft.body.sesothoDraft);
-  assert.equal(presentation.content.quiz[0].q, source.quiz[0].q);
-  assert.deepEqual(presentation.content.quiz[0].options, source.quiz[0].options,
-    'all earthworks and rainfall quiz guidance remains English');
-  assert.equal(presentation.content.quiz[0].rationale, source.quiz[0].rationale);
-  assert.equal(presentation.content.quiz[1].q, source.quiz[1].q);
-  assert.deepEqual(presentation.content.quiz[1].options, source.quiz[1].options,
-    'all poultry and edible-crop safety guidance remains English');
-  assert.equal(presentation.content.quiz[1].options[source.quiz[1].correct], source.quiz[1].options[source.quiz[1].correct]);
-  assert.equal(presentation.content.quiz[1].correct, source.quiz[1].correct);
-  assert.equal(presentation.content.quiz[1].rationale, source.quiz[1].rationale);
-  assert.deepEqual(presentation.content.keyPoints, source.keyPoints,
-    'earthwork, water, crop and weather key points remain exact English');
+  assert.deepEqual(presentation.content.keyPoints, draft.keyPoints.map(point => point.sesothoDraft));
+  draft.quiz.forEach((question, index) => {
+    assert.equal(presentation.content.quiz[index].q, question.question.sesothoDraft);
+    assert.deepEqual(presentation.content.quiz[index].options, question.options.map(option => option.sesothoDraft));
+    assert.equal(presentation.content.quiz[index].rationale, question.rationale.sesothoDraft);
+    assert.equal(presentation.content.quiz[index].correct, source.quiz[index].correct);
+  });
+  assert.equal(resolveLearnerLessonPresentation({ ...source, quiz: source.quiz.map((question, index) =>
+    index === 0 ? { ...question, rationale: `${question.rationale} New safety condition.` } : question) }, 'st').status,
+    'english-fallback', 'a changed source safety condition invalidates the assessment draft');
   assert.notEqual(presentation.content.title, source.title);
 });
 
