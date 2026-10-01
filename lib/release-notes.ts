@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '7c0d147c', changes: [
+    'Soil Health adds marked Sesotho and Xitsonga winter wind and storm text.',
+    'Other Soil Health guidance stays in English; the regional decks remain silent.',
+  ], tour: [
+    { title: 'Compare the seasonal soil risks', where: 'Study → Soil Health → lesson 3', href: '/student',
+      detail: 'Choose Sesotho or Xitsonga. Three draft paragraphs appear beside the exact English source; other soil guidance remains in English.' },
+  ] },
   { when: '1 October 2026', sha: '40a6f825', changes: [
     'Vegetables adds three marked Tshivenda sentences beside the English lesson.',
     'Introduction and Seeds add Sesotho descriptions of their lesson pictures.',
