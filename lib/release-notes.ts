@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'ea414f48', changes: [
+    'The principles body now has complete marked Tshivenda and Xitsonga drafts.',
+  ], tour: [
+    { title: 'Read the regional principles drafts', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. All three body paragraphs have a marked draft beside the exact English source; difficult technical terms remain English. Facilitator review is pending.' },
+  ] },
   { when: '1 October 2026', sha: '77b07754', changes: [
     'Crop calendar: vegetables, staple crops, fruit and animal products each get a section.',
     'A section that is switched off says so, with one tap to show it again.',
