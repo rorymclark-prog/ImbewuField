@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '266b2265', changes: [
+    'Study course cards now show more Tshivenda and Xitsonga headings in the selected language.',
+    'Unreviewed drafts keep English farming guidance where needed.',
+  ], tour: [
+    { title: 'Check regional Study cards', where: 'Study → course modules', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Compare category headings and the Xitsonga ready/module labels; some course text remains in English pending language review.' },
+  ] },
   { when: '1 October 2026', sha: '72de4cc1', changes: [
     'Study slides now label the silent-reading choice in Sesotho, Tshivenda and Xitsonga.',
     'Slide zoom and some playback controls also use those languages.',
