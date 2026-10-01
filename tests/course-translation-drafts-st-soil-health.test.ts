@@ -93,7 +93,6 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     'lessons[1] soil-health-l2.quiz[0].rationale',
     'lessons[1] soil-health-l2.quiz[1].rationale',
     'lessons[2] soil-health-l3.infographicAlt',
-    'lessons[2] soil-health-l3.body',
     'lessons[2] soil-health-l3.keyPoints[3]',
     'lessons[2] soil-health-l3.quiz[0].options[2]',
     'lessons[2] soil-health-l3.quiz[0].rationale',
@@ -112,6 +111,30 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     'the visible draft must keep the whole compost procedure exact English until its sanitation wording is reviewed');
   assert.equal(presentation.content.keyPoints[1], compostLesson.keyPoints[1],
     'the visible summary must retain the exact sanitation claim until its Sesotho wording is reviewed');
+});
+
+test('Soil Health Sesotho L3 drafts only the screened seasonal risks and falls back after source drift', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'soil-health')!.lessons[2];
+  const draft = SESOTHO_SOIL_HEALTH_DRAFT.lessons[2];
+  const english = source.body.split('\n\n');
+  const localized = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(draft.id, source.id);
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  assert.equal(localized.length, english.length);
+  assert.deepEqual(localized.slice(0, 9), english.slice(0, 9));
+  assert.deepEqual(localized.slice(9, 12), [
+    'Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.',
+    'Moea oa mariha o ka nka mobu o ommeng o ka holimo.',
+    'Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.',
+  ]);
+  assert.equal(localized[12], english[12]);
+  const shown = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.sesothoDraft);
+  assert.deepEqual(shown.content.quiz.map(question => question.correct), source.quiz.map(question => question.correct));
+  const changedSource = { ...source, body: source.body.replace('Winter wind', 'Cold wind') };
+  assert.equal(resolveLearnerLessonPresentation(changedSource, 'st').status, 'english-fallback');
 });
 
 test('Soil L1 keeps jar interpretation and diagnostic cautions English beside selected observation drafts', () => {
