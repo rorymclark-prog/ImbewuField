@@ -162,7 +162,14 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Miri mirefu i vhumba tshivhumbeo tsha nṱha (canopy).",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
+          },
+          {
+            "status": "draft",
+            "text": "Miri miṱuku i aluwa nga fhasi hayo.",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
             "status": "english-hold"
@@ -171,10 +178,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwimela zwi fukaho fhasi zwi a ṱandavhuwa kha fhethu.",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
             "status": "english-hold"

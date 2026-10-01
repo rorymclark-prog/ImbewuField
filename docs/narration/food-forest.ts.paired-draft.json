@@ -162,7 +162,14 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mirhi yo leha yi vumba xifunengeto xa le henhla (canopy).",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
+          },
+          {
+            "status": "draft",
+            "text": "Mirhi leyitsongo yi kula ehansi ka xona.",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
             "status": "english-hold"
@@ -171,16 +178,17 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swimilani leswi funengetaka misava swi hangalaka ehenhla ka yona.",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swimilani swo khandziya swi tirhisa switiyiso leswi faneleke.",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
             "status": "english-hold"

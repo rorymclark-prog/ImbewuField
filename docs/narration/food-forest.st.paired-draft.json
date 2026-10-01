@@ -166,7 +166,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lifate tse nyane di mela ka tlasa lera leo.",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
             "status": "english-hold"
@@ -175,13 +177,19 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dimela tse kwahelang mobu (ground cover) di hasana hodima mobu.",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dijalo tsa metso (root crops) di mela ka tlasa bokahodimo ba mobu.",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dimela tse hloang di sebedisa ditshehetso tse di loketseng (supports).",
+            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
           },
           {
             "status": "english-hold"
