@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: '4d054145', changes: [
+    'Soil Health lesson 1 now shows the remaining Sesotho body paragraphs as marked drafts.',
+    'Jar and soil terms remain in English where needed, beside the exact English source.',
+  ], tour: [
+    { title: 'Read the Sesotho soil lesson draft', where: 'Study → Soil Health → lesson 1', href: '/student',
+      detail: 'Choose Sesotho. The lesson body and jar summary are unreviewed drafts shown beside their exact English source.' },
+  ] },
   { when: '1 October 2026', sha: '8bd7b4b6', changes: [
     'The zones and sectors lesson now has complete marked Tshivenda and Xitsonga text drafts.',
   ], tour: [
