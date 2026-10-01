@@ -43,8 +43,8 @@ export interface UpdateTourStop {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '2 October 2026', sha: 'fa529c13', changes: [
-    'Sesotho Soil Health lesson 2 now shows a marked sanitation key point and compost quiz question and feedback drafts.',
-    'The checked wording stays beside its exact English source; answer choices and order are preserved.',
+    'Sesotho Soil L2 adds marked compost question, feedback and key point drafts.',
+    'Exact English stays beside them; answer choices and order are preserved.',
   ], tour: [
     { title: 'Review the Sesotho compost assessment drafts', where: 'Study → Soil Health → lesson 2', href: '/student',
       detail: 'Choose Sesotho. Read the key point, compost question and explanations beside English. This is an unreviewed machine draft; lesson media are unchanged.' },
