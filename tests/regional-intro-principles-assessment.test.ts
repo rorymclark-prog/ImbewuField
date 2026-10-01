@@ -167,12 +167,21 @@ test('changed L2 key points or safety sources fail closed to the exact English l
   }
 });
 
-test('other Xitsonga Intro lessons keep their exact-English hold records', () => {
+test('completed Xitsonga Intro L3 removes only its superseded hold records', () => {
   const heldFields = XITSONGA_INTRO_PERMACULTURE_DRAFT.holds;
-  assert.ok(heldFields.some(hold => hold.lessonId === 'intro-permaculture-l1' && hold.field === 'keyPoints[1]'));
-  assert.ok(heldFields.some(hold => hold.lessonId === 'intro-permaculture-l1' && hold.field === 'quiz[0].q'));
-  assert.ok(heldFields.some(hold => hold.lessonId === 'intro-permaculture-l3' && hold.field === 'body'));
-  assert.ok(heldFields.some(hold => hold.lessonId === 'intro-permaculture-l3' && hold.field === 'quiz[1].rationale'));
+  assert.ok(heldFields.some(hold => hold.lessonId === 'intro-permaculture-l1' && hold.field === 'keyPoints[1]'),
+    'the unrelated L1 key-point hold remains');
+  assert.ok(heldFields.some(hold => hold.lessonId === 'intro-permaculture-l1' && hold.field === 'quiz[0].q'),
+    'the unrelated L1 quiz hold remains');
+  assert.ok(!heldFields.some(hold => hold.lessonId === 'intro-permaculture-l3'),
+    'the complete source-paired L3 candidate has no stale body, key-point, or quiz holds');
   assert.ok(!heldFields.some(hold => hold.lessonId === 'intro-permaculture-l2'),
     'completed assessment candidates no longer advertise superseded L2 holds');
+  const l3 = XITSONGA_INTRO_PERMACULTURE_DRAFT.lessons.find(lesson => lesson.id === 'intro-permaculture-l3');
+  assert.ok(l3);
+  assert.equal(l3.body.reviewStatus, 'machine-draft');
+  assert.ok(l3.keyPoints.every(point => point.reviewStatus === 'machine-draft'));
+  assert.ok(l3.quiz.every(question => question.question.reviewStatus === 'machine-draft' &&
+    question.options.every(option => option.reviewStatus === 'machine-draft') &&
+    question.rationale.reviewStatus === 'machine-draft' && question.sourceCorrectIndex === 1));
 });

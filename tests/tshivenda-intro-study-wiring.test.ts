@@ -6,7 +6,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
 
-test('Tshivenda Introduction Study keeps source pairs, held L2 semantic risks and L3 flood/compass wording visible', () => {
+test('Tshivenda Introduction Study keeps source pairs, held L2 risks and conditional L3 compass wording visible', () => {
   const draft = TSHIVENDA_INTRO_PERMACULTURE_DRAFT;
   const module = COURSE_MODULES.find(candidate => candidate.id === draft.id);
   assert.ok(module, 'the draft module must exist in the canonical Study course');
@@ -37,18 +37,33 @@ test('Tshivenda Introduction Study keeps source pairs, held L2 semantic risks an
   const finalDraftLesson = draft.lessons[2];
   const finalPresentation = resolveLearnerLessonPresentation(finalSourceLesson, 've');
   assert.equal(finalDraftLesson.body.sourceEnglish, finalSourceLesson.body,
-    'the observation draft must stay paired to the exact Study source');
-  assert.equal(finalDraftLesson.body.reviewStatus, 'hold',
-    'unreviewed field and compass instructions must remain exact English');
-  assert.equal(finalDraftLesson.body.tshivendaDraft, finalSourceLesson.body);
-  assert.equal(finalPresentation.content.body, finalSourceLesson.body);
-  assert.equal(finalDraftLesson.quiz[1].question.reviewStatus, 'hold');
-  assert.ok(finalDraftLesson.quiz[1].options.every(option => option.reviewStatus === 'hold'));
-  assert.equal(finalDraftLesson.quiz[1].rationale.reviewStatus, 'hold');
-  assert.equal(finalPresentation.content.quiz[1].q, finalSourceLesson.quiz[1].q,
-    'the held compass question must stay English');
-  assert.deepEqual(finalPresentation.content.quiz[1], finalSourceLesson.quiz[1],
-    'the complete direction-dependent quiz item must stay exact English');
+    'the zone and sector draft must stay paired to the exact Study source');
+  assert.equal(finalDraftLesson.body.reviewStatus, 'machine-draft');
+  const zoneParagraphs = finalDraftLesson.body.tshivendaDraft.split('\n\n');
+  assert.equal(zoneParagraphs.length, 3);
+  assert.match(zoneParagraphs[0], /Zone 2.*serapa tshihulwane.*luthihi kana luvhili.*nga ḓuvha/);
+  assert.match(zoneParagraphs[0], /Zone 3.*tsimu khulwane.*vhege iṅwe na iṅwe/);
+  assert.match(zoneParagraphs[0], /Zone 4.*semi-wild.*miri ya mitshelo.*fodder.*zwiṅwe zwifhinga/);
+  assert.match(zoneParagraphs[1], /weather station.*dzi nga thusa.*thungo ya muya/);
+  assert.match(zoneParagraphs[1], /Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha land yaṋu/);
+  assert.equal(finalPresentation.content.body, finalDraftLesson.body.tshivendaDraft);
+
+  const sourceWindQuestion = finalSourceLesson.quiz[1];
+  const draftWindQuestion = finalDraftLesson.quiz[1];
+  assert.equal(draftWindQuestion.sourceCorrectIndex, sourceWindQuestion.correct);
+  assert.match(draftWindQuestion.question.tshivendaDraft,
+    /damaging wind coming from the north-west on a Highveld farm/,
+    'the scenario remains conditional on the observed compass direction');
+  assert.equal(draftWindQuestion.options[0].sourceEnglish, sourceWindQuestion.options[0]);
+  assert.match(draftWindQuestion.options[1].tshivendaDraft, /North-west.*vhukati ha muya na zwimela/);
+  assert.equal(draftWindQuestion.sourceCorrectIndex, 1);
+  assert.match(draftWindQuestion.rationale.tshivendaDraft, /muya wa bva khaḽo zwa vhukuma/);
+  assert.deepEqual(finalPresentation.content.quiz[1], {
+    q: draftWindQuestion.question.tshivendaDraft,
+    options: draftWindQuestion.options.map(option => option.tshivendaDraft),
+    correct: sourceWindQuestion.correct,
+    rationale: draftWindQuestion.rationale.tshivendaDraft,
+  }, 'the complete direction-dependent draft remains paired and learner-visible');
 
   const principleSource = module.lessons[1];
   const principleDraft = draft.lessons[1];

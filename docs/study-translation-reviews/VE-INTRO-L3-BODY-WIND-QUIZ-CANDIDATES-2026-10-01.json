@@ -1,14 +1,45 @@
 {
   "lessonId": "intro-permaculture-l3",
   "sourceMainSha": "570064a1170457aed7c515e19c89501552e4c563",
-  "status": "unwired-machine-draft",
-  "scopeNote": "Only fields currently held in the Tshivenda paired draft are included. Existing translated key points and quiz 1 are omitted.",
+  "status": "learner-wired-machine-draft",
+  "scopeNote": "Source-paired machine draft for the complete L3 body, keyPoints 0 and 3, and both quizzes. Existing infographic alt, title, and other fields are unchanged.",
   "body": {
     "sourceEnglish": "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
     "draft": "Zones na sectors zwi thusa u fhungudza mushumo u sa ṱoḓei. Zones dzi bva kha 0 u ya kha 5, zwi tshi tevhedza uri ni dalela fhethu honoho lunzhi-lini. Zone 0 ndi nnḓu. Kha tsumbo iyi, Zone 1 i tsini na nnḓu nahone i na zwine na zwi ka lunzhi — herbs na muroho wa saladi. Zone 2 ndi serapa tshihulwane na chicken run, zwine zwa dalelwa luthihi kana luvhili nga ḓuvha. Zone 3 ndi tsimu khulwane, ine ya dalelwa vhege iṅwe na iṅwe. Zone 4 ndi semi-wild — miri ya mitshelo na fodder zwine zwa ṱoḓa ṱhogomelo nga zwiṅwe zwifhinga. Zone 5 yo siwa i wild.\n\nSectors ndi energy dzi no swika dzi tshi bva nnḓa — ḓuvha, muya, mvula, mandindi na mulilo. Sedzani hune muya u re na maanḓa wa bva hone bulasini yaṋu. Rekhodo dza weather station ya tsini dzi nga thusa u sedza thungo ya muya. Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha land yaṋu. Olani misevhe u sumbedza zwe na zwi vhona.\n\nOlani zones na sectors kha bammbiri, nahone ni vha ni na motheo wa pulane yaṋu."
   },
   "quiz": [
     {
+      "index": 0,
+      "question": {
+        "sourceEnglish": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
+        "draft": "Ni ṱavha herbs kha Zone 3, tsimu khulwane i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?"
+      },
+      "options": [
+        {
+          "sourceEnglish": "Herbs grow too large",
+          "draft": "Herbs dzi aluwa zwihulwane lwo kalaho"
+        },
+        {
+          "sourceEnglish": "The extra walk may mean you pick or check them less often",
+          "draft": "Lwendo lwo engedzeaho lu nga amba uri ni nga ka kana u sedza herbs less often"
+        },
+        {
+          "sourceEnglish": "Herbs cross-pollinate with main crops",
+          "draft": "Herbs dzi cross-pollinate na zwimela zwihulwane"
+        },
+        {
+          "sourceEnglish": "Zone 3 gets too much sun for herbs",
+          "draft": "Zone 3 i wana ḓuvha ḽinzhi lwo kalaho kha herbs"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
+        "draft": "Vheani tshimela tshine na tshi ka lunzhi tsini ha nḓila ya ḓuvha ḽiṅwe na ḽiṅwe. Bed i re kule i engedza u tshimbila nahone i nga tolwa less often."
+      }
+    },
+    {
+      "index": 1,
       "question": {
         "sourceEnglish": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
         "draft": "Musi ni tshi vhona “damaging wind coming from the north-west on a Highveld farm”, windbreak i fanela u vhewa ngafhi?"
@@ -16,7 +47,7 @@
       "options": [
         {
           "sourceEnglish": "South-east boundary",
-          "draft": "Boundary ya South-east"
+          "draft": "Moedi wa South-east"
         },
         {
           "sourceEnglish": "North-west boundary, between the wind and the crops",
@@ -34,13 +65,27 @@
       "sourceCorrectIndex": 1,
       "rationale": {
         "sourceEnglish": "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
-        "draft": "Windbreak i shuma nga u ima vhukati ha hune wind ya bva hone na tshine ya nga tshi tshinya — ngauralo i fanela u vha kha sia ḽine wind ya bva khaḽo zwa vhukuma."
+        "draft": "Windbreak i shuma nga u ima vhukati ha hune muya wa bva hone na tshine ya nga tshi tshinya — ngauralo i fanela u vha kha sia ḽine muya wa bva khaḽo zwa vhukuma."
       }
     }
   ],
   "uncertainties": [
     "The precise local-language rendering of energy-sector terminology and fodder is uncertain; those technical terms remain in English. Zone and sector names are retained as formal labels.",
-    "The conditional source phrase “damaging wind coming from the north-west on a Highveld farm” remains exact English in the question. The answer is limited to the direction of the observed damaging wind."
+    "The conditional source phrase “damaging wind coming from the north-west on a Highveld farm” remains exact English in the question. The answer is limited to the direction of the observed damaging wind.",
+    "The proposals retain the formal English term herbs pending confirmation of its local equivalent.",
+    "The simple sketch key point retains design to avoid implying construction."
   ],
-  "review": "Independent lower-cost source/semantic backcheck accepted zone assignments/examples/frequencies, observed-source sectors and conditional north-west windbreak/index. Root repaired herbs generic scope by keeping English and restored draw/Sketch verb Olani; corrected source SHA metadata. Unreviewed machine draft; not learner-wired or fluent/local farming approved."
+  "review": "Independently backchecked source alignment, zone order/frequencies, conditional observed wind direction, quiz answers, and the supplemental herbs/design wording. Unreviewed machine draft; no fluent Tshivenda or local farming approval is claimed.",
+  "keyPoints": [
+    {
+      "index": 0,
+      "sourceEnglish": "In this example, Zone 1 near the house holds often-picked herbs",
+      "draft": "Kha tsumbo iyi, Zone 1 i re tsini na nnḓu i na herbs dzine na dzi ka lunzhi."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "A simple sketch of zones and sectors is enough to start designing",
+      "draft": "Nyolo yo leluwaho ya zones na sectors yo lingana u thoma design."
+    }
+  ]
 }

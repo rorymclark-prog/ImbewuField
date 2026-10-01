@@ -277,14 +277,14 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
-        "xitsongaDraft": "Ti-zone na ti-sector ti ku pfuna ku hunguta ntirho lowu tlangisiwaka. Ti-zone ti famba ku sukela eka 0 kufika eka 5 hi ku ya hi minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi endzeriwaka kan'we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi endzeriwaka vhiki na vhiki. Zone 4 yi lo sala yi ri le xikarhi ka ku rimiwa na nhova — mirhi ya mihandzu na swakudya swa swifuwo leswi lavaka nyingiso minkarhi yin'wana. Zone 5 yi tshikiwile yi ri nhova.\n\nTi-sector i matimba lama nghenaka ma huma ehandle — dyambu, moya, mpfula, ndhambi, ndzilo. Xiyisisa laha moya wa matimba wu humaka kona eka purasi ra wena. Matsalwa ya xitichi xa maxelo xa le kusuhi ma nga ku pfuna ku kamba tlhelo leri moya wu humaka eka rona. Watch where rainwater enters and flows across your land. Dirowa miseve eka leswi u swi vonaka.\n\nDirowa ti-zone na ti-sector ephepheni kutani u va na rhambu ra pulani ya wena.",
+        "xitsongaDraft": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka example leyi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova.\n\nSectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, flood na fire. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.\n\nDirowa zones na sectors ephepheni kutani u va na motheo wa design ya wena.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "In this example, Zone 1 near the house holds often-picked herbs",
-          "xitsongaDraft": "In this example, Zone 1 near the house holds often-picked herbs",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Eka example leyi, Zone 1 leyi nga kusuhi na yindlu yi na herbs leti u ti tshovelaka nkarhi na nkarhi",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Zones organise labour by how often you need to visit",
@@ -293,8 +293,8 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Sectors map incoming sun, wind, rainwater, flood and fire",
-          "xitsongaDraft": "Sectors map incoming sun, wind, rainwater, flood and fire",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Sectors ti komba energy leyi nghenaka: dyambu, moya, mati ya mpfula, flood na ndzilo",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "A simple sketch of zones and sectors is enough to start designing",
@@ -306,58 +306,58 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
-            "xitsongaDraft": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "U byala herbs eka Zone 3, main field leyi nga ekule na yindlu. Xana leswi swi vanga xiphiqo xihi?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Herbs grow too large",
-              "xitsongaDraft": "Herbs grow too large",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Herbs ti kula ngopfu",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "The extra walk may mean you pick or check them less often",
-              "xitsongaDraft": "The extra walk may mean you pick or check them less often",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Ku famba mpfhuka wo engetela swi nga endla leswaku u tshovela kumbe u kambela herbs hi minkarhi yitsongo.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Herbs cross-pollinate with main crops",
-              "xitsongaDraft": "Herbs cross-pollinate with main crops",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Herbs ti cross-pollinate na crops letikulu",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Zone 3 gets too much sun for herbs",
-              "xitsongaDraft": "Zone 3 gets too much sun for herbs",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Zone 3 yi kuma sun yo tala ngopfu eka herbs",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
-            "xitsongaDraft": "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Veka crop leyi u yi tshovelaka nkarhi na nkarhi ekusuhi na ndlela leyi u yi tirhisaka siku na siku. Bed leyi nga ekule yi engetela ku famba naswona yi nga endla leswaku u yi kambela hi minkarhi yitsongo.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
-            "xitsongaDraft": "U xiyisisa moya lowu onhaka wu huma en'walungu-vupeladyambu eka purasi ra Highveld. Xisivela-moya (windbreak) xi fanele ku ya kwihi?",
+            "xitsongaDraft": "U xiyisisa damaging wind coming from the North-west on a Highveld farm. Windbreak yi fanele ku ya kwihi?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "South-east boundary",
-              "xitsongaDraft": "Ndzilakano wa dzonga-vuxa",
+              "xitsongaDraft": "Ndzilakana wa South-east",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "North-west boundary, between the wind and the crops",
-              "xitsongaDraft": "Ndzilakano wa n'walungu-vupeladyambu, exikarhi ka moya na swimilana",
+              "xitsongaDraft": "Ndzilakana wa North-west, vhukati ka moya na crops",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Centre of the property",
-              "xitsongaDraft": "Exikarhi ka ndhawu ya purasi",
+              "xitsongaDraft": "Exikari ka property",
               "reviewStatus": "machine-draft"
             },
             {
@@ -369,8 +369,8 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
-            "xitsongaDraft": "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Windbreak yi tirha hi ku yima vhukati ka laha moya wu humaka kona ni leswi wu nga swi onhaka. Hikokwalaho yi fanele ku va eka tlhelo leri moya wu humaka eka rona hakunene.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -389,72 +389,6 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       "sourceText": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
       "reason": "The maize term in this question is uncertain; keep the exact source until a fluent reviewer confirms it."
     },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "body",
-      "sourceText": "In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens.",
-      "reason": "The Xitsonga word chosen for herbs is uncertain; keep this example exact until reviewed."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "body",
-      "sourceText": "Watch where rainwater enters and flows across your land.",
-      "reason": "Held in the exact English source pending fluent local review because changing this safety condition could mislead a learner."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "keyPoints[0]",
-      "sourceText": "In this example, Zone 1 near the house holds often-picked herbs",
-      "reason": "The Xitsonga word chosen for herbs is uncertain; keep this example exact until reviewed."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "keyPoints[2]",
-      "sourceText": "Sectors map incoming sun, wind, rainwater, flood and fire",
-      "reason": "Held in the exact English source pending fluent Xitsonga review because the current proposal may change this meaning."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "quiz[0].q",
-      "sourceText": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
-      "reason": "The Xitsonga word chosen for herbs is uncertain; keep this quiz item exact until reviewed."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "quiz[0].options[0]",
-      "sourceText": "Herbs grow too large",
-      "reason": "The Xitsonga word chosen for herbs is uncertain; keep this quiz option exact until reviewed."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "quiz[0].options[1]",
-      "sourceText": "The extra walk may mean you pick or check them less often",
-      "reason": "The Xitsonga word chosen for herbs is uncertain; keep this quiz option exact until reviewed."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "quiz[0].options[2]",
-      "sourceText": "Herbs cross-pollinate with main crops",
-      "reason": "The Xitsonga word chosen for herbs is uncertain; keep this quiz option exact until reviewed."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "quiz[0].options[3]",
-      "sourceText": "Zone 3 gets too much sun for herbs",
-      "reason": "The Xitsonga word chosen for herbs is uncertain; keep this quiz option exact until reviewed."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "quiz[0].rationale",
-      "sourceText": "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
-      "reason": "The rationale uses the held herb term; keep it exact until reviewed."
-    },
-    {
-      "lessonId": "intro-permaculture-l3",
-      "field": "quiz[1].rationale",
-      "sourceText": "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
-      "reason": "Keep the exact rationale tied to the scenario where damaging wind was observed from the north-west on a Highveld farm; do not broaden it into a general claim."
-    }
   ]
 };
 

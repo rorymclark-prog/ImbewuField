@@ -257,15 +257,15 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         "Zones and Sectors: Organising Your Farm by Energy",
         "Zoune na Sekithara: U Dzudzanya Bulasi Yaṋu nga Maanḓa",
       ),
-      // Its observation steps are field instructions, and the wind wording has
-      // not had a fluent check; keep the whole paragraph pair source-exact.
-      body: hold(
+      // Keep field observations paired to their exact source while the Tshivenda prose remains a marked review draft.
+      body: pair(
         "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+        "Zones na sectors zwi thusa u fhungudza mushumo u sa ṱoḓei. Zones dzi bva kha 0 u ya kha 5, zwi tshi tevhedza uri ni dalela fhethu honoho lunzhi-lini. Zone 0 ndi nnḓu. Kha tsumbo iyi, Zone 1 i tsini na nnḓu nahone i na zwine na zwi ka lunzhi — herbs na muroho wa saladi. Zone 2 ndi serapa tshihulwane na chicken run, zwine zwa dalelwa luthihi kana luvhili nga ḓuvha. Zone 3 ndi tsimu khulwane, ine ya dalelwa vhege iṅwe na iṅwe. Zone 4 ndi semi-wild — miri ya mitshelo na fodder zwine zwa ṱoḓa ṱhogomelo nga zwiṅwe zwifhinga. Zone 5 yo siwa i wild.\n\nSectors ndi energy dzi no swika dzi tshi bva nnḓa — ḓuvha, muya, mvula, mandindi na mulilo. Sedzani hune muya u re na maanḓa wa bva hone bulasini yaṋu. Rekhodo dza weather station ya tsini dzi nga thusa u sedza thungo ya muya. Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha land yaṋu. Olani misevhe u sumbedza zwe na zwi vhona.\n\nOlani zones na sectors kha bammbiri, nahone ni vha ni na motheo wa pulane yaṋu.",
       ),
       keyPoints: [
         pair(
           "In this example, Zone 1 near the house holds often-picked herbs",
-          "Kha tsumbo iyi, Zoune 1 i re tsini na nnḓu i fara zwilavhele zwine zwa kiwa lunzhi",
+          "Kha tsumbo iyi, Zone 1 i re tsini na nnḓu i na herbs dzine na dzi ka lunzhi.",
         ),
         pair(
           "Zones organise labour by how often you need to visit",
@@ -277,62 +277,67 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         ),
         pair(
           "A simple sketch of zones and sectors is enough to start designing",
-          "Muolo wo leluwaho wa zoune na sekithara wo lingana u thoma mufhaṱo",
+          "Nyolo yo leluwaho ya zones na sectors yo lingana u thoma design.",
         ),
       ],
       quiz: [
         {
           question: pair(
             "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
-            "Ni ṱavha zwilavhele kha Zoune 3, tsimu khulwane i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?",
+            "Ni ṱavha herbs kha Zone 3, tsimu khulwane i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?",
           ),
           options: [
             pair(
               "Herbs grow too large",
-              "Zwilavhele zwi aluwa zwihulwane lwo kalaho",
+              "Herbs dzi aluwa zwihulwane lwo kalaho",
             ),
             pair(
               "The extra walk may mean you pick or check them less often",
-              "Lwendo lwo engedzeaho lu nga amba uri ni zwi ka kana u zwi tola lwa si gathi",
+              "Lwendo lwo engedzeaho lu nga amba uri ni nga ka kana u sedza herbs less often",
             ),
             pair(
               "Herbs cross-pollinate with main crops",
-              "Zwilavhele zwi ṱanganyisa mbeu (cross-pollinate) na zwimela zwihulwane",
+              "Herbs dzi cross-pollinate na zwimela zwihulwane",
             ),
             pair(
               "Zone 3 gets too much sun for herbs",
-              "Zoune 3 i wana ḓuvha ḽinzhisa kha zwilavhele",
+              "Zone 3 i wana ḓuvha ḽinzhi lwo kalaho kha herbs",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
-            "Vheani tshimela tshine na tshi ka lunzhi tsini ha nḓila ya ḓuvha ḽiṅwe na ḽiṅwe. Ndima i re kule i engedza u tshimbila nahone i nga tolwa lwa si gathi.",
+            "Vheani tshimela tshine na tshi ka lunzhi tsini ha nḓila ya ḓuvha ḽiṅwe na ḽiṅwe. Bed i re kule i engedza u tshimbila nahone i nga tolwa less often.",
           ),
         },
         {
-          // The north-west scenario depends on direction being read correctly;
-          // keep the entire answer set paired in English until fluent review.
-          question: hold(
-            "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?"
+          // Keep the observed north-west condition paired with its boundary answer and rationale.
+          question: pair(
+            "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
+            "Musi ni tshi vhona “damaging wind coming from the north-west on a Highveld farm”, windbreak i fanela u vhewa ngafhi?",
           ),
           options: [
-            hold(
+            pair(
               "South-east boundary",
+              "Moedi wa South-east",
             ),
-            hold(
-              "North-west boundary, between the wind and the crops"
+            pair(
+              "North-west boundary, between the wind and the crops",
+              "Moedi wa North-west, vhukati ha muya na zwimela",
             ),
-            hold(
+            pair(
               "Centre of the property",
+              "Vhukati ha land yaṋu",
             ),
-            hold(
+            pair(
               "Windbreaks aren't needed since winds are seasonal",
+              "Windbreaks a dzi ṱoḓei ngauri mimuya i ya nga khalaṅwaha",
             ),
           ],
           sourceCorrectIndex: 1,
-          rationale: hold(
+          rationale: pair(
             "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
+            "Windbreak i shuma nga u ima vhukati ha hune muya wa bva hone na tshine ya nga tshi tshinya — ngauralo i fanela u vha kha sia ḽine muya wa bva khaḽo zwa vhukuma.",
           ),
         },
       ],
