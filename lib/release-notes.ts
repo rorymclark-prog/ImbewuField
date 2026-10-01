@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '1 October 2026', sha: 'bb21cd90', changes: [
+    'IsiZulu Study slides can now be read without narration.',
+    'Study diagram buttons and loading errors also use isiZulu.',
+  ], tour: [
+    { title: 'Check isiZulu Study controls', where: 'Study → Introduction → lesson 1', href: '/student',
+      detail: 'Choose isiZulu. The diagram button and silent slide choice use isiZulu; the English source teaching remains available where needed.' },
+  ] },
   { when: '1 October 2026', sha: 'b0cd9613', changes: [
     'Introduction adds four marked Xitsonga and Tshivenda slide sentences.',
     'The exact English source remains visible; technical field instructions stay in English.',

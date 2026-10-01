@@ -15,6 +15,7 @@
 
 import { useState } from 'react';
 import { ImageIcon, AlertCircle } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n-context';
 
 const GREEN = '#1F4D2B';
 const MUTED = '#755942';
@@ -32,6 +33,7 @@ interface LessonInfographicProps {
 }
 
 export default function LessonInfographic({ url, alt, sizeHint }: LessonInfographicProps) {
+  const { t } = useLanguage();
   const [shown, setShown] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -50,7 +52,7 @@ export default function LessonInfographic({ url, alt, sizeHint }: LessonInfograp
         }}
       >
         <ImageIcon size={15} style={{ flexShrink: 0 }} />
-        Show diagram
+        {t('courseDiagramShow')}
         {sizeHint && (
           <span className="font-mono text-xs font-normal" style={{ color: MUTED }}>
             ({sizeHint})
@@ -68,7 +70,7 @@ export default function LessonInfographic({ url, alt, sizeHint }: LessonInfograp
       >
         <AlertCircle size={14} style={{ color: '#B03A2E', flexShrink: 0 }} />
         <span className="font-sans text-xs leading-snug" style={{ color: '#8B2020' }}>
-          Could not load this diagram — check your connection and try again.
+          {t('courseDiagramFailed')}
         </span>
       </div>
     );

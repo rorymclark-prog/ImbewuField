@@ -461,7 +461,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           {index + 1} / {total}
         </span>
         <h3 className={styles.slideHeading} style={{ color: INK }}>{heading}</h3>
-        {(languages.length > 1 || needsSourceNarrationChoice) && (
+        {languages.length > 0 && (
           <div role="group" aria-label={t('courseNarrationLanguage')} style={{ display: 'flex', flexWrap: 'wrap', gap: 4, flex: '1 1 100%', minWidth: 0, maxWidth: '100%' }}>
             {(needsSourceNarrationChoice ? languages.filter((code) => code === 'en') : languages).map((code) => {
               const on = code === narrationChoice;
@@ -493,7 +493,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                 </button>
               );
             })}
-            {needsSourceNarrationChoice && (
+            {languages.length > 0 && (
               <button
                 type="button"
                 onClick={() => {
@@ -516,7 +516,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                   color: narrationChoice === NO_NARRATION ? GREEN : MUTED,
                 }}
               >
-                No narration
+                {t('courseDeckNoNarration')}
               </button>
             )}
           </div>
@@ -691,6 +691,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           {t('courseDeckNarrationFallback')
             .replace('{spokenLanguage}', langName(spokenLang.lang, uiLang))
             .replace('{appLanguage}', langName(appLang, uiLang))}
+        </p>
+      )}
+
+      {narrationChoice === NO_NARRATION && !needsSourceNarrationChoice && (
+        <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+          {t('courseDeckSilentStatus')}
         </p>
       )}
 
