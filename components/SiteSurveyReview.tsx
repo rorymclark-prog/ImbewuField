@@ -29,6 +29,8 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
 }) {
   const {lang,t}=useLanguage();
   const unknown=t('surveyNotRecorded');
+  // “None” is a stored choice, not missing information. Repeat its question's exact meaning:
+  // the old generic fallback turned “Rain-fed only” into “None reported” at final review.
   const list=(values:string[], overrides:Record<string,string>={})=>values.length?values.map(v=>t(overrides[v]??LABELS[v]??(v==='none'?'surveyNoneReported':v))).join(' · '):unknown;
   const challengeSources:Record<string,string>={drought:'Drought / dry spells',pests:'Pests & disease',soil:'Poor / degraded soil',water:'Limited water access',funding:'Funding / costs',labour:'Not enough labour',flooding:'Flooding / erosion',market:'Market access',none:'No major challenges'};
   const practiceSources:Record<string,string>={organic:'Fully organic','mostly-organic':'Mostly organic',conventional:'Conventional',experimenting:'Experimenting / mixed'};
@@ -52,20 +54,20 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
     ]},
     {step:1,Icon:Leaf,title:t('surveyStepLandLocation'),rows:[
       [t('sectionSoilCondition'),list(s.soilCondition?[s.soilCondition]:[])],
-      [t('sectionHowIsLandPrepared'),list(s.landPrepMethod?[s.landPrepMethod]:[])],
-      [t('sectionSoilInputs'),list(s.soilAmendments)],
+      [t('sectionHowIsLandPrepared'),list(s.landPrepMethod?[s.landPrepMethod]:[],{none:'landPrepNoneLabel'})],
+      [t('sectionSoilInputs'),list(s.soilAmendments,{none:'soilAmendmentNone'})],
       [t('sectionFencing'),s.hasFencing?t({full:'fencingFull',partial:'fencingPartial',none:'fencingNone'}[s.hasFencing]??s.hasFencing):unknown],
     ]},
     {step:2,Icon:Sprout,title:t('surveyGrowingResources'),rows:[
       [t('sectionCropsGrowing'),list(s.existingCrops)],
       [t('surveyExistingGrowingAreaLabel'),area(s.existingGrowingAreaM2),s.existingGrowingAreaM2===null?'':t(s.existingGrowingAreaSource==='auto'?'surveySourceMap':'surveySourceFarmer')],
     ]},
-    {step:3,Icon:Sprout,title:t('surveyStepLivestockPoultry'),rows:[[t('sectionLivestock'),list(s.livestock)],[t('sectionOtherInfrastructure'),list(s.otherInfra)]]},
+    {step:3,Icon:Sprout,title:t('surveyStepLivestockPoultry'),rows:[[t('sectionLivestock'),list(s.livestock,{none:'livestockNone'})],[t('sectionOtherInfrastructure'),list(s.otherInfra)]]},
     {step:4,Icon:Users,title:t('surveyStepIncomeSales'),rows:[[t('toggleSellProduceLabel'),t(s.isCommercial?'surveyAnswerYes':'surveyAnswerNo')],[t('sectionCurrentOrTargetMarket'),s.isCommercial?list(s.marketType?[s.marketType]:[]):t('surveyNotApplicable')]]},
     {step:5,Icon:Droplets,title:t('surveyStepResourcesInputs'),rows:[
-      [t('sectionWaterSources'),list(s.waterSource)],
-      [t('sectionHowDoesWaterReachPlants'),list(s.waterDelivery)],
-      [t('sectionWaterStorage'),list(s.waterStorage)],
+      [t('sectionWaterSources'),list(s.waterSource,{none:'waterSourceNoneYet'})],
+      [t('sectionHowDoesWaterReachPlants'),list(s.waterDelivery,{none:'waterDeliveryNoneLabel'})],
+      [t('sectionWaterStorage'),list(s.waterStorage,{none:'waterStorageNone'})],
       [t('toggleGuttersLabel'),t(s.hasGutters?'surveyAnswerYes':'surveyAnswerNo')],
       [t('sectionMainBuildingRoofArea'),area(s.roofMainM2),s.roofMainM2===null?'':t(s.roofAreaSource==='auto'?'surveySourceMap':'surveySourceFarmer')],
       [t('sectionSecondaryRoofs'),area(s.roofSecondaryM2),s.roofSecondaryM2===null?'':t(s.roofSecondarySource==='auto'?'surveySourceMap':'surveySourceFarmer')],

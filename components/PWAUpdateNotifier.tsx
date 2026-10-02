@@ -22,6 +22,9 @@ interface PWAUpdateNotifierProps {
 
 const UPDATE_CHECK_MS = 60_000;
 const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
+// The small pill still covered survey validation on a phone. Keep both forms below sheets
+// and dialogs so their instructions and actions win; closing them exposes the waiting update.
+const UPDATE_NOTICE_LAYER = 40;
 
 /**
  * Registers /sw.js and surfaces a small non-blocking toast once a NEW worker
@@ -281,7 +284,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   const containerBottomStyle = 'calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 0.5rem)';
 
   if (!expanded) {
-    // The whole notice, reduced to something that cannot cover a button: a small pill clear of bottom nav.
+    // Compact above navigation, but below the work in an open sheet or dialog.
     return (
       <div
         className="no-print pwa-update-notifier"
@@ -291,7 +294,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           bottom: containerBottomStyle,
           left: '50%',
           transform: 'translateX(-50%)',
-          zIndex: 10000,
+          zIndex: UPDATE_NOTICE_LAYER,
           display: 'flex',
           alignItems: 'center',
           gap: 6,
@@ -350,7 +353,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
         alignItems: 'flex-start',
         gap: '0.5rem',
         maxWidth: 'min(92vw, 27rem)',
-        zIndex: 10000,
+        zIndex: UPDATE_NOTICE_LAYER,
         boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
         fontSize: '0.875rem',
       }}

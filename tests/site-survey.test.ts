@@ -10,6 +10,7 @@ import {
   reportedFoodGroups,
   toggleSurveyChoice,
   productionNeedsReview,
+  productionHasAnswers,
   saveSurvey,
   surveyToPrompt,
   createSurveyDraftStore,
@@ -287,6 +288,23 @@ test('production review catches missing units and over-allocation without reject
   assert.equal(productionNeedsReview({ ...row, category: 'other' }), true);
   assert.equal(productionNeedsReview({ ...row, quantityPerYear: .3, usedByHousehold: .1, sold: .2 }), false);
   assert.equal(productionNeedsReview({ ...row, quantityPerYear: null, usedByHousehold: null, sold: null, unit: '', harvestMonths: [1] }), false);
+});
+
+test('opening an optional Other row gives no error, while any recorded answer still needs its name', () => {
+  const empty = { category: 'other' as const, quantityPerYear: null, unit: '',
+    usedByHousehold: null, sold: null, incomeZar: null, harvestMonths: [] };
+  assert.equal(productionHasAnswers(empty), false);
+  assert.equal(productionNeedsReview(empty), false);
+  assert.equal(productionHasAnswers({ ...empty, name: ' ', unit: ' ' }), false);
+  for (const partial of [
+    { quantityPerYear: 0 }, { usedByHousehold: 0 }, { sold: 0 }, { incomeZar: 0 },
+    { unit: 'kg' }, { harvestMonths: [1] }, { foodGroup: 'vegetables' as const },
+  ]) {
+    const row = { ...empty, ...partial };
+    assert.equal(productionHasAnswers(row), true);
+    assert.equal(productionNeedsReview(row), true);
+  }
+  assert.equal(productionNeedsReview({ ...empty, name: 'Farmer-named produce' }), false);
 });
 
 test('the site report receives the production the farmer entered, with units and missing figures intact', () => {
