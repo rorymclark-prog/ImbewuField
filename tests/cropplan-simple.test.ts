@@ -24,9 +24,11 @@ test('Simple drops the secondary header chips but keeps site/bed picking and the
   // "Back to design" is a secondary chip, gone in Simple.
   assert.match(header, /\{!simple && \(\s*<Link\s*\n\s*href=\{designHref\}/, '"Back to design" must be hidden in Simple');
   // Switching between a farmer's saved designs is how they pick which site's plan they see —
-  // required to use the grid — so both "All crop plans" variants stay in both modes.
+  // required to use the grid — so both renamed "All production plans" variants stay in both modes.
+  const planSwitchAt = header.indexOf('All production plans');
+  assert.ok(planSwitchAt >= 0, 'the Production plan rename must retain the site switch');
   assert.doesNotMatch(
-    header.slice(header.indexOf('All crop plans'), header.indexOf('All crop plans') + 400),
+    header.slice(planSwitchAt, planSwitchAt + 400),
     /simple/,
     'switching site/design must stay available in Simple',
   );

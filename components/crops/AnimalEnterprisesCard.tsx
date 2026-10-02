@@ -21,7 +21,9 @@ import {
   type AnimalProduct,
   type HousingKind,
   type PlacedAnimalGroup,
+  type AnimalSeasonChoices,
 } from '@/lib/animal-enterprises';
+import { MONTHS_SHORT } from '@/lib/crop-catalog';
 import { animalArtUrl } from '@/lib/animal-art';
 import { formatMonthSpan, formatRange, type HarvestCitation, type SourcedRange } from '@/lib/perennial-harvest';
 
@@ -159,10 +161,13 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
   );
 }
 
-export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
+export default function AnimalEnterprisesCard({ groups, choices, onChoose, seasons = {}, onSeasonsChange, compact = false }: {
   groups: PlacedAnimalGroup[];
   choices: Partial<Record<HousingKind, string>>;
   onChoose: (housing: HousingKind, enterpriseId: string | null) => void;
+  seasons?: AnimalSeasonChoices;
+  onSeasonsChange?: (housing: HousingKind, enterpriseId: string, months: number[]) => void;
+  compact?: boolean;
 }) {
   if (groups.length === 0) return null;
   return (
@@ -171,8 +176,9 @@ export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
         <PawPrint size={14} aria-hidden /> Animals on your map
       </div>
       <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
-        Per-animal figures from named sources. The map shows housing, not how many animals live in it, so nothing here is multiplied up — and animals never enter the bed yield or any per-m² figure.
+        The map shows housing, not animal numbers. Choose what you keep, then confirm the months it gives food here. Housing stays on the printed plan even when dates are unknown.
       </p>
+      <p className="font-sans mb-3" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>These confirmations are kept on this device for this design.</p>
       <div className="flex flex-col gap-4">
         {groups.map((g) => {
           const options = enterprisesForHousing(g.housing);
@@ -200,7 +206,7 @@ export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
                       aria-pressed={on}
                       onClick={() => onChoose(g.housing, on ? null : e.enterpriseId)}
                       className="font-sans rounded-full inline-flex items-center gap-1"
-                      style={{ fontSize: 12, fontWeight: on ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${on ? 'var(--emerald)' : 'var(--border)'}`, background: on ? 'var(--bg-2)' : 'transparent', color: on ? 'var(--text-primary)' : 'var(--text-secondary)' }}
+                      style={{ fontSize: 12, fontWeight: on ? 600 : 400, padding: '4px 10px', minHeight: 40, cursor: 'pointer', border: `1px solid ${on ? 'var(--emerald)' : 'var(--border)'}`, background: on ? 'var(--bg-2)' : 'transparent', color: on ? 'var(--text-primary)' : 'var(--text-secondary)' }}
                     >
                       {chipArt
                         ? <img className="produce-art" src={chipArt} alt="" aria-hidden width={16} height={16} style={{ width: 16, height: 16, objectFit: 'contain' }} />
@@ -209,9 +215,20 @@ export default function AnimalEnterprisesCard({ groups, choices, onChoose }: {
                   );
                 })}
               </div>
-              {chosen ? <EnterpriseFacts e={chosen} /> : (
+              {chosen && isFoodProduct(chosen.product) && onSeasonsChange && <>
+                <p className="font-sans mt-3 mb-2" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Tap months when your animals already give {PRODUCT_LABEL[chosen.product].toLowerCase()} here. A reference season is not a promise for this farm.{chosen.enterpriseId === 'chicken-layer' ? ' The all-year source is for commercial layers with managed feeding and lighting.' : ''}</p>
+                <div className="flex flex-wrap gap-1.5" role="group" aria-label={`${HOUSING_LABEL[g.housing]} local production months`}>
+                  {MONTHS_SHORT.map((name, i) => {
+                    const months = seasons[g.housing]?.enterpriseId === chosen.enterpriseId ? seasons[g.housing]?.months ?? [] : [];
+                    const on = months.includes(i + 1);
+                    return <button key={name} type="button" aria-pressed={on} disabled={g.existing === 0} onClick={() => onSeasonsChange(g.housing, chosen.enterpriseId, on ? months.filter((m) => m !== i + 1) : [...months, i + 1].sort((a, b) => a - b))} className="font-sans rounded-lg" style={{ minWidth: 44, minHeight: 44, fontSize: 12, cursor: 'pointer', color: 'var(--text-primary)', border: `1px solid ${on ? 'var(--emerald)' : 'var(--border)'}`, background: on ? 'var(--bg-2)' : 'transparent' }}>{name}</button>;
+                  })}
+                </div>
+                {g.existing === 0 && <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Only proposed housing: no animals giving food yet.</p>}
+              </>}
+              {chosen ? compact ? <details className="mt-3 font-sans" style={{ fontSize: 12 }}><summary style={{ cursor: 'pointer', color: 'var(--text-primary)' }}>Reference seasons, care and sources</summary><EnterpriseFacts e={chosen} /></details> : <EnterpriseFacts e={chosen} /> : (
                 <p className="font-sans mt-2 inline-flex items-center gap-1.5" style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>
-                  <ShieldCheck size={12} aria-hidden /> Pick one to see its figures and put its months on the availability chart.
+                  <ShieldCheck size={12} aria-hidden /> Choose what they are kept for. Production months need local confirmation.
                 </p>
               )}
             </section>

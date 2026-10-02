@@ -378,7 +378,7 @@ test('a farmer typing the plural gets the catalogue crop, not a rival custom one
   assert.ok(!loadCustomCropNames().some((n) => /avocado|cabbage/i.test(n)), 'no catalogue crop leaked into custom names');
 });
 
-test('a paid invoice creates kg crop-sale evidence while cash totals still count the invoice once', () => {
+test('a paid invoice preserves weighed and counted produce separately while cash counts the invoice once', () => {
   const paid = invoice({
     id: 'invoice-kg',
     billTo: 'Spaza shop',
@@ -389,10 +389,15 @@ test('a paid invoice creates kg crop-sale evidence while cash totals still count
       { desc: 'Spinach', qty: 2, unit: 'crates', price: 80 },
     ],
   });
+  // Crates used to be dropped to avoid inventing weight. The stronger rule
+  // retains their actual quantity with unknown kg, preserving cash deduplication.
   const generated = invoiceSalesForPaidInvoice(paid);
   assert.deepEqual(generated, [{
     crop: 'Cabbage', kg: 12.5, amount: 112.5, buyer: 'Spaza shop',
     sold_at: paid.paidAt, invoice_id: 'invoice-kg', invoice_line: 0,
+  }, {
+    crop: 'Spinach', kg: null, quantity: 2, unit: 'crates', amount: 160, buyer: 'Spaza shop',
+    sold_at: paid.paidAt, invoice_id: 'invoice-kg', invoice_line: 1,
   }]);
   assert.deepEqual(invoiceSalesForPaidInvoice({ ...paid, status: 'unpaid', paidAt: undefined }), []);
   assert.equal(
@@ -705,6 +710,30 @@ test('a quick sale saves one paid invoice before syncing its income', async () =
   assert.equal(saved.salesSyncPending, undefined);
   assert.equal(loadInvoices().length, 1);
   assert.equal(saved.items[0].price, 20);
+});
+
+test('a quick egg sale keeps its unit through the invoice ledger and cloud-sale conversion', async () => {
+  installBrowser();
+  const saved = await saveSaleInvoice({ crop: 'Eggs', kg: null, quantity: 12, unit: 'eggs', amount: 36 }, async doc => {
+    const rows = invoiceSalesForPaidInvoice(doc);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].kg, null);
+    assert.equal(rows[0].quantity, 12);
+    assert.equal(rows[0].unit, 'eggs');
+  });
+  assert.deepEqual(saved.items[0], { desc: 'Eggs', qty: 12, unit: 'eggs', price: 3 });
+  assert.equal(loadInvoices().length, 1);
+  assert.equal(cashIncomeTotal(invoiceSalesForPaidInvoice(saved), [saved]), 36);
+});
+
+test('fractional eggs cannot be saved as an invoice or silently turned into cash-only produce', async () => {
+  installBrowser();
+  let syncCalls = 0;
+  await assert.rejects(saveSaleInvoice({ crop: 'Eggs', kg: null, quantity: 1.5, unit: 'eggs', amount: 36 }, async () => { syncCalls++; }));
+  assert.equal(syncCalls, 0);
+  assert.equal(loadInvoices().length, 0);
+  saveInvoice(invoice({ id: 'bad-eggs', items: [{ desc: 'Eggs', qty: 1.5, unit: 'eggs', price: 3 }] }));
+  assert.equal(loadInvoices().length, 0);
 });
 
 test('failed sales sync leaves the original invoice available for retry', async () => {

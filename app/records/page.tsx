@@ -59,6 +59,10 @@ import {
   validateExpenseReceipt, saveExpenseWithReceipt,
 } from '@/lib/expense-receipts';
 import { APP_HEADER_INSET } from '@/lib/app-header';
+import RecordQuantityFields from '@/components/records/RecordQuantityFields';
+import RecordQuantitySummary from '@/components/records/RecordQuantitySummary';
+import { recordQuantity, recordUnit, recordQuantityPayload, recordQuantityLabel, recordWeightKg, quantityTotals, type RecordUnit } from '@/lib/farm-records';
+import { parseDecimalInput } from '@/lib/decimal-input';
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -179,18 +183,19 @@ function useIncludePerennials(): boolean {
 }
 
 /** Kilograms in scope, plus what was left out — never one without the other. */
-function scopeKg(rows: { crop: string; kg?: number | null }[], includePerennials: boolean) {
+function scopeKg(rows: { crop: string; kg?: number | null; quantity?: number; unit?: string }[], includePerennials: boolean) {
   let counted = 0;
   let excluded = 0;
   const excludedNames = new Set<string>();
   for (const row of rows) {
-    const kg = row.kg ?? 0;
+    const kg = recordWeightKg(row);
+    if (kg === null) continue;
     if (countsWithScope(row.crop, includePerennials)) counted += kg;
     // The catalogue's own name: a picker-written harvest and a hand-typed sale are one fruit,
     // and naming it twice makes a farmer count trees they do not have.
     else { excluded += kg; excludedNames.add(produceDisplayName(row.crop)); }
   }
-  return { counted, excluded, excludedNames: [...excludedNames].sort((a, b) => a.localeCompare(b, 'en-ZA')) };
+  return { counted, excluded, excludedNames: [...excludedNames].sort((a, b) => a.localeCompare(b, 'en-ZA')), quantities: quantityTotals(rows.filter((row) => recordWeightKg(row) === null || countsWithScope(row.crop, includePerennials))) };
 }
 
 function SummaryCards({ sales, production, expenses, invoices, loading }: SummaryProps) {
@@ -203,7 +208,6 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
     .filter((x) => isThisMonth(x.spent_at))
     .reduce((acc, x) => acc + (x.amount ?? 0), 0);
   const monthKg = scopeKg(production.filter((p) => isThisMonth(p.logged_at)), includePerennials);
-  const totalKg = monthKg.counted;
 
   const cards = [
     {
@@ -224,8 +228,8 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
     },
     {
       icon: <Scale size={16} />,
-      label: recordsText(lang, 'Kg harvested', 'Ama-kg avuniwe'),
-      value: `${totalKg.toFixed(1)} kg`,
+      label: 'Picked this month',
+      value: <RecordQuantitySummary compact totals={monthKg.quantities} />,
       color: 'var(--color-water)',
       bg: 'rgba(35,94,134,0.08)',
       border: 'rgba(35,94,134,0.18)',
@@ -335,7 +339,7 @@ function RecordDocument({ kind, id, invoices, expenses, sales }: { kind: string;
   const expense = kind === 'expense' ? expenses.find((row) => row.id === id) : undefined;
   if (invoice) return <Link className={styles.documentLink} href={`/invoice?view=${encodeURIComponent(invoice.id)}`} aria-label={`${recordsText(lang, 'View invoice', 'Buka i-invoyisi')} ${invoice.no}`}><Eye size={16} /> {recordsText(lang, 'Invoice', 'I-invoyisi')} #{String(invoice.no).padStart(4, '0')} · {recordsText(lang, 'View', 'Buka')}</Link>;
   if (sale?.invoice_source_sale) return <Link className={styles.documentLink} href={`/invoice?sale=${encodeURIComponent(sale.id)}`}><FileText size={16} /> {recordsText(lang, 'Recover invoice', 'Buyisa i-invoyisi')}</Link>;
-  if (sale && !sale.invoice_id && Number.isFinite(sale.kg) && sale.kg > 0 && Number.isFinite(sale.amount) && sale.amount > 0) return <Link className={styles.documentLink} href={`/invoice?sale=${encodeURIComponent(sale.id)}`}><FileText size={16} /> {recordsText(lang, 'Create invoice', 'Dala i-invoyisi')}</Link>;
+  if (sale && !sale.invoice_id && (recordQuantity(sale) ?? 0) > 0 && Number.isFinite(sale.amount) && sale.amount > 0) return <Link className={styles.documentLink} href={`/invoice?sale=${encodeURIComponent(sale.id)}`}><FileText size={16} /> {recordsText(lang, 'Create invoice', 'Dala i-invoyisi')}</Link>;
   if (expense) return <ReceiptPreview expense={expense} />;
   return null;
 }
@@ -343,7 +347,7 @@ function RecordDocument({ kind, id, invoices, expenses, sales }: { kind: string;
 function toPhoneRows(sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedInvoice[], lang = 'en'): PhoneRow[] {
   const saleRows: PhoneRow[] = cashLedgerSales(sales, invoices.map((invoice) => invoice.id)).map((s) => ({
     kind: 'sale', id: s.id, iso: s.sold_at ?? '',
-    title: s.crop, subtitle: s.buyer ? `${recordsText(lang, 'via', 'ku')} ${s.buyer} · ${s.kg} kg` : `${s.kg} kg`,
+    title: s.crop, subtitle: s.buyer ? `${recordsText(lang, 'via', 'ku')} ${s.buyer} · ${recordQuantityLabel(s)}` : `${recordQuantityLabel(s)}`,
     amount: s.amount ?? 0, positive: true,
   }));
   const expenseRows: PhoneRow[] = expenses.map((x) => ({
@@ -502,7 +506,8 @@ interface SaleFormState {
   enterprise: GrowingEnterprise | null;
   crop: string;
   expenseCrop: string;
-  kg: string;
+  quantity: string;
+  unit: RecordUnit;
   price: string;
   buyer: string;
   category: ExpenseCategory | null;
@@ -513,7 +518,7 @@ interface SaleFormState {
 // Editing target: either an existing sale or expense being edited, or null for a fresh entry.
 export type EditTarget = { type: 'sale'; row: SalesLog } | { type: 'expense'; row: ExpenseLog } | null;
 
-const emptyForm = (): SaleFormState => ({ enterprise: null, crop: '', expenseCrop: '', kg: '', price: '', buyer: '', category: null, loading: false, error: '' });
+const emptyForm = (): SaleFormState => ({ enterprise: null, crop: '', expenseCrop: '', quantity: '', unit: 'kg', price: '', buyer: '', category: null, loading: false, error: '' });
 
 // `alwaysOpen` skips the collapsed "New entry" button state (the desktop modal
 // provides its own open/close chrome); `onDone` fires on cancel or successful
@@ -593,10 +598,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
     setScanNote('');
     if (editing.type === 'sale') {
       setKind('in');
-      setForm({ enterprise: editing.row.enterprise ?? null, crop: editing.row.crop, expenseCrop: '', kg: String(editing.row.kg ?? ''), price: String(editing.row.amount ?? ''), buyer: editing.row.buyer ?? '', category: null, loading: false, error: '' });
+      setForm({ enterprise: editing.row.enterprise ?? null, crop: editing.row.crop, expenseCrop: '', quantity: String(recordQuantity(editing.row) ?? ''), unit: recordUnit(editing.row) ?? 'kg', price: String(editing.row.amount ?? ''), buyer: editing.row.buyer ?? '', category: null, loading: false, error: '' });
     } else {
       setKind('out');
-      setForm({ enterprise: editing.row.enterprise ?? null, crop: editing.row.item, expenseCrop: editing.row.crop ?? '', kg: '', price: String(editing.row.amount ?? ''), buyer: editing.row.supplier ?? '', category: editing.row.category ?? null, loading: false, error: '' });
+      setForm({ enterprise: editing.row.enterprise ?? null, crop: editing.row.item, expenseCrop: editing.row.crop ?? '', quantity: '', unit: 'kg', price: String(editing.row.amount ?? ''), buyer: editing.row.supplier ?? '', category: editing.row.category ?? null, loading: false, error: '' });
     }
   }, [editing, lockKind]);
 
@@ -677,10 +682,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
     e.preventDefault();
     if (form.loading || readingPhoto || scanning) return;
     const what = form.crop.trim();
-    const amount = parseFloat(form.price);
-    const kg = parseFloat(form.kg);
-    if (!what || isNaN(amount) || amount < 0 || (isIn && (isNaN(kg) || kg <= 0))) {
-      setForm((f) => ({ ...f, error: recordsText(lang, isIn ? 'Crop, kg and price are required.' : 'Item and amount are required.', isIn ? 'Kudingeka isitshalo, u-kg nenani.' : 'Kudingeka into nenani.') }));
+    const amount = parseDecimalInput(form.price);
+    const quantity = parseDecimalInput(form.quantity);
+    if (!what || !Number.isFinite(amount) || amount < 0 || (isIn && (!Number.isFinite(quantity) || quantity <= 0))) {
+      setForm((f) => ({ ...f, error: isIn ? 'Product, quantity and amount are required.' : recordsText(lang, 'Item and amount are required.', 'Kudingeka into nenani.') }));
       return;
     }
     setForm((f) => ({ ...f, loading: true, error: '' }));
@@ -688,10 +693,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       const sampling = isSampleMode();
       if (isIn) {
         if (editing?.type === 'sale') {
-          const patch = { enterprise: form.enterprise, crop: what, kg, amount, buyer: form.buyer.trim() || null };
+          const patch = { enterprise: form.enterprise, crop: what, ...recordQuantityPayload(quantity, form.unit), amount, buyer: form.buyer.trim() || null };
           if (sampling) updateSandboxSale(editing.row.id, patch); else await updateSale(editing.row.id, patch);
         } else {
-          const row = { enterprise: form.enterprise, crop: what, kg, amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() };
+          const row = { enterprise: form.enterprise, crop: what, ...recordQuantityPayload(quantity, form.unit), amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() };
           const invoice = await addSale(row);
           router.push(`/invoice?view=${encodeURIComponent(invoice.id)}`);
         }
@@ -862,7 +867,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
 
         <div>
           <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
-            {recordsText(lang, isIn ? 'Crop' : 'What for', isIn ? 'Isitshalo' : 'Bekungokwani')}
+            {isIn ? 'Produce / product' : recordsText(lang, 'What for', 'Bekungokwani')}
           </label>
           <input type="text" placeholder={recordsText(lang, isIn ? 'e.g. Spinach' : 'e.g. Seedlings', isIn ? 'isb. Isipinashi' : 'isb. Izithombo')}
             value={form.crop} onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
@@ -871,16 +876,8 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          {isIn && (
-            <div>
-              <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Kg sold', 'Ama-kg adayisiwe')}</label>
-              <input type="number" placeholder="0.0" step="0.1" min="0"
-                value={form.kg} onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
-                className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-                style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
-            </div>
-          )}
-          <div className={isIn ? '' : 'col-span-2'}>
+          {isIn && <div className="col-span-2"><RecordQuantityFields idPrefix={alwaysOpen ? 'ledger-modal-sale' : 'ledger-sale'} label="Quantity sold" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} /></div>}
+          <div className="col-span-2">
             <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Amount (R)', 'Inani (R)')}</label>
             <input type="number" placeholder="0.00" step="0.01" min="0"
               value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
@@ -1020,13 +1017,13 @@ interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: stri
 function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: ProductionLog[], invoices: SavedInvoice[], period: Period, now: Date, lang = 'en'): LedgerRow[] {
   const saleRows: LedgerRow[] = cashLedgerSales(sales, invoices.map((invoice) => invoice.id))
     .filter((s) => isInFinancePeriod(s.sold_at, period, now))
-    .map((s) => ({ kind: 'sale' as const, id: s.id, iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} ${recordsText(lang, 'sale', 'ukudayisa')}`, qty: `${s.kg} kg`, inAmt: s.amount ?? 0, source: s.buyer || recordsText(lang, 'Direct sale', 'Ukudayisa ngokuqondile'), outAmt: null }));
+    .map((s) => ({ kind: 'sale' as const, id: s.id, iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} ${recordsText(lang, 'sale', 'ukudayisa')}`, qty: recordQuantityLabel(s), inAmt: s.amount ?? 0, source: s.buyer || recordsText(lang, 'Direct sale', 'Ukudayisa ngokuqondile'), outAmt: null }));
   const expenseRows: LedgerRow[] = expenses
     .filter((x) => isInFinancePeriod(x.spent_at, period, now))
     .map((x) => ({ kind: 'expense' as const, id: x.id, iso: x.spent_at ?? '', date: fmtDate(x.spent_at), desc: x.item, qty: categoryLabel(x.category, lang) || '—', inAmt: null, source: x.supplier || recordsText(lang, 'Cost', 'Izindleko'), outAmt: x.amount ?? 0 }));
   const harvestRows: LedgerRow[] = production
     .filter((p) => isInFinancePeriod(p.logged_at, period, now))
-    .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: `${p.kg} kg`, inAmt: null, source: recordsText(lang, 'Yield log', 'Irekhodi lesivuno'), outAmt: null }));
+    .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: recordQuantityLabel(p), inAmt: null, source: recordsText(lang, 'Yield log', 'Irekhodi lesivuno'), outAmt: null }));
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && isInFinancePeriod(i.paidAt, period, now))
     .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${paymentMethodLabel(i.paymentMethod)}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
@@ -1074,8 +1071,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   const net = income - expenseTotal;
   const includePerennials = useIncludePerennials();
   const periodKg = scopeKg(production.filter((p) => isInFinancePeriod(p.logged_at, period, now)), includePerennials);
-  const yieldKg = periodKg.counted;
-  const yieldLabel = yieldKg >= 1000 ? `${(yieldKg / 1000).toFixed(1)} t` : `${yieldKg.toFixed(0)} kg`;
+  const yieldLabel = <RecordQuantitySummary compact totals={periodKg.quantities} />;
 
   function exportCsv() { exportLedgerCsv(rows, period, lang); }
 

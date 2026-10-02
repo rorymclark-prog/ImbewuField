@@ -42,6 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '366f3e93', changes: [
+    'Production plans include fruit, eggs and honey, with crops shown across printed months.',
+    'Record local frost, dry-season water and chicken care in the site survey.',
+    'Check sourced crop varieties and chicken options; confirm the choice locally.',
+    'Record eggs, jars and packages in their own units alongside weighed harvests.',
+  ], tour: [
+    { title: 'Check your production plan', where: 'Production plan → Check your farm conditions',
+      href: '/facilitator/crops',
+      detail: 'Review water, frost, varieties and chicken care, then print the monthly plan.' },
+    { title: 'Record eggs and honey', where: 'My Records → Picked or Sold',
+      href: '/records',
+      detail: 'Choose the product and its actual unit. Counted products keep their own totals.' },
+  ] },
   { when: '2 October 2026', sha: 'feaa8a19', changes: [
     'Greywater lessons show marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
     'Technical and sanitation cautions stay English; both quizzes keep the source answers.',
@@ -58,6 +71,16 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Review the regional Water lessons', where: 'Study → Water Harvesting → lessons 2–3',
       href: '/student',
       detail: 'Compare marked drafts with English and try the quizzes. Silent slides stay available.' },
+  ] },
+  { when: '2 October 2026', sha: '4863cbf0', changes: [
+    'Printed crop plans start with crop pictures across the months and larger job sheets.',
+    'Banana, hives and coops stay on the print while local food dates are unconfirmed.',
+    'Confirm missed sowings. Shared-bed jobs show their area; seed weights use sourced rates.',
+    'Tree and animal food months use your local confirmations, kept on this device.',
+  ], tour: [
+    { title: 'Print the crop picture calendar', where: 'Crop plan → Take this plan with you',
+      href: '/facilitator/crops',
+      detail: 'Check local food months, then print the picture calendar and monthly tick-off jobs.' },
   ] },
   { when: '2 October 2026', sha: '434cd435', changes: [
     'Sesotho and Xitsonga now show marked Water L2 body drafts beside exact English.',

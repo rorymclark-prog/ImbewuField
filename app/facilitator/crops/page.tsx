@@ -21,15 +21,21 @@ import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
+import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
+import PoultryGuidanceCard from '@/components/crops/PoultryGuidanceCard';
+import SiteSurveySheet from '@/components/SiteSurveySheet';
+import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
+import { canonicalCoordinateSiteId } from '@/lib/site-id';
 import CropIcon from '@/components/CropIcon';
 import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
-import { buildTreeAvailability, formatMonthSpan, formatRange, placedTreeGroups, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine } from '@/lib/perennial-harvest';
+import { buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
-import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
+import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, poultryGuidance, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
+import TreeSeasonsCard from '@/components/crops/TreeSeasonsCard';
 import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
 import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
 import { printableAvailability } from '@/lib/crop-export-availability';
@@ -56,7 +62,7 @@ import {
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
-  restampEditedOnce,
+  restampEditedOnce, confirmOnceSowing,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
@@ -76,8 +82,8 @@ import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format
 // and three copies of that sentence is how they stop doing so.
 import type { BuyingMonth } from '@/lib/crop-export-schedule';
 import {
-  buildBuyingSchedule, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
-  taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE,
+  buildBuyingSchedule, buildProductionGuide, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
+  taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE, weightRangeLabel,
 } from '@/lib/crop-export-schedule';
 
 /** Same ticked tiles and exact crops, ignoring order. */
@@ -407,6 +413,8 @@ function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNo
                   ? 'confirm spacing first'
                   : item.quantityStatus === 'packet-rate-required'
                     ? 'packet rate needed'
+                    : item.quantityStatus === 'sourced-weight-range' && item.countRange
+                      ? weightRangeLabel(item.countRange)
                     : item.quantityStatus === 'counted-piece-range' && item.countRange
                       ? `~${positionRangeLabel(item.countRange)} ${item.unit} positions`
                       : item.count === null
@@ -717,6 +725,8 @@ function FacilitatorCropsPageInner() {
   // The design's fruit trees, for the availability chart's own row. Read from the same canvas
   // as the beds and refreshed on the same event, so a tree placed in the Studio shows up here.
   const [canvasTrees, setCanvasTrees] = useState<PlacedTreeGroup[]>([]);
+  const [unidentifiedPlants, setUnidentifiedPlants] = useState<UnidentifiedPlantGroup[]>([]);
+  const [treeSeasons, setTreeSeasons] = useState<TreeSeasonChoices>({});
   // The same orchard switch as Money and Records (lib/produce-scope.ts) — one preference, so
   // turning the orchard off in one place is not quietly undone in another.
   const [includeTrees, setIncludeTrees] = useState(DEFAULT_INCLUDE_PERENNIALS);
@@ -726,6 +736,7 @@ function FacilitatorCropsPageInner() {
   // not an enterprise either — so nothing is charted for a kind until the farmer picks one.
   const [canvasAnimals, setCanvasAnimals] = useState<PlacedAnimalGroup[]>([]);
   const [animalChoices, setAnimalChoices] = useState<Partial<Record<HousingKind, string>>>({});
+  const [animalSeasons, setAnimalSeasons] = useState<AnimalSeasonChoices>({});
   const [includeAnimals, setIncludeAnimals] = useState(DEFAULT_INCLUDE_ANIMALS);
   useEffect(() => { setIncludeAnimals(loadIncludeAnimals()); }, []);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
@@ -856,6 +867,7 @@ function FacilitatorCropsPageInner() {
       siteMonthlyTempC: siteClimate?.monthlyTempC,
       siteMonthlyRainMm: siteClimate?.monthlyRainMm,
       siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
+      observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined,
     };
     // Say WHERE the climate came from, not just what it is — a satellite-derived
     // per-site profile and a reference city 250 km away are different claims.
@@ -1117,12 +1129,15 @@ function FacilitatorCropsPageInner() {
   // reloads facilitator state), so placing another bed in the Studio (another
   // tab) refreshes the bed list here without a reload.
   useEffect(() => {
-    if (!canvasSite) { setCanvasTrees([]); setCanvasAnimals([]); setAnimalChoices({}); return; }
+    if (!canvasSite) { setCanvasTrees([]); setUnidentifiedPlants([]); setTreeSeasons({}); setCanvasAnimals([]); setAnimalChoices({}); setAnimalSeasons({}); return; }
     setAnimalChoices(loadEnterpriseChoices(canvasSite));
+    setTreeSeasons(loadTreeSeasonChoices(canvasSite));
+    setAnimalSeasons(loadAnimalSeasonChoices(canvasSite));
     const refresh = () => {
       const state = loadCanvasState(canvasSite);
       setCanvasBeds(bedsFromDesignCanvas(state));
       setCanvasTrees(placedTreeGroups(state?.items ?? []));
+      setUnidentifiedPlants(unidentifiedPlantGroups(state?.items ?? []));
       setCanvasAnimals(placedAnimalGroups(state?.items ?? []));
     };
     refresh();
@@ -1184,18 +1199,35 @@ function FacilitatorCropsPageInner() {
   const siteLat = canvasLatLon?.lat ?? design?.bgSite?.lat;
   const siteLon = canvasLatLon?.lon ?? design?.bgSite?.lon;
   const hasSiteCoords = typeof siteLat === 'number' && typeof siteLon === 'number';
-  const [siteClimate, setSiteClimate] = useState<SiteClimate | null>(null);
+  const surveySiteId = hasSiteCoords ? canonicalCoordinateSiteId(`site:${siteLat!.toFixed(5)},${siteLon!.toFixed(5)}`) : null;
+  const [surveySnapshot, setSurveySnapshot] = useState<{ siteId: string; survey: SiteSurvey | null } | null>(null);
+  const siteSurvey = surveySnapshot?.siteId === surveySiteId ? surveySnapshot?.survey ?? null : null;
+  const [siteSurveyOpen, setSiteSurveyOpen] = useState(false);
   useEffect(() => {
-    if (!hasSiteCoords) { setSiteClimate(null); return; }
+    setSiteSurveyOpen(false);
+    if (!surveySiteId) { setSurveySnapshot(null); return; }
+    const refresh = () => setSurveySnapshot({ siteId: surveySiteId, survey: loadSurvey(surveySiteId) });
+    refresh();
+    window.addEventListener('imbewu-surveys-changed', refresh);
+    window.addEventListener('storage', refresh);
+    return () => {
+      window.removeEventListener('imbewu-surveys-changed', refresh);
+      window.removeEventListener('storage', refresh);
+    };
+  }, [surveySiteId]);
+  const climateSiteKey = hasSiteCoords ? `${siteLat},${siteLon}` : null;
+  const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null } | null>(null);
+  const siteClimate = climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
+  useEffect(() => {
+    if (!climateSiteKey) { setClimateSnapshot(null); return; }
     let cancelled = false;
-    // Reset immediately so a site switch can never keep the previous site's pattern
-    // on screen while the new site's climate is still resolving.
-    setSiteClimate(null);
+    // The render guard also blocks the old site's climate before this effect runs.
+    setClimateSnapshot(null);
     resolveSiteClimate(siteLat!, siteLon!).then((sc) => {
-      if (!cancelled) setSiteClimate(sc);
+      if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc });
     });
     return () => { cancelled = true; };
-  }, [hasSiteCoords, siteLat, siteLon]);
+  }, [climateSiteKey, siteLat, siteLon]);
 
   // ?canvasSite&auto=1 → open the auto-suggest questionnaire once, as soon as at
   // least one bed has loaded. Ref-guarded so a bed refresh (canvas-change event)
@@ -1247,6 +1279,12 @@ function FacilitatorCropsPageInner() {
     const bedIds = new Set(beds.map((b) => b.id));
     return (plan?.plantings ?? []).filter((p) => bedIds.has(p.bedId));
   }, [plan, beds]);
+  const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth), [siteSurvey, plantings, growingZones, currentMonth]);
+  const chickenGuide = useMemo(() => {
+    const coop = canvasAnimals.find((group) => group.housing === 'chicken');
+    if (!coop && !siteSurvey?.livestock.includes('chickens') && !siteSurvey?.poultryManagement) return undefined;
+    return poultryGuidance(siteSurvey?.poultryManagement, siteSurvey?.productionConditions, coop ? animalChoices[coop.housing] : undefined);
+  }, [canvasAnimals, animalChoices, siteSurvey]);
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
   function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
@@ -1291,6 +1329,10 @@ function FacilitatorCropsPageInner() {
       return { ...prev, version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
     });
   }
+  function confirmPastSowing(id: string) {
+    pushPlanHistory();
+    setPlan((prev) => prev ? { ...prev, plantings: prev.plantings.map((p) => p.id === id ? confirmOnceSowing(p, currentYear, currentMonth) : p), updatedAt: Date.now() } : prev);
+  }
   // Only drops plantings on beds actually shown right now (matches the
   // `plantings` derived read below) — never touches plantings parked under a
   // bed id that no longer exists in this design, same care as removePlanting.
@@ -1333,8 +1375,8 @@ function FacilitatorCropsPageInner() {
   // Tree picking by look-ahead slot, only for the first twelve: a season repeats every year, so
   // "(next year)" slots would only say the same thing again. Follows the chart's food-forest switch.
   const treePicking = useMemo(
-    () => (includeTrees ? treePickingByMonth(canvasTrees, lookAheadMonthOrder.slice(0, 12)) : []),
-    [includeTrees, canvasTrees, lookAheadMonthOrder],
+    () => (includeTrees ? treePickingByMonth(canvasTrees, lookAheadMonthOrder.slice(0, 12), treeSeasons) : []),
+    [includeTrees, canvasTrees, lookAheadMonthOrder, treeSeasons],
   );
 
   const benchmarkPlantings = useMemo(
@@ -1403,15 +1445,9 @@ function FacilitatorCropsPageInner() {
     [mounted, plantings, beds, currentMonth],
   );
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
-  // TWO honest years, one chart (2026-08-04, Rory: "i want to show what a full years season
-  // will look like... i am tired of not seeing a full ideal planting").
-  // 'established' omits nowMonth, so the builders fold every planting mod-12 — the plan
-  // repeated every year, the steady state a garden grows into. It is the DEFAULT because it
-  // is the picture the plan is FOR; a garden starting today inevitably shows near-empty
-  // early months, which reads as a broken plan rather than a young one.
-  // 'fromToday' uses the same absolute occurrences as the bed timeline. A
-  // repeated month name must not repeat an existing or one-time planting.
-  const [yearMode, setYearMode] = useState<'established' | 'fromToday'>('established');
+  // A dated field plan must not wrap a future crop into an earlier month. Start from today;
+  // the established-year option remains an explicitly chosen recurring-cycle reference.
+  const [yearMode, setYearMode] = useState<'established' | 'fromToday'>('fromToday');
   const chartNowMonth = yearMode === 'fromToday' ? currentMonth : undefined;
   const chartPlantings = useMemo(
     () => yearMode === 'established' ? recurringPlanPlantings(plantings) : plantings,
@@ -1426,29 +1462,29 @@ function FacilitatorCropsPageInner() {
   // a mango tree is not a bed crop (lib/perennial-produce.ts). "From today" leaves out proposed
   // trees, which are years from a first crop; the established year shows the whole design.
   const treeAvailability = useMemo(
-    () => buildTreeAvailability(canvasTrees, monthOrder, yearMode === 'fromToday'),
-    [canvasTrees, monthOrder, yearMode],
+    () => buildTreeAvailability(canvasTrees, monthOrder, yearMode === 'fromToday', treeSeasons),
+    [canvasTrees, monthOrder, yearMode, treeSeasons],
   );
   // Animals get their own row too, by the same rule: a coop drawn as proposed has no hens yet.
   const animalAvailability = useMemo(
-    () => buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, yearMode === 'fromToday'),
-    [canvasAnimals, animalChoices, monthOrder, yearMode],
+    () => buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, yearMode === 'fromToday', animalSeasons),
+    [canvasAnimals, animalChoices, monthOrder, yearMode, animalSeasons],
   );
   // The bed calendar's own food-forest and animal rows: the whole design, proposed kept apart
   // (lib/calendar-produce.ts), over the same rolling columns as the beds above them.
   const calendarProduce = useMemo(
-    () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder),
-    [canvasTrees, canvasAnimals, animalChoices, monthOrder],
+    () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons),
+    [canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons],
   );
   // Plants on the map whose harvest record has no sourced picking month yet: named under the row,
   // so a pawpaw that never appears is explained rather than silently missing.
   const treesWithoutSeason = useMemo(
-    () => canvasTrees.filter((g) => sourcedSeasonMonths(g.harvest).length === 0).map((g) => g.harvest.name),
-    [canvasTrees],
+    () => [...canvasTrees.filter((g) => confirmedTreeMonths(g.harvest, treeSeasons).length === 0).map((g) => g.harvest.name), ...unidentifiedPlants.map((g) => g.label)],
+    [canvasTrees, treeSeasons, unidentifiedPlants],
   );
-  const animalsNotShown = useMemo(() => animalsNotShownNote(canvasAnimals, animalChoices), [canvasAnimals, animalChoices]);
+  const animalsNotShown = useMemo(() => animalsNotShownNote(canvasAnimals, animalChoices, animalSeasons), [canvasAnimals, animalChoices, animalSeasons]);
   // Honey: on the map, but no source puts it in months — a line with no bar (see unmarkedAnimalLines).
-  const animalsUnmarked = useMemo(() => unmarkedAnimalLines(canvasAnimals, animalChoices), [canvasAnimals, animalChoices]);
+  const animalsUnmarked = useMemo(() => unmarkedAnimalLines(canvasAnimals, animalChoices, animalSeasons), [canvasAnimals, animalChoices, animalSeasons]);
   // The year of food folds the chart's own first twelve slots into one verdict per month, so it
   // follows the year mode and the orchard/animal switches exactly as the chart does.
   const yearOfFood = useMemo(
@@ -1468,8 +1504,8 @@ function FacilitatorCropsPageInner() {
     siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
   }, !aReliableIrrigation), [siteClimate, hasSiteCoords, siteLat, aReliableIrrigation]);
   const gapFills = useMemo(
-    () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate }),
-    [yearOfFood, beds, plantings, pattern, currentMonth, yearGate],
+    () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }),
+    [yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
   );
   function chooseAnimalEnterprise(housing: HousingKind, enterpriseId: string | null) {
     if (!canvasSite) return;
@@ -1477,6 +1513,22 @@ function FacilitatorCropsPageInner() {
     if (enterpriseId) next[housing] = enterpriseId; else delete next[housing];
     setAnimalChoices(next);
     saveEnterpriseChoices(canvasSite, next);
+    const nextSeasons = { ...animalSeasons };
+    delete nextSeasons[housing];
+    setAnimalSeasons(nextSeasons);
+    saveAnimalSeasonChoices(canvasSite, nextSeasons);
+  }
+  function chooseTreeSeason(speciesId: string, choice: NonNullable<TreeSeasonChoices[string]>) {
+    if (!canvasSite) return;
+    const next = { ...treeSeasons, [speciesId]: choice };
+    setTreeSeasons(next);
+    saveTreeSeasonChoices(canvasSite, next);
+  }
+  function chooseAnimalSeason(housing: HousingKind, enterpriseId: string, months: number[]) {
+    if (!canvasSite) return;
+    const next = { ...animalSeasons, [housing]: { enterpriseId, months } };
+    setAnimalSeasons(next);
+    saveAnimalSeasonChoices(canvasSite, next);
   }
   const fieldUtilization = useMemo(() => {
     if (chartNowMonth !== undefined) return buildFieldUtilizationByMonth(chartPlantings, beds, chartNowMonth, DISPLAY_MONTHS);
@@ -1487,9 +1539,10 @@ function FacilitatorCropsPageInner() {
   // The printed "Food availability" page: the first twelve columns of the chart above, with the
   // tree and animal rows only when the farmer has them switched on there.
   const printAvailability = useMemo(() => printableAvailability({
-    yearMode, veg: foodAvailability, utilization: fieldUtilization,
-    trees: treeAvailability, animals: animalAvailability, includeTrees, includeAnimals,
-  }), [yearMode, foodAvailability, fieldUtilization, treeAvailability, animalAvailability, includeTrees, includeAnimals]);
+    yearMode: 'fromToday', veg: buildFoodAvailability(plantings, beds, currentMonth, 12), utilization: buildFieldUtilizationByMonth(plantings, beds, currentMonth, 12),
+    trees: buildTreeAvailability(canvasTrees, monthOrder, true, treeSeasons), animals: buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, true, animalSeasons), includeTrees, includeAnimals,
+    treeGroups: canvasTrees, unidentifiedPlants, treeSeasons, animalGroups: canvasAnimals, animalChoices, animalSeasons,
+  }), [plantings, beds, currentMonth, monthOrder, canvasTrees, treeSeasons, canvasAnimals, animalChoices, animalSeasons, includeTrees, includeAnimals, unidentifiedPlants]);
 
   // Cover-page facts for the printed plan and the calendar's name. Built from
   // the same values the header and the bed-check strip already show, so the
@@ -1525,7 +1578,7 @@ function FacilitatorCropsPageInner() {
 
   function shareTasks() {
     const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line)}`).join('');
-    const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
+    const text = `🌱 Production plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 
@@ -1632,7 +1685,7 @@ function FacilitatorCropsPageInner() {
           className="flex-shrink-0 px-3 md:px-5 py-2"
           style={{ background: '#9A3412', color: '#FDF3EC', fontSize: 12.5, lineHeight: 1.35 }}
         >
-          <strong>Not saving.</strong> This phone has no space left, so changes to your crop plan
+          <strong>Not saving.</strong> This phone has no space left, so changes to your production plan
           are not being kept. Free up space — your plan is still on screen until you close it.
         </div>
       )}
@@ -1664,9 +1717,9 @@ function FacilitatorCropsPageInner() {
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer' }}
-            title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
+            title={cropUi(lang, "Switch to a different design's production plan", 'Shintshela ohlelweni lokukhiqiza lomunye umklamo')}
           >
-            ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
+            ‹ {cropUi(lang, 'All production plans', 'Zonke izinhlelo zokukhiqiza')}
           </button>
         )}
         {canvasSite && ((myDesignsList?.length ?? 0) + studioChoices.length > 1) && (
@@ -1677,9 +1730,9 @@ function FacilitatorCropsPageInner() {
             href="/facilitator/crops?switch=1"
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', textDecoration: 'none' }}
-            title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
+            title={cropUi(lang, "Switch to a different design's production plan", 'Shintshela ohlelweni lokukhiqiza lomunye umklamo')}
           >
-            ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
+            ‹ {cropUi(lang, 'All production plans', 'Zonke izinhlelo zokukhiqiza')}
           </Link>
         )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: 'var(--border)' }} />
@@ -1690,16 +1743,16 @@ function FacilitatorCropsPageInner() {
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left' }}
           >
             <div className="flex flex-col min-w-0">
-              <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
+              <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
               <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>{designTitle}</span>
             </div>
             <ChevronDown size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
           </button>
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
+            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
             <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>
-              {canvasSite ? cropUi(lang, 'Beds from your Design Studio map', 'Imibhede esemephini ye-Design Studio') : designTitle}
+              {canvasSite ? cropUi(lang, 'Plants and housing from your map', 'Izitshalo nezindlu zezilwane ezisemephini yakho') : designTitle}
             </span>
           </div>
         )}
@@ -1743,6 +1796,10 @@ function FacilitatorCropsPageInner() {
         ))}
       </header>
 
+      <div className="flex-shrink-0 px-3 md:px-5 py-2 font-sans" style={{ fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+        Vegetables and staples · Fruit, nuts &amp; berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.
+      </div>
+
       {lang === 'zu' && (
         <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
           <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
@@ -1780,7 +1837,7 @@ function FacilitatorCropsPageInner() {
 
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
-          <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading crop plan…', 'Kulayishwa uhlelo lwezitshalo…')}</span>
+          <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading production plan…', 'Kulayishwa uhlelo lokukhiqiza…')}</span>
         </div>
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
@@ -2056,8 +2113,8 @@ function FacilitatorCropsPageInner() {
                       kind="trees"
                       months={calendarProduce}
                       axis={monthAxis}
-                      emptyText="No fruit, nut or berry plant with a sourced season is on your map yet. Add them in the Design Studio and their picking months show here."
-                      footnote={treesWithoutSeason.length ? `On your map with no sourced picking months yet, so not shown: ${treesWithoutSeason.join(', ')}.` : null}
+                      emptyText="No locally confirmed picking months yet. Plants on your map are listed below; confirm when they already give food here."
+                      footnote={treesWithoutSeason.length ? `On your map, with picking months to confirm: ${treesWithoutSeason.join(', ')}. They stay listed on the printed plan.` : null}
                     />
                   ) : (
                     <CalendarSectionNote action={{ label: 'Show fruit, nuts & berries', onClick: () => { setIncludeTrees(true); saveIncludePerennials(true); } }}>
@@ -2070,7 +2127,7 @@ function FacilitatorCropsPageInner() {
                       kind="animals"
                       months={calendarProduce}
                       axis={monthAxis}
-                      emptyText="No animals giving food on your map yet. Place a coop, hive or pen in the Design Studio, then say what it is for under Animals on your map."
+                      emptyText="No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan."
                       footnote={animalsNotShown}
                       unmarked={animalsUnmarked}
                     />
@@ -2124,6 +2181,21 @@ function FacilitatorCropsPageInner() {
                 </div>
               </div>
             )}
+
+            {(plan?.plantings ?? []).some((p) => p.awaitingSowingConfirmation && beds.some((b) => b.id === p.bedId)) && <div className="rounded-2xl p-4 mt-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--gold)' }} data-sowing-confirmation>
+              <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>Were these crops planted?</div>
+              <p className="font-sans mt-1 mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Their one-time sowing month has passed. Confirm what happened before the plan counts their harvest or field work.</p>
+              {(plan?.plantings ?? []).filter((p) => p.awaitingSowingConfirmation && beds.some((b) => b.id === p.bedId)).map((p) => <div key={p.id} className="font-sans flex flex-wrap items-center justify-between gap-2 py-2" style={{ fontSize: 13, borderTop: '1px solid var(--border)', color: 'var(--text-primary)' }}>
+                <span><strong>{cropByKey(p.cropKey)?.name ?? p.cropKey}</strong> · {beds.find((b) => b.id === p.bedId)?.label} · {p.once}</span>
+                <div className="flex gap-2"><button type="button" onClick={() => confirmPastSowing(p.id)} className="rounded-lg px-3 py-2" style={{ background: 'var(--bg-2)', border: '1px solid var(--emerald)', cursor: 'pointer' }}>Already planted</button><button type="button" onClick={() => removePlanting(p.id)} className="rounded-lg px-3 py-2" style={{ background: 'transparent', border: '1px solid var(--border)', cursor: 'pointer' }}>Not planted</button></div>
+              </div>)}
+            </div>}
+
+            <TreeSeasonsCard groups={canvasTrees} unidentified={unidentifiedPlants} choices={treeSeasons} onChoose={chooseTreeSeason} />
+            <ProductionGuideCard guide={productionGuide} canSurvey={!!surveySiteId} onSurvey={() => setSiteSurveyOpen(true)} />
+            {chickenGuide && <PoultryGuidanceCard guidance={chickenGuide} />}
+            <AnimalEnterprisesCard groups={canvasAnimals} choices={animalChoices} onChoose={chooseAnimalEnterprise} seasons={animalSeasons} onSeasonsChange={chooseAnimalSeason} compact={simple} />
+            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} poultryGuidance={includeAnimals ? chickenGuide : undefined} />}
 
             {!simple && (
             <>
@@ -2187,7 +2259,6 @@ function FacilitatorCropsPageInner() {
               climateKnown={!!yearGate?.tempC}
               onPlan={planGapFill}
             />
-            <AnimalEnterprisesCard groups={canvasAnimals} choices={animalChoices} onChoose={chooseAnimalEnterprise} />
 
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
@@ -2430,6 +2501,9 @@ function FacilitatorCropsPageInner() {
               meta={exportMeta}
               availability={printAvailability}
               treeGroups={includeTrees ? canvasTrees : undefined}
+              treeSeasons={treeSeasons}
+              productionGuide={productionGuide}
+              poultryGuidance={includeAnimals ? chickenGuide : undefined}
             />
 
             {/* Seed BOQ + year-ahead report */}
@@ -2588,6 +2662,14 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Planting popover */}
+      {siteSurveyOpen && surveySiteId && <SiteSurveySheet
+        key={surveySiteId}
+        placeId={siteSurvey?.placeId || surveySiteId}
+        coords={{ lat: siteLat!, lon: siteLon! }}
+        annualRainfallMm={siteClimate?.annualMm}
+        onSaved={(survey) => { setSurveySnapshot({ siteId: surveySiteId, survey }); setSiteSurveyOpen(false); }}
+        onClose={() => setSiteSurveyOpen(false)}
+      />}
       {activePlanting && (
         <PlantingPopover
           planting={activePlanting}
@@ -2619,6 +2701,7 @@ function FacilitatorCropsPageInner() {
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
           reliableIrrigation={aReliableIrrigation} onReliableIrrigation={setAReliableIrrigation}
           siteClimate={siteClimate}
+          siteObservationNotes={productionGuide.siteObservations.slice(0, 2).flatMap((item) => item.lines)}
           beds={beds}
           result={autoResult}
           onGenerate={runAutoSuggest}
@@ -3331,12 +3414,12 @@ function FoodAvailabilityChart({
               </div>
               {showTreeRow && (
                 <p className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
-                  Tree months are the span South African sources give across all growing regions. Your own weeks depend on your area and cultivar{yearMode === 'fromToday' ? '; trees drawn as proposed are left out, as they are years from a first crop' : ''}. Trees are never added to the bars or to any per-m² figure.
+                  Tree months are confirmed for this farm under Fruit, nuts &amp; berries on your map{yearMode === 'fromToday' ? '; proposed plants are left out' : ''}. Regional source windows remain references until you confirm the local season and that plants already give food.
                 </p>
               )}
               {showAnimalRow && (
                 <p className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
-                  Animal months are the ones the sources give for what you said each kind is kept for{yearMode === 'fromToday' ? '; housing drawn as proposed is left out, as nothing lives in it yet' : ''}. Animals are never added to the bars or to any per-m² figure.
+                  Animal months are confirmed for this farm under Animals on your map{yearMode === 'fromToday' ? '; proposed housing is left out' : ''}. Choosing layers does not promise year-round eggs. Animals are never added to the bed bars or any per-m² figure.
                 </p>
               )}
               <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
@@ -4002,7 +4085,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
             <span>{openLane.text}</span>
           </div>
           <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 7, lineHeight: 1.35 }}>
-            Months from the sourced South African season. No kilograms: the sources give a span, not a monthly amount.
+            Locally confirmed months for this farm. No monthly quantities are assumed.
           </div>
         </div>
       )}
@@ -4034,7 +4117,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
   };
   const Icon = PRODUCT_ICON[line.product];
   const docs = [...new Set(line.records.map((r) => r.source.doc))];
-  const noteText = line.note?.text ?? 'No source puts this in months, so none are marked.';
+  const noteText = line.note?.text ?? 'Local production months are not confirmed, so no months are marked.';
 
   return (
     <div
@@ -4804,7 +4887,7 @@ function AutoSuggestModal({
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
   pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
-  siteClimate, beds, result, onGenerate, onAccept, onBackToQuestions, onClose,
+  siteClimate, siteObservationNotes, beds, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
@@ -4833,6 +4916,7 @@ function AutoSuggestModal({
   /** The site's own monthly climate, when it resolved. Null keeps the irrigation
    * question generic rather than quoting a reference region's rain as this site's. */
   siteClimate: SiteClimate | null;
+  siteObservationNotes?: string[];
   /** Beds in the parent's scope, used to label each suggested planting with its bed. */
   beds: PlanBed[];
   result: AutoSuggestResult | null;
@@ -5085,6 +5169,11 @@ function AutoSuggestModal({
               </span>
             </button>
 
+            {!!siteObservationNotes?.length && <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+              <p className="font-sans font-semibold" style={{ fontSize: 12, color: 'var(--text-primary)' }}>Site survey: water and frost</p>
+              {siteObservationNotes.map((note) => <p key={note} className="font-sans mt-1" style={{ fontSize: 11.5, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{note}</p>)}
+              <p className="font-sans mt-1" style={{ fontSize: 11.5, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Confirm your current water supply before switching irrigation on. Observed frost months are checked when the plan is suggested.</p>
+            </div>}
             <button
               onClick={() => onReliableIrrigation(!reliableIrrigation)}
               className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"

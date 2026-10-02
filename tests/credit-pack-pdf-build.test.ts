@@ -13,8 +13,19 @@ import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 import { isSampleMode } from '@/lib/sample-mode';
 import { buildCreditPackPdf, buildCreditPackPreviewPdf } from '@/lib/credit-pack-pdf';
 import { formatInvoiceZar } from '@/lib/invoice-document';
+import { recordQuantityPayload } from '@/lib/farm-records';
 
 const NOW = new Date('2026-08-15T09:00:00.000Z');
+
+test('a counted-produce lender PDF preserves egg and jar quantities without printing a zero kilogram harvest', async () => {
+  const blob = await buildCreditPackPdf({ farmer: farmer(), production: [{ ...harvest(), crop: 'Eggs', ...recordQuantityPayload(50, 'eggs') }, { ...harvest(), id: 'honey', crop: 'Honey', ...recordQuantityPayload(3, 'jars') }], sales: [{ ...sale(), crop: 'Eggs', ...recordQuantityPayload(20, 'eggs'), amount: 60 }], expenses: [], now: NOW });
+  const text = await blob.text();
+  assert.match(text, /50 eggs/);
+  assert.match(text, /3 jars/);
+  assert.match(text, /20 eggs/);
+  assert.match(text, /weight is unknown/);
+  assert.doesNotMatch(text, /0 kg harvested in total|0 kg in total|0 kg sold for/);
+});
 
 test('the tour exports a complete preview using an example identity', async () => {
   const blob = await buildCreditPackPreviewPdf({ production: [harvest()], sales: [sale()], expenses: [expense()], now: NOW });

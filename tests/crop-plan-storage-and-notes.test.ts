@@ -301,12 +301,21 @@ test('the availability chart reaches its stored detail by tap, not only by hover
 
 // ── C. the PDF carries the storage stat ─────────────────────────────────────
 
-test('buildPlanDashboard counts stored months and names the crops behind them', () => {
+test('the dated dashboard counts storage after its sowing and names the crops behind it', () => {
   const beds = bedsFor(1, 0, 9);
   const stored = buildPlanDashboard(
     [{ id: 'bn', bedId: 'b1', cropKey: 'butternut', sowMonth: 10 }],
+    beds, [], { nowMonth: 10 },
+  );
+  // An upcoming October sowing has food and storage later in an October-start
+  // year. The previous annual wrap wrongly borrowed that same future crop
+  // into the January-start year before it was sown.
+  const beforeSowing = buildPlanDashboard(
+    [{ id: 'bn', bedId: 'b1', cropKey: 'butternut', sowMonth: 10 }],
     beds, [], { nowMonth: 1 },
   );
+  assert.equal(beforeSowing.storedFoodMonths, 0);
+  assert.deepEqual(beforeSowing.storedFoodCrops, []);
   assert.ok(stored.storedFoodMonths > 0, 'a sourced shelf life must produce stored months');
   assert.deepEqual(stored.storedFoodCrops, ['Butternut']);
 
@@ -578,4 +587,31 @@ test('the from-now engine call in page.tsx survives the whole-year feature byte-
     'the literal from-now engine call must keep its first five arguments unchanged, and pass '
     + 'realNow explicitly',
   );
+});
+
+test('saving and reopening dated sowing decisions preserves confirmation and never revives last year\'s crop', async () => {
+  const { confirmOnceSowing, loadCropPlan, saveCropPlan } = await import('@/lib/crop-plan');
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const currentStamp = `${year}-${String(month).padStart(2, '0')}`;
+  const oldStamp = `${year - 1}-${String(month).padStart(2, '0')}`;
+  const confirmed = confirmOnceSowing({ id: 'current', bedId: 'b1', cropKey: 'green-beans', sowMonth: month, once: currentStamp }, year, month);
+  const old = confirmOnceSowing({ id: 'old', bedId: 'b1', cropKey: 'green-beans', sowMonth: month, once: oldStamp }, year - 1, month);
+  const undecided: Planting = { id: 'undecided', bedId: 'b1', cropKey: 'green-beans', sowMonth: month, once: oldStamp };
+  const plan: CropPlanState = { version: 1, plantings: [confirmed, old, undecided], updatedAt: now.getTime() };
+  const loaded = withLocalStorage(new Map<string, string>(), () => {
+    assert.equal(saveCropPlan(plan), true);
+    const first = loadCropPlan();
+    assert.equal(saveCropPlan(first), true);
+    return loadCropPlan();
+  });
+  assert.equal(loaded.plantings[0].confirmedOnceSowing, currentStamp);
+  assert.equal(loaded.plantings[0].finishedOnceSowing, undefined);
+  assert.equal(loaded.plantings[1].confirmedOnceSowing, oldStamp);
+  assert.equal(loaded.plantings[1].finishedOnceSowing, true);
+  assert.equal(loaded.plantings[2].once, oldStamp);
+  assert.equal(loaded.plantings[2].awaitingSowingConfirmation, true);
+  assert.equal(loaded.plantings[2].existing, undefined);
+  assert.ok(buildFoodAvailability(loaded.plantings.slice(1), [{ id: 'b1', label: 'Bed 1', areaM2: 9 }], month, 24).every((slot) => slot.length === 0));
 });

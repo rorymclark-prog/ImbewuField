@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { ANIMAL_PRODUCT_ENTRY_OPTIONS, CROP_ENTRY_OPTIONS, cropEntryOption, produceEntryOption } from '@/lib/crop-entry';
+import { ANIMAL_ENTERPRISES, PRODUCT_LABEL } from '@/lib/animal-enterprises';
+import { recordQuantityPayload, recordQuantityLabel, quantityTotals } from '@/lib/farm-records';
 
 // Swarm wave 2 — Records polish: tap targets, isiZulu, theme colours.
 // Pins the fixes from the w2-records-polish audit so they cannot silently regress.
@@ -104,4 +107,59 @@ test('the records offline banner follows --orange instead of a hardcoded amber',
   assert.match(block, /color-mix\(in srgb, var\(--orange\) 12%, transparent\)/, 'offline banner background must derive from var(--orange)');
   assert.match(block, /color-mix\(in srgb, var\(--orange\) 30%, transparent\)/, 'offline banner border must derive from var(--orange)');
   assert.match(block, /color: 'var\(--orange\)'/, 'offline banner text must use var(--orange)');
+});
+
+test('eggs and honey are direct record choices from the animal catalogue without becoming plannable crops', () => {
+  const products = [...new Set(Object.values(ANIMAL_ENTERPRISES).map(enterprise => enterprise.product))];
+  assert.deepEqual(ANIMAL_PRODUCT_ENTRY_OPTIONS, products.map(product => ({ key: `animal-product:${product}`, label: PRODUCT_LABEL[product] })));
+  assert.equal(produceEntryOption('Eggs')?.key, 'animal-product:eggs');
+  assert.equal(produceEntryOption('honey')?.key, 'animal-product:honey');
+  assert.equal(cropEntryOption('Eggs'), null, 'a product must never acquire a bed yield or sowing rule');
+  assert.ok(!CROP_ENTRY_OPTIONS.some(option => option.key.startsWith('animal-product:')));
+  const picker = readFileSync(new URL('../components/CropSelect.tsx', import.meta.url), 'utf8');
+  assert.match(picker, /<optgroup label="Animal products">/);
+  assert.match(picker, /ANIMAL_PRODUCT_ENTRY_OPTIONS\.find/, 'selecting an animal product must resolve the same catalogue option that was displayed');
+});
+
+test('picked, quick-sale and sale-edit forms keep quantities with their units and readable labels', () => {
+  const pickedAndSale = myRecords();
+  const ledger = recordsPage();
+  assert.match(pickedAndSale, /idPrefix="picked"[^>]*quantity=\{form\.quantity\}[^>]*unit=\{form\.unit\}/);
+  assert.match(pickedAndSale, /idPrefix="quick-sale"[^>]*quantity=\{form\.quantity\}[^>]*unit=\{form\.unit\}/);
+  assert.match(ledger, /idPrefix=\{alwaysOpen[^>]*quantity=\{form\.quantity\}[^>]*unit=\{form\.unit\}/);
+  assert.match(ledger, /quantity: String\(recordQuantity\(editing\.row\) \?\? ''\), unit: recordUnit\(editing\.row\) \?\? 'kg'/, 'editing eggs must preserve eggs rather than resetting to kg');
+  assert.match(pickedAndSale, /recordQuantityPayload\(quantity, form\.unit\)/);
+  assert.match(ledger, /recordQuantityPayload\(quantity, form\.unit\)/);
+  assert.match(pickedAndSale, /form\.unit === 'kg' && form\.cropKey \? priceFor/, 'per-kg guide prices must never price an egg or a jar');
+  assert.match(ledger, /qty: recordQuantityLabel\(s\)/, 'sale CSV and ledger rows must retain their unit');
+  assert.match(ledger, /qty: recordQuantityLabel\(p\)/, 'picked CSV and ledger rows must retain their unit');
+});
+
+test('quantity controls remain labelled and counts never erase weighed produce from a summary', () => {
+  const controls = readFileSync(new URL('../components/records/RecordQuantityFields.tsx', import.meta.url), 'utf8');
+  assert.match(controls, /const instanceId = useId\(\)/, 'the phone and desktop forms must not share field IDs');
+  assert.match(controls, /htmlFor=\{quantityId\}/);
+  assert.match(controls, /id=\{quantityId\}/);
+  assert.match(controls, /htmlFor=\{unitId\}/);
+  assert.match(controls, /id=\{unitId\}/);
+  assert.match(controls, /minHeight: 44/);
+  assert.match(controls, /unit === 'eggs' \|\| unit === 'each' \? 'numeric' : 'decimal'/, 'packages may be fractional while eggs and items need whole numbers');
+  const rows = [recordQuantityPayload(2.5, 'kg'), recordQuantityPayload(12, 'eggs'), recordQuantityPayload(3, 'jars')];
+  const labels = quantityTotals(rows).map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit)));
+  assert.deepEqual(quantityTotals(rows), [{ unit: 'kg', quantity: 2.5 }, { unit: 'eggs', quantity: 12 }, { unit: 'jars', quantity: 3 }], 'mixed records must remain separate quantities rather than a made-up combined weight');
+  assert.deepEqual(labels, [`${(2.5).toLocaleString('en-ZA')} kg`, '12 eggs', '3 jars']);
+  assert.throws(() => recordQuantityPayload(1.5, 'eggs'), /whole numbers/);
+  assert.doesNotThrow(() => recordQuantityPayload(1.5, 'bunches'));
+  assert.match(myRecords(), /quantityTotals\(counted\)/, 'the picked summary must use the grouped record authority');
+  assert.match(recordsPage(), /quantities: quantityTotals/, 'the financial sheet must retain nonweight observations');
+});
+
+test('staff book mappings and print previews retain count units without assigning them weight', () => {
+  const staff = readFileSync(new URL('../components/NgoDashboard.tsx', import.meta.url), 'utf8');
+  assert.match(staff, /quantity: p\.quantity,\s+unit: p\.unit/);
+  assert.match(staff, /quantity: s\.quantity,\s+unit: s\.unit/);
+  assert.match(staff, /Production entries[^\n]+recordQuantityLabel\(p\)/);
+  assert.match(staff, /Sales entries[^\n]+recordQuantityLabel\(p\)/);
+  assert.match(staff, /recordWeightKg\(p\) \?\? 0/);
+  assert.doesNotMatch(staff, /reduce\([^\n]*\+ p\.kg/, 'staff weight totals must reject nonweight or inconsistent quantity rows');
 });

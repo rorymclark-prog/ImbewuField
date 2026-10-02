@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   CROP_ENTRY_OPTIONS,
+  ANIMAL_PRODUCT_ENTRY_OPTIONS,
   PERENNIAL_ENTRY_GROUPS,
   produceEntryOption,
   loadCustomCropNames,
@@ -54,7 +55,8 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
     if (next.startsWith('catalogue:')) {
       const key = next.slice('catalogue:'.length);
       const crop = CROP_ENTRY_OPTIONS.find((option) => option.key === key)
-        ?? PERENNIAL_ENTRY_GROUPS.flatMap((entry) => entry.options).find((option) => option.key === key);
+        ?? PERENNIAL_ENTRY_GROUPS.flatMap((entry) => entry.options).find((option) => option.key === key)
+        ?? ANIMAL_PRODUCT_ENTRY_OPTIONS.find((option) => option.key === key);
       if (crop) onChange(crop.label, crop.key);
       return;
     }
@@ -88,7 +90,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
         className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
         style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
       >
-        <option value="">{label('Choose a crop', 'Khetha isilimo')}</option>
+        <option value="">Choose produce / product</option>
         <optgroup label={label('Crop list', 'Uhlu lwezitshalo')}>
           {CROP_ENTRY_OPTIONS.map((crop) => (
             <option key={crop.key} value={`catalogue:${crop.key}`}>{crop.label}</option>
@@ -109,21 +111,24 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             ))}
           </optgroup>
         ))}
+        <optgroup label="Animal products">
+          {ANIMAL_PRODUCT_ENTRY_OPTIONS.map((product) => <option key={product.key} value={`catalogue:${product.key}`}>{product.label}</option>)}
+        </optgroup>
         {savedNames.length > 0 && (
-          <optgroup label={label('Crops you added', 'Izitshalo ozifakile')}>
+          <optgroup label="Products you added">
             {savedNames.map((name, index) => (
               <option key={name.toLocaleLowerCase('en-ZA')} value={`custom:${index}`}>{name}</option>
             ))}
           </optgroup>
         )}
-        <option value="__add__">{label('＋ Add another crop…', '＋ Engeza esinye isilimo…')}</option>
+        <option value="__add__">＋ Add another product…</option>
       </select>
 
       {adding && (
         <div className="flex gap-2">
           <input
             autoFocus
-            aria-label={label('New crop name', 'Igama lesilimo esisha')}
+            aria-label="New product name"
             value={newName}
             onChange={(event) => setNewName(event.target.value)}
             onKeyDown={(event) => {
@@ -132,7 +137,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
                 addCrop();
               }
             }}
-            placeholder={label('Type the crop name', 'Thayipha igama lesilimo')}
+            placeholder="Type the product name"
             className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
           />
@@ -147,7 +152,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
               cursor: newName.trim() ? 'pointer' : 'not-allowed',
             }}
           >
-            {label('Save crop', 'Londoloza isilimo')}
+            Save product
           </button>
         </div>
       )}
