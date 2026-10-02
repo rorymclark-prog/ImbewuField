@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '7baf7296', changes: [
+    'Tshivenda bed preparation adds marked draft paragraphs beside exact English.',
+    'Precise soil, sizing and cultivation wording stays English for facilitator review.',
+  ], tour: [
+    { title: 'Review bed preparation', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lesson 1 beside English. Silent slides and optional English audio remain.' },
+  ] },
   { when: '2 October 2026', sha: '133fe811', changes: [
     'Reading quizzes add Tshivenda and Xitsonga draft explanations beside English.',
     'Frost, disease and soil cautions keep exact English; answers stay source-paired.',
