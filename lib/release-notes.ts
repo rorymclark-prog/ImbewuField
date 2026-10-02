@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'e7f8a847', changes: [
+    'Xitsonga succession lessons add marked body drafts beside exact English.',
+    'Bed and sowing questions add draft wording; precise farming conditions stay English.',
+  ], tour: [
+    { title: 'Review vegetable drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 1 and 2 with exact English sources and unreviewed draft labels.' },
+  ] },
   { when: '2 October 2026', sha: 'd6f77b1e', changes: [
     'Xitsonga pest lessons add marked step-by-step drafts beside exact English.',
     'Sesotho market lessons add draft framing; precise business conditions stay English.',
