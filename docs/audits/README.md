@@ -6,18 +6,24 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site survey: start here
 
-1. [Latest continuation: comprehensive coverage and recommended report stages — 2 October 2026](2026-10-02/site-report-coverage-and-stages-codex.md).
-2. [Completed survey and visual improvements — 2 October 2026](2026-10-02/site-survey-completed-visual-codex.md) · [Readable completed example and report](2026-10-02/site-survey-completed-example.md).
-3. [Unfinished survey recovery — 2 October 2026](2026-10-02/site-survey-draft-recovery-codex.md).
-4. [Prior work and continuation baseline — 2 October 2026](2026-10-02/site-survey-continuation.md).
-5. [Original illustrated survey and report audit — 20 September](../SITE-SURVEY-AUDIT-2026-09-20.md).
-6. [isiZulu survey review packet — 25 September](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
+1. [Latest continuation: six actual Ubhejane reports and signed-in evidence — 3 October 2026](2026-10-03/ubhejane-six-report-continuation-codex.md).
+2. [Comprehensive coverage and recommended report stages — 2 October 2026](2026-10-02/site-report-coverage-and-stages-codex.md).
+3. [Completed survey and visual improvements — 2 October 2026](2026-10-02/site-survey-completed-visual-codex.md) · [Readable completed example and report](2026-10-02/site-survey-completed-example.md).
+4. [Unfinished survey recovery — 2 October 2026](2026-10-02/site-survey-draft-recovery-codex.md).
+5. [Prior work and continuation baseline — 2 October 2026](2026-10-02/site-survey-continuation.md).
+6. [Original illustrated survey and report audit — 20 September](../SITE-SURVEY-AUDIT-2026-09-20.md).
+7. [isiZulu survey review packet — 25 September](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
 
 The continuation record distinguishes work already merged from open improvements
 and checks that have not been performed. The older audit's pending-release text
 is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
+
+The [3 October six-report continuation](2026-10-03/ubhejane-six-report-continuation-codex.md)
+uses the current signed-in crop summary in the design editions and distinguishes
+it from actual production in the review editions. Keep the following implementation
+audits as the authority for existing crop-plan findings and changes.
 
 1. [Production-plan follow-up — 2 October 2026](2026-10-02/crop-production-codex-followup.md).
 2. [Original crop/production finding register — 2 October 2026](2026-10-02/crop-production-audit.md).
@@ -59,6 +65,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-03 | [Six actual Ubhejane reports: dated local catalog, signed-in evidence and next iteration — Codex](2026-10-03/ubhejane-six-report-continuation-codex.md) |
 | 2026-10-02 | [Site report: recovered comprehensive work, coverage gaps and recommended stages — Codex](2026-10-02/site-report-coverage-and-stages-codex.md) |
 | 2026-10-02 | [Site survey: completed example, PDF and visual improvements — Codex](2026-10-02/site-survey-completed-visual-codex.md) · [Read the saved example](2026-10-02/site-survey-completed-example.md) |
 | 2026-10-02 | [Site survey: draft recovery, browser evidence and next checks — Codex](2026-10-02/site-survey-draft-recovery-codex.md) |
