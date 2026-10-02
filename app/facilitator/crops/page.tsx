@@ -807,6 +807,7 @@ function FacilitatorCropsPageInner() {
   const [autoGenerating, setAutoGenerating] = useState(false);
 
   function openAutoSuggest() {
+    if (beds.length === 0) return;
     setAGoal('family');
     setAFocusCount(1);
     applyGoalMix('family');
@@ -851,6 +852,7 @@ function FacilitatorCropsPageInner() {
     setACropKeys((prev) => prev.includes(cropKey) ? prev.filter((key) => key !== cropKey) : [...prev, cropKey]);
   }
   function runAutoSuggest() {
+    if (beds.length === 0) return;
     const answers: AutoSuggestAnswers = {
       goal: aGoal,
       focusCropCount: aGoal !== 'family' ? aFocusCount : undefined,
@@ -920,7 +922,7 @@ function FacilitatorCropsPageInner() {
     setPlanHistory((prev) => prev.slice(0, -1));
   }
   function acceptAutoSuggest() {
-    if (!autoResult) return;
+    if (!autoResult || beds.length === 0) return;
     pushPlanHistory();
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
@@ -1905,7 +1907,9 @@ function FacilitatorCropsPageInner() {
             </button>
           </div>
         </div>
-      ) : beds.length === 0 ? (
+      // An orchard, unresolved food layout or animal housing is still a production plan.
+      // Requiring a crop bed here hid its confirmation controls and printed inventory.
+      ) : beds.length === 0 && canvasTrees.length === 0 && unidentifiedPlants.length === 0 && canvasAnimals.length === 0 ? (
         <EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
       ) : (
         <div className="flex-1 overflow-y-auto">
@@ -1944,8 +1948,10 @@ function FacilitatorCropsPageInner() {
             <div className="flex gap-2 mb-3">
               <button
                 onClick={openAutoSuggest}
+                disabled={beds.length === 0}
+                title={beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
                 className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
-                style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: 'pointer' }}
+                style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: beds.length === 0 ? 'not-allowed' : 'pointer', opacity: beds.length === 0 ? 0.55 : 1 }}
               >
                 <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Auto-suggest a plan', 'Phakamisa uhlelo ngokuzenzakalelayo')}
               </button>
@@ -1971,6 +1977,9 @@ function FacilitatorCropsPageInner() {
               )}
             </div>
             )}
+            {beds.length === 0 && <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              Your mapped plants and animal housing are listed below. To plan vegetable or staple crops, <Link href={designHref} style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>add a bed or plot in the Design Studio</Link>.
+            </p>}
 
             {/* Timeline. The month header and the bed-rows body are TWO
                 separate horizontal-scroll regions kept in sync by JS
@@ -2682,7 +2691,7 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Auto-suggest: questionnaire + review */}
-      {autoPhase !== 'idle' && (
+      {autoPhase !== 'idle' && beds.length > 0 && (
         <AutoSuggestModal
           phase={autoPhase}
           goal={aGoal} onGoal={chooseGoal}

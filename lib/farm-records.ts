@@ -47,20 +47,53 @@ export function recordQuantityLabel(row: RecordQuantityRow): string {
   return quantity === null || !unit ? 'Quantity not recorded' : `${quantity.toLocaleString('en-ZA', { maximumSignificantDigits: 21 })} ${unit === 'each' ? 'items' : unit}`;
 }
 
+type DecimalQuantity = { digits: bigint; exponent: number };
+
+function addDecimalQuantity(previous: DecimalQuantity | undefined, quantity: number): DecimalQuantity {
+  const [decimal, scientificExponent] = quantity.toString().split('e');
+  const [whole, fraction = ''] = decimal.split('.');
+  const next = { digits: BigInt(whole + fraction), exponent: Number(scientificExponent ?? 0) - fraction.length };
+  if (!previous) return next;
+  const exponent = Math.min(previous.exponent, next.exponent);
+  return {
+    digits: previous.digits * BigInt(10) ** BigInt(previous.exponent - exponent)
+      + next.digits * BigInt(10) ** BigInt(next.exponent - exponent),
+    exponent,
+  };
+}
+
+function decimalQuantityNumber(total: DecimalQuantity | undefined): number | null {
+  const quantity = total ? Number(`${total.digits}e${total.exponent}`) : 0;
+  return Number.isFinite(quantity) ? quantity : null;
+}
+
+/** Signed observations can derive a balance without introducing decimal noise.
+ * Invalid inputs and an overflowing result cannot prove a known quantity. */
+export function decimalQuantitySum(values: readonly number[]): number | null {
+  let total: DecimalQuantity | undefined;
+  for (const quantity of values) {
+    if (typeof quantity !== 'number' || !Number.isFinite(quantity)) return null;
+    total = addDecimalQuantity(total, quantity);
+  }
+  return decimalQuantityNumber(total);
+}
+
 export function quantityTotals(rows: readonly RecordQuantityRow[]): Array<{ unit: RecordUnit; quantity: number }> {
-  const totals = new Map<RecordUnit, number>();
-  const unknownTotals = new Set<RecordUnit>();
+  const totals = new Map<RecordUnit, DecimalQuantity>();
   for (const row of rows) {
     const quantity = recordQuantity(row), unit = recordUnit(row);
-    if (quantity === null || !unit || unknownTotals.has(unit)) continue;
-    const total = (totals.get(unit) ?? 0) + quantity;
-    if (validRecordQuantity(total, unit)) totals.set(unit, total);
-    else {
-      // An overflowing sum has no exact representable quantity. Withhold that
-      // unit's total rather than display a partial or rounded egg count.
-      totals.delete(unit);
-      unknownTotals.add(unit);
-    }
+    if (quantity === null || !unit) continue;
+    // The live book printed 1 203,6000000000001 kg after adding valid decimal
+    // observations. Sum their canonical decimal strings exactly; rounding labels
+    // instead would also discard precision a farmer actually entered.
+    totals.set(unit, addDecimalQuantity(totals.get(unit), quantity));
   }
-  return RECORD_UNITS.flatMap(unit => totals.has(unit) ? [{ unit, quantity: totals.get(unit)! }] : []);
+  return RECORD_UNITS.flatMap(unit => {
+    const total = totals.get(unit);
+    if (!total) return [];
+    // Convert once after decimal accumulation. An overflowing mass or unsafe
+    // whole count remains unknown rather than a partial or rounded total.
+    const quantity = decimalQuantityNumber(total);
+    return validRecordQuantity(quantity, unit) ? [{ unit, quantity }] : [];
+  });
 }
