@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '133fe811', changes: [
+    'Reading quizzes add Tshivenda and Xitsonga draft explanations beside English.',
+    'Frost, disease and soil cautions keep exact English; answers stay source-paired.',
+  ], tour: [
+    { title: 'Review regional Reading answers', where: 'Study → Reading the Landscape',
+      href: '/student',
+      detail: 'Try lessons 1–4, then compare draft feedback with English. Difficult terms stay English.' },
+  ] },
   { when: '2 October 2026', sha: '4729738d', changes: [
     'Plans for fruit trees and animals work without a vegetable bed.',
     'Harvest totals add decimal measurements without rounding whole egg counts.',
