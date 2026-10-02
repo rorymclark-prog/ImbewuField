@@ -15,6 +15,22 @@ l3DraftParagraphs[9] = 'Nsimu ya Highveld leyi tshikiweke yi nga funengetiwangi 
 l3DraftParagraphs[10] = 'Mheho wa xixika wu nga susa misava ya le henhla leyi omeke.';
 l3DraftParagraphs[11] = 'Xidzedze xo sungula xo tika xa ximun’wana xi nga hlasela misava leyi nga funengetiwangi, xi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma famba na yona.';
 
+const l2SourceBody = 'Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.';
+const l2DraftBody = [
+  'Compost i organic matter leyi broken down ehansi ka managed conditions.',
+  'Finished compost yi nga antswisa xivumbeko xa misava ni ku contribute nutrients.',
+  'Nkarhi wo lungheka wa hambana hi materials, moisture, air na temperature. Vito ra province kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.',
+  'Hlanganisa dry browns na fresh greens. Papalata thick, wet layers leti sivelaka air ku nghena.',
+  "Loko heap yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi turn.",
+  "Kambela moisture na air loko heap yi ri karhi yi cinca; recipe yin'we a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa materials.",
+  'Hot centre ya heap a yi tiyisisi leswaku every part ya heap yi treated. Time, temperature and management all matter.',
+  'Hlayisani meat, dairy, diseased plants, pet waste na contaminated materials swi ri ehandle ka simple household system.',
+  "U nga teki leswaku home composting yi lovisa weed seed yin'wana ni yin'wana kumbe disease organism yin'wana ni yin'wana. Tirhisa recognised process laha sanitation yi lavekaka.",
+  "Hlayisani wattle seed pods ehandle ka compost heap. An ordinary heap may not make every seed non-viable.",
+  'Tirhisa clean, untreated materials ntsena. Bark breaks down slowly; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.',
+  'Kambela heap kutani u yi turn loko yi lava air yo tala kumbe mixing. Yi hlayise yi ri moist, ku nga ri waterlogged.',
+].join('\n\n');
+
 const sourceBody = 'Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.';
 const sourceParagraphs = sourceBody.split('\n\n');
 const draftParagraphs = [...sourceParagraphs];
@@ -72,6 +88,42 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
           ],
           sourceCorrectIndex: 2,
           rationale: hold('Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.'),
+        },
+      ],
+    },
+    {
+      id: 'soil-health-l2',
+      infographicAlt: hold('A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.'),
+      title: hold('Making and Using Compost'),
+      body: pair(l2SourceBody, l2DraftBody),
+      keyPoints: [
+        hold('Balance browns, greens, moisture and air'),
+        hold('A hot centre does not prove the whole heap is sanitised'),
+        hold('Keep seed pods and contaminated materials out'),
+        hold('Judge readiness from the compost condition, not a fixed regional timetable'),
+      ],
+      quiz: [
+        {
+          question: hold("A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?"),
+          options: [
+            hold('Add more nitrogen-rich green material'),
+            hold('Add more dry carbon material like straw and turn the heap'),
+            hold('Stop turning it and let it cool'),
+            hold("Add more water — the smell means it's too dry"),
+          ],
+          sourceCorrectIndex: 1,
+          rationale: hold('A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.'),
+        },
+        {
+          question: hold('Why keep wattle seed pods out of an ordinary compost heap?'),
+          options: [
+            hold('Bark makes every heap too hot'),
+            hold('Some seeds may survive and spread when the compost is used'),
+            hold('Pods always attract termites'),
+            hold('Pods release a gas that kills every soil organism'),
+          ],
+          sourceCorrectIndex: 1,
+          rationale: hold('An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.'),
         },
       ],
     },

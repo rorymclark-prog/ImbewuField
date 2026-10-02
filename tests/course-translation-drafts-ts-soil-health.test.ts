@@ -97,11 +97,67 @@ test('Soil Health L1 retains difficult jar and diagnostic terms in the checked m
   assert.match(paragraphs[11], /management history, drainage.*remedy/);
 });
 
-test('Soil Health L2 stays English while L3 exposes only the screened seasonal risk draft', () => {
+test('Soil Health L2 exposes the source-paired compost body while assessment fields stay held', () => {
   const l2 = sourceModule.lessons[1];
-  const l2Shown = resolveLearnerLessonPresentation(l2, 'ts');
-  assert.equal(l2Shown.status, 'english-fallback');
-  assert.equal(l2Shown.content.body, l2.body);
+  const l2Matches = XITSONGA_SOIL_HEALTH_DRAFT.lessons.filter(lesson => lesson.id === l2.id);
+  assert.equal(l2Matches.length, 1, 'the source lesson must have exactly one registry entry');
+  const l2Draft = l2Matches[0];
+  assert.ok(l2Draft, 'the completed Xitsonga L2 draft must be present');
+  assert.equal(l2Draft.title.sourceEnglish, l2.title);
+  assert.equal(l2Draft.title.xitsongaDraft, l2.title, 'do not invent a localized title');
+  assert.equal(l2Draft.title.reviewStatus, 'hold');
+  assert.equal(l2Draft.infographicAlt?.sourceEnglish, l2.infographicAlt);
+  assert.equal(l2Draft.infographicAlt?.xitsongaDraft, l2.infographicAlt);
+  assert.equal(l2Draft.infographicAlt?.reviewStatus, 'hold');
+  assert.equal(l2Draft.body.sourceEnglish, l2.body);
+  assert.equal(l2Draft.body.reviewStatus, 'machine-draft');
+  const sourceParagraphs = l2.body.split('\n\n');
+  const paragraphs = l2Draft.body.xitsongaDraft.split('\n\n');
+  assert.equal(sourceParagraphs.length, 12);
+  assert.equal(paragraphs.length, sourceParagraphs.length);
+  for (const [index, sourceParagraph] of sourceParagraphs.entries()) {
+    assert.notEqual(paragraphs[index], sourceParagraph,
+      `paragraph ${index + 1} must not remain an obsolete whole-paragraph English hold`);
+  }
+  assert.match(paragraphs[0], /Compost i organic matter.*broken down.*managed conditions/,
+    'paragraph 1 preserves broken-down state and managed conditions');
+  assert.match(paragraphs[1], /Finished compost yi nga antswisa.*xivumbeko xa misava.*contribute nutrients/,
+    'finished compost can improve soil structure and contribute nutrients');
+  assert.match(paragraphs[2], /materials, moisture, air na temperature.*province.*nhlayo leyi vekiweke ya mavhiki.*a hi readiness test/,
+    'readiness varies with all four factors and neither province nor fixed weeks is a test');
+  assert.match(paragraphs[3], /dry browns.*fresh greens.*thick, wet layers.*sivelaka air ku nghena/,
+    'the mixing categories and thick wet layer air-blocking warning remain intact');
+  assert.match(paragraphs[4], /Loko heap yi va slimy kumbe.*ammonia swinene.*dry browns.*turn/,
+    'either sliminess or a strong ammonia smell conditionally calls for dry browns and turning');
+  assert.match(paragraphs[5], /moisture na air.*heap yi ri karhi yi cinca.*recipe.*nkatsakanyo wun'wana ni wun'wana wa materials/,
+    'moisture and air are checked as the heap changes; a single recipe is not universal');
+  assert.match(paragraphs[6], /Hot centre.*a yi tiyisisi.*every part.*treated.*Time, temperature and management all matter/,
+    'a hot centre is not proof every part was treated, and the three factors remain');
+  assert.match(paragraphs[7], /meat, dairy, diseased plants, pet waste na contaminated materials.*simple household system/,
+    'all five prohibited inputs remain out of the simple household system');
+  assert.match(paragraphs[8], /U nga teki.*home composting.*weed seed yin'wana ni yin'wana.*disease organism yin'wana ni yin'wana.*recognised process.*sanitation yi lavekaka/,
+    'the no-assumption warning covers every weed seed and disease organism, with sanitation conditional');
+  assert.match(paragraphs[9], /wattle seed pods.*compost heap.*may not make every seed non-viable/,
+    'wattle pods stay excluded and may-not/every-seed viability scope remains');
+  assert.match(paragraphs[10], /clean, untreated materials ntsena.*Bark breaks down slowly.*vito ra yona ntsena.*contamination/,
+    'clean and untreated is mandatory; slow bark and the name-alone caveat remain');
+  assert.match(paragraphs[11], /turn.*loko yi lava air yo tala kumbe mixing.*moist.*waterlogged/,
+    'turning is conditional on more air or mixing, and moist is not waterlogged');
+  assert.ok(l2Draft.keyPoints.every(item => item.reviewStatus === 'hold' && item.xitsongaDraft === item.sourceEnglish));
+  assert.ok(l2Draft.quiz.every(item => item.question.reviewStatus === 'hold'
+    && item.question.xitsongaDraft === item.question.sourceEnglish
+    && item.rationale.reviewStatus === 'hold'
+    && item.rationale.xitsongaDraft === item.rationale.sourceEnglish
+    && item.options.every(option => option.reviewStatus === 'hold' && option.xitsongaDraft === option.sourceEnglish)));
+  assert.deepEqual(l2Draft.quiz.map(item => item.sourceCorrectIndex), l2.quiz.map(item => item.correct));
+  const shownL2 = resolveLearnerLessonPresentation(l2, 'ts');
+  assert.equal(shownL2.status, 'draft');
+  assert.equal(shownL2.content.body, l2Draft.body.xitsongaDraft);
+  assert.deepEqual(shownL2.content.keyPoints, l2.keyPoints);
+  assert.deepEqual(shownL2.content.quiz.map(item => item.correct), l2.quiz.map(item => item.correct));
+  const changedL2 = { ...l2, body: l2.body.replace('may not make every seed non-viable', 'may not make any seed non-viable') };
+  assert.equal(resolveLearnerLessonPresentation(changedL2, 'ts').status, 'english-fallback',
+    'changing the seed-viability caveat withdraws the whole source-paired body draft');
 
   const source = sourceModule.lessons[2];
   const draft = XITSONGA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === source.id);

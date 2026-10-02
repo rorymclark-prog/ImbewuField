@@ -152,94 +152,94 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Balance browns, greens, moisture and air",
-          "tshivendaDraft": "Balance browns, greens, moisture and air",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Linganyisani browns, greens, moisture na air.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
-          "tshivendaDraft": "A hot centre does not prove the whole heap is sanitised",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Vhukati ho fhisaho a vhu sumbedzi uri heap yoṱhe yo sanitised.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Keep seed pods and contaminated materials out",
-          "tshivendaDraft": "Keep seed pods and contaminated materials out",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Siyani seed pods na contaminated materials nnḓa ha heap.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
-          "tshivendaDraft": "Judge readiness from the compost condition, not a fixed regional timetable",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Ṱolani uri compost yo lugela nga condition yayo; ni songo shumisa fixed regional timetable.",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
-            "tshivendaDraft": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Heap ya compost ya mulimi i nukha ammonia nga maanḓa nahone i wet na slimy. Ndi mini zwine zwa nga lugisa?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Add more nitrogen-rich green material",
-              "tshivendaDraft": "Add more nitrogen-rich green material",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Engedzani green material ine ya vha na nitrogen nnzhi",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
-              "tshivendaDraft": "Add more dry carbon material like straw and turn the heap",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Engedzani dry carbon material i ngaho straw nahone ni i rembuluse.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Stop turning it and let it cool",
-              "tshivendaDraft": "Stop turning it and let it cool",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Litshani u rembulusa heap, ni i tende i rothole.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Add more water — the smell means it's too dry",
-              "tshivendaDraft": "Add more water — the smell means it's too dry",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Engedzani maḓi manzhi — honoyo munukho u amba uri yo oma nga maanḓa",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
-            "tshivendaDraft": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "A wet, slimy heap may need more air and drier material. Engedzani dry browns ni i rembuluse heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "Why keep wattle seed pods out of an ordinary compost heap?",
-            "tshivendaDraft": "Why keep wattle seed pods out of an ordinary compost heap?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Ndi ngani ni tshi tea u vhea wattle seed pods nnḓa ha ordinary compost heap?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Bark makes every heap too hot",
-              "tshivendaDraft": "Bark makes every heap too hot",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Bark i ita uri heap iṅwe na iṅwe i fhise nga maanḓa",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Some seeds may survive and spread when the compost is used",
-              "tshivendaDraft": "Some seeds may survive and spread when the compost is used",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Dziṅwe seeds dzi nga survive nahone dza phaḓalala musi compost i tshi shumiswa",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Pods always attract termites",
-              "tshivendaDraft": "Pods always attract termites",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Pods dzi kunga termites tshifhinga tshoṱhe",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Pods release a gas that kills every soil organism",
-              "tshivendaDraft": "Pods release a gas that kills every soil organism",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Pods dzi bvisa gas ine ya vhulaha zwivhumbiwa zwoṱhe zwa soil",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
-            "tshivendaDraft": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "An ordinary heap may not expose every seed to conditions that make it non-viable. U bvisa pods zwi thivhela uri dzi phaḓalale dzi tshi ṱuwa na compost.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]

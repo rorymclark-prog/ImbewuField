@@ -19,7 +19,7 @@ test('regional Study cards distinguish English module copy from available lesson
   assert.equal(regionalModuleDraftBadge(source('seeds-sovereignty'), 've'),
     'English module · 1 lesson draft available');
   assert.equal(regionalModuleDraftBadge(source('soil-health'), 'ts'),
-    'English module · 2 lesson drafts available');
+    'English module · 3 lesson drafts available');
   assert.equal(regionalModuleDraftBadge(source('market-community'), 've'),
     'English module · 3 lesson drafts available');
   assert.equal(regionalModuleDraftBadge(source('soil-health'), 've'),
@@ -184,6 +184,22 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     ['lessons[0].keyPoints[1]', 'Muvhala wa mavu na tshivhalo tsha zwivhungu fhedzi a zwi sumbedzi uri thaidzo yo vhangwa nga mini.'],
     ['lessons[0].keyPoints[2]', 'U lingedza nga jar zwi sumbedza texture nga u anganyela fhedzi, a si soil test yo fhelelaho.'],
     ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
+    ['lessons[1].keyPoints[0]', 'Linganyisani browns, greens, moisture na air.'],
+    ['lessons[1].keyPoints[1]', 'Vhukati ho fhisaho a vhu sumbedzi uri heap yoṱhe yo sanitised.'],
+    ['lessons[1].keyPoints[2]', 'Siyani seed pods na contaminated materials nnḓa ha heap.'],
+    ['lessons[1].keyPoints[3]', 'Ṱolani uri compost yo lugela nga condition yayo; ni songo shumisa fixed regional timetable.'],
+    ['lessons[1].quiz[0].question', 'Heap ya compost ya mulimi i nukha ammonia nga maanḓa nahone i wet na slimy. Ndi mini zwine zwa nga lugisa?'],
+    ['lessons[1].quiz[0].options[0]', 'Engedzani green material ine ya vha na nitrogen nnzhi'],
+    ['lessons[1].quiz[0].options[1]', 'Engedzani dry carbon material i ngaho straw nahone ni i rembuluse.'],
+    ['lessons[1].quiz[0].options[2]', 'Litshani u rembulusa heap, ni i tende i rothole.'],
+    ['lessons[1].quiz[0].options[3]', 'Engedzani maḓi manzhi — honoyo munukho u amba uri yo oma nga maanḓa'],
+    ['lessons[1].quiz[0].rationale', 'A wet, slimy heap may need more air and drier material. Engedzani dry browns ni i rembuluse heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.'],
+    ['lessons[1].quiz[1].question', 'Ndi ngani ni tshi tea u vhea wattle seed pods nnḓa ha ordinary compost heap?'],
+    ['lessons[1].quiz[1].options[0]', 'Bark i ita uri heap iṅwe na iṅwe i fhise nga maanḓa'],
+    ['lessons[1].quiz[1].options[1]', 'Dziṅwe seeds dzi nga survive nahone dza phaḓalala musi compost i tshi shumiswa'],
+    ['lessons[1].quiz[1].options[2]', 'Pods dzi kunga termites tshifhinga tshoṱhe'],
+    ['lessons[1].quiz[1].options[3]', 'Pods dzi bvisa gas ine ya vhulaha zwivhumbiwa zwoṱhe zwa soil'],
+    ['lessons[1].quiz[1].rationale', 'An ordinary heap may not expose every seed to conditions that make it non-viable. U bvisa pods zwi thivhela uri dzi phaḓalale dzi tshi ṱuwa na compost.'],
   ]);
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   let heldFields = 0;
@@ -261,7 +277,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }
   }
 
-  assert.equal(heldFields, 51, 'hold the module summary, all illustration descriptions, diagnostic key point, L3 body and quiz fields');
+  assert.equal(heldFields, 35, 'hold the module summary, image descriptions, L1/L3 diagnostic content and L3 body/quiz fields');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');
@@ -279,8 +295,16 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     const expectedKeyPoints = lesson.keyPoints.map((point, pointIndex) =>
       translated.get(`lessons[${index}].keyPoints[${pointIndex}]`) ?? point);
     assert.deepEqual(presentation.content.keyPoints, expectedKeyPoints,
-      `${lesson.id}: show only the three bounded Tshivenda observation summaries`);
-    assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: keep questions and answers in exact English`);
+      `${lesson.id}: show source-paired key-point drafts and retain exact-English holds`);
+    const expectedQuiz = lesson.quiz.map((question, questionIndex) => ({
+      q: translated.get(`lessons[${index}].quiz[${questionIndex}].question`) ?? question.q,
+      options: question.options.map((option, optionIndex) =>
+        translated.get(`lessons[${index}].quiz[${questionIndex}].options[${optionIndex}]`) ?? option),
+      correct: question.correct,
+      rationale: translated.get(`lessons[${index}].quiz[${questionIndex}].rationale`) ?? question.rationale,
+    }));
+    assert.deepEqual(presentation.content.quiz, expectedQuiz,
+      `${lesson.id}: show only the source-paired quiz drafts and keep the original answer mapping`);
     assert.equal(presentation.content.infographicAlt, lesson.infographicAlt,
       `${lesson.id}: image descriptions stay exact English holds`);
 
