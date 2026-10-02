@@ -42,9 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 October 2026', sha: '625c27f8', changes: [
+  { when: '2 October 2026', sha: '62a08753', changes: [
     'Sesotho and Xitsonga now show marked Water L2 body drafts beside exact English.',
-    'Dam design, spillway and dry-period terms stay English where needed.',
+    'The Xitsonga title, picture text, key points and quizzes remain English pending review.',
   ], tour: [
     { title: 'Read the Sesotho and Xitsonga dam drafts', where: 'Study → Water Harvesting → lesson 2',
       href: '/student',
