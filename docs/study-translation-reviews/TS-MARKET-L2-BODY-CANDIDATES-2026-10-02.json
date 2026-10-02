@@ -1,0 +1,171 @@
+{
+  "packetId": "TS-MARKET-L2-BODY-NEXT-2026-10-02",
+  "language": "itsonga",
+  "languageCode": "ts",
+  "sourceRevision": "c62fbd38c644c99fab71e0d0fece1ba1c44c237e",
+  "checkedOutHead": "c62fbd38c644c99fab71e0d0fece1ba1c44c237e",
+  "canonicalAndRegistryFilesMatchReference": true,
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ts-market-community.ts",
+  "lessonId": "market-community-l2",
+  "sourceParagraphCount": 12,
+  "currentRegistryFinding": "Paragraph 0 is already localized; paragraphs 1-11 currently retain canonical English. Paragraph 0 is preserved byte-for-byte.",
+  "paragraphOrder": "Canonical zero-based order; paragraph separators are blank lines.",
+  "entries": [
+    {
+      "paragraphIndex": 0,
+      "fieldPath": "body.paragraphs[0]",
+      "exactSourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "currentRegistryDraft": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+      "candidateitsongaDraft": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+      "draftStatus": "preserve-existing-localized-paragraph-verbatim",
+      "drafterBacktranslation": "Ask what the customer needs: product, quantity, quality, delivery, and payment date.",
+      "conditions": "Existing localized paragraph copied exactly from the current TS registry.",
+      "uncertainty": "Current unreviewed wording; no changes or fluent approval implied."
+    },
+    {
+      "paragraphIndex": 1,
+      "fieldPath": "body.paragraphs[1]",
+      "exactSourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "currentRegistryDraft": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "candidateitsongaDraft": "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Compare market fees, transport, packing and unsold produce with the selling price.",
+      "conditions": "Translates only the ordinary comparison verb; preserves all finance/cost categories and selling-price comparator exactly.",
+      "uncertainty": "Moderate: market fees, transport, packing, unsold produce and selling price remain English; confirm ni as the comparison connector."
+    },
+    {
+      "paragraphIndex": 2,
+      "fieldPath": "body.paragraphs[2]",
+      "exactSourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentRegistryDraft": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidateitsongaDraft": "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Check market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "conditions": "Translates only the ordinary check verb; retains all requirements and the no-automatic-exemption caveat exactly.",
+      "uncertainty": "Low: regulatory terms and caveat remain exact source English."
+    },
+    {
+      "paragraphIndex": 3,
+      "fieldPath": "body.paragraphs[3]",
+      "exactSourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentRegistryDraft": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "candidateitsongaDraft": "Direct selling can retain more of the sale price, kambe it also takes time, packing, transport and customer care.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "conditions": "Keeps the financial comparative and full logistical cost list exact; translates only the connecting ‘but’.",
+      "uncertainty": "Moderate: high-value comparative and cost categories remain exact English."
+    },
+    {
+      "paragraphIndex": 4,
+      "fieldPath": "body.paragraphs[4]",
+      "exactSourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+      "currentRegistryDraft": "A box scheme supplies a regular selection to agreed customers.",
+      "candidateitsongaDraft": "A box scheme supplies a regular selection to agreed customers.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full English hold: box-scheme supply, customer/grower contract terms, regular-order reliability, fixed-delivery constraints, surplus, or clear customer terms must remain exact pending review.",
+      "uncertainty": "No translation attempted to protect business/contract meaning."
+    },
+    {
+      "paragraphIndex": 5,
+      "fieldPath": "body.paragraphs[5]",
+      "exactSourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "currentRegistryDraft": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidateitsongaDraft": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full English hold: box-scheme supply, customer/grower contract terms, regular-order reliability, fixed-delivery constraints, surplus, or clear customer terms must remain exact pending review.",
+      "uncertainty": "No translation attempted to protect business/contract meaning."
+    },
+    {
+      "paragraphIndex": 6,
+      "fieldPath": "body.paragraphs[6]",
+      "exactSourceEnglish": "Start from what you can reliably supply and what customers want.",
+      "currentRegistryDraft": "Start from what you can reliably supply and what customers want.",
+      "candidateitsongaDraft": "Sungula hi what you can reliably supply and what customers want.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Start from what you can reliably supply and what customers want.",
+      "conditions": "Translates the ordinary starting-point framing; keeps reliable supply and customer demand exact.",
+      "uncertainty": "Low to moderate: reliability/supplyability clause remains source English."
+    },
+    {
+      "paragraphIndex": 7,
+      "fieldPath": "body.paragraphs[7]",
+      "exactSourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+      "currentRegistryDraft": "Check the costs and household food needs before promising regular boxes.",
+      "candidateitsongaDraft": "Kambisisa costs and household food needs before promising regular boxes.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Check costs and household food needs before promising regular boxes.",
+      "conditions": "Translates only ‘Check’; preserves both cost/household-food requirements and before-promising condition verbatim.",
+      "uncertainty": "Low: condition and box commitment remain exact English."
+    },
+    {
+      "paragraphIndex": 8,
+      "fieldPath": "body.paragraphs[8]",
+      "exactSourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentRegistryDraft": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "candidateitsongaDraft": "Garden area or customer count alone does not predict income. Ringeta arrangement leyi manageable, kutani u record results.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Garden area or customer count alone does not predict income. Try an arrangement that is manageable, then record the results.",
+      "conditions": "Keeps the no-income-prediction claim exact; translates the ordinary trial instruction, retaining ‘manageable’ and ‘record results’ to avoid changing the test or evidence requirement.",
+      "uncertainty": "Moderate: financial qualifier remains exact; manageable arrangement and result-recording are partly code-switched."
+    },
+    {
+      "paragraphIndex": 9,
+      "fieldPath": "body.paragraphs[9]",
+      "exactSourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "currentRegistryDraft": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "candidateitsongaDraft": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full English hold: box-scheme supply, customer/grower contract terms, regular-order reliability, fixed-delivery constraints, surplus, or clear customer terms must remain exact pending review.",
+      "uncertainty": "No translation attempted to protect business/contract meaning."
+    },
+    {
+      "paragraphIndex": 10,
+      "fieldPath": "body.paragraphs[10]",
+      "exactSourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+      "currentRegistryDraft": "Offer the surplus you have and agree clear terms with customers.",
+      "candidateitsongaDraft": "Offer the surplus you have and agree clear terms with customers.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full English hold: box-scheme supply, customer/grower contract terms, regular-order reliability, fixed-delivery constraints, surplus, or clear customer terms must remain exact pending review.",
+      "uncertainty": "No translation attempted to protect business/contract meaning."
+    },
+    {
+      "paragraphIndex": 11,
+      "fieldPath": "body.paragraphs[11]",
+      "exactSourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentRegistryDraft": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "candidateitsongaDraft": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "conditions": "Translates the ordinary honesty instruction; keeps certification, buyer-required claims, and label use condition exact English.",
+      "uncertainty": "Moderate: verify that vutshembeki adequately conveys honesty in describing practices; regulatory clause remains exact."
+    }
+  ],
+  "constraints": [
+    "Read-only packet; no repository edits.",
+    "No financial promise, price/income guarantee, regulatory claim, contract term, production commitment, or certainty was added.",
+    "Keep regulatory and business-risk clauses exact English where uncertain.",
+    "No fluent approval claimed; independent review required."
+  ],
+  "implementationRecord": {
+    "registryPath": "lib/course-translation-drafts-ts-market-community.ts",
+    "testPath": "tests/course-translation-drafts-ts-water-harvesting.test.ts",
+    "sourcePairing": "All 12 canonical English paragraphs verified against lib/course-modules.ts and retained in the registry source sequence; existing paragraph 0 preserved byte-for-byte. Assessment correct indices remain [2, 2].",
+    "reviewChecks": [
+      "All 12 canonical English paragraphs and registry paragraph 0 compared before implementation.",
+      "Seven ordinary framing candidates independently checked against the English source; their retained regulatory, commercial and uncertainty clauses remain exact English.",
+      "Whole-paragraph English holds retained at indices 4, 5, 9 and 10 for box terms/crop-short handling, variable production/fixed delivery, surplus and clear customer terms.",
+      "Title, infographic alt, keypoints, quizzes, option order, answer indices, other lessons, canonical lesson, media, species, numbers, geometry and PLAN_VERSION untouched.",
+      "Focused Market source-pair test checks no-automatic-exemption, sale-price comparative/costs, reliable supply, before-promising condition, no-income-prediction, fixed-delivery restriction, certification-before-label condition and source-drift fallback."
+    ],
+    "status": "Unreviewed machine draft for facilitator review; no fluent approval claimed."
+  },
+  "sourceCorrectIndices": [
+    2,
+    2
+  ]
+}

@@ -161,17 +161,17 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         ].join("\n\n"),
         "xitsongaDraft": [
           "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
-          "Compare market fees, transport, packing and unsold produce as well as the selling price.",
-          "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
-          "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+          "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+          "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+          "Direct selling can retain more of the sale price, kambe it also takes time, packing, transport and customer care.",
           "A box scheme supplies a regular selection to agreed customers.",
           "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
-          "Start from what you can reliably supply and what customers want.",
-          "Check the costs and household food needs before promising regular boxes.",
-          "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+          "Sungula hi what you can reliably supply and what customers want.",
+          "Kambisisa costs and household food needs before promising regular boxes.",
+          "Garden area or customer count alone does not predict income. Ringeta arrangement leyi manageable, kutani u record results.",
           "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
           "Offer the surplus you have and agree clear terms with customers.",
-          "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+          "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label."
         ].join("\n\n"),
         "reviewStatus": "machine-draft"
       },

@@ -1,0 +1,202 @@
+{
+  "packetId": "ST-VEGETABLES-L3-BODY-NEXT-2026-10-02",
+  "language": "Sesotho",
+  "languageCode": "st",
+  "region": "Free State",
+  "sourceRevision": "c62fbd38c644c99fab71e0d0fece1ba1c44c237e",
+  "checkedOutHead": "c62fbd38c644c99fab71e0d0fece1ba1c44c237e",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-vegetables-staples.ts",
+  "canonicalLessonId": "vegetables-staples-l3",
+  "sourceParagraphCount": 16,
+  "sourceMatchesRegistry": true,
+  "currentRegistryFinding": "Exactly one of 16 paragraphs differs from English: paragraph 11. Its Sesotho draft is preserved verbatim. All other paragraphs are currently English holds.",
+  "paragraphOrder": "Exact canonical zero-based body order; blank-line separation.",
+  "entries": [
+    {
+      "paragraphIndex": 0,
+      "fieldPath": "body.paragraphs[0]",
+      "exactSourceEnglish": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "currentRegistryDraft": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "candidateSesothoDraft": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "conditions": "Translates ordinary framing while retaining the technical category ‘staple’ and harvest-day relation.",
+      "uncertainty": "Moderate: staple retained in English; otherwise direct framing."
+    },
+    {
+      "paragraphIndex": 1,
+      "fieldPath": "body.paragraphs[1]",
+      "exactSourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "currentRegistryDraft": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "candidateSesothoDraft": "E fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "It provides energy or protein. It is stored, or remains in the ground until you need it. It often also carries cultural memory.",
+      "conditions": "Preserves energy/protein, the two storage alternatives, and the cultural-memory claim; difficult terms retained exactly.",
+      "uncertainty": "Moderate: energy, protein and cultural memory retained in English."
+    },
+    {
+      "paragraphIndex": 2,
+      "fieldPath": "body.paragraphs[2]",
+      "exactSourceEnglish": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+      "currentRegistryDraft": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+      "candidateSesothoDraft": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "One staple can leave you vulnerable. Two or more give you options when weather or pests hit.",
+      "conditions": "Preserves one versus two-or-more and the conditional weather/pest trigger; staple/weather/pests remain English.",
+      "uncertainty": "Added possibility modal removed after independent check; categorical vulnerability and conditional weather/pests preserved."
+    },
+    {
+      "paragraphIndex": 3,
+      "fieldPath": "body.paragraphs[3]",
+      "exactSourceEnglish": "Grow at least two. Not one.",
+      "currentRegistryDraft": "Grow at least two. Not one.",
+      "candidateSesothoDraft": "Lema bonyane tse pedi. Eseng se le seng.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Grow at least two. Not one.",
+      "conditions": "Preserves the exact minimum and explicit contrast.",
+      "uncertainty": "Low: exact quantity preserved."
+    },
+    {
+      "paragraphIndex": 4,
+      "fieldPath": "body.paragraphs[4]",
+      "exactSourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentRegistryDraft": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateSesothoDraft": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "Which staple does your household rely on most right now? That is the one whose failure would hurt most, so it needs a companion.",
+      "conditions": "Translates the ordinary question; retains the consequence and companion-crop reasoning exactly in English to avoid changing its conditional force.",
+      "uncertainty": "Most-heavily superlative unclear in candidate question; whole exact English hold."
+    },
+    {
+      "paragraphIndex": 5,
+      "fieldPath": "body.paragraphs[5]",
+      "exactSourceEnglish": "Each staple protects you against something different.",
+      "currentRegistryDraft": "Each staple protects you against something different.",
+      "candidateSesothoDraft": "Staple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Each staple protects you against something different.",
+      "conditions": "Preserves the idea that different staples protect against different things; staple term retained.",
+      "uncertainty": "Low to moderate: staple retained as a technical term."
+    },
+    {
+      "paragraphIndex": 6,
+      "fieldPath": "body.paragraphs[6]",
+      "exactSourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentRegistryDraft": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateSesothoDraft": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Open-pollinated maize, seed saving, isolation, and selection are precise crop/seed claims; preserve exact paragraph.",
+      "uncertainty": "No translation attempted; preserve exact crop/condition meaning."
+    },
+    {
+      "paragraphIndex": 7,
+      "fieldPath": "body.paragraphs[7]",
+      "exactSourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentRegistryDraft": "Beans and cowpeas give a storable protein harvest.",
+      "candidateSesothoDraft": "Beans and cowpeas give a storable protein harvest.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Bean and cowpea identities and the storable-protein claim are crop-specific; preserve exact paragraph.",
+      "uncertainty": "No translation attempted; preserve exact crop/condition meaning."
+    },
+    {
+      "paragraphIndex": 8,
+      "fieldPath": "body.paragraphs[8]",
+      "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentRegistryDraft": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateSesothoDraft": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Whole paragraph held for sweet-potato species, conditional drought tolerance after storage-root formation, water needs in the first weeks and during root formation, water-stress harvest effect, and edible-leaf claim.",
+      "uncertainty": "No translation attempted; preserve exact crop/condition meaning."
+    },
+    {
+      "paragraphIndex": 9,
+      "fieldPath": "body.paragraphs[9]",
+      "exactSourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentRegistryDraft": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateSesothoDraft": "Amadumbe handles wetter ground, where other staples struggle.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Amadumbe identity and wetter-ground suitability are crop-specific; preserve exact paragraph.",
+      "uncertainty": "No translation attempted; preserve exact crop/condition meaning."
+    },
+    {
+      "paragraphIndex": 10,
+      "fieldPath": "body.paragraphs[10]",
+      "exactSourceEnglish": "Notice that they fail in different conditions. That's the whole point.",
+      "currentRegistryDraft": "Notice that they fail in different conditions. That's the whole point.",
+      "candidateSesothoDraft": "Hlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Notice that they fail in different conditions. That is the whole point.",
+      "conditions": "Preserves different failure conditions and the central lesson.",
+      "uncertainty": "Moderate: ‘the whole point’ rendered literally as the whole point."
+    },
+    {
+      "paragraphIndex": 11,
+      "fieldPath": "body.paragraphs[11]",
+      "exactSourceEnglish": "Resilience doesn't mean nothing fails.",
+      "currentRegistryDraft": "Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.",
+      "candidateSesothoDraft": "Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.",
+      "draftStatus": "preserve-existing-localized-paragraph-verbatim",
+      "drafterBacktranslation": "Resilience does not mean that nothing fails.",
+      "conditions": "Only currently localized L3 paragraph; copied byte-for-byte from the actual ST registry.",
+      "uncertainty": "Existing machine draft remains unreviewed; no fluency claim."
+    },
+    {
+      "paragraphIndex": 12,
+      "fieldPath": "body.paragraphs[12]",
+      "exactSourceEnglish": "It means one failure doesn't finish your household's food plan.",
+      "currentRegistryDraft": "It means one failure doesn't finish your household's food plan.",
+      "candidateSesothoDraft": "Ho bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "It means one failure does not finish your household's food plan.",
+      "conditions": "Preserves singular failure and the household food-plan consequence.",
+      "uncertainty": "Low to moderate: direct framing; does not suggest that no other failures can occur."
+    },
+    {
+      "paragraphIndex": 13,
+      "fieldPath": "body.paragraphs[13]",
+      "exactSourceEnglish": "One crop is one point of failure.",
+      "currentRegistryDraft": "One crop is one point of failure.",
+      "candidateSesothoDraft": "Sejalo se le seng ke point of failure e le nngwe.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "One crop is one point of failure.",
+      "conditions": "Preserves the one-crop/one-failure-point concept while translating the sentence frame.",
+      "uncertainty": "Moderate: technical phrase point of failure kept in English."
+    },
+    {
+      "paragraphIndex": 14,
+      "fieldPath": "body.paragraphs[14]",
+      "exactSourceEnglish": "Two or more staples give you more ways to keep eating.",
+      "currentRegistryDraft": "Two or more staples give you more ways to keep eating.",
+      "candidateSesothoDraft": "Dijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Two or more staples give you more ways to keep eating.",
+      "conditions": "Preserves the quantity and food-resilience claim; staple retained in English.",
+      "uncertainty": "Moderate: staple retained as a technical category."
+    },
+    {
+      "paragraphIndex": 15,
+      "fieldPath": "body.paragraphs[15]",
+      "exactSourceEnglish": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "currentRegistryDraft": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "candidateSesothoDraft": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "conditions": "Preserves the source’s comparison and protection statement; water, soil, seasons, and protection remain exact terms.",
+      "uncertainty": "Moderate: technical terms retained in English."
+    }
+  ],
+  "constraints": [
+    "Read-only packet; no repository edits.",
+    "No changes to canonical English, paragraph order, crops/species, quantities, or cultivation advice.",
+    "Sweet-potato water/timing/drought/edible-leaf and amadumbe wet-ground qualifiers remain exact English.",
+    "No food-safety or tolerance guarantee added.",
+    "No fluent approval claimed; independent review required."
+  ],
+  "independentCheck": "All16source/order and preservedp11 verified. Independent check accepted final categorical p2 repair and wholep4 superlative hold. No fluent/local approval.",
+  "rootScope": "Data-only checked packet for a fresh later learner batch; not learner wired in the Xitsonga Market batch."
+}

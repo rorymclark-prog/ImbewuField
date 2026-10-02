@@ -81,14 +81,38 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
     const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 6, 7, 14]
-      : draftLesson.id === 'market-community-l2' ? [0] : [3, 4, 5, 9];
+      : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 6, 7, 8, 11] : [3, 4, 5, 9];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
       else assert.equal(draftParagraphs[index], paragraph);
     }
     if (draftLesson.id === 'market-community-l2') {
-      for (const index of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-        'market costs, box terms, reliable supply and fixed delivery stay exact English');
+      assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
+      assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
+      assert.equal(draftParagraphs[0], 'Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.',
+        'the existing localized customer-needs paragraph is preserved byte-for-byte');
+      for (const index of [4, 5, 9, 10]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
+        `commercial commitment paragraph ${index} remains exact English`);
+      assert.ok(draftParagraphs[1].startsWith('Pimanisa '));
+      assert.ok(draftParagraphs[1].includes('market fees, transport, packing and unsold produce'));
+      assert.ok(draftParagraphs[1].includes('selling price'));
+      assert.ok(draftParagraphs[2].startsWith('Kambisisa market rules'));
+      assert.ok(draftParagraphs[2].includes('An informal stall does not automatically have no rules or costs.'));
+      assert.ok(draftParagraphs[3].includes('can retain more of the sale price'));
+      assert.ok(draftParagraphs[3].includes('kambe it also takes time, packing, transport and customer care.'));
+      assert.ok(draftParagraphs[6].startsWith('Sungula hi '));
+      assert.ok(draftParagraphs[6].includes('reliably supply and what customers want'));
+      assert.ok(draftParagraphs[7].startsWith('Kambisisa costs'));
+      assert.ok(draftParagraphs[7].includes('before promising regular boxes'));
+      assert.ok(draftParagraphs[8].startsWith('Garden area or customer count alone does not predict income.'));
+      assert.ok(draftParagraphs[8].includes('Ringeta arrangement leyi manageable'));
+      assert.ok(draftParagraphs[8].includes('record results'));
+      assert.ok(draftParagraphs[11].startsWith('Hlamusela maendlelo ya wena ya ku byala hi vutshembeki.'));
+      assert.ok(draftParagraphs[11].endsWith('Check any certification or claim the buyer requires before using a label.'));
+      const changedBody = { ...sourceLesson, body: `${sourceLesson.body} Changed commercial condition.` };
+      const changedPresentation = resolveLearnerLessonPresentation(changedBody, 'ts');
+      assert.equal(changedPresentation.status, 'english-fallback');
+      assert.equal(changedPresentation.content.body, changedBody.body);
     }
     if (draftLesson.id === 'market-community-l1') {
       const draftParagraphsSource = draftLesson.body.xitsongaDraft.split('\n\n');
