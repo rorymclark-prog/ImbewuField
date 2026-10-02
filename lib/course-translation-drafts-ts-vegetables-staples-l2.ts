@@ -51,18 +51,28 @@ export const XITSONGA_VEGETABLES_STAPLES_L2_DRAFT: XitsongaCourseModuleDraft = {
     {
       id: sourceLesson.id,
       infographicAlt: hold(sourceLesson.infographicAlt!),
-      title: hold(sourceLesson.title),
+      title: pair("Succession Planting and Intercropping", "Succession planting na intercropping"),
       body: pair(bodySourceEnglish, draftParagraphs.join('\n\n')),
-      keyPoints: sourceLesson.keyPoints.map((sourceText, index) => index === 1 && sourceText === 'The Three Sisters comes from Indigenous farming traditions in the Americas'
-        ? pair(sourceText, 'The Three Sisters yi huma eka Indigenous farming traditions in the Americas.')
-        : hold(sourceText)),
+      keyPoints: sourceLesson.keyPoints.map((sourceText, index) => index === 0
+        ? pair('Stagger sowings and adjust the interval for crop, weather and household use', 'Byalani staggered sowings, mi lulamisa interval hi ku ya hi crop, weather na household use.')
+        : index === 1 && sourceText === 'The Three Sisters comes from Indigenous farming traditions in the Americas'
+          ? pair(sourceText, 'The Three Sisters yi huma eka Indigenous farming traditions in the Americas.')
+          : index === 2
+            ? pair('Use household food records to identify and plan for a hungry gap', 'Tirhisani household food records ku kuma ni ku pulanela hungry gap.')
+            : index === 3
+              ? pair('Intercropped plants can still compete; manage space, timing and water', 'Intercropped plants can still compete; lawulani space, timing na mati.')
+              : hold(sourceText)),
       quiz: sourceLesson.quiz.map((question, questionIndex) => ({
-        question: questionIndex === 0 && question.q === 'Why sow lettuce in small batches every 2-3 weeks instead of all at once?'
-          ? pair(question.q, "Hikokwalaho ka yini u byala lettuce hi small batches every 2-3 weeks, ematshan'weni yo yi byala hinkwayona hi nkarhi wun'we?")
+        question: questionIndex === 0
+          ? pair('Why sow lettuce in small batches every 2-3 weeks instead of all at once?', "Hikokwalaho ka yini u byala lettuce hi small batches every 2-3 weeks, ematshan'weni yo yi byala hinkwayona hi nkarhi wun'we?")
           : hold(question.q),
-        options: question.options.map(hold),
+        options: question.options.map((option, optionIndex) => optionIndex === 1 && questionIndex === 0
+          ? pair('It gives a steady harvest instead of a glut followed by a gap', 'Yi nyika steady harvest, ku nga ri glut leyi landzeleriwaka hi gap.')
+          : hold(option)),
         sourceCorrectIndex: question.correct,
-        rationale: hold(question.rationale),
+        rationale: questionIndex === 0
+          ? pair('A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.', 'A single large sowing matures all at once — ku byala hi ku landzelelana swi hangalasa harvest leswaku yi fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene.')
+          : hold(question.rationale),
       })),
     },
   ],

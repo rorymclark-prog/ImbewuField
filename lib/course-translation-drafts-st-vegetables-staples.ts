@@ -109,8 +109,8 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Brassicas, which need protection while small",
-              "sesothoDraft": "Brassicas, which need protection while small",
-              "reviewStatus": "hold"
+              "sesothoDraft": "Brassicas, tse hlokang tshireletso ha di sa le nyane",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Beans, which resent root disturbance",
@@ -175,8 +175,8 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
-            "sesothoDraft": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
-            "reviewStatus": "hold"
+            "sesothoDraft": "Ke hobaneng ha o jala lettuce ka dihlopha tse nyane dibeke tse ding le tse ding tse 2-3 ho e na le ho e jala kaofela hang?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
@@ -434,8 +434,8 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
-            "sesothoDraft": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
-            "reviewStatus": "hold"
+            "sesothoDraft": "Ha makhasi a brassica a sehoai a fetoha mosehla, pele a nahana hore ke disenyi, o lokela ho hlahloba eng pele?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
