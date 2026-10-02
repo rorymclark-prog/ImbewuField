@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { autoSuggestPlan, type AutoSuggestAnswers } from '../lib/crop-autosuggest.ts';
-import { CROPS, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
-import { occupiedMonthsForPlanting, type PlanBed } from '../lib/crop-plan.ts';
+import { autoSuggestPlan, fillFirstSeasonGaps, observedFrostConflicts, observedFrostConflictsForPlanting, recomputeLaterThisYear, type AutoSuggestAnswers } from '../lib/crop-autosuggest.ts';
+import { CROPS, cropByKey, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
+import { occupiedMonthsForPlanting, type PlanBed, type Planting } from '../lib/crop-plan.ts';
 import { ECOCROP_HEAT_LIMITS_C, rainFedGrowingMonths, thornthwaitePetMm } from '../lib/crop-climate-gate.ts';
 
 const BEDS: PlanBed[] = Array.from({ length: 6 }, (_, i) => ({ id: `b${i + 1}`, label: `Bed ${i + 1}`, areaM2: 9, minDimM: 3 }));
@@ -101,4 +101,104 @@ test('a frost-free plan names the crops whose frost-free months are not sourced'
   assert.ok(mixed.plantings.some((p) => p.cropKey === 'lettuce'), 'fixture: lettuce must place');
   const note = texts(mixed).find((t) => /not yet from a published local table/.test(t));
   assert.ok(note && /Lettuce/.test(note) && !/Swiss chard/.test(note), note);
+});
+
+test('farmer-observed frost limits tender crops even when the satellite mean and regional calendar are warm', () => {
+  const answers = { ...base, cropKeys: ['tomatoes', 'kale'], siteMonthlyTempC: Array(12).fill(18) };
+  const warm = autoSuggestPlan(answers, 'all-year', BEDS, [], 10);
+  assert.ok(warm.plantings.some(planting => planting.cropKey === 'tomatoes'), 'fixture must offer tomatoes without observed frost');
+  const observedMonths = [6, 7, 8];
+  const local = autoSuggestPlan({ ...answers, observedFrostMonths: observedMonths }, 'all-year', BEDS, [], 10);
+  assert.ok(local.plantings.some(planting => planting.cropKey === 'kale'), 'hardy crops must remain available');
+  assert.ok(local.plantings.some(planting => planting.cropKey === 'tomatoes'), 'frost observations should narrow tender windows, not ban the crop all year');
+  for (const planting of local.plantings) {
+    const crop = cropByKey(planting.cropKey)!;
+    if (crop.frostTender !== true) continue;
+    assert.deepEqual(occupiedMonthsForPlanting(planting).filter(month => observedMonths.includes(month)), [], `${crop.name} still occupies the field in observed frost`);
+  }
+  assert.ok(texts(local).some(text => /farmer-observed frost months \(Jun, Jul, Aug\) were used/.test(text)));
+  assert.ok(texts(local).some(text => /Unrecorded months are not a promise of frost-free conditions/.test(text)));
+  assert.deepEqual(autoSuggestPlan(answers, 'all-year', BEDS, [], 10).plantings, warm.plantings, 'the observation gate leaked into the next farm');
+});
+
+test('when every local month has observed frost the tender refusal says frost rather than claiming lack of space', () => {
+  const observedFrostMonths = Array.from({ length: 12 }, (_, index) => index + 1);
+  const answers = { ...base, cropKeys: ['tomatoes', 'kale'], observedFrostMonths, siteMonthlyTempC: Array(12).fill(18) };
+  const result = autoSuggestPlan(answers, 'all-year', BEDS, [], 10);
+  assert.ok(result.plantings.some(planting => planting.cropKey === 'kale'));
+  assert.ok(!result.plantings.some(planting => planting.cropKey === 'tomatoes'));
+  assert.ok(texts(result).some(text => /Tomatoes.*left out.*observed frost months/.test(text)), texts(result).join('\n'));
+  assert.ok(!texts(result).some(text => /Tomatoes.*didn't fit anywhere/.test(text)), texts(result).join('\n'));
+  assert.deepEqual(recomputeLaterThisYear(answers, 'all-year', BEDS, result.plantings, [], 10), [], 'waiting crops must not re-offer a frost-excluded tomato');
+});
+
+test('a blank or malformed observed frost answer cannot invent a new frost calendar', () => {
+  const answers = { ...base, cropKeys: ['tomatoes', 'kale'], siteMonthlyTempC: Array(12).fill(18) };
+  const unchanged = autoSuggestPlan(answers, 'all-year', BEDS, [], 10);
+  for (const value of [undefined, [], [0, 13, -1, 6.5, '6', null, true, Number.NaN], 'Jun', null]) {
+    const result = autoSuggestPlan({ ...answers, observedFrostMonths: value as number[] }, 'all-year', BEDS, [], 10);
+    assert.deepEqual(result.plantings, unchanged.plantings);
+    assert.deepEqual(result.notes, unchanged.notes);
+  }
+  const clean = autoSuggestPlan({ ...answers, observedFrostMonths: [6, 7] }, 'all-year', BEDS, [], 10);
+  const mixed = autoSuggestPlan({ ...answers, observedFrostMonths: [7, 6, 6, 0, 13, '8'] as number[] }, 'all-year', BEDS, [], 10);
+  assert.deepEqual(mixed.plantings, clean.plantings);
+  assert.deepEqual(mixed.notes, clean.notes);
+});
+
+test('observed frost checks the reserved field span across New Year, excluding nursery time and stored-food months', () => {
+  const tomato = cropByKey('tomatoes')!;
+  assert.equal(tomato.frostTender, true);
+  const planting = { id: 'dec-tomato', bedId: BEDS[0].id, cropKey: tomato.key, sowMonth: 12 };
+  const fieldMonths = occupiedMonthsForPlanting(planting);
+  assert.ok(fieldMonths.includes(1), 'December tray sowing must reserve field time in January');
+  assert.ok(!fieldMonths.includes(12), 'the tray month itself is not field occupancy');
+  assert.deepEqual(observedFrostConflicts(tomato, 12, [12]), []);
+  assert.deepEqual(observedFrostConflicts(tomato, 12, [1, 1, 13, 12]), [1]);
+  assert.deepEqual(observedFrostConflicts(cropByKey('kale')!, 12, [1]), []);
+  for (const sowMonth of [0, 13, Number.NaN]) assert.deepEqual(observedFrostConflicts(tomato, sowMonth, [1]), []);
+  const butternut = cropByKey('butternut')!;
+  const held = occupiedMonthsForPlanting({ ...planting, cropKey: butternut.key, sowMonth: 1 });
+  const afterField = held.at(-1)! % 12 + 1;
+  assert.ok(!held.includes(afterField));
+  assert.deepEqual(observedFrostConflicts(butternut, 1, [afterField]), [], 'stored food after field picking must not be treated as a live frost-sensitive crop');
+});
+
+test('first-season starters obey the same observed-frost and sourced heat checks as the repeating cycle', () => {
+  const cycle = [{ id: 'future-kale', bedId: BEDS[0].id, cropKey: 'kale', sowMonth: 12 }];
+  const answers = { ...base, cropKeys: ['tomatoes', 'kale'], siteMonthlyTempC: Array(12).fill(18) };
+  const warm = fillFirstSeasonGaps(answers, 'all-year', BEDS, cycle, [], 10, 2026);
+  assert.ok(warm.starters.some(planting => planting.cropKey === 'tomatoes'), 'fixture must actually exercise a tender starter');
+  const frost = fillFirstSeasonGaps({ ...answers, observedFrostMonths: Array.from({ length: 12 }, (_, index) => index + 1) }, 'all-year', BEDS, cycle, [], 10, 2026);
+  assert.ok(frost.starters.some(planting => planting.cropKey === 'kale'));
+  assert.ok(!frost.starters.some(planting => planting.cropKey === 'tomatoes'), 'the transition pass reintroduced frost-excluded tomatoes');
+
+  const heat = fillFirstSeasonGaps({ ...base, cropKeys: ['true-spinach', 'lettuce'], siteMonthlyTempC: Array(12).fill(28) }, 'mild-frost', BEDS,
+    [{ id: 'future-lettuce', bedId: BEDS[0].id, cropKey: 'lettuce', sowMonth: 6 }], [], 3, 2026);
+  assert.ok(heat.starters.some(planting => planting.cropKey === 'lettuce'));
+  assert.ok(!heat.starters.some(planting => planting.cropKey === 'true-spinach'), 'the transition pass bypassed the sourced spinach heat limit');
+});
+
+test('an unconfirmed missed sowing cannot occupy ground or choose food for first-season starters', () => {
+  const cycle = [{ id: 'future-kale', bedId: BEDS[0].id, cropKey: 'kale', sowMonth: 12 }];
+  const answers = { ...base, cropKeys: ['tomatoes', 'kale'], siteMonthlyTempC: Array(12).fill(18) };
+  const missed: Planting = { id: 'missed-tomatoes', bedId: BEDS[1].id, cropKey: 'tomatoes', sowMonth: 9, once: '2026-09', awaitingSowingConfirmation: true };
+  const clear = fillFirstSeasonGaps(answers, 'all-year', BEDS, cycle, [], 10, 2026);
+  assert.deepEqual(fillFirstSeasonGaps(answers, 'all-year', BEDS, cycle, [missed], 10, 2026), clear);
+  const observed: Planting = { ...missed, awaitingSowingConfirmation: undefined, existing: true };
+  assert.notDeepEqual(fillFirstSeasonGaps(answers, 'all-year', BEDS, cycle, [observed], 10, 2026), clear, 'fixture must distinguish a real observed crop from a missed intention');
+});
+
+test('manual frost warnings see only a saved cohort\'s remaining field months, with no false annual repeat', () => {
+  const observed: Planting = { id: 'observed-tomatoes', bedId: BEDS[0].id, cropKey: 'tomatoes', sowMonth: 1, existing: true };
+  assert.ok(occupiedMonthsForPlanting(observed).includes(3), 'fixture must have held the field in March');
+  assert.deepEqual(observedFrostConflictsForPlanting(observed, 5, [3]), [], 'March frost is history for this existing cohort');
+  assert.deepEqual(observedFrostConflictsForPlanting(observed, 5, [5]), [5], 'May is still held by the observed crop');
+  assert.deepEqual(observedFrostConflictsForPlanting(observed, 11, [3]), [], 'finished existing tomatoes must not recur next March');
+  assert.deepEqual(observedFrostConflictsForPlanting({ ...observed, existing: undefined }, 5, [3]), [3], 'a repeating planned row really does have a future March occurrence');
+  assert.deepEqual(observedFrostConflictsForPlanting({ ...observed, existing: undefined, once: '2027-01' }, 5, [3]), [3], 'an upcoming one-time January crop is still real');
+  assert.deepEqual(observedFrostConflictsForPlanting({ ...observed, awaitingSowingConfirmation: true }, 5, [5]), []);
+  assert.deepEqual(observedFrostConflictsForPlanting({ ...observed, finishedOnceSowing: true }, 5, [5]), []);
+  const nursery: Planting = { ...observed, sowMonth: 12, inNursery: '2026-12' };
+  assert.deepEqual(observedFrostConflictsForPlanting(nursery, 1, [1, 12]), [1], 'December nursery is history, January field reservation is ahead');
 });

@@ -1,3 +1,4 @@
+import { recordWeightKg } from './farm-records';
 /*
  * ╔══════════════════════════════════════════════════════════════════════════╗
  * ║  ACCESS-CONTROL PRECONDITION — READ THIS BEFORE FEEDING REAL DATA IN     ║
@@ -497,8 +498,8 @@ export function buildFarmerMetrics(
     plan: reconciliation !== null,
   };
 
-  const producedKg = production ? round(sumBy(production, (r) => r.kg), 1) : null;
-  const soldKg = sales ? round(sumBy(sales, (r) => r.kg), 1) : null;
+  const producedKg = production && (!production.length || production.some(row => recordWeightKg(row) !== null)) ? round(sumBy(production, recordWeightKg), 1) : null;
+  const soldKg = sales && (!sales.length || sales.some(row => recordWeightKg(row) !== null)) ? round(sumBy(sales, recordWeightKg), 1) : null;
   const incomeZar = sales ? round(sumBy(sales, (r) => r.amount), 2) : null;
   const expensesZar = expenses ? round(sumBy(expenses, (r) => r.amount), 2) : null;
 

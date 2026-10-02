@@ -51,13 +51,27 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       href: '/farmer',
       detail: 'Check your water answers and optional production records before saving.' },
   ] },
-  { when: '2 October 2026', sha: 'd79d6c58', changes: [
+  { when: '2 October 2026', sha: '14c06e79', changes: [
     'Unfinished site survey answers can now be recovered after reopening the app.',
+    'Your unfinished frost, water and chicken observations stay together after reopening.',
     'Save & continue still controls which answers appear in your site report.',
   ], tour: [
     { title: 'Recover an unfinished survey', where: 'Farm → your saved site → Site questionnaire',
       href: '/farmer',
       detail: 'Reopen unfinished answers, choose Continue or Discard, then review before saving.' },
+  ] },
+  { when: '2 October 2026', sha: '366f3e93', changes: [
+    'Production plans include fruit, eggs and honey, with crops shown across printed months.',
+    'Record local frost, dry-season water and chicken care in the site survey.',
+    'Check sourced crop varieties and chicken options; confirm the choice locally.',
+    'Record eggs, jars and packages in their own units alongside weighed harvests.',
+  ], tour: [
+    { title: 'Check your production plan', where: 'Production plan → Check your farm conditions',
+      href: '/facilitator/crops',
+      detail: 'Review water, frost, varieties and chicken care, then print the monthly plan.' },
+    { title: 'Record eggs and honey', where: 'My Records → Picked or Sold',
+      href: '/records',
+      detail: 'Choose the product and its actual unit. Counted products keep their own totals.' },
   ] },
   { when: '2 October 2026', sha: 'feaa8a19', changes: [
     'Greywater lessons show marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
@@ -75,6 +89,16 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Review the regional Water lessons', where: 'Study → Water Harvesting → lessons 2–3',
       href: '/student',
       detail: 'Compare marked drafts with English and try the quizzes. Silent slides stay available.' },
+  ] },
+  { when: '2 October 2026', sha: '4863cbf0', changes: [
+    'Printed crop plans start with crop pictures across the months and larger job sheets.',
+    'Banana, hives and coops stay on the print while local food dates are unconfirmed.',
+    'Confirm missed sowings. Shared-bed jobs show their area; seed weights use sourced rates.',
+    'Tree and animal food months use your local confirmations, kept on this device.',
+  ], tour: [
+    { title: 'Print the crop picture calendar', where: 'Crop plan → Take this plan with you',
+      href: '/facilitator/crops',
+      detail: 'Check local food months, then print the picture calendar and monthly tick-off jobs.' },
   ] },
   { when: '2 October 2026', sha: '434cd435', changes: [
     'Sesotho and Xitsonga now show marked Water L2 body drafts beside exact English.',

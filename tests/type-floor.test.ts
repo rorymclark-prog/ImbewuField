@@ -77,6 +77,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/records/RecordQuantityFields.tsx': 'a farmer must read the production quantity and its unit before saving',
+  'components/records/RecordQuantitySummary.tsx': 'eggs and packages need readable separate totals beside weighed harvests',
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',
   'components/SiteSurveyReview.tsx': 'farmers must read their own survey answers before saving',
   'components/SurveyZuluDraftPair.tsx': 'paired draft translations and English sources must stay readable on phones',

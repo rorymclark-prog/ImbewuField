@@ -3103,7 +3103,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         {canvasState && (
           <Link
             href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`}
-            aria-label={tr("Open this farm's crop plan", 'Vula uhlelo lwezitshalo zaleli pulazi')}
+            aria-label={tr("Open this farm's production plan", 'Vula uhlelo lokukhiqiza lwaleli pulazi')}
             style={{
               display: isPhone ? 'none' : 'inline-flex', alignItems: 'center', gap: 6,
               minHeight: 32, padding: '5px 12px', borderRadius: 10,
@@ -3111,7 +3111,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap',
             }}
           >
-            <Sprout size={15} /> {tr('Crop plan', 'Uhlelo lwezitshalo')}
+            <Sprout size={15} /> {tr('Production plan', 'Uhlelo lokukhiqiza')}
           </Link>
         )}
         {canvasState && frame && (
@@ -3193,7 +3193,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               {tr('Back to map', 'Buyela kumephu')}
             </Link>
             <Link href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, color: GREEN, fontWeight: 700 }}>
-              {tr('Crop plan', 'Uhlelo lwezitshalo')}
+              {tr('Production plan', 'Uhlelo lokukhiqiza')}
             </Link>
             {frame && <button type="button" onClick={() => { setPhoneActionsOpen(false); setPrintOpen(true); }} style={{ minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}>
               {tr('Print / Export', 'Phrinta / Khipha')}

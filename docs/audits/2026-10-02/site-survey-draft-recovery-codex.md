@@ -109,3 +109,36 @@ checks used the updated bundle. The final checks above completed successfully.
    states and other dialogs so one placement rule serves the application.
 4. Carry SS-002 and SS-004 forward for fluent review and physical Safari/phone
    testing. Save the next dated record separately and update the shared index.
+
+## Integration update — 2 October, after the crop follow-up merged
+
+PR #879 merged at `dca05ac578db4e1c50cdec7fc442853df81524c6` during the next visual
+audit. Recovery now integrates that main in
+`14c06e799ab324002b0a56c3fa4598111d7ec8d9`. Both sets of release notes and tests
+are retained. This closes the schema integration action above; it does not close
+the signed-in, language or physical-device findings.
+
+Draft format 2 keeps the new raw laying-hen count and reporting year alongside
+the existing raw areas. Version 1 remains readable without inventing answers;
+reading does not rewrite its stored data, and its exact token guards the later
+write. Older clients treat version 2 as a future draft instead of silently
+stripping the added observation fields. Partial breed text also stays editable.
+
+An isolated local component check in a fresh Chromium session at 390×844
+entered observed frost months, limited water, wet ground, partial shade and the
+new chicken management choices. It reloaded, resumed and checked the retained
+answers. A negative/fractional hen count and invalid reporting year still blocked
+Save; correcting them enabled Save. The final callback returned the exact
+observation choices, with blank count/year unknown. See
+[recovered input and readable warnings](site-survey-draft-recovery-evidence/11-production-inputs-recovered.png).
+These are disposable QA inputs, not agricultural observations or recommendations.
+
+The reused browser first returned `QuotaExceededError`; the form displayed the
+honest retry warning. A fresh session successfully kept the same kinds of edits.
+This does not establish a production storage failure. Temporary diagnostics and
+the component QA route were removed. Production authentication remains untested.
+
+Typecheck is clean. The combined full suite passes: 4,483 tests, 4,482 pass,
+zero failures and one existing shape-sync TODO. Two additional IndexedDB tests
+cover the new fields, invalid raw numbers and version-1 migration/stale tokens.
+The saved-survey authority, account/site isolation and `PLAN_VERSION` are unchanged.

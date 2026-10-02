@@ -37,6 +37,7 @@ import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import { updateMyProfile } from '@/lib/db/queries';
 import type { Profile, SalesLog } from '@/lib/db/types';
 import { APP_HEADER_INSET } from '@/lib/app-header';
+import { RECORD_UNITS, recordQuantity, recordUnit, recordQuantityLabel, normaliseRecordUnit, validRecordQuantity } from '@/lib/farm-records';
 
 interface LineItem {
   id: number; desc: string; qty: number; unit: string; price: number;
@@ -53,7 +54,7 @@ interface LineItem {
   priceFromGuide?: boolean;
 }
 
-const UNITS = ['bags', 'kg', 'crates', 'bunches', 'trays', 'each'];
+const UNITS = RECORD_UNITS;
 const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'eft', 'card', 'mobile', 'other'];
 const BUYER_TYPES = [
   'Neighbour', 'Farm gate', 'Spaza shop', 'Bakkie trader', 'Market stall', 'Hawker',
@@ -65,7 +66,6 @@ const INVOICE_ZU: Record<string, string> = {
   'Invoice': 'I-invoyisi', 'Learn': 'Funda', 'Share PDF (WhatsApp, email…)': 'Yabelana nge-PDF (WhatsApp, i-imeyili…)',
   'New invoice': 'I-invoyisi entsha', 'Saved': 'Okulondoloziwe', 'Editing': 'Kuyahlelwa',
   'Invoice and payment details': 'Imininingwane ye-invoyisi nenkokhelo', 'Record the sale once': 'Rekhoda ukuthengisa kanye kuphela',
-  'Keep the invoice, payment and kilograms together.': 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.',
   'A new invoice': 'I-invoyisi entsha', 'Produce already sold': 'Umkhiqizo osudayisiwe', 'An invoice already written on paper': 'I-invoyisi esivele ibhalwe ephepheni',
   'VAT / tax no.': 'Inombolo ye-VAT / yentela', 'Qty': 'Inani',
   'What are you recording?': 'Urekhoda ini?', 'Invoice type': 'Uhlobo lwe-invoyisi',
@@ -74,8 +74,6 @@ const INVOICE_ZU: Record<string, string> = {
   'No — record it with this invoice': 'Cha — kurekhode ngale invoyisi', 'Yes — link the existing sale': 'Yebo — xhumanisa nerekhodi elikhona',
   'Recorded sale': 'Ukuthengisa okurekhodiwe', 'Choose recorded sale': 'Khetha ukuthengisa okurekhodiwe',
   'Choose the exact sale': 'Khetha ukuthengisa okufanele', 'Loading your sales…': 'Kulayishwa ukuthengisa kwakho…',
-  'The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.': 'Isilimo esirekhodiwe, amakhilogremu, isamba nosuku lokukhokha kuhlala ndawonye. Le invoyisi ibhala lokho kuthengisa ngaphandle kokukubala futhi.',
-  'Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.': 'Khetha ukuthengisa okurekhodwe ngamakhilogremu. Vula futhi i-invoyisi ekhona kokuthi Okulondoloziwe.',
   'Original paper invoice number or reference': 'Inombolo noma ireferensi ye-invoyisi yephepha yokuqala',
   'As written on the paper invoice': 'Njengoba ibhalwe ku-invoyisi yephepha',
   'Date on the original paper invoice': 'Usuku olukwi-invoyisi yephepha yokuqala', 'Invoice issue date': 'Usuku lokukhishwa kwe-invoyisi',
@@ -83,7 +81,6 @@ const INVOICE_ZU: Record<string, string> = {
   'Choose paid or unpaid': 'Khetha ukuthi ikhokhiwe noma ayikakhokhwa', 'Yes — paid in full': 'Yebo — ikhokhwe yonke',
   'Not yet — payment outstanding': 'Cha — kusafuneka inkokhelo', 'Payment received on': 'Inkokhelo yamukelwe ngomhlaka',
   'Payment received date': 'Usuku lokwamukelwa kwenkokhelo', 'Payment method': 'Indlela yokukhokha', 'Optional': 'Akuphoqelekile',
-  'Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.': 'Ama-invoyisi akhokhiwe engeza imali engenayo nemigqa yamakhilogremu kokuthi Okurekhodiwe Kwami. Amanye amayunithi agcina amanani awo; ama-invoyisi angakhokhiwe ahlala engakakhokhwa.',
   'No buyer': 'Akekho umthengi', 'Paid': 'Ikhokhiwe', 'Unpaid': 'Ayikhokhiwe', 'Delete invoice': 'Susa i-invoyisi',
   'Your details & banking': 'Imininingwane yakho yasebhange', 'Printed on every invoice': 'Kuboniswa kuwo wonke ama-invoyisi',
   'Add an address and bank account so buyers can pay you': 'Faka ikheli ne-akhawunti yasebhange ukuze abathengi bakukhokhele',
@@ -111,7 +108,6 @@ const INVOICE_ZU: Record<string, string> = {
   'Confirm whether this sale is already recorded.': 'Qinisekisa ukuthi lokhu kuthengisa sekurekhodiwe yini.',
   'Select the existing sale to continue.': 'Khetha ukuthengisa okukhona ukuze uqhubeke.',
   'Add a buyer and at least one item to save, print or share.': 'Faka umthengi nento okungenani eyodwa ukuze ulondoloze, uphrinte noma wabelane.',
-  'Marking an invoice paid adds its kg crop lines to My Records automatically.': 'Ukumaka i-invoyisi njengekhokhiwe kwengeza ngokuzenzakalelayo imigqa yesilimo engamakhilogremu kokuthi Okurekhodiwe Kwami.',
   'Bags, crates and bunches are not converted because their weight is unknown.': 'Amasaka, amakhreyithi nezinyanda akuguqulwa ngoba isisindo sazo asaziwa.',
   'No saved invoices yet — save your first invoice here.': 'Awekho ama-invoyisi alondoloziwe okwamanje — londoloza i-invoyisi yakho yokuqala lapha.',
   'Review payment for invoice': 'Buyekeza inkokhelo ye-invoyisi', 'Delete?': 'Susa?',
@@ -131,10 +127,8 @@ const INVOICE_ZU: Record<string, string> = {
   'Your account changed. Open the invoice again in the correct workspace.': 'I-akhawunti yakho ishintshile. Vula futhi i-invoyisi endaweni yokusebenza efanele.',
   'This invoice could not be saved. Check your device storage and keep the original details of any linked sale, then try again.': 'Le invoyisi ayikwazanga ukulondolozwa. Hlola isikhala kudivayisi, ugcine imininingwane yokuqala yanoma yikuphi ukuthengisa okuxhunyiwe, bese uzama futhi.',
   'Invoice saved on this device. Reconnect and save it again to update the crop sale book.': 'I-invoyisi ilondolozwe kule divayisi. Xhuma futhi bese uyilondoloza futhi ukuze ubuyekeze incwadi yokuthengisa izilimo.',
-  'Invoice saved and linked to the existing sale. Its kilograms and income are counted once.': 'I-invoyisi ilondoloziwe futhi ixhunyaniswe nokuthengisa okukhona. Amakhilogremu nemali engenayo kubalwa kanye kuphela.',
   'Invoice saved.': 'I-invoyisi ilondoloziwe.', 'The invoice could not be saved. Please try again.': 'I-invoyisi ayikwazanga ukulondolozwa. Zama futhi.',
   'The PDF could not be built on this device. The invoice is saved — try Print instead.': 'I-PDF ayikwazanga ukwenziwa kule divayisi. I-invoyisi ilondoloziwe — zama ukuphrinta.',
-  'Choose an available sale with recorded kilograms from your own records.': 'Khetha ukuthengisa okutholakalayo okunamakhilogremu arekhodiwe kumarekhodi akho.',
   'Your pending invoice has been recovered. Review it and save to finish linking.': 'I-invoyisi yakho ebisalindile itholakele. Yibuyekeze bese uyilondoloza ukuze uqedele ukuxhumanisa.',
   'This sale already has an invoice. Open it on the device where it was created; its private invoice copy is not available on this device.': 'Lokhu kuthengisa sekune-invoyisi. Yivule kudivayisi eyadalelwa kuyo; ikhophi yayo eyimfihlo ayitholakali kule divayisi.',
   'The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.': 'Isimo se-invoyisi asishintshwanga ngoba ukuthengisa izilimo akukwazanga ukubuyekezwa. Hlola uxhumano bese uzama futhi.',
@@ -147,22 +141,21 @@ const INVOICE_ZU: Record<string, string> = {
   'This sale already belongs to another invoice.': 'Lokhu kuthengisa sekuvele kungokwenye i-invoyisi.',
   'Keep the recorded growing area for this sale.': 'Gcina indawo yokutshala erekhodiwe yalokhu kuthengisa.',
   'Keep the recorded payment date and paid status for this sale.': 'Gcina usuku lwenkokhelo nesimo sokukhokha okurekhodiwe kwalokhu kuthengisa.',
-  'Keep the recorded crop, kilograms and total when documenting this sale.': 'Gcina isilimo, amakhilogremu nesamba okurekhodiwe lapho ubhala lokhu kuthengisa.',
 };
 
 // These instructions affect payment status, duplicate counting, sync, or deletion. Keep the
 // English visible beside the draft so a farmer can check the meaning before acting.
 const INVOICE_PAIRED_COPY = new Set([
-  'The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.',
-  'Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.',
+  'The recorded produce, quantity, unit, total and payment date stay together. This invoice documents that sale without adding it again.',
+  'Paid invoices add income and produce quantities to My Records in their recorded units. Unpaid invoices stay outstanding.',
   'For your R/m² records. Choose only if every line belongs to this area.',
-  'Marking an invoice paid adds its kg crop lines to My Records automatically.',
+  'Marking an invoice paid adds its produce quantities to My Records in their recorded units.',
   'Bags, crates and bunches are not converted because their weight is unknown.',
   'Invoice saved on this device. The shared sales records have not confirmed yet.',
   'Retry sales sync',
   'Choose paid or unpaid to continue.',
   'Invoice saved on this device. Reconnect and save it again to update the crop sale book.',
-  'Invoice saved and linked to the existing sale. Its kilograms and income are counted once.',
+  'Invoice saved and linked to the existing sale. Its quantity and income are counted once.',
   'The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.',
   'Connect to the internet to load a sale you have already recorded.',
   'Load the recorded sale before saving this invoice.',
@@ -518,6 +511,7 @@ export default function InvoicePage() {
     try {
       const invalid = invoiceEntryError(candidate);
       if (invalid) throw new Error(invalid);
+      if (candidate.items.some(item => normaliseRecordUnit(item.unit) !== null && !validRecordQuantity(item.qty, item.unit))) throw new Error('Enter a positive quantity. Eggs and items need whole numbers.');
       if (sourceSaleId) {
         if (!linkedSale) throw new Error(ui('Load the recorded sale before saving this invoice.'));
         const mismatch = recordedSaleInvoiceError(candidate, linkedSale, sample ? 'demo' : user?.uid ?? '');
@@ -557,7 +551,7 @@ export default function InvoicePage() {
           return sameAccount() ? id : null;
         }
       }
-      if (sameAccount()) setSaveMessage(sourceSaleId ? ui('Invoice saved and linked to the existing sale. Its kilograms and income are counted once.') : ui('Invoice saved.'));
+      if (sameAccount()) setSaveMessage(sourceSaleId ? ui('Invoice saved and linked to the existing sale. Its quantity and income are counted once.') : ui('Invoice saved.'));
       return sameAccount() ? id : null;
     } catch (error) {
       if (sameAccount()) setSaveError(error instanceof Error ? ui(error.message) : ui('The invoice could not be saved. Please try again.'));
@@ -651,8 +645,8 @@ export default function InvoicePage() {
   function selectRecordedSale(id: string) {
     const sale = recordedSales.find(row => row.id === id);
     const owner = isSampleMode() ? 'demo' : user?.uid;
-    if (!sale || sale.profile_id !== owner || !Number.isFinite(sale.kg) || sale.kg <= 0 || sale.amount < 0) {
-      setSaveError(ui('Choose an available sale with recorded kilograms from your own records.')); return;
+    if (!sale || sale.profile_id !== owner || recordQuantity(sale) === null || !recordUnit(sale) || sale.amount < 0) {
+      setSaveError(ui('Choose an available sale with a recorded quantity and unit from your own records.')); return;
     }
     const known = saved.find(invoice => invoice.id === sale.invoice_id)
       ?? loadPendingInvoiceLinks().find(invoice => invoice.sourceSaleId === sale.id);
@@ -671,7 +665,8 @@ export default function InvoicePage() {
     setCurrentNo(loadNextInvoiceNumber(seq));
     setSourceSaleId(sale.id); setRecordBasis('existing');
     setPaymentStatus('paid'); setPaymentISO(sale.sold_at); setPaymentMethod('');
-    setItems([{ id: 1, desc: sale.crop, qty: sale.kg, unit: 'kg', price: sale.amount / sale.kg }]);
+    const quantity = recordQuantity(sale)!;
+    setItems([{ id: 1, desc: sale.crop, qty: quantity, unit: recordUnit(sale)!, price: sale.amount / quantity }]);
     setNextId(2);
     setBillTo(sale.buyer ?? ''); setCustomBuyer(Boolean(sale.buyer));
     setBuyerDetails({});
@@ -792,7 +787,7 @@ export default function InvoicePage() {
             <section className="rounded-2xl p-4 space-y-3" style={CARD} aria-label={ui('Invoice and payment details', 'Imininingwane ye-invoyisi nenkokhelo')}>
               <div>
                 <h1 className="font-display text-xl font-semibold" style={{ color: 'var(--color-forest-800)' }}>{ui('Record the sale once', 'Bhala ukuthengisa kanye kuphela')}</h1>
-                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{ui('Keep the invoice, payment and kilograms together.', 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.')}</p>
+                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{ui('Keep the invoice, payment and quantity together.')}</p>
               </div>
               {/* Simple defaults straight to a new sale — a quick farm-gate sale is the common
                   case, and the picker below is how the other two entry kinds stayed reachable:
@@ -830,12 +825,12 @@ export default function InvoicePage() {
                     <select aria-label={ui('Choose recorded sale')} value={sourceSaleId} disabled={Boolean(currentId) || saving || !salesReady}
                       onChange={event => selectRecordedSale(event.target.value)} className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD}>
                       <option value="">{salesReady ? ui('Choose the exact sale') : ui('Loading your sales…')}</option>
-                      {recordedSales.filter(sale => sale.id === sourceSaleId || ((!sale.invoice_id || sale.invoice_source_sale) && sale.kg > 0 && sale.amount >= 0)).map(sale => (
-                        <option key={sale.id} value={sale.id}>{invoiceDateInput(sale.sold_at)} · {sale.crop} · {sale.kg} kg · R{sale.amount.toFixed(2)}{sale.buyer ? ` · ${sale.buyer}` : ''}</option>
+                      {recordedSales.filter(sale => sale.id === sourceSaleId || ((!sale.invoice_id || sale.invoice_source_sale) && recordQuantity(sale) !== null && sale.amount >= 0)).map(sale => (
+                        <option key={sale.id} value={sale.id}>{invoiceDateInput(sale.sold_at)} · {sale.crop} · {recordQuantityLabel(sale)} · R{sale.amount.toFixed(2)}{sale.buyer ? ` · ${sale.buyer}` : ''}</option>
                       ))}
                     </select>
                   </label>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{financialsLocked ? ui('The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.') : ui('Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.')}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{financialsLocked ? ui('The recorded produce, quantity, unit, total and payment date stay together. This invoice documents that sale without adding it again.') : ui('Select a sale with a recorded quantity and unit. An existing invoice should be reopened from Saved.')}</p>
       {salesError && <p role="alert" className="text-sm" style={{ color: '#A02B28' }}>{ui(salesError)}</p>}
                 </div>
               )}
@@ -876,14 +871,14 @@ export default function InvoicePage() {
                   </label>
                 </div>
               )}
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{ui('Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.')}</p>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{ui('Paid invoices add income and produce quantities to My Records in their recorded units. Unpaid invoices stay outstanding.')}</p>
             </section>
 
             {/* Saved-invoices list — tap to reopen/reprint */}
             {showSaved && (
               <div className="rounded-xl overflow-hidden" style={CARD}>
                 <div className="px-3 py-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-                  {ui('Marking an invoice paid adds its kg crop lines to My Records automatically.')}
+                  {ui('Marking an invoice paid adds its produce quantities to My Records in their recorded units.')}
                   {' '}{ui('Bags, crates and bunches are not converted because their weight is unknown.')}
                 </div>
                 {saved.length === 0 ? (

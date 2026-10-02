@@ -12,6 +12,7 @@
 import { getCropArt } from '@/lib/crop-art';
 import { speciesPickerArtworkUrl } from '@/lib/species-art';
 import { animalArtUrl } from '@/lib/animal-art';
+import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 export type PdfIconMap = Record<string, string>;
 
@@ -24,11 +25,12 @@ export function pdfIconUrl(iconKey: string): string | null {
   if (kind === 'crop') return getCropArt(id) ?? null;
   if (kind === 'tree') return speciesPickerArtworkUrl(id);
   if (kind === 'animal') return animalArtUrl(id);
+  if (kind === 'element') return ELEMENTS_BY_ID[id]?.art ?? null;
   return null;
 }
 
-/** 64px: a printed icon is ~14pt (about 5 mm), so 64px is well over 300 dpi at that size. */
-export const PDF_ICON_PX = 64;
+/** The field calendar now uses larger pictures; 128px keeps them crisp on paper. */
+export const PDF_ICON_PX = 128;
 
 async function downscale(url: string, px: number): Promise<string | null> {
   const response = await fetch(url);

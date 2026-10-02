@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
+import { quantityTotals, recordQuantityLabel, recordQuantityPayload, recordUnit, type RecordQuantityRow } from '@/lib/farm-records';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -38,8 +39,8 @@ interface Ctx {
   waterData?: WaterData;
   language?: string;
   reports?: { name: string; savedAt: string; text?: string }[];
-  production?: { crop: string; kg: number }[];
-  sales?: { crop: string; kg: number; amount: number }[];
+  production?: (RecordQuantityRow & { crop: string })[];
+  sales?: (RecordQuantityRow & { crop: string; amount: number })[];
   /**
    * THIS farmer's own sharing settings, read from their own consent record (lib/consent.ts) by the
    * client that is already signed in as them. Never anyone else's, and never a whole cohort's — a
@@ -88,23 +89,28 @@ Soil: ${loc.soil.textureClass}, pH ${loc.soil.ph}, organic carbon ${loc.soil.org
   }
 
   if (ctx.production && ctx.production.length) {
-    const byCrop = new Map<string, number>();
-    for (const p of ctx.production) byCrop.set(p.crop, (byCrop.get(p.crop) ?? 0) + (p.kg || 0));
-    const lines = Array.from(byCrop.entries()).map(([c, kg]) => `${c}: ${Math.round(kg)}kg`).join(', ');
-    parts.push(`--- THIS FARMER'S PRODUCTION RECORDS ---\n${lines}`);
+    const byCrop = new Map<string, RecordQuantityRow[]>();
+    for (const row of ctx.production) byCrop.set(row.crop, [...(byCrop.get(row.crop) ?? []), row]);
+    const lines = Array.from(byCrop.entries()).map(([crop, rows]) => {
+      const totals = quantityTotals(rows);
+      return `${crop}: ${totals.length ? totals.map(total => recordQuantityLabel(recordQuantityPayload(total.quantity, total.unit))).join(', ') : 'quantity unknown'}`;
+    }).join(', ');
+    parts.push(`--- THIS FARMER'S PRODUCTION RECORDS ---\n${lines}\nCounts and packages have unknown weight; never convert them to kilograms.`);
   }
 
   if (ctx.sales && ctx.sales.length) {
-    const byCrop = new Map<string, { kg: number; amount: number }>();
-    for (const s of ctx.sales) {
-      const cur = byCrop.get(s.crop) ?? { kg: 0, amount: 0 };
-      byCrop.set(s.crop, { kg: cur.kg + (s.kg || 0), amount: cur.amount + (s.amount || 0) });
+    const byCropUnit = new Map<string, typeof ctx.sales>();
+    for (const row of ctx.sales) {
+      const key = `${row.crop}\u0000${recordUnit(row) ?? 'unknown'}`;
+      byCropUnit.set(key, [...(byCropUnit.get(key) ?? []), row]);
     }
-    const totalIncome = ctx.sales.reduce((sum, s) => sum + (s.amount || 0), 0);
-    const lines = Array.from(byCrop.entries())
-      .map(([c, v]) => `${c}: ${Math.round(v.kg)}kg sold for R${Math.round(v.amount)} (≈R${(v.amount / Math.max(1, v.kg)).toFixed(2)}/kg)`)
-      .join('\n');
-    parts.push(`--- THIS FARMER'S SALES / INCOME ---\nTotal income: R${Math.round(totalIncome)}\n${lines}`);
+    const totalIncome = ctx.sales.reduce((sum, s) => sum + (Number.isFinite(s.amount) ? s.amount : 0), 0);
+    const lines = Array.from(byCropUnit.values()).map(rows => {
+      const totals = quantityTotals(rows), amount = rows.reduce((sum, row) => sum + (Number.isFinite(row.amount) ? row.amount : 0), 0);
+      const quantity = totals[0];
+      return `${rows[0].crop}: ${quantity ? recordQuantityLabel(recordQuantityPayload(quantity.quantity, quantity.unit)) : 'quantity unknown'} sold for R${amount.toFixed(2)}`;
+    }).join('\n');
+    parts.push(`--- THIS FARMER'S SALES / INCOME ---\nTotal income: R${Math.round(totalIncome)}\n${lines}\nEach unit is separate. No package or egg weight conversion is recorded.`);
   }
 
   if (ctx.consent) {
