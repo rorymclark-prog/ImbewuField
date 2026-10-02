@@ -232,6 +232,34 @@ test('Water Harvesting held wording remains exact where dam, water-law and reuse
   ]) assert.ok(exactHolds.some(held => held.includes(required)), `safety or legal claim needs an exact hold: ${required}`);
 });
 
+test('Water L2 Xitsonga keeps unchecked heading, image description and assessments in exact English', () => {
+  const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!;
+  const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
+  const heldPairs = [paired.title, paired.infographicAlt!, ...paired.keyPoints,
+    ...paired.quiz.flatMap(item => [item.question, ...item.options, item.rationale])];
+  for (const pair of heldPairs) {
+    assert.equal(pair.reviewStatus, 'hold');
+    assert.equal(pair.xitsongaDraft, pair.sourceEnglish);
+  }
+  assert.deepEqual(paired.quiz.map(item => item.sourceCorrectIndex), [1, 1]);
+
+  const shown = resolveLearnerLessonPresentation(canonical, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.title, canonical.title);
+  assert.equal(shown.content.infographicAlt, canonical.infographicAlt);
+  assert.deepEqual(shown.content.keyPoints, canonical.keyPoints);
+  assert.deepEqual(shown.content.quiz, canonical.quiz);
+  assert.equal(shown.content.body, paired.body.xitsongaDraft,
+    'only the independently checked, source-paired body draft remains localized');
+
+  const changedKeyPoint = { ...canonical, keyPoints: canonical.keyPoints.map((point, index) =>
+    index === 0 ? `${point} changed` : point) };
+  const fallback = resolveLearnerLessonPresentation(changedKeyPoint, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.deepEqual(fallback.content.keyPoints, changedKeyPoint.keyPoints,
+    'a changed key-point source withdraws the whole source-paired lesson');
+});
+
 test('Water L1 Xitsonga keeps infiltration possible and requires assessment for all listed land conditions', () => {
   const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l1')!;
   const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;

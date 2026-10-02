@@ -140,5 +140,81 @@
   ],
   "packetStatus": "wired-machine-draft",
   "wiringStatus": "Wired only to the source-matched learner body; other lesson fields, assessments and media are unchanged.",
-  "finalIndependentBackcheck": "Root review retained the pre-existing South Africa sentence exactly in paragraph 2 and retained “dry periods”; the technical terms “evaporation and seepage” remain exact English in paragraph 7 to avoid a steam reading. Paragraph 6 keeps the overflow/breach sentence exact English; paragraph 8 is an exact English hold; paragraph 9 keeps the all-animals sentence exact English. No fluent-speaker approval is claimed."
+  "finalIndependentBackcheck": "Root review retained the pre-existing South Africa sentence exactly in paragraph 2 and retained “dry periods”; the technical terms “evaporation and seepage” remain exact English in paragraph 7 to avoid a steam reading. Paragraph 6 keeps the overflow/breach sentence exact English; paragraph 8 is an exact English hold; paragraph 9 keeps the all-animals sentence exact English. No fluent-speaker approval is claimed.",
+  "previousLearnerFieldsPreservedForLaterReview": {
+    "title": {
+      "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
+      "previousDraft": "Madamu ya Mapurasi na Swidziva: Ku Hlayisa Mati ya Nkarhi wa Dyandza"
+    },
+    "infographicAlt": {
+      "sourceEnglish": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+      "previousDraft": "Damu ra purasi leri tsemakanyiweke exikarhi: mati lama khulukelaka endzeni hi tlhelo rin'wana, mati lama hlayisiweke, spillway ehenhla ka rimbiti ra le henhla ku halaka mati lama taleke ngopfu, na ribuwa leri byariweke swimilana leri khomeke misava."
+    },
+    "keyPoints[0]": {
+      "sourceEnglish": "A dam needs a site assessment and qualified design",
+      "previousDraft": "Damu ri lava vukambisi bya sayiti na dizayini leyi endliweke hi munhu la fanelekaka"
+    },
+    "keyPoints[1]": {
+      "sourceEnglish": "Design a safe spillway before construction",
+      "previousDraft": "Dizayina spillway leyi hlayisekeke u nga si sungula ku aka"
+    },
+    "keyPoints[2]": {
+      "sourceEnglish": "Check required water authorisations before building",
+      "previousDraft": "Kamba mpfumelelo lowu lavekaka wa ta mati u nga si aka"
+    },
+    "keyPoints[3]": {
+      "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
+      "previousDraft": "Hlayisa swimilana swo funengeta ribuwa naswona u nga byari mirhi ehenhla ka rirhangu ra damu ra misava"
+    },
+    "quiz[0].question": {
+      "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+      "previousDraft": "Murimi u aka rirhangu ra damu handle ka spillway. Endzhaku ka xidzedze lexikulu ngopfu ra khuluka ri hundza ehenhla. Xana xiphiqo lexi nga vangiwaka i yini?"
+    },
+    "quiz[0].options[0]": {
+      "sourceEnglish": "The water irrigates lower fields beneficially",
+      "previousDraft": "Mati ma cheleta masimu lama nga ehansi hi ndlela leyinene"
+    },
+    "quiz[0].options[1]": {
+      "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
+      "previousDraft": "Ma khuluka ehenhla kutani ma dya rirhangu, leswi nga vangaka ku mbundzumuka loku kulu"
+    },
+    "quiz[0].options[2]": {
+      "sourceEnglish": "The dam stays full and overflow drains harmlessly",
+      "previousDraft": "Damu ri tshama ri terile naswona mati lama taleke ngopfu ma khuluka handle ko vanga khombo"
+    },
+    "quiz[0].options[3]": {
+      "sourceEnglish": "Storage capacity increases permanently",
+      "previousDraft": "Vuhlayiselo bya mati byi engeteleka hilaha ku nga heriki"
+    },
+    "quiz[0].rationale": {
+      "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+      "previousDraft": "Handle ka ndlela leyi dizayiniweke ya mati lama taleke ngopfu, mati lama tlulaka mpimo ma tikumela ndlela ehenhla ka rirhangu — naswona ku khuluka koloko loku nga lawulekiki hi kona loku dyaka misava naswona eku heteleleni ku mbundzumuxa rirhangu."
+    },
+    "quiz[1].question": {
+      "sourceEnglish": "Which action helps protect an earth dam?",
+      "previousDraft": "Hi xihi xiendlo lexi pfunaka ku sirhelela damu ra misava?"
+    },
+    "quiz[1].options[0]": {
+      "sourceEnglish": "A deep, exposed dam with no bank vegetation",
+      "previousDraft": "Damu ro enta, leri nga sirhelelekangiki leri nga riki na swimilana eribuweni"
+    },
+    "quiz[1].options[1]": {
+      "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
+      "previousDraft": "Hlayisa swimilana swa ribuwa leswi dizayiniweke naswona u hlayisa spillway yi basile"
+    },
+    "quiz[1].options[2]": {
+      "sourceEnglish": "A full concrete lining and plastic cover",
+      "previousDraft": "Ku endla khonkhriti hinkwako na ku funengeta hi pulasitiki"
+    },
+    "quiz[1].options[3]": {
+      "sourceEnglish": "A larger surface area to spread evaporation evenly",
+      "previousDraft": "Ndhawu leyikulu ya le henhla leswaku mati ma phyaphyarha hi ku ringana"
+    },
+    "quiz[1].rationale": {
+      "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+      "previousDraft": "Spillway leyi basileke na maribuwa lama hlayisiweke swi pfuna damu ku tirha hilaha ri dizayiniweke hakona. Mirhi a yi fanelanga ku byariwa ehenhla ka rirhangu ra damu ra misava."
+    },
+    "note": "These earlier machine drafts are retained for a future independently checked assessment/title/infographic pass. Learners now see exact English holds for these fields."
+  },
+  "currentActivationStatus": "The body remains a source-paired marked draft. The title, infographic description, all four key points, and both complete quizzes are exact-English holds pending separate review."
 }
