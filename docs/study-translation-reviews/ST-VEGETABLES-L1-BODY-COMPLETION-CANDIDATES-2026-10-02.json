@@ -1,0 +1,196 @@
+{
+  "packetId": "ST-VEGETABLES-L1-BODY-COMPLETION-2026-10-02",
+  "language": "Sesotho (st)",
+  "sourceRevision": "917643955add4c342391175347670fd9ccdf0f1f",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-vegetables-staples.ts",
+  "lessonId": "vegetables-staples-l1",
+  "paragraphCount": 20,
+  "paragraphSourceMatchesCanonical": true,
+  "scope": "Paragraph-level review of the existing body draft. Existing localized paragraphs are copied verbatim; no repository changes.",
+  "paragraphs": [
+    {
+      "paragraphIndex": 0,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "currentSesothoDraft": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng.",
+      "candidateSesotho": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng.",
+      "candidateStatus": "preserved-existing-draft",
+      "independentBacktranslation": "Existing localized text retained verbatim; no new backtranslation is claimed.",
+      "conditionsAndUncertainty": "Preserved verbatim from current localized draft; no change proposed."
+    },
+    {
+      "paragraphIndex": 1,
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "currentSesothoDraft": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "candidateSesotho": "Tshireletso e bonolo. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "conditionsAndUncertainty": "Translate only the simple framing. Retain permanent-path and reachable-from-both-sides geometry in exact English."
+    },
+    {
+      "paragraphIndex": 2,
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "currentSesothoDraft": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateSesotho": "One metre to one point two metres wide. Ke yona working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "One metre to one point two metres wide. It is the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "conditionsAndUncertainty": "Keep both endpoints and full reach/never-step condition exact; translate only the framing that this is the working number."
+    },
+    {
+      "paragraphIndex": 3,
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "currentSesothoDraft": "Jwale nahana ka dibethe tsa hao. Na o ka fihla bohareng ntle le ho hata ka hare? Eya o leke pele o lema eng kapa eng hape.",
+      "candidateSesotho": "Jwale nahana ka dibethe tsa hao. Na o ka fihla bohareng ntle le ho hata ka hare? Eya o leke pele o lema eng kapa eng hape.",
+      "candidateStatus": "preserved-existing-draft",
+      "independentBacktranslation": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try before you plant anything else.",
+      "conditionsAndUncertainty": "Preserved verbatim from current localized draft; no change proposed."
+    },
+    {
+      "paragraphIndex": 4,
+      "sourceEnglish": "There's no single bed shape that's right everywhere.",
+      "currentSesothoDraft": "Ha ho sebopeho se le seng sa bethe se loketseng dibaka tsohle.",
+      "candidateSesotho": "Ha ho sebopeho se le seng sa bethe se loketseng dibaka tsohle.",
+      "candidateStatus": "preserved-existing-draft",
+      "independentBacktranslation": "There is no single bed shape that is right everywhere.",
+      "conditionsAndUncertainty": "Preserved verbatim from current localized draft; no change proposed."
+    },
+    {
+      "paragraphIndex": 5,
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "currentSesothoDraft": "Start with the least disturbance that solves your problem.",
+      "candidateSesotho": "Qala ka least disturbance that solves your problem.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Start with the least disturbance that solves your problem.",
+      "conditionsAndUncertainty": "Keep the least-disturbance and solves-your-problem condition exact."
+    },
+    {
+      "paragraphIndex": 6,
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "currentSesothoDraft": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "candidateSesotho": "No-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme build fertility on top.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "No-dig suits most garden soils. Leave the structure as it is, and build fertility on top.",
+      "conditionsAndUncertainty": "No-dig retained; most-scope is translated as boholo. Structure/fertility instruction partly held; verify horticultural wording."
+    },
+    {
+      "paragraphIndex": 7,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentSesothoDraft": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateSesotho": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateStatus": "hold",
+      "independentBacktranslation": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "conditionsAndUncertainty": "Held exact English because wet-clay prohibition and severe compaction/poor-drainage, local-advice-before-deeper-cultivation conditions must remain exact."
+    },
+    {
+      "paragraphIndex": 8,
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "currentSesothoDraft": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "candidateSesotho": "Raised beds di loketse wet ground, moo water needs somewhere to drain away to.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "conditionsAndUncertainty": "Translate only the basic suitability framing. Wet-ground and drainage direction remain exact English."
+    },
+    {
+      "paragraphIndex": 9,
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "currentSesothoDraft": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "candidateSesotho": "Sunken beds di loketse dry ground, moo you want to catch and hold what rain you get.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "conditionsAndUncertainty": "Translate only the basic suitability framing. Dry-ground and catch-and-hold-rain condition remain exact English."
+    },
+    {
+      "paragraphIndex": 10,
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentSesothoDraft": "Ka mora pula e matla, sheba hore na metsi a sala hokae kapa a phalla a fete hokae. Kopanya seo o se boneng le keletso mabapi le mobu le phallo ya metsi pele o kgetha bethe.",
+      "candidateSesotho": "Ka mora pula e matla, sheba hore na metsi a sala hokae kapa a phalla a fete hokae. Kopanya seo o se boneng le keletso mabapi le mobu le phallo ya metsi pele o kgetha bethe.",
+      "candidateStatus": "preserved-existing-draft",
+      "independentBacktranslation": "Existing localized text retained verbatim; no new backtranslation is claimed.",
+      "conditionsAndUncertainty": "Preserved verbatim from current localized draft; no change proposed."
+    },
+    {
+      "paragraphIndex": 11,
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "currentSesothoDraft": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "candidateSesotho": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Some crops do not like having their roots disturbed. They do better sown straight where they will grow. Beans, carrots and maize belong in that group.",
+      "conditionsAndUncertainty": "Translate ordinary introduction only. Root disturbance, direct-sowing method, and Beans, carrots and maize stay faithful to source; verify sentence joining."
+    },
+    {
+      "paragraphIndex": 12,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentSesothoDraft": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "candidateSesotho": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "candidateStatus": "exact-English hold",
+      "independentBacktranslation": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "conditionsAndUncertainty": "Root repair after independent backcheck: preserve crop grouping / prepare-for-your-soil meaning exactly."
+    },
+    {
+      "paragraphIndex": 13,
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "currentSesothoDraft": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "candidateSesotho": "Sebedisa spacing guidance for the crop, variety and local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants grow.",
+      "conditionsAndUncertainty": "Keep crop/variety/local conditions and spacing guidance exact. Translate the imperatives and crowding observation; packet/local grower advice stays exact."
+    },
+    {
+      "paragraphIndex": 14,
+      "sourceEnglish": "Before you plant, mark the bed out.",
+      "currentSesothoDraft": "Before you plant, mark the bed out.",
+      "candidateSesotho": "Pele o lema, mark the bed out.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Before you plant, mark the bed.",
+      "conditionsAndUncertainty": "Root repair retains the exact mark-out boundary/layout action."
+    },
+    {
+      "paragraphIndex": 15,
+      "sourceEnglish": "One point two metres wide. Three metres long. One practice bed.",
+      "currentSesothoDraft": "One point two metres wide. Three metres long. One practice bed.",
+      "candidateSesotho": "Bophara ba One point two metres. Bolelele ba Three metres. Bethe e le nngwe ya boikwetliso.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Width one point two metres. Length three metres. One practice bed.",
+      "conditionsAndUncertainty": "Keep the exact dimensions and order; translate only width/length framing and practice-bed wording."
+    },
+    {
+      "paragraphIndex": 16,
+      "sourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "currentSesothoDraft": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "candidateSesotho": "Sebedisa pegs le string. Tshwaya rectangle, le mark both access paths.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "conditionsAndUncertainty": "Keep pegs, string, rectangle and both access paths exact; translate the use/mark framing."
+    },
+    {
+      "paragraphIndex": 17,
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentSesothoDraft": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateSesotho": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateStatus": "exact-English hold",
+      "independentBacktranslation": "Then prepare your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "conditionsAndUncertainty": "Root repair after independent backcheck: preserve crop grouping / prepare-for-your-soil meaning exactly."
+    },
+    {
+      "paragraphIndex": 18,
+      "sourceEnglish": "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+      "currentSesothoDraft": "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+      "candidateSesotho": "Mohala wa thapo o fetola mohopolo qeto. Ha ditsela di se di le teng, di boloke. Ha sebaka sa temo se se se le teng, se sireletse.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "A string line turns an idea into a decision. Once the paths are there, keep them. Once the growing area is there, protect it.",
+      "conditionsAndUncertainty": "Translate the string-line/path/growing-area principle without changing the order or protection instruction."
+    },
+    {
+      "paragraphIndex": 19,
+      "sourceEnglish": "That bed gets easier to improve every season, because you stopped walking on it.",
+      "currentSesothoDraft": "That bed gets easier to improve every season, because you stopped walking on it.",
+      "candidateSesotho": "Bethe eo e ba bonolo ho e ntlafatsa sehla se seng le se seng, hobane o kgaolitse ho e hata.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "That bed becomes easier to improve every season, because you stopped stepping on it.",
+      "conditionsAndUncertainty": "Translate the result and causal explanation; preserve each-season timing and stopped-walking cause."
+    }
+  ],
+  "reviewNote": "Mixed machine-draft candidates only; no fluent approval. Exact English holds preserve dimensions, geometry, soil restrictions, crop establishment methods, species and conditions.",
+  "backtranslationProvenance": "Fields named independentBacktranslation in the original drafter packet are drafter backtranslations. Independent review is the separate backcheck report.",
+  "rootReview": "All20 exact source/current pairs verified independently; root applied repairs12/14/17. Not fluent/local farming approval."
+}

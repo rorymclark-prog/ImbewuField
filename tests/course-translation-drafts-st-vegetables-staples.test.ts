@@ -78,9 +78,24 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
 
   const bedSource = source.lessons[0].body.split('\n\n');
   const bedDraft = draft.lessons[0].body.sesothoDraft.split('\n\n');
-  for (const index of [1, 2, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19]) {
-    assert.equal(bedDraft[index], bedSource[index], `bed paragraph ${index + 1}: unreviewed crop, measure and soil guidance stays exact English`);
+  // New source-paired ordinary prose replaces whole-paragraph holds; precise conditions still bind.
+  for (const index of [7, 12, 17]) {
+    assert.equal(bedDraft[index], bedSource[index], `bed paragraph ${index + 1}: soil prohibition, crop grouping and deeper-cultivation conditions stay English`);
   }
+  for (const [index, condition] of [
+    [1, 'Permanent paths, and a bed narrow enough to reach into from both sides.'],
+    [2, 'At that width you can reach the centre from either path, and your feet never touch the growing area.'],
+    [5, 'least disturbance that solves your problem'],
+    [6, 'build fertility on top'],
+    [8, 'water needs somewhere to drain away to'],
+    [9, 'you want to catch and hold what rain you get'],
+    [11, "They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."],
+    [13, 'spacing guidance for the crop, variety and local conditions'],
+    [14, 'mark the bed out'],
+    [16, 'mark both access paths'],
+  ] as const) assert.ok(bedDraft[index].includes(condition), `bed paragraph ${index + 1}: preserve ${condition}`);
+  assert.match(bedDraft[6], /boholo ba mobu wa dirapa/, 'no-dig suits most garden soils, not every soil');
+  assert.match(bedDraft[15], /Bophara ba One point two metres\. Bolelele ba Three metres/, 'width and length cannot swap');
   const pestSource = source.lessons[3].body.split('\n\n');
   const pestDraft = draft.lessons[3].body.sesothoDraft.split('\n\n');
   for (const index of [0, 1, 2, 5, 8, 9, 10, 11]) {

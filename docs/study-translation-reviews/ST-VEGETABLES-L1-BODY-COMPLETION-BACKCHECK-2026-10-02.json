@@ -1,0 +1,146 @@
+{
+  "packetId": "ST-VEGETABLES-L1-BODY-COMPLETION-BACKCHECK-2026-10-02",
+  "reviewedPacket": "/tmp/imbewu-st-vegetables-l1-body-completion-20261002.json",
+  "canonicalRevision": "917643955add4c342391175347670fd9ccdf0f1f",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-vegetables-staples.ts",
+  "lessonId": "vegetables-staples-l1",
+  "readOnly": true,
+  "sourceBinding": {
+    "result": "pass",
+    "paragraphCount": 20,
+    "checks": "Compared every packet sourceEnglish paragraph to the canonical lesson body and registry body sourceEnglish; compared every currentSesothoDraft paragraph to the registry sesothoDraft. All 20 pairs matched exactly and in order. No repository files changed."
+  },
+  "overall": "Repaired packet passes the independent semantic backcheck. Critical geometry, dimensions, wet-clay prohibition, local-advice-before-deeper-cultivation conditions, crop establishment and identities, and soil-specific cultivation constraints remain protected. This is not fluency approval.",
+  "findings": [
+    {
+      "paragraphIndex": 0,
+      "result": "preserve-current-draft",
+      "note": "Candidate preserves the registry text exactly. Its 'Metso e hola butle' reads as roots grow slowly rather than explicitly 'roots slow down'; this is an existing localized sentence, so do not treat the candidate as a correction of it."
+    },
+    {
+      "paragraphIndex": 1,
+      "result": "accept-bounded-mixed-draft",
+      "note": "'Tshireletso e bonolo' conveys the simple protection framing. Both-side reachability and permanent paths remain exact English, preserving the access geometry."
+    },
+    {
+      "paragraphIndex": 2,
+      "result": "accept-bounded-mixed-draft",
+      "note": "Exact width range, reach from either path, and never-touching the growing area remain English. 'Ke yona working number' conveys that this is the working number; no geometry or numeric change."
+    },
+    {
+      "paragraphIndex": 3,
+      "result": "preserve-current-draft",
+      "note": "Preserved text retains the question about reaching the middle without stepping inside and the try-before-planting instruction."
+    },
+    {
+      "paragraphIndex": 4,
+      "result": "preserve-current-draft",
+      "note": "Preserved text retains that no one bed shape suits every place."
+    },
+    {
+      "paragraphIndex": 5,
+      "result": "accept-held-core",
+      "note": "The complete least-disturbance and solves-your-problem condition stays exact English; only 'Qala ka' supplies the ordinary start framing."
+    },
+    {
+      "paragraphIndex": 6,
+      "result": "accept-with-technical-terms-held",
+      "note": "'Boholo ba' retains most-scope. No-dig and build-fertility-on-top remain explicit. 'Structure' is retained as a technical term, with 'Tlohela ... e le jwalo' preserving leave it as it is."
+    },
+    {
+      "paragraphIndex": 7,
+      "result": "accept-exact-english-hold",
+      "note": "Wet-clay prohibition and the severe compaction/poor drainage trigger, identify-the-cause step, local advice, and before-deeper-cultivation order are all preserved verbatim."
+    },
+    {
+      "paragraphIndex": 8,
+      "result": "accept-bounded-mixed-draft",
+      "note": "Raised beds are said to suit wet ground; the drainage-away condition remains exact English. No claim that raised beds solve drainage is added."
+    },
+    {
+      "paragraphIndex": 9,
+      "result": "accept-bounded-mixed-draft",
+      "note": "Sunken beds are said to suit dry ground; the desire to catch and hold the rain received remains exact English. No universal suitability claim is added."
+    },
+    {
+      "paragraphIndex": 10,
+      "result": "preserve-current-draft",
+      "note": "Preserved text retains observation after heavy rain, sitting/runoff, and combining that observation with soil/drainage advice before bed choice."
+    },
+    {
+      "paragraphIndex": 11,
+      "result": "accept-bounded-mixed-draft",
+      "note": "The translated introduction conveys that some crops do not like root disturbance. The direct-sowing comparison and the exact crop list Beans, carrots and maize remain English."
+    },
+    {
+      "paragraphIndex": 12,
+      "result": "accept-repaired-exact-english-hold",
+      "note": "Repaired candidate now holds the complete source paragraph in exact English, preserving the protected nursery-start/transplanting sequence and the exact tomatoes/brassicas group membership."
+    },
+    {
+      "paragraphIndex": 13,
+      "result": "accept-bounded-mixed-draft",
+      "note": "Spacing guidance for crop, variety and local conditions, plus packet/local-grower advice, remain exact English. The translated ending retains observing crowding as plants grow/develop."
+    },
+    {
+      "paragraphIndex": 14,
+      "result": "accept-repaired-mixed-draft",
+      "note": "Repaired candidate translates the timing (`Pele o lema`) and retains `mark the bed out` exactly, preserving the boundary/layout action."
+    },
+    {
+      "paragraphIndex": 15,
+      "result": "accept",
+      "note": "Width 1.2 metres, length 3 metres, and one practice bed remain in source order. No number or unit changed."
+    },
+    {
+      "paragraphIndex": 16,
+      "result": "accept-bounded-mixed-draft",
+      "note": "Pegs and string remain named; the rectangle is marked and both access paths are explicitly preserved. No alternate geometry is introduced."
+    },
+    {
+      "paragraphIndex": 17,
+      "result": "accept-repaired-exact-english-hold",
+      "note": "Repaired candidate holds the complete paragraph in exact English, preserving prepare-for-your-own-soil meaning, no-dig-first order, and digging deeper only if genuinely needed."
+    },
+    {
+      "paragraphIndex": 18,
+      "result": "accept-with-watchpoint",
+      "note": "Both once-existing conditions and their order are retained: keep paths once present; protect the growing area once present. 'Mohala wa thapo' is recognizable as a string/rope line, and the idea-to-decision relation is preserved."
+    },
+    {
+      "paragraphIndex": 19,
+      "result": "accept",
+      "note": "The easier-to-improve result, every-season timing, and causal explanation that people stopped stepping/walking on the bed are retained."
+    }
+  ],
+  "protectionAudit": {
+    "bothSidesReachability": "Exact English retained in paragraphs 1 and 2.",
+    "dimensionsAndNoFootTraffic": "Exact source range and never-touch/growing-area condition retained in paragraph 2; 1.2m by 3m practice bed retained in paragraph 15.",
+    "wetClayAndDeeperCultivation": "Exact English prohibition and severe-condition/local-advice-before-deeper-cultivation sequence retained in paragraph 7; paragraph 17 retains no-dig-first and deeper only when genuinely needed.",
+    "cropIdentityAndEstablishment": "Beans, carrots, maize, tomatoes and brassicas unchanged; direct sow and protected nursery start/transplanting held in English. Paragraph 12 group-membership framing needs hold.",
+    "soilAndBedConditions": "Wet-ground drainage-away and dry-ground rain-catching conditions held in English in paragraphs 8 and 9; no new bed prescription."
+  },
+  "provenanceNote": "The packet's independentBacktranslation fields are the drafter's assertions. This report records my direct comparison with the source and candidate; it does not treat those fields as independent evidence.",
+  "finalPacketRecheck": {
+    "result": "pass",
+    "exactBinding": "Rechecked against canonical lib/course-modules.ts and registry lib/course-translation-drafts-st-vegetables-staples.ts at revision 917643955add4c342391175347670fd9ccdf0f1f. All 20 source paragraphs and all 20 current Sesotho draft paragraphs still match exactly and in order.",
+    "repairsVerified": "Paragraph 12 is now a complete exact-English hold; paragraph 14 keeps `mark the bed out` exact while translating the timing; paragraph 17 is now a complete exact-English hold.",
+    "candidateChangedParagraphs": [
+      1,
+      2,
+      5,
+      6,
+      8,
+      9,
+      11,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19
+    ],
+    "provenance": "The packet now correctly labels the original independentBacktranslation fields as drafter backtranslations and identifies this file as the separate independent review."
+  }
+}

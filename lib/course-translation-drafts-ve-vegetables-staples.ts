@@ -74,12 +74,36 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
       tshivendaDraft: 'Tshibyariwa tshithihi ndi point nthihi ya failure.',
       reviewStatus: 'machine-draft',
     },
+    {
+      paragraphIndex: 3,
+      sourceEnglish: "Grow at least two. Not one.",
+      tshivendaDraft: "Alusani zwivhili kana zwo engaho. Hu si tshithihi.",
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 10,
+      sourceEnglish: "Notice that they fail in different conditions. That's the whole point.",
+      tshivendaDraft: "Ṱhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.",
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 14,
+      sourceEnglish: "Two or more staples give you more ways to keep eating.",
+      tshivendaDraft: "Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.",
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 15,
+      sourceEnglish: "That difference is the protection.",
+      tshivendaDraft: "Phambano yeneyo ndi yone tsireledzo.",
+      reviewStatus: 'machine-draft',
+    },
   ],
   exactEnglishHoldPaths: [
     'module title and description',
     'lesson title',
     'infographicAlt',
-    'body[3–4], body[6–10], body[14], and the remaining English sentence in body[15]',
+    'body[4] and body[6–9]',
     'keyPoints',
     'quiz questions, options, and rationales',
   ],
@@ -88,19 +112,6 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
 const pair = (sourceEnglish: string, tshivendaDraft: string): TshivendaSourcePair => ({ sourceEnglish, tshivendaDraft, reviewStatus: 'machine-draft' });
 const hold = (sourceEnglish: string): TshivendaSourcePair => ({ sourceEnglish, tshivendaDraft: sourceEnglish, reviewStatus: 'hold' });
 const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.moduleId)!;
-const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.lessonId)!;
-const sourceParagraphs = sourceLesson.body.split('\n\n');
-const draftParagraphs = sourceParagraphs.map((paragraph, index) =>
-  index === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.bodyConcept.paragraphIndex
-    ? TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.bodyConcept.tshivendaDraft
-    : index === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.paragraphIndex
-      ? TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.tshivendaDraft
-      : paragraph,
-);
-for (const concept of TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.additionalBodyConcepts) {
-  draftParagraphs[concept.paragraphIndex] = draftParagraphs[concept.paragraphIndex].replace(concept.sourceEnglish, concept.tshivendaDraft);
-}
-
 const vegetablesL1 = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
 
 const vegetablesL2 = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!;
@@ -116,10 +127,8 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT: TshivendaCourseModuleDraft =
     id: "vegetables-staples-l3",
     infographicAlt: hold("Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground."),
     title: hold("Staple Crops: Maize, Beans, and Root Vegetables"),
-    body: pair(
-      sourceLesson.body,
-      draftParagraphs.join('\n\n'),
-    ),
+    // Bind the entire reviewed body to its literal source so changed guidance fails closed.
+    body: pair("A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.", "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo."),
     keyPoints: [
       hold("Open-pollinated maize lets you save seed; hybrid seed won't breed true next season"),
       hold("Beans are the key protein crop — productive, storable, and nitrogen-fixing"),

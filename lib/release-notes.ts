@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '96641048', changes: [
+    'Sesotho bed preparation adds marked draft paragraphs beside exact English.',
+    'Tshivenda staple lessons add resilience drafts; precise crop advice stays English.',
+  ], tour: [
+    { title: 'Review regional vegetable bodies', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read Sesotho lesson 1 and Tshivenda lesson 3 beside their exact English source.' },
+  ] },
   { when: '2 October 2026', sha: 'a5f75077', changes: [
     'Tshivenda Vegetables lessons 1, 2 and 4 add marked quiz and key-point drafts.',
     'Precise planting, nitrogen and treatment wording stays English beside the drafts.',
