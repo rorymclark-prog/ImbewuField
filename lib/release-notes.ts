@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 October 2026', sha: '1b58ea7f', changes: [
+  { when: '2 October 2026', sha: 'd178ee8f', changes: [
     'Picking months follow the food chart, including crops already growing.',
     'New crop comparisons keep their own totals in the app and detailed PDF.',
   ], tour: [
