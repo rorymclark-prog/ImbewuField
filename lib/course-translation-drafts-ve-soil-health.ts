@@ -55,79 +55,79 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
-          "tshivendaDraft": "Check drainage, roots and management history before choosing a remedy",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Ṱolani drainage, midzi na management history ni sa athu khetha remedy.",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
-            "tshivendaDraft": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Jar ya mavu i kha ḓi vha na cloudy water nga nṱha ha lera la sand. Mulimi u fanela u phetha mini?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "The soil definitely needs less water",
-              "tshivendaDraft": "The soil definitely needs less water",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Mavu a ṱoḓa less water nga ngoho",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
-              "tshivendaDraft": "Fine particles may still be suspended; more observation is needed",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Fine particles dzi nga kha ḓi vha suspended; u sedza hafhu zwi a ṱoḓea",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "All the clay has already settled",
-              "tshivendaDraft": "All the clay has already settled",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Clay yoṱhe yo no dzula fhasi",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "The crop definitely needs gypsum",
-              "tshivendaDraft": "The crop definitely needs gypsum",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Crop i ṱoḓa gypsum nga ngoho",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
-            "tshivendaDraft": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Cloudy water i nga vha na fine particles dzi sa athu u dzula fhasi. U sedza ha u thoma luthihi a hu nga khwaṱhisedzi final proportions kana right treatment.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
-            "tshivendaDraft": "A farmer finds compacted soil and few worms. What is the useful next step?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Mulimi u wana mavu o compacted na worms dzi si gathi. Ndi vhukando vhufhio vhu tevhelaho vhune ha nga thusa?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Assume every soil organism has died",
-              "tshivendaDraft": "Assume every soil organism has died",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Humbulani uri soil organism iṅwe na iṅwe yo fa",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Add a treatment without checking the site",
-              "tshivendaDraft": "Add a treatment without checking the site",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Engedzani treatment ni sa athu ṱola site",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Check drainage, roots, moisture and management history",
-              "tshivendaDraft": "Check drainage, roots, moisture and management history",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Ṱolani drainage, midzi, moisture na management history",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Give up because the soil cannot improve",
-              "tshivendaDraft": "Give up because the soil cannot improve",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Litshani u lingedza ngauri mavu a nga si khwinifhadzee",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
-            "tshivendaDraft": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "U sedza zwithu zwo vhalaho zwi thusa u wana thaidzo. Worm activity i a shanduka u ya nga conditions, ngauralo worms dzi si gathi fhedzi a dzi khwaṱhisedzi uri thaidzo yo vhangwa nga mini.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]

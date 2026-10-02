@@ -58,27 +58,69 @@ test('Soil Health L1 keeps all twelve source paragraphs paired while filling the
   assert.match(candidateParagraphs[10], /few worms.*a swi tiyisisi.*chemicals.*Worm activity.*moisture.*season/);
   assert.match(candidateParagraphs[11], /patterns.*management history, drainage.*ku kula ka swimilani.*u nga si.*remedy/);
 
-  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
-  assert.deepEqual(draft.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
-  assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'hold'));
-  assert.equal(draft.quiz.length, sourceLesson.quiz.length);
-  for (const [index, question] of draft.quiz.entries()) {
-    const source = sourceLesson.quiz[index];
-    assert.equal(question.question.sourceEnglish, source.q);
-    assert.equal(question.question.xitsongaDraft, source.q);
-    assert.deepEqual(question.options.map(option => option.sourceEnglish), source.options);
-    assert.deepEqual(question.options.map(option => option.xitsongaDraft), source.options);
-    assert.equal(question.sourceCorrectIndex, source.correct);
-    assert.equal(question.rationale.sourceEnglish, source.rationale);
-    assert.equal(question.rationale.xitsongaDraft, source.rationale);
-    assert.ok(question.options.every(option => option.reviewStatus === 'hold'));
-  }
-
   const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
-  assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
-  assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
+});
+
+test('Soil Health L1 Xitsonga assessments preserve diagnostic limits and answer indexes', () => {
+  const source = sourceModule.lessons[0];
+  const draft = XITSONGA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === source.id);
+  assert.ok(draft);
+  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.infographicAlt?.reviewStatus, 'hold');
+  assert.equal(draft.body.sourceEnglish, source.body, 'assessment wiring leaves the existing body pairing intact');
+  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+  assert.deepEqual(draft.keyPoints.map(point => point.reviewStatus), Array(4).fill('machine-draft'));
+  assert.match(draft.keyPoints[0].xitsongaDraft, /swikombiso swo hlayanyana/,
+    'several clues remains a quantity, not just a difference between clues');
+  assert.match(draft.keyPoints[1].xitsongaDraft, /worm[s]? ntsena.*a swi diagnose cause/,
+    'soil colour and worm counts alone are not made diagnostic');
+  assert.match(draft.keyPoints[2].xitsongaDraft, /rough indication.*a hi complete soil test/,
+    'the jar remains approximate rather than a complete test');
+  assert.match(draft.keyPoints[3].xitsongaDraft, /drainage, timitsu na management history.*u nga si.*remedy/,
+    'all three checks remain before choosing a remedy');
+
+  assert.equal(draft.quiz.length, source.quiz.length);
+  for (const [index, item] of draft.quiz.entries()) {
+    const original = source.quiz[index]!;
+    assert.equal(item.question.sourceEnglish, original.q);
+    assert.equal(item.question.reviewStatus, 'machine-draft');
+    assert.deepEqual(item.options.map(option => option.sourceEnglish), original.options);
+    assert.ok(item.options.every(option => option.reviewStatus === 'machine-draft'));
+    assert.equal(item.sourceCorrectIndex, original.correct);
+    assert.equal(item.options[item.sourceCorrectIndex]?.sourceEnglish, original.options[original.correct]);
+    assert.equal(item.rationale.sourceEnglish, original.rationale);
+    assert.equal(item.rationale.reviewStatus, 'machine-draft');
+  }
+  assert.equal(draft.quiz[0].sourceCorrectIndex, 1);
+  assert.match(draft.quiz[0].question.xitsongaDraft, /cloudy water ehenhla ka sand layer/);
+  assert.match(draft.quiz[0].options[0].xitsongaDraft, /less water/, 'the comparative remains explicit');
+  assert.match(draft.quiz[0].options[1].xitsongaDraft, /Fine particles.*nga ha va suspended.*ku languta nakambe/);
+  assert.match(draft.quiz[0].rationale.xitsongaDraft, /nga va na fine particles leti nga se tshamaka ehansi.*Observation yin'we ya le masungulweni.*a yi koti ku tiyisisa final proportions kumbe right treatment/,
+    'possibility, an early observation and both limits remain in the rationale');
+  assert.equal(draft.quiz[1].sourceCorrectIndex, 2);
+  assert.match(draft.quiz[1].options[2].xitsongaDraft, /drainage, timitsu, moisture ni management history/);
+  assert.match(draft.quiz[1].rationale.xitsongaDraft, /Worm activity yi cinca hi conditions.*worms ti nga ri tingani ntsena a ti kombisi cause/,
+    'worm activity varies, and few worms alone do not establish cause');
+
+  const shown = resolveLearnerLessonPresentation(source, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.xitsongaDraft));
+  assert.deepEqual(shown.content.quiz, source.quiz.map((item, index) => ({
+    q: draft.quiz[index].question.xitsongaDraft,
+    options: draft.quiz[index].options.map(option => option.xitsongaDraft),
+    correct: item.correct,
+    rationale: draft.quiz[index].rationale.xitsongaDraft,
+  })));
+  const changedSource = {
+    ...source,
+    quiz: source.quiz.map((item, index) => index === 0
+      ? { ...item, rationale: item.rationale.replace('final proportions', 'soil condition') }
+      : item),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedSource, 'ts').status, 'english-fallback',
+    'a changed diagnostic caveat withdraws the stale paired assessment');
 });
 
 test('Soil Health L1 retains difficult jar and diagnostic terms in the checked mixed-language draft', () => {
