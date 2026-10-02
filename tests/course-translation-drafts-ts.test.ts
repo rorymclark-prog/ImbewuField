@@ -325,6 +325,35 @@ test('the Xitsonga principles body translates every paragraph while remaining bo
     'english-fallback', 'changed English guidance invalidates the whole body draft');
 });
 
+test('Reading Landscape L4 translates observation framing while retaining the compaction diagnostic limit', async () => {
+  const sourceLesson = COURSE_MODULES.find(module => module.id === 'reading-landscape')!.lessons
+    .find(lesson => lesson.id === 'reading-landscape-l4')!;
+  const lesson = readingDraft.lessons.find(item => item.id === sourceLesson.id)!;
+  assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  assert.equal(lesson.body.reviewStatus, 'machine-draft');
+  const sourceParagraphs = sourceLesson.body.split('\n\n');
+  const draftParagraphs = lesson.body.xitsongaDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+  assert.equal(draftParagraphs[0], "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, mitsheto. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.");
+  assert.ok(draftParagraphs[1].startsWith('Tsala laha frost yi tshamaka kona'));
+  assert.ok(draftParagraphs[1].includes('nkarhi wo leha ngopfu'));
+  assert.ok(draftParagraphs[1].includes("misava yi nun'hwaka yi tsakama hi tin'hweti leti omeke"));
+  assert.ok(draftParagraphs[1].includes('khakibos kumbe blackjack'));
+  assert.ok(draftParagraphs[1].includes('These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.'));
+  assert.ok(draftParagraphs[1].includes('Kambela misava u nga si teka xiboho'));
+  assert.equal(draftParagraphs[2], "Veka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+    'preserve the neighboring localized sketch-value paragraph exactly');
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const view = resolveLearnerLessonPresentation(sourceLesson, 'ts');
+  assert.equal(view.status, 'draft');
+  assert.equal(view.content.body, lesson.body.xitsongaDraft);
+  const drifted = { ...sourceLesson, body: sourceLesson.body.replace('Note where frost sits longest,', 'Note where frost sits briefly,') };
+  assert.notEqual(drifted.body, sourceLesson.body);
+  const fallback = resolveLearnerLessonPresentation(drifted, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.equal(fallback.content.body, drifted.body, 'withdraw the whole stale body when its source changes');
+});
+
 test('Reading Landscape L3 drafts ordinary body guidance while keeping precise cold and disease clauses exact', async () => {
   const sourceLesson = COURSE_MODULES.find(module => module.id === 'reading-landscape')!.lessons
     .find(lesson => lesson.id === 'reading-landscape-l3')!;
@@ -353,7 +382,8 @@ test('Reading Landscape L3 drafts ordinary body guidance while keeping precise c
   assert.ok(draftParagraphs[2].startsWith('Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.'));
   assert.ok(draftParagraphs[2].includes('low ground na slopes'));
   assert.ok(draftParagraphs[2].includes('minimum temperatures laha swi kotekaka'));
-  assert.ok(draftParagraphs[2].includes('Mark places where cold or damage lasts longest.'));
+  assert.ok(draftParagraphs[2].includes('Fungha tindhawu where cold or damage lasts longest.'),
+    'translate only the marking action and retain the exact longest-duration criterion');
   assert.ok(draftParagraphs[2].includes('cold pockets leti u ti vonaka'));
 
   assert.ok(draftParagraphs[3].startsWith('Eka matamatisi'));

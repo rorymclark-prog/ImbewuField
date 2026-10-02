@@ -1,0 +1,50 @@
+{
+  "packetId": "IMBEWU-READING-ORDINARY-CLAUSE-CANDIDATES-2026-10-03",
+  "sourceRevision": "e0a87b57731eb7bfbca9b08cfa01dc4fd46c680d",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPaths": {
+    "ve": "lib/course-translation-drafts-ve-reading-landscape.ts",
+    "ts": "lib/course-translation-drafts-ts.ts",
+    "st": "lib/course-translation-drafts-st-reading-landscape.ts"
+  },
+  "provenance": "Rechecked against the exact current mixed paragraphs at HEAD e0a87b57731eb7bfbca9b08cfa01dc4fd46c680d; applied only the two listed bounded draft-clause changes. The VE wording uses the independent repair “land yaṋu” to retain a farmer’s holding rather than a country. Canonical source unchanged.",
+  "entries": [
+    {
+      "lessonId": "reading-landscape-l1",
+      "paragraphIndex": 0,
+      "fieldPath": "body.paragraphs[0]",
+      "exactSourceParagraph": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+      "currentRegistryParagraph": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, walk your land. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+      "exactEnglishClause": "Musi zwo no tsireledzea nga murahu, walk your land.",
+      "minimalReplacement": "Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu.",
+      "candidateRegionalParagraph": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+      "backtranslation": "When it is safe afterward, walk your land.",
+      "uncertainty": "Check the respectful-plural imperative and natural phrasing locally; the safety-timing clause is retained word-for-word in Tshivenda. Technical observations about rills, spreading water, ponding, property limits and the safe excess-water route remain untouched.",
+      "evidence": "The same VE Reading L1 key point already uses ni tshimbile muvuni for walking the land after it is safe; the registry also uses Tshimbilani kha shango in L3.",
+      "status": "repaired candidate accepted with review flags; unreviewed machine draft",
+      "repairReason": "“shango ḽaṋu” may refer to a country; the checked repair uses “land yaṋu” to preserve the farmer’s holding while retaining the after-safety condition."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "fieldPath": "body.paragraphs[2]",
+      "exactSourceParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "currentRegistryParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Mark places where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "exactEnglishClause": "Mark places where cold or damage lasts longest.",
+      "minimalReplacement": "Fungha tindhawu where cold or damage lasts longest.",
+      "candidateRegionalParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "backtranslation": "Mark places where cold or damage lasts longest.",
+      "uncertainty": "Only the ordinary marking instruction is localized. The cold-or-damage criterion, including the longest-duration comparison, stays exact English because its comparative wording is safety-relevant. Check local agreement/naturalness; no fluent review is claimed.",
+      "evidence": "Fungha is used in the current Xitsonga Reading L4 body for “Mark north” and in its L4 key points for marking observed features.",
+      "status": "accepted with review flags; unreviewed machine draft"
+    }
+  ],
+  "auditNote": "The inspected ST and TS Reading Landscape bodies contain many technical or safety-sensitive English clauses. Those were retained. Only clauses with a bounded ordinary action that could be translated without changing the technical condition were selected; the three-to-six target is limited by those safety and uncertainty holds.",
+  "constraints": [
+    "Preserve all current localized text outside each explicitly listed clause.",
+    "Preserve canonical English source, paragraph order, timing and safety conditions.",
+    "Do not turn observation into design approval or add farming advice.",
+    "Candidates remain unreviewed machine drafts; local fluent review is still needed."
+  ],
+  "scope": "Two bounded ordinary action clauses only: one VE L1 safe-afterward land walk, one TS L3 place-marking action. All adjacent text, diagnostic/safety/technical clauses and canonical source remain unchanged."
+}\n
