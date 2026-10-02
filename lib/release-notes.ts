@@ -51,7 +51,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       where: 'Study → Seeds and Seed Sovereignty / Small Livestock Integration', href: '/student',
       detail: 'Compare drafts with English, answer a quiz, and play the silent slides.' },
   ] },
-  { when: '2 October 2026', sha: '4729738d', changes: [
+  { when: '2 October 2026', sha: 'bbdb1952', changes: [
     'Plans for fruit trees and animals work without a vegetable bed.',
     'Harvest totals add decimal measurements without rounding whole egg counts.',
   ], tour: [
