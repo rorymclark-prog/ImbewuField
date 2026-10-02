@@ -113,7 +113,7 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
     "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.",
     "E fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.",
     "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.",
-    "Lema bonyane tse pedi. Eseng se le seng.",
+    "Grow at least two. Not one.",
     "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
     "Staple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.",
     "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
@@ -134,11 +134,11 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
     'no paragraph can be dropped or shifted away from its agronomic source');
   assert.equal(staplesDraft[11], 'Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.',
     'the already localized resilience paragraph remains byte-for-byte unchanged');
-  for (const index of [4, 6, 7, 8, 9]) {
+  for (const index of [3, 4, 6, 7, 8, 9]) {
     assert.equal(staplesDraft[index], staplesSource[index],
-      `staple paragraph ${index + 1}: unresolved comparative or crop-specific conditions stay exact English`);
+      `staple paragraph ${index + 1}: unresolved agreement, comparative or crop-specific conditions stay exact English`);
   }
-  for (const index of [0, 1, 2, 3, 5, 10, 12, 13, 14, 15]) {
+  for (const index of [0, 1, 2, 5, 10, 12, 13, 14, 15]) {
     assert.notEqual(staplesDraft[index], staplesSource[index],
       `staple paragraph ${index + 1}: defensible ordinary framing is drafted rather than left wholly in English`);
   }

@@ -51,11 +51,11 @@
       "fieldPath": "body.paragraphs[3]",
       "exactSourceEnglish": "Grow at least two. Not one.",
       "currentRegistryDraft": "Grow at least two. Not one.",
-      "candidateSesothoDraft": "Lema bonyane tse pedi. Eseng se le seng.",
-      "draftStatus": "machine-draft-candidate",
+      "candidateSesothoDraft": "Grow at least two. Not one.",
+      "draftStatus": "exact-English-hold",
       "drafterBacktranslation": "Grow at least two. Not one.",
-      "conditions": "Preserves the exact minimum and explicit contrast.",
-      "uncertainty": "Low: exact quantity preserved."
+      "conditions": "Exact minimum two and not-one contrast held in English after Agy found discordant noun-class reference; independent Codex check could not confirm a proposed repair.",
+      "uncertainty": "Quantity clear but implied staple agreement unresolved; do not reuse prior se le seng candidate."
     },
     {
       "paragraphIndex": 4,
@@ -203,7 +203,20 @@
     "baseCommit": "a1026c1d1b02eb1cff3b7df463b5519ef4b66955",
     "registryField": "lib/course-translation-drafts-st-vegetables-staples.ts: vegetables-staples-l3.body.sesothoDraft",
     "testFile": "tests/course-translation-drafts-st-vegetables-staples.test.ts",
-    "status": "Implemented from the checked candidates; focused and required verification pending root review.",
+    "status": "Nine new ordinary paragraphs implemented; paragraph3 restored to exact English following additional Agy/Codex checks. Verification pending.",
     "scope": "L3 learner body only. Canonical English, title, infographic alt, key points, quiz questions, options, rationales and answer indices are unchanged."
+  },
+  "agyObservation": {
+    "conversationId": "c714a1c1-0d47-482c-b0fa-99d4dcbd8107",
+    "modelObserved": "Gemini 3.7 Flash High",
+    "method": "Desktop text-only AX-observed response, no repository edits",
+    "checkedParagraphs": [
+      0,
+      2,
+      3,
+      12
+    ],
+    "findings": "Core quantities/conditions intact; p0 deserves/earns idiom noted and p2 vulnerability/unprotected wording noted. P3 flagged class-10 tse pedi versus class-7 se le seng. P12 precise.",
+    "rootDecision": "Preserve p0/p2/p12 accepted core meanings, hold p3 exact English after independent repair check could not establish implied noun class. Model check is not fluent approval."
   }
 }
