@@ -54,7 +54,6 @@ test('Water Harvesting Tshivenda draft keeps held safety guidance exact and answ
     'water-harvesting': 'U Kuvhanganya Maḓi',
     'water-harvesting-l1': 'Mikubo (Swales) na Ṱhanga dza Mavu (Berms): U Fhungudza Luvhilo lwa Maḓi kha U Sendama ha Mavu',
     'water-harvesting-l2': 'Madamu na Zwidziva zwa Bulasini: U Vhulunga Maḓi a Tshifhinga tsha Gomelelo',
-    'water-harvesting-l3': 'Dzithanngi dza Maḓi a Mvula na U Kuvhanganya Maḓi kha Mutombo: U Kuvhanganya na U Tsireledza Maḓi',
   };
   const checkPair = (pair: { sourceEnglish: string; tshivendaDraft: string; reviewStatus: string }, english: string, path: string) => {
     assert.equal(pair.sourceEnglish, english, `${path}: retain exact English beside every draft`);
@@ -208,6 +207,33 @@ test('Water Harvesting Tshivenda draft keeps held safety guidance exact and answ
       const drifted = resolveLearnerLessonPresentation(changedWallRule, 've');
       assert.equal(drifted.status, 'english-fallback', `${path}.body: changed wall-safety rule withdraws the draft`);
       assert.equal(drifted.content.body, changedWallRule.body);
+    } else if (lesson.id === 'water-harvesting-l3') {
+      const bodyParagraphs = lesson.body.tshivendaDraft.split('\n\n');
+      assert.equal(bodyParagraphs.length, 13, `${path}.body: preserve all source paragraphs`);
+      assert.ok(bodyParagraphs[0].includes('i nga kuvhanganya') &&
+        bodyParagraphs[0].includes('vhuhulwane ha ṱhanga, mvula na madi a xelaho'),
+        `${path}.body: retain collection possibility and all yield factors`);
+      assert.ok(bodyParagraphs[2].includes('misses the gutter, is diverted or overflows a full tank'),
+        `${path}.body: account for each collection-loss path`);
+      assert.ok(bodyParagraphs[3].includes('Tshivhalo tsha ṅwaha woṱhe') && bodyParagraphs[3].includes('during a dry spell'),
+        `${path}.body: annual rainfall cannot imply dry-spell availability`);
+      assert.ok(bodyParagraphs[4].includes('maṅwe maḓi a first runoff'),
+        `${path}.body: preserve that only some first runoff is diverted`);
+      // These source-checked mixed-language drafts carry the safety rules, so assert those rules here rather than requiring an English hold.
+      assert.ok(bodyParagraphs[6].includes('Diverter a i iti uri maḓi o salaho a vhe o tsireledzea u nwiwa'),
+        `${path}.body: diverting runoff does not make remaining water safe to drink`);
+      assert.ok(bodyParagraphs[10].includes('screen openings against insects') &&
+        bodyParagraphs[10].includes('Keep rainwater separate from drinking-water pipes'),
+        `${path}.body: preserve insect screening and separate drinking-water plumbing`);
+      assert.ok(bodyParagraphs[11].startsWith('Water that looks clear may still contain germs or chemicals.'),
+        `${path}.body: clear-looking water is not proof of safety`);
+      assert.ok(bodyParagraphs[12].includes('Basic filter fhedzi a si drinking-water guarantee') &&
+        bodyParagraphs[12].includes('food crops') && bodyParagraphs[12].includes('safety assessment'),
+        `${path}.body: preserve filter and food-crop safety limits`);
+      const changedSource = { ...original, body: original.body.replace('some of the first runoff', 'all of the first runoff') };
+      const fallback = resolveLearnerLessonPresentation(changedSource, 've');
+      assert.equal(fallback.status, 'english-fallback');
+      assert.equal(fallback.content.body, changedSource.body);
     } else {
       assert.equal(lesson.body.reviewStatus, Object.keys(bodySentences).length ? 'machine-draft' : 'hold',
         `${path}: only screened concept sentences are translated`);
@@ -219,7 +245,8 @@ test('Water Harvesting Tshivenda draft keeps held safety guidance exact and answ
     assert.equal(lesson.keyPoints.length, original.keyPoints.length);
     for (const [j, point] of lesson.keyPoints.entries()) {
       checkPair(point, original.keyPoints[j], `${path}.keyPoints[${j}]`);
-      const shouldDraftPoint = lesson.id === 'water-harvesting-l2' && (j === 0 || j === 2);
+      const shouldDraftPoint = (lesson.id === 'water-harvesting-l2' || lesson.id === 'water-harvesting-l3') &&
+        (j === 0 || j === 2);
       assert.equal(point.reviewStatus, shouldDraftPoint ? 'machine-draft' : 'hold',
         `${path}.keyPoints[${j}]: only reviewed prose becomes a machine draft`);
       if (lesson.id === 'water-harvesting-l2' && (j === 1 || j === 3)) {
@@ -236,10 +263,10 @@ test('Water Harvesting Tshivenda draft keeps held safety guidance exact and answ
       assert.equal(question.sourceCorrectIndex, originalQuestion.correct, `${path}.quiz[${j}]: answer index stays unchanged`);
       assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, originalQuestion.options[originalQuestion.correct], `${path}.quiz[${j}]: correct answer remains paired`);
       checkPair(question.rationale, originalQuestion.rationale, `${path}.quiz[${j}].rationale`);
-      const l2Quiz = lesson.id === 'water-harvesting-l2';
-      assert.equal(question.question.reviewStatus, l2Quiz ? 'machine-draft' : 'hold',
+      const assessedQuiz = lesson.id === 'water-harvesting-l2' || lesson.id === 'water-harvesting-l3';
+      assert.equal(question.question.reviewStatus, assessedQuiz ? 'machine-draft' : 'hold',
         `${path}.quiz[${j}]: source-paired questions are visibly marked when translated`);
-      if (l2Quiz && j === 1) {
+      if (lesson.id === 'water-harvesting-l2' && j === 1) {
         for (const optionIndex of [0,1]) {
           assert.equal(question.options[optionIndex].reviewStatus, 'hold',
             `${path}.quiz[${j}].options[${optionIndex}]: English-only option remains held`);
@@ -262,6 +289,15 @@ test('Water Harvesting Tshivenda draft keeps held safety guidance exact and answ
         'the question asks for a likely result rather than making failure certain');
       assert.ok(lesson.quiz[0].options[1].tshivendaDraft.includes('khombo ya catastrophic breach'),
         'the correct option retains risk rather than certainty of a catastrophic breach');
+    }
+    if (lesson.id === 'water-harvesting-l3') {
+      assert.deepEqual(lesson.quiz.map(item => item.sourceCorrectIndex), [1, 1]);
+      assert.ok(lesson.quiz[1].options[1].tshivendaDraft.includes('dzine dza nga contaminate edible crops'),
+        'retain can-contaminate modality and edible-crop exposure');
+      assert.ok(lesson.quiz[1].rationale.tshivendaDraft.includes('zwi nga fhungudza contamination') &&
+        lesson.quiz[1].rationale.tshivendaDraft.includes('a zwi khwaṱhisedzi') &&
+        lesson.quiz[1].rationale.tshivendaDraft.includes('intended use'),
+      'keep first-flush risk-reduction separate from water-safety assurance');
     }
   }
 
@@ -292,13 +328,13 @@ test('Tshivenda Water Harvesting shows source-paired lesson drafts and retains h
       ? lesson.title : draft.title.tshivendaDraft, `${lesson.id}: only explicitly drafted titles change`);
     assert.equal(presentation.content.body, draft.body.tshivendaDraft,
       `${lesson.id}: show only exact-source-paired body wording, with technical instructions retained`);
-    const expectedKeyPoints = index === 1
+    const expectedKeyPoints = index === 1 || index === 2
       ? lesson.keyPoints.map((point, pointIndex) =>
           [0,2].includes(pointIndex) ? draft.keyPoints[pointIndex].tshivendaDraft : point)
       : lesson.keyPoints;
     assert.deepEqual(presentation.content.keyPoints, expectedKeyPoints,
       `${lesson.id}: show only source-paired key-point drafts and preserve held text`);
-    const expectedQuiz = index === 1
+    const expectedQuiz = index === 1 || index === 2
       ? draft.quiz.map(item => ({
           q: item.question.tshivendaDraft,
           options: item.options.map(option => option.tshivendaDraft),
