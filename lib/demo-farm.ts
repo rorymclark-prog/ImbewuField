@@ -195,9 +195,9 @@ export function buildDemoCropPlan(): CropPlanState {
    Dates stay inside the trailing twelve months and never advance beyond today. */
 
 export interface DemoFinance {
-  sales: SalesLog[];
+  sales: (SalesLog & { kg: number })[];
   expenses: ExpenseLog[];
-  production: ProductionLog[];
+  production: (ProductionLog & { kg: number })[];
   invoices: SavedInvoice[];
   customers: Customer[];
   products: Product[];
@@ -421,7 +421,7 @@ export function buildDemoFinance(): DemoFinance {
   // costs and the actual accounting arithmetic intact. Real farm records never use this seed.
   const harvestScale = 4;
 
-  const sales: SalesLog[] = DEMO_SALES.map((row, i) => {
+  const sales: (SalesLog & { kg: number })[] = DEMO_SALES.map((row, i) => {
     const iso = on(row.month, row.day);
     return {
       id: `demo-sale-${i + 1}`, profile_id: 'demo', garden_id: null,
@@ -435,7 +435,7 @@ export function buildDemoFinance(): DemoFinance {
     };
   });
 
-  const production: ProductionLog[] = DEMO_HARVESTS.map((row, i) => {
+  const production: (ProductionLog & { kg: number })[] = DEMO_HARVESTS.map((row, i) => {
     const iso = on(row.month, row.day);
     return {
       id: `demo-production-${i + 1}`, profile_id: 'demo', garden_id: null,

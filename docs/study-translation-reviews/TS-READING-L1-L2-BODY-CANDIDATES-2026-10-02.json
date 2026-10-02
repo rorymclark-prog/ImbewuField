@@ -1,0 +1,228 @@
+{
+  "packetId": "imbewu-ts-reading-next-body-candidates-20261002",
+  "createdDate": "2026-10-02",
+  "repository": "ImbewuField",
+  "sourceRevision": "ea97e803440c3dd4672d4084d7b2f33dfc5b75bf",
+  "languageCode": "ts",
+  "languageName": "Xitsonga",
+  "registryExport": "XITSONGA_READING_LANDSCAPE_DRAFT",
+  "readOnly": true,
+  "repositoryEditsMade": false,
+  "summary": "Expanded conservative body candidates: preserve all existing localized paragraphs byte-for-byte; translate defensible ordinary instructions in L1 paragraphs 2-3 and L2 paragraph 3 while retaining technical terms and all safety/site-dependent clauses in exact English.",
+  "conditions": [
+    "Canonical English and paragraph order are unchanged.",
+    "Existing localized paragraphs are preserved byte-for-byte.",
+    "A-frame same-height marking and contour tracing terms, no-design/no-approval, pre-digging assessment, site factors, and trained-adviser conditions remain explicit and exact.",
+    "Erosion, soil infiltration, water works, safe overflow, named plants, and known frost-pocket wording remain exact where technical or site-dependent.",
+    "No geometry, directions, numbers, species names, or new site-specific advice have been added.",
+    "No claim of fluent review or Shangani comprehension is made; all proposed changes remain machine drafts pending competent local review."
+  ],
+  "lessons": [
+    {
+      "lessonId": "reading-landscape-l1",
+      "title": "Understanding Water Flow: Where Rain Goes on Your Land",
+      "canonicalSourcePath": "lib/course-modules.ts",
+      "registryPath": "lib/course-translation-drafts-ts.ts",
+      "sourceBody": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentRegistryBody": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "paragraphs": [
+        {
+          "paragraphIndex": 0,
+          "sourceEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+          "currentRegistryText": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+          "currentParagraphStatus": "machine-draft",
+          "proposedDraft": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": null,
+          "conditions": [
+            "Existing localized text is preserved byte-for-byte; do not revise it in this pass."
+          ]
+        },
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+          "currentRegistryText": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+          "currentParagraphStatus": "hold",
+          "proposedDraft": "An A-frame level yi nga ku pfuna ku mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Vutisa a trained local adviser.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+          "conditions": [
+            "Keep the same-height marking and contour-tracing technical terms exact in English.",
+            "Keep the no-design/no-approval clause, pre-digging site assessment, all listed site factors, and the trained-local-adviser condition exact; only render the ordinary connector and ask verb in Xitsonga.",
+            "Unreviewed Xitsonga machine draft; fluent local review is required."
+          ]
+        },
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+          "currentRegistryText": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+          "currentParagraphStatus": "hold",
+          "proposedDraft": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+          "conditions": [
+            "Translate only ordinary framing and observation instructions; retain placement rule, slope, erosion, soil infiltration, water works, and excess-water safety wording exactly where technical or site-dependent.",
+            "Do not add a siting recommendation or imply that any placement is safe.",
+            "Unreviewed Xitsonga machine draft; fluent local review is required."
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "title": "Sun Angles, Shade, and Aspect: Getting the Most from Sunlight",
+      "canonicalSourcePath": "lib/course-modules.ts",
+      "registryPath": "lib/course-translation-drafts-ts.ts",
+      "sourceBody": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "currentRegistryBody": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "paragraphs": [
+        {
+          "paragraphIndex": 0,
+          "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.",
+          "currentRegistryText": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.",
+          "currentParagraphStatus": "machine-draft",
+          "proposedDraft": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": null,
+          "conditions": [
+            "Existing localized text is preserved byte-for-byte; do not revise it in this pass."
+          ]
+        },
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "Winter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.",
+          "currentRegistryText": "Dyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.",
+          "currentParagraphStatus": "machine-draft",
+          "proposedDraft": "Dyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": null,
+          "conditions": [
+            "Existing localized text is preserved byte-for-byte; do not revise it in this pass."
+          ]
+        },
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+          "currentRegistryText": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+          "currentParagraphStatus": "hold",
+          "proposedDraft": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Xiya local frost u nga se byala.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+          "conditions": [
+            "Preserve Pawpaw and young citrus, frost sensitivity, and known low frost pockets exactly. Translate only the observation connector and before-planting instruction; keep local frost as a technical phrase.",
+            "Do not suggest a guaranteed frost-free location.",
+            "Unreviewed Xitsonga machine draft; fluent local review is required."
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "title": "Wind, Frost, and Topography: Reading the Invisible Forces",
+      "canonicalSourcePath": "lib/course-modules.ts",
+      "registryPath": "lib/course-translation-drafts-ts.ts",
+      "sourceBody": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "currentRegistryBody": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na tinhlonge na minxaxamelo ya ndhawu ya wena. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "paragraphs": [
+        {
+          "paragraphIndex": 0,
+          "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.",
+          "currentRegistryText": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na tinhlonge na minxaxamelo ya ndhawu ya wena. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.",
+          "currentParagraphStatus": "machine-draft",
+          "proposedDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na tinhlonge na minxaxamelo ya ndhawu ya wena. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": null,
+          "conditions": [
+            "Existing localized text is preserved byte-for-byte; do not revise it in this pass."
+          ]
+        },
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+          "currentRegistryText": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+          "currentParagraphStatus": "hold",
+          "proposedDraft": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+          "proposedStatus": "hold",
+          "backtranslation": null,
+          "conditions": [
+            "Exact-English hold; preserve source wording and punctuation.",
+            "Keep weather observation, minimum-temperature, frost, and late-blight guidance exact until fluent review."
+          ]
+        },
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+          "currentRegistryText": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+          "currentParagraphStatus": "hold",
+          "proposedDraft": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+          "proposedStatus": "hold",
+          "backtranslation": null,
+          "conditions": [
+            "Exact-English hold; preserve source wording and punctuation.",
+            "Keep weather observation, minimum-temperature, frost, and late-blight guidance exact until fluent review."
+          ]
+        },
+        {
+          "paragraphIndex": 3,
+          "sourceEnglish": "For tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+          "currentRegistryText": "For tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+          "currentParagraphStatus": "hold",
+          "proposedDraft": "For tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+          "proposedStatus": "hold",
+          "backtranslation": null,
+          "conditions": [
+            "Exact-English hold; preserve source wording and punctuation.",
+            "Keep weather observation, minimum-temperature, frost, and late-blight guidance exact until fluent review."
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "title": "Making a Simple Site Map: Your Design Starts on Paper",
+      "canonicalSourcePath": "lib/course-modules.ts",
+      "registryPath": "lib/course-translation-drafts-ts.ts",
+      "sourceBody": "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+      "currentRegistryBody": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, mitsheto. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nVeka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+      "paragraphs": [
+        {
+          "paragraphIndex": 0,
+          "sourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.",
+          "currentRegistryText": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, mitsheto. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.",
+          "currentParagraphStatus": "machine-draft",
+          "proposedDraft": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, mitsheto. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": null,
+          "conditions": [
+            "Existing localized text is preserved byte-for-byte; do not revise it in this pass."
+          ]
+        },
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
+          "currentRegistryText": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
+          "currentParagraphStatus": "hold",
+          "proposedDraft": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
+          "proposedStatus": "hold",
+          "backtranslation": null,
+          "conditions": [
+            "Exact-English hold; preserve source wording and punctuation.",
+            "Keep soil-compaction claims and named plant terms exact; do not infer diagnosis from species presence."
+          ]
+        },
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Overlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+          "currentRegistryText": "Veka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+          "currentParagraphStatus": "machine-draft",
+          "proposedDraft": "Veka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+          "proposedStatus": "machine-draft",
+          "backtranslation": null,
+          "conditions": [
+            "Existing localized text is preserved byte-for-byte; do not revise it in this pass."
+          ]
+        }
+      ]
+    }
+  ]
+}

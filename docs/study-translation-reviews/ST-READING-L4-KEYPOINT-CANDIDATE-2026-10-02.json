@@ -1,0 +1,47 @@
+{
+  "task": "Read-only source-paired Sesotho candidate for Reading Landscape L4 key point",
+  "locale": "st",
+  "sourceRevision": {
+    "ref": "origin/main",
+    "commit": "ea97e803440c3dd4672d4084d7b2f33dfc5b75bf"
+  },
+  "source": {
+    "path": "lib/course-modules.ts",
+    "lessonId": "reading-landscape-l4",
+    "field": "keyPoints[2]",
+    "text": "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction"
+  },
+  "currentRegistry": {
+    "path": "lib/course-translation-drafts-st-reading-landscape.ts",
+    "field": "reading-landscape-l4.keyPoints[2]",
+    "sesothoDraft": "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
+    "reviewStatus": "hold"
+  },
+  "candidate": {
+    "sesothoDraft": "Tshwaya thick khakibos or blackjack growth, ebe o hlahloba mobu ka hloko; it does not prove compaction.",
+    "reviewStatus": "machine-draft",
+    "sourceEnglishUnchanged": true
+  },
+  "backTranslation": "Mark where khakibos or blackjack grow thick, then check the soil closely; their growing there does not prove compaction.",
+  "preservedMeaning": [
+    "Retains both source plant names exactly: khakibos and blackjack.",
+    "Marks thick growth as a reason for a closer soil check.",
+    "States that the plants' presence does not prove compaction; does not diagnose the soil."
+  ],
+  "conditionsForBackcheck": [
+    "Confirm that 'di melang haholo' conveys thick growth in context.",
+    "Confirm that 'hlahloba mobu ka hloko' conveys taking a closer soil check rather than a prescribed test.",
+    "Retain 'compaction' in English unless a reviewer confirms a precise Sesotho equivalent."
+  ],
+  "rootRepair": "Retain exact thick-growth and non-proof English clauses after independent check found abundant/dense ambiguity; ordinary mark/closer-check Sesotho remains.",
+  "publishedFor": "facilitator review",
+  "status": "unreviewed source-paired regional draft; not fluent-approved",
+  "implementationScope": "Only reading-landscape-l4 keyPoints[2] changed; canonical English source and all other fields remain as found.",
+  "appliedRegistryValue": {
+    "sourceEnglish": "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
+    "sesothoDraft": "Tshwaya thick khakibos or blackjack growth, ebe o hlahloba mobu ka hloko; it does not prove compaction.",
+    "reviewStatus": "machine-draft",
+    "field": "reading-landscape-l4.keyPoints[2]"
+  },
+  "sourceExactnessCheck": "Canonical keyPoints[2] has no final period; source and pre-edit held registry fields in this packet match it byte-for-byte. Candidate keeps its own final period."
+}

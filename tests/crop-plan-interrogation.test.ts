@@ -353,10 +353,19 @@ test('the material bill reconciles to spacing ranges without inventing packet se
       continue;
     }
     if (crop.seedRateKgPerHaRange !== undefined) {
-      // This BOQ is a piece/packet model. A field cover's sourced kg/ha rate
-      // belongs in its sowing task; the legacy plant-grid placeholder must not
-      // be converted into a fake shopping count merely to force a bill row.
-      if (row) wrong.push(`${crop.key}: a kg/ha field rate became a final-position purchase line`);
+      // The old assertion required no row, which hid real seed purchases.
+      // Published field kg/ha can be scaled by recorded field area, while a
+      // nursery must not borrow field area and broadcast seed has no grid.
+      if (crop.transplant) {
+        if (row) wrong.push(`${crop.key}: a field rate became a tray-seed order`);
+      } else {
+        const expectedKg = crop.seedRateKgPerHaRange.map((rate) => rate * bed.areaM2 / 10_000);
+        if (!row || row.quantityStatus !== 'sourced-weight-range' || row.unit !== 'kg seed'
+          || row.count !== null || row.finalPlantPositions !== 0
+          || row.countRange?.[0] !== expectedKg[0] || row.countRange?.[1] !== expectedKg[1]) {
+          wrong.push(`${crop.key}: source-derived weight missing, changed, or disguised as plant positions`);
+        }
+      }
       continue;
     }
     if (!row) { wrong.push(`${crop.key}: no bill line at all`); continue; }
@@ -450,6 +459,14 @@ test('every material line names a real crop and never disguises final positions 
   for (const run of sweep([8])) {
     for (const row of seedBoqForPlan(run.plantings, run.beds)) {
       if (!cropByKey(row.cropKey)) bad.push(`${run.label} — unknown crop ${row.cropKey}`);
+      if (row.quantityStatus === 'sourced-weight-range') {
+        if (row.unit !== 'kg seed' || row.count !== null || row.finalPlantPositions !== 0
+          || row.finalPlantPositionsRange.some((value) => value !== 0)
+          || !row.countRange || row.countRange[0] <= 0 || row.countRange[1] < row.countRange[0]) {
+          bad.push(`${run.label} — ${row.cropKey} unusable source-derived seed weight`);
+        }
+        continue;
+      }
       if (!Number.isFinite(row.finalPlantPositionsRange[0])
         || !Number.isFinite(row.finalPlantPositionsRange[1])
         || row.finalPlantPositionsRange[0] < 1

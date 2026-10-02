@@ -121,12 +121,13 @@ test('Sesotho Water Harvesting uses a source-paired learner draft and keeps unre
   }
   assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} Changed.` }, 'st').status,
     'english-fallback', 'changed module description withdraws the card draft');
-  // Xitsonga Water lessons enter learner copy only after their source-paired bodies are checked.
+  // Xitsonga Water lessons enter learner copy through their source-paired draft records.
   assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'draft');
   assert.equal(resolveLearnerLessonPresentation(module.lessons[0], 'ts').status, 'draft');
   for (const lesson of module.lessons.slice(1)) {
     assert.equal(resolveLearnerLessonPresentation(lesson, 'ts').status,
-      lesson.id === 'water-harvesting-l2' || lesson.id === 'water-harvesting-l3' ? 'draft' : 'english-fallback');
+      lesson.id === 'water-harvesting-l2' || lesson.id === 'water-harvesting-l3' || lesson.id === 'water-harvesting-l4'
+        ? 'draft' : 'english-fallback');
   }
 });
 

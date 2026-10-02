@@ -14,6 +14,17 @@ service cloud.firestore {
     function isMentor()    { return myRole() == 'mentor'; }
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
     function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
+    // A crate or egg count never proves kilograms. Legacy weight-only rows remain
+    // editable, while explicit count rows must keep kg unknown and their real unit.
+    function validProduceQuantity(d) {
+      let unit = d.get('unit', 'kg');
+      let quantity = d.get('quantity', d.get('kg', null));
+      return unit in ['kg', 'eggs', 'jars', 'bags', 'crates', 'bunches', 'trays', 'each']
+        && quantity is number && quantity > 0 && quantity - quantity == 0
+        && (unit != 'eggs' && unit != 'each' || quantity % 1 == 0)
+        && (unit == 'kg' ? d.kg == quantity : d.kg == null)
+        && (d.get('unit', null) != null || d.get('quantity', null) == null);
+    }
     function sameOrg(d)    { return isStaff() && myOrg() != null && d.org_id == myOrg() && (myRole() != 'funder' || funderEnabled(d.org_id)); }
     // Stricter than sameOrg(): also admits mentors, and refuses to match two org-less
     // accounts against each other (null == null would otherwise be true).
@@ -203,7 +214,7 @@ service cloud.firestore {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'production') || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
-        && request.resource.data.kg is number && request.resource.data.kg > 0
+        && validProduceQuantity(request.resource.data)
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
       // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
       // as it was BEFORE the write, so nothing stopped a farmer re-pointing their own row at
@@ -216,7 +227,7 @@ service cloud.firestore {
       allow update: if owns(resource.data)
         && request.resource.data.profile_id == resource.data.profile_id
         && request.resource.data.org_id == resource.data.org_id
-        && request.resource.data.kg is number && request.resource.data.kg > 0
+        && validProduceQuantity(request.resource.data)
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
       allow delete: if owns(resource.data);
     }
@@ -225,7 +236,7 @@ service cloud.firestore {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'sales') || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
-        && request.resource.data.kg is number && request.resource.data.kg > 0
+        && validProduceQuantity(request.resource.data)
         && request.resource.data.amount is number && request.resource.data.amount >= 0
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
       // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
@@ -239,7 +250,7 @@ service cloud.firestore {
       allow update: if owns(resource.data)
         && request.resource.data.profile_id == resource.data.profile_id
         && request.resource.data.org_id == resource.data.org_id
-        && request.resource.data.kg is number && request.resource.data.kg > 0
+        && validProduceQuantity(request.resource.data)
         && request.resource.data.amount is number && request.resource.data.amount >= 0
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
       allow delete: if owns(resource.data);

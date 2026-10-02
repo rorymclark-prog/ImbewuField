@@ -72,8 +72,8 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [production, setProduction] = useState<{ crop: string; kg: number }[]>([]);
-  const [salesRows, setSalesRows] = useState<{ crop: string; kg: number; amount: number }[]>([]);
+  const [production, setProduction] = useState<{ crop: string; kg: number | null; quantity?: number; unit?: string }[]>([]);
+  const [salesRows, setSalesRows] = useState<{ crop: string; kg: number | null; quantity?: number; unit?: string; amount: number }[]>([]);
   const [consent, setConsent] = useState<FarmerConsent | null>(null);
   const [pendingImage, setPendingImage] = useState<{ data: string; mediaType: string; preview: string } | null>(null);
   const [hasSample, setHasSample] = useState(false);
@@ -100,11 +100,11 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
   useEffect(() => {
     let alive = true;
     (async () => {
-      try { const rows = await myProduction(); if (alive) setProduction(rows.map((r) => ({ crop: r.crop, kg: r.kg }))); }
+      try { const rows = await myProduction(); if (alive) setProduction(rows.map((r) => ({ crop: r.crop, kg: r.kg, quantity: r.quantity, unit: r.unit }))); }
       catch { /* not signed in / offline */ }
     })();
     (async () => {
-      try { const rows = await mySales(); if (alive) setSalesRows(rows.map((r) => ({ crop: r.crop, kg: r.kg, amount: r.amount }))); }
+      try { const rows = await mySales(); if (alive) setSalesRows(rows.map((r) => ({ crop: r.crop, kg: r.kg, quantity: r.quantity, unit: r.unit, amount: r.amount }))); }
       catch { /* not signed in / offline */ }
     })();
     // The farmer's own sharing settings, read through the SAME query ConsentPanel uses, so the

@@ -10,6 +10,9 @@ import { FRUIT_ART_SPECIES, speciesFruitArtworkUrl } from '@/lib/species-art';
 const MONTHS = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
 const mango = PERENNIAL_HARVEST['mangifera-indica'];
 const moringa = PERENNIAL_HARVEST['moringa-oleifera'];
+// Reference seasons alone cannot place crops in this farm's calendar. These are explicit
+// farmer-confirmed test observations, keeping the existing status and month-lane coverage.
+const localTrees = { 'mangifera-indica': { months: [12, 1, 2], bearing: true }, 'moringa-oleifera': { months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], bearing: true } };
 
 test('every species with a harvest record has a fruit icon, and it is fruit art, not the tree', () => {
   assert.deepEqual([...FRUIT_ART_SPECIES].sort(), Object.keys(PERENNIAL_HARVEST).sort());
@@ -22,9 +25,9 @@ test('every species with a harvest record has a fruit icon, and it is fruit art,
   assert.equal(speciesFruitArtworkUrl(null), null);
 });
 
-test('a tree shows only in its sourced months, with what it gives and how many are proposed', () => {
-  const season = new Set(sourcedSeasonMonths(mango));
-  const out = calendarProduceByMonth([{ harvest: mango, existing: 2, proposed: 1 }], [], {}, MONTHS);
+test('a tree shows only in locally confirmed months, with what it gives and how many are proposed', () => {
+  const season = new Set(localTrees['mangifera-indica'].months);
+  const out = calendarProduceByMonth([{ harvest: mango, existing: 2, proposed: 1 }], [], {}, MONTHS, localTrees);
   MONTHS.forEach((m, i) => {
     assert.equal(out[i].trees.length, season.has(m) ? 1 : 0, `month ${m}`);
   });
@@ -34,7 +37,7 @@ test('a tree shows only in its sourced months, with what it gives and how many a
 });
 
 test('an all-proposed planting is said not to be cropping yet, never passed off as picking', () => {
-  const out = calendarProduceByMonth([{ harvest: moringa, existing: 0, proposed: 4 }], [], {}, MONTHS);
+  const out = calendarProduceByMonth([{ harvest: moringa, existing: 0, proposed: 4 }], [], {}, MONTHS, localTrees);
   const line = out.find((m) => m.trees.length)!.trees[0];
   assert.equal(line.standing, 0);
   assert.equal(line.product, 'leaves and pods');
@@ -44,7 +47,7 @@ test('an all-proposed planting is said not to be cropping yet, never passed off 
 test('the month list keeps the product short: a parenthetical note stays on the tree card', () => {
   const marula = PERENNIAL_HARVEST['sclerocarya-birrea-subsp-caffra'];
   assert.match(marula.product, /\(/, 'the record still carries its note');
-  const out = calendarProduceByMonth([{ harvest: marula, existing: 1, proposed: 0 }], [], {}, MONTHS);
+  const out = calendarProduceByMonth([{ harvest: marula, existing: 1, proposed: 0 }], [], {}, MONTHS, { [marula.speciesId]: { months: [2], bearing: true } });
   const line = out.find((m) => m.trees.length)?.trees[0];
   if (line) assert.equal(line.product, 'fruit');
 });
@@ -56,13 +59,14 @@ test('a plant with no sourced month never appears', () => {
   assert.ok(out.every((m) => m.trees.length === 0));
 });
 
-test('animals give their product in its sourced months, only once the farmer says what the coop is for', () => {
+test('animal products use local confirmation rather than assuming commercial source conditions from a coop', () => {
   const layer = ANIMAL_ENTERPRISES['chicken-layer'];
-  const season = new Set(sourcedProductMonths(layer));
+  const season = new Set([9, 10]);
   const groups = [{ housing: 'chicken' as const, existing: 1, proposed: 1 }];
   assert.ok(calendarProduceByMonth([], groups, {}, MONTHS).every((m) => m.animals.length === 0),
     'no enterprise chosen, nothing claimed');
-  const out = calendarProduceByMonth([], groups, { chicken: 'chicken-layer' }, MONTHS);
+  assert.ok(calendarProduceByMonth([], groups, { chicken: 'chicken-layer' }, MONTHS).every((m) => m.animals.length === 0));
+  const out = calendarProduceByMonth([], groups, { chicken: 'chicken-layer' }, MONTHS, {}, { chicken: { enterpriseId: 'chicken-layer', months: [9, 10] } });
   MONTHS.forEach((m, i) => assert.equal(out[i].animals.length, season.has(m) ? 1 : 0, `month ${m}`));
   const line = out.find((m) => m.animals.length)!.animals[0];
   assert.equal(line.product, 'eggs');
@@ -73,10 +77,9 @@ test('an animal that gives nothing in the calendar is explained, not silently mi
   const groups = [{ housing: 'bee' as const, existing: 2, proposed: 0 }, { housing: 'kraal' as const, existing: 1, proposed: 0 }];
   const bees = ANIMAL_ENTERPRISES.bees;
   const note = animalsNotShownNote(groups, { bee: 'bees' });
-  // Honey has no months but is shown as its own line (see the honey test below), so it is not listed here.
-  assert.ok(!note!.includes('honey'), note!);
+  assert.match(note!, /confirm local production months for honey/);
   assert.match(note!, /say what it is for under Animals on your map: Kraal/);
-  assert.equal(animalsNotShownNote([{ housing: 'chicken', existing: 1, proposed: 0 }], { chicken: 'chicken-layer' }), null);
+  assert.equal(animalsNotShownNote([{ housing: 'chicken', existing: 1, proposed: 0 }], { chicken: 'chicken-layer' }, { chicken: { enterpriseId: 'chicken-layer', months: [9] } }), null);
 });
 
 test('the bed calendar carries the produce rows and hover card', () => {
@@ -106,7 +109,7 @@ test('honey shows as a line with no month bar, with each recorded flow and its s
     assert.ok(r.source.quote.length > 20 && /^https:\/\//.test(r.source.url) && r.source.page !== null, flowRecordText(r));
   }
   assert.ok(line.records.some((r) => flowRecordText(r) === 'Western Cape (Stellenbosch, Cape Peninsula): April–May, Blue gum (Eucalyptus globulus)'));
-  assert.equal(animalsNotShownNote(groups, { bee: 'bees' }), null, 'honey is shown, so not listed as missing');
+  assert.match(animalsNotShownNote(groups, { bee: 'bees' })!, /On your map, with no month bar/);
   assert.deepEqual(unmarkedAnimalLines(groups, {}), [], 'nothing until the farmer says the hive is for honey');
   const page = readFileSync(join(process.cwd(), 'app/facilitator/crops/page.tsx'), 'utf8');
   assert.match(page, /unmarked=\{animalsUnmarked\}/);
@@ -114,8 +117,8 @@ test('honey shows as a line with no month bar, with each recorded flow and its s
 
 test('each tree kind is one lane of bars over its picking months, cut at year two', () => {
   const axis = [...MONTHS, ...MONTHS];
-  const season = new Set(sourcedSeasonMonths(mango));
-  const out = calendarProduceByMonth([{ harvest: mango, existing: 1, proposed: 0 }, { harvest: moringa, existing: 0, proposed: 2 }], [], {}, axis);
+  const season = new Set(localTrees['mangifera-indica'].months);
+  const out = calendarProduceByMonth([{ harvest: mango, existing: 1, proposed: 0 }, { harvest: moringa, existing: 0, proposed: 2 }], [], {}, axis, localTrees);
   const lanes = produceLanes(out, 'trees');
   assert.deepEqual(lanes.map((l) => l.key).sort(), ['mangifera-indica', 'moringa-oleifera']);
   const mangoLane = lanes.find((l) => l.key === 'mangifera-indica')!;
@@ -125,7 +128,7 @@ test('each tree kind is one lane of bars over its picking months, cut at year tw
     assert.ok(!(run.start < 12 && run.end >= 12), 'a bar ran across the year-two seam');
     for (let c = run.start; c <= run.end; c++) covered.add(c);
   }
-  // Exactly the sourced months, in both years — no month added or dropped by the bars.
+  // Exactly the confirmed months, in both years — no month added or dropped by the bars.
   axis.forEach((m, col) => assert.equal(covered.has(col), season.has(m), `column ${col} (month ${m})`));
   // Adjacent runs are merged: no two bars in a lane touch except across the seam.
   mangoLane.runs.slice(1).forEach((run, i) => {

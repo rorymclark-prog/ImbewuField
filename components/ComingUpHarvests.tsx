@@ -115,7 +115,7 @@ export default function ComingUpHarvests({
             english={`${book.areaConflictBedLabels.join(', ')} — until that is resolved, any harvest figure here would be a guess about which crop loses the space.`}
             zulu={`${book.areaConflictBedLabels.join(', ')} — kuze kulungiswe lokhu, noma yisiphi isibalo sesivuno lapha singaba ukuqagela ukuthi yisiphi isitshalo esizolahlekelwa yileyo ndawo.`} />}
           href="/facilitator/crops"
-          cta={text('Fix it in the crop plan', 'Lungisa ohlelweni lwezitshalo')}
+          cta={text('Fix it in the production plan', 'Lungisa ohlelweni lokukhiqiza')}
         />
       </section>
     );
@@ -133,7 +133,7 @@ export default function ComingUpHarvests({
               : <IsiZuluDraftSource lang={lang} english={`Nothing in the plan starts picking in the next ${book.horizonMonths} months.`} zulu={`Akukho ohlelweni okuzoqala ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
           }
           href="/facilitator/crops"
-          cta={source.plantings.length === 0 ? text('Plan your crops', 'Hlela izitshalo zakho') : text('Open the crop plan', 'Vula uhlelo lwezitshalo')}
+          cta={source.plantings.length === 0 ? text('Plan your crops', 'Hlela izitshalo zakho') : text('Open the production plan', 'Vula uhlelo lokukhiqiza')}
         />
         <Exclusions book={book} lang={lang} />
       </section>

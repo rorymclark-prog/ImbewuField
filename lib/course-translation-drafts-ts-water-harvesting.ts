@@ -360,48 +360,48 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "id": "water-harvesting-l4",
       "title": {
         "sourceEnglish": "Greywater: Check Before Reuse",
-        "xitsongaDraft": "Mati lama Tirhisiweke (greywater): Kamba u nga si ma Tirhisa Nakambe",
+        "xitsongaDraft": "Greywater: Kambela u nga si ma tirhisa nakambe",
         "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-        "xitsongaDraft": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Mati lama tirhisiweke ekaya ma nga va na germs, salts, cleaning products ni other substances. Swiletelo a swi hlamuseli swihlovo hinkwaswo hi ndlela yin’we. Swiletelo swa Afrika-Dzonga swa hambana hi mati ya le khixini ni mati yo hlantswa swiambalo.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nXifaniso xa ntolovelo a hi pulani ya purasi. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+        "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Water sources and greywater guidance can differ",
-          "xitsongaDraft": "Swihlovo swa mati na swiletelo swa mati lama tirhisiweke (greywater) swi nga hambana",
+          "xitsongaDraft": "Swihlovo swa mati ni swiletelo swa greywater swi nga hambana",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
-          "xitsongaDraft": "Kamba xihlovo, xiyimo xa vukorhokeri, matirhiselo lama kunguhatiweke na sayiti endhawini ya le kusuhi u nga si ma tirhisa nakambe",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "Check the source, service status, intended use and site locally before any reuse",
+          "reviewStatus": "hold"
         },
         {
           "sourceEnglish": "Soil and mulch do not disinfect wastewater",
-          "xitsongaDraft": "Misava na xifunengeto (mulch) a swi dlai switsongwatsongwana ematini lama thyakeke",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "Soil and mulch do not disinfect wastewater",
+          "reviewStatus": "hold"
         },
         {
           "sourceEnglish": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
-          "xitsongaDraft": "Sivela ku khumbiwa, ku fafazeriwa, ku endla xidziva, ku khuluka na ku hlangana na mati yo nwa",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+          "reviewStatus": "hold"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "What should happen before any household washwater is reused?",
-            "xitsongaDraft": "What should happen before any household washwater is reused?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Xana ku fanele ku endliwa yini before any household washwater is reused?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Direct it below mulch around a tree",
-              "xitsongaDraft": "Direct it below mulch around a tree",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Yi kongomise ehansi ka mulch leyi rhendzeleke murhi.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
@@ -415,38 +415,38 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "Use it only on plants that are not eaten raw",
-              "xitsongaDraft": "Use it only on plants that are not eaten raw",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Yi tirhise ntsena eka swimilana leswi nga dyiwiki swi nga swekiwanga.",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
-            "xitsongaDraft": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Swiletelo swi hambana hi swihlovo swin’wana swa mati ni hi swiyimo swa vukorhokeri leswi faneleke leswaku mati ma tlhela ma tirhisiwa. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "Why check the exact water source and cleaning products before considering reuse?",
-            "xitsongaDraft": "Why check the exact water source and cleaning products before considering reuse?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Hi mhaka muni u fanele ku check the exact water source and cleaning products before considering reuse?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "All cleaning products are safe if the water is diluted",
-              "xitsongaDraft": "All cleaning products are safe if the water is diluted",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "All cleaning products are safe loko mati ma dilute.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Water composition and product effects vary, so the actual source and products need assessment",
-              "xitsongaDraft": "Water composition and product effects vary, so the actual source and products need assessment",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Water composition and product effects vary, kutani the actual source and products need assessment.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "The water can be reused when it has no smell",
-              "xitsongaDraft": "The water can be reused when it has no smell",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Mati ma nga tirhisiwa nakambe loko ma nga nunhwi.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Mulch removes every harmful substance",
@@ -457,8 +457,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
-            "xitsongaDraft": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Mati lama tirhisiweke ma nga va na germs, salts ni chemicals to hambana. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -544,108 +544,6 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "reason": "This rationale contains earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
     },
     {
-      "lessonId": "water-harvesting-l4",
-      "field": "body[0]",
-      "sourceText": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.",
-      "reason": "Household wastewater reuse has source-specific health, sanitation and local-authority conditions. Keep the complete body exact English until those conditions and Xitsonga wording receive fluent local review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "body[1]",
-      "sourceText": "Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.",
-      "reason": "Household wastewater reuse has source-specific health, sanitation and local-authority conditions. Keep the complete body exact English until those conditions and Xitsonga wording receive fluent local review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "body[2]",
-      "sourceText": "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.",
-      "reason": "Household wastewater reuse has source-specific health, sanitation and local-authority conditions. Keep the complete body exact English until those conditions and Xitsonga wording receive fluent local review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "body[3]",
-      "sourceText": "A generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
-      "reason": "Household wastewater reuse has source-specific health, sanitation and local-authority conditions. Keep the complete body exact English until those conditions and Xitsonga wording receive fluent local review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "body[4]",
-      "sourceText": "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-      "reason": "Household wastewater reuse has source-specific health, sanitation and local-authority conditions. Keep the complete body exact English until those conditions and Xitsonga wording receive fluent local review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[0].options[0]",
-      "sourceText": "Direct it below mulch around a tree",
-      "reason": "This item depends on earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[0].options[1]",
-      "sourceText": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
-      "reason": "This item depends on earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[0].options[2]",
-      "sourceText": "Use it if it looks clear",
-      "reason": "This item depends on earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[0].options[3]",
-      "sourceText": "Use it only on plants that are not eaten raw",
-      "reason": "This item depends on earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[0].question",
-      "sourceText": "What should happen before any household washwater is reused?",
-      "reason": "This question tests safety-critical or site-specific water design; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[0].rationale",
-      "sourceText": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
-      "reason": "This rationale contains earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[1].options[0]",
-      "sourceText": "All cleaning products are safe if the water is diluted",
-      "reason": "This item depends on earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[1].options[1]",
-      "sourceText": "Water composition and product effects vary, so the actual source and products need assessment",
-      "reason": "This item depends on earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[1].options[2]",
-      "sourceText": "The water can be reused when it has no smell",
-      "reason": "This item depends on earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[1].options[3]",
-      "sourceText": "Mulch removes every harmful substance",
-      "reason": "This item depends on earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[1].question",
-      "sourceText": "Why check the exact water source and cleaning products before considering reuse?",
-      "reason": "This question tests safety-critical or site-specific water design; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "quiz[1].rationale",
-      "sourceText": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
-      "reason": "This rationale contains earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
       "lessonId": "water-harvesting-l2",
       "field": "infographicAlt",
       "sourceText": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
@@ -728,6 +626,60 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "field": "body[11]",
       "sourceText": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
       "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "body[1]",
+      "sourceText": "Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.",
+      "reason": "Explicit exclusion list and harmful-chemical prohibition are safety-critical; needs fluent Xitsonga and local sanitation review before translation."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "body[2]",
+      "sourceText": "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.",
+      "reason": "The hold preserves the mandatory municipality plus qualified local sanitation adviser check and the no-advice/no-reuse rule. Do not use until reviewed."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "body[4]",
+      "sourceText": "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+      "reason": "Keep the full conditional trigger together: an operating system AND (bad smell OR pooling OR plant harm) means stop and seek qualified local advice. No unreviewed Xitsonga wording for the pooling condition."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "keyPoints[1]",
+      "sourceText": "Check the source, service status, intended use and site locally before any reuse",
+      "reason": "Preserves all four required checks before any reuse; translate only after sanitation review."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "keyPoints[2]",
+      "sourceText": "Soil and mulch do not disinfect wastewater",
+      "reason": "Do not weaken or reverse the no-disinfection guarantee."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "keyPoints[3]",
+      "sourceText": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+      "reason": "Compact point contains multiple safety prohibitions; retain intact until reviewed."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "quiz[0].options[1]",
+      "sourceText": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+      "reason": "Correct option at unchanged index 1. Retained in English to preserve the required municipality, qualified adviser, and all checks."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "quiz[0].options[2]",
+      "sourceText": "Use it if it looks clear",
+      "reason": "Keep the clear-looking distractor exact: appearance does not mean clean or safe."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "quiz[1].options[3]",
+      "sourceText": "Mulch removes every harmful substance",
+      "reason": "Keep “every harmful substance” exact. Do not weaken the claim or broaden the term to all bad things."
     }
   ]
 } satisfies XitsongaCourseModuleDraft;

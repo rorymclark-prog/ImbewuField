@@ -185,15 +185,85 @@ test('Reading Landscape preserves source lesson fields and quiz answer indexes',
       ...lesson.quiz.flatMap(item => [item.question, ...item.options, item.rationale])];
     for (const pair of pairs) {
       assert.deepEqual(digits(pair.xitsongaDraft), digits(pair.sourceEnglish), `${lesson.id} figures changed`);
-      for (const plantName of ['pawpaw', 'citrus', 'tomatoes', 'khakibos', 'blackjack']) {
+      for (const plantName of ['pawpaw', 'citrus', 'khakibos', 'blackjack']) {
         assert.equal(
           pair.xitsongaDraft.match(new RegExp(`\\b${plantName}\\b`, 'gi'))?.length ?? 0,
           pair.sourceEnglish.match(new RegExp(`\\b${plantName}\\b`, 'gi'))?.length ?? 0,
           `${lesson.id} introduced or dropped the source plant term ${plantName}`,
         );
       }
+      const sourceTomatoes = pair.sourceEnglish.match(/\btomatoes\b/gi)?.length ?? 0;
+      const draftTomatoes = (pair.xitsongaDraft.match(/\btomatoes\b/gi)?.length ?? 0)
+        + (pair.xitsongaDraft.match(/\bmatamatisi\b/gi)?.length ?? 0);
+      assert.equal(draftTomatoes, sourceTomatoes, `${lesson.id} introduced or dropped the tomato crop reference`);
     }
   }
+});
+
+test('Reading Landscape Xitsonga body candidates preserve paragraph order and bounded farming claims', () => {
+  const readingSource = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
+  const l1Source = readingSource.lessons.find(lesson => lesson.id === 'reading-landscape-l1')!;
+  const l1 = readingDraft.lessons.find(lesson => lesson.id === l1Source.id)!;
+  const l1SourceParagraphs = l1Source.body.split('\n\n');
+  const l1Paragraphs = l1.body.xitsongaDraft.split('\n\n');
+  assert.equal(l1.body.sourceEnglish, l1Source.body);
+  assert.equal(l1.body.reviewStatus, 'machine-draft');
+  assert.equal(l1Paragraphs.length, l1SourceParagraphs.length);
+  assert.equal(l1Paragraphs[0], `Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.`,
+    'the previously localized rain-observation paragraph must remain unchanged');
+
+  assert.match(l1Paragraphs[1], /^An A-frame level yi nga ku pfuna ku mark points at the same height and trace a contour line\./);
+  for (const exact of [
+    'points at the same height',
+    'mark points',
+    'trace a contour line',
+    'Its marks are an observation, not a design or approval for earthworks.',
+    'Before digging a swale, dam, or other structure, have the site assessed.',
+    'Soil, slope, drainage, storm flow, and a safe overflow route all matter.',
+    'a trained local adviser',
+  ]) assert.ok(l1Paragraphs[1].includes(exact), `L1 paragraph 2 must preserve ${exact}`);
+  assert.match(l1Paragraphs[1], /Vutisa a trained local adviser\.$/);
+
+  assert.match(l1Paragraphs[2], /^A ku na placement rule yin’we ya slope yin’wana ni yin’wana\. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona\./);
+  for (const exact of [
+    'Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.',
+    'Choose any water works for the site and plan a safe route for excess water.',
+  ]) assert.ok(l1Paragraphs[2].includes(exact), `L1 paragraph 3 must preserve ${exact}`);
+
+  const l2Source = readingSource.lessons.find(lesson => lesson.id === 'reading-landscape-l2')!;
+  const l2 = readingDraft.lessons.find(lesson => lesson.id === l2Source.id)!;
+  const l2SourceParagraphs = l2Source.body.split('\n\n');
+  const l2Paragraphs = l2.body.xitsongaDraft.split('\n\n');
+  assert.equal(l2.body.sourceEnglish, l2Source.body);
+  assert.equal(l2Paragraphs.length, l2SourceParagraphs.length);
+  assert.equal(l2Paragraphs[0], `Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.`,
+    'the previously localized aspect and site-observation paragraph must remain unchanged');
+  assert.equal(l2Paragraphs[1], `Dyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.`,
+    'the previously localized shade and time-of-day paragraph must remain unchanged');
+  assert.ok(l2Paragraphs[2].includes('Pawpaw and young citrus are sensitive to frost.'), 'the frost-sensitive crops must remain exactly named');
+  assert.ok(l2Paragraphs[2].includes('Keep tender plants out of known low frost pockets.'), 'the known-frost-pocket instruction must remain exact');
+  assert.ok(l2Paragraphs[2].endsWith('Xiya local frost u nga se byala.'), 'observe local frost before planting');
+});
+
+test('Reading Landscape Xitsonga source drift falls back to the complete current English lesson', async () => {
+  const readingSource = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
+  const sourceLesson = readingSource.lessons.find(lesson => lesson.id === 'reading-landscape-l1')!;
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const draftView = resolveLearnerLessonPresentation(sourceLesson, 'ts');
+  const paired = readingDraft.lessons.find(lesson => lesson.id === sourceLesson.id)!;
+  assert.equal(draftView.status, 'draft');
+  assert.equal(draftView.content.body, paired.body.xitsongaDraft);
+
+  const changedSource = { ...sourceLesson, body: `${sourceLesson.body} A source condition changed.` };
+  const fallback = resolveLearnerLessonPresentation(changedSource, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.deepEqual(fallback.content, {
+    title: changedSource.title,
+    body: changedSource.body,
+    keyPoints: changedSource.keyPoints,
+    quiz: changedSource.quiz,
+    infographicAlt: changedSource.infographicAlt,
+  }, 'stale translations must not leak through when the canonical body changes');
 });
 
 test('Reading Landscape safety and terminology holds remain exact in their paired fields', () => {
@@ -246,4 +316,53 @@ test('the Xitsonga principles body translates every paragraph while remaining bo
   assert.equal(view.content.body, paired.body.xitsongaDraft);
   assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} New condition.` }, 'ts').status,
     'english-fallback', 'changed English guidance invalidates the whole body draft');
+});
+
+test('Reading Landscape L3 drafts ordinary body guidance while keeping precise cold and disease clauses exact', async () => {
+  const sourceLesson = COURSE_MODULES.find(module => module.id === 'reading-landscape')!.lessons
+    .find(lesson => lesson.id === 'reading-landscape-l3')!;
+  const lesson = readingDraft.lessons.find(item => item.id === sourceLesson.id)!;
+  assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  assert.equal(lesson.body.reviewStatus, 'machine-draft');
+  const sourceParagraphs = sourceLesson.body.split('\n\n');
+  const draftParagraphs = lesson.body.xitsongaDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+
+  assert.ok(draftParagraphs[0].includes("your site's ridges and gaps"));
+  assert.ok(draftParagraphs[0].includes('Fambafamba eka misava hi masiku ya moya.'));
+  assert.ok(!draftParagraphs[0].includes('Check local weather records before deciding where shelter is needed.'));
+  assert.ok(draftParagraphs[0].includes('Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho'));
+
+  assert.ok(draftParagraphs[1].startsWith('On a clear, still night, cold air can flow downhill and collect in low places.'));
+  assert.ok(draftParagraphs[1].includes('These places can be colder than nearby slopes.'));
+  assert.ok(draftParagraphs[1].includes('Frost patterns also depend on the site.'));
+  assert.ok(draftParagraphs[1].includes('Pimanisa candidate places through the local frost season.'));
+  assert.ok(draftParagraphs[1].includes('Kambela local minimum-temperature records where available.'));
+  assert.ok(draftParagraphs[1].includes('Loko records ti nga ri kona'));
+  assert.ok(draftParagraphs[1].includes('across cold nights'));
+  assert.ok(draftParagraphs[1].includes('local agriculture adviser'));
+  assert.ok(draftParagraphs[1].includes('u nga si hlawula permanent home for tender seedlings'));
+
+  assert.ok(draftParagraphs[2].startsWith('Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.'));
+  assert.ok(draftParagraphs[2].includes('low ground na slopes'));
+  assert.ok(draftParagraphs[2].includes('minimum temperatures laha swi kotekaka'));
+  assert.ok(draftParagraphs[2].includes('Mark places where cold or damage lasts longest.'));
+  assert.ok(draftParagraphs[2].includes('cold pockets leti u ti vonaka'));
+
+  assert.ok(draftParagraphs[3].startsWith('Eka matamatisi'));
+  assert.ok(draftParagraphs[3].includes('Late blight can still spread during prolonged cool, damp weather.'));
+  assert.ok(draftParagraphs[3].includes('bed ntsena a swi nge lawuli late blight'));
+  assert.ok(draftParagraphs[3].includes('seek local crop-health guidance too.'));
+
+  const bodyHolds = readingDraft.holds.filter(hold => hold.lessonId === sourceLesson.id && hold.field === 'body');
+  assert.ok(bodyHolds.length > 0);
+  assert.ok(!bodyHolds.some(hold => sourceParagraphs.includes(hold.sourceText)),
+    'metadata must identify exact held clauses instead of claiming a whole body paragraph is held');
+  for (const hold of bodyHolds) assert.ok(lesson.body.xitsongaDraft.includes(hold.sourceText), `held clause remains exact: ${hold.sourceText}`);
+
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const changedSource = { ...sourceLesson, body: `${sourceLesson.body} A source condition changed.` };
+  const fallback = resolveLearnerLessonPresentation(changedSource, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.equal(fallback.content.body, changedSource.body, 'source drift must not serve stale regional safety instructions');
 });
