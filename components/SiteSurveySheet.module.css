@@ -17,7 +17,14 @@
 .siteHeading span { display:flex; align-items:center; gap:5px; font-size:12px; color:var(--text-2); }
 .close { width:44px; display:grid; place-items:center; border:1px solid var(--border); border-radius:50%; flex-shrink:0; }
 .modeButton { display:flex; align-items:center; gap:8px; padding:8px 14px; border:1px solid var(--border); border-radius:999px; font-size:13px; }
-.workspace { display:flex; flex:1; min-height:0; }
+.workspace { display:flex; flex:1; min-height:0; min-width:0; border:0; padding:0; margin:0; }
+.recovery { max-width:960px; margin:20px auto; padding:20px; border:2px solid var(--brand); border-radius:16px; background:var(--surface); font-size:14px; line-height:1.6; }
+.recovery strong { font-size:18px; }
+.recovery p { margin:10px 0; color:var(--text-2); }
+.recovery>div { display:flex; gap:12px; flex-wrap:wrap; }
+.draftNotice { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:8px; font-size:13px; line-height:1.5; padding:8px 16px; color:var(--text); }
+.draftStatus { margin:0; padding:8px 16px 0; font-size:13px; line-height:1.5; color:var(--text-2); text-align:center; }
+@media(max-width:760px) { .recovery { margin:16px 12px; } }
 .navigation { width:246px; flex-shrink:0; padding:30px 18px; border-right:1px solid var(--border); background:var(--surface); overflow:auto; }
 .eyebrow { display:block; font:600 12px/1.5 var(--font-sans); text-transform:uppercase; letter-spacing:.13em; color:var(--text-2); }
 .navigation>.eyebrow { margin:0 10px 22px; }

@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import 'fake-indexeddb/auto';
+import { fieldDeviceStore, type DeviceStore } from '../lib/field-device-store';
+import { bindMountedAccountLocalStorageUid, activeAccountLocalStorageKey } from '../lib/account-local-storage';
 
 import {
   canonicalSurveySiteId,
@@ -9,6 +12,9 @@ import {
   productionNeedsReview,
   saveSurvey,
   surveyToPrompt,
+  createSurveyDraftStore,
+  surveySavedRevision,
+  type SiteSurveyDraftInput,
   type SiteSurvey,
 } from '../lib/site-survey.ts';
 
@@ -311,4 +317,140 @@ test('translated adult-count ranges keep the same household key used by water es
   const saved = saveSurvey(survey({ adults: '2–5' }));
   assert.equal(saved?.adults, '2-5');
   assert.equal(loadSurvey(saved!.siteId)?.adults, '2-5');
+});
+
+function draftInput(overrides: Partial<SiteSurveyDraftInput> = {}): SiteSurveyDraftInput {
+  return {
+    baseRevision: surveySavedRevision(null), answers: survey({ savedAt: '' }),
+    numberInputs: { roofMain: '', roofSecondary: '', existingGrowingArea: '' },
+    mode: 'full', step: 2, started: true, openProduction: 'other', ...overrides,
+  };
+}
+
+test('a restarted survey keeps unfinished figures and free rows without publishing report facts', async () => {
+  const { target } = installBrowser();
+  bindMountedAccountLocalStorageUid('draft-unfinished');
+  let published = 0;
+  target.addEventListener('imbewu-surveys-changed', () => published++);
+  const original = saveSurvey(survey({ notes: 'Last reviewed observation' }));
+  assert.ok(original);
+  published = 0;
+  const input = draftInput({
+    baseRevision: surveySavedRevision(original),
+    answers: survey({ notes: '  Still writing  ', goals: [], reportedProduction: [{
+      category: 'other', name: '', unit: ' ', quantityPerYear: -2,
+      usedByHousehold: null, sold: null, incomeZar: null,
+    }] }),
+    numberInputs: { roofMain: '-3', roofSecondary: '', existingGrowingArea: '1e' },
+  });
+  const first = createSurveyDraftStore(input.answers.siteId)!;
+  const written = await first.write(input, null);
+  assert.equal(written.status, 'saved');
+  const recovered = await createSurveyDraftStore(input.answers.siteId)!.read();
+  assert.equal(recovered.unavailable, false);
+  assert.deepEqual(recovered.draft?.numberInputs, input.numberInputs);
+  assert.equal(recovered.draft?.answers.notes, '  Still writing  ');
+  assert.deepEqual(recovered.draft?.answers.goals, []);
+  assert.equal(recovered.draft?.answers.reportedProduction?.[0].quantityPerYear, -2);
+  assert.equal(recovered.draft?.answers.reportedProduction?.[0].unit, ' ');
+  assert.equal(recovered.draft?.answers.reportedProduction?.[0].category, 'other');
+  assert.equal(recovered.draft?.mode, 'full');
+  assert.equal(recovered.draft?.step, 2);
+  assert.equal(recovered.draft?.openProduction, 'other');
+  assert.deepEqual(loadSurvey(input.answers.siteId), original);
+  assert.equal(published, 0, 'keeping unfinished answers must not announce a report update');
+  bindMountedAccountLocalStorageUid(null);
+});
+
+test('unfinished answers belong only to their site and mounted account, including delayed old-account writes', async () => {
+  installBrowser();
+  bindMountedAccountLocalStorageUid('draft-owner-A');
+  const input = draftInput();
+  const a = createSurveyDraftStore(input.answers.siteId)!;
+  assert.equal((await a.write(input, null)).status, 'saved');
+  assert.equal((await createSurveyDraftStore('site:-28.00000,31.00000')!.read()).draft, null);
+  bindMountedAccountLocalStorageUid('draft-owner-B');
+  const b = createSurveyDraftStore(input.answers.siteId)!;
+  assert.equal((await b.read()).draft, null);
+  assert.equal((await a.write(draftInput({ answers: survey({ notes: 'Late A timer' }) }), null)).status, 'changed');
+  assert.equal((await b.write(draftInput({ answers: survey({ notes: 'B observation' }) }), null)).status, 'saved');
+  assert.equal((await b.read()).draft?.answers.notes, 'B observation');
+  bindMountedAccountLocalStorageUid('draft-owner-A');
+  assert.equal((await createSurveyDraftStore(input.answers.siteId)!.read()).draft?.answers.notes, 'Farmer observation');
+  bindMountedAccountLocalStorageUid(null);
+});
+
+test('competing survey tabs cannot overwrite or discard the draft the other tab just kept', async () => {
+  installBrowser(); bindMountedAccountLocalStorageUid('draft-tabs');
+  const input = draftInput(), a = createSurveyDraftStore(input.answers.siteId)!, b = createSurveyDraftStore(input.answers.siteId)!;
+  const results = await Promise.all([a.write(input, null), b.write(draftInput({ answers: survey({ notes: 'Newer tab' }) }), null)]);
+  assert.equal(results.filter(result => result.status === 'saved').length, 1);
+  assert.equal(results.filter(result => result.status === 'changed').length, 1);
+  const baseline = await a.read();
+  assert.ok(baseline.token);
+  const newer = await b.write(draftInput({ answers: survey({ notes: 'Newest observation' }) }), baseline.token);
+  assert.equal(newer.status, 'saved');
+  assert.equal((await a.clear(baseline.token)).status, 'changed');
+  assert.equal((await a.write(input, baseline.token)).status, 'changed');
+  assert.equal((await b.read()).draft?.answers.notes, 'Newest observation');
+  bindMountedAccountLocalStorageUid(null);
+});
+
+test('a failed device transaction reports failure and leaves the previous unfinished answers recoverable', async () => {
+  installBrowser(); bindMountedAccountLocalStorageUid('draft-storage-failure');
+  const input = draftInput(), normal = createSurveyDraftStore(input.answers.siteId)!;
+  await normal.write(input, null);
+  const previous = await normal.read();
+  const aborting: DeviceStore = { ...fieldDeviceStore, change: (key, update) => fieldDeviceStore.change(key, row => {
+    update(row); throw Error('Device transaction aborted');
+  }) };
+  const broken = createSurveyDraftStore(input.answers.siteId, aborting)!;
+  assert.equal((await broken.write(draftInput({ answers: survey({ notes: 'Uncommitted' }) }), previous.token)).status, 'unavailable');
+  assert.equal((await broken.clear(previous.token)).status, 'unavailable');
+  assert.deepEqual(await normal.read(), previous);
+  bindMountedAccountLocalStorageUid(null);
+});
+
+test('only an explicit successful final save followed by matching cleanup clears this draft', async () => {
+  const { local } = installBrowser(); bindMountedAccountLocalStorageUid('draft-final-save');
+  const input = draftInput(), client = createSurveyDraftStore(input.answers.siteId)!;
+  await client.write(input, null);
+  const previous = await client.read();
+  local.failKey = activeAccountLocalStorageKey(`imbewu_site_survey_${input.answers.siteId}`);
+  assert.equal(saveSurvey(input.answers), null);
+  assert.deepEqual(await client.read(), previous);
+  local.failKey = null;
+  assert.ok(saveSurvey(input.answers));
+  assert.equal((await client.clear(previous.token)).status, 'cleared');
+  assert.equal((await client.read()).draft, null);
+  assert.ok(loadSurvey(input.answers.siteId));
+  bindMountedAccountLocalStorageUid(null);
+});
+
+test('unreadable future drafts require deliberate discard rather than being silently overwritten', async () => {
+  installBrowser(); bindMountedAccountLocalStorageUid('draft-future-version');
+  const input = draftInput(), scope = activeAccountLocalStorageKey('imbewu_site_survey_drafts');
+  const key = `${scope}|draft|${input.answers.siteId}`;
+  const future = { version: 99, answers: { notes: 'Keep future answers' } };
+  await fieldDeviceStore.change(key, () => ({ key, scope, kind: 'draft', value: future }));
+  const client = createSurveyDraftStore(input.answers.siteId)!;
+  const recovered = await client.read();
+  assert.equal(recovered.draft, null); assert.ok(recovered.token); assert.equal(recovered.unavailable, false);
+  assert.equal((await client.write(input, null)).status, 'changed');
+  assert.deepEqual((await fieldDeviceStore.get(key))?.value, future);
+  assert.equal((await client.clear(recovered.token)).status, 'cleared');
+  bindMountedAccountLocalStorageUid(null);
+});
+
+test('sample answers never enter persistent drafts, even when sample mode starts during a pending write', async () => {
+  installBrowser(); bindMountedAccountLocalStorageUid(null);
+  const input = draftInput(), client = createSurveyDraftStore(input.answers.siteId)!;
+  window.sessionStorage.setItem('imbewu_sample_mode', '1');
+  assert.equal(createSurveyDraftStore(input.answers.siteId), null);
+  assert.equal((await client.write(input, null)).status, 'changed');
+  window.sessionStorage.removeItem('imbewu_sample_mode');
+  assert.equal((await client.read()).draft, null);
+  assert.equal(createSurveyDraftStore('invalid-site'), null);
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: undefined });
+  assert.equal(createSurveyDraftStore(input.answers.siteId), null);
 });

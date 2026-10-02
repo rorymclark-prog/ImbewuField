@@ -3,6 +3,7 @@ import { upsertSurvey } from './user-sync';
 import { loadPlaces } from './saved-places';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { fieldDeviceStore, type DeviceStore, type DeviceRow } from './field-device-store';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
 // reported groups, never a made-up nutrition score or an estimate of what a household eats.
@@ -157,7 +158,7 @@ function monthArray(value: unknown): number[] {
   ))].sort((a, b) => a - b);
 }
 
-function normaliseReportedProduction(value: unknown): ReportedProduction[] {
+function normaliseReportedProduction(value: unknown, unfinished = false): ReportedProduction[] {
   if (!Array.isArray(value)) return [];
   const seen = new Set<ProductionCategory>();
   const rows: ReportedProduction[] = [];
@@ -167,17 +168,17 @@ function normaliseReportedProduction(value: unknown): ReportedProduction[] {
     if (!PRODUCTION_CATEGORIES.includes(row.category as ProductionCategory) || seen.has(row.category as ProductionCategory)) continue;
     const category = row.category as ProductionCategory;
     const foodGroup = HDDS_FOOD_GROUPS.includes(row.foodGroup as HddsFoodGroup) ? row.foodGroup as HddsFoodGroup : undefined;
-    const name = stringValue(row.name);
+    const name = unfinished && typeof row.name === 'string' ? row.name : stringValue(row.name);
     // A nameless free row is not a report at all. Named catalog rows are never expected here.
-    if (category === 'other' && !name) continue;
+    if (category === 'other' && !name && !unfinished) continue;
     seen.add(category);
     const clean: ReportedProduction = {
       category,
-      quantityPerYear: moneyOrQuantity(row.quantityPerYear),
-      unit: stringValue(row.unit),
-      usedByHousehold: moneyOrQuantity(row.usedByHousehold),
-      sold: moneyOrQuantity(row.sold),
-      incomeZar: moneyOrQuantity(row.incomeZar),
+      quantityPerYear: unfinishedQuantity(row.quantityPerYear, unfinished),
+      unit: unfinished && typeof row.unit === 'string' ? row.unit : stringValue(row.unit),
+      usedByHousehold: unfinishedQuantity(row.usedByHousehold, unfinished),
+      sold: unfinishedQuantity(row.sold, unfinished),
+      incomeZar: unfinishedQuantity(row.incomeZar, unfinished),
     };
     if (name) clean.name = name;
     const harvestMonths = monthArray(row.harvestMonths);
@@ -188,7 +189,14 @@ function normaliseReportedProduction(value: unknown): ReportedProduction[] {
   return rows;
 }
 
-function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
+function unfinishedQuantity(value: unknown, unfinished: boolean): number | null {
+  // A negative figure still needs correction after a restart. A draft must not silently
+  // erase it by applying the rules for completed report facts before the farmer reviews it.
+  return unfinished && typeof value === 'number' && Number.isFinite(value)
+    ? value : moneyOrQuantity(value);
+}
+
+function normaliseSurvey(value: unknown, siteId: string, unfinished = false): SiteSurvey | null {
   if (!value || typeof value !== 'object' || Array.isArray(value) || !siteId) return null;
   const row = value as Partial<SiteSurvey>;
   const roofAreaSource = row.roofAreaSource === 'auto' || row.roofAreaSource === 'manual'
@@ -236,8 +244,8 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     challenges: stringArray(row.challenges),
     isCommercial: row.isCommercial === true,
     marketType: stringValue(row.marketType) || undefined,
-    reportedProduction: normaliseReportedProduction(row.reportedProduction),
-    notes: stringValue(row.notes),
+    reportedProduction: normaliseReportedProduction(row.reportedProduction, unfinished),
+    notes: unfinished && typeof row.notes === 'string' ? row.notes : stringValue(row.notes),
   };
 }
 
@@ -353,6 +361,103 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
 const key = (id: string) => activeAccountLocalStorageKey(`imbewu_site_survey_${id}`);
 
 export const canonicalSurveySiteId = canonicalCoordinateSiteId;
+
+export interface SiteSurveyDraft {
+  version: 1;
+  revision: string;
+  updatedAt: number;
+  baseRevision: string;
+  answers: SiteSurvey;
+  numberInputs: { roofMain: string; roofSecondary: string; existingGrowingArea: string };
+  mode: 'short' | 'full';
+  step: number;
+  started: boolean;
+  openProduction: ProductionCategory | null;
+}
+export type SiteSurveyDraftInput = Omit<SiteSurveyDraft, 'version' | 'revision' | 'updatedAt'>;
+export type SurveyDraftChange =
+  | { status: 'saved'; draft: SiteSurveyDraft; token: string }
+  | { status: 'cleared'; token: null }
+  | { status: 'changed' | 'unavailable' };
+
+export function surveySavedRevision(survey: SiteSurvey | null): string {
+  return JSON.stringify([survey?.savedAt ?? null, survey?.updatedAt ?? null]);
+}
+
+function normaliseSurveyDraft(value: unknown, siteId: string): SiteSurveyDraft | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const row = value as Partial<SiteSurveyDraft>;
+  const inputs = row.numberInputs;
+  if (row.version !== 1 || typeof row.revision !== 'string' || !row.revision
+      || typeof row.updatedAt !== 'number' || !Number.isFinite(row.updatedAt) || row.updatedAt < 0
+      || typeof row.baseRevision !== 'string' || row.answers?.siteId !== siteId
+      || (row.mode !== 'short' && row.mode !== 'full')
+      || typeof row.step !== 'number' || !Number.isInteger(row.step) || row.step < 0 || row.step > 7
+      || typeof row.started !== 'boolean' || !inputs
+      || typeof inputs.roofMain !== 'string' || typeof inputs.roofSecondary !== 'string'
+      || typeof inputs.existingGrowingArea !== 'string'
+      || (row.openProduction !== null && !PRODUCTION_CATEGORIES.includes(row.openProduction as ProductionCategory))) return null;
+  const answers = normaliseSurvey(row.answers, siteId, true);
+  if (!answers) return null;
+  return {
+    version: 1, revision: row.revision, updatedAt: row.updatedAt, baseRevision: row.baseRevision,
+    answers, numberInputs: { ...inputs }, mode: row.mode, step: row.step,
+    started: row.started, openProduction: row.openProduction as ProductionCategory | null,
+  };
+}
+
+function draftToken(row: DeviceRow | undefined): string | null {
+  return row ? JSON.stringify(row.value) : null;
+}
+
+/** Use the existing transactional device store: an older tab cannot erase a newer draft. */
+export function createSurveyDraftStore(siteId: string, store: DeviceStore = fieldDeviceStore) {
+  const canonical = canonicalSurveySiteId(siteId);
+  if (typeof window === 'undefined' || !canonical) return null;
+  // The sample's storage shim protects localStorage, not IndexedDB. Demonstration answers
+  // must never escape that sandbox into a real account's persistent device store.
+  try { if (window.sessionStorage.getItem('imbewu_sample_mode') === '1') return null; } catch { return null; }
+  const scope = activeAccountLocalStorageKey('imbewu_site_survey_drafts');
+  const draftKey = `${scope}|draft|${canonical}`;
+  const current = () => {
+    try {
+      return window.sessionStorage.getItem('imbewu_sample_mode') !== '1'
+        && scope === activeAccountLocalStorageKey('imbewu_site_survey_drafts');
+    } catch { return false; }
+  };
+  return {
+    async read(): Promise<{ draft: SiteSurveyDraft | null; token: string | null; unavailable: boolean }> {
+      try {
+        if (!current()) throw Error('Account changed');
+        const row = await store.get(draftKey);
+        if (!current()) throw Error('Account changed');
+        return { draft: normaliseSurveyDraft(row?.value, canonical), token: draftToken(row), unavailable: false };
+      } catch { return { draft: null, token: null, unavailable: true }; }
+    },
+    async write(input: SiteSurveyDraftInput, expectedToken: string | null): Promise<SurveyDraftChange> {
+      let changed = false;
+      try {
+        const draft = normaliseSurveyDraft({ ...input, version: 1, revision: crypto.randomUUID(), updatedAt: Date.now() }, canonical);
+        if (!draft) return { status: 'unavailable' };
+        await store.change(draftKey, row => {
+          if (!current() || draftToken(row) !== expectedToken) { changed = true; return row; }
+          return { key: draftKey, scope, kind: 'draft', value: draft };
+        });
+        return changed ? { status: 'changed' } : { status: 'saved', draft, token: JSON.stringify(draft) };
+      } catch { return { status: 'unavailable' }; }
+    },
+    async clear(expectedToken: string | null): Promise<SurveyDraftChange> {
+      let changed = false;
+      try {
+        await store.change(draftKey, row => {
+          if (!current() || draftToken(row) !== expectedToken) { changed = true; return row; }
+          return undefined;
+        });
+        return changed ? { status: 'changed' } : { status: 'cleared', token: null };
+      } catch { return { status: 'unavailable' }; }
+    },
+  };
+}
 
 // One-time read-repair: survey answers saved under the old placeId-keyed scheme (before the
 // storage key was switched to the lat/lon-derived siteId) would otherwise never be found by
