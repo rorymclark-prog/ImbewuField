@@ -1,0 +1,176 @@
+{
+  "packetId": "imbewu-ve-reading-l2-l4-assessment-next-20261002",
+  "status": "implemented unreviewed source-paired regional draft; publication gates pending",
+  "language": "Tshivenda (ve)",
+  "sourceRevision": "4896d38be5716fc9a4ee7b43566b0f60f182394d",
+  "canonicalSource": "lib/course-modules.ts",
+  "registrySource": "lib/course-translation-drafts-ve-reading-landscape.ts",
+  "scope": "Only exact-English held key points, quiz rationales and quiz options in Reading Landscape L2–L4 are included. All source fields, lesson order, quiz option order, and correct indices remain unchanged. Entries marked hold remain exact English.",
+  "entries": [
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "keyPoints[1]",
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Winter sun is lower and farther north; check local shade before building",
+      "currentRegistry": {
+        "tshivendaDraft": "Winter sun is lower and farther north; check local shade before building",
+        "reviewStatus": "hold"
+      },
+      "candidate": {
+        "tshivendaDraft": "Ḓuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo; sedzani murunzi wa henefho musi ni sa athu fhaṱa.",
+        "reviewStatus": "machine-draft"
+      },
+      "backTranslation": "Winter sun is low and farther north than the summer sun; observe the local shade before you build.",
+      "technicalTermsRetained": [],
+      "uncertainty": "The first clause follows the lesson body wording already in this Tshivenda draft. The short check/build clause is ordinary language; a fluent Tshivenda speaker should verify idiom and that the shade check remains before any building."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "keyPoints[1]",
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Cold air can drain downhill on clear, still nights and collect in low ground",
+      "currentRegistry": {
+        "tshivendaDraft": "Cold air can drain downhill on clear, still nights and collect in low ground",
+        "reviewStatus": "hold"
+      },
+      "candidate": {
+        "tshivendaDraft": "Cold air can drain downhill on clear, still nights and collect in low ground",
+        "reviewStatus": "hold"
+      },
+      "backTranslation": "Cold air can drain downhill on clear, still nights and collect in low ground.",
+      "technicalTermsRetained": [
+        "cold-air drainage",
+        "clear, still night condition",
+        "low-ground accumulation"
+      ],
+      "uncertainty": "Exact-English hold. Translating this compact atmospheric and terrain condition without changing where or when cold air collects could misdirect nursery placement. No verified Tshivenda wording is proposed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentRegistry": {
+        "tshivendaDraft": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+        "reviewStatus": "hold"
+      },
+      "candidate": {
+        "tshivendaDraft": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+        "reviewStatus": "hold"
+      },
+      "backTranslation": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "technicalTermsRetained": [
+        "cold-air settling condition",
+        "local frost season comparison",
+        "minimum-temperature records",
+        "frost damage indicators",
+        "no guaranteed frost-free hillside position"
+      ],
+      "uncertainty": "Keep the entire rationale exact English for now: its full-season comparison, records-or-adviser alternatives, permanent-choice timing, visible-frost limitation, and no-guarantee statement are safety-critical. No partial phrase is localized because the sentences depend on these qualifiers."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].rationale",
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "currentRegistry": {
+        "tshivendaDraft": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+        "reviewStatus": "hold"
+      },
+      "candidate": {
+        "tshivendaDraft": "U elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+        "reviewStatus": "machine-draft"
+      },
+      "backTranslation": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "technicalTermsRetained": [
+        "late blight",
+        "prolonged cool, damp weather",
+        "moving the bed alone is not a complete control plan"
+      ],
+      "uncertainty": "The ordinary drying sentence matches the wording used in the existing L3 body draft. Retain the full disease-condition and no-control-alone clauses verbatim; do not imply airflow or sun controls late blight. A fluent speaker should check the localized sentence."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "keyPoints[2]",
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
+      "currentRegistry": {
+        "tshivendaDraft": "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
+        "reviewStatus": "hold"
+      },
+      "candidate": {
+        "tshivendaDraft": "Swayani hune khakibos kana blackjack zwa mela zwo tsitsikana, uri ni tole mavu nga vhuronwane; it does not prove compaction.",
+        "reviewStatus": "machine-draft"
+      },
+      "backTranslation": "Mark where khakibos or blackjack grows thick so that you check the soil carefully; it does not prove compaction.",
+      "technicalTermsRetained": [
+        "khakibos",
+        "blackjack",
+        "compaction (paired with a descriptive phrase)"
+      ],
+      "uncertainty": "Root retains exact English non-proof clause to avoid changing does-not-prove into does-not-show. Dense-growth and closer inspection wording still needs semantic backcheck; no fluent/local approval."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[1].options[1]",
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "They can come from different directions, changing where windbreaks and tender crops should go",
+      "currentRegistry": {
+        "tshivendaDraft": "They can come from different directions, changing where windbreaks and tender crops should go",
+        "reviewStatus": "hold"
+      },
+      "candidate": {
+        "tshivendaDraft": "They can come from different directions, changing where windbreaks and tender crops should go",
+        "reviewStatus": "hold"
+      },
+      "backTranslation": "They can come from different directions, changing where windbreaks and tender crops should be placed.",
+      "technicalTermsRetained": [
+        "windbreaks",
+        "tender crops (paired with descriptive Tshivenda wording)"
+      ],
+      "uncertainty": "Independent backcheck left Zwi wind antecedent/class agreement uncertain; root retains exact English option."
+    }
+  ],
+  "preservedInvariants": [
+    "All candidate entries are bound to the exact source and current registry text at the named path.",
+    "Quiz correct indices remain those in canonical source: L3 quiz 0 = 2, L3 quiz 1 = 1, L4 quiz 1 = 1.",
+    "No new crops, species, numbers, growing prescriptions, site guarantees, or control claims are introduced.",
+    "The full frost-season comparison, minimum-temperature/adviser check, permanent-choice sequence, no-visible-frost-only sign, and no-frost-free-position guarantee are held exact English.",
+    "Late blight weather favorability and the warning that moving a bed alone is not a complete control plan remain exact English.",
+    "The L4 thick-growth candidate preserves both species and the explicit limit that their presence alone does not prove compaction."
+  ],
+  "repositoryEditsMade": true,
+  "fluencyReviewClaim": false,
+  "requires": "Independent semantic check and root review before any repository wiring; fluent Tshivenda review is still outstanding.",
+  "review": "Independent semantic check and root repairs completed. Ordinary drafts remain unreviewed by fluent/local farming reviewers.",
+  "additionalModelBackcheck": {
+    "provider": "Agy desktop",
+    "model": "Gemini 3.7 Flash High",
+    "conversation": "79a5067a-9299-4f40-a1ac-8e3cd0f1f1b7",
+    "scope": "L4 keyPoints[2] repaired candidate only",
+    "observedResponse": true,
+    "result": "Dense growth and careful soil inspection meaning retained; species and non-proof clause exact English. Possible dense/compressed-root and borrowed-name concord nuances noted, not fluent/local approval."
+  },
+  "implementation": {
+    "baseRevision": "4896d38be5716fc9a4ee7b43566b0f60f182394d",
+    "implementedFields": [
+      {
+        "lessonId": "reading-landscape-l2",
+        "field": "keyPoints[1]"
+      },
+      {
+        "lessonId": "reading-landscape-l3",
+        "field": "quiz[1].rationale"
+      },
+      {
+        "lessonId": "reading-landscape-l4",
+        "field": "keyPoints[2]"
+      }
+    ],
+    "registryPath": "lib/course-translation-drafts-ve-reading-landscape.ts",
+    "canonicalEnglishChanged": false,
+    "mediaChanged": false,
+    "fluentOrLocalFarmingApproval": false,
+    "note": "Current-registry values above record the pre-implementation baseline; exact source pairs are retained in learner registry. Remaining hold entries were not changed."
+  }
+}
