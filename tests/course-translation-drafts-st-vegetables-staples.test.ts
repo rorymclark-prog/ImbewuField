@@ -98,9 +98,15 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
   assert.match(bedDraft[15], /Bophara ba One point two metres\. Bolelele ba Three metres/, 'width and length cannot swap');
   const pestSource = source.lessons[3].body.split('\n\n');
   const pestDraft = draft.lessons[3].body.sesothoDraft.split('\n\n');
-  for (const index of [0, 1, 2, 5, 8, 9, 10, 11]) {
-    assert.equal(pestDraft[index], pestSource[index], `pest paragraph ${index + 1}: unreviewed treatment advice stays exact English`);
+  // Ordinary step framing now has checked drafts; causal ecology and treatment safeguards remain English.
+  for (const index of [1, 10]) {
+    assert.equal(pestDraft[index], pestSource[index], `pest paragraph ${index + 1}: precise ecology and treatment safeguards stay exact English`);
   }
+  assert.match(pestDraft[2], /pele o phekola eng kapa eng.*system yohle/);
+  assert.match(pestDraft[5], /mehato e mene, ka tatellano/);
+  assert.match(pestDraft[9], /Ke ka morao feela moo o nkang kgato/);
+  assert.ok(pestDraft[9].endsWith('and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.'));
+  assert.ok(pestDraft[8].endsWith('Beneficial insects are doing work you\'d otherwise do yourself.'));
   const staplesSource = source.lessons[2].body.split('\n\n');
   const staplesDraft = draft.lessons[2].body.sesothoDraft.split('\n\n');
   assert.equal(staplesDraft[11], 'Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.',

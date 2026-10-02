@@ -380,3 +380,21 @@ test('Sesotho bed-body drafts keep reachability, no wet clay and soil-specific p
   assert.equal(shown.content.body, draft.body.sesothoDraft);
   assert.equal(resolveLearnerLessonPresentation({ ...source, body: source.body + ' changed soil instruction' }, 'st').status, 'english-fallback');
 });
+
+test('Sesotho pest step framing preserves diagnosis before action and treatment safeguards with source drift fallback', async () => {
+  const { SESOTHO_VEGETABLES_STAPLES_DRAFT } = await import('../lib/course-translation-drafts-st-vegetables-staples.ts');
+  const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons[3];
+  const draft = SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons[3];
+  assert.equal(draft.body.sourceEnglish, source.body);
+  const paragraphs = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(paragraphs.length, source.body.split('\n\n').length);
+  assert.match(paragraphs[2], /pele o phekola eng kapa eng.*system yohle/);
+  assert.match(paragraphs[5], /mehato e mene, ka tatellano/);
+  assert.match(paragraphs[9], /Ke ka morao feela/);
+  assert.ok(paragraphs[9].includes('lightest thing that works'));
+  assert.ok(paragraphs[9].includes('may help. Check that the action suits the problem and monitor the result.'));
+  assert.equal(paragraphs[10], source.body.split('\n\n')[10]);
+  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
+  assert.equal(resolveLearnerLessonPresentation(source, 'st').content.body, draft.body.sesothoDraft);
+  assert.equal(resolveLearnerLessonPresentation({ ...source, body: source.body + ' Changed treatment condition.' }, 'st').status, 'english-fallback');
+});
