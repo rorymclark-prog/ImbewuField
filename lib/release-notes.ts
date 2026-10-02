@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 October 2026', sha: '80ea2477', changes: [
+  { when: '3 October 2026', sha: 'fe3bff8f', changes: [
     'Reading lessons add marked Tshivenda and Xitsonga drafts beside English.',
     'Precise frost, soil and safe-site conditions stay in exact English.',
   ], tour: [
