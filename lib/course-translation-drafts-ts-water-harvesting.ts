@@ -141,8 +141,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       },
       "title": {
         "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
-        "xitsongaDraft": "Farm Dams and Ponds: Storing Water for the Dry Season",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Madamu ya Mapurasi na Swidziva: Ku Hlayisa Mati eka Dry Season",
+        "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
@@ -152,8 +152,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "keyPoints": [
         {
           "sourceEnglish": "A dam needs a site assessment and qualified design",
-          "xitsongaDraft": "A dam needs a site assessment and qualified design",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Damu ri lava site assessment na qualified design.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Design a safe spillway before construction",
@@ -162,27 +162,27 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         },
         {
           "sourceEnglish": "Check required water authorisations before building",
-          "xitsongaDraft": "Check required water authorisations before building",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Kamba authorisations ta mati leti lavekaka u nga si aka.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
-          "xitsongaDraft": "Maintain bank cover and keep trees off an earth dam wall",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Hlayisa bank cover naswona do not plant trees on an earth dam wall.",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
-            "xitsongaDraft": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Murimi u aka dam wall with no spillway. After an exceptional storm it overflows. What is the likely result?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "The water irrigates lower fields beneficially",
-              "xitsongaDraft": "The water irrigates lower fields beneficially",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Mati ma cheleta masimu ya le hansi hi ndlela leyinene.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
@@ -191,8 +191,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "The dam stays full and overflow drains harmlessly",
-              "xitsongaDraft": "The dam stays full and overflow drains harmlessly",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Damu ri sala ri tele naswona overflow yi khuluka hi ndlela leyi nga riki na khombo.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Storage capacity increases permanently",
@@ -210,8 +210,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         {
           "question": {
             "sourceEnglish": "Which action helps protect an earth dam?",
-            "xitsongaDraft": "Which action helps protect an earth dam?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Hi rihi goza leri pfunaka ku sirhelela earth dam?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
@@ -221,8 +221,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
-              "xitsongaDraft": "Maintain the designed bank cover and keep the spillway clear",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Hlayisa bank cover leyi design yi yi hlamuselaka naswona u endla leswaku spillway yi nga pfaleki.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "A full concrete lining and plastic cover",
@@ -238,8 +238,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
-            "xitsongaDraft": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Spillway leyi nga pfaleki na banks leti hlayisiweke swi pfuna damu ku tirha hi ndlela leyi design yi yi hlamuselaka. Trees should not be planted on an earth dam wall.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -248,38 +248,38 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "id": "water-harvesting-l3",
       "infographicAlt": {
         "sourceEnglish": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
-        "xitsongaDraft": "Mpfula yi khuluka ehenhla ka lwangu yi nghena eka gatara kutani yi rhelela hi phayiphi yi nghena ethankini, laha ku nga na first-flush diverter leyitsongo leyi hambanaka na phayiphi thanki yi nga si fikeleleka ku lahla mati yo sungula lama thyakeke.",
-        "reviewStatus": "machine-draft"
+        "xitsongaDraft": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+        "reviewStatus": "hold"
       },
       "title": {
         "sourceEnglish": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
-        "xitsongaDraft": "Tithanki ta Mati ya Mpfula na ku Hlengeleta eLwangwini: Ku Hlengeleta na ku Sirhelela Mati",
-        "reviewStatus": "machine-draft"
+        "xitsongaDraft": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+        "reviewStatus": "hold"
       },
       "body": {
         "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
-        "xitsongaDraft": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.\n\nKamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.\n\nTirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Kutani u tekela enhlokweni mati lama hundzaka gatara, lama hambukisiwaka kumbe lama halakaka loko thanki yi tele.\n\nNtsengo wa lembe hinkwaro a wu ku byeli leswaku ku ta va na mati yo tanihi kwihi hi nkarhi wa dyandza. Pimanisa mati lama nga kona na mitirho leyi u yi kunguhataka.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nSayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya minkarhi ya dyandza.\n\nTsala mitirho leyi kunguhatiweke kutani u ringanisa xilaveko ku suka eka tirhekhodo ta wena n'wini. Pimanisa sweswo na mati lama kumekaka hi tinguva hinkwato.\n\nKunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma hunguteka. Vito ra phurovhinse ntsena a ri nge ku byeli sayizi ya thanki leyi u yi lavaka.\n\nHlayisa thanki yi funengetiwile, sefa tindhawu leti pfulekeke ku sivela switsotswana, naswona u hlayisa lwangu, tigatara na diverter. Hlayisa mati ya mpfula ma hambanile na tiphayiphi ta mati yo nwa.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.\n\nKamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.\n\nTirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. First-flush diverter yi endla leswaku some of the first runoff yi nga ngheni etankini.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nDiverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.\n\nSayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya dry periods.\n\nTsala intended uses kutani u estimate demand ya wona u tirhisa tirhekhodo ta wena n'wini. Compare that with supply through the seasons.\n\nKunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. A province name alone cannot tell you the tank size you need.\n\nHlayisa thanki yi funengetiwile. Screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nBasic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka food crops na wona ya lava safety assessment.",
+        "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Roof area, rain, demand and losses determine useful storage",
-          "xitsongaDraft": "Vukulu bya lwangu, mpfula, xilaveko na ku lahleka ka mati swi vumba vuhlayiselo lebyi pfunaka",
+          "xitsongaDraft": "Vukulu bya lwangu, mpfula, xilaveko xa mati na ku lahleka ka mati swi lawula ku hlayisiwa ka mati lama nga tirhisiwaka.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Size and maintain the first-flush diverter for the roof",
-          "xitsongaDraft": "Pima sayizi naswona u hlayisa first-flush diverter ya lwangu",
+          "xitsongaDraft": "Lulamisa sayizi ya first-flush diverter hi ku landza lwangu naswona yi hlayise.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Clear water can still contain germs or chemicals",
-          "xitsongaDraft": "Mati lama tengileko ma nga va ma ha ri na switsongwatsongwana kumbe tikhemikhali",
+          "xitsongaDraft": "Clear water ya ha nga va na germs kumbe chemicals.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Testing and treatment must match the intended use",
-          "xitsongaDraft": "Ku kamba na vutshunguri swi fanele swi fambisana na matirhiselo lama kunguhatiweke",
+          "xitsongaDraft": "Testing na treatment swi fanele swi fambisana na intended use.",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -287,70 +287,70 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         {
           "question": {
             "sourceEnglish": "What information is needed to choose a rainwater tank?",
-            "xitsongaDraft": "Hi vuxokoxoko bahi lebyi lavekaka ku hlawula thanki ya mati ya mpfula?",
+            "xitsongaDraft": "Hi wahi vuxokoxoko byi lavekaka ku hlawula rainwater tank?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Only the province where the farm is located",
-              "xitsongaDraft": "Ntsena phurovhinse laha purasi ri kumekaka kona",
+              "xitsongaDraft": "Province ntsena laha farm yi nga kona.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Roof area, rainfall pattern, water demand and collection losses",
-              "xitsongaDraft": "Vukulu bya lwangu, mafambelo ya mpfula, xilaveko xa mati na ku lahleka ka mati loko ku hlengeletiwa",
+              "xitsongaDraft": "Vukulu bya lwangu, pattern ya mpfula, xilaveko xa mati na ku lahleka ka mati loko ma hlengeletiwa.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Only the amount of rain in one storm",
-              "xitsongaDraft": "Ntsena ntsengo wa mpfula eka xidzedze xin'we",
+              "xitsongaDraft": "Ntsengo wa mpfula ya storm yin'we ntsena.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Only the price of the biggest available tank",
-              "xitsongaDraft": "Ntsena nxavo wa thanki leyikulu ngopfu leyi kumekaka",
+              "xitsongaDraft": "Ntsengo ntsena wa tank leyikulu swinene leyi kumekaka.",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
-            "xitsongaDraft": "Ku kunguhatela thanki swi fanele swi pimanisa mati lama tirhisekaka na xilaveko eka minkarhi ya mpfula na ya dyandza. Sayizi yin'we leyi pimiweke ya xifundzha a yi nge swi koti sweswo.",
+            "xitsongaDraft": "Ku pulana tank swi fanele ku pimanisa supply leyi nga tirhisiwaka na demand hi nkarhi wa wet na dry periods. Sayizi yin'we leyi vekiweke ya region a yi nge endli tano.",
             "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "Why does a first-flush diverter matter even for irrigation-only tank water?",
-            "xitsongaDraft": "Ha yini first-flush diverter yi ri ya nkoka hambi ku ri eka mati ya thanki lama tirhiseriwaka ku cheleta ntsena?",
+            "xitsongaDraft": "Ha yini first-flush diverter yi ri ya nkoka hambi mati ya tank ma tirhisiwa eka irrigation ntsena?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "It doesn't matter for irrigation, only drinking water",
-              "xitsongaDraft": "A swi na nkoka eka ku cheleta, ntsena eka mati yo nwa",
+              "xitsongaDraft": "A yi na nkoka eka irrigation; i ya drinking water ntsena.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
-              "xitsongaDraft": "Ku khuluka ko sungula ku rhwala thyaka ro tala ra swinyenyani, ritshuri na switsongwatsongwana leswi nga thyakisaka swibyariwa leswi dyiwaka",
+              "xitsongaDraft": "First flush yi rhwala concentrated droppings, dust na pathogens leti nga contaminate edible crops.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It's more acidic and changes soil pH over time",
-              "xitsongaDraft": "Yi na asidi yo tala naswona yi cinca pH ya misava hi nkarhi",
+              "xitsongaDraft": "It's more acidic naswona yi cinca soil pH hi ku famba ka nkarhi.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It stops the tank overfilling in storms",
-              "xitsongaDraft": "Yi sivela thanki ku tala ngopfu hi minkarhi ya swidzedze",
+              "xitsongaDraft": "Yi sivela tank ku tala ngopfu hi nkarhi wa storms.",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
-            "xitsongaDraft": "Ku hambukisa mati yo sungula lama khulukaka swi nga hunguta thyaka, kambe a swi tiyisekisi leswaku mati lama landzelaka ma hlayisekile. Kamba khwalithi eka matirhiselo lama kunguhatiweke.",
+            "xitsongaDraft": "Ku hambukisa early runoff swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ya hlayisekile. Kambela quality hi ku landza intended use.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -544,42 +544,6 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "reason": "This rationale contains earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
     },
     {
-      "lessonId": "water-harvesting-l2",
-      "field": "body[7]",
-      "sourceText": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
-      "reason": "The prohibition about trees on an earth dam wall is safety-critical; retain exact wording pending fluent-language review."
-    },
-    {
-      "lessonId": "water-harvesting-l3",
-      "field": "body[4]",
-      "sourceText": "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
-      "reason": "First-flush contamination and food-crop exposure are water-safety claims; retain exact source wording pending fluent-language review."
-    },
-    {
-      "lessonId": "water-harvesting-l3",
-      "field": "body[5]",
-      "sourceText": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
-      "reason": "First-flush sizing and maintenance depend on system-specific instructions; retain exact wording pending fluent-language review."
-    },
-    {
-      "lessonId": "water-harvesting-l3",
-      "field": "body[6]",
-      "sourceText": "A diverter does not make the remaining water safe to drink.",
-      "reason": "This is a drinking-water safety qualification; retain exact wording pending fluent-language review."
-    },
-    {
-      "lessonId": "water-harvesting-l3",
-      "field": "body[11]",
-      "sourceText": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
-      "reason": "Water testing and treatment are public-health claims; retain exact wording pending fluent-language review."
-    },
-    {
-      "lessonId": "water-harvesting-l3",
-      "field": "body[12]",
-      "sourceText": "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
-      "reason": "This is a drinking-water and crop-safety qualification; retain exact wording pending fluent-language review."
-    },
-    {
       "lessonId": "water-harvesting-l4",
       "field": "body[0]",
       "sourceText": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.",
@@ -683,111 +647,87 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
     },
     {
       "lessonId": "water-harvesting-l2",
-      "field": "title",
-      "sourceText": "Farm Dams and Ponds: Storing Water for the Dry Season",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
       "field": "infographicAlt",
       "sourceText": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     },
     {
       "lessonId": "water-harvesting-l2",
-      "field": "keyPoints[0]",
-      "sourceText": "A dam needs a site assessment and qualified design",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "field": "body[7]",
+      "sourceText": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "reason": "The design-specified bank cover and earth-dam tree prohibition remain exact English while the rest of this body is paired to localized text."
     },
     {
       "lessonId": "water-harvesting-l2",
       "field": "keyPoints[1]",
       "sourceText": "Design a safe spillway before construction",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "keyPoints[2]",
-      "sourceText": "Check required water authorisations before building",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "keyPoints[3]",
-      "sourceText": "Maintain bank cover and keep trees off an earth dam wall",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "quiz[0].question",
-      "sourceText": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "quiz[0].options[0]",
-      "sourceText": "The water irrigates lower fields beneficially",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     },
     {
       "lessonId": "water-harvesting-l2",
       "field": "quiz[0].options[1]",
       "sourceText": "It overtops and erodes the wall, risking a catastrophic breach",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "quiz[0].options[2]",
-      "sourceText": "The dam stays full and overflow drains harmlessly",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     },
     {
       "lessonId": "water-harvesting-l2",
       "field": "quiz[0].options[3]",
       "sourceText": "Storage capacity increases permanently",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     },
     {
       "lessonId": "water-harvesting-l2",
       "field": "quiz[0].rationale",
       "sourceText": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "quiz[1].question",
-      "sourceText": "Which action helps protect an earth dam?",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     },
     {
       "lessonId": "water-harvesting-l2",
       "field": "quiz[1].options[0]",
       "sourceText": "A deep, exposed dam with no bank vegetation",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "quiz[1].options[1]",
-      "sourceText": "Maintain the designed bank cover and keep the spillway clear",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     },
     {
       "lessonId": "water-harvesting-l2",
       "field": "quiz[1].options[2]",
       "sourceText": "A full concrete lining and plastic cover",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     },
     {
       "lessonId": "water-harvesting-l2",
       "field": "quiz[1].options[3]",
       "sourceText": "A larger surface area to spread evaporation evenly",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     },
     {
-      "lessonId": "water-harvesting-l2",
-      "field": "quiz[1].rationale",
-      "sourceText": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
-      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+      "lessonId": "water-harvesting-l3",
+      "field": "title",
+      "sourceText": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
+    },
+    {
+      "lessonId": "water-harvesting-l3",
+      "field": "infographicAlt",
+      "sourceText": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
+    },
+    {
+      "lessonId": "water-harvesting-l3",
+      "field": "body[3]",
+      "sourceText": "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
+    },
+    {
+      "lessonId": "water-harvesting-l3",
+      "field": "body[5]",
+      "sourceText": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
+    },
+    {
+      "lessonId": "water-harvesting-l3",
+      "field": "body[11]",
+      "sourceText": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
     }
   ]
 } satisfies XitsongaCourseModuleDraft;

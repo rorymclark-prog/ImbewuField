@@ -126,7 +126,7 @@ test('Sesotho Water Harvesting uses a source-paired learner draft and keeps unre
   assert.equal(resolveLearnerLessonPresentation(module.lessons[0], 'ts').status, 'draft');
   for (const lesson of module.lessons.slice(1)) {
     assert.equal(resolveLearnerLessonPresentation(lesson, 'ts').status,
-      lesson.id === 'water-harvesting-l2' ? 'draft' : 'english-fallback');
+      lesson.id === 'water-harvesting-l2' || lesson.id === 'water-harvesting-l3' ? 'draft' : 'english-fallback');
   }
 });
 

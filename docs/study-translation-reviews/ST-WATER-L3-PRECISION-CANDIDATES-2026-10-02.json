@@ -1,0 +1,91 @@
+{
+  "language": "st",
+  "lessonId": "water-harvesting-l3",
+  "sourceMainSha": "f76814b2",
+  "currentSourceCheckedAt": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "provenance": "Root precision candidate from current registry; independent semantic check required; no fluent approval",
+  "paragraphs": [
+    {
+      "index": 1,
+      "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+      "currentDraft": "Marulelo a hao a ka bokella metsi a pula. Bongata bo itshetlehile ka boholo ba marulelo, pula le tahlehelo.",
+      "candidate": "Marulelo a hao a ka bokella metsi a pula. Bongata bo itshetlehile ka boholo ba marulelo, pula le tahlehelo."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
+      "currentDraft": "Hlahloba hore na thepa ya marulelo e loketse ho bokella metsi a pula pele o hokela tanka.",
+      "candidate": "Hlahloba hore na thepa ya marulelo e loketse ho bokella metsi a pula pele o hokela tanka."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+      "currentDraft": "Sebedisa boholo ba marulelo jwalo ka ha bo bonwa ho tloha hodimo le ditlaleho tsa pula ya sebaka seo. Ebe o dumella metsi a fosang koto, a kgelohang kapa a kgaphatsehang ha tanka e tletse.",
+      "candidate": "Sebedisa boholo ba marulelo jwalo ka ha bo bonwa ho tloha hodimo le ditlaleho tsa pula ya sebaka seo. Ebe o dumella metsi a fosang koto, a kgelohang kapa a kgaphatsehang ha tanka e tletse."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+      "currentDraft": "Palo yohle ya selemo le selemo ha e o jwetse hore na metsi a makae a tla fumaneha nakong ya komello. Bapisa phepelo le tshebediso eo o e rerileng.",
+      "candidate": "An annual total does not tell you how much water will be available during a dry spell. Bapisa phepelo le tshebediso eo o e rerileng."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+      "currentDraft": "Metsi a theohang marulelong a ka nka lerole, mantle le tshilafalo e nngwe. Sekgelo sa ho qala ha phallo (first-flush diverter) se boloka karolo e nngwe ya metsi a pele a phallang kantle ho tanka.",
+      "candidate": "Metsi a theohang marulelong a ka nka lerole, mantle le tshilafalo e nngwe. Sekgelo sa ho qala ha phallo (first-flush diverter) se boloka karolo e nngwe ya metsi a pele a phallang kantle ho tanka."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+      "currentDraft": "Bongata bo hlokahalang ba ho kgeloha bo itshetlehile ka marulelo le tsamaiso. Sebedisa ditaelo tsa boholo le tlhokomelo tse tswang ho mofani wa thepa; ha ho na bophahamo bo le bong bakeng sa marulelo a mang le a mang.",
+      "candidate": "Bongata bo hlokahalang ba ho kgeloha bo itshetlehile ka marulelo le tsamaiso. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "A diverter does not make the remaining water safe to drink.",
+      "currentDraft": "Sekgelo (diverter) ha se etse hore metsi a setseng a bolokehele ho nowa.",
+      "candidate": "Sekgelo (diverter) ha se etse hore metsi a setseng a bolokehele ho nowa."
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+      "currentDraft": "Boholo ba tanka bo itshetlehile ka tlhoko ya metsi, pula, boholo ba marulelo le bolelele ba dinako tsa komello.",
+      "candidate": "Boholo ba tanka bo itshetlehile ka tlhoko ya metsi, pula, boholo ba marulelo le the length of dry periods."
+    },
+    {
+      "index": 9,
+      "sourceEnglish": "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+      "currentDraft": "Ngola tshebediso e rerilweng mme o hakanye tlhoko ya yona ho tswa ditlalehong tsa hao. Bapisa seo le phepelo ho pholletsa le dihla.",
+      "candidate": "Ngola tshebediso e rerilweng mme o hakanye tlhoko ya yona ho tswa ditlalehong tsa hao. Bapisa seo le phepelo ho pholletsa le dihla."
+    },
+    {
+      "index": 10,
+      "sourceEnglish": "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.",
+      "currentDraft": "Rala seo o tla se etsa ha metsi a bolokilweng a qala ho fela. Lebitso la provense feela le ke ke la o jwetsa boholo ba tanka eo o e hlokang.",
+      "candidate": "Rala seo o tla se etsa ha metsi a bolokilweng a qala ho fela. Lebitso la provense feela le ke ke la o jwetsa boholo ba tanka eo o e hlokang."
+    },
+    {
+      "index": 11,
+      "sourceEnglish": "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+      "currentDraft": "Boloka tanka e kwahetswe, sefa menyako kgahlanong le dikokwanyana, mme o hlokomele marulelo, dikoto le sekgelo (diverter). Boloka metsi a pula a arohane le diphaephe tsa metsi a nowang.",
+      "candidate": "Boloka tanka e kwahetswe, screen openings against insects, mme o hlokomele marulelo, dikoto le sekgelo (diverter). Boloka metsi a pula a arohane le diphaephe tsa metsi a nowang."
+    },
+    {
+      "index": 12,
+      "sourceEnglish": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+      "currentDraft": "Metsi a shebahalang a hlwekile a ka nna a ba le dikokwana-hloko (germs) kapa dikhemikhale. Botsa balaodi ba bophelo bo botle ba sebaka seo ka diteko le kalafo tse loketseng tshebediso e rerilweng.",
+      "candidate": "Water that looks clear may still contain germs or chemicals. Botsa balaodi ba bophelo bo botle ba sebaka seo ka diteko le kalafo tse loketseng tshebediso e rerilweng."
+    },
+    {
+      "index": 13,
+      "sourceEnglish": "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+      "currentDraft": "Sefa sa mantlha feela hase tiiso ya metsi a nowang. Metsi a sebediswang dijalong tsa dijo le ona a hloka tlhahlobo ya polokeho.",
+      "candidate": "Sefa sa mantlha feela hase tiiso ya metsi a nowang. Metsi a sebediswang dijalong tsa dijo le ona a hloka tlhahlobo ya polokeho."
+    }
+  ],
+  "scope": "Repair dry spell versus drought, supplier volume versus height, insect screening versus filtering, and clear appearance versus clean/safe. Preserve all other paragraphs. No learner wiring.",
+  "implementationBaseSha": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "authorizationNote": "Rory explicitly authorized regional lesson and quiz translations on 2026-10-02 (“ok yes”); canonical English sources remain unchanged.",
+  "learnerStatusNote": "Machine draft for facilitator review; this is not fluent-speaker or local practitioner approval."
+}
