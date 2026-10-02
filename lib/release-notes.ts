@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '81334c53', changes: [
+    'Tshivenda Soil lesson 2 now has a complete marked compost body draft.',
+    'Difficult technical English remains beside the exact English source.',
+  ], tour: [
+    { title: 'Read the Tshivenda compost draft', where: 'Study → Soil Health → lesson 2', href: '/student',
+      detail: 'Read all 12 unreviewed paragraphs beside English. Slides and audio are unchanged.' },
+  ] },
   { when: '2 October 2026', sha: 'cd2d24df', changes: [
     'Sesotho Soil lesson 3 now has a complete marked body and assessment draft.',
     'Exact English remains beside the draft, with difficult technical terms retained.',

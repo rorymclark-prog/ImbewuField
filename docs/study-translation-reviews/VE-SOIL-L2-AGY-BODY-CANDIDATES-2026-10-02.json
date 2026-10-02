@@ -1,0 +1,146 @@
+{
+  "lessonId": "soil-health-l2",
+  "language": "ve",
+  "languageName": "Tshivenda",
+  "sourceMainSha": "09e23eac039a0090ab5b232bd4d339a53d1f6043",
+  "status": "data-only candidate; independent semantic review recorded; not wired or approved",
+  "scopeNote": "Read-only data candidate now covers all 12 Soil Health L2 body paragraphs. Paragraphs 1–10 retain the original Agy proposals and independent semantic corrections. Paragraphs 11–12 are new candidate additions based on current canonical source and exact English holds in the actual Tshivenda registry (language ve, property tshivendaDraft); no AGY draft was supplied for those two paragraphs. No repository/learner files were edited.",
+  "paragraphs": [
+    {
+      "index": 1,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "agyDraft": "Compost ndi organic matter yo pwashekanywaho fhasi ha maemo o langwaho.",
+      "revisedCandidate": "Compost ndi organic matter yo broken down nga fhasi ha managed conditions.",
+      "literalBacktranslation": "Compost is organic matter broken down under managed conditions.",
+      "semanticReview": "Repair: “pwashekanywaho” can suggest physical breaking/crushing instead of organic decomposition. Keep “broken down” and “managed conditions” in English until a precise Tshivenda composting term is checked."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+      "agyDraft": "Compost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu na u shela mulenzhe kha nutrients.",
+      "revisedCandidate": "Compost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u contribute nutrients.",
+      "literalBacktranslation": "Finished compost can improve soil structure and contribute nutrients.",
+      "semanticReview": "The AGY wording can read as contributing “to nutrients” rather than contributing nutrients. Minimal repair keeps “contribute nutrients” in English; “can” and finished compost are retained."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+      "agyDraft": "Tshifhinga tsha u luga ha manyoro tshi a fhambana u ya nga zwishumiswa (materials), vhunyunyu, muya na thempheretsha (temperature). Dzina ḽa vundu kana mbalo yo vhewaho ya vhege a si tsedzuluso ya u luga ha manyoro.",
+      "revisedCandidate": "Tshifhinga tsha u luga ha manyoro tshi a fhambana u ya nga zwishumiswa (materials), vhunyunyu, muya na thempheretsha (temperature). Dzina ḽa vundu kana mbalo yo vhewaho ya vhege a si tsedzuluso ya u luga ha manyoro.",
+      "literalBacktranslation": "Time to readiness varies according to materials, moisture, air and temperature. A province name or fixed number of weeks is not a readiness test.",
+      "semanticReview": "No material drift identified. Readiness variation and both negative timing claims are retained. “Province”, materials and readiness-test concepts remain explicit."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+      "agyDraft": "Tanganyani zwo omaho zwa buraweni (dry browns) na zwitshe zwa girini (fresh greens). Iledzani zwilere (layers) zwo kandelaho, zwi re na vhunyunyu vhunzhi zwine zwa thivhela muya uri u sa dzhene.",
+      "revisedCandidate": "Tanganyani dry browns na fresh greens. Avoid thick, wet layers that keep air out.",
+      "literalBacktranslation": "Mix dry browns and fresh greens. Avoid thick, wet layers that prevent air from entering.",
+      "semanticReview": "Repair: brown/green labels could be read as colour rather than compost-material categories. Keep the source technical categories “dry browns” and “fresh greens” in English. Layer thickness/wetness and air exclusion remain."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+      "agyDraft": "Arali thulwi ya manyoro ya vha ya ndodzi (slimy) kana ya nukha nga maanḓa ammonia, shelani zwo omaho zwa buraweni (dry browns) nahone ni i rembuluse.",
+      "revisedCandidate": "Arali thulwi ya manyoro ya vha slimy kana ya nukha ammonia nga maanḓa, shelani dry browns nahone ni i rembuluse.",
+      "literalBacktranslation": "If the compost heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+      "semanticReview": "“Slimy” is retained directly to avoid substituting “dirty”; the strong ammonia smell, conditional trigger, dry browns and turning are preserved."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "agyDraft": "Tolani vhunyunyu na muya musi thulwi i tshi khou shanduka; resepi (recipe) nthihi a i lulameli mutanganyo muṅwe na muṅwe wa zwishumiswa (materials).",
+      "revisedCandidate": "Sedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; recipe nthihi a i lulameli mutanganyo muṅwe na muṅwe wa materials.",
+      "literalBacktranslation": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "semanticReview": "Repair: “Tolani” can imply measuring rather than checking/monitoring. “Sedzulusani” is a minimal check/observe wording. One recipe not fitting every materials mix remains."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+      "agyDraft": "Vhukati hu re na mufhiso (hot centre) a zwi khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho shumiwa (treated). Tshifhinga, thempheretsha (temperature) na ndangulo (management) zwoṱhe zwi na ndeme.",
+      "revisedCandidate": "Hot centre a i khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Time, temperature na management zwoṱhe zwi na ndeme.",
+      "literalBacktranslation": "A hot centre does not prove that every part of the heap has been treated. Time, temperature and management all matter.",
+      "semanticReview": "Repair: “shumiwa” suggests being worked on, not having been treated. Keep “treated” directly. A hot centre does not prove every part received treatment; time, temperature and management still matter."
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "agyDraft": "Iledzani u dzhenisa ṋama, zwi-bva-kha-mukhaha (dairy), zwimela zwi re na malwadze, matoko a zwifuwo zwa hayani (pet waste) na zwishumiswa zwo tshinyalaho (contaminated materials) kha iyi sisiṱeme yo leluwaho ya hayani.",
+      "revisedCandidate": "Iledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi simple household system.",
+      "literalBacktranslation": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "semanticReview": "Repair: “pet waste” must not expand to domestic/livestock waste, and “contaminated” must not become merely spoiled. Keep the precise source categories in English; retain simple household system and exclusion."
+    },
+    {
+      "index": 9,
+      "sourceEnglish": "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.",
+      "agyDraft": "Ni songo humbula uri u ita manyoro hayani (home composting) zwi fhedza mbeu iṅwe na iṅwe ya hatsi (weed seed) kana tshitzhili tshiṅwe na tshiṅwe tsha vhulwadze (disease organism). Shumisani kuitele kwo tendelwaho (recognised process) hune ha ṱoḓea sanitation.",
+      "revisedCandidate": "Ni songo humbula uri home composting i fhedza weed seed iṅwe na iṅwe kana disease organism iṅwe na iṅwe. Shumisani recognised process hune sanitation ya ṱoḓea.",
+      "literalBacktranslation": "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.",
+      "semanticReview": "Repair: “hatsi” means grass and narrows “weed seed.” Keep “weed seed” and “disease organism” exact. Preserve not-assume/every and the recognised-process condition for sanitation."
+    },
+    {
+      "index": 10,
+      "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "agyDraft": "Iledzani u dzhenisa dzithungo dza mbeu dza wattle (wattle seed pods) kha thulwi ya manyoro. Thulwi ya misi yoṱhe fhedzi (ordinary heap) i nga si kone u ita uri mbeu iṅwe na iṅwe i si tsha mela (non-viable).",
+      "revisedCandidate": "Iledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. An ordinary heap may not make every seed non-viable.",
+      "literalBacktranslation": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "semanticReview": "Repair: “i nga si kone” can sound like the heap is unable, a categorical impossibility. Keep the exact modal source sentence in English (“may not”), while preserving the wattle seed-pod exclusion in Tshivenda."
+    },
+    {
+      "index": 11,
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "currentDraft": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "agyDraft": null,
+      "revisedCandidate": "Shumisani fhedzi clean, untreated materials. Bark breaks down slowly; dzina layo fhedzi a si proof ya uri a i na contamination.",
+      "literalBacktranslation": "Use only materials that are clean and untreated. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "semanticReview": "The registry still holds this whole paragraph in English. Candidate retains clean, untreated, contamination, slow breakdown and the claim that the name alone is not proof. Keeping technical terms direct prevents “untreated” or “contamination-free” from being broadened."
+    },
+    {
+      "index": 12,
+      "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "currentDraft": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "agyDraft": null,
+      "revisedCandidate": "Sedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. Keep it moist, hu si waterlogged.",
+      "literalBacktranslation": "Check the heap and turn it when it needs more air or mixing. Keep it moist, not waterlogged.",
+      "semanticReview": "The registry still holds this whole paragraph in English. Candidate keeps turning conditional on need for more air or mixing, preserves the “or” relation, and keeps moist distinct from waterlogged in English."
+    }
+  ],
+  "overallFindings": [
+    "P1 “pwashekanywaho” risks physical crushing/breaking rather than compost decomposition; retain source “broken down” pending precise Tshivenda term.",
+    "P2 revise “contribute nutrients” shift by retaining that exact technical phrase.",
+    "P4 retain “dry browns”/“fresh greens” to avoid color-only interpretation.",
+    "P6 change “Tolani” (measure) to “Sedzulusani” (check/observe).",
+    "P7 “shumiwa” (worked on) is not equivalent to “treated”; retain “treated”.",
+    "P8 avoid changing pet waste into domestic animal waste and contaminated materials into spoiled materials; exact technical categories retained in English.",
+    "P9 “hatsi” means grass and narrows weed seed; retain weed seed and disease organism.",
+    "P10 avoid turning “may not” into categorical inability; retain exact English modal sentence."
+  ],
+  "preservation": {
+    "sourcePairsExact": true,
+    "paragraphsIncluded": 12,
+    "sourceParagraphCount": 12,
+    "paragraphs11And12Untouched": true,
+    "speciesTermsPreserved": [
+      "wattle seed pods"
+    ],
+    "noFiguresOrNewInstructions": true,
+    "exactEnglishHoldsInCurrentVeRegistry": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "allSourcesMatchCanonical": true
+  },
+  "uncertaintySummary": "Tshivenda wording remains a candidate, not fluency approval. Technical compost, treatment, weed, contamination and moisture terms remain English where ambiguity remains. Root independent review is still required before any learner wiring.",
+  "composedCandidateBody": "Compost ndi organic matter yo broken down nga fhasi ha managed conditions.\n\nCompost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u contribute nutrients.\n\nTshifhinga tsha u luga ha manyoro tshi a fhambana u ya nga zwishumiswa (materials), vhunyunyu, muya na thempheretsha (temperature). Dzina ḽa vundu kana mbalo yo vhewaho ya vhege a si tsedzuluso ya u luga ha manyoro.\n\nTanganyani dry browns na fresh greens. Iledzani layers dzo kandelaho, dza vhunyunyu vhunzhi dzine dza thivhela muya uri u sa dzhene.\n\nArali thulwi ya manyoro ya vha slimy kana ya nukha ammonia nga maanḓa, shelani dry browns nahone ni i rembuluse.\n\nSedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; recipe nthihi a i lulameli mutanganyo muṅwe na muṅwe wa materials.\n\nHot centre a i khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Time, temperature na management zwoṱhe zwi na ndeme.\n\nIledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi simple household system.\n\nNi songo humbula uri home composting i fhedza weed seed iṅwe na iṅwe kana disease organism iṅwe na iṅwe. Shumisani recognised process hune sanitation ya ṱoḓea.\n\nIledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. An ordinary heap may not make every seed non-viable.\n\nShumisani fhedzi materials dzine dza vha clean, dzo untreated. Bark breaks down slowly; dzina layo fhedzi a si proof ya uri a i na contamination.\n\nSedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. Keep it moist, hu si waterlogged.",
+  "secondIndependentCheck": "All12 exactsources verified. Root retained full English air-exclusion clause in4 and clean, untreated materials in11 to avoid unresolved English-plural concord. Conditions/modalities/sourceindices preserved; no fluent/local approval. Candidate remains data-only until fresh learner batch."
+}
