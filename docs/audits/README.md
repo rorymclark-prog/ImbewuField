@@ -6,9 +6,10 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site survey: start here
 
-1. [Current continuation record — 2 October 2026](2026-10-02/site-survey-continuation.md).
-2. [Original illustrated survey and report audit — 20 September](../SITE-SURVEY-AUDIT-2026-09-20.md).
-3. [isiZulu survey review packet — 25 September](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
+1. [Latest iteration: unfinished survey recovery — 2 October 2026](2026-10-02/site-survey-draft-recovery-codex.md).
+2. [Prior work and continuation baseline — 2 October 2026](2026-10-02/site-survey-continuation.md).
+3. [Original illustrated survey and report audit — 20 September](../SITE-SURVEY-AUDIT-2026-09-20.md).
+4. [isiZulu survey review packet — 25 September](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
 
 The continuation record distinguishes work already merged from open improvements
 and checks that have not been performed. The older audit's pending-release text
@@ -56,6 +57,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-02 | [Site survey: draft recovery, browser evidence and next checks — Codex](2026-10-02/site-survey-draft-recovery-codex.md) |
 | 2026-10-02 | [Production-plan follow-up: implementation, sources and verified outputs](2026-10-02/crop-production-codex-followup.md) |
 | 2026-10-02 | [Crop/production planning: original register](2026-10-02/crop-production-audit.md) · [Original nine-page audit PDF](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf) |
 | 2026-10-02 | [Site survey: prior work, merged follow-ups and next improvements](2026-10-02/site-survey-continuation.md) |

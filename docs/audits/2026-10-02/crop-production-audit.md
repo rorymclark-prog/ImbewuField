@@ -9,6 +9,10 @@
 - Current follow-up: **in progress** on
   `codex/ubhejane-farmer-crop-print-20261002`, worktree
   `/Users/roryclark/.codex/worktrees/crop-plan-audit/ImbewuField`.
+- Follow-up pull request: [#879 — farmer crop-plan prints](https://github.com/rorymclark-prog/ImbewuField/pull/879).
+- Survey continuation: [draft recovery iteration](site-survey-draft-recovery-codex.md).
+  This keeps unfinished answers separate from saved production/report inputs;
+  it does not duplicate the crop chat's frost, water or poultry questions.
 
 ## Preserve the original evidence
 
