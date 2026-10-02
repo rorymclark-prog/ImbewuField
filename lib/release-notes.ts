@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'a602b9d3', changes: [
+    'Reading lessons show more marked Tshivenda and Xitsonga drafts beside English.',
+    'A Sesotho soil-check point is drafted; difficult farming directions stay English.',
+  ], tour: [
+    { title: 'Review the regional Reading drafts', where: 'Study → Reading the Landscape',
+      href: '/student',
+      detail: 'Read lessons 1–2 and the Sesotho map key point beside English. Silent slides remain.' },
+  ] },
   { when: '2 October 2026', sha: 'feaa8a19', changes: [
     'Greywater lessons show marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
     'Technical and sanitation cautions stay English; both quizzes keep the source answers.',
