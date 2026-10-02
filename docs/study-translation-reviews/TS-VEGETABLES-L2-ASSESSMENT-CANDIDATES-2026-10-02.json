@@ -60,10 +60,10 @@
         "xitsongaDraft": "Intercropped plants can still compete; manage space, timing and water",
         "reviewStatus": "hold"
       },
-      "candidateXitsonga": "Intercropped plants can still compete; lulamisa space, timing and water.",
-      "candidateStatus": "machine-draft",
-      "independentBacktranslation": "Intercropped plants can still compete; manage space, timing and water.",
-      "uncertainty": "The competition condition and space/timing/water factors remain exact English."
+      "candidateXitsonga": "Intercropped plants can still compete; manage space, timing and water",
+      "candidateStatus": "hold",
+      "independentBacktranslation": "Intercropped plants can still compete; manage space, timing and water",
+      "uncertainty": "Retain exact English: 'lulamisa' may mean repair/fix and does not safely express the source's broad manage instruction."
     }
   ],
   "quiz": [
@@ -92,10 +92,10 @@
             "xitsongaDraft": "It uses less seed overall",
             "reviewStatus": "hold"
           },
-          "candidateXitsonga": "Yi tirhisa mbewu yitsongo hi ku angarhela.",
-          "candidateStatus": "machine-draft",
-          "independentBacktranslation": "It uses less seed overall.",
-          "uncertainty": "Check the comparative wording for less seed overall."
+          "candidateXitsonga": "It uses less seed overall",
+          "candidateStatus": "hold",
+          "independentBacktranslation": "It uses less seed overall",
+          "uncertainty": "Retain exact English: 'mbewu yitsongo' may mean a physically smaller seed rather than a smaller quantity of seed."
         },
         {
           "fieldPath": "quiz[0].options[1]",
@@ -238,5 +238,5 @@
   ],
   "reviewNote": "Source-paired machine-draft candidates only; no fluent approval. Nitrogen, root bacteria, decomposition, crop identities, timing/harvest pattern, and pest-effect claims remain exact English.",
   "independentCheck": "Current sources/order/indices checked; KP0/2 held after semantic concerns; Q0 at-one-time repaired. Not learner-wired; no fluent approval.",
-  "rootReview": "All-at-once repaired to hi nkarhi wun’we; staggered sowing and plan-for hungry gap held English after independent ambiguity check. Further final composition review before learner wiring; not fluent approval."
+  "rootReview": "Final independent check: ambiguous manage and less-seed wording remain exact English, alongside earlier staggered-sowing/plan-for-gap holds. Only KP1 and Q0 question accepted for learner draft; no fluent approval."
 }
