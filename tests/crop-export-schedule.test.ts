@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { cropByKey, plantSpacingRangeCm, plantsPerM2Range } from '@/lib/crop-catalog';
-import { buildFieldUtilizationByMonth, buildFoodAvailability, buildYearReport, seedBoqForPlan, settleOnceRows, tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
+import { buildFieldUtilizationByMonth, buildFoodAvailability, buildYearReport, seedBoqForPlan, settleOnceRows, confirmOnceSowing, tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { buildFieldSheet, buildOccupancyCalendar, buildPlanDashboard, buildPlanTableRows } from '@/lib/crop-export-benchmark';
 import {
   bedShareLabel,
@@ -16,6 +16,7 @@ import {
   rollingMonths,
   sowingInstruction,
   positionRangeLabel,
+  weightRangeLabel,
   taskLine,
   taskSentence,
   taskTitle,
@@ -177,8 +178,19 @@ test('a sourced field-rate cover creates management work without becoming food o
   const bedRow = buildBedPlanRows(cover, BEDS).find((candidate) => candidate.bedId === 'plot-1')!.crops[0];
   assert.equal(bedRow.harvestMonth, 10);
   assert.equal(bedRow.harvestEndMonth, 10);
-  assert.deepEqual(seedBoqForPlan(cover, BEDS), [], 'a kg/ha cover rate must not become a final-position seed count');
-  assert.deepEqual(buildBuyingSchedule(cover, BEDS, NOW_MONTH), [], 'the piece/packet buying model must not fake a kg/ha shopping quantity');
+  // The old empty-list assertion protected against fake plant counts, but
+  // also hid real cover seed from the shopping list. A sourced weight can
+  // be derived from mapped area without inventing an oat row grid.
+  const seedRow = seedBoqForPlan(cover, BEDS)[0];
+  const plot = BEDS.find((bed) => bed.id === 'plot-1')!;
+  assert.equal(seedRow.quantityStatus, 'sourced-weight-range');
+  assert.equal(seedRow.finalPlantPositions, 0);
+  assert.equal(seedRow.count, null);
+  assert.deepEqual(seedRow.countRange, oats.seedRateKgPerHaRange!.map((rate) => plot.areaM2 * rate / 10_000));
+  const purchase = buildBuyingSchedule(cover, BEDS, NOW_MONTH).flatMap((month) => month.items)[0];
+  assert.deepEqual(purchase.countRange, seedRow.countRange);
+  assert.match(purchase.note, /70kg seed\/ha.*105–140kg\/ha/);
+  assert.doesNotMatch(purchase.note, /Living planting material|plant positions|0 kg seed/);
   assert.equal(buildFoodAvailability(cover, BEDS).flat().some((item) => item.cropKey === 'oats'), false);
   assert.ok(buildFieldUtilizationByMonth(cover, BEDS).some((value) => value > 0), 'a sourced cover must count as field occupancy');
   assert.equal(buildOccupancyCalendar(cover, BEDS, NOW_MONTH).flatMap((calendarRow) => calendarRow.cells).flat().some((entry) => entry.cropKey === 'oats'), true);
@@ -662,7 +674,7 @@ const NURSERY_BED: PlanBed[] = [{ id: 'b1', label: 'Bed 1', areaM2: 20 }];
 
 test('a seedling line survives into the month it is staged for', () => {
   const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
-  const nur = settleOnceRows([starter], 2026, 10)[0];
+  const nur = [confirmOnceSowing(starter, 2026, 10)][0];
 
   const octSchedule = buildBuyingSchedule([nur], NURSERY_BED, 10);
   const items = octSchedule.flatMap((m) => m.items);
@@ -674,13 +686,13 @@ test('a seedling line survives into the month it is staged for', () => {
   assert.equal(octSchedule[0].month, 10, 'filed in THIS October, not eleven months out');
 
   // And it is gone the month after, same as the task list.
-  const nov = settleOnceRows([starter], 2026, 11);
+  const nov = [confirmOnceSowing(starter, 2026, 11)];
   assert.deepEqual(buildBuyingSchedule(nov, NURSERY_BED, 11), []);
 });
 
 test('a nursery line does not tell the farmer to buy seed for a month that has gone', () => {
   const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
-  const nur = settleOnceRows([starter], 2026, 10)[0];
+  const nur = [confirmOnceSowing(starter, 2026, 10)][0];
   const items = buildBuyingSchedule([nur], NURSERY_BED, 10).flatMap((m) => m.items);
   assert.equal(items.length, 1);
   assert.ok(!items[0].note.includes('Raising your own'));
@@ -691,7 +703,7 @@ test('a nursery line does not tell the farmer to buy seed for a month that has g
 test('the quantity does not change when the row settles — only the note does', () => {
   const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
   const sepItems = buildBuyingSchedule(settleOnceRows([starter], 2026, 9), NURSERY_BED, 9).flatMap((m) => m.items);
-  const octItems = buildBuyingSchedule(settleOnceRows([starter], 2026, 10), NURSERY_BED, 10).flatMap((m) => m.items);
+  const octItems = buildBuyingSchedule([confirmOnceSowing(starter, 2026, 10)], NURSERY_BED, 10).flatMap((m) => m.items);
   assert.equal(sepItems.length, 1);
   assert.equal(octItems.length, 1);
   assert.equal(sepItems[0].count, octItems[0].count);
@@ -885,4 +897,126 @@ test('a frost-tender crop whose harvest window reaches SA winter gets a caveat o
   // A crop whose harvest window never touches Jun/Jul gets no caveat even on a mild-frost site.
   const noWinter: Planting[] = [{ id: 'oats-only', bedId: 'plot-1', cropKey: 'oats', sowMonth: 4 }];
   assert.equal(buildPlanTableRows(noWinter, BEDS, true)[0].frostCaveat, null);
+});
+
+
+test('the dated dashboard does not count harvest or storage before the crop is sown', () => {
+  const rows: Planting[] = [{ id: 'next-august', bedId: 'bed-1', cropKey: 'potato', sowMonth: 8 }];
+  const tasks = tasksForPlan(rows, BEDS, 10);
+  const dashboard = buildPlanDashboard(rows, BEDS, tasks, { nowMonth: 10 });
+  assert.equal(dashboard.freshPickingMonths, 0, 'next August cannot supply this December');
+  assert.equal(dashboard.storedFoodMonths, 0, 'future potatoes cannot already be in storage');
+  assert.ok(buildFoodAvailability(rows, BEDS, 10, 12).every((month) => month.length === 0));
+  assert.ok(buildOccupancyCalendar(rows, BEDS, 10)[0].cells[2].every((entry) => entry.cropKey !== 'potato'));
+});
+
+test('shared-bed field instructions keep each crop in its recorded share and prepare before sowing', () => {
+  const beds: PlanBed[] = [{ id: 'shared', label: 'Bed 2', areaM2: 9 }];
+  const rows: Planting[] = [
+    { id: 'third', bedId: 'shared', cropKey: 'carrots', sowMonth: 10, areaFraction: 1 / 3 },
+    { id: 'quarter', bedId: 'shared', cropKey: 'radish', sowMonth: 10, areaFraction: 1 / 4 },
+  ];
+  const before = JSON.stringify({ rows, beds });
+  const sheet = buildFieldSheet(10, tasksForPlan(rows, beds, 10), new Date(2026, 9, 2), rows, beds);
+  assert.equal(sheet.sections[0].title, 'Prepare for the next planting');
+  const sow = sheet.sections.find((section) => section.title === 'Direct sowing and planting')!;
+  const work = sow.rows.map((row) => row.work).join(' ');
+  assert.match(work, /carrots \(a third of the bed; 3 m²;/);
+  assert.match(work, /radish \(a quarter of the bed; 2.25 m²;/);
+  assert.doesNotMatch(work, /whole bed/);
+  assert.equal(JSON.stringify({ rows, beds }), before, 'a field instruction must not alter the bed or its saved allocation');
+});
+
+test('cover seed weights follow the sourced rate and each actual sowing cohort without fake oat plant counts', () => {
+  const beds: PlanBed[] = [{ id: 'b', label: 'Bed 3', areaM2: 9 }, { id: 'p', label: 'Plot 1', areaM2: 100, kind: 'plot' }];
+  const rows: Planting[] = [
+    { id: 'a', bedId: 'b', cropKey: 'oats', sowMonth: 3, areaFraction: 1 / 3 },
+    { id: 'b', bedId: 'b', cropKey: 'oats', sowMonth: 4, areaFraction: 1 / 3 },
+    { id: 'c', bedId: 'p', cropKey: 'oats', sowMonth: 4 },
+  ];
+  const schedule = buildBuyingSchedule(rows, beds, 10);
+  const items = schedule.flatMap((month) => month.items);
+  assert.equal(items.length, 2, 'March and April remain separate purchases');
+  const march = items.find((item) => item.sowMonth === 3)!;
+  const april = items.find((item) => item.sowMonth === 4)!;
+  assert.deepEqual(march.countRange, [3 * 70 / 10_000, 3 * 140 / 10_000]);
+  assert.deepEqual(april.countRange, [103 * 70 / 10_000, 103 * 140 / 10_000]);
+  assert.equal(weightRangeLabel(march.countRange!), '21–42 g seed');
+  assert.equal(weightRangeLabel(april.countRange!), '0.721–1.442 kg seed');
+  assert.ok(items.every((item) => item.unit === 'kg seed' && item.count === null && item.finalPlantPositions === 0));
+  assert.ok(items.every((item) => !/Living planting material|plants at the spacings/.test(item.note)));
+  assert.match(march.note, /drill at 70kg seed\/ha, or broadcast at 105–140kg\/ha/);
+  const totals = seedBoqForPlan(rows, beds)[0];
+  assert.deepEqual(totals.countRange, [march.countRange![0] + april.countRange![0], march.countRange![1] + april.countRange![1]]);
+  assert.deepEqual(buildBuyingSchedule([{ ...rows[0], areaFraction: -1 }], beds, 10), [], 'invalid area must not create a negative seed purchase');
+});
+
+
+test('the reference plan retains missed sowings as decisions and never calls them zero food or future harvest', () => {
+  const [pending] = settleOnceRows([{ id: 'missed', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 9, once: '2026-09' }], 2026, 10);
+  const [row] = buildPlanTableRows([pending], BEDS);
+  assert.ok(row, 'the farmer must still see which crop needs confirmation');
+  assert.equal(row.awaitingSowingConfirmation, true);
+  assert.equal(row.establish, 'Confirm Sep 2026 sowing');
+  assert.equal(row.intoField, 'Not confirmed');
+  assert.equal(row.harvest, 'Confirm sowing');
+  assert.equal(row.yieldKg, null, 'an unconfirmed planting is not a sourced zero-food cover crop');
+  assert.equal(row.once, true, 'the decision remains one dated first-season sowing');
+});
+
+
+test('the printed calendar keeps identical shared crop sowings as distinct dated cohorts', () => {
+  const beds: PlanBed[] = [{ id: 'shared', label: 'Bed 2', areaM2: 9 }];
+  const rows: Planting[] = [
+    { id: 'october-third', bedId: 'shared', cropKey: 'carrots', sowMonth: 10, areaFraction: 1 / 3 },
+    { id: 'november-third', bedId: 'shared', cropKey: 'carrots', sowMonth: 11, areaFraction: 1 / 3 },
+    { id: 'second-november-third', bedId: 'shared', cropKey: 'carrots', sowMonth: 11, areaFraction: 1 / 3 },
+  ];
+  const before = JSON.stringify(rows);
+  const [calendar] = buildOccupancyCalendar(rows, beds, 10);
+  assert.deepEqual(calendar.cells[0].map((entry) => entry.plantingId), ['october-third']);
+  assert.deepEqual(new Set(calendar.cells[1].map((entry) => entry.plantingId)), new Set(rows.map((row) => row.id)));
+  assert.ok(calendar.cells[1].every((entry) => entry.cropKey === 'carrots' && entry.share === '1/3'));
+  for (const planting of rows) {
+    const ownFood = buildFoodAvailability([planting], beds, 10, 12);
+    calendar.cells.forEach((cell, offset) => {
+      const cohort = cell.filter((entry) => entry.plantingId === planting.id);
+      assert.ok(cohort.length <= 1, 'one planting must not occupy two lanes in one month');
+      if (cohort.length) assert.equal(cohort[0].harvesting, ownFood[offset].some((item) => item.status === 'fresh'));
+    });
+  }
+  assert.equal(JSON.stringify(rows), before, 'calendar presentation must not modify saved crop allocations');
+});
+
+test('undecided sowings and finished dated cohorts cannot acquire a visible print lane', () => {
+  const rows: Planting[] = [
+    { id: 'pending', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 9, once: '2026-09', awaitingSowingConfirmation: true },
+    { id: 'finished', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 9, existing: true, confirmedOnceSowing: '2025-09', finishedOnceSowing: true },
+    { id: 'scheduled', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 11 },
+  ];
+  const entries = buildOccupancyCalendar(rows, BEDS, 10).flatMap((row) => row.cells).flat();
+  assert.ok(entries.length > 0, 'the scheduled crop must still have a lane');
+  assert.deepEqual(new Set(entries.map((entry) => entry.plantingId)), new Set(['scheduled']));
+});
+
+test('cohort identity preserves nursery, field and picking phases across December and January', () => {
+  const beds: PlanBed[] = [{ id: 'shared', label: 'Bed 4', areaM2: 9 }];
+  const rows: Planting[] = [
+    { id: 'october-trays', bedId: 'shared', cropKey: 'tomatoes', sowMonth: 10, areaFraction: 1 / 3 },
+    { id: 'november-trays', bedId: 'shared', cropKey: 'tomatoes', sowMonth: 11, areaFraction: 1 / 3 },
+  ];
+  // Start before both planned sowings; from November a planned October row
+  // belongs to next year, and must not be mistaken for an observed tray crop.
+  const [calendar] = buildOccupancyCalendar(rows, beds, 10);
+  assert.deepEqual(calendar.cells[1].map((entry) => entry.plantingId), ['october-trays'], 'November trays do not yet occupy the field');
+  assert.deepEqual(new Set(calendar.cells[2].map((entry) => entry.plantingId)), new Set(rows.map((row) => row.id)), 'both cohorts reserve field area in December');
+  assert.ok(calendar.cells[3].some((entry) => entry.plantingId === 'november-trays' && !entry.harvesting), 'the January crop must not become an earlier same-named harvest');
+  for (const planting of rows) {
+    const ownFood = buildFoodAvailability([planting], beds, 10, 12);
+    assert.ok(ownFood.some((month) => month.some((item) => item.status === 'fresh')), 'the fixture must exercise a real picking phase');
+    calendar.cells.forEach((cell, offset) => {
+      const entry = cell.find((candidate) => candidate.plantingId === planting.id);
+      if (entry) assert.equal(entry.harvesting, ownFood[offset].some((item) => item.status === 'fresh'), `${planting.id} at offset ${offset} must agree with the canonical dated food phase`);
+    });
+  }
 });

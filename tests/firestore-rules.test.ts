@@ -431,6 +431,38 @@ test('a farmer can read and write their own production, sales, and expense logs'
   }
 });
 
+test('counted produce is stored with unknown weight and retains the same owner gates', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  const other = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
+  for (const collectionName of ['production_logs', 'sales_logs']) {
+    const target = doc(db, collectionName, `counted-${collectionName}`);
+    const data = { ...logData(FARMER_WITH_LINK, 'org-1', collectionName), kg: null, quantity: 12, unit: 'eggs' };
+    await assertSucceeds(setDoc(target, data));
+    await assertSucceeds(updateDoc(target, { quantity: 18 }));
+    await assertFails(updateDoc(target, { profile_id: FARMER_WITHOUT_LINK }));
+    await assertFails(updateDoc(target, { org_id: 'org-other' }));
+    await assertFails(updateDoc(doc(other, collectionName, `counted-${collectionName}`), { quantity: 99 }));
+    await assertFails(deleteDoc(doc(other, collectionName, `counted-${collectionName}`)));
+    await assertSucceeds(deleteDoc(target));
+  }
+});
+
+test('unit validation rejects fabricated kg conversions, fractional eggs and unsupported units', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  for (const collectionName of ['production_logs', 'sales_logs']) {
+    const target = doc(db, collectionName, `invalid-count-${collectionName}`);
+    const data = { ...logData(FARMER_WITH_LINK, 'org-1', collectionName), kg: null, quantity: 12, unit: 'eggs' };
+    for (const invalid of [
+      { quantity: 0 }, { quantity: -1 }, { quantity: 1.5 }, { quantity: Infinity },
+      { kg: 12 }, { unit: 'hours' }, { unit: 'kg', kg: 2 },
+    ]) await assertFails(setDoc(target, { ...data, ...invalid }));
+    await assertSucceeds(setDoc(target, { ...data, unit: 'jars', quantity: 2.5 }));
+    await assertFails(updateDoc(target, { kg: 2.5 }));
+    await assertSucceeds(updateDoc(target, { kg: 2.5, unit: 'kg' }));
+    await assertSucceeds(deleteDoc(target));
+  }
+});
+
 test('a shared site is readable by exact code but its collection cannot be listed', async () => {
   const anonymous = env.unauthenticatedContext().firestore();
   await assertSucceeds(getDoc(doc(anonymous, 'shared_sites', 'ABC123')));

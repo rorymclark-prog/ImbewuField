@@ -10,6 +10,7 @@ import {
   getSandboxPendingInvoiceLinks, setSandboxPendingInvoiceLinks,
 } from './sample-mode';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { normaliseRecordUnit, validRecordQuantity } from './farm-records';
 
 export interface InvoiceItem { desc: string; qty: number; unit: string; price: number }
 export interface Product { desc: string; unit: string; price: number }
@@ -190,6 +191,7 @@ function cleanItem(row: unknown): InvoiceItem | null {
     || !unit
     || !Number.isFinite(item.qty)
     || item.qty! <= 0
+    || (normaliseRecordUnit(unit) !== null && !validRecordQuantity(item.qty, unit))
     || !Number.isFinite(item.price)
     || item.price! < 0
     || !Number.isFinite(item.qty! * item.price!)

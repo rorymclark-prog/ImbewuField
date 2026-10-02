@@ -312,3 +312,119 @@ test('translated adult-count ranges keep the same household key used by water es
   assert.equal(saved?.adults, '2-5');
   assert.equal(loadSurvey(saved!.siteId)?.adults, '2-5');
 });
+
+test('old surveys do not acquire frost, dependable irrigation, hens or a production year from their save date', () => {
+  installBrowser();
+  const saved = saveSurvey(survey({ savedAt: `${new Date().getFullYear()}-01-01T00:00:00.000Z` }));
+  assert.ok(saved);
+  const loaded = loadSurvey(saved.siteId);
+  assert.ok(loaded);
+  assert.equal(loaded.productionConditions, undefined);
+  assert.equal(loaded.poultryManagement, undefined);
+  assert.equal(loaded.productionYear, undefined);
+  const prompt = surveyToPrompt(loaded, 800);
+  assert.match(prompt, /Local frost: not recorded/);
+  assert.match(prompt, /Dry-season growing water: not recorded/);
+  assert.match(prompt, /Hens laying now: not recorded/);
+  assert.match(prompt, /Reporting year for these annual production figures: not recorded/);
+  assert.doesNotMatch(prompt, /Hens laying now: 0|Local frost: not observed/);
+});
+
+test('saved site observations keep actual frost months and current birds without converting them into forecasts', () => {
+  installBrowser();
+  const saved = saveSurvey(survey({
+    productionYear: new Date().getFullYear() - 1,
+    productionConditions: {
+      frost: 'yes', frostMonths: [8, 6, 6, 0, 13, 7.5],
+      drySeasonWater: 'limited', drainage: 'stays-wet', sunlight: 'part-shade',
+    },
+    poultryManagement: {
+      purpose: 'both', recordedBreed: '  Supplier record name  ', layingHens: 7,
+      drinkingWater: 'sometimes', feeding: 'mostly-scavenging', nightProtection: 'partial',
+    },
+    reportedProduction: [{ category: 'eggs', quantityPerYear: 120, unit: 'eggs', usedByHousehold: 120, sold: 0, incomeZar: null, harvestMonths: [1, 12] }],
+  }));
+  assert.ok(saved);
+  const loaded = loadSurvey(saved.siteId);
+  assert.ok(loaded);
+  assert.deepEqual(loaded.productionConditions, { frost: 'yes', frostMonths: [6, 8], drySeasonWater: 'limited', drainage: 'stays-wet', sunlight: 'part-shade' });
+  assert.deepEqual(loaded.poultryManagement, { purpose: 'both', recordedBreed: 'Supplier record name', layingHens: 7, drinkingWater: 'sometimes', feeding: 'mostly-scavenging', nightProtection: 'partial' });
+  assert.equal(loaded.productionYear, new Date().getFullYear() - 1);
+  assert.deepEqual(saveSurvey(loaded)?.productionConditions, loaded.productionConditions);
+  const prompt = surveyToPrompt(loaded, 800);
+  assert.match(prompt, /Months when frost was observed .*: 6, 8/);
+  assert.match(prompt, /available, but not enough or not dependable/);
+  assert.match(prompt, /Breed or strain recorded by the farmer: Supplier record name/);
+  assert.match(prompt, /Hens laying now: 7/);
+  assert.match(prompt, /not a promised egg yield/);
+  assert.match(prompt, /reported annual eggs remain separate from plan forecasts/);
+  assert.match(prompt, /Quantity per year: 120 eggs/);
+  assert.deepEqual(loaded.reportedProduction?.[0].harvestMonths, [1, 12]);
+  assert.doesNotMatch(prompt, /NaN|Infinity|undefined|\[object Object\]/);
+});
+
+test('an explicit zero laying-hen count stays zero, while an unknown count stays unrecorded', () => {
+  installBrowser();
+  const zero = saveSurvey(survey({ poultryManagement: { layingHens: 0 } }));
+  assert.ok(zero);
+  assert.equal(loadSurvey(zero.siteId)?.poultryManagement?.layingHens, 0);
+  assert.match(surveyToPrompt(zero, 800), /Hens laying now: 0/);
+  const blank = saveSurvey(survey({ poultryManagement: { layingHens: null, purpose: 'unknown' } }));
+  assert.ok(blank);
+  assert.equal(loadSurvey(blank.siteId)?.poultryManagement?.layingHens, undefined);
+  assert.match(surveyToPrompt(blank, 800), /Hens laying now: not recorded/);
+});
+
+test('malformed production observations cannot claim frost absence, safe water or fractional laying hens', () => {
+  installBrowser();
+  const malformed = survey({
+    productionConditions: { frost: 'false', frostMonths: [6], drySeasonWater: true, drainage: 0, sunlight: 'Sunny' } as unknown as SiteSurvey['productionConditions'],
+    poultryManagement: { purpose: 'layer', recordedBreed: {}, layingHens: '7', drinkingWater: true, feeding: ['balanced-feed'], nightProtection: 'safe' } as unknown as SiteSurvey['poultryManagement'],
+  });
+  const saved = saveSurvey(malformed);
+  assert.ok(saved);
+  assert.equal(saved.productionConditions, undefined);
+  assert.equal(saved.poultryManagement, undefined);
+  for (const value of [-1, 1.5, Number.NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
+    const badCount = saveSurvey(survey({ poultryManagement: { layingHens: value } }));
+    assert.ok(badCount);
+    assert.equal(badCount.poultryManagement, undefined);
+    assert.match(surveyToPrompt(survey({ poultryManagement: { layingHens: value } }), 800), /Hens laying now: not recorded/);
+  }
+  for (const value of [null, [], 'yes']) {
+    const badShape = saveSurvey(survey({ productionConditions: value as SiteSurvey['productionConditions'], poultryManagement: value as SiteSurvey['poultryManagement'] }));
+    assert.ok(badShape);
+    assert.equal(badShape.productionConditions, undefined);
+    assert.equal(badShape.poultryManagement, undefined);
+  }
+});
+
+test('frost months require observed frost and never turn not-observed into a frost-free promise', () => {
+  installBrowser();
+  for (const frost of ['no', 'unknown'] as const) {
+    const saved = saveSurvey(survey({ productionConditions: { frost, frostMonths: [6, 7] } }));
+    assert.ok(saved);
+    assert.deepEqual(saved.productionConditions, { frost });
+    assert.equal(loadSurvey(saved.siteId)?.productionConditions?.frostMonths, undefined);
+    assert.match(surveyToPrompt(saved, 800), /Months when frost was observed .*: not recorded/);
+    assert.doesNotMatch(surveyToPrompt(saved, 800), /frost-free|safe to plant/);
+  }
+});
+
+test('reporting years round-trip independently of survey dates and future or invalid years stay unknown', () => {
+  installBrowser();
+  const currentYear = new Date().getFullYear();
+  for (const year of [1900, currentYear - 1, currentYear]) {
+    const saved = saveSurvey(survey({ productionYear: year, savedAt: '2020-01-01T00:00:00.000Z' }));
+    assert.ok(saved);
+    assert.equal(loadSurvey(saved.siteId)?.productionYear, year);
+    assert.match(surveyToPrompt(saved, 800), new RegExp(`Reporting year for these annual production figures: ${year}`));
+  }
+  for (const year of [1899, currentYear + 1, currentYear + .5, Number.NaN, Infinity, '2020', null]) {
+    const saved = saveSurvey(survey({ productionYear: year as number, savedAt: `${currentYear}-01-01T00:00:00.000Z` }));
+    assert.ok(saved);
+    assert.equal(saved.productionYear, undefined);
+    assert.equal(loadSurvey(saved.siteId)?.productionYear, undefined);
+    assert.match(surveyToPrompt(saved, 800), /Reporting year for these annual production figures: not recorded/);
+  }
+});

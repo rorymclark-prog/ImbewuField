@@ -16,10 +16,12 @@ import { useLanguage } from '@/lib/i18n';
 import { Share2, CalendarPlus, Hourglass, Download, ClipboardList } from 'lucide-react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
-import type { PlacedTreeGroup } from '@/lib/perennial-harvest';
+import type { PlacedTreeGroup, TreeSeasonChoices } from '@/lib/perennial-harvest';
+import type { ProductionGuide } from '@/lib/crop-export-schedule';
+import type { PoultryGuidance } from '@/lib/animal-enterprises';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
 import {
-  availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename,
+  ALL_SECTIONS, FARMER_SECTIONS, availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename,
   type CropPlanAvailability, type CropPlanPageFormat, type CropPlanPdfInput, type CropPlanPdfMeta,
 } from '@/lib/crop-export-pdf';
 import { loadPdfIcons } from '@/lib/pdf-icons';
@@ -42,12 +44,15 @@ export interface CropPlanExportCardProps {
   availability?: CropPlanAvailability;
   /** The design's trees with a harvest record, for the task summary's "pick" lines. */
   treeGroups?: PlacedTreeGroup[];
+  treeSeasons?: TreeSeasonChoices;
+  productionGuide?: ProductionGuide;
+  poultryGuidance?: PoultryGuidance;
 }
 
 type Busy = 'ics' | 'pdf' | null;
 const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
-export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups }: CropPlanExportCardProps) {
+export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, poultryGuidance }: CropPlanExportCardProps) {
   const { lang } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -64,7 +69,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
       // carry 'ü' (Hügel). Without it some clients guess Latin-1 and the
       // farmer sees mojibake in every event title.
       const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-      const how = await deliverFile(blob, cropPlanIcsFilename(meta.planTitle), 'ImbewuField crop plan');
+      const how = await deliverFile(blob, cropPlanIcsFilename(meta.planTitle), 'ImbewuField production plan');
       setStatus(
         how === 'shared'
           ? `Shared ${tasks.length} tasks — open the file to add them to your calendar.`
@@ -101,10 +106,9 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     setBusy('pdf');
     setStatus(null);
     try {
-      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, ...overrides };
-      // The availability page draws the app's own crop, tree and animal art. Only that page
-      // needs pictures, so a print without it (quick print) never fetches any.
-      const wantsIcons = !input.sections || input.sections.includes('availability');
+      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, poultryGuidance, sections: FARMER_SECTIONS, ...overrides };
+      // Both month views reuse the app's pictures: crops growing in beds, and food to pick.
+      const wantsIcons = !input.sections || input.sections.includes('availability') || input.sections.includes('calendar');
       const icons = wantsIcons ? await loadPdfIcons(availabilityIconKeys(input)) : undefined;
       const blob = await buildCropPlanPdf({ ...input, icons });
       await run(blob);
@@ -118,7 +122,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
 
   const exportPdf = () => withPdf(
     async (blob) => {
-      const how = await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField crop plan');
+      const how = await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField production plan');
       if (how === 'downloaded') return;
     },
     shareFirst ? 'Plan shared — save it to your files or send it on.' : 'Plan saved to your downloads — open it to print.',
@@ -130,7 +134,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
   );
 
   const sharePdf = () => withPdf(
-    async (blob) => { await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField crop plan'); },
+    async (blob) => { await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField production plan'); },
     'Plan shared.',
   );
 
@@ -142,8 +146,14 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     'Opened in a new tab — use your browser\'s Print button there.',
   );
 
-  // Two pages only, for pinning on a wall: the bed calendar and the
-  // month-by-month task list. "Open to print" mirrors printPdf exactly —
+  const referencePdf = () => withPdf(
+    (blob) => { downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), 'reference')); },
+    'Detailed reference saved to your downloads.',
+    { sections: ALL_SECTIONS },
+  );
+
+  // A picture calendar and monthly jobs, for pinning on a wall.
+  // "Open to print" mirrors printPdf exactly —
   // the reader wants the browser's own Print dialog, not a share sheet.
   // The filename carries a `quick-print-<size>` kind so a popup-blocked
   // fallback download never shares a name with the full document (or with
@@ -153,7 +163,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
       if (!openFileInTab(blob)) downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), `quick-print-${quickPrintFormat}`));
     },
     'Opened in a new tab — use your browser\'s Print button there.',
-    { sections: ['calendar', 'taskSummary'], pageFormat: quickPrintFormat },
+    { sections: ['availability', 'calendar', 'taskSummary'], pageFormat: quickPrintFormat },
   );
 
   const buttonStyle = (primary: boolean, disabled: boolean) => ({
@@ -175,6 +185,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
       <p className="font-sans mb-3" style={{ fontSize: 12, color: '#755942', lineHeight: 1.5 }}>
         Both files are made on this phone — nothing is uploaded, and they work with no signal.
       </p>
+      <p className="font-sans mb-3" style={{ fontSize: 12, color: '#755942', lineHeight: 1.5 }}>Your production plan covers vegetables and staples, fruit, nuts, berries and animal products from your map. Hives, coops and pens are housing. Record animal numbers and care checks in the site survey; confirm picking months on this plan.</p>
       {lang === 'zu' && (
         <p role="note" className="font-sans mb-3" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.5 }}>
           Draft notice: exported task names, planting times and instructions remain in English pending source and local farming review. Isaziso: amagama emisebenzi, izikhathi zokutshala nemiyalelo kumafayela athunyelwayo kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
@@ -198,7 +209,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           disabled={busy !== null}
           className="font-display font-semibold inline-flex items-center gap-1.5"
           style={buttonStyle(false, busy !== null)}
-          title="The whole plan as a PDF — bed by bed, what seed to buy when, and every month's jobs"
+          title="See each crop growing in its bed over the months, pictures of what to pick, what to buy and monthly jobs"
         >
           {busy === 'pdf'
             ? <><Hourglass size={14} aria-hidden /> Building…</>
@@ -214,11 +225,11 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           disabled={busy !== null}
           className="font-display font-semibold inline-flex items-center gap-1.5"
           style={buttonStyle(false, busy !== null)}
-          title="Two pages only: the bed calendar and a month-by-month task list — made for pinning on a wall"
+          title="Crops growing in each bed, pictures of what to pick and monthly jobs — for pinning on a wall"
         >
           {busy === 'pdf'
             ? <><Hourglass size={14} aria-hidden /> {cropUi(lang, 'Building…', 'Kwakhiwa…')}</>
-            : <><ClipboardList size={14} aria-hidden /> {cropUi(lang, 'Quick print (2 pages)', 'Phrinta ngokushesha (amakhasi ama-2)')}</>}
+            : <><ClipboardList size={14} aria-hidden /> {cropUi(lang, 'Calendar & jobs', 'Ikhalenda nemisebenzi')}</>}
         </button>
         <select
           value={quickPrintFormat}
@@ -239,6 +250,8 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
         <button onClick={printPdf} disabled={busy !== null} className="underline" style={{ color: '#1F4D2B' }}>
           {cropUi(lang, 'open it to print', 'yivule ukuze uphrinte')}
         </button>
+        {' · '}
+        <button onClick={referencePdf} disabled={busy !== null} className="underline" style={{ color: '#1F4D2B' }}>Detailed reference PDF</button>
         {shareFirst && (
           <>
             {' · '}
@@ -260,8 +273,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
       <div className="font-sans mt-2.5" style={{ fontSize: 11, color: '#755942', lineHeight: 1.55 }}>
         The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the
         first of their month — this plan works in months, not exact days — with a reminder three days before.
-        The PDF opens with the year at a glance, then a one-page calendar of every bed, the full plan bed by bed,
-        the seed and seedling buying schedule, and a tick-off field sheet for each month.
+        The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick. It also has what to buy, monthly tick-off jobs and a harvest record. Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The detailed reference includes the full bed-by-bed plan and benchmarks.
       </div>
 
       {status && (

@@ -1,3 +1,4 @@
+import { recordWeightKg } from './farm-records';
 /*
  * THE COHORT'S MONTH-BY-MONTH LEDGER — the one time dimension a funder can be shown honestly.
  *
@@ -318,14 +319,19 @@ export function buildCohortSeries(
     const both = isComparable[i];
     if (ledger.production) {
       for (const row of ledger.production) {
-        add(i, row.logged_at, row.kg, 'producedKg');
-        if (both) add(i, row.logged_at, row.kg, 'comparableProducedKg');
+        const kg = recordWeightKg(row);
+        if (kg === null) continue;
+        add(i, row.logged_at, kg, 'producedKg');
+        if (both) add(i, row.logged_at, kg, 'comparableProducedKg');
       }
     }
     if (ledger.sales) {
       for (const row of ledger.sales) {
-        add(i, row.sold_at, row.kg, 'soldKg');
-        if (both) add(i, row.sold_at, row.kg, 'comparableSoldKg');
+        const kg = recordWeightKg(row);
+        if (kg !== null) {
+          add(i, row.sold_at, kg, 'soldKg');
+          if (both) add(i, row.sold_at, kg, 'comparableSoldKg');
+        }
         add(i, row.sold_at, row.amount, 'incomeZar');
       }
     }

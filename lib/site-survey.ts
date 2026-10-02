@@ -51,6 +51,27 @@ export interface ReportedProduction {
   foodGroup?: HddsFoodGroup;
 }
 
+/** Local observations supplement the satellite climate; they do not replace its record or
+ * turn an unanswered question into permission to plant a frost-sensitive crop. */
+export interface SiteProductionConditions {
+  frost?: 'yes' | 'no' | 'unknown';
+  frostMonths?: number[];
+  drySeasonWater?: 'reliable' | 'limited' | 'rain-only' | 'unknown';
+  drainage?: 'drains-well' | 'stays-wet' | 'unknown';
+  sunlight?: 'full-sun' | 'part-shade' | 'mostly-shade' | 'unknown';
+}
+
+/** These describe the birds already kept here. A coop on the map is neither a hen count nor
+ * evidence that the feeding, water and protection needed for a sourced output are in place. */
+export interface PoultryManagement {
+  purpose?: 'eggs' | 'meat' | 'both' | 'unknown';
+  recordedBreed?: string;
+  layingHens?: number | null;
+  drinkingWater?: 'always' | 'sometimes' | 'unknown';
+  feeding?: 'balanced-feed' | 'mixed-feed' | 'mostly-scavenging' | 'unknown';
+  nightProtection?: 'enclosed' | 'partial' | 'none' | 'unknown';
+}
+
 const CATEGORY_FOOD_GROUP: Partial<Record<ProductionCategory, HddsFoodGroup>> = {
   leafy_greens: 'vegetables',
   other_vegetables: 'vegetables',
@@ -121,6 +142,11 @@ export interface SiteSurvey {
   // Farmer-reported production, not a modelled yield. All row values are optional: a blank egg
   // count or income must remain blank rather than becoming a false zero in a funder report.
   reportedProduction?: ReportedProduction[];
+  /** The farmer's reporting year, never inferred from the survey's save date. */
+  productionYear?: number;
+
+  productionConditions?: SiteProductionConditions;
+  poultryManagement?: PoultryManagement;
 
   notes: string;
 }
@@ -155,6 +181,47 @@ function monthArray(value: unknown): number[] {
   return [...new Set(value.filter((month): month is number =>
     typeof month === 'number' && Number.isInteger(month) && month >= 1 && month <= 12,
   ))].sort((a, b) => a - b);
+}
+
+function enumValue<const T extends readonly string[]>(value: unknown, allowed: T): T[number] | undefined {
+  return typeof value === 'string' && allowed.includes(value) ? value : undefined;
+}
+
+function normaliseProductionConditions(value: unknown): SiteProductionConditions | undefined {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+  const row = value as SiteProductionConditions;
+  const clean: SiteProductionConditions = {};
+  const frost = enumValue(row.frost, ['yes', 'no', 'unknown']);
+  const drySeasonWater = enumValue(row.drySeasonWater, ['reliable', 'limited', 'rain-only', 'unknown']);
+  const drainage = enumValue(row.drainage, ['drains-well', 'stays-wet', 'unknown']);
+  const sunlight = enumValue(row.sunlight, ['full-sun', 'part-shade', 'mostly-shade', 'unknown']);
+  if (frost) clean.frost = frost;
+  // Months describe observed frost, not a speculative forecast or evidence of frost absence.
+  const frostMonths = frost === 'yes' ? monthArray(row.frostMonths) : [];
+  if (frostMonths.length) clean.frostMonths = frostMonths;
+  if (drySeasonWater) clean.drySeasonWater = drySeasonWater;
+  if (drainage) clean.drainage = drainage;
+  if (sunlight) clean.sunlight = sunlight;
+  return Object.keys(clean).length ? clean : undefined;
+}
+
+function normalisePoultryManagement(value: unknown): PoultryManagement | undefined {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+  const row = value as PoultryManagement;
+  const clean: PoultryManagement = {};
+  const purpose = enumValue(row.purpose, ['eggs', 'meat', 'both', 'unknown']);
+  const drinkingWater = enumValue(row.drinkingWater, ['always', 'sometimes', 'unknown']);
+  const feeding = enumValue(row.feeding, ['balanced-feed', 'mixed-feed', 'mostly-scavenging', 'unknown']);
+  const nightProtection = enumValue(row.nightProtection, ['enclosed', 'partial', 'none', 'unknown']);
+  const recordedBreed = stringValue(row.recordedBreed).slice(0, 120);
+  if (purpose) clean.purpose = purpose;
+  if (recordedBreed) clean.recordedBreed = recordedBreed;
+  // A partial bird, invalid saved value or blank answer must never become a counted laying hen.
+  if (typeof row.layingHens === 'number' && Number.isSafeInteger(row.layingHens) && row.layingHens >= 0) clean.layingHens = row.layingHens;
+  if (drinkingWater) clean.drinkingWater = drinkingWater;
+  if (feeding) clean.feeding = feeding;
+  if (nightProtection) clean.nightProtection = nightProtection;
+  return Object.keys(clean).length ? clean : undefined;
 }
 
 function normaliseReportedProduction(value: unknown): ReportedProduction[] {
@@ -237,6 +304,14 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     isCommercial: row.isCommercial === true,
     marketType: stringValue(row.marketType) || undefined,
     reportedProduction: normaliseReportedProduction(row.reportedProduction),
+    productionYear: typeof row.productionYear === 'number'
+      && Number.isInteger(row.productionYear)
+      && row.productionYear >= 1900
+      && row.productionYear <= new Date().getFullYear()
+      ? row.productionYear
+      : undefined,
+    productionConditions: normaliseProductionConditions(row.productionConditions),
+    poultryManagement: normalisePoultryManagement(row.poultryManagement),
     notes: stringValue(row.notes),
   };
 }
@@ -310,6 +385,27 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push(`Soil amendments applied: ${s.soilAmendments.length ? s.soilAmendments.filter(v => v !== 'none').join(', ') || 'none reported' : 'not recorded'}`);
   lines.push(`Fencing: ${s.hasFencing || 'not specified'}`);
 
+  const conditions = s.productionConditions;
+  const poultry = s.poultryManagement;
+  const conditionLabels: Record<string, string> = {
+    yes: 'observed here', no: 'not observed here', unknown: 'not known',
+    reliable: 'reliably available for watering the growing area through the dry season',
+    limited: 'available, but not enough or not dependable through the dry season',
+    'rain-only': 'rain-fed only',
+    'drains-well': 'water drains away after rain', 'stays-wet': 'ground stays wet or water stands after rain',
+    'full-sun': 'sun through most of the day', 'part-shade': 'sun for only part of the day',
+    'mostly-shade': 'mostly shaded',
+  };
+  const observation = (value: string | undefined) => value ? conditionLabels[value] ?? value : 'not recorded';
+  lines.push('');
+  lines.push('--- FARMER-OBSERVED PRODUCTION CONDITIONS ---');
+  lines.push(`Local frost: ${observation(conditions?.frost)}.`);
+  lines.push(`Months when frost was observed (1=January, 12=December): ${conditions?.frostMonths?.length ? conditions.frostMonths.join(', ') : 'not recorded'}.`);
+  lines.push(`Dry-season growing water: ${observation(conditions?.drySeasonWater)}.`);
+  lines.push(`Drainage in the growing area: ${observation(conditions?.drainage)}.`);
+  lines.push(`Sunlight in the growing area: ${observation(conditions?.sunlight)}.`);
+  lines.push('These are farmer observations, not measured climate, soil-test results or a forecast. Do not infer safe planting months, a water volume or a yield from an unanswered question.');
+
   lines.push('');
   lines.push('--- EXISTING RESOURCES ---');
   lines.push(`Crops growing now: ${s.existingCrops.length ? s.existingCrops.filter(v => v !== 'nothing').join(', ') || 'nothing yet' : 'not recorded'}`);
@@ -319,8 +415,27 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push(`Livestock: ${s.livestock.length ? s.livestock.filter(v => v !== 'none').join(', ') || 'none reported' : 'not recorded'}`);
   lines.push(`Other infrastructure: ${s.otherInfra.length ? s.otherInfra.join(', ') : 'none mentioned'}`);
 
+  const poultryLabels: Record<string, string> = {
+    eggs: 'eggs', meat: 'meat', both: 'eggs and meat', unknown: 'not known',
+    always: 'available every day', sometimes: 'sometimes unavailable',
+    'balanced-feed': 'balanced poultry feed', 'mixed-feed': 'a mixture of feeds and household or garden food',
+    'mostly-scavenging': 'mostly finding their own food',
+    enclosed: 'closed, protected housing at night', partial: 'partly protected at night', none: 'no night protection',
+  };
+  const poultryObservation = (value: string | undefined) => value ? poultryLabels[value] ?? value : 'not recorded';
+  lines.push('');
+  lines.push('--- FARMER-REPORTED CURRENT CHICKEN MANAGEMENT ---');
+  lines.push(`Purpose of the current birds: ${poultryObservation(poultry?.purpose)}.`);
+  lines.push(`Breed or strain recorded by the farmer: ${poultry?.recordedBreed || 'not recorded'}.`);
+  lines.push(`Hens laying now: ${poultry?.layingHens ?? 'not recorded'}.`);
+  lines.push(`Clean drinking water: ${poultryObservation(poultry?.drinkingWater)}.`);
+  lines.push(`Feeding: ${poultryObservation(poultry?.feeding)}.`);
+  lines.push(`Night protection: ${poultryObservation(poultry?.nightProtection)}.`);
+  lines.push('A housing structure does not establish the number of birds. Recorded hens and management are not a promised egg yield; reported annual eggs remain separate from plan forecasts.');
+
   lines.push('');
   lines.push('--- FARMER-REPORTED ANNUAL PRODUCTION ---');
+  lines.push(`Reporting year for these annual production figures: ${s.productionYear ?? 'not recorded'}. The survey save date is not the reporting year.`);
   const rows = s.reportedProduction ?? [];
   if (!rows.length) lines.push('Production quantities, household use, sales, income and harvest timing: not recorded.');
   for (const row of rows) {

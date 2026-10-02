@@ -32,6 +32,7 @@ import type { SavedInvoice } from '@/lib/invoices';
 import type { CashflowSettings } from '@/lib/crop-plan';
 import type { FinancePlanSource } from '@/lib/finance-plan-source';
 import { buildFinanceSeries, type FinanceMonthPoint } from '@/lib/finance-series';
+import { recordQuantityLabel, recordQuantityPayload } from '@/lib/farm-records';
 import { buildPlanVsActual, type PlanVsActualRow } from '@/lib/plan-vs-actual';
 import { kgLabel } from '@/lib/format-figures';
 import { cappedScale } from '@/lib/chart-scale';
@@ -249,6 +250,17 @@ function MeasuredView({
   lang: string;
 }) {
   const { W, PAD, PLOT_H, barCap } = wide ? DESK : PHONE;
+  const quantityText = (totals: typeof series.productionQuantities) => totals.map(total => recordQuantityLabel(recordQuantityPayload(total.quantity, total.unit))).join(', ');
+  const hasWeighedProduce = [...series.productionQuantities, ...series.salesQuantities].some(total => total.unit === 'kg');
+  if (series.hasRecords && !hasWeighedProduce) {
+    return <div className="px-4 py-5 space-y-2" style={{ color: INK }}>
+      <p className="font-display font-semibold">Recorded produce, {series.windowMonths} months</p>
+      <p className="text-sm">Picked: {quantityText(series.productionQuantities) || 'Quantity not recorded'}</p>
+      <p className="text-sm">Sold: {quantityText(series.salesQuantities) || 'Quantity not recorded'}</p>
+      <p className="text-xs" style={{ color: MUTED }}>No produce weights recorded in these months. Egg and package counts keep their own units; kilogram totals and kept weight are unknown.</p>
+      <Link href="/records" className="inline-block text-sm underline" style={{ color: SOLD_TEXT }}>View your records</Link>
+    </div>;
+  }
   if (!series.hasRecords) {
     const emptyEnglish = series.earlierRecords
       ? `Your records start in ${series.firstRecordLabel}. Try a longer window above to reach them.`
@@ -309,13 +321,18 @@ function MeasuredView({
   return (
     <>
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
-        <Figure label={lang === 'zu' ? `Okuvunyiwe, izinyanga ezingu-${series.windowMonths}` : `Picked, ${series.windowMonths} months`} value={kgLabel(series.totalProducedKg)} tone={INK} />
-        <Figure label={lang === 'zu' ? 'Okudayisiwe' : 'Sold'} value={kgLabel(series.totalSoldKg)} tone={SOLD_TEXT} />
+        <Figure label={`Weighed produce picked, ${series.windowMonths} months`} value={kgLabel(series.totalProducedKg)} tone={INK} />
+        <Figure label="Weighed produce sold" value={kgLabel(series.totalSoldKg)} tone={SOLD_TEXT} />
         {/* Null is not zero: when the window sold more than it logged picking, the
             difference is a missing record, not food that stayed on the farm. */}
         {series.totalKeptKg === null
-          ? <Figure label={lang === 'zu' ? 'Okusele epulazini' : 'Kept on the farm'} value="—" tone={FAINT} />
-          : <Figure label={lang === 'zu' ? 'Okusele epulazini' : 'Kept on the farm'} value={kgLabel(series.totalKeptKg)} tone={KEPT} />}
+          ? <Figure label="Weighed produce kept on the farm" value="—" tone={FAINT} />
+          : <Figure label="Weighed produce kept on the farm" value={kgLabel(series.totalKeptKg)} tone={KEPT} />}
+      </div>
+      <div className="px-4 pb-3 text-xs space-y-1" style={{ color: MUTED }}>
+        <p>This chart shows recorded kilograms only. Counted produce stays in its recorded units.</p>
+        {series.productionQuantities.some(total => total.unit !== 'kg') && <p>Also picked: {quantityText(series.productionQuantities.filter(total => total.unit !== 'kg'))}</p>}
+        {series.salesQuantities.some(total => total.unit !== 'kg') && <p>Also sold: {quantityText(series.salesQuantities.filter(total => total.unit !== 'kg'))}</p>}
       </div>
 
       <div className="px-2">
@@ -446,7 +463,7 @@ function PlanView({ plan, source, wide, orchard, lang }: {
         <Link href={source.origin === 'none' ? '/design' : '/facilitator/crops'}
           className="inline-block mt-2.5 font-sans font-semibold"
           style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
-          {lang === 'zu' ? (source.origin === 'none' ? 'Vula i-Design Studio' : 'Vula uhlelo lwezitshalo') : (source.origin === 'none' ? 'Open the Design Studio' : 'Open the crop plan')}
+          {lang === 'zu' ? (source.origin === 'none' ? 'Vula i-Design Studio' : 'Vula uhlelo lokukhiqiza') : (source.origin === 'none' ? 'Open the Design Studio' : 'Open the production plan')}
         </Link>
       </div>
     );
