@@ -1,0 +1,112 @@
+{
+  "lessonId": "soil-health-l1",
+  "sourceMainSha": "d89504c3d9bad06f196f8bf14c1589e80a0e887c",
+  "status": "unwired-machine-draft",
+  "scopeNote": "Only the exact-English-held assessment fields in the current Tshivenda Soil L1 registry are drafted: key point 4 and all fields in both quizzes. The existing localized first three key points are included verbatim as preservation evidence and are not revised. Exact canonical English, source order and correct indices were checked in lib/course-modules.ts. No repository edits; candidates need independent Tshivenda backcheck.",
+  "preservedKeyPoints": [
+    {
+      "index": 0,
+      "sourceEnglish": "Use several clues to assess soil condition",
+      "currentDraft": "Shumisani zwiṱalusi zwo vhalaho u ṱola vhuimo ha mavu."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "Soil colour and worm counts alone do not diagnose the cause of a problem",
+      "currentDraft": "Muvhala wa mavu na tshivhalo tsha zwivhungu fhedzi a zwi sumbedzi uri thaidzo yo vhangwa nga mini."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "A jar exercise gives a rough indication of texture, not a complete soil test",
+      "currentDraft": "U lingedza nga jar zwi sumbedza texture nga u anganyela fhedzi, a si soil test yo fhelelaho."
+    }
+  ],
+  "heldKeyPoint": {
+    "index": 3,
+    "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+    "currentStatus": "Exact-English hold",
+    "draft": "Ṱolani drainage, midzi na management history ni sa athu khetha remedy.",
+    "literalBacktranslation": "Check drainage, roots and management history before choosing a remedy.",
+    "uncertainty": "Preserves all three checks and their order before choosing a remedy. Retains drainage, management history and remedy in English to avoid narrowing their meaning."
+  },
+  "quizzes": [
+    {
+      "index": 0,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+        "currentStatus": "Exact-English hold",
+        "draft": "Jar ya mavu i kha ḓi vha na cloudy water nga nṱha ha lera la sand. Mulimi u fanela u phetha mini?",
+        "literalBacktranslation": "The soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+        "uncertainty": "Retains cloudy water and sand layer in English, and preserves still/ongoing uncertainty rather than treating the cloudy water as settled."
+      },
+      "options": [
+        {
+          "sourceEnglish": "The soil definitely needs less water",
+          "draft": "Mavu a ṱoḓa maḓi a si gathi nga ngoho"
+        },
+        {
+          "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+          "draft": "Fine particles dzi nga kha ḓi vha suspended; u sedza hafhu zwi a ṱoḓea"
+        },
+        {
+          "sourceEnglish": "All the clay has already settled",
+          "draft": "Clay yoṱhe yo no dzula fhasi"
+        },
+        {
+          "sourceEnglish": "The crop definitely needs gypsum",
+          "draft": "Crop i ṱoḓa gypsum nga ngoho"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+        "currentStatus": "Exact-English hold",
+        "draft": "Cloudy water i nga vha na fine particles dzi sa athu u dzula fhasi. U sedza ha u thoma luthihi a hu nga khwaṱhisedzi final proportions kana right treatment.",
+        "literalBacktranslation": "Cloudy water can contain fine particles that have not yet settled. One initial observation cannot establish the final proportions or the right treatment.",
+        "uncertainty": "Preserves can contain, unsettled particles, one early observation, and the inability to establish either final proportions or the appropriate treatment. Keeps the diagnostic terms in English."
+      }
+    },
+    {
+      "index": 1,
+      "sourceCorrectIndex": 2,
+      "question": {
+        "sourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
+        "currentStatus": "Exact-English hold",
+        "draft": "Mulimi u wana mavu o compacted na worms dzi si gathi. Ndi vhukando vhufhio vhu tevhelaho vhune ha nga thusa?",
+        "literalBacktranslation": "A farmer finds compacted soil and few worms. Which next step could help?",
+        "uncertainty": "Retains both findings, compacted soil and few worms, and asks for the useful next step without implying a diagnosis. Compacted remains English."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Assume every soil organism has died",
+          "draft": "Humbulani uri soil organism iṅwe na iṅwe yo fa"
+        },
+        {
+          "sourceEnglish": "Add a treatment without checking the site",
+          "draft": "Engedzani treatment ni sa athu ṱola site"
+        },
+        {
+          "sourceEnglish": "Check drainage, roots, moisture and management history",
+          "draft": "Ṱolani drainage, midzi, moisture na management history"
+        },
+        {
+          "sourceEnglish": "Give up because the soil cannot improve",
+          "draft": "Litshani u lingedza ngauri mavu a nga si khwinifhadzee"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
+        "currentStatus": "Exact-English hold",
+        "draft": "U sedza zwithu zwo vhalaho zwi thusa u wana thaidzo. Worm activity i a shanduka u ya nga conditions, ngauralo worms dzi si gathi fhedzi a dzi khwaṱhisedzi uri thaidzo yo vhangwa nga mini.",
+        "literalBacktranslation": "Looking at several things helps identify a problem. Worm activity changes with conditions, so few worms alone do not confirm what caused the problem.",
+        "uncertainty": "Preserves that multiple observations help identify the problem and that activity varies with conditions. Few worms alone do not establish the cause; no claim that worms prove or disprove a specific diagnosis is added."
+      }
+    }
+  ],
+  "semanticChecks": [
+    "Held fields and English source strings are exact to canonical Soil L1; existing localized key points 0–2 are copied unchanged from the VE registry.",
+    "Quiz 0 keeps cloudy water above the sand layer, may still be suspended, need for further observation, and the limit that one early observation cannot establish final proportions or treatment.",
+    "Quiz 1 preserves the correct index 2 and the next-step checks: drainage, roots, moisture and management history. Few worms alone are not diagnostic; no treatment-before-checking advice is introduced.",
+    "No species, quantities, diagnosis, treatment recommendation or other farming claim was added."
+  ],
+  "uncertaintySummary": "Unreviewed Tshivenda machine draft, not fluent-speaker approval. Technical terms remain in English where exact local rendering is uncertain. Independent Tshivenda backcheck is required before wiring."
+}

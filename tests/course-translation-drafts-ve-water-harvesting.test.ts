@@ -251,6 +251,18 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
         });
         assert.deepEqual(numberTokens(paired.body.tshivendaDraft), numberTokens(lesson.body),
           `${path}.body: preserve every numeric source token`);
+      } else if (index === 2) {
+        assert.equal(paired.body.sourceEnglish, lesson.body, `${path}.body: preserve the exact canonical source pairing`);
+        assert.equal(paired.body.reviewStatus, 'machine-draft', `${path}.body: mark the complete unreviewed L3 draft`);
+        const sourceParagraphs = lesson.body.split('\n\n');
+        const bodyParagraphs = paired.body.tshivendaDraft.split('\n\n');
+        assert.equal(bodyParagraphs.length, 13, `${path}.body: preserve all 13 source paragraph boundaries`);
+        sourceParagraphs.forEach((paragraph, paragraphIndex) => {
+          assert.notEqual(bodyParagraphs[paragraphIndex], paragraph,
+            `${path}.body paragraph ${paragraphIndex + 1}: replace this obsolete full-paragraph English hold`);
+        });
+        assert.deepEqual(numberTokens(paired.body.tshivendaDraft), numberTokens(lesson.body),
+          `${path}.body: preserve every numeric source token`);
       } else {
         checkPair(paired.body, lesson.body, `${path}.body`);
         assert.deepEqual(paired.body.tshivendaDraft.split('\n\n'), lesson.body.split('\n\n'), `${path}: preserve paragraph boundaries`);
@@ -277,7 +289,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }
   }
 
-  assert.equal(heldFields, 35, 'hold the module summary, image descriptions, L1/L3 diagnostic content and L3 body/quiz fields');
+  assert.equal(heldFields, 34, 'hold the module summary, image descriptions, L1/L3 diagnostic content, L2 title and L3 assessment fields');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');
@@ -287,7 +299,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
   for (const [index, lesson] of source.lessons.entries()) {
     const presentation = resolveLearnerLessonPresentation(lesson, 've');
     const paired = draft.lessons[index];
-    assert.equal(presentation.status, index < 2 ? 'draft' : 'english-fallback',
+    assert.equal(presentation.status, 'draft',
       `${lesson.id}: status only claims a draft when at least one field is translated`);
     assert.equal(presentation.content.title, paired.title.tshivendaDraft, `${lesson.id}: show the paired title draft`);
     assert.equal(presentation.content.body, paired.body.tshivendaDraft,
@@ -310,7 +322,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
 
     assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
       'english-fallback', `${lesson.id}: changed source withdraws the whole paired draft`);
-    if (index === 0) {
+    if (index === 0 || index === 2) {
       assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} changed` }, 've').status,
         'english-fallback', `${lesson.id}: changed body withdraws the whole paired draft`);
     }
