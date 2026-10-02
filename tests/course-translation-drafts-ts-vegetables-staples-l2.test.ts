@@ -89,7 +89,9 @@ test('Vegetables & Staple Crops L2 source drift and undrafted lessons fall back 
 
   assert.equal(resolveLearnerLessonPresentation(sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l3')!, 'ts').status,
     'draft', 'L3 is separately source-paired in this combined batch');
-  for (const lesson of sourceModule.lessons.filter(lesson => !['vegetables-staples-l2', 'vegetables-staples-l3'].includes(lesson.id))) {
+  // L1 now has a checked body draft; unregistered lessons and changed sources still fail closed.
+  assert.equal(resolveLearnerLessonPresentation(sourceModule.lessons[0], 'ts').status, 'draft');
+  for (const lesson of sourceModule.lessons.filter(lesson => !['vegetables-staples-l1', 'vegetables-staples-l2', 'vegetables-staples-l3'].includes(lesson.id))) {
     const shown = resolveLearnerLessonPresentation(lesson, 'ts');
     assert.equal(shown.status, 'english-fallback');
     assert.equal(shown.content.body, lesson.body);

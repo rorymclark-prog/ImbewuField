@@ -78,7 +78,7 @@ test('Vegetables & Staple Crops L3 source drift and undrafted lesson sources fal
 
   assert.equal(resolveLearnerLessonPresentation(sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!, 'ts').status,
     'draft', 'L2 is separately source-paired in this combined batch');
-  for (const lesson of sourceModule.lessons.filter(lesson => !['vegetables-staples-l2', 'vegetables-staples-l3'].includes(lesson.id))) {
+  for (const lesson of sourceModule.lessons.filter(lesson => !['vegetables-staples-l1', 'vegetables-staples-l2', 'vegetables-staples-l3'].includes(lesson.id))) {
     const other = resolveLearnerLessonPresentation(lesson, 'ts');
     assert.equal(other.status, 'english-fallback');
     assert.equal(other.content.body, lesson.body);
@@ -93,4 +93,32 @@ test('Vegetables & Staple Crops L3 preserves the one-failure scope while holding
   assert.equal(paragraphs[14], sourceLesson.body.split('\n\n')[14]);
   assert.match(paragraphs[14], /^Two or more staples give you more ways to keep eating\.$/);
   assert.match(paragraphs[15], /mati, misava na tinguva/);
+});
+
+// L1 now has a body draft; the remaining farming and assessment fields remain exact-source holds.
+test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions and withdraw on source drift', () => {
+  const source = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
+  const matches = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons.filter(lesson => lesson.id === source.id);
+  assert.equal(matches.length, 1);
+  const draft = matches[0];
+  const paragraphs = draft.body.xitsongaDraft.split('\n\n');
+  const english = source.body.split('\n\n');
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(paragraphs.length, english.length);
+  for (const index of [2, 6, 7, 8, 9, 12, 15, 17]) {
+    assert.equal(paragraphs[index], english[index], 'hold geometry, soil suitability, establishment sequence and dimensions');
+  }
+  assert.ok(paragraphs[0].includes('Roots slow down.'));
+  assert.ok(paragraphs[1].endsWith('Permanent paths, and a bed narrow enough to reach into from both sides.'));
+  assert.ok(paragraphs[11].endsWith("They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."));
+  assert.ok(paragraphs[13].includes('crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.'));
+  assert.ok(paragraphs[16].endsWith('Mark the rectangle, and mark both access paths.'));
+  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
+  const shown = resolveLearnerLessonPresentation(source, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.xitsongaDraft);
+  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+  assert.deepEqual(shown.content.quiz, source.quiz);
+  const changed = { ...source, body: source.body + ' Changed planting condition.' };
+  assert.equal(resolveLearnerLessonPresentation(changed, 'ts').status, 'english-fallback');
 });

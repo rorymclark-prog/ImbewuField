@@ -1,0 +1,102 @@
+{
+  "packetId": "ST-VEGETABLES-L4-BODY-COMPLETION-BACKCHECK-2026-10-02",
+  "reviewedPacket": "/tmp/imbewu-st-vegetables-l4-body-completion-20261002.json",
+  "language": "Sesotho (st)",
+  "lessonId": "vegetables-staples-l4",
+  "verifiedRevision": "d81dee752057bc11c6c61dd0f958fc39117436f8",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-vegetables-staples.ts",
+  "readOnly": true,
+  "sourceBinding": {
+    "result": "pass",
+    "paragraphCount": 12,
+    "checks": "Compared all 12 packet exactSourceEnglish paragraphs with canonical and registry sourceEnglish, and all currentSesothoDraft paragraphs with the registry sesothoDraft. Every pair matched exactly and in order."
+  },
+  "overall": "The repaired packet passes the independent semantic backcheck. Diagnosis-before-treatment, four-step order, the least-intensive-action safety anchor, conditional action suitability/monitoring, and complete product-use safeguards remain protected. This is not fluency approval.",
+  "findings": [
+    {
+      "paragraphIndex": 0,
+      "result": "accept-bounded-mixed-draft",
+      "note": "`hangata` preserves usually; the pest-pressure term stays English. Candidate says pressure usually increases for a reason without adding a cause or treatment."
+    },
+    {
+      "paragraphIndex": 1,
+      "result": "accept-exact-english-hold",
+      "note": "All three possible contexts remain exact: stressed plants, one crop dominating the ground, or broad chemical use having already removed helpful predators."
+    },
+    {
+      "paragraphIndex": 2,
+      "result": "accept-bounded-mixed-draft",
+      "note": "`pele` preserves before treating anything; `sheba system yohle` preserves the instruction to look at the whole system. The broad treat verb remains a modest uncertainty, but the source ordering and scope remain explicit."
+    },
+    {
+      "paragraphIndex": 3,
+      "result": "preserve-existing-draft-verbatim",
+      "note": "The existing localized questions retain water shortage, compacted or nutrient-hungry soil, and whether predators are already helping. Not changed by this packet."
+    },
+    {
+      "paragraphIndex": 4,
+      "result": "preserve-existing-draft-verbatim",
+      "note": "The existing paragraph retains that a yellow leaf is not by itself proof of insects, lists water/nutrition/root damage as alternatives, and says identify which before acting. Not changed by this packet."
+    },
+    {
+      "paragraphIndex": 5,
+      "result": "accept",
+      "note": "`mehato e mene, ka tatellano` retains four steps and their order."
+    },
+    {
+      "paragraphIndex": 6,
+      "result": "preserve-existing-draft-verbatim",
+      "note": "The existing first step retains observing the damage pattern, leaf underside, stem and nearby plants."
+    },
+    {
+      "paragraphIndex": 7,
+      "result": "preserve-existing-draft-verbatim",
+      "note": "The existing second step retains checking soil moisture, roots, spacing, nutrition and drainage as stress factors."
+    },
+    {
+      "paragraphIndex": 8,
+      "result": "accept-bounded-mixed-draft",
+      "note": "The candidate labels this as step three and says protect what is helping. The beneficial-insect claim remains exact English, preserving its helpful role and comparison to work the grower would otherwise do."
+    },
+    {
+      "paragraphIndex": 9,
+      "result": "accept-repaired-mixed-draft",
+      "note": "Repaired candidate keeps fourth-step and only-then sequencing in Sesotho, holds `and start with the lightest thing that works` exactly in English, and retains conditional may-help, suitability and monitoring statements verbatim."
+    },
+    {
+      "paragraphIndex": 10,
+      "result": "accept-exact-english-hold",
+      "note": "The complete hold preserves only-if-needed treatment, product registration for both crop and pest, label compliance, neem inclusion, protection and harvest-waiting instructions, and both prohibitions against improvised mixtures and stronger doses."
+    },
+    {
+      "paragraphIndex": 11,
+      "result": "accept-bounded-mixed-draft",
+      "note": "The self-reflection instruction and ‘usually’ frequency are preserved; candidate asks the learner to tell themself the truth about which step they usually skip."
+    }
+  ],
+  "preservationAndSafetyAudit": {
+    "existingLocalizedParagraphs": {
+      "indices": [
+        3,
+        4,
+        6,
+        7
+      ],
+      "result": "All four candidate paragraphs match current Sesotho registry text verbatim."
+    },
+    "wholeSystemBeforeTreat": "Paragraph 2 retains the before-treat condition and whole-system scope.",
+    "fourStepOrder": "Paragraph 5 states four steps in order; candidate step labels at 6, 7, 8, 9 remain first, second, third, fourth in that order.",
+    "predatorsVersusBeneficialInsects": "Paragraph 1 preserves predator removal as a possible context; paragraph 8 preserves the complete beneficial-insect claim in English.",
+    "conditionalAction": "Only-then order is retained. May-help, suitability, and monitor-result conditions remain exact English; recommended hold narrows to the intensity phrase.",
+    "registeredProductSafety": "Entire paragraph 10 remains exact English with crop+pest registration, product label, neem mention, protection/waiting instructions, and no improvised mixes/stronger doses."
+  },
+  "provenanceNote": "The packet drafterBacktranslation values are drafter assertions. This report is a direct source/candidate semantic backcheck and makes no fluent approval claim.",
+  "finalPacketRecheck": {
+    "result": "pass",
+    "exactBinding": "Rechecked all 12 exactSourceEnglish paragraphs against canonical and registry sourceEnglish; rechecked all 12 currentSesothoDraft paragraphs against registry sesothoDraft. Every pair matches exactly and in order.",
+    "preservedExistingParagraphs": "Candidate paragraphs 3, 4, 6 and 7 remain verbatim matches to the existing Sesotho registry text.",
+    "repairVerified": "Paragraph 9 now reads `Ntlha ya bone. Ke ka morao feela moo o nkang kgato — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.` The least-intensive-action clause and all conditions are exact English.",
+    "provenance": "This is a direct source/candidate backcheck, not fluent or local-adviser approval."
+  }
+}

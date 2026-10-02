@@ -1,4 +1,4 @@
-/** Unreviewed source-paired Xitsonga concept block for Vegetables & Staple Crops L3. */
+/** Unreviewed source-paired Xitsonga bed-preparation and staple concepts. */
 import { COURSE_MODULES } from './course-modules.ts';
 import type { XitsongaCourseModuleDraft, XitsongaSourcePair } from './course-translation-drafts-ts.ts';
 
@@ -41,6 +41,118 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
         sourceCorrectIndex: question.correct,
         rationale: hold(question.rationale),
       })),
+    },
+    {
+      "id": "vegetables-staples-l1",
+      "infographicAlt": {
+        "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+        "xitsongaDraft": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+        "reviewStatus": "hold"
+      },
+      "title": {
+        "sourceEnglish": "Preparing and Planting Your Beds",
+        "xitsongaDraft": "Preparing and Planting Your Beds",
+        "reviewStatus": "hold"
+      },
+      "body": {
+        "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+        "xitsongaDraft": "Compacted soil loses its air spaces. Roots slow down. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.\n\nNsirhelelo wu olova. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nSweswi ehleketa hi mabedhe ya wena. Can you reach the middle without stepping inside? Famba u ya ringeta leswi u nga si byala swin'wana.\n\nA ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato.\n\nSungula hi least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nEndzhaku ka heavy rain, kambisisa. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSwibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nLandzelela spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nLoko u nga si byala, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nTirhisa pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nNtila wa ntambhu wu hundzula miehleketo wu va xiboho. Loko tindlela ti ri kona, ti hlayise. Loko ndhawu yo byala yi ri kona, yi sirhelele.\n\nBed yoleyo yi ya olova ku antswisa eka nguva yin'wana ni yin'wana, hikuva u tshike ku famba ehenhla ka yona.",
+        "reviewStatus": "machine-draft"
+      },
+      "keyPoints": [
+        {
+          "sourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+          "xitsongaDraft": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+          "xitsongaDraft": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+          "xitsongaDraft": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Crowded plants underperform — space generously for your local climate",
+          "xitsongaDraft": "Crowded plants underperform — space generously for your local climate",
+          "reviewStatus": "hold"
+        }
+      ],
+      "quiz": [
+        {
+          "question": {
+            "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+            "xitsongaDraft": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+            "reviewStatus": "hold"
+          },
+          "options": [
+            {
+              "sourceEnglish": "Wider beds get too much sun",
+              "xitsongaDraft": "Wider beds get too much sun",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+              "xitsongaDraft": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Narrow beds drain better in all conditions",
+              "xitsongaDraft": "Narrow beds drain better in all conditions",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "It's a fixed rule with no practical reason",
+              "xitsongaDraft": "It's a fixed rule with no practical reason",
+              "reviewStatus": "hold"
+            }
+          ],
+          "sourceCorrectIndex": 1,
+          "rationale": {
+            "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+            "xitsongaDraft": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+            "reviewStatus": "hold"
+          }
+        },
+        {
+          "question": {
+            "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+            "xitsongaDraft": "Which crop is best suited to direct-seeding rather than transplanting?",
+            "reviewStatus": "hold"
+          },
+          "options": [
+            {
+              "sourceEnglish": "Tomatoes, which need an early start",
+              "xitsongaDraft": "Tomatoes, which need an early start",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Brassicas, which need protection while small",
+              "xitsongaDraft": "Brassicas, which need protection while small",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Beans, which resent root disturbance",
+              "xitsongaDraft": "Beans, which resent root disturbance",
+              "reviewStatus": "hold"
+            },
+            {
+              "sourceEnglish": "Peppers, which are slow to germinate",
+              "xitsongaDraft": "Peppers, which are slow to germinate",
+              "reviewStatus": "hold"
+            }
+          ],
+          "sourceCorrectIndex": 2,
+          "rationale": {
+            "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+            "xitsongaDraft": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+            "reviewStatus": "hold"
+          }
+        }
+      ]
     },
   ],
   holds: [
