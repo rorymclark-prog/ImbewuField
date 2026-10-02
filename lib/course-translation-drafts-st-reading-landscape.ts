@@ -127,7 +127,7 @@ export const SESOTHO_READING_LANDSCAPE_DRAFT: SesothoCourseModuleDraft = {
       keyPoints: [
         pair("A site map needs only paper, a tape measure, a compass, and observation", "Mmapa wa setsha (site map) o hloka feela pampiri, tepi e methang, khampase, le tlhokomelo", "machine-draft"),
         pair("Mark water flow, wind direction, frost pockets, and existing vegetation", "Tshwaya phallo ya metsi, nqa ya moya, dipokotho tsa serame, le dimela tse teng", "machine-draft"),
-        pair("Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction", "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction", "hold"),
+        pair("Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction", "Tshwaya thick khakibos or blackjack growth, ebe o hlahloba mobu ka hloko; it does not prove compaction.", "machine-draft"),
         pair("Overlay zones and sectors on your base map to complete the design skeleton", "Beha di-zone le makala (sectors) hodima mmapa wa hao wa motheo ho phethela masapo a moralo", "machine-draft"),
       ],
       quiz: [

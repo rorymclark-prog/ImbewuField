@@ -426,7 +426,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
-        "xitsongaDraft": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "xitsongaDraft": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nAn A-frame level yi nga ku pfuna ku mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Vutisa a trained local adviser.\n\nA ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -538,7 +538,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
-        "xitsongaDraft": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+        "xitsongaDraft": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Xiya local frost u nga se byala.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -865,14 +865,26 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "reading-landscape-l1",
       "field": "body",
-      "sourceText": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
+      "sourceText": "Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter.",
+      "reason": "Keep the explicit limit on what an A-frame can establish, the before-dig site assessment, and all named site factors exact while the surrounding ordinary prose is drafted."
     },
     {
       "lessonId": "reading-landscape-l1",
       "field": "body",
-      "sourceText": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
+      "sourceText": "a trained local adviser",
+      "reason": "Keep the required adviser qualification exact."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "reason": "Keep the erosion and slow-infiltration conditions exact while drafting the surrounding observation prose."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Choose any water works for the site and plan a safe route for excess water.",
+      "reason": "Keep the site-specific waterworks and safe-excess-water requirement exact."
     },
     {
       "lessonId": "reading-landscape-l1",
@@ -895,8 +907,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "reading-landscape-l2",
       "field": "body",
-      "sourceText": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
+      "sourceText": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets.",
+      "reason": "Keep the plant names, frost sensitivity, and low-frost-pocket placement instruction exact while drafting the ordinary observation-before-planting sentence."
     },
     {
       "lessonId": "reading-landscape-l2",

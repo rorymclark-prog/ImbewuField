@@ -180,14 +180,70 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     'lessons[3] reading-landscape-l4.quiz[1].options[1]',
   ], 'uncertain wording stays held until checked by a fluent Tshivenda speaker');
 
-  const waterEnglish = source.lessons[0].body.split('\n\n');
+  const landscapeL1Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l1');
+  const landscapeL1Draft = draft.lessons.find(lesson => lesson.id === 'reading-landscape-l1');
+  const landscapeL2Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l2');
+  const landscapeL2Draft = draft.lessons.find(lesson => lesson.id === 'reading-landscape-l2');
+  assert.ok(landscapeL1Source && landscapeL1Draft && landscapeL2Source && landscapeL2Draft);
+  assert.equal(landscapeL1Draft.body.sourceEnglish, landscapeL1Source.body);
+  assert.equal(landscapeL1Draft.body.reviewStatus, 'machine-draft');
+  const l1SourceParagraphs = landscapeL1Source.body.split('\n\n');
+  const l1DraftParagraphs = landscapeL1Draft.body.tshivendaDraft.split('\n\n');
+  assert.equal(l1DraftParagraphs.length, l1SourceParagraphs.length);
+  assert.ok(l1DraftParagraphs[0].startsWith(
+    'Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho.'),
+  'keep the two existing Tshivenda opening sentences unchanged');
+  assert.ok(l1DraftParagraphs[0].includes('walk your land') && l1DraftParagraphs[0].includes('your property'),
+    'keep the land walk and property boundary specific to the farmer’s holding');
+  assert.ok(l1DraftParagraphs[1].includes('u mark points at the same height and trace a contour line'),
+    'the A-frame action must mark equal-height points and trace a contour');
+  assert.ok(l1DraftParagraphs[1].includes('Its marks are an observation, not a design or approval for earthworks.'),
+    'A-frame marks remain observation, not earthworks design or approval');
+  assert.ok(l1DraftParagraphs[1].includes('Before digging a swale, dam, or other structure, have the site assessed.'),
+    'assessment must precede digging any listed or other structure');
+  assert.ok(l1DraftParagraphs[1].includes('Soil, slope, drainage, storm flow na safe overflow route zwoṱhe ndi zwa ndeme.') &&
+    l1DraftParagraphs[1].includes('Vhudzisani a trained local adviser.'),
+  'keep all site factors, safe overflow, and trained local adviser in the instruction');
+  assert.ok(l1DraftParagraphs[2].startsWith(
+    'A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone.'),
+  'keep the existing Tshivenda site-observation prefix unchanged');
+  assert.ok(l1DraftParagraphs[2].includes('Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.'),
+    'preserve the full erosion and slow-infiltration condition');
+  const changedL1Source = { ...landscapeL1Source, body: landscapeL1Source.body.replace('walk your land', 'walk a different field') };
+  assert.notEqual(changedL1Source.body, landscapeL1Source.body);
+  assert.equal(resolveLearnerLessonPresentation(changedL1Source, 've').status, 'english-fallback',
+    'source drift withdraws the whole paired landscape lesson');
+
+  assert.equal(landscapeL2Draft.body.sourceEnglish, landscapeL2Source.body);
+  assert.equal(landscapeL2Draft.body.reviewStatus, 'machine-draft');
+  const l2SourceParagraphs = landscapeL2Source.body.split('\n\n');
+  const l2DraftParagraphs = landscapeL2Draft.body.tshivendaDraft.split('\n\n');
+  assert.equal(l2DraftParagraphs.length, l2SourceParagraphs.length);
+  assert.equal(l2DraftParagraphs[0], "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), ḓuvha ḽi vha ḽi devhula (north). Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu. U sendama ho lavhelesaho devhula (north-facing slopes) lunzhi hu wana ḓuvha ḽinzhisa nahone hu nga duderana ha dovha ha oma. U sendama ho lavhelesaho tshipembe (south-facing slopes) lunzhi hu fhola ha vha na vhunyisi. Tshando (frost) tshi nga kuvhangana kha milindi i re fhasi hune muya wo rotholaho wa dzula hone. Ṱhogomelani tshitentsi tshaṋu musi ni sa athu nanga hune na ḓo ṱavha zwimela zwi sa konḓeleliho tshando (tender crops) kana u vhea zwifhaṱo.",
+    'preserve the existing Tshivenda north/south slope and local observation paragraph byte-for-byte');
+  assert.equal(l2DraftParagraphs[1], "Ḓuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.",
+    'preserve the existing Tshivenda winter shade observation paragraph byte-for-byte');
+  assert.equal(l2DraftParagraphs[2],
+    'Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.',
+    'retain the exact young-citrus and frost-pocket directions while preserving the existing local-frost sentence');
+  assert.ok(l2DraftParagraphs[2].includes('Pawpaw and young citrus are sensitive to frost.') &&
+    l2DraftParagraphs[2].includes('Keep tender plants out of known low frost pockets.'),
+  'preserve age, frost sensitivity, and the direction to keep tender plants outside known low pockets');
+  const changedL2Source = { ...landscapeL2Source, body: landscapeL2Source.body.replace('young citrus', 'mature citrus') };
+  assert.notEqual(changedL2Source.body, landscapeL2Source.body);
+  assert.equal(resolveLearnerLessonPresentation(changedL2Source, 've').status, 'english-fallback',
+    'a changed frost instruction withdraws its complete paired lesson');
+
   const waterDraft = draft.lessons[0].body.tshivendaDraft.split('\n\n');
-  assert.equal(waterDraft[1], waterEnglish[1], 'all A-frame and earthworks guidance stays exact English');
-  for (const sentence of [
-    'When it is safe afterward, walk your land.',
-    'Look for rills, places where water fans out, where it ponds, and where it leaves your property.',
-    'Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.',
-  ]) assert.ok(draft.lessons[0].body.tshivendaDraft.includes(sentence), `held site guidance stays exact English: ${sentence}`);
+  assert.equal(waterDraft[1], l1DraftParagraphs[1], 'show the source-paired mixed Tshivenda A-frame candidate with its exact safeguards');
+  assert.ok(waterDraft[0].includes('Musi zwo no tsireledzea nga murahu, walk your land.'),
+    'preserve the safe-afterward condition and land scope');
+  assert.ok(waterDraft[0].includes('rills') && waterDraft[0].includes('(fans out)') &&
+    waterDraft[0].includes('(ponds)') && waterDraft[0].includes('your property'),
+    'retain the technical channel term and clarify spreading, ponding, and property exit');
+  assert.ok(draft.lessons[0].body.tshivendaDraft.includes(
+    'Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.'),
+    'preserve the erosion and slow-infiltration condition in exact English');
   assert.equal(draft.lessons[1].keyPoints[1].reviewStatus, 'hold', 'winter-sun position stays English');
 });
 
