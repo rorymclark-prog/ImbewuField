@@ -1,0 +1,63 @@
+{
+  "packetId": "VE-VEGETABLES-L2-L3-BODY-CANDIDATES-2026-10-03",
+  "language": "tshivenda",
+  "languageCode": "ve",
+  "sourceRevision": "0661ce4d38ed77099c3db6ecce6ea5ecb8312d7e",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+  "status": "unreviewed machine drafts, independently source/meaning checked; no fluent approval",
+  "entries": [
+    {
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndex": 1,
+      "fieldPath": "body.paragraphs[1]",
+      "exactSourceEnglish": "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+      "currentRegistryDraft": "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+      "candidateTshivendaDraft": "Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu sow a small amount of it, hafhu na hafhu.",
+      "backtranslation": "Choose something that your household actually eats often. Then sow a small amount of it, again and again.",
+      "assessment": "Meaning and sequence preserved. Nangani/tshithu/...kanzhi vhukuma carries the choice and frequent actual household eating. Nga murahu means afterwards; the sow verb and small-amount reference remain exact English; hafhu na hafhu carries repetition.",
+      "recommendation": "Accept as an unreviewed mixed candidate for independent language review; no quantity or crop has been added.",
+      "uncertainty": "No fluent approval; validate local idiom and agreement."
+    },
+    {
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndex": 19,
+      "fieldPath": "body.paragraphs[19]",
+      "exactSourceEnglish": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "currentRegistryDraft": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "candidateTshivendaDraft": "Hungry gap yaṋu i nga ḓa nga murahu ha musi stored maize yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden.",
+      "backtranslation": "Your hungry gap may come after stored maize runs out. It may come when winter greens are not yet ready. It may come in a dry period when water limits the garden.",
+      "assessment": "All three possibilities and might modality remain. The middle clause says the gap may come while the greens are not yet ready, which preserves the source “before winter greens are ready” without the earlier potentially reversing “before ... not yet” construction. The stored-maize and water-limit scenario conditions remain exact English.",
+      "recommendation": "Accept as an unreviewed mixed candidate for independent language review; preserve the English condition clauses as written.",
+      "uncertainty": "No noun-class/gender explanation is relied on as authority; check the hungry-gap agreement with a local speaker."
+    },
+    {
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 4,
+      "fieldPath": "body.paragraphs[4]",
+      "exactSourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentRegistryDraft": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateTshivendaDraft": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "newNonidenticalCandidate": true,
+      "proposalOrigin": "new-candidate-for-independent-backcheck",
+      "draftStatus": "new-machine-draft-candidate",
+      "drafterBacktranslation": "Which staple does your household depend on more than the others right now? That is the one whose failure would hurt most, so it is the one that needs a companion.",
+      "conditions": "Translates the household’s most-heavily-relied-on question with an explicit comparison; keeps the consequence and companion reasoning exact English.",
+      "uncertainty": "Unreviewed Tshivenda candidate; verify relative-clause agreement and that nga maanḓa u fhira zwiṅwe carries the superlative."
+    }
+  ],
+  "notApplied": [
+    {
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndex": 3,
+      "reason": "Previously rejected wrong-language contamination; paragraph remains as the pre-existing registry text."
+    },
+    {
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndex": 8,
+      "reason": "The candidate did not preserve the exact “by the fourth sowing” boundary; paragraph remains exact English."
+    }
+  ],
+  "preservation": "Only L2 body paragraphs 1 and 19 and L3 body paragraph 4 changed. Canonical English source, titles, key points, quizzes, indices, media, all other lesson body paragraphs and existing draft text are preserved.",
+  "backtranslationProvenance": "Backtranslations and semantic checks are reproduced from the supplied independently checked packets; these do not constitute fluent review."
+}

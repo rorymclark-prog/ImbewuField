@@ -54,11 +54,15 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
     {
       id: sourceLesson.id,
       infographicAlt: hold(sourceLesson.infographicAlt!),
-      title: hold(sourceLesson.title),
+      title: pair("Staple Crops: Maize, Beans, and Root Vegetables", "Staple Crops: Maize, Beans, na Root Vegetables"),
       body: pair(vegetablesL3CheckedSourceEnglish, draftParagraphs.join('\n\n')),
       keyPoints: sourceLesson.keyPoints.map(hold),
-      quiz: sourceLesson.quiz.map(question => ({
-        question: hold(question.q),
+      quiz: sourceLesson.quiz.map((question, index) => ({
+        question: index === 0
+          ? pair("Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?", "Hikokwalaho ka yini u hlawula open-pollinated maize ematshan'weni ya hybrid variety loko u kunguhata ku hlayisa mbewu ya wena?")
+          : index === 1
+            ? pair("Why is amadumbe (taro) a good staple choice for parts of KZN?", "Hikokwalaho ka yini amadumbe (taro) yi ri nhlawulo lowunene wa staple eka swiphemu swa KZN?")
+            : hold(question.q),
         options: question.options.map(hold),
         sourceCorrectIndex: question.correct,
         rationale: hold(question.rationale),
@@ -89,8 +93,8 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
-          "xitsongaDraft": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Assess compaction na drainage u nga si hlawula deeper cultivation; do not work wet clay.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
@@ -128,15 +132,15 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "It's a fixed rule with no practical reason",
-              "xitsongaDraft": "It's a fixed rule with no practical reason",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "I nawu lowu nga cinciki, lowu nga riki na practical reason.",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
-            "xitsongaDraft": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Ku kandziya growing soil ku endla compaction ni ku onha roots — bed leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki ku kandziya growing soil.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
@@ -298,6 +302,6 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
     })),
     { lessonId: sourceLesson.id, field: 'body[14]', sourceText: sourceParagraphs[14], reason: 'Keep the full “two or more staples” scope exact English until a fluent reviewer confirms wording that cannot narrow the claim.' },
     { lessonId: sourceLesson.id, field: 'infographicAlt', sourceText: sourceLesson.infographicAlt!, reason: 'The illustration names staple crop forms; retain exact English.' },
-    { lessonId: sourceLesson.id, field: 'quiz', sourceText: sourceLesson.quiz.map(item => `${item.q}\n${item.rationale}`).join('\n\n'), reason: 'Keep crop-specific resilience, seed-saving, and wet-ground claims exact English in quiz content.' },
+    { lessonId: sourceLesson.id, field: 'quiz', sourceText: sourceLesson.quiz.map(item => `${item.q}\n${item.rationale}`).join('\n\n'), reason: 'Keep the remaining quiz options and rationales exact English because they carry crop-specific seed-genetics and wet-ground claims; question stems are drafted separately.' },
   ],
 };

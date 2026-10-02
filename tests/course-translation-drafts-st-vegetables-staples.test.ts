@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
 test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic figures and quiz answers', () => {
   const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples');
@@ -67,14 +68,11 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
     }
   }
   assert.deepEqual(holds, [
-    'lessons[0] vegetables-staples-l1.quiz[1].options[1]',
-    'lessons[1] vegetables-staples-l2.quiz[0].question',
     'lessons[2] vegetables-staples-l3.keyPoints[2]',
     'lessons[3] vegetables-staples-l4.infographicAlt',
     'lessons[3] vegetables-staples-l4.quiz[0].options[1]',
     'lessons[3] vegetables-staples-l4.quiz[0].rationale',
-    'lessons[3] vegetables-staples-l4.quiz[1].question',
-  ], 'uncertain crop and pest passages stay exact English until reviewed');
+  ], 'seed physiology and precise product-registration/safety wording remain held while the three ordinary assessment fields are source-paired');
 
   const bedSource = source.lessons[0].body.split('\n\n');
   const bedDraft = draft.lessons[0].body.sesothoDraft.split('\n\n');
@@ -142,4 +140,52 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
     assert.notEqual(staplesDraft[index], staplesSource[index],
       `staple paragraph ${index + 1}: defensible ordinary framing is drafted rather than left wholly in English`);
   }
+});
+
+
+test('Sesotho assessment drafts stay source-bound and fail closed when exact English changes', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples');
+  assert.ok(source);
+  const draft = SESOTHO_VEGETABLES_STAPLES_DRAFT;
+
+  const l1 = source.lessons[0];
+  const l1q = draft.lessons[0].quiz[1];
+  assert.equal(l1q.sourceCorrectIndex, l1.quiz[1].correct);
+  assert.equal(l1q.options[1].sourceEnglish, 'Brassicas, which need protection while small');
+  assert.equal(l1q.options[1].sesothoDraft, 'Brassicas, tse hlokang tshireletso ha di sa le nyane');
+  let shown = resolveLearnerLessonPresentation(l1, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.quiz[1].options[1], l1q.options[1].sesothoDraft);
+  const changedL1 = { ...l1, quiz: l1.quiz.map((q, i) => i === 1 ? { ...q, options: q.options.map((o, j) => j === 1 ? `${o} changed` : o) } : q) };
+  shown = resolveLearnerLessonPresentation(changedL1, 'st');
+  assert.equal(shown.status, 'english-fallback');
+  assert.equal(shown.content.quiz[1].options[1], changedL1.quiz[1].options[1]);
+
+  const l2 = source.lessons[1];
+  const l2q = draft.lessons[1].quiz[0];
+  assert.equal(l2q.sourceCorrectIndex, l2.quiz[0].correct);
+  assert.equal(l2q.question.sourceEnglish, 'Why sow lettuce in small batches every 2-3 weeks instead of all at once?');
+  assert.equal(l2q.question.sesothoDraft, 'Ke hobaneng ha o jala lettuce ka dihlopha tse nyane dibeke tse ding le tse ding tse 2-3 ho e na le ho e jala kaofela hang?');
+  shown = resolveLearnerLessonPresentation(l2, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.quiz[0].q, l2q.question.sesothoDraft);
+  const changedL2 = { ...l2, quiz: l2.quiz.map((q, i) => i === 0 ? { ...q, q: `${q.q} changed` } : q) };
+  shown = resolveLearnerLessonPresentation(changedL2, 'st');
+  assert.equal(shown.status, 'english-fallback');
+  assert.equal(shown.content.quiz[0].q, changedL2.quiz[0].q);
+  assert.match(l2q.question.sesothoDraft, /dibeke tse ding le tse ding tse 2-3/);
+
+  const l4 = source.lessons[3];
+  const l4q = draft.lessons[3].quiz[1];
+  assert.equal(l4q.sourceCorrectIndex, l4.quiz[1].correct);
+  assert.equal(l4q.question.sourceEnglish, "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?");
+  assert.equal(l4q.question.sesothoDraft, 'Ha makhasi a brassica a sehoai a fetoha mosehla, pele a nahana hore ke disenyi, o lokela ho hlahloba eng pele?');
+  shown = resolveLearnerLessonPresentation(l4, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.quiz[1].q, l4q.question.sesothoDraft);
+  const changedL4 = { ...l4, quiz: l4.quiz.map((q, i) => i === 1 ? { ...q, q: `${q.q} changed` } : q) };
+  shown = resolveLearnerLessonPresentation(changedL4, 'st');
+  assert.equal(shown.status, 'english-fallback');
+  assert.equal(shown.content.quiz[1].q, changedL4.quiz[1].q);
+  assert.match(l4q.question.sesothoDraft, /pele a nahana hore ke disenyi/);
 });

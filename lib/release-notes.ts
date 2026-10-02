@@ -50,6 +50,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       href: '/facilitator/crops',
       detail: 'Read Food forest and Animal products after the vegetable rows, including sources with months to confirm.' },
   ] },
+  { when: '3 October 2026', sha: '59edf369', changes: [
+    'Vegetable quizzes add marked Sesotho and Xitsonga drafts beside exact English.',
+    'Tshivenda household food-planning paragraphs add marked drafts beside English.',
+  ], tour: [
+    { title: 'Review vegetable drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read regional wording and answer quizzes beside the unchanged English source.' },
+  ] },
   { when: '2 October 2026', sha: 'ce623f36', changes: [
     'Silent regional decks now offer slide-only downloads before optional English audio.',
     'Five Xitsonga staple paragraphs add marked drafts beside exact English.',
