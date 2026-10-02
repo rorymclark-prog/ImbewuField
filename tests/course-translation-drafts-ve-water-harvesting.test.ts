@@ -223,8 +223,22 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
       assert.deepEqual(numberTokens(paired.body.tshivendaDraft), numberTokens(lesson.body),
         `${path}.body: preserve every numeric source token`);
     } else {
-      checkPair(paired.body, lesson.body, `${path}.body`);
-      assert.deepEqual(paired.body.tshivendaDraft.split('\n\n'), lesson.body.split('\n\n'), `${path}: preserve paragraph boundaries`);
+      if (index === 1) {
+        assert.equal(paired.body.sourceEnglish, lesson.body, `${path}.body: preserve the exact canonical source pairing`);
+        assert.equal(paired.body.reviewStatus, 'machine-draft', `${path}.body: keep the complete unreviewed translation visibly marked`);
+        const sourceParagraphs = lesson.body.split('\n\n');
+        const bodyParagraphs = paired.body.tshivendaDraft.split('\n\n');
+        assert.equal(bodyParagraphs.length, sourceParagraphs.length, `${path}.body: preserve all 12 paragraph boundaries`);
+        sourceParagraphs.forEach((paragraph, paragraphIndex) => {
+          assert.notEqual(bodyParagraphs[paragraphIndex], paragraph,
+            `${path}.body paragraph ${paragraphIndex + 1}: the reviewed candidate replaces this obsolete exact-English hold`);
+        });
+        assert.deepEqual(numberTokens(paired.body.tshivendaDraft), numberTokens(lesson.body),
+          `${path}.body: preserve every numeric source token`);
+      } else {
+        checkPair(paired.body, lesson.body, `${path}.body`);
+        assert.deepEqual(paired.body.tshivendaDraft.split('\n\n'), lesson.body.split('\n\n'), `${path}: preserve paragraph boundaries`);
+      }
     }
     assert.equal(paired.keyPoints.length, lesson.keyPoints.length);
     for (const [pointIndex, point] of lesson.keyPoints.entries()) {
@@ -247,7 +261,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }
   }
 
-  assert.equal(heldFields, 52, 'hold the module summary, all illustration descriptions, diagnostic key point and other body and quiz fields');
+  assert.equal(heldFields, 51, 'hold the module summary, all illustration descriptions, diagnostic key point, L3 body and quiz fields');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');

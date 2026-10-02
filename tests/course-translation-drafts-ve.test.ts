@@ -117,6 +117,59 @@ test('Tshivenda Soil L1 jar draft stays aligned and preserves diagnostic limits'
   }
 });
 
+test('Tshivenda Soil L2 compost body preserves source conditions and falls back after source drift', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_SOIL_HEALTH_DRAFT.id);
+  assert.ok(sourceModule, 'Soil Health source module must exist');
+  const source = sourceModule.lessons.find(lesson => lesson.id === 'soil-health-l2');
+  const draft = TSHIVENDA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === 'soil-health-l2');
+  assert.ok(source, 'canonical Soil L2 source must exist');
+  assert.ok(draft, 'Tshivenda Soil L2 draft must exist');
+
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  assert.equal(draft.body.sourceEnglish, source.body,
+    'the body draft must remain paired to the exact canonical source');
+  const english = source.body.split('\n\n');
+  const paragraphs = draft.body.tshivendaDraft.split('\n\n');
+  assert.equal(english.length, 12);
+  assert.equal(paragraphs.length, english.length,
+    'all compost paragraphs must remain aligned with their source');
+  assert.ok(paragraphs.every((paragraph, index) => paragraph !== english[index]),
+    'no former full-paragraph English hold may silently remain');
+
+  assert.match(paragraphs[0], /organic matter.*broken down.*managed conditions/,
+    'compost remains organic matter broken down under managed conditions');
+  assert.match(paragraphs[1], /Compost yo fhelelaho i nga.*tshivhumbeo tsha mavu.*contribute nutrients/,
+    'finished compost can improve soil structure and contribute nutrients');
+  assert.match(paragraphs[2], /materials.*vhunyunyu.*muya.*temperature.*Dzina.*vhege.*a si tsedzuluso/,
+    'readiness varies with the source factors and neither province nor fixed weeks is a readiness test');
+  assert.match(paragraphs[3], /dry browns.*fresh greens.*Avoid thick, wet layers that keep air out/,
+    'brown/green material categories and the air-exclusion warning remain precise');
+  assert.match(paragraphs[4], /slimy.*kana ya nukha ammonia nga maanḓa.*dry browns.*rembuluse/,
+    'either sliminess or strong ammonia smell triggers dry browns and turning');
+  assert.match(paragraphs[5], /Sedzulusani vhunyunyu na muya.*thulwi.*recipe nthihi.*materials/,
+    'moisture and air are checked as the heap changes and one recipe does not fit every mix');
+  assert.match(paragraphs[6], /Hot centre a i khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe.*tsho treated.*Time, temperature na management/,
+    'a hot centre does not prove every part has been treated; time, temperature and management matter');
+  assert.match(paragraphs[7], /nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials.*simple household system/,
+    'all prohibited material categories remain out of the simple household system');
+  assert.match(paragraphs[8], /home composting.*weed seed iṅwe na iṅwe.*disease organism iṅwe na iṅwe.*recognised process.*sanitation ya ṱoḓea/,
+    'the warning covers every weed seed and disease organism and keeps the sanitation condition');
+  assert.match(paragraphs[9], /wattle seed pods.*thulwi ya manyoro.*An ordinary heap may not make every seed non-viable/,
+    'wattle seed pods remain excluded and the ordinary-heap limitation remains modal, not absolute');
+  assert.match(paragraphs[10], /clean, untreated materials.*Bark breaks down slowly.*dzina layo fhedzi a si proof.*contamination/,
+    'materials must be clean and untreated; bark breaks down slowly and its name alone proves no freedom from contamination');
+  assert.match(paragraphs[11], /Sedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa.*Keep it moist.*waterlogged/,
+    'turning occurs when more air or mixing is needed, and moist remains distinct from waterlogged');
+
+  const shown = resolveLearnerLessonPresentation(source, 've');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.tshivendaDraft,
+    'the complete marked body draft reaches the learner');
+  const changedSource = { ...source, body: source.body.replace('more air or mixing', 'more air only') };
+  assert.equal(resolveLearnerLessonPresentation(changedSource, 've').status, 'english-fallback',
+    'changing a source condition withdraws the complete paired body draft');
+});
+
 test('Tshivenda Introduction L3 preserves zone frequencies and the observed wind direction', async () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_INTRO_PERMACULTURE_DRAFT.id);
   assert.ok(sourceModule);
