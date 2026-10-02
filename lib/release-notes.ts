@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '4a20403c', changes: [
+    'The Xitsonga Soil Health lesson 1 body now has a marked machine draft.',
+    'Difficult jar and soil terms stay in English beside the exact English source.',
+  ], tour: [
+    { title: 'Read the Xitsonga soil body draft', where: 'Study → Soil Health → lesson 1', href: '/student',
+      detail: 'Choose Xitsonga to read the marked 12-paragraph body beside exact English.' },
+  ] },
   { when: '2 October 2026', sha: 'fa529c13', changes: [
     'Sesotho Soil L2 adds marked compost question, feedback and key point drafts.',
     'Exact English stays beside them; answer choices and order are preserved.',
