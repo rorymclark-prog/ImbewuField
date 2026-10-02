@@ -42,9 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 October 2026', sha: 'd91a17a2', changes: [
+  { when: '2 October 2026', sha: '2339d285', changes: [
     'Sesotho staple lessons add marked body drafts beside exact English.',
-    'Precise crop, seed and water conditions remain English for review.',
+    'Unclear wording and precise crop, seed and water conditions stay English for review.',
   ], tour: [
     { title: 'Review staple lesson drafts', where: 'Study → Vegetables → Lesson 3',
       href: '/student',
