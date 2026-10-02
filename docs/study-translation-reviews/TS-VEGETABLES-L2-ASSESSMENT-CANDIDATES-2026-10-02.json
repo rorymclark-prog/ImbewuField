@@ -1,0 +1,242 @@
+{
+  "packetId": "TS-VEGETABLES-L2-ASSESSMENT-NEXT-2026-10-02",
+  "language": "Xitsonga",
+  "languageCode": "ts",
+  "sourceRevision": "0f26227cba5b48dda6823af124719e43a58acc09",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+  "lessonId": "vegetables-staples-l2",
+  "sourceBodyMatchesRegistry": true,
+  "sourceCorrectIndices": [
+    1,
+    1
+  ],
+  "scope": "Only currently exact-English keypoints, questions, options and rationales are included. Current translations are not duplicated; order and answer indices are unchanged.",
+  "keyPoints": [
+    {
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Stagger sowings and adjust the interval for crop, weather and household use",
+      "currentRegistry": {
+        "sourceEnglish": "Stagger sowings and adjust the interval for crop, weather and household use",
+        "xitsongaDraft": "Stagger sowings and adjust the interval for crop, weather and household use",
+        "reviewStatus": "hold"
+      },
+      "candidateXitsonga": "Stagger sowings and adjust the interval for crop, weather and household use",
+      "candidateStatus": "hold",
+      "independentBacktranslation": "Stagger sowings and adjust the interval for crop, weather and household use.",
+      "uncertainty": "Root retains English after independent check found staggered-sowing or plan-for-gap ambiguity."
+    },
+    {
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "The Three Sisters comes from Indigenous farming traditions in the Americas",
+      "currentRegistry": {
+        "sourceEnglish": "The Three Sisters comes from Indigenous farming traditions in the Americas",
+        "xitsongaDraft": "The Three Sisters comes from Indigenous farming traditions in the Americas",
+        "reviewStatus": "hold"
+      },
+      "candidateXitsonga": "The Three Sisters yi huma eka Indigenous farming traditions in the Americas.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "The Three Sisters comes from Indigenous farming traditions in the Americas.",
+      "uncertainty": "The named system and Indigenous Americas attribution remain exact English; verify the source relationship term."
+    },
+    {
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Use household food records to identify and plan for a hungry gap",
+      "currentRegistry": {
+        "sourceEnglish": "Use household food records to identify and plan for a hungry gap",
+        "xitsongaDraft": "Use household food records to identify and plan for a hungry gap",
+        "reviewStatus": "hold"
+      },
+      "candidateXitsonga": "Use household food records to identify and plan for a hungry gap",
+      "candidateStatus": "hold",
+      "independentBacktranslation": "Use household food records to identify and plan for a hungry gap.",
+      "uncertainty": "Root retains English after independent check found staggered-sowing or plan-for-gap ambiguity."
+    },
+    {
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "Intercropped plants can still compete; manage space, timing and water",
+      "currentRegistry": {
+        "sourceEnglish": "Intercropped plants can still compete; manage space, timing and water",
+        "xitsongaDraft": "Intercropped plants can still compete; manage space, timing and water",
+        "reviewStatus": "hold"
+      },
+      "candidateXitsonga": "Intercropped plants can still compete; lulamisa space, timing and water.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Intercropped plants can still compete; manage space, timing and water.",
+      "uncertainty": "The competition condition and space/timing/water factors remain exact English."
+    }
+  ],
+  "quiz": [
+    {
+      "quizIndex": 0,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "fieldPath": "quiz[0].question",
+        "sourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+        "currentRegistry": {
+          "sourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+          "xitsongaDraft": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+          "reviewStatus": "hold"
+        },
+        "candidateXitsonga": "Hikokwalaho ka yini u byala lettuce hi small batches every 2-3 weeks, ematshan'weni yo yi byala hinkwayona hi nkarhi wun'we?",
+        "candidateStatus": "machine-draft",
+        "independentBacktranslation": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+        "uncertainty": "Lettuce, small batches and exact 2-3-week interval remain English; verify the all-at-once comparison."
+      },
+      "options": [
+        {
+          "fieldPath": "quiz[0].options[0]",
+          "sourceEnglish": "It uses less seed overall",
+          "currentRegistry": {
+            "sourceEnglish": "It uses less seed overall",
+            "xitsongaDraft": "It uses less seed overall",
+            "reviewStatus": "hold"
+          },
+          "candidateXitsonga": "Yi tirhisa mbewu yitsongo hi ku angarhela.",
+          "candidateStatus": "machine-draft",
+          "independentBacktranslation": "It uses less seed overall.",
+          "uncertainty": "Check the comparative wording for less seed overall."
+        },
+        {
+          "fieldPath": "quiz[0].options[1]",
+          "sourceEnglish": "It gives a steady harvest instead of a glut followed by a gap",
+          "currentRegistry": {
+            "sourceEnglish": "It gives a steady harvest instead of a glut followed by a gap",
+            "xitsongaDraft": "It gives a steady harvest instead of a glut followed by a gap",
+            "reviewStatus": "hold"
+          },
+          "candidateXitsonga": "It gives a steady harvest instead of a glut followed by a gap",
+          "candidateStatus": "hold",
+          "independentBacktranslation": "It gives a steady harvest instead of a glut followed by a gap.",
+          "uncertainty": "Held exact because the harvest/glut/gap pattern is the core answer claim."
+        },
+        {
+          "fieldPath": "quiz[0].options[2]",
+          "sourceEnglish": "Lettuce germinates better in small batches",
+          "currentRegistry": {
+            "sourceEnglish": "Lettuce germinates better in small batches",
+            "xitsongaDraft": "Lettuce germinates better in small batches",
+            "reviewStatus": "hold"
+          },
+          "candidateXitsonga": "Lettuce germinates better in small batches",
+          "candidateStatus": "hold",
+          "independentBacktranslation": "Lettuce germinates better in small batches.",
+          "uncertainty": "Held exact because crop germination is a technical claim, even though this option is a distractor."
+        },
+        {
+          "fieldPath": "quiz[0].options[3]",
+          "sourceEnglish": "It reduces pest pressure",
+          "currentRegistry": {
+            "sourceEnglish": "It reduces pest pressure",
+            "xitsongaDraft": "It reduces pest pressure",
+            "reviewStatus": "hold"
+          },
+          "candidateXitsonga": "It reduces pest pressure",
+          "candidateStatus": "hold",
+          "independentBacktranslation": "It reduces pest pressure.",
+          "uncertainty": "Held exact because this is a crop-protection outcome claim."
+        }
+      ],
+      "rationale": {
+        "fieldPath": "quiz[0].rationale",
+        "sourceEnglish": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+        "currentRegistry": {
+          "sourceEnglish": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+          "xitsongaDraft": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+          "reviewStatus": "hold"
+        },
+        "candidateXitsonga": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+        "candidateStatus": "hold",
+        "independentBacktranslation": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+        "uncertainty": "Held exact to preserve timing and household-use qualification."
+      }
+    },
+    {
+      "quizIndex": 1,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "fieldPath": "quiz[1].question",
+        "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+        "currentRegistry": {
+          "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+          "xitsongaDraft": "When can nitrogen in bean crop residues become available to other plants?",
+          "reviewStatus": "hold"
+        },
+        "candidateXitsonga": "When can nitrogen in bean crop residues become available to other plants?",
+        "candidateStatus": "hold",
+        "independentBacktranslation": "When can nitrogen in bean crop residues become available to other plants?",
+        "uncertainty": "Held exact: nitrogen availability in residues is precise technical content."
+      },
+      "options": [
+        {
+          "fieldPath": "quiz[1].options[0]",
+          "sourceEnglish": "Immediately whenever a bean touches maize",
+          "currentRegistry": {
+            "sourceEnglish": "Immediately whenever a bean touches maize",
+            "xitsongaDraft": "Immediately whenever a bean touches maize",
+            "reviewStatus": "hold"
+          },
+          "candidateXitsonga": "Immediately whenever a bean touches maize",
+          "candidateStatus": "hold",
+          "independentBacktranslation": "Immediately whenever a bean touches maize.",
+          "uncertainty": "Held exact to preserve crop identities and the immediate-feeding misconception in this distractor."
+        },
+        {
+          "fieldPath": "quiz[1].options[1]",
+          "sourceEnglish": "As soil organisms decompose the residues",
+          "currentRegistry": {
+            "sourceEnglish": "As soil organisms decompose the residues",
+            "xitsongaDraft": "As soil organisms decompose the residues",
+            "reviewStatus": "hold"
+          },
+          "candidateXitsonga": "As soil organisms decompose the residues",
+          "candidateStatus": "hold",
+          "independentBacktranslation": "As soil organisms decompose the residues.",
+          "uncertainty": "Held exact: soil organisms and decomposition are technical process terms."
+        },
+        {
+          "fieldPath": "quiz[1].options[2]",
+          "sourceEnglish": "Only when pumpkin leaves shade them",
+          "currentRegistry": {
+            "sourceEnglish": "Only when pumpkin leaves shade them",
+            "xitsongaDraft": "Only when pumpkin leaves shade them",
+            "reviewStatus": "hold"
+          },
+          "candidateXitsonga": "Only when pumpkin leaves shade them",
+          "candidateStatus": "hold",
+          "independentBacktranslation": "Only when pumpkin leaves shade them.",
+          "uncertainty": "Held exact to preserve crop identity and the distractor claim."
+        },
+        {
+          "fieldPath": "quiz[1].options[3]",
+          "sourceEnglish": "It can never be released",
+          "currentRegistry": {
+            "sourceEnglish": "It can never be released",
+            "xitsongaDraft": "It can never be released",
+            "reviewStatus": "hold"
+          },
+          "candidateXitsonga": "It can never be released",
+          "candidateStatus": "hold",
+          "independentBacktranslation": "It can never be released.",
+          "uncertainty": "Held exact to preserve the absolute distractor wording."
+        }
+      ],
+      "rationale": {
+        "fieldPath": "quiz[1].rationale",
+        "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+        "currentRegistry": {
+          "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+          "xitsongaDraft": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+          "reviewStatus": "hold"
+        },
+        "candidateXitsonga": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+        "candidateStatus": "hold",
+        "independentBacktranslation": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+        "uncertainty": "Held exact for nitrogen, root bacteria, decomposition, crop identities, and the no-guarantee/no-immediate-feeding condition."
+      }
+    }
+  ],
+  "reviewNote": "Source-paired machine-draft candidates only; no fluent approval. Nitrogen, root bacteria, decomposition, crop identities, timing/harvest pattern, and pest-effect claims remain exact English.",
+  "independentCheck": "Current sources/order/indices checked; KP0/2 held after semantic concerns; Q0 at-one-time repaired. Not learner-wired; no fluent approval.",
+  "rootReview": "All-at-once repaired to hi nkarhi wun’we; staggered sowing and plan-for hungry gap held English after independent ambiguity check. Further final composition review before learner wiring; not fluent approval."
+}
