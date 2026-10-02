@@ -483,8 +483,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 0,
           "rationale": {
             "sourceEnglish": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
-            "xitsongaDraft": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "A-frame yi nga ku pfuna ku mark points at the same height. A-frame a yi assess soil, drainage, storm flow, or whether earthworks are suitable.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
@@ -501,8 +501,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Check the soil, slope, drainage and storm flow, and plan a safe overflow with a trained local adviser",
-              "xitsongaDraft": "Check the soil, slope, drainage and storm flow, and plan a safe overflow with a trained local adviser",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Kambela soil, slope, drainage and storm flow, kutani u plan a safe overflow with a trained local adviser.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Put it wherever water first appears",
@@ -595,8 +595,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
-            "xitsongaDraft": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
@@ -630,8 +630,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 0,
           "rationale": {
             "sourceEnglish": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
-            "xitsongaDraft": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Kambela the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -707,15 +707,15 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-            "xitsongaDraft": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Kambela local minimum-temperature records kumbe u vutisa a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
-            "xitsongaDraft": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
@@ -742,8 +742,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
-            "xitsongaDraft": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Airflow and morning sun swi nga pfuna leswaku matluka ma oma. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -819,8 +819,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
-            "xitsongaDraft": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Xiya u tlhela u kambela misava u nga se teka xiboho hi leswi ndhawu yoleyo yi vulaka swona eka design ya wena.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
@@ -854,14 +854,23 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately.",
-            "xitsongaDraft": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — kutani fungha moya wa ximumu na wa vuxika hi ku hambana.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]
     }
   ],
   "holds": [
+    {"lessonId": "reading-landscape-l2", "field": "quiz[0].rationale", "sourceText": "A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "Winter sun is lower and farther north.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "Shade cloth can change the hours of sun on a bed.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Cold air can settle in low places on clear, still nights.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Compare candidate nursery sites through the local frost season.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[1].q", "sourceText": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[1].rationale", "sourceText": "Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l4", "field": "quiz[0].rationale", "sourceText": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
     {
       "lessonId": "reading-landscape-l1",
       "field": "body",
@@ -888,18 +897,6 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     },
     {
       "lessonId": "reading-landscape-l1",
-      "field": "quiz[0].rationale",
-      "sourceText": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
-    {
-      "lessonId": "reading-landscape-l1",
-      "field": "quiz[1].options[1]",
-      "sourceText": "Check the soil, slope, drainage and storm flow, and plan a safe overflow with a trained local adviser",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
-    {
-      "lessonId": "reading-landscape-l1",
       "field": "quiz[1].rationale",
       "sourceText": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
       "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
@@ -910,18 +907,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       "sourceText": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets.",
       "reason": "Keep the plant names, frost sensitivity, and low-frost-pocket placement instruction exact while drafting the ordinary observation-before-planting sentence."
     },
-    {
-      "lessonId": "reading-landscape-l2",
-      "field": "quiz[0].rationale",
-      "sourceText": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
-    {
-      "lessonId": "reading-landscape-l2",
-      "field": "quiz[1].rationale",
-      "sourceText": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
+
+
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
@@ -1018,36 +1005,16 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       "sourceText": "seek local crop-health guidance too.",
       "reason": "Keep the local crop-health guidance instruction exact until reviewed."
     },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "quiz[0].rationale",
-      "sourceText": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "quiz[1].rationale",
-      "sourceText": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
+
+
     {
       "lessonId": "reading-landscape-l4",
       "field": "body",
       "sourceText": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
       "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
     },
-    {
-      "lessonId": "reading-landscape-l4",
-      "field": "quiz[0].rationale",
-      "sourceText": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
-    {
-      "lessonId": "reading-landscape-l4",
-      "field": "quiz[1].rationale",
-      "sourceText": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
+
+
     {
       "lessonId": "reading-landscape-l1",
       "field": "quiz[0].options[1]",
@@ -1078,11 +1045,6 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       "sourceText": "not to scale",
       "reason": "Keep the standard scale warning exact on a field map until reviewed."
     },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "quiz[1].q",
-      "sourceText": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
-      "reason": "Keep the crop and disease context exact until a fluent reviewer confirms the Xitsonga wording."
-    }
+
   ]
 };

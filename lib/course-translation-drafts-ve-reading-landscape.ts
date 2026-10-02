@@ -84,9 +84,10 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
             ),
           ],
           sourceCorrectIndex: 0,
-          rationale: hold(
-"An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
-      ),
+          rationale: pair(
+            "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+            "A-frame i nga ni thusa u swaya points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+          ),
         },
         {
           question: pair(
@@ -138,9 +139,10 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
           "North-facing slopes often get more direct sun; south-facing slopes are often cooler and moister",
           "U sendama ho lavhelesaho devhula lunzhi hu wana ḓuvha ḽa thwii ḽinzhisa; u sendama ho lavhelesaho tshipembe lunzhi hu a fhola ha dovha ha vha na vhunyisi",
         ),
-        hold(
-"Winter sun is lower and farther north; check local shade before building",
-      ),
+        pair(
+            "Winter sun is lower and farther north; check local shade before building",
+            "Ḓuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo; sedzani murunzi wa henefho musi ni sa athu fhaṱa.",
+          ),
         pair(
           "Cold air can collect in low hollows; aspect is only one site factor",
           "Muya wo rotholaho u nga kuvhangana kha milindi i re fhasi; tshivhumbeleo tsha thungo (aspect) ndi tshiṅwe fhedzi tsha zwithu zwa tshitentsi",
@@ -295,9 +297,10 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
             ),
           ],
           sourceCorrectIndex: 1,
-          rationale: hold(
-"Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
-      ),
+          rationale: pair(
+            "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+            "U elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+          ),
         },
       ],
     },
@@ -324,9 +327,10 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
           "Mark water flow, wind direction, frost pockets, and existing vegetation",
           "Swayani u elela ha maḓi, thungo ya muya, milindi ya tshando, na zwimela zwi re hone",
         ),
-        hold(
-          "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
-        ),
+        pair(
+            "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
+            "Swayani hune khakibos kana blackjack zwa mela zwo tsitsikana, uri ni tole mavu nga vhuronwane; it does not prove compaction.",
+          ),
         pair(
           "Overlay zones and sectors on your base map to complete the design skeleton",
           "Vheani dzi-zone na dzi-sector kha mmapa waṋu wa mutheo u itela u fhedzisa marambo a nyolo",

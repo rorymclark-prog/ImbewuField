@@ -1,0 +1,48 @@
+{
+  "packetId": "imbewu-ve-reading-l1-assessment-implementation-20261002",
+  "status": "implemented source-paired Tshivenda machine draft; unreviewed and not approved for fluent use",
+  "language": "Tshivenda (ve)",
+  "sourceRevision": "4896d38be5716fc9a4ee7b43566b0f60f182394d",
+  "canonicalSource": "lib/course-modules.ts",
+  "registrySource": "lib/course-translation-drafts-ve-reading-landscape.ts",
+  "lessonId": "reading-landscape-l1",
+  "quizIndex": 0,
+  "sourceCorrectIndex": 0,
+  "scope": "Only reading-landscape-l1 quiz[0].rationale was changed. All other source fields, candidate fields, answer order, indices, and canonical English remain unchanged.",
+  "entries": [
+    {
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+      "currentRegistry": {
+        "tshivendaDraft": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+        "reviewStatus": "hold"
+      },
+      "candidate": {
+        "tshivendaDraft": "A-frame i nga ni thusa u swaya points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+        "reviewStatus": "machine-draft"
+      },
+      "backTranslation": "An A-frame can help you mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+      "uncertainty": "Only the ordinary helper/marking framing is localized; the exact-height phrase and the full no-assessment/no-suitability clause stay English. Check whether “i nga ni thusa u swaya” naturally means “can help you mark.” Keep the technical checklist and limitation complete.",
+      "implementation": {
+        "registryPath": "lib/course-translation-drafts-ve-reading-landscape.ts",
+        "reviewStatus": "machine-draft",
+        "independentSemanticCheck": "accepted bounded helper phrase and exact retained limitation",
+        "rootCheck": "accepted",
+        "fluentSpeakerReview": "not performed"
+      }
+    }
+  ],
+  "preservedInvariants": [
+    "Quiz 0 option order is unchanged.",
+    "The correct option index remains 0 and still points to “Points at the same height along a contour.”",
+    "The key point retains both the A-frame capability and the limitation that it does not determine earthwork suitability.",
+    "The rationale retains the full assessment limitation for soil, drainage, storm flow, and earthwork suitability.",
+    "No slope, contour, construction, safety, number, or site recommendation is added.",
+    "Canonical English lesson source is unchanged.",
+    "Only the L1 quiz 0 rationale registry entry changed; questions, options, key points, body, media, and all other lessons remain untouched.",
+    "The unchanged assessment limitations remain exact English: no assessment of soil, drainage, storm flow, or earthwork suitability.",
+    "Changed canonical rationale text invalidates the paired draft and falls back to exact current English."
+  ],
+  "repositoryEditsMade": true,
+  "fluencyReviewClaim": false
+}

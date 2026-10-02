@@ -184,18 +184,16 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
       checkPair(question.rationale, sourceQuestion.rationale, `${questionPath}.rationale`);
     });
   }
+  // Ordinary shade/drying/soil-check framing is now independently checked and source-paired;
+  // precise technical clauses remain English and are checked separately below.
   assert.deepEqual(holds, [
     'lessons[0] reading-landscape-l1.keyPoints[1]',
     'lessons[0] reading-landscape-l1.quiz[0].options[0]',
     'lessons[0] reading-landscape-l1.quiz[0].options[2]',
-    'lessons[0] reading-landscape-l1.quiz[0].rationale',
-    'lessons[1] reading-landscape-l2.keyPoints[1]',
     'lessons[2] reading-landscape-l3.keyPoints[1]',
     'lessons[2] reading-landscape-l3.quiz[0].rationale',
-    'lessons[2] reading-landscape-l3.quiz[1].rationale',
-    'lessons[3] reading-landscape-l4.keyPoints[2]',
     'lessons[3] reading-landscape-l4.quiz[1].options[1]',
-  ], 'uncertain wording stays held until checked by a fluent Tshivenda speaker');
+  ], 'remaining whole-field technical holds remain exact English; new drafts remain unreviewed');
 
   const landscapeL1Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l1');
   const landscapeL1Draft = draft.lessons.find(lesson => lesson.id === 'reading-landscape-l1');
@@ -204,6 +202,28 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
   assert.ok(landscapeL1Source && landscapeL1Draft && landscapeL2Source && landscapeL2Draft);
   assert.equal(landscapeL1Draft.body.sourceEnglish, landscapeL1Source.body);
   assert.equal(landscapeL1Draft.body.reviewStatus, 'machine-draft');
+  const l1Quiz0 = landscapeL1Draft.quiz[0];
+  const l1Quiz0Source = landscapeL1Source.quiz[0];
+  assert.equal(l1Quiz0.rationale.sourceEnglish, l1Quiz0Source.rationale,
+    'the rationale remains paired to the exact current canonical source');
+  assert.equal(l1Quiz0.rationale.reviewStatus, 'machine-draft',
+    'the bounded learner-facing rationale is visibly unreviewed');
+  assert.ok(l1Quiz0.rationale.tshivendaDraft.startsWith('A-frame i nga ni thusa u swaya '),
+    'localize the ordinary helper phrase and leave difficult equal-height wording in English');
+  assert.ok(l1Quiz0.rationale.tshivendaDraft.endsWith(
+    'It does not assess soil, drainage, storm flow, or whether earthworks are suitable.'),
+    'retain the full exact no-assessment and no-suitability limitation');
+  const rationaleDrift = {
+    ...landscapeL1Source,
+    quiz: landscapeL1Source.quiz.map((question, index) => index === 0
+      ? { ...question, rationale: `${question.rationale} Changed.` }
+      : question),
+  };
+  const rationaleFallback = resolveLearnerLessonPresentation(rationaleDrift, 've');
+  assert.equal(rationaleFallback.status, 'english-fallback',
+    'a changed source rationale withdraws this paired machine draft');
+  assert.equal(rationaleFallback.content.quiz[0].rationale, rationaleDrift.quiz[0].rationale,
+    'source drift shows the exact updated canonical rationale');
   const l1SourceParagraphs = landscapeL1Source.body.split('\n\n');
   const l1DraftParagraphs = landscapeL1Draft.body.tshivendaDraft.split('\n\n');
   assert.equal(l1DraftParagraphs.length, l1SourceParagraphs.length);
@@ -261,7 +281,12 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
   assert.ok(draft.lessons[0].body.tshivendaDraft.includes(
     'Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.'),
     'preserve the erosion and slow-infiltration condition in exact English');
-  assert.equal(draft.lessons[1].keyPoints[1].reviewStatus, 'hold', 'winter-sun position stays English');
+  // The checked winter-sun summary is now a draft; preserve its exact source and directional comparison.
+  const winterPoint = draft.lessons[1].keyPoints[1];
+  assert.equal(winterPoint.sourceEnglish, source.lessons[1].keyPoints[1]);
+  assert.equal(winterPoint.reviewStatus, 'machine-draft');
+  assert.ok(winterPoint.tshivendaDraft.includes('ḽi fhasi') && winterPoint.tshivendaDraft.includes('kule devhula'),
+    'winter sun must remain lower and farther north, never reversed');
 });
 
 test('Tshivenda Small Livestock drafts the module card and every lesson, with animal names checked separately', () => {
@@ -333,4 +358,26 @@ test('Tshivenda Market L2 pairs bounded customer text and holds uncertain terms 
   const stalePresentation = resolveLearnerLessonPresentation(changedSource, 've');
   assert.equal(stalePresentation.status, 'english-fallback');
   assert.deepEqual(stalePresentation.content.keyPoints, changedSource.keyPoints);
+});
+
+test('Reading assessment drafts retain before-building shade, conditional drying and non-proof soil checks', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
+  const l2 = TSHIVENDA_READING_LANDSCAPE_DRAFT.lessons.find(lesson => lesson.id === 'reading-landscape-l2')!;
+  const l3 = TSHIVENDA_READING_LANDSCAPE_DRAFT.lessons.find(lesson => lesson.id === 'reading-landscape-l3')!;
+  const l4 = TSHIVENDA_READING_LANDSCAPE_DRAFT.lessons.find(lesson => lesson.id === 'reading-landscape-l4')!;
+  assert.equal(l2.keyPoints[1].reviewStatus, 'machine-draft');
+  assert.ok(l2.keyPoints[1].tshivendaDraft.includes('devhula'));
+  assert.ok(l2.keyPoints[1].tshivendaDraft.includes('musi ni sa athu fhaṱa'));
+  assert.equal(l3.quiz[1].rationale.reviewStatus, 'machine-draft');
+  assert.ok(l3.quiz[1].rationale.tshivendaDraft.includes('zwi nga thusa'));
+  assert.ok(l3.quiz[1].rationale.tshivendaDraft.includes('Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.'));
+  assert.equal(l4.keyPoints[2].reviewStatus, 'machine-draft');
+  assert.ok(l4.keyPoints[2].tshivendaDraft.includes('khakibos kana blackjack'));
+  assert.ok(l4.keyPoints[2].tshivendaDraft.includes('zwa mela zwo tsitsikana'));
+  assert.ok(l4.keyPoints[2].tshivendaDraft.includes('it does not prove compaction.'));
+  const sourceL4 = sourceModule.lessons.find(lesson => lesson.id === l4.id)!;
+  assert.equal(l4.quiz[1].options[1].tshivendaDraft, sourceL4.quiz[1].options[1],
+    'uncertain seasonal-wind pronoun remains exact English');
+  const drifted = { ...sourceL4, keyPoints: sourceL4.keyPoints.map((point, index) => index === 2 ? `${point} A new diagnostic condition.` : point) };
+  assert.equal(resolveLearnerLessonPresentation(drifted, 've').status, 'english-fallback');
 });
