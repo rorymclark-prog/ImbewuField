@@ -39,7 +39,7 @@ test('regional Study cards distinguish English module copy from available lesson
   }
 });
 
-test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer mapping intact', () => {
+test('Water Harvesting Tshivenda draft keeps held safety guidance exact and answer mapping intact', () => {
   const source = COURSE_MODULES.find(module => module.id === 'water-harvesting');
   assert.ok(source, 'the draft must stay paired to the canonical Water Harvesting module');
   const draft = TSHIVENDA_WATER_HARVESTING_DRAFT;
@@ -81,7 +81,14 @@ test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer ma
     checkPair(lesson.title, original.title, `${path}.title`);
     if (titles[original.id]) assert.equal(lesson.title.tshivendaDraft, titles[original.id]);
     else assert.equal(lesson.title.reviewStatus, 'hold', 'greywater reuse title stays English');
-    checkPair(lesson.body, original.body, `${path}.body`);
+    if (lesson.id === 'water-harvesting-l1') {
+      assert.equal(lesson.body.sourceEnglish, original.body, `${path}.body: retain exact canonical source`);
+      assert.equal(lesson.body.reviewStatus, 'machine-draft', `${path}.body: label the full learner copy as unreviewed`);
+      assert.notEqual(lesson.body.tshivendaDraft, original.body,
+        `${path}.body: do not mark an all-English body as translated`);
+    } else {
+      checkPair(lesson.body, original.body, `${path}.body`);
+    }
     const bodySentences: Record<string, string> = lesson.id === 'water-harvesting-l2'
       ? {
           'Rainfall seasons differ across South Africa.': 'Tshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe.',
@@ -97,12 +104,72 @@ test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer ma
       assert.equal(original.body.split(english).length - 1, 1, `${path}.body: selected sentence occurs once in the source`);
       expectedBody = expectedBody.replace(english, tshivenda);
     }
-    assert.equal(lesson.body.reviewStatus, Object.keys(bodySentences).length ? 'machine-draft' : 'hold',
-      `${path}: only screened concept sentences are translated`);
-    assert.equal(lesson.body.tshivendaDraft, expectedBody,
-      `${path}: retain exact source English outside the selected sentences`);
-    assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, original.body.split('\n\n').length,
-      `${path}: retain paragraph boundaries`);
+    if (lesson.id === 'water-harvesting-l1') {
+      const bodyParagraphs = lesson.body.tshivendaDraft.split('\n\n');
+      const sourceParagraphs = original.body.split('\n\n');
+      assert.equal(sourceParagraphs.length, 8, `${path}.body: canonical lesson has eight paragraphs`);
+      bodyParagraphs.forEach((paragraph, paragraphIndex) => {
+        assert.notEqual(paragraph, sourceParagraphs[paragraphIndex],
+          `${path}.body paragraph ${paragraphIndex + 1}: an English-only hold must not be marked translated`);
+      });
+      assert.ok(bodyParagraphs[0].startsWith('One kind of swale is a level trench on contour.'),
+        `${path}.body: preserve exact contour geometry in English`);
+      assert.ok(bodyParagraphs[0].includes('Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet.'),
+        `${path}.body: preserve the alternative graded design and safe outlet`);
+      assert.ok(bodyParagraphs[0].includes('Have a trained local adviser check the line, overflow and receiving point before digging.'),
+        `${path}.body: adviser must check line, overflow and receiver before digging`);
+      assert.ok(bodyParagraphs[1].includes('berm on the downhill side') &&
+        bodyParagraphs[1].includes('trees can be planted when the site design is suitable'),
+      `${path}.body: retain berm direction and conditional tree planting`);
+      assert.ok(bodyParagraphs[2].includes('may draw on moisture stored in the soil after rain, depending on the site'),
+        `${path}.body: preserve the conditional moisture benefit`);
+      assert.ok(bodyParagraphs[3].startsWith('Pula khulwane i nga ḓadza swale nga u ṱavhanya u fhira u dzhena ha maḓi mavuni') &&
+        bodyParagraphs[3].includes('Plan a safe overflow before digging'),
+      `${path}.body: preserve the can-risk and overflow-before-digging instruction`);
+      assert.ok(bodyParagraphs[4].includes('A downstream swale or dam must be able to receive it safely'),
+      `${path}.body: preserve the erosion/neighbour prohibition and safe downstream capacity`);
+      assert.ok(bodyParagraphs[5].includes('Ask a trained local adviser to assess the soil, slope and storm flow') &&
+        bodyParagraphs[5].includes('Tshifanyiso a si construction design'),
+      `${path}.body: retain the adviser request and translate the picture/design limitation`);
+      assert.ok(bodyParagraphs[6].startsWith('Slope fhedzi a i sumbedzi arali swale i suitable'),
+        `${path}.body: translate that slope alone is insufficient`);
+      assert.ok(bodyParagraphs[7].includes('Keep good ground cover.') &&
+        bodyParagraphs[7].includes('Wanani local assessment before digging on steep, wet or unstable land') &&
+        bodyParagraphs[7].includes('Grass barriers na terraces na zwone zwi ṱoḓa a design suited to the site'),
+      `${path}.body: retain the imperative and all pre-dig site conditions`);
+      assert.ok(bodyParagraphs[0].includes('I fhungudza luvhilo na u phaḓaladza runoff, uri maḓi maṅwe a kone u dzhena kha suitable soil'),
+        `${path}.body: translate runoff slowing/spreading and preserve possibility and suitable soil`);
+      assert.ok(bodyParagraphs[1].startsWith('Mavu o excavated a vhumba berm on the downhill side'),
+        `${path}.body: translate berm formation while preserving direction`);
+      assert.ok(bodyParagraphs[2].startsWith('Miri yo ṱavhiwaho henefho'),
+        `${path}.body: translate the planted-tree subject while keeping the conditional in English`);
+      assert.ok(bodyParagraphs[4].startsWith('Route a i tei u erode slope kana u rumela damaging water kha neighbour'),
+        `${path}.body: express the prohibition while preserving routing terms`);
+      assert.ok(bodyParagraphs[7].includes('Wanani local assessment before digging on steep, wet or unstable land'),
+        `${path}.body: preserve the local-assessment-before-digging condition`);
+      assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, sourceParagraphs.length,
+        `${path}.body: preserve all eight source paragraph boundaries`);
+      const changedSafetySource = {
+        ...original,
+        body: original.body.replace(
+          'Get a local assessment before digging on steep, wet or unstable land.',
+          'Dig on steep, wet or unstable land without an assessment.',
+        ),
+      };
+      assert.notEqual(changedSafetySource.body, original.body,
+        `${path}.body safety-drift fixture must actually change the paired source`);
+      const drifted = resolveLearnerLessonPresentation(changedSafetySource, 've');
+      assert.equal(drifted.status, 'english-fallback', `${path}.body: changing a before-dig safety condition withdraws the draft`);
+      assert.equal(drifted.content.body, changedSafetySource.body,
+        `${path}.body: show current English after before-dig safety source drift`);
+    } else {
+      assert.equal(lesson.body.reviewStatus, Object.keys(bodySentences).length ? 'machine-draft' : 'hold',
+        `${path}: only screened concept sentences are translated`);
+      assert.equal(lesson.body.tshivendaDraft, expectedBody,
+        `${path}: retain exact source English outside the selected sentences`);
+      assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, original.body.split('\n\n').length,
+        `${path}: retain paragraph boundaries`);
+    }
     assert.equal(lesson.keyPoints.length, original.keyPoints.length);
     for (const [j, point] of lesson.keyPoints.entries()) {
       checkPair(point, original.keyPoints[j], `${path}.keyPoints[${j}]`);
@@ -129,7 +196,7 @@ test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer ma
   }
 });
 
-test('Tshivenda Water Harvesting keeps technical lesson instructions English and shows source-paired concept drafts', () => {
+test('Tshivenda Water Harvesting shows source-paired lesson drafts and retains held technical claims', () => {
   const source = COURSE_MODULES.find(module => module.id === TSHIVENDA_WATER_HARVESTING_DRAFT.id);
   assert.ok(source, 'the canonical Water Harvesting module must exist');
   const modulePresentation = resolveCourseModulePresentation(source, 've');

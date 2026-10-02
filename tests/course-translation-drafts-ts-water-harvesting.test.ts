@@ -214,3 +214,26 @@ test('Water Harvesting held wording remains exact where dam, water-law and reuse
     'A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.',
   ]) assert.ok(exactHolds.some(held => held.includes(required)), `safety or legal claim needs an exact hold: ${required}`);
 });
+
+test('Water L1 Xitsonga keeps infiltration possible and requires assessment for all listed land conditions', () => {
+  const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l1')!;
+  const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
+  assert.equal(paired.body.sourceEnglish, canonical.body);
+  assert.equal(paired.body.reviewStatus, 'machine-draft');
+  const paragraphs = paired.body.xitsongaDraft.split('\n\n');
+  assert.equal(paragraphs.length, canonical.body.split('\n\n').length);
+  // The earlier wording made infiltration an outcome and narrowed steep land to very steep.
+  assert.ok(paragraphs[0].includes('so some water can soak into suitable soil'),
+    'keep can and suitable soil: slowing runoff does not guarantee infiltration');
+  assert.ok(paragraphs[0].includes('Ndlela leyi faneleke ndhawu ya wena yi titshege hi misava'),
+    'distinguish the site from soil when selecting a design');
+  assert.ok(paragraphs[7].includes('Kuma nkambelo wa laha kaya u nga si cela eka steep, wet or unstable land'),
+    'assessment must precede digging on every source land condition');
+  assert.ok(!paragraphs[7].includes('rhelela ngopfu'),
+    'do not narrow the steep-land assessment warning to very steep land');
+  const changed = { ...canonical, body: canonical.body.replace('some water can soak', 'all water will soak') };
+  assert.notEqual(changed.body, canonical.body, 'the possibility-drift fixture must change the source');
+  const shown = resolveLearnerLessonPresentation(changed, 'ts');
+  assert.equal(shown.status, 'english-fallback', 'withdraw drafts after source changes infiltration certainty');
+  assert.equal(shown.content.body, changed.body);
+});

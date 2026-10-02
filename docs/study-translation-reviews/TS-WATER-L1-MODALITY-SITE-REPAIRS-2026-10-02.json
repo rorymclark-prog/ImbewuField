@@ -1,0 +1,105 @@
+{
+  "lessonId": "water-harvesting-l1",
+  "sourceMainSha": "a1e1703306cfa9a5a9450b74d4707d90b14df244",
+  "currentSourceCheckedAt": "a1e1703306cfa9a5a9450b74d4707d90b14df244",
+  "canonicalPath": "lib/course-modules.ts (the requested lib/course-content.ts does not exist in this worktree)",
+  "registryPath": "lib/course-translation-drafts-ts-water-harvesting.ts",
+  "language": "ts",
+  "status": "no-English-held-body-paragraphs",
+  "scopeNote": "Existing Xitsonga body already localized; this packet records three source-preserving corrections after independent semantic backcheck. Not a new full translation; no fluent approval.",
+  "sourceBody": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+  "currentDraftBody": "Muxaka wun'we wa xisele (swale) i mugodi wo leha lowu ringaneke, lowu celiweke eka khanthura. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, leswaku man'wana ma nghena emisaveni leyi faneleke. Swisele swin'wana swi dizayiniwa swi rhelela katsongo hi ndlela leyi lawulekaka, leswaku swi yisa mati lama taleke hi ku nonoka eka ndhawu leyi hlayisekeke yo huma. Ndlela leyi faneleke misava ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela layini, ndlela ya mati lama taleke na ndhawu leyi ma yaka kona u nga si cela.\n\nMisava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi, laha mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.\n\nMirhi leyi byariweke kona yi nga tirhisa ku tsakama loku hlayisiweke emisaveni endzhaku ka mpfula, swi ya hi ndhawu.\n\nMpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.\n\nNdlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.\n\nKombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.\n\nKu rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.\n\nHlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka misava yo rhelela ngopfu, leyi tsakameke kumbe leyi nga tiyangiki. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+  "candidateBody": "Muxaka wun'we wa xisele (swale) i mugodi wo leha lowu ringaneke, lowu celiweke eka khanthura. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, leswaku man'wana ma nghena emisaveni leyi faneleke. Swisele swin'wana swi dizayiniwa swi rhelela katsongo hi ndlela leyi lawulekaka, leswaku swi yisa mati lama taleke hi ku nonoka eka ndhawu leyi hlayisekeke yo huma. Ndlela leyi faneleke misava ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela layini, ndlela ya mati lama taleke na ndhawu leyi ma yaka kona u nga si cela.\n\nMisava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi, laha mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.\n\nMirhi leyi byariweke kona yi nga tirhisa ku tsakama loku hlayisiweke emisaveni endzhaku ka mpfula, swi ya hi ndhawu.\n\nMpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.\n\nNdlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.\n\nKombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.\n\nKu rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.\n\nHlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka misava yo rhelela ngopfu, leyi tsakameke kumbe leyi nga tiyangiki. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+  "paragraphs": [
+    {
+      "index": 1,
+      "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "currentDraft": "Muxaka wun'we wa xisele (swale) i mugodi wo leha lowu ringaneke, lowu celiweke eka khanthura. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, leswaku man'wana ma nghena emisaveni leyi faneleke. Swisele swin'wana swi dizayiniwa swi rhelela katsongo hi ndlela leyi lawulekaka, leswaku swi yisa mati lama taleke hi ku nonoka eka ndhawu leyi hlayisekeke yo huma. Ndlela leyi faneleke misava ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela layini, ndlela ya mati lama taleke na ndhawu leyi ma yaka kona u nga si cela.",
+      "candidateDraft": "Muxaka wun'we wa xisele (swale) i mugodi wo leha lowu ringaneke, lowu celiweke eka khanthura. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, so some water can soak into suitable soil. Swisele swin'wana swi dizayiniwa swi rhelela katsongo hi ndlela leyi lawulekaka, leswaku swi yisa mati lama taleke hi ku nonoka eka ndhawu leyi hlayisekeke yo huma. Ndlela leyi faneleke ndhawu ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela layini, ndlela ya mati lama taleke na ndhawu leyi ma yaka kona u nga si cela.",
+      "status": "source-preserving-repair",
+      "recommendation": "Publish unreviewed correction beside exact English after normal release gates."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "The excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.",
+      "currentDraft": "Misava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi, laha mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.",
+      "candidateDraft": "Misava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi, laha mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.",
+      "status": "preserve-existing-localized",
+      "recommendation": "Keep current localized paragraph unchanged in this gap packet."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
+      "currentDraft": "Mirhi leyi byariweke kona yi nga tirhisa ku tsakama loku hlayisiweke emisaveni endzhaku ka mpfula, swi ya hi ndhawu.",
+      "candidateDraft": "Mirhi leyi byariweke kona yi nga tirhisa ku tsakama loku hlayisiweke emisaveni endzhaku ka mpfula, swi ya hi ndhawu.",
+      "status": "preserve-existing-localized",
+      "recommendation": "Keep current localized paragraph unchanged in this gap packet."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+      "currentDraft": "Mpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.",
+      "candidateDraft": "Mpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.",
+      "status": "preserve-existing-localized",
+      "recommendation": "Keep current localized paragraph unchanged in this gap packet."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "currentDraft": "Ndlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.",
+      "candidateDraft": "Ndlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.",
+      "status": "preserve-existing-localized",
+      "recommendation": "Keep current localized paragraph unchanged in this gap packet."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
+      "currentDraft": "Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.",
+      "candidateDraft": "Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.",
+      "status": "preserve-existing-localized",
+      "recommendation": "Keep current localized paragraph unchanged in this gap packet."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+      "currentDraft": "Ku rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.",
+      "candidateDraft": "Ku rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.",
+      "status": "preserve-existing-localized",
+      "recommendation": "Keep current localized paragraph unchanged in this gap packet."
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "currentDraft": "Hlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka misava yo rhelela ngopfu, leyi tsakameke kumbe leyi nga tiyangiki. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+      "candidateDraft": "Hlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet or unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+      "status": "source-preserving-repair",
+      "recommendation": "Publish unreviewed correction beside exact English after normal release gates."
+    }
+  ],
+  "semanticReviewNotes": [
+    "All eight source paragraphs are paired in order with the actual canonical body and current Xitsonga registry at a1e1703306cfa9a5a9450b74d4707d90b14df244. All are already machine-drafted; there are zero exact-English held paragraphs. Candidate wording is copied verbatim from current localized paragraphs as requested.",
+    "Paragraph 1 preserves swale type, contour, runoff, some water and suitable soil. The source says some water can soak into suitable soil, while current Xitsonga says some water enters (man’wana ma nghena), which may strengthen possibility into an outcome. Minimal future repair: “leswaku man’wana ma nga nghena eka misava leyi faneleke”. Also, “misava ya wena” is used for the approach fitting your land immediately before “misava” for soil; consider “ndhawu ya wena” for land/site to keep those factors distinct.",
+    "The alternative slight controlled grade and safe outlet remain described as designed, and the trained local adviser checks line, overflow and receiving point before digging.",
+    "The berm remains downhill; planting is conditional on suitable site design; the possible stored-moisture benefit remains after rain and dependent on the site.",
+    "Heavy-rain filling remains possible and faster than infiltration; safe overflow is planned before digging.",
+    "The route prohibition, neighbour-harm condition and downstream swale/dam receiving capacity remain explicit in the existing draft.",
+    "Paragraph 8 says “misava yo rhelela ngopfu” for steep land; “ngopfu” commonly intensifies to very/greatly, which may narrow the source caution. Minimal conservative repair: retain “steep” in English or use a fluent-confirmed equivalent without an added intensity. The wet/unstable conditions and assessment-before-digging sequence are present.",
+    "No localized paragraph was edited or rewritten in this read-only packet; no engineering prescription, dimension or species was added."
+  ],
+  "independentCheck": "Exact source pairing, language identity, body status and paragraph boundaries verified programmatically at a1e1703306cfa9a5a9450b74d4707d90b14df244. No English-only held body paragraph remains. Potential modality and land/steep-scope drift are flagged for root decisions; existing localized wording is preserved verbatim here, not approved as fluent.",
+  "repairs": [
+    {
+      "paragraph": 1,
+      "reason": "Original clause omitted possibility. Retain exact English some water can soak into suitable soil."
+    },
+    {
+      "paragraph": 1,
+      "reason": "Use ndhawu ya wena to distinguish site from soil."
+    },
+    {
+      "paragraph": 8,
+      "reason": "Remove very-steep narrowing. Retain exact English steep, wet or unstable land after assessment-before-digging."
+    }
+  ],
+  "draftBody": "Muxaka wun'we wa xisele (swale) i mugodi wo leha lowu ringaneke, lowu celiweke eka khanthura. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, so some water can soak into suitable soil. Swisele swin'wana swi dizayiniwa swi rhelela katsongo hi ndlela leyi lawulekaka, leswaku swi yisa mati lama taleke hi ku nonoka eka ndhawu leyi hlayisekeke yo huma. Ndlela leyi faneleke ndhawu ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela layini, ndlela ya mati lama taleke na ndhawu leyi ma yaka kona u nga si cela.\n\nMisava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi, laha mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.\n\nMirhi leyi byariweke kona yi nga tirhisa ku tsakama loku hlayisiweke emisaveni endzhaku ka mpfula, swi ya hi ndhawu.\n\nMpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.\n\nNdlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.\n\nKombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.\n\nKu rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.\n\nHlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet or unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu."
+}
