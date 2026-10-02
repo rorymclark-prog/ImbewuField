@@ -97,7 +97,7 @@ test('Soil Health L1 retains difficult jar and diagnostic terms in the checked m
   assert.match(paragraphs[11], /management history, drainage.*remedy/);
 });
 
-test('Soil Health L2 exposes the source-paired compost body while assessment fields stay held', () => {
+test('Soil Health L3 exposes all source-paired body paragraphs while assessment fields stay held', () => {
   const l2 = sourceModule.lessons[1];
   const l2Matches = XITSONGA_SOIL_HEALTH_DRAFT.lessons.filter(lesson => lesson.id === l2.id);
   assert.equal(l2Matches.length, 1, 'the source lesson must have exactly one registry entry');
@@ -169,13 +169,27 @@ test('Soil Health L2 exposes the source-paired compost body while assessment fie
   const english = source.body.split('\n\n');
   const localized = draft.body.xitsongaDraft.split('\n\n');
   assert.equal(localized.length, english.length);
-  assert.deepEqual(localized.slice(0, 9), english.slice(0, 9));
+  assert.deepEqual(localized.slice(0, 9).map((paragraph, index) => paragraph === english[index]), Array(9).fill(false),
+    'the ten previously held body paragraphs now use source-paired mixed-language drafts');
+  assert.match(localized[0], /Funengetani misava.*mulch leyi basekile.*straw.*byanyi byo oma.*wood chips/);
+  assert.match(localized[1], /yi nga hunguta evaporation.*yi nga olovisa.*mpfula.*yi nga suppress weeds/,
+    'mulch benefits remain possible effects, not guarantees');
+  assert.match(localized[2], /^Keep it clear of trunks and stems\./);
+  assert.match(localized[2], /moisture.*lulamisa layer.*mulch yo tala a yi vuli/);
+  assert.match(localized[3], /between main crops.*weather ya laha.*mati lama kumekaka.*next planting/);
+  assert.match(localized[4], /oats, lupins, sunn hemp na cowpea.*mi nga si swi byala/);
+  assert.match(localized[5], /Legumes.*bacteria leti faneleke.*suitable growing conditions.*fix nitrogen.*masalela.*material.*yi bola/);
+  assert.match(localized[6], /Worm farms.*food scraps.*bedding.*castings.*Kambelani bin.*fixed harvest date/);
+  assert.match(localized[7], /^Liquid that drains naturally from a worm bin.*leachate.*prepared worm-casting tea/);
+  assert.match(localized[8], /yi nga va na harmful organisms kumbe substances.*Do not use it on edible plants or assume that dilution makes it safe/);
   assert.deepEqual(localized.slice(9, 12), [
     'Nsimu ya Highveld leyi tshikiweke yi nga funengetiwangi endzhaku ka ntshovelo wa maize yi langutana ni makhombo mambirhi lamakulu.',
     'Mheho wa xixika wu nga susa misava ya le henhla leyi omeke.',
     'Xidzedze xo sungula xo tika xa ximun’wana xi nga hlasela misava leyi nga funengetiwangi, xi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma famba na yona.',
   ]);
-  assert.equal(localized[12], english[12]);
+  assert.match(localized[12], /Cover crops, mulch ni organic matter.*swi nga pfuna ku khoma misava.*yi ya mahlweni yi hanya/);
+  assert.ok(XITSONGA_SOIL_HEALTH_DRAFT.holds.every(item => item.lessonId !== 'soil-health-l3' || !item.field.startsWith('body[')),
+    'all L3 body paragraphs are now source-paired drafts, so superseded body holds must be removed');
 
   const shown = resolveLearnerLessonPresentation(source, 'ts');
   assert.equal(shown.status, 'draft');
@@ -191,7 +205,7 @@ test('Soil Health L2 exposes the source-paired compost body while assessment fie
     assert.equal(question.sourceCorrectIndex, source.quiz[index].correct);
     assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
   });
-  const changedSource = { ...source, body: source.body.replace('Winter wind', 'Cold wind') };
+  const changedSource = { ...source, body: source.body.replace('Do not use it on edible plants', 'Use it on edible plants') };
   const changedShown = resolveLearnerLessonPresentation(changedSource, 'ts');
   assert.equal(changedShown.status, 'english-fallback');
   assert.equal(changedShown.content.body, changedSource.body);

@@ -1,4 +1,4 @@
-/** Unreviewed source-paired Xitsonga concept sentences for Soil Health L1. */
+/** Unreviewed source-paired Xitsonga drafts for all three Soil Health lessons. */
 import type { XitsongaCourseModuleDraft, XitsongaSourcePair } from './course-translation-drafts-ts.ts';
 
 const pair = (sourceEnglish: string, xitsongaDraft: string, reviewStatus: XitsongaSourcePair['reviewStatus'] = 'machine-draft'): XitsongaSourcePair => ({
@@ -14,6 +14,16 @@ const l3DraftParagraphs = [...l3SourceParagraphs];
 l3DraftParagraphs[9] = 'Nsimu ya Highveld leyi tshikiweke yi nga funengetiwangi endzhaku ka ntshovelo wa maize yi langutana ni makhombo mambirhi lamakulu.';
 l3DraftParagraphs[10] = 'Mheho wa xixika wu nga susa misava ya le henhla leyi omeke.';
 l3DraftParagraphs[11] = 'Xidzedze xo sungula xo tika xa ximun’wana xi nga hlasela misava leyi nga funengetiwangi, xi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma famba na yona.';
+l3DraftParagraphs[0] = 'Funengetani misava leyi nga hava cover hi mulch leyi basekile, leyi faneleke, yo fana na straw, byanyi byo oma kumbe wood chips.';
+l3DraftParagraphs[1] = 'Mulch yi nga hunguta evaporation; yi nga olovisa ku ba ka mpfula naswona yi nga suppress weeds.';
+l3DraftParagraphs[2] = 'Keep it clear of trunks and stems. Kambelani moisture ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun\'wana ni wun\'wana.';
+l3DraftParagraphs[3] = 'Cover crops ti nga sirhelela misava leyi nga kona between main crops. Ti hlawuleni hi ku ya hi weather ya laha, mati lama kumekaka ni next planting.';
+l3DraftParagraphs[4] = 'Swikombiso swa course swi katsa oats, lupins, sunn hemp na cowpea. Kambelani loko swi fanele ndhawu ya kwalaho mi nga si swi byala.';
+l3DraftParagraphs[5] = 'Legumes ti lava bacteria leti faneleke ni suitable growing conditions leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.';
+l3DraftParagraphs[6] = 'Worm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani bin ematshan\'weni yo langutela fixed harvest date.';
+l3DraftParagraphs[7] = 'Liquid that drains naturally from a worm bin yi vuriwa leachate. A yi fani na prepared worm-casting tea.';
+l3DraftParagraphs[8] = 'Leachate yi nga va na harmful organisms kumbe substances. Do not use it on edible plants or assume that dilution makes it safe.';
+l3DraftParagraphs[12] = 'Cover crops, mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.';
 
 const l2SourceBody = 'Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.';
 const l2DraftBody = [
@@ -164,8 +174,5 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
       ],
     },
   ],
-  holds: [
-    { lessonId: 'soil-health-l3', field: 'body[0-8]', sourceText: l3SourceParagraphs.slice(0, 9).join('\n\n'), reason: 'Mulch, cover-crop and worm-bin advice stays exact English; only the screened seasonal erosion risks are drafted.' },
-    { lessonId: 'soil-health-l3', field: 'body[12]', sourceText: l3SourceParagraphs[12], reason: 'The closing soil-cover advice stays exact English.' },
-  ],
+  holds: [],
 };

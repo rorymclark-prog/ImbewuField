@@ -231,6 +231,72 @@ test('Tshivenda Soil L2 assessment drafts preserve caveats and answer indexes', 
     'changing a translated quiz caveat withdraws the stale assessment draft');
 });
 
+test('Tshivenda Soil L3 body preserves cover-crop, season and leachate safeguards', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_SOIL_HEALTH_DRAFT.id);
+  assert.ok(sourceModule);
+  const source = sourceModule.lessons.find(lesson => lesson.id === 'soil-health-l3');
+  const draft = TSHIVENDA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === 'soil-health-l3');
+  assert.ok(source);
+  assert.ok(draft);
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+
+  const sourceParagraphs = source.body.split('\n\n');
+  const paragraphs = draft.body.tshivendaDraft.split('\n\n');
+  assert.equal(sourceParagraphs.length, 13);
+  assert.equal(paragraphs.length, sourceParagraphs.length,
+    'all 13 source paragraphs must keep their alignment');
+  for (const [index, paragraph] of paragraphs.entries()) {
+    assert.notEqual(paragraph, sourceParagraphs[index],
+      `paragraph ${index + 1} must not silently remain an exact-English hold`);
+  }
+  assert.match(paragraphs[0], /mavu a songo fukwaho.*mulch yo kunaho, yo teaho.*straw.*hatsi ho omaho.*wood chips/,
+    'bare soil, clean and suitable mulch, and all three examples remain');
+  assert.match(paragraphs[1], /i nga fhungudza evaporation; i nga soften the impact of rain; i nga suppress weeds/,
+    'can scopes all three benefits and weeds are suppressed rather than eliminated');
+  assert.match(paragraphs[2], /Keep it clear of trunks and stems.*moisture nga fhasi.*lulamise layer.*mulch nnzhi a i dzuli/,
+    'trunks and stems stay distinct; underneath moisture, layer adjustment and more-is-not-always-better remain');
+  assert.match(paragraphs[3], /Cover crops dzi nga tsireledza.*vhukati ha main crops.*mutsho wa henefho.*maḓi ane a vha hone na next planting/,
+    'cover crops protect between main crops and selection retains local weather, available water and next planting');
+  assert.match(paragraphs[4], /oats, lupins, sunn hemp na cowpea.*Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala/,
+    'all four named course examples remain in order and local suitability is checked before sowing');
+  assert.match(paragraphs[5], /Legumes.*bacteria dzo teaho.*growth conditions dzo teaho.*fix nitrogen.*Nutrients.*masalela.*material i tshi decompose/,
+    'nitrogen fixation needs suitable bacteria and conditions, and residue nutrients become available during decomposition');
+  assert.match(paragraphs[6], /Worm farms dzi nga.*food scraps na bedding zwo teaho.*castings.*songo lavhelela fixed harvest date/,
+    'worm farms can process suitable scraps and bedding into castings, with no fixed harvest date');
+  assert.match(paragraphs[7], /Liquid that drains naturally from a worm bin.*leachate.*A si tshithu tshithihi na prepared worm-casting tea/,
+    'natural drainage is distinguished from prepared worm-casting tea');
+  assert.match(paragraphs[8], /Leachate i nga vha na harmful organisms kana substances.*Do not use it on edible plants or assume that dilution makes it safe/,
+    'possible harmful contents, no edible-plant use and no dilution safety assumption remain');
+  assert.match(paragraphs[9], /Field ya Highveld.*nga murahu ha harvest ya maize.*risks mbili/,
+    'the specific Highveld field after maize harvest faces exactly two risks');
+  assert.match(paragraphs[10], /Mhepo ya winter i nga.*topsoil yo omaho/,
+    'winter wind may carry away dry topsoil');
+  assert.match(paragraphs[11], /Storm ya u thoma khulwane ya spring i nga rwa.*tshinyadza surface na structure.*Arali maḓi.*a nga hwala loosened soil/,
+    'the first heavy spring storm and its damage remain possible; soil is carried only if water runs over the field');
+  assert.match(paragraphs[12], /Cover crops, mulch na organic matter zwi nga thusa.*fhethu hayo.*dzule.*tshi khou tshila/,
+    'the final soil benefits remain possible rather than guaranteed');
+
+  assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'hold'
+    && point.tshivendaDraft === point.sourceEnglish));
+  assert.ok(draft.quiz.every(item => item.question.reviewStatus === 'hold'
+    && item.question.tshivendaDraft === item.question.sourceEnglish
+    && item.rationale.reviewStatus === 'hold'
+    && item.rationale.tshivendaDraft === item.rationale.sourceEnglish
+    && item.options.every(option => option.reviewStatus === 'hold' && option.tshivendaDraft === option.sourceEnglish)));
+  const shown = resolveLearnerLessonPresentation(source, 've');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.tshivendaDraft);
+  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+  assert.deepEqual(shown.content.quiz, source.quiz);
+  const changedSource = {
+    ...source,
+    body: source.body.replace('Do not use it on edible plants', 'Use it on edible plants'),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedSource, 've').status, 'english-fallback',
+    'changing the edible-plant prohibition withdraws the stale body draft');
+});
+
 test('Tshivenda Introduction L3 preserves zone frequencies and the observed wind direction', async () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_INTRO_PERMACULTURE_DRAFT.id);
   assert.ok(sourceModule);
