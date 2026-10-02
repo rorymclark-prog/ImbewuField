@@ -42,6 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '366f3e93', changes: [
+    'Production plans include fruit, eggs and honey, with crops shown across printed months.',
+    'Record local frost, dry-season water and chicken care in the site survey.',
+    'Check sourced crop varieties and chicken options; confirm the choice locally.',
+    'Record eggs, jars and packages in their own units alongside weighed harvests.',
+  ], tour: [
+    { title: 'Check your production plan', where: 'Production plan → Check your farm conditions',
+      href: '/facilitator/crops',
+      detail: 'Review water, frost, varieties and chicken care, then print the monthly plan.' },
+    { title: 'Record eggs and honey', where: 'My Records → Picked or Sold',
+      href: '/records',
+      detail: 'Choose the product and its actual unit. Counted products keep their own totals.' },
+  ] },
   { when: '2 October 2026', sha: 'f6268170', changes: [
     'Tshivenda and Xitsonga roof-water lessons show marked drafts beside exact English.',
     'Both roof-water quizzes retain safety checks; difficult terms remain English.',

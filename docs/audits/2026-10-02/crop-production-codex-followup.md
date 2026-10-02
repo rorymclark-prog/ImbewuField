@@ -1,7 +1,7 @@
 # Crop and production plan follow-up — 2026-10-02
 
 - Auditor: Codex; implementation and independent QA shared by the parent agent, crop-model agent and inventory agent.
-- Reviewed revision: `b7105d50` on `codex/ubhejane-farmer-crop-print-20261002`, plus the local production-plan, site-observation and record-unit changes. The release owner must append the final tested SHA and deployment evidence below.
+- Reviewed revision: `366f3e93dfbc47689db5a5ebce500fab2e8ee348` on `codex/ubhejane-farmer-crop-print-20261002`, with the integrated production-plan, site-observation and record-unit changes. The following note commit only adds release wording and this SHA reference. Deployment evidence is recorded on issue #35.
 - Deployment inspected: independent checks in this record used local source and generated PDFs. Hosted build verification remains the release owner's task.
 - Previous audit: [current register and CP-001–CP-008](crop-production-audit.md), its [preserved original audit PDF](Ubhejane-Crop-Plan-Audit-2026-10-02.pdf), and [site-survey continuation](site-survey-continuation.md).
 - Scope: `/facilitator/crops`, farmer/reference PDF exports, mapped food inventory, crop varieties, same-site observations and production records.
