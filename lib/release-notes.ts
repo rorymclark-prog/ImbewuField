@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '497f513b', changes: [
+    'Tshivenda compost key points and both quizzes now show marked drafts beside English.',
+    'The Xitsonga compost body now has 12 marked paragraphs with technical English retained.',
+  ], tour: [
+    { title: 'Review the regional compost drafts', where: 'Study → Soil Health → lesson 2', href: '/student',
+      detail: 'Read Xitsonga or answer the Tshivenda quizzes. Exact English stays beside each draft.' },
+  ] },
   { when: '2 October 2026', sha: '81334c53', changes: [
     'Tshivenda Soil lesson 2 now has a complete marked compost body draft.',
     'Difficult technical English remains beside the exact English source.',

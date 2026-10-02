@@ -170,6 +170,67 @@ test('Tshivenda Soil L2 compost body preserves source conditions and falls back 
     'changing a source condition withdraws the complete paired body draft');
 });
 
+test('Tshivenda Soil L2 assessment drafts preserve caveats and answer indexes', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_SOIL_HEALTH_DRAFT.id);
+  assert.ok(sourceModule);
+  const source = sourceModule.lessons.find(lesson => lesson.id === 'soil-health-l2');
+  const draft = TSHIVENDA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === 'soil-health-l2');
+  assert.ok(source);
+  assert.ok(draft);
+
+  assert.equal(draft.keyPoints.length, source.keyPoints.length);
+  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+  assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'machine-draft'));
+  assert.match(draft.keyPoints[0].tshivendaDraft, /browns, greens, moisture.*air/,
+    'the balance key point does not add dry or fresh qualifiers');
+  assert.match(draft.keyPoints[1].tshivendaDraft, /Vhukati ho fhisaho.*a vhu sumbedzi.*heap yoṱhe.*sanitised/,
+    'a hot centre is not evidence that the whole heap is sanitised');
+  assert.match(draft.keyPoints[2].tshivendaDraft, /seed pods.*contaminated materials.*nnḓa/,
+    'seed pods and contaminated materials remain excluded');
+  assert.match(draft.keyPoints[3].tshivendaDraft, /compost.*condition.*fixed regional timetable/,
+    'readiness is judged from condition, not a fixed regional timetable');
+
+  assert.equal(draft.quiz.length, source.quiz.length);
+  for (const [index, item] of draft.quiz.entries()) {
+    assert.equal(item.question.sourceEnglish, source.quiz[index]!.q);
+    assert.equal(item.question.reviewStatus, 'machine-draft');
+    assert.deepEqual(item.options.map(option => option.sourceEnglish), source.quiz[index]!.options);
+    assert.ok(item.options.every(option => option.reviewStatus === 'machine-draft'));
+    assert.equal(item.sourceCorrectIndex, source.quiz[index]!.correct, `quiz ${index} source answer index is stable`);
+    assert.equal(item.options[item.sourceCorrectIndex].sourceEnglish, source.quiz[index]!.options[source.quiz[index]!.correct]);
+    assert.equal(item.rationale.sourceEnglish, source.quiz[index]!.rationale);
+    assert.equal(item.rationale.reviewStatus, 'machine-draft');
+  }
+  assert.match(draft.quiz[0].question.tshivendaDraft, /ammonia.*nga maanḓa.*wet.*slimy/,
+    'the Q0 symptoms retain the strong smell and wet/slimy conditions');
+  assert.match(draft.quiz[0].rationale.tshivendaDraft, /may need more air and drier material/,
+    'the corrective advice remains qualified');
+  assert.match(draft.quiz[0].rationale.tshivendaDraft, /can also suggest too much nitrogen-rich material/,
+    'ammonia can suggest excess nitrogen but is not made a definitive diagnosis');
+  assert.match(draft.quiz[0].rationale.tshivendaDraft, /damp, not soggy/,
+    'the moisture limit remains explicit');
+  assert.match(draft.quiz[1].rationale.tshivendaDraft, /may not expose every seed.*non-viable.*U bvisa pods.*zwi thivhela uri dzi phaḓalale/,
+    'the ordinary-heap caveat and reason for excluding pods remain in source order');
+
+  const shown = resolveLearnerLessonPresentation(source, 've');
+  assert.equal(shown.status, 'draft');
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.tshivendaDraft));
+  assert.deepEqual(shown.content.quiz, source.quiz.map((item, index) => ({
+    q: draft.quiz[index].question.tshivendaDraft,
+    options: draft.quiz[index].options.map(option => option.tshivendaDraft),
+    correct: item.correct,
+    rationale: draft.quiz[index].rationale.tshivendaDraft,
+  })), 'learner assessment keeps the same options and answer while showing paired drafts');
+  const changedQuizSource = {
+    ...source,
+    quiz: source.quiz.map((item, index) => index === 0
+      ? { ...item, rationale: item.rationale.replace('may need more air', 'may need more water') }
+      : item),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedQuizSource, 've').status, 'english-fallback',
+    'changing a translated quiz caveat withdraws the stale assessment draft');
+});
+
 test('Tshivenda Introduction L3 preserves zone frequencies and the observed wind direction', async () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_INTRO_PERMACULTURE_DRAFT.id);
   assert.ok(sourceModule);
