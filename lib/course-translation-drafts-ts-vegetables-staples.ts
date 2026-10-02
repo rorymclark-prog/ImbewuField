@@ -11,15 +11,37 @@ const hold = (sourceEnglish: string): XitsongaSourcePair => pair(sourceEnglish, 
 
 const sourceModule = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!;
 const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l3')!;
-const sourceParagraphs = sourceLesson.body.split('\n\n');
+// Freeze this checked English source: canonical edits must make the learner resolver fall back.
+const vegetablesL3CheckedSourceEnglish = [
+  "A staple earns its place because it feeds the household beyond the day of harvest.",
+  "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+  "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+  "Grow at least two. Not one.",
+  "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+  "Each staple protects you against something different.",
+  "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+  "Beans and cowpeas give a storable protein harvest.",
+  "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+  "Amadumbe handles wetter ground, where other staples struggle.",
+  "Notice that they fail in different conditions. That's the whole point.",
+  "Resilience doesn't mean nothing fails.",
+  "It means one failure doesn't finish your household's food plan.",
+  "One crop is one point of failure.",
+  "Two or more staples give you more ways to keep eating.",
+  "Different crops use water, soil and seasons differently. That difference is the protection."
+].join('\n\n');
+const sourceParagraphs = vegetablesL3CheckedSourceEnglish.split('\n\n');
 const draftParagraphs = [...sourceParagraphs];
-draftParagraphs[10] = 'Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.';
-draftParagraphs[11] = 'Resilience a swi vuli leswaku a ku na lexi tsandzekaka.';
-draftParagraphs[12] = 'Swi vula leswaku ku tsandzeka kun\'we a ku herisi kungu ra swakudya ra ndyangu wa wena.';
-draftParagraphs[13] = 'Xibyariwa xin\'we i "point of failure" yin\'we.';
-// Keep the whole quantity-and-staples claim in English until its scope is reviewed.
-draftParagraphs[14] = sourceParagraphs[14];
-draftParagraphs[15] = 'Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.';
+draftParagraphs[0] = "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.";
+draftParagraphs[1] = "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.";
+draftParagraphs[2] = "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.";
+draftParagraphs[3] = "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we.";
+draftParagraphs[5] = "Staple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.";
+draftParagraphs[10] = "Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.";
+draftParagraphs[11] = "Resilience a swi vuli leswaku a ku na lexi tsandzekaka.";
+draftParagraphs[12] = "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.";
+draftParagraphs[13] = "Xibyariwa xin'we i \"point of failure\" yin'we.";
+draftParagraphs[15] = "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.";
 
 export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
   id: sourceModule.id,
@@ -33,7 +55,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
       id: sourceLesson.id,
       infographicAlt: hold(sourceLesson.infographicAlt!),
       title: hold(sourceLesson.title),
-      body: pair(sourceLesson.body, draftParagraphs.join('\n\n')),
+      body: pair(vegetablesL3CheckedSourceEnglish, draftParagraphs.join('\n\n')),
       keyPoints: sourceLesson.keyPoints.map(hold),
       quiz: sourceLesson.quiz.map(question => ({
         question: hold(question.q),

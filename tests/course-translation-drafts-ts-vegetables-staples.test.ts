@@ -6,42 +6,71 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 
 const sourceModule = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!;
 const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l3')!;
-const selectedDraftParagraphs = [
-  'Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.',
-  'Resilience a swi vuli leswaku a ku na lexi tsandzekaka.',
-  "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.",
-  'Xibyariwa xin\'we i "point of failure" yin\'we.',
-  'Two or more staples give you more ways to keep eating.',
-  'Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.',
-];
-const selectedEnglishParagraphs = [
+const checkedL3SourceParagraphs = [
+  "A staple earns its place because it feeds the household beyond the day of harvest.",
+  "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+  "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+  "Grow at least two. Not one.",
+  "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+  "Each staple protects you against something different.",
+  "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+  "Beans and cowpeas give a storable protein harvest.",
+  "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+  "Amadumbe handles wetter ground, where other staples struggle.",
   "Notice that they fail in different conditions. That's the whole point.",
   "Resilience doesn't mean nothing fails.",
   "It means one failure doesn't finish your household's food plan.",
-  'One crop is one point of failure.',
-  'Two or more staples give you more ways to keep eating.',
-  'Different crops use water, soil and seasons differently. That difference is the protection.',
+  "One crop is one point of failure.",
+  "Two or more staples give you more ways to keep eating.",
+  "Different crops use water, soil and seasons differently. That difference is the protection."
+];
+const checkedL3SourceEnglish = checkedL3SourceParagraphs.join('\n\n');
+const checkedL3DraftParagraphs = [
+  "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+  "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.",
+  "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.",
+  "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we.",
+  "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+  "Staple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.",
+  "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+  "Beans and cowpeas give a storable protein harvest.",
+  "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+  "Amadumbe handles wetter ground, where other staples struggle.",
+  "Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.",
+  "Resilience a swi vuli leswaku a ku na lexi tsandzekaka.",
+  "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.",
+  "Xibyariwa xin'we i \"point of failure\" yin'we.",
+  "Two or more staples give you more ways to keep eating.",
+  "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo."
 ];
 
-test('Vegetables & Staple Crops L3 pairs the one-failure concept and holds the staple-count claim', () => {
+test('Vegetables & Staple Crops L3 keeps its checked source frozen while adding bounded Xitsonga framing', () => {
   const draft = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0];
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.id, sourceModule.id);
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.language, 'ts');
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.reviewStatus, 'machine-draft');
   assert.equal(draft.id, sourceLesson.id);
-  assert.equal(draft.body.sourceEnglish, sourceLesson.body);
+  assert.equal(sourceLesson.body, checkedL3SourceEnglish,
+    'a changed canonical lesson source requires a new checked source pair');
+  assert.equal(draft.body.sourceEnglish, checkedL3SourceEnglish,
+    'the learner draft stays bound to the exact reviewed English rather than following future edits');
   assert.equal(draft.body.reviewStatus, 'machine-draft');
 
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const localizedParagraphs = draft.body.xitsongaDraft.split('\n\n');
-  assert.equal(sourceParagraphs.length, 16);
+  assert.deepEqual(sourceParagraphs, checkedL3SourceParagraphs,
+    'canonical body order and paragraph boundaries still match the checked packet');
   assert.equal(localizedParagraphs.length, sourceParagraphs.length);
-  assert.deepEqual(sourceParagraphs.slice(10), selectedEnglishParagraphs);
-  assert.deepEqual(localizedParagraphs.slice(0, 10), sourceParagraphs.slice(0, 10),
-    'species-specific crop claims and farming instructions stay exact English');
-  assert.deepEqual(localizedParagraphs.slice(10), selectedDraftParagraphs);
-  assert.equal(localizedParagraphs[12], selectedDraftParagraphs[2], 'the one-failure sentence keeps its full household food-plan scope');
-  assert.equal(localizedParagraphs[14], sourceParagraphs[14], 'the full staple-count sentence remains exact English');
+  assert.deepEqual(localizedParagraphs, checkedL3DraftParagraphs,
+    'ordinary framing is localized while checked existing paragraphs and holds stay in place');
+  for (const index of [4, 6, 7, 8, 9, 14]) {
+    assert.equal(localizedParagraphs[index], sourceParagraphs[index],
+      `paragraph ${index} retains its unresolved superlative or crop-specific agronomic claim exactly`);
+  }
+  for (const index of [10, 11, 12, 13, 15]) {
+    assert.equal(localizedParagraphs[index], checkedL3DraftParagraphs[index],
+      `existing Xitsonga paragraph ${index} remains byte-for-byte preserved`);
+  }
 
   assert.equal(draft.title.sourceEnglish, sourceLesson.title);
   assert.equal(draft.title.xitsongaDraft, sourceLesson.title);

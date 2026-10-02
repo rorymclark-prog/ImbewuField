@@ -51,6 +51,17 @@ export type PackQuality = 'standard' | 'high';
 /** A slide-only pack keeps the stills a regional learner sees and any matching poster. */
 export type OfflinePackVariant = 'full' | 'slides';
 
+/** Silent regional decks must not download fallback English audio without a choice. */
+export function regionalPackNeedsNarrationChoice(moduleIds: readonly string[], lang: string): boolean {
+  return ['st', 've', 'ts'].includes(lang) && moduleIds.some(id =>
+    Boolean(COURSE_DECKS[id]) && resolveNarrationLang(id, lang)?.exact !== true,
+  );
+}
+
+export function defaultOfflinePackVariant(moduleIds: readonly string[], lang: string): OfflinePackVariant {
+  return regionalPackNeedsNarrationChoice(moduleIds, lang) ? 'slides' : 'full';
+}
+
 /**
  * The high-quality twin of an asset, where one exists.
  *
