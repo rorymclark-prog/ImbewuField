@@ -1,0 +1,158 @@
+{
+  "lessonId": "water-harvesting-l1",
+  "sourceMainSha": "ae1bc6cbb290ef9046fda51c2704019f5fc4187a",
+  "status": "wired-machine-draft",
+  "scopeNote": "Read-only Sesotho body candidates for Water Harvesting L1, source-paired across all eight canonical paragraphs. The current ST registry holds the whole body in exact English, so there are no existing localized body paragraphs to preserve. Technical phrases for contour geometry, controlled grade, overflow, receiving points and earthworks are retained in English where a translation could change the design. No repository edits; candidates require independent Sesotho backcheck.",
+  "paragraphs": [
+    {
+      "index": 0,
+      "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "currentDraft": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "status": "exact-English hold; candidate supplied",
+      "draft": "Mofuta o mong wa swale ke level trench on contour. E fokotsa lebelo mme e hasanya runoff, hore metsi a mang a kgone ho kenella mobung o loketseng. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Mokgwa o loketseng naha ya hao o itshetlehile ka mobu, slope, drainage le storm flow. Pele o tjheka, trained local adviser a hlahlobe line, overflow le receiving point.",
+      "literalBacktranslation": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach suits your land depends on soil, slope, drainage and storm flow. Before you dig, a trained local adviser should check the line, overflow and receiving point.",
+      "uncertainty": "Keeps 'level trench on contour' and the alternate slight controlled grade/outlet clause exact in English to avoid geometric ambiguity. The runoff, infiltration, land factors and trained-local-adviser check-before-digging are preserved. 'E kgone ho kenella mobung' is intended as some water soaking into suitable soil; backcheck the local wording."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "The excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.",
+      "currentDraft": "The excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.",
+      "status": "exact-English hold; candidate supplied",
+      "draft": "Mobu o epolotsweng o etsa berm on the downhill side; moo difate di ka jalwang ha site design e loketse.",
+      "literalBacktranslation": "The excavated soil makes a berm on the downhill side; trees can be planted there when the site design is suitable.",
+      "uncertainty": "Preserves that excavated soil forms the berm on the downhill side and that tree planting there is conditional on a suitable site design. Retains berm and downhill side in English for direction and earthwork precision."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
+      "currentDraft": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
+      "status": "exact-English hold; candidate supplied",
+      "draft": "Difate tse jetsweng moo di ka nka moisture e bolokilweng mobung ka mora pula, ho ya ka site.",
+      "literalBacktranslation": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
+      "uncertainty": "Preserves may, stored soil moisture after rain, and dependence on the site. Retains moisture and site in English; it does not promise that trees will always access the water."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+      "currentDraft": "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+      "status": "exact-English hold; candidate supplied",
+      "draft": "Pula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rera safe overflow pele o tjheka.",
+      "literalBacktranslation": "Heavy rain can fill a swale faster than water enters the soil. Plan a safe overflow before digging.",
+      "uncertainty": "Keeps can and the comparison between filling speed and infiltration. Preserves that a safe overflow is planned before digging; safe overflow remains English."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "currentDraft": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "status": "exact-English hold; candidate supplied",
+      "draft": "Route eo ha e a tshwanela ho senya slope ka erosion kapa ho romela metsi a senyang ho moahisani. Downstream swale kapa dam e lokela ho kgona ho amohela metsi ao ka polokeho.",
+      "literalBacktranslation": "The route must not cause erosion of the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive that water safely.",
+      "uncertainty": "Preserves both prohibitions and the downstream receiving requirement. Retains route, slope, downstream, swale and dam terminology to avoid changing water direction or engineering meaning."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
+      "currentDraft": "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
+      "status": "exact-English hold; candidate supplied",
+      "draft": "Kopa trained local adviser hore a hlahlobe mobu, slope le storm flow. Setshwantsho ha se construction design.",
+      "literalBacktranslation": "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
+      "uncertainty": "Preserves the trained local adviser qualification and all three assessment factors. Keeps slope, storm flow and construction design in English."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+      "currentDraft": "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+      "status": "exact-English hold; candidate supplied",
+      "draft": "Slope feela ha e bolele hore swale e a lokela. Soil, drainage, unstable ground le metsi a tswang upslope kaofela di bohlokwa.",
+      "literalBacktranslation": "Slope alone does not tell whether the swale is suitable. Soil, drainage, unstable ground and water coming from upslope all matter.",
+      "uncertainty": "Preserves slope alone as insufficient and lists soil, drainage, unstable ground, and upslope-arriving water. Keeps drainage, unstable ground and upslope in English for site-design precision."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "currentDraft": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "status": "exact-English hold; candidate supplied",
+      "draft": "Boloka ground cover e ntle. Fumana local assessment pele o tjheka mobung o steep, wet kapa unstable. Grass barriers le terraces le tsona di hloka design e loketseng site.",
+      "literalBacktranslation": "Keep good ground cover. Get a local assessment before digging in steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "uncertainty": "Preserves all three land conditions, the local assessment before digging, and the need for site-suited designs for both grass barriers and terraces. Technical slope and erosion-control terms stay English."
+    }
+  ],
+  "sourceBody": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+  "draftBody": "Mofuta o mong wa swale ke level trench on contour. E fokotsa lebelo mme e hasanya runoff, hore metsi a mang a kgone ho kenella mobung o loketseng. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Mokgwa o loketseng naha ya hao o itshetlehile ka mobu, slope, drainage le storm flow. Pele o tjheka, trained local adviser a hlahlobe line, overflow le receiving point.\n\nMobu o epolotsweng o etsa berm on the downhill side; moo difate di ka jalwang ha site design e loketse.\n\nDifate tse jetsweng moo di ka nka moisture e bolokilweng mobung ka mora pula, ho ya ka site.\n\nPula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rera safe overflow pele o tjheka.\n\nRoute eo ha e a tshwanela ho senya slope ka erosion kapa ho romela metsi a senyang ho moahisani. Downstream swale kapa dam e lokela ho kgona ho amohela metsi ao ka polokeho.\n\nKopa trained local adviser hore a hlahlobe mobu, slope le storm flow. Setshwantsho ha se construction design.\n\nSlope feela ha e bolele hore swale e a lokela. Soil, drainage, unstable ground le metsi a tswang upslope kaofela di bohlokwa.\n\nBoloka ground cover e ntle. Fumana local assessment pele o tjheka mobung o steep, wet kapa unstable. Grass barriers le terraces le tsona di hloka design e loketseng site.",
+  "preservation": {
+    "sourceParagraphCount": 8,
+    "candidateParagraphCount": 8,
+    "currentSTRegistryParagraphCount": 8,
+    "currentLocalizedParagraphCount": 0,
+    "existingLocalizedParagraphsPreservedExactly": [],
+    "englishHeldParagraphIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "canonicalSourceUnchanged": true,
+    "noRepositoryEdits": true
+  },
+  "materialAmbiguities": [
+    "The precise geometry of level contour and slight controlled grade is left in exact English in paragraph 1; do not wire a localized geometric paraphrase without specialist review.",
+    "Berm on the downhill side, safe outlet/overflow, and downstream receiving capacity retain English direction/design terms in paragraphs 1–5.",
+    "The infiltration wording in paragraphs 1 and 4 is an ordinary Sesotho attempt; a reviewer should confirm it means water soaking/entering the suitable soil and not necessarily all the runoff."
+  ],
+  "semanticChecks": [
+    "All eight exact source paragraphs are represented in order; the current ST registry holds all eight in English, so there are no prior localized paragraphs to overwrite.",
+    "Level trench on contour remains distinguished from other swales designed with slight, controlled grade; excess water is carried slowly to a safe outlet only in the latter clause.",
+    "The trained local adviser checks the line, overflow and receiving point before digging; a later instruction also asks the trained adviser to assess soil, slope and storm flow.",
+    "Berm remains on the downhill side; tree planting and stored-soil-moisture benefits remain conditional on site design/site conditions.",
+    "Heavy-rain filling is a can-risk compared with infiltration; plan safe overflow before digging. The route must not erode the slope or send harmful water to a neighbour, and a downstream receiver must receive it safely.",
+    "Slope alone is insufficient; soil, drainage, unstable ground and water from upslope all matter. Steep, wet and unstable land require local assessment before digging; grass barriers and terraces need site-suited design."
+  ],
+  "uncertaintySummary": "Unreviewed Sesotho machine draft, not fluent-speaker approval. Geometry, berm direction and safe outlet/overflow technical clauses remain English where translation could alter the earthwork. All eight body paragraphs were held English in the current ST registry; independent Sesotho and local earthworks review are required before wiring.",
+  "currentSourceCheckedAt": "2026-10-02T08:05:00Z",
+  "independentReview": {
+    "result": "accepted for machine-draft wiring with the recorded minimal quiz wording repair",
+    "scope": "Sesotho prose meaning and source alignment; not fluent-speaker approval or technical earthworks advice",
+    "checks": [
+      "body meaning, source order, conditionals and water-routing cautions reviewed",
+      "quiz question candidates accepted after preserving the exact phrase one end",
+      "key point 0 and quiz 0 rationale remain exact-English holds"
+    ]
+  },
+  "assessmentCandidates": {
+    "sourceMainSha": "ae1bc6cbb290ef9046fda51c2704019f5fc4187a",
+    "status": "wired-machine-draft",
+    "quizQuestions": [
+      {
+        "index": 0,
+        "sourceEnglish": "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
+        "draft": "Sehoai se ile sa rera level contour swale. Ka mora pula e matla, one end e holds most of the water. Sehoai se lokela ho hlahloba eng pele se fetola earthwork?",
+        "sourceCorrectIndex": 1,
+        "literalBacktranslation": "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
+        "uncertainty": "Keeps the technical geometry, ‘holds most of the water’ comparison and earthwork term in English. Preserves the after-heavy-rain condition and asks what to check before any change."
+      },
+      {
+        "index": 1,
+        "sourceEnglish": "A farmer wants to control erosion on steep land. What should she do before digging?",
+        "draft": "Sehoai se batlang ho laola kgoholeho mobung o moepa se lokela ho etsa eng pele se tjheka?",
+        "sourceCorrectIndex": 1,
+        "literalBacktranslation": "A farmer who wants to control erosion on steep land should do what before digging?",
+        "uncertainty": "Preserves the steep-land condition and asks for action before digging; source does not specify the farmer's gender in Sesotho."
+      }
+    ],
+    "preservedHolds": [
+      {
+        "field": "keyPoints[0]",
+        "sourceEnglish": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet"
+      },
+      {
+        "field": "quiz[0].rationale",
+        "sourceEnglish": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it."
+      }
+    ],
+    "independentReview": "Accepted for machine-draft wiring, including exact one end repair; not fluent-speaker approval."
+  }
+}

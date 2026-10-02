@@ -84,19 +84,69 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   }
   assert.deepEqual(holds, [
     'lessons[0] water-harvesting-l1.infographicAlt',
-    'lessons[0] water-harvesting-l1.body',
     'lessons[0] water-harvesting-l1.keyPoints[0]',
-    'lessons[0] water-harvesting-l1.quiz[0].question',
     'lessons[0] water-harvesting-l1.quiz[0].rationale',
-    'lessons[0] water-harvesting-l1.quiz[1].question',
     'lessons[3] water-harvesting-l4.body',
-  ], 'ambiguous contour and other reviewed safety wording must remain exact English');
+  ], 'unreviewed contour key point and other held safety wording must remain exact English');
 
   const swaleSource = source.lessons[0];
   const visible = resolveLearnerLessonPresentation(swaleSource, 'st');
   assert.equal(visible.status, 'draft');
+  assert.equal(visible.content.body, draft.lessons[0].body.sesothoDraft,
+    'the exact-source-paired Sesotho body should be shown as an unreviewed learner draft');
   assert.equal(visible.content.infographicAlt, swaleSource.infographicAlt);
   assert.equal(visible.content.keyPoints[0], swaleSource.keyPoints[0]);
-  assert.equal(visible.content.quiz[0].q, swaleSource.quiz[0].q);
+  assert.equal(visible.content.quiz[0].q, draft.lessons[0].quiz[0].question.sesothoDraft);
   assert.equal(visible.content.quiz[0].rationale, swaleSource.quiz[0].rationale);
+  assert.equal(visible.content.quiz[1].q, draft.lessons[0].quiz[1].question.sesothoDraft,
+    'the second question should use its exact-source-paired Sesotho draft');
+
+  const body = draft.lessons[0].body;
+  assert.equal(body.reviewStatus, 'machine-draft');
+  assert.equal(body.sourceEnglish, swaleSource.body);
+  assert.equal(body.sesothoDraft.split('\n\n').length, 8);
+  for (const requiredMeaning of [
+    'level trench on contour',
+    'slight, controlled grade',
+    'safe outlet',
+    'Pele o tjheka, trained local adviser a hlahlobe line, overflow le receiving point',
+    'downhill side',
+    'di ka nka moisture e bolokilweng mobung ka mora pula, ho ya ka site',
+    'e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung',
+    'Rera safe overflow pele o tjheka',
+    'ha e a tshwanela ho senya slope ka erosion',
+    'metsi a senyang ho moahisani',
+    'Downstream swale kapa dam e lokela ho kgona ho amohela metsi ao ka polokeho',
+    'Slope feela ha e bolele',
+    'local assessment pele o tjheka mobung o steep, wet kapa unstable',
+  ]) {
+    assert.ok(body.sesothoDraft.includes(requiredMeaning),
+      `the body must retain this source condition or technical distinction: ${requiredMeaning}`);
+  }
+
+  const changedSource = {
+    ...swaleSource,
+    body: swaleSource.body.replace(
+      'Get a local assessment before digging on steep, wet or unstable land.',
+      'Dig on steep, wet or unstable land without an assessment.',
+    ),
+  };
+  const drifted = resolveLearnerLessonPresentation(changedSource, 'st');
+  assert.equal(drifted.status, 'english-fallback', 'source drift must withdraw the complete paired body');
+  assert.equal(drifted.content.body, changedSource.body);
+
+  const quiz0Question = draft.lessons[0].quiz[0].question;
+  assert.equal(quiz0Question.reviewStatus, 'machine-draft');
+  assert.ok(quiz0Question.sesothoDraft.includes('one end'),
+    'the source says one end, so the candidate must not narrow it to a point');
+  assert.ok(quiz0Question.sesothoDraft.includes('Ka mora pula e matla'));
+  assert.ok(quiz0Question.sesothoDraft.includes('pele se fetola earthwork'));
+  assert.equal(draft.lessons[0].quiz[0].rationale.reviewStatus, 'hold',
+    'the geometry rationale remains exact English pending its separate review');
+  assert.equal(draft.lessons[0].quiz[0].rationale.sesothoDraft,
+    draft.lessons[0].quiz[0].rationale.sourceEnglish);
+  const quiz1Question = draft.lessons[0].quiz[1].question;
+  assert.equal(quiz1Question.reviewStatus, 'machine-draft');
+  assert.ok(quiz1Question.sesothoDraft.includes('mobung o moepa'));
+  assert.ok(quiz1Question.sesothoDraft.includes('pele se tjheka'));
 });
