@@ -50,6 +50,15 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       href: '/facilitator/crops',
       detail: 'Confirm food sources and print your plan, even when no vegetable beds are mapped.' },
   ] },
+  { when: '2 October 2026', sha: '40691d34', changes: [
+    'Reading lessons show more marked Tshivenda and Xitsonga drafts beside English.',
+    'A Sesotho soil-check point is drafted; difficult farming directions stay English.',
+    'Wind and frost lessons add regional drafts while keeping precise English cautions.',
+  ], tour: [
+    { title: 'Review the regional Reading drafts', where: 'Study → Reading the Landscape',
+      href: '/student',
+      detail: 'Read lessons 1–3 and the Sesotho map point beside English. Silent slides remain.' },
+  ] },
   { when: '2 October 2026', sha: '366f3e93', changes: [
     'Production plans include fruit, eggs and honey, with crops shown across printed months.',
     'Record local frost, dry-season water and chicken care in the site survey.',
