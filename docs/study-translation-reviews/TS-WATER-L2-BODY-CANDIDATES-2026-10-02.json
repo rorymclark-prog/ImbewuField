@@ -3,7 +3,7 @@
   "language": "ts (itsonga)",
   "lessonId": "water-harvesting-l2",
   "sourceMainSha": "8f187e6750a0510d581d4ebc82b64051c4a85e09",
-  "currentSourceCheckedAt": "8f187e6750a0510d581d4ebc82b64051c4a85e09",
+  "currentSourceCheckedAt": "f76814b2aa256a9610f7bd02d36a4c04183955db",
   "canonicalPath": "lib/course-modules.ts",
   "registryPath": "lib/course-translation-drafts-ts-water-harvesting.ts",
   "registryLanguageConfirmed": "ts",
@@ -31,12 +31,12 @@
   ],
   "candidateBody": [
     "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.",
-    "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwaro. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
+    "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
     "Loko u nga si cinca watercourse kumbe ku aka storage works, kamba authorisation leyi lavekaka eka water authority.",
     "Damu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.",
     "U nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.",
     "An uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.",
-    "Mati ma nga lahleka hi ku phyaphyarha na ku nwelela ehansi ka misava. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
+    "Mati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
     "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
     "Animals can damage banks and add manure to the water. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka."
   ],
@@ -54,10 +54,10 @@
       "index": 2,
       "sourceEnglish": "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
       "currentDraft": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona kunguhatela minkarhi ya dyandza; damu leri teleke a ri tiyisiwangi.",
-      "candidateDraft": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwaro. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
+      "candidateDraft": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
       "status": "partial English retained for precision",
-      "literalBacktranslation": "Rain seasons vary across all of South Africa. Use nearby records and plan for dry periods; a full dam is not assured.",
-      "uncertainty": "The existing localized version narrowed “dry periods” to drought; retaining the exact phrase “dry periods” avoids that narrower meaning."
+      "literalBacktranslation": "Rainfall seasons differ across South Africa. Use nearby records and plan for dry periods; a full dam is not guaranteed.",
+      "uncertainty": "Preserves the existing localized South Africa sentence exactly and keeps the no-guarantee wording. “Dry periods” remains exact English because the previous local rendering narrowed it to drought."
     },
     {
       "index": 3,
@@ -99,10 +99,10 @@
       "index": 7,
       "sourceEnglish": "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
       "currentDraft": "Mati ma nga lahleka hi ku phyaphyarha na ku nwelela ehansi ka misava. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
-      "candidateDraft": "Mati ma nga lahleka hi ku phyaphyarha na ku nwelela ehansi ka misava. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
+      "candidateDraft": "Mati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
       "status": "preserve existing localized draft",
-      "literalBacktranslation": "Water may be lost by evaporation and seepage. Check level and look for leaks or erosion.",
-      "uncertainty": "Existing localized draft preserved without revision."
+      "literalBacktranslation": "Water may be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+      "uncertainty": "The candidate retains the technical terms “evaporation and seepage” in English because the earlier Xitsonga rendering could mean steam; the existing water-level, leak and erosion checks remain unchanged."
     },
     {
       "index": 8,
@@ -138,7 +138,83 @@
     6,
     9
   ],
-  "packetStatus": "data-only-unwired-machine-draft-candidate",
-  "independentBackcheck": "Root and independent semantic review accepted the full nine-paragraph source-paired candidate with final repairs to paragraph 2 dry-period wording, paragraph 6 breach wording, paragraph 9 animal scope, and paragraph 8 retained as exact English. No fluent-speaker approval is claimed.",
-  "wiringStatus": "Not wired in this batch; saved for a later source-checked implementation."
+  "packetStatus": "wired-machine-draft",
+  "wiringStatus": "Wired only to the source-matched learner body; other lesson fields, assessments and media are unchanged.",
+  "finalIndependentBackcheck": "Root review retained the pre-existing South Africa sentence exactly in paragraph 2 and retained “dry periods”; the technical terms “evaporation and seepage” remain exact English in paragraph 7 to avoid a steam reading. Paragraph 6 keeps the overflow/breach sentence exact English; paragraph 8 is an exact English hold; paragraph 9 keeps the all-animals sentence exact English. No fluent-speaker approval is claimed.",
+  "previousLearnerFieldsPreservedForLaterReview": {
+    "title": {
+      "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
+      "previousDraft": "Madamu ya Mapurasi na Swidziva: Ku Hlayisa Mati ya Nkarhi wa Dyandza"
+    },
+    "infographicAlt": {
+      "sourceEnglish": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+      "previousDraft": "Damu ra purasi leri tsemakanyiweke exikarhi: mati lama khulukelaka endzeni hi tlhelo rin'wana, mati lama hlayisiweke, spillway ehenhla ka rimbiti ra le henhla ku halaka mati lama taleke ngopfu, na ribuwa leri byariweke swimilana leri khomeke misava."
+    },
+    "keyPoints[0]": {
+      "sourceEnglish": "A dam needs a site assessment and qualified design",
+      "previousDraft": "Damu ri lava vukambisi bya sayiti na dizayini leyi endliweke hi munhu la fanelekaka"
+    },
+    "keyPoints[1]": {
+      "sourceEnglish": "Design a safe spillway before construction",
+      "previousDraft": "Dizayina spillway leyi hlayisekeke u nga si sungula ku aka"
+    },
+    "keyPoints[2]": {
+      "sourceEnglish": "Check required water authorisations before building",
+      "previousDraft": "Kamba mpfumelelo lowu lavekaka wa ta mati u nga si aka"
+    },
+    "keyPoints[3]": {
+      "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
+      "previousDraft": "Hlayisa swimilana swo funengeta ribuwa naswona u nga byari mirhi ehenhla ka rirhangu ra damu ra misava"
+    },
+    "quiz[0].question": {
+      "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+      "previousDraft": "Murimi u aka rirhangu ra damu handle ka spillway. Endzhaku ka xidzedze lexikulu ngopfu ra khuluka ri hundza ehenhla. Xana xiphiqo lexi nga vangiwaka i yini?"
+    },
+    "quiz[0].options[0]": {
+      "sourceEnglish": "The water irrigates lower fields beneficially",
+      "previousDraft": "Mati ma cheleta masimu lama nga ehansi hi ndlela leyinene"
+    },
+    "quiz[0].options[1]": {
+      "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
+      "previousDraft": "Ma khuluka ehenhla kutani ma dya rirhangu, leswi nga vangaka ku mbundzumuka loku kulu"
+    },
+    "quiz[0].options[2]": {
+      "sourceEnglish": "The dam stays full and overflow drains harmlessly",
+      "previousDraft": "Damu ri tshama ri terile naswona mati lama taleke ngopfu ma khuluka handle ko vanga khombo"
+    },
+    "quiz[0].options[3]": {
+      "sourceEnglish": "Storage capacity increases permanently",
+      "previousDraft": "Vuhlayiselo bya mati byi engeteleka hilaha ku nga heriki"
+    },
+    "quiz[0].rationale": {
+      "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+      "previousDraft": "Handle ka ndlela leyi dizayiniweke ya mati lama taleke ngopfu, mati lama tlulaka mpimo ma tikumela ndlela ehenhla ka rirhangu — naswona ku khuluka koloko loku nga lawulekiki hi kona loku dyaka misava naswona eku heteleleni ku mbundzumuxa rirhangu."
+    },
+    "quiz[1].question": {
+      "sourceEnglish": "Which action helps protect an earth dam?",
+      "previousDraft": "Hi xihi xiendlo lexi pfunaka ku sirhelela damu ra misava?"
+    },
+    "quiz[1].options[0]": {
+      "sourceEnglish": "A deep, exposed dam with no bank vegetation",
+      "previousDraft": "Damu ro enta, leri nga sirhelelekangiki leri nga riki na swimilana eribuweni"
+    },
+    "quiz[1].options[1]": {
+      "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
+      "previousDraft": "Hlayisa swimilana swa ribuwa leswi dizayiniweke naswona u hlayisa spillway yi basile"
+    },
+    "quiz[1].options[2]": {
+      "sourceEnglish": "A full concrete lining and plastic cover",
+      "previousDraft": "Ku endla khonkhriti hinkwako na ku funengeta hi pulasitiki"
+    },
+    "quiz[1].options[3]": {
+      "sourceEnglish": "A larger surface area to spread evaporation evenly",
+      "previousDraft": "Ndhawu leyikulu ya le henhla leswaku mati ma phyaphyarha hi ku ringana"
+    },
+    "quiz[1].rationale": {
+      "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+      "previousDraft": "Spillway leyi basileke na maribuwa lama hlayisiweke swi pfuna damu ku tirha hilaha ri dizayiniweke hakona. Mirhi a yi fanelanga ku byariwa ehenhla ka rirhangu ra damu ra misava."
+    },
+    "note": "These earlier machine drafts are retained for a future independently checked assessment/title/infographic pass. Learners now see exact English holds for these fields."
+  },
+  "currentActivationStatus": "The body remains a source-paired marked draft. The title, infographic description, all four key points, and both complete quizzes are exact-English holds pending separate review."
 }

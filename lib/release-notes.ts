@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '434cd435', changes: [
+    'Sesotho and Xitsonga now show marked Water L2 body drafts beside exact English.',
+    'The Xitsonga title, picture text, key points and quizzes remain English pending review.',
+    'The Sesotho dam quiz keeps the spillway-clear instruction beside exact English.',
+  ], tour: [
+    { title: 'Read the Sesotho and Xitsonga dam drafts', where: 'Study → Water Harvesting → lesson 2',
+      href: '/student',
+      detail: 'Compare both marked nine-paragraph bodies with English; exact holds remain for review.' },
+  ] },
   { when: '2 October 2026', sha: 'a33dd6de', changes: [
     'Tshivenda Water lesson 2 now has nine marked body paragraphs beside exact English.',
     'Both quizzes show marked drafts; difficult design terms and English holds stay clear.',

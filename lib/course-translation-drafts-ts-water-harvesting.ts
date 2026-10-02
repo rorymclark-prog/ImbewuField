@@ -136,110 +136,110 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "id": "water-harvesting-l2",
       "infographicAlt": {
         "sourceEnglish": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
-        "xitsongaDraft": "Damu ra purasi leri tsemakanyiweke exikarhi: mati lama khulukelaka endzeni hi tlhelo rin'wana, mati lama hlayisiweke, spillway ehenhla ka rimbiti ra le henhla ku halaka mati lama taleke ngopfu, na ribuwa leri byariweke swimilana leri khomeke misava.",
-        "reviewStatus": "machine-draft"
+        "xitsongaDraft": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+        "reviewStatus": "hold"
       },
       "title": {
         "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
-        "xitsongaDraft": "Madamu ya Mapurasi na Swidziva: Ku Hlayisa Mati ya Nkarhi wa Dyandza",
-        "reviewStatus": "machine-draft"
+        "xitsongaDraft": "Farm Dams and Ponds: Storing Water for the Dry Season",
+        "reviewStatus": "hold"
       },
       "body": {
         "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
-        "xitsongaDraft": "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.\n\nTinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona kunguhatela minkarhi ya dyandza; damu leri teleke a ri tiyisiwangi.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nU nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.\n\nKu khuluka loku nga lawulekiki ka mati lama taleke ngopfu ku nga dya misava kutani ku mbundzumuxa rirhangu. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.\n\nMati ma nga lahleka hi ku phyaphyarha na ku nwelela ehansi ka misava. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nSwifuwo swi nga onha maribuwa naswona swi nga chela vulongo ematini. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka.",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.\n\nTinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.\n\nLoko u nga si cinca watercourse kumbe ku aka storage works, kamba authorisation leyi lavekaka eka water authority.\n\nDamu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.\n\nU nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.\n\nAn uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.\n\nMati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka.",
+        "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "A dam needs a site assessment and qualified design",
-          "xitsongaDraft": "Damu ri lava vukambisi bya sayiti na dizayini leyi endliweke hi munhu la fanelekaka",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "A dam needs a site assessment and qualified design",
+          "reviewStatus": "hold"
         },
         {
           "sourceEnglish": "Design a safe spillway before construction",
-          "xitsongaDraft": "Dizayina spillway leyi hlayisekeke u nga si sungula ku aka",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "Design a safe spillway before construction",
+          "reviewStatus": "hold"
         },
         {
           "sourceEnglish": "Check required water authorisations before building",
-          "xitsongaDraft": "Kamba mpfumelelo lowu lavekaka wa ta mati u nga si aka",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "Check required water authorisations before building",
+          "reviewStatus": "hold"
         },
         {
           "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
-          "xitsongaDraft": "Hlayisa swimilana swo funengeta ribuwa naswona u nga byari mirhi ehenhla ka rirhangu ra damu ra misava",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "Maintain bank cover and keep trees off an earth dam wall",
+          "reviewStatus": "hold"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
-            "xitsongaDraft": "Murimi u aka rirhangu ra damu handle ka spillway. Endzhaku ka xidzedze lexikulu ngopfu ra khuluka ri hundza ehenhla. Xana xiphiqo lexi nga vangiwaka i yini?",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+            "reviewStatus": "hold"
           },
           "options": [
             {
               "sourceEnglish": "The water irrigates lower fields beneficially",
-              "xitsongaDraft": "Mati ma cheleta masimu lama nga ehansi hi ndlela leyinene",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "The water irrigates lower fields beneficially",
+              "reviewStatus": "hold"
             },
             {
               "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
-              "xitsongaDraft": "Ma khuluka ehenhla kutani ma dya rirhangu, leswi nga vangaka ku mbundzumuka loku kulu",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "It overtops and erodes the wall, risking a catastrophic breach",
+              "reviewStatus": "hold"
             },
             {
               "sourceEnglish": "The dam stays full and overflow drains harmlessly",
-              "xitsongaDraft": "Damu ri tshama ri terile naswona mati lama taleke ngopfu ma khuluka handle ko vanga khombo",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "The dam stays full and overflow drains harmlessly",
+              "reviewStatus": "hold"
             },
             {
               "sourceEnglish": "Storage capacity increases permanently",
-              "xitsongaDraft": "Vuhlayiselo bya mati byi engeteleka hilaha ku nga heriki",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "Storage capacity increases permanently",
+              "reviewStatus": "hold"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
-            "xitsongaDraft": "Handle ka ndlela leyi dizayiniweke ya mati lama taleke ngopfu, mati lama tlulaka mpimo ma tikumela ndlela ehenhla ka rirhangu — naswona ku khuluka koloko loku nga lawulekiki hi kona loku dyaka misava naswona eku heteleleni ku mbundzumuxa rirhangu.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+            "reviewStatus": "hold"
           }
         },
         {
           "question": {
             "sourceEnglish": "Which action helps protect an earth dam?",
-            "xitsongaDraft": "Hi xihi xiendlo lexi pfunaka ku sirhelela damu ra misava?",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Which action helps protect an earth dam?",
+            "reviewStatus": "hold"
           },
           "options": [
             {
               "sourceEnglish": "A deep, exposed dam with no bank vegetation",
-              "xitsongaDraft": "Damu ro enta, leri nga sirhelelekangiki leri nga riki na swimilana eribuweni",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "A deep, exposed dam with no bank vegetation",
+              "reviewStatus": "hold"
             },
             {
               "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
-              "xitsongaDraft": "Hlayisa swimilana swa ribuwa leswi dizayiniweke naswona u hlayisa spillway yi basile",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "Maintain the designed bank cover and keep the spillway clear",
+              "reviewStatus": "hold"
             },
             {
               "sourceEnglish": "A full concrete lining and plastic cover",
-              "xitsongaDraft": "Ku endla khonkhriti hinkwako na ku funengeta hi pulasitiki",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "A full concrete lining and plastic cover",
+              "reviewStatus": "hold"
             },
             {
               "sourceEnglish": "A larger surface area to spread evaporation evenly",
-              "xitsongaDraft": "Ndhawu leyikulu ya le henhla leswaku mati ma phyaphyarha hi ku ringana",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "A larger surface area to spread evaporation evenly",
+              "reviewStatus": "hold"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
-            "xitsongaDraft": "Spillway leyi basileke na maribuwa lama hlayisiweke swi pfuna damu ku tirha hilaha ri dizayiniweke hakona. Mirhi a yi fanelanga ku byariwa ehenhla ka rirhangu ra damu ra misava.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+            "reviewStatus": "hold"
           }
         }
       ]
@@ -545,18 +545,6 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
     },
     {
       "lessonId": "water-harvesting-l2",
-      "field": "body[2]",
-      "sourceText": "Before changing a watercourse or building storage works, check the required authorisation with the water authority.",
-      "reason": "This is a water-law and authorisation instruction; preserve its exact source wording pending local legal and fluent-language review."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "body[3]",
-      "sourceText": "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
-      "reason": "This is a dam-safety design qualification; preserve its exact technical requirements pending fluent-language review."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
       "field": "body[7]",
       "sourceText": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
       "reason": "The prohibition about trees on an earth dam wall is safety-critical; retain exact wording pending fluent-language review."
@@ -692,6 +680,114 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "field": "quiz[1].rationale",
       "sourceText": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
       "reason": "This rationale contains earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "title",
+      "sourceText": "Farm Dams and Ponds: Storing Water for the Dry Season",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "infographicAlt",
+      "sourceText": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "keyPoints[0]",
+      "sourceText": "A dam needs a site assessment and qualified design",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "keyPoints[1]",
+      "sourceText": "Design a safe spillway before construction",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "keyPoints[2]",
+      "sourceText": "Check required water authorisations before building",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "keyPoints[3]",
+      "sourceText": "Maintain bank cover and keep trees off an earth dam wall",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[0].question",
+      "sourceText": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[0].options[0]",
+      "sourceText": "The water irrigates lower fields beneficially",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[0].options[1]",
+      "sourceText": "It overtops and erodes the wall, risking a catastrophic breach",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[0].options[2]",
+      "sourceText": "The dam stays full and overflow drains harmlessly",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[0].options[3]",
+      "sourceText": "Storage capacity increases permanently",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[0].rationale",
+      "sourceText": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[1].question",
+      "sourceText": "Which action helps protect an earth dam?",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[1].options[0]",
+      "sourceText": "A deep, exposed dam with no bank vegetation",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[1].options[1]",
+      "sourceText": "Maintain the designed bank cover and keep the spillway clear",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[1].options[2]",
+      "sourceText": "A full concrete lining and plastic cover",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[1].options[3]",
+      "sourceText": "A larger surface area to spread evaporation evenly",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[1].rationale",
+      "sourceText": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+      "reason": "This Xitsonga wording has not had an independent local-language check. Keep the exact English source visible until that review is complete."
     }
   ]
 } satisfies XitsongaCourseModuleDraft;

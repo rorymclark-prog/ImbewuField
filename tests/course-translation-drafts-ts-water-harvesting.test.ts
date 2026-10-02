@@ -116,7 +116,7 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
   }
 });
 
-test('only Water lesson one is shown as a Xitsonga learner draft while earthwork quiz answers remain English', () => {
+test('Water L1 and L2 show source-paired Xitsonga drafts while unresolved lessons remain English', () => {
   const module = resolveCourseModulePresentation(source, 'ts');
   assert.equal(module.status, 'draft');
   assert.equal(module.title, 'Ku hlengeleta Mati');
@@ -130,8 +130,14 @@ test('only Water lesson one is shown as a Xitsonga learner draft while earthwork
 
   for (const lesson of source.lessons.slice(1)) {
     const unreleased = resolveLearnerLessonPresentation(lesson, 'ts');
-    assert.equal(unreleased.status, 'english-fallback');
-    assert.equal(unreleased.content.body, lesson.body);
+    if (lesson.id === 'water-harvesting-l2') {
+      assert.equal(unreleased.status, 'draft');
+      assert.equal(unreleased.content.body,
+        draft.lessons.find(item => item.id === lesson.id)?.body.xitsongaDraft);
+    } else {
+      assert.equal(unreleased.status, 'english-fallback');
+      assert.equal(unreleased.content.body, lesson.body);
+    }
   }
 });
 
@@ -198,21 +204,60 @@ test('Water Harvesting held wording remains exact where dam, water-law and reuse
   for (const hold of draft.holds) {
     const pair = pairForHold(hold);
     assert.ok(pair, `${hold.lessonId} ${hold.field} must resolve to a source pair`);
-    if (hold.field.startsWith('body')) assert.ok(pair.xitsongaDraft.includes(hold.sourceText), `${hold.field} must retain its exact source passage`);
-    else assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} must remain exact English`);
-    assert.equal(pair.reviewStatus, 'hold');
+    const heldBodyParagraph = hold.field.match(/^body\[(\d+)\]$/);
+    if (heldBodyParagraph) {
+      const paragraphs = pair.xitsongaDraft.split('\n\n');
+      assert.equal(paragraphs[Number(heldBodyParagraph[1])], hold.sourceText, `${hold.field} must remain an exact paragraph hold`);
+      if (hold.lessonId === 'water-harvesting-l2') {
+        assert.equal(pair.reviewStatus, 'machine-draft', `${hold.field}: a retained paragraph must not hold the translated body`);
+      } else {
+        assert.ok(['hold', 'machine-draft'].includes(pair.reviewStatus), `${hold.field}: hold metadata must remain explicit`);
+      }
+    } else if (hold.field === 'body') {
+      assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} must remain exact English`);
+      assert.equal(pair.reviewStatus, 'hold');
+    } else {
+      assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} must remain exact English`);
+      assert.equal(pair.reviewStatus, 'hold');
+    }
     assert.ok(hold.reason.length > 0);
   }
 
   const exactHolds = draft.holds.map(hold => hold.sourceText);
   for (const required of [
-    'Before changing a watercourse or building storage works, check the required authorisation with the water authority.',
-    'A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.',
     'Do not plant trees on an earth dam wall.',
     'A diverter does not make the remaining water safe to drink.',
     'Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.',
     'A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.',
   ]) assert.ok(exactHolds.some(held => held.includes(required)), `safety or legal claim needs an exact hold: ${required}`);
+});
+
+test('Water L2 Xitsonga keeps unchecked heading, image description and assessments in exact English', () => {
+  const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!;
+  const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
+  const heldPairs = [paired.title, paired.infographicAlt!, ...paired.keyPoints,
+    ...paired.quiz.flatMap(item => [item.question, ...item.options, item.rationale])];
+  for (const pair of heldPairs) {
+    assert.equal(pair.reviewStatus, 'hold');
+    assert.equal(pair.xitsongaDraft, pair.sourceEnglish);
+  }
+  assert.deepEqual(paired.quiz.map(item => item.sourceCorrectIndex), [1, 1]);
+
+  const shown = resolveLearnerLessonPresentation(canonical, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.title, canonical.title);
+  assert.equal(shown.content.infographicAlt, canonical.infographicAlt);
+  assert.deepEqual(shown.content.keyPoints, canonical.keyPoints);
+  assert.deepEqual(shown.content.quiz, canonical.quiz);
+  assert.equal(shown.content.body, paired.body.xitsongaDraft,
+    'only the independently checked, source-paired body draft remains localized');
+
+  const changedKeyPoint = { ...canonical, keyPoints: canonical.keyPoints.map((point, index) =>
+    index === 0 ? `${point} changed` : point) };
+  const fallback = resolveLearnerLessonPresentation(changedKeyPoint, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.deepEqual(fallback.content.keyPoints, changedKeyPoint.keyPoints,
+    'a changed key-point source withdraws the whole source-paired lesson');
 });
 
 test('Water L1 Xitsonga keeps infiltration possible and requires assessment for all listed land conditions', () => {
@@ -235,5 +280,40 @@ test('Water L1 Xitsonga keeps infiltration possible and requires assessment for 
   assert.notEqual(changed.body, canonical.body, 'the possibility-drift fixture must change the source');
   const shown = resolveLearnerLessonPresentation(changed, 'ts');
   assert.equal(shown.status, 'english-fallback', 'withdraw drafts after source changes infiltration certainty');
+  assert.equal(shown.content.body, changed.body);
+});
+
+test('Water L2 Xitsonga preserves dry periods, overflow sequence and exact safety holds', () => {
+  const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!;
+  const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
+  assert.equal(paired.body.sourceEnglish, canonical.body);
+  assert.equal(paired.body.reviewStatus, 'machine-draft');
+  const sourceParagraphs = canonical.body.split('\n\n');
+  const paragraphs = paired.body.xitsongaDraft.split('\n\n');
+  assert.equal(paragraphs.length, 9);
+  assert.equal(sourceParagraphs.length, paragraphs.length);
+  assert.ok(paragraphs[1].includes('plan for dry periods') && paragraphs[1].includes('damu leri teleke a ri tiyisiwangi'),
+    'retain the wider dry-period meaning and no-guarantee condition');
+  assert.ok(paragraphs[1].startsWith('Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo.'),
+    'preserve the established localized South Africa sentence exactly');
+  assert.ok(paragraphs[2].includes('Loko u nga si cinca watercourse') && paragraphs[2].includes('authorisation') && paragraphs[2].includes('water authority'),
+    'keep the water-authority check before either regulated activity');
+  assert.ok(paragraphs[3].includes('site investigation') && paragraphs[3].includes('design hi munhu loyi a nga na suitable qualifications') &&
+    paragraphs[3].includes('Catchment runoff') && paragraphs[3].includes('downstream risk') && paragraphs[3].includes('safe spillway'),
+  'retain the site investigation, qualified designer and listed dam-safety factors');
+  assert.ok(paragraphs[5].startsWith('An uncontrolled overflow can erode and breach the wall.') &&
+    paragraphs[5].includes('Kunguhatela ndlela leyi hlayisekeke') && paragraphs[5].includes('u nga si sungula ku aka'),
+  'retain overflow/breach meaning and plan the safe route before construction');
+  assert.ok(paragraphs[6].startsWith('Mati ma nga lahleka hi evaporation and seepage.') &&
+    paragraphs[6].includes('Kamba xiyimo xa mati') && paragraphs[6].includes('ku lutla'),
+  'keep evaporation distinct from steam and preserve the existing checks');
+  assert.equal(paragraphs[7], sourceParagraphs[7], 'keep the high-consequence spillway, bank-cover and tree restrictions exact English');
+  assert.ok(paragraphs[8].startsWith('Animals can damage banks and add manure to the water.') &&
+    paragraphs[8].includes('a swi endli mati ma basa kumbe ku hlayiseka'),
+  'preserve all-animal scope and the no-cleanliness/no-safety inference');
+  const changed = { ...canonical, body: canonical.body.replace('dry periods', 'drought only') };
+  assert.notEqual(changed.body, canonical.body);
+  const shown = resolveLearnerLessonPresentation(changed, 'ts');
+  assert.equal(shown.status, 'english-fallback', 'withdraw the whole lesson when its source conditions change');
   assert.equal(shown.content.body, changed.body);
 });
