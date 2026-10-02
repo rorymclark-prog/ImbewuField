@@ -1,7 +1,7 @@
 # Production-plan live edge cases — 2026-10-02
 
 - Auditor: Codex, with independent crop-model, inventory and UI-guard agents.
-- Reviewed revision: main `dca05ac578db4e1c50cdec7fc442853df81524c6` plus the six-file follow-up on `codex/production-record-total-precision-20261002`. The final reviewed code SHA is recorded with the release note and issue #35.
+- Reviewed revision: `4729738da97360dc3b267fa0cba88fff7ca8fe91` on `codex/production-record-total-precision-20261002`, based on main `dca05ac578db4e1c50cdec7fc442853df81524c6`. The next commit adds only this exact SHA reference and the farmer update note.
 - Deployment inspected: `https://imbewufield.vercel.app` and `https://permamap-sa.vercel.app` independently returned `dca05ac`; these observations belong to the first production release. Follow-up checks below use the latest local code. Final hosting evidence is recorded on issue #35.
 - Previous audit: [production follow-up and CP-001–CP-012](crop-production-codex-followup.md), [original register](crop-production-audit.md) and [SS-001–SS-004 continuation](site-survey-continuation.md).
 - Scope: food-source-only production plans, auto-suggest boundaries, accumulated quantity summaries in Records/lender/staff views.
