@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'd6f77b1e', changes: [
+    'Xitsonga pest lessons add marked step-by-step drafts beside exact English.',
+    'Sesotho market lessons add draft framing; precise business conditions stay English.',
+  ], tour: [
+    { title: 'Review regional lesson drafts', where: 'Study → Vegetables and Market Gardening',
+      href: '/student',
+      detail: 'Read Xitsonga lesson 4 and Sesotho Market lesson 2 beside their English source.' },
+  ] },
   { when: '2 October 2026', sha: '832ef38a', changes: [
     'Sesotho pest lessons add step-by-step draft framing beside exact English.',
     'Xitsonga bed preparation adds a marked body draft; precise planting stays English.',

@@ -1,0 +1,128 @@
+{
+  "packetId": "ST-MARKET-L2-BODY-COMPLETION-2026-10-02",
+  "language": "Sesotho (st)",
+  "sourceRevision": "0f26227cba5b48dda6823af124719e43a58acc09",
+  "registryRevision": "65ccead7db01a838c5b6d0c21d80820f28cf1319",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-market-community.ts",
+  "canonicalLessonId": "market-community-l2",
+  "canonicalBodyMatchesRegistry": true,
+  "canonicalAndRegistryFilesMatchMain": true,
+  "paragraphCount": 12,
+  "paragraphs": [
+    {
+      "paragraphIndex": 0,
+      "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "currentSesothoDraft": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+      "candidateSesotho": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+      "candidateStatus": "preserved-existing-draft",
+      "independentBacktranslation": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "conditionsAndUncertainty": "Existing localized paragraph retained verbatim."
+    },
+    {
+      "paragraphIndex": 1,
+      "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "currentSesothoDraft": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "candidateSesotho": "Bapisa market fees, transport, packing and unsold produce, hammoho le selling price.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Compare market fees, transport, packing and unsold produce, along with the selling price.",
+      "conditionsAndUncertainty": "Cost categories and selling-price comparison remain exact English; backcheck Sesotho conjunction and comparison framing."
+    },
+    {
+      "paragraphIndex": 2,
+      "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentSesothoDraft": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidateSesotho": "Hlahloba market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Check market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "conditionsAndUncertainty": "Only the checking verb is translated. Keep local trade/food requirements and the informal-stall no-rules/no-cost caveat exact English."
+    },
+    {
+      "paragraphIndex": 3,
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentSesothoDraft": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "candidateSesotho": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "candidateStatus": "exact-English hold",
+      "independentBacktranslation": "Direct selling can retain more of the selling price, but it also requires time, packing, transport and customer care.",
+      "conditionsAndUncertainty": "Independent backcheck found comparative or reliable-supply ambiguity; root keeps the complete precise English sentence."
+    },
+    {
+      "paragraphIndex": 4,
+      "sourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+      "currentSesothoDraft": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+      "candidateSesotho": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+      "candidateStatus": "preserved-existing-draft",
+      "independentBacktranslation": "A box scheme supplies a regular selection to agreed customers.",
+      "conditionsAndUncertainty": "Existing localized paragraph retained verbatim."
+    },
+    {
+      "paragraphIndex": 5,
+      "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "currentSesothoDraft": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidateSesotho": "Dumellanang ka contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "conditionsAndUncertainty": "Contract terms, short-crop contingency, and condition on orders helping planning remain exact English."
+    },
+    {
+      "paragraphIndex": 6,
+      "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+      "currentSesothoDraft": "Start from what you can reliably supply and what customers want.",
+      "candidateSesotho": "Start from what you can reliably supply and what customers want.",
+      "candidateStatus": "exact-English hold",
+      "independentBacktranslation": "Start with what you can reliably supply and what customers want.",
+      "conditionsAndUncertainty": "Independent backcheck found comparative or reliable-supply ambiguity; root keeps the complete precise English sentence."
+    },
+    {
+      "paragraphIndex": 7,
+      "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+      "currentSesothoDraft": "Check the costs and household food needs before promising regular boxes.",
+      "candidateSesotho": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Check costs and household food needs before promising regular boxes.",
+      "conditionsAndUncertainty": "Preserves costs and household food needs before promising regular boxes; ordinary household wording is translated, costs and regular boxes retained English."
+    },
+    {
+      "paragraphIndex": 8,
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentSesothoDraft": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "candidateSesotho": "Garden area or customer count alone does not predict income. Leka arrangement e ka laolehang mme o record results.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Garden area or customer count alone does not predict income. Try an arrangement that can be managed and record results.",
+      "conditionsAndUncertainty": "No-income-prediction safeguard remains exact English; ordinary trial-and-record instruction is translated."
+    },
+    {
+      "paragraphIndex": 9,
+      "sourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "currentSesothoDraft": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+      "candidateSesotho": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+      "candidateStatus": "preserved-existing-draft",
+      "independentBacktranslation": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "conditionsAndUncertainty": "Existing localized paragraph retained verbatim."
+    },
+    {
+      "paragraphIndex": 10,
+      "sourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+      "currentSesothoDraft": "Offer the surplus you have and agree clear terms with customers.",
+      "candidateSesotho": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Offer the surplus you have and agree clear terms with customers.",
+      "conditionsAndUncertainty": "Surplus and clear-terms action translated; backcheck that “se setseng” preserves surplus and agreement framing."
+    },
+    {
+      "paragraphIndex": 11,
+      "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentSesothoDraft": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "candidateSesotho": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Check any certification or claim the buyer requires before using a label.",
+      "candidateStatus": "machine-draft",
+      "independentBacktranslation": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "conditionsAndUncertainty": "Honesty framing translated; certification, buyer requirement, claim and label clause remain exact English."
+    }
+  ],
+  "pr844ScopeCheck": {
+    "result": "verified-docs-only",
+    "detail": "Root gh pr view844 confirmed only docs/study-translation-reviews/MARKET-RECORD-SLIDE-5-REGIONAL-2026-10-01.md; no registry overlap."
+  },
+  "reviewNote": "Source-paired machine-draft candidates only; no fluent approval. Existing localized passages are preserved verbatim. Precise local trading, contract, cost/income, supply-guarantee, certification and labeling clauses remain exact English where needed.",
+  "independentCheck": "Independent source/order/meaning check accepted final composition; p3/p6 remain exact English, p10 retains surplus and p7 before-promising sequence. No fluent approval."
+}
