@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 October 2026', sha: '4729738d', changes: [
+  { when: '2 October 2026', sha: 'bbdb1952', changes: [
     'Plans for fruit trees and animals work without a vegetable bed.',
     'Harvest totals add decimal measurements without rounding whole egg counts.',
   ], tour: [
