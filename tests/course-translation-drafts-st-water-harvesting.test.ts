@@ -107,6 +107,15 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   assert.ok(waterL2Paragraphs[6].startsWith('Metsi a ka lahleha ka evaporation and seepage.') &&
     waterL2Paragraphs[6].includes('Hlahloba boemo ba metsi') && waterL2Paragraphs[6].includes('kgoholeho'),
   'retain the correct evaporation/seepage terms and preserve the checks');
+  const waterL2ProtectionQuiz = waterL2Draft.quiz[1];
+  assert.equal(waterL2ProtectionQuiz.sourceCorrectIndex, waterL2Source.quiz[1].correct);
+  assert.ok(waterL2ProtectionQuiz.options[waterL2ProtectionQuiz.sourceCorrectIndex].sesothoDraft.includes('keep the spillway clear'),
+    'the correct protection option must say the spillway stays unobstructed, not merely clean');
+  assert.ok(waterL2ProtectionQuiz.rationale.sesothoDraft.includes('A clear spillway (spillway e sa thibehang)'),
+    'the feedback must preserve the spillway-clear requirement');
+  assert.equal(waterL2Visible.content.quiz[1].options[waterL2ProtectionQuiz.sourceCorrectIndex],
+    waterL2ProtectionQuiz.options[waterL2ProtectionQuiz.sourceCorrectIndex].sesothoDraft);
+  assert.equal(waterL2Visible.content.quiz[1].rationale, waterL2ProtectionQuiz.rationale.sesothoDraft);
   assert.ok(waterL2Paragraphs[7].startsWith('Keep the spillway clear and maintain the bank cover specified in the design.') &&
     waterL2Paragraphs[7].endsWith('O se ke wa jala difate hodima lerako la letamo la mobu.'),
   'preserve unobstructed spillway and design-specified cover, plus the existing tree prohibition');
