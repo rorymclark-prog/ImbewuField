@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
+import { placedTreeGroups, unidentifiedPlantGroups, type PlacedPlant } from '@/lib/perennial-harvest';
+import { placedAnimalGroups } from '@/lib/animal-enterprises';
 
 // Simple / All tools on the crop planner (lib/app-level.ts). Rory: "the crop plan screen and
 // those graphs are particularly challenging … intimidating … would be nice to have simplified
@@ -103,4 +106,89 @@ test('Simple hides unlabelled food-group icons on a multi-crop bed but keeps a s
   const bedRow = CROPS.slice(CROPS.indexOf('function BedRow('), CROPS.indexOf('function PlantingBar('));
   assert.match(bedRow, /simple: boolean;/);
   assert.match(bedRow, /\{bedGroups\.length > 0 && \(!simple \|\| bedGroups\.length === 1\) && \(/);
+});
+
+// Exercise the shipped JSX gate rather than a copied predicate. The page needs Next's
+// browser providers; its actual branch conditions can still fail under node:test.
+const pageTree = ts.createSourceFile('crops/page.tsx', CROPS, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+function nodesMatching<T extends ts.Node>(predicate: (node: ts.Node) => node is T): T[] {
+  const found: T[] = [];
+  const walk = (node: ts.Node) => { if (predicate(node)) found.push(node); ts.forEachChild(node, walk); };
+  walk(pageTree);
+  return found;
+}
+const jsxNodes = nodesMatching((node): node is ts.JsxSelfClosingElement => ts.isJsxSelfClosingElement(node));
+const emptyNode = jsxNodes.find(node => node.tagName.getText(pageTree) === 'EmptyState');
+assert.ok(emptyNode, 'the truly empty map must retain its existing help');
+let emptyBranch: ts.Node | undefined = emptyNode.parent;
+while (emptyBranch && !ts.isConditionalExpression(emptyBranch)) emptyBranch = emptyBranch.parent;
+assert.ok(emptyBranch && ts.isConditionalExpression(emptyBranch), 'find the actual EmptyState selection');
+const productionBranch = emptyBranch.whenFalse;
+
+function evaluate(expression: ts.Expression, values: Record<string, unknown>): boolean {
+  return Boolean(new Function(...Object.keys(values), `return (${expression.getText(pageTree)});`)(...Object.values(values)));
+}
+
+const productionOnlyCases: Array<[string, PlacedPlant[]]> = [
+  ['an orchard with unconfirmed picking months', [{ defId: 'tree_avocado' }]],
+  ['a coop and hive with unknown purposes or production dates', [{ defId: 'chicken_coop' }, { defId: 'beehive' }]],
+  ['an unresolved proposed Banana Circle', [{ defId: 'banana_circle', status: 'proposed' as const }]],
+  ['a known food species without a harvest dossier', [{ defId: 'tree_other', speciesId: 'olea-europaea-subsp-europaea' }]],
+];
+for (const [name, items] of productionOnlyCases) {
+  test(`${name} opens production confirmation and export without inventing a crop bed`, () => {
+    const before = structuredClone(items);
+    const values = { beds: [], canvasTrees: placedTreeGroups(items), unidentifiedPlants: unidentifiedPlantGroups(items), canvasAnimals: placedAnimalGroups(items) };
+    assert.equal(evaluate(emptyBranch.condition, values), false,
+      'no crop beds must not erase food-source or housing inventory');
+    assert.deepEqual(values.beds, [], 'the gate must not inject a virtual bed');
+    assert.deepEqual(items, before, 'reading mapped sources must leave saved items unchanged');
+    for (const simple of [true, false]) {
+      for (const card of ['TreeSeasonsCard', 'AnimalEnterprisesCard', 'CropPlanExportCard']) {
+        const visible = jsxNodes.filter(node => node.tagName.getText(pageTree) === card && node.pos >= productionBranch.pos && node.end <= productionBranch.end)
+          .some(node => {
+            const conditions: ts.Expression[] = [];
+            let ancestor: ts.Node | undefined = node.parent;
+            while (ancestor && ancestor !== productionBranch) {
+              if (ts.isBinaryExpression(ancestor) && ancestor.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken
+                && node.pos >= ancestor.right.pos && node.end <= ancestor.right.end) conditions.push(ancestor.left);
+              ancestor = ancestor.parent;
+            }
+            return conditions.every(condition => evaluate(condition, { ...values, simple }));
+          });
+        assert.ok(visible, `${card} must be reachable in ${simple ? 'Simple' : 'All tools'} mode`);
+      }
+    }
+  });
+}
+
+test('a genuinely empty map retains the empty-state help and an existing bed still opens its crop plan', () => {
+  const values = { beds: [], canvasTrees: [], unidentifiedPlants: [], canvasAnimals: [] };
+  assert.equal(evaluate(emptyBranch.condition, values), true);
+  assert.equal(evaluate(emptyBranch.condition, { ...values, beds: [{ id: 'bed' }] }), false);
+});
+
+test('a production-only map cannot open generate or accept a bed auto-suggestion', () => {
+  const button = nodesMatching((node): node is ts.JsxElement => ts.isJsxElement(node)).find(node =>
+    node.openingElement.tagName.getText(pageTree) === 'button'
+      && node.openingElement.attributes.properties.some(attribute => ts.isJsxAttribute(attribute)
+        && attribute.name.getText(pageTree) === 'onClick' && attribute.initializer?.getText(pageTree) === '{openAutoSuggest}'));
+  assert.ok(button);
+  const disabled = button.openingElement.attributes.properties.find(attribute => ts.isJsxAttribute(attribute) && attribute.name.getText(pageTree) === 'disabled');
+  assert.ok(disabled && ts.isJsxAttribute(disabled) && disabled.initializer && ts.isJsxExpression(disabled.initializer) && disabled.initializer.expression);
+  assert.equal(evaluate(disabled.initializer.expression, { beds: [] }), true);
+  assert.equal(evaluate(disabled.initializer.expression, { beds: [{}] }), false);
+  assert.match(CROPS, /Your mapped plants and animal housing are listed below/);
+  assert.match(CROPS, /autoPhase !== 'idle' && beds\.length > 0 &&/,
+    'removing the last bed while the modal is open must hide its stale bed-planning actions');
+  for (const name of ['openAutoSuggest', 'runAutoSuggest', 'acceptAutoSuggest']) {
+    const handler = nodesMatching((node): node is ts.FunctionDeclaration => ts.isFunctionDeclaration(node)).find(node => node.name?.text === name);
+    assert.ok(handler?.body);
+    const calls: string[] = [];
+    const source = ts.transpileModule(`function check() ${handler.body.getText(pageTree)}; check();`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
+    const setters = [...new Set(handler.body.getText(pageTree).match(/\bset[A-Z]\w+|\bpushPlanHistory|\bapplyGoalMix/g) ?? [])];
+    const values = { beds: [], autoResult: { plantings: [] }, ...Object.fromEntries(setters.map(setter => [setter, () => calls.push(setter)])) };
+    new Function(...Object.keys(values), source)(...Object.values(values));
+    assert.deepEqual(calls, [], `${name} must stop before changing a crop plan with no beds`);
+  }
 });

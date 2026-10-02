@@ -51,6 +51,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       where: 'Study → Seeds and Seed Sovereignty / Small Livestock Integration', href: '/student',
       detail: 'Compare drafts with English, answer a quiz, and play the silent slides.' },
   ] },
+  { when: '2 October 2026', sha: '4729738d', changes: [
+    'Plans for fruit trees and animals work without a vegetable bed.',
+    'Harvest totals add decimal measurements without rounding whole egg counts.',
+  ], tour: [
+    { title: 'Plan trees and animal food', where: 'Production plan → Plants and housing from your map',
+      href: '/facilitator/crops',
+      detail: 'Confirm food sources and print your plan, even when no vegetable beds are mapped.' },
+  ] },
   { when: '2 October 2026', sha: '40691d34', changes: [
     'Reading lessons show more marked Tshivenda and Xitsonga drafts beside English.',
     'A Sesotho soil-check point is drafted; difficult farming directions stay English.',
