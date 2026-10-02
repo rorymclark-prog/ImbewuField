@@ -1831,7 +1831,12 @@ function monthRunsLabel(monthsAscending: readonly number[]): string {
  * Works for ANY plan (auto-suggested or hand-built) since it only reads the
  * plantings themselves, not the auto-suggest questionnaire answers.
  */
-export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[] {
+export interface YearReportOptions {
+  /** A dated calendar already answers when food is available; an annual comparison must not contradict it. */
+  includeCalendarNarrative?: boolean;
+}
+
+export function buildYearReport(plantings: Planting[], beds: PlanBed[], options: YearReportOptions = {}): string[] {
   const bedIds = new Set(beds.map((bed) => bed.id));
   const toPlant = plantings.filter((p) => !p.existing && !p.awaitingSowingConfirmation && !p.finishedOnceSowing && bedIds.has(p.bedId) && cropByKey(p.cropKey));
   if (!toPlant.length) return [];
@@ -1865,7 +1870,7 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
 
   const paragraphs: string[] = [];
   paragraphs.push(
-    `For crops with a verified kg/m² benchmark, the crop cycles shown in this plan total about ${totalKg.toFixed(0)}kg in the conservative commercial comparison. `
+    `For crops with a verified kg/m² benchmark, the new bed crop cycles in this comparison total about ${totalKg.toFixed(0)}kg in the conservative commercial comparison. `
     + 'No monthly kilogram split is shown because the benchmark source does not say how yield is distributed within each fresh-picking window. This is not a household or farm-yield guarantee.',
   );
 
@@ -1877,7 +1882,7 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
     paragraphs.push(`${nonFoodCrops.join(', ')} ${nonFoodCrops.length === 1 ? 'is a soil-cover crop' : 'are soil-cover crops'} and ${nonFoodCrops.length === 1 ? 'is' : 'are'} excluded from the food-yield total as 0 food kg, not counted as a failed harvest.`);
   }
 
-  if (quietMonths.length) {
+  if (options.includeCalendarNarrative !== false && quietMonths.length) {
     // Group into contiguous runs (wrap-safe) so "Jun, Jul, Aug" reads as one
     // stretch rather than three separate mentions.
     const runs: number[][] = [];
@@ -1909,7 +1914,7 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
         .map((item) => item.name)),
     )].sort((a, b) => a.localeCompare(b));
     paragraphs.push(
-      `No verified fresh-picking window is scheduled around ${label}. Nothing is due for picking then — that is a timing gap, not a crop failure.`
+      `No verified fresh-picking window is scheduled around ${label}. This describes the repeating new bed crop cycles only; crops already growing, trees and animal food are outside this comparison. Check the dated calendar for actual picking months.`
       + (coveredMonths.length
         ? ` Stored ${namesSentence(storedNames)} should still be usable in ${monthRunsLabel(coveredMonths)} if ${storedNames.length === 1 ? 'it was' : 'they were'} kept under the storage conditions ${storedNames.length === 1 ? 'its shelf life assumes' : 'their shelf lives assume'}.`
         : '')
@@ -1929,7 +1934,7 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
       .filter((item) => item.status === 'stored')
       .map((item) => item.name)),
   )].sort((a, b) => a.localeCompare(b));
-  if (storedCropNames.length) {
+  if (options.includeCalendarNarrative !== false && storedCropNames.length) {
     const conditionsClause = storedCropNames.length === 1
       ? 'The shelf life this plan uses assumes particular storage conditions, and does not hold if they are not met.'
       : 'The shelf life this plan uses assumes particular storage conditions for each of those crops, and does not hold if they are not met.';

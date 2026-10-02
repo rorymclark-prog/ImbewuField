@@ -1,19 +1,30 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
 
 import { cropByKey } from '@/lib/crop-catalog';
+import { wrapMonth } from '@/lib/crop-export-schedule';
 import {
   bedOverlapFraction,
   bedOverlapWarning,
   benchmarkAreaConflictBedLabels,
   benchmarkAreaConflictDetails,
+  buildFoodAvailability,
+  buildYearReport,
   occupiedMonthsForPlanting,
+  planningMaturityMonths,
+  recurringPlanPlantings,
+  TRANSPLANT_ENTRY_PLANNED_MONTHS,
+  type FoodAvailabilityItem,
   type PlanBed,
   type Planting,
 } from '@/lib/crop-plan';
 import { IDEAL_PLAN_COPY } from '@/lib/crop-plan-ideal';
 import { driestMonths } from '@/lib/site-climate';
+import { buildTreeAvailability, placedTreeGroups, type TreeAvailabilityItem } from '@/lib/perennial-harvest';
+import { ANIMAL_ENTERPRISES, buildAnimalAvailability, placedAnimalGroups, type AnimalAvailabilityItem } from '@/lib/animal-enterprises';
+import { buildYearOfFood, type YearOfFood } from '@/lib/year-of-food';
 
 // THE PLAN PAGE'S UX HONESTY GAPS (audit, 19 Aug 2026).
 //
@@ -40,6 +51,155 @@ const BEDS: PlanBed[] = [
   { id: 'bed-1', label: 'Bed 1', areaM2: 10 },
   { id: 'bed-2', label: 'Bed 2', areaM2: 10 },
 ];
+
+// The October 2026 native sample showed fresh existing crops in Oct/Nov, while a second
+// annual narrative claimed nothing was due then. Execute the shipped page callbacks so a
+// regression to the old option, timeline or source switches cannot pass against a copied rule.
+const productionPage = source('../app/facilitator/crops/page.tsx');
+const productionTree = ts.createSourceFile('crops/page.tsx', productionPage, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+function pageNodes<T extends ts.Node>(predicate: (node: ts.Node) => node is T): T[] {
+  const result: T[] = [];
+  const visit = (node: ts.Node) => { if (predicate(node)) result.push(node); ts.forEachChild(node, visit); };
+  visit(productionTree);
+  return result;
+}
+function pageInitializer(name: string): ts.Expression {
+  const declaration = pageNodes((node): node is ts.VariableDeclaration => ts.isVariableDeclaration(node))
+    .find(node => ts.isIdentifier(node.name) && node.name.text === name);
+  assert.ok(declaration?.initializer, `the shipped ${name} computation must exist`);
+  return declaration.initializer;
+}
+function runPageExpression<T>(expression: ts.Expression, values: Record<string, unknown>): T {
+  return new Function(...Object.keys(values), `return (${expression.getText(productionTree)});`)(...Object.values(values));
+}
+function runPageMemo<T>(name: string, values: Record<string, unknown>): T {
+  const initializer = pageInitializer(name);
+  assert.ok(ts.isCallExpression(initializer) && initializer.expression.getText(productionTree) === 'useMemo');
+  const callback = runPageExpression<() => T>(initializer.arguments[0], values);
+  return callback();
+}
+function productionScope(yearMode: 'fromToday' | 'established', includeTrees: boolean, includeAnimals: boolean): Record<string, unknown> {
+  const plantedFor = (cropKey: string, pickMonth: number, bedId: string): Planting => {
+    const crop = cropByKey(cropKey)!;
+    const lead = planningMaturityMonths(crop.daysToHarvest) + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
+    return { id: `existing-${cropKey}`, bedId, cropKey, sowMonth: wrapMonth(pickMonth - lead), existing: true };
+  };
+  const canvasTrees = placedTreeGroups([{ defId: 'tree_avocado' }, { defId: 'tree_avocado', status: 'proposed' }]);
+  const layer = ANIMAL_ENTERPRISES['chicken-layer'];
+  const honey = Object.values(ANIMAL_ENTERPRISES).find(enterprise => enterprise.animal === 'bee' && enterprise.product === 'honey');
+  assert.ok(layer && honey, 'the real enterprise records must supply these fixture products');
+  const values: Record<string, unknown> = {
+    currentMonth: 10, yearMode, includeTrees, includeAnimals,
+    DISPLAY_MONTHS: runPageExpression<number>(pageInitializer('DISPLAY_MONTHS'), {}),
+    plantings: [plantedFor('cabbage', 10, 'oct-bed'), plantedFor('onions', 11, 'nov-bed'),
+      { id: 'new-cycle', bedId: 'planned-bed', cropKey: 'butternut', sowMonth: 12 }],
+    beds: ['oct-bed', 'nov-bed', 'planned-bed'].map(id => ({ id, label: id, areaM2: 10 })),
+    canvasTrees, treeSeasons: { [canvasTrees[0].harvest.speciesId]: { bearing: true, months: [1] } },
+    canvasAnimals: placedAnimalGroups([{ defId: 'chicken_coop' }, { defId: 'beehive' }]),
+    animalChoices: { chicken: layer.enterpriseId, bee: honey.enterpriseId },
+    animalSeasons: { chicken: { enterpriseId: layer.enterpriseId, months: [2] }, bee: { enterpriseId: honey.enterpriseId, months: [2] } },
+    wrapMonth, buildFoodAvailability, buildYearReport, recurringPlanPlantings, buildTreeAvailability, buildAnimalAvailability, buildYearOfFood,
+  };
+  values.monthOrder = runPageMemo('monthOrder', values);
+  values.chartNowMonth = runPageExpression(pageInitializer('chartNowMonth'), values);
+  for (const name of ['chartPlantings', 'foodAvailability', 'treeAvailability', 'animalAvailability', 'yearOfFood']) {
+    values[name] = runPageMemo(name, values);
+  }
+  return values;
+}
+
+test('existing October and November pickings cannot be contradicted by a separate new-crop comparison', () => {
+  const values = productionScope('fromToday', true, true);
+  const food = values.foodAvailability as FoodAvailabilityItem[][];
+  const year = values.yearOfFood as YearOfFood;
+  assert.ok(food[0].some(item => item.cropKey === 'cabbage' && item.status === 'fresh'));
+  assert.ok(food[1].some(item => item.cropKey === 'onions' && item.status === 'fresh'));
+  assert.equal(year.months[0].status, 'fresh');
+  assert.equal(year.months[1].status, 'fresh');
+  assert.ok(!year.hungryMonths.includes(10) && !year.hungryMonths.includes(11));
+  assert.ok(!food[12].some(item => item.cropKey === 'cabbage'), 'existing crops must not recur next October');
+
+  let reportOptions: unknown;
+  const comparison = runPageMemo<string[]>('yearReport', { ...values,
+    buildYearReport: (plantings: Planting[], beds: PlanBed[], options: Parameters<typeof buildYearReport>[2]) => {
+      reportOptions = options;
+      return buildYearReport(plantings, beds, options);
+    },
+  });
+  assert.deepEqual(reportOptions, { includeCalendarNarrative: false }, 'the app must request comparison-only prose from the shared report authority');
+  assert.ok(comparison.some(line => /^For crops with a verified kg\/m² benchmark,.*total about/.test(line)), 'the useful sourced benchmark comparison remains');
+  assert.doesNotMatch(comparison.join(' '), /No verified fresh-picking window|Nothing (?:is )?due for picking|should still be usable in/,
+    'the comparison cannot declare annual gaps or storage months beside a dated food chart');
+  assert.match(productionPage, /> Planned crop comparison<\/div>/);
+  assert.match(productionPage, /New vegetable and staple crop cycles, using published yield benchmarks\./);
+  const timingDestination = productionPage.match(/See ([^.]+) above for picking months and gaps\./)?.[1];
+  const foodCard = ts.createSourceFile('YearOfFoodCard.tsx', source('../components/crops/YearOfFoodCard.tsx'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const headingLabels: string[] = [];
+  const findHeadings = (node: ts.Node) => {
+    if (ts.isJsxElement(node) && node.openingElement.attributes.properties.some(property =>
+      ts.isJsxAttribute(property) && property.name.getText(foodCard) === 'className'
+        && property.initializer?.getText(foodCard).includes('font-display'))) {
+      headingLabels.push(node.children.filter(ts.isJsxText).map(child => child.text.trim()).join(''));
+    }
+    ts.forEachChild(node, findHeadings);
+  };
+  findHeadings(foodCard);
+  assert.ok(timingDestination && headingLabels.includes(timingDestination),
+    'the comparison must direct the farmer to the actual visible food-timing heading');
+  assert.match(productionPage, /Add a planned bed or plot sowing to see its crop-cycle comparison\./);
+  assert.doesNotMatch(productionPage, /Year ahead|year-ahead summary/, 'the remaining card must state its crop-cycle scope');
+});
+
+test('the page food-gap verdict follows the chart mode and selected fruit eggs and honey', () => {
+  for (const yearMode of ['fromToday', 'established'] as const) {
+    for (const includeTrees of [true, false]) for (const includeAnimals of [true, false]) {
+      const values = productionScope(yearMode, includeTrees, includeAnimals);
+      const food = values.foodAvailability as FoodAvailabilityItem[][];
+      const trees = values.treeAvailability as TreeAvailabilityItem[][];
+      const animals = values.animalAvailability as AnimalAvailabilityItem[][];
+      const year = values.yearOfFood as YearOfFood;
+      for (const month of year.months) {
+        const chartHasFresh = food[month.slot].some(item => item.status === 'fresh')
+          || (includeTrees && trees[month.slot].length > 0) || (includeAnimals && animals[month.slot].length > 0);
+        assert.equal(month.status === 'fresh', chartHasFresh, `${yearMode}, trees=${includeTrees}, animals=${includeAnimals}, month=${month.month}`);
+        assert.deepEqual(month.fruit, includeTrees ? trees[month.slot] : []);
+        assert.deepEqual(month.animalProducts, includeAnimals ? [...new Set(animals[month.slot].map(item => item.product))] : []);
+      }
+      const january = year.months.find(month => month.month === 1)!;
+      const february = year.months.find(month => month.month === 2)!;
+      assert.equal(january.freshVeg.length, 0, 'the fruit toggle must affect a month without fresh vegetables');
+      assert.equal(february.freshVeg.length, 0, 'the animal toggle must affect a month without fresh vegetables');
+      assert.equal(january.status === 'fresh', includeTrees);
+      assert.equal(february.status === 'fresh', includeAnimals);
+      assert.deepEqual(february.animalProducts, includeAnimals ? ['eggs', 'honey'] : []);
+      if (includeTrees) assert.equal(january.fruit[0].trees, yearMode === 'fromToday' ? 1 : 2);
+      assert.equal(year.months[0].status === 'fresh', yearMode === 'fromToday', 'an established new-crop template cannot inherit an observed October cohort');
+    }
+  }
+  // React must refresh the actual callback when the farmer changes the horizon or source rows.
+  for (const [name, required] of [
+    ['chartPlantings', ['yearMode', 'plantings']],
+    ['foodAvailability', ['chartPlantings', 'beds', 'chartNowMonth', 'monthOrder']],
+    ['treeAvailability', ['canvasTrees', 'monthOrder', 'yearMode', 'treeSeasons']],
+    ['animalAvailability', ['canvasAnimals', 'animalChoices', 'monthOrder', 'yearMode', 'animalSeasons']],
+    ['yearOfFood', ['monthOrder', 'foodAvailability', 'includeTrees', 'treeAvailability', 'includeAnimals', 'animalAvailability']],
+  ] as const) {
+    const initializer = pageInitializer(name);
+    assert.ok(ts.isCallExpression(initializer) && ts.isArrayLiteralExpression(initializer.arguments[1]));
+    const dependencies = initializer.arguments[1].elements.map(element => element.getText(productionTree));
+    for (const dependency of required) assert.ok(dependencies.includes(dependency), `${name} must refresh when ${dependency} changes`);
+  }
+  const cards = pageNodes((node): node is ts.JsxSelfClosingElement => ts.isJsxSelfClosingElement(node));
+  for (const [tag, prop, expected] of [['YearOfFoodCard', 'year', 'yearOfFood'], ['FoodAvailabilityChart', 'availability', 'foodAvailability'], ['CropPlanExportCard', 'yearReport', 'yearReport']]) {
+    const matching = cards.filter(card => card.tagName.getText(productionTree) === tag);
+    assert.ok(matching.length, `${tag} must remain in the production page`);
+    for (const card of matching) {
+      const attribute = card.attributes.properties.find(property => ts.isJsxAttribute(property) && property.name.getText(productionTree) === prop);
+      assert.ok(attribute && ts.isJsxAttribute(attribute) && attribute.initializer && ts.isJsxExpression(attribute.initializer));
+      assert.equal(attribute.initializer.expression?.getText(productionTree), expected, `${tag} must receive the canonical ${prop}`);
+    }
+  }
+});
 
 // ── The overlap check, for the share the picker actually defaults to ────────
 
