@@ -139,18 +139,18 @@ test('Soil Health L1 retains difficult jar and diagnostic terms in the checked m
   assert.match(paragraphs[11], /management history, drainage.*remedy/);
 });
 
-test('Soil Health L3 exposes all source-paired body paragraphs while assessment fields stay held', () => {
+test('Soil Health L2/L3 expose source-paired lesson and assessment drafts with safe fallback', () => {
   const l2 = sourceModule.lessons[1];
   const l2Matches = XITSONGA_SOIL_HEALTH_DRAFT.lessons.filter(lesson => lesson.id === l2.id);
   assert.equal(l2Matches.length, 1, 'the source lesson must have exactly one registry entry');
   const l2Draft = l2Matches[0];
   assert.ok(l2Draft, 'the completed Xitsonga L2 draft must be present');
   assert.equal(l2Draft.title.sourceEnglish, l2.title);
-  assert.equal(l2Draft.title.xitsongaDraft, l2.title, 'do not invent a localized title');
-  assert.equal(l2Draft.title.reviewStatus, 'hold');
+  assert.equal(l2Draft.title.xitsongaDraft, 'Ku Endla ni Ku Tirhisa Compost');
+  assert.equal(l2Draft.title.reviewStatus, 'machine-draft');
   assert.equal(l2Draft.infographicAlt?.sourceEnglish, l2.infographicAlt);
-  assert.equal(l2Draft.infographicAlt?.xitsongaDraft, l2.infographicAlt);
-  assert.equal(l2Draft.infographicAlt?.reviewStatus, 'hold');
+  assert.equal(l2Draft.infographicAlt?.xitsongaDraft, 'Heap ya compost cut open, yi komba alternating layers ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona arrow yi komba leswaku heap ya hundzuluxiwa.');
+  assert.equal(l2Draft.infographicAlt?.reviewStatus, 'machine-draft');
   assert.equal(l2Draft.body.sourceEnglish, l2.body);
   assert.equal(l2Draft.body.reviewStatus, 'machine-draft');
   const sourceParagraphs = l2.body.split('\n\n');
@@ -185,27 +185,67 @@ test('Soil Health L3 exposes all source-paired body paragraphs while assessment 
     'clean and untreated is mandatory; slow bark and the name-alone caveat remain');
   assert.match(paragraphs[11], /turn.*loko yi lava air yo tala kumbe mixing.*moist.*waterlogged/,
     'turning is conditional on more air or mixing, and moist is not waterlogged');
-  assert.ok(l2Draft.keyPoints.every(item => item.reviewStatus === 'hold' && item.xitsongaDraft === item.sourceEnglish));
-  assert.ok(l2Draft.quiz.every(item => item.question.reviewStatus === 'hold'
-    && item.question.xitsongaDraft === item.question.sourceEnglish
-    && item.rationale.reviewStatus === 'hold'
-    && item.rationale.xitsongaDraft === item.rationale.sourceEnglish
-    && item.options.every(option => option.reviewStatus === 'hold' && option.xitsongaDraft === option.sourceEnglish)));
+  assert.deepEqual(l2Draft.keyPoints.map(item => item.sourceEnglish), l2.keyPoints);
+  assert.ok(l2Draft.keyPoints.every(item => item.reviewStatus === 'machine-draft'));
+  assert.match(l2Draft.keyPoints[0].xitsongaDraft, /^Ringanisa browns, greens, moisture ni air\./);
+  assert.match(l2Draft.keyPoints[1].xitsongaDraft, /Hot centre a yi tiyisisi leswaku heap hinkwaro ri sanitised/);
+  assert.match(l2Draft.keyPoints[2].xitsongaDraft, /seed pods na contaminated materials.*handle ka heap/);
+  assert.match(l2Draft.keyPoints[3].xitsongaDraft, /xiyimo xa yona.*ku nga ri hi fixed regional timetable/);
+  assert.equal(l2Draft.quiz.length, l2.quiz.length);
+  l2Draft.quiz.forEach((item, index) => {
+    const original = l2.quiz[index]!;
+    assert.equal(item.question.sourceEnglish, original.q);
+    assert.equal(item.question.reviewStatus, 'machine-draft');
+    assert.deepEqual(item.options.map(option => option.sourceEnglish), original.options);
+    assert.ok(item.options.every(option => option.reviewStatus === 'machine-draft'));
+    assert.equal(item.sourceCorrectIndex, original.correct);
+    assert.equal(item.options[item.sourceCorrectIndex]?.sourceEnglish, original.options[original.correct]);
+    assert.equal(item.rationale.sourceEnglish, original.rationale);
+    assert.equal(item.rationale.reviewStatus, 'machine-draft');
+  });
   assert.deepEqual(l2Draft.quiz.map(item => item.sourceCorrectIndex), l2.quiz.map(item => item.correct));
+  assert.match(l2Draft.quiz[0].options[1].xitsongaDraft, /Engetela more dry carbon material yo fana na straw.*hundzuluxa heap/);
+  assert.match(l2Draft.quiz[0].rationale.xitsongaDraft, /nga lava more air na drier material.*dry browns.*hundzuluxa heap.*ammonia na wona wu nga suggest.*nitrogen-rich material yo tala ngopfu.*damp, ku nga ri soggy/,
+    'the wet/slimy fix remains qualified, ammonia can also suggest excess nitrogen, and damp-not-soggy stays explicit');
+  assert.match(l2Draft.quiz[1].rationale.xitsongaDraft, /^An ordinary heap may not expose every seed to conditions that make it non-viable\./);
+  assert.match(l2Draft.quiz[1].options[1].xitsongaDraft, /Mbewu tin'wana ti nga ha pona kutani ti hangalaka/,
+    'some seeds may survive and spread remains possible rather than certain');
+  assert.match(l2Draft.quiz[1].rationale.xitsongaDraft, /Ku susa pods swi papalata ku ti hangalasa na compost/,
+    'wattle seed pods are excluded to avoid spreading them with compost');
   const shownL2 = resolveLearnerLessonPresentation(l2, 'ts');
   assert.equal(shownL2.status, 'draft');
   assert.equal(shownL2.content.body, l2Draft.body.xitsongaDraft);
-  assert.deepEqual(shownL2.content.keyPoints, l2.keyPoints);
-  assert.deepEqual(shownL2.content.quiz.map(item => item.correct), l2.quiz.map(item => item.correct));
+  assert.deepEqual(shownL2.content.title, l2Draft.title.xitsongaDraft);
+  assert.deepEqual(shownL2.content.keyPoints, l2Draft.keyPoints.map(item => item.xitsongaDraft));
+  assert.deepEqual(shownL2.content.quiz, l2.quiz.map((item, index) => ({
+    q: l2Draft.quiz[index].question.xitsongaDraft,
+    options: l2Draft.quiz[index].options.map(option => option.xitsongaDraft),
+    correct: item.correct,
+    rationale: l2Draft.quiz[index].rationale.xitsongaDraft,
+  })));
   const changedL2 = { ...l2, body: l2.body.replace('may not make every seed non-viable', 'may not make any seed non-viable') };
   assert.equal(resolveLearnerLessonPresentation(changedL2, 'ts').status, 'english-fallback',
     'changing the seed-viability caveat withdraws the whole source-paired body draft');
+  const changedL2Assessment = {
+    ...l2,
+    quiz: l2.quiz.map((item, index) => index === 1
+      ? { ...item, rationale: item.rationale.replace('may not expose every seed', 'does not expose any seed') }
+      : item),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedL2Assessment, 'ts').status, 'english-fallback',
+    'source drift in the seed-survival caveat withdraws the stale assessment draft');
 
   const source = sourceModule.lessons[2];
-  const draft = XITSONGA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === source.id);
-  assert.ok(draft, 'the paired L3 draft must be present without adding L2');
+  const l3Matches = XITSONGA_SOIL_HEALTH_DRAFT.lessons.filter(lesson => lesson.id === source.id);
+  assert.equal(l3Matches.length, 1, 'the L3 source lesson must have exactly one registry entry');
+  const draft = l3Matches[0];
+  assert.ok(draft, 'the paired L3 draft must be present in the existing three-lesson module');
   assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(draft.title.xitsongaDraft, 'Ku Tirhisa Mulch na Cover Crops: Ku Sirhelela Misava na Building Soil');
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
   assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
+  assert.equal(draft.infographicAlt?.xitsongaDraft, 'Swiphemu swimbirhi swa misava ehansi ka dyambu rin\'we: misava leyi nga funengetiwangi yi pandzekile naswona yi omile; misava leyi nga na mulch ya ha ri ya ntima naswona yi tsakamile.');
+  assert.equal(draft.infographicAlt?.reviewStatus, 'machine-draft');
   assert.equal(draft.body.sourceEnglish, source.body);
   assert.equal(draft.body.reviewStatus, 'machine-draft');
   const english = source.body.split('\n\n');
@@ -236,21 +276,53 @@ test('Soil Health L3 exposes all source-paired body paragraphs while assessment 
   const shown = resolveLearnerLessonPresentation(source, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
-  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
-  assert.deepEqual(shown.content.quiz.map(question => question.correct), source.quiz.map(question => question.correct));
+  assert.deepEqual(shown.content.title, draft.title.xitsongaDraft);
   assert.equal(draft.keyPoints.length, source.keyPoints.length);
   assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+  assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'machine-draft'));
+  assert.match(draft.keyPoints[3].xitsongaDraft, /^Worm-bin leachate is not automatically safe fertiliser;/,
+    'the no-automatic-safety claim stays exact while the edible-plant instruction is translated');
   assert.equal(draft.quiz.length, source.quiz.length);
   draft.quiz.forEach((question, index) => {
     assert.equal(question.question.sourceEnglish, source.quiz[index].q);
+    assert.equal(question.question.reviewStatus, 'machine-draft');
     assert.deepEqual(question.options.map(option => option.sourceEnglish), source.quiz[index].options);
+    assert.ok(question.options.every(option => option.reviewStatus === 'machine-draft'));
     assert.equal(question.sourceCorrectIndex, source.quiz[index].correct);
     assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
+    assert.equal(question.rationale.reviewStatus, 'machine-draft');
   });
+  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), [2, 1]);
+  assert.match(draft.quiz[0].question.xitsongaDraft, /maize hi April.*all winter/);
+  assert.match(draft.quiz[0].options[0].xitsongaDraft, /waterlogging from rain/,
+    'retain the technical waterlogging condition rather than broadening it to too much water');
+  assert.match(draft.quiz[0].options[1].xitsongaDraft, /Frost kills soil life.*weeds take over early/);
+  assert.match(draft.quiz[0].rationale.xitsongaDraft, /lowu nga susaka dry topsoil.*ku nga onha surface; laha mati ma khulukaka.*ma nga teka misava leyi ntshunxekeke/,
+    'wind and raindrop effects remain possible, with runoff loss conditional on water over the field');
+  assert.match(draft.quiz[1].question.xitsongaDraft, /liquid draining from a worm bin/);
+  assert.match(draft.quiz[1].options[1].xitsongaDraft, /nga va na harmful organisms kumbe substances; dilution a hi safety guarantee/);
+  assert.match(draft.quiz[1].rationale.xitsongaDraft, /^Leachate i liquid that drains naturally from a worm bin\. Composition ya yona ya hambana/);
+  assert.match(draft.quiz[1].rationale.xitsongaDraft, /a yi fanelanga ku kombisiwa yi ri feed leyi tiyisekisiweke leswaku yi hlayisekile eka edible crops/,
+    'natural drainage, variable composition and no edible-crop safety guarantee remain explicit');
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.xitsongaDraft));
+  assert.deepEqual(shown.content.quiz, source.quiz.map((item, index) => ({
+    q: draft.quiz[index].question.xitsongaDraft,
+    options: draft.quiz[index].options.map(option => option.xitsongaDraft),
+    correct: item.correct,
+    rationale: draft.quiz[index].rationale.xitsongaDraft,
+  })));
   const changedSource = { ...source, body: source.body.replace('Do not use it on edible plants', 'Use it on edible plants') };
   const changedShown = resolveLearnerLessonPresentation(changedSource, 'ts');
   assert.equal(changedShown.status, 'english-fallback');
   assert.equal(changedShown.content.body, changedSource.body);
+  const changedLeachateSource = {
+    ...source,
+    quiz: source.quiz.map((item, index) => index === 1
+      ? { ...item, rationale: item.rationale.replace('composition varies', 'composition is constant') }
+      : item),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedLeachateSource, 'ts').status, 'english-fallback',
+    'source drift in the variable-composition warning withdraws the stale assessment draft');
 });
 
 test('Soil Health source drift falls back to exact English', () => {

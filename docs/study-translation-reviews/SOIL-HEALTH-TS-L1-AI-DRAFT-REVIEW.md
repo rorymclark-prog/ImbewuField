@@ -28,6 +28,6 @@ The wording uses “living things” to include organisms beyond visible animals
 
 - The body remains a complete source-paired machine draft; technical terms and phrases stay in English where wording precision is uncertain.
 - All four key points and both quizzes (questions, options and rationales) are now source-paired Xitsonga machine drafts. Correct-answer indexes remain 1 and 2. The lesson title and infographic description remain exact English.
-- Lessons 2 and 3 have separate source-paired body drafts; their assessment fields retain their existing registry status. Existing source-paired slide drafts and optional English narration are unchanged.
+- Lessons 2 and 3 have complete source-paired body drafts. Their titles, image descriptions, key points and quiz fields are also source-paired Xitsonga machine drafts; the answer indexes are preserved. Existing source-paired slide drafts and optional English narration are unchanged.
 
 This is a bounded learner draft, not an approved or fluent translation.
