@@ -23,7 +23,7 @@ import { COURSE_MODULES } from '@/lib/course-modules';
 import { getCropArt } from '@/lib/crop-art';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
 import { cropByKey } from '@/lib/crop-catalog';
-import { recordWeightKg, recordQuantityLabel, recordQuantityPayload, quantityTotals, type RecordQuantityRow } from '@/lib/farm-records';
+import { recordWeightKg, recordQuantityLabel, recordQuantityPayload, quantityTotals, decimalQuantitySum, type RecordQuantityRow } from '@/lib/farm-records';
 import { useLanguage } from '@/lib/i18n';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
@@ -417,18 +417,22 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   }, []);
 
   const totals = gardener && (() => {
-    const produced = gardener.production.reduce((s, p) => s + (recordWeightKg(p) ?? 0), 0);
     const producedLabels = quantityTotals(gardener.production).map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit))).join(' · ') || 'No quantity recorded';
     const soldLabels = quantityTotals(gardener.sales).map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit))).join(' · ') || 'No quantity recorded';
     const weightCoverageUnknown = gardener.production.some(p => recordWeightKg(p) === null) || gardener.sales.some(p => recordWeightKg(p) === null);
-    const soldKg = gardener.sales.reduce((s, p) => s + (recordWeightKg(p) ?? 0), 0);
     const soldR = gardener.sales.reduce((s, p) => s + p.rand, 0);
+    // Signed original observations keep the decimal difference exact, without
+    // subtracting two intermediate totals that have already become floats.
+    const balance = weightCoverageUnknown ? null : decimalQuantitySum([
+      ...gardener.production.map(p => recordWeightKg(p)!),
+      ...gardener.sales.map(p => -recordWeightKg(p)!),
+    ]);
     // A negative difference means some picking was not logged (or a sale was
     // from an earlier harvest), so zero would be a made-up kept amount.
-    const kept = !weightCoverageUnknown && soldKg <= produced ? produced - soldKg : null;
+    const kept = balance !== null && balance >= 0 ? balance : null;
     // Sales are measured money. Kept food is measured weight, not a rand value:
     // one blanket price hid an assumption inside what looked like earnings.
-    return { produced, soldKg, soldR, kept, producedLabels, soldLabels, weightCoverageUnknown };
+    return { soldR, kept, producedLabels, soldLabels, weightCoverageUnknown };
   })();
 
   /* Deduped on the resolved catalogue key, not the displayed name. While every unmatched crop was
@@ -440,13 +444,11 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   const areaNames = [...new Set(gardens.map(g=>g.town || 'Area not recorded'))].sort();
   const areaGardens = gardens.filter(g=>areaFilter === 'All areas' || (g.town || 'Area not recorded') === areaFilter).sort((a,b)=>a.town.localeCompare(b.town));
   const gardenProduction = gardeners.flatMap(person => person.production);
-  const gardenWeights = gardenProduction.flatMap(row => {
-    const kg = recordWeightKg(row);
-    return kg === null ? [] : [kg];
-  });
-  const gardenWeightLabel = garden && garden.produceKg > 0 ? `${garden.produceKg} kg`
-    : gardenWeights.length > 0 ? `${gardenWeights.reduce((sum, kg) => sum + kg, 0)} kg` : '—';
-  const gardenCountLabels = quantityTotals(gardenProduction).filter(row => row.unit !== 'kg')
+  const gardenQuantities = quantityTotals(gardenProduction);
+  const gardenWeight = gardenQuantities.find(row => row.unit === 'kg');
+  const gardenWeightLabel = garden && garden.produceKg > 0 ? recordQuantityLabel({ kg: garden.produceKg })
+    : gardenWeight ? recordQuantityLabel(recordQuantityPayload(gardenWeight.quantity, gardenWeight.unit)) : '—';
+  const gardenCountLabels = gardenQuantities.filter(row => row.unit !== 'kg')
     .map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit))).join(' · ');
   return (
     <div className="flex flex-col w-full h-full overflow-hidden">
