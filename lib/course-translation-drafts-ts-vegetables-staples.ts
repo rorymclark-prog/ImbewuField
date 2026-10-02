@@ -51,8 +51,8 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "Preparing and Planting Your Beds",
-        "xitsongaDraft": "Preparing and Planting Your Beds",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Ku Lulamisa ni ku Byala Mabedhe ya Wena.",
+        "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
@@ -85,14 +85,14 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
-            "xitsongaDraft": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m wide ku ri na ku yi endla yi anama ku tlurisa?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Wider beds get too much sun",
-              "xitsongaDraft": "Wider beds get too much sun",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Mabedhe lama anameke ma kuma dyambu ro tala ngopfu.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
@@ -120,8 +120,8 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
-            "xitsongaDraft": "Which crop is best suited to direct-seeding rather than transplanting?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Hi xihi xibyariwa lexi faneleke ngopfu ku byariwa hi direct-seeding ku ri na transplanting?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {

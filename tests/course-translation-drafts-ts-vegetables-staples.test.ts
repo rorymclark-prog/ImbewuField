@@ -114,12 +114,42 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
   assert.ok(paragraphs[11].endsWith("They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."));
   assert.ok(paragraphs[13].includes('crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.'));
   assert.ok(paragraphs[16].endsWith('Mark the rectangle, and mark both access paths.'));
-  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
+  assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(draft.title.xitsongaDraft, 'Ku Lulamisa ni ku Byala Mabedhe ya Wena.');
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
+  assert.equal(draft.infographicAlt?.xitsongaDraft, source.infographicAlt);
+  assert.equal(draft.infographicAlt?.reviewStatus, 'hold');
+  assert.deepEqual(draft.keyPoints.map(item => item.sourceEnglish), source.keyPoints);
+  assert.deepEqual(draft.keyPoints.map(item => item.xitsongaDraft), source.keyPoints);
+  assert.ok(draft.keyPoints.every(item => item.reviewStatus === 'hold'));
+  assert.equal(draft.quiz.length, source.quiz.length);
+  for (const [index, question] of draft.quiz.entries()) {
+    const original = source.quiz[index];
+    assert.equal(question.question.sourceEnglish, original.q);
+    assert.deepEqual(question.options.map(option => option.sourceEnglish), original.options);
+    assert.deepEqual(question.sourceCorrectIndex, original.correct);
+    assert.equal(question.rationale.sourceEnglish, original.rationale);
+    assert.equal(question.rationale.xitsongaDraft, original.rationale);
+    assert.equal(question.rationale.reviewStatus, 'hold');
+    assert.deepEqual(question.options.map(option => option.reviewStatus), index === 0 ? ['machine-draft', 'hold', 'hold', 'hold'] : ['hold', 'hold', 'hold', 'hold'],
+      'only the reviewed ordinary distractor is drafted; option order remains canonical');
+  }
+  assert.equal(draft.quiz[0].question.xitsongaDraft, 'Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m wide ku ri na ku yi endla yi anama ku tlurisa?');
+  assert.equal(draft.quiz[0].question.reviewStatus, 'machine-draft');
+  assert.equal(draft.quiz[0].options[0].xitsongaDraft, 'Mabedhe lama anameke ma kuma dyambu ro tala ngopfu.');
+  assert.equal(draft.quiz[0].options[0].reviewStatus, 'machine-draft');
+  assert.equal(draft.quiz[0].options[1].reviewStatus, 'hold');
+  assert.equal(draft.quiz[1].question.xitsongaDraft, 'Hi xihi xibyariwa lexi faneleke ngopfu ku byariwa hi direct-seeding ku ri na transplanting?');
+  assert.equal(draft.quiz[1].question.reviewStatus, 'machine-draft');
+  assert.equal(draft.quiz[1].sourceCorrectIndex, 2);
   const shown = resolveLearnerLessonPresentation(source, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
-  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
-  assert.deepEqual(shown.content.quiz, source.quiz);
+  assert.equal(shown.content.keyPoints[0], source.keyPoints[0]);
+  assert.equal(shown.content.quiz[0].q, draft.quiz[0].question.xitsongaDraft);
+  assert.equal(shown.content.quiz[0].options[0], draft.quiz[0].options[0].xitsongaDraft);
+  assert.equal(shown.content.quiz[0].options[1], source.quiz[0].options[1]);
+  assert.equal(shown.content.quiz[1].q, draft.quiz[1].question.xitsongaDraft);
   const changed = { ...source, body: source.body + ' Changed planting condition.' };
   assert.equal(resolveLearnerLessonPresentation(changed, 'ts').status, 'english-fallback');
 });
