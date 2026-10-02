@@ -327,8 +327,9 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('plant-guilds', GUILD_ANIMATIONS),
   },
   'seeds-sovereignty': {
-    // Regional frames are silent source-paired review drafts. Slides 1–3 have learner-language
-    // candidates; later technical seed-saving instruction remains visibly exact English.
+    // Regional frames are silent source-paired review drafts. Since 2 October 2026 every heading and
+    // paragraph on all 24 slides is an unreviewed machine draft beside its exact English source; terms
+    // such as F1 and open-pollinated stay in English inside the translated sentences.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
     slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },

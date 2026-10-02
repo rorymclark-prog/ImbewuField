@@ -19,28 +19,40 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Mbewu hi laha nguva leyi landzelaka yi sungulaka kona."
+          "text": "Mbewu ni Vulawuri bya Mbewu (seed sovereignty)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Seed and Seed Sovereignty (seed sovereignty)"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Mbewu hi laha nguva leyi landzelaka yi sungulaka kona."
+            "text": "Mbewu hi laha nguva leyi landzelaka yi sungulaka kona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed is how the next time begins."
           },
           {
             "status": "draft",
-            "text": "Loko ndyangu wa ka n'wina wu kota ku hlengeleta, ku hlayisa ni ku avelana mbewu leyinene, wu yisa swilo swo tala ku hundza ntshovelo ntsena. Wu tlhela wu yisa ntshunxeko wa ku hlawula."
+            "text": "Loko ndyangu wa ka n'wina wu kota ku hlengeleta, ku hlayisa ni ku avelana mbewu leyinene, wu yisa swilo swo tala ku hundza ntshovelo ntsena. Wu tlhela wu yisa ntshunxeko wa ku hlawula.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When your family is able to gather, store and share good seed, it carries many things beyond the harvest only. It also carries the freedom to choose."
           },
           {
             "status": "draft",
-            "text": "Eka dyondzo leyi, u ta landzelela mbewu ku suka eka ximilana xa mutswari ku ya eka nkwama, eka xikambelo xa ku mila, ni le voko ra muakelani."
+            "text": "Eka dyondzo leyi, u ta landzelela mbewu ku suka eka ximilana xa mutswari ku ya eka xikwama, eka xikambelo xa ku mila, ni le voko ra muakelani.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "In this lesson, you will follow the seed from the parent plant to the packet, to the germination test, and to the hand of the neighbour."
           },
           {
             "status": "draft",
-            "text": "Anakanya hi swimilana swa le ndhawini ya ka n'wina. Hi swihi leswi mi se mi hlengeletaka mbewu ya swona? Hi yihi mbewu leyi mi yi xavaka? Hi yihi leyi mi yi cincanaka?"
+            "text": "Anakanya hi swirimiwa (crops) swa le ndhawini ya ka n'wina. Hi swihi leswi mi se mi hlengeletaka mbewu ya swona? Hi yihi mbewu leyi mi yi xavaka? Hi yihi leyi mi yi cincanaka?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the crops of your area. Which ones have you already gathered seed of? Which seed do you buy? Which do you swap?"
           },
           {
             "status": "draft",
-            "text": "Ringeta ku vula ximilana xin’we lexi se ku hlengeletiwaka mbewu ya xona endhawini ya ka n'wina."
+            "text": "Ringeta ku vula xirimiwa (crop) xin'we kumbe ku tlula lexi se ku hlengeletiwaka mbewu ya xona endhawini ya ka n'wina.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Try to name one crop or more than that whose seed has already been gathered in your area."
           }
         ]
       }
@@ -60,24 +72,34 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ha Yini Ku Hlengeleta Mbewu Swi Ri Swa Nkoka"
+          "text": "Ha Yini Ku Hlengeleta Mbewu Swi Ri Swa Nkoka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Why Gathering Seed Matters"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Ku hlengeleta mbewu a swi vuli ku ala mbewu leyi xaviweke. Swi vula ku va ni tindlela leti u nga ti hlawulaka."
+            "text": "Ku hlengeleta mbewu a swi vuli ku ala mbewu hinkwayo leyi xaviweke. Swi vula ku aka tindlela to tirhisiwa leti u nga ti hlawulaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Gathering seed does not mean refusing all bought seed. It means building methods to use that you choose."
           },
           {
             "status": "draft",
-            "text": "Ximilana xin’wana ni xin’wana lexi u dyondzaka ku hlengeleta mbewu ya xona kahle xi hunguta ku xava loku phindha-phindhiwaka. Xi tlhela xi sungula rhekhodo ya le ndhawini ya ka n'wina ya leswi kulaka kahle emaribyeni ya wena ni hi nguva ya wena."
+            "text": "Xirimiwa (crop) xin'wana ni xin'wana lexi u dyondzaka ku hlengeleta mbewu ya xona kahle xi susa ku xava kun'we loku phindha-phindhiwaka. Xi tlhela xi sungula rhekhodo ya le ndhawini ya ka n'wina ya leswi kulaka kahle emisaveni ya wena ni hi nguva ya wena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Each crop whose seed you learn to gather well removes one repeated buying. It also begins a local record of what grows well in your soil and in your time."
           },
           {
             "status": "draft",
-            "text": "Anakanya hi mbewu leyi u yi xavaka nkarhi ni nkarhi. Hi yihi mbewu leyi durhaka ngopfu ndyangu wa ka n'wina lembe rin’wana ni rin’wana?"
+            "text": "Anakanya hi mbewu leyi u yi xavaka nkarhi ni nkarhi. Hi yihi mbewu leyi durhaka ngopfu ndyangu wa ka n'wina lembe rin'wana ni rin'wana?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the seed that you buy time after time. Which seed is most expensive for your family each year?"
           },
           {
             "status": "draft",
-            "text": "Hlawula ximilana xin’we eka nxaxamelo wa wena wo byala. Xi endle ximilana xa wena xo sungula ku hlengeleta mbewu ya xona. U nga ringeti ku hlayisa swilo hinkwaswo hi nkarhi wun’we."
+            "text": "Hlawula ximilana xin'we eka nxaxamelo wa wena wo byala. Xi endle ximilana xa wena xo sungula ku hlengeleta mbewu ya xona. U nga ringeti ku hlayisa swilo hinkwaswo hi nkarhi wun'we.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose one plant from your planting list. Make it your first plant to gather seed from. Do not try to store everything at the same time."
           }
         ]
       }
@@ -101,40 +123,58 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Leswi U Nga Ta Swi Dyondza"
+          "text": "Leswi U Nga Ta Swi Dyondza",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "What You Will Learn"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Dyondzo leyi yi hela hi vuhlayiselo bya mbewu byo tirha, ku nga ri nxaxamelo wa timhaka ntsena."
+            "text": "Dyondzo leyi yi hela hi vuhlayiselo bya mbewu byo tirha, ku nga ri nxaxamelo wa timhaka ntsena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This lesson ends with working seed storage, not only a list of matters."
           },
           {
             "status": "draft",
-            "text": "U ta endla swiboho swa mune."
+            "text": "U ta endla swiboho swa mune.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You will make four decisions."
           },
           {
             "status": "draft",
-            "text": "U ta hlayisa yini?"
+            "text": "U ta hlayisa yini?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What will you store?"
           },
           {
             "status": "draft",
-            "text": "U ta yi lulamisa hi ndlela yihi?"
+            "text": "U ta yi lulamisa hi ndlela yihi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "How will you prepare it?"
           },
           {
             "status": "draft",
-            "text": "U ta yi sirhelela hi ndlela yihi?"
+            "text": "U ta yi sirhelela hi ndlela yihi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "How will you protect it?"
           },
           {
             "status": "draft",
-            "text": "Naswona u ta swi tivisa ku yini leswaku ya ha hanya u nga si yi tshemba?"
+            "text": "Naswona u ta swi tiva ku yini leswaku ya ha hanya u nga si yi tshemba?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "And how will you know that it is still alive before you trust it?"
           },
           {
             "status": "draft",
-            "text": "Hi xihi eka swiboho leswi swa mune lexi u nga xi tolovelangiki ngopfu?"
+            "text": "Hi xihi eka swiboho leswi swa mune lexi u nga xi tolovelangiki ngopfu?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which of these four decisions are you least used to?"
           },
           {
             "status": "draft",
-            "text": "Vula nakambe hi marito ya wena: hlawula, lulamisa, sirhelela, kutani u tiyisisa."
+            "text": "Vula nakambe hi marito ya wena: hlawula, lulamisa, sirhelela, kutani u tiyisisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Say again in your own words: choose, prepare, protect, and then confirm."
           }
         ]
       }
@@ -156,29 +196,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mbewu ya Open-Pollinated ni Mbewu ya F1",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Open-Pollinated Seed and F1 Seed"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu ya open-pollinated a hi xihlamariso.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Open-pollinated seed is not a wonder/miracle."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Stable variety yi nga humesa switukulwana leswi fanaka loko yi hambanisiwe kahle (isolated) kumbe yi endla self-pollination.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A stable variety can/may produce generations that are alike when it has been separated well (isolated) or it does self-pollination."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu ya F1 hi ntolovelo yi ha hanya. Kambe xitukulwana lexi landzelaka xi hambana hi ku hlanganisiwa ka swihlawulekisi swa vatswari.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "F1 seed usually still lives. But the next generation differs because of the mixing of the distinguishing features of the parents."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xiphiqo hi ku nga tivekiki leswi swi nga ta humelela, ku nga ri ku tsandzeka ku mila (germinate).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The problem is in not knowing what will happen, not in failing to germinate."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Anakanya hi bedi rin'we ro tsongo ra ntanga ya wena. Ha yini swimilana leswi u nga tivi leswaku swi ta va njhani swi nga va khombo loko ndhawu yi ri yitsongo?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about one small bed of your garden. Why could plants that you do not know what they will be like be a danger when the place is small?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko u ri ni swikwama swa mbewu, languta loko swi tsariwile open-pollinated kumbe F1. U nga hlawula xihi ku hlayisa mbewu leyi tshembekaka?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When you have seed packets, look whether they are written open-pollinated or F1. Which can you choose to save seed that is trustworthy?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsundzuka: xitukulwana xa F1 lexi landzelaka xi hambana. A xi fi hi ku tisungulela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Remember: the next F1 generation is different. It does not die by itself."
           }
         ]
       }
@@ -199,30 +263,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Mbewu ya Open-Pollinated ni F1",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Open-Pollinated Seed and F1"
         },
         "body": [
           {
             "status": "draft",
             "text": "Languta matlhelo hamambirhi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
             "backTranslation": "Look at both sides."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu hamambirhi ya mila (germinate).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Both seeds germinate."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu ya open-pollinated yi humesa swimilana leswi fanaka loko muxaka (variety) wu ri stable ni loko pollination yi lawuriwa kahle.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Open-pollinated seed produces plants that are alike when the variety (variety) is stable and when pollination is controlled well."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu leyi hlayisiweke eka ximilana xa F1 na yona ya mila. Kambe xitukulwana xa yona lexi landzelaka xi hambana. Swimilana swin'wana swi nga leha. Swin'wana swi nga komba. Matimba ya swona ni ntshovelo wa swona swi nga hambana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed stored from an F1 plant also germinates. But its next generation is different. Some plants may be tall. Others may be short. Their strength and their harvest may differ."
           },
           {
             "status": "draft",
             "text": "Tivutise leswaku leswi swi vula yini loko u hlawula mbewu leyi u nga ta yi hlayisa.",
-            "backTranslation": "Ask yourself what this means when you choose seed to save."
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ask yourself what this means when you choose seed that you will store."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko u twisisa ku hambana, u nga ku hlamusela hi xivulwa xin'we: hamambirhi ya mila, kambe xitukulwana xa F1 lexi landzelaka a xi tivekiki leswi xi nga ta va xiswona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When you understand the difference, you can explain it in one saying: both germinate, but the next F1 generation is not known, what it will be."
           }
         ]
       }
@@ -243,30 +324,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vulawuri bya Mbewu (seed sovereignty)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Seed Sovereignty (seed sovereignty)"
         },
         "body": [
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vulawuri bya mbewu (seed sovereignty) a byi hanyi eka xivulwa (slogan).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed sovereignty does not live in a slogan."
           },
           {
             "status": "draft",
-            "text": "Hi yihi mbewu leyi ndyangu wa ka n'wina wu yi hlayisaka kahle sweswi?",
-            "backTranslation": "Which seed does your household already save well?"
+            "text": "Byi hanya eka xikwama xo oma, rhekhodo leyi tsariweke ni vutivi bya ndlela leyi mbewu yi tikhomaka ha yona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It lives in a dry packet, a written record, and knowledge of how the seed behaves."
           },
           {
             "status": "draft",
-            "text": "Dirowa mepe lowutsongo wa miti leyi nga kusuhi na wena. Etlhelo ka muti wun’wana ni wun’wana, tsala ximilana xin’we (crop) lexi ndyangu wolowo wu nga xi tiselaka ku cincana mbewu.",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "Ndyangu wa ka n'wina wu wu sungula. Vaakelani va wu andzisa. Tinguva ta lembe ti endla leswaku mbewu leyi hlengeletiweke ya le ndhawini yi pfuna ku tlula loko yi sungula.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The family of your (pl.) home starts it. Neighbours increase it. The times of the year make it so that the seed that has been collected, of the place, helps to exceed when it starts."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi yihi mbewu leyi ndyangu wa ka n'wina se wu yi hlayisaka kahle ku tlula yin'wana ni yin'wana?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which seed does your family already store well more than any other?"
+          },
+          {
+            "status": "draft",
+            "text": "Dirowa mepe lowutsongo wa miti leyi nga kusuhi na wena. Etlhelo ka muti wun'wana ni wun'wana, tsala ximilana xin'we (crop) lexi ndyangu wolowo wu nga xi tiselaka ku cincana mbewu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Draw a small map of the households that are near you. Beside each household, write one plant (crop) that that family brings for swapping seed."
+          },
+          {
+            "status": "draft",
+            "text": "Vulawuri byi lava swilo swinharhu: mbewu leyi nga tirhisiwaka, vuxokoxoko lebyi tsariweke ni ku cincana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sovereignty needs three things: seed that can be used, written details and swapping."
           }
         ]
       }
@@ -285,24 +383,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Vuxaka bya Mbewu bya Mindyangu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: The Seed Relationship of Households"
         },
         "body": [
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu leyi hlayisiweke kahle yi va ni matimba ngopfu loko yi tivekile ni loko yi avelaniwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed that is stored well becomes very strong when it is known and when it is shared."
           },
           {
             "status": "draft",
-            "text": "Eku heteleleni, ndyangu wun’wana ni wun’wana wu va ni mixaka yo tala ya mbewu (varieties) ku hundza leyi a wu ri na yona eku sunguleni.",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "Languta ndyangu wun'we wu sungula hi ku hlayisa mbewu kahle eka xirimiwa (crop) xin'we. Mbewu yo oma yi nghena eka swikwama leswi tengeke. Swikwama swin'wana swi famba swi ya eka miti leyi nga ekusuhi. Vaakelani va tlherisela hi ku avelana mbewu yo hambana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at one family starting by saving seed well from one crop (crop). Dry seed goes into bought packets. Some packets travel to nearby homesteads. Neighbours return by sharing different seed."
+          },
+          {
+            "status": "draft",
+            "text": "Eku heteleleni, ndyangu wun'wana ni wun'wana wu va ni mixaka yo tala ya mbewu (varieties) ku hundza leyi a wu ri na yona eku sunguleni.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "In the end, each household has many varieties of seed more than what it had at the beginning."
           },
           {
             "status": "draft",
             "text": "Anakanya hi mbewu leyi u nga yi avelanaka ni mbewu leyi u nga yi amukelaka eka muakelani. Mbewu ya famba. Vutivi ni ku tshemba swi fanele swi famba na yona.",
-            "backTranslation": "Think about seed you could share and seed you could receive from a neighbour. Seed moves. Knowledge and trust should move with it."
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the seed that you share and the seed that you receive from a neighbour. Seed travels. Knowledge and trust must travel with it."
           }
         ]
       }
@@ -325,40 +434,59 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlawula Swimilana Swo Tala swa Vatswari",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose Many Parent Plants"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mihandzu leyikulu ngopfu a hi yona minkarhi hinkwayo mutswari wa mbewu lowunene.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The biggest fruits are not always the good parent of seed."
           },
           {
             "status": "draft",
             "text": "Languta ximilana hinkwaxo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
             "backTranslation": "Look at the whole plant."
           },
           {
             "status": "draft",
             "text": "Xana a xi hanye kahle?",
-            "backTranslation": "Was it healthy?"
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Has it lived well/been healthy?"
           },
           {
             "status": "draft",
             "text": "Xana xi vupfe hi nkarhi lowu faneleke?",
-            "backTranslation": "Did it mature at the right time?"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Did it ripen at the right time?"
           },
           {
             "status": "draft",
-            "text": "I yini lexi nga ku endla u ala ximilana xa mbewu, hambiloko mihandzu ya xona yi ri leyikulu?",
-            "backTranslation": "What could make you reject a seed plant, even if its fruit was large?"
+            "text": "Xana a xi fana ni muxaka wa xona (true to type)?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Is it like its kind (true to type)?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayisa mbewu eka swimilana swo tala leswinene, ngopfu-ngopfu eka swirimiwa leswi hlanganaka (cross-pollinated). Leswi swi sivela xitukulwana lexi landzelaka ku huma eka mutswari un'we ntsena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Store seed from many good plants, especially in crops that cross (cross-pollinated). This prevents the next generation from coming from one parent only."
+          },
+          {
+            "status": "draft",
+            "text": "I yini lexi nga ku endla u ala ximilana xa mbewu, hambiloko mihandzu yi ri leyikulu?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What could make you refuse a plant for seed, even if the fruits are big?"
+          },
+          {
+            "status": "draft",
+            "text": "Famba u ya eka ndhawu ya wena yo byala. Komba swimilana leswi u nga swi hlawulaka ni leswi u nga swi alaka. Hlawula swimilana swo tala leswi hanyeke kahle, leswi fanaka ni muxaka wa swona (true to type). Ala leswi vabyaka ni leswi nga fanangiki ni muxaka wa swona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Go to your planting place. Show the plants that you choose and those that you reject. Choose many plants that are alive well, that are like their kind (true to type). Reject those that are sick and those that are not like their kind."
           }
         ]
       }
@@ -379,28 +507,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lawula Pollination",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Control Pollination"
         },
         "body": [
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swimilana swin'wana hi ku tala swi endla self-pollination. Hikwalaho ntanga yitsongo yi nga hlayisa muxaka (variety) wu fana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Some plants mostly do self-pollination. Therefore a small garden can/may keep the variety (variety) alike."
           },
           {
             "status": "draft",
-            "text": "U nga hambanisa mixaka yimbirhi hi ndlela yihi handle ko tirhisa mpfhuka?",
+            "text": "Swimilana leswi pollination ya swona yi endliwaka hi moya kumbe switsotswana swi nga hlangana (cross) hi mpfhuka wo leha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plants whose pollination is done by wind or insects can/may mix (cross) over a long gap/distance."
+          },
+          {
+            "status": "draft",
+            "text": "Mpfhuka lowu lavekaka wu ya hi ximilana, ndhawu ni xikongomelo xa mbewu. U nga tshembisi ku tenga ka muxaka (varietal purity) ku se kondza u kambela ximilana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The distance that is needed goes by plant, place and purpose of the seed. Do not promise purity of kind (varietal purity) until you have checked the plant."
+          },
+          {
+            "status": "draft",
+            "text": "U nga hambanisa mixaka (varieties) yimbirhi hi ndlela yihi handle ko tirhisa mpfhuka?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
             "backTranslation": "How can you separate two varieties without using distance?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga yi byala hi tinguva to hambana leswaku yi nga vi ni swiluva hi nkarhi wun'we. U nga tlhela u lawula pollination hi voko kumbe hi swifunengeto (covers).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You can plant it at different times so that it does not have flowers at one time. You can also control pollination by hand or with coverings (covers)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsundzuka switirhisiwa swinharhu: mpfhuka, nkarhi wa swiluva kumbe pollination leyi lawuriwaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Remember three tools: gap/distance, time of flowers or pollination that is controlled."
           }
         ]
       }
@@ -419,20 +566,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Self-Pollination ni Ku Hlangana (crossing)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Self-Pollination and Meeting (crossing)"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Landzelela ndlela ya pollen.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Follow the way of pollen."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eka self-pollination, pollen yi famba endzeni ka xiluva xin'we, yi suka eka xiphemu lexi xi yi humesaka yi ya eka xiphemu lexi xi yi amukelaka. Minkarhi yo tala leswi swi pfuna muxaka (variety) wu tshama wu fana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "In self-pollination, pollen travels inside one flower, it leaves from the part that releases it and goes to the part that receives it. Many times these help the variety (variety) to keep being alike."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Entangeni ya mavele, moya wu rhwala pollen yi suka eka tassels yi ya eka silks. Loko mixaka (varieties) yimbirhi yi ri ekusuhi ni ku va ni swiluva hi nkarhi wun'we, yi nga hlangana (cross).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "In the field of maize, wind carries pollen, it leaves from the tassels and goes to the silks. When two varieties (varieties) are nearby and to have flowers at one time, they can/may mix (cross)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Anakanya hi ndlela leyi mpfhuka kumbe nkarhi wo hambana wa swiluva swi nga swi sivelaka ha yona eka ndhawu ya wena yo byala.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about how distance or a different flowering time could prevent them in your planting place."
           }
         ]
       }
@@ -453,26 +615,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ku Lulamisa hi Ndlela yo Oma ni ya Mati",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Preparing by the Dry Way and the Water Way"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku na tindlela timbirhi leti anameke ta ku lulamisa mbewu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "There are two widespread ways of preparing seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu yo oma yi vupfa eka pod, nhloko kumbe cob. Yi hlengeletiwa loko yi vupfile hi ku helela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Dry seed ripens in the pod, head or cob. It is gathered when it is completely ripe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu leyi nga endzeni ka mihandzu yo tala nyama yi fanele yi sungula yi hambanisiwa ni nyama.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed that is inside fruits with much flesh must first be separated from the flesh."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fermentation ya nkarhi wo koma yi pfuna ngopfu-ngopfu eka mbewu ya tamatisi. A hi nawu eka swimilana hinkwaswo leswi mbewu ya swona yi nga endzeni ka nyama.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Short-time fermentation helps especially with tomato seed. It is not a rule for all plants whose seed is inside flesh."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Anakanya hi swimilana swa le ndhawini ya ka n'wina. Hi swihi leswi fambelanaka ni ndlela yo oma? Hi swihi leswi fambelanaka ni ndlela ya mati?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the plants of your area. Which go with the dry way? Which go with the water way?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko u ri ni mbewu kumbe mihandzu ekusuhi, hambanisa swikombiso ku ya hi tinxaka leti timbirhi. Hlamusela ku hambana hi ku hlamusela leswi mbewu yi nga swona hi nkarhi wa ntshovelo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If you have seed or fruits nearby, separate the examples according to the two kinds. Explain the difference by explaining what the seed is at harvest time."
           }
         ]
       }
@@ -494,29 +677,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lulamisa Mbewu Yo Oma",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Prepare Dry Seed"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Siya swimilana leswi nga ni mbewu yo oma eka ximilana ku ya fika mbewu yi vupfile hi ku helela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Leave plants that have dry seed on the plant until the seed is completely ripe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi hlengelete ku nga si va xiyimo xa moya (weather), swinyenyana kumbe ku phaluka ka pods ku teka ntshovelo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Gather it before weather, small birds or the bursting of pods take the harvest."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Susa chaff ni mbewu leyi onhakeke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Remove chaff and spoiled seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Endzhaku ka sweswo hangalasa mbewu leyi tengeke hi xiyenge xin'we eka moya lowu fambaka ni endzhutini.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "After that spread the clean seed in one layer in moving air and in shade."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I yini lexi ku byelaka leswaku mbewu yo oma yi vupfile ku ringana ku hlengeletiwa?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What tells you that dry seed is ripe enough to be gathered?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko u ri ni pod yo oma kumbe nhloko ya mbewu, yi khome. Yingisela mbewu. Pimanisa ximilana xa rihlaza lexi bindzukaka ni lexi nga ya buraweni (brown) lexi pasukaka hi ku olova.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If you have a dry pod or seed head, hold it. Listen to the seed. Compare a green plant that bends and a brown one that breaks easily."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rindza ku vupfa. Eku omiseni ko hetelela, tirhisa ndzhuti ni moya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Wait for ripening. At the final drying, use shade and air."
           }
         ]
       }
@@ -536,23 +743,41 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Ku Tirha Mbewu Yo Oma (Dry Processing)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Working Dry Seed (Dry Processing)"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pfumelela mbewu yi vupfa eka ximila ku nga si yi hlengeleta.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Allow the seed to ripen on the plant before you gather it."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta ndlela leyi yi hlengeletiwaka ha yona loko yi vupfile. Chaff ni debris swa susiwa. Mbewu leyi onhakeke yi susiwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at how it is gathered when it is ripe. Chaff and debris are removed. Spoiled seed is removed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani mbewu leyi basileke yi andlariwa hi layer yin'we endzhutini ni le moyeni lowu fambaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Then the clean seed is spread in a single layer in shade and in moving air."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Landzelela magoza hi ku landzelelana: vupfa, hlengeleta, basisa, omisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Follow the steps in order: ripen, gather, clean, dry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Anakanyisisa leswaku u nga endla xin'wana ni xin'wana xa swiphemu swa ndlela leyi ndhawini yihi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think carefully about where you could do each one of the parts of this way."
           }
         ]
       }
@@ -574,29 +799,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Wet Processing ya Mbewu ya Tamatisi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Wet Processing of Tomato Seed"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Susa (scoop) mbewu ni nyama ya tamatisi u swi veka eka jari leyi basileke leyi nga ni mati ntsongo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Remove (scoop) the seed and flesh of the tomato and put them in a clean jar that has a little water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi siye yi pfulekile kumbe yi funengetiwe kutsongo. Yi sirhelele eka dyambu ra ku kongoma.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Leave it open or covered slightly. Protect it from direct sun."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Endzhaku ka masiku ya 2 ku ya eka 3, xikhumba xo olova ni nun'hwelo lowu bavaka (sour) swi nga humelela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "After 2 to 3 days, a soft skin and a sour smell may appear."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlantswa hi ku hatlisa. Susa debris. Kutani andlala mbewu leyi basileke hi layer yin'we leswaku yi oma.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Wash quickly. Remove debris. Then spread the clean seed in one layer so that it dries."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga pfali jari leyi ha ku ferment.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Do not close the jar that is still fermenting."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Anakanyisisa hi swikombiso leswi ku tivisaka leswaku endlelo ri sungule. Anakanyisisa na hi swikombiso leswi nga ku endlaka u lahla batch.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think carefully about the signs that tell you that the process has started. Think carefully also about signs that make you discard the batch."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kuma jari, sieve ni xibya xo omisa. Loko u lunghekile, sungula batch yo tsongo. Tsundzuka ku landzelelana: susa (scoop), ferment hi nkarhi wo koma, hlantswa u omisa hi ku helela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Get a jar, a sieve and a dish for drying. When you are ready, start with a small batch. Remember the order: remove (scoop), ferment for a short time, wash and dry completely."
           }
         ]
       }
@@ -617,26 +866,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Wet Processing ya Mbewu ya Tamatisi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Wet Processing of Tomato Seed"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta endlelo hinkwaro hi ku landzelelana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at the whole process in order."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tamatisi leyi vupfeke yi pfuriwa. Mbewu ni gel swi susiwa (scooped) swi vekiwa eka jari leyi basileke. Ku engeteriwa mati ntsongo ntsena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A ripe tomato is opened. The seed and gel are removed (scooped) and put in a clean jar. Only a little water is added."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jari yi siyiwa yi pfulekile kumbe yi funengetiwe hi ndlela yo olova 2 ku ya eka 3 wa masiku.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The jar is left open or lightly covered for 2 to 3 days."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko xikhumba xo olova ni nun'hwelo lowu bavaka (sour) swi humelela, leswi nga endzeni swi chuhisiwa eka sieve. Mbewu yi hlantswiwa ku kondza yi basa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When a soft skin and a sour smell appear, the contents are drained/poured through a sieve. The seed is washed until it is clean."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eku heteleleni, mbewu yi andlariwa hi layer yin'we endzhutini ku kondza yi omile hi ku helela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "In the end, the seed is spread in one layer in shade until it is completely dry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tlhela u tivulavule magoza: susa (scoop), ferment hi nkarhi wo koma, hlantswa, omisa hi ku helela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Repeat the steps yourself: remove (scoop), ferment for a short time, wash, dry completely."
           }
         ]
       }
@@ -657,26 +927,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ntirho wo Endla",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "A Task to Do"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Laha dyondzo yi huma eka skrini yi fika emavokweni ya wena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Here the lesson comes out of the screen and arrives in your hands."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula batch yin'we ya xiviri ya mbewu leyi lulamisiweke hi wet processing.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start one real batch of seed prepared by wet processing."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa muhandzu wun'we lowu vupfeke, lowu hanyaka kahle, jari leyi basileke, spuni, mati ntsongo, sieve ni xibya xo omisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use one ripe, healthy fruit, a clean jar, a spoon, a little water, a sieve and a drying dish."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Veka mbewu, nyama ni mati ntsongo eka jari. Namarhela label leyi nga ni siku.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Put seed, flesh and a little water in the jar. Stick on a label that has the date."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ta khathalela jari leyi endzhaku ka dyondzo. Hlawula sweswi leswaku u ta yi kambela rini, u ta yi hlantswa rini ni leswaku u ta omisa mbewu rini.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You will look after the jar after the lesson. Decide now when you will check it, when you will wash it and when you will dry the seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jari ya wena yi lava siku ni kungu ra ku tlhelela. Tsala siku leri u nga ta yi kambela ha rona endzhaku ka 2 wa masiku.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Your jar needs a date and an intention to return. Write the date on which you will check it after 2 days."
           }
         ]
       }
@@ -698,29 +989,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sungula U Omisa, Endzhaku U Pfala",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "First Dry, Afterwards Close"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku omisa a hi goza ro hetelela ro sasekisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Drying is not a final decorative step."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu leyi tsakameke yi ya emahlweni yi hefemula. Yi nga hisa, yi bola kumbe yi fa loko yi hlayisiwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Damp seed goes on breathing. It can heat up, rot or die when it is stored."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa ndzhuti, moya lowu fambaka ni nkarhi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use shade, moving air and time."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pfala mbewu ntsena loko u tiyiseke leswaku yi omile.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Close the seed only when you are sure that it is dry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I ndhawu yihi ekaya ra wena leyi nga ni ndzhuti ni moya, kambe yi sirheleriwaka eka mpfula ni hunguva (steam) ya ku sweka?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which place at your home has shade and air, but is protected from rain and steam from cooking?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula ndhawu yin'we leyi hlayisekeke yo omisa. Kutani kuma ndhawu yin'we leyi nga hlayisekangiki.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose one place that is safe for drying. Then find one place that is not safe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Phindha leswi ku kambela leswaku u swi twisisa: sungula u omisa, endzhaku u pfala.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Repeat these to check that you understand: first dry, afterwards close."
           }
         ]
       }
@@ -741,26 +1056,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sirhelela Mbewu eka Ku Hisa, Ku Vonakala ni Ku Tsakama",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Protect Seed from Heat, Light and Dampness"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swikwama swa phepha swa hefemula naswona swi hlela mbewu. Kambe a swi eneli endhawini leyi tsakameke swinene (humid climate).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Paper packets breathe and they organise seed. But they are not enough in a very damp place (humid climate)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko mbewu yi omile hi ku helela, veka swikwama leswi nga ni label endzeni ka xibya lexi pfaleke lexi sirhelelaka eka ku tsakama. Loko yi kona, engetela desiccant leyi nga riki ni khombo eka swakudya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When the seed is completely dry, put the bags that have labels inside a closed dish that protects against dampness. If available, add a desiccant that has no danger to food."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayisa xibya lexi xi pholile ni ku va ni munyama hilaha swi kotekaka hakona ekaya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep the dish cool and dark as far as is possible at home."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I kamara kumbe khabodo yihi ekaya leyi tshamaka yi pholile ni yo omisa swinene?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which room or cupboard at home stays cool and very dry?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fananisa envulopo ya phepha ntsena ni envulopo leyi nga endzeni ka xibya lexi pfaleke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Compare a paper envelope only and an envelope that is inside a closed container."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vuhlayiselo lebyi hlayisekeke byi na swiphemu swimbirhi: xikwama xa phepha lexi nga ni label endzeni ka xibya lexi omeke, lexi pfaleke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Safe storage has two parts: a paper bag with a label inside a dry, closed container."
           }
         ]
       }
@@ -782,29 +1118,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Label Xikwama Xin'wana ni Xin'wana",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Label Each Bag"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vuhlayiselo byi sirhelela miri wa mbewu. Mahungu lama tsariweke ma sirhelela nhlamuselo ya yona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Storage protects the body of the seed. Written information protects its description."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xikwama xi fanele ku byela munhu la landzelaka leswaku i xirimiwa xihi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The bag must tell the next person which crop it is."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xi fanele ku nyika muxaka (variety) kumbe vito leri tirhisiwaka endhawini.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It must give the variety or the name that is used locally."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xi fanele ku vula leswaku mbewu yi hlayisiwe rini ni leswaku yi humile kwihi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It must say when the seed was stored and where it came from."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xana i mavito yihi ya le ndhawini lama nga ta lahleka loko u tsala vito ra xirimiwa ntsena?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What local names could be lost when you write only the name of the crop?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Teka xikwama lexi nga tsariwangiki nchumu. Dyondza ku tsala swiphemu swa mahungu swa 4: xirimiwa, muxaka (variety) kumbe vito leri tirhisiwaka endhawini, siku ni ndhawu leyi yi humeke eka yona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take a bag that has nothing written on it. Learn to write 4 pieces of information: crop, variety or the name used locally, date and the place from which it came."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kambela nakambe leswaku hinkwaswo swa 4 swi kona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check again that all 4 are there."
           }
         ]
       }
@@ -827,32 +1187,59 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Germination Test ya Mbewu ya 10",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Germination Test of 10 Seeds"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xikwama xa mbewu xi nga vonaka xi hetisekile hambi mbewu yi lahlekeriwa hi vutomi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A bag of seed can look complete even if the seed has lost life."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbewu ya 10 yi endla ku hlayela ku olova.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "10 seeds make easy counting."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi hlayise yi kufumela naswona yi tsakama. U nga yi nghenisi ematini hi ku helela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep them covered and damp. Do not put them completely in water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani hlayela swimilana leswi tolovelekeke (normal seedlings).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Then count the normal plants (normal seedlings)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "6 eka 10 i ku fana ni 60 wa tiphesente. Leswi swi ku byela ku byala mbewu yo tala ku tlula leswi tolovelekeke, ku tirhisa mbewu ntsena tanihi ku ringeta, kumbe ku yi cincisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "6 out of 10 is equal to 60 percent. This tells you to plant more seed than usual, to use the seed only as a test, or to swap it."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko mbewu ya 8 eka 10 yi mila, i phesente yingani?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If 8 seeds out of 10 germinate, what percent is it?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nhlamulo i 80 wa tiphesente.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The answer is 80 percent."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula germination test ya mbewu ya 10 hi xikwama xa khale. Tsala siku ra sweswi ni siku leri u nga ta hlayela ha rona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start a germination test of 10 seeds with an old bag. Write today's date and the date on which you will count."
           }
         ]
       }
@@ -874,29 +1261,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Germination Test ya Mbewu ya 10",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Germination Test of 10 Seeds"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayela mbewu ya 10 hi ku hetiseka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Count 10 seeds completely."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi veke hi tirhowu ta 2, yin'wana ni yin'wana yi ni 5.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Place them in 2 rows, each with 5."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi hlayise ehenhla ka phepha kumbe lapi leri tsakamaka. U nga yi nghenisi ematini.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep them on top of a damp paper or cloth. Do not put them in water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Endzhaku ka nkarhi, hlayela nakambe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "After a time, count again."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Laha, 6 yi mile. 4 a yi mila. Nhlayo hinkwayo yi ha ri 10.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Here, 6 have germinated. 4 did not germinate. The total is still 10."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mpimo wa ku mila hikokwalaho i 60 wa tiphesente.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The germination measure is therefore 60 percent."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tivutise. Xana u hlayele 10 eku sunguleni, mbewu ya 6 leyi mileke ni mbewu ya 4 leyi nga mila eku heteleleni?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ask yourself. Did you count 10 at the beginning, 6 seeds that germinated and 4 seeds that did not germinate at the end?"
           }
         ]
       }
@@ -917,28 +1328,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Avelana Mbewu Ni Mahungu Ya Yona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Share Seed and Its Information"
         },
         "body": [
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku cincisana mbewu a hi tafula ra swikwama leswi nga tivekiki.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Exchanging seed is not a table of unknown bags."
           },
           {
             "status": "draft",
-            "text": "Hi byihi vuxokoxoko byi nga ku pfunaka ku tshemba mbewu leyi humaka eka ndyangu wun'wana?",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "Ku cincisana kuhle ku fambisa mahungu swin'we ni mbewu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Good exchanging moves information together with seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku ku byela leswaku mbewu i yini. Yi humile kwihi. Yi hlayisiwe rini. Ni leswaku xana yi kambeliwile (tested).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It tells you what the seed is. Where it came from. When it was stored. And whether it has been tested (tested)."
+          },
+          {
+            "status": "draft",
+            "text": "Ku tshembeka loku ku tiyisa vuxaka hinkwabyo (network).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This trustworthiness strengthens the whole relationship (network)."
+          },
+          {
+            "status": "draft",
+            "text": "Hi byihi vuxokoxoko lebyi nga ku pfunaka ku tshemba mbewu leyi humaka eka ndyangu wun'wana?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which details help you trust seed that comes from another household?"
+          },
+          {
+            "status": "draft",
+            "text": "Teka xin'wana xa swikwama swa wena. Dyondza ku xi hlamusela u nga se xi avelana. Nyika mbewu ni matimu ya yona ya masungulo swin'we.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take one of your bags. Learn to explain it before it is shared. Give the seed together with its original history."
           }
         ]
       }
@@ -962,37 +1392,65 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ntirho wa Nsimu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Field Task"
         },
         "body": [
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ntirho lowu wu ntsongo lerova wu nga hetiwa. Wu ni nkoka lowu eneleke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This task is small so that it can be finished. It has enough value."
           },
           {
             "status": "draft",
-            "text": "Hi yini swin'wana leswi u swi lavaka leswaku u heta ntirhu lowu ekaya?",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "Aka xibya xin'we xa ku hlayisa mbewu lexi tirhaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Build one working seed-storage container."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Veka swikwama swa phepha leswi nga ni label eka xibya lexi omeke, lexi pfaleke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Put paper bags that have labels in a dry, closed container."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Teka xifaniso xa xona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take a picture of it."
+          },
+          {
+            "status": "draft",
+            "text": "Kutani vula xirimiwa lexi u nga ta hlayisa mbewu ya xona nkarhi lowu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Then name the crop whose seed you will store this time."
+          },
+          {
+            "status": "draft",
+            "text": "Xifaniso i vumbhoni. Xikwama i masungulo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The picture is evidence. The bag is the beginning."
+          },
+          {
+            "status": "draft",
+            "text": "Hi yini leswi u ha swi lavaka leswaku u heta ntirho lowu ekaya?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What do you still need in order to finish this task at home?"
+          },
+          {
+            "status": "draft",
+            "text": "Tsala nxaxamelo wo koma wa swilo leswi lavekaka. Hlawula siku ra ku heta.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write a short list of the things that are needed. Choose a finishing date."
+          },
+          {
+            "status": "draft",
+            "text": "U nga se pfala xibya, kambela ntirho wa wena: mbewu yi omile hi ku helela; xikwama xin'wana ni xin'wana xi na xirimiwa, muxaka (variety) ni siku; xibya xi pholile, xi ni munyama, xi sirheleriwile eka ku tsakama; u hlawule swimila swo hlayanyana swa vatswari leswi hanyaka kahle.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Before you close the container, check your work: the seed is completely dry; each bag has the crop, variety and date; the container is cool, dark, protected from dampness; you have chosen a few healthy parent plants."
           }
         ]
       }
@@ -1016,35 +1474,65 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Goza ra Nsimu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Field Step"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lulamisa (process).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Prepare (process)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sirhelela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Protect."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tiyisisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Confirm."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swiendlo leswi swa 4 swi rhwala nhlengeletano ya mbewu ku suka ensin'wini lowu, swi yi yisa eka nkarhi lowu landzelaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "These 4 actions carry the seed collection from this field, taking it to the next time."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula hi xirimiwa xin'we u xi endla kahle.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start with one crop and do it well."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ta sungula hi xirimiwa xihi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which crop will you start with?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xi vule hi rito leri tlakukeke. Kutani hlawula goza rin'we leri u nga ta ri teka endzhaku.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Say it with a raised voice. Then choose one step that you will take afterwards."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nkarhi lowu landzelaka wu se wu ri endzeni ka mbewu leyi u yi hlawulaka namuntlha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The next time will already be inside the seed that you choose today."
           }
         ]
       }

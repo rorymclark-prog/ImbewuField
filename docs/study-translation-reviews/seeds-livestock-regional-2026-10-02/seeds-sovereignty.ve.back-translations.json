@@ -1,0 +1,1472 @@
+{
+  "module": "seeds-sovereignty",
+  "language": "ve",
+  "reviewStatus": "unreviewed-machine-draft",
+  "method": "Claude Sonnet drafting; blind English back-translation by a separate agent that never saw the source; independent semantic check against the exact English",
+  "items": [
+    {
+      "key": "module.title",
+      "sourceEnglish": "Seeds and Seed Sovereignty",
+      "draft": "Mbeu na Maanḓa kha Mbeu (seed sovereignty)",
+      "blindBackTranslation": "Seed and Power in Seed (seed sovereignty)"
+    },
+    {
+      "key": "module.description",
+      "sourceEnglish": "Save, store and share seed — freedom from buying seed every season.",
+      "draft": "U vhulunga, u vhea na u kovhelana mbeu — mbofholowo ya u sa renga mbeu khalaṅwaha iṅwe na iṅwe.",
+      "blindBackTranslation": "To keep, to place and to share seed — freedom of not buying seed every year."
+    },
+    {
+      "key": "L1.body.p0",
+      "sourceEnglish": "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.",
+      "draft": "Mbeu ya open-pollinated i bvaho kha stable variety i nga alusa zwimela zwi fanaho arali pollination i tshi langwa zwavhuḓi. F1 hybrids dzi bva kha zwimela zwa vhabebi zwo khethwaho. Mbeu yadzo yo vhulungwaho i nga kha ḓi mela, fhedzi zwimela zwa murafho u tevhelaho zwi a fhambana; zwi nga vha zwi songo vhulunga zwivhumbeo zwo ṱanganaho (combination) zwe na vha ni tshi zwi ṱoḓa.",
+      "blindBackTranslation": "Seed of open-pollinated that comes from a stable variety can grow/raise plants that are alike if pollination is being controlled well. F1 hybrids come from plants of parents that have been selected. Their seed that has been saved can still sprout, but plants of the generation that follows differ; they may have not kept the forms that have joined together (combination) that you were wanting."
+    },
+    {
+      "key": "L1.body.p1",
+      "sourceEnglish": "Seed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.",
+      "draft": "Maanḓa kha mbeu (seed sovereignty) a katela nḓivho na khetho zwi ṱoḓeaho u alusa, u vhulunga na u kovhela vhaṅwe mbeu yo teaho. Ṅwalani dzina ḽa tshimela (crop) na lushaka (variety) kha tshigwada tshiṅwe na tshiṅwe tsha mbeu.",
+      "blindBackTranslation": "Seed sovereignty includes the knowledge and choice needed to grow, keep and share with others correct seed. Write the name of the plant (crop) and the variety on each portion of seed."
+    },
+    {
+      "key": "L1.body.p2",
+      "sourceEnglish": "Choose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
+      "draft": "Nangani zwimela zwi re na mutakalo na zwivhumbeo zwi thusaho (useful traits). Thomani nga tshimela (crop) tshine na tshi ḓivha, ni vhudzise muthu a re na tshenzhemo ya u vhulunga mbeu (seed-saving mentor) uri pollination na u khetha zwa tshimela itsho zwi langwa hani.",
+      "blindBackTranslation": "Choose plants that have health and forms that help (useful traits). Begin with a plant (crop) that you know, and ask a person who has experience of saving seed (seed-saving mentor) how pollination and the choosing of [things] of that plant are managed."
+    },
+    {
+      "key": "L1.infographicAlt",
+      "sourceEnglish": "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
+      "draft": "Pakete mbili dza mbeu nṱha ha tsumbo yo leluwaho ya u vhambedza: zwimela zwiṱanu zwi vhonalaho zwi tshi fana thungo ya tsha monde (left) na zwimela zwiṱanu zwi fhambanaho thungo ya tshanḓa tsha u ḽa (right). Zwimela zwine zwa ḓo bva kha mbeu zwi ḓitika nga lushaka (variety) na pollination.",
+      "blindBackTranslation": "Two packets of seed above a simple example of comparing: five plants that appear, being alike, side of [tsha monde] (left) and five plants that are different, side of the hand of eating (right). The plants that will come from seed depend on kind (variety) and pollination."
+    },
+    {
+      "key": "L1.title",
+      "sourceEnglish": "Why Seed Saving Matters",
+      "draft": "Ndeme ya u Vhulunga Mbeu",
+      "blindBackTranslation": "The Importance of Keeping Seed"
+    },
+    {
+      "key": "L1.keyPoint0",
+      "sourceEnglish": "Stable open-pollinated varieties need suitable pollination management",
+      "draft": "Kha stable variety ya open-pollinated, pollination i fanela u langwa nga nḓila yo teaho.",
+      "blindBackTranslation": "In a stable variety of open-pollinated, pollination should be managed in a way that is suitable."
+    },
+    {
+      "key": "L1.keyPoint1",
+      "sourceEnglish": "Seed sovereignty means freedom from depending on a seed company every season",
+      "draft": "Maanḓa kha mbeu (seed sovereignty) a amba mbofholowo ya u sa ḓitika nga khamphani ya mbeu khalaṅwaha iṅwe na iṅwe.",
+      "blindBackTranslation": "Seed sovereignty means freedom of not depending on a seed company every year."
+    },
+    {
+      "key": "L1.keyPoint2",
+      "sourceEnglish": "Crop and variety diversity can support adaptation to climate change when varieties are suited to local conditions",
+      "draft": "U fhambana ha zwilimiwa (crop) na varieties zwi nga tikedza u ḓowela tshanduko ya mutsho (climate change) musi varieties dzi tshi fanelea zwiimo zwa fhethu haṋu.",
+      "blindBackTranslation": "Diversity of crops and varieties can support getting used to climate change when the varieties suit your local conditions."
+    },
+    {
+      "key": "L1.keyPoint3",
+      "sourceEnglish": "Select healthy plants with useful traits; use crop-specific seed-saving guidance",
+      "draft": "Nangani zwimela zwi re na mutakalo na zwivhumbeo zwi thusaho; tevhedzani nyeletshedzo ya u vhulunga mbeu ya tshilimiwa tshenetsho.",
+      "blindBackTranslation": "Choose plants that have health and useful traits; follow the advice on keeping seed of that crop."
+    },
+    {
+      "key": "L1.quiz0.question",
+      "sourceEnglish": "Why won't seed saved from a hybrid (F1) tomato breed true next season?",
+      "draft": "Ndi ngani mbeu yo vhulungwaho kha tamatisi ya hybrid (F1) i sa ḓo vha i tshi fana na mubebi (breed true) khalaṅwaha i tevhelaho?",
+      "blindBackTranslation": "Why will seed kept from a hybrid (F1) tomato not be like the parent (breed true) next year?"
+    },
+    {
+      "key": "L1.quiz0.option0",
+      "sourceEnglish": "Hybrid seed is sterile and won't germinate at all",
+      "draft": "Mbeu ya hybrid a i bebi (sterile) nahone i nga si mele na luthihi",
+      "blindBackTranslation": "Hybrid seed does not give birth (sterile) and cannot sprout at all"
+    },
+    {
+      "key": "L1.quiz0.option1",
+      "sourceEnglish": "Hybrid seed is a one-time genetic cross — its offspring vary unpredictably from the parent",
+      "draft": "Mbeu ya hybrid ndi genetic cross ya luthihi fhedzi — zwimela zwa murafho wayo zwi fhambana na mubebi nga nḓila i sa ḓivhiwi",
+      "blindBackTranslation": "Hybrid seed is a genetic cross of only one time — the plants of its offspring differ from the parent in an unknown way"
+    },
+    {
+      "key": "L1.quiz0.option2",
+      "sourceEnglish": "Hybrids only grow in commercial greenhouses",
+      "draft": "Hybrid dzi mela fhedzi kha greenhouse dza u rengisa",
+      "blindBackTranslation": "Hybrids grow only in greenhouses for selling"
+    },
+    {
+      "key": "L1.quiz0.option3",
+      "sourceEnglish": "Hybrid seed loses viability faster in storage",
+      "draft": "Mbeu ya hybrid i fhelelwa nga viability nga u ṱavhanya u fhira dziṅwe mbeu musi i tshi vhulungwa",
+      "blindBackTranslation": "Hybrid seed loses viability faster than other seed when it is kept"
+    },
+    {
+      "key": "L1.quiz0.rationale",
+      "sourceEnglish": "F1 hybrids are bred by crossing two specific parent lines — their seed carries a mixed, unpredictable genetic recombination, not a stable copy of the parent.",
+      "draft": "F1 hybrids dzi bveledzwa nga u ṱanganya parent lines mbili dzo khetheaho — mbeu yadzo i hwala genetic recombination yo ṱanganyiswaho i sa ḓivhiwi, hu si khophi i sa shanduki ya mubebi.",
+      "blindBackTranslation": "F1 hybrids are produced by mixing two specific parent lines — their seed carries mixed, unknown genetic recombination, not an unchanging copy of the parent."
+    },
+    {
+      "key": "L1.quiz1.question",
+      "sourceEnglish": "When selecting a parent plant to save seed from, what should guide your choice?",
+      "draft": "Musi ni tshi khetha tshimela tshine na ḓo dzhia mbeu khatsho, ndi mini zwine zwa fanela u ni livhisa kha khetho yaṋu?",
+      "blindBackTranslation": "When you choose a plant from which you will take seed, what should guide your choice?"
+    },
+    {
+      "key": "L1.quiz1.option0",
+      "sourceEnglish": "Whichever plant produced the single largest fruit",
+      "draft": "Tshimela tsho bveledzaho mutshelo muthihi muhulu u fhira yoṱhe",
+      "blindBackTranslation": "The plant that produced one fruit bigger than all"
+    },
+    {
+      "key": "L1.quiz1.option1",
+      "sourceEnglish": "The healthiest, most disease-free, well-shaped plant, even if not the biggest yielder",
+      "draft": "Tshimela tshi re na mutakalo u fhira zwoṱhe, tshi si na malwadze, tshi re na tshivhumbeo tshavhuḓi, naho tshi si tshone tshi bveledzaho zwinzhi",
+      "blindBackTranslation": "The plant that is healthiest of all, without diseases, with a good shape, even if it is not the one that produces the most"
+    },
+    {
+      "key": "L1.quiz1.option2",
+      "sourceEnglish": "Whichever plant matured first, regardless of health",
+      "draft": "Tshimela tsho thomaho u vhibva, hu sa sedzwi mutakalo watsho",
+      "blindBackTranslation": "The plant that began ripening first, without looking at its health"
+    },
+    {
+      "key": "L1.quiz1.option3",
+      "sourceEnglish": "Any plant — selection doesn't affect future seed quality",
+      "draft": "Tshimela tshiṅwe na tshiṅwe — u khetha a zwi kwami quality ya mbeu ya tshifhinga tshi ḓaho",
+      "blindBackTranslation": "Any plant — choosing does not affect the quality of seed of the future time"
+    },
+    {
+      "key": "L1.quiz1.rationale",
+      "sourceEnglish": "You're selecting for the traits you want to carry forward — health and vigour matter more long-term than one plant's single biggest harvest.",
+      "draft": "Ni khetha zwivhumbeo zwine na ṱoḓa u zwi isa phanḓa — mutakalo na maanḓa a u mela zwi na ndeme nga tshifhinga tshilapfu u fhira khaṋo khulwane ya tshimela tshithihi.",
+      "blindBackTranslation": "You choose the traits that you want to carry on — health and strength of growing matter over a long time more than one big yield of one plant."
+    },
+    {
+      "key": "L2.body.p0",
+      "sourceEnglish": "Dry seed must mature before collection. Clean away chaff and damaged seed, then finish drying with shade and airflow.",
+      "draft": "Mbeu yo omaho i fanela u vhibva u sa athu u kuvhanganywa. Bvisani chaff na mbeu yo tshinyalaho, ni fhedze u i omisa murunzini hune ha vha na muya (airflow).",
+      "blindBackTranslation": "Dry seed must ripen before being gathered. Remove chaff and spoiled seed, and finish drying it in shade where there is wind (airflow)."
+    },
+    {
+      "key": "L2.body.p1",
+      "sourceEnglish": "Seed in fleshy fruit needs a crop-specific method. Tomato seed can be briefly fermented to help remove its gel, then rinsed and dried thoroughly. Keep an active jar open or loosely covered. Fermentation is not required for every wet-seeded crop and does not guarantee disease-free seed.",
+      "draft": "Mbeu i re kha mitshelo i re na nama i ṱoḓa nḓila yo itelwaho tshilimiwa tshenetsho (crop-specific). Mbeu ya tamatisi i nga itwa fermentation ya tshifhinganyana u thusa u bvisa gel yayo, ya dovha ya ṱanzwiwa ya omiswa zwavhuḓi. Jara ine ya khou ita fermentation i dzule yo vulea kana yo fukedzwa zwiṱuku (loosely covered). Fermentation a i ṱoḓei kha zwilimiwa zwoṱhe zwi re na mbeu dza maḓi (wet-seeded) nahone a i khwaṱhisedzi uri mbeu a i na malwadze.",
+      "blindBackTranslation": "Seed that is in fruits that have flesh needs a way made for that crop (crop-specific). Tomato seed can undergo short fermentation to help remove its gel, and then be washed and dried well. The jar that is fermenting should stay open or covered a little (loosely covered). Fermentation is not needed for all crops that have wet seeds (wet-seeded) and it does not guarantee that the seed has no diseases."
+    },
+    {
+      "key": "L2.body.p2",
+      "sourceEnglish": "Pollination matters too. Maize is wind-pollinated and can cross with other varieties. Tomatoes mostly self-pollinate, but crossing is possible. Check the crop and variety before planning isolation or saving seed.",
+      "draft": "Pollination i na ndeme na yone. Pollen ya mavhele i hwalwa nga muya (wind-pollinated), nahone mavhele a nga ṱangana na dziṅwe varieties (cross). Tamatisi kanzhi dzi ita self-pollination, fhedzi u ṱangana (crossing) zwi a konadzea. Sedzani tshilimiwa (crop) na lushaka (variety) u sa athu u pulana isolation kana u vhulunga mbeu.",
+      "blindBackTranslation": "Pollination has importance too. Pollen of maize is carried by wind (wind-pollinated), and also maize can meet/mix with other varieties (cross). Tomatoes often do self-pollination, but meeting/mixing (crossing) is possible. Look at/check the crop (crop) and kind (variety) before planning isolation or saving seed."
+    },
+    {
+      "key": "L2.infographicAlt",
+      "sourceEnglish": "Dry seed is collected from mature pods. The tomato wet-method example shows brief fermentation, rinsing and drying.",
+      "draft": "Mbeu yo omaho i kuvhanganywa kha pods dzo vhibvaho. Tsumbo ya wet-method kha tamatisi i sumbedza fermentation ya tshifhinganyana, u ṱanzwa na u omisa.",
+      "blindBackTranslation": "Dry seed is gathered in ripe pods. An example of the wet-method on tomatoes shows short fermentation, washing and drying."
+    },
+    {
+      "key": "L2.title",
+      "sourceEnglish": "How to Save Seed: Dry and Wet Methods",
+      "draft": "Nḓila dza u Vhulunga Mbeu: ya u Oma na ya Maḓi",
+      "blindBackTranslation": "Ways of Keeping Seed: the Dry one and the Water one"
+    },
+    {
+      "key": "L2.keyPoint0",
+      "sourceEnglish": "Dry-method crops (beans, maize, sunflower) simply dry on the plant before collection",
+      "draft": "Zwilimiwa zwa dry-method (nawa, mavhele, sunflower) zwi tou omela kha tshimela u sa athu u kuvhanganywa",
+      "blindBackTranslation": "Dry-method crops (beans, maize, sunflower) simply dry on the plant before being gathered"
+    },
+    {
+      "key": "L2.keyPoint1",
+      "sourceEnglish": "Tomato fermentation removes gel; other wet seeds need their own processing method",
+      "draft": "Fermentation ya tamatisi i bvisa gel; dziṅwe mbeu dza maḓi dzi ṱoḓa nḓila dzadzo dza u dzi lugisa",
+      "blindBackTranslation": "Fermentation of tomato removes gel; other wet seeds need their own ways of preparing them"
+    },
+    {
+      "key": "L2.keyPoint2",
+      "sourceEnglish": "Tomatoes mostly self-pollinate but can cross; maize is wind-pollinated. Check crop- and variety-specific isolation guidance before saving seed",
+      "draft": "Tamatisi kanzhi dzi ita self-pollination fhedzi dzi nga ṱangana (cross); pollen ya mavhele i hwalwa nga muya (wind-pollinated). Sedzani nyeletshedzo ya isolation yo itelwaho tshilimiwa na lushaka (variety) lwonolwo u sa athu u vhulunga mbeu",
+      "blindBackTranslation": "Tomatoes often do self-pollination but they can meet/mix (cross); pollen of maize is carried by wind (wind-pollinated). Look at/check the explanation of isolation that has been done for the crop and that very kind (variety) before saving seed"
+    },
+    {
+      "key": "L2.keyPoint3",
+      "sourceEnglish": "Rinse processed tomato seed and dry it thoroughly before storage",
+      "draft": "Ṱanzwani mbeu ya tamatisi yo lugiswaho ni i omise zwavhuḓi u sa athu u i vhulunga",
+      "blindBackTranslation": "Wash prepared tomato seed and dry it well before keeping it"
+    },
+    {
+      "key": "L2.quiz0.question",
+      "sourceEnglish": "What does brief fermentation help remove when processing tomato seed?",
+      "draft": "Ndi mini zwine fermentation ya tshifhinganyana ya thusa u zwi bvisa musi hu tshi lugiswa mbeu ya tamatisi?",
+      "blindBackTranslation": "What does short fermentation help to remove when tomato seed is being prepared?"
+    },
+    {
+      "key": "L2.quiz0.option0",
+      "sourceEnglish": "Fermentation improves the seed's flavour",
+      "draft": "Fermentation i ita uri flavour ya mbeu i vhe khwine",
+      "blindBackTranslation": "Fermentation makes the flavour of the seed better"
+    },
+    {
+      "key": "L2.quiz0.option1",
+      "sourceEnglish": "It helps remove the gel around the seed before rinsing and drying",
+      "draft": "I thusa u bvisa gel yo fukedzaho mbeu u sa athu u i ṱanzwa na u i omisa",
+      "blindBackTranslation": "It helps remove the gel that covers the seed before washing and drying it"
+    },
+    {
+      "key": "L2.quiz0.option2",
+      "sourceEnglish": "It kills any pests inside the fruit",
+      "draft": "I vhulaha zwikhokhonono zwoṱhe (pests) zwi re ngomu ha mutshelo",
+      "blindBackTranslation": "It kills all pests that are inside the fruit"
+    },
+    {
+      "key": "L2.quiz0.option3",
+      "sourceEnglish": "It's purely traditional with no practical function",
+      "draft": "Ndi sialala fhedzi, a i na mushumo wa vhukuma",
+      "blindBackTranslation": "It is a custom only, it has no real function"
+    },
+    {
+      "key": "L2.quiz0.rationale",
+      "sourceEnglish": "Fermentation helps separate tomato seed from its gel. It is not a guarantee of germination or disease-free seed; dry, store and test the batch.",
+      "draft": "Fermentation i thusa u fhambanya mbeu ya tamatisi na gel yayo. A si khwaṱhisedzo ya germination kana ya mbeu i si na malwadze; omisani, ni vhulunge, ni dovhe ni linge tshigwada.",
+      "blindBackTranslation": "Fermentation helps separate tomato seed from its gel. It is not a guarantee of germination or of seed without diseases; dry it, keep it, and then test a portion."
+    },
+    {
+      "key": "L2.quiz1.question",
+      "sourceEnglish": "Why does maize need much greater isolation distance than tomatoes to keep a variety pure?",
+      "draft": "Ndi ngani mavhele a ṱoḓa isolation distance khulwane vhukuma u fhira tamatisi u itela uri lushaka (variety) lu dzule lu sa ṱanganyiswi?",
+      "blindBackTranslation": "Why does maize need a much bigger isolation distance than tomatoes so that the variety stays unmixed?"
+    },
+    {
+      "key": "L2.quiz1.option0",
+      "sourceEnglish": "Maize seed is more fragile",
+      "draft": "Mbeu ya mavhele i tshinyala nga u leluwa",
+      "blindBackTranslation": "Maize seed spoils easily"
+    },
+    {
+      "key": "L2.quiz1.option1",
+      "sourceEnglish": "Maize is wind-pollinated and crosses easily over distance; tomatoes mostly self-pollinate",
+      "draft": "Pollen ya mavhele i hwalwa nga muya (wind-pollinated) nahone mavhele a ṱangana nga u leluwa naho a kule; tamatisi kanzhi dzi ita self-pollination",
+      "blindBackTranslation": "Pollen of maize is carried by wind (wind-pollinated) and also maize meet/mix with ease even though they are far; tomatoes often do self-pollination"
+    },
+    {
+      "key": "L2.quiz1.option2",
+      "sourceEnglish": "Tomatoes don't cross-pollinate at all under any conditions",
+      "draft": "Tamatisi a dzi ṱangani (cross-pollinate) na luthihi, naho zwiimo zwi tshi vha zwifhio",
+      "blindBackTranslation": "Tomatoes never cross-pollinate, whatever the conditions are"
+    },
+    {
+      "key": "L2.quiz1.option3",
+      "sourceEnglish": "Maize flowers for a shorter period",
+      "draft": "Mavhele a vha na maluvha nga tshifhinga tshipfufhi",
+      "blindBackTranslation": "Maize has flowers for a short time"
+    },
+    {
+      "key": "L2.quiz1.rationale",
+      "sourceEnglish": "Wind carries maize pollen far further than insect or self-pollination moves tomato pollen — that difference in pollination method drives the isolation requirement.",
+      "draft": "Muya u hwala pollen ya mavhele u i isa kule vhukuma u fhira zwikhokhonono kana self-pollination zwine zwa tshimbidza pollen ya tamatisi — u fhambana uho ha nḓila ya pollination ndi hone hu ṱoḓaho isolation.",
+      "blindBackTranslation": "Wind carries pollen of maize, takes it very far, surpassing insects or self-pollination which move pollen of tomatoes — that difference of the way of pollination, it is there that [it] requires isolation."
+    },
+    {
+      "key": "L3.body.p0",
+      "sourceEnglish": "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture. Storage life varies by crop and conditions, so test germination before relying on saved seed.",
+      "draft": "Omisani mbeu zwavhuḓi u sa athu u i vhulunga: envelope dza bammbiri, hu si dza pulasitiki, murunzini hune ha vha na muya — ni songo i vhea ḓuvhani (direct sun) kana fhethu ho valiwaho hu fhisaho na luthihi. Maswina mararu a viability ya mbeu ndi u fhisa, tshedza na maḓi (moisture). Tshifhinga tshine mbeu ya nga dzula yo vhulungwa tshi fhambana nga tshilimiwa (crop) na zwiimo, ngauralo lingani germination u sa athu u ḓitika nga mbeu yo vhulungwaho.",
+      "blindBackTranslation": "Dry seed well before keeping it: paper envelopes, not plastic, in shade where there is wind — do not put it in direct sun or in a closed place that is hot at all. The three enemies of seed viability are heat, light and moisture. The time that seed can stay stored differs by crop and conditions, therefore test germination before depending on stored seed."
+    },
+    {
+      "key": "L3.body.p1",
+      "sourceEnglish": "Label every envelope with crop, variety, and date saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. Sealing damp seed can trap moisture and damage it.",
+      "draft": "Ṅwalani kha envelope iṅwe na iṅwe tshilimiwa, lushaka (variety) na ḓuvha ḽe mbeu ya vhulungwa. Vhulungani mbeu yo omaho zwavhuḓi kha container yo valiwaho fhethu ho rotholaho, hu re na swiswi, ho omaho. U valela mbeu i re na maḓi zwi nga ita uri maḓi (moisture) a dzule ngomu nahone zwa i tshinya.",
+      "blindBackTranslation": "Write on each envelope the crop, the variety and the date on which the seed was kept. Keep well-dried seed in a closed container in a cool, dark, dry place. Closing seed that is wet can make the moisture stay inside and spoil it."
+    },
+    {
+      "key": "L3.body.p2",
+      "sourceEnglish": "Before a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.",
+      "draft": "Phanḓa ha khalaṅwaha ntswa ya u zwala, lingani tshigwada tshiṱuku nga germination test uri ni si ḓitike nga mbeu yo no fhelelwa nga viability zwi sa ḓivhei.",
+      "blindBackTranslation": "Before the new planting season, test a small portion by germination test so that you do not depend on seed that has lost viability without it being known."
+    },
+    {
+      "key": "L3.body.p3",
+      "sourceEnglish": "Organise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
+      "draft": "Dzudzanyani seed swap (u kovhelana mbeu) na vhahura vhaṋu khalaṅwaha iyi. Zwine muṱa muthihi wa zwi vhulunga zwavhuḓi, miṱa minzhi i nga zwi kovhelana — nahone u fhambana ha varieties ha tshigwada tshoṱhe hu a engedzea nga seed swap iṅwe na iṅwe.",
+      "blindBackTranslation": "Organise a seed swap (sharing seed) with your neighbours this year. What one household keeps well, many households can share — and the diversity of varieties of the whole group increases with each seed swap."
+    },
+    {
+      "key": "L3.infographicAlt",
+      "sourceEnglish": "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
+      "draft": "Envelope dza mbeu dzo vhulungwa kha container yo valiwaho, fhethu ho rotholaho, hu re na swiswi, ho omaho. Tsini hayo, mbeu dza 10 kha cloth i re na maḓi (damp) — dziṅwe dzo mela, dziṅwe a dzo ngo mela — sa germination test.",
+      "blindBackTranslation": "Seed envelopes kept in a closed container, in a cool, dark, dry place. Nearby, 10 seeds on a damp cloth — some have sprouted, some have not — as a germination test."
+    },
+    {
+      "key": "L3.title",
+      "sourceEnglish": "Drying, Storing, and Sharing Seed",
+      "draft": "U Omisa, u Vhulunga na u Kovhelana Mbeu",
+      "blindBackTranslation": "Drying, Keeping and Sharing Seed"
+    },
+    {
+      "key": "L3.keyPoint0",
+      "sourceEnglish": "Dry seed in shade with good airflow; never in direct sun or sealed heat",
+      "draft": "Omisani mbeu murunzini hune ha vha na muya wavhuḓi; ni songo i omisela ḓuvhani (direct sun) kana fhethu ho valiwaho hu fhisaho na luthihi",
+      "blindBackTranslation": "Dry seed in shade where there is good wind; do not dry it in direct sun or in a closed place that is hot at all"
+    },
+    {
+      "key": "L3.keyPoint1",
+      "sourceEnglish": "Store labelled seed cool, dark, and dry — heat, light, and moisture are the three enemies of viability",
+      "draft": "Vhulungani mbeu yo ṅwalelwaho (labelled) fhethu ho rotholaho, hu re na swiswi, ho omaho — u fhisa, tshedza na maḓi (moisture) ndi maswina mararu a viability",
+      "blindBackTranslation": "Keep labelled seed in a cool, dark, dry place — heat, light and moisture are the three enemies of viability"
+    },
+    {
+      "key": "L3.keyPoint2",
+      "sourceEnglish": "Test a small batch for germination before relying on stored seed for planting",
+      "draft": "Lingani tshigwada tshiṱuku nga germination test u sa athu u ḓitika nga mbeu yo vhulungwaho u i zwala",
+      "blindBackTranslation": "Test a small portion by germination test before depending on stored seed to plant it"
+    },
+    {
+      "key": "L3.keyPoint3",
+      "sourceEnglish": "Seed swaps grow everyone's variety diversity faster than saving alone",
+      "draft": "Seed swaps dzi engedza u fhambana ha varieties ha vhoṱhe nga u ṱavhanya u fhira u vhulunga mbeu ni sa kovhelani",
+      "blindBackTranslation": "Seed swaps increase the diversity of varieties of all faster than keeping seed without sharing"
+    },
+    {
+      "key": "L3.quiz0.question",
+      "sourceEnglish": "What are the three main enemies of stored seed viability?",
+      "draft": "Ndi afhio maswina mararu mahulwane a viability ya mbeu yo vhulungwaho?",
+      "blindBackTranslation": "Which are the three big enemies of the viability of stored seed?"
+    },
+    {
+      "key": "L3.quiz0.option0",
+      "sourceEnglish": "Wind, insects, and fungus",
+      "draft": "Muya (wind), zwikhokhonono (insects) na fungus",
+      "blindBackTranslation": "Wind, insects and fungus"
+    },
+    {
+      "key": "L3.quiz0.option1",
+      "sourceEnglish": "Heat, light, and moisture",
+      "draft": "U fhisa, tshedza na maḓi (moisture)",
+      "blindBackTranslation": "Heat, light and moisture"
+    },
+    {
+      "key": "L3.quiz0.option2",
+      "sourceEnglish": "Cold, darkness, and dryness",
+      "draft": "U rothola, swiswi na u oma",
+      "blindBackTranslation": "Coolness, darkness and drying"
+    },
+    {
+      "key": "L3.quiz0.option3",
+      "sourceEnglish": "Soil contact, pests, and rodents",
+      "draft": "U kwama mavu, zwikhokhonono (pests) na mbevha (rodents)",
+      "blindBackTranslation": "Touching soil, pests and rodents"
+    },
+    {
+      "key": "L3.quiz0.rationale",
+      "sourceEnglish": "Keeping thoroughly dry seed cool and dark counters all three. A sealed container helps keep dry seed dry, but can trap moisture if seed is packed while damp.",
+      "draft": "U vhulunga mbeu yo omaho zwavhuḓi fhethu ho rotholaho hu re na swiswi zwi lwa na maswina oṱhe mararu. Container yo valiwaho i thusa uri mbeu yo omaho i dzule yo oma, fhedzi i nga valela maḓi (moisture) ngomu arali mbeu yo vhewa ngomu i tshi kha ḓi vha na maḓi.",
+      "blindBackTranslation": "Keeping dry seed well in a cool dark place fights all three enemies. A closed container helps dry seed stay dry, but it can lock moisture inside if the seed placed inside was still wet."
+    },
+    {
+      "key": "L3.quiz1.question",
+      "sourceEnglish": "Why test a small batch of stored seed for germination before planting season?",
+      "draft": "Ndi ngani hu tshi lingwa tshigwada tshiṱuku tsha mbeu yo vhulungwaho nga germination test phanḓa ha khalaṅwaha ya u zwala?",
+      "blindBackTranslation": "Why is a small portion of stored seed tested by germination test before the planting season?"
+    },
+    {
+      "key": "L3.quiz1.option0",
+      "sourceEnglish": "It's a legal requirement for seed sharing",
+      "draft": "Ndi zwine mulayo wa zwi ṱoḓa kha u kovhelana mbeu",
+      "blindBackTranslation": "It is what the law requires in sharing seed"
+    },
+    {
+      "key": "L3.quiz1.option1",
+      "sourceEnglish": "Seed can quietly lose viability in storage, and testing avoids relying on seed that won't grow",
+      "draft": "Mbeu i nga fhelelwa nga viability zwi sa ḓivhiwi musi i tshi vhulungwa, nahone u linga zwi thivhela u ḓitika nga mbeu ine ya nga si mele",
+      "blindBackTranslation": "Seed can lose viability without it being known when it is stored, and testing prevents depending on seed that will not sprout"
+    },
+    {
+      "key": "L3.quiz1.option2",
+      "sourceEnglish": "It improves the seed's flavour",
+      "draft": "I ita uri flavour ya mbeu i vhe khwine",
+      "blindBackTranslation": "It makes the flavour of the seed better"
+    },
+    {
+      "key": "L3.quiz1.option3",
+      "sourceEnglish": "It's only necessary for hybrid seed",
+      "draft": "Zwi ṱoḓea fhedzi kha mbeu ya hybrid",
+      "blindBackTranslation": "It is needed only for hybrid seed"
+    },
+    {
+      "key": "L3.quiz1.rationale",
+      "sourceEnglish": "A germination test catches seed that's died in storage before you've committed a whole season's planting to it.",
+      "draft": "Germination test i wana mbeu yo no fa musi i tshi vhulungwa, ni sa athu u ḓitika ngayo kha u zwala ha khalaṅwaha yoṱhe.",
+      "blindBackTranslation": "A germination test finds seed that has already died while being stored, before you depend on it in the planting of the whole year."
+    },
+    {
+      "key": "slide.s1.h",
+      "sourceEnglish": "Seeds and Seed Sovereignty",
+      "draft": "Mbeu na Maanḓa kha Mbeu (seed sovereignty)",
+      "blindBackTranslation": "Seed and Power in Seed (seed sovereignty)"
+    },
+    {
+      "key": "slide.s1.b0",
+      "sourceEnglish": "Seed is where the next season begins.",
+      "draft": "Khalaṅwaha i tevhelaho i thoma nga mbeu.",
+      "blindBackTranslation": "The coming season begins with seed."
+    },
+    {
+      "key": "slide.s1.b1",
+      "sourceEnglish": "When your household can save, store and share good seed, it carries more than a crop forward. It also carries the freedom to choose.",
+      "draft": "Musi muṱa waṋu u tshi kona u vhulunga, u vhea na u kovhelana mbeu yavhuḓi, u isa phanḓa zwinzhi u fhira tshilimiwa (crop) fhedzi. Nahone u isa phanḓa na mbofholowo ya u nanga.",
+      "blindBackTranslation": "When your household can keep, store and share good seed, it goes further than only the crop. And it carries on the freedom of choosing."
+    },
+    {
+      "key": "slide.s1.b2",
+      "sourceEnglish": "In this lesson, you will follow seed from the parent plant to the packet, the germination test and a neighbour’s hand.",
+      "draft": "Kha ngudo iyi, ni ḓo tevhela mbeu u bva kha tshimela tsha mubebi u ya kha pakete, kha mulingo wa u mela (germination test), na u swika tshanḓani tsha muhura.",
+      "blindBackTranslation": "In this lesson, you will follow seed from the parent plant to the packet, to the test of sprouting (germination test), and to the yard of the neighbour."
+    },
+    {
+      "key": "slide.s1.b3",
+      "sourceEnglish": "Think about the crops in your area. Which ones do you already save seed from? Which seed do you buy? Which seed do you exchange?",
+      "draft": "Humbulani nga zwilimiwa (crops) zwa henefho. Ndi zwifhio zwine na vhulunga mbeu yazwo zwino? Ndi mbeu ifhio ine na i renga? Ndi mbeu ifhio ine na i kovhelana na vhaṅwe?",
+      "blindBackTranslation": "Think of local crops. Which ones do you keep the seed of now? Which seed do you buy? Which seed do you share with others?"
+    },
+    {
+      "key": "slide.s1.b4",
+      "sourceEnglish": "Try to name at least one crop whose seed is already being saved in your area.",
+      "draft": "Lingedzani u bula dzina ḽa tshilimiwa (crop) tshithihi kana zwinzhi, tshine mbeu yatsho i khou vhulungwa zwino henefho.",
+      "blindBackTranslation": "Try to open the name of one crop or more, whose seed is being kept locally now."
+    },
+    {
+      "key": "slide.s2.h",
+      "sourceEnglish": "Why Saving Seed Matters",
+      "draft": "Ndeme ya U Vhulunga Mbeu",
+      "blindBackTranslation": "The Importance of Keeping Seed"
+    },
+    {
+      "key": "slide.s2.b0",
+      "sourceEnglish": "Saving seed does not mean rejecting all bought seed. It means building practical choices.",
+      "draft": "U vhulunga mbeu a zwi ambi u hana mbeu yoṱhe yo rengwaho. Zwi amba u vha na khetho dzi re na mushumo.",
+      "blindBackTranslation": "Keeping seed does not mean refusing all seed that is bought. It means having choices that work."
+    },
+    {
+      "key": "slide.s2.b1",
+      "sourceEnglish": "Each crop you learn to save well removes one repeated purchase. It also begins a local record of what performs well in your soil and your season.",
+      "draft": "Tshilimiwa tshiṅwe na tshiṅwe tshine na guda u vhulunga mbeu yatsho zwavhuḓi tshi ni thusa uri ni si tsha renga mbeu yatsho hafhu na hafhu. Nahone ni thoma u ṅwala zwine zwa aluwa zwavhuḓi mavuni aṋu na nga khalaṅwaha yaṋu.",
+      "blindBackTranslation": "Each crop whose seed you learn to keep well helps you not to buy its seed again and again. And you begin to record what grows well in your soils and in your season."
+    },
+    {
+      "key": "slide.s2.b2",
+      "sourceEnglish": "Think about the seed you buy again and again. Which repeated seed purchase costs your household the most each year?",
+      "draft": "Humbulani nga mbeu ine na i renga hafhu na hafhu. Ndi mbeu ifhio ine muṱa waṋu wa shumisa tshelede nnzhi u fhira dzoṱhe u i renga ṅwaha muṅwe na muṅwe?",
+      "blindBackTranslation": "Think of seed that you buy again and again. Which seed does your household use the most money of all to buy every year?"
+    },
+    {
+      "key": "slide.s2.b3",
+      "sourceEnglish": "Choose one crop from your planting list. Make it your practical starting point for seed saving. Do not try to save everything at once.",
+      "draft": "Nangani tshilimiwa tshithihi kha mutevhe waṋu wa u zwala. Kha tshi vhe mathomo aṋu a u vhulunga mbeu. Ni songo lingedza u vhulunga zwoṱhe nga tshifhinga tshithihi.",
+      "blindBackTranslation": "Choose one crop in your planting list. Let it be your beginning of keeping seed. Do not try to keep all at one time."
+    },
+    {
+      "key": "slide.s3.h",
+      "sourceEnglish": "Learning Outcomes",
+      "draft": "Zwine Na Ḓo Guda",
+      "blindBackTranslation": "What You Will Learn"
+    },
+    {
+      "key": "slide.s3.b0",
+      "sourceEnglish": "This lesson ends with a working seed store, not a list of facts.",
+      "draft": "Ngudo iyi i fhela nga fhethu ha u vhulunga mbeu hu shumaho, hu si mutevhe wa mafhungo.",
+      "blindBackTranslation": "This lesson ends with a working place of keeping seed, not a list of information."
+    },
+    {
+      "key": "slide.s3.b1",
+      "sourceEnglish": "You will make four decisions.",
+      "draft": "Ni ḓo ita khetho nṋa.",
+      "blindBackTranslation": "You will make four choices."
+    },
+    {
+      "key": "slide.s3.b2",
+      "sourceEnglish": "What will you save?",
+      "draft": "Ni ḓo vhulunga mini?",
+      "blindBackTranslation": "What will you keep?"
+    },
+    {
+      "key": "slide.s3.b3",
+      "sourceEnglish": "How will you process it?",
+      "draft": "Ni ḓo zwi lugisa hani?",
+      "blindBackTranslation": "How will you prepare it?"
+    },
+    {
+      "key": "slide.s3.b4",
+      "sourceEnglish": "How will you protect it?",
+      "draft": "Ni ḓo zwi tsireledza hani?",
+      "blindBackTranslation": "How will you protect it?"
+    },
+    {
+      "key": "slide.s3.b5",
+      "sourceEnglish": "And how will you know it is still alive before you depend on it?",
+      "draft": "Nahone ni ḓo ḓivha hani uri mbeu i kha ḓi tshila ni sa athu u ḓitika ngayo?",
+      "blindBackTranslation": "And how will you know that the seed is still alive before depending on it?"
+    },
+    {
+      "key": "slide.s3.b6",
+      "sourceEnglish": "Which of these four decisions is least familiar to you?",
+      "draft": "Ndi ifhio kha khetho idzi nṋa ine na i ḓivha zwiṱuku u fhira dziṅwe?",
+      "blindBackTranslation": "Which of these four choices do you know less than the others?"
+    },
+    {
+      "key": "slide.s3.b7",
+      "sourceEnglish": "Say them again in your own words: select, process, protect and verify.",
+      "draft": "Zwi ambeni hafhu nga maipfi aṋu: nanga, lugisa, tsireledza na khwaṱhisedza (select, process, protect, verify).",
+      "blindBackTranslation": "Say it again in your own words: select, process, protect and verify (select, process, protect, verify)."
+    },
+    {
+      "key": "slide.s4.h",
+      "sourceEnglish": "Open-Pollinated Seed and F1 Seed",
+      "draft": "Mbeu ya Open-Pollinated na Mbeu ya F1",
+      "blindBackTranslation": "Open-Pollinated Seed and F1 Seed"
+    },
+    {
+      "key": "slide.s4.b0",
+      "sourceEnglish": "Open-pollinated seed is not magic.",
+      "draft": "Mbeu ya open-pollinated a si tshithu tshi mangadzaho (magic).",
+      "blindBackTranslation": "Open-pollinated seed is not something amazing (magic)."
+    },
+    {
+      "key": "slide.s4.b1",
+      "sourceEnglish": "A stable variety can produce similar generations when it is properly isolated or self-pollinated.",
+      "draft": "Stable variety i nga bveledza mirafho i fanaho musi yo khethekanywa zwavhuḓi (isolated) kana i tshi ita self-pollination.",
+      "blindBackTranslation": "A stable variety can produce generations that are alike when it has been separated well (isolated) or it is doing self-pollination."
+    },
+    {
+      "key": "slide.s4.b2",
+      "sourceEnglish": "F1 seed usually remains alive. But the next generation separates into different combinations of the parent traits.",
+      "draft": "Mbeu ya F1 kanzhi i a tshila. Fhedzi murafho u tevhelaho u a fhambana: zwivhumbeo (traits) zwa vhabebi zwi ṱangana nga nḓila dzo fhambanaho.",
+      "blindBackTranslation": "F1 seed usually lives. But the next generation differs: the traits of the parents combine in different ways."
+    },
+    {
+      "key": "slide.s4.b3",
+      "sourceEnglish": "The problem is unpredictability, not failure to germinate.",
+      "draft": "Thaidzo ndi u sa ḓivha zwine zwa ḓo bvelela, hu si u sa mela ha mbeu.",
+      "blindBackTranslation": "The problem is not knowing what will come out, not the seed failing to sprout."
+    },
+    {
+      "key": "slide.s4.b4",
+      "sourceEnglish": "Think about one small bed on your own plot. Why could unpredictable plants be a risk when space is limited?",
+      "draft": "Humbulani nga bede ḽiṱuku ḽithihi kha tsimu yaṋu. Ndi ngani zwimela zwine na sa ḓivhi uri zwi ḓo vha hani zwi nga vha khombo musi fhethu hu si hunzhi?",
+      "blindBackTranslation": "Think of one small bed in your field. Why could plants whose outcome you do not know be a danger when the place is not big?"
+    },
+    {
+      "key": "slide.s4.b5",
+      "sourceEnglish": "If you have seed packets, check whether they are marked open-pollinated or F1. Which would you choose for saving dependable seed?",
+      "draft": "Arali ni na pakete dza mbeu, sedzani arali dzo ṅwalwa open-pollinated kana F1. Ni nga nanga ifhio u vhulunga mbeu i fulufhedzeaho?",
+      "blindBackTranslation": "If you have seed packets, look whether they are written open-pollinated or F1. Which can you choose for keeping reliable seed?"
+    },
+    {
+      "key": "slide.s4.b6",
+      "sourceEnglish": "Remember: the next F1 generation varies. It does not automatically die.",
+      "draft": "Humbulani: murafho u tevhelaho wa F1 u a fhambana. A zwi ambi uri mbeu i ḓo fa.",
+      "blindBackTranslation": "Remember: the next generation of F1 differs. It does not say that the seed will die."
+    },
+    {
+      "key": "slide.s5.h",
+      "sourceEnglish": "Watch: Open-Pollinated Seed and F1 Seed",
+      "draft": "Sedzani: Mbeu ya Open-Pollinated na Mbeu ya F1",
+      "blindBackTranslation": "Look: Open-Pollinated Seed and F1 Seed"
+    },
+    {
+      "key": "slide.s5.b0",
+      "sourceEnglish": "Watch both sides.",
+      "draft": "Sedzani thungo dzoṱhe mbili.",
+      "blindBackTranslation": "Look at both sides."
+    },
+    {
+      "key": "slide.s5.b1",
+      "sourceEnglish": "Both kinds of seed germinate.",
+      "draft": "Mbeu dzoṱhe mbili dzi a mela.",
+      "blindBackTranslation": "Both seeds sprout."
+    },
+    {
+      "key": "slide.s5.b2",
+      "sourceEnglish": "Open-pollinated seed produces similar plants when the variety is stable and pollination is properly managed.",
+      "draft": "Mbeu ya open-pollinated i bveledza zwimela zwi fanaho musi lushaka (variety) lu tshi vha stable nahone pollination i tshi langwa zwavhuḓi.",
+      "blindBackTranslation": "Seed of open-pollinated produces plants that are alike when the kind (variety) is/becomes stable and also pollination is being managed well."
+    },
+    {
+      "key": "slide.s5.b3",
+      "sourceEnglish": "Seed saved from an F1 plant also germinates. But its next generation varies. Some plants may be tall. Others may be short. Their vigour and yield may differ.",
+      "draft": "Mbeu yo vhulungwaho kha tshimela tsha F1 i a mela na yone. Fhedzi murafho wayo u tevhelaho u a fhambana. Zwiṅwe zwimela zwi nga vha zwilapfu. Zwiṅwe zwi nga vha zwipfufhi. Maanḓa azwo (vigour) na khaṋo (yield) zwi nga fhambana.",
+      "blindBackTranslation": "Seed kept from an F1 plant also sprouts. But its next generation differs. Some plants may be tall. Some may be short. Their strength (vigour) and yield may differ."
+    },
+    {
+      "key": "slide.s5.b4",
+      "sourceEnglish": "Ask yourself what this means when choosing seed to save.",
+      "draft": "Humbulani uri hezwi zwi amba mini musi ni tshi nanga mbeu ine na ḓo i vhulunga.",
+      "blindBackTranslation": "Think what this means when you choose seed that you will keep."
+    },
+    {
+      "key": "slide.s5.b5",
+      "sourceEnglish": "If you understand the difference, you can explain it in one sentence: both germinate, but the next F1 generation is unpredictable.",
+      "draft": "Arali ni tshi pfesesa phambano, ni nga i ṱalutshedza nga u pfufhifhadza: dzoṱhe dzi a mela, fhedzi a zwi ḓivhei uri murafho u tevhelaho wa F1 u ḓo vha hani.",
+      "blindBackTranslation": "If you understand the difference, you can explain it briefly: all sprout, but it is not known how the next generation of F1 will be."
+    },
+    {
+      "key": "slide.s6.h",
+      "sourceEnglish": "Seed Sovereignty",
+      "draft": "Maanḓa kha Mbeu (seed sovereignty)",
+      "blindBackTranslation": "Power in Seed (seed sovereignty)"
+    },
+    {
+      "key": "slide.s6.b0",
+      "sourceEnglish": "Seed sovereignty does not live in a slogan.",
+      "draft": "Maanḓa kha mbeu (seed sovereignty) a a dzuli kha slogan.",
+      "blindBackTranslation": "Seed sovereignty does not stay in a slogan."
+    },
+    {
+      "key": "slide.s6.b1",
+      "sourceEnglish": "It lives in a dry packet, a written record and knowledge of how the seed behaves.",
+      "draft": "A dzula kha pakete yo omaho, kha zwo ṅwalwaho na kha nḓivho ya uri mbeu i ita hani.",
+      "blindBackTranslation": "It stays in a dry packet, in what is written down and in knowledge of how seed behaves."
+    },
+    {
+      "key": "slide.s6.b2",
+      "sourceEnglish": "Your household begins it. Neighbours extend it. The seasons make the local seed collection more useful.",
+      "draft": "Muṱa waṋu u a thoma. Vhahura vha a andadza. Khalaṅwaha dzi tshi ya, mbeu dzo kuvhanganywaho henefho dzi vha na mushumo muhulwane.",
+      "blindBackTranslation": "Your household begins. Neighbours spread it. As years go, seed gathered locally becomes of great use."
+    },
+    {
+      "key": "slide.s6.b3",
+      "sourceEnglish": "Which seed does your household already save best?",
+      "draft": "Ndi mbeu ifhio ine muṱa waṋu wa i vhulunga zwavhuḓi u fhira dzoṱhe zwino?",
+      "blindBackTranslation": "Which seed does your household keep well most of all now?"
+    },
+    {
+      "key": "slide.s6.b4",
+      "sourceEnglish": "Draw a small map of the homes near you. Beside each home, write one crop that household could bring to a seed exchange.",
+      "draft": "Olani mapa muṱuku wa miṱa i re tsini na inwi. Tsini ha muṱa muṅwe na muṅwe, ṅwalani tshilimiwa tshithihi tshine muṱa uyo wa nga tshi ḓisa kha u kovhelana mbeu (seed exchange).",
+      "blindBackTranslation": "Draw a small map of households that are near you. Near each household, write one crop that that household could bring to a seed exchange."
+    },
+    {
+      "key": "slide.s6.b5",
+      "sourceEnglish": "Sovereignty needs three things: usable seed, written information and exchange.",
+      "draft": "Maanḓa kha mbeu a ṱoḓa zwithu zwiraru: mbeu ine ya nga shumiswa, mafhungo o ṅwalwaho na u kovhelana.",
+      "blindBackTranslation": "Seed sovereignty needs three things: seed that can be used, information that is written down, and sharing."
+    },
+    {
+      "key": "slide.s7.h",
+      "sourceEnglish": "Watch: Household Seed Network",
+      "draft": "Sedzani: U Kovhelana Mbeu Vhukati ha Miṱa",
+      "blindBackTranslation": "Look: Seed Sharing Between Households"
+    },
+    {
+      "key": "slide.s7.b0",
+      "sourceEnglish": "Well-saved seed becomes more powerful when it is known and shared.",
+      "draft": "Mbeu yo vhulungwaho zwavhuḓi i vha na maanḓa manzhi musi i tshi ḓivhiwa nahone i tshi kovhelwa.",
+      "blindBackTranslation": "Seed that is well kept has much power when it is known and when it is shared."
+    },
+    {
+      "key": "slide.s7.b1",
+      "sourceEnglish": "Watch one household begin by saving seed well from one crop. Dry seed goes into clean packets. Some packets move to neighbouring homes. The neighbours share different seed in return.",
+      "draft": "Sedzani muṱa muthihi u tshi thoma nga u vhulunga mbeu zwavhuḓi kha tshilimiwa tshithihi. Mbeu yo omaho i dzhena kha pakete dzo kunaho. Dziṅwe pakete dzi ya miṱani i re tsini. Vhahura na vhone vha kovhela mbeu yo fhambanaho.",
+      "blindBackTranslation": "Look at one household beginning by keeping seed well of one crop. Dry seed goes into clean packets. Some packets go to households that are near. Neighbours also share different seed."
+    },
+    {
+      "key": "slide.s7.b2",
+      "sourceEnglish": "By the end, each household holds more varieties than it had before.",
+      "draft": "Mafheleloni, muṱa muṅwe na muṅwe u vha na tshaka nnzhi (varieties) u fhira dze wa vha nadzo mathomoni.",
+      "blindBackTranslation": "In the end, each household has many kinds (varieties) more than it had at the beginning."
+    },
+    {
+      "key": "slide.s7.b3",
+      "sourceEnglish": "Think about which seed you could share and which seed you might receive from a neighbour. Seed moves. Knowledge and trust must move with it.",
+      "draft": "Humbulani nga mbeu ine na nga i kovhela vhaṅwe na mbeu ine na nga i wana kha muhura. Mbeu i a tshimbila. Nḓivho na fulufhelo zwi fanela u tshimbila nayo.",
+      "blindBackTranslation": "Think of seed that you could share with others and seed that you could get from a neighbour. Seed travels. Knowledge and trust must travel with it."
+    },
+    {
+      "key": "slide.s8.h",
+      "sourceEnglish": "Select Several Parent Plants",
+      "draft": "Nangani Zwimela Zwinzhi zwa Vhabebi",
+      "blindBackTranslation": "Choose Many Parent Plants"
+    },
+    {
+      "key": "slide.s8.b0",
+      "sourceEnglish": "The largest fruit is not always the best seed parent.",
+      "draft": "Mutshelo muhulu u fhira yoṱhe a u ambi tshifhinga tshoṱhe uri tshimela tshawo ndi mubebi wa khwine wa mbeu.",
+      "blindBackTranslation": "The biggest fruit does not always mean that its plant is the best parent of seed."
+    },
+    {
+      "key": "slide.s8.b1",
+      "sourceEnglish": "Look at the whole plant.",
+      "draft": "Lavhelesani tshimela tshoṱhe.",
+      "blindBackTranslation": "Look at the whole plant."
+    },
+    {
+      "key": "slide.s8.b2",
+      "sourceEnglish": "Was it healthy?",
+      "draft": "Tsho vha tshi na mutakalo?",
+      "blindBackTranslation": "Was it healthy?"
+    },
+    {
+      "key": "slide.s8.b3",
+      "sourceEnglish": "Did it mature at the right time?",
+      "draft": "Tsho vhibva nga tshifhinga tsho teaho?",
+      "blindBackTranslation": "Did it ripen at the correct time?"
+    },
+    {
+      "key": "slide.s8.b4",
+      "sourceEnglish": "Was it true to type?",
+      "draft": "Tsho vha tshi fana na lushaka lwatsho (true to type)?",
+      "blindBackTranslation": "Was it like its variety (true to type)?"
+    },
+    {
+      "key": "slide.s8.b5",
+      "sourceEnglish": "Save from several good plants, especially in cross-pollinated crops. This prevents the next generation from coming from only one parent.",
+      "draft": "Vhulungani mbeu kha zwimela zwinzhi zwavhuḓi, nga maanḓa kha zwilimiwa zwa cross-pollinated. Izwi zwi thivhela uri murafho u tevhelaho u bve kha mubebi muthihi fhedzi.",
+      "blindBackTranslation": "Keep seed from many good plants, especially from cross-pollinated crops. This prevents the next generation from coming from only one parent."
+    },
+    {
+      "key": "slide.s8.b6",
+      "sourceEnglish": "What would make you reject a seed plant even if its fruit were large?",
+      "draft": "Ndi mini zwine zwa nga ita uri ni hane tshimela tsha mbeu naho mutshelo watsho u muhulu?",
+      "blindBackTranslation": "What could make you reject a seed plant even though its fruit is big?"
+    },
+    {
+      "key": "slide.s8.b7",
+      "sourceEnglish": "Go to your own plot. Point out the plants you would select and the plants you would reject. Choose several healthy, true-to-type plants. Reject diseased plants and those that are not true to type.",
+      "draft": "Yani kha tsimu yaṋu. Sumbedzani zwimela zwine na ḓo zwi nanga na zwine na ḓo zwi hana. Nangani zwimela zwinzhi zwi re na mutakalo zwi fanaho na lushaka lwazwo. Hanani zwimela zwo lwalaho na zwi sa fani na lushaka lwazwo.",
+      "blindBackTranslation": "Go to your field. Show the plants that you will choose and those that you will reject. Choose many healthy plants that are like their variety. Reject plants that were sick and that are not like their variety."
+    },
+    {
+      "key": "slide.s9.h",
+      "sourceEnglish": "Control Pollination",
+      "draft": "Langani Pollination",
+      "blindBackTranslation": "Manage Pollination"
+    },
+    {
+      "key": "slide.s9.b0",
+      "sourceEnglish": "Some crops mostly self-pollinate. A small garden can therefore keep the variety similar.",
+      "draft": "Zwiṅwe zwilimiwa (crops) kanzhi zwi ita self-pollination. Ngauralo, tsimu ṱhukhu i nga ita uri lushaka (variety) lu dzule lu tshi fana.",
+      "blindBackTranslation": "Some crops (crops) often do self-pollination. Therefore, a small field can cause that the kind (variety) keeps being alike."
+    },
+    {
+      "key": "slide.s9.b1",
+      "sourceEnglish": "Crops pollinated by wind or insects can cross over long distances.",
+      "draft": "Zwilimiwa zwine pollen yazwo ya hwalwa nga muya kana nga zwikhokhonono (insects) zwi nga ṱangana (cross) naho zwi kule vhukuma.",
+      "blindBackTranslation": "Crops whose pollen is carried by wind or by insects (insects) can meet/mix (cross) even though they are very far."
+    },
+    {
+      "key": "slide.s9.b2",
+      "sourceEnglish": "The distance needed depends on the crop, the place and the purpose of the seed. Do not promise varietal purity until you have checked the crop.",
+      "draft": "Tshikhala (distance) tshi ṱoḓeaho tshi ḓitika nga tshilimiwa (crop), fhethu na ndivho ya mbeu. Ni songo fulufhedzisa varietal purity ni sa athu u sedza tshilimiwa.",
+      "blindBackTranslation": "The distance needed depends on the crop, the place and the purpose of the seed. Do not promise varietal purity before looking at the crop."
+    },
+    {
+      "key": "slide.s9.b3",
+      "sourceEnglish": "How can you separate two varieties without using distance?",
+      "draft": "Ni nga fhambanya hani tshaka mbili ni sa shumisi tshikhala (distance)?",
+      "blindBackTranslation": "How can you separate two kinds without using distance?"
+    },
+    {
+      "key": "slide.s9.b4",
+      "sourceEnglish": "You can plant them at different times so they do not flower together. You can also control pollination by hand or with covers.",
+      "draft": "Ni nga dzi zwala nga zwifhinga zwo fhambanaho uri dzi songo vha na maluvha nga tshifhinga tshithihi. Nahone ni nga langa pollination nga zwanḓa kana nga u fukedza maluvha (covers).",
+      "blindBackTranslation": "You can plant them at different times so that they not have flowers at one time. And also you can manage pollination by hands or by covering the flowers (covers)."
+    },
+    {
+      "key": "slide.s9.b5",
+      "sourceEnglish": "Remember the three tools: distance, flowering time or controlled pollination.",
+      "draft": "Humbulani zwishumiswa zwiraru: tshikhala (distance), tshifhinga tsha maluvha kana pollination yo langwaho.",
+      "blindBackTranslation": "Think about three things used/tools: space (distance), time of flowers or pollination that has been managed."
+    },
+    {
+      "key": "slide.s10.h",
+      "sourceEnglish": "Watch: Self-Pollination and Crossing",
+      "draft": "Sedzani: Self-Pollination na Crossing",
+      "blindBackTranslation": "Look: Self-Pollination and Crossing"
+    },
+    {
+      "key": "slide.s10.b0",
+      "sourceEnglish": "Follow the path of the pollen.",
+      "draft": "Tevhelani nḓila ya pollen.",
+      "blindBackTranslation": "Follow the path of pollen."
+    },
+    {
+      "key": "slide.s10.b1",
+      "sourceEnglish": "In self-pollination, pollen moves within one flower from the part that produces it to the part that receives it. This often helps the variety remain similar.",
+      "draft": "Kha self-pollination, pollen i tshimbila ngomu ha luvha luthihi i bva kha tshipiḓa tshine tsha i bveledza i ya kha tshipiḓa tshine tsha i ṱanganedza. Izwi kanzhi zwi thusa uri lushaka lu dzule lu tshi fana.",
+      "blindBackTranslation": "In self-pollination, pollen travels inside one flower, it comes from the part which produces it, it goes to the part which receives it. These often help that the kind keeps being alike."
+    },
+    {
+      "key": "slide.s10.b2",
+      "sourceEnglish": "In a maize field, wind carries pollen from the tassels to the silks. If two varieties are close together and flower at the same time, they can cross.",
+      "draft": "Kha tsimu ya mavhele, muya u hwala pollen u bva kha tassels u ya kha silks. Arali tshaka mbili dzi tshi vha tsini nahone dzi na maluvha nga tshifhinga tshithihi, dzi nga ṱangana (cross).",
+      "blindBackTranslation": "In a field of maize, wind carries pollen from the tassels to the silks. If two kinds are near and they have flowers at one time, they can meet/mix (cross)."
+    },
+    {
+      "key": "slide.s10.b3",
+      "sourceEnglish": "Think about how distance or different flowering times could prevent that on your own plot.",
+      "draft": "Humbulani uri tshikhala (distance) kana zwifhinga zwo fhambanaho zwa maluvha zwi nga thivhela hani izwo kha tsimu yaṋu.",
+      "blindBackTranslation": "Think how distance or different flowering times could prevent those in your field."
+    },
+    {
+      "key": "slide.s11.h",
+      "sourceEnglish": "Dry and Wet Processing",
+      "draft": "U Lugisa Mbeu nga Nḓila ya u Oma na ya Maḓi",
+      "blindBackTranslation": "Preparing Seed in the Dry and the Wet Way"
+    },
+    {
+      "key": "slide.s11.b0",
+      "sourceEnglish": "There are two broad ways to process seed.",
+      "draft": "Hu na nḓila mbili khulwane dza u lugisa mbeu.",
+      "blindBackTranslation": "There are two big ways of preparing seed."
+    },
+    {
+      "key": "slide.s11.b1",
+      "sourceEnglish": "Dry seed matures in a pod, head or cob. It is collected when fully mature.",
+      "draft": "Mbeu yo omaho i vhibva ngomu ha pod, head kana cob. I kuvhanganywa musi yo vhibva zwavhuḓi.",
+      "blindBackTranslation": "Dry seed ripens inside a pod, head or cob. It is gathered when it is fully ripe."
+    },
+    {
+      "key": "slide.s11.b2",
+      "sourceEnglish": "Seed inside a fleshy fruit must first be separated from the flesh.",
+      "draft": "Mbeu i re ngomu ha mutshelo u re na nama (fleshy fruit) i fanela u thoma u fhambanywa na nama.",
+      "blindBackTranslation": "Seed that is inside a fruit that has flesh (fleshy fruit) must first be separated from the flesh."
+    },
+    {
+      "key": "slide.s11.b3",
+      "sourceEnglish": "Brief fermentation is especially useful for tomato seed. It is not a rule for every wet-seeded crop.",
+      "draft": "Fermentation ya tshifhinganyana i thusa nga maanḓa kha mbeu ya tamatisi. A si mulayo kha zwilimiwa zwoṱhe zwa mbeu dza maḓi (wet-seeded).",
+      "blindBackTranslation": "Short fermentation helps especially with tomato seed. It is not a rule for all wet-seeded crops."
+    },
+    {
+      "key": "slide.s11.b4",
+      "sourceEnglish": "Think about the crops in your area. Which fit the dry method? Which fit the wet method?",
+      "draft": "Humbulani nga zwilimiwa zwa henefho. Ndi zwifhio zwi fanelaho nḓila ya u oma? Ndi zwifhio zwi fanelaho nḓila ya maḓi?",
+      "blindBackTranslation": "Think of local crops. Which suit the dry way? Which suit the wet way?"
+    },
+    {
+      "key": "slide.s11.b5",
+      "sourceEnglish": "If you have seed or fruit nearby, sort the examples into these two types. Explain the difference by describing what the seed is like at harvest.",
+      "draft": "Arali ni na mbeu kana mitshelo tsini, fhambanyani tsumbo idzi u ya nga nḓila idzi mbili. Ṱalutshedzani phambano nga u amba uri mbeu i vha hani nga tshifhinga tsha khaṋo.",
+      "blindBackTranslation": "If you have seed or fruits nearby, separate these examples by these two ways. Explain the difference by saying how the seed is at the time of harvest."
+    },
+    {
+      "key": "slide.s12.h",
+      "sourceEnglish": "Process Dry Seed",
+      "draft": "U Lugisa Mbeu Yo Omaho",
+      "blindBackTranslation": "Preparing Dry Seed"
+    },
+    {
+      "key": "slide.s12.b0",
+      "sourceEnglish": "Leave dry-seeded crops on the plant until the seed is fully mature.",
+      "draft": "Litshani mbeu ya zwilimiwa zwa mbeu yo omaho (dry-seeded) kha tshimela u swika yo vhibva zwavhuḓi.",
+      "blindBackTranslation": "Leave seed of dry-seeded crops on the plant until it is fully ripe."
+    },
+    {
+      "key": "slide.s12.b1",
+      "sourceEnglish": "Collect it before weather, birds or bursting pods take the harvest.",
+      "draft": "I kuvhanganyeni phanḓa ha uri mutsho (weather), zwiṋoni (birds) kana pod dzi vuleaho (bursting) zwi dzhie khaṋo.",
+      "blindBackTranslation": "Gather it before weather, birds or bursting pods take the harvest."
+    },
+    {
+      "key": "slide.s12.b2",
+      "sourceEnglish": "Remove chaff and damaged seed.",
+      "draft": "Bvisani chaff na mbeu yo tshinyalaho.",
+      "blindBackTranslation": "Remove chaff and spoiled seed."
+    },
+    {
+      "key": "slide.s12.b3",
+      "sourceEnglish": "Then spread the clean seed in a single layer in moving air and shade.",
+      "draft": "Nga murahu, andadzani mbeu yo kunaho nga layer nthihi fhethu hune muya wa tshimbila na hune ha vha na murunzi.",
+      "blindBackTranslation": "Afterward, spread clean seed in one layer where wind moves and where there is shade."
+    },
+    {
+      "key": "slide.s12.b4",
+      "sourceEnglish": "What tells you that dry seed is mature enough to collect?",
+      "draft": "Ndi mini zwine zwa ni sumbedza uri mbeu yo omaho yo vhibva lune ya nga kuvhanganywa?",
+      "blindBackTranslation": "What shows you that dry seed is ripe so that it can be gathered?"
+    },
+    {
+      "key": "slide.s12.b5",
+      "sourceEnglish": "If you have a dry pod or seed head, handle it. Listen for the seed. Compare green, flexible plant material with brown, brittle material.",
+      "draft": "Arali ni na pod kana ṱhoho ya mbeu yo omaho, i fareni. Thetshelesani mbeu. Vhambedzani zwipiḓa zwa tshimela zwi sa athu u oma (green, flexible) na zwo omaho (brown, brittle).",
+      "blindBackTranslation": "If you have a pod or head of dry seed, hold it. Listen to the seed. Compare parts of the plant that are not yet dry (green, flexible) and dry ones (brown, brittle)."
+    },
+    {
+      "key": "slide.s12.b6",
+      "sourceEnglish": "Wait for maturity. For final drying, use shade and airflow.",
+      "draft": "Lindelani u vhibva. Kha u omisa ha u fhedza, shumisani murunzi na muya (airflow).",
+      "blindBackTranslation": "Wait for ripeness. For the final drying, use shade and wind (airflow)."
+    },
+    {
+      "key": "slide.s13.h",
+      "sourceEnglish": "Watch: Dry Processing",
+      "draft": "Sedzani: U Lugisa Mbeu Yo Omaho",
+      "blindBackTranslation": "Look: Preparing Dry Seed"
+    },
+    {
+      "key": "slide.s13.b0",
+      "sourceEnglish": "Allow the seed to mature on the plant before collecting it.",
+      "draft": "Litshani mbeu i vhibve kha tshimela phanḓa ha u i kuvhanganya.",
+      "blindBackTranslation": "Leave seed to ripen on the plant before gathering it."
+    },
+    {
+      "key": "slide.s13.b1",
+      "sourceEnglish": "Watch how it is collected once mature. Chaff and debris are removed. Damaged seed is taken out.",
+      "draft": "Sedzani nḓila ine ya kuvhanganywa ngayo musi yo vhibva. Chaff na debris zwi a bviswa. Mbeu yo tshinyalaho i a bviswa.",
+      "blindBackTranslation": "Look at the way it is gathered when it is ripe. Chaff and debris are removed. Spoiled seed is removed."
+    },
+    {
+      "key": "slide.s13.b2",
+      "sourceEnglish": "The clean seed is then spread in a single layer in moving air and shade.",
+      "draft": "Nga murahu, mbeu yo kunaho i andadzwa nga layer nthihi fhethu hune muya wa tshimbila hone na hune ha vha na murunzi.",
+      "blindBackTranslation": "Afterward, clean seed is spread in one layer where wind moves and where there is shade."
+    },
+    {
+      "key": "slide.s13.b3",
+      "sourceEnglish": "Follow the steps in order: mature, collect, clean, dry.",
+      "draft": "Tevhelani zwipiḓa izwi nga u tevhekana: u vhibva, u kuvhanganya, u kunakisa, u omisa.",
+      "blindBackTranslation": "Follow these steps in order: ripening, gathering, cleaning, drying."
+    },
+    {
+      "key": "slide.s13.b4",
+      "sourceEnglish": "Think about where you could carry out each part of this process.",
+      "draft": "Humbulani hune na nga ita hone tshipiḓa tshiṅwe na tshiṅwe tsha mushumo uyu.",
+      "blindBackTranslation": "Think where you could do each step of this work."
+    },
+    {
+      "key": "slide.s14.h",
+      "sourceEnglish": "Wet Processing for Tomato Seed",
+      "draft": "U Lugisa Mbeu ya Tamatisi nga Maḓi",
+      "blindBackTranslation": "Preparing Tomato Seed with Water"
+    },
+    {
+      "key": "slide.s14.b0",
+      "sourceEnglish": "Scoop tomato seed and flesh into a clean jar with a little water.",
+      "draft": "Bvisani mbeu na nama ya tamatisi ni i vhee kha jara yo kunaho i re na maḓi maṱuku.",
+      "blindBackTranslation": "Take out the seeds and the flesh of the tomato and put it in a jar that is clean, which has little water."
+    },
+    {
+      "key": "slide.s14.b1",
+      "sourceEnglish": "Leave it open or loosely covered. Keep it out of direct sun.",
+      "draft": "Ni i litshe yo vulea kana yo fukedzwa zwiṱuku (loosely covered). Ni songo i vhea ḓuvhani (direct sun).",
+      "blindBackTranslation": "Leave it open or covered a little (loosely covered). Do not put it in direct sun."
+    },
+    {
+      "key": "slide.s14.b2",
+      "sourceEnglish": "After two to three days, a light film and a sour smell may appear.",
+      "draft": "Nga murahu ha maḓuvha mavhili kana mararu, film ṱhukhu na munukho wa u vhava (sour) zwi nga vhonala.",
+      "blindBackTranslation": "After two or three days, a thin film and a sour smell may appear."
+    },
+    {
+      "key": "slide.s14.b3",
+      "sourceEnglish": "Rinse promptly. Remove debris. Then spread the clean seed thinly to dry.",
+      "draft": "Ṱanzwani nga u ṱavhanya. Bvisani debris. Nga murahu andadzani mbeu yo kunaho nga layer ṱhukhu (thinly) uri i ome.",
+      "blindBackTranslation": "Wash quickly. Remove debris. Afterwards spread clean seed thinly so that it dries."
+    },
+    {
+      "key": "slide.s14.b4",
+      "sourceEnglish": "Do not seal an actively fermenting jar.",
+      "draft": "Ni songo vala jara ine ya khou ita fermentation.",
+      "blindBackTranslation": "Do not close the jar that is fermenting."
+    },
+    {
+      "key": "slide.s14.b5",
+      "sourceEnglish": "Think about the signs that tell you the process has begun. Also think about signs that would make you discard the batch.",
+      "draft": "Humbulani zwiga zwine zwa ni sumbedza uri fermentation yo thoma. Humbulani na zwiga zwine zwa nga ita uri ni pose tshigwada itsho.",
+      "blindBackTranslation": "Think of signs that show you that fermentation has begun. Think also of signs that could make you throw away that portion."
+    },
+    {
+      "key": "slide.s14.b6",
+      "sourceEnglish": "Find a jar, a sieve and a drying plate. When you are ready, start a small batch. Remember the order: scoop, ferment briefly, rinse and dry completely.",
+      "draft": "Wanani jara, sieve na plate ya u omisa. Musi no lugela, thomani tshigwada tshiṱuku. Humbulani u tevhekana: bvisani, itani fermentation tshifhinganyana, ṱanzwani ni omise zwo fhelelaho.",
+      "blindBackTranslation": "Find a jar, a sieve and a drying plate. When you are ready, begin a small portion. Think of the order: remove, ferment briefly, wash and dry completely."
+    },
+    {
+      "key": "slide.s15.h",
+      "sourceEnglish": "Watch: Wet Processing for Tomato Seed",
+      "draft": "Sedzani: U Lugisa Mbeu ya Tamatisi nga Maḓi",
+      "blindBackTranslation": "Look: Preparing Tomato Seed with Water"
+    },
+    {
+      "key": "slide.s15.b0",
+      "sourceEnglish": "Watch the whole process in order.",
+      "draft": "Sedzani mushumo woṱhe nga u tevhekana.",
+      "blindBackTranslation": "Look at the whole work in order."
+    },
+    {
+      "key": "slide.s15.b1",
+      "sourceEnglish": "A ripe tomato is opened. The seed and gel are scooped into a clean jar. Only a little water is added.",
+      "draft": "Tamatisi yo vhibvaho i a vulwa. Mbeu na gel zwi bviswa nga spoon zwa vhewa kha jara yo kunaho. Hu engedzwa maḓi maṱuku fhedzi.",
+      "blindBackTranslation": "A ripe tomato is opened. Seed and gel are removed with a spoon and put in a clean jar. Only a little water is added."
+    },
+    {
+      "key": "slide.s15.b2",
+      "sourceEnglish": "The jar is left open or loosely covered for two to three days.",
+      "draft": "Jara i litshwa yo vulea kana yo fukedzwa zwiṱuku (loosely covered) lwa maḓuvha mavhili kana mararu.",
+      "blindBackTranslation": "The jar is left open or covered a little (loosely covered) for two or three days."
+    },
+    {
+      "key": "slide.s15.b3",
+      "sourceEnglish": "When a light film and sour smell appear, the contents are poured through a sieve. The seed is rinsed until it is clean.",
+      "draft": "Musi film ṱhukhu na munukho wa u vhava (sour) zwi tshi vhonala, zwi re ngomu zwi shululelwa kha sieve. Mbeu i ṱanzwiwa u swika yo kuna.",
+      "blindBackTranslation": "When a thin film and a sour smell appear, what is inside is poured into a sieve. Seed is washed until it is clean."
+    },
+    {
+      "key": "slide.s15.b4",
+      "sourceEnglish": "Finally, the seed is spread in a single layer in the shade until completely dry.",
+      "draft": "Mafheleloni, mbeu i andadzwa nga layer nthihi murunzini u swika yo oma zwo fhelelaho.",
+      "blindBackTranslation": "In the end, seed is spread in one layer in shade until it is completely dry."
+    },
+    {
+      "key": "slide.s15.b5",
+      "sourceEnglish": "Repeat the steps to yourself: scoop, ferment briefly, rinse, dry completely.",
+      "draft": "Dovhololani zwipiḓa izwi: bvisani, itani fermentation tshifhinganyana, ṱanzwani, omisani zwo fhelelaho.",
+      "blindBackTranslation": "Repeat these steps: remove, ferment briefly, wash, dry completely."
+    },
+    {
+      "key": "slide.s16.h",
+      "sourceEnglish": "Practical Activity",
+      "draft": "Mushumo wa u Ita nga Zwanḓa",
+      "blindBackTranslation": "Work to Do by Hand"
+    },
+    {
+      "key": "slide.s16.b0",
+      "sourceEnglish": "This is where the lesson leaves the screen and reaches your hands.",
+      "draft": "Hafha ndi hune ngudo ya bva kha screen ya swika zwanḓani zwaṋu.",
+      "blindBackTranslation": "Here is where the lesson leaves the screen and reaches your hands."
+    },
+    {
+      "key": "slide.s16.b1",
+      "sourceEnglish": "Start one real batch of wet-processed seed.",
+      "draft": "Thomani tshigwada tshithihi tsha vhukuma tsha mbeu ine ya lugiswa nga maḓi (wet-processed).",
+      "blindBackTranslation": "Begin one real portion of seed that is wet-processed."
+    },
+    {
+      "key": "slide.s16.b2",
+      "sourceEnglish": "Use one ripe, healthy fruit, a clean jar, a spoon, a little water, a sieve and a drying plate.",
+      "draft": "Shumisani mutshelo muthihi wo vhibvaho, u re na mutakalo, jara yo kunaho, spoon, maḓi maṱuku, sieve na plate ya u omisa.",
+      "blindBackTranslation": "Use one ripe, healthy fruit, a clean jar, a spoon, a little water, a sieve and a drying plate."
+    },
+    {
+      "key": "slide.s16.b3",
+      "sourceEnglish": "Put the seed, flesh and a little water into the jar. Add a label with the date.",
+      "draft": "Vheani mbeu, nama na maḓi maṱuku kha jara. Ṅwalani ḓuvha kha jara (label).",
+      "blindBackTranslation": "Place the seed, flesh and a little water in the jar. Write the date on the jar (label)."
+    },
+    {
+      "key": "slide.s16.b4",
+      "sourceEnglish": "You will look after this jar after the lesson. Decide now when you will inspect it, when you will rinse it and when you will dry the seed.",
+      "draft": "Ni ḓo ṱhogomela jara iyi nga murahu ha ngudo. Nangani zwino uri ni ḓo i sedza lini, ni ḓo ṱanzwa mbeu lini na uri ni ḓo i omisa lini.",
+      "blindBackTranslation": "You will look after this jar after the lesson. Choose now when you will look at it, when you will wash the seed and when you will dry it."
+    },
+    {
+      "key": "slide.s16.b5",
+      "sourceEnglish": "Your jar needs a date and a return plan. Write down the date when you will inspect it after two days.",
+      "draft": "Jara yaṋu i ṱoḓa ḓuvha na pulane ya u vhuya. Ṅwalani ḓuvha ḽine na ḓo i sedza nga murahu ha maḓuvha mavhili.",
+      "blindBackTranslation": "Your jar needs a date and a plan of returning. Write the date on which you will look at it after two days."
+    },
+    {
+      "key": "slide.s17.h",
+      "sourceEnglish": "Dry First, Seal Later",
+      "draft": "Omisani Mathomoni, Valani nga Murahu",
+      "blindBackTranslation": "Dry First, Close Afterward"
+    },
+    {
+      "key": "slide.s17.b0",
+      "sourceEnglish": "Drying is not a decorative final step.",
+      "draft": "U omisa a si tshipiḓa tsha u fhedza tshine tsha nga litshwa.",
+      "blindBackTranslation": "Drying is not a last step that can be left."
+    },
+    {
+      "key": "slide.s17.b1",
+      "sourceEnglish": "Moist seed keeps breathing. It can heat, rot or die in storage.",
+      "draft": "Mbeu i re na maḓi (moist) i kha ḓi fema. I nga fhisa, ya tshinyala (rot) kana ya fa musi i tshi vhulungwa.",
+      "blindBackTranslation": "Moist seed is still breathing. It can heat up, rot or die when it is stored."
+    },
+    {
+      "key": "slide.s17.b2",
+      "sourceEnglish": "Use shade, moving air and time.",
+      "draft": "Shumisani murunzi, muya u tshimbilaho na tshifhinga.",
+      "blindBackTranslation": "Use shade, moving wind and time."
+    },
+    {
+      "key": "slide.s17.b3",
+      "sourceEnglish": "Seal seed only when you are sure it is dry.",
+      "draft": "Valani mbeu fhedzi musi no khwaṱhisedza uri yo oma.",
+      "blindBackTranslation": "Close the seed only when you have made sure that it is dry."
+    },
+    {
+      "key": "slide.s17.b4",
+      "sourceEnglish": "Which place in your home has shade and airflow, but is protected from rain and cooking steam?",
+      "draft": "Ndi fhethu hufhio hayani haṋu hune ha vha na murunzi na muya, fhedzi ho tsireledzea kha mvula na steam ya u bika?",
+      "blindBackTranslation": "Which place at your home has shade and wind, but is protected from rain and cooking steam?"
+    },
+    {
+      "key": "slide.s17.b5",
+      "sourceEnglish": "Choose one safe drying place. Then identify one unsafe place.",
+      "draft": "Nangani fhethu huthihi ha u omisa ho tsireledzeaho. Nga murahu ni bule fhethu huthihi hu sa tsireledzei.",
+      "blindBackTranslation": "Choose one protected drying place. Afterward open one unprotected place."
+    },
+    {
+      "key": "slide.s17.b6",
+      "sourceEnglish": "Repeat this to check your understanding: dry first, seal later.",
+      "draft": "Dovhololani izwi u sedza arali ni tshi pfesesa: omisani mathomoni, valani nga murahu.",
+      "blindBackTranslation": "Repeat these to check if you understand: dry first, close afterward."
+    },
+    {
+      "key": "slide.s18.h",
+      "sourceEnglish": "Protect Seed from Heat, Light and Moisture",
+      "draft": "Tsireledzani Mbeu kha U Fhisa, Tshedza na Maḓi",
+      "blindBackTranslation": "Protect Seed from Heat, Light and Moisture"
+    },
+    {
+      "key": "slide.s18.b0",
+      "sourceEnglish": "Paper packets breathe and organise seed. But they are not enough in a humid climate.",
+      "draft": "Pakete dza bammbiri dzi a fema nahone dzi dzudzanya mbeu. Fhedzi kha mutsho u re na maḓi manzhi (humid climate), a dzi tsireledzi mbeu zwo fhelelaho.",
+      "blindBackTranslation": "Paper packets breathe and organise seed. But in a humid climate, they do not fully protect seed."
+    },
+    {
+      "key": "slide.s18.b1",
+      "sourceEnglish": "Once the seed is completely dry, place the labelled packets inside a sealed, moisture-proof container. If available, include a food-safe desiccant.",
+      "draft": "Musi mbeu yo oma zwo fhelelaho, vheani pakete dzo ṅwalelwaho (labelled) ngomu ha container yo valiwaho ine maḓi a sa kone u dzhena khayo. Arali i hone, vheani na food-safe desiccant.",
+      "blindBackTranslation": "When seed is fully dry, put labelled packets inside a closed container that water cannot enter. If it is available, also put in food-safe desiccant."
+    },
+    {
+      "key": "slide.s18.b2",
+      "sourceEnglish": "Keep the container as cool and dark as possible in your home.",
+      "draft": "Vhulungani container fhethu ho rotholaho na hu re na swiswi nga hune zwa konadzea hayani haṋu.",
+      "blindBackTranslation": "Keep the container in a cool, dark place as far as is possible at your home."
+    },
+    {
+      "key": "slide.s18.b3",
+      "sourceEnglish": "Which room or cupboard in your home stays coolest and driest?",
+      "draft": "Ndi fhethu hufhio hayani haṋu (room kana cupboard) hune ha dzula ho rothola na u oma u fhira huṅwe?",
+      "blindBackTranslation": "Which place at your home (room or cupboard) stays cooler and drier than others?"
+    },
+    {
+      "key": "slide.s18.b4",
+      "sourceEnglish": "Compare a paper envelope on its own with an envelope inside a sealed container.",
+      "draft": "Vhambedzani envelope ya bammbiri fhedzi na envelope i re ngomu ha container yo valiwaho.",
+      "blindBackTranslation": "Compare a paper envelope alone and an envelope that is inside a closed container."
+    },
+    {
+      "key": "slide.s18.b5",
+      "sourceEnglish": "Safe storage has two layers: a labelled paper packet inside a dry, sealed container.",
+      "draft": "U vhulunga ho tsireledzeaho hu na layers mbili: pakete ya bammbiri yo ṅwalelwaho (labelled) ngomu ha container yo omaho, yo valiwaho.",
+      "blindBackTranslation": "Protected storage has two layers: a labelled paper packet inside a dry, closed container."
+    },
+    {
+      "key": "slide.s19.h",
+      "sourceEnglish": "Label Every Packet",
+      "draft": "Ṅwalani kha Pakete Iṅwe na Iṅwe",
+      "blindBackTranslation": "Write on Every Packet"
+    },
+    {
+      "key": "slide.s19.b0",
+      "sourceEnglish": "Storage protects the seed physically. Written information protects its meaning.",
+      "draft": "U vhulunga hu tsireledza mbeu nga muvhili. Mafhungo o ṅwalwaho a tsireledza ṱhalutshedzo yayo.",
+      "blindBackTranslation": "Keeping protects seed physically. Written information protects its explanation."
+    },
+    {
+      "key": "slide.s19.b1",
+      "sourceEnglish": "The packet must tell the next person what crop it is.",
+      "draft": "Pakete i fanela u vhudza muthu a tevhelaho uri ndi tshilimiwa (crop) tshifhio.",
+      "blindBackTranslation": "A packet must tell the next person which crop it is."
+    },
+    {
+      "key": "slide.s19.b2",
+      "sourceEnglish": "It must give the variety or local name.",
+      "draft": "I fanela u ṋea lushaka (variety) kana dzina ḽa henefho.",
+      "blindBackTranslation": "It must give the variety or the local name."
+    },
+    {
+      "key": "slide.s19.b3",
+      "sourceEnglish": "It must say when the seed was saved and where it came from.",
+      "draft": "I fanela u amba uri mbeu yo vhulungwa lini na uri yo bva ngafhi.",
+      "blindBackTranslation": "It must say when the seed was kept and where it came from."
+    },
+    {
+      "key": "slide.s19.b4",
+      "sourceEnglish": "Which local names could be lost if you write only the crop name?",
+      "draft": "Ndi madzina afhio a henefho ane a nga xela arali ni tshi ṅwala dzina ḽa crop fhedzi?",
+      "blindBackTranslation": "Which local names could be lost if you write only the crop name?"
+    },
+    {
+      "key": "slide.s19.b5",
+      "sourceEnglish": "Take a blank packet. Practise writing the four pieces of information: crop, variety or local name, date and source.",
+      "draft": "Dzhiani pakete i si na tshithu. Lingedzani u ṅwala mafhungo maṋa: crop, lushaka (variety) kana dzina ḽa henefho, ḓuvha na hune ya bva hone.",
+      "blindBackTranslation": "Take an empty packet. Try to write four pieces of information: crop, variety or local name, date and where it came from."
+    },
+    {
+      "key": "slide.s19.b6",
+      "sourceEnglish": "Check again that all four are present.",
+      "draft": "Sedzani hafhu uri mafhungo oṱhe maṋa a hone.",
+      "blindBackTranslation": "Check again that all four pieces of information are there."
+    },
+    {
+      "key": "slide.s20.h",
+      "sourceEnglish": "Ten-Seed Germination Test",
+      "draft": "Mulingo wa U Mela wa Mbeu dza Fumi",
+      "blindBackTranslation": "Ten-Seed Germination Test"
+    },
+    {
+      "key": "slide.s20.b0",
+      "sourceEnglish": "A seed packet can look perfect even when the seed is losing life.",
+      "draft": "Pakete ya mbeu i nga vhonala yavhuḓi naho mbeu i tshi khou fhelelwa nga vhutshilo.",
+      "blindBackTranslation": "A seed packet can look good even when the seed is losing life."
+    },
+    {
+      "key": "slide.s20.b1",
+      "sourceEnglish": "Ten seeds make the calculation easy.",
+      "draft": "Mbeu dza fumi dzi ita uri mbalo i leluwe.",
+      "blindBackTranslation": "Ten seeds make counting easy."
+    },
+    {
+      "key": "slide.s20.b2",
+      "sourceEnglish": "Keep them warm and moist. Do not submerge them in water.",
+      "draft": "Dzi vhulungeni fhethu hu dudelaho (warm) nahone hu re na maḓi (moist). Ni songo dzi vhea ngomu ha maḓi (submerge).",
+      "blindBackTranslation": "Keep them in a warm and moist place. Do not put them in water (submerge)."
+    },
+    {
+      "key": "slide.s20.b3",
+      "sourceEnglish": "Then count the normal seedlings.",
+      "draft": "Nga murahu vhalani zwimela zwiṱuku (seedlings) zwi re na tshivhumbeo tshavhuḓi (normal).",
+      "blindBackTranslation": "Afterward count the seedlings that have a good form (normal)."
+    },
+    {
+      "key": "slide.s20.b4",
+      "sourceEnglish": "Six out of ten is about sixty percent. That tells you to sow more heavily, use the seed only as a trial, or replace it.",
+      "draft": "6 kha 10 ndi tsini na 60 phesenthe. Izwo zwi ni vhudza uri ni zwale mbeu nnzhi, ni shumise mbeu u linga fhedzi (trial), kana ni i shandukise nga iṅwe.",
+      "blindBackTranslation": "6 of 10 is close to 60 percent. That tells you to plant more seed, to use the seed for a trial only, or to replace it with other seed."
+    },
+    {
+      "key": "slide.s20.b5",
+      "sourceEnglish": "If eight seeds out of ten germinate, what percentage is that?",
+      "draft": "Arali mbeu dza 8 kha dza 10 dzi tshi mela, ndi phesenthe ifhio?",
+      "blindBackTranslation": "If 8 of 10 seeds sprout, what percentage is it?"
+    },
+    {
+      "key": "slide.s20.b6",
+      "sourceEnglish": "The answer is eighty percent.",
+      "draft": "Phindulo ndi 80 phesenthe.",
+      "blindBackTranslation": "The answer is 80 percent."
+    },
+    {
+      "key": "slide.s20.b7",
+      "sourceEnglish": "Start a ten-seed test with an old packet. Write down the date and the day when you will count.",
+      "draft": "Thomani mulingo wa mbeu dza 10 nga pakete ya kale. Ṅwalani ḓuvha ḽa ṋamusi na ḓuvha ḽine na ḓo vhala.",
+      "blindBackTranslation": "Begin a test of 10 seeds with an old packet. Write today's date and the date on which you will count."
+    },
+    {
+      "key": "slide.s21.h",
+      "sourceEnglish": "Watch: Ten-Seed Germination Test",
+      "draft": "Sedzani: Mulingo wa U Mela wa Mbeu dza Fumi",
+      "blindBackTranslation": "Look: Ten-Seed Germination Test"
+    },
+    {
+      "key": "slide.s21.b0",
+      "sourceEnglish": "Count exactly ten seeds.",
+      "draft": "Vhalani mbeu dza 10 fhedzi.",
+      "blindBackTranslation": "Count only 10 seeds."
+    },
+    {
+      "key": "slide.s21.b1",
+      "sourceEnglish": "Place them in two rows of five.",
+      "draft": "Vheani mbeu nga mitevhe mivhili (rows), mbeu dza 5 kha muṅwe na muṅwe.",
+      "blindBackTranslation": "Place the seeds in two rows, 5 seeds in each."
+    },
+    {
+      "key": "slide.s21.b2",
+      "sourceEnglish": "Keep them on moist paper or cloth. Do not submerge them in water.",
+      "draft": "Dzi vhulungeni kha bammbiri kana cloth zwi re na maḓi (moist). Ni songo dzi vhea ngomu ha maḓi (submerge).",
+      "blindBackTranslation": "Keep them in paper or cloth that is moist. Do not put them in water (submerge)."
+    },
+    {
+      "key": "slide.s21.b3",
+      "sourceEnglish": "After some time, count again.",
+      "draft": "Nga murahu ha tshifhinga, vhalani hafhu.",
+      "blindBackTranslation": "After some time, count again."
+    },
+    {
+      "key": "slide.s21.b4",
+      "sourceEnglish": "Here, six have germinated. Four have not. The total is still ten.",
+      "draft": "Fhano, 6 dzo mela. 4 a dzo ngo mela. Tshivhalo tshoṱhe tshi kha ḓi vha 10.",
+      "blindBackTranslation": "Here, 6 sprouted. 4 did not sprout. The total is still 10."
+    },
+    {
+      "key": "slide.s21.b5",
+      "sourceEnglish": "The germination rate is therefore sixty percent.",
+      "draft": "Ngauralo, tshivhalo tsha u mela (germination rate) ndi 60 phesenthe.",
+      "blindBackTranslation": "Therefore, the germination rate is 60 percent."
+    },
+    {
+      "key": "slide.s21.b6",
+      "sourceEnglish": "Check yourself. Did you count ten at the start, six germinated seeds and four ungerminated seeds at the end?",
+      "draft": "Sedzani hafhu: naa no vhala 10 mathomoni, 6 dzo melaho na 4 dzi songo melaho mafheleloni?",
+      "blindBackTranslation": "Check again: did you count 10 at the beginning, and 6 that sprouted and 4 that did not sprout at the end?"
+    },
+    {
+      "key": "slide.s22.h",
+      "sourceEnglish": "Share Seed with Its Information",
+      "draft": "Kovhelani Mbeu na Mafhungo Ayo",
+      "blindBackTranslation": "Share Seed with Its Information"
+    },
+    {
+      "key": "slide.s22.b0",
+      "sourceEnglish": "A seed exchange is not a table of unknown packets.",
+      "draft": "U kovhelana mbeu a si tafula ya pakete dzi sa ḓivhiwi.",
+      "blindBackTranslation": "Sharing seed is not a table of unknown packets."
+    },
+    {
+      "key": "slide.s22.b1",
+      "sourceEnglish": "A good exchange moves information with the seed.",
+      "draft": "U kovhelana havhuḓi hu tshimbidza mafhungo khathihi na mbeu.",
+      "blindBackTranslation": "Good sharing moves information together with seed."
+    },
+    {
+      "key": "slide.s22.b2",
+      "sourceEnglish": "It tells you what the seed is. Where it came from. When it was saved. And whether it has been tested.",
+      "draft": "Zwi ni vhudza uri mbeu ndi mini. Yo bva ngafhi. Yo vhulungwa lini. Na uri yo lingwa kana hai.",
+      "blindBackTranslation": "It tells you what the seed is. Where it came from. When it was kept. And whether it has been tested or not."
+    },
+    {
+      "key": "slide.s22.b3",
+      "sourceEnglish": "This honesty strengthens the whole network.",
+      "draft": "U fulufhedzea uhu hu khwaṱhisa vhathu vhoṱhe vha kovhelanaho mbeu.",
+      "blindBackTranslation": "This reliability strengthens all people who share seed."
+    },
+    {
+      "key": "slide.s22.b4",
+      "sourceEnglish": "What information would help you trust seed from another household?",
+      "draft": "Ndi mafhungo afhio ane a nga ni thusa u fulufhela mbeu i bvaho kha muṅwe muṱa?",
+      "blindBackTranslation": "Which information could help you trust seed that comes from another household?"
+    },
+    {
+      "key": "slide.s22.b5",
+      "sourceEnglish": "Take one of your packets. Practise describing it before sharing it. Give the seed and its basic history together.",
+      "draft": "Dzhiani iṅwe ya pakete dzaṋu. Lingedzani u i ṱalutshedza ni sa athu u i kovhela. Ṋeani mbeu khathihi na mafhungo ayo a ndeme (history).",
+      "blindBackTranslation": "Take one of your packets. Try to explain it before sharing it. Give the seed together with its important information (history)."
+    },
+    {
+      "key": "slide.s23.h",
+      "sourceEnglish": "Field Assignment",
+      "draft": "Mushumo wa Tsimu",
+      "blindBackTranslation": "Field Work"
+    },
+    {
+      "key": "slide.s23.b0",
+      "sourceEnglish": "This task is small enough to finish. It is important enough to matter.",
+      "draft": "Mushumo uyu ndi muṱuku lune na nga u fhedza. Nahone u na ndeme.",
+      "blindBackTranslation": "This work is small so that you can finish it. And it has importance."
+    },
+    {
+      "key": "slide.s23.b1",
+      "sourceEnglish": "Build one working seed-storage container.",
+      "draft": "Lugisani container nthihi ya u vhulunga mbeu i shumaho.",
+      "blindBackTranslation": "Prepare one working container for keeping seed."
+    },
+    {
+      "key": "slide.s23.b2",
+      "sourceEnglish": "Put labelled paper packets inside a dry, sealed container.",
+      "draft": "Vheani pakete dza bammbiri dzo ṅwalelwaho (labelled) ngomu ha container yo omaho, yo valiwaho.",
+      "blindBackTranslation": "Place labelled paper packets inside a dry, closed container."
+    },
+    {
+      "key": "slide.s23.b3",
+      "sourceEnglish": "Take a photograph of it.",
+      "draft": "Dzhiani tshifanyiso (photo) tshayo.",
+      "blindBackTranslation": "Take a picture (photo) of it."
+    },
+    {
+      "key": "slide.s23.b4",
+      "sourceEnglish": "Then name the crop whose seed you will save this season.",
+      "draft": "Nga murahu ni bule tshilimiwa tshine na ḓo vhulunga mbeu yatsho khalaṅwaha iyi.",
+      "blindBackTranslation": "Afterward open the crop whose seed you will keep this year."
+    },
+    {
+      "key": "slide.s23.b5",
+      "sourceEnglish": "The photograph is evidence. The packet is a beginning.",
+      "draft": "Tshifanyiso ndi vhuṱanzi. Pakete ndi mathomo.",
+      "blindBackTranslation": "A photo is proof. A packet is a beginning."
+    },
+    {
+      "key": "slide.s23.b6",
+      "sourceEnglish": "What do you still need to finish this at home?",
+      "draft": "Ndi zwifhio zwine na kha ḓi zwi ṱoḓa u fhedza mushumo hayani?",
+      "blindBackTranslation": "What do you still need to finish the work at home?"
+    },
+    {
+      "key": "slide.s23.b7",
+      "sourceEnglish": "Write a short materials list. Choose a completion date.",
+      "draft": "Ṅwalani mutevhe mupfufhi wa zwishumiswa. Nangani ḓuvha ḽa u fhedza.",
+      "blindBackTranslation": "Write a short list of tools. Choose a date to finish."
+    },
+    {
+      "key": "slide.s23.b8",
+      "sourceEnglish": "Before sealing the container, check your work: the seed is completely dry; every packet has the crop, variety and date; the container is cool, dark and protected from moisture; and you selected several healthy parent plants.",
+      "draft": "Ni sa athu u vala container, sedzani: mbeu yo oma zwo fhelelaho; pakete iṅwe na iṅwe i na crop, lushaka (variety) na ḓuvha; container i swiswini, yo rothola, yo tsireledzea kha maḓi (moisture); no nanga zwimela zwinzhi zwa vhabebi zwi re na mutakalo.",
+      "blindBackTranslation": "Before closing the container, check: seed completely dry; every packet has crop, variety and date; the container is in the dark, cool, protected from moisture; you have chosen many healthy parent plants."
+    },
+    {
+      "key": "slide.s24.h",
+      "sourceEnglish": "Field Action",
+      "draft": "Tshiito tsha Tsimu",
+      "blindBackTranslation": "Field Action"
+    },
+    {
+      "key": "slide.s24.b0",
+      "sourceEnglish": "Select.",
+      "draft": "Nangani.",
+      "blindBackTranslation": "Choose."
+    },
+    {
+      "key": "slide.s24.b1",
+      "sourceEnglish": "Process.",
+      "draft": "Lugisani (process).",
+      "blindBackTranslation": "Prepare (process)."
+    },
+    {
+      "key": "slide.s24.b2",
+      "sourceEnglish": "Protect.",
+      "draft": "Tsireledzani.",
+      "blindBackTranslation": "Protect."
+    },
+    {
+      "key": "slide.s24.b3",
+      "sourceEnglish": "Verify.",
+      "draft": "Khwaṱhisedzani.",
+      "blindBackTranslation": "Verify."
+    },
+    {
+      "key": "slide.s24.b4",
+      "sourceEnglish": "Those four actions carry a seed collection from this field into the next season.",
+      "draft": "Zwiito izwi zwiṋa zwi isa mbeu dzo kuvhanganywaho u bva kha tsimu iyi u ya kha khalaṅwaha i tevhelaho.",
+      "blindBackTranslation": "These four actions carry seed gathered from this field to the coming season."
+    },
+    {
+      "key": "slide.s24.b5",
+      "sourceEnglish": "Begin with one crop and do it well.",
+      "draft": "Thomani nga tshilimiwa (crop) tshithihi ni zwi ite zwavhuḓi.",
+      "blindBackTranslation": "Begin with one crop (crop) and do it well."
+    },
+    {
+      "key": "slide.s24.b6",
+      "sourceEnglish": "Which crop will you begin with?",
+      "draft": "Ndi tshilimiwa (crop) tshifhio tshine na ḓo thoma ngatsho?",
+      "blindBackTranslation": "Which crop (crop) will you begin with?"
+    },
+    {
+      "key": "slide.s24.b7",
+      "sourceEnglish": "Say it aloud. Then choose one action you will take next.",
+      "draft": "Zwi ambeni nga ipfi ḽihulu (aloud). Nga murahu ha izwo, nangani tshiito tshithihi tshine na ḓo tshi ita.",
+      "blindBackTranslation": "Say it with a big word/voice (aloud). After that, choose one action that you will do."
+    },
+    {
+      "key": "slide.s24.b8",
+      "sourceEnglish": "The next season is already inside the seed you choose today.",
+      "draft": "Khalaṅwaha i tevhelaho yo no vha ngomu ha mbeu ine na i nanga ṋamusi.",
+      "blindBackTranslation": "The coming season is already inside the seed that you choose today."
+    }
+  ]
+}

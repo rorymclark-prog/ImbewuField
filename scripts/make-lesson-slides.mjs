@@ -275,7 +275,7 @@ writeFileSync(
 
 // ── Rendering happens in python/Pillow: no npm dependency added, and Pillow is already here.
 const PY = String.raw`
-import json, os, sys
+import json, os, sys, unicodedata
 from PIL import Image, ImageDraw, ImageFont
 
 cfg = json.load(open(sys.argv[1]))
@@ -372,6 +372,15 @@ def paired_lines(draw, text, fnt, maxw, slide_n):
         raise ValueError('slide %d has a word wider than its paired panel' % slide_n)
     return lines
 
+# Tshivenda's under-marked letters (ḓ ḽ ṋ ṱ) hang their mark into the gap below the line. At the 66px
+# phone pitch that mark lands on the next line, where it reads as a circumflex on the wrong letter.
+# Inside a paragraph, a line carrying an under-mark gets the 12px clearance a paragraph break already has.
+def has_under_mark(line):
+    return any(unicodedata.combining(c) == 220 for c in unicodedata.normalize('NFD', line))
+
+def body_pitches(lines):
+    return [66 + (12 if index < len(lines) - 1 and has_under_mark(line) else 0) for index, line in enumerate(lines)]
+
 if PAIRED:
     F_PAIR_TITLE = font(SERIF_B, 76)
     F_PAIR_BODY = font(SANS, 58)
@@ -392,7 +401,7 @@ if PAIRED:
                 text = segment['text'] if isinstance(segment, dict) else segment
                 lines = paired_lines(draw, text, F_PAIR_BODY, width, n)
                 segment_plans.append({'lines': lines, 'status': segment.get('status') if isinstance(segment, dict) else None})
-                y += len(lines) * 66 + 8
+                y += sum(body_pitches(lines)) + 8
             paragraphs.append(segment_plans)
             y += 4
         if y > bottom - 48:
@@ -449,9 +458,9 @@ if PAIRED:
                 else:
                     status = part['status'] if part else None
                 color = RUST if status == 'english-hold' else INK
-                for line in segment_plan['lines']:
+                for line, pitch in zip(segment_plan['lines'], body_pitches(segment_plan['lines'])):
                     draw.text((96, y), line, font=F_PAIR_BODY, fill=color)
-                    y += 66
+                    y += pitch
                 y += 8
             y += 4
 

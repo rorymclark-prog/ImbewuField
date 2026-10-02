@@ -4,66 +4,22 @@ import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
 import { XITSONGA_SMALL_LIVESTOCK_DRAFT } from '../lib/course-translation-drafts-ts-small-livestock.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { assertKeeps, checkAnimalNames, checkCompleteModuleDraft, FORBIDDEN_WORDS, sourceDraftPairs } from './regional-full-draft-checks.ts';
 
 const sourceModule = COURSE_MODULES.find(module => module.id === 'small-livestock')!;
-const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'small-livestock-l2')!;
-const draftedSentences = [
-  'Swimilani swo hambana na ti-variety to hambana swi na swilaveko swo hambana swa pollination.',
-  "Hive a yi tiyisisi leswaku yields ti ta va ta le henhla hinkwako: weather, mati, rihanyu ra swimilani na pollinators tin'wana na tona i swa nkoka.",
-];
+const body = (lesson: number, paragraph: number) =>
+  XITSONGA_SMALL_LIVESTOCK_DRAFT.lessons[lesson].body.xitsongaDraft.split('\n\n')[paragraph];
 
-test('Small Livestock L2 exposes only the two source-paired Xitsonga concept sentences', () => {
-  const draft = XITSONGA_SMALL_LIVESTOCK_DRAFT.lessons[0];
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.id, sourceModule.id);
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.language, 'ts');
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.reviewStatus, 'machine-draft');
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.title.sourceEnglish, sourceModule.title);
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.title.xitsongaDraft, 'Ku Hlanganisa Swifuwo Leswitsongo');
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.title.reviewStatus, 'machine-draft');
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.description.sourceEnglish, sourceModule.description);
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.description.xitsongaDraft,
-    'Tihuku, masekwe na tinyoxi i swiphemu swa sisiteme — a hi swilo leswi ehleketiwaka endzhaku.');
-  assert.equal(XITSONGA_SMALL_LIVESTOCK_DRAFT.description.reviewStatus, 'machine-draft');
-  assert.equal(draft.id, sourceLesson.id);
-  assert.equal(draft.title.sourceEnglish, sourceLesson.title);
-  assert.equal(draft.title.xitsongaDraft, 'Tinyoxi: Pollination, Vulombe, na Ecology ya Sisiteme');
-  assert.equal(draft.title.reviewStatus, 'machine-draft');
-  assert.equal(draft.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
-  assert.equal(draft.infographicAlt?.xitsongaDraft, sourceLesson.infographicAlt);
-  assert.equal(draft.body.sourceEnglish, sourceLesson.body);
-  assert.equal(draft.body.reviewStatus, 'machine-draft');
-
-  const sourceParagraphs = sourceLesson.body.split('\n\n');
-  const candidateParagraphs = draft.body.xitsongaDraft.split('\n\n');
-  assert.equal(candidateParagraphs.length, sourceParagraphs.length);
-  const sourceSentences = sourceParagraphs[0].split(/(?<=\.) /);
-  assert.equal(sourceSentences.length, 4);
-  assert.deepEqual(candidateParagraphs[0].split(/(?<=\.) /), [sourceSentences[0], sourceSentences[1], ...draftedSentences]);
-  assert.deepEqual(candidateParagraphs.slice(1), sourceParagraphs.slice(1),
-    'bee species, geography, movement rules, safety, regulation and all other instructions remain exact English');
-
-  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
-  assert.deepEqual(draft.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
-  assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'hold'));
-  assert.equal(draft.quiz.length, sourceLesson.quiz.length);
-  for (const [index, question] of draft.quiz.entries()) {
-    const source = sourceLesson.quiz[index];
-    assert.equal(question.question.sourceEnglish, source.q);
-    assert.equal(question.question.xitsongaDraft, source.q);
-    assert.deepEqual(question.options.map(option => option.sourceEnglish), source.options);
-    assert.deepEqual(question.options.map(option => option.xitsongaDraft), source.options);
-    assert.equal(question.sourceCorrectIndex, source.correct);
-    assert.equal(question.rationale.sourceEnglish, source.rationale);
-    assert.equal(question.rationale.xitsongaDraft, source.rationale);
-    assert.ok(question.options.every(option => option.reviewStatus === 'hold'));
-  }
-
-  const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
-  assert.equal(shown.status, 'draft');
-  assert.equal(shown.content.title, draft.title.xitsongaDraft);
-  assert.equal(shown.content.body, draft.body.xitsongaDraft);
-  assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
-  assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
+// Rewritten 2 October 2026: the edition grew from two drafted L2 sentences (everything else held in English)
+// to every lesson, key point, quiz and explanation, so the old pins on English holds give way to complete-draft
+// checks. The module title keeps its earlier wording; the description now names ducks as masekwa.
+test('Xitsonga Small Livestock drafts the module card and every lesson, with animal names checked separately', () => {
+  const draft = XITSONGA_SMALL_LIVESTOCK_DRAFT;
+  checkCompleteModuleDraft(sourceModule, draft, 'ts', FORBIDDEN_WORDS.ts);
+  assert.ok(checkAnimalNames(sourceDraftPairs(draft, 'ts'), 'ts', 'Xitsonga Small Livestock') >= 30);
+  assert.equal(draft.title.xitsongaDraft, 'Ku Hlanganisa Swifuwo Leswitsongo');
+  assert.ok(draft.description.xitsongaDraft.includes('masekwa (ducks)'), 'the duck name is glossed on the module card');
+  assert.deepEqual(draft.holds, [], 'no passage is held in English');
 });
 
 test('Small Livestock Xitsonga card resolves only against its exact module source pair', () => {
@@ -77,26 +33,27 @@ test('Small Livestock Xitsonga card resolves only against its exact module sourc
     'english-fallback');
 });
 
-test('Small Livestock L2 source drift and other lessons stay English', () => {
-  const changedSource: Lesson = { ...sourceLesson, body: `${sourceLesson.body}\nChanged.` };
-  const shown = resolveLearnerLessonPresentation(changedSource, 'ts');
-  assert.equal(shown.status, 'english-fallback');
-  assert.equal(shown.content.body, changedSource.body);
-
-  for (const lesson of sourceModule.lessons.filter(lesson => lesson.id !== sourceLesson.id)) {
-    const other = resolveLearnerLessonPresentation(lesson, 'ts');
-    assert.equal(other.status, 'english-fallback');
-    assert.equal(other.content.body, lesson.body);
+test('Small Livestock Xitsonga source drift returns any lesson to English', () => {
+  for (const lesson of sourceModule.lessons) {
+    assert.equal(resolveLearnerLessonPresentation(lesson, 'ts').status, 'draft', `${lesson.id} shows its labelled draft`);
+    const changedSource: Lesson = { ...lesson, body: `${lesson.body}\nChanged.` };
+    const shown = resolveLearnerLessonPresentation(changedSource, 'ts');
+    assert.equal(shown.status, 'english-fallback');
+    assert.equal(shown.content.body, changedSource.body);
   }
 });
 
-test('Small Livestock L2 explicitly retains all scope and factor terms in the draft', () => {
-  const paragraph = XITSONGA_SMALL_LIVESTOCK_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n')[0];
-  assert.match(paragraph, /Swimilani swo hambana na ti-variety to hambana/);
-  assert.match(paragraph, /pollination/);
-  assert.match(paragraph, /a yi tiyisisi/);
-  assert.match(paragraph, /yields ti ta va ta le henhla hinkwako/);
-  for (const factor of ['weather', 'mati', 'rihanyu ra swimilani', "pollinators tin'wana"]) assert.ok(paragraph.includes(factor));
-  assert.ok(XITSONGA_SMALL_LIVESTOCK_DRAFT.holds.some(hold => hold.field === 'body[1]'));
-  assert.ok(XITSONGA_SMALL_LIVESTOCK_DRAFT.holds.some(hold => hold.field === 'body[2]'));
+test('Small Livestock Xitsonga keeps every scope, factor and safety condition in the translated prose', () => {
+  assertKeeps(body(1, 0), ['tinxaka (varieties)', 'pollination', 'a yi tiyisekisi', 'xiyimo xa moya (weather)', 'mati',
+    'rihanyo ra swimilana', "pollinators tin'wana", 'avocado'], 'a hive does not guarantee yields; other factors matter');
+  assertKeeps(body(1, 1), ['a hi nkongomiso', 'demarcation line', 'ku nga si fambisiwa tinyoxi'],
+    'natural ranges are not a movement guide; check the rules before moving bees');
+  assertKeeps(body(0, 0), ['a ku tekeli ndhawu'], 'foraging does not replace a balanced diet or daily care');
+  assertKeeps(body(0, 1), ['yi nga si'], 'move the pen before the ground is bare, muddy or covered in manure');
+  assertKeeps(body(0, 2), ['ekule na swimilana leswintshwa', 'Mavi lamantshwa ma nga rhwala germs',
+    'loko ku nga si va ku byariwa', 'Masekwa (ducks)'], 'seedlings, fresh-manure germs, before the next crop, ducks');
+  assertKeeps(body(2, 0), ['hi ku helela ku nga si tirhisiwa'], 'compost manure fully before using it near food crops');
+  assertKeeps(body(2, 1), ['U nga titshegi'], 'do not rely on guinea fowl for tick protection');
+  assertKeeps(body(2, 3), ['a hi ku tekela ndhawu loku tiyisekisiweke', 'U nga yimisi vutshunguri'],
+    'chickens are not proven goat worm control; do not stop treatment');
 });

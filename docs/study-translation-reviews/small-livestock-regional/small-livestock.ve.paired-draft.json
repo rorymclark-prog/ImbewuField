@@ -15,18 +15,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U Ṱanganyisa Zwifuwo Zwiṱuku",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Integrating Small Livestock"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ṱanganyisa zwifuwo zwiṱuku hu ita uri dzikhuhu (chickens), dakisi (ducks) na dziṋotshi (bees) dzi vhe zwipiḓa zwi shumaho zwa bulasi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Integrating small livestock makes chickens (chickens), ducks (ducks) and bees (bees) become working parts of the farm."
           },
           {
             "status": "draft",
-            "text": "Gudani uri zwifuwo zwi nga langa pests, zwa engedza soil fertility, zwa thusa pollination, na u vhuedzedza ndeme mavuni."
+            "text": "Gudani uri zwifuwo zwi nga langa hani pests, zwa engedza fertility, zwa thusa pollination, na u vhuyisa ndeme kha mavu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Learn how livestock can manage pests, they increase fertility, they help pollination, and to return importance to the soil."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani system ine na vha nayo kale: zwiḽiwa, manure, maluvha, u ḽisa (grazing), na u sudzulusa zwifuwo nga ṱhogomelo kha mavu oṱhe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use the system that you already have: feed, manure, flowers, grazing (grazing), and moving livestock with care over all the soil."
           }
         ]
       }
@@ -44,20 +55,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ndi Ngani Izwi Zwi na Ndeme",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Why These Matter"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwifuwo zwiṱuku zwi nga ita mushumo u fhiraho u bveledza nama, makumba kana mutoli (honey).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Small livestock can do a job beyond producing meat, eggs or honey (honey)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzikhuhu (chickens) dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza weeds. Manure yadzo i nga vha compost.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens (chickens) eat some insects (insects) and some weed (weeds) seeds. Their manure may become compost."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dakisi (ducks) dzi pala fhasi zwiṱuku u fhira dzikhuhu, fhedzi dzi nga kha ḓi tshinya zwimela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ducks (ducks) scratch the ground less than chickens, but they may still damage plants."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dziṋotshi (bees) na zwiṅwe pollinators zwi thusa zwilimiwa zwinzhi. Tshifuwo tshiṅwe na tshiṅwe tshi kha ḓi ṱoḓa zwiḽiwa zwo teaho, maḓi, vhudzulo na u ṱhogomelwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bees (bees) and other pollinators help many crops. Each and every animal still needs suitable food, water, dwelling and being cared for."
           }
         ]
       }
@@ -74,17 +100,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Zwine Na Ḓo Guda",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "What You Will Learn"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mafheleloni a ngudo iyi, ni ḓo pfesesa nḓila ine dzikhuhu (chickens), dakisi (ducks), dziṋotshi (bees) na guinea fowl dza vha ngayo tshipiḓa tsha system i shumaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "At the end of this lesson, you will understand the way chickens (chickens), ducks (ducks), bees (bees) and guinea fowl (guinea fowl) become part of a working system."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni ḓo ḓivha musi dzikhuhu (chickens) dzi tshi thusa bede ḽa tsimu (garden bed), na musi u pala hadzo hu tshi nga tshinya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You will know when chickens (chickens) help a garden bed (garden bed), and when their scratching may damage."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni ḓo pfesesa pollination, u vhea hive, na nḓila ine zwifuwo zwa tshimbidza ngayo nutrients kha bulasi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You will understand pollination, to place hive, and the way in which livestock move nutrients on the farm."
           }
         ]
       }
@@ -101,17 +139,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani: Dzikhuhu dzi tshi Ḽa Murahu ha Khaṋo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Watch: Chickens Eating After Harvest"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lavhelesani dzikhuhu dzi tshi ṱoḓa zwiḽiwa fhasi vhukati ha zwo salaho zwa zwimela zwo omaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Watch chickens looking for food on the ground among the remains of dry plants."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzikhuhu (chickens) dzi nga ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza weeds. Dzi kha ḓi ṱoḓa zwiḽiwa zwi fanelaho (balanced feed), maḓi o kunaho na vhudzulo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens (chickens) may eat some insects (insects) and some weed (weeds) seeds. They still need balanced feed (balanced feed), clean water and space."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thivhelani dzikhuhu u swika kha seedlings na zwiḽiwa zwo lugelaho u kuvhanganywa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep chickens away from seedlings (seedlings) and from food that is ready to be gathered."
           }
         ]
       }
@@ -129,20 +179,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U Pala ha Dzikhuhu hu Vha Mushumo u Thusaho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Chicken Scratching Becomes Helpful Work"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzikhuhu (chickens) dzi nga thusa bede ḽi si na zwilimiwa murahu ha khaṋo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens (chickens) may help a bed that has no crops after harvest."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzi pala fhasi kha zwo salaho zwa zwimela nahone dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza weeds.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "They scratch the ground among plant remains and eat some insects (insects) and some weed (weeds) seeds."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Manure yadzo na bedding zwi nga itwa compost nahone zwa vhuyiswa kha mavu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Their manure (manure) and bedding (bedding) can be made into compost (compost) and returned to the soil."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ḓiṱoḓela zwiḽiwa a hu dzhii fhethu ha zwiḽiwa zwi fanelaho (balanced diet), maḓi o kunaho, vhudzulo kana u londwa ḓuvha na ḓuvha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Foraging for themselves does not replace a balanced diet (balanced diet), clean water, shelter or daily care."
           }
         ]
       }
@@ -160,20 +225,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shumisani Dzikhuhu nga Tshifhinga Tsho Teaho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Use Chickens at the Right Time"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani dzikhuhu (chickens) kha bede ḽi si na zwilimiwa murahu ha khaṋo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use chickens (chickens) in a bed that has no crops after harvest."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thivhelani dzikhuhu u swika kha seedlings na zwilimiwa zwine zwa khou kuvhanganywa u itela zwiḽiwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep chickens away from seedlings (seedlings) and from crops that are being gathered for food."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Manure ntswa i nga vha na germs. Vhudzisani extension adviser nḓila ya u langa manure nga tsireledzo phanḓa ha zwilimiwa zwi tevhelaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Fresh manure may have germs (germs). Ask an extension adviser (extension adviser) how to manage manure safely before the following crops."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sudzulusani zwiṋoni phanḓa ha uri zwi tshinye mavu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Move the birds before they finish/eat down the soil/ground."
           }
         ]
       }
@@ -191,20 +271,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dakisi Dzi Fanela Understorey yo no Aluwaho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Ducks Suit an Established Understorey"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dakisi (ducks) dzi ḽa slugs na snails hu si na u pala fhasi nga maanḓa sa dzikhuhu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ducks (ducks) eat slugs (slugs) and snails (snails) without scratching the ground much like chickens."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzi nga fanela understorey ya food forest yo no aluwaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "They may suit the understorey (understorey) of an established food forest (food forest)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzi nga kha ḓi ḽa zwimela kana u tshimbila nṱha hazwo (trample), na u ita uri mavu a re na maḓi (wet) a vhe matope. Lavhelesani zwiṋoni ni zwi sudzuluse musi zwi tshi ṱoḓea.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "They may still eat plants or walk over them (trample), and make wet (wet) soil become mud. Watch the birds and move them when needed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṋeani maḓi o kunaho na zwiḽiwa zwo teaho; u ḓiṱoḓela zwiḽiwa fhedzi hu nga vha hu sa ḓadzi ṱhoḓea dzadzo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Give clean water and suitable feed; foraging for themselves alone may not meet their needs."
           }
         ]
       }
@@ -222,20 +317,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sudzulusani Tractor kha Plot Yoṱhe",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Move the Tractor Over the Whole Plot"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Chicken tractor ndi pen ine ya nga sudzuluswa, i si na fhasi (floorless).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A chicken tractor (Chicken tractor) is a pen (pen) that can be moved, with no floor (floorless)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni i sudzuluse phanḓa ha uri mavu a sale a si na tshithu (bare), a vhe na matope kana a fukedzwe nga manure nnzhi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Move it before the soil is left bare (bare), becomes mud or is covered with a lot of manure (manure)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshifhinga tsho teaho tshi ya nga zwiṋoni, mavu na mutsho (weather). Litshani mavu a fhole phanḓa ha u vhuyisa zwiṋoni hafhu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The right time depends on the birds, the soil and the weather (weather). Let the soil heal before bringing the birds back again."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A hu na nomboro nthihi ya dzikhuhu (chickens) ine ya fulufhedzisa fertility i ḓadzaho ṱhoḓea dza plot iṅwe na iṅwe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "There is no single number of chickens (chickens) that guarantees fertility (fertility) that meets the needs of every plot (plot)."
           }
         ]
       }
@@ -251,16 +361,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani: Ṋotshi i Bva kha Luvha i Ya kha Ḽiṅwe",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Watch: A Bee Goes from One Flower to Another"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Vhonani ṋotshi nthihi i tshi bva kha luvha i tshi ya kha ḽiṅwe."
+            "text": "Lavhelesani ṋotshi nthihi i tshi bva kha luvha ḽithihi i tshi ya kha ḽiṅwe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Watch one bee leaving one flower and going to another."
           },
           {
             "status": "draft",
-            "text": "Dziṋotshi dzi nga hwala pollen musi dzi tshi dalela maluvha."
+            "text": "Dziṋotshi (bees) dzi nga hwala pollen musi dzi tshi dalela maluvha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bees (bees) can carry pollen when they visit flowers."
           }
         ]
       }
@@ -277,17 +394,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dziṋotshi Dzi Thusa Pollination ya Zwilimiwa Zwinzhi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Bees Help Pollination of Many Crops"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dziṋotshi (honeybees) na zwiṅwe zwikhokhonono zwi hwala pollen vhukati ha maluvha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bees (honeybees) and other insects carry pollen between flowers."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Izwi zwi thusa zwilimiwa zwinzhi zwa mitshelo na miroho, zwi katela avocado. Zwilimiwa zwo fhambanaho na varieties dzo fhambanaho zwi na ṱhoḓea dzo fhambanaho dza pollination.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "These help many crops of fruits and vegetables, they include avocado. Crops that are different and varieties that are different have different needs of pollination."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hive a i fulufhedzisi khaṋo (yields) i engedzeaho fhethu hoṱhe. Mutsho (weather), maḓi, mutakalo wa zwimela na zwiṅwe pollinators zwi na ndeme na zwone.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A hive does not promise khaṋo (yields) that increases everywhere. Mutsho (weather), water, health of plants and other pollinators have importance too."
           }
         ]
       }
@@ -304,17 +433,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dziṋotshi dza Mupo dza Afrika Tshipembe",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Natural Bees of South Africa"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Afrika Tshipembe i na subspecies mbili dza ṋotshi (honeybee) dza mupo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "South Africa has two subspecies of bee (honeybee) of nature."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Cape honeybee i wanala kha Western Cape na kha zwiṅwe zwipiḓa zwa Eastern Cape. African honeybee ndi ya mupo kha Afrika ya vhukati na vhunzhi ha Afrika ya Tshipembe (southern Africa).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The Cape honeybee (Cape honeybee) is found in the Western Cape and in some parts of the Eastern Cape. The African honeybee (African honeybee) is natural in central Africa and most of southern Africa (southern Africa)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fhethu hu hulwane hune dza dzula hone nga mupo a hu sumbedzi uri dziṋotshi dzi nga sudzuluswa ngafhi. Control measures dza Muhasho (the Department) dzi vhea demarcation line ya u sudzuluswa ha dziṋotshi. Sedzani milayo ya zwino phanḓa ha u sudzulusa dziṋotshi kana hives.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The large area where they live naturally does not show where bees may be moved. The Department's (the Department) control measures (Control measures) set a demarcation line (demarcation line) for moving bees. Check the current rules before moving bees or hives (hives)."
           }
         ]
       }
@@ -332,20 +473,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vheani Hive nga Ṱhogomelo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Place a Hive with Care"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Gudani kha beekeeper wa fhethu ane a vha na vhukoni ha tshifhinga tshilapfu phanḓa ha u wana hive.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Learn from a local beekeeper (beekeeper) who has long-time ability before getting a hive (hive)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vheani hives kule na nḓila dzo dalaho, mahaya na fhethu hune vhana vha tamba hone.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Place hives (hives) far from busy roads, homesteads and places where children play."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ḓuvha ḽa matsheloni ḽi nga thusa, fhedzi fhethu ha tsireledzo hu tou thoma.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Afternoon sun may help, but a safe place comes first."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulanani uri vhathu na zwifuwo zwi ḓo tshimbila hani fhethu henefho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan how people and livestock will walk in that place."
           }
         ]
       }
@@ -363,20 +519,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Colony i Khwaṱhaho i Ṱoḓa Ṱhogomelo na Maluvha",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "A Strong Colony Needs Care and Flowers"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhani na zwimela zwi re na maluvha nga zwifhinga zwoṱhe zwa ṅwaha nahone ni tsireledze dziṋotshi (bees) kha pesticides.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Have plants with flowers at all times of the year and protect the bees (bees) from pesticides (pesticides)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dziṋotshi dzi tshi khou shuma a dzi khwaṱhisedzi uri bulasi ḽi si na chemicals kana vhulwadze.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Working bees do not guarantee that the farm has no chemicals (chemicals) or disease."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Registration i a ṱoḓea kha zwiito zwo ṱalutshedzwaho nga national honey-bee control measures. Izwi zwi katela u fuwa hives dzo langwaho u itela zwibveledzwa zwa dziṋotshi, queen rearing, commercial pollination, na u bvisa, u fhelisa kana u sudzulusa colonies. Vhudzisani Muhasho (the Department) arali ni sa ḓivhi uri tshiito tshaṋu tshi a katelwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Registration (Registration) is required for activities specified by the national honey-bee control measures (national honey-bee control measures). These include keeping managed hives (hives) for bee products, queen rearing (queen rearing), commercial pollination (commercial pollination), and removing, destroying or moving colonies (colonies). Ask the Department (the Department) if you do not know whether your activity is included."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Arali colony i tshi ita swarm hafhu na hafhu, humbelani beekeeper o gudiswaho u i sedzesa. Crowding ndi tshiṅwe tsha zwiitisi zwine zwa nga vha hone, a si diagnosis.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If a colony swarms again and again, ask for a beekeeper who has been taught to look closely at it. Crowding is one of the causes that may be there; it is not a diagnosis."
           }
         ]
       }
@@ -391,11 +562,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nutrients dzi Tshimbilaho kha Bulasi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Nutrients (Nutrients) Moving on the Farm"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dziṅwe nutrients dzi bva kha zwimela dza ya kha zwifuwo. Zwiḽiwa zwa zwifuwo zwo rengwaho na zwone zwi ḓisa nutrients kha bulasi. Dziṅwe nutrients dzi nga vhuya kha fhethu ha u lima nga compost yo itwaho nga manure. Zwiḽiwa na zwiṅwe zwibveledzwa zwi dzhia nutrients zwi tshi bva.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Some nutrients (nutrients) go from plants to livestock. Bought livestock feed also brings nutrients to the farm. Some nutrients may return to the growing place through compost (compost) made from manure (manure). Food and other products take nutrients away when they leave."
           }
         ]
       }
@@ -413,20 +590,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dziṅwe Dzi Vhuya; Dziṅwe Dzi Dzhena na u Bva",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Some Return; Some Come In and Go Out"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwifuwo zwi nga vhuyisa dziṅwe nutrients nga compost yo itwaho nga manure. Manure ntswa i nga vha na germs dzi vhaisaho. Itani compost ya manure zwo fhelelaho phanḓa ha u i shumisa tsini ha zwilimiwa zwa zwiḽiwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Livestock may return some nutrients (nutrients) through compost (compost) made from manure (manure). Fresh manure may have harmful germs (germs). Fully compost manure before using it near food crops."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzikhuhu (chickens) dzi ḽa zwibveledzwa zwa bulasi zwo teaho na zwikhokhonono (insects).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens (chickens) eat suitable farm products and insects (insects)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwiḽiwa zwa zwifuwo zwo rengwaho zwi ḓisa nutrients kha bulasi. Zwiḽiwa zwo rengiswaho kana zwo dzhiiwaho hayani na zwiṅwe zwibveledzwa zwi dzhia nutrients zwi tshi bva. Ṅwalani zwiḽiwa zwa zwifuwo zwo rengwaho na zwiḽiwa zwo rengiswaho kana zwo dzhiiwaho hayani.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bought livestock feed brings nutrients (nutrients) to the farm. Food that is sold or taken home and other products take nutrients away when they leave. Write down the bought livestock feed and the food that is sold or taken home."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwo salaho zwa zwiḽiwa fhedzi zwi nga vha zwi sa ḓadzi ṱhoḓea dza zwifuwo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Leftovers of food alone may not meet the needs of livestock."
           }
         ]
       }
@@ -444,20 +636,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Guinea Fowl dzi Ḓiṱoḓela, fhedzi Sedzani Mutakalo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Guinea Fowl seek for themselves (fend for themselves), but Check Health"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Guinea fowl dzi ḓiṱoḓela zwikhokhonono (insects) nahone dzi nga ḽa ticks.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Guinea fowl (Guinea fowl) forage for themselves insects (insects) and may eat ticks (ticks)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni songo ḓitika ngadzo u tsireledza vhathu kana zwifuwo (livestock) kha ticks kana vhulwadze vhu ḓiswaho nga ticks.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Do not rely on them to protect people or livestock (livestock) from ticks (ticks) or from disease brought by ticks."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzulani ni tshi sedza zwifuwo nahone ni tevhele animal-health plan ya fhethu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep watching the livestock and follow the local animal-health plan (animal-health plan)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwiṋoni zwi ḓiṱoḓelaho zwiḽiwa ndi tshipiḓa tshithihi tsha bulasi; a zwi dzhii fhethu ha u ṱhogomela mutakalo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Birds that forage for themselves are one part of the farm; they do not replace caring for health."
           }
         ]
       }
@@ -475,21 +682,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mbudziso Tharu kha Tshifuwo Tshiṅwe na Tshiṅwe",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Three Questions for Each Animal"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kha tshifuwo tshiṅwe na tshiṅwe, vhudzisani uri tshi nga ḽa mini fhano.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "For each animal, ask what it could eat here."
           },
           {
             "status": "draft",
-            "text": "Vhudzisani uri tshi bveledza mini i thusaho."
+            "text": "Vhudzisani uri tshi bveledza zwithu zwifhio zwi thusaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ask what helpful things it produces."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nga murahu vhudzisani uri ndi zwifhio zwiṅwe zwine tsha zwi ṱoḓa. Katelani maḓi, zwiḽiwa zwa zwifuwo zwo teaho, vhudzulo, fencing na u londwa ḓuvha na ḓuvha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Afterwards ask what else it needs. Include water, suitable livestock feed, space, fencing (fencing) and daily care."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dziṅwe ṱhoḓea dzi nga ṱoḓa inputs dzo rengwaho. Pulanani nga hazwo phanḓa ha u ḓisa zwifuwo kha mavu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Some needs may require bought inputs (inputs). Plan for them before bringing livestock onto the land."
           }
         ]
       }
@@ -507,20 +728,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U Ḽisa na u Langa Zwivhungu zwa Mbudzi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Grazing and Controlling Goat Worms"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzikhuhu (chickens) dzi tevhelaho mbudzi (goats) a si nḓila yo khwaṱhisedzwaho ya u dzhia fhethu ha u langa zwivhungu (worms) zwa mbudzi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens (chickens) that follow goats (goats) are not a reliable way to replace controlling goat worms (worms)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U langa u ḽisa (grazing management) hu nga thusa, fhedzi mbudzi dzi kha ḓi ṱoḓa u sedzwa mutakalo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Managing grazing (grazing management) may help, but goats still need health checks."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumani na veterinary kana animal-health adviser kha parasite plan ya tshigwada tshaṋu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Work with a veterinary or animal-health adviser (animal-health adviser) on a parasite plan (parasite plan) for your herd."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni songo litsha u alafha ngauri dzikhuhu dzo dalela fhethu ha u ḽisa (grazing camp).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Do not stop treating because chickens have visited the grazing camp (grazing camp)."
           }
         ]
       }
@@ -538,20 +774,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mushumo wa Tsimu: Olani Hune Zwiko zwa Ya Hone",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Field Task: Draw Where Resources Go"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshimbilani kha smallholding yaṋu ni nange fhethu hune zwifuwo zwa nga thusa tshiṅwe tshipiḓa tsha system.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Walk around your smallholding (smallholding) and choose places where livestock could help another part of the system (system)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṅwalani zwiḽiwa, zwo salaho zwa zwiḽiwa, pests, zwibveledzwa zwi fhiraho zwine na zwi ṱoḓa (surplus), manure kana zwimela zwi re na maluvha zwo no vha hone.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write down feed, feed leftovers, pests (pests), products beyond what you need (surplus), manure (manure) or flowering plants that are already there."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nga murahu ṅwalani zwine tshifuwo tshiṅwe na tshiṅwe tsha nga zwi bveledza, na zwine tsha nga zwi ṱoḓa kha bulasi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Afterwards write down what each animal could produce, and what it could need on the farm."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Olani vhushaka (link) vhuthihi vhu thusaho vhukati ha zwifuwo na zwiṅwe zwipiḓa zwa bulasi ḽaṋu. Sumbedzani zwi dzhenaho na zwi bvaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Draw one helpful link (link) between livestock and other parts of your farm. Show what goes in and what goes out."
           }
         ]
       }
@@ -569,20 +820,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tshiito tsha Tsimu: Shumisani Vhushaka Vhuthihi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Field Activity: Use One Link"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nangani tshiito tshithihi tshi tsireledzeaho kha ngudo iyi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose one safe activity from this lesson."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulanani uri dzikhuhu (chickens) dzi nga shumisa hani bede ḽi si na zwilimiwa murahu ha khaṋo, vhudzisani beekeeper nga ha fhethu ha tsireledzo ha hive, kana ni sedze ṱhoḓea dza ḓuvha na ḓuvha dza zwifuwo zwaṋu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan how chickens (chickens) could use a bed that has no crops after harvest, ask a beekeeper (beekeeper) about a safe place for a hive (hive), or check the daily needs of your livestock."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṅwalani zwiḽiwa, maḓi, vhudzulo na u ṱhogomela zwine tshiito itsho tsha zwi ṱoḓa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write down the feed, water, space and care that the activity needs."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thomani nga zwiko na thuso zwine na nga zwi ṋea nga nḓila i fulufhedzeaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start with the resources and help that you could give in a reliable way."
           }
         ]
       }

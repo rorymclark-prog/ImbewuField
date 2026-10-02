@@ -17,7 +17,7 @@ test('regional Study cards distinguish English module copy from available lesson
     return module;
   };
   assert.equal(regionalModuleDraftBadge(source('seeds-sovereignty'), 've'),
-    'English module · 1 lesson draft available');
+    'Tshivenda AI draft · review pending');
   assert.equal(regionalModuleDraftBadge(source('soil-health'), 'ts'),
     'English module · 3 lesson drafts available');
   assert.equal(regionalModuleDraftBadge(source('market-community'), 've'),

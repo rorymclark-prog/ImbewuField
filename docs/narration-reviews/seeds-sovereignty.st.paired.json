@@ -19,28 +19,40 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Peo ke moo sehla se tlang se qalang."
+          "text": "Dipeo le Boikemelo ba Peo (seed sovereignty)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Seeds and Seed Self-Reliance (seed sovereignty)"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Peo ke moo sehla se tlang se qalang."
+            "text": "Peo ke moo sehla se tlang se qalang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed is where the coming season begins."
           },
           {
             "status": "draft",
-            "text": "Ha lelapa la hao le khona ho boloka, ho baballa le ho arolelana peo e ntle, le fetisetsa tse fetang kotulo feela. Le fetisetsa le bolokolohi ba ho ikhethela."
+            "text": "Ha lelapa la hao le kgona ho boloka, ho baballa le ho arolelana peo e ntle, le fetisetsa ho feta sejalo feela. Hape le fetisetsa tokoloho ya ho ikgethela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When your household can save, keep and share good seed, it passes on more than just a crop. It also passes on the freedom to choose for itself."
           },
           {
             "status": "draft",
-            "text": "Thutong ena, u tla latela peo ho tloha semeleng sa motsoali ho ea ka paketeng, tekong ea hore na ea mela, le letsohong la moahisani."
+            "text": "Thutong ena, o tla latela peo ho tloha semeleng sa motswadi ho ya paketeng, tekong ya hore na e a mela (germination test), le letsohong la moahisani.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "In this lesson, you will follow a seed from the parent plant to the packet, to the test of whether it germinates (germination test), and to a neighbour's hand."
           },
           {
             "status": "draft",
-            "text": "Nahana ka lijalo tsa sebakeng sa heno. Ke life tseo le seng le li bolokela peo? Ke peo efe eo le e rekang? Ke efe eo le fapanyetsanang ka eona?"
+            "text": "Nahana ka dijalo tsa sebaka sa heno. Ke dife tseo o seng o di bolokela peo? Ke peo efe eo o e rekang? Ke peo efe eo o e fapanyetsanang?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the crops of your area. Which ones do you already save seed for? Which seed do you buy? Which seed do you swap?"
           },
           {
             "status": "draft",
-            "text": "Leka ho bolela bonyane sejalo se le seng seo peo ea sona e seng e bolokoa sebakeng sa heno."
+            "text": "Leka ho bolela bonyane sejalo se le seng seo peo ya sona e seng e bolokwa sebakeng sa heno.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Try to name at least one crop whose seed is already being saved in your area."
           }
         ]
       }
@@ -60,24 +72,34 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Hobaneng ho Boloka Peo ho le Bohlokoa"
+          "text": "Hobaneng ho Boloka Peo ho le Bohlokwa",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Why Saving Seed Is Important"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Ho boloka peo ha ho bolele ho hana peo eohle e rekiloeng. Ho bolela ho eketsa likhetho tse ka sebelisoang."
+            "text": "Ho boloka peo ha ho bolele ho hana peo yohle e rekilweng. Ho bolela ho aha dikgetho tse sebetsang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Saving seed does not mean refusing all bought seed. It means building choices that work."
           },
           {
             "status": "draft",
-            "text": "Sejalo se seng le se seng seo u ithutang ho se bolokela peo hantle se fokotsa theko e phetoang. Hape se qala tlaleho ea sebakeng sa heno ea se sebetsang hantle mobung oa hao le sehleng sa hao."
+            "text": "Sejalo se seng le se seng seo o ithutang ho se bolokela peo hantle se tlosa theko e le nngwe e phetwang. Hape se qala tlaleho ya sebakeng sa heno ya se sebetsang hantle mobung wa hao le sehleng sa hao.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Every crop whose seed you learn to save well removes one repeated purchase. It also starts a local record of what does well in your soil and in your season."
           },
           {
             "status": "draft",
-            "text": "Nahana ka peo eo u e rekang khafetsa. Ke peo efe e jang chelete e ngata ka ho fetisisa lapeng la hao selemo le selemo?"
+            "text": "Nahana ka peo eo o e rekang kgafetsa. Ke theko efe ya peo e phetwang e jang tjhelete e ngata ka ho fetisisa lapeng la hao selemo le selemo?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the seed you buy again and again. Which repeated seed purchase eats the most money in your household every year?"
           },
           {
             "status": "draft",
-            "text": "Khetha sejalo se le seng lethathamong la hao la ho lema. E etse qalo ea hao ea ho boloka peo. U se ke ua leka ho boloka tsohle hang-hang."
+            "text": "Kgetha sejalo se le seng lethathamong la hao la ho lema. E etse qalo ya hao e sebetsang ya ho boloka peo. O se ke wa leka ho boloka tsohle hang-hang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose one crop on your planting list. Make it your working start to saving seed. Do not try to save everything at once."
           }
         ]
       }
@@ -101,40 +123,58 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Seo U Tla Ithuta Sona"
+          "text": "Seo O Tla Ithuta Sona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "What You Will Learn"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Thuto ena e qetella ka polokelo ea peo e sebetsang, eseng lethathamo la lintlha feela."
+            "text": "Thuto ena e qetella ka polokelo ya peo e sebetsang, e seng lethathamo la dintlha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This lesson ends with a working seed store, not a list of facts."
           },
           {
             "status": "draft",
-            "text": "U tla etsa liqeto tse ’nè."
+            "text": "O tla etsa diqeto tse nne.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You will make four decisions."
           },
           {
             "status": "draft",
-            "text": "U tla boloka eng?"
+            "text": "O tla boloka eng?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What will you save?"
           },
           {
             "status": "draft",
-            "text": "U tla e lokisa joang?"
+            "text": "O tla e lokisa jwang?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "How will you prepare it?"
           },
           {
             "status": "draft",
-            "text": "U tla e sireletsa joang?"
+            "text": "O tla e sireletsa jwang?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "How will you protect it?"
           },
           {
             "status": "draft",
-            "text": "Hona u tla tseba joang hore e ntse e phela pele u itšetleha ka eona?"
+            "text": "Mme o tla tseba jwang hore e ntse e phela pele o itshetleha ka yona?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "And how will you know that it is still alive before you rely on it?"
           },
           {
             "status": "draft",
-            "text": "Ke efe ho liqeto tsee tse ’nè eo u sa e tloaelang hakaalo?"
+            "text": "Ke efe ya diqeto tsena tse nne eo o e tlwaetseng hanyane ka ho fetisisa?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which of these four decisions are you least used to?"
           },
           {
             "status": "draft",
-            "text": "Li phete ka mantsoe a hao: khetha, lokisa, sireletsa, ’me u netefatse."
+            "text": "Di phete ka mantswe a hao: kgetha, lokisa, sireletsa, mme o netefatse.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Repeat them in your own words: choose, prepare, protect, and confirm."
           }
         ]
       }
@@ -156,29 +196,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Peo ya Open-Pollinated le Peo ya F1",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Open-Pollinated Seed and F1 Seed"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Peo ya open-pollinated ha se mohlolo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Open-pollinated seed is not a miracle."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Stable variety e ka hlahisa meloko e tshwanang ha e arotswe hantle kapa ha e etsa self-pollination.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A stable variety can produce generations that are alike when it is separated well or when it does self-pollination."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Peo ya F1 hangata e ntse e phela. Empa moloko o latelang o arohana ka metswako e fapaneng ya dipharologanyo tsa batswadi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "F1 seed is usually still alive. But the next generation splits into different mixtures of the parents' differences."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bothata ke hore ha ho tsejwe esale pele hore dimela di tla ba jwang, e seng ho hloleha ho mela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The problem is that it is not known beforehand what the plants will be like, not a failure to germinate."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nahana ka bethe e nyane e le nngwe ya serapa tshimong ya hao. Ke hobaneng dimela tse sa tsejweng esale pele di ka ba kotsi ha sebaka se lekanyeditswe?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think of one small garden bed in your field. Why could plants that are not known beforehand be a risk when space is limited?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Haeba o na le dipakete tsa peo, hlahloba hore na di tshwailwe open-pollinated kapa F1. Ke efe eo o ka e kgethang ho boloka peo e tshepehang?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If you have seed packets, check whether they are marked open-pollinated or F1. Which one could you choose to save reliable seed?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hopola: moloko o latelang wa F1 o a fapana. Ha o shwe ka boyona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Remember: the next generation of F1 is different. It does not die by itself."
           }
         ]
       }
@@ -199,32 +263,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sheba: Peo ya Open-Pollinated le Peo ya F1",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Open-Pollinated Seed and F1 Seed"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Sheba mahlakore ka bobeli.",
+            "text": "Sheba mahlakore ka bobedi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
             "backTranslation": "Look at both sides."
           },
           {
             "status": "draft",
-            "text": "Mefuta ka bobeli ea peo ea mela.",
+            "text": "Mefuta ka bobedi ya peo e a mela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
             "backTranslation": "Both kinds of seed germinate."
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Peo ya open-pollinated e hlahisa dimela tse tshwanang ha e le stable variety mme pollination e laolwa hantle.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Open-pollinated seed produces plants that are alike when it is a stable variety and pollination is controlled well."
           },
           {
             "status": "draft",
-            "text": "Nahana hore na see se bolela eng ha u khetha peo eo u tla e boloka.",
-            "backTranslation": "Think about what this means when you choose seed to save."
+            "text": "Peo e bolokilweng ho semela sa F1 le yona e a mela. Empa moloko wa yona o latelang o a fapana. Dimela tse ding di ka ba telele. Tse ding di ka ba kgutshwane. Matla a tsona a kgolo le tlhahiso ya tsona di ka fapana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed saved from an F1 plant also germinates. But its next generation differs. Some plants may be tall. Others may be short. Their vigour and their yield may differ."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ipotse hore na sena se bolela eng ha o kgetha peo eo o tla e boloka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ask yourself what this means when you choose seed that you will save."
+          },
+          {
+            "status": "draft",
+            "text": "Haeba o utlwisisa phapang, o ka e hlalosa ka polelo e le nngwe: mefuta ka bobedi e a mela, empa moloko o latelang wa F1 ha o tsejwe esale pele.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If you understand the difference, you can explain it in one sentence: both kinds germinate, but the next generation of F1 is not known beforehand."
           }
         ]
       }
@@ -245,32 +324,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Boikemelo ba Peo (seed sovereignty)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Seed Self-Reliance (seed sovereignty)"
         },
         "body": [
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boikemelo ba peo ha bo phele mohoong (slogan).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed self-reliance does not live in a slogan (slogan)."
           },
           {
             "status": "draft",
-            "text": "Lelapa la heno le qala sena. Baahelani ba se atolosa. Ha linako tsa selemo li ntse li feta, pokello ea peo ea sebakeng seo e ba molemo haholoanyane.",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "Bo phela paketeng e omileng, tlalehong e ngotsweng le tsebong ya hore peo e itshwara jwang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It lives in a dry packet, in written records and in knowing how the seed behaves."
           },
           {
             "status": "draft",
-            "text": "Ke peo efe eo lelapa la heno le seng le e boloka hantle?",
-            "backTranslation": "Which seed does your household already save well?"
+            "text": "Lelapa la heno le qala sena. Baahisani ba se atolosa. Dinako tsa selemo di etsa hore pokello ya peo ya sebakeng seo e be le thuso e ngata ho feta.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Your household starts this. Neighbours spread it. The seasons of the year make a local seed collection more useful."
           },
           {
             "status": "draft",
-            "text": "Thala ’mapa o monyenyane oa matlo a haufi le uena. Haufi le ntlo ka ’ngoe, ngola sejalo se le seng seo lelapa leo le ka se tlisang phapanyetsanong ea peo.",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "Ke peo efe eo lelapa la heno le seng le e boloka hantle ka ho fetisisa?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which seed does your household already save best?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Taka mmapa o monyane wa matlo a haufi le wena. Haufi le ntlo e nngwe le e nngwe, ngola sejalo se le seng seo lelapa leo le ka se tlisang phapanyetsanong ya peo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Draw a small map of the houses near you. Near each house, write one crop that that household could bring to a seed swap."
+          },
+          {
+            "status": "draft",
+            "text": "Boikemelo bo hloka dintho tse tharo: peo e ka sebediswang, tlhahisoleseding e ngotsweng le phapanyetsano.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Self-reliance needs three things: usable seed, written information and swapping."
           }
         ]
       }
@@ -289,24 +383,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sheba: Marangrang a Peo a Malapa",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Household Seed Networks"
         },
         "body": [
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Peo e bolokilweng hantle e ba le matla le ho feta ha e tsejwa mme e arolelwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Well-saved seed becomes even stronger when it is known and shared."
           },
           {
             "status": "draft",
-            "text": "Qetellong, lelapa ka leng le na le mefuta e mengata ea peo (varieties) ho feta eo le neng le e-na le eona pele.",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "Sheba lelapa le le leng le qala ka ho boloka peo hantle ho sejalo se le seng. Peo e omileng e kena dipaketeng tse hlwekileng. Dipakete tse ding di ya malapeng a baahisani. Baahisani ba arolelana peo e fapaneng ka phapanyetsano.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at one household starting by saving seed well from one crop. Dry seed goes into clean packets. Other packets go to the neighbours' households. Neighbours share different seed through swapping."
           },
           {
             "status": "draft",
-            "text": "Nahana ka peo eo u ka e arolelanang le eo u ka e fumanang ho moahisani. Peo ea tsamaea. Tsebo le tšepo le tsona li lokela ho tsamaea le eona.",
-            "backTranslation": "Think about seed you could share and seed you could receive from a neighbour. Seed moves. Knowledge and trust should move with it."
+            "text": "Qetellong, lelapa le le leng le le leng le na le mefuta e mengata ya peo (varieties) ho feta eo le neng le e na le yona pele.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "In the end, each household has more varieties (varieties) of seed than it had before."
+          },
+          {
+            "status": "draft",
+            "text": "Nahana ka peo eo o ka e arolelanang le eo o ka e fumanang ho moahisani. Peo e a tsamaya. Tsebo le tshepo di tshwanetse ho tsamaya le yona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the seed you could share and what you could get from a neighbour. Seed travels. Knowledge and trust must travel with it."
           }
         ]
       }
@@ -329,40 +434,59 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kgetha Dimela tse Mmalwa tsa Motswadi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose Several Parent Plants"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tholwana e kgolo ka ho fetisisa ha se kamehla e leng motswadi o molemo ka ho fetisisa wa peo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The biggest fruit is not always the best seed parent."
           },
           {
             "status": "draft",
             "text": "Sheba semela sohle.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
             "backTranslation": "Look at the whole plant."
           },
           {
             "status": "draft",
             "text": "Na se ne se phetse hantle?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
             "backTranslation": "Was it healthy?"
           },
           {
             "status": "draft",
-            "text": "Na se ile sa butsoa ka nako e loketseng?",
-            "backTranslation": "Did it mature at the right time?"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "text": "Na se ile sa butswa ka nako e loketseng?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Did it ripen at the right time?"
           },
           {
             "status": "draft",
-            "text": "Ke eng e neng e ka etsa hore u se ke ua khetha semela sa peo, leha tholoana ea sona e ne e le kholo?",
-            "backTranslation": "What could make you reject a seed plant, even if its fruit was large?"
+            "text": "Na se ne se tshwana le mofuta wa sona (true to type)?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Was it like its variety (true to type)?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boloka peo ho dimela tse mmalwa tse ntle, haholoholo dijalong tsa cross-pollinated. Sena se thibela moloko o latelang hore o se tswe ho motswadi a le mong feela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Save seed from several good plants, especially in cross-pollinated crops. This prevents the next generation from coming from only one parent."
+          },
+          {
+            "status": "draft",
+            "text": "Ke eng e neng e ka etsa hore o hane semela sa peo, leha tholwana ya sona e ne e le kgolo?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What would make you reject a seed plant, even if its fruit was big?"
+          },
+          {
+            "status": "draft",
+            "text": "Eya tshimong ya hao. Supa dimela tseo o ka di kgethang le tseo o ka di hanang. Kgetha dimela tse mmalwa tse phetseng hantle tse tshwanang le mofuta wa tsona. Hana dimela tse nang le malwetse le tse sa tshwaneng le mofuta wa tsona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Go to your field. Point out the plants you could choose and those you could reject. Choose several healthy plants that are like their variety. Reject plants that have diseases and those that are not like their variety."
           }
         ]
       }
@@ -383,26 +507,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Laola Pollination",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Control Pollination"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dijalo tse ding hangata di etsa self-pollination. Ka hona serapa se senyane se ka boloka mofuta (variety) o tshwana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Some crops usually do self-pollination. Therefore a small garden can keep a variety (variety) that is the same."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dijalo tseo pollen ya tsona e tsamaiswang ke moya kapa dikokwanyana di ka tswakana (cross) ho pholletsa le sebaka se selelele.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Crops whose pollen is carried by wind or insects can mix (cross) across a long space."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bohole bo hlokehang bo ya ka sejalo, sebaka le morero wa peo. O se ke wa kholofetsa bohlweke ba mofuta (variety) ho fihlela o hlahlobile sejalo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The distance needed depends on the crop, the place and the purpose of the seed. Do not promise the purity of a variety (variety) until you have checked the crop."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O ka aroganya mefuta e mmedi (varieties) jwang ntle le ho sebedisa sebaka?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "How can you separate two varieties (varieties) without using distance?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O ka di jala ka dinako tse fapaneng hore di se ke tsa thunya mmoho. O ka boela wa laola pollination ka letsoho kapa ka dikwahelo (covers).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You can plant them at different times so that they do not flower together. You can also control pollination by hand or with coverings (covers)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hopola disebediswa tse tharo: sebaka, nako ya ho thunya kapa pollination e laolwang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Remember three tools: space, time of flowering, or controlled pollination."
           }
         ]
       }
@@ -421,20 +566,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sheba: Self-Pollination le Ho Tswakana (crossing)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Self-Pollination and To Mix with One Another (crossing)"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Latela tsela ya pollen.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Follow the path of pollen."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nakong ya self-pollination, pollen e tsamaya ka hare ho palesa e le nngwe ho tloha karolong e e hlahisang ho ya karolong e e amohelang. Sena hangata se thusa hore mofuta (variety) o tswele pele o tshwana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "At the time of self-pollination, pollen moves inside one flower from the part that produces [it] to the part that receives [it]. This usually helps the variety (variety) to continue being the same."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshimong ya poone, moya o jara pollen ho tloha ho tassels ho ya ho silks. Haeba mefuta e mmedi (varieties) e haufi mme e thunya ka nako e le nngwe, e ka tswakana (cross).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "In a field of maize, wind carries pollen from tassels to silks. If two varieties (varieties) are near and flower at one time, they can mix (cross)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nahana hore sebaka kapa dinako tse fapaneng tsa ho thunya di ka thibela seo jwang tshimong ya hao.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about how distance or different flowering times could prevent that in your field."
           }
         ]
       }
@@ -455,26 +615,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ho Lokisa Peo ka Mokgwa o Omileng le o Metsi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Preparing Seed by the Dry and Wet Method"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho na le ditsela tse pedi tse kgolo tsa ho lokisa peo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "There are two big ways of preparing seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Peo e omileng e butswa ka hare ho pod, hlooho kapa cob. E bokelwa ha e butsitse ka ho feletseng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Dry seed ripens inside the pod, head or cob. It is collected when it is completely ripe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Peo e ka hare ho tholwana e nang le nama e tlameha pele ho aroswa le nama.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Seed inside a fleshy fruit must first be separated from the flesh."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho etsa fermentation e kgutshwane ho thusa haholoholo ho peo ya tamati. Ha se molao bakeng sa dijalo tsohle tse nang le peo e metsi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A short fermentation especially helps with tomato seed. It is not a rule for all crops with wet seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nahana ka dijalo tsa sebaka sa heno. Ke dife tse tshwanelang mokgwa o omileng? Ke dife tse tshwanelang mokgwa o metsi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the crops of your area. Which suit the dry method? Which suit the wet method?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Haeba o na le peo kapa ditholwana haufi, aroganya mehlala ka mefuta ena e mmedi. Hlalosa phapang ka ho hlalosa hore peo e jwang nakong ya kotulo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If you have seed or fruits nearby, separate examples into these two kinds. Explain the difference by describing how the seed is at harvest time."
           }
         ]
       }
@@ -496,29 +677,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lokisa Peo e Omileng",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Prepare Dry Seed"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tlogela dijalo tse nang le peo e omileng semeleng ho fihlela peo e butsitse ka ho feletseng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Leave crops with dry seed on the plant until the seed is completely ripe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E bokele pele boemo ba lehodimo, dinonyana kapa dipod tse phatlohang di nka kotulo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Collect it before weather, birds or bursting pods take the harvest."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tlosa makgapetla (chaff) le peo e senyehileng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Remove the husks (chaff) and the damaged seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jwale phatlalatsa peo e hlwekileng ka lera le le leng moyeng o tsamayang le moriting.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Now spread the clean seed in a single layer in moving air and in shade."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke eng e o bolellang hore peo e omileng e butsitse ho lekana ho bokelwa?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What tells you that dry seed is ripe enough to be collected?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Haeba o na le pod kapa hlooho ya peo e omileng, e tshware. Mamela peo. Bapisa thepa ya semela e tala e kobehang habonolo le e sootho e robehang habonolo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If you have a pod or head of dry seed, hold it. Listen to the seed. Compare the material of a green plant that bends easily with a brown one that breaks easily."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Emela hore peo e butswe. Bakeng sa ho omisa qetellong, sebedisa moriti le moya o tsamayang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Wait for the seed to ripen. For the final drying, use shade and moving air."
           }
         ]
       }
@@ -538,23 +743,41 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sheba: Mokgwa o Omileng (dry processing)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: The Dry Method (dry processing)"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dumella peo hore e butswe semeleng pele e bokellwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Allow the seed to ripen on the plant before it is collected."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba kamoo e bokellwang ka teng hang ha e butswe. Makgapetla (chaff) le ditshila di tloswa. Peo e senyehileng e ntshiwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at how it is collected once it is ripe. Husks (chaff) and dirt are removed. Damaged seed is taken out."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Peo e hlwekileng e anngwa ka lera le le leng moyeng o tsamayang le moriting.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Clean seed is spread in a single layer in moving air and in shade."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Latela mehato ka tatellano: butswa, bokella, hlwekisa, omisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Follow the steps in order: ripen, collect, clean, dry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nahana hore na o ka etsa karolo ka nngwe ya tshebetso ena kae.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about where you could do each part of this process."
           }
         ]
       }
@@ -576,29 +799,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mokgwa o Metsi (wet processing): Peo ya Tamati",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "The Wet Method (wet processing): Tomato Seed"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kenya peo ya tamati le nama ya yona ka jareng e hlwekileng e nang le metsi a mannyane.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Put the tomato seed and its flesh in a clean jar with a little water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E tlohele e bulehile kapa e kwahetswe ka tsela e sa tiyang. E boloke kantle ho letsatsi le tobileng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Leave it open or loosely covered. Keep it out of direct sun."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kamora matsatsi a mabedi ho isa ho a mararo, lera le bobebe le monko o bodila di ka hlaha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "After two to three days, a light layer and a sour smell may appear."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlatswa kapele. Tlosa ditshila. Ebe o anya peo e hlwekileng e tshesaane hore e ome.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Wash quickly. Remove the dirt. Then spread the clean seed thinly to dry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O se ke wa kwala jara e ntseng e fermenta.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Do not close a jar that is still fermenting."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nahana ka matshwao a o bolellang hore tshebetso e qadile. Hape nahana ka matshwao a ka o etsang hore o lahle sehlopha seo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the signs that tell you the process has started. Also think about the signs that could make you throw that batch away."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fumana jara, sefe le poleiti ya ho omisa. Ha o se o itokiseditse, qala sehlopha se senyenyane. Hopola tatellano: ntsha, fermenta nakwana, hlatswa o be o omise ka ho feletseng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Find a jar, a sieve and a plate for drying. When you are ready, start a small batch. Remember the order: take out, ferment briefly, wash and then dry completely."
           }
         ]
       }
@@ -619,26 +866,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sheba: Mokgwa o Metsi bakeng sa Peo ya Tamati",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: The Wet Method for Tomato Seed"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba tshebetso yohle ka tatellano.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at the whole process in order."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tamati e butsweng e a bulwa. Peo le jele di kenngwa ka jareng e hlwekileng. Ho kenngwa metsi a mannyane feela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A ripe tomato is opened. The seed and the jelly are put into a clean jar. Only a little water is added."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jara e tlohelwa e bulehile kapa e kwahetswe ka tsela e sa tiyang ka matsatsi a mabedi ho isa ho a mararo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The jar is left open or loosely covered for two to three days."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ha lera le bobebe le monko o bodila di hlaha, dikahare di tshollelwa ka sefeng. Peo e hlatsuwa ho fihlela e hlweka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When a light layer and a sour smell appear, the contents are poured into a sieve. The seed is washed until it is clean."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qetellong, peo e anngwa ka lera le le leng moriting ho fihlela e omme ka ho feletseng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Finally, the seed is spread in a single layer in shade until it is completely dry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ipolelle mehato: ntsha, fermenta nakwana, hlatswa, omisa ka ho feletseng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Say the steps to yourself: take out, ferment briefly, wash, dry completely."
           }
         ]
       }
@@ -659,26 +927,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mosebetsi wa ho Etsa",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "The Practical Task"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mona ke moo thuto e tlohang skrineng e fihlang diatleng tsa hao.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This is where the lesson leaves the screen and reaches your hands."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qala sehlopha se le seng sa 'nnete' sa peo e sebetsitsweng ka wet processing.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start one 'real' batch of seed processed by wet processing."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa tholwana e le nngwe e butsweng e phetseng hantle, jara e hlwekileng, kgaba (spoon), metsi a mannyane, sefe le poleiti ya ho omisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use one healthy ripe fruit, a clean jar, a spoon (spoon), a little water, a sieve and a plate for drying."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kenya peo, nama le metsi a mannyane ka jareng. Kgomaretsa leibole e nang le letsatsi la kgwedi (date).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Put the seed, flesh and a little water in a jar. Stick on a label with the date of the month (date)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O tla hlokomela jara ena kamora thuto. Etsa qeto hona jwale hore na o tla e hlahloba neng, o tla e hlatswa neng le hore o tla omisa peo neng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You will look after this jar after the lesson. Decide now when you will check it, when you will wash it and when you will dry the seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jara ya hao e hloka letsatsi la kgwedi (date) le moralo wa ho kgutla. Ngola letsatsi leo o tla e hlahloba ka lona kamora matsatsi a mabedi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Your jar needs a date (date) and a plan for coming back. Write the day on which you will check it after two days."
           }
         ]
       }
@@ -700,29 +989,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Omisa Pele, Kwala Hamorao",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Dry First, Close Later"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho omisa hase mohato o kgabisang wa ho qetela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Drying is not a decorative last step."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Peo e metsi e ntse e phefumoloha. E ka futhumala, ya bola kapa ya shwa ha e bolokilwe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Wet seed is still breathing. It can heat up, rot or die when stored."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa moriti, moya o tsamayang le nako.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use shade, moving air and time."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kwala peo feela ha o tseba hantle hore e omme.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Close up seed only when you know well that it is dry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke sebaka sefe ka lapeng la hao se nang le moriti le moya, empa se sireletsehileng pula le mouwane wa ho pheha?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which place in your home has shade and air, but is protected from rain and cooking steam?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kgetha sebaka se le seng se bolokehileng sa ho omisa. Ebe o bona sebaka se le seng se sa bolokehang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose one safe place for drying. Then find one place that is not safe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pheta sena ho hlahloba kutlwisiso ya hao: omisa pele, kwala hamorao.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Repeat this to check your understanding: dry first, close later."
           }
         ]
       }
@@ -743,26 +1056,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sireletsa Peo ho Motjheso, Lesedi le Mongobo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Protect Seed from Heat, Light and Moisture"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dipakete tsa pampiri di a phefumoloha mme di hlophisa peo. Empa ha di lekane boemong ba maemo a mongobo o mongata.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Paper packets breathe and organise the seed. But they are not enough in conditions of a lot of moisture."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hang ha peo e omme ka ho feletseng, kenya dipakete tse nang le dileibole ka setshelong se kwetsweng, se thibelang mongobo. Haeba e fumaneha, kenya food-safe desiccant.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Once the seed is completely dry, put the packets with labels in a closed container that keeps out moisture. If it is available, add a food-safe desiccant."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boloka setshelo se phodile le se lefifi kamoo ho ka kgonehang ka lapeng la hao.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep the container as cool and dark as possible in your home."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke kamore efe kapa kabinete efe ka lapeng la hao e dulang e phodile ebile e omme ho fetisisa?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which room or cabinet in your home stays the coolest and driest?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bapisa enfelopo ya pampiri e se nang setshelo le enfelopo e ka hare ho setshelo se kwetsweng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Compare a paper envelope with no container and an envelope inside a closed container."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Polokelo e bolokehileng e na le dikarolo tse pedi: pakete ya pampiri e nang le leibole ka hare ho setshelo se omileng, se kwetsweng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Safe storage has two parts: a paper packet with a label inside a dry, closed container."
           }
         ]
       }
@@ -784,29 +1118,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Beha Leibole Paketeng Ka Nngwe",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Put a Label on Each Packet"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Polokelo e sireletsa peo ka mmele. Tlhahisoleseding e ngotsweng e sireletsa moelelo wa yona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Storage protects the seed physically. Written information protects its meaning."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pakete e tlameha ho bolella motho ya latelang hore ke sejalo sefe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A packet must tell the next person which crop it is."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E tlameha ho fana ka lebitso la mofuta (variety) kapa lebitso la lehae.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It must give the name of the variety (variety) or the local name."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E tlameha ho bolela hore peo e bolokilwe neng le hore e tswa kae.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It must say when the seed was stored and where it comes from."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke mabitso afe a lehae a ka lahlehang ha o ngola lebitso la sejalo feela?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which local names could be lost if you write only the name of the crop?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nka pakete e se nang letho. Ikwetlise ho ngola dintlha tse nne: sejalo, mofuta (variety) kapa lebitso la lehae, letsatsi la kgwedi le mohlodi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take an empty packet. Practise writing four things: the crop, the variety (variety) or local name, the date and the source."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlahloba hape hore tse nne kaofela di teng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check again that all four are there."
           }
         ]
       }
@@ -829,32 +1187,59 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Germination Test ya Dipeo tse Leshome",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Germination Test of Ten Seeds"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pakete ya peo e ka bonahala e se na sekoli le ha peo e ntse e lahlehelwa ke bophelo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A packet of seed may appear to have no fault even though the seed is still losing life."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dipeo tse leshome di etsa hore palo e be bonolo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ten seeds make the counting easy."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Di boloke di futhumetse ebile di metsi. O se ke wa di qwedisa ka metsing.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep them warm and moist. Do not drown them in water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ebe o bala dimela tse nyane (seedlings) tse tlwaelehileng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Then count the normal seedlings (seedlings)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tse tsheletseng ho tse leshome ke hoo e ka bang diperesente tse mashome a tsheletseng. Seo se o bolella hore o jale ka botenya bo fetang, o sebedise peo e le teko feela, kapa o e nkele sebaka ka peo e nngwe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Six out of ten is about sixty percent. That tells you to sow more thickly, use the seed only as a trial, or replace it with other seed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Haeba dipeo tse robedi ho tse leshome di mela, ke diperesente tse kae?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If eight seeds out of ten germinate, what percentage is that?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Karabo ke diperesente tse mashome a robedi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The answer is eighty percent."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qala teko ya dipeo tse leshome ka pakete ya kgale. Ngola letsatsi la kgwedi le letsatsi leo o tla bala ka lona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start a ten-seed test with an old packet. Write the date and the day on which you will count."
           }
         ]
       }
@@ -876,29 +1261,53 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sheba: Germination Test ya Dipeo tse Leshome",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Germination Test of Ten Seeds"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bala dipeo tse leshome ka nepo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Count ten seeds accurately."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Di behe ka mela e mebedi ya tse hlano.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Place them in two rows of five."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Di boloke hodima pampiri kapa lesela le nang le mongobo. O se ke wa di qwedisa ka metsing.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep them on damp paper or cloth. Do not drown them in water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kamora nakwana, bala hape.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "After a short while, count again."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mona, tse tsheletseng di mehile. Tse nne ha di a mela. Palo kaofela e ntse e le leshome.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Here, six have sprouted. Four have not germinated. The total is still ten."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kahoo sekgahla sa germination ke diperesente tse mashome a tsheletseng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "So the germination rate is sixty percent."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Itlhahlobe. Na o ile wa bala dipeo tse leshome qalong, dipeo tse tsheletseng tse mehileng le dipeo tse nne tse sa meleng qetellong?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check yourself. Did you count ten seeds at the start, six sprouted seeds and four seeds that did not germinate at the end?"
           }
         ]
       }
@@ -919,30 +1328,47 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Arolelana Peo le Tlhahisoleseding ya Yona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Share Seed and Its Information"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Phapanyetsano ya peo hase tafole ya dipakete tse sa tsejweng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A seed swap is not a table of unknown packets."
           },
           {
             "status": "draft",
-            "text": "Phapanyetsano e ntle ea peo e tsamaisa tlhahisoleseding hammoho le peo.",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "text": "Phapanyetsano e ntle ya peo e tsamaisa tlhahisoleseding hammoho le peo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A good seed swap moves information together with the seed."
           },
           {
             "status": "draft",
-            "text": "Ke tlhahisoleseding efe e ka u thusang ho tšepa peo e tsoang lelapeng le leng?",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "E o bolella hore peo ke eng. E tswa kae. E bolokilwe neng. Mme na e se e lekotswe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It tells you what the seed is. Where it comes from. When it was stored. And whether it has been tested."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Botshepehi bona bo matlafatsa marangrang kaofela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This trustworthiness strengthens the whole network."
+          },
+          {
+            "status": "draft",
+            "text": "Ke tlhahisoleseding efe e ka o thusang ho tshepa peo e tswang lelapeng le leng?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What information could help you trust seed that comes from another household?"
+          },
+          {
+            "status": "draft",
+            "text": "Nka e nngwe ya dipakete tsa hao. Ikwetlise ho e hlalosa pele o e arolelana. Fana ka peo le nalane ya yona ya motheo hammoho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take one of your packets. Practise describing it before you share it. Give the seed and its basic history together."
           }
         ]
       }
@@ -966,37 +1392,65 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mosebetsi wa Tshimong",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Field Task"
         },
         "body": [
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mosebetsi ona o monyane, o ka o phetha. O bohlokwa ka ho lekana hore o etse phapang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This task is small, you can finish it. It is equally important in making a difference."
           },
           {
             "status": "draft",
-            "text": "Ke eng hape eo o e hlokang hore o phethe mosebetsi ona lapeng?",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "text": "Aha setshelo se le seng se sebetsang sa polokelo ya peo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Build one working seed storage container."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kenya dipakete tsa pampiri tse nang le dileibole ka setshelong se omileng, se kwetsweng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Put paper packets with labels in a dry, closed container."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nka setshwantsho sa sona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take a picture of it."
+          },
+          {
+            "status": "draft",
+            "text": "Ebe o reha sejalo seo o tla boloka peo ya sona sehla sena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Then name the crop whose seed you will save this season."
+          },
+          {
+            "status": "draft",
+            "text": "Setshwantsho ke bopaki. Pakete ke qalo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The picture is proof. The packet is the beginning."
+          },
+          {
+            "status": "draft",
+            "text": "Ke eng eo o ntseng o e hloka ho phetha sena lapeng?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "What do you still need to finish this at home?"
+          },
+          {
+            "status": "draft",
+            "text": "Ngola lethathamo le lekgutshwane la thepa. Kgetha letsatsi la ho qeta.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write a short list of materials. Choose a day to finish."
+          },
+          {
+            "status": "draft",
+            "text": "Pele o kwala setshelo, hlahloba mosebetsi: peo e omme ka ho feletseng; pakete ka nngwe e na le sejalo, mofuta (variety) le letsatsi la kgwedi; setshelo se phodile, se lefifi mme se sireletsehile mongobong; mme o kgethile dimela tse mmalwa tsa batswadi tse phetseng hantle.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Before you close the container, check the work: the seed is completely dry; each packet has the crop, variety (variety) and date; the container is cool, dark and protected from moisture; and you have chosen several healthy parent plants."
           }
         ]
       }
@@ -1020,37 +1474,65 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ketso ya Tshimong",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Field Action"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kgetha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lokisa (process).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Prepare (process)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sireletsa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Protect."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Netefatsa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Confirm."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Diketso tseo tse nne di isa pokello ya peo ho tswa tshimong ena ho fihlela sehla se latelang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Those four actions carry the seed collection from this field until the next season."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qala ka sejalo se le seng mme o se etse hantle.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start with one crop and do it well."
           },
           {
             "status": "draft",
             "text": "O tla qala ka sejalo sefe?",
-            "provenance": "independent-semantic-backcheck; unreviewed-machine-draft; exact English source paired"
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Which crop will you start with?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E bolele ka lentswe le phahameng. Ebe o kgetha ketso e le nngwe eo o tla e etsa e latelang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Say it out loud. Then choose one action that you will do next."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sehla se latelang se se se ka hare ho peo eo o e kgethang kajeno.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The coming season is already inside the seed you choose today."
           }
         ]
       }

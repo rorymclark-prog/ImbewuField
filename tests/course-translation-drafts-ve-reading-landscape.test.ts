@@ -9,28 +9,21 @@ import { TSHIVENDA_SMALL_LIVESTOCK_DRAFT } from '../lib/course-translation-draft
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-ve-seeds-sovereignty.ts';
+import { assertKeeps, checkAnimalNames, checkCompleteModuleDraft, FORBIDDEN_WORDS, sourceDraftPairs } from './regional-full-draft-checks.ts';
 
-test('Tshivenda Seeds draft keeps source pairing, English genetics terms and quiz answers', () => {
+test('Tshivenda Seeds drafts every lesson field, keeps English genetics terms and leaves quiz answers unchanged', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'seeds-sovereignty');
   assert.ok(sourceModule);
-  const source = sourceModule.lessons[0];
-  const draft = TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT.lessons[0];
-  assert.equal(draft.id, source.id);
-  assert.equal(draft.title.sourceEnglish, source.title);
-  assert.equal(draft.body.sourceEnglish, source.body);
-  assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
-  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
-  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
-  const shown = resolveLearnerLessonPresentation(source, 've');
-  assert.equal(shown.status, 'draft');
-  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.tshivendaDraft));
-  assert.deepEqual(shown.content.quiz, source.quiz);
-  assert.equal(shown.content.body, draft.body.tshivendaDraft);
+  // 2 October 2026: lessons 2 and 3, the key points and the quizzes were exact English until now. The complete
+  // edition is a labelled machine draft beside its exact English source; each passage had a blind
+  // back-translation and an independent semantic check. Correct-answer indices stay canonical.
+  checkCompleteModuleDraft(sourceModule, TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT, 've', FORBIDDEN_WORDS.ve);
+  const shown = resolveLearnerLessonPresentation(sourceModule.lessons[0], 've');
   for (const term of ['open-pollinated', 'stable variety', 'F1 hybrid', 'pollination']) {
-    assert.ok(shown.content.body.includes(term), `${term} stays English until its meaning is reviewed`);
+    assert.ok(shown.content.body.includes(term), `${term} stays English inside the translated sentence`);
   }
-  assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed.` }, 've').status,
-    'english-fallback');
+  assertKeeps(TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT.lessons[2].body.tshivendaDraft.split('\n\n')[1],
+    ['yo omaho', 'yo valiwaho', 'ho rotholaho', 'swiswi'], 'storage keeps dry seed in a sealed container, cool and dark');
 });
 
 test('Tshivenda Market lesson drafts retain exact English guidance around short descriptive drafts', () => {
@@ -191,39 +184,27 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
   assert.equal(draft.lessons[1].keyPoints[1].reviewStatus, 'hold', 'winter-sun position stays English');
 });
 
-test('Tshivenda Small Livestock shows only the checked module description draft and keeps lesson copy English', () => {
+test('Tshivenda Small Livestock drafts the module card and every lesson, with animal names checked separately', () => {
   const source = COURSE_MODULES.find(module => module.id === 'small-livestock');
   assert.ok(source, 'the canonical Small Livestock module must exist');
   const draft = TSHIVENDA_SMALL_LIVESTOCK_DRAFT;
-
-  assert.equal(draft.reviewStatus, 'machine-draft');
+  // 2 October 2026: the English title hold and the unwired lesson candidates give way to a complete edition.
+  // Each passage had a blind back-translation and an independent semantic check, and animal names were
+  // checked on their own because an earlier draft confused ducks with frogs.
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
   assert.equal(draft.sourceMetadata.category, source.category);
-  assert.equal(draft.title.sourceEnglish, source.title);
-  assert.equal(draft.title.reviewStatus, 'hold');
-  assert.equal(draft.title.tshivendaDraft, source.title);
-  assert.equal(draft.description.sourceEnglish, source.description);
-  assert.equal(draft.description.reviewStatus, 'machine-draft');
-  assert.equal(draft.description.tshivendaDraft,
-    'Chickens, ducks and bees sa system components — hu si zwithu zwo humbulwaho nga murahu.');
-  assert.deepEqual(draft.lessons, [], 'back-checked lesson title candidates with terminology mismatches are not wired');
-
-  const card = resolveCourseModulePresentation(source, 've');
-  assert.equal(card.status, 'draft', 'the module description is visibly marked as unreviewed');
-  assert.equal(card.title, source.title, 'the uncertain module title remains English');
-  assert.equal(card.description, draft.description.tshivendaDraft);
-
-  for (const lesson of source.lessons) {
-    const presentation = resolveLearnerLessonPresentation(lesson, 've');
-    assert.equal(presentation.status, 'english-fallback', `${lesson.id} has no approved lesson title draft`);
-    assert.equal(presentation.content.title, lesson.title, `${lesson.id}: title stays English`);
-    assert.equal(presentation.content.body, lesson.body, `${lesson.id}: animal-care and manure guidance stays English`);
-    assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints, `${lesson.id}: safety key points stay English`);
-    assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: quiz and answer choices stay English`);
-  }
-
-  assert.equal(resolveCourseModulePresentation({ ...source, description: `${source.description} Changed.` }, 've').status,
-    'english-fallback', 'a changed module description withdraws the paired draft');
+  checkCompleteModuleDraft(source, draft, 've', FORBIDDEN_WORDS.ve);
+  assert.ok(checkAnimalNames(sourceDraftPairs(draft, 've'), 've', 'Tshivenda Small Livestock') >= 30);
+  assert.ok(draft.description.tshivendaDraft.includes('dakisi (ducks)'), 'the duck name is glossed on the module card');
+  const body = (lesson: number, paragraph: number) => draft.lessons[lesson].body.tshivendaDraft.split('\n\n')[paragraph];
+  assertKeeps(body(0, 0), ['a hu dzhii fhethu'], 'foraging does not replace a balanced diet or daily care');
+  assertKeeps(body(0, 1), ['phanḓa ha uri'], 'move the pen before the ground is bare, muddy or covered in manure');
+  assertKeeps(body(0, 2), ['Manure ntswa i nga vha na germs', 'phanḓa ha zwilimiwa zwi tevhelaho'],
+    'fresh manure can carry germs; ask about safe handling before the next crop');
+  assertKeeps(body(2, 0), ['zwo fhelelaho phanḓa ha u i shumisa'], 'compost manure fully before using it near food crops');
+  assertKeeps(body(2, 1), ['Ni songo ḓitika'], 'do not rely on guinea fowl for tick protection');
+  assertKeeps(body(2, 3), ['a si nḓila yo khwaṱhisedzwaho', 'Ni songo litsha u alafha'],
+    'chickens are not proven goat worm control; do not stop treatment');
   assert.equal(resolveCourseModulePresentation({ ...source, durationMins: source.durationMins + 1 }, 've').status,
     'english-fallback', 'changed module metadata withdraws the paired draft');
 });
