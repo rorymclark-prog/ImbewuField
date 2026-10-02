@@ -6,6 +6,7 @@ import {
   ELEMENT_SPECIES,
   PERENNIAL_HARVEST,
   buildTreeAvailability,
+  cleanTreeSeasonChoices,
   formatMonthSpan,
   formatRange,
   perennialHarvestFor,
@@ -14,6 +15,7 @@ import {
   speciesIdForPlaced,
   treePickingByMonth,
   treePickingPhrase,
+  unidentifiedPlantGroups,
 } from '@/lib/perennial-harvest';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { harvestFromDossier, loadDossiers } from '../scripts/build-perennial-harvest.mjs';
@@ -106,7 +108,7 @@ test('month spans read the way a farmer says them', () => {
   assert.equal(formatRange([100, 112.5]), '100–112.5');
 });
 
-test('the chart counts standing trees only from today, and the whole design for an established year', () => {
+test('locally confirmed seasons count standing trees from today and preserve proposed plants in the repeated design', () => {
   const avocado = PERENNIAL_HARVEST['persea-americana'];
   assert.ok(avocado, 'avocado dossier missing');
   const groups = placedTreeGroups([
@@ -119,19 +121,48 @@ test('the chart counts standing trees only from today, and the whole design for 
   assert.equal(groups.length, 1);
   assert.deepEqual([groups[0].existing, groups[0].proposed], [2, 1]);
 
-  const season = sourcedSeasonMonths(avocado);
+  // The audit found an eleven-month avocado season made by unioning different regions. This
+  // fixture represents one farmer-confirmed window; the national union must never choose it.
+  const choices = { 'persea-americana': { months: [8, 9, 10, 11, 12], bearing: true } };
+  const season = choices['persea-americana'].months;
   const off = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].find((m) => !season.includes(m));
   const inSeason = season[0];
   const months = off === undefined ? [inSeason] : [inSeason, off];
-  const established = buildTreeAvailability(groups, months, false);
-  const fromToday = buildTreeAvailability(groups, months, true);
+  assert.ok(buildTreeAvailability(groups, months, false).every((m) => m.length === 0));
+  const established = buildTreeAvailability(groups, months, false, choices);
+  const fromToday = buildTreeAvailability(groups, months, true, choices);
   assert.equal(established[0][0].trees, 3);
   assert.equal(fromToday[0][0].trees, 2);
   if (off !== undefined) assert.deepEqual(established[1], []);
 
   // Only proposed trees: nothing from today.
   const young = placedTreeGroups([{ defId: 'tree_avocado', status: 'proposed' }]);
-  assert.deepEqual(buildTreeAvailability(young, [inSeason], true), [[]]);
+  assert.deepEqual(buildTreeAvailability(young, [inSeason], true, choices), [[]]);
+});
+
+test('an avocado reference never extends a locally confirmed season, and unproductive plants do not promise food', () => {
+  const groups = placedTreeGroups([{ defId: 'tree_avocado', status: 'existing' }]);
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+  assert.deepEqual(buildTreeAvailability(groups, months, true).map((m) => m.length), months.map(() => 0));
+  const choices = { 'persea-americana': { months: [8, 9], bearing: true } };
+  assert.deepEqual(buildTreeAvailability(groups, months, true, choices).map((m) => m.length), [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0]);
+  assert.ok(buildTreeAvailability(groups, months, true, { 'persea-americana': { months: [8, 9], bearing: false } }).every((m) => m.length === 0));
+});
+
+test('banana clumps retain their sourced identity and an untyped Banana Circle remains an explicit map item', () => {
+  const items = [{ defId: 'banana_clump', status: 'existing' as const }, { defId: 'banana_circle', status: 'proposed' as const }];
+  const groups = placedTreeGroups(items);
+  assert.equal(groups[0].harvest.speciesId, 'musa-acuminata-aaa-group');
+  assert.equal(sourcedSeasonMonths(groups[0].harvest).length, 0, 'do not invent an all-year banana season');
+  assert.equal(speciesIdForPlaced(items[1]), null, 'the circle is a layout, not a guessed species');
+  assert.deepEqual(unidentifiedPlantGroups(items), [{ defId: 'banana_circle', label: 'Banana Circle', existing: 0, proposed: 1 }]);
+  assert.deepEqual(unidentifiedPlantGroups([{ defId: 'banana_circle', speciesId: 'musa-acuminata-aaa-group' }]), []);
+  assert.equal(unidentifiedPlantGroups([{ defId: 'banana_circle', speciesId: 'unsupported-id' }]).length, 1, 'an unavailable harvest record must not erase the design layout');
+});
+
+test('saved local seasons discard invalid months and unknown species without assuming productive plants', () => {
+  const clean = cleanTreeSeasonChoices({ 'persea-americana': { months: [8, 8, 0, 13, '9', 9], bearing: 'true' }, missing: { months: [1], bearing: true }, constructor: { months: [1], bearing: true } });
+  assert.deepEqual(clean, { 'persea-americana': { months: [8, 9], bearing: false } });
 });
 
 test('trees never reach a per-m² figure', () => {
@@ -145,7 +176,7 @@ test('trees never reach a per-m² figure', () => {
   }
 });
 
-test('the crop plan\'s pick lines: standing trees only, one per in-season month, with the SA season', () => {
+test('the crop plan\'s pick lines require local confirmation and keep proposed plants out of current jobs', () => {
   const raspberry = PERENNIAL_HARVEST['rubus-idaeus'];
   assert.ok(raspberry, 'raspberry dossier missing');
   const groups = placedTreeGroups([
@@ -154,11 +185,13 @@ test('the crop plan\'s pick lines: standing trees only, one per in-season month,
     { defId: 'tree_other', speciesId: 'rubus-idaeus', status: 'proposed' },
   ]);
   // KZN DARD: "1st week November to late January".
-  const lines = treePickingByMonth(groups, [10, 11, 12, 1, 2]);
+  const choices = { 'rubus-idaeus': { months: [11, 12, 1], bearing: true } };
+  assert.ok(treePickingByMonth(groups, [10, 11, 12, 1, 2]).every((slot) => slot.length === 0));
+  const lines = treePickingByMonth(groups, [10, 11, 12, 1, 2], choices);
   assert.deepEqual(lines.map((slot) => slot.length), [0, 1, 1, 1, 0]);
   assert.equal(lines[1][0].trees, 2, 'a proposed cane is not picking this year');
-  assert.equal(treePickingPhrase(lines[1][0]), 'Pick Raspberry (2) — SA season Nov–Jan');
-  assert.deepEqual(treePickingByMonth(placedTreeGroups([{ defId: 'tree_other', speciesId: 'rubus-idaeus', status: 'proposed' }]), [11]), [[]]);
+  assert.equal(treePickingPhrase(lines[1][0]), 'Pick Raspberry (2) — confirmed local months Nov–Jan');
+  assert.deepEqual(treePickingByMonth(placedTreeGroups([{ defId: 'tree_other', speciesId: 'rubus-idaeus', status: 'proposed' }]), [11], choices), [[]]);
 });
 
 test('berries and moringa: harvest records only for what a primary source gave', () => {

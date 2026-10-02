@@ -10,10 +10,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import { PNG } from 'pngjs';
-import { PERENNIAL_HARVEST, sourcedSeasonMonths } from '@/lib/perennial-harvest';
+import { PERENNIAL_HARVEST } from '@/lib/perennial-harvest';
 
 import {
-  availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename, resolveAvailability, type CropPlanPdfInput,
+  availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename, FARMER_SECTIONS, resolveAvailability, type CropPlanPdfInput,
 } from '@/lib/crop-export-pdf';
 import { tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
@@ -162,14 +162,15 @@ test('the full export carries the availability page, and it can be printed on it
   assert.ok(full.size > withoutIt.size, 'the default export did not add the availability page');
 });
 
-test('with no chart data handed in, the page builds an established year from the plan itself', () => {
+test('without chart data, a dated print cannot borrow harvests from an earlier annual cycle', () => {
   const resolved = resolveAvailability(input(), 8);
-  assert.equal(resolved.yearMode, 'established');
+  assert.equal(resolved.yearMode, 'fromToday');
   assert.equal(resolved.utilization.length, 12);
   // Only veg rows exist without a canvas; empty forest and animal trays are left off, as on screen.
   assert.deepEqual(resolved.bands.map((b) => b.key).filter((k) => k === 'forest' || k === 'animals'), []);
   const fresh = resolved.bands.find((b) => b.key === 'fresh');
   assert.ok(fresh && fresh.cells.length === 12);
+  assert.equal(fresh.cells[0].length, 0, 'a new August sowing cannot already be a fresh August harvest');
   assert.ok(fresh.cells.flat().some((c) => c.iconKey === 'crop:cabbage'), 'the plan\'s cabbage never shows as fresh veg');
   for (const cell of fresh.cells.flat()) assert.ok(cell.code.length > 0, `${cell.label} has no fallback code`);
 });
@@ -214,17 +215,49 @@ test('a picture jsPDF cannot read falls back to the code instead of breaking the
 // ── Food-forest picking in the task summary ────────────────────────────────
 // Rory, 2026-09-29: "maybe have it even show in the monthly crop plan? harvest period etc etc".
 
-test('the task summary adds a pick line in each month a standing tree is in its sourced season', async () => {
+test('picking jobs use confirmed local months, never the union of national source seasons', async () => {
   const blueberry = PERENNIAL_HARVEST['vaccinium-corymbosum'];
   assert.ok(blueberry, 'blueberry dossier missing');
   const standing = [{ harvest: blueberry, existing: 3, proposed: 0 }];
-  const withTrees = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'], treeGroups: standing })));
-  // One line per month of the sourced season (every region together) — jsPDF escapes the "(3)".
-  const season = sourcedSeasonMonths(blueberry);
-  assert.equal(withTrees.match(/\(Pick Blueberry \\+\(3\\+\)/g)?.length ?? 0, season.length);
+  const unconfirmed = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'], treeGroups: standing })));
+  assert.ok(!unconfirmed.includes('Pick Blueberry'), 'a planted tree is not evidence of local picking months');
+  const treeSeasons = { [blueberry.speciesId]: { months: [11, 12], bearing: true } };
+  const withTrees = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'], treeGroups: standing, treeSeasons })));
+  assert.equal(withTrees.match(/\(Pick Blueberry \\+\(3\\+\)/g)?.length ?? 0, 2);
   const without = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'] })));
   assert.ok(!without.includes('Pick Blueberry'));
   // Proposed bushes are years from a crop: nothing to pick from today.
-  const young = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'], treeGroups: [{ harvest: blueberry, existing: 0, proposed: 3 }] })));
+  const young = await pdfText(await buildCropPlanPdf(input({ sections: ['taskSummary'], treeGroups: [{ harvest: blueberry, existing: 0, proposed: 3 }], treeSeasons })));
   assert.ok(!young.includes('Pick Blueberry'));
+});
+
+test('the field copy prints undated banana and housing with their pictures and reasons', async () => {
+  const undated = [
+    { iconKey: 'tree:musa-acuminata-aaa-group', label: 'Banana', detail: 'Existing plant; local picking months not confirmed.' },
+    { iconKey: 'animal:bees', label: 'Hives', detail: 'Existing housing; honey flow months not confirmed.' },
+    { iconKey: 'animal:chicken-indigenous', label: 'Coops / chicken tractors', detail: 'Existing housing; choose what the chickens are kept for.' },
+  ];
+  const fields = input({ sections: FARMER_SECTIONS, availability: { undated } });
+  const keys = availabilityIconKeys(fields);
+  for (const entry of undated) assert.ok(keys.includes(entry.iconKey), `${entry.label} picture was omitted`);
+  const raw = await pdfText(await buildCropPlanPdf(fields));
+  for (const entry of undated) {
+    assert.ok(raw.includes(entry.label), `${entry.label} disappeared from the printed inventory`);
+    assert.ok(raw.includes(entry.detail), `${entry.label} lost its timing explanation`);
+  }
+  assert.ok(!raw.includes('Largest crops by known benchmark volume'), 'the field copy must open with useful pictures and jobs');
+  assert.ok(raw.includes('Food sources to check'));
+  assert.ok(raw.includes('Monthly harvest and field record'));
+});
+
+test('a field copy carries the storage conditions behind its stored-food pictures', async () => {
+  const plants: Planting[] = [{ id: 'grain', bedId: 'b1', cropKey: 'maize', sowMonth: 8 }];
+  const raw = await pdfText(await buildCropPlanPdf(input({
+    plantings: plants, tasks: tasksForPlan(plants, BEDS), sections: FARMER_SECTIONS,
+  })));
+  assert.ok(raw.includes('Before using stored food'));
+  assert.ok(raw.includes('sourced storage window'), 'shelf life must remain tied to the source conditions');
+  assert.ok(raw.includes('Source guide'));
+  assert.ok(raw.includes('Picked kg') && raw.includes('Stored kg'), 'actual harvest records need explicit units');
+  assert.ok(!raw.includes('Benchmark kg'), 'a blank monthly record must not ask for a crop-cycle benchmark as though it is this month\'s harvest');
 });

@@ -357,7 +357,7 @@ export function buildBedPlanRows(plantings: Planting[], beds: PlanBed[]): BedPla
   return beds.map((bed) => {
     const crops: BedPlanCrop[] = [];
     for (const p of plantings) {
-      if (p.bedId !== bed.id) continue;
+      if (p.bedId !== bed.id || p.awaitingSowingConfirmation || p.finishedOnceSowing) continue;
       const crop = cropByKey(p.cropKey);
       if (!crop) continue;
       const fraction = p.areaFraction ?? 1;
@@ -398,7 +398,7 @@ export interface BuyingItem {
   cropKey: string;
   cropName: string;
   icon: string;
-  /** 'seeds' | 'seedlings' | 'slips' | 'seed potatoes' | 'cloves' | 'corms'. */
+  /** Seed packets, living material, or kg seed for a sourced field rate. */
   unit: string;
   /** Piece count for living material; null for packet seed or unverified spacing. */
   count: number | null;
@@ -493,7 +493,9 @@ export function buildBuyingSchedule(
       harvestMonth: harvestMonthForCrop(sowMonth, crop),
       transplant: !!crop.transplant,
       bedLabels,
-      note: buyingNote(
+      note: boq.quantityStatus === 'sourced-weight-range' && boq.countRange
+        ? `Source ${weightRangeLabel(boq.countRange)} before sowing in ${monthLong(sowMonth)}. This is the mapped area multiplied by the published ${positionRangeLabel(crop.seedRateKgPerHaRange!)} kg/ha field-rate range. ${crop.fieldSpacingInstruction ?? crop.note} Confirm the sowing method and cultivar with the supplier; no germination allowance is added.`
+        : buyingNote(
         boq.unit,
         !!crop.transplant,
         sowMonth,
@@ -575,6 +577,17 @@ export function positionRangeLabel(range: readonly [number, number]): string {
   const minimum = numberLabel(range[0]);
   const maximum = numberLabel(range[1]);
   return range[0] === range[1] ? minimum : `${minimum}–${maximum}`;
+}
+
+/** Keep a small-bed order readable in grams without changing the sourced
+ * kg/ha calculation or quietly rounding a positive amount down to zero. */
+export function weightRangeLabel(range: readonly [number, number]): string {
+  const inGrams = range[1] < 1;
+  const scale = inGrams ? 1_000 : 1;
+  const quantity = (value: number): string => numberLabel(Number((value * scale).toPrecision(4)), 6);
+  const minimum = quantity(range[0]);
+  const maximum = quantity(range[1]);
+  return `${range[0] === range[1] ? minimum : `${minimum}–${maximum}`} ${inGrams ? 'g' : 'kg'} seed`;
 }
 
 /** Per-crop totals across the whole schedule — the cross-check against the on-screen BOQ. */

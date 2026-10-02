@@ -15,8 +15,8 @@
 //
 // 2. Harvest months are REGIONAL. An avocado in the Lowveld is picked from June; the same cultivar
 //    in the KZN midlands from August. The table keeps every sourced window with its region label.
-//    The crop-plan chart, which cannot yet tell which window a farm sits in, shows the span the
-//    sources cover across South Africa and says so — it does not pretend to know the farm's weeks.
+//    The card keeps those windows as references. The farm calendar uses only picking months
+//    confirmed locally, after the farmer confirms that its existing plants already give food.
 //
 // 3. Kilograms per tree are orientation, not a forecast. They come from named trials at named
 //    spacings; a tree's crop swings with age, cultivar, water and alternate bearing. Nothing here
@@ -24,6 +24,8 @@
 
 import { PERENNIAL_HARVEST_DATA } from './perennial-harvest-data';
 import { canonicalSpeciesId } from './species-aliases';
+import { activeAccountLocalStorageKey } from './account-local-storage';
+import { isSampleMode } from './sample-mode';
 
 export interface HarvestCitation {
   /** Verbatim from the source. Fragments joined with "..." are separate passages of one source. */
@@ -162,6 +164,20 @@ export interface PlacedTreeGroup {
   proposed: number;
 }
 
+/** A banana circle is a design layout, not evidence of one catalogue species. */
+export interface UnidentifiedPlantGroup {
+  defId: 'banana_circle';
+  label: 'Banana Circle';
+  existing: number;
+  proposed: number;
+}
+
+export function unidentifiedPlantGroups(items: readonly PlacedPlant[]): UnidentifiedPlantGroup[] {
+  const itemsWithoutSpecies = items.filter((item) => item.defId === 'banana_circle' && !perennialHarvestFor(speciesIdForPlaced(item)));
+  if (itemsWithoutSpecies.length === 0) return [];
+  return [{ defId: 'banana_circle', label: 'Banana Circle', existing: itemsWithoutSpecies.filter((item) => item.status !== 'proposed').length, proposed: itemsWithoutSpecies.filter((item) => item.status === 'proposed').length }];
+}
+
 /**
  * The design's trees that have a harvest record, grouped by species.
  *
@@ -188,8 +204,55 @@ export interface TreeAvailabilityItem {
   trees: number;
 }
 
+/** Farmer-confirmed months for this design, separate from regional source references. */
+export type TreeSeasonChoices = Partial<Record<string, { months: number[]; bearing: boolean }>>;
+
+export function confirmedTreeMonths(h: PerennialHarvest, choices: TreeSeasonChoices): number[] {
+  const choice = choices[h.speciesId];
+  return choice?.bearing ? validMonths(choice.months) : [];
+}
+
+function validMonths(raw: unknown): number[] {
+  return Array.isArray(raw) ? [...new Set(raw.filter((m): m is number => Number.isInteger(m) && m >= 1 && m <= 12))].sort((a, b) => a - b) : [];
+}
+
+export function cleanTreeSeasonChoices(raw: unknown): TreeSeasonChoices {
+  const out: TreeSeasonChoices = {};
+  if (!raw || typeof raw !== 'object') return out;
+  for (const [id, value] of Object.entries(raw)) {
+    if (!Object.hasOwn(PERENNIAL_HARVEST, id) || !value || typeof value !== 'object') continue;
+    const candidate = value as { months?: unknown; bearing?: unknown };
+    out[id] = { months: validMonths(candidate.months), bearing: candidate.bearing === true };
+  }
+  return out;
+}
+
+const TREE_SEASONS_KEY = 'imbewu_tree_seasons_v1';
+let sampleTreeSeasons: Record<string, TreeSeasonChoices> = {};
+
+export function loadTreeSeasonChoices(siteId: string): TreeSeasonChoices {
+  if (isSampleMode()) return cleanTreeSeasonChoices(sampleTreeSeasons[siteId]);
+  if (typeof window === 'undefined') return {};
+  try {
+    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(TREE_SEASONS_KEY));
+    return cleanTreeSeasonChoices(raw ? JSON.parse(raw)?.[siteId] : undefined);
+  } catch { return {}; }
+}
+
+export function saveTreeSeasonChoices(siteId: string, choices: TreeSeasonChoices): void {
+  const clean = cleanTreeSeasonChoices(choices);
+  if (isSampleMode()) { sampleTreeSeasons = { ...sampleTreeSeasons, [siteId]: clean }; return; }
+  if (typeof window === 'undefined') return;
+  try {
+    const key = activeAccountLocalStorageKey(TREE_SEASONS_KEY);
+    const raw = window.localStorage.getItem(key);
+    const all = raw ? JSON.parse(raw) : {};
+    window.localStorage.setItem(key, JSON.stringify({ ...(all && typeof all === 'object' ? all : {}), [siteId]: clean }));
+  } catch { /* An unavailable store must not change the saved design. */ }
+}
+
 /**
- * Which placed trees can be picking in each chart slot, by the sourced South African span.
+ * Which placed trees can be picking in each chart slot, by locally confirmed picking months.
  *
  * `onlyStanding` is the "from today" chart's rule: proposed trees are left out because they are
  * years from a crop. The established-year chart shows the whole design, as it does for beds.
@@ -199,9 +262,10 @@ export function buildTreeAvailability(
   groups: readonly PlacedTreeGroup[],
   months: readonly number[],
   onlyStanding: boolean,
+  choices: TreeSeasonChoices = {},
 ): TreeAvailabilityItem[][] {
   const rows = groups
-    .map((g) => ({ g, trees: onlyStanding ? g.existing : g.existing + g.proposed, season: new Set(sourcedSeasonMonths(g.harvest)) }))
+    .map((g) => ({ g, trees: onlyStanding ? g.existing : g.existing + g.proposed, season: new Set(confirmedTreeMonths(g.harvest, choices)) }))
     .filter((r) => r.trees > 0 && r.season.size > 0);
   return months.map((m) => rows
     .filter((r) => r.season.has(m))
@@ -213,27 +277,27 @@ export interface TreePickingLine {
   name: string;
   /** Standing trees (or bushes) of this species on the design. */
   trees: number;
-  /** The sourced South African season, every region's window together. */
+  /** The farmer-confirmed picking months for this design. */
   season: number[];
 }
 
 /**
  * The crop plan's "pick from your trees" lines: for each month given, the standing trees whose
- * sourced SA season includes it.
+ * locally confirmed season includes it.
  *
  * This is a to-do list read from today, so it follows the "from today" chart's rule — a tree drawn
- * as proposed is years from its first crop and is left out. The season is the union of every
- * sourced region's window, not this farm's: the line says so wherever it is shown.
+ * as proposed is years from its first crop and is left out. A regional reference cannot silently
+ * become a dated picking instruction; the farmer must confirm months and productive plants.
  */
-export function treePickingByMonth(groups: readonly PlacedTreeGroup[], months: readonly number[]): TreePickingLine[][] {
-  const seasons = new Map(groups.map((g) => [g.harvest.speciesId, sourcedSeasonMonths(g.harvest)]));
-  return buildTreeAvailability(groups, months, true).map((slot) => slot.map((item) => ({
+export function treePickingByMonth(groups: readonly PlacedTreeGroup[], months: readonly number[], choices: TreeSeasonChoices = {}): TreePickingLine[][] {
+  const seasons = new Map(groups.map((g) => [g.harvest.speciesId, confirmedTreeMonths(g.harvest, choices)]));
+  return buildTreeAvailability(groups, months, true, choices).map((slot) => slot.map((item) => ({
     ...item,
     season: seasons.get(item.speciesId) ?? [],
   })));
 }
 
-/** "Pick Blueberry (3) — SA season Aug–Feb". One line, the same on screen and on paper. */
+/** One locally confirmed picking instruction, the same on screen and on paper. */
 export function treePickingPhrase(line: TreePickingLine): string {
-  return `Pick ${line.name} (${line.trees}) — SA season ${formatMonthSpan(line.season)}`;
+  return `Pick ${line.name} (${line.trees}) — confirmed local months ${formatMonthSpan(line.season)}`;
 }

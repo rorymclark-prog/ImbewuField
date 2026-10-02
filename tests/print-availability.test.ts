@@ -5,10 +5,14 @@
 
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
 
 import { monthAxisSlots } from '@/lib/month-axis';
 import { animalEntries, forestEntries, printableAvailability } from '@/lib/crop-export-availability';
 import { pdfIconUrl } from '@/lib/pdf-icons';
+import { loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, unidentifiedPlantGroups } from '@/lib/perennial-harvest';
+import { loadAnimalSeasonChoices, placedAnimalGroups, saveAnimalSeasonChoices } from '@/lib/animal-enterprises';
+import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
 test('the month axis names the current month and every year it crosses', () => {
   const slots = monthAxisSlots(9, 2026, 24);
@@ -70,6 +74,65 @@ test('every icon key resolves to the app art the chart itself shows', () => {
   assert.match(pdfIconUrl('crop:cabbage') ?? '', /^\/crop-art\/.+\.png$/);
   assert.match(pdfIconUrl('tree:mangifera-indica') ?? '', /^\/element-art\/tree_.+\.png$/);
   assert.equal(pdfIconUrl('animal:chicken-layer'), '/animal-art/chicken-layer.png');
+  assert.equal(pdfIconUrl('element:banana_circle'), '/element-art/banana_circle-v3.png');
   assert.equal(pdfIconUrl('nonsense'), null);
   assert.equal(pdfIconUrl('planet:mars'), null);
+});
+
+test('banana, hives and coops survive printing without invented products or harvest months', () => {
+  const items = [{ defId: 'banana_clump', status: 'existing' as const }, { defId: 'banana_circle', status: 'proposed' as const }, { defId: 'beehive', status: 'existing' as const }, { defId: 'chicken_coop', status: 'proposed' as const }];
+  const printed = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], treeGroups: placedTreeGroups(items), unidentifiedPlants: unidentifiedPlantGroups(items), animalGroups: placedAnimalGroups(items) });
+  assert.equal(printed.undated?.length, 4);
+  const banana = printed.undated?.find((e) => e.iconKey === 'tree:musa-acuminata-aaa-group');
+  assert.match(banana?.detail ?? '', /Picking months.*need local confirmation/);
+  assert.ok(printed.undated?.some((e) => e.label === 'Banana Circle'));
+  const hives = printed.undated?.find((e) => e.label === 'Hives');
+  assert.match(hives?.detail ?? '', /No product or production dates assumed/);
+  assert.ok(printed.undated?.some((e) => e.label === 'Coops / chicken tractors' && e.detail.includes('1 proposed')));
+  assert.ok(printed.undated?.every((e) => !!pdfIconUrl(e.iconKey)), 'retained map items have printable artwork');
+  const honey = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], animalGroups: placedAnimalGroups(items), animalChoices: { bee: 'bees' } });
+  assert.match(honey.undated?.find((e) => e.label.includes('honey'))?.detail ?? '', /Honey flows depend on local plants and rain/);
+  assert.equal(honey.animals, undefined, 'no months silently supplied for honey');
+  const hidden = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], treeGroups: placedTreeGroups(items), unidentifiedPlants: unidentifiedPlantGroups(items), animalGroups: placedAnimalGroups(items), includeTrees: false, includeAnimals: false });
+  assert.deepEqual(hidden.undated, []);
+});
+
+test('Simple farmers can confirm crop timing and get a picture calendar without opening All tools', () => {
+  // The old Simple-mode guard excluded export/control access; Rory's audit exposed that hidden
+  // enterprise selection was precisely why coops never produced a visible paper inventory.
+  const page = readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8');
+  assert.match(page, /<AnimalEnterprisesCard[^>]+compact=\{simple\}/);
+  assert.match(page, /<TreeSeasonsCard/);
+  assert.match(page, /\{simple && <CropPlanExportCard/);
+  const card = readFileSync(new URL('../components/crops/CropPlanExportCard.tsx', import.meta.url), 'utf8');
+  assert.match(card, /sections: FARMER_SECTIONS/);
+  assert.match(card, /sections: \['availability', 'calendar', 'taskSummary'\]/);
+  assert.doesNotMatch(card, /Quick print \(2 pages\)|Two pages only/);
+});
+
+test('local harvest confirmations survive a reload without crossing farms or signed-in accounts', () => {
+  const oldWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const rows = new Map<string, string>();
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: { localStorage: { getItem: (key: string) => rows.get(key) ?? null, setItem: (key: string, value: string) => rows.set(key, value) }, sessionStorage: { getItem: () => null } } });
+  try {
+    bindMountedAccountLocalStorageUid('farmer-a');
+    const trees = { 'persea-americana': { months: [8, 9], bearing: true } };
+    const animals = { chicken: { enterpriseId: 'chicken-indigenous', months: [10] } };
+    saveTreeSeasonChoices('farm-one', trees);
+    saveAnimalSeasonChoices('farm-one', animals);
+    assert.deepEqual(loadTreeSeasonChoices('farm-one'), trees);
+    assert.deepEqual(loadAnimalSeasonChoices('farm-one'), animals);
+    assert.deepEqual(loadTreeSeasonChoices('farm-two'), {});
+    assert.deepEqual(loadAnimalSeasonChoices('farm-two'), {});
+    bindMountedAccountLocalStorageUid('farmer-b');
+    assert.deepEqual(loadTreeSeasonChoices('farm-one'), {});
+    assert.deepEqual(loadAnimalSeasonChoices('farm-one'), {});
+    saveTreeSeasonChoices('farm-one', { 'persea-americana': { months: [12], bearing: true } });
+    bindMountedAccountLocalStorageUid('farmer-a');
+    assert.deepEqual(loadTreeSeasonChoices('farm-one'), trees, 'another account must not overwrite local observations');
+  } finally {
+    if (oldWindow) Object.defineProperty(globalThis, 'window', oldWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+    bindMountedAccountLocalStorageUid(null);
+  }
 });

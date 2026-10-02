@@ -3664,6 +3664,11 @@ export function autoSuggestPlan(
   realNow?: RealNow,
 ): AutoSuggestResult {
   const rainFed = answers.reliableIrrigation !== true;
+  // A calendar date is not evidence that a pending sowing occupied this bed.
+  // Keep undecided and finished dated rows in the saved plan, but never seed
+  // the new suggestion's land occupancy or recent-rotation history from them.
+  existingPlantings = existingPlantings.filter((planting) =>
+    !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing);
   const gate = climateGateFrom(answers, rainFed);
   return withClimateGate(gate, () =>
     autoSuggestPlanUnderGate(answers, pattern, beds, existingPlantings, nowMonth, realNow, gate, rainFed));

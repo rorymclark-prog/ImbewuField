@@ -8,6 +8,7 @@ import {
   ELEMENT_HOUSING,
   HOUSING_ANIMALS,
   buildAnimalAvailability,
+  cleanAnimalSeasonChoices,
   cleanChoices,
   enterprisesFor,
   enterprisesForHousing,
@@ -137,7 +138,7 @@ test('structures are grouped by animal and counted as structures, not animals', 
   assert.deepEqual(groups.map((g) => [g.housing, g.existing, g.proposed]), expected);
 });
 
-test('the availability row shows only what the farmer said they keep, and standing structures from today', () => {
+test('choosing layers does not promise all-year eggs and locally confirmed months count standing housing from today', () => {
   const layer = ANIMAL_ENTERPRISES['chicken-layer'];
   assert.ok(layer, 'chicken-layer dossier missing');
   const groups = placedAnimalGroups([
@@ -151,17 +152,24 @@ test('the availability row shows only what the farmer said they keep, and standi
   // A choice filed under the wrong animal is ignored.
   assert.ok(buildAnimalAvailability(groups, { goat: 'chicken-layer' }, all, false).every((slot) => slot.length === 0));
 
-  const months = sourcedProductMonths(layer);
-  if (months.length === 0) return; // unsourced months: nothing to chart, which is the rule
-  const m = months[0];
-  const established = buildAnimalAvailability(groups, { chicken: 'chicken-layer' }, [m], false);
-  const fromToday = buildAnimalAvailability(groups, { chicken: 'chicken-layer' }, [m], true);
+  // Commercial source conditions do not establish productive hens or their local months.
+  assert.ok(buildAnimalAvailability(groups, { chicken: 'chicken-layer' }, all, false).every((slot) => slot.length === 0));
+  const m = 9;
+  const seasons = { chicken: { enterpriseId: 'chicken-layer', months: [m] } };
+  const established = buildAnimalAvailability(groups, { chicken: 'chicken-layer' }, [m, 10], false, seasons);
+  const fromToday = buildAnimalAvailability(groups, { chicken: 'chicken-layer' }, [m, 10], true, seasons);
   assert.equal(established[0][0].structures, 2);
   assert.equal(fromToday[0][0].structures, 1);
   assert.equal(established[0][0].product, layer.product);
+  assert.deepEqual(established[1], [], 'local confirmation does not expand to a commercial all-year reference');
   // Only proposed coops: nothing from today.
   const planned = placedAnimalGroups([{ defId: 'chicken_coop', status: 'proposed' }]);
-  assert.deepEqual(buildAnimalAvailability(planned, { chicken: 'chicken-layer' }, [m], true), [[]]);
+  assert.deepEqual(buildAnimalAvailability(planned, { chicken: 'chicken-layer' }, [m], true, seasons), [[]]);
+  assert.deepEqual(buildAnimalAvailability(groups, { chicken: 'chicken-indigenous' }, [m], true, seasons), [[]], 'changing purpose must not inherit the previous enterprise dates');
+});
+
+test('saved animal seasons reject mismatched housing, unknown enterprises and invalid month values', () => {
+  assert.deepEqual(cleanAnimalSeasonChoices({ chicken: { enterpriseId: 'chicken-layer', months: [0, 9, 9, 13, '10', 10] }, bee: { enterpriseId: 'chicken-layer', months: [1] }, missing: { enterpriseId: 'bees', months: [1] }, constructor: { enterpriseId: 'bees', months: [1] } }), { chicken: { enterpriseId: 'chicken-layer', months: [9, 10] } });
 });
 
 test('animals never reach a per-m² figure', () => {

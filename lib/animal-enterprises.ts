@@ -223,11 +223,37 @@ export interface AnimalAvailabilityItem {
   structures: number;
 }
 
+/** Locally confirmed product months, tied to the enterprise so changing purpose clears dates. */
+export type AnimalSeasonChoices = Partial<Record<HousingKind, { enterpriseId: string; months: number[] }>>;
+
+export function confirmedAnimalMonths(housing: HousingKind, enterpriseId: string, choices: AnimalSeasonChoices): number[] {
+  const choice = choices[housing];
+  return choice?.enterpriseId === enterpriseId ? validAnimalMonths(choice.months) : [];
+}
+
+function validAnimalMonths(raw: unknown): number[] {
+  return Array.isArray(raw) ? [...new Set(raw.filter((m): m is number => Number.isInteger(m) && m >= 1 && m <= 12))].sort((a, b) => a - b) : [];
+}
+
+export function cleanAnimalSeasonChoices(raw: unknown): AnimalSeasonChoices {
+  const out: AnimalSeasonChoices = {};
+  if (!raw || typeof raw !== 'object') return out;
+  for (const [housing, value] of Object.entries(raw)) {
+    if (!Object.hasOwn(HOUSING_ANIMALS, housing) || !value || typeof value !== 'object') continue;
+    const choice = value as { enterpriseId?: unknown; months?: unknown };
+    const enterprise = typeof choice.enterpriseId === 'string' ? ANIMAL_ENTERPRISES[choice.enterpriseId] : undefined;
+    if (enterprise && fits(housing as HousingKind, enterprise)) out[housing as HousingKind] = { enterpriseId: enterprise.enterpriseId, months: validAnimalMonths(choice.months) };
+  }
+  return out;
+}
+
 /**
- * Which chosen enterprises give FOOD in each chart slot, by the sourced months.
+ * Which chosen enterprises give FOOD in each chart slot, by locally confirmed months.
  *
  * Only structures the farmer has said what they keep them for are shown (rule 3). Wool has
- * months but is not food, so a wool flock stays on its card and off the chart. `onlyStanding` is
+ * months but is not food, so a wool flock stays on its card and off the chart. Source references
+ * do not establish this farm's production: commercial layers, for example, require managed
+ * conditions that a coop on the map does not prove. `onlyStanding` is
  * the "from today" chart's rule, as for trees: a coop drawn as proposed has no hens in it yet.
  */
 export function buildAnimalAvailability(
@@ -235,6 +261,7 @@ export function buildAnimalAvailability(
   choices: Readonly<Partial<Record<HousingKind, string>>>,
   months: readonly number[],
   onlyStanding: boolean,
+  seasons: AnimalSeasonChoices = {},
 ): AnimalAvailabilityItem[][] {
   const rows = groups
     .map((g) => {
@@ -243,7 +270,7 @@ export function buildAnimalAvailability(
     })
     .filter((r): r is { g: PlacedAnimalGroup; e: AnimalEnterprise; structures: number } =>
       !!r.e && fits(r.g.housing, r.e) && isFoodProduct(r.e.product) && r.structures > 0)
-    .map((r) => ({ ...r, season: new Set(sourcedProductMonths(r.e)) }))
+    .map((r) => ({ ...r, season: new Set(confirmedAnimalMonths(r.g.housing, r.e.enterpriseId, seasons)) }))
     .filter((r) => r.season.size > 0);
   return months.map((m) => rows
     .filter((r) => r.season.has(m))
@@ -258,11 +285,34 @@ export function buildAnimalAvailability(
 
 const INCLUDE_ANIMALS_KEY = 'imbewu_crops_include_animals_v1';
 const ENTERPRISE_CHOICE_KEY = 'imbewu_animal_enterprise_choice_v1';
+const ANIMAL_SEASON_KEY = 'imbewu_animal_seasons_v1';
 
 export const DEFAULT_INCLUDE_ANIMALS = true;
 
 let sandboxIncludeAnimals = DEFAULT_INCLUDE_ANIMALS;
 let sandboxChoices: Record<string, Partial<Record<HousingKind, string>>> = {};
+let sampleAnimalSeasons: Record<string, AnimalSeasonChoices> = {};
+
+export function loadAnimalSeasonChoices(siteId: string): AnimalSeasonChoices {
+  if (isSampleMode()) return cleanAnimalSeasonChoices(sampleAnimalSeasons[siteId]);
+  if (typeof window === 'undefined') return {};
+  try {
+    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(ANIMAL_SEASON_KEY));
+    return cleanAnimalSeasonChoices(raw ? JSON.parse(raw)?.[siteId] : undefined);
+  } catch { return {}; }
+}
+
+export function saveAnimalSeasonChoices(siteId: string, seasons: AnimalSeasonChoices): void {
+  const clean = cleanAnimalSeasonChoices(seasons);
+  if (isSampleMode()) { sampleAnimalSeasons = { ...sampleAnimalSeasons, [siteId]: clean }; return; }
+  if (typeof window === 'undefined') return;
+  try {
+    const key = activeAccountLocalStorageKey(ANIMAL_SEASON_KEY);
+    const raw = window.localStorage.getItem(key);
+    const all = raw ? JSON.parse(raw) : {};
+    window.localStorage.setItem(key, JSON.stringify({ ...(all && typeof all === 'object' ? all : {}), [siteId]: clean }));
+  } catch { /* The plan remains usable when storage is unavailable. */ }
+}
 
 export function loadIncludeAnimals(): boolean {
   if (isSampleMode()) return sandboxIncludeAnimals;
@@ -290,7 +340,7 @@ export function cleanChoices(raw: unknown): Partial<Record<HousingKind, string>>
   const out: Partial<Record<HousingKind, string>> = {};
   if (!raw || typeof raw !== 'object') return out;
   for (const [housing, id] of Object.entries(raw as Record<string, unknown>)) {
-    if (typeof id !== 'string' || !(housing in HOUSING_ANIMALS)) continue;
+    if (typeof id !== 'string' || !Object.hasOwn(HOUSING_ANIMALS, housing)) continue;
     const e = ANIMAL_ENTERPRISES[id];
     if (e && fits(housing as HousingKind, e)) out[housing as HousingKind] = id;
   }
@@ -327,4 +377,5 @@ export function saveEnterpriseChoices(siteId: string, choices: Partial<Record<Ho
 export function resetSampleAnimalChoices(): void {
   sandboxIncludeAnimals = DEFAULT_INCLUDE_ANIMALS;
   sandboxChoices = {};
+  sampleAnimalSeasons = {};
 }
