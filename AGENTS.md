@@ -233,6 +233,15 @@ for your check to notice, and confirm it actually would.
 
 ---
 
+## 5b. Keep audits readable across Claude and Codex
+
+For audit work, read `docs/audits/README.md` and the latest dated record for the
+area before starting. Save each new audit under `docs/audits/YYYY-MM-DD/` using
+`docs/audits/TEMPLATE.md`, link the previous audit, carry forward finding IDs and
+record what was actually verified. Add it to the date index. Preserve historical
+files and distinguish later fixes from findings that remain open. Push the audit
+with the finished branch and link it in issue #35.
+
 ## 6. House style
 
 - **Comments explain *why*, not *what*.** Most comments in this repo record the
