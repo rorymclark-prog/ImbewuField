@@ -85,11 +85,7 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     'lessons[0] soil-health-l1.infographicAlt',
     'lessons[1] soil-health-l2.infographicAlt',
     'lessons[2] soil-health-l3.infographicAlt',
-    'lessons[2] soil-health-l3.keyPoints[3]',
-    'lessons[2] soil-health-l3.quiz[0].options[2]',
-    'lessons[2] soil-health-l3.quiz[0].rationale',
-    'lessons[2] soil-health-l3.quiz[1].rationale',
-  ], 'uncertain and untranslated fields must remain exact-English holds');
+  ], 'only untranslated media descriptions remain exact-English holds after the source-checked learner drafts were completed');
 
   const compostLesson = source.lessons.find(lesson => lesson.id === 'soil-health-l2');
   assert.ok(compostLesson);
@@ -165,7 +161,7 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     'source drift in an assessment field withdraws the entire paired lesson draft');
 });
 
-test('Soil Health Sesotho L3 drafts only the screened seasonal risks and falls back after source drift', () => {
+test('Soil Health Sesotho L3 preserves screened seasonal risks and checks mulch/leachate claims against source drift', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health')!.lessons[2];
   const draft = SESOTHO_SOIL_HEALTH_DRAFT.lessons[2];
   const english = source.body.split('\n\n');
@@ -173,20 +169,73 @@ test('Soil Health Sesotho L3 drafts only the screened seasonal risks and falls b
   assert.equal(draft.id, source.id);
   assert.equal(draft.body.sourceEnglish, source.body);
   assert.equal(draft.body.reviewStatus, 'machine-draft');
-  assert.equal(localized.length, english.length);
-  assert.deepEqual(localized.slice(0, 9), english.slice(0, 9));
+  assert.equal(localized.length, 13);
+  assert.ok(localized.every((paragraph, index) => paragraph !== english[index]),
+    'all previous English body holds must now have paired draft prose');
+
+  assert.match(localized[0], /mulch e hlwekileng e loketseng.*straw.*dry grass.*wood chips/,
+    'the cover instruction retains clean, suitable mulch and all three source examples');
+  assert.match(localized[1], /e ka fokotsa evaporation.*pula.*mefoka/,
+    'the benefits remain modal and include evaporation, rain impact and weeds');
+  assert.match(localized[2], /trunks and stems.*mongobo.*layer.*ha e dule e le betere/,
+    'keep mulch clear of trunks/stems, check moisture underneath, and do not imply more is always better');
+  assert.match(localized[3], /Cover crops.*main crops.*metsi a fumanehang.*next planting/,
+    'cover-crop choice remains between main crops and depends on local weather, available water and next planting');
+  assert.match(localized[4], /oats, lupins, sunn hemp le cowpea.*pele o jala/,
+    'the four named examples remain unchanged and local suitability is checked before sowing');
+  assert.match(localized[5], /Legumes.*bacteria tse loketseng.*maemo a kgolo.*fix nitrogen.*masalleng.*di a fumaneha ha.*bola/,
+    'nitrogen fixation keeps its bacteria/growing conditions requirements and residues release nutrients as they decompose');
+  assert.match(localized[6], /Worm farms.*food scraps le bedding tse loketseng.*worm castings.*Hlahloba bin.*letsatsi le behilweng/,
+    'suitable scraps and bedding become castings, and bin condition takes precedence over a fixed harvest date');
+  assert.match(localized[7], /^Liquid that drains naturally from a worm bin.*leachate.*worm-casting tea/,
+    'natural drainage remains distinct from prepared worm-casting tea');
+  assert.match(localized[8], /Leachate e ka ba le harmful organisms kapa substances.*O se ke wa e sebedisa hodima edible plants.*hlapolla.*bolokehe/,
+    'leachate may contain harm, must not be used on edible plants, and dilution is not treated as safe');
   assert.deepEqual(localized.slice(9, 12), [
     'Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.',
     'Moea oa mariha o ka nka mobu o ommeng o ka holimo.',
     'Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.',
-  ]);
-  assert.equal(localized[12], english[12]);
+  ], 'the existing 10–12 seasonal risk translations remain verbatim, including conditional runoff');
+  assert.match(localized[12], /Cover crops, mulch le organic matter di ka thusa ho tshwara mobu.*dule o phela/,
+    'the closing claim remains that these covers can help hold soil and keep it alive');
+
   const shown = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.sesothoDraft);
-  assert.deepEqual(shown.content.quiz.map(question => question.correct), source.quiz.map(question => question.correct));
+
+  const kp = draft.keyPoints[3];
+  assert.equal(kp.sourceEnglish, source.keyPoints[3]);
+  assert.equal(kp.reviewStatus, 'machine-draft');
+  assert.match(kp.sesothoDraft, /Leachate.*do not use it on edible plants/,
+    'the leachate summary explicitly prohibits use on edible plants');
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.sesothoDraft));
+
+  const seasonalQuiz = draft.quiz[0];
+  assert.equal(seasonalQuiz.sourceCorrectIndex, source.quiz[0].correct);
+  assert.equal(seasonalQuiz.sourceCorrectIndex, 2);
+  assert.deepEqual(seasonalQuiz.options.map(option => option.sourceEnglish), source.quiz[0].options,
+    'seasonal quiz options remain paired and in canonical order');
+  assert.equal(seasonalQuiz.options[2].reviewStatus, 'machine-draft');
+  assert.match(seasonalQuiz.options[2].sesothoDraft, /Wind erosion.*topsoil e ommeng.*soil structure.*spring storm/,
+    'the correct risk answer retains wind erosion, dry topsoil, structure loss and spring storm impact');
+  assert.match(seasonalQuiz.rationale.sesothoDraft, /moya wa mariha.*topsoil e ommeng.*marothodi a pula.*moo metsi a phallang.*mobu o hlephileng/,
+    'the rationale keeps the winter-wind and raindrop claims and runoff conditional');
+  assert.equal(shown.content.quiz[0].correct, source.quiz[0].correct);
+
+  const leachateQuiz = draft.quiz[1];
+  assert.equal(leachateQuiz.sourceCorrectIndex, source.quiz[1].correct);
+  assert.equal(leachateQuiz.sourceCorrectIndex, 1);
+  assert.equal(leachateQuiz.rationale.sourceEnglish, source.quiz[1].rationale);
+  assert.equal(leachateQuiz.rationale.reviewStatus, 'machine-draft');
+  assert.match(leachateQuiz.rationale.sesothoDraft, /^Leachate ke liquid that drains naturally from a worm bin/,
+    'the rationale retains that leachate drains naturally from the worm bin');
+  assert.match(leachateQuiz.rationale.sesothoDraft, /Composition ya yona e a fapana.*feed e bolokehileng ka tiisetso.*edible crops/,
+    'variable composition is not presented as a guaranteed-safe feed for edible crops');
+  assert.match(shown.content.quiz[1].rationale, /liquid that drains naturally from a worm bin/);
+
   const changedSource = { ...source, body: source.body.replace('Winter wind', 'Cold wind') };
-  assert.equal(resolveLearnerLessonPresentation(changedSource, 'st').status, 'english-fallback');
+  assert.equal(resolveLearnerLessonPresentation(changedSource, 'st').status, 'english-fallback',
+    'changing one canonical body condition withdraws the complete source-paired draft');
 });
 
 test('Soil L1 preserves the reviewed jar limits while completing its source-paired Sesotho body', () => {
