@@ -1,0 +1,33 @@
+{
+  "packetId": "TS-MARKET-L2-BODY-BACKCHECK-2026-10-03",
+  "languageCode": "ts",
+  "lessonId": "market-community-l2",
+  "sourceRevision": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+  "candidatePacket": "TS-MARKET-L2-BODY-CANDIDATES-2026-10-03.json",
+  "sourceParagraphCount": 12,
+  "changedParagraphIndices": [
+    3,
+    5,
+    6,
+    7,
+    8,
+    10
+  ],
+  "preservedParagraphIndices": [
+    0,
+    1,
+    2,
+    4,
+    9,
+    11
+  ],
+  "sourceAndCurrentArraysMatchedBeforeWrite": true,
+  "canonicalEnglishChanged": false,
+  "otherFieldsChanged": false,
+  "reviewStatus": "unreviewed machine draft; facilitator/local language review pending",
+  "reviewBasis": "root-reviewed final candidate; final p5/p7/p10 repairs retained",
+  "checks": {
+    "sourceDriftFallbackTestAdded": true,
+    "businessConditionsAndPreservedNeighborsCovered": true
+  }
+}

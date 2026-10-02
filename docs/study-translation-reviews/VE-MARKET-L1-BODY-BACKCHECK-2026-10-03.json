@@ -1,0 +1,38 @@
+{
+  "packetId": "VE-MARKET-L1-BODY-BACKCHECK-2026-10-03",
+  "languageCode": "ve",
+  "lessonId": "market-community-l1",
+  "sourceRevision": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+  "candidatePacket": "VE-MARKET-L1-BODY-CANDIDATES-2026-10-03.json",
+  "sourceParagraphCount": 17,
+  "changedParagraphIndices": [
+    2,
+    5,
+    7,
+    11,
+    13,
+    15,
+    16
+  ],
+  "preservedParagraphIndices": [
+    0,
+    1,
+    3,
+    4,
+    6,
+    8,
+    9,
+    10,
+    12,
+    14
+  ],
+  "sourceAndCurrentArraysMatchedBeforeWrite": true,
+  "canonicalEnglishChanged": false,
+  "otherFieldsChanged": false,
+  "reviewStatus": "unreviewed machine draft; facilitator/local language review pending",
+  "reviewBasis": "root and independent semantic backcheck accepted the repaired full-body draft",
+  "checks": {
+    "sourceDriftFallbackTestAdded": true,
+    "businessConditionsAndPreservedNeighborsCovered": true
+  }
+}

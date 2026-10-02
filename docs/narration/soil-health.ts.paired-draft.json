@@ -42,10 +42,12 @@
             "provenance": "new-machine-draft; proposed for review; not present in the existing Xitsonga course draft"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I ndhawu leyi hanyaka leyi yi phamelaka crops, yi hlayisaka mati, naswona yi rhwalaka ntshovelo wa wena."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eka modulu leyi, dyondza ku hlaya soil, ku endla safe compost, ku sirhelela bare ground, ni ku tirhisa cover crops na worm farms."
           }
         ]
       }
@@ -73,7 +75,8 @@
             "provenance": "new-machine-draft; proposed for review; not present in the existing Xitsonga course draft"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Repeated bare ground, compaction and loss of organic matter can damage it. Muhlovo ntsena a wu kombisi mhaka leyi heleleke."
           },
           {
             "status": "english-hold"
@@ -182,7 +185,8 @@
             "text": "Langutisisa swikombiso leswi swimbirhi swa misava."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xosungula, languta soil structure. Loko u ri ensin’wini, twa ndlela leyi xiphemu xa misava lexi tsakamaka xi hambanaka ha yona."
           },
           {
             "status": "draft",
@@ -605,7 +609,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fananisa ni ndhawu yin’wana, u tekela enhlokweni maxelo ya sweswinyana na management."
           },
           {
             "status": "english-hold"

@@ -1,0 +1,237 @@
+{
+  "packetId": "IMBEWU-TS-MARKET-L2-FULLER-BODY-FINAL-CANDIDATES-2026-10-03",
+  "sourceRevision": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+  "language": "ts",
+  "languageName": "Xitsonga",
+  "lessonId": "market-community-l2",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ts-market-community.ts",
+  "sourceParagraphCount": 12,
+  "exactSourceParagraphs": [
+    "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+    "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+    "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+    "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+    "A box scheme supplies a regular selection to agreed customers.",
+    "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+    "Start from what you can reliably supply and what customers want.",
+    "Check the costs and household food needs before promising regular boxes.",
+    "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+    "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+    "Offer the surplus you have and agree clear terms with customers.",
+    "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+  ],
+  "currentRegistryParagraphs": [
+    "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+    "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+    "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+    "Direct selling can retain more of the sale price, kambe it also takes time, packing, transport and customer care.",
+    "A box scheme supplies a regular selection to agreed customers.",
+    "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+    "Sungula hi what you can reliably supply and what customers want.",
+    "Kambisisa costs and household food needs before promising regular boxes.",
+    "Garden area or customer count alone does not predict income. Ringeta arrangement leyi manageable, kutani u record results.",
+    "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+    "Offer the surplus you have and agree clear terms with customers.",
+    "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label."
+  ],
+  "candidateParagraphs": [
+    "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+    "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+    "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+    "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
+    "A box scheme supplies a regular selection to agreed customers.",
+    "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+    "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
+    "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
+    "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+    "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+    "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
+    "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label."
+  ],
+  "changedParagraphIndices": [
+    3,
+    5,
+    6,
+    7,
+    8,
+    10
+  ],
+  "preservedParagraphIndices": [
+    0,
+    1,
+    2,
+    4,
+    9,
+    11
+  ],
+  "exactEnglishHoldIndices": [
+    2,
+    4,
+    9,
+    11
+  ],
+  "entries": [
+    {
+      "paragraphIndex": 0,
+      "fieldPath": "body.paragraphs[0]",
+      "exactSourceParagraph": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "currentRegistryParagraph": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+      "candidateParagraph": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+      "backtranslation": "Preserved existing text.",
+      "meaningAndConditions": "The customer needs are still named in their existing source-bound form.",
+      "status": "preserve current text",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    },
+    {
+      "paragraphIndex": 1,
+      "fieldPath": "body.paragraphs[1]",
+      "exactSourceParagraph": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "currentRegistryParagraph": "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+      "candidateParagraph": "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+      "backtranslation": "Preserved existing text.",
+      "meaningAndConditions": "Compare market fees, transport, packing and unsold produce with the selling price.",
+      "status": "preserve current text",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    },
+    {
+      "paragraphIndex": 2,
+      "fieldPath": "body.paragraphs[2]",
+      "exactSourceParagraph": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentRegistryParagraph": "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidateParagraph": "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "backtranslation": "Preserved existing text.",
+      "meaningAndConditions": "Check market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "status": "preserve current text",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    },
+    {
+      "paragraphIndex": 3,
+      "fieldPath": "body.paragraphs[3]",
+      "exactSourceParagraph": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentRegistryParagraph": "Direct selling can retain more of the sale price, kambe it also takes time, packing, transport and customer care.",
+      "candidateParagraph": "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
+      "backtranslation": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "meaningAndConditions": "The comparative price-retention clause stays exact English; the contrast, time and customer-care framing is translated.",
+      "status": "unreviewed mixed-language machine candidate",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    },
+    {
+      "paragraphIndex": 4,
+      "fieldPath": "body.paragraphs[4]",
+      "exactSourceParagraph": "A box scheme supplies a regular selection to agreed customers.",
+      "currentRegistryParagraph": "A box scheme supplies a regular selection to agreed customers.",
+      "candidateParagraph": "A box scheme supplies a regular selection to agreed customers.",
+      "backtranslation": "Preserved exact English due to the business commitment in regular supply to agreed customers.",
+      "meaningAndConditions": "A box scheme supplies a regular selection to agreed customers.",
+      "status": "preserve current text",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    },
+    {
+      "paragraphIndex": 5,
+      "fieldPath": "body.paragraphs[5]",
+      "exactSourceParagraph": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "currentRegistryParagraph": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidateParagraph": "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "backtranslation": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "meaningAndConditions": "The agreement contents and the complete crop-shortage and keep-the-agreement conditions remain explicit; no certainty of supply is added.",
+      "status": "unreviewed mixed-language machine candidate",
+      "uncertainty": "Contents, price, payment, the crop-shortage contingency, and the exact only-when condition remain explicit. The comma before “and what happens” was removed for cleaner code-switch punctuation. Unreviewed candidate."
+    },
+    {
+      "paragraphIndex": 6,
+      "fieldPath": "body.paragraphs[6]",
+      "exactSourceParagraph": "Start from what you can reliably supply and what customers want.",
+      "currentRegistryParagraph": "Sungula hi what you can reliably supply and what customers want.",
+      "candidateParagraph": "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
+      "backtranslation": "Start with what you can reliably supply and what customers want.",
+      "meaningAndConditions": "The full reliability clause is kept exact English, with localized start and customer-wants framing.",
+      "status": "unreviewed mixed-language machine candidate",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    },
+    {
+      "paragraphIndex": 7,
+      "fieldPath": "body.paragraphs[7]",
+      "exactSourceParagraph": "Check the costs and household food needs before promising regular boxes.",
+      "currentRegistryParagraph": "Kambisisa costs and household food needs before promising regular boxes.",
+      "candidateParagraph": "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
+      "backtranslation": "Check costs and household food needs before promising regular boxes.",
+      "meaningAndConditions": "Check costs and household food needs before promising regular boxes; timing still places the check before any promise.",
+      "status": "unreviewed mixed-language machine candidate",
+      "uncertainty": "Cost and regular-box terms stay English; household-food needs remain before the exact English promise condition. Unreviewed candidate."
+    },
+    {
+      "paragraphIndex": 8,
+      "fieldPath": "body.paragraphs[8]",
+      "exactSourceParagraph": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentRegistryParagraph": "Garden area or customer count alone does not predict income. Ringeta arrangement leyi manageable, kutani u record results.",
+      "candidateParagraph": "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+      "backtranslation": "Garden area or customer count alone does not predict income. Try an arrangement you can manage and write down results.",
+      "meaningAndConditions": "The no-prediction qualification remains exact English; try a manageable arrangement and record results.",
+      "status": "unreviewed mixed-language machine candidate",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    },
+    {
+      "paragraphIndex": 9,
+      "fieldPath": "body.paragraphs[9]",
+      "exactSourceParagraph": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "currentRegistryParagraph": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "candidateParagraph": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "backtranslation": "Preserved exact English because it states a critical condition and prohibition against promising a delivery that cannot be supplied.",
+      "meaningAndConditions": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "status": "preserve current text",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    },
+    {
+      "paragraphIndex": 10,
+      "fieldPath": "body.paragraphs[10]",
+      "exactSourceParagraph": "Offer the surplus you have and agree clear terms with customers.",
+      "currentRegistryParagraph": "Offer the surplus you have and agree clear terms with customers.",
+      "candidateParagraph": "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
+      "backtranslation": "Offer the surplus you have and agree clear terms with customers.",
+      "meaningAndConditions": "Offer only the surplus you have and agree clear terms with customers; no sale or amount is guaranteed.",
+      "status": "unreviewed mixed-language machine candidate",
+      "uncertainty": "The sales verb Offer stays exact English pending local lexical confirmation. The candidate preserves the limit to surplus actually held and clear terms with customers. Unreviewed candidate."
+    },
+    {
+      "paragraphIndex": 11,
+      "fieldPath": "body.paragraphs[11]",
+      "exactSourceParagraph": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentRegistryParagraph": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label.",
+      "candidateParagraph": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label.",
+      "backtranslation": "Preserved existing text; the certification and buyer-claim check remains exact English.",
+      "meaningAndConditions": "Describe growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "status": "preserve current text",
+      "uncertainty": "Draft requires local facilitator review; no fluent approval."
+    }
+  ],
+  "verification": {
+    "sourceAndOrder": "Copied from the existing checked source-paired Market packet; the canonical lesson and registry body were inspected in the stated worktree. Paragraph count and order match.",
+    "neighborPreservation": "Every candidate index not listed in changedParagraphIndices is byte-for-byte equal to the current TS registry text.",
+    "businessConstraints": "No added prices, quantities, product categories, legal requirements, customer commitments, sale guarantees, income promises, or supply guarantees. Crop-shortage, only-when agreement, before-promising, and cannot-supply conditions remain explicit.",
+    "status": "Unreviewed machine draft requiring facilitator/local language review; not fluent-approved."
+  },
+  "constraints": [
+    "No repository edits.",
+    "Canonical English unchanged.",
+    "Preserve the full “what you can reliably supply” clause in English.",
+    "No invented figures, products, guarantees, or terms."
+  ],
+  "provenance": "Final bounded text repair following independent backcheck. Live canonical and TS registry arrays/source pairs were verified at c2ad8e033b4758b34f288c31d459d23ebaccb5f4. The English source/current arrays are unchanged; only candidate p5/p7/p10 wording was repaired. No repository edits; no fluent approval.",
+  "repairSummary": [
+    {
+      "paragraphIndex": 5,
+      "change": "Removed the extra comma before the retained English crop-shortage clause."
+    },
+    {
+      "paragraphIndex": 7,
+      "change": "Retained the before-promising condition as exact English after localized costs/household-needs framing."
+    },
+    {
+      "paragraphIndex": 10,
+      "change": "Retained Offer as exact English pending confirmation that the proposed Xitsonga verb means offer rather than give/transfer."
+    }
+  ],
+  "implementationProvenance": "Canonical English lesson and current regional registry were checked at HEAD 00abeeb7ae967e733971f5af70d9da9fa2d5d0c0; exact source/current arrays matched before implementation. This packet records source-bound body candidates only. No title, keypoint, quiz, canonical content, species, number, or media was changed. Candidate remains unreviewed machine draft.",
+  "reviewStatus": "machine-draft; facilitator/local language review pending"
+}

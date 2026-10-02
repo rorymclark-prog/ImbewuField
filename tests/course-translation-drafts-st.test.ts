@@ -318,14 +318,21 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
   for (const index of [0, 4, 9]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
     'the screened customer, box and variable-supply concepts reach the learner');
   // New ordinary framing was independently checked; unresolved comparative and reliability claims still hold.
-  for (const index of [1, 2, 5, 7, 8, 10, 11]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
-  for (const index of [3, 6]) assert.equal(draftParagraphs[index], sourceParagraphs[index]);
-  assert.ok(draftParagraphs[2].endsWith('An informal stall does not automatically have no rules or costs.'));
+  for (const index of [1, 2, 3, 5, 7, 8, 10, 11]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
+  assert.ok(draftParagraphs[3].startsWith('Direct selling can retain more of the sale price, empa ho boetse ho hloka nako,'),
+    'the bounded sale-price claim remains English while ordinary time and customer-care wording is drafted');
+  assert.ok(draftParagraphs[6].startsWith('Qala ka what you can reliably supply'),
+    'the reliability criterion stays exact English inside its checked Sesotho framing');
+  assert.ok(draftParagraphs[2].startsWith('Hlahloba market rules le ditlhoko tsa lehae'));
+  assert.ok(draftParagraphs[2].endsWith('ha ho na rules kapa costs.'),
+    'the Sesotho framing keeps the caveat that informal stalls may still have rules and costs');
   assert.ok(draftParagraphs[5].endsWith('Regular orders help planning only when customers and growers can keep the agreement.'));
   assert.ok(draftParagraphs[7].includes('ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes'));
   assert.ok(draftParagraphs[8].startsWith('Garden area or customer count alone does not predict income.'));
   assert.ok(draftParagraphs[10].includes('surplus eo o nang le yona'));
-  assert.ok(draftParagraphs[11].endsWith('Check any certification or claim the buyer requires before using a label.'));
+  assert.ok(draftParagraphs[11].startsWith('Hlalosa ditsela tseo o lemang ka tsona ka botshepehi.'));
+  assert.ok(draftParagraphs[11].includes('Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.'),
+    'the certification and buyer-claim check remains present in the Sesotho framing');
   assert.equal(lesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft');
   assert.equal(lesson.infographicAlt?.sesothoDraft,
