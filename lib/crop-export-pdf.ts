@@ -103,7 +103,7 @@ export interface CropPlanPdfInput {
   beds: PlanBed[];
   tasks: CropTask[];
   meta: CropPlanPdfMeta;
-  /** buildYearReport's paragraphs — the plan in plain words. */
+  /** buildYearReport's scoped comparison; app exports omit its recurring calendar narrative. */
   yearReport?: string[];
   /**
    * The accepted suggestion's own notes, off the saved plan (CropPlanState).
@@ -652,21 +652,21 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   });
   s.y += assuranceH + 12;
 
-  // "Say a rule once." The year-report prose opens with the crop-cycle total
-  // and biggest crop — both are already tiles or signals directly above. Only
-  // paragraphs that say something those summaries cannot are repeated here.
-  const extra = (input.yearReport ?? []).filter(
-    (p) => !/^For crops with a verified kg\/m² benchmark/.test(p) && !/^Within the benchmark comparison/.test(p),
-  );
-  if (extra.length) {
+  // The dashboard includes active existing crops; this comparison covers new
+  // bed-crop cycles. Their totals and leading crop are not duplicate claims.
+  if (input.yearReport?.length) {
+    const comparison = [
+      'This comparison covers planned new bed-crop cycles. It is not a whole-farm production forecast. Read the monthly growing and food calendars for timing.',
+      ...input.yearReport,
+    ];
     // Keep the heading with its first paragraph (and ideally the next): printed alone it sat at the
     // foot of page 1 with the text it introduces starting page 2 unheaded.
     s.font(8.8);
-    const firstLines = extra.slice(0, 2)
+    const firstLines = comparison.slice(0, 2)
       .reduce((n, para) => n + (s.doc.splitTextToSize(pdfSafe(para), s.contentWidth) as string[]).length, 0);
     s.need(10 * 1.4 + 6 + firstLines * 8.8 * 1.4 + 5);
-    s.paragraph('Also worth knowing', { size: 10, bold: true, ink: INK.green, gap: 6 });
-    for (const para of extra) s.paragraph(para, { size: 8.8, ink: INK.muted, gap: 5 });
+    s.paragraph('Planned crop comparison', { size: 10, bold: true, ink: INK.green, gap: 6 });
+    for (const para of comparison) s.paragraph(para, { size: 8.8, ink: INK.muted, gap: 5 });
   }
 
   drawPlanNotes(s, input);

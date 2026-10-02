@@ -15,7 +15,7 @@ import { PERENNIAL_HARVEST } from '@/lib/perennial-harvest';
 import {
   availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename, FARMER_SECTIONS, resolveAvailability, type CropPlanPdfInput,
 } from '@/lib/crop-export-pdf';
-import { tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
+import { buildPlanYieldBenchmark, buildYearReport, tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
 
 const BEDS: PlanBed[] = [{ id: 'b1', label: 'Bed 1', areaM2: 10, kind: 'bed' }];
@@ -147,6 +147,45 @@ function tinyPng(): string {
 }
 
 const pdfText = async (blob: Blob) => Buffer.from(await blob.arrayBuffer()).toString('latin1');
+// Compare the visible sentence across PDF line wrapping, not a single drawing run.
+const visibleText = (raw: string) => [...raw.matchAll(/\(((?:\\.|[^\\)])*)\)\s*Tj/g)]
+  .map(match => match[1].replace(/\\([\\()])/g, '$1')).join(' ');
+
+test('the detailed benchmark-only summary cannot contradict the dated picking calendar', async () => {
+  const beds: PlanBed[] = [
+    { id: 'existing-bed', label: 'Already growing', areaM2: 10, kind: 'bed' },
+    { id: 'new-bed', label: 'New crop', areaM2: 10, kind: 'bed' },
+  ];
+  const plantings: Planting[] = [
+    { id: 'existing', bedId: 'existing-bed', cropKey: 'swiss-chard', sowMonth: 8, existing: true },
+    { id: 'planned', bedId: 'new-bed', cropKey: 'carrots', sowMonth: 3 },
+  ];
+  const yearReport = buildYearReport(plantings, beds, { includeCalendarNarrative: false });
+  assert.ok(yearReport.some(paragraph => paragraph.startsWith('For crops with a verified kg/m² benchmark')),
+    'the fixture must retain a real planned-crop comparison, not pass by drawing an empty report');
+  const raw = await pdfText(await buildCropPlanPdf(input({
+    plantings, beds, tasks: [], yearReport, sections: ['dashboard'], now: new Date('2026-10-02T08:00:00Z'),
+  })));
+  const text = visibleText(raw);
+  // The dashboard includes the active existing chard cycle, while the new-crop
+  // comparison covers the planned carrots. Dropping the latter as a duplicate
+  // used to hide its different denominator and the crop the farmer is choosing.
+  const allCycles = buildPlanYieldBenchmark(plantings, beds, 10).knownKg;
+  const newCycles = buildPlanYieldBenchmark(plantings.filter(planting => !planting.existing), beds).knownKg;
+  assert.ok(allCycles !== null && newCycles !== null && allCycles > newCycles,
+    'the fixture must distinguish the dashboard and proposed-crop benchmark scopes');
+  assert.ok(text.includes(`${allCycles.toFixed(1)} kg`), 'the dashboard must retain its existing-plus-planned crop comparison');
+  assert.ok(text.includes(`total about ${newCycles.toFixed(0)}kg`), 'the separate planned-new-crop figure must not be dropped as a duplicate');
+  assert.ok(text.includes('Carrots is the biggest crop-cycle total'), 'the new-crop leader must not be replaced by the dashboard leader');
+  assert.ok(raw.includes('(Planned crop comparison) Tj'), 'the actual PDF lost the comparison scope heading');
+  assert.ok(text.includes('planned new bed-crop cycles'), 'the summary must identify which rows its benchmark covers');
+  assert.ok(text.includes('whole-farm production forecast'), 'the comparison must not pose as all site production');
+  assert.ok(text.includes('monthly growing and food calendars'), 'timing must point to the shared dated calendars');
+  assert.ok(!text.includes('Year ahead'), 'a new-bed benchmark must not be labelled as the whole year ahead');
+  assert.ok(!text.includes('Nothing is due for picking') && !text.includes('No verified fresh-picking window'),
+    'a proposed-crop benchmark must not announce a gap that ignores already growing crops');
+  assert.ok(!text.includes('can be kept after harvest'), 'recurring storage prose must not replace the dated availability chart');
+});
 
 // Picking icons alone do not answer Rory's request to see the growing bars from the app.
 // Inspect the real PDF text so a section switch that silently drops those bars can fail.

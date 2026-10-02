@@ -1446,7 +1446,12 @@ function FacilitatorCropsPageInner() {
     () => (mounted ? buildBuyingSchedule(plantings, beds, currentMonth) : []),
     [mounted, plantings, beds, currentMonth],
   );
-  const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
+  // Existing crops can be ready while new sowings are still growing. Only the selected food
+  // chart answers which months have food; this comparison must not declare a separate gap.
+  const yearReport = useMemo(
+    () => buildYearReport(plantings, beds, { includeCalendarNarrative: false }),
+    [plantings, beds],
+  );
   // A dated field plan must not wrap a future crop into an earlier month. Start from today;
   // the established-year option remains an explicitly chosen recurring-cycle reference.
   const [yearMode, setYearMode] = useState<'established' | 'fromToday'>('fromToday');
@@ -2570,7 +2575,10 @@ function FacilitatorCropsPageInner() {
               </div>
 
               <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><BookOpen size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Year ahead', 'Unyaka ozayo')}</div>
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><BookOpen size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Planned crop comparison</div>
+                <p className="font-sans mb-2" style={{ fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                  New vegetable and staple crop cycles, using published yield benchmarks. See Year of food above for picking months and gaps.
+                </p>
                 {yearReport.length > 0 ? (
                   <div className="space-y-2">
                     {yearReport.map((line, i) => (
@@ -2578,7 +2586,7 @@ function FacilitatorCropsPageInner() {
                     ))}
                   </div>
                 ) : (
-                  <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add some plantings to see a year-ahead summary.</div>
+                  <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add a planned bed or plot sowing to see its crop-cycle comparison.</div>
                 )}
               </div>
             </div>

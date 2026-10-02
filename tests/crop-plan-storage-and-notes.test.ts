@@ -97,6 +97,59 @@ function* sweep(): Generator<SweepCase> {
 
 // ── A. the storage contradiction ────────────────────────────────────────────
 
+test('a planned-crop comparison cannot contradict existing October and November pickings', () => {
+  // The live October sample showed cabbage/onions ready while an undated
+  // new-crop narrative declared Sep–Nov empty. The dated calendar owns that
+  // question; a benchmark comparison must not answer it a second way.
+  const beds = bedsFor(3, 0, 9);
+  const plantings: Planting[] = [
+    { id: 'growing-cabbage', bedId: 'b1', cropKey: 'cabbage', sowMonth: 3, existing: true },
+    { id: 'growing-onions', bedId: 'b2', cropKey: 'onions', sowMonth: 3, existing: true },
+    { id: 'new-tomatoes', bedId: 'b3', cropKey: 'tomatoes', sowMonth: 10 },
+  ];
+  const before = JSON.stringify({ beds, plantings });
+  const dated = buildFoodAvailability(plantings, beds, 10, 12);
+  assert.ok(dated[0].some((item) => item.cropKey === 'cabbage' && item.status === 'fresh'));
+  assert.ok(dated[1].some((item) => item.cropKey === 'onions' && item.status === 'fresh'));
+  const annual = buildYearReport(plantings, beds);
+  assert.ok(annual.some((line) => line.startsWith('No verified fresh-picking window')),
+    'the control must reproduce the separate annual timing claim');
+  const comparison = buildYearReport(plantings, beds, { includeCalendarNarrative: false });
+  assert.equal(comparison[0], annual[0], 'removing a timing claim must not alter the sourced benchmark');
+  assert.match(comparison[0], /new bed crop cycles in this comparison/);
+  assert.doesNotMatch(comparison.join(' '), /No verified fresh-picking window|Nothing is due for picking|usable in/);
+  assert.equal(JSON.stringify({ beds, plantings }), before, 'presentation must not rewrite saved plantings or areas');
+});
+
+test('a dated-screen comparison leaves annual gaps and storage months to the calendar', () => {
+  const beds = bedsFor(1, 0, 9);
+  const plantings: Planting[] = [{ id: 'bn', bedId: 'b1', cropKey: 'butternut', sowMonth: 10 }];
+  const annual = buildYearReport(plantings, beds);
+  assert.ok(annual.some((line) => line.startsWith('No verified fresh-picking window')));
+  assert.ok(annual.some((line) => /can be kept after harvest/.test(line)), 'storage control must exercise a real sourced duration');
+  assert.match(annual.find((line) => line.startsWith('No verified fresh-picking window'))!, /repeating new bed crop cycles only/);
+  assert.doesNotMatch(annual.join(' '), /Nothing is due for picking/);
+  const comparison = buildYearReport(plantings, beds, { includeCalendarNarrative: false });
+  assert.equal(comparison[0], annual[0]);
+  assert.ok(comparison.some((line) => line.startsWith('Within the benchmark comparison')));
+  assert.doesNotMatch(comparison.join(' '), /scheduled around|usable in|can be kept after harvest/);
+});
+
+test('removing annual timing prose retains unknown yields, cover crops and area-conflict warnings', () => {
+  const beds = bedsFor(1, 0, 9);
+  const options = { includeCalendarNarrative: false };
+  const unknown = buildYearReport([{ id: 'unknown', bedId: 'b1', cropKey: 'amadumbe', sowMonth: 4 }], beds, options).join(' ');
+  assert.match(unknown, /no verified kg\/m² benchmark/);
+  assert.match(unknown, /treating it as 0kg would be false/);
+  const cover = buildYearReport([{ id: 'cover', bedId: 'b1', cropKey: 'oats', sowMonth: 5 }], beds, options).join(' ');
+  assert.match(cover, /soil-cover crop.*0 food kg.*not as a failed harvest/);
+  const conflict = buildYearReport([
+    { id: 'one', bedId: 'b1', cropKey: 'tomatoes', sowMonth: 10 },
+    { id: 'two', bedId: 'b1', cropKey: 'maize', sowMonth: 10 },
+  ], beds, options).join(' ');
+  assert.match(conflict, /No kilogram or value total.*overlapping or invalid planting shares/);
+});
+
 /** The months the quiet-month sentence claims nothing is due for picking in. */
 function quietRunFromSentence(sentence: string): number[] | null {
   const match = sentence.match(/scheduled around ([A-Za-z]{3})(?:-([A-Za-z]{3}))?\./);

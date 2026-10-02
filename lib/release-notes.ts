@@ -51,6 +51,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       where: 'Study → Seeds and Seed Sovereignty / Small Livestock Integration', href: '/student',
       detail: 'Compare drafts with English, answer a quiz, and play the silent slides.' },
   ] },
+  { when: '2 October 2026', sha: 'd178ee8f', changes: [
+    'Picking months follow the food chart, including crops already growing.',
+    'New crop comparisons keep their own totals in the app and detailed PDF.',
+  ], tour: [
+    { title: 'Check food months and new crops', where: 'Production plan → Year of food and Planned crop comparison',
+      href: '/facilitator/crops',
+      detail: 'Read picking months in Year of food, then compare the new crop cycles separately.' },
+  ] },
   { when: '2 October 2026', sha: '133fe811', changes: [
     'Reading quizzes add Tshivenda and Xitsonga draft explanations beside English.',
     'Frost, disease and soil cautions keep exact English; answers stay source-paired.',
