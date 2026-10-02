@@ -16,11 +16,12 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-1. [Live edge cases: food-only plans and decimal totals — 2 October 2026](2026-10-02/production-live-edge-cases-codex.md).
-2. [Production-plan follow-up — 2 October 2026](2026-10-02/crop-production-codex-followup.md).
-3. [Original crop/production finding register — 2 October 2026](2026-10-02/crop-production-audit.md).
-4. [Today's nine-page Ubhejane crop plan audit](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf).
-5. [Earlier crop-plan truth audit — 6 August](../CROP-PLAN-TRUTH-AUDIT-2026-08-06.md).
+1. [Timing narrative: dated food calendar and scoped crop comparisons — 2 October 2026](2026-10-02/production-timing-narrative-codex.md).
+2. [Live edge cases: food-only plans and decimal totals — 2 October 2026](2026-10-02/production-live-edge-cases-codex.md).
+3. [Production-plan follow-up — 2 October 2026](2026-10-02/crop-production-codex-followup.md).
+4. [Original crop/production finding register — 2 October 2026](2026-10-02/crop-production-audit.md).
+5. [Today's nine-page Ubhejane crop plan audit](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf).
+6. [Earlier crop-plan truth audit — 6 August](../CROP-PLAN-TRUTH-AUDIT-2026-08-06.md).
 
 Today's PDF is preserved as the original audit snapshot. Its follow-up chat is
 still implementing changes; consult the register before treating an original
@@ -57,6 +58,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-02 | [Production timing narrative: dated food and scoped crop comparisons](2026-10-02/production-timing-narrative-codex.md) |
 | 2026-10-02 | [Live production edge cases: food-only maps and decimal quantities](2026-10-02/production-live-edge-cases-codex.md) |
 | 2026-10-02 | [Production-plan follow-up: implementation, sources and verified outputs](2026-10-02/crop-production-codex-followup.md) |
 | 2026-10-02 | [Crop/production planning: original register](2026-10-02/crop-production-audit.md) · [Original nine-page audit PDF](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf) |
