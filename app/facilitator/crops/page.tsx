@@ -21,6 +21,11 @@ import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
+import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
+import PoultryGuidanceCard from '@/components/crops/PoultryGuidanceCard';
+import SiteSurveySheet from '@/components/SiteSurveySheet';
+import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
+import { canonicalCoordinateSiteId } from '@/lib/site-id';
 import CropIcon from '@/components/CropIcon';
 import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
@@ -28,7 +33,7 @@ import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/li
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
-import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
+import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, poultryGuidance, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
 import TreeSeasonsCard from '@/components/crops/TreeSeasonsCard';
 import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
@@ -77,7 +82,7 @@ import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format
 // and three copies of that sentence is how they stop doing so.
 import type { BuyingMonth } from '@/lib/crop-export-schedule';
 import {
-  buildBuyingSchedule, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
+  buildBuyingSchedule, buildProductionGuide, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
   taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE, weightRangeLabel,
 } from '@/lib/crop-export-schedule';
 
@@ -862,6 +867,7 @@ function FacilitatorCropsPageInner() {
       siteMonthlyTempC: siteClimate?.monthlyTempC,
       siteMonthlyRainMm: siteClimate?.monthlyRainMm,
       siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
+      observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined,
     };
     // Say WHERE the climate came from, not just what it is — a satellite-derived
     // per-site profile and a reference city 250 km away are different claims.
@@ -1193,18 +1199,35 @@ function FacilitatorCropsPageInner() {
   const siteLat = canvasLatLon?.lat ?? design?.bgSite?.lat;
   const siteLon = canvasLatLon?.lon ?? design?.bgSite?.lon;
   const hasSiteCoords = typeof siteLat === 'number' && typeof siteLon === 'number';
-  const [siteClimate, setSiteClimate] = useState<SiteClimate | null>(null);
+  const surveySiteId = hasSiteCoords ? canonicalCoordinateSiteId(`site:${siteLat!.toFixed(5)},${siteLon!.toFixed(5)}`) : null;
+  const [surveySnapshot, setSurveySnapshot] = useState<{ siteId: string; survey: SiteSurvey | null } | null>(null);
+  const siteSurvey = surveySnapshot?.siteId === surveySiteId ? surveySnapshot?.survey ?? null : null;
+  const [siteSurveyOpen, setSiteSurveyOpen] = useState(false);
   useEffect(() => {
-    if (!hasSiteCoords) { setSiteClimate(null); return; }
+    setSiteSurveyOpen(false);
+    if (!surveySiteId) { setSurveySnapshot(null); return; }
+    const refresh = () => setSurveySnapshot({ siteId: surveySiteId, survey: loadSurvey(surveySiteId) });
+    refresh();
+    window.addEventListener('imbewu-surveys-changed', refresh);
+    window.addEventListener('storage', refresh);
+    return () => {
+      window.removeEventListener('imbewu-surveys-changed', refresh);
+      window.removeEventListener('storage', refresh);
+    };
+  }, [surveySiteId]);
+  const climateSiteKey = hasSiteCoords ? `${siteLat},${siteLon}` : null;
+  const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null } | null>(null);
+  const siteClimate = climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
+  useEffect(() => {
+    if (!climateSiteKey) { setClimateSnapshot(null); return; }
     let cancelled = false;
-    // Reset immediately so a site switch can never keep the previous site's pattern
-    // on screen while the new site's climate is still resolving.
-    setSiteClimate(null);
+    // The render guard also blocks the old site's climate before this effect runs.
+    setClimateSnapshot(null);
     resolveSiteClimate(siteLat!, siteLon!).then((sc) => {
-      if (!cancelled) setSiteClimate(sc);
+      if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc });
     });
     return () => { cancelled = true; };
-  }, [hasSiteCoords, siteLat, siteLon]);
+  }, [climateSiteKey, siteLat, siteLon]);
 
   // ?canvasSite&auto=1 → open the auto-suggest questionnaire once, as soon as at
   // least one bed has loaded. Ref-guarded so a bed refresh (canvas-change event)
@@ -1256,6 +1279,12 @@ function FacilitatorCropsPageInner() {
     const bedIds = new Set(beds.map((b) => b.id));
     return (plan?.plantings ?? []).filter((p) => bedIds.has(p.bedId));
   }, [plan, beds]);
+  const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth), [siteSurvey, plantings, growingZones, currentMonth]);
+  const chickenGuide = useMemo(() => {
+    const coop = canvasAnimals.find((group) => group.housing === 'chicken');
+    if (!coop && !siteSurvey?.livestock.includes('chickens') && !siteSurvey?.poultryManagement) return undefined;
+    return poultryGuidance(siteSurvey?.poultryManagement, siteSurvey?.productionConditions, coop ? animalChoices[coop.housing] : undefined);
+  }, [canvasAnimals, animalChoices, siteSurvey]);
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
   function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
@@ -1475,8 +1504,8 @@ function FacilitatorCropsPageInner() {
     siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
   }, !aReliableIrrigation), [siteClimate, hasSiteCoords, siteLat, aReliableIrrigation]);
   const gapFills = useMemo(
-    () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate }),
-    [yearOfFood, beds, plantings, pattern, currentMonth, yearGate],
+    () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }),
+    [yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
   );
   function chooseAnimalEnterprise(housing: HousingKind, enterpriseId: string | null) {
     if (!canvasSite) return;
@@ -1549,7 +1578,7 @@ function FacilitatorCropsPageInner() {
 
   function shareTasks() {
     const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line)}`).join('');
-    const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
+    const text = `🌱 Production plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 
@@ -1656,7 +1685,7 @@ function FacilitatorCropsPageInner() {
           className="flex-shrink-0 px-3 md:px-5 py-2"
           style={{ background: '#9A3412', color: '#FDF3EC', fontSize: 12.5, lineHeight: 1.35 }}
         >
-          <strong>Not saving.</strong> This phone has no space left, so changes to your crop plan
+          <strong>Not saving.</strong> This phone has no space left, so changes to your production plan
           are not being kept. Free up space — your plan is still on screen until you close it.
         </div>
       )}
@@ -1688,9 +1717,9 @@ function FacilitatorCropsPageInner() {
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer' }}
-            title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
+            title={cropUi(lang, "Switch to a different design's production plan", 'Shintshela ohlelweni lokukhiqiza lomunye umklamo')}
           >
-            ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
+            ‹ {cropUi(lang, 'All production plans', 'Zonke izinhlelo zokukhiqiza')}
           </button>
         )}
         {canvasSite && ((myDesignsList?.length ?? 0) + studioChoices.length > 1) && (
@@ -1701,9 +1730,9 @@ function FacilitatorCropsPageInner() {
             href="/facilitator/crops?switch=1"
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', textDecoration: 'none' }}
-            title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
+            title={cropUi(lang, "Switch to a different design's production plan", 'Shintshela ohlelweni lokukhiqiza lomunye umklamo')}
           >
-            ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
+            ‹ {cropUi(lang, 'All production plans', 'Zonke izinhlelo zokukhiqiza')}
           </Link>
         )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: 'var(--border)' }} />
@@ -1714,16 +1743,16 @@ function FacilitatorCropsPageInner() {
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left' }}
           >
             <div className="flex flex-col min-w-0">
-              <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
+              <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
               <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>{designTitle}</span>
             </div>
             <ChevronDown size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
           </button>
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
+            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
             <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>
-              {canvasSite ? cropUi(lang, 'Beds from your Design Studio map', 'Imibhede esemephini ye-Design Studio') : designTitle}
+              {canvasSite ? cropUi(lang, 'Plants and housing from your map', 'Izitshalo nezindlu zezilwane ezisemephini yakho') : designTitle}
             </span>
           </div>
         )}
@@ -1767,6 +1796,10 @@ function FacilitatorCropsPageInner() {
         ))}
       </header>
 
+      <div className="flex-shrink-0 px-3 md:px-5 py-2 font-sans" style={{ fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+        Vegetables and staples · Fruit, nuts &amp; berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.
+      </div>
+
       {lang === 'zu' && (
         <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
           <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
@@ -1804,7 +1837,7 @@ function FacilitatorCropsPageInner() {
 
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
-          <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading crop plan…', 'Kulayishwa uhlelo lwezitshalo…')}</span>
+          <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading production plan…', 'Kulayishwa uhlelo lokukhiqiza…')}</span>
         </div>
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
@@ -2159,8 +2192,10 @@ function FacilitatorCropsPageInner() {
             </div>}
 
             <TreeSeasonsCard groups={canvasTrees} unidentified={unidentifiedPlants} choices={treeSeasons} onChoose={chooseTreeSeason} />
+            <ProductionGuideCard guide={productionGuide} canSurvey={!!surveySiteId} onSurvey={() => setSiteSurveyOpen(true)} />
+            {chickenGuide && <PoultryGuidanceCard guidance={chickenGuide} />}
             <AnimalEnterprisesCard groups={canvasAnimals} choices={animalChoices} onChoose={chooseAnimalEnterprise} seasons={animalSeasons} onSeasonsChange={chooseAnimalSeason} compact={simple} />
-            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} />}
+            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} poultryGuidance={includeAnimals ? chickenGuide : undefined} />}
 
             {!simple && (
             <>
@@ -2467,6 +2502,8 @@ function FacilitatorCropsPageInner() {
               availability={printAvailability}
               treeGroups={includeTrees ? canvasTrees : undefined}
               treeSeasons={treeSeasons}
+              productionGuide={productionGuide}
+              poultryGuidance={includeAnimals ? chickenGuide : undefined}
             />
 
             {/* Seed BOQ + year-ahead report */}
@@ -2625,6 +2662,14 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Planting popover */}
+      {siteSurveyOpen && surveySiteId && <SiteSurveySheet
+        key={surveySiteId}
+        placeId={siteSurvey?.placeId || surveySiteId}
+        coords={{ lat: siteLat!, lon: siteLon! }}
+        annualRainfallMm={siteClimate?.annualMm}
+        onSaved={(survey) => { setSurveySnapshot({ siteId: surveySiteId, survey }); setSiteSurveyOpen(false); }}
+        onClose={() => setSiteSurveyOpen(false)}
+      />}
       {activePlanting && (
         <PlantingPopover
           planting={activePlanting}
@@ -2656,6 +2701,7 @@ function FacilitatorCropsPageInner() {
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
           reliableIrrigation={aReliableIrrigation} onReliableIrrigation={setAReliableIrrigation}
           siteClimate={siteClimate}
+          siteObservationNotes={productionGuide.siteObservations.slice(0, 2).flatMap((item) => item.lines)}
           beds={beds}
           result={autoResult}
           onGenerate={runAutoSuggest}
@@ -4039,7 +4085,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
             <span>{openLane.text}</span>
           </div>
           <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 7, lineHeight: 1.35 }}>
-            Months from the sourced South African season. No kilograms: the sources give a span, not a monthly amount.
+            Locally confirmed months for this farm. No monthly quantities are assumed.
           </div>
         </div>
       )}
@@ -4841,7 +4887,7 @@ function AutoSuggestModal({
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
   pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
-  siteClimate, beds, result, onGenerate, onAccept, onBackToQuestions, onClose,
+  siteClimate, siteObservationNotes, beds, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
@@ -4870,6 +4916,7 @@ function AutoSuggestModal({
   /** The site's own monthly climate, when it resolved. Null keeps the irrigation
    * question generic rather than quoting a reference region's rain as this site's. */
   siteClimate: SiteClimate | null;
+  siteObservationNotes?: string[];
   /** Beds in the parent's scope, used to label each suggested planting with its bed. */
   beds: PlanBed[];
   result: AutoSuggestResult | null;
@@ -5122,6 +5169,11 @@ function AutoSuggestModal({
               </span>
             </button>
 
+            {!!siteObservationNotes?.length && <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+              <p className="font-sans font-semibold" style={{ fontSize: 12, color: 'var(--text-primary)' }}>Site survey: water and frost</p>
+              {siteObservationNotes.map((note) => <p key={note} className="font-sans mt-1" style={{ fontSize: 11.5, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{note}</p>)}
+              <p className="font-sans mt-1" style={{ fontSize: 11.5, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Confirm your current water supply before switching irrigation on. Observed frost months are checked when the plan is suggested.</p>
+            </div>}
             <button
               onClick={() => onReliableIrrigation(!reliableIrrigation)}
               className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"

@@ -38,7 +38,7 @@ export default function SiteCropPlanPreview({ siteId, siteName }: { siteId: stri
   }, [siteId]);
 
   const counts = preview ? [preview.beds ? t('cropPlanBedCount').replace('{count}', String(preview.beds)) : '', preview.plots ? t('cropPlanPlotCount').replace('{count}', String(preview.plots)) : ''].filter(Boolean).join(' · ') : '';
-  return <Link className={styles.preview} href={`/facilitator/crops?canvasSite=${encodeURIComponent(siteId)}`} aria-label={t(preview?.crops.length ? 'cropPlanOpenAria' : 'cropPlanStartAria').replace('{siteName}', siteName)}>
+  return <Link className={styles.preview} href={`/facilitator/crops?canvasSite=${encodeURIComponent(siteId)}`} aria-label={t(preview?.crops.length ? 'cropPlanOpenAria' : 'cropPlanStartAria').replace('{site}', siteName)}>
     <div className={styles.overview}>
       <div className={styles.plan}>{preview?.plan ? <MiniPlanPlate plan={preview.plan} /> : <Sprout size={36} aria-hidden="true" />}</div>
       <div><strong>{t('cropPlanTitle')}</strong><span>{preview ? counts || t('cropPlanAddGrowingAreas') : t('cropPlanLoading')}</span><span className={styles.action}>{preview?.crops.length ? t('cropPlanPlannedCount').replace('{count}', String(preview.crops.length)) : t('cropPlanStartAction')} <ArrowUpRight size={15} aria-hidden="true" /></span></div>

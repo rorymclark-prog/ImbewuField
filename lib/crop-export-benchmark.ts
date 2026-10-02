@@ -398,6 +398,9 @@ export function buildTopCrops(plantings: Planting[], beds: PlanBed[], limit = 7)
 // ── 3. Land occupancy calendar ──────────────────────────────────────────────
 
 export interface CalendarEntry {
+  /** Same-crop successions can overlap in one bed; keep their identity so
+   * print lanes cannot join distinct sowings into one continuous crop. */
+  plantingId: string;
   cropKey: string;
   abbr: string;
   /** '1/3', '1/2', 'Full' — what share of the bed this crop holds. */
@@ -478,6 +481,7 @@ export function buildOccupancyCalendar(
           const idx = start + lifeMonth;
           if (idx < 0 || idx >= 12) continue;
           cells[idx].push({
+            plantingId: p.id,
             cropKey: p.cropKey,
             abbr: abbr.get(p.cropKey) ?? '??',
             share: shareCode(p.areaFraction ?? 1),

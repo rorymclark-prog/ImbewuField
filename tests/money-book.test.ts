@@ -105,18 +105,19 @@ test('every write path that existed on either screen still has a door', () => {
   assert.match(recordsPage, /<MyRecords section=\{tab\}/, 'the book must mount the harvest form it did not rewrite');
 });
 
-test('the harvest form kept its shape: crop, kilograms, optional photo, save', () => {
-  // The audit's "what not to touch" list, first entry: "The harvest form. Crop, kilograms,
-  // optional photo, save. Three fields, one optional. This is already the right shape; the
-  // problem is finding it, not filling it." Only its front door moved.
+test('the harvest form keeps produce, an explicit quantity unit, optional photo and save together', () => {
+  // The earlier kg-only shape could not record eggs or honey jars honestly. The
+  // requested production record keeps the same simple flow while making units explicit.
   const myRecords = read('../components/MyRecords.tsx');
   const start = myRecords.indexOf('function LogProductionForm');
   assert.ok(start > 0, 'the harvest form is gone');
   const form = myRecords.slice(start, myRecords.indexOf('/* ── Log sale form', start));
-  for (const field of ['myRecordsCropLabel', 'myRecordsKgHarvestedLabel', 'myRecordsPhotoLabel', 'myRecordsSaveHarvest']) {
+  for (const field of ['myRecordsPhotoLabel', 'myRecordsSaveHarvest']) {
     assert.ok(form.includes(`t('${field}')`), `the harvest form lost ${field}`);
   }
-  assert.match(form, /<CropSelect/, 'the crop picker must stay');
+  assert.match(form, /<CropSelect/, 'the reviewed produce picker must stay');
+  assert.match(form, /<RecordQuantityFields[^>]*quantity=\{form\.quantity\}[^>]*unit=\{form\.unit\}/, 'picked quantity and unit must be chosen together');
+  assert.match(form, /recordQuantityPayload\(quantity, form\.unit\)/, 'the saved quantity must use the explicit unit rather than an implied kg value');
   assert.match(form, /capture="environment"/, 'the optional photo must stay a camera, not a file browser');
 });
 

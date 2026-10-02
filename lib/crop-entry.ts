@@ -2,6 +2,7 @@ import { activeAccountLocalStorageKey } from './account-local-storage';
 import { CROPS, hasPlanningYield } from './crop-catalog';
 import { buildCropAliasIndex, exactCropKey } from './harvest-reconciliation';
 import { PERENNIAL_PRODUCE, PERENNIAL_GROUP_LABEL, PERENNIAL_GROUP_ORDER, perennialKeyForName, type PerennialGroup } from './perennial-produce';
+import { ANIMAL_ENTERPRISES, PRODUCT_LABEL } from './animal-enterprises';
 
 export interface CropEntryOption {
   key: string;
@@ -34,6 +35,10 @@ export interface PerennialEntryGroup {
 
 export const PERENNIAL_ENTRY_OPTIONS: CropEntryOption[] = PERENNIAL_PRODUCE
   .map((produce) => ({ key: produce.key, label: produce.label }));
+
+/** Recorded products use the enterprise catalogue's labels, never an invented crop or yield. */
+export const ANIMAL_PRODUCT_ENTRY_OPTIONS: CropEntryOption[] = [...new Set(Object.values(ANIMAL_ENTERPRISES).map((enterprise) => enterprise.product))]
+  .map((product) => ({ key: `animal-product:${product}`, label: PRODUCT_LABEL[product] }));
 
 export const PERENNIAL_ENTRY_GROUPS: PerennialEntryGroup[] = PERENNIAL_GROUP_ORDER
   .map((group) => ({
@@ -107,7 +112,8 @@ export function perennialEntryOption(value: string): CropEntryOption | null {
  * the orchard list happens to contain.
  */
 export function produceEntryOption(value: string): CropEntryOption | null {
-  return cropEntryOption(value) ?? perennialEntryOption(value);
+  return cropEntryOption(value) ?? perennialEntryOption(value)
+    ?? ANIMAL_PRODUCT_ENTRY_OPTIONS.find((option) => cropAliases(option).includes(normalise(value))) ?? null;
 }
 
 export function loadCustomCropNames(): string[] {

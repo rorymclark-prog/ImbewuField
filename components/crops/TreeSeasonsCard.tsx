@@ -16,7 +16,7 @@ export default function TreeSeasonsCard({ groups, unidentified, choices, onChoos
     <div className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}><Trees size={16} aria-hidden /> Fruit, nuts &amp; berries on your map</div>
     <p className="font-sans mt-1 mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Picking months vary by place and variety. The calendar stays blank until you confirm months for plants that already give food here. Plants stay on the printed plan while dates are unknown.</p>
     <p className="font-sans mb-3" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>These confirmations are kept on this device for this design.</p>
-    {unidentified.map((g) => <p key={g.defId} className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{g.label} · {g.existing + g.proposed} on your map. Choose the species in the Design Studio; picking dates are not yet known.</p>)}
+    {unidentified.map((g) => <p key={g.speciesId ?? g.defId} className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{g.label} · {g.existing} existing{g.proposed ? `, ${g.proposed} proposed` : ''} on your map. {g.legalCheck ?? 'Choose the species in the Design Studio; picking dates are not yet known.'}</p>)}
     <div className="flex flex-col gap-3">
       {groups.map((g) => {
         const choice = choices[g.harvest.speciesId] ?? { months: [], bearing: false };
@@ -35,7 +35,7 @@ export default function TreeSeasonsCard({ groups, unidentified, choices, onChoos
             })}
           </div>
           <div className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-            <strong>Reference seasons — check place and variety:</strong>
+            <strong>{g.referenceMissing ? 'No harvest reference is available in this plan:' : 'Reference seasons — check place and variety:'}</strong>
             {g.harvest.windows.length ? <ul style={{ listStyle: 'disc', paddingInlineStart: 18 }}>
               {g.harvest.windows.map((w, i) => <li key={i}>{w.region}: {formatMonthSpan(w.months)}. <a href={w.source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>{w.source.doc}{w.source.page ? `, p. ${w.source.page}` : ''}</a></li>)}
             </ul> : <p>No picking months are verified in the source record. Local observations can still be recorded above.</p>}

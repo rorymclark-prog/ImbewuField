@@ -34,22 +34,24 @@
 
 import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, FoodAvailabilityItem, PlanBed, Planting } from '@/lib/crop-plan';
-import { buildFieldUtilizationByMonth, buildFoodAvailability, planNotesDateLabel, recurringPlanPlantings, settleOnceRows } from '@/lib/crop-plan';
+import { benchmarkAreaConflictDetails, buildFieldUtilizationByMonth, buildFoodAvailability, occupiedMonthsForPlanting, plantingBedEntryOffsets, planNotesDateLabel, recurringPlanPlantings, settleOnceRows, TRANSPLANT_BED_RESERVED_FROM_MONTHS } from '@/lib/crop-plan';
 import { monthAxisSlots } from '@/lib/month-axis';
 import type { PlanNote, PlanNoteKind } from '@/lib/crop-autosuggest';
 import { foodGroupOf, type FoodGroup } from '@/lib/crop-groups';
 import {
   buildBuyingSchedule, buildTaskMonths, monthShort, monthYearLabel, positionRangeLabel, rollingMonths,
   SUCCESSION_TIMING_GUIDANCE, taskPhrase, weightRangeLabel,
+  type ProductionGuide, type ProductionGuideItem,
 } from '@/lib/crop-export-schedule';
 import {
   buildFieldSheet, buildOccupancyCalendar, compactPlaces, buildPlanDashboard,
   buildPlanTableRows, buildTopCrops, buildWorkloadSeries, cropAbbreviations,
-  type CalendarRow, type MonthCount,
+  type CalendarRow, type FieldSheetSection, type MonthCount,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
 import { treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
 import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
+import type { PoultryGuidance } from '@/lib/animal-enterprises';
 
 export interface CropPlanPdfMeta {
   /** The design/site this plan belongs to. */
@@ -135,6 +137,10 @@ export interface CropPlanPdfInput {
   treeGroups?: PlacedTreeGroup[];
   /** Locally confirmed picking months; a national reference is not a farm calendar. */
   treeSeasons?: TreeSeasonChoices;
+  /** The same farm observations and cultivar preparation guide shown in the app. */
+  productionGuide?: ProductionGuide;
+  /** Sourced choices to discuss locally, not a selected breed or animal yield forecast. */
+  poultryGuidance?: PoultryGuidance;
 }
 
 /** One picture on the availability page: which art to use, and the name the key gives it. */
@@ -158,7 +164,7 @@ export interface CropPlanAvailability {
   undated?: { iconKey: string; label: string; detail: string }[];
 }
 
-export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'availability' | 'plan' | 'buying' | 'fieldsheets' | 'record' | 'taskSummary';
+export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'availability' | 'guidance' | 'plan' | 'buying' | 'fieldsheets' | 'record' | 'taskSummary';
 
 export type CropPlanPageFormat = 'a4' | 'a3' | 'a2';
 
@@ -167,11 +173,11 @@ export type CropPlanPageFormat = 'a4' | 'a3' | 'a2';
 // The full document already covers every month in detail via 'fieldsheets';
 // including both there would print the same tasks twice.
 export const ALL_SECTIONS: CropPlanSection[] = [
-  'dashboard', 'numbers', 'calendar', 'availability', 'plan', 'buying', 'fieldsheets', 'record',
+  'dashboard', 'numbers', 'calendar', 'availability', 'guidance', 'plan', 'buying', 'fieldsheets', 'record',
 ];
 
-/** The field copy starts with pictures and jobs. Detailed benchmarks remain an optional reference. */
-export const FARMER_SECTIONS: CropPlanSection[] = ['availability', 'buying', 'fieldsheets', 'record'];
+/** Rory wants the same bed timeline on paper, followed by the food pictures and field jobs. */
+export const FARMER_SECTIONS: CropPlanSection[] = ['calendar', 'availability', 'guidance', 'buying', 'fieldsheets', 'record'];
 
 /**
  * jsPDF's built-in fonts are WinAnsi-encoded: they have no glyph for an emoji
@@ -250,15 +256,6 @@ const GROUP_INK: Record<FoodGroup, readonly number[]> = {
   less_common: INK.muted,
   cover_crop: INK.muted,
 };
-
-const GROUP_LEGEND: { label: string; ink: readonly number[]; groups: readonly FoodGroup[] }[] = [
-  { label: 'Leafy crops and herbs', ink: INK.green, groups: ['leafy_green', 'herb'] },
-  { label: 'Roots and onions', ink: INK.gold, groups: ['root_tuber', 'allium'] },
-  { label: 'Legumes', ink: INK.teal, groups: ['legume'] },
-  { label: 'Fruiting crops', ink: INK.terracotta, groups: ['fruiting_veg', 'squash_melon'] },
-  { label: 'Staples', ink: INK.brown, groups: ['staple_grain'] },
-  { label: 'Less common, cover', ink: INK.muted, groups: ['less_common', 'cover_crop'] },
-];
 
 type Doc = import('jspdf').jsPDF;
 
@@ -484,7 +481,7 @@ function panelBodyHeight(lineCounts: number[]): number {
 
 function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
   const { meta } = input;
-  masthead(s, 'Crop plan');
+  masthead(s, 'Production plan');
 
   s.font(7.5, true);
   s.ink(INK.gold);
@@ -494,7 +491,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   // off the right edge at 21pt; wrap to two lines and only then truncate.
   s.font(21, true);
   s.ink(INK.text);
-  const titleLines = s.doc.splitTextToSize(pdfSafe(`Crop plan - ${meta.planTitle}`), s.contentWidth) as string[];
+  const titleLines = s.doc.splitTextToSize(pdfSafe(`Production plan - ${meta.planTitle}`), s.contentWidth) as string[];
   const shownTitle = titleLines.length > 2
     ? [titleLines[0], truncateToWidth(s.doc, titleLines.slice(1).join(' '), s.contentWidth)]
     : titleLines;
@@ -887,118 +884,164 @@ function drawYearInNumbers(
 // ── 3. Land occupancy calendar ──────────────────────────────────────────────
 
 function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows: CalendarRow[]): void {
-  masthead(s, 'Land occupancy');
-  // No standfirst on this page: the whole value of the calendar is that all
-  // thirteen growing areas land on ONE sheet, and a two-line introduction is
-  // enough to push the last two plots onto a second page where they say nothing.
   const start = input.now ?? new Date();
   const end = new Date(start.getFullYear(), start.getMonth() + 11, 1);
-  pageTitle(s, 'Land occupancy', `Bed calendar: ${monthShort(nowMonth)} ${start.getFullYear()} - ${monthShort(end.getMonth() + 1)} ${end.getFullYear()}`);
-
   const months = rollingMonths(nowMonth);
-  const labelW = 96;
+  const conflicts = new Set(benchmarkAreaConflictDetails(input.plantings, input.beds, nowMonth).map((record) => record.bedId));
+  const labelW = 204;
   const colW = (s.contentWidth - labelW) / 12;
-  const headH = 18;
+  const headH = 30;
+  const rowH = 34;
+  const bedHeadH = 27;
+  const growingInk = [127, 174, 110];
+  const pickingInk = [212, 160, 23];
 
-  const drawHead = () => {
+  const drawHead = (continued = false) => {
+    masthead(s, 'Production plan');
+    pageTitle(s, continued ? 'Bed calendar - continued' : 'Bed calendar',
+      `Growing plan: ${monthShort(nowMonth)} ${start.getFullYear()} - ${monthShort(end.getMonth() + 1)} ${end.getFullYear()}`);
+    s.paragraph('Read across to see what occupies each bed. Each line is one planting, not a measured strip of land.',
+      { size: 9.5, ink: INK.muted, gap: 6 });
+    const legend = [
+      { ink: growingInk, label: 'Bed reserved / growing', width: 174 },
+      { ink: pickingInk, label: 'Pick fresh food', width: 124 },
+      { ink: INK.muted, label: 'Finish a cover crop', width: 154 },
+    ];
+    let lx = s.margin;
+    for (const item of legend) {
+      s.fill(item.ink);
+      s.doc.roundedRect(lx, s.y - 8, 17, 9, 2, 2, 'F');
+      s.font(9);
+      s.ink(INK.text);
+      s.doc.text(pdfSafe(item.label), lx + 23, s.y);
+      lx += item.width;
+    }
+    s.y += 13;
+    s.paragraph(`Tray crops reserve the bed from their first readiness month. Follow the monthly jobs. An arrow means the crop continues after ${monthShort(end.getMonth() + 1)} ${end.getFullYear()}.`,
+      { size: 8.5, ink: INK.muted, gap: 8 });
     s.fill(INK.green);
     s.doc.rect(s.margin, s.y, s.contentWidth, headH, 'F');
-    s.font(7.5, true);
+    s.font(9.5, true);
     s.ink(INK.white);
-    s.doc.text(pdfSafe('BED / PLOT'), s.margin + 8, s.y + 12);
+    s.doc.text('CROP / SHARE OF BED', s.margin + 8, s.y + 18);
     months.forEach((m, i) => {
-      s.doc.text(pdfSafe(monthShort(m)), s.margin + labelW + i * colW + colW / 2, s.y + 12, { align: 'center' });
+      const date = new Date(start.getFullYear(), start.getMonth() + i, 1);
+      const x = s.margin + labelW + i * colW + colW / 2;
+      s.font(9.5, true);
+      s.doc.text(pdfSafe(monthShort(m)), x, s.y + 12, { align: 'center' });
+      s.font(7.5);
+      s.doc.text(String(date.getFullYear()), x, s.y + 24, { align: 'center' });
     });
     s.y += headH;
   };
   drawHead();
 
-  for (const row of rows) {
-    const depth = Math.max(1, ...row.cells.map((c) => c.length));
-    const rowH = Math.max(18, 5 + depth * 6.5);
-    if (s.need(rowH + 30)) { masthead(s, 'Land occupancy'); drawHead(); }
-
-    s.fill(row.kind === 'plot' ? INK.panelCream : INK.white);
-    s.doc.rect(s.margin, s.y, s.contentWidth, rowH, 'F');
-    s.stroke(INK.hair);
-    s.doc.setLineWidth(0.4);
-    s.doc.line(s.margin, s.y + rowH, s.margin + s.contentWidth, s.y + rowH);
-
-    // row.label is the farmer's own name for a mapped bed or staple-garden
-    // zone ("Bed 1 - Nursery corner", "Plot A - Maize block"), not the
-    // short "Bed N" fallback — routinely too long for this 96pt column to
-    // hold next to the right-aligned area figure. Reserve the area figure's
-    // own width first and truncate the label into whatever is left, rather
-    // than let the two run together into unreadable overlapping text.
-    s.font(6.5);
-    s.ink(INK.faint);
-    const areaText = pdfSafe(`${row.areaM2.toFixed(1)} m²`);
-    const areaW = s.doc.getTextWidth(areaText);
-    s.font(8, true);
-    s.ink(INK.text);
-    const labelMaxW = labelW - 16 - areaW - 4;
-    s.doc.text(truncateToWidth(s.doc, pdfSafe(row.label), Math.max(20, labelMaxW)), s.margin + 8, s.y + 13);
-    s.font(6.5);
-    s.ink(INK.faint);
-    s.doc.text(areaText, s.margin + labelW - 8, s.y + 13, { align: 'right' });
-
-    row.cells.forEach((cell, i) => {
-      const cx = s.margin + labelW + i * colW;
-      s.stroke(INK.hair);
-      s.doc.line(cx, s.y, cx, s.y + rowH);
-      cell.forEach((entry, j) => {
-        s.font(5.8, entry.harvesting);
-        s.ink(GROUP_INK[entry.group]);
-        s.doc.text(
-          pdfSafe(`${entry.abbr}${entry.harvesting ? '*' : ''} ${entry.share}`),
-          cx + colW / 2, s.y + 10 + j * 6.5, { align: 'center' },
-        );
-      });
-    });
-    s.y += rowH;
-  }
-
-  s.y += 12;
-  // Colour key with each crop code filed under its own colour. The codes used to run in five
-  // alphabetical columns directly under the five colour bars, so "To = Tomatoes" sat under
-  // Staples and "Ca = Cabbage" under Leafy crops by accident of the alphabet, not by group.
-  const abbr = cropAbbreviations(input.plantings);
-  const keyW = s.contentWidth / GROUP_LEGEND.length;
-  const columns = GROUP_LEGEND.map((g) => [...abbr.entries()]
-    .filter(([key]) => {
-      const crop = cropByKey(key);
-      return crop !== undefined && g.groups.includes(foodGroupOf(crop));
-    })
-    .map(([key, code]) => `${code} = ${cropByKey(key)?.name ?? key}`)
-    .sort());
-  s.need(38 + Math.max(1, ...columns.map((c) => c.length)) * 9);
-  s.font(8, true);
-  s.ink(INK.green);
-  s.doc.text(pdfSafe('Crop codes'), s.margin, s.y);
-  s.font(7);
-  s.ink(INK.faint);
-  s.doc.text(
-    pdfSafe(`Read left to right from ${monthShort(nowMonth)}. A star marks the months a crop is being picked; nursery dates and exact spacing are in the full plan.`),
-    s.margin + 58, s.y,
-  );
-  s.y += 10;
-  // Only the colours this plan uses: a Staples bar with nothing under it (maize did not fit at
-  // the Western Cape site) reads as a missing list. Column width stays one legend slot, packed left.
-  const used = GROUP_LEGEND.map((g, i) => ({ g, lines: columns[i] })).filter((c) => c.lines.length);
-  (used.length ? used : GROUP_LEGEND.map((g, i) => ({ g, lines: columns[i] }))).forEach(({ g, lines }, i) => {
-    const x = s.margin + i * keyW;
-    s.fill(g.ink);
-    s.doc.rect(x, s.y, keyW - 6, 6, 'F');
-    s.font(7.5, true);
+  const newCalendarPage = () => { s.page('landscape'); drawHead(true); };
+  const drawBedHead = (row: CalendarRow, continued = false) => {
+    const conflict = conflicts.has(row.bedId);
+    s.fill(conflict ? INK.panelPink : row.kind === 'plot' ? INK.panelCream : INK.panelGreen);
+    s.doc.rect(s.margin, s.y, s.contentWidth, bedHeadH, 'F');
+    s.font(11, true);
+    s.ink(conflict ? INK.terracotta : INK.green);
+    const area = pdfSafe(`${numberLabel(row.areaM2)} m²`);
+    const suffix = `${continued ? ' - continued' : ''}${conflict ? ' - CHECK SPACE: crop shares conflict' : ''}`;
+    const room = s.contentWidth - s.doc.getTextWidth(area) - 28;
+    s.doc.text(truncateToWidth(s.doc, pdfSafe(row.label + suffix), room), s.margin + 8, s.y + 18);
+    s.font(10);
     s.ink(INK.muted);
-    s.doc.text(pdfSafe(g.label), x, s.y + 17);
-    s.font(6.8);
-    lines.forEach((line, j) => {
-      const fitted = truncateToWidth(s.doc, pdfSafe(line), keyW - 8);
-      s.doc.text(fitted, x, s.y + 28 + j * 9);
-    });
-  });
-  s.y += 28 + Math.max(1, ...columns.map((c) => c.length)) * 9;
+    s.doc.text(area, s.width - s.margin - 8, s.y + 18, { align: 'right' });
+    s.y += bedHeadH;
+  };
+
+  for (const row of rows) {
+    // Two sowings of carrots can have the same crop and share while being separate cohorts.
+    // Keep their recorded identities rather than merging their bars by crop name.
+    const active = new Set(row.cells.flat().map((entry) => entry.plantingId));
+    const lanes = input.plantings.filter((p) => p.bedId === row.bedId && active.has(p.id));
+    const varietyLinesFor = (planting: Planting) => {
+      s.font(8.5);
+      return planting.variety?.trim()
+        ? s.doc.splitTextToSize(pdfSafe(`Variety: ${planting.variety.trim()}`), labelW - 44) as string[] : [];
+    };
+    const firstLaneHeight = rowH + (lanes[0] ? varietyLinesFor(lanes[0]).length * 11 : 0);
+    if (!s.fits(bedHeadH + firstLaneHeight)) newCalendarPage();
+    drawBedHead(row);
+
+    const drawGridRow = (height = rowH) => {
+      s.fill(INK.white);
+      s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F');
+      s.fill(INK.panelGreen);
+      s.doc.rect(s.margin + labelW, s.y, colW, height, 'F');
+      s.stroke(INK.hair);
+      s.doc.setLineWidth(0.4);
+      s.doc.line(s.margin, s.y + height, s.width - s.margin, s.y + height);
+      months.forEach((_, i) => {
+        const x = s.margin + labelW + i * colW;
+        s.doc.line(x, s.y, x, s.y + height);
+      });
+    };
+
+    if (!lanes.length) {
+      drawGridRow();
+      s.font(9.5);
+      s.ink(INK.muted);
+      s.doc.text('No dated crop reserved here', s.margin + 8, s.y + 21);
+      s.y += rowH;
+    }
+    for (const planting of lanes) {
+      const varietyLines = varietyLinesFor(planting);
+      const laneH = rowH + varietyLines.length * 11;
+      if (!s.fits(laneH)) { newCalendarPage(); drawBedHead(row, true); }
+      drawGridRow(laneH);
+      const crop = cropByKey(planting.cropKey)!;
+      const cells = row.cells.map((cell) => cell.find((entry) => entry.plantingId === planting.id));
+      const entry = cells.find((cell) => cell !== undefined)!;
+      drawIconOrCode(s, { iconKey: `crop:${crop.key}`, code: entry.abbr }, s.margin + 6, s.y + 5, 24, input.icons);
+      s.font(10, true);
+      s.ink(INK.text);
+      s.doc.text(truncateToWidth(s.doc, pdfSafe(crop.name), labelW - 44), s.margin + 36, s.y + 14);
+      s.font(8.5);
+      s.ink(INK.muted);
+      const fraction = planting.areaFraction ?? 1;
+      const share = !Number.isFinite(fraction) || fraction <= 0 ? 'Invalid share'
+        : fraction === 1 ? 'Whole area' : fraction > 1 ? `${numberLabel(fraction * 100)}% area` : `${entry.share} area`;
+      const [bedStart] = plantingBedEntryOffsets(planting, nowMonth, 12);
+      const sowOffset = bedStart - (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
+      const sowDate = new Date(start.getFullYear(), start.getMonth() + sowOffset, 1);
+      const detail = `${share} - sow ${monthShort(planting.sowMonth)} ${sowDate.getFullYear()}`;
+      s.doc.text(truncateToWidth(s.doc, pdfSafe(detail), labelW - 44), s.margin + 36, s.y + 27);
+      if (varietyLines.length) s.doc.text(varietyLines, s.margin + 36, s.y + 38, { lineHeightFactor: 11 / 8.5 });
+      const continues = bedStart + occupiedMonthsForPlanting(planting).length > 12;
+
+      // Paint adjacent phase cells as one bar. Its dates come directly from the same
+      // occupancy entries used by the app's source model, including clipped existing crops.
+      for (let i = 0; i < cells.length;) {
+        const phase = cells[i];
+        if (!phase) { i++; continue; }
+        let last = i;
+        while (last + 1 < cells.length && cells[last + 1]?.harvesting === phase.harvesting) last++;
+        const coverEnd = phase.harvesting && crop.yieldKgPerM2 === 0;
+        s.fill(phase.harvesting ? (coverEnd ? INK.muted : pickingInk) : growingInk);
+        const x = s.margin + labelW + i * colW + 1;
+        const width = (last - i + 1) * colW - 2;
+        s.doc.roundedRect(x, s.y + 8, width, 18, 3, 3, 'F');
+        if (phase.harvesting) {
+          s.font(8, true);
+          s.ink(coverEnd ? INK.white : INK.text);
+          s.doc.text(coverEnd ? 'Finish' : 'Pick', x + width / 2, s.y + 20, { align: 'center' });
+        }
+        if (last === 11 && continues) {
+          s.fill(phase.harvesting && !coverEnd ? INK.text : INK.white);
+          s.doc.triangle(x + width - 9, s.y + 13, x + width - 9, s.y + 21, x + width - 3, s.y + 17, 'F');
+        }
+        i = last + 1;
+      }
+      s.y += laneH;
+    }
+    s.y += 8;
+  }
+  if (!rows.length) s.paragraph('No beds or staple plots are mapped. Fruit, berries and animal food sources are listed in the picture calendar.',
+    { size: 10, ink: INK.muted });
 }
 
 // ── Food availability (the app's chart, on paper) ───────────────────────────
@@ -1085,6 +1128,7 @@ export function availabilityIconKeys(input: CropPlanPdfInput): string[] {
   const nowMonth = (input.now ?? new Date()).getMonth() + 1;
   const { bands } = resolveAvailability(input, nowMonth);
   return [...new Set([
+    ...buildOccupancyCalendar(input.plantings, input.beds, nowMonth).flatMap((row) => row.cells.flat().map((entry) => `crop:${entry.cropKey}`)),
     ...bands.flatMap((b) => b.cells.flat().map((e) => e.iconKey)),
     ...(input.availability?.undated ?? []).map((e) => e.iconKey),
   ])];
@@ -1543,15 +1587,155 @@ function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: numb
   }
 }
 
+// ── Farm observations and choices ──────────────────────────────────────────
+
+/** Long cultivar references must travel onto readable continuation pages. Repeating the
+ * item as well as the page title keeps a source on page two attached to the crop it supports. */
+function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
+  let group = '';
+  let item = '';
+  const drawHead = (continued = false) => {
+    masthead(s, 'Production guidance');
+    pageTitle(s, input.meta.planTitle, continued ? 'Farm choices - continued' : 'Before you buy or start',
+      'Use your farm observations and the research shortlists. Confirm choices locally before buying.');
+    if (continued && group) {
+      s.text(`${group} (continued)`, s.margin, { size: 11, bold: true, ink: INK.green });
+      s.y += 18;
+    }
+    if (continued && item) {
+      s.text(`${item} (continued)`, s.margin, { size: 10, bold: true });
+      s.y += 16;
+    }
+  };
+  const ensure = (height: number) => {
+    if (s.fits(height)) return;
+    s.page('portrait');
+    drawHead(true);
+  };
+  const paragraph = (text: string, opts: { size?: number; bold?: boolean; ink?: readonly number[]; gap?: number } = {}) => {
+    const size = opts.size ?? 9.5;
+    const leading = size * 1.4;
+    s.font(size, opts.bold);
+    const lines = s.doc.splitTextToSize(pdfSafe(text), s.contentWidth) as string[];
+    for (const line of lines) {
+      ensure(leading + 4);
+      s.text(line, s.margin, { size, bold: opts.bold, ink: opts.ink });
+      s.y += leading;
+    }
+    s.y += opts.gap ?? 3;
+  };
+  const heading = (title: string) => {
+    item = '';
+    if (!s.fits(40)) group = '';
+    ensure(40);
+    group = title;
+    s.text(title, s.margin, { size: 12, bold: true, ink: INK.green });
+    s.y += 20;
+  };
+  const sourceLine = (label: string, url: string | null) => {
+    const size = 8;
+    s.font(size);
+    const lines = s.doc.splitTextToSize(pdfSafe(`Source: ${label}`), s.contentWidth) as string[];
+    for (const line of lines) {
+      ensure(15);
+      s.text(line, s.margin, { size, ink: INK.teal });
+      if (url && /^https?:\/\//i.test(url)) s.doc.link(s.margin, s.y - size, s.doc.getTextWidth(line), size * 1.4, { url });
+      s.y += size * 1.4;
+    }
+    s.y += 4;
+  };
+  const guideItem = (entry: ProductionGuideItem) => {
+    item = '';
+    s.font(10.5, true);
+    const titleHeight = (s.doc.splitTextToSize(pdfSafe(entry.title), s.contentWidth) as string[]).length * 14.7 + 1;
+    s.font(9.5);
+    const bodyHeight = entry.lines.reduce((height, line) => height + (s.doc.splitTextToSize(pdfSafe(line), s.contentWidth) as string[]).length * 13.3 + 3, 0);
+    s.font(8);
+    const sourcesHeight = (entry.sources ?? []).reduce((height, source) => height + (s.doc.splitTextToSize(pdfSafe(`Source: ${source.label}`), s.contentWidth) as string[]).length * 11.2 + 4, 0);
+    // An ordinary crop or breed card moves as a whole, so its source cannot become a
+    // nearly empty last page. An exceptionally long farmer note still splits safely.
+    ensure(Math.min(titleHeight + bodyHeight + sourcesHeight + 10, s.bottom - s.margin - 170));
+    item = entry.title;
+    paragraph(entry.title, { size: 10.5, bold: true, gap: 1 });
+    for (const line of entry.lines) paragraph(line);
+    for (const source of entry.sources ?? []) sourceLine(source.label, source.url);
+    s.y += 6;
+  };
+  const sourceLabel = (source: { doc: string; page?: string }) => `${source.doc}${source.page ? `, p. ${source.page}` : ''}`;
+
+  drawHead();
+  const guide = input.productionGuide;
+  if (guide) {
+    paragraph(`Research climate group: ${guide.area}. This grouping is not a validated recommendation for this farm.`, { ink: INK.muted, gap: 10 });
+    if (guide.siteObservations.length) {
+      heading('What you reported about this farm');
+      for (const entry of guide.siteObservations) guideItem(entry);
+    }
+    if (guide.recordedProduction.length) {
+      heading('Reporting-year records - not a forecast');
+      paragraph('Past reporting-year totals and months describe what was reported. They do not promise food in the coming plan.', { ink: INK.muted, gap: 8 });
+      for (const entry of guide.recordedProduction) guideItem(entry);
+    }
+    if (guide.cropChoices.length) {
+      heading('Crop varieties to check locally');
+      paragraph('Keep the named variety you actually choose. Research shortlists need confirmation for your local season, water and ground.', { ink: INK.muted, gap: 8 });
+      for (const entry of guide.cropChoices) guideItem(entry);
+    }
+  }
+  const poultry = input.poultryGuidance;
+  if (poultry) {
+    heading('Chickens - choices to confirm');
+    const purpose = { eggs: 'Eggs', meat: 'Meat', both: 'Eggs and meat', unknown: 'Not yet recorded' }[poultry.purpose];
+    paragraph(`${poultry.statusText}. Purpose: ${purpose}.`, { bold: true });
+    if (poultry.selectedEnterprise) paragraph(`Selected plan enterprise: ${poultry.selectedEnterprise.name}.`);
+    if (poultry.recordedBreed !== null) paragraph(`Your recorded breed: ${poultry.recordedBreed}.`);
+    if (poultry.recordedLayingHens !== null) paragraph(`Laying hens you recorded: ${numberLabel(poultry.recordedLayingHens)}. This count does not promise an egg yield.`);
+    for (const text of poultry.attention) paragraph(`Care check: ${text}`);
+    for (const text of poultry.missing) paragraph(`Still to check: ${text}`);
+    const printedCareSources = new Set<string>();
+    for (const point of [...poultry.careNotes, ...poultry.climateNotes]) {
+      paragraph(point.text);
+      if (!printedCareSources.has(point.source.url)) {
+        sourceLine(sourceLabel(point.source), point.source.url);
+        printedCareSources.add(point.source.url);
+      }
+    }
+    paragraph(poultry.localCheck, { ink: INK.muted, gap: 10 });
+    for (const option of poultry.options) guideItem({
+      title: option.name,
+      lines: [option.detail],
+      sources: [{ label: sourceLabel(option.source), url: option.source.url }],
+    });
+  }
+}
+
 // ── 5. Working documents ────────────────────────────────────────────────────
 
 function drawFieldSheets(
   s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number,
   startPage: (o: 'portrait' | 'landscape') => void,
 ): void {
-  for (const month of rollingMonths(nowMonth)) {
+  for (const [monthOffset, month] of rollingMonths(nowMonth).entries()) {
     const sheet = buildFieldSheet(month, input.tasks, now, input.plantings, input.beds);
-    if (!sheet.sections.length) continue;
+    const extraSections: FieldSheetSection[] = [];
+    const forest = [...new Map((input.availability?.forest?.[monthOffset] ?? []).map((entry) => [entry.iconKey, entry])).values()];
+    const animals = [...new Map((input.availability?.animals?.[monthOffset] ?? []).map((entry) => [entry.iconKey, entry])).values()];
+    if (forest.length || animals.length) extraSections.push({
+      title: 'Fruit, berries and animal products - record',
+      note: 'These are the same locally confirmed months as the picture calendar. Check readiness and record what actually happens; no quantity is promised.',
+      rows: [
+        ...forest.map((entry) => ({ place: 'Fruit / berries', work: `Pick ${entry.label} when ready; record actual harvest and where it went.` })),
+        ...animals.map((entry) => ({ place: 'Animals', work: `${entry.label}: record actual production, household use, sales and losses.` })),
+      ],
+    });
+    const undated = monthOffset === 0 ? input.availability?.undated ?? [] : [];
+    if (undated.length) extraSections.push({
+      title: 'Care and establishment - dates to confirm',
+      note: 'Undated reminders, not scheduled harvests. Check local care and readiness before establishment; record dates when known.',
+      rows: undated.map((entry) => ({ place: entry.iconKey.startsWith('animal:') ? 'Animal housing' : 'Mapped plants', work: `${entry.label}: ${entry.detail}` })),
+    });
+    const sections = [...sheet.sections, ...extraSections];
+    if (!sections.length) continue;
 
     startPage('portrait');
     masthead(s, 'Field sheet');
@@ -1559,7 +1743,8 @@ function drawFieldSheets(
       `${input.meta.planTitle} - tick each job off as it is done.`);
 
     s.font(9.5, true); s.ink(INK.green);
-    s.doc.text(pdfSafe(`${sheet.workRows} jobs - ${sheet.plantingFocus} sowing / planting - ${sheet.harvestFocus} harvest`), s.margin, s.y);
+    const addedRows = extraSections.reduce((count, section) => count + section.rows.length, 0);
+    s.doc.text(pdfSafe(`${sheet.workRows + addedRows} jobs - ${sheet.plantingFocus} sowing / planting - ${sheet.harvestFocus + forest.length + animals.length} harvest / recording`), s.margin, s.y);
     s.y += 18;
     if (!(input.sections ?? ALL_SECTIONS).includes('availability')) {
       s.paragraph(SUCCESSION_TIMING_GUIDANCE, { size: 9, ink: INK.muted, gap: 8 });
@@ -1567,7 +1752,7 @@ function drawFieldSheets(
 
     // Column geometry: tick | place | work | date-and-note. The tick column has
     // to clear the word DONE in the header, not just the checkbox under it.
-    const cTick = 30;
+    const cTick = 38;
     const cPlace = 82;
     const cNote = 80;
     const cWork = s.contentWidth - cTick - cPlace - cNote;
@@ -1594,7 +1779,7 @@ function drawFieldSheets(
     };
     headRow();
 
-    for (const section of sheet.sections) {
+    for (const section of sections) {
       const sectionHead = (repeat = false) => {
         s.fill(INK.panelGreen);
         s.doc.rect(s.margin, s.y, s.contentWidth, 24, 'F');
@@ -1689,6 +1874,29 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
     { key: 'g', header: 'Lost kg', width: 56 },
   ], 10, 29);
 
+  // Eggs and honey need the same actual-record trail as vegetables. Keeping the
+  // unit beside every amount prevents a counted egg from becoming a kilogram.
+  s.page('portrait');
+  masthead(s, 'Production record');
+  pageTitle(s, 'Plan versus reality', 'Fruit, eggs, honey and other production',
+    'Write the month: ____________________   Team: ____________________');
+  const productionNote = panel(s, {
+    title: 'Use the unit you actually measured',
+    accent: INK.green,
+    bg: INK.panelGreen,
+    body: ['Write the food and its source: tree, coop, hive or bed. Use kg for weighed food, eggs for counted eggs, or jars, bunches or items. Record jar size in the source column. Keep all amounts on one row in the same unit.'],
+  });
+  s.y += productionNote + 16;
+  blankRows([
+    { key: 'date', header: 'Date', width: 46 },
+    { key: 'source', header: 'Food / source', width: 128 },
+    { key: 'amount', header: 'Collected', width: 62 },
+    { key: 'unit', header: 'Unit', width: 54 },
+    { key: 'used', header: 'Used', width: 50 },
+    { key: 'sold', header: 'Sold/shared', width: 76 },
+    { key: 'lost', header: 'Lost', width: 50 },
+  ], 10, 29);
+
   s.font(10, true); s.ink(INK.text);
   s.doc.text(pdfSafe('Weekly observation'), s.margin, s.y); s.y += 10;
   blankRows([
@@ -1753,6 +1961,7 @@ export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = fa
   if (!want.has('dashboard') && want.has('plan') && input.planNotes?.length) { startPage('portrait'); masthead(s, 'Plan notes'); drawPlanNotes(s, input); }
   if (want.has('calendar')) { startPage('landscape'); drawCalendar(s, input, nowMonth, calendar); }
   if (want.has('availability')) { startPage('portrait'); drawAvailability(s, input, now, nowMonth); }
+  if (want.has('guidance') && (input.productionGuide || input.poultryGuidance)) { startPage('portrait'); drawProductionGuidance(s, input); }
   if (want.has('taskSummary')) { startPage('portrait'); drawTaskSummary(s, input, nowMonth); }
   if (want.has('plan')) { startPage('landscape'); drawFullPlan(s, input); }
   if (want.has('buying')) { startPage('landscape'); drawBuying(s, input, now, nowMonth); }

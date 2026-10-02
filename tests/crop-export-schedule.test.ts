@@ -963,3 +963,60 @@ test('the reference plan retains missed sowings as decisions and never calls the
   assert.equal(row.yieldKg, null, 'an unconfirmed planting is not a sourced zero-food cover crop');
   assert.equal(row.once, true, 'the decision remains one dated first-season sowing');
 });
+
+
+test('the printed calendar keeps identical shared crop sowings as distinct dated cohorts', () => {
+  const beds: PlanBed[] = [{ id: 'shared', label: 'Bed 2', areaM2: 9 }];
+  const rows: Planting[] = [
+    { id: 'october-third', bedId: 'shared', cropKey: 'carrots', sowMonth: 10, areaFraction: 1 / 3 },
+    { id: 'november-third', bedId: 'shared', cropKey: 'carrots', sowMonth: 11, areaFraction: 1 / 3 },
+    { id: 'second-november-third', bedId: 'shared', cropKey: 'carrots', sowMonth: 11, areaFraction: 1 / 3 },
+  ];
+  const before = JSON.stringify(rows);
+  const [calendar] = buildOccupancyCalendar(rows, beds, 10);
+  assert.deepEqual(calendar.cells[0].map((entry) => entry.plantingId), ['october-third']);
+  assert.deepEqual(new Set(calendar.cells[1].map((entry) => entry.plantingId)), new Set(rows.map((row) => row.id)));
+  assert.ok(calendar.cells[1].every((entry) => entry.cropKey === 'carrots' && entry.share === '1/3'));
+  for (const planting of rows) {
+    const ownFood = buildFoodAvailability([planting], beds, 10, 12);
+    calendar.cells.forEach((cell, offset) => {
+      const cohort = cell.filter((entry) => entry.plantingId === planting.id);
+      assert.ok(cohort.length <= 1, 'one planting must not occupy two lanes in one month');
+      if (cohort.length) assert.equal(cohort[0].harvesting, ownFood[offset].some((item) => item.status === 'fresh'));
+    });
+  }
+  assert.equal(JSON.stringify(rows), before, 'calendar presentation must not modify saved crop allocations');
+});
+
+test('undecided sowings and finished dated cohorts cannot acquire a visible print lane', () => {
+  const rows: Planting[] = [
+    { id: 'pending', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 9, once: '2026-09', awaitingSowingConfirmation: true },
+    { id: 'finished', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 9, existing: true, confirmedOnceSowing: '2025-09', finishedOnceSowing: true },
+    { id: 'scheduled', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 11 },
+  ];
+  const entries = buildOccupancyCalendar(rows, BEDS, 10).flatMap((row) => row.cells).flat();
+  assert.ok(entries.length > 0, 'the scheduled crop must still have a lane');
+  assert.deepEqual(new Set(entries.map((entry) => entry.plantingId)), new Set(['scheduled']));
+});
+
+test('cohort identity preserves nursery, field and picking phases across December and January', () => {
+  const beds: PlanBed[] = [{ id: 'shared', label: 'Bed 4', areaM2: 9 }];
+  const rows: Planting[] = [
+    { id: 'october-trays', bedId: 'shared', cropKey: 'tomatoes', sowMonth: 10, areaFraction: 1 / 3 },
+    { id: 'november-trays', bedId: 'shared', cropKey: 'tomatoes', sowMonth: 11, areaFraction: 1 / 3 },
+  ];
+  // Start before both planned sowings; from November a planned October row
+  // belongs to next year, and must not be mistaken for an observed tray crop.
+  const [calendar] = buildOccupancyCalendar(rows, beds, 10);
+  assert.deepEqual(calendar.cells[1].map((entry) => entry.plantingId), ['october-trays'], 'November trays do not yet occupy the field');
+  assert.deepEqual(new Set(calendar.cells[2].map((entry) => entry.plantingId)), new Set(rows.map((row) => row.id)), 'both cohorts reserve field area in December');
+  assert.ok(calendar.cells[3].some((entry) => entry.plantingId === 'november-trays' && !entry.harvesting), 'the January crop must not become an earlier same-named harvest');
+  for (const planting of rows) {
+    const ownFood = buildFoodAvailability([planting], beds, 10, 12);
+    assert.ok(ownFood.some((month) => month.some((item) => item.status === 'fresh')), 'the fixture must exercise a real picking phase');
+    calendar.cells.forEach((cell, offset) => {
+      const entry = cell.find((candidate) => candidate.plantingId === planting.id);
+      if (entry) assert.equal(entry.harvesting, ownFood[offset].some((item) => item.status === 'fresh'), `${planting.id} at offset ${offset} must agree with the canonical dated food phase`);
+    });
+  }
+});

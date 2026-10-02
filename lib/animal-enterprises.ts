@@ -28,6 +28,7 @@ import { ANIMAL_ENTERPRISE_DATA } from './animal-enterprises-data';
 import type { HarvestCitation, HarvestWindow, SourcedRange } from './perennial-harvest';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
+import type { PoultryManagement, SiteProductionConditions } from './site-survey';
 
 export type AnimalKind = 'chicken' | 'goat' | 'bee' | 'rabbit' | 'duck' | 'cattle' | 'sheep' | 'pig' | 'fish';
 export type AnimalProduct = 'eggs' | 'meat' | 'milk' | 'honey' | 'fish' | 'wool';
@@ -78,6 +79,157 @@ export interface AnimalEnterprise {
 }
 
 export const ANIMAL_ENTERPRISES: Readonly<Record<string, AnimalEnterprise>> = ANIMAL_ENTERPRISE_DATA;
+
+/** Advice is separate from the enterprise's generated quantities: a named breed and a mapped
+ * coop do not establish how many healthy, fed, laying birds a farmer has. */
+export interface PoultryGuidanceSource {
+  doc: string;
+  url: string;
+  page?: string;
+}
+
+export interface PoultryGuidancePoint {
+  text: string;
+  source: PoultryGuidanceSource;
+}
+
+export interface PoultryGuidanceOption {
+  id: string;
+  name: string;
+  kind: 'breed' | 'management-system';
+  detail: string;
+  source: PoultryGuidanceSource;
+}
+
+export interface PoultryGuidance {
+  purpose: 'eggs' | 'meat' | 'both' | 'unknown';
+  selectedEnterprise: { id: string; name: string } | null;
+  recordedBreed: string | null;
+  recordedLayingHens: number | null;
+  status: 'needs-confirmation' | 'care-needs-attention' | 'review-locally';
+  statusText: string;
+  missing: string[];
+  attention: string[];
+  careNotes: PoultryGuidancePoint[];
+  climateNotes: PoultryGuidancePoint[];
+  options: PoultryGuidanceOption[];
+  localCheck: string;
+  sources: PoultryGuidanceSource[];
+}
+
+const POULTRY_GUIDANCE_SOURCES = {
+  arcManual: {
+    doc: 'ARC: Climate-Smart Agriculture, Poultry Production',
+    url: 'https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf',
+    page: '468–471, 478–480',
+  },
+  arcBreeds: {
+    doc: 'ARC: Conserved South African chicken breeds',
+    url: 'https://www.arc.agric.za/arc-api/Pages/Rangelands%20and%20Nutrition/Germplasm-Conservation-and-Reproductive-Biotechnologies.aspx',
+  },
+  arcTrial: {
+    doc: 'ARC: Indigenous chicken egg-production study',
+    url: 'https://www.fao.org/4/i1353t/i1353t04.pdf',
+    page: '27–32',
+  },
+  layerManual: {
+    doc: 'SAPA: Commercial Layers',
+    url: 'https://sapoultry.co.za/pdf-training/commercial-layers.pdf',
+    page: '12–15',
+  },
+  villageFeed: {
+    doc: 'South African village-chicken feeding study',
+    url: 'https://www.scielo.org.za/pdf/sajas/v45n2/05.pdf',
+  },
+  localAdaptation: {
+    doc: 'ARC researchers: Local chicken environmental suitability',
+    url: 'https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2024.1450939/full',
+  },
+} satisfies Record<string, PoultryGuidanceSource>;
+
+/** This is a shortlist to discuss, not a province-to-breed lookup. The ARC egg trial used
+ * managed feed, water, housing and lighting at Irene; its results cannot forecast a village flock. */
+export function poultryGuidance(
+  profile?: PoultryManagement,
+  conditions?: SiteProductionConditions,
+  selectedEnterpriseId?: string | null,
+): PoultryGuidance {
+  const purpose = profile?.purpose === 'eggs' || profile?.purpose === 'meat' || profile?.purpose === 'both'
+    ? profile.purpose : 'unknown';
+  const selected = selectedEnterpriseId ? ANIMAL_ENTERPRISES[selectedEnterpriseId] : undefined;
+  const missing: string[] = [];
+  const attention: string[] = [];
+  if (purpose === 'unknown') missing.push('What are the chickens for: eggs, meat or both?');
+  if (profile?.drinkingWater !== 'always' && profile?.drinkingWater !== 'sometimes') missing.push('Is clean drinking water always available?');
+  if (!['balanced-feed', 'mixed-feed', 'mostly-scavenging'].includes(profile?.feeding ?? '')) missing.push('What feed is available?');
+  if (!['enclosed', 'partial', 'none'].includes(profile?.nightProtection ?? '')) missing.push('Are the birds protected at night?');
+  if (profile?.drinkingWater === 'sometimes') attention.push('Secure reliable clean drinking water before buying more birds.');
+  if (profile?.feeding === 'mixed-feed' || profile?.feeding === 'mostly-scavenging') attention.push('Check feed suitability; scavenging and scraps may not meet laying hens’ needs.');
+  if (profile?.nightProtection === 'partial' || profile?.nightProtection === 'none') attention.push('Improve night protection and weatherproof housing.');
+  if (selected?.animal === 'chicken' && ((purpose === 'eggs' && selected.product === 'meat') || (purpose === 'meat' && selected.product === 'eggs'))) {
+    attention.push('Your selected chicken enterprise and recorded purpose differ; review them together.');
+  }
+
+  const careNotes: PoultryGuidancePoint[] = [
+    { text: 'Every breed needs clean drinking water, suitable feed and protected housing.', source: POULTRY_GUIDANCE_SOURCES.arcManual },
+    { text: 'Foraging alone may not supply enough nutrients for eggs.', source: POULTRY_GUIDANCE_SOURCES.villageFeed },
+  ];
+  const climateNotes: PoultryGuidancePoint[] = [
+    { text: 'In hot weather, provide shade, airflow and reliable water. This is general care advice; heat at this site has not been confirmed.', source: POULTRY_GUIDANCE_SOURCES.arcManual },
+    { text: 'Local chicken adaptation varies within provinces. Location alone does not identify the best breed for this farm.', source: POULTRY_GUIDANCE_SOURCES.localAdaptation },
+  ];
+  if (conditions?.frost === 'yes') climateNotes.unshift({
+    text: 'You reported frost. Check winter shelter and chick warmth with a local adviser.', source: POULTRY_GUIDANCE_SOURCES.arcManual,
+  });
+  else if (conditions?.frost !== 'no') missing.push('Does this site get frost?');
+  if (conditions?.drainage === 'stays-wet') climateNotes.unshift({
+    text: 'You reported wet ground. Check that chicken housing drains and bedding stays dry.', source: POULTRY_GUIDANCE_SOURCES.arcManual,
+  });
+  if (conditions?.drySeasonWater === 'limited' || conditions?.drySeasonWater === 'rain-only') climateNotes.unshift({
+    text: 'Growing water is limited. Check drinking water separately; garden water does not confirm a safe poultry supply.', source: POULTRY_GUIDANCE_SOURCES.arcManual,
+  });
+
+  const options: PoultryGuidanceOption[] = [
+    {
+      id: 'potchefstroom-koekoek', name: 'Potchefstroom Koekoek', kind: 'breed',
+      detail: 'An egg-and-meat option. It outperformed the other indigenous breeds for eggs in a managed ARC trial; those results do not predict this farm.',
+      source: POULTRY_GUIDANCE_SOURCES.arcTrial,
+    },
+    { id: 'venda', name: 'Venda', kind: 'breed', detail: 'An ARC-conserved indigenous option for eggs and meat; check local stock and care needs.', source: POULTRY_GUIDANCE_SOURCES.arcTrial },
+    { id: 'ovambo', name: 'Ovambo', kind: 'breed', detail: 'An ARC-conserved indigenous option for eggs and meat; check local stock and care needs.', source: POULTRY_GUIDANCE_SOURCES.arcTrial },
+    { id: 'naked-neck', name: 'Naked Neck', kind: 'breed', detail: 'An indigenous option described across diverse South African climates; confirm suitability with local advice.', source: POULTRY_GUIDANCE_SOURCES.arcTrial },
+  ];
+  if (purpose !== 'meat') options.push({
+    id: 'commercial-layers', name: 'Commercial layers — egg system', kind: 'management-system',
+    detail: 'Consider only after checking reliable feed, drinking water, housing, health care and managed lighting. Breed and supplier still need local confirmation.',
+    source: POULTRY_GUIDANCE_SOURCES.layerManual,
+  });
+  if (purpose !== 'eggs') options.push({
+    id: 'commercial-broilers', name: 'Commercial broilers — meat system', kind: 'management-system',
+    detail: 'Needs dependable balanced feed, water, suitable housing and management. Confirm chick supply and a meat outlet before choosing.',
+    source: POULTRY_GUIDANCE_SOURCES.arcManual,
+  });
+  const status = attention.length ? 'care-needs-attention' : missing.length ? 'needs-confirmation' : 'review-locally';
+  const recordedBreed = profile?.recordedBreed?.trim().slice(0, 120) || null;
+  const hens = profile?.layingHens;
+  return {
+    purpose,
+    selectedEnterprise: selected?.animal === 'chicken' ? { id: selected.enterpriseId, name: selected.name } : null,
+    recordedBreed,
+    recordedLayingHens: typeof hens === 'number' && Number.isInteger(hens) && hens >= 0 ? hens : null,
+    status,
+    statusText: status === 'care-needs-attention' ? 'Care needs attention before expansion'
+      : status === 'needs-confirmation' ? 'Check the farm details before choosing'
+        : 'Discuss these choices with a local adviser',
+    missing,
+    attention,
+    careNotes,
+    climateNotes,
+    options,
+    localCheck: 'These are options to discuss, not a final breed recommendation. Confirm healthy stock, supplier availability, ventilation, chick warmth and a health plan locally. Record actual production months separately; this guide promises no output or dates.',
+    sources: [...new Map([...options.map((o) => o.source), ...careNotes.map((p) => p.source), ...climateNotes.map((p) => p.source), POULTRY_GUIDANCE_SOURCES.arcBreeds].map((s) => [s.url, s])).values()],
+  };
+}
 
 export const ANIMAL_LABEL: Readonly<Record<AnimalKind, string>> = {
   chicken: 'Chickens',

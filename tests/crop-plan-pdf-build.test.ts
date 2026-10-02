@@ -148,6 +148,51 @@ function tinyPng(): string {
 
 const pdfText = async (blob: Blob) => Buffer.from(await blob.arrayBuffer()).toString('latin1');
 
+// Picking icons alone do not answer Rory's request to see the growing bars from the app.
+// Inspect the real PDF text so a section switch that silently drops those bars can fail.
+test('the farmer production copy contains the growing timeline as well as the food pictures', async () => {
+  const raw = await pdfText(await buildCropPlanPdf(input({ sections: FARMER_SECTIONS })));
+  assert.ok(raw.includes('Growing plan:'), 'the field copy lost its bed-by-bed growing calendar');
+  assert.ok(raw.includes('Bed reserved / growing'), 'the bars lost the distinction between field reservation and actual picking');
+  assert.ok(raw.includes('Fresh veg'), 'growing bars must not replace the food-availability pictures');
+  assert.ok(raw.indexOf('Growing plan:') < raw.indexOf('Fresh veg'), 'the growing timeline should be encountered before picking availability');
+});
+
+test('two sowings of the same crop keep separate dated lanes in the actual printed timeline', async () => {
+  const plantings: Planting[] = [
+    { id: 'march', bedId: 'b1', cropKey: 'carrots', sowMonth: 3, areaFraction: 1 / 3 },
+    { id: 'april', bedId: 'b1', cropKey: 'carrots', sowMonth: 4, areaFraction: 1 / 3 },
+  ];
+  const raw = await pdfText(await buildCropPlanPdf(input({ plantings, tasks: [], sections: ['calendar'], now: new Date('2026-10-02T08:00:00Z') })));
+  assert.equal(raw.match(/\(Carrots\)\s*Tj/g)?.length, 2, 'same-crop cohorts were merged into a single undated lane');
+  assert.ok(raw.includes('sow Mar 2027') && raw.includes('sow Apr 2027'), 'the farmer must be able to tell which sowing each bar describes');
+});
+
+test('an impossible bed share prints the actual invalid percentage and a space warning', async () => {
+  const plantings: Planting[] = [{ id: 'invalid', bedId: 'b1', cropKey: 'carrots', sowMonth: 10, areaFraction: 2 }];
+  const raw = await pdfText(await buildCropPlanPdf(input({ plantings, tasks: [], sections: ['calendar'], now: new Date('2026-10-02T08:00:00Z') })));
+  assert.ok(raw.includes('CHECK SPACE'), 'an impossible area must not look like a workable bed calendar');
+  assert.ok(raw.includes('200% area'), 'a double-sized allocation must not silently become Whole area');
+});
+
+test('the printed winter cover ends as field work rather than being labelled food to pick', async () => {
+  // March's source duration puts termination inside this October-to-September copy.
+  const plantings: Planting[] = [{ id: 'cover', bedId: 'b1', cropKey: 'oats', sowMonth: 3 }];
+  const raw = await pdfText(await buildCropPlanPdf(input({ plantings, tasks: [], sections: ['calendar'], now: new Date('2026-10-02T08:00:00Z') })));
+  assert.ok(raw.includes('(Finish) Tj'), 'the oats termination window disappeared');
+  assert.ok(!raw.includes('(Pick) Tj'), 'a cover-crop termination must not become a food-harvest instruction');
+});
+
+test('pending and finished starters cannot acquire lanes on the printed growing calendar', async () => {
+  const plantings: Planting[] = [
+    { id: 'pending', bedId: 'b1', cropKey: 'green-beans', sowMonth: 9, once: '2026-09', awaitingSowingConfirmation: true },
+    { id: 'finished', bedId: 'b1', cropKey: 'carrots', sowMonth: 9, existing: true, confirmedOnceSowing: '2025-09', finishedOnceSowing: true },
+  ];
+  const raw = await pdfText(await buildCropPlanPdf(input({ plantings, tasks: [], sections: ['calendar'], now: new Date('2026-10-02T08:00:00Z') })));
+  assert.ok(raw.includes('No dated crop reserved here'));
+  assert.ok(!raw.includes('(Green beans) Tj') && !raw.includes('(Carrots) Tj'), 'unconfirmed or retired observations must not become growing bars');
+});
+
 const FOREST_AND_HENS = {
   forest: Array.from({ length: 12 }, (_, i) => i < 4 ? [{ iconKey: 'tree:mangifera-indica', label: 'Mango' }] : []),
   animals: Array.from({ length: 12 }, () => [{ iconKey: 'animal:chicken-layer', label: 'Laying hens - eggs' }]),
@@ -248,6 +293,9 @@ test('the field copy prints undated banana and housing with their pictures and r
   assert.ok(!raw.includes('Largest crops by known benchmark volume'), 'the field copy must open with useful pictures and jobs');
   assert.ok(raw.includes('Food sources to check'));
   assert.ok(raw.includes('Monthly harvest and field record'));
+  assert.ok(raw.includes('Fruit, eggs, honey and other production'), 'the farmer record must include food outside the vegetable beds');
+  assert.ok(raw.includes('Use the unit you actually measured') && raw.includes('(Unit)'), 'counted production needs its own explicit unit instead of a kg heading');
+  assert.ok(raw.includes('Record jar size'), 'a jar count needs the actual jar size recorded, not an assumed weight');
 });
 
 test('a field copy carries the storage conditions behind its stored-food pictures', async () => {

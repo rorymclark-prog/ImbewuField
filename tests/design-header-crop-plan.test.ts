@@ -21,16 +21,17 @@ import { readFileSync } from 'node:fs';
 
 const PAGE = readFileSync(new URL('../app/design/page.tsx', import.meta.url), 'utf8');
 
-test('the header links to this farm\'s crop plan via the shared canvasSite deep link', () => {
+test('the header links to this farm\'s production plan via the shared canvasSite deep link', () => {
   assert.match(
     PAGE,
     /href=\{`\/facilitator\/crops\?canvasSite=\$\{encodeURIComponent\(canvasState\.siteId\)\}`\}/,
-    'header Crop plan link must use the same ?canvasSite format as the picker and the step guide',
+    'the renamed Production plan must still open this farm through the shared canvasSite link',
   );
   assert.match(
     PAGE,
-    /aria-label=\{tr\("Open this farm's crop plan", 'Vula uhlelo lwezitshalo zaleli pulazi'\)\}/,
-    'the farm-specific crop-plan link must stay named in both interface languages',
+    // Rory renamed this screen because it also covers fruit, berries and animal products.
+    /aria-label=\{tr\("Open this farm's production plan", 'Vula uhlelo lokukhiqiza lwaleli pulazi'\)\}/,
+    'the farm-specific production-plan link must stay named in both draft interface languages',
   );
 });
 

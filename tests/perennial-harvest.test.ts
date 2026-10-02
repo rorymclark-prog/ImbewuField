@@ -160,6 +160,60 @@ test('banana clumps retain their sourced identity and an untyped Banana Circle r
   assert.equal(unidentifiedPlantGroups([{ defId: 'banana_circle', speciesId: 'unsupported-id' }]).length, 1, 'an unavailable harvest record must not erase the design layout');
 });
 
+test('mapped food species without a harvest dossier remain counted and permit only confirmed local dates without invented yields', () => {
+  const apple = SPECIES.find(species => species.id === 'malus-domestica');
+  assert.ok(apple && apple.uses.includes('food') && apple.nemba === 'none');
+  assert.equal(perennialHarvestFor(apple.id), null, 'the fixture must exercise a genuinely missing harvest dossier');
+  const items = [
+    { defId: 'tree_other', speciesId: apple.id, status: 'existing' as const },
+    { defId: 'tree_apple', speciesId: apple.id },
+    { defId: 'tree_other', speciesId: apple.id, status: 'proposed' as const },
+    { defId: 'tree_other', speciesId: 'morus-nigra', status: 'proposed' as const },
+    { defId: 'tree_avocado', status: 'existing' as const },
+  ];
+  const before = structuredClone(items);
+  const groups = placedTreeGroups(items);
+  assert.equal(groups.length, 3, 'unknown research must not erase known catalogue food plants');
+  assert.deepEqual(unidentifiedPlantGroups(items), [], 'an identified permitted food plant uses the same month-confirmation authority');
+  const group = groups.find(entry => entry.harvest.speciesId === apple.id);
+  assert.ok(group?.referenceMissing);
+  assert.deepEqual([group.existing, group.proposed, group.harvest.name], [2, 1, apple.commonName]);
+  assert.deepEqual(group.harvest.windows, []);
+  for (const key of ['yearsToFirstCrop', 'yearsToFullBearing', 'yieldKgPerTree', 'chillUnits', 'pollination'] as const) assert.equal(group.harvest[key], null);
+  assert.deepEqual(buildTreeAvailability(groups, [1, 6, 12], true), [[], [], []]);
+  const choices = cleanTreeSeasonChoices({ [apple.id]: { bearing: true, months: [6, 6, 13, 0] }, 'morus-nigra': { bearing: true, months: [6] } });
+  assert.deepEqual(choices[apple.id], { bearing: true, months: [6] });
+  const locallyConfirmed = buildTreeAvailability(groups, [1, 6, 12], true, choices);
+  assert.deepEqual(locallyConfirmed[1], [{ speciesId: apple.id, name: apple.commonName, trees: 2 }]);
+  assert.deepEqual(locallyConfirmed[0], []);
+  assert.deepEqual(locallyConfirmed[2], []);
+  assert.equal(treePickingByMonth(groups, [6], choices)[0][0].name, apple.commonName);
+  assert.equal(locallyConfirmed[1].some(entry => entry.speciesId === 'morus-nigra'), false, 'proposed-only plants have no current picking jobs even with dates supplied');
+  assert.deepEqual(items, before, 'reading an inventory must not change map geometry or status');
+});
+
+test('generic fruit elements retain their names while restricted mapped food remains inventory without gaining production dates', () => {
+  const ornamental = SPECIES.find(species => !species.uses.includes('food') && species.nemba === 'none');
+  const restricted = SPECIES.find(species => species.nemba !== 'none');
+  assert.ok(ornamental && restricted);
+  const items = [
+    { defId: 'tree_pear' }, { defId: 'tree_plum', status: 'proposed' as const },
+    { defId: 'tree_olive' }, { defId: 'tree_citrus' },
+    { defId: 'tree_other' }, { defId: 'tree_indigenous' }, { defId: 'tree_basin' },
+    { defId: 'tree_apple', speciesId: ornamental.id },
+    { defId: 'tree_other', speciesId: restricted.id },
+  ];
+  const groups = unidentifiedPlantGroups(items);
+  assert.deepEqual(groups.map(group => group.label).sort(), [...['tree_pear', 'tree_plum', 'tree_olive', 'tree_citrus'].map(id => ELEMENTS_BY_ID[id].name), restricted.commonName].sort());
+  assert.ok(groups.filter(group => !group.legalCheck).every(group => group.speciesId === undefined), 'generic element names do not prove a botanical identity');
+  assert.equal(groups.find(group => group.defId === 'tree_plum')?.proposed, 1);
+  assert.match(groups.find(group => group.speciesId === restricted.id)?.legalCheck ?? '', new RegExp(`NEMBA ${restricted.nemba}`));
+  assert.equal(placedTreeGroups(items).some(group => group.harvest.speciesId === restricted.id), false);
+  assert.deepEqual(cleanTreeSeasonChoices({ [restricted.id]: { bearing: true, months: [1] } }), {});
+  const aliased = cleanTreeSeasonChoices({ 'dovyalis-caffra': { bearing: true, months: [12, 1] } });
+  assert.deepEqual(aliased, { 'dovyalis-afra': { bearing: true, months: [1, 12] } }, 'retired catalogue IDs must use the current stored observation key');
+});
+
 test('saved local seasons discard invalid months and unknown species without assuming productive plants', () => {
   const clean = cleanTreeSeasonChoices({ 'persea-americana': { months: [8, 8, 0, 13, '9', 9], bearing: 'true' }, missing: { months: [1], bearing: true }, constructor: { months: [1], bearing: true } });
   assert.deepEqual(clean, { 'persea-americana': { months: [8, 9], bearing: false } });

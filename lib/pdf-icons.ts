@@ -25,7 +25,7 @@ export function pdfIconUrl(iconKey: string): string | null {
   if (kind === 'crop') return getCropArt(id) ?? null;
   if (kind === 'tree') return speciesPickerArtworkUrl(id);
   if (kind === 'animal') return animalArtUrl(id);
-  if (kind === 'element' && id === 'banana_circle') return ELEMENTS_BY_ID[id]?.art ?? null;
+  if (kind === 'element') return ELEMENTS_BY_ID[id]?.art ?? null;
   return null;
 }
 

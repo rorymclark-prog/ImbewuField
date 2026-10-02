@@ -7,7 +7,7 @@
 // proportional gain for a first version.
 
 import type { CropDef, RainPattern } from './crop-catalog';
-import { CROPS, FROST_FREE_CALENDAR_CITED, hasAutomaticPlanningBasis, hasVerifiedSchedule, MONTHS_SHORT, plantsPerM2 } from './crop-catalog';
+import { CROPS, cropByKey, FROST_FREE_CALENDAR_CITED, hasAutomaticPlanningBasis, hasVerifiedSchedule, MONTHS_SHORT, plantsPerM2 } from './crop-catalog';
 import type { PlanBed, Planting } from './crop-plan';
 import {
   existingSowOffset,
@@ -15,6 +15,8 @@ import {
   harvestMonthForCrop,
   isSpaceHungry,
   onceStampIsPast,
+  occupiedMonthsForPlanting,
+  plantingBedEntryOffsets,
   planningMaturityMonths,
   TRANSPLANT_BED_RESERVED_FROM_MONTHS,
   TRANSPLANT_ENTRY_PLANNED_MONTHS,
@@ -93,6 +95,10 @@ export interface AutoSuggestAnswers {
    * siteLatitude it lets the planner make a rain-fed plan. */
   siteMonthlyRainMm?: number[];
   siteLatitude?: number;
+  /** Months in which the farmer has actually observed frost in the growing area.
+   * A regional frost-free label or a warm monthly average cannot disprove that
+   * local observation. Absent/empty means no extra frost assumption. */
+  observedFrostMonths?: number[];
 }
 
 /**
@@ -427,18 +433,22 @@ function plannedOccupiedOffsets(
 /** The site-climate check active for the current autoSuggestPlan /
  * recomputeLaterThisYear call (lib/crop-climate-gate.ts). The engine reads a
  * crop's sowing months in a dozen passes; routing them all through
- * sowMonthsOf() keeps the heat and rain-fed checks in one place instead of
+ * sowMonthsOf() keeps the heat, rain-fed and observed-frost checks in one place instead of
  * threading a parameter through every pass. Set and cleared synchronously by
  * withClimateGate(), so it never leaks between calls. */
 let activeClimateGate: ClimateGate | null = null;
+let activeObservedFrostMonths: readonly number[] = [];
 
-function withClimateGate<T>(gate: ClimateGate | null, run: () => T): T {
+function withClimateGate<T>(gate: ClimateGate | null, observedMonths: unknown, run: () => T): T {
   const previous = activeClimateGate;
+  const previousFrost = activeObservedFrostMonths;
   activeClimateGate = gate;
+  activeObservedFrostMonths = normaliseObservedFrostMonths(observedMonths);
   try {
     return run();
   } finally {
     activeClimateGate = previous;
+    activeObservedFrostMonths = previousFrost;
   }
 }
 
@@ -447,8 +457,43 @@ function fieldMonthsOf(crop: BedHold, sowMonth: number): number[] {
   return calendarMonthsOf(plannedOccupiedOffsets(1, sowMonth, crop));
 }
 
-function climateVerdict(crop: CropDef, sowMonth: number, gate: ClimateGate): GateVerdict {
-  return judgeFieldMonths(crop, fieldMonthsOf(crop, sowMonth), gate);
+function normaliseObservedFrostMonths(value: unknown): number[] {
+  if (!Array.isArray(value)) return [];
+  return [...new Set(value.filter((month): month is number =>
+    typeof month === 'number' && Number.isInteger(month) && month >= 1 && month <= 12,
+  ))].sort((a, b) => a - b);
+}
+
+/** Share the planner's actual field hold with manual-plan warnings. Nursery
+ * time and stored food are not field occupancy; a month named on either side
+ * of New Year must still be checked against the same observed frost. */
+export function observedFrostConflicts(crop: CropDef, sowMonth: number, observedMonths: unknown): number[] {
+  if (crop.frostTender !== true || !Number.isInteger(sowMonth) || sowMonth < 1 || sowMonth > 12) return [];
+  const field = new Set(fieldMonthsOf(crop, sowMonth));
+  return normaliseObservedFrostMonths(observedMonths).filter(month => field.has(month));
+}
+
+/** A saved, loaded cohort only warns for ground it will still hold from now.
+ * The full candidate span above is right before sowing; reusing it for an
+ * observed one-off would warn about frost months that crop already survived. */
+export function observedFrostConflictsForPlanting(planting: Planting, nowMonth: number, observedMonths: unknown): number[] {
+  if (!Number.isInteger(nowMonth) || nowMonth < 1 || nowMonth > 12) return [];
+  const crop = cropByKey(planting.cropKey);
+  if (crop?.frostTender !== true) return [];
+  const span = occupiedMonthsForPlanting(planting).length;
+  if (!span) return [];
+  const forwardField = new Set(plantingBedEntryOffsets(planting, nowMonth, 12)
+    .flatMap(entry => Array.from({ length: span }, (_, index) => entry + index))
+    .filter(offset => offset >= 0 && offset < 12)
+    .map(offset => wrapMonth(nowMonth + offset)));
+  return normaliseObservedFrostMonths(observedMonths).filter(month => forwardField.has(month));
+}
+
+type SiteGateVerdict = GateVerdict | 'observed-frost';
+
+function climateVerdict(crop: CropDef, sowMonth: number, gate: ClimateGate | null): SiteGateVerdict {
+  if (observedFrostConflicts(crop, sowMonth, activeObservedFrostMonths).length) return 'observed-frost';
+  return gate ? judgeFieldMonths(crop, fieldMonthsOf(crop, sowMonth), gate) : 'ok';
 }
 
 /** The crop's regional sowing months, minus any month whose growing season the
@@ -457,7 +502,7 @@ function climateVerdict(crop: CropDef, sowMonth: number, gate: ClimateGate): Gat
 function sowMonthsOf(crop: CropDef, pattern: RainPattern): number[] {
   const months = crop.sowMonths[pattern] ?? [];
   const gate = activeClimateGate;
-  if (!gate) return months;
+  if (!gate && !activeObservedFrostMonths.length) return months;
   return months.filter((month) => climateVerdict(crop, month, gate) === 'ok');
 }
 
@@ -2534,6 +2579,24 @@ export function fillFirstSeasonGaps(
   realNowMonth: number,
   realNowYear: number,
 ): FirstSeasonFill {
+  // The ideal-plan wrapper calls this after the cycle run restores its gate.
+  // A starter must pass the same local climate and frost checks as the cycle,
+  // or a crop excluded above can quietly return in the first-season fill.
+  return withClimateGate(climateGateFrom(answers, false), answers.observedFrostMonths, () =>
+    fillFirstSeasonGapsUnderGate(answers, pattern, beds, cyclePlantings,
+      existingPlantings.filter(planting => !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing),
+      realNowMonth, realNowYear));
+}
+
+function fillFirstSeasonGapsUnderGate(
+  answers: AutoSuggestAnswers,
+  pattern: RainPattern,
+  beds: PlanBed[],
+  cyclePlantings: readonly Planting[],
+  existingPlantings: readonly Planting[],
+  realNowMonth: number,
+  realNowYear: number,
+): FirstSeasonFill {
   // The fill BRIDGES a cycle; it is never a plan of its own. An engine run
   // that refused to plan (irrigation unconfirmed, nothing schedulable) must
   // not be second-guessed by a back door that plants anyway.
@@ -2599,11 +2662,10 @@ export function fillFirstSeasonGaps(
   // ledger below is plan-wide — food already eaten reads as food still coming,
   // which then steers the crop chosen on a DIFFERENT bed. Measured: 46 of 1705
   // single stale-row injections changed the starter set on beds the row never
-  // touched. loadCropPlan's settleOnceRows normally converts past `once` rows
-  // to existing before they ever arrive here, so this was latent — but nothing
-  // in this pass asserted that, and it is the only place where breaking it
-  // silently corrupts another bed. A past stamp now yields a NEGATIVE offset,
-  // which the horizon guards already drop.
+  // touched. Loading now leaves missed intentions pending and keeps the stamp
+  // when the farmer confirms a sowing. Confirmed dated crops must still use
+  // their real negative offset here, or food already eaten can silently choose
+  // a starter for another bed. The horizon guards drop finished past offsets.
   const onceSowOffset = (stamp: string): number | null => {
     const match = /^(\d{4})-(\d{2})$/.exec(stamp);
     if (!match) return null;
@@ -3670,7 +3732,7 @@ export function autoSuggestPlan(
   existingPlantings = existingPlantings.filter((planting) =>
     !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing);
   const gate = climateGateFrom(answers, rainFed);
-  return withClimateGate(gate, () =>
+  return withClimateGate(gate, answers.observedFrostMonths, () =>
     autoSuggestPlanUnderGate(answers, pattern, beds, existingPlantings, nowMonth, realNow, gate, rainFed));
 }
 
@@ -3720,6 +3782,9 @@ function autoSuggestPlanUnderGate(
   }
   if (rainFed) {
     notes.push(planNote('warning', 'Rain-fed plan: a crop is only sown where every month it grows gets rain of at least half the estimated evaporation (the FAO growing-period rule, using this site\'s monthly rainfall; evaporation estimated from temperature by Thornthwaite\'s method, which can under-estimate it in dry, windy places). Average rain is not every year\'s rain — water in a dry spell if you can.'));
+  }
+  if (activeObservedFrostMonths.length) {
+    notes.push(planNote('basis', `Your farmer-observed frost months (${activeObservedFrostMonths.map(month => MONTHS_SHORT[month - 1]).join(', ')}) were used: frost-sensitive crops are not suggested when their field growing period crosses those months. Unrecorded months are not a promise of frost-free conditions.`));
   }
   if (pattern !== 'mild-frost') {
     // ACTION FIRST. This used to lead with the provenance sentence and sat at
@@ -4195,10 +4260,11 @@ function autoSuggestPlanUnderGate(
   // growing season this site's climate rules out is named with the reason, so
   // it is never mistaken for a crop that merely lost out on space.
   const climateRuledOut = new Set<string>();
-  if (gate) {
+  if (gate || activeObservedFrostMonths.length) {
     const cut: string[] = [];
     const tooHot: string[] = [];
     const tooDry: string[] = [];
+    const observedFrost: string[] = [];
     for (const crop of pool) {
       const regional = crop.sowMonths[pattern] ?? [];
       if (!regional.length) continue;
@@ -4207,7 +4273,8 @@ function autoSuggestPlanUnderGate(
       if (!dropped.length) continue;
       if (dropped.length === regional.length) {
         climateRuledOut.add(crop.key);
-        (dropped.some((v) => v.verdict === 'too-hot') ? tooHot : tooDry).push(crop.name);
+        (dropped.some((v) => v.verdict === 'observed-frost') ? observedFrost
+          : dropped.some((v) => v.verdict === 'too-hot') ? tooHot : tooDry).push(crop.name);
       } else {
         cut.push(`${crop.name} (not ${dropped.map((v) => MONTHS_SHORT[v.month - 1]).join(', ')})`);
       }
@@ -4218,14 +4285,20 @@ function autoSuggestPlanUnderGate(
     if (tooDry.length) {
       notes.push(planNote('warning', `${tooDry.join(', ')} ${tooDry.length === 1 ? 'was' : 'were'} left out: none of ${tooDry.length === 1 ? 'its' : 'their'} sowing windows has enough rain through the whole crop without irrigation.`));
     }
+    if (observedFrost.length) {
+      notes.push(planNote('warning', `${observedFrost.join(', ')} ${observedFrost.length === 1 ? 'was' : 'were'} left out: no sowing window remains after checking your observed frost months (${activeObservedFrostMonths.map(month => MONTHS_SHORT[month - 1]).join(', ')}) and the available site climate. Check a protected growing area or local timing with your extension officer before adding frost-sensitive crops by hand.`));
+    }
     if (cut.length) {
-      notes.push(planNote('basis', `Some sowing months were skipped for this site's climate — ${rainFed ? 'too hot, or not enough rain through the crop' : 'the crop would grow through a month hotter than its FAO ECOCROP upper limit'}: ${cut.join('; ')}.`));
+      const reason = activeObservedFrostMonths.length
+        ? `the field period crosses your observed frost months${gate ? ', or another site heat or rainfall check rules it out' : ''}`
+        : rainFed ? 'too hot, or not enough rain through the crop' : 'the crop would grow through a month hotter than its FAO ECOCROP upper limit';
+      notes.push(planNote('basis', `Some sowing months were skipped for this site's climate — ${reason}: ${cut.join('; ')}.`));
     }
     const warm: string[] = [];
     for (const crop of pool) {
       const hot = new Set(added
         .filter((planting) => planting.cropKey === crop.key)
-        .flatMap((planting) => monthsAboveOptimum(crop, fieldMonthsOf(crop, planting.sowMonth), gate)));
+        .flatMap((planting) => gate ? monthsAboveOptimum(crop, fieldMonthsOf(crop, planting.sowMonth), gate) : []));
       if (hot.size) warm.push(`${crop.name} (${[...hot].sort((a, b) => a - b).map((m) => MONTHS_SHORT[m - 1]).join(', ')})`);
     }
     if (warm.length) {
@@ -4393,7 +4466,7 @@ export function recomputeLaterThisYear(
   const rainFed = answers.reliableIrrigation !== true;
   const gate = climateGateFrom(answers, rainFed);
   if (rainFed && !gate?.rainFedMonths) return [];
-  return withClimateGate(gate, () => laterThisYearUnderGate(
+  return withClimateGate(gate, answers.observedFrostMonths, () => laterThisYearUnderGate(
     explicitCropKeys, answers, pattern, beds, proposedPlantings, existingPlantings, nowMonth, realNow,
   ));
 }

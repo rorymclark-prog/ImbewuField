@@ -38,9 +38,13 @@ export function undatedAvailability(opts: {
     for (const g of opts.treeGroups ?? []) {
       const season = confirmedTreeMonths(g.harvest, opts.treeSeasons ?? {});
       if (season.length > 0 && g.proposed === 0) continue;
-      entries.push({ iconKey: `tree:${g.harvest.speciesId}`, label: g.harvest.name, detail: `Plants on map: ${mapCounts(g)}. ${season.length ? `Local months: ${formatMonthSpan(season)}. Proposed plants are not a current harvest.` : 'Picking months and fruit-bearing plants need local confirmation.'}` });
+      entries.push({ iconKey: `tree:${g.harvest.speciesId}`, label: g.harvest.name, detail: `Plants on map: ${mapCounts(g)}. ${season.length ? `Local months: ${formatMonthSpan(season)}. Proposed plants are not a current harvest.` : 'Picking months and fruit-bearing plants need local confirmation.'}${g.referenceMissing ? ' No harvest reference is available in this plan; only local observations can supply picking months.' : ''}` });
     }
-    for (const g of opts.unidentifiedPlants ?? []) entries.push({ iconKey: 'element:banana_circle', label: g.label, detail: `${mapCounts(g)} on your map. Choose its species in the design, then confirm picking months locally.` });
+    for (const g of opts.unidentifiedPlants ?? []) entries.push({
+      iconKey: g.speciesId ? `tree:${g.speciesId}` : `element:${g.defId}`,
+      label: g.label,
+      detail: `${mapCounts(g)} on your map. ${g.legalCheck ?? (g.speciesId ? 'No harvest reference is available in this plan. Picking months are not recorded.' : 'Choose its species in the design, then confirm picking months locally.')}`,
+    });
   }
   if (opts.includeAnimals !== false) {
     for (const g of opts.animalGroups ?? []) {

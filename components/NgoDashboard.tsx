@@ -23,6 +23,7 @@ import { COURSE_MODULES } from '@/lib/course-modules';
 import { getCropArt } from '@/lib/crop-art';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
 import { cropByKey } from '@/lib/crop-catalog';
+import { recordWeightKg, recordQuantityLabel, recordQuantityPayload, quantityTotals, type RecordQuantityRow } from '@/lib/farm-records';
 import { useLanguage } from '@/lib/i18n';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
@@ -69,8 +70,8 @@ function seeded(seed: string) {
 const pick = <T,>(r: () => number, a: T[]) => a[Math.floor(r() * a.length)];
 const rint = (r: () => number, a: number, b: number) => a + Math.floor(r() * (b - a + 1));
 
-interface ProdRow { date: string; crop: typeof CROPS[number]; kg: number; photoUrl?: string | null }
-interface SaleRow { date: string; crop: typeof CROPS[number]; kg: number; rand: number; buyer: string }
+interface ProdRow extends RecordQuantityRow { date: string; crop: typeof CROPS[number]; kg: number | null; photoUrl?: string | null }
+interface SaleRow extends RecordQuantityRow { date: string; crop: typeof CROPS[number]; kg: number | null; rand: number; buyer: string }
 interface Gardener {
   id: string; profileId: string; name: string; plot: string; idNumber: string; sizeM2: number; lat: number; lon: number;
   trainingPct: number; courses: { name: string; done: boolean }[]; production: ProdRow[]; sales: SaleRow[];
@@ -193,6 +194,8 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
     date: fmtDate(p.logged_at),
     crop: cropForName(p.crop),
     kg: p.kg,
+    quantity: p.quantity,
+    unit: p.unit,
     photoUrl: p.photo_url,
   }));
 
@@ -200,6 +203,8 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
     date: fmtDate(s.sold_at),
     crop: cropForName(s.crop),
     kg: s.kg,
+    quantity: s.quantity,
+    unit: s.unit,
     rand: s.amount,
     buyer: s.buyer ?? 'Unknown',
   }));
@@ -412,15 +417,18 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   }, []);
 
   const totals = gardener && (() => {
-    const produced = gardener.production.reduce((s, p) => s + p.kg, 0);
-    const soldKg = gardener.sales.reduce((s, p) => s + p.kg, 0);
+    const produced = gardener.production.reduce((s, p) => s + (recordWeightKg(p) ?? 0), 0);
+    const producedLabels = quantityTotals(gardener.production).map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit))).join(' · ') || 'No quantity recorded';
+    const soldLabels = quantityTotals(gardener.sales).map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit))).join(' · ') || 'No quantity recorded';
+    const weightCoverageUnknown = gardener.production.some(p => recordWeightKg(p) === null) || gardener.sales.some(p => recordWeightKg(p) === null);
+    const soldKg = gardener.sales.reduce((s, p) => s + (recordWeightKg(p) ?? 0), 0);
     const soldR = gardener.sales.reduce((s, p) => s + p.rand, 0);
     // A negative difference means some picking was not logged (or a sale was
     // from an earlier harvest), so zero would be a made-up kept amount.
-    const kept = soldKg <= produced ? produced - soldKg : null;
+    const kept = !weightCoverageUnknown && soldKg <= produced ? produced - soldKg : null;
     // Sales are measured money. Kept food is measured weight, not a rand value:
     // one blanket price hid an assumption inside what looked like earnings.
-    return { produced, soldKg, soldR, kept };
+    return { produced, soldKg, soldR, kept, producedLabels, soldLabels, weightCoverageUnknown };
   })();
 
   /* Deduped on the resolved catalogue key, not the displayed name. While every unmatched crop was
@@ -431,6 +439,15 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
   const areaNames = [...new Set(gardens.map(g=>g.town || 'Area not recorded'))].sort();
   const areaGardens = gardens.filter(g=>areaFilter === 'All areas' || (g.town || 'Area not recorded') === areaFilter).sort((a,b)=>a.town.localeCompare(b.town));
+  const gardenProduction = gardeners.flatMap(person => person.production);
+  const gardenWeights = gardenProduction.flatMap(row => {
+    const kg = recordWeightKg(row);
+    return kg === null ? [] : [kg];
+  });
+  const gardenWeightLabel = garden && garden.produceKg > 0 ? `${garden.produceKg} kg`
+    : gardenWeights.length > 0 ? `${gardenWeights.reduce((sum, kg) => sum + kg, 0)} kg` : '—';
+  const gardenCountLabels = quantityTotals(gardenProduction).filter(row => row.unit !== 'kg')
+    .map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit))).join(' · ');
   return (
     <div className="flex flex-col w-full h-full overflow-hidden">
       {/* Stat row — 2×2 grid on mobile (fits 375px), 4-across flex row on desktop */}
@@ -618,12 +635,12 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   <>
                     {/* Value summary */}
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Produced','Kukhiqiziwe')}</div><div className="text-base font-display font-semibold" style={{ color: '#1F4D2B' }}>{totals.produced}<span className="text-xs"> kg</span></div></div>
-                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Sold','Kuthengisiwe')}</div><div className="text-base font-display font-semibold" style={{ color: '#20190F' }}>{totals.soldKg}<span className="text-xs"> kg</span></div></div>
+                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Produced','Kukhiqiziwe')}</div><div className="text-base font-display font-semibold" style={{ color: '#1F4D2B' }}>{totals.producedLabels}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Sold','Kuthengisiwe')}</div><div className="text-base font-display font-semibold" style={{ color: '#20190F' }}>{totals.soldLabels}</div></div>
                       <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Sales received','Imali etholakele ngokuthengisa')}</div><div className="text-base font-display font-semibold" style={{ color: '#9E5C08' }}>R{numberLabel(totals.soldR)}</div></div>
                     </div>
                     <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
-                      {totals.kept === null
+                      {totals.weightCoverageUnknown ? 'Weight not matched to sales: unknown — counts and packages are kept in their own units.' : totals.kept === null
                         ? ui('Harvest not matched to sales: unknown — sales exceed recorded harvest','Inani lesivuno elingahambisani nokuthengisa: alaziwa — okuthengisiwe kudlula isivuno esirekhodiwe')
                         : ui(`Harvest not matched to sales: ${totals.kept} kg`,`Isivuno esingahambisani nokuthengisa: ${totals.kept} kg`)}
                     </p>
@@ -650,8 +667,8 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>{ui('Preview & download this garden record','Buka bese ulanda irekhodi lale ngadi')}</summary>
                       <ReportComposer title="Garden production record" sample={isDemo} photos={isDemo ? sampleSitePhotos(garden.id) : []} photosByDefault={isDemo} sections={[
                         { title: 'Garden record', lines: [garden.name, `${gardener.name} · ${gardener.plot}`, `Plot size recorded: ${gardener.sizeM2} m². This is not a verified active production area.`] },
-                        { title: 'Production entries', lines: gardener.production.map(p => `${p.date}: ${p.crop.n}, ${p.kg} kg`) },
-                        { title: 'Sales entries', lines: gardener.sales.map(p => `${p.date}: ${p.crop.n}, ${p.kg} kg; R${p.rand}`) },
+                        { title: 'Production entries', lines: gardener.production.map(p => `${p.date}: ${p.crop.n}, ${recordQuantityLabel(p)}`) },
+                        { title: 'Sales entries', lines: gardener.sales.map(p => `${p.date}: ${p.crop.n}, ${recordQuantityLabel(p)}; R${p.rand}`) },
                         { title: 'Coverage', lines: ['Includes only the production and sales entries shown in this garden record. Costs are not included, so this is not a profitability report.'] },
                       ]} />
                     </details>
@@ -679,7 +696,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#755942' }}><BookOpen size={13} /> {ui('Books — production','Izincwadi — ukukhiqiza')}</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#755942' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{p.kg}kg</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#755942' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{recordQuantityLabel(p)}</span></div>
                         ))}
                       </div>
                     </div>
@@ -689,7 +706,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#755942' }}><BookOpen size={13} /> {ui('Books — sales','Izincwadi — ukuthengisa')}</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{p.kg}kg → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{recordQuantityLabel(p)} → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
                         ))}
                       </div>
                     </div>
@@ -707,10 +724,11 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                 {isDemo && <a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer" className="block rounded-xl p-3 font-semibold" style={{background:'#e9f1e9',color:'#214d35'}}>{ui('Open completed garden report (PDF) →','Vula umbiko ophelele wengadi (PDF) →')}</a>}
                 {isDemo && <SampleGardenVisual key={garden.id} kind={garden.kind} variant={garden.id} name={garden.name} />}
                 <div className="grid grid-cols-3 gap-2">
-                  {[[ui('Farmers','Abalimi'), garden.farmers || gardeners.length, '#20190F'], [ui('Produce','Umkhiqizo'), `${garden.produceKg || gardeners.reduce((s, g) => s + g.production.reduce((a, p) => a + p.kg, 0), 0)}kg`, '#2F6F9E'], [ui('Training','Ukuqeqeshwa'), garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
+                  {[[ui('Farmers','Abalimi'), garden.farmers || gardeners.length, '#20190F'], ['Weighed produce', gardenWeightLabel, '#2F6F9E'], [ui('Training','Ukuqeqeshwa'), garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
                     <div key={l as string} className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>
                   ))}
                 </div>
+                {gardenCountLabels && <p className="text-xs" style={{ color: '#506158' }}>Other recorded quantities: {gardenCountLabels}. Their weight is not recorded.</p>}
                 <div>
                   <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#755942' }}>{ui('Gardeners — tap for full record','Abalimi — thepha ukuze ubone irekhodi eligcwele')}</div>
                   {gardenersLoading ? (
@@ -722,12 +740,12 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   ) : (
                     <div className="space-y-1">
                       {gardeners.map((gr) => {
-                        const prod = gr.production.reduce((s, p) => s + p.kg, 0);
+                        const prodLabel = quantityTotals(gr.production).map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit))).join(' · ') || '—';
                         return (
                           <button key={gr.id} onClick={() => openGardener(gr)} className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
                             <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', color: '#1F4D2B', fontSize: 12, fontWeight: 600 }}>{isDemo ? <img data-photo-preview src={samplePortrait(gr.name)} alt="" className="w-full h-full object-cover rounded-full" /> : initials(gr.name)}</div>
                             <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{gr.name}</div><div className="text-xs font-mono" style={{ color: '#755942' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
-                            <span className="text-xs font-mono flex-shrink-0" style={{ color: '#1F4D2B' }}>{prod > 0 ? `${prod}kg` : '—'}</span>
+                            <span className="text-xs font-mono flex-shrink-0 max-w-[40%] text-right break-words" style={{ color: '#1F4D2B' }}>{prodLabel}</span>
                           </button>
                         );
                       })}

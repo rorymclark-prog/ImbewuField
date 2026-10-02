@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs';
 import { monthAxisSlots } from '@/lib/month-axis';
 import { animalEntries, forestEntries, printableAvailability } from '@/lib/crop-export-availability';
 import { pdfIconUrl } from '@/lib/pdf-icons';
-import { loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, unidentifiedPlantGroups } from '@/lib/perennial-harvest';
+import { buildTreeAvailability, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, unidentifiedPlantGroups } from '@/lib/perennial-harvest';
 import { loadAnimalSeasonChoices, placedAnimalGroups, saveAnimalSeasonChoices } from '@/lib/animal-enterprises';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
@@ -95,6 +95,40 @@ test('banana, hives and coops survive printing without invented products or harv
   assert.equal(honey.animals, undefined, 'no months silently supplied for honey');
   const hidden = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], treeGroups: placedTreeGroups(items), unidentifiedPlants: unidentifiedPlantGroups(items), animalGroups: placedAnimalGroups(items), includeTrees: false, includeAnimals: false });
   assert.deepEqual(hidden.undated, []);
+});
+
+test('food plants missing harvest research retain names counts and artwork on paper without a false banana label', () => {
+  const items = [
+    { defId: 'tree_other', speciesId: 'olea-europaea-subsp-europaea', status: 'existing' as const },
+    { defId: 'tree_other', speciesId: 'olea-europaea-subsp-europaea', status: 'proposed' as const },
+    { defId: 'tree_pear', status: 'existing' as const },
+  ];
+  const printed = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], treeGroups: placedTreeGroups(items), unidentifiedPlants: unidentifiedPlantGroups(items) });
+  assert.equal(printed.undated?.length, 2);
+  const olive = printed.undated?.find(entry => entry.label === 'Olive');
+  assert.equal(olive?.iconKey, 'tree:olea-europaea-subsp-europaea');
+  assert.match(olive?.detail ?? '', /1 existing; 1 proposed.*need local confirmation.*No harvest reference/);
+  assert.doesNotMatch(olive?.detail ?? '', /Choose its species|Jan|all year|kg/);
+  const pear = printed.undated?.find(entry => entry.label === 'Pear Tree');
+  assert.equal(pear?.iconKey, 'element:tree_pear');
+  assert.equal(pdfIconUrl(pear?.iconKey ?? ''), '/element-art/tree_pear.png');
+  assert.ok(printed.undated?.every(entry => !!pdfIconUrl(entry.iconKey)), 'use each mapped plant\'s own available artwork');
+  const hidden = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], treeGroups: placedTreeGroups(items), unidentifiedPlants: unidentifiedPlantGroups(items), includeTrees: false });
+  assert.deepEqual(hidden.undated, []);
+});
+
+test('a permitted mapped food plant with no dossier uses confirmed local months consistently on screen and paper', () => {
+  const items = [
+    { defId: 'tree_other', speciesId: 'olea-europaea-subsp-europaea', status: 'existing' as const },
+    { defId: 'tree_other', speciesId: 'olea-europaea-subsp-europaea', status: 'proposed' as const },
+  ];
+  const groups = placedTreeGroups(items);
+  const treeSeasons = { 'olea-europaea-subsp-europaea': { bearing: true, months: [4] } };
+  const slots = buildTreeAvailability(groups, [3, 4, 5], true, treeSeasons);
+  const printed = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], trees: slots, treeGroups: groups, treeSeasons });
+  assert.deepEqual(printed.forest, [[], [{ iconKey: 'tree:olea-europaea-subsp-europaea', label: 'Olive' }], []]);
+  assert.match(printed.undated?.[0].detail ?? '', /1 proposed.*Local months: Apr.*Proposed plants are not a current harvest.*No harvest reference/);
+  assert.equal(slots[1][0].trees, 1, 'a proposed mapped plant must not inflate current output');
 });
 
 test('Simple farmers can confirm crop timing and get a picture calendar without opening All tools', () => {

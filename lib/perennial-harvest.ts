@@ -26,6 +26,8 @@ import { PERENNIAL_HARVEST_DATA } from './perennial-harvest-data';
 import { canonicalSpeciesId } from './species-aliases';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
+import { SPECIES } from './species-catalog';
+import { ELEMENTS_BY_ID, plantingGroupFor } from './design-elements';
 
 export interface HarvestCitation {
   /** Verbatim from the source. Fragments joined with "..." are separate passages of one source. */
@@ -72,6 +74,7 @@ export interface PerennialHarvest {
 }
 
 export const PERENNIAL_HARVEST: Readonly<Record<string, PerennialHarvest>> = PERENNIAL_HARVEST_DATA;
+const catalogueSpecies = new Map(SPECIES.map(species => [species.id, species]));
 
 /** The harvest record for a catalogue species, following retired ids (lib/species-aliases.ts). */
 export function perennialHarvestFor(speciesId: string | null | undefined): PerennialHarvest | null {
@@ -160,26 +163,64 @@ export function speciesIdForPlaced(item: PlacedPlant): string | null {
 
 export interface PlacedTreeGroup {
   harvest: PerennialHarvest;
+  /** Local observations are allowed even when no harvest dossier supplies reference facts. */
+  referenceMissing?: true;
   existing: number;
   proposed: number;
 }
 
-/** A banana circle is a design layout, not evidence of one catalogue species. */
+/** A mapped food plant or layout without a harvest dossier still belongs in inventory.
+ * A missing research record supplies neither a picking month nor an expected crop. */
 export interface UnidentifiedPlantGroup {
-  defId: 'banana_circle';
-  label: 'Banana Circle';
+  defId: string;
+  label: string;
+  speciesId?: string;
+  /** The existing catalogue flag, not a new legal classification or planting recommendation. */
+  legalCheck?: string;
   existing: number;
   proposed: number;
 }
 
 export function unidentifiedPlantGroups(items: readonly PlacedPlant[]): UnidentifiedPlantGroup[] {
-  const itemsWithoutSpecies = items.filter((item) => item.defId === 'banana_circle' && !perennialHarvestFor(speciesIdForPlaced(item)));
-  if (itemsWithoutSpecies.length === 0) return [];
-  return [{ defId: 'banana_circle', label: 'Banana Circle', existing: itemsWithoutSpecies.filter((item) => item.status !== 'proposed').length, proposed: itemsWithoutSpecies.filter((item) => item.status === 'proposed').length }];
+  const groups = new Map<string, UnidentifiedPlantGroup>();
+  for (const item of items) {
+    const speciesId = speciesIdForPlaced(item);
+    const species = speciesId ? catalogueSpecies.get(speciesId) : undefined;
+    // The chosen species wins over the element's generic picture. A shade plant on a
+    // fruit-tree symbol must not acquire food status. A restricted plant remains inventory,
+    // while its existing catalogue restriction prevents a dated production recommendation.
+    if (species && !species.uses.includes('food')) continue;
+    const legalCheck = species && species.nemba !== 'none'
+      ? `Existing catalogue restriction flag: NEMBA ${species.nemba}. Legal status needs checking; kept as mapped inventory without planting advice or production dates.`
+      : undefined;
+    if (!legalCheck && harvestForMappedFoodSpecies(speciesId)) continue;
+    const def = ELEMENTS_BY_ID[item.defId];
+    const group = def ? plantingGroupFor(def) : null;
+    if (!species && item.defId !== 'banana_circle' && group !== 'fruit_nut' && group !== 'indigenous_fruit') continue;
+    const label = species?.commonName ?? def?.name;
+    if (!label) continue;
+    const key = species ? `species:${species.id}` : `element:${item.defId}`;
+    const entry = groups.get(key) ?? { defId: item.defId, label, ...(species ? { speciesId: species.id } : {}), ...(legalCheck ? { legalCheck } : {}), existing: 0, proposed: 0 };
+    if (item.status === 'proposed') entry.proposed++; else entry.existing++;
+    groups.set(key, entry);
+  }
+  return [...groups.values()].sort((a, b) => a.label.localeCompare(b.label));
+}
+
+/** A farmer's observed months need an identity, not a research yield. The absent source
+ * fields stay explicitly empty so this fallback cannot masquerade as a harvest dossier. */
+function harvestForMappedFoodSpecies(id: string | null): PerennialHarvest | null {
+  if (!id) return null;
+  const species = catalogueSpecies.get(canonicalSpeciesId(id));
+  if (!species || !species.uses.includes('food') || species.nemba !== 'none') return null;
+  return perennialHarvestFor(species.id) ?? {
+    speciesId: species.id, name: species.commonName, product: 'food', windows: [],
+    yearsToFirstCrop: null, yearsToFullBearing: null, yieldKgPerTree: null, chillUnits: null, pollination: null,
+  };
 }
 
 /**
- * The design's trees that have a harvest record, grouped by species.
+ * The design's known, permitted catalogue food plants, grouped by species.
  *
  * Status matters to the chart. A tree drawn as proposed is a plan: it will not crop for the years
  * its yearsToFirstCrop says, so a "from today" calendar must not show its fruit. Legacy items with
@@ -188,9 +229,9 @@ export function unidentifiedPlantGroups(items: readonly PlacedPlant[]): Unidenti
 export function placedTreeGroups(items: readonly PlacedPlant[]): PlacedTreeGroup[] {
   const bySpecies = new Map<string, PlacedTreeGroup>();
   for (const item of items) {
-    const harvest = perennialHarvestFor(speciesIdForPlaced(item));
+    const harvest = harvestForMappedFoodSpecies(speciesIdForPlaced(item));
     if (!harvest) continue;
-    const group = bySpecies.get(harvest.speciesId) ?? { harvest, existing: 0, proposed: 0 };
+    const group = bySpecies.get(harvest.speciesId) ?? { harvest, ...(!perennialHarvestFor(harvest.speciesId) ? { referenceMissing: true as const } : {}), existing: 0, proposed: 0 };
     if (item.status === 'proposed') group.proposed++; else group.existing++;
     bySpecies.set(harvest.speciesId, group);
   }
@@ -220,9 +261,10 @@ export function cleanTreeSeasonChoices(raw: unknown): TreeSeasonChoices {
   const out: TreeSeasonChoices = {};
   if (!raw || typeof raw !== 'object') return out;
   for (const [id, value] of Object.entries(raw)) {
-    if (!Object.hasOwn(PERENNIAL_HARVEST, id) || !value || typeof value !== 'object') continue;
+    const canonicalId = canonicalSpeciesId(id);
+    if (!harvestForMappedFoodSpecies(canonicalId) || !value || typeof value !== 'object') continue;
     const candidate = value as { months?: unknown; bearing?: unknown };
-    out[id] = { months: validMonths(candidate.months), bearing: candidate.bearing === true };
+    out[canonicalId] = { months: validMonths(candidate.months), bearing: candidate.bearing === true };
   }
   return out;
 }

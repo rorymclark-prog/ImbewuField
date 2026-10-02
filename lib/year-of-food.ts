@@ -23,6 +23,7 @@
 import type { CropDef, RainPattern } from './crop-catalog';
 import { CROPS, hasAutomaticPlanningBasis } from './crop-catalog';
 import type { ClimateGate } from './crop-climate-gate';
+import { observedFrostConflicts } from './crop-autosuggest';
 import { judgeFieldMonths } from './crop-climate-gate';
 import type { FoodAvailabilityItem, PlanBed, Planting } from './crop-plan';
 import {
@@ -160,6 +161,8 @@ export interface GapFillInput {
   currentMonth: number;
   /** Site climate gate (lib/crop-climate-gate.ts); null when the site's climate is unknown. */
   gate: ClimateGate | null;
+  /** Farmer-observed frost months from this site's survey, not inferred monthly minima. */
+  observedFrostMonths?: readonly number[];
   /** Suggestions per gap month. */
   perMonth?: number;
   /** Candidate crops; defaults to the whole catalog. Tests pass a fixed list. */
@@ -200,6 +203,7 @@ export function suggestGapFills(input: GapFillInput): GapFillMonth[] {
       let best: GapFillSuggestion | null = null;
       let reachedButNoRoom = false;
       for (const sowMonth of crop.sowMonths[pattern] ?? []) {
+        if (observedFrostConflicts(crop, sowMonth, input.observedFrostMonths).length) continue;
         const hitOffsets = offsets.filter((off) => wrap(sowMonth + off) === targetMonth);
         if (hitOffsets.length === 0) continue;
         const entry = bedEntryMonth(sowMonth, crop);
