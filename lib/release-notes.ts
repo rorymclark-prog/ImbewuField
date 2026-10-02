@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '4863cbf0', changes: [
+    'Printed crop plans start with crop pictures across the months and larger job sheets.',
+    'Banana, hives and coops stay on the print while local food dates are unconfirmed.',
+    'Confirm missed sowings. Shared-bed jobs show their area; seed weights use sourced rates.',
+    'Tree and animal food months use your local confirmations, kept on this device.',
+  ], tour: [
+    { title: 'Print the crop picture calendar', where: 'Crop plan → Take this plan with you',
+      href: '/facilitator/crops',
+      detail: 'Check local food months, then print the picture calendar and monthly tick-off jobs.' },
+  ] },
   { when: '2 October 2026', sha: '434cd435', changes: [
     'Sesotho and Xitsonga now show marked Water L2 body drafts beside exact English.',
     'The Xitsonga title, picture text, key points and quizzes remain English pending review.',
