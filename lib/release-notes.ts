@@ -42,8 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 October 2026', sha: 'd79d6c58', changes: [
+  { when: '2 October 2026', sha: '14c06e79', changes: [
     'Unfinished site survey answers can now be recovered after reopening the app.',
+    'Your unfinished frost, water and chicken observations stay together after reopening.',
     'Save & continue still controls which answers appear in your site report.',
   ], tour: [
     { title: 'Recover an unfinished survey', where: 'Farm → your saved site → Site questionnaire',
