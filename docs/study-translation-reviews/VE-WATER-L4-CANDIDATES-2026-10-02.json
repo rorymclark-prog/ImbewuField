@@ -1,0 +1,166 @@
+{
+  "status": "unreviewed regional translation candidates; not learner-ready",
+  "language": "Tshivenda (ve)",
+  "lessonId": "water-harvesting-l4",
+  "canonicalSource": "lib/course-modules.ts",
+  "existingDraftSource": "lib/course-translation-drafts-ve-water-harvesting.ts",
+  "sourceCommit": "1ed35873",
+  "sourceOrderPreserved": true,
+  "sourceCorrectIndices": [
+    1,
+    1
+  ],
+  "notes": [
+    "Canonical English remains unchanged. This packet is for qualified Tshivenda review only.",
+    "Existing held Tshivenda entry remains untouched in the repository.",
+    "Where sanitation terminology, legal suitability, or conditional safety meaning is uncertain, the full canonical English is retained.",
+    "The final operating-system condition is kept exactly in English: If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice. This encodes system active AND (bad smell OR pooling OR plant harm).",
+    "No Xitsonga wording intentionally included. No new species, measurements, or treatment guarantees."
+  ],
+  "lesson": {
+    "title": {
+      "sourceEnglish": "Greywater: Check Before Reuse",
+      "candidate": "Greywater: Ṱolani ni sa athu u shumisa hafhu",
+      "backTranslation": "Greywater: Check before you use it again.",
+      "uncertainty": "Keep technical term greywater in English pending local terminology review.",
+      "reviewStatus": "unreviewed"
+    },
+    "body": {
+      "sourceEnglish": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+      "candidate": "Maḓi o shumiswaho hayani a nga vha na germs, salts, cleaning products na zwiṅwe zwithu. Tsivhudzo a i ṱalusi tshiko tshiṅwe na tshiṅwe nga nḓila nthihi. Tsivhudzo ya Afurika Tshipembe i fhambana nga ha maḓi a khishini na maḓi a u ṱanzwa zwiambaro.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture a si farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+      "backTranslation": "Used household water may have germs, salt, cleaning products and other things. Advice does not describe every source in the same way. South African advice differs about kitchen water and laundry water. [The prohibition paragraph remains exact English.] A picture is not a farm plan. Soil and mulch do not clean wastewater. [The exposure and disposal controls remain exact English.] [The active-system stop condition remains exact English.]",
+      "uncertainty": "Tshivenda candidate only for the first paragraph and the first two sentences of paragraph four. Review zwitshili, muno, zwibveledzwa, tshifanyiso, ṱambulula and agreement. All prohibited sources, harmful-chemical rule, required local review, no-advice rule, contact/spray/pooling/runoff/drinking-water plumbing controls, and AND/OR stop condition remain complete canonical English for safety.",
+      "reviewStatus": "unreviewed"
+    },
+    "keyPoints": [
+      {
+        "sourceEnglish": "Water sources and greywater guidance can differ",
+        "candidate": "Tshiko tsha maḓi na tsivhudzo ya greywater zwi nga fhambana.",
+        "backTranslation": "Water sources and greywater advice can differ.",
+        "uncertainty": "Review the plural subject agreement and preferred local term for guidance.",
+        "reviewStatus": "unreviewed"
+      },
+      {
+        "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
+        "candidate": "Check the source, service status, intended use and site locally before any reuse",
+        "backTranslation": "Exact safety condition retained in English because service status and sanitation advice terms need precise review.",
+        "uncertainty": "The shortened canonical key point is expanded to retain the operative local-advice/no-advice rule. Do not shorten in a learner version without fluent safety review.",
+        "reviewStatus": "unreviewed"
+      },
+      {
+        "sourceEnglish": "Soil and mulch do not disinfect wastewater",
+        "candidate": "Soil and mulch do not disinfect wastewater",
+        "backTranslation": "Soil and mulch do not clean/disinfect wastewater.",
+        "uncertainty": "Tshivenda verb for disinfect and the technical term wastewater need fluent review; retain the source English alongside candidate.",
+        "reviewStatus": "unreviewed"
+      },
+      {
+        "sourceEnglish": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+        "candidate": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+        "backTranslation": "Exposure, disposal and exact operating-system stop condition retained in English to preserve all prohibitions and logic.",
+        "uncertainty": "Do not translate or weaken the stop trigger without checking that it still means system active AND (bad smell OR pooling OR plant harm).",
+        "reviewStatus": "unreviewed"
+      }
+    ],
+    "quiz": [
+      {
+        "question": {
+          "sourceEnglish": "What should happen before any household washwater is reused?",
+          "candidate": "Hu fanela u itea mini before any household washwater is reused?",
+          "backTranslation": "What must we do before using household used water again?",
+          "uncertainty": "Review plural/polite form and preferred word for washwater.",
+          "reviewStatus": "unreviewed"
+        },
+        "options": [
+          {
+            "sourceEnglish": "Direct it below mulch around a tree",
+            "candidate": "Livhisani maḓi fhasi ha mulch u mona na muri.",
+            "backTranslation": "Direct the water below mulch around a tree.",
+            "uncertainty": "Review imperative and technical term mulch.",
+            "reviewStatus": "unreviewed"
+          },
+          {
+            "sourceEnglish": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+            "candidate": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+            "backTranslation": "Full correct safety action retained in English, including the no-advice means no-reuse rule.",
+            "uncertainty": "Kept in English to avoid obscuring the required qualified local check or changing its scope.",
+            "reviewStatus": "unreviewed"
+          },
+          {
+            "sourceEnglish": "Use it if it looks clear",
+            "candidate": "Use it if it looks clear",
+            "backTranslation": "Use it if it looks clean/clear.",
+            "uncertainty": "Review concord and distinction between clear-looking and safe.",
+            "reviewStatus": "unreviewed"
+          },
+          {
+            "sourceEnglish": "Use it only on plants that are not eaten raw",
+            "candidate": "I shumiseni kha zwimela fhedzi zwine zwi sa ḽiwe zwi songo bikiwa.",
+            "backTranslation": "Use it only on plants that are not eaten uncooked.",
+            "uncertainty": "Review phrasing; this remains an incorrect distractor and must not be presented as advice.",
+            "reviewStatus": "unreviewed"
+          }
+        ],
+        "sourceCorrectIndex": 1,
+        "rationale": {
+          "sourceEnglish": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+          "candidate": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+          "backTranslation": "Exact rationale retained in English because suitability, service status and permission must stay conditional.",
+          "uncertainty": "Translate only with fluent technical review; no water source or use is declared safe or permitted here.",
+          "reviewStatus": "unreviewed"
+        }
+      },
+      {
+        "question": {
+          "sourceEnglish": "Why check the exact water source and cleaning products before considering reuse?",
+          "candidate": "Ndi ngani ri tshi ṱola exact water source na cleaning products before considering reuse?",
+          "backTranslation": "Why must we check the water source and cleaning products before considering using them again?",
+          "uncertainty": "Review exactness, verb choice for assess, and long question readability.",
+          "reviewStatus": "unreviewed"
+        },
+        "options": [
+          {
+            "sourceEnglish": "All cleaning products are safe if the water is diluted",
+            "candidate": "Zwibveledzwa zwoṱhe zwa u kunakisa zwo tsireledzea arali maḓi o vanganywa na maṅwe.",
+            "backTranslation": "All cleaning products are safe if the water is mixed/diluted with more water.",
+            "uncertainty": "Review wording; incorrect distractor only.",
+            "reviewStatus": "unreviewed"
+          },
+          {
+            "sourceEnglish": "Water composition and product effects vary, so the actual source and products need assessment",
+            "candidate": "Water composition and product effects vary; ngauralo the actual source and products need assessment.",
+            "backTranslation": "Water and cleaning products vary; therefore the actual source and products must be assessed.",
+            "uncertainty": "Review technical term for composition and grammatical agreement. Correct option index stays 1.",
+            "reviewStatus": "unreviewed"
+          },
+          {
+            "sourceEnglish": "The water can be reused when it has no smell",
+            "candidate": "Maḓi a nga shumiswa hafhu arali a si na munukho.",
+            "backTranslation": "The water can be used again if it has no smell.",
+            "uncertainty": "Review agreement; incorrect distractor only and must not imply smell determines safety.",
+            "reviewStatus": "unreviewed"
+          },
+          {
+            "sourceEnglish": "Mulch removes every harmful substance",
+            "candidate": "Mulch i bvisa zwithu zwoṱhe zwi vhaisaho.",
+            "backTranslation": "Mulch removes all harmful things.",
+            "uncertainty": "Review agreement; incorrect distractor only.",
+            "reviewStatus": "unreviewed"
+          }
+        ],
+        "sourceCorrectIndex": 1,
+        "rationale": {
+          "sourceEnglish": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+          "candidate": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+          "backTranslation": "Used water can contain different germs, salts and chemicals. Looking clear, having no smell or mulch does not show that it is safe or suitable.",
+          "uncertainty": "Review technical vocabulary and agreement. Preserve the two distinct cautions: neither appearance nor smell nor mulch establishes safety/suitability.",
+          "reviewStatus": "unreviewed"
+        }
+      }
+    ]
+  },
+  "rootRepairs": [
+    "Normalized expanded English keypoints/correct option to exact canonical source; disinfect and clear-looking terms English; restored washwater/exact/composition/effects scope; generic picture framing with technical English."
+  ],
+  "publicationScope": "Candidate for visibly unreviewed source-paired publication after semantic, code and UI checks; facilitator feedback follows publication under Rory explicit authorization."
+}
