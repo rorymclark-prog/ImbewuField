@@ -1,0 +1,161 @@
+{
+  "packetVersion": 1,
+  "created": "2026-10-02",
+  "language": "Xitsonga (TS)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l4",
+  "sourceRevision": "0f26227cba5b48dda6823af124719e43a58acc09",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "currentRegistryPath": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+  "registryFinding": "The current Xitsonga Vegetables & Staples registry contains L3 and L1 but no L4 lesson. Therefore all L4 current display paragraphs fall back to canonical English. No Sesotho text was used or carried over.",
+  "sourceParagraphCount": 12,
+  "entries": [
+    {
+      "fieldPath": "lessons[3].body.paragraphs[0]",
+      "paragraphIndex": 0,
+      "exactSourceEnglish": "Pest pressure usually rises for a reason.",
+      "currentRegistryDraft": "Pest pressure usually rises for a reason.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Pest pressure usually increases for a reason.",
+      "conditions": "Preserves usually and the cause statement; the pest-pressure term remains exact English.",
+      "uncertainty": "Low to moderate: English technical term retained.",
+      "candidateXitsongaDraft": "Pest pressure hi ntolovelo yi engetseka hi xivangelo.",
+      "candidateProvenance": "Codex candidate retained after independent check; Agy uncertain connective not used"
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[1]",
+      "paragraphIndex": 1,
+      "exactSourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentRegistryDraft": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full paragraph retained because it contains pest causes, diagnosis, roots/water/predator conditions, diagnostic uncertainty, or inspection/stress indicators. Preserve exact source clauses.",
+      "uncertainty": "No translation attempted; exact English hold avoids changing diagnostic, causal, or safety conditions.",
+      "candidateXitsongaDraft": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[2]",
+      "paragraphIndex": 2,
+      "exactSourceEnglish": "So before you treat anything, look at the whole system.",
+      "currentRegistryDraft": "So before you treat anything, look at the whole system.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "So, before you treat anything, look at the whole system.",
+      "conditions": "Preserves the before-treatment sequence and whole-system observation requirement; system retained as a technical term.",
+      "uncertainty": "Moderate: tshungula is used for treat; whole-system scope is explicit.",
+      "candidateXitsongaDraft": "Kutani, loko u nga si tshungula xin'wana ni xin'wana, languta system hinkwawu.",
+      "candidateProvenance": "Codex candidate retained after independent check; Agy uncertain connective not used"
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[3]",
+      "paragraphIndex": 3,
+      "exactSourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentRegistryDraft": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full paragraph retained because it contains pest causes, diagnosis, roots/water/predator conditions, diagnostic uncertainty, or inspection/stress indicators. Preserve exact source clauses.",
+      "uncertainty": "No translation attempted; exact English hold avoids changing diagnostic, causal, or safety conditions.",
+      "candidateXitsongaDraft": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?"
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[4]",
+      "paragraphIndex": 4,
+      "exactSourceEnglish": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "currentRegistryDraft": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full paragraph retained because it contains pest causes, diagnosis, roots/water/predator conditions, diagnostic uncertainty, or inspection/stress indicators. Preserve exact source clauses.",
+      "uncertainty": "No translation attempted; exact English hold avoids changing diagnostic, causal, or safety conditions.",
+      "candidateXitsongaDraft": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[5]",
+      "paragraphIndex": 5,
+      "exactSourceEnglish": "Work through four steps, in order.",
+      "currentRegistryDraft": "Work through four steps, in order.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Work by means of four steps, in following each other [in order].",
+      "conditions": "Preserves exact four-step count and ordered sequence.",
+      "uncertainty": "Low.",
+      "candidateXitsongaDraft": "Tirha hi magoza ya mune, hi ku landzelelana.",
+      "candidateProvenance": "Agy desktop observed response, independently backchecked"
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[6]",
+      "paragraphIndex": 6,
+      "exactSourceEnglish": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "currentRegistryDraft": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full paragraph retained because it contains pest causes, diagnosis, roots/water/predator conditions, diagnostic uncertainty, or inspection/stress indicators. Preserve exact source clauses.",
+      "uncertainty": "No translation attempted; exact English hold avoids changing diagnostic, causal, or safety conditions.",
+      "candidateXitsongaDraft": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[7]",
+      "paragraphIndex": 7,
+      "exactSourceEnglish": "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+      "currentRegistryDraft": "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full paragraph retained because it contains pest causes, diagnosis, roots/water/predator conditions, diagnostic uncertainty, or inspection/stress indicators. Preserve exact source clauses.",
+      "uncertainty": "No translation attempted; exact English hold avoids changing diagnostic, causal, or safety conditions.",
+      "candidateXitsongaDraft": "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[8]",
+      "paragraphIndex": 8,
+      "exactSourceEnglish": "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+      "currentRegistryDraft": "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Third. Protect what is helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+      "conditions": "Translates the ordinary framing; keeps the full beneficial-insect claim exact in English.",
+      "uncertainty": "Low.",
+      "candidateXitsongaDraft": "Vunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects are doing work you'd otherwise do yourself.",
+      "candidateProvenance": "Agy step/protect framing; canonical exact English counterfactual restored by root"
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[9]",
+      "paragraphIndex": 9,
+      "exactSourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentRegistryDraft": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Four. It is only then that you take action [act] — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "conditions": "Preserves the fourth-step placement and only-then modality; retains may help, suitability, and monitoring clauses exactly in English.",
+      "uncertainty": "Moderate: translated only the sequencing/action framing; all effectiveness and conditions for controls remain verbatim.",
+      "candidateXitsongaDraft": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "candidateProvenance": "Agy desktop observed response, independently backchecked"
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[10]",
+      "paragraphIndex": 10,
+      "exactSourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentRegistryDraft": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Full registered-product and treatment-safety paragraph retained verbatim, including crop/pest registration, label, neem, protection, harvest waiting, and prohibitions on improvised mixtures or stronger doses.",
+      "uncertainty": "No translation attempted; exact English hold avoids changing diagnostic, causal, or safety conditions.",
+      "candidateXitsongaDraft": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[11]",
+      "paragraphIndex": 11,
+      "exactSourceEnglish": "Be honest with yourself about which step you usually skip.",
+      "currentRegistryDraft": "Be honest with yourself about which step you usually skip.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Be honest to yourself regarding the step that you usually skip [jump over].",
+      "conditions": "Preserves reflection on the step usually skipped.",
+      "uncertainty": "Unreviewed Xitsonga self-honesty/usually-skip framing independently backchecked; no fluent approval.",
+      "candidateXitsongaDraft": "Tshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula.",
+      "candidateProvenance": "Agy desktop observed response, independently backchecked"
+    }
+  ],
+  "constraints": [
+    "Canonical source, order, and all 12 paragraph indices unchanged.",
+    "No existing L4 translations were present to alter.",
+    "Keep causal, diagnostic, pest-control, treatment-registration, label, protection, and harvest-waiting clauses exact in English.",
+    "May-help, only-then, and no-improvised-mixture/stronger-dose meanings retained.",
+    "No new numbers, crops, or control efficacy claims.",
+    "No fluent approval claimed."
+  ],
+  "independentCheck": "Final composition accepted against all12 current exact English paragraphs; six framing drafts and six whole holds; language field Xitsonga. No fluent approval."
+}

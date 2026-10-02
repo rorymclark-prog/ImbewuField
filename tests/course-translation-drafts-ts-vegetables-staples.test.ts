@@ -78,11 +78,12 @@ test('Vegetables & Staple Crops L3 source drift and undrafted lesson sources fal
 
   assert.equal(resolveLearnerLessonPresentation(sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!, 'ts').status,
     'draft', 'L2 is separately source-paired in this combined batch');
-  for (const lesson of sourceModule.lessons.filter(lesson => !['vegetables-staples-l1', 'vegetables-staples-l2', 'vegetables-staples-l3'].includes(lesson.id))) {
-    const other = resolveLearnerLessonPresentation(lesson, 'ts');
-    assert.equal(other.status, 'english-fallback');
-    assert.equal(other.content.body, lesson.body);
-  }
+  // L4 now has independently checked framing; every registered body remains source-bound.
+  const fourth = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
+  assert.equal(resolveLearnerLessonPresentation(fourth, 'ts').status, 'draft');
+  const changedFourth = { ...fourth, body: fourth.body + ' Changed safety condition.' };
+  assert.equal(resolveLearnerLessonPresentation(changedFourth, 'ts').status, 'english-fallback');
+  assert.equal(resolveLearnerLessonPresentation(changedFourth, 'ts').content.body, changedFourth.body);
 });
 
 test('Vegetables & Staple Crops L3 preserves the one-failure scope while holding the staple-count claim', () => {
@@ -121,4 +122,30 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
   assert.deepEqual(shown.content.quiz, source.quiz);
   const changed = { ...source, body: source.body + ' Changed planting condition.' };
   assert.equal(resolveLearnerLessonPresentation(changed, 'ts').status, 'english-fallback');
+});
+
+
+test('Pest framing retains four-step order and exact treatment safeguards beside unchanged English', () => {
+  const source = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
+  const matches = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons.filter(lesson => lesson.id === source.id);
+  assert.equal(matches.length, 1);
+  const draft = matches[0];
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  const english = source.body.split('\n\n');
+  const paragraphs = draft.body.xitsongaDraft.split('\n\n');
+  assert.equal(paragraphs.length, 12);
+  for (const index of [1, 3, 4, 6, 7, 10]) assert.equal(paragraphs[index], english[index]);
+  for (const index of [0, 2, 5, 8, 9, 11]) assert.notEqual(paragraphs[index], english[index]);
+  assert.equal(paragraphs[5], 'Tirha hi magoza ya mune, hi ku landzelelana.');
+  assert.ok(paragraphs[8].endsWith("Beneficial insects are doing work you'd otherwise do yourself."));
+  assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
+  assert.ok(paragraphs[9].endsWith(english[9].slice(english[9].indexOf('—') + 2)));
+  assert.ok(paragraphs[11].startsWith("Tshembeka eka wena n'winyi"));
+  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
+  const shown = resolveLearnerLessonPresentation(source, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.xitsongaDraft);
+  assert.deepEqual(shown.content.quiz, source.quiz);
+  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
 });

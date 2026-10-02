@@ -317,8 +317,15 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
   for (const index of [0, 4, 9]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
     'the screened customer, box and variable-supply concepts reach the learner');
-  for (const index of [1, 2, 3, 5, 6, 7, 8, 10, 11]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-    'price, legal, income and uncertain reliability advice stays exact English');
+  // New ordinary framing was independently checked; unresolved comparative and reliability claims still hold.
+  for (const index of [1, 2, 5, 7, 8, 10, 11]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
+  for (const index of [3, 6]) assert.equal(draftParagraphs[index], sourceParagraphs[index]);
+  assert.ok(draftParagraphs[2].endsWith('An informal stall does not automatically have no rules or costs.'));
+  assert.ok(draftParagraphs[5].endsWith('Regular orders help planning only when customers and growers can keep the agreement.'));
+  assert.ok(draftParagraphs[7].includes('ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes'));
+  assert.ok(draftParagraphs[8].startsWith('Garden area or customer count alone does not predict income.'));
+  assert.ok(draftParagraphs[10].includes('surplus eo o nang le yona'));
+  assert.ok(draftParagraphs[11].endsWith('Check any certification or claim the buyer requires before using a label.'));
   assert.equal(lesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft');
   assert.equal(lesson.infographicAlt?.sesothoDraft,

@@ -91,9 +91,10 @@ test('Vegetables & Staple Crops L2 source drift and undrafted lessons fall back 
     'draft', 'L3 is separately source-paired in this combined batch');
   // L1 now has a checked body draft; unregistered lessons and changed sources still fail closed.
   assert.equal(resolveLearnerLessonPresentation(sourceModule.lessons[0], 'ts').status, 'draft');
-  for (const lesson of sourceModule.lessons.filter(lesson => !['vegetables-staples-l1', 'vegetables-staples-l2', 'vegetables-staples-l3'].includes(lesson.id))) {
-    const shown = resolveLearnerLessonPresentation(lesson, 'ts');
-    assert.equal(shown.status, 'english-fallback');
-    assert.equal(shown.content.body, lesson.body);
-  }
+  // L4 now has independently checked framing; every registered body remains source-bound.
+  const fourth = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
+  assert.equal(resolveLearnerLessonPresentation(fourth, 'ts').status, 'draft');
+  const changedFourth = { ...fourth, body: fourth.body + ' Changed safety condition.' };
+  assert.equal(resolveLearnerLessonPresentation(changedFourth, 'ts').status, 'english-fallback');
+  assert.equal(resolveLearnerLessonPresentation(changedFourth, 'ts').content.body, changedFourth.body);
 });
