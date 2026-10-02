@@ -84,10 +84,6 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
   assert.deepEqual(holds, [
     'lessons[0] soil-health-l1.infographicAlt',
     'lessons[1] soil-health-l2.infographicAlt',
-    'lessons[1] soil-health-l2.keyPoints[1]',
-    'lessons[1] soil-health-l2.quiz[0].question',
-    'lessons[1] soil-health-l2.quiz[0].rationale',
-    'lessons[1] soil-health-l2.quiz[1].rationale',
     'lessons[2] soil-health-l3.infographicAlt',
     'lessons[2] soil-health-l3.keyPoints[3]',
     'lessons[2] soil-health-l3.quiz[0].options[2]',
@@ -104,8 +100,69 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.body, compostDraft.body.sesothoDraft,
     'the complete marked body draft must be shown beside its exact English source');
-  assert.equal(presentation.content.keyPoints[1], compostLesson.keyPoints[1],
-    'the visible summary must retain the exact sanitation claim until its Sesotho wording is reviewed');
+  assert.equal(presentation.content.keyPoints[1], compostDraft.keyPoints[1].sesothoDraft,
+    'the localized key point must preserve the source sanitation limitation');
+
+  const sanitationPoint = compostDraft.keyPoints[1];
+  assert.equal(sanitationPoint.sourceEnglish, compostLesson.keyPoints[1]);
+  assert.equal(sanitationPoint.reviewStatus, 'machine-draft');
+  assert.match(sanitationPoint.sesothoDraft, /chesang.*ha e pake.*qubu yohle.*sanitised/,
+    'a hot centre must not be presented as proof of whole-heap sanitation');
+
+  const ammoniaSource = compostLesson.quiz[0];
+  const ammoniaDraft = compostDraft.quiz[0];
+  assert.equal(ammoniaDraft.question.sourceEnglish, ammoniaSource.q);
+  assert.equal(ammoniaDraft.question.reviewStatus, 'machine-draft');
+  assert.match(ammoniaDraft.question.sesothoDraft, /nkha ammonia haholo.*metsi.*slimy/,
+    'the question must retain the strong ammonia smell and wet, slimy heap conditions');
+  assert.equal(ammoniaDraft.sourceCorrectIndex, ammoniaSource.correct);
+  assert.equal(ammoniaDraft.sourceCorrectIndex, 1);
+  assert.deepEqual(ammoniaDraft.options.map(option => option.sourceEnglish), ammoniaSource.options,
+    'all four existing options stay in source order');
+  assert.deepEqual(presentation.content.quiz[0], {
+    q: ammoniaDraft.question.sesothoDraft,
+    options: ammoniaDraft.options.map(option => option.sesothoDraft),
+    correct: ammoniaSource.correct,
+    rationale: ammoniaDraft.rationale.sesothoDraft,
+  }, 'the exact-paired question and rationale reach the learner while options and answer index stay unchanged');
+  assert.match(ammoniaDraft.rationale.sesothoDraft, /e ka hloka moya o mongata le material e ommeng ho feta/,
+    'a wet, slimy heap may need more air and drier material');
+  assert.match(ammoniaDraft.rationale.sesothoDraft, /Eketsa dry browns.*phethole qubu.*hore e bulehe.*moya o kene/,
+    'the rationale preserves adding dry browns and turning the heap to open it up');
+  assert.match(ammoniaDraft.rationale.sesothoDraft, /Monko wa ammonia le wona o ka bontsha.*material e ngata haholo.*nitrogen/,
+    'the ammonia smell can also suggest excess nitrogen-rich material without asserting it as certain');
+  assert.match(ammoniaDraft.rationale.sesothoDraft, /e dule e le damp, e se be soggy/,
+    'the final moisture check remains damp, not soggy');
+
+  const wattleSource = compostLesson.quiz[1];
+  const wattleDraft = compostDraft.quiz[1];
+  assert.equal(wattleDraft.sourceCorrectIndex, wattleSource.correct);
+  assert.equal(wattleDraft.sourceCorrectIndex, 1);
+  assert.deepEqual(wattleDraft.options.map(option => option.sourceEnglish), wattleSource.options,
+    'the existing wattle answer options and order stay unchanged');
+  assert.equal(wattleDraft.rationale.sourceEnglish, wattleSource.rationale);
+  assert.equal(wattleDraft.rationale.reviewStatus, 'machine-draft');
+  assert.deepEqual(presentation.content.quiz[1], {
+    q: wattleDraft.question.sesothoDraft,
+    options: wattleDraft.options.map(option => option.sesothoDraft),
+    correct: wattleSource.correct,
+    rationale: wattleDraft.rationale.sesothoDraft,
+  }, 'the unchanged source-paired wattle question/options and new rationale reach the learner');
+  assert.match(wattleDraft.rationale.sesothoDraft, /e ka nna ya se pepesetse peo e nngwe le e nngwe/,
+    'an ordinary heap may fail to expose every seed to non-viable conditions');
+  assert.match(wattleDraft.rationale.sesothoDraft, /maemong a ka e etsang hore e se hlole e kgona ho mela \(non-viable\)/,
+    'non-viability stays tied to the conditions');
+  assert.match(wattleDraft.rationale.sesothoDraft, /Ho ntsha makgapha a dipeo ho thibela hore a se ke a nama mmoho le kompose/,
+    'excluding seed pods is explained as preventing their spread with compost');
+
+  const changedQuizSource = {
+    ...compostLesson,
+    quiz: compostLesson.quiz.map((question, index) => index === 0
+      ? { ...question, rationale: `${question.rationale} Changed source.` }
+      : question),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedQuizSource, 'st').status, 'english-fallback',
+    'source drift in an assessment field withdraws the entire paired lesson draft');
 });
 
 test('Soil Health Sesotho L3 drafts only the screened seasonal risks and falls back after source drift', () => {
@@ -226,7 +283,7 @@ test('Soil L1 Quiz 0 translates only its reviewed assessment fields and keeps th
   }, 'the existing second quiz must remain untouched by the scoped first-quiz update');
 });
 
-test('Soil L2 exposes all twelve compost paragraphs without adding safety or readiness claims', () => {
+test('Soil L2 body and scoped assessment drafts preserve compost caveats and answer indexes', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health')!.lessons[1];
   const draft = SESOTHO_SOIL_HEALTH_DRAFT.lessons[1];
   const english = source.body.split('\n\n');
@@ -270,12 +327,21 @@ test('Soil L2 exposes all twelve compost paragraphs without adding safety or rea
   assert.equal(shown.content.body, draft.body.sesothoDraft);
   assert.deepEqual(draft.keyPoints.map(point => point.sesothoDraft), [
     'Lekanyetsa tse sootho, tse tala, mongobo le moya',
-    'A hot centre does not prove the whole heap is sanitised',
+    'Karolo e bohareng e chesang ha e pake hore qubu yohle e sanitised.',
     'Boloka makgapha a dipeo le disebediswa tse nang le ditshila kantle',
     'Ahlola ho loka ho tswa boemong ba kompose, eseng lenaneong le behilweng la nako la lebatowa',
-  ], 'all existing key-point wording, including the sanitation hold, stays unchanged');
+  ], 'only the held sanitation key point changes; the other key points remain as they were');
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.sesothoDraft),
+    'the scoped keypoint draft appears in learner view');
   assert.deepEqual(shown.content.quiz.map(question => question.correct), source.quiz.map(question => question.correct),
-    'both quizzes and answer indices remain unchanged by this body-only batch');
+    'both source answer indexes remain unchanged');
+  assert.equal(shown.content.quiz[0].q, draft.quiz[0].question.sesothoDraft);
+  assert.equal(shown.content.quiz[0].rationale, draft.quiz[0].rationale.sesothoDraft);
+  assert.equal(shown.content.quiz[1].q, draft.quiz[1].question.sesothoDraft,
+    'the existing wattle question remains as it was');
+  assert.deepEqual(shown.content.quiz[1].options, draft.quiz[1].options.map(option => option.sesothoDraft),
+    'the existing wattle options remain in source order and unchanged');
+  assert.equal(shown.content.quiz[1].rationale, draft.quiz[1].rationale.sesothoDraft);
   const changedSource = { ...source, body: source.body.replace('fresh greens', 'fresh material') };
   assert.equal(resolveLearnerLessonPresentation(changedSource, 'st').status, 'english-fallback',
     'any changed English compost instruction must invalidate the paired body draft');
