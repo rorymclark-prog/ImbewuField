@@ -1,9 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Download, Check, Loader2, Trash2, AlertTriangle, WifiOff } from 'lucide-react';
 
-import { offlinePack, formatPackSize, defaultOfflinePackVariant, regionalPackNeedsNarrationChoice, type OfflinePack, type OfflinePackVariant, type PackQuality } from '@/lib/offline-pack';
+import { offlinePack, formatPackSize, defaultOfflinePackVariant, regionalPackNeedsNarrationChoice, type OfflinePackVariant, type PackQuality } from '@/lib/offline-pack';
 import {
   downloadPack, packStatus, removePack, offlineSupported, requestPersistence, storageEstimate,
   CACHE_CHANGED_EVENT,
@@ -50,7 +50,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   const regionalSlidePack = regionalPackNeedsNarrationChoice(moduleIds, lang);
   const defaultVariant = defaultOfflinePackVariant(moduleIds, lang);
   const moduleSelection = moduleIds.join('|');
-  const [packs, setPacks] = useState<OfflinePack[]>([]);
+  const selectionKey = `${lang}:${moduleSelection}`;
   const [phase, setPhase] = useState<Phase>('checking');
   const [doneFiles, setDoneFiles] = useState(0);
   const [totalFiles, setTotalFiles] = useState(0);
@@ -62,7 +62,14 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   // higher-quality set exists for facilitators, funders and anyone training off a laptop on wifi.
   // Defaulting the other way would spend a farmer's airtime to serve a projector.
   const [quality, setQuality] = useState<PackQuality>('standard');
-  const [variant, setVariant] = useState<OfflinePackVariant>(defaultVariant);
+  const [contentChoice, setContentChoice] = useState({ selectionKey, variant: defaultVariant });
+  // A language/module change must not briefly offer the previous selection's audio or files.
+  const variant = contentChoice.selectionKey === selectionKey ? contentChoice.variant : defaultVariant;
+  const packs = useMemo(() => moduleIds.map(id => offlinePack(id, lang, quality, variant))
+    .filter(pack => pack.entries.length > 0), [moduleIds, lang, quality, variant]);
+  useEffect(() => {
+    setContentChoice({ selectionKey, variant: defaultVariant });
+  }, [selectionKey, defaultVariant]);
   const abortRef = useRef<AbortController | null>(null);
 
   const totalBytes = packs.reduce((s, p) => s + p.bytes, 0);
@@ -77,14 +84,6 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   const standardBytes = sizeFor('standard');
   const highBytes = sizeFor('high');
   const hasHigher = highBytes > standardBytes;
-
-  useEffect(() => {
-    setVariant(defaultVariant);
-  }, [lang, moduleSelection, defaultVariant]);
-
-  useEffect(() => {
-    setPacks(moduleIds.map((id) => offlinePack(id, lang, quality, variant)).filter((p) => p.entries.length > 0));
-  }, [moduleIds, lang, quality, variant]);
 
   const refresh = useCallback(async () => {
     if (packs.length === 0) return;
@@ -249,7 +248,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
                 onClick={() => {
                   if (variant === opt.key) return;
                   setPhase('checking');
-                  setVariant(opt.key);
+                  setContentChoice({ selectionKey, variant: opt.key });
                 }}
                 aria-pressed={on}
                 className="text-left px-2.5 py-1.5 rounded-xl"

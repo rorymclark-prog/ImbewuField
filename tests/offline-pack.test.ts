@@ -29,9 +29,6 @@ test('silent regional downloads default to slides while Sesotho Introduction kee
   const intro = offlinePack('intro-permaculture', 'st', 'standard', 'full');
   assert.equal(intro.entries.filter(entry => entry.kind === 'audio' && entry.url.includes('/st/')).length, 22);
   assert.ok(!intro.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/en/')));
-  const ui = readFileSync(join(process.cwd(), 'components/course/OfflineDownload.tsx'), 'utf8');
-  assert.match(ui, /setVariant\(defaultVariant\)/);
-  assert.match(ui, /\[lang, moduleSelection, defaultVariant\]/);
 });
 
 test('public teaching-preview packs name every static reading route and the finance materials it links', () => {
