@@ -6,11 +6,12 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site survey: start here
 
-1. [Latest iteration: completed survey and visual improvements — 2 October 2026](2026-10-02/site-survey-completed-visual-codex.md) · [Readable completed example and report](2026-10-02/site-survey-completed-example.md).
-2. [Unfinished survey recovery — 2 October 2026](2026-10-02/site-survey-draft-recovery-codex.md).
-3. [Prior work and continuation baseline — 2 October 2026](2026-10-02/site-survey-continuation.md).
-4. [Original illustrated survey and report audit — 20 September](../SITE-SURVEY-AUDIT-2026-09-20.md).
-5. [isiZulu survey review packet — 25 September](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
+1. [Latest continuation: comprehensive coverage and recommended report stages — 2 October 2026](2026-10-02/site-report-coverage-and-stages-codex.md).
+2. [Completed survey and visual improvements — 2 October 2026](2026-10-02/site-survey-completed-visual-codex.md) · [Readable completed example and report](2026-10-02/site-survey-completed-example.md).
+3. [Unfinished survey recovery — 2 October 2026](2026-10-02/site-survey-draft-recovery-codex.md).
+4. [Prior work and continuation baseline — 2 October 2026](2026-10-02/site-survey-continuation.md).
+5. [Original illustrated survey and report audit — 20 September](../SITE-SURVEY-AUDIT-2026-09-20.md).
+6. [isiZulu survey review packet — 25 September](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
 
 The continuation record distinguishes work already merged from open improvements
 and checks that have not been performed. The older audit's pending-release text
@@ -58,6 +59,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-02 | [Site report: recovered comprehensive work, coverage gaps and recommended stages — Codex](2026-10-02/site-report-coverage-and-stages-codex.md) |
 | 2026-10-02 | [Site survey: completed example, PDF and visual improvements — Codex](2026-10-02/site-survey-completed-visual-codex.md) · [Read the saved example](2026-10-02/site-survey-completed-example.md) |
 | 2026-10-02 | [Site survey: draft recovery, browser evidence and next checks — Codex](2026-10-02/site-survey-draft-recovery-codex.md) |
 | 2026-10-02 | [Production-plan follow-up: implementation, sources and verified outputs](2026-10-02/crop-production-codex-followup.md) |
