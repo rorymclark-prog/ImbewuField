@@ -51,6 +51,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Read regional observations beside the unchanged English source.',
       href: '/student' },
   ] },
+  { when: '3 October 2026', sha: '4143b9b9', changes: [
+    'Printed calendars keep food forest and animal products visible when dates are unknown.',
+    'Plants, hives and coops have named rows; hidden sections explain how to show them.',
+  ], tour: [
+    { title: 'Find fruit and animal products', where: 'Production plan → Download the plan → Picture calendar',
+      href: '/facilitator/crops',
+      detail: 'Read Food forest and Animal products after the vegetable rows, including sources with months to confirm.' },
+  ] },
   { when: '3 October 2026', sha: '59edf369', changes: [
     'Vegetable quizzes add marked Sesotho and Xitsonga drafts beside exact English.',
     'Tshivenda household food-planning paragraphs add marked drafts beside English.',

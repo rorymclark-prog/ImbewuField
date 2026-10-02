@@ -68,6 +68,8 @@ test('the print takes twelve months and respects the chart switches', () => {
   });
   assert.equal(off.forest, undefined);
   assert.equal(off.animals, undefined);
+  assert.equal(off.includeTrees, false, 'paper must explain the deliberate fruit switch-off');
+  assert.equal(off.includeAnimals, false, 'paper must explain the deliberate animal switch-off');
 });
 
 test('every icon key resolves to the app art the chart itself shows', () => {
