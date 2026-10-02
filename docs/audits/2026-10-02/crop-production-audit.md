@@ -13,6 +13,9 @@
 - Survey continuation: [draft recovery iteration](site-survey-draft-recovery-codex.md).
   This keeps unfinished answers separate from saved production/report inputs;
   it does not duplicate the crop chat's frost, water or poultry questions.
+- Latest survey continuation: [completed example and visual review](site-survey-completed-visual-codex.md).
+  A real app journey now has saved sample answers and an exported site report;
+  its production figures remain unknown rather than being inferred from the plan.
 
 ## Preserve the original evidence
 

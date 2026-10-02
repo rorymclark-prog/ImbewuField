@@ -11,6 +11,7 @@ import {
   reportedFoodGroups,
   toggleSurveyChoice,
   productionNeedsReview,
+  productionHasAnswers,
   createSurveyDraftStore,
   surveySavedRevision,
   type SiteSurveyDraft,
@@ -585,11 +586,7 @@ function SiteSurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose,
       challenges,
       isCommercial,
       marketType: isCommercial ? marketType : undefined,
-      reportedProduction: reportedProduction.filter((row) =>
-        !!row.name || !!row.unit || row.quantityPerYear !== null || row.usedByHousehold !== null
-        || row.sold !== null || row.incomeZar !== null || (row.harvestMonths?.length ?? 0) > 0
-        || !!row.foodGroup,
-      ),
+      reportedProduction: reportedProduction.filter(productionHasAnswers),
       productionYear: productionYear === '' ? undefined : Number(productionYear),
       productionConditions: Object.keys(productionConditions).length ? productionConditions : undefined,
       poultryManagement: Object.keys(poultryManagement).length || layingHens !== '' ? {

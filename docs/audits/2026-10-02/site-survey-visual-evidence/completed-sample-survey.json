@@ -1,0 +1,58 @@
+{
+  "provenance": "Disposable Ubhejane tour example completed through the app UI. No real site visit or farmer interview. Existing sample assessment/visit wording and traced sample roof only; not verified farming evidence.",
+  "survey": {
+    "siteId": "site:-27.72623,31.96304",
+    "placeId": "demo-place-ubhejane",
+    "savedAt": "2026-10-02T15:37:40.103Z",
+    "updatedAt": 1790955460104,
+    "siteType": "community",
+    "adults": "",
+    "memberCount": "Under 20",
+    "goals": [
+      "food",
+      "soil",
+      "education"
+    ],
+    "waterSource": [
+      "municipal",
+      "rainwater"
+    ],
+    "waterDelivery": [
+      "bucket"
+    ],
+    "waterStorage": [
+      "jojo"
+    ],
+    "roofMainM2": 144,
+    "roofSecondaryM2": null,
+    "hasGutters": true,
+    "roofAreaSource": "auto",
+    "landPrepMethod": "hand",
+    "soilCondition": "compacted",
+    "soilAmendments": [
+      "compost",
+      "mulch"
+    ],
+    "hasFencing": "full",
+    "existingCrops": [
+      "vegetables",
+      "fruit-trees"
+    ],
+    "existingGrowingAreaM2": 128,
+    "existingGrowingAreaSource": "manual",
+    "livestock": [
+      "none"
+    ],
+    "otherInfra": [
+      "compost-bay"
+    ],
+    "farmingPractice": "mostly-organic",
+    "challenges": [
+      "water"
+    ],
+    "isCommercial": true,
+    "marketType": "local-market",
+    "reportedProduction": [],
+    "notes": "Tour assessment for exploring the editable design; no site survey was carried out. Example visit completed: reviewed bed labels and the water supply. Follow up on the damaged gutter and record the next harvest together."
+  }
+}

@@ -25,8 +25,16 @@ export function toggleSurveyChoice(values: string[], value: string, none = 'none
   return value === none ? [none] : [...values.filter(item => item !== none), value];
 }
 
+/** Opening an optional row is not a production claim; zero and partial answers are. */
+export function productionHasAnswers(row: ReportedProduction): boolean {
+  return !!row.name?.trim() || !!row.unit.trim() || row.quantityPerYear !== null
+    || row.usedByHousehold !== null || row.sold !== null || row.incomeZar !== null
+    || (row.harvestMonths?.length ?? 0) > 0 || !!row.foodGroup;
+}
+
 /** Review a farmer's own figures; never repair them by silently changing a quantity. */
 export function productionNeedsReview(row: ReportedProduction): boolean {
+  if (!productionHasAnswers(row)) return false;
   const quantities = [row.quantityPerYear, row.usedByHousehold, row.sold];
   if (quantities.some(value => value !== null && (!Number.isFinite(value) || value < 0))) return true;
   if (row.incomeZar !== null && (!Number.isFinite(row.incomeZar) || row.incomeZar < 0)) return true;
