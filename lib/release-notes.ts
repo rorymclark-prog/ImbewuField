@@ -55,6 +55,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       href: '/records',
       detail: 'Choose the product and its actual unit. Counted products keep their own totals.' },
   ] },
+  { when: '2 October 2026', sha: 'feaa8a19', changes: [
+    'Greywater lessons show marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Technical and sanitation cautions stay English; both quizzes keep the source answers.',
+  ], tour: [
+    { title: 'Review the regional greywater drafts', where: 'Study → Water Harvesting → lesson 4',
+      href: '/student',
+      detail: 'Compare drafts with English and try both quizzes. Silent slides remain available.' },
+  ] },
   { when: '2 October 2026', sha: 'f6268170', changes: [
     'Tshivenda and Xitsonga roof-water lessons show marked drafts beside exact English.',
     'Both roof-water quizzes retain safety checks; difficult terms remain English.',
