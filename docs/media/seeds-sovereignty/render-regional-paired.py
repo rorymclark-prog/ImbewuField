@@ -90,6 +90,11 @@ def main() -> None:
                     "sha256": sha(sample_path),
                 })
 
+        packet = json.loads(paired.read_text(encoding="utf-8"))
+        passages = [item for slide in packet["slides"]
+                    for item in [slide["target"]["heading"], *slide["target"]["body"]]]
+        draft_count = sum(item["status"] == "draft" for item in passages)
+        hold_count = len(passages) - draft_count
         report = {
             "module": "seeds-sovereignty",
             "language": language,
@@ -105,7 +110,11 @@ def main() -> None:
             "slides": rows,
             "contactSheet": str(contact_path.relative_to(ROOT)),
             "phoneSamples": samples,
-            "note": "Slides 1–3 and selected ordinary-language sentences on slides 5–9 and 22–24 use machine drafts from the paired review packet. Technical and uncertain meanings remain exact English holds. The 960x540 English illustrations are shown at native pixels without resampling. No translation approval or narration is claimed.",
+            "draftPassageCount": draft_count,
+            "englishHoldCount": hold_count,
+            "note": (f"{draft_count} of {len(passages)} headings and passages are unreviewed machine drafts from the paired review packet, each beside its exact English source"
+                     + (f"; {hold_count} remain exact English holds. " if hold_count else "; no English holds remain. ")
+                     + "Difficult technical terms stay in English inside translated sentences. The 960x540 English illustrations are shown at native pixels without resampling. Optional narration stays exact English. No fluent-speaker, local-farming or translation approval is claimed."),
         }
         (QA / f"{language}-verification.json").write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

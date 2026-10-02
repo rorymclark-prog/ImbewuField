@@ -13,6 +13,7 @@ import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
+import { assertKeeps, checkAnimalNames, checkCompleteSlideDrafts } from './regional-full-draft-checks.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const marketSource = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
@@ -127,17 +128,24 @@ test('Water Harvesting keeps technical teaching in English under localized gener
   }
 });
 
-test('silent Small Livestock drafts keep animal-care text exact and ship the reviewed still bytes', () => {
+// Rewritten 2 October 2026: slides 12-16 and 18-20 were exact-English holds. Every heading and paragraph is
+// now a back-translated draft beside its exact English source, with animal names checked on their own (an
+// earlier draft confused ducks with frogs). The learner stills must still match the review frames byte for byte.
+test('silent Small Livestock decks draft every slide passage, name each animal correctly and ship the reviewed still bytes', () => {
   const english = englishSlideRecords(readFileSync('docs/narration/small-livestock.en.md', 'utf8'));
   assert.equal(english.length, 20);
-  for (const lang of ['st', 've', 'ts']) {
+  for (const lang of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/study-translation-reviews/small-livestock-regional/small-livestock.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, english, lang);
     assert.equal(packet.reviewStatus, 'unreviewed');
     assert.equal(slides.length, 20);
-    for (const number of [12, 13, 14, 15, 16, 18, 19, 20]) {
-      assert.ok(slides[number - 1].target.body.every((part: any) => part.status === 'english-hold'),
-        `${lang} slide ${number}: husbandry, safety, manure and field-action advice stays exact English`);
+    const pairs = checkCompleteSlideDrafts(slides, lang, `${lang} Small Livestock`);
+    assert.ok(checkAnimalNames(pairs, lang, `${lang} Small Livestock slides`) >= 40);
+    for (const slide of slides) {
+      const englishText = [slide.english.heading, ...slide.english.body].join(' ');
+      if (!/\bducks?\b/i.test(englishText)) continue;
+      const shown = [slide.target.heading.text, ...slide.target.body.map((part: any) => part.text)].join(' ');
+      assert.match(shown, /\(ducks?\)/, `${lang} slide ${slide.n}: the duck name keeps its English gloss on the slide`);
     }
     for (const slide of slides) {
       const name = `slide-${String(slide.n).padStart(2, '0')}.webp`;
@@ -798,52 +806,43 @@ test('Seeds native-source proof is explicit, exact-size, and does not relax the 
   }
 });
 
-test('Seeds regional drafts pair the English source and hold technical seed-selection claims', () => {
+// Rewritten 2 October 2026: the F1 comparison, seed-parent selection and pollination paragraphs on slides 5, 8
+// and 9 (and Tshivenda 8.7) were held in English until their conditions could be checked. They are now drafted
+// with blind back-translations and independent semantic checks, so this requires every passage to be a labelled
+// draft and the genetics terms, negations and storage conditions to stay explicit inside the translation.
+test('Seeds regional drafts translate every slide and keep the genetics terms, negations and storage conditions', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/seeds-sovereignty.en.md', 'utf8'));
-  for (const language of ['st', 've', 'ts']) {
+  const keeps: Record<'st' | 've' | 'ts', { notDie: string; evenIf: string; reject: string }> = {
+    st: { notDie: 'Ha o shwe', evenIf: 'leha', reject: 'hane' },
+    ve: { notDie: 'A zwi ambi uri mbeu i ḓo fa', evenIf: 'naho', reject: 'hane' },
+    ts: { notDie: 'A xi fi', evenIf: 'hambiloko', reject: 'ala' },
+  };
+  for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(
       `docs/narration-reviews/seeds-sovereignty.${language}.paired.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
-    assert.ok(slides.slice(0, 3).every((slide: any) =>
-      slide.target.heading.status === 'draft' && slide.target.body.every((part: any) => part.status === 'draft')),
-    `${language}: the packet's first three study slides carry the supplied learner drafts`);
-    // Ordinary prompts can now be translated after the opening slides. Keep the F1 comparison,
-    // seed-parent selection and pollination instructions in exact English until their conditions
-    // have been checked: a reversal here could lead a learner to save the wrong seed.
-    for (const [slideNumber, bodyIndexes] of [
-      [5, [2, 3, 5]],
-      [8, [4, 5, 7]],
-      [9, [0, 1, 2, 4, 5]],
-    ] as const) {
-      const slide = slides[slideNumber - 1];
-      for (const bodyIndex of bodyIndexes) {
-        assert.equal(slide.target.body[bodyIndex].status, 'english-hold',
-          `${language} slide ${slideNumber} paragraph ${bodyIndex + 1}: technical condition stays English`);
-      }
-    }
-    if (language === 've') {
-      assert.equal(slides[7].target.body[6].status, 'english-hold',
-        'Tshivenda seed-parent rejection remains English after an ambiguous draft reversed its meaning');
-    }
-    const communityFields: Record<string, readonly (readonly [number, number])[]> = {
-      st: [[6, 2], [6, 4], [7, 2]],
-      ve: [[7, 2]],
-      ts: [[6, 4], [7, 2]],
-    };
-    for (const [slideNumber, bodyIndex] of communityFields[language]) {
-      const slide = slides[slideNumber - 1];
-      const paragraph = slide.target.body[bodyIndex];
-      assert.equal(paragraph.status, 'draft',
-        `${language} slide ${slideNumber}: household and sharing context must remain visibly marked`);
-      assert.ok(paragraph.text && paragraph.text !== slide.english.body[bodyIndex]);
-      assert.match(paragraph.provenance ?? '', /unreviewed-machine-draft/);
-    }
-    assert.match(slides[6].target.body[2].text, /\(varieties\)/,
-      `${language}: the seed-variety meaning must remain explicit beside the regional draft`);
+    checkCompleteSlideDrafts(slides, language, `${language} Seeds`);
+    const text = (slide: number, paragraph: number | 'heading') =>
+      paragraph === 'heading' ? slides[slide - 1].target.heading.text : slides[slide - 1].target.body[paragraph].text;
+    assert.match(text(4, 'heading'), /Open-Pollinated/);
+    assert.match(text(4, 'heading'), /\bF1\b/);
+    assert.match(text(4, 1), /stable variety/i);
+    assert.match(text(4, 1), /self-pollination/);
+    for (const paragraph of [2, 6]) assert.match(text(4, paragraph), /\bF1\b/);
+    assertKeeps(text(4, 6), [keeps[language].notDie], `${language}: the next F1 generation varies but does not automatically die`);
+    for (const term of [/open-pollinated/, /stable/, /pollination/]) assert.match(text(5, 2), term);
+    assert.match(text(5, 3), /\bF1\b/);
+    assert.match(text(8, 5), /cross-pollinated/);
+    assertKeeps(text(8, 6), [keeps[language].evenIf, keeps[language].reject],
+      `${language}: reject a seed plant even if its fruit is large (an earlier draft reversed this)`);
+    assert.match(text(9, 4), /pollination/);
+    assert.match(text(9, 4), /\(covers\)/);
+    assert.match(text(18, 1), /desiccant/);
+    assert.match(text(23, 8), /\(variety\)/);
+    assert.match(text(7, 2), /\(varieties\)/, `${language}: the seed-variety meaning must remain explicit beside the regional draft`);
     if (language === 'ts') {
-      assert.match(slides[5].target.body[4].text, /\(crop\)/,
-        'the Xitsonga word for plant must be disambiguated as a crop');
+      assert.match(text(6, 4), /\(crop\)/, 'the Xitsonga word for plant must be disambiguated as a crop');
     }
   }
 });
