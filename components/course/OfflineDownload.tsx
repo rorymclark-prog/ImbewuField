@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Download, Check, Loader2, Trash2, AlertTriangle, WifiOff } from 'lucide-react';
 
-import { offlinePack, formatPackSize, type OfflinePack, type OfflinePackVariant, type PackQuality } from '@/lib/offline-pack';
-import { COURSE_DECKS } from '@/lib/course-deck';
+import { offlinePack, formatPackSize, defaultOfflinePackVariant, regionalPackNeedsNarrationChoice, type OfflinePack, type OfflinePackVariant, type PackQuality } from '@/lib/offline-pack';
 import {
   downloadPack, packStatus, removePack, offlineSupported, requestPersistence, storageEstimate,
   CACHE_CHANGED_EVENT,
@@ -48,7 +47,9 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   // student or farmer who switches to All tools must still never see this, only its own default.
   const { navigationRole } = useRoleNavigation();
   const isStaff = isStaffRole(navigationRole);
-  const regionalSlidePack = ['ve', 'ts'].includes(lang) && moduleIds.some((id) => Boolean(COURSE_DECKS[id]));
+  const regionalSlidePack = regionalPackNeedsNarrationChoice(moduleIds, lang);
+  const defaultVariant = defaultOfflinePackVariant(moduleIds, lang);
+  const moduleSelection = moduleIds.join('|');
   const [packs, setPacks] = useState<OfflinePack[]>([]);
   const [phase, setPhase] = useState<Phase>('checking');
   const [doneFiles, setDoneFiles] = useState(0);
@@ -61,7 +62,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   // higher-quality set exists for facilitators, funders and anyone training off a laptop on wifi.
   // Defaulting the other way would spend a farmer's airtime to serve a projector.
   const [quality, setQuality] = useState<PackQuality>('standard');
-  const [variant, setVariant] = useState<OfflinePackVariant>(regionalSlidePack ? 'slides' : 'full');
+  const [variant, setVariant] = useState<OfflinePackVariant>(defaultVariant);
   const abortRef = useRef<AbortController | null>(null);
 
   const totalBytes = packs.reduce((s, p) => s + p.bytes, 0);
@@ -78,8 +79,8 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   const hasHigher = highBytes > standardBytes;
 
   useEffect(() => {
-    setVariant(regionalSlidePack ? 'slides' : 'full');
-  }, [lang, regionalSlidePack]);
+    setVariant(defaultVariant);
+  }, [lang, moduleSelection, defaultVariant]);
 
   useEffect(() => {
     setPacks(moduleIds.map((id) => offlinePack(id, lang, quality, variant)).filter((p) => p.entries.length > 0));
