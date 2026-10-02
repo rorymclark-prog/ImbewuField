@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'e64604a0', changes: [
+    'Survey review keeps the meaning of rain-fed watering and other no-resource answers.',
+    'Blank optional production rows stay quiet; unfinished entries still need review.',
+    'Update notices stay below open sheets, keeping survey warnings and buttons clear.',
+  ], tour: [
+    { title: 'Review your site survey', where: 'Farm → your saved site → Site questionnaire',
+      href: '/farmer',
+      detail: 'Check your water answers and optional production records before saving.' },
+  ] },
   { when: '2 October 2026', sha: 'd79d6c58', changes: [
     'Unfinished site survey answers can now be recovered after reopening the app.',
     'Save & continue still controls which answers appear in your site report.',
