@@ -1,6 +1,6 @@
-# Soil Health L1 — Xitsonga concept sentence draft
+# Soil Health L1 — Xitsonga body and assessment draft
 
-**Review only.** These are unreviewed Xitsonga candidate sentences paired with the complete exact English lesson source in the Study player. No fluent Xitsonga or local soil-science review is claimed. The AI-draft notice remains visible; title, image description, key points, quizzes and rationale remain English.
+**Review only.** These are unreviewed Xitsonga drafts paired with the complete exact English lesson source in the Study player. No fluent Xitsonga or local soil-science review is claimed. The AI-draft notice remains visible; title and image description remain English.
 
 ## Candidate sentences
 
@@ -26,9 +26,8 @@ The wording uses “living things” to include organisms beyond visible animals
 
 ## Holds
 
-- “Bacteria and fungi help break down organic matter and cycle nutrients.” remains exact English.
-- All soil observation, jar-test steps, layer interpretation, accuracy caveats, diagnosis and remedy advice remain exact English.
-- The lesson title, infographic description, all key points, quiz questions, options, correct-answer indexes and rationales remain exact English.
-- Soil Health lessons 2 and 3 remain exact English. Slides and narration remain English.
+- The body remains a complete source-paired machine draft; technical terms and phrases stay in English where wording precision is uncertain.
+- All four key points and both quizzes (questions, options and rationales) are now source-paired Xitsonga machine drafts. Correct-answer indexes remain 1 and 2. The lesson title and infographic description remain exact English.
+- Lessons 2 and 3 have separate source-paired body drafts; their assessment fields retain their existing registry status. Existing source-paired slide drafts and optional English narration are unchanged.
 
 This is a bounded learner draft, not an approved or fluent translation.

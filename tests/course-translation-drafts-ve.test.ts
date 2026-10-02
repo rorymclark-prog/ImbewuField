@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { COURSE_MODULES, type QuizQuestion } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
 import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
@@ -115,6 +115,71 @@ test('Tshivenda Soil L1 jar draft stays aligned and preserves diagnostic limits'
   for (const [index, source] of sourceParagraphs.entries()) {
     assert.notEqual(paragraphs[index], source, `paragraph ${index + 1} must not silently fall back to an English hold`);
   }
+});
+
+test('Tshivenda Soil L1 assessments preserve diagnostic caveats and answer indexes', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_SOIL_HEALTH_DRAFT.id);
+  assert.ok(sourceModule);
+  const source = sourceModule.lessons.find(lesson => lesson.id === 'soil-health-l1');
+  const draft = TSHIVENDA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === 'soil-health-l1');
+  assert.ok(source);
+  assert.ok(draft);
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
+  assert.equal(draft.infographicAlt?.reviewStatus, 'hold');
+  assert.equal(draft.body.sourceEnglish, source.body, 'assessment wiring leaves the current body source pair intact');
+  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+  assert.deepEqual(draft.keyPoints.map(point => point.reviewStatus), [
+    'machine-draft', 'machine-draft', 'machine-draft', 'machine-draft',
+  ]);
+  assert.deepEqual(draft.keyPoints.slice(0, 3).map(point => point.tshivendaDraft), [
+    'Shumisani zwiṱalusi zwo vhalaho u ṱola vhuimo ha mavu.',
+    'Muvhala wa mavu na tshivhalo tsha zwivhungu fhedzi a zwi sumbedzi uri thaidzo yo vhangwa nga mini.',
+    'U lingedza nga jar zwi sumbedza texture nga u anganyela fhedzi, a si soil test yo fhelelaho.',
+  ], 'the three existing localized key points remain unchanged');
+  assert.match(draft.keyPoints[0].tshivendaDraft, /zwiṱalusi zwo vhalaho/,
+    'the existing several-clues draft stays unchanged');
+  assert.equal(draft.keyPoints[3].tshivendaDraft, 'Ṱolani drainage, midzi na management history ni sa athu khetha remedy.');
+
+  assert.equal(draft.quiz.length, source.quiz.length);
+  for (const [index, item] of draft.quiz.entries()) {
+    const sourceQuestion: QuizQuestion = source.quiz[index]!;
+    assert.equal(item.question.sourceEnglish, sourceQuestion.q);
+    assert.equal(item.question.reviewStatus, 'machine-draft');
+    assert.deepEqual(item.options.map(option => option.sourceEnglish), sourceQuestion.options);
+    assert.ok(item.options.every(option => option.reviewStatus === 'machine-draft'));
+    assert.equal(item.sourceCorrectIndex, sourceQuestion.correct);
+    assert.equal(item.options[item.sourceCorrectIndex]?.sourceEnglish, sourceQuestion.options[sourceQuestion.correct]);
+    assert.equal(item.rationale.sourceEnglish, sourceQuestion.rationale);
+    assert.equal(item.rationale.reviewStatus, 'machine-draft');
+  }
+  assert.equal(draft.quiz[0].sourceCorrectIndex, 1);
+  assert.match(draft.quiz[0].question.tshivendaDraft, /cloudy water.*nga nṱha ha lera la sand/);
+  assert.match(draft.quiz[0].options[0].tshivendaDraft, /less water/, 'the comparative remains explicit');
+  assert.match(draft.quiz[0].options[1].tshivendaDraft, /Fine particles.*nga kha ḓi vha suspended.*u sedza hafhu/);
+  assert.match(draft.quiz[0].rationale.tshivendaDraft, /Cloudy water.*nga vha na fine particles.*sa athu u dzula fhasi.*U sedza ha u thoma luthihi.*final proportions kana right treatment/,
+    'possibility, one early observation and both limits remain in the rationale');
+  assert.equal(draft.quiz[1].sourceCorrectIndex, 2);
+  assert.match(draft.quiz[1].options[2].tshivendaDraft, /drainage, midzi, moisture na management history/);
+  assert.match(draft.quiz[1].rationale.tshivendaDraft, /Worm activity.*shanduka u ya nga conditions.*worms dzi si gathi fhedzi a dzi khwaṱhisedzi/,
+    'worm activity varies, and few worms alone do not establish a cause');
+
+  const shown = resolveLearnerLessonPresentation(source, 've');
+  assert.equal(shown.status, 'draft');
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.tshivendaDraft));
+  assert.deepEqual(shown.content.quiz, source.quiz.map((item, index) => ({
+    q: draft.quiz[index].question.tshivendaDraft,
+    options: draft.quiz[index].options.map(option => option.tshivendaDraft),
+    correct: item.correct,
+    rationale: draft.quiz[index].rationale.tshivendaDraft,
+  })), 'the learner sees paired drafts with the canonical answers unchanged');
+  const changedSource = {
+    ...source,
+    quiz: source.quiz.map((item, index) => index === 0
+      ? { ...item, rationale: item.rationale.replace('final proportions', 'soil condition') }
+      : item),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedSource, 've').status, 'english-fallback',
+    'a changed diagnostic caveat withdraws the stale assessment draft');
 });
 
 test('Tshivenda Soil L2 compost body preserves source conditions and falls back after source drift', () => {

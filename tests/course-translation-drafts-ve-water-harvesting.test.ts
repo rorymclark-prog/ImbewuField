@@ -183,6 +183,19 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     ['lessons[0].keyPoints[0]', 'Shumisani zwiṱalusi zwo vhalaho u ṱola vhuimo ha mavu.'],
     ['lessons[0].keyPoints[1]', 'Muvhala wa mavu na tshivhalo tsha zwivhungu fhedzi a zwi sumbedzi uri thaidzo yo vhangwa nga mini.'],
     ['lessons[0].keyPoints[2]', 'U lingedza nga jar zwi sumbedza texture nga u anganyela fhedzi, a si soil test yo fhelelaho.'],
+    ['lessons[0].keyPoints[3]', 'Ṱolani drainage, midzi na management history ni sa athu khetha remedy.'],
+    ['lessons[0].quiz[0].question', 'Jar ya mavu i kha ḓi vha na cloudy water nga nṱha ha lera la sand. Mulimi u fanela u phetha mini?'],
+    ['lessons[0].quiz[0].options[0]', 'Mavu a ṱoḓa less water nga ngoho'],
+    ['lessons[0].quiz[0].options[1]', 'Fine particles dzi nga kha ḓi vha suspended; u sedza hafhu zwi a ṱoḓea'],
+    ['lessons[0].quiz[0].options[2]', 'Clay yoṱhe yo no dzula fhasi'],
+    ['lessons[0].quiz[0].options[3]', 'Crop i ṱoḓa gypsum nga ngoho'],
+    ['lessons[0].quiz[0].rationale', 'Cloudy water i nga vha na fine particles dzi sa athu u dzula fhasi. U sedza ha u thoma luthihi a hu nga khwaṱhisedzi final proportions kana right treatment.'],
+    ['lessons[0].quiz[1].question', 'Mulimi u wana mavu o compacted na worms dzi si gathi. Ndi vhukando vhufhio vhu tevhelaho vhune ha nga thusa?'],
+    ['lessons[0].quiz[1].options[0]', 'Humbulani uri soil organism iṅwe na iṅwe yo fa'],
+    ['lessons[0].quiz[1].options[1]', 'Engedzani treatment ni sa athu ṱola site'],
+    ['lessons[0].quiz[1].options[2]', 'Ṱolani drainage, midzi, moisture na management history'],
+    ['lessons[0].quiz[1].options[3]', 'Litshani u lingedza ngauri mavu a nga si khwinifhadzee'],
+    ['lessons[0].quiz[1].rationale', 'U sedza zwithu zwo vhalaho zwi thusa u wana thaidzo. Worm activity i a shanduka u ya nga conditions, ngauralo worms dzi si gathi fhedzi a dzi khwaṱhisedzi uri thaidzo yo vhangwa nga mini.'],
     ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
     ['lessons[1].keyPoints[0]', 'Linganyisani browns, greens, moisture na air.'],
     ['lessons[1].keyPoints[1]', 'Vhukati ho fhisaho a vhu sumbedzi uri heap yoṱhe yo sanitised.'],
@@ -289,7 +302,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }
   }
 
-  assert.equal(heldFields, 34, 'hold the module summary, image descriptions, L1/L3 diagnostic content, L2 title and L3 assessment fields');
+  assert.equal(heldFields, 21, 'L1 and L2 assessment drafts replace their superseded holds; keep the module summary, image descriptions and L3 title/assessment fields held');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');

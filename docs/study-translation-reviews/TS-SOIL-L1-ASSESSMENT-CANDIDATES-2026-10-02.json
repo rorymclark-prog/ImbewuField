@@ -1,0 +1,147 @@
+{
+  "lessonId": "soil-health-l1",
+  "sourceMainSha": "35fb3f7e3b4b468b170765eccc810397fc56775b",
+  "status": "wired-machine-draft",
+  "scopeNote": "Read-only audit found all 16 L1 assessment fields held in exact English in the current Xitsonga registry: four key points and, for each of two quizzes, one question, four options and one rationale. No existing localized assessment fields were found to preserve. This packet drafts only those held fields, in canonical order, with exact source strings and correct indices. The sourceMainSha records original candidate provenance; currentSourceCheckedAt records the exact canonical revision checked before wiring. Wired as an unreviewed machine draft; no fluent-speaker approval is claimed.",
+  "keyPoints": [
+    {
+      "index": 0,
+      "sourceEnglish": "Use several clues to assess soil condition",
+      "currentDraft": "Use several clues to assess soil condition",
+      "status": "exact-English hold",
+      "draft": "Tirhisa swikombiso swo hlayanyana ku kambela xiyimo xa misava.",
+      "literalBacktranslation": "Use several clues to assess the condition of the soil.",
+      "uncertainty": "Keeps the instruction to use several clues together; does not imply that one clue is sufficient."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "Soil colour and worm counts alone do not diagnose the cause of a problem",
+      "currentDraft": "Soil colour and worm counts alone do not diagnose the cause of a problem",
+      "status": "exact-English hold",
+      "draft": "Muhlovo wa misava ni ku hlayela worms ntsena a swi diagnose cause ya problem.",
+      "literalBacktranslation": "Soil colour and counting worms alone do not diagnose the cause of a problem.",
+      "uncertainty": "Retains diagnose and cause in English to avoid claiming those signs never provide useful evidence; the 'alone do not diagnose' limitation is explicit."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "A jar exercise gives a rough indication of texture, not a complete soil test",
+      "currentDraft": "A jar exercise gives a rough indication of texture, not a complete soil test",
+      "status": "exact-English hold",
+      "draft": "Jar exercise yi nyika rough indication ya texture, a hi complete soil test.",
+      "literalBacktranslation": "A jar exercise gives a rough indication of texture; it is not a complete soil test.",
+      "uncertainty": "Keeps rough and not-complete limits explicit, retaining the technical terms texture and soil test in English."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+      "currentDraft": "Check drainage, roots and management history before choosing a remedy",
+      "status": "exact-English hold",
+      "draft": "Kambela drainage, timitsu na management history u nga si hlawula remedy.",
+      "literalBacktranslation": "Check drainage, roots and management history before choosing a remedy.",
+      "uncertainty": "Preserves all three checks and their order before choosing a remedy. Retains drainage, management history and remedy in English to avoid narrowing their meanings."
+    }
+  ],
+  "quizzes": [
+    {
+      "index": 0,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+        "currentDraft": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+        "status": "exact-English hold",
+        "draft": "Jar ya misava ya ha ri na cloudy water ehenhla ka sand layer. Murimi u fanele ku gimeta hi yini?",
+        "literalBacktranslation": "The soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+        "uncertainty": "Keeps cloudy water and sand layer in English and preserves the still/continuing observation."
+      },
+      "options": [
+        {
+          "sourceEnglish": "The soil definitely needs less water",
+          "currentDraft": "The soil definitely needs less water",
+          "status": "exact-English hold",
+          "draft": "Misava yi lava less water hakunene"
+        },
+        {
+          "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+          "currentDraft": "Fine particles may still be suspended; more observation is needed",
+          "status": "exact-English hold",
+          "draft": "Fine particles ti nga ha va suspended; ku laveka ku languta nakambe"
+        },
+        {
+          "sourceEnglish": "All the clay has already settled",
+          "currentDraft": "All the clay has already settled",
+          "status": "exact-English hold",
+          "draft": "Clay hinkwaro se yi tshamile ehansi"
+        },
+        {
+          "sourceEnglish": "The crop definitely needs gypsum",
+          "currentDraft": "The crop definitely needs gypsum",
+          "status": "exact-English hold",
+          "draft": "Crop yi lava gypsum hakunene"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+        "currentDraft": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+        "status": "exact-English hold",
+        "draft": "Cloudy water yi nga va na fine particles leti nga se tshamaka ehansi. Observation yin'we ya le masungulweni a yi koti ku tiyisisa final proportions kumbe right treatment.",
+        "literalBacktranslation": "Cloudy water can contain fine particles that have not yet settled. One early observation cannot establish the final proportions or the right treatment.",
+        "uncertainty": "Preserves can contain, not-yet-settled particles, one early observation, and the inability to establish either final proportions or the right treatment. Technical terms remain English."
+      }
+    },
+    {
+      "index": 1,
+      "sourceCorrectIndex": 2,
+      "question": {
+        "sourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
+        "currentDraft": "A farmer finds compacted soil and few worms. What is the useful next step?",
+        "status": "exact-English hold",
+        "draft": "Murimi u kuma misava leyi compacted ni worms ti nga ri tingani. Hi wihi mohato lowu landzelaka wu nga pfunaka?",
+        "literalBacktranslation": "A farmer finds compacted soil and few worms. Which next step could help?",
+        "uncertainty": "Retains both observations and asks for a useful next step without asserting a cause. Compacted remains English."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Assume every soil organism has died",
+          "currentDraft": "Assume every soil organism has died",
+          "status": "exact-English hold",
+          "draft": "Ehleketa leswaku soil organism yin'wana ni yin'wana yi file"
+        },
+        {
+          "sourceEnglish": "Add a treatment without checking the site",
+          "currentDraft": "Add a treatment without checking the site",
+          "status": "exact-English hold",
+          "draft": "Engetela treatment handle ko kambela site"
+        },
+        {
+          "sourceEnglish": "Check drainage, roots, moisture and management history",
+          "currentDraft": "Check drainage, roots, moisture and management history",
+          "status": "exact-English hold",
+          "draft": "Kambela drainage, timitsu, moisture ni management history"
+        },
+        {
+          "sourceEnglish": "Give up because the soil cannot improve",
+          "currentDraft": "Give up because the soil cannot improve",
+          "status": "exact-English hold",
+          "draft": "Tshika hikuva misava a yi nge antswi"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
+        "currentDraft": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
+        "status": "exact-English hold",
+        "draft": "Ku endla observations to tala swi pfuna ku kuma problem. Worm activity yi cinca hi conditions, hikokwalaho worms ti nga ri tingani ntsena a ti kombisi cause ya yona.",
+        "literalBacktranslation": "Making several observations helps identify a problem. Worm activity changes with conditions, so few worms alone do not show its cause.",
+        "uncertainty": "Preserves that several observations help, activity varies with conditions, and few worms alone do not establish the cause. No diagnosis or remedy is added."
+      }
+    }
+  ],
+  "semanticChecks": [
+    "All 16 assessment fields in the current TS registry are exact-English holds: four key points, two questions, eight options and two rationales. There are no localized assessment fields to alter or preserve.",
+    "Question 0 and its rationale keep cloudy water above sand, may-still-be-suspended, need for further observation, and the limit that one early observation cannot establish final proportions or treatment.",
+    "Question 1 retains correct index 2 and the drainage, roots, moisture and management-history checks. Few worms alone do not establish cause.",
+    "No numbers, treatment instruction, diagnosis or new farming claim was added."
+  ],
+  "uncertaintySummary": "Unreviewed machine-draft candidates, not fluent-speaker approval. Assessment technical terms remain English where local equivalents could weaken precision. No fluent-speaker approval is claimed; technical terms remain in English where precise local wording is uncertain.",
+  "independentBackcheck": "Source/order/indices and semantic limits checked independently; repaired several-clue quantity and kept less water comparative in English. Root reviewed; not fluent approval.",
+  "currentSourceCheckedAt": "4ef73fa7f8e55e4262c8f2153aab9fbb137a4916"
+}

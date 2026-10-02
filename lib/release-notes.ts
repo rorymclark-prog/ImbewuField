@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '750e1ab8', changes: [
+    'Tshivenda and Xitsonga Soil lesson 1 now show marked key-point and quiz drafts.',
+    'Exact English stays beside the drafts; difficult technical terms remain in English.',
+  ], tour: [
+    { title: 'Review the regional soil questions', where: 'Study → Soil Health → lesson 1',
+      href: '/student',
+      detail: 'Read the key points and both quizzes beside English, including answer feedback.' },
+  ] },
   { when: '2 October 2026', sha: '95e1978e', changes: [
     'Tshivenda and Xitsonga Soil lesson 3 now show complete marked body drafts.',
     'Exact English stays beside them, with difficult terms and safety wording retained.',

@@ -1,8 +1,8 @@
 {
   "lessonId": "soil-health-l1",
   "sourceMainSha": "d89504c3d9bad06f196f8bf14c1589e80a0e887c",
-  "status": "unwired-machine-draft",
-  "scopeNote": "Only the exact-English-held assessment fields in the current Tshivenda Soil L1 registry are drafted: key point 4 and all fields in both quizzes. The existing localized first three key points are included verbatim as preservation evidence and are not revised. Exact canonical English, source order and correct indices were checked in lib/course-modules.ts. No repository edits; candidates need independent Tshivenda backcheck.",
+  "status": "wired-machine-draft",
+  "scopeNote": "Only the exact-English-held assessment fields in the current Tshivenda Soil L1 registry are drafted: key point 4 and all fields in both quizzes. The existing localized first three key points are included verbatim as preservation evidence and are not revised. Exact canonical English, source order and correct indices were checked in lib/course-modules.ts. The sourceMainSha records original candidate provenance; currentSourceCheckedAt records the exact canonical revision checked before wiring. Wired as an unreviewed machine draft; no fluent-speaker approval is claimed.",
   "preservedKeyPoints": [
     {
       "index": 0,
@@ -42,7 +42,7 @@
       "options": [
         {
           "sourceEnglish": "The soil definitely needs less water",
-          "draft": "Mavu a ṱoḓa maḓi a si gathi nga ngoho"
+          "draft": "Mavu a ṱoḓa less water nga ngoho"
         },
         {
           "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
@@ -108,5 +108,7 @@
     "Quiz 1 preserves the correct index 2 and the next-step checks: drainage, roots, moisture and management history. Few worms alone are not diagnostic; no treatment-before-checking advice is introduced.",
     "No species, quantities, diagnosis, treatment recommendation or other farming claim was added."
   ],
-  "uncertaintySummary": "Unreviewed Tshivenda machine draft, not fluent-speaker approval. Technical terms remain in English where exact local rendering is uncertain. Independent Tshivenda backcheck is required before wiring."
+  "uncertaintySummary": "Unreviewed Tshivenda machine draft, not fluent-speaker approval. Technical terms remain in English where exact local rendering is uncertain. No fluent-speaker approval is claimed; technical terms remain in English where precise local wording is uncertain.",
+  "independentBackcheck": "Source/order/indices and semantic limits checked independently. Root retains less water in English to protect comparative meaning; not fluent approval.",
+  "currentSourceCheckedAt": "4ef73fa7f8e55e4262c8f2153aab9fbb137a4916"
 }
