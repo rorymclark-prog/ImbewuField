@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Render the Small Livestock Tshivenda and Xitsonga silent review decks."""
+"""Render the Small Livestock Sesotho, Tshivenda and Xitsonga silent review decks."""
 from __future__ import annotations
 
 import hashlib
 import json
+import shutil
 import subprocess
 import tempfile
 import sys
@@ -17,9 +18,9 @@ W, H = 1440, 5400
 SLIDES = 20
 PHONE_SLIDES = (1, 2, 13, 15, 17)
 LANGS = {
-    "st": ("Sesotho", "SESOTHO REVIEW · MOSTLY ENGLISH · UNREVIEWED"),
-    "ve": ("Tshivenda", "TSHIVENḒA REVIEW · MOSTLY ENGLISH · UNREVIEWED"),
-    "ts": ("standard written Xitsonga", "XITSONGA REVIEW · MOSTLY ENGLISH · UNREVIEWED"),
+    "st": ("Sesotho", "SESOTHO REVIEW · UNREVIEWED"),
+    "ve": ("Tshivenda", "TSHIVENḒA REVIEW · UNREVIEWED"),
+    "ts": ("standard written Xitsonga", "XITSONGA REVIEW · UNREVIEWED"),
 }
 PAPER = (245, 240, 228)
 INK = (32, 25, 15)
@@ -116,11 +117,13 @@ def render(language: str) -> dict:
     name, _ = LANGS[language]
     out = MEDIA / language
     qa = out
+    public = ROOT / f"public/course-decks/small-livestock/{language}"
     paired = ROOT / f"docs/study-translation-reviews/small-livestock-regional/small-livestock.{language}.paired-draft.json"
     english = ROOT / "docs/narration/small-livestock.en.md"
     packet = json.loads(paired.read_text(encoding="utf-8"))
     out.mkdir(parents=True, exist_ok=True)
     qa.mkdir(parents=True, exist_ok=True)
+    public.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix=f"small-livestock-{language}-") as temp:
         generated = Path(temp) / "slides"
         subprocess.run([
@@ -147,6 +150,7 @@ def render(language: str) -> dict:
                     image = source_only_card(packet["slides"][n - 1]["english"], n, language, source_image)
                 output = out / f"slide-{n:02d}.webp"
                 image.save(output, "WEBP", quality=88, method=6)
+                shutil.copyfile(output, public / output.name)
                 thumb = image.copy()
                 thumb.thumbnail((140, 525), Image.Resampling.LANCZOS)
                 thumbs.append(thumb)
@@ -171,11 +175,10 @@ def render(language: str) -> dict:
                     sample_path, quality=92, optimize=True)
             phone_samples.append({"slide": n, "path": str(sample_path.relative_to(ROOT)),
                                   "pixels": "390x1463", "sha256": sha(sample_path)})
-    draft_count = sum(
-        item["status"] == "draft"
-        for slide in packet["slides"]
-        for item in [slide["target"]["heading"], *slide["target"]["body"]]
-    )
+    passages = [item for slide in packet["slides"]
+                for item in [slide["target"]["heading"], *slide["target"]["body"]]]
+    draft_count = sum(item["status"] == "draft" for item in passages)
+    hold_count = len(passages) - draft_count
     report = {
         "module": "small-livestock", "language": language,
         "reviewStatus": "unreviewed-machine-draft", "humanLanguageReview": False,
@@ -186,12 +189,15 @@ def render(language: str) -> dict:
         "slides": rows, "contactSheet": str(contact_path.relative_to(ROOT)),
         "phoneSamples": phone_samples,
         "draftPassageCount": draft_count,
-        "note": (f"All 20 silent frames use the validated existing {name} paired packet and exact English narration. "
-                 "Only packet passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending; no pseudo-translation or repeated English artwork is shown. Animal-care, bee/hive safety, disease, manure, pesticide, registration, crop consumption, water/feed plans and site-specific advice remain exact English holds. No narration or farming approval is claimed."),
+        "englishHoldCount": hold_count,
+        "note": (f"All 20 silent frames use the validated {name} paired packet; optional narration stays exact English. "
+                 f"{draft_count} of {len(passages)} headings and passages are unreviewed machine drafts shown beside their exact English source"
+                 + (f"; {hold_count} remain exact English holds. " if hold_count else "; no English holds remain. ")
+                 + "Difficult technical terms stay in English inside translated sentences. A slide with no draft shows one English source card labelled translation pending; no pseudo-translation or repeated English artwork is shown. No fluent-speaker, local-farming or narration approval is claimed."),
     }
     report_path = qa / "verification.json"
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Rendered 20 {name} stills; {draft_count} draft passages")
+    print(f"Rendered 20 {name} stills; {draft_count} draft passages, {hold_count} English holds")
     print(f"Contact sheet: {contact_path}")
     print(f"Verification: {report_path}")
     return report

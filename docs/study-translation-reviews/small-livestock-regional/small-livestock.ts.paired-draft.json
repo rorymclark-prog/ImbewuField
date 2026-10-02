@@ -15,19 +15,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ku Hlanganisa Swifuwo Leswitsongo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Integrating Small Livestock"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Ku hlanganisa swifuwo leswitsongo swo fana na tihuku, masekwe na tinyoxi swi endla leswaku swi tirha swin’we na purasi."
+            "text": "Ku hlanganisa swifuwo leswitsongo swi endla leswaku tihuku (chickens), masekwa (ducks) na tinyoxi (bees) swi va swiphemu leswi tirhaka swa purasi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Integrating small livestock makes chickens, ducks and bees become working parts of the farm."
           },
           {
             "status": "draft",
-            "text": "Dyondza ndlela leyi swifuwo swi nga lawulaka pests, swi antswisaka soil fertility, swi pfunaka pollination ni ku tlherisela nkoka emisaveni."
+            "text": "Dyondza ndlela leyi swifuwo swi nga lawulaka pests, swi antswisaka soil fertility, swi pfunaka pollination ni ku tlherisela nkoka emisaveni.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Learn the way in which livestock can/may control pests, improve soil fertility, help pollination and give back importance/value to the earth."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa sisiteme leyi se u nga na yona: swakudya, manyoro, swiluva, ku dyisa ni ku fambisa swifuwo hi vukheta emisaveni.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use the system that you already have: feed, manure, flowers, grazing and moving livestock carefully on the soil."
           }
         ]
       }
@@ -45,22 +55,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ha Yini Leswi Swi Ni Nkoka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Why This Matters"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Swiharhi switsongo swi nga endla mintirho yo tala ku tlhandlekela ku humesa nyama, matandza kumbe vulombe."
-          },
-          {
-            "status": "english-hold"
+            "text": "Swifuwo leswitsongo swi nga endla mintirho yo tala handle ka ku humesa nyama, matandza kumbe vulombe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Small livestock can do many jobs apart from producing meat, eggs or honey."
           },
           {
             "status": "draft",
-            "text": "Masekwe ma cela misava katsongo ku hundza tihuku, kambe ma nga ha onha swimilana."
+            "text": "Tihuku (chickens) ti dya switsotswana swin'wana ni mbewu ya swimila leswi nga laveki (weed seeds). Manyoro ya tona ma nga va compost.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens eat some small insects and seed of unwanted plants (weed seeds). Their manure can become compost."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Masekwa (ducks) a ma celi misava ngopfu kukota tihuku (chickens), kambe ma nga ha onha swimila.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ducks (ducks) do not dig the soil as much as chickens (chickens), but they may still damage plants."
+          },
+          {
+            "status": "draft",
+            "text": "Tinyoxi (bees) ni pollinators tin'wana ti pfuna swibyariwa swo tala. Xifuwo xin'wana ni xin'wana xi ha lava swakudya leswi faneleke, mati, ndhawu yo tumbela ni vuhlayisi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bees (bees) and other pollinators help many crops. Each animal still needs suitable food, water, a place for hiding and care."
           }
         ]
       }
@@ -77,18 +100,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Leswi U Nga Ta Dyondza Swona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "What You Will Learn"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Loko module leyi yi hela, u ta twisisa ndlela leyi tihuku, masekwe, tinyoxi na guinea fowl swi tirhaka ha yona eka sisiteme leyi tirhaka."
+            "text": "Loko module leyi yi hela, u ta twisisa ndlela leyi tihuku (chickens), masekwa (ducks), tinyoxi (bees) na guinea fowl swi tirhaka ha yona eka sisiteme leyi tirhaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When this module ends, you will understand how chickens, ducks, bees and guinea fowl work in a working system."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ta tiva loko tihuku (chickens) ti pfuna bedi ya ku byala (garden bed), ni loko ku cela ka tona ku nga onha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You will know when chickens help a planting bed (garden bed), and when their scratching can damage."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ta twisisa pollination, ndhawu yo veka hive, ni ndlela leyi swifuwo swi fambisaka swakudya swa swimilana (nutrients) ha yona eka purasi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "You will understand pollination, a place to put a hive, and the way in which livestock move food of plants (nutrients) by it on the farm."
           }
         ]
       }
@@ -105,17 +139,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Tihuku Ti Dya Endzhaku ka Ntshovelo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Chickens Eat After Harvest"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta tihuku (hens) ti lava swakudya emisaveni exikarhi ka masalela ya swimilana leswi omeke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at hens looking for food on the soil among dry plant remains."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tihuku (chickens) ti nga dya switsotswana swin'wana ni mbewu ya swimila leswi nga laveki (weed seeds). Ti ha lava swakudya leswi ringanisiweke, mati lama tengeke ni ndhawu yo tumbela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens can eat some small insects and seed of unwanted plants (weed seeds). They still need balanced feed, clean water and a place to hide."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ti hlayise ekule ni swimilana leswintshwa (seedlings) ni swakudya leswi lunghekeke ku tshoveriwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep them away from young plants (seedlings) and food that is ready to be harvested."
           }
         ]
       }
@@ -133,20 +179,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ku Cela ka Tihuku Ku Va Ntirho wa Nkoka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Scratching of Chickens Becomes Important Work"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tihuku (chickens) ti nga pfuna bedi ya ku byala leyi nga riki na nchumu endzhaku ka ku tshovela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens can help an empty planting bed after harvesting."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ti cela hi le ndzeni ka masalela ya swimilana ni ku dya switsotswana swin'wana ni mbewu ya swimila leswi nga laveki (weed seeds).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "They scratch inside the plant remains and eat some small insects and seed of unwanted plants (weed seeds)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Manyoro ya tona ni swo andlala (bedding) swi nga endliwa compost kutani swi tlheriseriwa emisaveni.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Their manure and bedding can be made into compost and returned to the soil."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku tilavela swakudya ka tona a ku vuyeteli swakudya leswi ringanisiweke, mati lama tengeke, ndhawu yo tumbela kumbe vuhlayisi bya siku na siku.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Their feeding for themselves does not replace balanced food, clean water, a place to hide or daily care."
           }
         ]
       }
@@ -164,20 +225,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tirhisa Tihuku Hi Nkarhi Lowu Faneleke",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Use Chickens at the Right Time"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa tihuku (chickens) eka bedi ya ku byala leyi nga riki na nchumu endzhaku ka ku tshovela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use chickens in an empty planting bed after harvesting."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ti hlayise ekule ni swimilana leswintshwa (seedlings) ni swibyariwa leswi tshoveriwaka ku va swakudya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep them away from young plants (seedlings) and crops that are harvested to be food."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Manyoro lamantshwa ma nga rhwala germs. Vutisa extension adviser ndlela yo lawula manyoro hi ku hlayiseka ku nga si va swibyariwa leswi landzelaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Fresh manure may carry germs. Ask an extension adviser the way to manage manure safely before the next crops."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fambisa swinyenyana ku nga si va swi onha misava.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Move the birds before they damage the soil."
           }
         ]
       }
@@ -195,21 +271,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Masekwa ma Fambisana na Understorey leyi Tiyeke",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Ducks Go Together with a Strong Understorey"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Masekwe ma dya slugs na snails, kambe a ma cela-celi misava hi ndlela yo tika ku fana na tihuku."
+            "text": "Masekwa (ducks) ma dya slugs na snails, kambe a ma cela-celi misava hi matimba ku fana na tihuku.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ducks eat slugs and snails, but they do not scratch the soil hard like chickens."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ma nga fambisana ni understorey ya food forest leyi tiyeke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "They can go together with an understorey of a food forest that is strong."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ma nga ha dya kumbe ku kandziya swimila ni ku endla misava leyi tele mati yi va ni ndzhope. Languta swinyenyana kutani u swi fambisa loko swi laveka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "They may eat or trample plants and make soil that has a lot of water muddy. Watch the birds and move them when needed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nyika mati lama tengeke ni swakudya leswi faneleke; ku tilavela swakudya ntsena swi nga ha nga ringani.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Give clean water and suitable food; feeding for themselves alone may not be balanced."
           }
         ]
       }
@@ -227,20 +317,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fambisa Chicken Tractor eka Swiphemu Hinkwaswo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Move the Chicken Tractor to All Parts"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Chicken tractor i xivaka xa tihuku (chickens) lexi fambisekaka, lexi nga riki na hansi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A chicken tractor is a movable house of chickens that has no floor."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi fambise ku nga si va misava yi hava swimilana, yi va ni ndzhope kumbe yi funengeteriwe swinene hi manyoro.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Move it before the soil gets bare of plants, becomes muddy or is covered too much with manure."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nkarhi lowu faneleke wu titshege hi swinyenyana, misava ni xiyimo xa moya. Pfumelela misava yi tlhela yi antswa exikarhi ka ku endzela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The right timing depends on the birds, the soil and the state of the weather. Allow the soil to improve again between visits."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A ku na nhlayo yin'we ya tihuku (chickens) leyi tiyisaka leswaku ku ta va ni fertility leyi ringaneke eka xiphemu xin'wana ni xin'wana xa masimu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "There is no single number of chickens that guarantees that there will be sufficient fertility in every part of the fields."
           }
         ]
       }
@@ -256,15 +361,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Nyoxi Yi Famba Eka Swiluva Swimbirhi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: A Bee Goes Between Two Flowers"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Languta nyoxi yin’we yi suka eka xiluva yi ya eka xin’wana."
+            "text": "Languta nyoxi (bee) yin'we yi suka eka xiluva yi ya eka xin'wana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at one bee leaving a flower and going to another."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tinyoxi (bees) ti nga rhwala pollen loko ti endzela swiluva.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bees (bees) can/may carry pollen when they visit flowers."
           }
         ]
       }
@@ -281,17 +394,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tinyoxi Ti Pfuna Pollination ya Swibyariwa Swo Tala",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Bees Help Pollination of Many Crops"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tinyoxi ta vulombe (honeybees) ni switsotswana swin'wana swi rhwala pollen exikarhi ka swiluva.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bees of honey (honeybees) and other insects carry pollen between flowers."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Leswi swi pfuna swibyariwa swo tala swa mihandzu ni swa miroho, ku katsa avocado. Swibyariwa ni mixaka (varieties) leswi hambaneke swi ni swilaveko leswi hambaneke swa pollination.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "These help many crops of fruits and of vegetables, including avocado. Crops and varieties (varieties) that differ have requirements that differ, of pollination."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hive a yi tiyisekisi leswaku vuyelo (yields) byi ta tlakuka ndhawu hinkwayo. Xiyimo xa moya (weather), mati, rihanyo ra swimilana ni pollinators tin'wana na swona swi na nkoka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A hive does not guarantee that the yields (yields) will rise everywhere. The condition of the air (weather), water, the health of plants and other pollinators, they too have importance."
           }
         ]
       }
@@ -308,17 +433,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tinyoxi ta Vulombe ta Ntumbuluko eAfrika-Dzonga",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Natural (Native) Honeybees in South Africa"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Afrika-Dzonga ri ni subspecies timbirhi ta tinyoxi ta vulombe (honeybee) ta ntumbuluko.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "South Africa has two native subspecies of honeybees."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Cape honeybee yi kumeka eWestern Cape ni swiphemu swin'wana swa Eastern Cape. African honeybee yi ta ntumbuluko eka Afrika ya le xikarhi ni swo tala swa le dzongeni ka Afrika.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The Cape honeybee is found in the Western Cape and some parts of the Eastern Cape. The African honeybee is native in central Africa and most of the south of Africa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndhawu leyi leyikulu ya ntumbuluko a hi nkongomiso wa ku fambisa tinyoxi (bees). Milawu ya ku lawula (control measures) ya Ndzawulo (Department) yi vekile demarcation line ya ku fambisa tinyoxi. Kambisisa milawu ya sweswi ku nga si fambisiwa tinyoxi kumbe tihive.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The big natural area is not a guide for moving bees (bees). The control measures (control measures) of the Department (Department) set a demarcation line for moving bees. Check the current rules before bees or hives are moved."
           }
         ]
       }
@@ -336,20 +473,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Veka Hive Hi Ku Tivonela",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Put the Hive With Care"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dyondza eka mufuwi wa tinyoxi (bees) wa ndhawu la nga ni ntokoto ku nga si va u kuma hive.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Learn from an experienced local beekeeper before you get a hive."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayisa tihive ekule ni tindlela leti nga ni vanhu vo tala, tindlu ni ndhawu leyi vana va tlangaka eka yona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep hives away from paths that have many people, houses and the place where children play."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dyambu ra mixo ri nga pfuna, kambe ndhawu leyi hlayisekeke yi rhanga.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Morning sun can help, but a safe place comes first."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulana ndlela leyi vanhu ni swifuwo swi nga ta fambafamba ha yona ku rhendzela ndhawu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan the way that people and livestock will walk around the area."
           }
         ]
       }
@@ -367,20 +519,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tinyoxi Leti Tiyeke Ti Lava Vuhlayisi ni Swiluva",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Strong Bees Need Care and Flowers"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nyika swimilana leswi nga ni swiluva eka tinguva hinkwato, u papalata ku paluxa tinyoxi (bees) eka pesticides.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Give plants that have flowers at all times, and avoid exposing bees to pesticides."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tinyoxi (bees) leti hanyaka ni ku tirha a ti kombisi leswaku purasi a yi na tikhemikhali kumbe vuvabyi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bees that live and work do not show that the farm has no chemicals or disease."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku tsarisa ku laveka eka mintirho leyi vekiweke hi national honey-bee control measures. Yi katsa ku hlayisa tihive leti lawuriwaka ku kuma swilo leswi humaka eka tinyoxi (bees), queen rearing, commercial pollination, ni ku susa, ku herisa kumbe ku hundzisa colony. Vutisa Ndzawulo loko u nga tiyiseki leswaku ntirho wa wena wu katsekile.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Registering is required for the activities that are designated by national honey-bee control measures. It includes keeping hives that are controlled in order to get things that come from bees (bees), queen rearing, commercial pollination, and removing, ending/destroying or transferring a colony. Ask the Division if you are not sure that your activity is included."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko ntlawa wa tinyoxi (bees) wu endla swarm hi ku phindha-phindha, kombela mufuwi wa tinyoxi la leteriweke leswaku a wu kambela. Ku tala ka tinyoxi ehivini i xin'wana xa swivangelo leswi nga endlekaka, a hi ku tiva leswaku xiphiqo i yini.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "If a group of bees (bees) makes a swarm repeatedly, ask a keeper of bees who has been [leteriweke - unrecognised] that he/she check it. Many bees in the hive is one of the causes that can happen; it is not knowing what the problem is."
           }
         ]
       }
@@ -395,11 +562,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nutrients Leti Fambaka eka Purasi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Nutrients that Move on the Farm"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nutrients tin'wana ti famba ti suka eka swimilana ti ya eka swifuwo. Swakudya swa swifuwo leswi xaviweke na swona swi tisa nutrients eka purasi. Nutrients tin'wana ti nga tlhela ti tlhelela endhawini yo mila hi compost leyi endliweke hi manyoro. Swakudya ni swin'wana leswi humesiweke swi rhwala nutrients swi ti suse.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Some nutrients move from plants to livestock. Livestock feed that is bought also brings nutrients to the farm. Some nutrients may return to the growing place through compost that is made from manure. Feed and other things that are taken out carry nutrients and take them away."
           }
         ]
       }
@@ -417,20 +590,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tin'wana Ti Tlhela; Tin'wana Ti Nghena Ti Huma",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Some Return; Some Go In and Out"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swifuwo swi nga tlherisa nutrients tin'wana hi compost leyi endliweke hi manyoro. Manyoro lamantshwa ma nga rhwala germs leti tisaka vuvabyi. Endla manyoro compost hi ku helela ku nga si va u ma tirhisa ekusuhi ni swibyariwa swa swakudya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Livestock may return some nutrients (nutrients) through compost that is made from manure. Fresh manure may carry germs that bring disease. Make manure into compost completely before you use it near food crops."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tihuku (chickens) ti dya swakudya swa le purasi leswi faneleke ni switsotswana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Chickens eat suitable food of the farm and small insects."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swakudya swa swifuwo leswi xaviweke swi tisa nutrients eka purasi. Swakudya leswi xavisiweke kumbe leswi rhwariweke ku ya ekaya ni swin'wana swi rhwala nutrients swi ti suse. Tsala swakudya swa swifuwo leswi xaviweke ni swakudya leswi xavisiweke kumbe leswi rhwariweke ku ya ekaya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bought livestock feed brings nutrients to the farm. Food that is sold or carried home and other things carry nutrients and remove them. Write down the bought livestock feed and the food that is sold or carried home."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Masalela ya swakudya ntsena ma nga ha nga ringanisi swilaveko swa swifuwo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Remains of food alone may not make the needs of livestock balanced/equal."
           }
         ]
       }
@@ -448,20 +636,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Guinea Fowl: Ku Kambela Rihanyo Ku Ha Ni Nkoka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Guinea Fowl: Checking Health Is Still Important"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Guinea fowl ti lava switsotswana, ti nga ha dya ticks.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Guinea fowl need small insects, they may eat ticks."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga titshegi hi tona ku sirhelela vanhu kumbe swifuwo eka ticks kumbe vuvabyi lebyi rhwariwaka hi ticks.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Do not rely on them to protect people or livestock from ticks or disease carried by ticks."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ya emahlweni ku kambela swifuwo, u landzela pulani ya rihanyo ra swifuwo (animal-health plan) ya ndhawu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Go on checking the livestock, following the animal health plan (animal-health plan) of the area."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swinyenyana leswi tilavelaka swakudya i xiphemu xin'we xa purasi, a hi leswi vuyetelaka vuhlayisi bya rihanyo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Birds that feed themselves are one part of the farm, they are not what replaces health care."
           }
         ]
       }
@@ -479,21 +682,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Swivutiso Swinharhu: Xifuwo Xin'wana Ni Xin'wana",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Three Questions: Each Animal"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eka xifuwo xin'wana ni xin'wana, vutisa leswaku xi nga dya yini laha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "For each animal, ask what it can eat here."
           },
           {
             "status": "draft",
-            "text": "Vutisa leswaku xi humesa yini ya nkoka."
+            "text": "Vutisa leswaku xi humesa yini ya nkoka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ask what important thing it produces."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani vutisa leswaku xi lava yini swin'wana. Katsa mati, swakudya leswi faneleke, ndhawu yo tumbela, fencing ni vuhlayisi bya siku na siku.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Then ask what else it needs. Include water, suitable feed, a place to hide, fencing and daily care."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swilaveko swin'wana swi nga lava swilo leswi xaviweke. Endla pulani ya swona ku nga si tisiwa swifuwo emisaveni.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Some needs may require things that are bought. Make a plan for them before livestock are brought onto the ground."
           }
         ]
       }
@@ -511,20 +728,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ku Dyisa ni Ku Lawula Worms eka Timbuti (goats)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Grazing and Controlling Worms in Goats"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku va tihuku (chickens) ti landzela timbuti (goats) a hi ndlela leyi tiyisisiweke ematshan'wini ya ku lawula worms ta le ndzeni (internal parasitic worms) eka timbuti.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Having chickens follow goats is not a proven way in place of controlling internal parasitic worms in goats."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku lawula ndhawu yo dyisa swi nga pfuna, kambe timbuti (goats) ti ha lava ku kamberiwa rihanyo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Controlling the grazing place can help, but goats still need to be checked for health."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisana ni dokodela wa swifuwo kumbe mupfuni wa rihanyo ra swifuwo eka pulani ya parasite ya ntlhambi wa wena wa timbuti (goats).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Work together with a veterinarian or animal-health helper on a parasite plan for your herd of goats."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga tshiki ku nyika mirhi (treatment) hikuva tihuku (chickens) ti endzerile ekampeni ya ku dyisa (grazing camp).",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Do not stop giving medicine (treatment) because chickens have visited the grazing camp."
           }
         ]
       }
@@ -542,20 +774,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ntirho wa Masimu: Dirowa Laha Swilo Swi Ya Kona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Fieldwork: Draw Where Things Go"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Famba eka purasi ya wena yitsongo u hlawula ndhawu leyi swifuwo swi nga seketelaka xiphemu xin'wana xa sisiteme eka yona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Walk on your small farm and choose a place where livestock can support one part of the system."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala leswi nga kona sweswi: swakudya, masalela ya swakudya, pests, swibyariwa leswi tlulaka, manyoro kumbe swilo swa swiluva.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write what is there now: feed, food remains, pests, crops that are surplus, manure or things of flowers."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani tsala leswi xifuwo xin'wana ni xin'wana xi nga swi humesaka, ni leswi xi nga ta swi lava eka purasi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Then write what each animal can produce, and what it will need from the farm."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dirowa ku hlanganisa kun'we ka nkoka exikarhi ka swifuwo ni xiphemu lexi saleke xa purasi ya wena. Kombisa leswi nghenaka ni leswi humaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Draw the important joining together between livestock and the remaining part of your farm. Show what goes in and what comes out."
           }
         ]
       }
@@ -573,20 +820,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ntirho wa Masimu: Tirhisa Ku Hlanganisa Kun'we",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Fieldwork: Use the Joining Together"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula ntirho wun'we lowu hlayisekeke eka module leyi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose one safe task in this module."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulana ndlela leyi tihuku (chickens) ti nga tirhisaka bedi ya ku byala leyi nga riki na nchumu ha yona endzhaku ka ku tshovela, vutisa mufuwi wa tinyoxi (bees) hi ndhawu leyi hlayisekeke ya hive, kumbe kambela swilaveko swa siku na siku swa swifuwo swa wena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan how chickens can use an empty planting bed after harvesting, ask a beekeeper about a safe place for a hive, or check the daily needs of your livestock."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala swakudya, mati, ndhawu yo tumbela ni vuhlayisi leswi ntirho lowu wu swi lavaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write the feed, water, place to hide and care that this task needs."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula hi swilo ni mpfuno leswi u nga swi nyikaka minkarhi hinkwayo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start with the things and help that you can give at all times."
           }
         ]
       }

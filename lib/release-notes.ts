@@ -50,6 +50,15 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       href: '/student',
       detail: 'Read lesson 1 beside English. Silent slides and optional English audio remain.' },
   ] },
+  { when: '2 October 2026', sha: 'a4b936fe', changes: [
+    'Seeds and Small Livestock lessons are fully drafted in Sesotho, Tshivenda and Xitsonga.',
+    'Each draft is marked unreviewed and sits beside the exact English it came from.',
+    'Silent regional slides for both modules now show translated text on every slide.',
+  ], tour: [
+    { title: 'Review the regional Seeds and Livestock lessons',
+      where: 'Study → Seeds and Seed Sovereignty / Small Livestock Integration', href: '/student',
+      detail: 'Compare drafts with English, answer a quiz, and play the silent slides.' },
+  ] },
   { when: '2 October 2026', sha: 'd178ee8f', changes: [
     'Picking months follow the food chart, including crops already growing.',
     'New crop comparisons keep their own totals in the app and detailed PDF.',
