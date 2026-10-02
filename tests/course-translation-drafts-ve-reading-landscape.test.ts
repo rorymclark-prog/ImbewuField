@@ -134,21 +134,45 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, original.body.split('\n\n').length,
       `${path}.body: preserve paragraph breaks`);
     if (original.id === 'reading-landscape-l3') {
-      assert.equal(lesson.body.reviewStatus, 'machine-draft');
+      assert.equal(lesson.body.reviewStatus, 'machine-draft', `${path}.body: candidate remains visibly unreviewed`);
       const sourceParagraphs = original.body.split('\n\n');
       const draftParagraphs = lesson.body.tshivendaDraft.split('\n\n');
-      assert.equal(draftParagraphs[0], sourceParagraphs[0]
-        .replace('Walk the land on windy days.', 'Tshimbilani kha shango nga maḓuvha a re na muya.')
-        .replace('Record where the wind comes from and what it affects.', 'Ṅwalani hune muya wa bva hone na zwine wa kwama.'),
-      'only the checked wind-observation sentences change');
-      assert.equal(draftParagraphs[1], sourceParagraphs[1]
-        .replace('On a clear, still night, cold air can flow downhill and collect in low places.',
-          'Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho.'),
-      'preserve the earlier cold-air draft and all adjoining frost guidance');
-      assert.deepEqual(draftParagraphs.slice(2), sourceParagraphs.slice(2),
-        'keep frost identification and late-blight guidance exact English');
-      assert.equal(resolveLearnerLessonPresentation({ ...original, body: `${original.body} changed` }, 've').status,
-        'english-fallback', 'changed source wording withdraws the whole paired learner draft');
+      assert.equal(draftParagraphs.length, 4, `${path}.body: preserve all four source paragraphs`);
+      assert.equal(draftParagraphs[0].includes('Tshimbilani kha shango nga maḓuvha a re na muya.'), true,
+        `${path}.body: preserve the existing windy-day land-walk sentence`);
+      assert.equal(draftParagraphs[0].includes('Ṅwalani hune muya wa bva hone na zwine wa kwama.'), true,
+        `${path}.body: preserve the existing wind-observation sentence`);
+      assert.ok(draftParagraphs[0].startsWith('Muya u nga tshinyadza zwimela kha smallholding.'),
+        `${path}.body: localize ordinary wind/crop framing and retain smallholding as an English anchor`);
+      assert.ok(draftParagraphs[0].includes("your site's ridges and gaps"),
+        `${path}.body: preserve the exact difficult site-landform phrase`);
+      assert.ok(draftParagraphs[0].includes('Check local weather records') &&
+        draftParagraphs[0].includes('musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone'),
+        `${path}.body: retain local-records anchor and before-deciding-shelter scope`);
+      assert.ok(draftParagraphs[1].startsWith(
+        'Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.'),
+        `${path}.body: preserve the clear/still-night condition and can-be-colder comparison`);
+      assert.ok(draftParagraphs[1].includes('Frost patterns also depend on the site.') &&
+        draftParagraphs[1].includes('Compare candidate places through the local frost season.') &&
+        draftParagraphs[1].includes('Check local minimum-temperature records where available.') &&
+        draftParagraphs[1].includes('If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.'),
+        `${path}.body: retain the full-season comparison, record availability, no-record fallback, observations and adviser-before-placement condition`);
+      assert.equal(draftParagraphs[2], sourceParagraphs[2],
+        `${path}.body: keep frost diagnosis, longest-duration comparison and observed-cold-pocket direction exact`);
+      assert.ok(draftParagraphs[3].startsWith('For tomatoes troubled by late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome.'),
+        `${path}.body: retain affected-tomato framing and can-help drying modality`);
+      assert.ok(draftParagraphs[3].includes('Late blight can still spread during prolonged cool, damp weather.') &&
+        draftParagraphs[3].includes('Moving a bed alone will not control it; seek local crop-health guidance too.'),
+        `${path}.body: keep disease-spread conditions and no-control-alone/local-advice guidance exact`);
+      const drifted = {
+        ...original,
+        body: original.body.replace('Mark places where cold or damage lasts longest.',
+          'Mark places where cold or damage lasts briefly.'),
+      };
+      assert.notEqual(drifted.body, original.body, `${path}.body: drift fixture must change the comparative source`);
+      const fallback = resolveLearnerLessonPresentation(drifted, 've');
+      assert.equal(fallback.status, 'english-fallback', `${path}.body: changed frost comparison withdraws the paired draft`);
+      assert.equal(fallback.content.body, drifted.body, `${path}.body: show the exact current source after drift`);
     }
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: preserve key-point count and order`);
     lesson.keyPoints.forEach((point, pointIndex) => {

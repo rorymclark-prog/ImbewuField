@@ -650,7 +650,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
-        "xitsongaDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na tinhlonge na minxaxamelo ya ndhawu ya wena. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+        "xitsongaDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Mark places where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -925,20 +925,98 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
-      "sourceText": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
+      "sourceText": "your site's ridges and gaps",
+      "reason": "Keep the site-landform terms exact until a fluent reviewer confirms the meaning."
     },
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
-      "sourceText": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
+      "sourceText": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "reason": "Keep the conditional cold-air movement and accumulation statement exact until reviewed."
     },
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
-      "sourceText": "For tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
+      "sourceText": "These places can be colder than nearby slopes.",
+      "reason": "Keep the relative-temperature claim exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Frost patterns also depend on the site.",
+      "reason": "Keep the site-dependence qualifier exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "the local frost season",
+      "reason": "Keep the local-season condition exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "local minimum-temperature records where available",
+      "reason": "Keep the record type and availability condition exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "across cold nights",
+      "reason": "Keep the observation condition exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "local agriculture adviser",
+      "reason": "Keep the adviser role exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "permanent home for tender seedlings",
+      "reason": "Keep permanence and tender-seedling scope exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "reason": "Retain the frost definition and mist/visible-ice distinction exactly until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "low ground",
+      "reason": "Keep low-ground site terminology exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "slopes",
+      "reason": "Keep slope terminology exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "minimum temperatures",
+      "reason": "Keep minimum-temperature terminology exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Mark places where cold or damage lasts longest.",
+      "reason": "Keep the longest-duration observation instruction exact; do not weaken it to merely a long time."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Late blight can still spread during prolonged cool, damp weather.",
+      "reason": "Keep the disease-spread condition exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "seek local crop-health guidance too.",
+      "reason": "Keep the local crop-health guidance instruction exact until reviewed."
     },
     {
       "lessonId": "reading-landscape-l3",
