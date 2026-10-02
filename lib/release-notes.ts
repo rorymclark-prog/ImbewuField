@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'a5f75077', changes: [
+    'Tshivenda Vegetables lessons 1, 2 and 4 add marked quiz and key-point drafts.',
+    'Precise planting, nitrogen and treatment wording stays English beside the drafts.',
+  ], tour: [
+    { title: 'Review vegetable quiz drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 1, 2 and 4, answer their quizzes, and compare the exact English.' },
+  ] },
   { when: '2 October 2026', sha: 'd775a08f', changes: [
     'Tshivenda succession and pest lessons add marked body drafts beside English.',
     'Crop timing, nitrogen and treatment cautions retain precise English wording.',

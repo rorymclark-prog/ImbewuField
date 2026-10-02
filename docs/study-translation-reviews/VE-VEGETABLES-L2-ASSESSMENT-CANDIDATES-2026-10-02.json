@@ -1,0 +1,182 @@
+{
+  "packetVersion": 1,
+  "created": "2026-10-02",
+  "language": "Tshivenda (VE)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l2",
+  "sourceRevision": "3c82b61f70ddd86ae2d0521b9fa9174080e5184d",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "currentRegistryPath": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+  "registryFinding": "VE Vegetables L2 is present in the current source-paired registry. The body is a mixed draft. Its title, key points, questions, options, and rationales are currently exact-English holds. The separate TS L2 registry is not used here.",
+  "sourceCorrectIndices": [
+    1,
+    1
+  ],
+  "fieldCount": 17,
+  "fields": [
+    {
+      "fieldPath": "lessons[1].title",
+      "exactSourceEnglish": "Succession Planting and Intercropping",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "machine-draft-candidate",
+      "tshivendaDraft": "Succession Planting na Intercropping",
+      "uncertainty": "Both are technical farming terms, retained exactly; only the conjunction is translated.",
+      "drafterBacktranslation": "Succession Planting and Intercropping."
+    },
+    {
+      "fieldPath": "lessons[1].keyPoints[0]",
+      "exactSourceEnglish": "Stagger sowings and adjust the interval for crop, weather and household use",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "machine-draft-candidate",
+      "tshivendaDraft": "Shumisani staggered sowings, ni shandule interval u ya nga crop, weather na household use.",
+      "uncertainty": "Retains technical terms and the full three factors; ‘staggered sowings’ remains English to preserve planting sequence meaning.",
+      "drafterBacktranslation": "Use staggered sowings and adjust the interval according to crop, weather, and household use."
+    },
+    {
+      "fieldPath": "lessons[1].keyPoints[1]",
+      "exactSourceEnglish": "The Three Sisters comes from Indigenous farming traditions in the Americas",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "The Three Sisters comes from Indigenous farming traditions in the Americas",
+      "uncertainty": "Exact English hold: cultural attribution and named system are sensitive to precise wording.",
+      "drafterBacktranslation": "The Three Sisters comes from Indigenous farming traditions in the Americas."
+    },
+    {
+      "fieldPath": "lessons[1].keyPoints[2]",
+      "exactSourceEnglish": "Use household food records to identify and plan for a hungry gap",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "machine-draft-candidate",
+      "tshivendaDraft": "Shumisani household food records u wana na u pulana hungry gap.",
+      "uncertainty": "Retains the named ‘hungry gap’ concept and household-record basis; translates only ordinary instruction framing.",
+      "drafterBacktranslation": "Use household food records to find and plan for a hungry gap."
+    },
+    {
+      "fieldPath": "lessons[1].keyPoints[3]",
+      "exactSourceEnglish": "Intercropped plants can still compete; manage space, timing and water",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "machine-draft-candidate",
+      "tshivendaDraft": "Zwimela zwo ṱavhiwaho zwo ṱanganelana zwi nga kha ḓi konkurisana; langani space, timing na maḓi.",
+      "uncertainty": "Preserves ‘can still’, competition, and all three management factors. ‘Intercropped’ rendered descriptively; space and timing retained as terms.",
+      "drafterBacktranslation": "Plants grown together can still compete; manage space, timing, and water."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].question",
+      "exactSourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "machine-draft-candidate",
+      "tshivendaDraft": "Ndi ngani ni tshi sow lettuce nga small batches every 2-3 weeks, nṱhani ha u i sow all at once?",
+      "uncertainty": "Preserves lettuce, small batches, exact 2-3 week timing, and contrast with sowing all at once. Technical planting phrases remain English.",
+      "drafterBacktranslation": "Why do you sow lettuce in small batches every 2-3 weeks rather than sow it all at once?"
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].options[0]",
+      "exactSourceEnglish": "It uses less seed overall",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "It uses less seed overall",
+      "uncertainty": "Root accepted independent backcheck: comparative or absolute wording was not explicit in the candidate; exact English retained.",
+      "drafterBacktranslation": "It uses less seed overall."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].options[1]",
+      "exactSourceEnglish": "It gives a steady harvest instead of a glut followed by a gap",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "It gives a steady harvest instead of a glut followed by a gap",
+      "uncertainty": "Exact English hold: preserves the key steady-harvest meaning and the glut-to-gap contrast; avoids weakening the correct answer.",
+      "drafterBacktranslation": "It gives a steady harvest instead of a glut followed by a gap."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].options[2]",
+      "exactSourceEnglish": "Lettuce germinates better in small batches",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Lettuce germinates better in small batches",
+      "uncertainty": "Root accepted independent backcheck: comparative or absolute wording was not explicit in the candidate; exact English retained.",
+      "drafterBacktranslation": "Lettuce germinates better in small batches."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].options[3]",
+      "exactSourceEnglish": "It reduces pest pressure",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "machine-draft-candidate",
+      "tshivendaDraft": "Zwi fhungudza pest pressure.",
+      "uncertainty": "Preserves the distractor meaning; pest pressure remains an English technical term.",
+      "drafterBacktranslation": "It reduces pest pressure."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].rationale",
+      "exactSourceEnglish": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+      "uncertainty": "Exact English hold: retains the full steady harvest explanation, household-use purpose, and contrast with one large sowing.",
+      "drafterBacktranslation": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].question",
+      "exactSourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "machine-draft-candidate",
+      "tshivendaDraft": "Ndi lini nitrogen in bean crop residues i nga vha available kha other plants?",
+      "uncertainty": "Retains exact nitrogen/residue subject and availability question; no timing is added.",
+      "drafterBacktranslation": "When can nitrogen in bean crop residues become available to other plants?"
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].options[0]",
+      "exactSourceEnglish": "Immediately whenever a bean touches maize",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "machine-draft-candidate",
+      "tshivendaDraft": "Nga u ṱavhanya tshifhinga tshoṱhe musi bean i tshi kwama maize.",
+      "uncertainty": "Preserves the incorrect option’s immediacy and bean/maize interaction without changing meaning.",
+      "drafterBacktranslation": "Immediately whenever a bean touches maize."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].options[1]",
+      "exactSourceEnglish": "As soil organisms decompose the residues",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "As soil organisms decompose the residues",
+      "uncertainty": "Exact English hold: retains the technical mechanism and timing condition verbatim.",
+      "drafterBacktranslation": "As soil organisms decompose the residues."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].options[2]",
+      "exactSourceEnglish": "Only when pumpkin leaves shade them",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Only when pumpkin leaves shade them",
+      "uncertainty": "Exact English hold: preserves the precise restriction and crop identity.",
+      "drafterBacktranslation": "Only when pumpkin leaves shade them."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].options[3]",
+      "exactSourceEnglish": "It can never be released",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "It can never be released",
+      "uncertainty": "Root accepted independent backcheck: comparative or absolute wording was not explicit in the candidate; exact English retained.",
+      "drafterBacktranslation": "It can never be released."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].rationale",
+      "exactSourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentRegistry": "Current VE L2 assessment pair is an exact English hold; no Tshivenda candidate is wired for this field.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "uncertainty": "Exact English hold: preserves suitable-root-bacteria qualification, decomposition release, and no-immediate-feeding caveat.",
+      "drafterBacktranslation": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding."
+    }
+  ],
+  "constraints": [
+    "Canonical English and source order remain unchanged.",
+    "Question option order and sourceCorrectIndex values remain [1,1].",
+    "No crop identity, number, timing, nitrogen mechanism, or causal claim was changed.",
+    "Exact English holds are machine-review status only; no fluent approval is claimed."
+  ],
+  "independentCheck": {
+    "report": "/tmp/imbewu-ve-vegetables-l2-assessment-backcheck-20261002.json",
+    "result": "Accepted with three exact-English repairs by root; not fluent approval."
+  },
+  "reviewStage": "Root and independent semantic check accepted after recorded exact-English repairs; unreviewed machine draft, no fluent/local approval."
+}
