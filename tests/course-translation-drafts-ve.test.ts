@@ -342,24 +342,59 @@ test('Tshivenda Soil L3 body preserves cover-crop, season and leachate safeguard
   assert.match(paragraphs[12], /Cover crops, mulch na organic matter zwi nga thusa.*fhethu hayo.*dzule.*tshi khou tshila/,
     'the final soil benefits remain possible rather than guaranteed');
 
-  assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'hold'
-    && point.tshivendaDraft === point.sourceEnglish));
-  assert.ok(draft.quiz.every(item => item.question.reviewStatus === 'hold'
-    && item.question.tshivendaDraft === item.question.sourceEnglish
-    && item.rationale.reviewStatus === 'hold'
-    && item.rationale.tshivendaDraft === item.rationale.sourceEnglish
-    && item.options.every(option => option.reviewStatus === 'hold' && option.tshivendaDraft === option.sourceEnglish)));
+  assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+  assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'machine-draft'));
+  assert.match(draft.keyPoints[0].tshivendaDraft, /exposed soil.*cover yo teaho/);
+  assert.match(draft.keyPoints[1].tshivendaDraft, /mulch kule na trunks na stems/);
+  assert.match(draft.keyPoints[2].tshivendaDraft, /cover crops.*maḓi a henefho.*mutsho.*crop i tevhelaho/);
+  assert.match(draft.keyPoints[3].tshivendaDraft, /a i sokou vha safe fertiliser; i vhetseni kule na edible plants/);
+  assert.equal(draft.quiz.length, source.quiz.length);
+  draft.quiz.forEach((item, index) => {
+    const original = source.quiz[index]!;
+    assert.equal(item.question.sourceEnglish, original.q);
+    assert.equal(item.question.reviewStatus, 'machine-draft');
+    assert.deepEqual(item.options.map(option => option.sourceEnglish), original.options);
+    assert.ok(item.options.every(option => option.reviewStatus === 'machine-draft'));
+    assert.equal(item.rationale.sourceEnglish, original.rationale);
+    assert.equal(item.rationale.reviewStatus, 'machine-draft');
+    assert.equal(item.sourceCorrectIndex, original.correct);
+    assert.equal(item.options[item.sourceCorrectIndex]?.sourceEnglish, original.options[original.correct]);
+  });
+  assert.deepEqual(draft.quiz.map(item => item.sourceCorrectIndex), [2, 1]);
+  assert.match(draft.quiz[0].question.tshivendaDraft, /Highveld.*maize nga April.*all winter/);
+  assert.match(draft.quiz[0].options[0].tshivendaDraft, /waterlogging from rain/,
+    'keep the specific waterlogging condition instead of broadening it to a large amount of water');
+  assert.match(draft.quiz[0].options[1].tshivendaDraft, /Frost.*weeds.*nga u ṱavhanya/);
+  assert.match(draft.quiz[0].rationale.tshivendaDraft, /nga hwala dry topsoil.*hu nga tshinyadza surface; where water runs over the field, it can carry loosened soil away/,
+    'wind and raindrop effects remain possible, and runoff soil loss stays conditional');
+  assert.match(draft.quiz[1].question.tshivendaDraft, /liquid draining from a worm bin/);
+  assert.match(draft.quiz[1].options[1].tshivendaDraft, /nga vha na harmful organisms.*dilution a si safety guarantee/);
+  assert.match(draft.quiz[1].rationale.tshivendaDraft, /^Leachate ndi liquid that drains naturally from a worm bin\. Composition yayo i a fhambana/);
+  assert.match(draft.quiz[1].rationale.tshivendaDraft, /a i tei u sumbedzwa sa feed yo khwaṱhisedzwaho uri yo safe kha edible crops/);
   const shown = resolveLearnerLessonPresentation(source, 've');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.tshivendaDraft);
-  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
-  assert.deepEqual(shown.content.quiz, source.quiz);
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.tshivendaDraft));
+  assert.deepEqual(shown.content.quiz, source.quiz.map((item, index) => ({
+    q: draft.quiz[index].question.tshivendaDraft,
+    options: draft.quiz[index].options.map(option => option.tshivendaDraft),
+    correct: item.correct,
+    rationale: draft.quiz[index].rationale.tshivendaDraft,
+  })));
   const changedSource = {
     ...source,
     body: source.body.replace('Do not use it on edible plants', 'Use it on edible plants'),
   };
   assert.equal(resolveLearnerLessonPresentation(changedSource, 've').status, 'english-fallback',
     'changing the edible-plant prohibition withdraws the stale body draft');
+  const changedAssessmentSource = {
+    ...source,
+    quiz: source.quiz.map((item, index) => index === 1
+      ? { ...item, rationale: item.rationale.replace('composition varies', 'composition is constant') }
+      : item),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedAssessmentSource, 've').status, 'english-fallback',
+    'source drift in leachate composition withdraws the stale quiz pairing');
 });
 
 test('Tshivenda Introduction L3 preserves zone frequencies and the observed wind direction', async () => {

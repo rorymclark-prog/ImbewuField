@@ -1,0 +1,154 @@
+{
+  "lessonId": "soil-health-l3",
+  "sourceMainSha": "ae1bc6cbb290ef9046fda51c2704019f5fc4187a",
+  "status": "wired-machine-draft",
+  "scopeNote": "Source-paired Tshivenda candidates for all exact-English-held assessment fields in Soil L3. The current VE registry fields were matched to canonical English at ae1bc6cbb290ef9046fda51c2704019f5fc4187a. All four key points and both complete quizzes are wired as marked machine drafts; source option order and correct indices 2 and 1 are preserved. Difficult safety and conditional-runoff clauses remain in English where needed. No fluent-speaker approval is implied.",
+  "keyPoints": [
+    {
+      "index": 0,
+      "sourceEnglish": "Protect exposed soil with suitable cover",
+      "currentDraft": "Protect exposed soil with suitable cover",
+      "status": "exact-English hold",
+      "draft": "Tsireledzani exposed soil nga cover yo teaho.",
+      "literalBacktranslation": "Protect exposed soil with suitable cover.",
+      "uncertainty": "Keeps cover broad and does not narrow it to mulch alone. Cover remains English as a technical label; exposed soil is expressed as uncovered soil."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "Keep mulch away from trunks and stems",
+      "currentDraft": "Keep mulch away from trunks and stems",
+      "status": "exact-English hold",
+      "draft": "Vhetseni mulch kule na trunks na stems.",
+      "literalBacktranslation": "Keep mulch away from trunks and stems.",
+      "uncertainty": "Retains both trunks and stems explicitly; mulch and plant-part terms stay English."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Choose cover crops for local water, weather and the following crop",
+      "currentDraft": "Choose cover crops for local water, weather and the following crop",
+      "status": "exact-English hold",
+      "draft": "Khethani cover crops u ya nga maḓi a henefho, mutsho na crop i tevhelaho.",
+      "literalBacktranslation": "Choose cover crops according to local water, weather and the crop that follows.",
+      "uncertainty": "Preserves local water, weather and following crop as the three selection factors. Cover crops and crop remain English technical terms."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+      "currentDraft": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+      "status": "exact-English hold",
+      "draft": "Worm-bin leachate a i sokou vha safe fertiliser; i vhetseni kule na edible plants.",
+      "literalBacktranslation": "Worm-bin leachate is not simply/automatically safe fertiliser; keep it away from edible plants.",
+      "uncertainty": "Preserves not automatically safe and keeping it away from edible plants; it does not claim dilution makes it safe."
+    }
+  ],
+  "quizzes": [
+    {
+      "index": 0,
+      "sourceCorrectIndex": 2,
+      "question": {
+        "sourceEnglish": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+        "currentDraft": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+        "status": "exact-English hold",
+        "draft": "Mulimi wa Highveld u kaṋa maize nga April a sia field i songo fukedzwaho all winter. Ndi khombo dzifhio mbili khulwane?",
+        "literalBacktranslation": "A Highveld farmer harvests maize in April and leaves the field uncovered throughout winter. What are the two main risks?",
+        "uncertainty": "Preserves Highveld, maize, April, the bare-field condition throughout winter, and exactly two main risks."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Overheating in winter sun and waterlogging from rain",
+          "currentDraft": "Overheating in winter sun and waterlogging from rain",
+          "status": "exact-English hold",
+          "draft": "U fhisa nga maanḓa fhasi ha ḓuvha ḽa winter na waterlogging from rain",
+          "literalBacktranslation": "Overheating beneath the winter sun and waterlogging from rain.",
+          "uncertainty": "Retains waterlogging from rain in exact English because translating it as merely a large amount of water could broaden the condition."
+        },
+        {
+          "sourceEnglish": "Frost kills soil life and weeds take over early",
+          "currentDraft": "Frost kills soil life and weeds take over early",
+          "status": "exact-English hold",
+          "draft": "Frost i vhulaha zwivhumbiwa zwi tshilaho mavuni, weeds dzi dzhia fhethu nga u ṱavhanya"
+        },
+        {
+          "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+          "currentDraft": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+          "status": "exact-English hold",
+          "draft": "Wind erosion ya dry topsoil na u tshinyala ha soil structure nga u rwa ha spring storm"
+        },
+        {
+          "sourceEnglish": "Soil pH drops and nitrogen builds up",
+          "currentDraft": "Soil pH drops and nitrogen builds up",
+          "status": "exact-English hold",
+          "draft": "Soil pH i tsela fhasi na nitrogen i a kuvhangana"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+        "currentDraft": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+        "status": "exact-English hold",
+        "draft": "Mavu a songo fukedzwaho a vha khagala kha wind ya winter, ine ya nga hwala dry topsoil ya i bvisa. U rwa ha marothi a mvula hu nga tshinyadza surface; where water runs over the field, it can carry loosened soil away.",
+        "literalBacktranslation": "Uncovered soil is exposed to winter wind, which can carry dry topsoil away. Raindrop impact can damage the surface; where water flows over the field, it can carry loosened soil away.",
+        "uncertainty": "Preserves can for wind loss and raindrop damage. Soil loss from runoff remains conditional on water flowing over the field. Retains wind, topsoil, surface and field in English for technical precision."
+      }
+    },
+    {
+      "index": 1,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "What should you remember about liquid draining from a worm bin?",
+        "currentDraft": "What should you remember about liquid draining from a worm bin?",
+        "status": "exact-English hold",
+        "draft": "Ni fanela u humbula mini nga liquid draining from a worm bin?",
+        "literalBacktranslation": "What should you remember about liquid that comes out of a worm bin?",
+        "uncertainty": "Retains the worm bin and drained-liquid context; the question does not imply a prepared product."
+      },
+      "options": [
+        {
+          "sourceEnglish": "It is always safe on salad leaves",
+          "currentDraft": "It is always safe on salad leaves",
+          "status": "exact-English hold",
+          "draft": "I dzula yo safe tshifhinga tshoṱhe kha salad leaves"
+        },
+        {
+          "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+          "currentDraft": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+          "status": "exact-English hold",
+          "draft": "I nga vha na harmful organisms kana substances; dilution a si safety guarantee"
+        },
+        {
+          "sourceEnglish": "It is identical to finished worm castings",
+          "currentDraft": "It is identical to finished worm castings",
+          "status": "exact-English hold",
+          "draft": "I fana tshoṱhe na finished worm castings"
+        },
+        {
+          "sourceEnglish": "A fixed dilution makes every liquid safe",
+          "currentDraft": "A fixed dilution makes every liquid safe",
+          "status": "exact-English hold",
+          "draft": "Fixed dilution i ita uri liquid iṅwe na iṅwe i vhe safe"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+        "currentDraft": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+        "status": "exact-English hold",
+        "draft": "Leachate ndi liquid that drains naturally from a worm bin. Composition yayo i a fhambana, ngauralo a i tei u sumbedzwa sa feed yo khwaṱhisedzwaho uri yo safe kha edible crops.",
+        "literalBacktranslation": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as feed guaranteed to be safe for edible crops.",
+        "uncertainty": "Retains natural drainage, variable composition and the prohibition on presenting it as guaranteed-safe feed for edible crops. Natural drainage remains English to distinguish leachate from prepared worm-casting tea."
+      }
+    }
+  ],
+  "sourceCorrectIndices": [
+    2,
+    1
+  ],
+  "semanticChecks": [
+    "All four key points and both quizzes are source-paired to the canonical VE L3 fields; correct indices remain 2 and 1.",
+    "The Highveld question preserves maize harvest in April and the bare-field-through-winter condition; the two-option answer mapping remains in canonical order.",
+    "The waterlogging option retains the exact technical phrase waterlogging from rain. The rationale keeps wind loss and raindrop damage possible and runoff loss conditional on water flowing over the field.",
+    "The leachate question retains the draining-from-a-worm-bin context; rationale preserves natural drainage, variable composition and the prohibition on presenting it as guaranteed safe feed for edible crops.",
+    "Existing L3 body pairing and paragraph text are unchanged; no species, numbers, timing, safety guarantee or new farming advice was added."
+  ],
+  "uncertaintySummary": "Unreviewed Tshivenda machine drafts, not fluent-speaker or local-adviser approval. Difficult field and leachate terminology remains in English where local wording could blur the source.",
+  "independentBackcheck": "Exact current source pairing, option order and indices 2,1 independently checked. Repaired the imperative, exposed/all-winter phrasing, runoff condition and liquid-drainage context. Retained waterlogging from rain in English to avoid broadening its meaning. Not fluent-speaker approval.",
+  "currentSourceCheckedAt": "ae1bc6cbb290ef9046fda51c2704019f5fc4187a"
+}

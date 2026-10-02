@@ -213,6 +213,22 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     ['lessons[1].quiz[1].options[2]', 'Pods dzi kunga termites tshifhinga tshoṱhe'],
     ['lessons[1].quiz[1].options[3]', 'Pods dzi bvisa gas ine ya vhulaha zwivhumbiwa zwoṱhe zwa soil'],
     ['lessons[1].quiz[1].rationale', 'An ordinary heap may not expose every seed to conditions that make it non-viable. U bvisa pods zwi thivhela uri dzi phaḓalale dzi tshi ṱuwa na compost.'],
+    ['lessons[2].keyPoints[0]', 'Tsireledzani exposed soil nga cover yo teaho.'],
+    ['lessons[2].keyPoints[1]', 'Vhetseni mulch kule na trunks na stems.'],
+    ['lessons[2].keyPoints[2]', 'Khethani cover crops u ya nga maḓi a henefho, mutsho na crop i tevhelaho.'],
+    ['lessons[2].keyPoints[3]', 'Worm-bin leachate a i sokou vha safe fertiliser; i vhetseni kule na edible plants.'],
+    ['lessons[2].quiz[0].question', 'Mulimi wa Highveld u kaṋa maize nga April a sia field i songo fukedzwaho all winter. Ndi khombo dzifhio mbili khulwane?'],
+    ['lessons[2].quiz[0].options[0]', 'U fhisa nga maanḓa fhasi ha ḓuvha ḽa winter na waterlogging from rain'],
+    ['lessons[2].quiz[0].options[1]', 'Frost i vhulaha zwivhumbiwa zwi tshilaho mavuni, weeds dzi dzhia fhethu nga u ṱavhanya'],
+    ['lessons[2].quiz[0].options[2]', 'Wind erosion ya dry topsoil na u tshinyala ha soil structure nga u rwa ha spring storm'],
+    ['lessons[2].quiz[0].options[3]', 'Soil pH i tsela fhasi na nitrogen i a kuvhangana'],
+    ['lessons[2].quiz[0].rationale', 'Mavu a songo fukedzwaho a vha khagala kha wind ya winter, ine ya nga hwala dry topsoil ya i bvisa. U rwa ha marothi a mvula hu nga tshinyadza surface; where water runs over the field, it can carry loosened soil away.'],
+    ['lessons[2].quiz[1].question', 'Ni fanela u humbula mini nga liquid draining from a worm bin?'],
+    ['lessons[2].quiz[1].options[0]', 'I dzula yo safe tshifhinga tshoṱhe kha salad leaves'],
+    ['lessons[2].quiz[1].options[1]', 'I nga vha na harmful organisms kana substances; dilution a si safety guarantee'],
+    ['lessons[2].quiz[1].options[2]', 'I fana tshoṱhe na finished worm castings'],
+    ['lessons[2].quiz[1].options[3]', 'Fixed dilution i ita uri liquid iṅwe na iṅwe i vhe safe'],
+    ['lessons[2].quiz[1].rationale', 'Leachate ndi liquid that drains naturally from a worm bin. Composition yayo i a fhambana, ngauralo a i tei u sumbedzwa sa feed yo khwaṱhisedzwaho uri yo safe kha edible crops.'],
   ]);
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   let heldFields = 0;
@@ -302,7 +318,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }
   }
 
-  assert.equal(heldFields, 21, 'L1 and L2 assessment drafts replace their superseded holds; keep the module summary, image descriptions and L3 title/assessment fields held');
+  assert.equal(heldFields, 5, 'L1, L2 and L3 assessment drafts replace superseded holds; the module summary, three image descriptions and L3 title remain exact-English holds');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');

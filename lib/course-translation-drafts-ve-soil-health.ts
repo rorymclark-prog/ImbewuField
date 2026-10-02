@@ -264,94 +264,94 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Protect exposed soil with suitable cover",
-          "tshivendaDraft": "Protect exposed soil with suitable cover",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Tsireledzani exposed soil nga cover yo teaho.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Keep mulch away from trunks and stems",
-          "tshivendaDraft": "Keep mulch away from trunks and stems",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Vhetseni mulch kule na trunks na stems.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Choose cover crops for local water, weather and the following crop",
-          "tshivendaDraft": "Choose cover crops for local water, weather and the following crop",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Khethani cover crops u ya nga maḓi a henefho, mutsho na crop i tevhelaho.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
-          "tshivendaDraft": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Worm-bin leachate a i sokou vha safe fertiliser; i vhetseni kule na edible plants.",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
-            "tshivendaDraft": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Mulimi wa Highveld u kaṋa maize nga April a sia field i songo fukedzwaho all winter. Ndi khombo dzifhio mbili khulwane?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Overheating in winter sun and waterlogging from rain",
-              "tshivendaDraft": "Overheating in winter sun and waterlogging from rain",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "U fhisa nga maanḓa fhasi ha ḓuvha ḽa winter na waterlogging from rain",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Frost kills soil life and weeds take over early",
-              "tshivendaDraft": "Frost kills soil life and weeds take over early",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Frost i vhulaha zwivhumbiwa zwi tshilaho mavuni, weeds dzi dzhia fhethu nga u ṱavhanya",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
-              "tshivendaDraft": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Wind erosion ya dry topsoil na u tshinyala ha soil structure nga u rwa ha spring storm",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Soil pH drops and nitrogen builds up",
-              "tshivendaDraft": "Soil pH drops and nitrogen builds up",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Soil pH i tsela fhasi na nitrogen i a kuvhangana",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
-            "tshivendaDraft": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Mavu a songo fukedzwaho a vha khagala kha wind ya winter, ine ya nga hwala dry topsoil ya i bvisa. U rwa ha marothi a mvula hu nga tshinyadza surface; where water runs over the field, it can carry loosened soil away.",
+            "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "What should you remember about liquid draining from a worm bin?",
-            "tshivendaDraft": "What should you remember about liquid draining from a worm bin?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Ni fanela u humbula mini nga liquid draining from a worm bin?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "It is always safe on salad leaves",
-              "tshivendaDraft": "It is always safe on salad leaves",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "I dzula yo safe tshifhinga tshoṱhe kha salad leaves",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
-              "tshivendaDraft": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "I nga vha na harmful organisms kana substances; dilution a si safety guarantee",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It is identical to finished worm castings",
-              "tshivendaDraft": "It is identical to finished worm castings",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "I fana tshoṱhe na finished worm castings",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "A fixed dilution makes every liquid safe",
-              "tshivendaDraft": "A fixed dilution makes every liquid safe",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Fixed dilution i ita uri liquid iṅwe na iṅwe i vhe safe",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
-            "tshivendaDraft": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Leachate ndi liquid that drains naturally from a worm bin. Composition yayo i a fhambana, ngauralo a i tei u sumbedzwa sa feed yo khwaṱhisedzwaho uri yo safe kha edible crops.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]

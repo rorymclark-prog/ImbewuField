@@ -1,0 +1,51 @@
+{
+  "sourceMainSha": "d89504c3d9bad06f196f8bf14c1589e80a0e887c",
+  "status": "wired-machine-draft",
+  "scopeNote": "Source-paired Xitsonga title and infographic-alt candidates for Soil Health L2 and L3. Exact source strings and current English holds were checked in lib/course-modules.ts and lib/course-translation-drafts-ts-soil-health.ts in the requested worktree. Text candidates only; no repository edits. Unreviewed and requiring independent Xitsonga backcheck. Wired as source-paired Xitsonga machine drafts after exact-source verification at ae1bc6cbb290ef9046fda51c2704019f5fc4187a. No fluent-speaker approval is implied.",
+  "fields": [
+    {
+      "lessonId": "soil-health-l2",
+      "field": "title",
+      "sourceEnglish": "Making and Using Compost",
+      "currentDraft": "Making and Using Compost",
+      "draft": "Ku Endla ni Ku Tirhisa Compost",
+      "literalBacktranslation": "Making and Using Compost",
+      "uncertainty": "Compost is retained as the familiar technical loanword; the title otherwise translates making and using directly."
+    },
+    {
+      "lessonId": "soil-health-l2",
+      "field": "infographicAlt",
+      "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "currentDraft": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "draft": "Heap ya compost cut open, yi komba alternating layers ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona arrow yi komba leswaku heap ya hundzuluxiwa.",
+      "literalBacktranslation": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material; heat rises from the middle, and an arrow shows that the heap is being turned.",
+      "uncertainty": "Cut open remains exact English to preserve cross-section rather than an opening. Root viewed actual L2 image: brown/green alternating layers, central heat marks, turning arrow and fork. L3 actual image matches same sun/cracked bare soil and dark mulched soil with water drops. Independently checked, still unreviewed."
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "field": "title",
+      "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
+      "currentDraft": "Mulching and Cover Crops: Protecting and Building Soil",
+      "draft": "Ku Tirhisa Mulch na Cover Crops: Ku Sirhelela Misava na Building Soil",
+      "literalBacktranslation": "Using Mulch and Cover Crops: Protecting Soil and Building Soil",
+      "uncertainty": "Independent/root check accepted ordinary protecting-soil wording; Building Soil remains exact technical English because ku aka misava figurative meaning was not defensible. Still unreviewed, not fluent approval. Alt candidates remain unwired pending actual diagram inspection."
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "field": "infographicAlt",
+      "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "currentDraft": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "draft": "Swiphemu swimbirhi swa misava ehansi ka dyambu rin'we: misava leyi nga funengetiwangi yi pandzekile naswona yi omile; misava leyi nga na mulch ya ha ri ya ntima naswona yi tsakamile.",
+      "literalBacktranslation": "Two patches of soil under one sun: uncovered soil is cracked and dry; soil with mulch is still dark and moist.",
+      "uncertainty": "Preserves two patches, the same sun, cracked/dry bare ground, and the mulched patch remaining dark and moist. Mulch stays English; no change to the visual comparison is intended."
+    }
+  ],
+  "checks": [
+    "The four source strings match the current canonical L2/L3 title and infographicAlt fields.",
+    "Both infographic candidates retain all visual elements and comparison claims without adding details.",
+    "The L3 lesson title retains the source distinction between mulch and cover crops."
+  ],
+  "uncertaintySummary": "Unreviewed machine candidates, not fluent-speaker approval. Compost, mulch and cover crops remain technical English loanwords; local wording and mixed-language agreement need independent Xitsonga review.",
+  "independentBackcheck": "Titles/L3 alt accepted; L2 cutaway wording repaired to cut open English. Root viewed both actual source images; no new visual claim. Not learner wired.",
+  "currentSourceCheckedAt": "ae1bc6cbb290ef9046fda51c2704019f5fc4187a"
+}
