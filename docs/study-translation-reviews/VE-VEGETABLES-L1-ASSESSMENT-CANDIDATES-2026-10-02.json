@@ -1,0 +1,179 @@
+{
+  "packetVersion": 1,
+  "created": "2026-10-02",
+  "language": "Tshivenda (VE)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l1",
+  "sourceRevision": "3c82b61f70ddd86ae2d0521b9fa9174080e5184d",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "currentRegistryPath": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+  "registryFinding": "L1 body is already a mixed Tshivenda draft in the VE registry. This packet covers title, key points, and quiz fields only; they are currently English holds. Body/media are excluded.",
+  "sourceCorrectIndices": [
+    1,
+    2
+  ],
+  "fieldCount": 17,
+  "fields": [
+    {
+      "fieldPath": "lessons[0].title",
+      "exactSourceEnglish": "Preparing and Planting Your Beds",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "machine-draft candidate",
+      "tshivendaDraft": "U Lugisela na u Ṱavha Beds dzaṋu",
+      "drafterBacktranslation": "Preparing and Planting Your Beds.",
+      "uncertainty": "Keeps the garden term Beds in English; translates the ordinary title framing."
+    },
+    {
+      "fieldPath": "lessons[0].keyPoints[0]",
+      "exactSourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "machine-draft candidate",
+      "tshivendaDraft": "Beds dzaṋu dzi vhe 1-1.2m wide so you never need to step on the growing area.",
+      "drafterBacktranslation": "Keep your beds 1-1.2m wide so you can reach the growing area from both sides and never stand on it.",
+      "uncertainty": "Root removed added all-sides reach wording; exact width and never-step condition retained in English."
+    },
+    {
+      "fieldPath": "lessons[0].keyPoints[1]",
+      "exactSourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "drafterBacktranslation": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay.",
+      "uncertainty": "Exact English hold: preserves the severe site conditions, sequence, and wet-clay prohibition."
+    },
+    {
+      "fieldPath": "lessons[0].keyPoints[2]",
+      "exactSourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "drafterBacktranslation": "Transplant crops that need an early start; direct-seed crops that do not tolerate root disturbance.",
+      "uncertainty": "Exact English hold: preserves nursery/transplant versus direct-seed distinction and root-disturbance criterion."
+    },
+    {
+      "fieldPath": "lessons[0].keyPoints[3]",
+      "exactSourceEnglish": "Crowded plants underperform — space generously for your local climate",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Crowded plants underperform — space generously for your local climate",
+      "drafterBacktranslation": "Crowded plants may not grow well — give them enough space according to the local climate.",
+      "uncertainty": "Root held English to preserve source performance, comparative width, or best-suited superlative."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].question",
+      "exactSourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "machine-draft candidate",
+      "tshivendaDraft": "Ndi ngani ni tshi vhulunga vegetable bed i tshi vha 1-1.2m wide, nṱhani ha u i ita wider?",
+      "drafterBacktranslation": "Why keep a vegetable bed 1-1.2m wide instead of making it wider?",
+      "uncertainty": "Retains exact 1-1.2m and comparative width; technical bed term remains English."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].options[0]",
+      "exactSourceEnglish": "Wider beds get too much sun",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Wider beds get too much sun",
+      "drafterBacktranslation": "Wider beds get too much sun.",
+      "uncertainty": "Root held English to preserve source performance, comparative width, or best-suited superlative."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].options[1]",
+      "exactSourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "drafterBacktranslation": "You can reach the centre from either side without stepping on the growing area, avoiding compaction.",
+      "uncertainty": "Exact English hold: preserves both-side reach, no stepping on growing area, and compaction reason—the correct answer."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].options[2]",
+      "exactSourceEnglish": "Narrow beds drain better in all conditions",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Narrow beds drain better in all conditions",
+      "drafterBacktranslation": "Narrow beds drain better in all conditions.",
+      "uncertainty": "Exact English hold: preserves this absolute but incorrect drainage claim without strengthening or weakening it."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].options[3]",
+      "exactSourceEnglish": "It's a fixed rule with no practical reason",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "machine-draft candidate",
+      "tshivendaDraft": "Ndi mulayo wo vhewaho une wa si vha na tshiitisi tsha u shumisa.",
+      "drafterBacktranslation": "It is a fixed rule with no practical reason.",
+      "uncertainty": "Preserves the distractor’s claim that the width is arbitrary."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].rationale",
+      "exactSourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "drafterBacktranslation": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "uncertainty": "Exact English hold: protects compaction/root-damage mechanism, reach from both sides, and the never-step conclusion."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].question",
+      "exactSourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "drafterBacktranslation": "Which crop is suitable for direct-seeding rather than transplanting?",
+      "uncertainty": "Root held English to preserve source performance, comparative width, or best-suited superlative."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].options[0]",
+      "exactSourceEnglish": "Tomatoes, which need an early start",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Tomatoes, which need an early start",
+      "drafterBacktranslation": "Tomatoes, which need an early start.",
+      "uncertainty": "Exact English hold: preserves species identity and establishment claim."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].options[1]",
+      "exactSourceEnglish": "Brassicas, which need protection while small",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Brassicas, which need protection while small",
+      "drafterBacktranslation": "Brassicas, which need protection while small.",
+      "uncertainty": "Exact English hold: preserves crop-group identity and protection claim."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].options[2]",
+      "exactSourceEnglish": "Beans, which resent root disturbance",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Beans, which resent root disturbance",
+      "drafterBacktranslation": "Beans, which resent root disturbance.",
+      "uncertainty": "Exact English hold: preserves crop identity and correct root-disturbance criterion."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].options[3]",
+      "exactSourceEnglish": "Peppers, which are slow to germinate",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Peppers, which are slow to germinate",
+      "drafterBacktranslation": "Peppers, which are slow to germinate.",
+      "uncertainty": "Exact English hold: preserves crop identity and germination claim."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].rationale",
+      "exactSourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "currentRegistry": "VE L1 lesson is wired with a mixed Tshivenda body; this assessment field is currently an exact English hold.",
+      "draftStatus": "exact-English hold",
+      "tshivendaDraft": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "drafterBacktranslation": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "uncertainty": "Exact English hold: preserves the crop group, root sensitivity, transplant-shock claim, and direct-sowing conclusion."
+    }
+  ],
+  "constraints": [
+    "Canonical English unchanged.",
+    "Quiz option order and correct indices [1,2] unchanged.",
+    "Preserves bilateral reachability, never standing on the growing area, soil and drainage conditions, no wet-clay work, nursery/transplant versus direct-seed distinction, and root disturbance.",
+    "No species, numbers, or agronomic claims added.",
+    "No fluent approval claimed; candidates require independent Tshivenda review."
+  ],
+  "reviewStage": "Root and independent semantic check accepted after recorded exact-English repairs; unreviewed machine draft, no fluent/local approval."
+}

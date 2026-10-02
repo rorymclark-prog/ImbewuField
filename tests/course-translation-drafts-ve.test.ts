@@ -630,8 +630,9 @@ test('Tshivenda bed preparation preserves reachability, soil conditions and crop
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), [1, 2]);
   draft.quiz.forEach((question, index) => {
     assert.equal(question.question.sourceEnglish, source.quiz[index].q);
-    assert.equal(question.question.tshivendaDraft, source.quiz[index].q);
-    assert.equal(question.rationale.tshivendaDraft, source.quiz[index].rationale);
+    // Assessment drafts now localize ordinary wording; the canonical source remains binding.
+    assert.equal(question.question.sourceEnglish, source.quiz[index].q);
+    assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
   });
   // The learner resolver exposes 'draft'; record-level provenance uses 'machine-draft'.
   assert.equal(resolveLearnerLessonPresentation(source, 've').status, 'draft');
@@ -648,9 +649,10 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
     assert.equal(draft.body.tshivendaDraft.split('\n\n').length, count);
     assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), correct);
     draft.quiz.forEach((question, index) => {
-      assert.equal(question.question.tshivendaDraft, source.quiz[index].q);
-      assert.equal(question.rationale.tshivendaDraft, source.quiz[index].rationale);
-      assert.deepEqual(question.options.map(option => option.tshivendaDraft), source.quiz[index].options);
+      // Later assessment drafts keep the same claims and source, rather than staying all English.
+      assert.equal(question.question.sourceEnglish, source.quiz[index].q);
+      assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
+      assert.deepEqual(question.options.map(option => option.sourceEnglish), source.quiz[index].options);
     });
     assert.equal(resolveLearnerLessonPresentation(source, 've').status, 'draft');
     assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} changed` }, 've').status, 'english-fallback');
@@ -673,4 +675,45 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   assert.match(l4[2], /^So before you treat anything,/);
   assert.match(l4[9], /start with the lightest thing that works/);
   assert.match(l4[9], /may help\. Check that the action suits the problem and monitor the result/);
+});
+
+
+test('Tshivenda Vegetables assessments keep source answers and withdraw after question or keypoint drift', () => {
+  const module = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!;
+  for (const [id, indices] of [['vegetables-staples-l1', [1, 2]], ['vegetables-staples-l2', [1, 1]], ['vegetables-staples-l4', [1, 0]]] as const) {
+    const source = module.lessons.find(lesson => lesson.id === id)!;
+    const draft = learnerVegetablesDraft.lessons.find(lesson => lesson.id === id)!;
+    assert.equal(draft.title.sourceEnglish, source.title);
+    assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+    assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), indices);
+    for (const [index, question] of draft.quiz.entries()) {
+      assert.equal(question.question.sourceEnglish, source.quiz[index].q);
+      assert.deepEqual(question.options.map(option => option.sourceEnglish), source.quiz[index].options);
+      assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
+    }
+    assert.equal(resolveLearnerLessonPresentation(source, 've').status, 'draft');
+    const changedQuiz = source.quiz.map((question, index) => index === 0 ? { ...question, q: `${question.q} changed` } : question);
+    assert.equal(resolveLearnerLessonPresentation({ ...source, quiz: changedQuiz }, 've').status, 'english-fallback');
+    assert.equal(resolveLearnerLessonPresentation({ ...source, keyPoints: [`${source.keyPoints[0]} changed`, ...source.keyPoints.slice(1)] }, 've').status, 'english-fallback');
+  }
+  const l1 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
+  assert.match(l1.keyPoints[0].tshivendaDraft, /1-1.2m wide so you never need to step on the growing area/);
+  assert.doesNotMatch(l1.keyPoints[0].tshivendaDraft, /masia oṱhe/);
+  assert.match(l1.quiz[0].options[1].tshivendaDraft, /either side without stepping on the growing area, avoiding compaction/);
+  assert.match(l1.quiz[1].rationale.tshivendaDraft, /transplant shock/);
+  const l2 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!;
+  // Unchecked comparisons and absolutes remain English; well is not better, nor not-yet never.
+  for (const [question, option] of [[0, 0], [0, 2], [1, 3]] as const) {
+    const pair = l2.quiz[question].options[option];
+    assert.equal(pair.tshivendaDraft, pair.sourceEnglish);
+    assert.equal(pair.reviewStatus, 'hold');
+  }
+  assert.match(l2.quiz[0].question.tshivendaDraft, /every 2-3 weeks/);
+  assert.match(l2.quiz[1].rationale.tshivendaDraft, /does not guarantee immediate feeding/);
+  const l4 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
+  assert.match(l4.keyPoints[3].tshivendaDraft, /use a registered product for the crop and pest and follow the label/);
+  assert.match(l4.quiz[0].rationale.tshivendaDraft, /dose, protection and harvest waiting instructions/);
+  assert.match(l4.quiz[0].rationale.tshivendaDraft, /does not make an improvised treatment safe or suitable/);
+  assert.equal(l4.quiz[1].options[3].tshivendaDraft, l4.quiz[1].options[3].sourceEnglish);
+  assert.equal(l4.quiz[1].options[3].reviewStatus, 'hold');
 });
