@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'd775a08f', changes: [
+    'Tshivenda succession and pest lessons add marked body drafts beside English.',
+    'Crop timing, nitrogen and treatment cautions retain precise English wording.',
+  ], tour: [
+    { title: 'Review succession and pest drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 2 and 4 beside English. Quizzes and silent media stay unchanged.' },
+  ] },
   { when: '2 October 2026', sha: '0895bf1b', changes: [
     'Tshivenda bed preparation adds marked draft paragraphs beside exact English.',
     'Precise soil, sizing and cultivation wording stays English for facilitator review.',
