@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'f9e20f4f', changes: [
+    'Silent regional decks now offer slide-only downloads before optional English audio.',
+    'Five Xitsonga staple paragraphs add marked drafts beside exact English.',
+  ], tour: [
+    { title: 'Save silent slides', where: 'Study → Vegetables → Download',
+      href: '/student',
+      detail: 'Sesotho downloads start with slides; English narration remains an explicit choice.' },
+  ] },
   { when: '2 October 2026', sha: '2339d285', changes: [
     'Sesotho staple lessons add marked body drafts beside exact English.',
     'Unclear wording and precise crop, seed and water conditions stay English for review.',
