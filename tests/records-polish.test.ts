@@ -160,6 +160,20 @@ test('staff book mappings and print previews retain count units without assignin
   assert.match(staff, /quantity: s\.quantity,\s+unit: s\.unit/);
   assert.match(staff, /Production entries[^\n]+recordQuantityLabel\(p\)/);
   assert.match(staff, /Sales entries[^\n]+recordQuantityLabel\(p\)/);
-  assert.match(staff, /recordWeightKg\(p\) \?\? 0/);
+  // Weight coverage must be explicit; a missing weight cannot become a zero
+  // contribution to a confidently reported kept-food total.
+  assert.match(staff, /weightCoverageUnknown =[^\n]+recordWeightKg\(p\) === null/);
   assert.doesNotMatch(staff, /reduce\([^\n]*\+ p\.kg/, 'staff weight totals must reject nonweight or inconsistent quantity rows');
+});
+
+test('staff garden totals and unmatched harvest share decimal arithmetic without losing zero or unknown weight', () => {
+  const staff = readFileSync(new URL('../components/NgoDashboard.tsx', import.meta.url), 'utf8');
+  assert.match(staff, /const gardenQuantities = quantityTotals\(gardenProduction\)/, 'the garden figure must use the same decimal accumulator as Records');
+  assert.match(staff, /gardenWeight = gardenQuantities\.find\(row => row\.unit === 'kg'\)/, 'count units must not become the garden weight figure');
+  assert.doesNotMatch(staff, /gardenWeights\.reduce/, 'a raw garden sum would reintroduce decimal noise');
+  assert.match(staff, /const balance = weightCoverageUnknown \? null : decimalQuantitySum\(\[/, 'unweighed rows must keep the unmatched amount unknown');
+  assert.match(staff, /\.\.\.gardener\.production\.map\(p => recordWeightKg\(p\)!\)/);
+  assert.match(staff, /\.\.\.gardener\.sales\.map\(p => -recordWeightKg\(p\)!\)/, 'subtract original observations within the accumulator, not already rounded totals');
+  assert.match(staff, /const kept = balance !== null && balance >= 0 \? balance : null/, 'equal harvest and sales must retain zero, while oversold or unknown balance stays unknown');
+  assert.doesNotMatch(staff, /produced - soldKg/, 'raw subtraction would still leak a floating-point tail');
 });

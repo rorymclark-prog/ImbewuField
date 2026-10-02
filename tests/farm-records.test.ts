@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { recordQuantity, recordUnit, recordWeightKg, recordQuantityLabel, recordQuantityPayload, quantityTotals } from '../lib/farm-records.ts';
+import { recordQuantity, recordUnit, recordWeightKg, recordQuantityLabel, recordQuantityPayload, quantityTotals, decimalQuantitySum } from '../lib/farm-records.ts';
 import { invoiceSalesForPaidInvoice, cashIncomeTotal } from '../lib/invoice-sales.ts';
 import { recordedSaleInvoiceError } from '../lib/invoice-entry.ts';
 import { buildFarmMetrics } from '../lib/farm-metrics.ts';
@@ -53,6 +53,54 @@ test('a mixed farm summary adds matching units and never adds eggs to kilograms'
     { unit: 'kg', quantity: 6 }, { unit: 'eggs', quantity: 20 }, { unit: 'jars', quantity: 3 },
   ]);
   assert.deepEqual(quantityTotals([recordQuantityPayload(Number.MAX_SAFE_INTEGER, 'eggs'), recordQuantityPayload(1, 'eggs'), { kg: 2 }]), [{ unit: 'kg', quantity: 2 }], 'an unrepresentable total must not crash or invent a partial egg count');
+});
+
+test('decimal harvest totals do not invent digits through binary floating-point addition', () => {
+  const rows = [0.1, 0.2].map(quantity => recordQuantityPayload(quantity, 'kg'));
+  assert.deepEqual(quantityTotals(rows), [{ unit: 'kg', quantity: 0.3 }]);
+  assert.match(recordQuantityLabel(recordQuantityPayload(quantityTotals(rows)[0].quantity, 'kg')), /^0[,.]3 kg$/);
+});
+
+test('a 1203.6 kg record total stays readable without discarding precision from saved inputs', () => {
+  // These decimal entries reproduced the live 1 203,6000000000001 kg total.
+  // The individual observations are valid; only their derived addition needs repair.
+  const rows = [0.13, 1203.47].map(quantity => recordQuantityPayload(quantity, 'kg'));
+  assert.deepEqual(quantityTotals(rows), [{ unit: 'kg', quantity: 1203.6 }]);
+  assert.deepEqual(quantityTotals([...rows].reverse()), [{ unit: 'kg', quantity: 1203.6 }]);
+  assert.match(recordQuantityLabel(recordQuantityPayload(quantityTotals(rows)[0].quantity, 'kg')), /^1[\s\u00a0]?203[,.]6 kg$/);
+  assert.deepEqual(rows.map(row => row.quantity), [0.13, 1203.47], 'summing must not rewrite the saved observations');
+});
+
+test('decimal totals preserve tiny exponent observations and explicit high-precision inputs', () => {
+  assert.deepEqual(quantityTotals([{ kg: 1e-8 }, { kg: 2e-8 }]), [{ unit: 'kg', quantity: 3e-8 }]);
+  assert.deepEqual(quantityTotals([{ kg: Number.MIN_VALUE }, { kg: Number.MIN_VALUE }]), [{ unit: 'kg', quantity: 1e-323 }]);
+  assert.match(recordQuantityLabel(recordQuantityPayload(quantityTotals([{ kg: 1e-8 }, { kg: 2e-8 }])[0].quantity, 'kg')), /^0[,.]00000003 kg$/);
+  for (const quantity of [1.2345678901234567, 0.30000000000000004]) {
+    assert.deepEqual(quantityTotals([{ kg: quantity }]), [{ unit: 'kg', quantity }], 'an explicit observed value must not be rounded to hide a different arithmetic defect');
+    assert.equal(recordQuantityLabel({ kg: quantity }).replace(',', '.'), `${quantity} kg`);
+  }
+});
+
+test('exact decimal accumulation keeps safe whole counts and withholds overflowing units', () => {
+  assert.deepEqual(quantityTotals([recordQuantityPayload(Number.MAX_SAFE_INTEGER - 1, 'eggs'), recordQuantityPayload(1, 'eggs')]), [{ unit: 'eggs', quantity: Number.MAX_SAFE_INTEGER }]);
+  assert.deepEqual(quantityTotals([recordQuantityPayload(Number.MAX_SAFE_INTEGER, 'eggs'), recordQuantityPayload(1, 'eggs'), recordQuantityPayload(1, 'eggs'), { kg: 0.3 }]), [{ unit: 'kg', quantity: 0.3 }]);
+  assert.deepEqual(quantityTotals([recordQuantityPayload(Number.MAX_SAFE_INTEGER, 'each'), recordQuantityPayload(1, 'each')]), []);
+  assert.deepEqual(quantityTotals([{ kg: 1e308 }, { kg: 1e308 }, recordQuantityPayload(2, 'jars')]), [{ unit: 'jars', quantity: 2 }]);
+});
+
+test('signed observed weights derive an exact balance while preserving zero and oversold values', () => {
+  assert.equal(decimalQuantitySum([0.3, -0.2]), 0.1);
+  assert.equal(decimalQuantitySum([-0.1, 0.3, -0.2]), 0);
+  assert.equal(decimalQuantitySum([0.1, -0.2]), -0.1, 'the arithmetic must not clamp an oversold balance into kept food');
+  assert.equal(decimalQuantitySum([Number.MIN_VALUE, -Number.MIN_VALUE]), 0);
+  assert.equal(decimalQuantitySum([]), 0);
+});
+
+test('signed decimal accumulation rejects invalid observations and only converts its final result', () => {
+  for (const invalid of [NaN, Infinity, -Infinity]) assert.equal(decimalQuantitySum([1, invalid]), null);
+  assert.equal(decimalQuantitySum([1e308, 1e308]), null);
+  assert.equal(decimalQuantitySum([1e308, 1e308, -1e308]), 1e308, 'an exact finite balance must survive an intermediate sum beyond Number range');
+  assert.equal(decimalQuantitySum([1.2345678901234567]), 1.2345678901234567);
 });
 
 test('paid invoices log counted produce once with deterministic line identity and no weight conversion', () => {
