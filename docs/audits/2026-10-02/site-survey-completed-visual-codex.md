@@ -1,7 +1,9 @@
 # Completed Site Survey visual audit — 2 October 2026
 
 - Auditor: Codex, continuing the shared Site Survey archive.
-- Reviewed implementation: `e64604a02a1b0f5cbb977c65ff14d83e65252a46`.
+- Visual implementation: `e64604a02a1b0f5cbb977c65ff14d83e65252a46`.
+- Combined implementation after concurrent crop integration:
+  `97f1fcb0d93985b1f0884b9ff5d4497b4c6f3a97`.
 - Branch: `codex/site-survey-visual-review-20261002`, based on draft-recovery
   branch `7eb453bf722a807216e421a346153b483937c60e` / PR #883.
 - App inspected: `http://localhost:4269/farmer?openSurvey=1&force-update=1`,
@@ -84,12 +86,32 @@ they are not additional farmer survey answers.
 
 ## Next continuation
 
-1. Merge/integrate PR #883 before this dependent branch. Then integrate the crop
-   follow-up in [PR #879](https://github.com/rorymclark-prog/ImbewuField/pull/879).
-   Its added site/poultry answers must survive the existing normalizer and draft
-   format; retain the schema-migration check from the prior audit.
+1. Merge PR #883 before [this dependent PR #885](https://github.com/rorymclark-prog/ImbewuField/pull/885),
+   then retarget #885 to main. The crop follow-up in PR #879 has already merged.
+   Its site/poultry questions are now integrated into both branches. Recovery
+   format 2, version-1 migration and retained raw counts/years close the schema
+   integration action; see the prior audit's appended browser/test evidence.
 2. Finish SS-003 with a disposable signed-in saved farm on the deployed build:
    edit, reopen/recover, explicitly save, and read that same site's report facts.
    Do not spend on paid generation merely to repeat these storage checks.
 3. Finish SS-002 and SS-004 through fluent review and a physical phone/iPad/Safari
    session. Save the next iteration separately and update the shared index.
+
+## Concurrent integration and final branch
+
+The crop follow-up landed while this visual audit was running. PR #883 was
+updated to `9403ad5b4dda38619b38ccab3b0dc2bfc7e8cbec` to integrate main and retain
+both survey features. This visual branch then integrated that recovery head.
+Its five implementation/test-file differences from the parent remain exactly
+the three corrections above; no crop planning implementation was rewritten.
+
+The new-field recovery was also seen in a fresh 390×844 Chromium session:
+frost months, dry-season water and chicken management choices survived reopening;
+invalid count/year remained visible and blocked Save until corrected. Explicit
+Save returned the same observations, with blank figures unknown. The isolated
+QA route is excluded from the branch. These checks supplement the actual app
+sample journey; they do not supply the still-missing signed-in verification.
+
+Final combined validation: typecheck clean, 4,484 tests with 4,483 pass, zero
+failures and one existing shape-sync TODO. All 34 survey tests pass. Whitespace
+and release-note checks are clean; no existing assertion was weakened.

@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 October 2026', sha: 'e64604a0', changes: [
+  { when: '2 October 2026', sha: '97f1fcb0', changes: [
     'Survey review keeps the meaning of rain-fed watering and other no-resource answers.',
     'Blank optional production rows stay quiet; unfinished entries still need review.',
     'Update notices stay below open sheets, keeping survey warnings and buttons clear.',

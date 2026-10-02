@@ -23,9 +23,9 @@ is historical; it does not describe the current release status.
 3. [Today's nine-page Ubhejane crop plan audit](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf).
 4. [Earlier crop-plan truth audit — 6 August](../CROP-PLAN-TRUTH-AUDIT-2026-08-06.md).
 
-Today's PDF is preserved as the original audit snapshot. Its follow-up chat is
-still implementing changes; consult the register before treating an original
-finding as either unresolved or fixed in a later build.
+Today's PDF is preserved as the original audit snapshot. The production-plan
+follow-up merged through PR #879; consult its evidence and the register before
+treating an original finding as either unresolved or fixed in a later build.
 
 ## Save a new audit
 

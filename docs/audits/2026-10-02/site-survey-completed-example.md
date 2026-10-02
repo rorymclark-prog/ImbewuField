@@ -1,5 +1,10 @@
 # Completed Site Survey example — 2 October 2026
 
+This example was completed before the concurrent crop follow-up added local
+growing and chicken-management questions. Those additional answers and the
+production reporting year are unknown here. They were checked separately with
+disposable recovery inputs; they must not be inferred from this sample report.
+
 This is the survey Codex completed through the real application's comprehensive
 questionnaire, then saved and read back from the Ubhejane tour workspace. It is a
 disposable demonstration, not a real farm visit or verified farmer interview.
