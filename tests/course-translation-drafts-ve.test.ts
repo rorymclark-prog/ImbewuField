@@ -605,3 +605,35 @@ test('Vegetables L3 shows screened concept sentences while crop advice and answe
     assert.ok(packet.includes(concept.tshivendaDraft), `review packet includes draft: ${concept.tshivendaDraft}`);
   }
 });
+
+test('Tshivenda bed preparation preserves reachability, soil conditions and crop establishment while translating ordinary prose', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
+  const draft = learnerVegetablesDraft.lessons.find(lesson => lesson.id === source.id)!;
+  assert.equal(draft.body.sourceEnglish, source.body);
+  const english = source.body.split('\n\n');
+  const paragraphs = draft.body.tshivendaDraft.split('\n\n');
+  assert.equal(paragraphs.length, english.length);
+  assert.equal(paragraphs.length, 20);
+  for (const index of [0, 7, 17]) assert.equal(paragraphs[index], english[index], `unresolved paragraph ${index} remains precise English`);
+  assert.equal(paragraphs.filter((paragraph, index) => paragraph !== english[index]).length, 17);
+  assert.match(paragraphs[1], /narrow enough to reach into from both sides/);
+  assert.match(paragraphs[2], /One metre to one point two metres wide/);
+  assert.match(paragraphs[2], /feet never touch the growing area/);
+  assert.match(paragraphs[5], /least disturbance that solves your problem/);
+  assert.match(paragraphs[6], /No-dig suits most garden soils/);
+  assert.match(paragraphs[7], /before choosing deeper cultivation/);
+  assert.match(paragraphs[11], /They do better sown straight where they'll grow/);
+  assert.match(paragraphs[11], /Beans, carrots na maize/);
+  assert.match(paragraphs[12], /then transplanting/);
+  assert.match(paragraphs[12], /Tomatoes na brassicas/);
+  assert.match(paragraphs[15], /One point two metres wide\. Three metres long/);
+  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), [1, 2]);
+  draft.quiz.forEach((question, index) => {
+    assert.equal(question.question.sourceEnglish, source.quiz[index].q);
+    assert.equal(question.question.tshivendaDraft, source.quiz[index].q);
+    assert.equal(question.rationale.tshivendaDraft, source.quiz[index].rationale);
+  });
+  // The learner resolver exposes 'draft'; record-level provenance uses 'machine-draft'.
+  assert.equal(resolveLearnerLessonPresentation(source, 've').status, 'draft');
+  assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} changed` }, 've').status, 'english-fallback');
+});
