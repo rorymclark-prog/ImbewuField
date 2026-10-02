@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 October 2026', sha: 'f9e20f4f', changes: [
+  { when: '2 October 2026', sha: 'ce623f36', changes: [
     'Silent regional decks now offer slide-only downloads before optional English audio.',
     'Five Xitsonga staple paragraphs add marked drafts beside exact English.',
   ], tour: [
