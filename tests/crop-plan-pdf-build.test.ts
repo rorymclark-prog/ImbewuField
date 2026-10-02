@@ -250,8 +250,13 @@ test('without chart data, a dated print cannot borrow harvests from an earlier a
   const resolved = resolveAvailability(input(), 8);
   assert.equal(resolved.yearMode, 'fromToday');
   assert.equal(resolved.utilization.length, 12);
-  // Only veg rows exist without a canvas; empty forest and animal trays are left off, as on screen.
-  assert.deepEqual(resolved.bands.map((b) => b.key).filter((k) => k === 'forest' || k === 'animals'), []);
+  // Section omission hid whole enterprises from the farmer. Keep headings without borrowing
+  // any product or date from a missing canvas; that is separate from the dated-sowing rule.
+  for (const key of ['forest', 'animals']) {
+    const band = resolved.bands.find((b) => b.key === key);
+    assert.ok(band, `${key} section disappeared from a production plan`);
+    assert.equal(band.cells.flat().length, 0, `${key} acquired an invented production month`);
+  }
   const fresh = resolved.bands.find((b) => b.key === 'fresh');
   assert.ok(fresh && fresh.cells.length === 12);
   assert.equal(fresh.cells[0].length, 0, 'a new August sowing cannot already be a fresh August harvest');
@@ -268,6 +273,48 @@ test('food forest and animal trays appear when the chart hands them in, and thei
   assert.ok(icons.includes('animal:chicken-layer'));
   assert.ok(icons.includes('crop:cabbage'));
   assert.equal(new Set(icons).size, icons.length, 'an icon key was asked for twice');
+});
+
+test('unknown banana, hive and coop months keep their own named rows on the picture calendar without inventing production', async () => {
+  const undated = [
+    { iconKey: 'tree:musa-acuminata-aaa-group', label: 'Banana', detail: 'Local picking months need confirming.' },
+    { iconKey: 'animal:bees', label: 'Hives', detail: 'Local honey flow needs confirming.' },
+    { iconKey: 'animal:chicken-indigenous', label: 'Coops / chicken tractors', detail: 'Actual birds and products need confirming.' },
+  ];
+  const data = input({ sections: ['availability'], availability: { undated } });
+  const bands = resolveAvailability(data, 8).bands;
+  for (const key of ['forest', 'animals']) {
+    const band = bands.find((b) => b.key === key);
+    assert.ok(band, `${key} was dropped because its dates were unknown`);
+    assert.equal(band.cells.flat().length, 0, `${key} acquired a made-up product month`);
+  }
+  const raw = await pdfText(await buildCropPlanPdf(data));
+  // A narrow crop column legitimately wraps the coop label; inspect every visible text run
+  // instead of treating PDF line breaks as evidence that part of the source name was lost.
+  const calendarRaw = raw.slice(0, raw.indexOf('(Food sources to check)'));
+  const calendar = [...calendarRaw.matchAll(/\(((?:\\.|[^\\)])*)\)\s*Tj/g)]
+    .map((match) => match[1].replace(/\\([\\()])/g, '$1')).join(' ');
+  for (const phrase of ['Food forest - fruit, nuts & berries', 'Animal products', 'Banana', 'Hives', 'Coops / chicken tractors', 'Months to confirm']) {
+    assert.ok(calendar.includes(phrase), `${phrase} was left only in the later inventory instead of the picture calendar`);
+  }
+});
+
+test('switching out fruit or animal products explains the hidden section without leaking dated or undated sources', async () => {
+  const data = input({ sections: ['availability'], availability: {
+    ...FOREST_AND_HENS, includeTrees: false, includeAnimals: false,
+    undated: [{ iconKey: 'animal:bees', label: 'Hives', detail: 'Not confirmed.' }],
+  } });
+  for (const key of ['forest', 'animals']) {
+    const band = resolveAvailability(data, 8).bands.find((b) => b.key === key);
+    assert.ok(band);
+    assert.equal(band.cells.flat().length, 0);
+    assert.equal(band.undated?.length, 0);
+    assert.match(band.emptyNote ?? '', /Hidden for this print/);
+  }
+  const raw = await pdfText(await buildCropPlanPdf(data));
+  assert.ok(raw.includes('Food forest - fruit, nuts & berries') && raw.includes('Animal products'));
+  assert.ok(raw.includes('Hidden for this print.'));
+  for (const source of ['Mango', 'Laying hens', 'Hives']) assert.ok(!raw.includes(source), `${source} leaked despite the explicit switch-off`);
 });
 
 test('each picture is embedded once however many months it appears in, and a missing one prints its code', async () => {

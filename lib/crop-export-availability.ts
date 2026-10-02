@@ -75,7 +75,8 @@ export function animalEntries(slots: readonly AnimalAvailabilityItem[][]): Avail
 
 /**
  * The first twelve slots of the chart as the print wants them. `includeTrees` / `includeAnimals`
- * are the chart's own switches: a row the farmer switched off on screen stays off the paper.
+ * are the chart's own switches: products switched off stay out of the paper's dated rows,
+ * while their section explains that they are hidden.
  */
 export function printableAvailability(opts: {
   yearMode: 'established' | 'fromToday';
@@ -96,6 +97,8 @@ export function printableAvailability(opts: {
     yearMode: opts.yearMode,
     veg: opts.veg.slice(0, 12).map((slot) => [...slot]),
     utilization: opts.utilization.slice(0, 12),
+    includeTrees: opts.includeTrees !== false,
+    includeAnimals: opts.includeAnimals !== false,
     forest: opts.includeTrees !== false && opts.trees ? forestEntries(opts.trees.slice(0, 12)) : undefined,
     animals: opts.includeAnimals !== false && opts.animals ? animalEntries(opts.animals.slice(0, 12)) : undefined,
     undated: undatedAvailability(opts),

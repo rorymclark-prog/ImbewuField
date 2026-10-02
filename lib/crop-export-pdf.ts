@@ -127,7 +127,7 @@ export interface CropPlanPdfInput {
   pageFormat?: CropPlanPageFormat;
   /** What the app's availability chart shows, for the printed food-availability page. Omitted =
    * the page builds the first dated year's veg and field-space rows from the plan itself and
-   * prints no food-forest or animal rows. */
+   * keeps the food-forest and animal headings visible without inventing dated products. */
   availability?: CropPlanAvailability;
   /** Small PNG data URLs keyed 'crop:<key>' / 'tree:<speciesId>' / 'animal:<enterpriseId>'
    * (lib/pdf-icons.ts). A key without one prints as its short code. */
@@ -158,6 +158,9 @@ export interface CropPlanAvailability {
   forest?: AvailabilityEntry[][];
   /** One entry per animal enterprise giving a product that month. Omit when animals are out. */
   animals?: AvailabilityEntry[][];
+  /** Preserve an explicit chart switch-off as a visible explanation, rather than a missing section. */
+  includeTrees?: boolean;
+  includeAnimals?: boolean;
   /** Share of mapped growing area occupied, 0–1+ per month. */
   utilization?: number[];
   /** Placed food sources stay visible even when their production dates are unknown. */
@@ -1065,6 +1068,8 @@ interface AvailabilityBand {
   /** The app tray's colour; the print uses it as a pale fill and a mid border. */
   rgb: readonly number[];
   cells: AvailabilityCell[][];
+  undated?: AvailabilityCell[];
+  emptyNote?: string;
 }
 
 export interface ResolvedAvailability {
@@ -1075,6 +1080,11 @@ export interface ResolvedAvailability {
 
 const mixWithWhite = (rgb: readonly number[], share: number): number[] =>
   rgb.map((c) => Math.round(255 - (255 - c) * share));
+
+function includedUndatedSources(availability?: CropPlanAvailability): NonNullable<CropPlanAvailability['undated']> {
+  return (availability?.undated ?? []).filter((entry) => entry.iconKey.startsWith('animal:')
+    ? availability?.includeAnimals !== false : availability?.includeTrees !== false);
+}
 
 /** Short code for an item without art: the crop code the bed calendar uses, else two letters. */
 function fallbackCode(label: string): string {
@@ -1108,17 +1118,30 @@ export function resolveAvailability(input: CropPlanPdfInput, nowMonth: number): 
     .map((v) => ({ iconKey: `crop:${v.cropKey}`, label: v.name, code: codes.get(v.cropKey) ?? fallbackCode(v.name) })));
   const entryCells = (rows?: AvailabilityEntry[][]) => months.map((_, i) => (rows?.[i] ?? [])
     .map((e) => ({ ...e, code: fallbackCode(e.label) })));
+  const undated = (kind: 'forest' | 'animals') => includedUndatedSources(given)
+    .filter((e) => kind === 'animals' ? e.iconKey.startsWith('animal:') : !e.iconKey.startsWith('animal:'))
+    .map((e) => ({ ...e, code: fallbackCode(e.label) }));
   const bands: AvailabilityBand[] = [
     { key: 'fresh', title: 'Fresh veg', sub: 'picked from the beds', rgb: [127, 174, 110], cells: vegCells('fresh') },
     { key: 'stored', title: 'Stored veg', sub: 'kept under named conditions', rgb: [212, 160, 23], cells: vegCells('stored') },
-    { key: 'forest', title: 'Food forest', sub: 'confirmed local picking months', rgb: [46, 107, 58], cells: entryCells(given?.forest) },
-    { key: 'animals', title: 'Animal products', sub: 'eggs, milk, meat, honey', rgb: [192, 122, 30], cells: entryCells(given?.animals) },
+    { key: 'forest', title: 'Food forest - fruit, nuts & berries', sub: 'confirmed local picking months', rgb: [46, 107, 58],
+      cells: entryCells(given?.includeTrees === false ? undefined : given?.forest),
+      undated: given?.includeTrees === false ? [] : undated('forest'),
+      emptyNote: given?.includeTrees === false
+        ? 'Hidden for this print. Show fruit, nuts and berries in the app to include them.'
+        : 'No confirmed picking months shown. Check fruit, nuts and berries on your map in the app.' },
+    { key: 'animals', title: 'Animal products', sub: 'eggs, milk, meat, honey', rgb: [192, 122, 30],
+      cells: entryCells(given?.includeAnimals === false ? undefined : given?.animals),
+      undated: given?.includeAnimals === false ? [] : undated('animals'),
+      emptyNote: given?.includeAnimals === false
+        ? 'Hidden for this print. Show animal products in the app to include them.'
+        : 'No confirmed production months shown. Check animal products and housing on your map in the app.' },
   ];
   return {
     yearMode: given?.yearMode ?? 'fromToday',
-    // A band with nothing in any month is left off, as the app hides an empty tray row; the
-    // fresh row always prints, so an empty plan still shows a grid that says so.
-    bands: bands.filter((b) => b.key === 'fresh' || b.cells.some((c) => c.length > 0)),
+    // Rory could not find fruit or animal products on paper: unknown dates must leave a
+    // named section and the mapped sources, not silently turn a production plan into vegetables.
+    bands: bands.filter((b) => b.key !== 'stored' || b.cells.some((c) => c.length > 0)),
     utilization,
   };
 }
@@ -1130,7 +1153,7 @@ export function availabilityIconKeys(input: CropPlanPdfInput): string[] {
   return [...new Set([
     ...buildOccupancyCalendar(input.plantings, input.beds, nowMonth).flatMap((row) => row.cells.flat().map((entry) => `crop:${entry.cropKey}`)),
     ...bands.flatMap((b) => b.cells.flat().map((e) => e.iconKey)),
-    ...(input.availability?.undated ?? []).map((e) => e.iconKey),
+    ...includedUndatedSources(input.availability).map((e) => e.iconKey),
   ])];
 }
 
@@ -1197,25 +1220,36 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   for (const band of resolved.bands) {
     const entries = new Map<string, AvailabilityCell>();
     for (const cell of band.cells) for (const e of cell) entries.set(e.iconKey, e);
+    for (const e of band.undated ?? []) if (!entries.has(e.iconKey)) entries.set(e.iconKey, e);
     const rows = [...entries.values()].sort((a, b) => a.label.localeCompare(b.label));
     if (!rows.length) {
-      if (!s.fits(58)) { s.page('portrait'); heading(); monthHead(); }
+      s.font(10);
+      const note = band.emptyNote ?? 'No picking months marked yet.';
+      const noteLines = s.doc.splitTextToSize(pdfSafe(note), s.contentWidth) as string[];
+      if (!s.fits(36 + noteLines.length * 14 + 10)) { s.page('portrait'); heading(); monthHead(); }
       bandHead(band);
-      s.paragraph('No picking months marked yet.', { size: 10, ink: INK.muted, gap: 10 });
+      s.y += 12;
+      s.paragraph(note, { size: 10, ink: INK.muted, gap: 10 });
       continue;
     }
     s.font(10, true);
     const firstLines = s.doc.splitTextToSize(pdfSafe(rows[0].label), labelW - 39) as string[];
-    if (!s.fits(24 + Math.max(29, firstLines.length * 12 + 10))) { s.page('portrait'); heading(); monthHead(); }
+    const firstUnknown = !band.cells.some((cell) => cell.some((entry) => entry.iconKey === rows[0].iconKey));
+    if (!s.fits(24 + Math.max(29, firstLines.length * 12 + (firstUnknown ? 24 : 10)))) { s.page('portrait'); heading(); monthHead(); }
     bandHead(band);
     for (const e of rows) {
+      const monthsUnknown = !band.cells.some((cell) => cell.some((entry) => entry.iconKey === e.iconKey));
       s.font(10, true);
       const label = s.doc.splitTextToSize(pdfSafe(e.label), labelW - 39) as string[];
-      const rowH = Math.max(29, label.length * 12 + 10);
+      const rowH = Math.max(29, label.length * 12 + (monthsUnknown ? 24 : 10));
       if (!s.fits(rowH)) { s.page('portrait'); heading(); monthHead(); bandHead(band, true); }
       drawIconOrCode(s, e, s.margin + 5, s.y + (rowH - 24) / 2, 24, input.icons);
       s.font(10, true); s.ink(INK.text);
       s.doc.text(label, s.margin + 34, s.y + 17, { lineHeightFactor: 1.2 });
+      if (monthsUnknown) {
+        s.font(8.5); s.ink(INK.muted);
+        s.doc.text('Months to confirm', s.margin + 34, s.y + label.length * 12 + 18);
+      }
       axis.forEach((_, i) => {
         const x = s.margin + labelW + i * colW;
         if (band.cells[i].some((entry) => entry.iconKey === e.iconKey)) {
@@ -1235,7 +1269,10 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     }
     s.y += 8;
   }
-  if (!s.fits(65)) { s.page('portrait'); heading(); monthHead(); }
+  const calendarNote = 'A dash means no picking window is marked. For months to confirm, check Food sources to check and record local months in the app. Red space figures mean the plan needs more growing space than is mapped.';
+  s.font(10);
+  const calendarNoteLines = s.doc.splitTextToSize(pdfSafe(calendarNote), s.contentWidth) as string[];
+  if (!s.fits(56 + calendarNoteLines.length * 14 + 8)) { s.page('portrait'); heading(); monthHead(); }
   s.fill(INK.panelGrey);
   s.doc.rect(s.margin, s.y, s.contentWidth, 44, 'F');
   s.font(10, true); s.ink(INK.text);
@@ -1249,9 +1286,9 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     if (value > 0) { s.fill(value > 1.001 ? [179, 58, 58] : INK.green); s.doc.rect(x + 5, s.y + 25, (colW - 10) * Math.min(1, value), 6, 'F'); }
   });
   s.y += 56;
-  s.paragraph('A dash means no picking window is marked. Red space figures mean the plan needs more growing space than is mapped.', { size: 10, ink: INK.muted, gap: 8 });
+  s.paragraph(calendarNote, { size: 10, ink: INK.muted, gap: 8 });
 
-  const undated = input.availability?.undated ?? [];
+  const undated = includedUndatedSources(input.availability);
   if (undated.length) {
     s.page('portrait'); masthead(s, 'On your map');
     pageTitle(s, input.meta.planTitle, 'Food sources to check',
@@ -1728,7 +1765,7 @@ function drawFieldSheets(
         ...animals.map((entry) => ({ place: 'Animals', work: `${entry.label}: record actual production, household use, sales and losses.` })),
       ],
     });
-    const undated = monthOffset === 0 ? input.availability?.undated ?? [] : [];
+    const undated = monthOffset === 0 ? includedUndatedSources(input.availability) : [];
     if (undated.length) extraSections.push({
       title: 'Care and establishment - dates to confirm',
       note: 'Undated reminders, not scheduled harvests. Check local care and readiness before establishment; record dates when known.',
