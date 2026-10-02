@@ -109,10 +109,37 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
   assert.ok(pestDraft[8].endsWith('Beneficial insects are doing work you\'d otherwise do yourself.'));
   const staplesSource = source.lessons[2].body.split('\n\n');
   const staplesDraft = draft.lessons[2].body.sesothoDraft.split('\n\n');
+  const expectedStapleDraft = [
+    "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.",
+    "E fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.",
+    "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.",
+    "Grow at least two. Not one.",
+    "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+    "Staple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.",
+    "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+    "Beans and cowpeas give a storable protein harvest.",
+    "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+    "Amadumbe handles wetter ground, where other staples struggle.",
+    "Hlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.",
+    "Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.",
+    "Ho bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.",
+    "Sejalo se le seng ke point of failure e le nngwe.",
+    "Dijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.",
+    "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection."
+  ];
+  assert.equal(staplesSource.length, 16, 'the staple lesson still has all sixteen source paragraphs');
+  assert.deepEqual(staplesDraft, expectedStapleDraft,
+    'Sesotho body follows the source-paired candidate while preserving exact holds and the existing translation');
+  assert.equal(staplesDraft.length, staplesSource.length,
+    'no paragraph can be dropped or shifted away from its agronomic source');
   assert.equal(staplesDraft[11], 'Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.',
-    'the draft retains the original negation about resilience');
-  for (const [index, paragraph] of staplesSource.entries()) {
-    if (index !== 11) assert.equal(staplesDraft[index], paragraph,
-      `staple paragraph ${index + 1}: technical, crop and household advice stays exact English`);
+    'the already localized resilience paragraph remains byte-for-byte unchanged');
+  for (const index of [3, 4, 6, 7, 8, 9]) {
+    assert.equal(staplesDraft[index], staplesSource[index],
+      `staple paragraph ${index + 1}: unresolved agreement, comparative or crop-specific conditions stay exact English`);
+  }
+  for (const index of [0, 1, 2, 5, 10, 12, 13, 14, 15]) {
+    assert.notEqual(staplesDraft[index], staplesSource[index],
+      `staple paragraph ${index + 1}: defensible ordinary framing is drafted rather than left wholly in English`);
   }
 });
