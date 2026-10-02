@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: 'fe3bff8f', changes: [
+    'Reading lessons add marked Tshivenda and Xitsonga drafts beside English.',
+    'Precise frost, soil and safe-site conditions stay in exact English.',
+  ], tour: [
+    { title: 'Review landscape observations',
+      where: 'Study → Reading the Landscape',
+      detail: 'Read regional observations beside the unchanged English source.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: '4143b9b9', changes: [
     'Printed calendars keep food forest and animal products visible when dates are unknown.',
     'Plants, hives and coops have named rows; hidden sections explain how to show them.',
