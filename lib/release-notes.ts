@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: '78f8aefd', changes: [
+    'Xitsonga market lessons add marked body drafts beside exact English.',
+    'Precise market, supply and income conditions remain English for review.',
+  ], tour: [
+    { title: 'Review market body drafts', where: 'Study → Market Gardening → Lesson 2',
+      href: '/student',
+      detail: 'Read ordinary Xitsonga framing beside the unchanged English source.' },
+  ] },
   { when: '2 October 2026', sha: 'e7f8a847', changes: [
     'Xitsonga succession lessons add marked body drafts beside exact English.',
     'Bed and sowing questions add draft wording; precise farming conditions stay English.',
