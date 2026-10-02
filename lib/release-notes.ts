@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '2 October 2026', sha: '8c4e0653', changes: [
+  { when: '2 October 2026', sha: 'a4b936fe', changes: [
     'Seeds and Small Livestock lessons are fully drafted in Sesotho, Tshivenda and Xitsonga.',
     'Each draft is marked unreviewed and sits beside the exact English it came from.',
     'Silent regional slides for both modules now show translated text on every slide.',
