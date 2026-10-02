@@ -18,11 +18,18 @@ l3DraftParagraphs[11] = 'Xidzedze xo sungula xo tika xa ximun’wana xi nga hlas
 const sourceBody = 'Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.';
 const sourceParagraphs = sourceBody.split('\n\n');
 const draftParagraphs = [...sourceParagraphs];
-draftParagraphs[0] = 'Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria and fungi help break down organic matter and cycle nutrients.';
+draftParagraphs[0] = 'Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.';
 draftParagraphs[1] = "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.";
 draftParagraphs[2] = 'Languta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.';
+draftParagraphs[3] = 'Chela misava na mati eka clear jar, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.';
+draftParagraphs[4] = 'Sand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended much longer.';
+draftParagraphs[5] = 'Lowu i rough learning exercise. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka accurate soil texture.';
+draftParagraphs[6] = 'Thick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.';
 draftParagraphs[7] = "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.";
 draftParagraphs[8] = 'Tsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.';
+draftParagraphs[9] = 'Compaction, poor drainage na ku lahleka ka organic matter can limit timitsu ni soil life.';
+draftParagraphs[10] = 'Muhlovo lowu nga vonakaka wa pale kumbe few worms a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi moisture na season.';
+draftParagraphs[11] = 'Languta patterns leti humelelaka ensin\'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula remedy.';
 
 export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
   id: 'soil-health',
@@ -106,11 +113,6 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
     },
   ],
   holds: [
-    { lessonId: 'soil-health-l1', field: 'body[0]', sourceText: 'Bacteria and fungi help break down organic matter and cycle nutrients.', reason: 'Technical microbiology and nutrient-cycling claim remains exact English.' },
-    { lessonId: 'soil-health-l1', field: 'body[2]', sourceText: sourceParagraphs[2], reason: 'Soil observation guidance remains exact English.' },
-    { lessonId: 'soil-health-l1', field: 'body[3]', sourceText: sourceParagraphs[3], reason: 'Jar-test steps and detergent choice remain exact English.' },
-    { lessonId: 'soil-health-l1', field: 'body[4-8]', sourceText: sourceParagraphs.slice(4, 9).join('\n\n'), reason: 'Texture interpretation, uncertainty and assessment advice remain exact English.' },
-    { lessonId: 'soil-health-l1', field: 'body[9-11]', sourceText: sourceParagraphs.slice(9, 12).join('\n\n'), reason: 'Soil diagnosis, causes and remedy-selection advice remain exact English.' },
     { lessonId: 'soil-health-l3', field: 'body[0-8]', sourceText: l3SourceParagraphs.slice(0, 9).join('\n\n'), reason: 'Mulch, cover-crop and worm-bin advice stays exact English; only the screened seasonal erosion risks are drafted.' },
     { lessonId: 'soil-health-l3', field: 'body[12]', sourceText: l3SourceParagraphs[12], reason: 'The closing soil-cover advice stays exact English.' },
   ],
