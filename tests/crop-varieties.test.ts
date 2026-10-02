@@ -40,7 +40,7 @@ test('every cultivar and zone note carries an outside source, and only real zone
   }
 });
 
-test('a site sees the cultivars named for its zones first, and every cultivar exactly once', () => {
+test('a climate shortlist preserves every research option without claiming that inferred groups are local trials', () => {
   const zones = ['highveld', 'midlands-mistbelt'] as const;
   for (const [key, rec] of Object.entries(CROP_VARIETY_DATA)) {
     const site = varietiesForSite(key, zones);
@@ -49,6 +49,25 @@ test('a site sees the cultivars named for its zones first, and every cultivar ex
     for (const v of site.others) assert.ok(!v.zones.some((z) => (zones as readonly string[]).includes(z)), `${key}/${v.name}`);
   }
   assert.deepEqual(varietiesForSite('not-a-crop', zones), { forYourArea: [], others: [], advice: [] });
+});
+
+test('the picker does not present inferred climate groupings or breeding labels as farm validation', () => {
+  // Broccoli's dossier explicitly says its zone spread is inferred; green beans are
+  // grouped nationally without a regional trial. A source link does not validate that fit.
+  const component = readFileSync('components/crops/VarietyGuidance.tsx', 'utf8');
+  assert.match(component, /Shortlist for areas like yours/);
+  assert.match(component, /Some matches are inferred, rather than tested locally/);
+  assert.match(component, /sowing season, soil, water and current availability/);
+  assert.match(component, /No site climate is confirmed/);
+  assert.doesNotMatch(component, /Named for:|Your area, from|None of the sources named a variety for your area/);
+  // Some dossiers infer OP/hybrid status from a name; others are clonal crops.
+  // Neither supports the earlier blanket promise that seed can be saved.
+  assert.doesNotMatch(component, /seed can be saved|v\.type ===/);
+  // The historical summaries can exaggerate a source (Scarlet Nantes says
+  // "cool-season only" while its bulletin says "best suited") or mix crop timings.
+  // Keep names and references available without printing those summaries as instructions.
+  assert.doesNotMatch(component, /\{v\.(season|traits|maturity|bestFor|note)\}|\{advice\.text\}/);
+  assert.match(component, /Confirm this option against the current packet or supplier guide/);
 });
 
 test('the crop picker shows the sourced guidance, not only the catalog advice', () => {

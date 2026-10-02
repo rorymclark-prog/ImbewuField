@@ -55,6 +55,9 @@ import {
   DEFAULT_INCLUDE_PERENNIALS,
 } from '@/lib/produce-scope';
 import { produceDisplayName } from '@/lib/perennial-produce';
+import RecordQuantityFields from '@/components/records/RecordQuantityFields';
+import RecordQuantitySummary from '@/components/records/RecordQuantitySummary';
+import { recordQuantityPayload, recordQuantity, recordWeightKg, recordQuantityLabel, quantityTotals, type RecordUnit } from '@/lib/farm-records';
 import {
   buildCreditPackPdf,
   buildCreditPackPreviewPdf,
@@ -255,7 +258,8 @@ function SignInPrompt() {
 interface ProdFormState {
   crop: string;
   cropKey: string | null;
-  kg: string;
+  quantity: string;
+  unit: RecordUnit;
   photoFile: File | null;
   photoPreview: string;
   loading: boolean;
@@ -267,7 +271,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   const [form, setForm] = useState<ProdFormState>({
     crop: '',
     cropKey: null,
-    kg: '',
+    quantity: '', unit: 'kg',
     photoFile: null,
     photoPreview: '',
     loading: false,
@@ -290,14 +294,16 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.loading) return;
     const crop = form.crop.trim();
-    const kg = parseDecimalInput(form.kg);
-    if (!crop || isNaN(kg) || kg <= 0) {
-      setForm((f) => ({ ...f, error: t('myRecordsProdValidationError') }));
+    const quantity = parseDecimalInput(form.quantity);
+    if (!crop || !Number.isFinite(quantity) || quantity <= 0) {
+      setForm((f) => ({ ...f, error: 'Enter a product and a quantity greater than zero.' }));
       return;
     }
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
+      const quantityFields = recordQuantityPayload(quantity, form.unit);
       let photo_url: string | null = null;
       if (form.photoFile) {
         const resized = await resizeFileForUpload(form.photoFile);
@@ -305,7 +311,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       }
       await addProduction({
         crop,
-        kg,
+        ...quantityFields,
         logged_at: new Date().toISOString(),
         ...(photo_url ? { photo_url } : {}),
       });
@@ -314,7 +320,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         return {
           crop: '',
           cropKey: null,
-          kg: '',
+          quantity: '', unit: 'kg',
           photoFile: null,
           photoPreview: '',
           loading: false,
@@ -335,7 +341,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           return {
             crop: '',
             cropKey: null,
-            kg: '',
+            quantity: '', unit: 'kg',
             photoFile: null,
             photoPreview: '',
             loading: false,
@@ -346,7 +352,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         onSaved();
         return;
       }
-      setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
+      setForm((f) => ({ ...f, loading: false, error: err instanceof Error ? err.message : t('myRecordsSaveError') }));
     }
   }
 
@@ -356,24 +362,15 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">{recordsUi(lang, 'AI-generated crop reference · add your own harvest photo below.', 'Isithombe sesitshalo esenziwe nge-AI · faka esakho isithombe sesivuno ngezansi.')}</figcaption></figure>}
         <div>
-          <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
+          <FieldLabel>Produce / product</FieldLabel>
           <CropSelect
-            ariaLabel={t('myRecordsCropLabel')}
+            ariaLabel="Produce / product"
             language={lang === 'zu' ? 'zu' : 'en'}
             value={form.crop}
             onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
           />
         </div>
-        <div>
-          <FieldLabel>{t('myRecordsKgHarvestedLabel')}</FieldLabel>
-          <Input
-            type="text"
-            inputMode="decimal"
-            placeholder="0.0"
-            value={form.kg}
-            onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
-          />
-        </div>
+        <RecordQuantityFields idPrefix="picked" label="Quantity picked" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} />
         <div>
           <FieldLabel>{t('myRecordsPhotoLabel')}</FieldLabel>
           {form.photoPreview && (
@@ -437,7 +434,8 @@ interface SaleFormState {
   enterprise?: SalesLog['enterprise'];
   crop: string;
   cropKey: string | null;
-  kg: string;
+  quantity: string;
+  unit: RecordUnit;
   amount: string;
   buyer: string;
   loading: boolean;
@@ -450,7 +448,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   const [form, setForm] = useState<SaleFormState>({
     crop: '',
     cropKey: null,
-    kg: '',
+    quantity: '', unit: 'kg',
     amount: '',
     buyer: '',
     loading: false,
@@ -460,20 +458,21 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
 
   useEffect(() => setPriceOverrides(loadCropPriceOverrides()), []);
 
-  const guide = form.cropKey ? priceFor(form.cropKey, priceOverrides) : null;
-  const saleKg = parseDecimalInput(form.kg);
+  const guide = form.unit === 'kg' && form.cropKey ? priceFor(form.cropKey, priceOverrides) : null;
+  const saleKg = form.unit === 'kg' ? parseDecimalInput(form.quantity) : Number.NaN;
   const guideLow = guide ? Math.min(guide.wholesalePerKg, guide.retailPerKg) : null;
   const guideHigh = guide ? Math.max(guide.wholesalePerKg, guide.retailPerKg) : null;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.loading) return;
     const crop = form.crop.trim();
-    const kg = parseDecimalInput(form.kg);
+    const quantity = parseDecimalInput(form.quantity);
     const amount = parseDecimalInput(form.amount);
-    if (!crop || isNaN(kg) || kg <= 0 || isNaN(amount) || amount < 0) {
+    if (!crop || !Number.isFinite(quantity) || quantity <= 0 || !Number.isFinite(amount) || amount < 0) {
       setForm((f) => ({
         ...f,
-        error: t('myRecordsSaleValidationError'),
+        error: 'Enter a product, a quantity greater than zero and the sale amount.',
       }));
       return;
     }
@@ -482,12 +481,12 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
       const invoice = await addSale({
         enterprise: form.enterprise ?? null,
         crop,
-        kg,
+        ...recordQuantityPayload(quantity, form.unit),
         amount,
         buyer: form.buyer.trim() || null,
         sold_at: new Date().toISOString(),
       });
-      setForm({ crop: '', cropKey: null, kg: '', amount: '', buyer: '', loading: false, error: '' });
+      setForm({ crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '', loading: false, error: '' });
       onSaved();
       router.push(`/invoice?view=${encodeURIComponent(invoice.id)}`);
     } catch (err) {
@@ -498,14 +497,14 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         // fields (not just the spinner) so re-reading this message and tapping Save again can't
         // log the same sale twice.
         setForm({
-          crop: '', cropKey: null, kg: '', amount: '', buyer: '',
+          crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '',
           loading: false,
           error: saveQueuedMessage(),
         });
         onSaved();
         return;
       }
-      setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
+      setForm((f) => ({ ...f, loading: false, error: err instanceof Error ? err.message : t('myRecordsSaveError') }));
     }
   }
 
@@ -513,28 +512,19 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
     <Card accent="#9E5C08">
       <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
-        <div className="grid grid-cols-2 gap-2">
+        <div>
           <div>
-            <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
+            <FieldLabel>Produce / product</FieldLabel>
             <CropSelect
-              ariaLabel={t('myRecordsCropLabel')}
+              ariaLabel="Produce / product"
               language={lang === 'zu' ? 'zu' : 'en'}
               value={form.crop}
               onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
             />
           </div>
-          <div>
-            <FieldLabel>{t('myRecordsKgSoldLabel')}</FieldLabel>
-            <Input
-              type="text"
-              inputMode="decimal"
-              placeholder="0.0"
-              value={form.kg}
-              onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
-            />
-          </div>
         </div>
-        {form.crop && (
+        <RecordQuantityFields idPrefix="quick-sale" label="Quantity sold" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} />
+        {form.crop && form.unit === 'kg' && (
           <div
             className="rounded-lg px-3 py-2 text-xs font-sans leading-relaxed"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
@@ -780,7 +770,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             className="text-sm font-display font-semibold flex-shrink-0"
             style={{ color: 'var(--color-forest-800)' }}
           >
-            {item.kg} kg
+            {recordQuantityLabel(item)}
           </div>
         </div>
       ))}
@@ -860,10 +850,10 @@ function SalesList({ items }: { items: SalesLog[] }) {
               ) : null}
             </p>
             <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
+              {recordQuantityLabel(item)} &nbsp;·&nbsp; {fmtDate(item.sold_at)}
             </p>
             {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoyisi ka')} ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />{recordsUi(lang, 'Invoice', 'I-invoyisi')} #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · {recordsUi(lang, 'View', 'Buka')}</Link>}
-            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && item.kg > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${recordsUi(lang, item.invoice_source_sale ? 'Recover invoice for' : 'Create invoice for', item.invoice_source_sale ? 'Buyisa i-invoyisi ka' : 'Dala i-invoyisi ka')} ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{recordsUi(lang, item.invoice_source_sale ? 'Recover invoice' : 'Create invoice', item.invoice_source_sale ? 'Buyisa i-invoyisi' : 'Dala i-invoyisi')}</Link>}
+            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && (recordQuantity(item) ?? 0) > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${recordsUi(lang, item.invoice_source_sale ? 'Recover invoice for' : 'Create invoice for', item.invoice_source_sale ? 'Buyisa i-invoyisi ka' : 'Dala i-invoyisi ka')} ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{recordsUi(lang, item.invoice_source_sale ? 'Recover invoice' : 'Create invoice', item.invoice_source_sale ? 'Buyisa i-invoyisi' : 'Dala i-invoyisi')}</Link>}
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
@@ -1014,8 +1004,8 @@ function CreditPackCard({
       ) : (
         <>
         <div className="grid grid-cols-3 gap-2 my-3">
-          {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), `${numberLabel(production.reduce((n, p) => n + (p.kg ?? 0), 0))} kg`]].map(([label, value]) => (
-            <div key={label} className="rounded-xl p-3" style={{ background: '#F0F5EA', color: '#214D32' }}>
+          {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), <RecordQuantitySummary key="picked" compact totals={quantityTotals(production)} />]].map(([label, value], index) => (
+            <div key={index} className="rounded-xl p-3" style={{ background: '#F0F5EA', color: '#214D32' }}>
               <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
             </div>
           ))}
@@ -1298,29 +1288,27 @@ export default function MyRecords({
         </div>
       )}
 
-      {/* ── Log production — THE harvest form. Crop, kilograms, optional photo, save.
-             The audit's "do not touch" list names this shape exactly; the merge moved its
-             front door and left every field and every branch of its save path alone. ── */}
+      {/* Counts need an explicit unit so eggs and jars cannot become kilogram evidence. */}
       {showPicked && <LogProductionForm onSaved={handleSaved} />}
 
       {/* ── Harvest summary ─────────────────────────── */}
       {showPicked && production.length > 0 && (() => {
         // Scoped, not filtered-away: what the switch removes is counted separately and named
         // underneath, so a total that suddenly drops has its missing kilograms on the same card.
-        const counted = production.filter((p) => inScope(p.crop));
-        const left = production.filter((p) => !inScope(p.crop));
+        const counted = production.filter((p) => recordWeightKg(p) === null || inScope(p.crop));
+        const left = production.filter((p) => recordWeightKg(p) !== null && !inScope(p.crop));
         const excludedKg = left.reduce((s, p) => s + (p.kg ?? 0), 0);
         // Named by the catalogue, so one fruit is one name however the picker and the sale form
         // each spelt it.
         const excludedNames = [...new Set(left.filter((p) => (p.kg ?? 0) > 0).map((p) => produceDisplayName(p.crop)))]
           .sort((a, b) => a.localeCompare(b, 'en-ZA'));
-        const totalKg = counted.reduce((s, p) => s + (p.kg ?? 0), 0);
+        const pickedQuantities = quantityTotals(counted);
         const byCrop: Record<string, number> = {};
         // Same grouping rule, so two spellings of one fruit cannot split its kilograms and cost it
         // the top-crop line it earned.
-        counted.forEach((p) => { const n = produceDisplayName(p.crop); byCrop[n] = (byCrop[n] ?? 0) + (p.kg ?? 0); });
+        counted.filter((p) => recordWeightKg(p) !== null).forEach((p) => { const n = produceDisplayName(p.crop); byCrop[n] = (byCrop[n] ?? 0) + (recordWeightKg(p) ?? 0); });
         const topCrop = Object.entries(byCrop).sort((a, b) => b[1] - a[1])[0];
-        const recent = counted.slice(0, 12);
+        const recent = counted.filter((p) => recordWeightKg(p) !== null).slice(0, 12);
         const maxKg = Math.max(...recent.map((p) => p.kg ?? 0), 1);
         const W = 180; const H = 36; const pts = recent.map((p, i) => {
           const x = (i / Math.max(recent.length - 1, 1)) * W;
@@ -1329,13 +1317,13 @@ export default function MyRecords({
         }).join(' ');
         return (
           <Card>
-            <div className="flex items-center justify-between gap-4 mb-3">
-              <div>
+            <div className="space-y-3 mb-3">
+              <div className="min-w-0">
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--color-forest-800)', lineHeight: 1 }}>
-                  {totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)} kg
+                  <RecordQuantitySummary totals={pickedQuantities} />
                 </div>
                 <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                  {t('myRecordsTotalHarvested')}{topCrop ? ` · ${topCrop[0]} ${t('myRecordsTopsLabel')}` : ''}
+                  {t('myRecordsTotalHarvested')}{topCrop ? ` · Top by weight: ${topCrop[0]}` : ''}
                 </div>
                 <OrchardSwitch
                   on={includePerennials}
@@ -1343,7 +1331,7 @@ export default function MyRecords({
                   t={t}
                 />
               </div>
-              <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
+              {recent.length > 0 && <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
                 <polyline points={pts} fill="none" stroke="rgba(31,77,43,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
                 <polyline points={pts} fill="none" stroke="#1F4D2B" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
                 {recent.map((p, i) => {
@@ -1351,7 +1339,7 @@ export default function MyRecords({
                   const y = H - ((p.kg ?? 0) / maxKg) * H;
                   return <circle key={i} cx={x} cy={y} r="2.5" fill="#1F4D2B" />;
                 })}
-              </svg>
+              </svg>}
             </div>
             {excludedKg > 0 && (
               <OrchardNote kg={excludedKg} names={excludedNames} t={t} />
@@ -1392,23 +1380,21 @@ export default function MyRecords({
 
       {/* ── Sales summary ────────────────────────────── */}
       {showSold && (sales.length > 0 || invoices.some((i) => i.status === 'paid')) && (() => {
-        // Summing `sales` alone double-counted a paid invoice's kg lines (also synced into
-        // `sales` by syncInvoiceSales) while missing its bags/crates/other non-kg lines entirely
-        // (they never create a sales row — their weight is unknown). cashIncomeTotal is the one
-        // place that combines sales and invoices correctly; see lib/invoice-sales.ts.
+        // Invoice-linked rows and paid invoices represent the same cash. Unit choice
+        // must not change the authority that counts that payment once.
         const totalRev = cashIncomeTotal(sales, invoices);
         // The rand total is NEVER scoped. An invoice can carry delivery, a discount or crate
         // lines, so splitting it between the beds and the orchard would be a claim the invoice
         // does not make — and cashIncomeTotal is the one place that counts a paid invoice once.
         // Only the kilogram figure beside it follows the switch, and says so when it does.
-        const soldLeftOut = sales.filter((p) => !inScope(p.crop));
+        const soldLeftOut = sales.filter((p) => recordWeightKg(p) !== null && !inScope(p.crop));
         const soldExcludedKg = soldLeftOut.reduce((s, p) => s + (p.kg ?? 0), 0);
         // Through the catalogue, exactly as the harvest note above does. These two notes sit on the
         // same screen: with one spelling raw and one canonical, one avocado tree read as "Avocado"
         // in the note above and "Avocados" in this one.
         const soldExcludedNames = [...new Set(soldLeftOut.filter((p) => (p.kg ?? 0) > 0).map((p) => produceDisplayName(p.crop)))]
           .sort((a, b) => a.localeCompare(b, 'en-ZA'));
-        const totalKgSold = sales.filter((p) => inScope(p.crop)).reduce((s, p) => s + (p.kg ?? 0), 0);
+        const soldQuantities = quantityTotals(sales.filter((p) => recordWeightKg(p) === null || inScope(p.crop)));
         const recent = sales.slice(0, 12);
         const maxAmt = Math.max(...recent.map((p) => p.amount ?? 0), 1);
         const W = 180; const H = 36;
@@ -1419,14 +1405,15 @@ export default function MyRecords({
         }).join(' ');
         return (
           <Card>
-            <div className="flex items-center justify-between gap-4 mb-3">
-              <div>
+            <div className="space-y-3 mb-3">
+              <div className="min-w-0">
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1 }}>
                   R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
                 </div>
                 <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                  {t('myRecordsTotalRevenue')} · {totalKgSold % 1 === 0 ? totalKgSold : totalKgSold.toFixed(1)} {t('myRecordsKgSoldSuffix')}
+                  {t('myRecordsTotalRevenue')}
                 </div>
+                <div className="font-sans mt-2" style={{ color: 'var(--text-muted)' }}><RecordQuantitySummary compact totals={soldQuantities} /></div>
               </div>
               <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
                 <polyline points={pts} fill="none" stroke="rgba(192,122,30,0.25)" strokeWidth="1.5" strokeLinejoin="round" />

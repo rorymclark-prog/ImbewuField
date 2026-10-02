@@ -20,6 +20,31 @@ const veg = (key: string, status: 'fresh' | 'stored' = 'fresh'): FoodAvailabilit
 const tree: TreeAvailabilityItem = { speciesId: 'mango', name: 'Mango', trees: 2 };
 const hens: AnimalAvailabilityItem = { enterpriseId: 'chicken-eggs', animal: 'chicken', product: 'eggs', structures: 1 };
 
+test('food-gap suggestions cannot reintroduce frost-tender crops excluded by farm observations', () => {
+  const input = {
+    year: buildYearOfFood(JAN_ORDER, JAN_ORDER.map(() => [])),
+    beds: [{ id: 'bed', label: 'Bed', areaM2: 10 }], plantings: [],
+    pattern: 'summer' as const, currentMonth: 10, gate: null,
+    crops: [cropByKey('tomatoes')!, cropByKey('kale')!], perMonth: 10,
+  };
+  const usual = suggestGapFills(input).flatMap((month) => month.suggestions);
+  assert.ok(usual.some((s) => s.crop.key === 'tomatoes'));
+  const frost = suggestGapFills({ ...input, observedFrostMonths: Array.from({ length: 12 }, (_, i) => i + 1) }).flatMap((month) => month.suggestions);
+  assert.ok(!frost.some((s) => s.crop.key === 'tomatoes'), 'monthly averages must not override frost the farmer saw');
+  assert.ok(frost.some((s) => s.crop.key === 'kale'), 'observed frost does not ban every crop');
+  assert.deepEqual(suggestGapFills(input).flatMap((month) => month.suggestions), usual, 'a second farm does not inherit the first farm’s observation');
+});
+
+test('blank and malformed frost months do not manufacture a restriction for food-gap suggestions', () => {
+  const input = {
+    year: buildYearOfFood(JAN_ORDER, JAN_ORDER.map(() => [])),
+    beds: [{ id: 'bed', label: 'Bed', areaM2: 10 }], plantings: [],
+    pattern: 'summer' as const, currentMonth: 10, gate: null, crops: [cropByKey('tomatoes')!],
+  };
+  assert.deepEqual(suggestGapFills({ ...input, observedFrostMonths: [] }), suggestGapFills(input));
+  assert.deepEqual(suggestGapFills({ ...input, observedFrostMonths: [0, 13, 1.5, NaN] }), suggestGapFills(input));
+});
+
 function slots<T>(fill: Partial<Record<number, T[]>>, length = 24): T[][] {
   return Array.from({ length }, (_, i) => fill[(i % 12) + 1] ?? []);
 }

@@ -17,9 +17,10 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-1. [Current crop/production audit register — 2 October 2026](2026-10-02/crop-production-audit.md).
-2. [Today's nine-page Ubhejane crop plan audit](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf).
-3. [Earlier crop-plan truth audit — 6 August](../CROP-PLAN-TRUTH-AUDIT-2026-08-06.md).
+1. [Production-plan follow-up — 2 October 2026](2026-10-02/crop-production-codex-followup.md).
+2. [Original crop/production finding register — 2 October 2026](2026-10-02/crop-production-audit.md).
+3. [Today's nine-page Ubhejane crop plan audit](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf).
+4. [Earlier crop-plan truth audit — 6 August](../CROP-PLAN-TRUTH-AUDIT-2026-08-06.md).
 
 Today's PDF is preserved as the original audit snapshot. Its follow-up chat is
 still implementing changes; consult the register before treating an original
@@ -57,7 +58,8 @@ date the audit was performed. Inclusion here does not certify current findings.
 | Date | Area and record |
 | --- | --- |
 | 2026-10-02 | [Site survey: draft recovery, browser evidence and next checks — Codex](2026-10-02/site-survey-draft-recovery-codex.md) |
-| 2026-10-02 | [Crop/production planning: current register](2026-10-02/crop-production-audit.md) · [Original nine-page audit PDF](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf) |
+| 2026-10-02 | [Production-plan follow-up: implementation, sources and verified outputs](2026-10-02/crop-production-codex-followup.md) |
+| 2026-10-02 | [Crop/production planning: original register](2026-10-02/crop-production-audit.md) · [Original nine-page audit PDF](2026-10-02/Ubhejane-Crop-Plan-Audit-2026-10-02.pdf) |
 | 2026-10-02 | [Site survey: prior work, merged follow-ups and next improvements](2026-10-02/site-survey-continuation.md) |
 | 2026-09-26 | [Garden Survey isiZulu dynamic status](../study-translation-reviews/GARDEN-SURVEY-ISIZULU-DYNAMIC-STATUS.md) · [Sesotho shell draft](../study-translation-reviews/GARDEN-SURVEY-SESOTHO-UI-DRAFT.md) |
 | 2026-09-25 | [Site Survey isiZulu review packet](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md) |

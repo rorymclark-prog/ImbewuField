@@ -9,9 +9,9 @@
 // still shown — it is part of the plan — but kept apart and never passed off as cropping. The
 // months are the sourced ones only; nothing here invents a season or a quantity.
 
-import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, HOUSING_ANIMALS, HOUSING_LABEL, PRODUCT_LABEL, buildAnimalAvailability, isFoodProduct, sourcedProductMonths, type AnimalEnterprise, type AnimalKind, type AnimalProduct, type FlowRecord, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
+import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, HOUSING_ANIMALS, HOUSING_LABEL, PRODUCT_LABEL, buildAnimalAvailability, confirmedAnimalMonths, isFoodProduct, type AnimalKind, type AnimalProduct, type AnimalSeasonChoices, type FlowRecord, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
 import type { HarvestCitation } from './perennial-harvest';
-import { PERENNIAL_HARVEST, buildTreeAvailability, formatRange, type PlacedTreeGroup } from './perennial-harvest';
+import { PERENNIAL_HARVEST, buildTreeAvailability, formatRange, type PlacedTreeGroup, type TreeSeasonChoices } from './perennial-harvest';
 
 export interface CalendarTreeLine {
   speciesId: string;
@@ -46,11 +46,13 @@ export function calendarProduceByMonth(
   animalGroups: readonly PlacedAnimalGroup[],
   choices: Readonly<Partial<Record<HousingKind, string>>>,
   months: readonly number[],
+  treeSeasons: TreeSeasonChoices = {},
+  animalSeasons: AnimalSeasonChoices = {},
 ): CalendarProduceMonth[] {
-  const treesAll = buildTreeAvailability(treeGroups, months, false);
-  const treesStanding = buildTreeAvailability(treeGroups, months, true);
-  const animalsAll = buildAnimalAvailability(animalGroups, choices, months, false);
-  const animalsStanding = buildAnimalAvailability(animalGroups, choices, months, true);
+  const treesAll = buildTreeAvailability(treeGroups, months, false, treeSeasons);
+  const treesStanding = buildTreeAvailability(treeGroups, months, true, treeSeasons);
+  const animalsAll = buildAnimalAvailability(animalGroups, choices, months, false, animalSeasons);
+  const animalsStanding = buildAnimalAvailability(animalGroups, choices, months, true, animalSeasons);
   return months.map((_, i) => ({
     trees: treesAll[i].map((t) => {
       const standing = treesStanding[i].find((s) => s.speciesId === t.speciesId)?.trees ?? 0;
@@ -178,19 +180,16 @@ export interface CalendarUnmarkedLine {
   records: FlowRecord[];
 }
 
-function hasUnmarkedStory(e: AnimalEnterprise): boolean {
-  return isFoodProduct(e.product) && sourcedProductMonths(e).length === 0 && (e.flowRecords.length > 0 || e.flowNote !== null);
-}
-
 export function unmarkedAnimalLines(
   groups: readonly PlacedAnimalGroup[],
   choices: Readonly<Partial<Record<HousingKind, string>>>,
+  seasons: AnimalSeasonChoices = {},
 ): CalendarUnmarkedLine[] {
   const lines: CalendarUnmarkedLine[] = [];
   for (const g of groups) {
     if (g.existing + g.proposed === 0) continue;
     const e = choices[g.housing] ? ANIMAL_ENTERPRISES[choices[g.housing]!] : undefined;
-    if (!e || !HOUSING_ANIMALS[g.housing].includes(e.animal) || !hasUnmarkedStory(e)) continue;
+    if (!e || !HOUSING_ANIMALS[g.housing].includes(e.animal) || !isFoodProduct(e.product) || confirmedAnimalMonths(g.housing, e.enterpriseId, seasons).length > 0) continue;
     lines.push({
       enterpriseId: e.enterpriseId,
       name: e.name,
@@ -223,6 +222,7 @@ export function flowRecordText(record: FlowRecord): string {
 export function animalsNotShownNote(
   groups: readonly PlacedAnimalGroup[],
   choices: Readonly<Partial<Record<HousingKind, string>>>,
+  seasons: AnimalSeasonChoices = {},
 ): string | null {
   const noMonths: string[] = [];
   const unchosen: string[] = [];
@@ -231,10 +231,10 @@ export function animalsNotShownNote(
     const e = choices[g.housing] ? ANIMAL_ENTERPRISES[choices[g.housing]!] : undefined;
     if (!e) unchosen.push(HOUSING_LABEL[g.housing]);
     // Honey has its own line with no month bar (unmarkedAnimalLines), so it is shown, not missing.
-    else if (isFoodProduct(e.product) && sourcedProductMonths(e).length === 0 && !hasUnmarkedStory(e)) noMonths.push(`${PRODUCT_LABEL[e.product].toLowerCase()} from ${e.name}`);
+    else if (isFoodProduct(e.product) && confirmedAnimalMonths(g.housing, e.enterpriseId, seasons).length === 0) noMonths.push(`${PRODUCT_LABEL[e.product].toLowerCase()} from ${e.name}`);
   }
   const parts: string[] = [];
-  if (noMonths.length) parts.push(`no sourced months yet for ${noMonths.join(', ')}`);
+  if (noMonths.length) parts.push(`confirm local production months for ${noMonths.join(', ')}`);
   if (unchosen.length) parts.push(`say what it is for under Animals on your map: ${unchosen.join(', ')}`);
-  return parts.length ? `Not shown — ${parts.join('; ')}.` : null;
+  return parts.length ? `On your map, with no month bar — ${parts.join('; ')}.` : null;
 }
