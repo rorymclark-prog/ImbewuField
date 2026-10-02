@@ -637,3 +637,40 @@ test('Tshivenda bed preparation preserves reachability, soil conditions and crop
   assert.equal(resolveLearnerLessonPresentation(source, 've').status, 'draft');
   assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} changed` }, 've').status, 'english-fallback');
 });
+
+test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty and treatment order', () => {
+  const module = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!;
+  for (const [id, count, correct] of [['vegetables-staples-l2', 23, [1, 1]], ['vegetables-staples-l4', 12, [1, 0]]] as const) {
+    const source = module.lessons.find(lesson => lesson.id === id)!;
+    const draft = learnerVegetablesDraft.lessons.find(lesson => lesson.id === id)!;
+    assert.equal(learnerVegetablesDraft.lessons.filter(lesson => lesson.id === id).length, 1);
+    assert.equal(draft.body.sourceEnglish, source.body);
+    assert.equal(draft.body.tshivendaDraft.split('\n\n').length, count);
+    assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), correct);
+    draft.quiz.forEach((question, index) => {
+      assert.equal(question.question.tshivendaDraft, source.quiz[index].q);
+      assert.equal(question.rationale.tshivendaDraft, source.quiz[index].rationale);
+      assert.deepEqual(question.options.map(option => option.tshivendaDraft), source.quiz[index].options);
+    });
+    assert.equal(resolveLearnerLessonPresentation(source, 've').status, 'draft');
+    assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} changed` }, 've').status, 'english-fallback');
+  }
+  const l2 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!.body.tshivendaDraft.split('\n\n');
+  assert.match(l2[2], /every two to three weeks/);
+  assert.match(l2[3], /^Less waste during a glut\. Fresh food for longer\./);
+  assert.match(l2[4], /They do not guarantee a harvest if difficult conditions continue/);
+  assert.match(l2[8], /will not always be ready by the fourth sowing/);
+  assert.match(l2[9], /Heat may speed things up, or cause a failure/);
+  assert.match(l2[12], /Indigenous farming traditions in the Americas/);
+  assert.match(l2[14], /and store as protein/);
+  assert.match(l2[15], /^Pumpkin spreads across the ground/);
+  assert.match(l2[16], /Establish the maize first, so it's strong enough to carry the beans when they start to climb/);
+  assert.match(l2[17], /do not assume they immediately feed the maize/);
+  assert.match(l2[17], /nutrients in residues are released during decomposition/);
+  const sourceL4 = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.split('\n\n');
+  const l4 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.tshivendaDraft.split('\n\n');
+  for (const index of [1, 3, 4, 7, 8, 10]) assert.equal(l4[index], sourceL4[index]);
+  assert.match(l4[2], /^So before you treat anything,/);
+  assert.match(l4[9], /start with the lightest thing that works/);
+  assert.match(l4[9], /may help\. Check that the action suits the problem and monitor the result/);
+});
