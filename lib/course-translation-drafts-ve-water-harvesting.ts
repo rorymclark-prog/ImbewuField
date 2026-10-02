@@ -364,110 +364,38 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       id: "water-harvesting-l4",
-      title: {
-        sourceEnglish: "Greywater: Check Before Reuse",
-        tshivendaDraft: "Greywater: Check Before Reuse",
-        reviewStatus: "hold"
-      },
-      body: {
-        sourceEnglish: "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-        tshivendaDraft: "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-        reviewStatus: "hold"
-      },
+      title: pair("Greywater: Check Before Reuse", "Greywater: Ṱolani ni sa athu u shumisa hafhu", "machine-draft"),
+      body: pair("Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.", "Maḓi o shumiswaho hayani a nga vha na germs, salts, cleaning products na zwiṅwe zwithu. Tsivhudzo a i ṱalusi tshiko tshiṅwe na tshiṅwe nga nḓila nthihi. Tsivhudzo ya Afurika Tshipembe i fhambana nga ha maḓi a khishini na maḓi a u ṱanzwa zwiambaro.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture a si farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.", "machine-draft"),
       keyPoints: [
-        {
-          sourceEnglish: "Water sources and greywater guidance can differ",
-          tshivendaDraft: "Water sources and greywater guidance can differ",
-          reviewStatus: "hold"
-        },
-        {
-          sourceEnglish: "Check the source, service status, intended use and site locally before any reuse",
-          tshivendaDraft: "Check the source, service status, intended use and site locally before any reuse",
-          reviewStatus: "hold"
-        },
-        {
-          sourceEnglish: "Soil and mulch do not disinfect wastewater",
-          tshivendaDraft: "Soil and mulch do not disinfect wastewater",
-          reviewStatus: "hold"
-        },
-        {
-          sourceEnglish: "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
-          tshivendaDraft: "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
-          reviewStatus: "hold"
-        }
+        pair("Water sources and greywater guidance can differ", "Tshiko tsha maḓi na tsivhudzo ya greywater zwi nga fhambana.", "machine-draft"),
+        pair("Check the source, service status, intended use and site locally before any reuse", "Check the source, service status, intended use and site locally before any reuse", "hold"),
+        pair("Soil and mulch do not disinfect wastewater", "Soil and mulch do not disinfect wastewater", "hold"),
+        pair("Prevent contact, spray, pooling, runoff and drinking-water cross-connections", "Prevent contact, spray, pooling, runoff and drinking-water cross-connections", "hold"),
       ],
       quiz: [
         {
-          question: {
-            sourceEnglish: "What should happen before any household washwater is reused?",
-            tshivendaDraft: "What should happen before any household washwater is reused?",
-            reviewStatus: "hold"
-          },
+          question: pair("What should happen before any household washwater is reused?", "Hu fanela u itea mini before any household washwater is reused?", "machine-draft"),
           options: [
-            {
-              sourceEnglish: "Direct it below mulch around a tree",
-              tshivendaDraft: "Direct it below mulch around a tree",
-              reviewStatus: "hold"
-            },
-            {
-              sourceEnglish: "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
-              tshivendaDraft: "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
-              reviewStatus: "hold"
-            },
-            {
-              sourceEnglish: "Use it if it looks clear",
-              tshivendaDraft: "Use it if it looks clear",
-              reviewStatus: "hold"
-            },
-            {
-              sourceEnglish: "Use it only on plants that are not eaten raw",
-              tshivendaDraft: "Use it only on plants that are not eaten raw",
-              reviewStatus: "hold"
-            }
+            pair("Direct it below mulch around a tree", "Livhisani maḓi fhasi ha mulch u mona na muri.", "machine-draft"),
+            pair("Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site", "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site", "hold"),
+            pair("Use it if it looks clear", "Use it if it looks clear", "hold"),
+            pair("Use it only on plants that are not eaten raw", "I shumiseni kha zwimela fhedzi zwine zwi sa ḽiwe zwi songo bikiwa.", "machine-draft"),
           ],
           sourceCorrectIndex: 1,
-          rationale: {
-            sourceEnglish: "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
-            tshivendaDraft: "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
-            reviewStatus: "hold"
-          }
+          rationale: pair("Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.", "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.", "hold"),
         },
         {
-          question: {
-            sourceEnglish: "Why check the exact water source and cleaning products before considering reuse?",
-            tshivendaDraft: "Why check the exact water source and cleaning products before considering reuse?",
-            reviewStatus: "hold"
-          },
+          question: pair("Why check the exact water source and cleaning products before considering reuse?", "Ndi ngani ri tshi ṱola exact water source na cleaning products before considering reuse?", "machine-draft"),
           options: [
-            {
-              sourceEnglish: "All cleaning products are safe if the water is diluted",
-              tshivendaDraft: "All cleaning products are safe if the water is diluted",
-              reviewStatus: "hold"
-            },
-            {
-              sourceEnglish: "Water composition and product effects vary, so the actual source and products need assessment",
-              tshivendaDraft: "Water composition and product effects vary, so the actual source and products need assessment",
-              reviewStatus: "hold"
-            },
-            {
-              sourceEnglish: "The water can be reused when it has no smell",
-              tshivendaDraft: "The water can be reused when it has no smell",
-              reviewStatus: "hold"
-            },
-            {
-              sourceEnglish: "Mulch removes every harmful substance",
-              tshivendaDraft: "Mulch removes every harmful substance",
-              reviewStatus: "hold"
-            }
+            pair("All cleaning products are safe if the water is diluted", "Zwibveledzwa zwoṱhe zwa u kunakisa zwo tsireledzea arali maḓi o vanganywa na maṅwe.", "machine-draft"),
+            pair("Water composition and product effects vary, so the actual source and products need assessment", "Water composition and product effects vary; ngauralo the actual source and products need assessment.", "machine-draft"),
+            pair("The water can be reused when it has no smell", "Maḓi a nga shumiswa hafhu arali a si na munukho.", "machine-draft"),
+            pair("Mulch removes every harmful substance", "Mulch i bvisa zwithu zwoṱhe zwi vhaisaho.", "machine-draft"),
           ],
           sourceCorrectIndex: 1,
-          rationale: {
-            sourceEnglish: "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
-            tshivendaDraft: "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
-            reviewStatus: "hold"
-          }
-        }
-      ]
-    }
+          rationale: pair("Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.", "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.", "hold"),
+        },
+      ],
+    },
   ]
 };

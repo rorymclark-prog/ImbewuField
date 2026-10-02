@@ -116,7 +116,7 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
   }
 });
 
-test('Water L1-L3 show source-paired drafts while the unchecked L4 remains English', () => {
+test('Water L1-L4 show source-paired Xitsonga drafts with exact-source English holds', () => {
   const module = resolveCourseModulePresentation(source, 'ts');
   assert.equal(module.status, 'draft');
   assert.equal(module.title, 'Ku hlengeleta Mati');
@@ -134,7 +134,7 @@ test('Water L1-L3 show source-paired drafts while the unchecked L4 remains Engli
       assert.equal(unreleased.status, 'draft');
       assert.equal(unreleased.content.body,
         draft.lessons.find(item => item.id === lesson.id)?.body.xitsongaDraft);
-    } else if (lesson.id === 'water-harvesting-l3') {
+    } else if (lesson.id === 'water-harvesting-l3' || lesson.id === 'water-harvesting-l4') {
       assert.equal(unreleased.status, 'draft');
       assert.equal(unreleased.content.body,
         draft.lessons.find(item => item.id === lesson.id)?.body.xitsongaDraft);
@@ -366,4 +366,46 @@ test('Water L2 Xitsonga preserves dry periods, overflow sequence and exact safet
   const shown = resolveLearnerLessonPresentation(changed, 'ts');
   assert.equal(shown.status, 'english-fallback', 'withdraw the whole lesson when its source conditions change');
   assert.equal(shown.content.body, changed.body);
+});
+
+
+test('Water L4 Xitsonga preserves source scope, sanitation gates, prohibitions and conditional stop action', () => {
+  const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l4')!;
+  const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
+  const sourceParagraphs = canonical.body.split('\n\n');
+  const candidateParagraphs = paired.body.xitsongaDraft.split('\n\n');
+  assert.equal(sourceParagraphs.length, 5);
+  assert.equal(candidateParagraphs.length, 5);
+  assert.equal(paired.body.sourceEnglish, canonical.body);
+  assert.equal(paired.body.reviewStatus, 'machine-draft');
+  assert.ok(candidateParagraphs[0].includes('ni other substances'), 'preserve the full harmful-substance scope');
+  assert.equal(candidateParagraphs[1], sourceParagraphs[1], 'keep all excluded source waters and chemical prohibition exact');
+  assert.equal(candidateParagraphs[2], sourceParagraphs[2], 'keep the before-any-reuse local-authority and no-advice rule exact');
+  assert.ok(candidateParagraphs[3].startsWith('Xifaniso xa ntolovelo'), 'draft the ordinary framing sentence');
+  for (const clause of [
+    'Soil and mulch do not disinfect wastewater.',
+    'Keep it away from drinking-water plumbing and prevent contact with people or animals.',
+    'Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.',
+  ]) assert.ok(candidateParagraphs[3].includes(clause), `retain exact operational clause: ${clause}`);
+  assert.equal(candidateParagraphs[4], sourceParagraphs[4], 'keep the full AND/OR stop trigger and advice action exact');
+  assert.ok(paired.title.xitsongaDraft.startsWith('Greywater:'), 'retain the exact technical title term');
+  assert.deepEqual(paired.keyPoints.map(point => point.sourceEnglish), canonical.keyPoints);
+  assert.deepEqual(paired.quiz.map(item => item.sourceCorrectIndex), canonical.quiz.map(item => item.correct));
+  assert.deepEqual(paired.quiz.map(item => item.sourceCorrectIndex), [1, 1]);
+  assert.equal(paired.quiz[0].options[1].xitsongaDraft, canonical.quiz[0].options[1], 'keep the correct local-check instruction exact');
+  assert.ok(paired.quiz[1].rationale.xitsongaDraft.includes('Neither clear appearance, lack of smell nor mulch proves'),
+    'clear-looking water and lack of smell do not establish safety');
+
+  const shown = resolveLearnerLessonPresentation(canonical, 'ts');
+  assert.equal(shown.status, 'draft', 'expose the source-paired L4 draft in the Xitsonga resolver');
+  assert.equal(shown.content.title, paired.title.xitsongaDraft);
+  assert.equal(shown.content.body, paired.body.xitsongaDraft);
+  assert.deepEqual(shown.content.keyPoints, paired.keyPoints.map(point => point.xitsongaDraft));
+  assert.deepEqual(shown.content.quiz.map(item => item.correct), [1, 1]);
+
+  const changedSource = { ...canonical, body: canonical.body.replace('toilet water', 'another source') };
+  assert.notEqual(changedSource.body, canonical.body, 'fixture changes the canonical safety-source scope');
+  const fallback = resolveLearnerLessonPresentation(changedSource, 'ts');
+  assert.equal(fallback.status, 'english-fallback', 'source drift withdraws the complete paired lesson');
+  assert.equal(fallback.content.body, changedSource.body);
 });
