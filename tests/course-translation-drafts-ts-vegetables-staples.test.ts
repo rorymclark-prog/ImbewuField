@@ -72,9 +72,9 @@ test('Vegetables & Staple Crops L3 keeps its checked source frozen while adding 
       `existing Xitsonga paragraph ${index} remains byte-for-byte preserved`);
   }
 
-  assert.equal(draft.title.sourceEnglish, sourceLesson.title);
-  assert.equal(draft.title.xitsongaDraft, sourceLesson.title);
-  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.title.sourceEnglish, "Staple Crops: Maize, Beans, and Root Vegetables");
+  assert.equal(draft.title.xitsongaDraft, "Staple Crops: Maize, Beans, na Root Vegetables");
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
   assert.equal(draft.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(draft.infographicAlt?.xitsongaDraft, sourceLesson.infographicAlt);
   assert.deepEqual(draft.keyPoints.map(item => item.sourceEnglish), sourceLesson.keyPoints);
@@ -84,7 +84,13 @@ test('Vegetables & Staple Crops L3 keeps its checked source frozen while adding 
   for (const [index, question] of draft.quiz.entries()) {
     const source = sourceLesson.quiz[index];
     assert.equal(question.question.sourceEnglish, source.q);
-    assert.equal(question.question.xitsongaDraft, source.q);
+    const expectedQuestion = index === 0
+      ? "Hikokwalaho ka yini u hlawula open-pollinated maize ematshan'weni ya hybrid variety loko u kunguhata ku hlayisa mbewu ya wena?"
+      : index === 1
+        ? "Hikokwalaho ka yini amadumbe (taro) yi ri nhlawulo lowunene wa staple eka swiphemu swa KZN?"
+        : source.q;
+    assert.equal(question.question.xitsongaDraft, expectedQuestion);
+    assert.equal(question.question.reviewStatus, index < 2 ? 'machine-draft' : 'hold');
     assert.deepEqual(question.options.map(option => option.sourceEnglish), source.options);
     assert.deepEqual(question.options.map(option => option.xitsongaDraft), source.options);
     assert.equal(question.sourceCorrectIndex, source.correct);
@@ -96,7 +102,11 @@ test('Vegetables & Staple Crops L3 keeps its checked source frozen while adding 
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
   assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
-  assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
+  const expectedShownQuiz = sourceLesson.quiz.map((question, index) => ({
+    ...question,
+    q: index === 0 ? draft.quiz[0].question.xitsongaDraft : index === 1 ? draft.quiz[1].question.xitsongaDraft : question.q,
+  }));
+  assert.deepEqual(shown.content.quiz, expectedShownQuiz);
 });
 
 test('Vegetables & Staple Crops L3 source drift and undrafted lesson sources fall back to English', () => {
@@ -149,8 +159,10 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
   assert.equal(draft.infographicAlt?.xitsongaDraft, source.infographicAlt);
   assert.equal(draft.infographicAlt?.reviewStatus, 'hold');
   assert.deepEqual(draft.keyPoints.map(item => item.sourceEnglish), source.keyPoints);
-  assert.deepEqual(draft.keyPoints.map(item => item.xitsongaDraft), source.keyPoints);
-  assert.ok(draft.keyPoints.every(item => item.reviewStatus === 'hold'));
+  const expectedKeyPoints = [...source.keyPoints];
+  expectedKeyPoints[1] = 'Assess compaction na drainage u nga si hlawula deeper cultivation; do not work wet clay.';
+  assert.deepEqual(draft.keyPoints.map(item => item.xitsongaDraft), expectedKeyPoints);
+  assert.deepEqual(draft.keyPoints.map(item => item.reviewStatus), ['hold', 'machine-draft', 'hold', 'hold']);
   assert.equal(draft.quiz.length, source.quiz.length);
   for (const [index, question] of draft.quiz.entries()) {
     const original = source.quiz[index];
@@ -158,16 +170,20 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
     assert.deepEqual(question.options.map(option => option.sourceEnglish), original.options);
     assert.deepEqual(question.sourceCorrectIndex, original.correct);
     assert.equal(question.rationale.sourceEnglish, original.rationale);
-    assert.equal(question.rationale.xitsongaDraft, original.rationale);
-    assert.equal(question.rationale.reviewStatus, 'hold');
-    assert.deepEqual(question.options.map(option => option.reviewStatus), index === 0 ? ['machine-draft', 'hold', 'hold', 'hold'] : ['hold', 'hold', 'hold', 'hold'],
-      'only the reviewed ordinary distractor is drafted; option order remains canonical');
+    assert.equal(question.rationale.xitsongaDraft, index === 0
+      ? 'Ku kandziya growing soil ku endla compaction ni ku onha roots — bed leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki ku kandziya growing soil.'
+      : original.rationale);
+    assert.equal(question.rationale.reviewStatus, index === 0 ? 'machine-draft' : 'hold');
+    assert.deepEqual(question.options.map(option => option.reviewStatus), index === 0 ? ['machine-draft', 'hold', 'hold', 'machine-draft'] : ['hold', 'hold', 'hold', 'hold'],
+      'the checked ordinary distractors are drafted without changing option order or the correct answer');
   }
   assert.equal(draft.quiz[0].question.xitsongaDraft, 'Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m wide ku ri na ku yi endla yi anama ku tlurisa?');
   assert.equal(draft.quiz[0].question.reviewStatus, 'machine-draft');
   assert.equal(draft.quiz[0].options[0].xitsongaDraft, 'Mabedhe lama anameke ma kuma dyambu ro tala ngopfu.');
   assert.equal(draft.quiz[0].options[0].reviewStatus, 'machine-draft');
   assert.equal(draft.quiz[0].options[1].reviewStatus, 'hold');
+  assert.equal(draft.quiz[0].options[3].xitsongaDraft, 'I nawu lowu nga cinciki, lowu nga riki na practical reason.');
+  assert.equal(draft.quiz[0].rationale.xitsongaDraft, 'Ku kandziya growing soil ku endla compaction ni ku onha roots — bed leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki ku kandziya growing soil.');
   assert.equal(draft.quiz[1].question.xitsongaDraft, 'Hi xihi xibyariwa lexi faneleke ngopfu ku byariwa hi direct-seeding ku ri na transplanting?');
   assert.equal(draft.quiz[1].question.reviewStatus, 'machine-draft');
   assert.equal(draft.quiz[1].sourceCorrectIndex, 2);
@@ -178,6 +194,8 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
   assert.equal(shown.content.quiz[0].q, draft.quiz[0].question.xitsongaDraft);
   assert.equal(shown.content.quiz[0].options[0], draft.quiz[0].options[0].xitsongaDraft);
   assert.equal(shown.content.quiz[0].options[1], source.quiz[0].options[1]);
+  assert.equal(shown.content.quiz[0].options[3], draft.quiz[0].options[3].xitsongaDraft);
+  assert.equal(shown.content.quiz[0].rationale, draft.quiz[0].rationale.xitsongaDraft);
   assert.equal(shown.content.quiz[1].q, draft.quiz[1].question.xitsongaDraft);
   const changed = { ...source, body: source.body + ' Changed planting condition.' };
   assert.equal(resolveLearnerLessonPresentation(changed, 'ts').status, 'english-fallback');
@@ -207,4 +225,17 @@ test('Pest framing retains four-step order and exact treatment safeguards beside
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
   assert.deepEqual(shown.content.quiz, source.quiz);
   assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+});
+
+
+test('L1/L3 assessment candidates withdraw when their exact English question or answer source changes', () => {
+  const l1 = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
+  const changedL1Quiz: Lesson = { ...l1, quiz: [{ ...l1.quiz[0], rationale: `${l1.quiz[0].rationale} Changed.` }, l1.quiz[1]] };
+  assert.equal(resolveLearnerLessonPresentation(changedL1Quiz, 'ts').status, 'english-fallback');
+  assert.equal(resolveLearnerLessonPresentation(changedL1Quiz, 'ts').content.quiz[0].rationale, changedL1Quiz.quiz[0].rationale);
+
+  const changedL3Question: Lesson = { ...sourceLesson, quiz: [{ ...sourceLesson.quiz[0], q: `${sourceLesson.quiz[0].q} Changed.` }, sourceLesson.quiz[1]] };
+  assert.equal(resolveLearnerLessonPresentation(changedL3Question, 'ts').status, 'english-fallback');
+  assert.equal(resolveLearnerLessonPresentation(changedL3Question, 'ts').content.quiz[0].q, changedL3Question.quiz[0].q);
+  assert.deepEqual(XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].quiz.map(question => question.sourceCorrectIndex), [1, 1]);
 });

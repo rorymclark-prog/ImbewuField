@@ -560,6 +560,7 @@ test('Vegetables L3 shows screened concept sentences while crop advice and answe
   const expectedParagraphs = [...paragraphs];
   expectedParagraphs[vegetablesL3Draft.bodyConcept.paragraphIndex] = vegetablesL3Draft.bodyConcept.tshivendaDraft;
   expectedParagraphs[vegetablesL3Draft.secondBodyConcept.paragraphIndex] = vegetablesL3Draft.secondBodyConcept.tshivendaDraft;
+  expectedParagraphs[4] = "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.";
   for (const concept of vegetablesL3Draft.additionalBodyConcepts) {
     assert.equal(paragraphs[concept.paragraphIndex].split(concept.sourceEnglish).length - 1, 1,
       `source paragraph ${concept.paragraphIndex + 1}: selected sentence occurs once`);
@@ -571,10 +572,10 @@ test('Vegetables L3 shows screened concept sentences while crop advice and answe
   assert.match(translated[2], /zwivhili kana zwo engaho/, 'the two-or-more qualifier must survive the new draft');
   assert.match(translated[3], /zwivhili kana zwo engaho/, 'grow-at-least-two threshold stays explicit');
   assert.match(translated[14], /zwivhili kana zwo engaho/, 'two-or-more staples remains explicit');
-  assert.equal(translated[4], paragraphs[4], 'most-heavy reliance and would-hurt-most comparison stays English');
+  assert.equal(translated[4], "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.", 'only the checked ordinary reliance question is localized; consequence and companion reasoning stay English');
   assert.ok(translated[15].endsWith('Phambano yeneyo ndi yone tsireledzo.'), 'difference remains the protection');
   paragraphs.forEach((paragraph, index) => {
-    if (![0, 1, 2, 3, 5, 10, 11, 12, 13, 14, 15].includes(index)) {
+    if (![0, 1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15].includes(index)) {
       assert.equal(translated[index], paragraph, `paragraph ${index + 1} stays English`);
     }
   });
@@ -659,12 +660,16 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
     assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} changed` }, 've').status, 'english-fallback');
   }
   const l2 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!.body.tshivendaDraft.split('\n\n');
+  assert.match(l2[1], /^Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma\. Nga murahu sow a small amount of it, hafhu na hafhu\.$/, 'L2 p1 preserves actual household use and repeats sowing while holding the difficult sow/quantity phrase English');
   assert.match(l2[2], /every two to three weeks/);
+  assert.equal(l2[3], 'Less waste during a glut. Fresh food for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi.', 'preserve the pre-existing mixed-language paragraph at index 3 byte for byte');
   assert.match(l2[3], /^Less waste during a glut\. Fresh food for longer\./);
   assert.match(l2[4], /They do not guarantee a harvest if difficult conditions continue/);
   assert.match(l2[8], /will not always be ready by the fourth sowing/);
   assert.match(l2[9], /Heat may speed things up, or cause a failure/);
   assert.match(l2[12], /Indigenous farming traditions in the Americas/);
+  assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi stored maize yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho when water limits the garden\.$/, 'L2 p19 retains each possible hungry-gap timing and the exact water-limits condition');
+  assert.equal(l2[8], module.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!.body.split('\n\n')[8], 'ambiguous by-fourth-sowing outcome remains exact English');
   assert.match(l2[14], /and store as protein/);
   assert.match(l2[15], /^Pumpkin spreads across the ground/);
   assert.match(l2[16], /Establish the maize first, so it's strong enough to carry the beans when they start to climb/);

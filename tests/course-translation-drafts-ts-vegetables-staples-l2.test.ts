@@ -50,41 +50,58 @@ test('Vegetables & Staple Crops L2 exposes its source-paired body and bounded as
   assert.ok(localizedParagraphs[20].includes('U nga tekeleli calendar') && localizedParagraphs[20].includes("tin'hweti ta wena"));
   assert.ok(localizedParagraphs[21].startsWith('Ti tsale ehansi.'));
 
-  assert.equal(draft.title.sourceEnglish, sourceLesson.title);
-  assert.equal(draft.title.xitsongaDraft, sourceLesson.title);
-  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.title.sourceEnglish, 'Succession Planting and Intercropping');
+  assert.equal(draft.title.xitsongaDraft, 'Succession planting na intercropping');
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
   assert.equal(draft.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(draft.infographicAlt?.xitsongaDraft, sourceLesson.infographicAlt);
   assert.deepEqual(draft.keyPoints.map(item => item.sourceEnglish), sourceLesson.keyPoints);
-  assert.deepEqual(draft.keyPoints.map((item, index) => index === 1 ? item.sourceEnglish : item.xitsongaDraft), sourceLesson.keyPoints);
-  assert.deepEqual(draft.keyPoints.map(item => item.reviewStatus), ['hold', 'machine-draft', 'hold', 'hold']);
+  assert.deepEqual(draft.keyPoints.map(item => item.sourceEnglish), sourceLesson.keyPoints);
+  assert.deepEqual(draft.keyPoints.map(item => item.xitsongaDraft), [
+    'Byalani staggered sowings, mi lulamisa interval hi ku ya hi crop, weather na household use.',
+    'The Three Sisters yi huma eka Indigenous farming traditions in the Americas.',
+    'Tirhisani household food records ku kuma ni ku pulanela hungry gap.',
+    'Intercropped plants can still compete; lawulani space, timing na mati.',
+  ]);
+  assert.deepEqual(draft.keyPoints.map(item => item.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft']);
   assert.match(draft.keyPoints[1].xitsongaDraft, /The Three Sisters.*Indigenous farming traditions in the Americas/);
   assert.equal(draft.quiz.length, sourceLesson.quiz.length);
   for (const [index, question] of draft.quiz.entries()) {
     const source = sourceLesson.quiz[index];
     assert.equal(question.question.sourceEnglish, source.q);
     assert.deepEqual(question.options.map(option => option.sourceEnglish), source.options);
-    assert.deepEqual(question.options.map(option => option.xitsongaDraft), source.options,
-      'all option text remains in the source order, including the ambiguous smaller-seed option');
+    assert.deepEqual(question.options.map(option => option.xitsongaDraft), index === 0
+      ? [source.options[0], 'Yi nyika steady harvest, ku nga ri glut leyi landzeleriwaka hi gap.', source.options[2], source.options[3]]
+      : source.options,
+      'the drafted answer remains at its canonical position and all other option wording is preserved');
     assert.equal(question.sourceCorrectIndex, source.correct);
     assert.equal(question.rationale.sourceEnglish, source.rationale);
-    assert.equal(question.rationale.xitsongaDraft, source.rationale);
-    assert.equal(question.rationale.reviewStatus, 'hold');
+    assert.equal(question.rationale.xitsongaDraft, index === 0
+      ? 'A single large sowing matures all at once — ku byala hi ku landzelelana swi hangalasa harvest leswaku yi fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene.'
+      : source.rationale);
+    assert.equal(question.rationale.reviewStatus, index === 0 ? 'machine-draft' : 'hold');
   }
   assert.equal(draft.quiz[0].question.reviewStatus, 'machine-draft');
   assert.match(draft.quiz[0].question.xitsongaDraft, /lettuce.*small batches.*2-3 weeks/);
   assert.match(draft.quiz[0].question.xitsongaDraft, /hinkwayona hi nkarhi wun'we/);
+  assert.equal(draft.quiz[0].options[1].reviewStatus, 'machine-draft');
+  assert.equal(draft.quiz[0].rationale.reviewStatus, 'machine-draft');
   assert.equal(draft.quiz[1].question.xitsongaDraft, sourceLesson.quiz[1].q);
   assert.equal(draft.quiz[1].question.reviewStatus, 'hold');
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), [1, 1]);
+  assert.equal(draft.quiz[0].question.sourceEnglish, 'Why sow lettuce in small batches every 2-3 weeks instead of all at once?',
+    'the candidate must stay bound to the checked literal instead of following future canonical edits');
 
   const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
   assert.equal(shown.content.keyPoints[1], draft.keyPoints[1].xitsongaDraft);
-  assert.equal(shown.content.keyPoints[2], sourceLesson.keyPoints[2]);
+  assert.equal(shown.content.keyPoints[2], draft.keyPoints[2].xitsongaDraft,
+    'the checked household-records framing appears at its existing key-point position');
   assert.equal(shown.content.quiz[0].q, draft.quiz[0].question.xitsongaDraft);
   assert.equal(shown.content.quiz[0].options[0], sourceLesson.quiz[0].options[0]);
+  assert.equal(shown.content.quiz[0].options[1], draft.quiz[0].options[1].xitsongaDraft);
+  assert.equal(shown.content.quiz[0].rationale, draft.quiz[0].rationale.xitsongaDraft);
   assert.equal(shown.content.quiz[1].q, sourceLesson.quiz[1].q);
 });
 
@@ -123,6 +140,9 @@ test('Vegetables & Staple Crops L2 source drift and undrafted lessons fall back 
   assert.equal(changed.status, 'english-fallback');
   assert.equal(changed.content.body, changedSource.body);
   const changedKeyPoint: Lesson = { ...sourceLesson, keyPoints: [sourceLesson.keyPoints[0], 'Changed source condition', ...sourceLesson.keyPoints.slice(2)] };
+  const changedCandidateKeyPoint: Lesson = { ...sourceLesson, keyPoints: ['Changed sowing instruction', ...sourceLesson.keyPoints.slice(1)] };
+  assert.equal(resolveLearnerLessonPresentation(changedCandidateKeyPoint, 'ts').status, 'english-fallback',
+    'a changed staggered-sowing instruction invalidates its frozen source pair');
   const changedPointPresentation = resolveLearnerLessonPresentation(changedKeyPoint, 'ts');
   assert.equal(changedPointPresentation.status, 'english-fallback');
   assert.deepEqual(changedPointPresentation.content.keyPoints, changedKeyPoint.keyPoints);
@@ -130,6 +150,14 @@ test('Vegetables & Staple Crops L2 source drift and undrafted lessons fall back 
   const changedQuestionPresentation = resolveLearnerLessonPresentation(changedQuestion, 'ts');
   assert.equal(changedQuestionPresentation.status, 'english-fallback');
   assert.equal(changedQuestionPresentation.content.quiz[0].q, changedQuestion.quiz[0].q);
+  const changedOptionValues = [...sourceLesson.quiz[0].options];
+  changedOptionValues[1] += ' Changed.';
+  const changedCandidateOption: Lesson = { ...sourceLesson, quiz: [{ ...sourceLesson.quiz[0], options: changedOptionValues }, sourceLesson.quiz[1]] };
+  assert.equal(resolveLearnerLessonPresentation(changedCandidateOption, 'ts').status, 'english-fallback',
+    'a changed answer source cannot leave a stale candidate exposed in a draft quiz');
+  const changedRationale: Lesson = { ...sourceLesson, quiz: [{ ...sourceLesson.quiz[0], rationale: `${sourceLesson.quiz[0].rationale} Changed.` }, sourceLesson.quiz[1]] };
+  assert.equal(resolveLearnerLessonPresentation(changedRationale, 'ts').status, 'english-fallback',
+    'a changed explanation source withdraws the complete lesson draft');
 
   assert.equal(resolveLearnerLessonPresentation(sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l3')!, 'ts').status,
     'draft', 'L3 is separately source-paired in this combined batch');

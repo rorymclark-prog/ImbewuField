@@ -1,0 +1,53 @@
+{
+  "packetId": "ST-VEGETABLES-ASSESSMENT-CANDIDATES-2026-10-02",
+  "language": "Sesotho",
+  "languageCode": "st",
+  "canonicalSource": {
+    "path": "lib/course-modules.ts",
+    "moduleId": "vegetables-staples",
+    "sourceRevision": "0661ce4d38ed77099c3db6ecce6ea5ecb8312d7e",
+    "branchHeadInspected": "2c39ad425c46c763772441649f52fdfec690e9c9"
+  },
+  "registryPath": "lib/course-translation-drafts-st-vegetables-staples.ts",
+  "scope": "Three checked source-bound assessment fields only; other content and exact technical holds remain unchanged.",
+  "candidates": [
+    {
+      "fieldPath": "lessons[0].quiz[1].options[1]",
+      "lessonId": "vegetables-staples-l1",
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Brassicas, which need protection while small",
+      "currentSesothoDraft": "Brassicas, which need protection while small",
+      "currentReviewStatus": "hold",
+      "sesothoDraft": "Brassicas, tse hlokang tshireletso ha di sa le nyane",
+      "reviewStatus": "machine-draft",
+      "backtranslation": "Brassicas, which need protection while they are small.",
+      "uncertainty": "The crop-group term ‘Brassicas’ stays in English. Check the Sesotho agreement and preferred word for protection during review."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].question",
+      "lessonId": "vegetables-staples-l2",
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+      "currentSesothoDraft": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+      "currentReviewStatus": "hold",
+      "sesothoDraft": "Ke hobaneng ha o jala lettuce ka dihlopha tse nyane dibeke tse ding le tse ding tse 2-3 ho e na le ho e jala kaofela hang?",
+      "reviewStatus": "machine-draft",
+      "backtranslation": "Why do you sow lettuce in small groups every 2-3 weeks instead of sowing it all at once?",
+      "uncertainty": "‘Lettuce’ is retained as the crop name; the 2-3 week interval and contrast with sowing all at once are preserved."
+    },
+    {
+      "fieldPath": "lessons[3].quiz[1].question",
+      "lessonId": "vegetables-staples-l4",
+      "sourceCorrectIndex": 0,
+      "sourceEnglish": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+      "currentSesothoDraft": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+      "currentReviewStatus": "hold",
+      "sesothoDraft": "Ha makhasi a brassica a sehoai a fetoha mosehla, pele a nahana hore ke disenyi, o lokela ho hlahloba eng pele?",
+      "reviewStatus": "machine-draft",
+      "backtranslation": "When a farmer’s brassica leaves are turning yellow, before she assumes that it is pests, what should she check first?",
+      "uncertainty": "The crop name ‘brassica’ remains in English. The question keeps the yellowing symptom and asks for a check before assuming pests. Sesotho does not require the English pronoun’s gender distinction."
+    }
+  ],
+  "implementation": "Literal sourceEnglish/sesothoDraft/reviewStatus triples; changed source falls back for the whole lesson.",
+  "reviewStatus": "machine-draft; not fluent-approved"
+}
