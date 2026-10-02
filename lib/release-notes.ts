@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'a33dd6de', changes: [
+    'Tshivenda Water lesson 2 now has nine marked body paragraphs beside exact English.',
+    'Both quizzes show marked drafts; difficult design terms and English holds stay clear.',
+  ], tour: [
+    { title: 'Review the Tshivenda dam lesson', where: 'Study → Water Harvesting → lesson 2',
+      href: '/student',
+      detail: 'Read beside English and try both quizzes. Qualified design and safety checks remain.' },
+  ] },
   { when: '2 October 2026', sha: '44f60f72', changes: [
     'Tshivenda Water lesson 1 now has eight marked paragraphs beside exact English.',
     'The Xitsonga water draft keeps possible infiltration and all site-check cautions.',

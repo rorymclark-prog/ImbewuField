@@ -152,14 +152,14 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
       },
       body: {
         sourceEnglish: "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
-        tshivendaDraft: "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nTshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+        tshivendaDraft: "Dam kana pond i nga vhulunga runoff, fhedzi amount i re hone i bva kha local rain, catchment, losses na uri ni shumisa maḓi mangana.\n\nTshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe. Shumisani local records ni pulanele dry periods; dam yo ḓalaho a yo khwaṱhisedzwi.\n\nMusi ni sa athu shandula watercourse kana u fhaṱa storage works, check the required authorisation with the water authority.\n\nDam i ṱoḓa site investigation na design yo itwaho nga suitably qualified person. Catchment runoff, soil, foundations, downstream risk na safe spillway zwoṱhe zwi na ndeme.\n\nNi songo humbula uri annual rainfall i ni vhudza size ya flood kana storage ine na ḓo vha nayo.\n\nOverflow i songo langiwaho i nga erode na breach wall. Plan safe route ya excess water before construction.\n\nMaḓi a nga xela nga evaporation na seepage. Check water level ni sedze leaks kana erosion.\n\nKeep spillway i clear nahone maintain bank cover yo bulwaho kha design. Do not plant trees on earth dam wall.\n\nAnimals can damage banks and add manure to the water. U vha hone hazwi iti uri maḓi a vhe clean kana safe.",
         reviewStatus: "machine-draft"
       },
       keyPoints: [
         {
           sourceEnglish: "A dam needs a site assessment and qualified design",
-          tshivendaDraft: "A dam needs a site assessment and qualified design",
-          reviewStatus: "hold"
+          tshivendaDraft: "Dam i ṱoḓa site assessment na qualified design.",
+          reviewStatus: "machine-draft"
         },
         {
           sourceEnglish: "Design a safe spillway before construction",
@@ -168,8 +168,8 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           sourceEnglish: "Check required water authorisations before building",
-          tshivendaDraft: "Check required water authorisations before building",
-          reviewStatus: "hold"
+          tshivendaDraft: "Ṱolani required water authorisations before building.",
+          reviewStatus: "machine-draft"
         },
         {
           sourceEnglish: "Maintain bank cover and keep trees off an earth dam wall",
@@ -181,43 +181,43 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
         {
           question: {
             sourceEnglish: "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
-            tshivendaDraft: "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
-            reviewStatus: "hold"
+            tshivendaDraft: "Mulimi u fhaṱa dam wall i si na spillway. Nga murahu ha exceptional storm, dam i a overflow. Ndi mvelelo ifhio ine ya nga tevhela?",
+            reviewStatus: "machine-draft"
           },
           options: [
             {
               sourceEnglish: "The water irrigates lower fields beneficially",
-              tshivendaDraft: "The water irrigates lower fields beneficially",
-              reviewStatus: "hold"
+              tshivendaDraft: "Maḓi a sheledza masimu a re fhasi nga ndila ya vhuyedzo.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "It overtops and erodes the wall, risking a catastrophic breach",
-              tshivendaDraft: "It overtops and erodes the wall, risking a catastrophic breach",
-              reviewStatus: "hold"
+              tshivendaDraft: "Maḓi a fhira nga nṱha ha wall na u erode wall, zwa ita uri hu vhe na khombo ya catastrophic breach.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "The dam stays full and overflow drains harmlessly",
-              tshivendaDraft: "The dam stays full and overflow drains harmlessly",
-              reviewStatus: "hold"
+              tshivendaDraft: "Dam i dzula yo ḓala nahone overflow i bva nga ndila i si na khombo.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "Storage capacity increases permanently",
-              tshivendaDraft: "Storage capacity increases permanently",
-              reviewStatus: "hold"
+              tshivendaDraft: "Storage capacity i engedzea tshifhinga tshoṱhe.",
+              reviewStatus: "machine-draft"
             }
           ],
           sourceCorrectIndex: 1,
           rationale: {
             sourceEnglish: "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
-            tshivendaDraft: "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
-            reviewStatus: "hold"
+            tshivendaDraft: "Without a designed overflow route, excess water i wana ndila yayo ya u fhira nga nṱha ha wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+            reviewStatus: "machine-draft"
           }
         },
         {
           question: {
             sourceEnglish: "Which action helps protect an earth dam?",
-            tshivendaDraft: "Which action helps protect an earth dam?",
-            reviewStatus: "hold"
+            tshivendaDraft: "Ndi vhukando vhufhio vhune ha thusa u tsireledza earth dam?",
+            reviewStatus: "machine-draft"
           },
           options: [
             {
@@ -232,20 +232,20 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               sourceEnglish: "A full concrete lining and plastic cover",
-              tshivendaDraft: "A full concrete lining and plastic cover",
-              reviewStatus: "hold"
+              tshivendaDraft: "Full concrete lining na plastic cover.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "A larger surface area to spread evaporation evenly",
-              tshivendaDraft: "A larger surface area to spread evaporation evenly",
-              reviewStatus: "hold"
+              tshivendaDraft: "Surface area khulwane u phaḓaladza evaporation nga ndinganelo.",
+              reviewStatus: "machine-draft"
             }
           ],
           sourceCorrectIndex: 1,
           rationale: {
             sourceEnglish: "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
-            tshivendaDraft: "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
-            reviewStatus: "hold"
+            tshivendaDraft: "Clear spillway na bank maintenance zwi thusa dam u shuma u ya nga design. Trees should not be planted on an earth dam wall.",
+            reviewStatus: "machine-draft"
           }
         }
       ]
