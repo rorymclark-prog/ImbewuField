@@ -2,6 +2,7 @@
 
 - Auditor: Codex.
 - Reviewed revision: `87231f7453a2d74456f7a861c31e251ceb680bd3`, branch `codex/production-empty-sections-20261003`, based on production `0661ce4d38ed77099c3db6ecce6ea5ecb8312d7e`.
+- Integrated revision: `4143b9b92b553c50f7f5c64fa9bf764ce0972403` includes incoming main `e0a87b57731eb7bfbca9b08cfa01dc4fd46c680d`. Both farmer update entries are preserved; incoming lesson content is unchanged by this correction.
 - Previous audit: [Timing narrative](../2026-10-02/production-timing-narrative-codex.md). CP-015 remains closed; this is a separately reproduced omission.
 - Scope: the actual PDF availability renderer, its chart-switch adapter and farmer/reference exports. App headings already exist below bed and staple rows.
 - Evidence: source review, the downloaded 2 October public-sample PDF, actual jsPDF exports, rendered PNGs and full tests. Release confirmation is recorded on issue #35 after CI and deployment.
@@ -19,9 +20,10 @@ Confirmed months, production quantities, species identities and saved geometry a
 ## Verification
 
 - TypeScript passed.
-- Full suite: 4,509 tests, 4,508 passed, zero failures, one existing shape-sync-loss TODO. `git diff --check` passed.
+- Final integrated full suite: 4,511 tests, 4,510 passed, zero failures/skips, one existing shape-sync-loss TODO (64.47 seconds). `git diff --check` passed. The earlier print-only source snapshot passed 4,508 of 4,509 tests before incoming main added two checks.
 - Rendered and inspected mapped, empty and explicitly hidden exports. The mapped fixture uses the existing avocado, banana clump/circle, beehive and chicken-coop catalogue elements, with no confirmed months or vegetable beds. It is a synthetic fixture, not Rory's private Ubhejane design.
 - The first render exposed notes too close to section headings; the note spacing was corrected and all three outputs were rendered again. Mapped plant/housing rows, icons, wrapping and hidden-section explanations are visible without overlap.
+- All pages of the revised mapped, empty and hidden PDFs have zero text characters outside page boundaries.
 - This changes the picture. `PLAN_VERSION` remains unchanged.
 
 ![Mapped sources with unconfirmed months](evidence-production-empty-sections/mapped-calendar.png)
