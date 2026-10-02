@@ -11,7 +11,7 @@
     "paragraphCount": 20,
     "checks": "Compared every packet sourceEnglish paragraph to the canonical lesson body and registry body sourceEnglish; compared every currentSesothoDraft paragraph to the registry sesothoDraft. All 20 pairs matched exactly and in order. No repository files changed."
   },
-  "overall": "Meaning is mostly bounded and the critical geometry, dimensions, crop identities, wet-clay prohibition, and deeper-cultivation conditions are held in English. Request the repairs/holds below before wiring. This is a semantic backcheck, not fluency approval.",
+  "overall": "Repaired packet passes the independent semantic backcheck. Critical geometry, dimensions, wet-clay prohibition, local-advice-before-deeper-cultivation conditions, crop establishment and identities, and soil-specific cultivation constraints remain protected. This is not fluency approval.",
   "findings": [
     {
       "paragraphIndex": 0,
@@ -75,10 +75,8 @@
     },
     {
       "paragraphIndex": 12,
-      "result": "repair-final-sentence",
-      "candidateIssue": "'Tomatoes le brassicas di wela moo' can read literally as tomatoes and brassicas falling there; it does not reliably express that these crops belong in the nursery-start group.",
-      "recommendedCandidate": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
-      "note": "Keep the crop names and group-membership sentence in English unless a checked Sesotho wording is available. The protected nursery start and transplanting sequence already remain exact."
+      "result": "accept-repaired-exact-english-hold",
+      "note": "Repaired candidate now holds the complete source paragraph in exact English, preserving the protected nursery-start/transplanting sequence and the exact tomatoes/brassicas group membership."
     },
     {
       "paragraphIndex": 13,
@@ -87,10 +85,8 @@
     },
     {
       "paragraphIndex": 14,
-      "result": "hold-out-meaning-for-precision",
-      "candidateIssue": "'Tshwaya bed' means mark the bed, but does not clearly retain 'mark the bed out' as laying out its boundaries before planting.",
-      "recommendedCandidate": "Pele o lema, mark the bed out.",
-      "note": "Keep the timing in Sesotho and hold the layout action in English until 'mark out' is verified. Paragraph 16's rectangle marking does not remove the need to preserve this exact action."
+      "result": "accept-repaired-mixed-draft",
+      "note": "Repaired candidate translates the timing (`Pele o lema`) and retains `mark the bed out` exactly, preserving the boundary/layout action."
     },
     {
       "paragraphIndex": 15,
@@ -104,10 +100,8 @@
     },
     {
       "paragraphIndex": 17,
-      "result": "repair-first-clause",
-      "candidateIssue": "'Ebe o lokisa mobu wa hao' reads as 'then prepare your soil'; source says 'prepare for your own soil', emphasizing adaptation to the grower's soil rather than merely preparing soil.",
-      "recommendedCandidate": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
-      "note": "Hold the complete introductory clause in English. The no-dig-first order and dig-deeper-only-if-genuinely-needed condition are already retained exactly and must remain so."
+      "result": "accept-repaired-exact-english-hold",
+      "note": "Repaired candidate holds the complete paragraph in exact English, preserving prepare-for-your-own-soil meaning, no-dig-first order, and digging deeper only if genuinely needed."
     },
     {
       "paragraphIndex": 18,
@@ -127,5 +121,26 @@
     "cropIdentityAndEstablishment": "Beans, carrots, maize, tomatoes and brassicas unchanged; direct sow and protected nursery start/transplanting held in English. Paragraph 12 group-membership framing needs hold.",
     "soilAndBedConditions": "Wet-ground drainage-away and dry-ground rain-catching conditions held in English in paragraphs 8 and 9; no new bed prescription."
   },
-  "provenanceNote": "The packet's independentBacktranslation fields are the drafter's assertions. This report records my direct comparison with the source and candidate; it does not treat those fields as independent evidence."
+  "provenanceNote": "The packet's independentBacktranslation fields are the drafter's assertions. This report records my direct comparison with the source and candidate; it does not treat those fields as independent evidence.",
+  "finalPacketRecheck": {
+    "result": "pass",
+    "exactBinding": "Rechecked against canonical lib/course-modules.ts and registry lib/course-translation-drafts-st-vegetables-staples.ts at revision 917643955add4c342391175347670fd9ccdf0f1f. All 20 source paragraphs and all 20 current Sesotho draft paragraphs still match exactly and in order.",
+    "repairsVerified": "Paragraph 12 is now a complete exact-English hold; paragraph 14 keeps `mark the bed out` exact while translating the timing; paragraph 17 is now a complete exact-English hold.",
+    "candidateChangedParagraphs": [
+      1,
+      2,
+      5,
+      6,
+      8,
+      9,
+      11,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19
+    ],
+    "provenance": "The packet now correctly labels the original independentBacktranslation fields as drafter backtranslations and identifies this file as the separate independent review."
+  }
 }

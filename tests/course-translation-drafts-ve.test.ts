@@ -548,7 +548,7 @@ test('Vegetables L3 shows screened concept sentences while crop advice and answe
   const draftLesson = learnerVegetablesDraft.lessons[0];
   assert.equal(paragraphs[0], vegetablesL3Draft.bodyConcept.sourceEnglish);
   assert.equal(paragraphs[vegetablesL3Draft.secondBodyConcept.paragraphIndex], vegetablesL3Draft.secondBodyConcept.sourceEnglish);
-  assert.equal(vegetablesL3Draft.additionalBodyConcepts.length, 9);
+  // Checked ordinary prose can grow; protect each selected source sentence rather than pinning a draft count.
   assert.equal(draftLesson.body.sourceEnglish, lesson.body, 'source drift must invalidate the entire learner draft');
   assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
   const shown = resolveLearnerLessonPresentation(lesson, 've');
@@ -569,11 +569,12 @@ test('Vegetables L3 shows screened concept sentences while crop advice and answe
   assert.deepEqual(translated, expectedParagraphs,
     'preserve both existing drafts and every other body sentence exactly, including counts and crop guidance');
   assert.match(translated[2], /zwivhili kana zwo engaho/, 'the two-or-more qualifier must survive the new draft');
-  assert.equal(translated[14], paragraphs[14], 'keep the two-or-more staples recommendation in English');
-  assert.ok(translated[15].endsWith('That difference is the protection.'),
-    'the separate protection claim remains exact English');
+  assert.match(translated[3], /zwivhili kana zwo engaho/, 'grow-at-least-two threshold stays explicit');
+  assert.match(translated[14], /zwivhili kana zwo engaho/, 'two-or-more staples remains explicit');
+  assert.equal(translated[4], paragraphs[4], 'most-heavy reliance and would-hurt-most comparison stays English');
+  assert.ok(translated[15].endsWith('Phambano yeneyo ndi yone tsireledzo.'), 'difference remains the protection');
   paragraphs.forEach((paragraph, index) => {
-    if (![0, 1, 2, 5, 11, 12, 13, 15].includes(index)) {
+    if (![0, 1, 2, 3, 5, 10, 11, 12, 13, 14, 15].includes(index)) {
       assert.equal(translated[index], paragraph, `paragraph ${index + 1} stays English`);
     }
   });

@@ -43,3 +43,24 @@ These earlier drafts remain unchanged; the first still keeps `[staple]` in Engli
 - All key points, quiz questions, options and rationales remain exact English. Correct answer indexes are unchanged. No Tshivenda deck or narration is included or promised.
 
 The drafts are conceptual wording only; they add no crop, count, planting instruction, water advice, or guarantee. A fluent Tshivenda speaker and local farming reviewer should check the selected wording before it is treated as approved.
+
+
+## Additional ordinary prose — unreviewed draft, 2 October 2026
+
+English: Grow at least two. Not one.
+
+Tshivenda draft: Alusani zwivhili kana zwo engaho. Hu si tshithihi.
+
+English: Notice that they fail in different conditions. That's the whole point.
+
+Tshivenda draft: Ṱhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.
+
+English: Two or more staples give you more ways to keep eating.
+
+Tshivenda draft: Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.
+
+English: Different crops use water, soil and seasons differently. That difference is the protection.
+
+Tshivenda draft: Zwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.
+
+Comparative household reliance and crop/seed/water guidance remain exact English. No fluent or local farming approval is claimed.
