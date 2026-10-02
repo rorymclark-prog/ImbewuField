@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '2 October 2026', sha: 'f6268170', changes: [
+    'Tshivenda and Xitsonga roof-water lessons show marked drafts beside exact English.',
+    'Both roof-water quizzes retain safety checks; difficult terms remain English.',
+    'Sesotho roof-water wording and Xitsonga dam assessments are clearer for review.',
+  ], tour: [
+    { title: 'Review the regional Water lessons', where: 'Study → Water Harvesting → lessons 2–3',
+      href: '/student',
+      detail: 'Compare marked drafts with English and try the quizzes. Silent slides stay available.' },
+  ] },
   { when: '2 October 2026', sha: '4863cbf0', changes: [
     'Printed crop plans start with crop pictures across the months and larger job sheets.',
     'Banana, hives and coops stay on the print while local food dates are unconfirmed.',

@@ -116,7 +116,7 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
   }
 });
 
-test('Water L1 and L2 show source-paired Xitsonga drafts while unresolved lessons remain English', () => {
+test('Water L1-L3 show source-paired drafts while the unchecked L4 remains English', () => {
   const module = resolveCourseModulePresentation(source, 'ts');
   assert.equal(module.status, 'draft');
   assert.equal(module.title, 'Ku hlengeleta Mati');
@@ -131,6 +131,10 @@ test('Water L1 and L2 show source-paired Xitsonga drafts while unresolved lesson
   for (const lesson of source.lessons.slice(1)) {
     const unreleased = resolveLearnerLessonPresentation(lesson, 'ts');
     if (lesson.id === 'water-harvesting-l2') {
+      assert.equal(unreleased.status, 'draft');
+      assert.equal(unreleased.content.body,
+        draft.lessons.find(item => item.id === lesson.id)?.body.xitsongaDraft);
+    } else if (lesson.id === 'water-harvesting-l3') {
       assert.equal(unreleased.status, 'draft');
       assert.equal(unreleased.content.body,
         draft.lessons.find(item => item.id === lesson.id)?.body.xitsongaDraft);
@@ -224,33 +228,44 @@ test('Water Harvesting held wording remains exact where dam, water-law and reuse
   }
 
   const exactHolds = draft.holds.map(hold => hold.sourceText);
-  for (const required of [
-    'Do not plant trees on an earth dam wall.',
-    'A diverter does not make the remaining water safe to drink.',
-    'Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.',
-    'A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.',
-  ]) assert.ok(exactHolds.some(held => held.includes(required)), `safety or legal claim needs an exact hold: ${required}`);
+  assert.ok(exactHolds.some(held => held.includes('Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees')),
+    'retain the high-consequence earth-dam restriction as exact English');
 });
 
-test('Water L2 Xitsonga keeps unchecked heading, image description and assessments in exact English', () => {
+test('Water L2 Xitsonga exposes the checked heading and assessment draft while retaining marked technical holds', () => {
   const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!;
   const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
-  const heldPairs = [paired.title, paired.infographicAlt!, ...paired.keyPoints,
-    ...paired.quiz.flatMap(item => [item.question, ...item.options, item.rationale])];
-  for (const pair of heldPairs) {
-    assert.equal(pair.reviewStatus, 'hold');
-    assert.equal(pair.xitsongaDraft, pair.sourceEnglish);
+  assert.equal(paired.title.reviewStatus, 'machine-draft');
+  assert.notEqual(paired.title.xitsongaDraft, canonical.title);
+  const holdFields = draft.holds.filter(hold => hold.lessonId === canonical.id);
+  for (const hold of holdFields) {
+    const pair = pairForHold(hold)!;
+    const heldBodyParagraph = hold.field.match(/^body\[(\d+)\]$/);
+    if (heldBodyParagraph) {
+      assert.equal(pair.xitsongaDraft.split('\n\n')[Number(heldBodyParagraph[1])], hold.sourceText);
+      assert.equal(pair.reviewStatus, 'machine-draft');
+    } else {
+      assert.equal(pair.reviewStatus, 'hold');
+      assert.equal(pair.xitsongaDraft, pair.sourceEnglish);
+    }
   }
   assert.deepEqual(paired.quiz.map(item => item.sourceCorrectIndex), [1, 1]);
+  assert.equal(paired.keyPoints[0].reviewStatus, 'machine-draft');
+  assert.equal(paired.keyPoints[2].reviewStatus, 'machine-draft');
+  assert.equal(paired.keyPoints[3].reviewStatus, 'machine-draft');
+  assert.equal(paired.quiz[0].question.reviewStatus, 'machine-draft');
+  assert.equal(paired.quiz[1].question.reviewStatus, 'machine-draft');
+  assert.equal(paired.quiz[1].options[1].reviewStatus, 'machine-draft');
+  assert.equal(paired.quiz[1].rationale.reviewStatus, 'machine-draft');
 
   const shown = resolveLearnerLessonPresentation(canonical, 'ts');
   assert.equal(shown.status, 'draft');
-  assert.equal(shown.content.title, canonical.title);
+  assert.equal(shown.content.title, paired.title.xitsongaDraft);
   assert.equal(shown.content.infographicAlt, canonical.infographicAlt);
-  assert.deepEqual(shown.content.keyPoints, canonical.keyPoints);
-  assert.deepEqual(shown.content.quiz, canonical.quiz);
+  assert.deepEqual(shown.content.keyPoints, paired.keyPoints.map(point => point.xitsongaDraft));
+  assert.deepEqual(shown.content.quiz.map(question => question.correct), [1, 1]);
   assert.equal(shown.content.body, paired.body.xitsongaDraft,
-    'only the independently checked, source-paired body draft remains localized');
+    'the exact-source body draft remains paired with its canonical English source');
 
   const changedKeyPoint = { ...canonical, keyPoints: canonical.keyPoints.map((point, index) =>
     index === 0 ? `${point} changed` : point) };
@@ -258,6 +273,41 @@ test('Water L2 Xitsonga keeps unchecked heading, image description and assessmen
   assert.equal(fallback.status, 'english-fallback');
   assert.deepEqual(fallback.content.keyPoints, changedKeyPoint.keyPoints,
     'a changed key-point source withdraws the whole source-paired lesson');
+});
+
+test('Water L3 Xitsonga keeps roof losses, first-flush limits and water-safety clauses source-bound', () => {
+  const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l3')!;
+  const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
+  const sourceParagraphs = canonical.body.split('\n\n');
+  const paragraphs = paired.body.xitsongaDraft.split('\n\n');
+  assert.equal(paragraphs.length, 13);
+  assert.deepEqual(paired.quiz.map(item => item.sourceCorrectIndex), [1, 1]);
+  assert.deepEqual(paired.keyPoints.map(point => point.sourceEnglish), canonical.keyPoints);
+  assert.equal(paragraphs[0], 'Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.');
+  assert.ok(paragraphs[2].includes('Then allow for water that misses the gutter, is diverted or overflows a full tank.'));
+  assert.ok(paragraphs[3].startsWith('An annual total does not tell you how much water will be available during a dry spell.'));
+  assert.ok(paragraphs[4].includes('some of the first runoff'));
+  assert.equal(paragraphs[5], sourceParagraphs[5]);
+  assert.ok(paragraphs[6].includes('Diverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.'));
+  assert.ok(paragraphs[10].toLowerCase().includes('screen openings against insects'));
+  assert.ok(paragraphs[10].includes('Keep rainwater separate from drinking-water pipes.'));
+  assert.ok(paragraphs[11].startsWith('Water that looks clear may still contain germs or chemicals.'));
+  assert.ok(paragraphs[12].includes('Basic filter ntsena a yi tiyisisi') &&
+    paragraphs[12].includes('food crops') && paragraphs[12].includes('safety assessment'),
+  'retain filter no-guarantee and food-crop safety assessment');
+  const irrigationQuiz = paired.quiz[1];
+  assert.equal(irrigationQuiz.sourceCorrectIndex, 1);
+  assert.ok(irrigationQuiz.options[1].xitsongaDraft.includes('leti nga contaminate edible crops'),
+    'retain the can-contaminate modality and edible-crop exposure');
+  assert.ok(irrigationQuiz.rationale.xitsongaDraft.includes('swi nga hunguta contamination') &&
+    irrigationQuiz.rationale.xitsongaDraft.includes('a swi tiyisisi') &&
+    irrigationQuiz.rationale.xitsongaDraft.includes('intended use'),
+  'first-flush guidance reduces contamination but does not certify later water');
+  const changed = { ...canonical, body: canonical.body.replace('some of the first runoff', 'all of the first runoff') };
+  assert.notEqual(changed.body, canonical.body);
+  const fallback = resolveLearnerLessonPresentation(changed, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.equal(fallback.content.body, changed.body);
 });
 
 test('Water L1 Xitsonga keeps infiltration possible and requires assessment for all listed land conditions', () => {

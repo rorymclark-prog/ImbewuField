@@ -259,19 +259,19 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
       },
       title: {
         sourceEnglish: "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
-        tshivendaDraft: "Dzithanngi dza Maḓi a Mvula na U Kuvhanganya Maḓi kha Mutombo: U Kuvhanganya na U Tsireledza Maḓi",
-        reviewStatus: "machine-draft"
+        tshivendaDraft: "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+        reviewStatus: "hold"
       },
       body: {
         sourceEnglish: "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
-        tshivendaDraft: "Ṱhanga ya ṋu i nga kuvhanganya madi a mvula. Madi ane a wanala a bva kha vhuhulwane ha ṱhanga, mvula na madi a xelaho.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nTshivhalo tsha ṅwaha woṱhe a tshi ni vhudzi uri hu ḓo vha na madi mangana nga tshifhinga tsha gomelelo. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+        tshivendaDraft: "Ṱhanga ya ṋu i nga kuvhanganya madi a mvula. Madi ane a wanala a bva kha vhuhulwane ha ṱhanga, mvula na madi a xelaho.\n\nṰolani arali roof material yo tea u kuvhanganya maḓi a mvula musi ni sa athu u ṱumanya tank.\n\nShumisani roof area ine ya vhonala u bva nṱha na local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nTshivhalo tsha ṅwaha woṱhe a tshi ni vhudzi uri hu ḓo vha na madi mangana during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff i nga hwala buse, droppings na iṅwe contamination. First-flush diverter i thivhela maṅwe maḓi a first runoff uri a si dzhene kha tank.\n\nDiversion ine ya ṱoḓea i ḓitika nga ṱhanga na system. Shumisani ndaela dza supplier dza sizing na maintenance; a hu na volume nthihi fhedzi ine ya shuma kha ṱhanga iṅwe na iṅwe.\n\nDiverter a i iti uri maḓi o salaho a vhe o tsireledzea u nwiwa.\n\nTank size i ḓitika nga water demand, mvula, roof area na vhulapfu ha tshifhinga tsha dry periods.\n\nṄwalani mutevhe wa intended uses nahone ni anganyele demand yayo u bva kha records dzaṋu vhaṋe. Compare that with supply through the seasons.\n\nPulannani zwine na ḓo zwi ita musi maḓi o vhulungwaho a tshi thoma u vha maṱuku. A province name alone cannot tell you the tank size you need.\n\nItani uri tank i dzule yo tibifhiwa; screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Vhudzisani local health authority nga ha testing na treatment yo teelaho intended use.\n\nBasic filter fhedzi a si drinking-water guarantee. Maḓi ane a shumiswa kha food crops na one a ṱoḓa safety assessment.",
         reviewStatus: "machine-draft"
       },
       keyPoints: [
         {
           sourceEnglish: "Roof area, rain, demand and losses determine useful storage",
-          tshivendaDraft: "Roof area, rain, demand and losses determine useful storage",
-          reviewStatus: "hold"
+          tshivendaDraft: "Vhuhulwane ha roof, mvula, water demand na losses zwi laula uri hu nga vhulungwa maḓi mangana ane a shumisea.",
+          reviewStatus: "machine-draft"
         },
         {
           sourceEnglish: "Size and maintain the first-flush diverter for the roof",
@@ -280,8 +280,8 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           sourceEnglish: "Clear water can still contain germs or chemicals",
-          tshivendaDraft: "Clear water can still contain germs or chemicals",
-          reviewStatus: "hold"
+          tshivendaDraft: "Clear water i nga kha ḓi vha na germs kana chemicals.",
+          reviewStatus: "machine-draft"
         },
         {
           sourceEnglish: "Testing and treatment must match the intended use",
@@ -293,71 +293,71 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
         {
           question: {
             sourceEnglish: "What information is needed to choose a rainwater tank?",
-            tshivendaDraft: "What information is needed to choose a rainwater tank?",
-            reviewStatus: "hold"
+            tshivendaDraft: "Ndi mafhungo afhio ane a ṱoḓea u khetha rainwater tank?",
+            reviewStatus: "machine-draft"
           },
           options: [
             {
               sourceEnglish: "Only the province where the farm is located",
-              tshivendaDraft: "Only the province where the farm is located",
-              reviewStatus: "hold"
+              tshivendaDraft: "Province ine farm ya vha khayo fhedzi.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "Roof area, rainfall pattern, water demand and collection losses",
-              tshivendaDraft: "Roof area, rainfall pattern, water demand and collection losses",
-              reviewStatus: "hold"
+              tshivendaDraft: "Vhuhulwane ha roof, pattern ya mvula, water demand na losses dza kuvhanganya maḓi.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "Only the amount of rain in one storm",
-              tshivendaDraft: "Only the amount of rain in one storm",
-              reviewStatus: "hold"
+              tshivendaDraft: "Tshivhalo tsha mvula ya storm nthihi fhedzi.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "Only the price of the biggest available tank",
-              tshivendaDraft: "Only the price of the biggest available tank",
-              reviewStatus: "hold"
+              tshivendaDraft: "Mutengo wa tank khulwanesa ine ya wanala fhedzi.",
+              reviewStatus: "machine-draft"
             }
           ],
           sourceCorrectIndex: 1,
           rationale: {
             sourceEnglish: "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
-            tshivendaDraft: "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
-            reviewStatus: "hold"
+            tshivendaDraft: "U pulana tank hu tea u vhambedza supply ine ya nga shumiswa na demand kha wet na dry periods. Sayizi nthihi ya region yo tiwaho a i nga koni u ita zwenezwo.",
+            reviewStatus: "machine-draft"
           }
         },
         {
           question: {
             sourceEnglish: "Why does a first-flush diverter matter even for irrigation-only tank water?",
-            tshivendaDraft: "Why does a first-flush diverter matter even for irrigation-only tank water?",
-            reviewStatus: "hold"
+            tshivendaDraft: "Ndi ngani first-flush diverter i tshi thusa na musi maḓi a tank a tshi shumiswa kha irrigation fhedzi?",
+            reviewStatus: "machine-draft"
           },
           options: [
             {
               sourceEnglish: "It doesn't matter for irrigation, only drinking water",
-              tshivendaDraft: "It doesn't matter for irrigation, only drinking water",
-              reviewStatus: "hold"
+              tshivendaDraft: "A i na mushumo kha irrigation; i thusa kha drinking water fhedzi.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
-              tshivendaDraft: "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
-              reviewStatus: "hold"
+              tshivendaDraft: "First flush i hwala concentrated droppings, dust na pathogens dzine dza nga contaminate edible crops.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "It's more acidic and changes soil pH over time",
-              tshivendaDraft: "It's more acidic and changes soil pH over time",
-              reviewStatus: "hold"
+              tshivendaDraft: "It's more acidic nahone i shandula soil pH nga tshifhinga.",
+              reviewStatus: "machine-draft"
             },
             {
               sourceEnglish: "It stops the tank overfilling in storms",
-              tshivendaDraft: "It stops the tank overfilling in storms",
-              reviewStatus: "hold"
+              tshivendaDraft: "I thivhela tank uri i sa ḓadzehe nga maḓi manzhi nga storms.",
+              reviewStatus: "machine-draft"
             }
           ],
           sourceCorrectIndex: 1,
           rationale: {
             sourceEnglish: "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
-            tshivendaDraft: "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
-            reviewStatus: "hold"
+            tshivendaDraft: "U divert-a early runoff zwi nga fhungudza contamination, fhedzi a zwi khwaṱhisedzi uri maḓi a tevhelaho a tsireledzea. Ṱolani quality u ya nga intended use.",
+            reviewStatus: "machine-draft"
           }
         }
       ]
