@@ -1,0 +1,106 @@
+{
+  "task": "Checked source-paired Xitsonga candidates for Reading Landscape L1 assessment fields",
+  "language": "ts",
+  "canonicalSource": {
+    "path": "lib/course-modules.ts",
+    "moduleId": "reading-landscape",
+    "lessonId": "reading-landscape-l1",
+    "title": "Understanding Water Flow: Where Rain Goes on Your Land"
+  },
+  "regionalRegistry": {
+    "path": "lib/course-translation-drafts-ts.ts",
+    "exportName": "XITSONGA_READING_LANDSCAPE_DRAFT",
+    "lessonId": "reading-landscape-l1"
+  },
+  "sourceCorrectIndexes": [
+    0,
+    1
+  ],
+  "scope": {
+    "fields": [
+      "quiz[0].rationale",
+      "quiz[1].options[1]"
+    ],
+    "canonicalEnglishChanged": false,
+    "repositoryEdits": true,
+    "questionOrderChanged": false,
+    "answerIndexesChanged": false,
+    "implementedFields": [
+      "quiz[0].rationale",
+      "quiz[1].options[1]"
+    ],
+    "retainedExactEnglishFields": [
+      "quiz[0].options[1]",
+      "quiz[0].options[3]",
+      "quiz[1].rationale"
+    ]
+  },
+  "candidates": [
+    {
+      "field": "quiz[0].options[1]",
+      "sourceEnglish": "Whether a swale is safe to build on this slope",
+      "currentRegionalDraft": "Whether a swale is safe to build on this slope",
+      "candidateRegionalDraft": "Whether a swale is safe to build on this slope",
+      "candidateStatus": "hold",
+      "backTranslation": "Whether a swale is safe to build on this slope.",
+      "uncertainty": "Keep the full option exact English: it asks for a site-specific safety judgement about a swale on this slope. Do not imply that A-frame level marks can establish this."
+    },
+    {
+      "field": "quiz[0].options[3]",
+      "sourceEnglish": "Where a dam spillway should be built",
+      "currentRegionalDraft": "Where a dam spillway should be built",
+      "candidateRegionalDraft": "Where a dam spillway should be built",
+      "candidateStatus": "hold",
+      "backTranslation": "Where a dam spillway should be built.",
+      "uncertainty": "Keep exact English because dam-spillway location is technical and site-specific. Do not add geometry, placement advice, or an approval claim."
+    },
+    {
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+      "currentRegionalDraft": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+      "candidateRegionalDraft": "A-frame yi nga ku pfuna ku mark points at the same height. A-frame a yi assess soil, drainage, storm flow, or whether earthworks are suitable.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "An A-frame can help you mark points at the same height. An A-frame does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+      "uncertainty": "Ordinary “can help you” and “does not” framing is drafted in Xitsonga. Keep marking points at the same height, soil/drainage/storm-flow assessment, and earthworks suitability exact English; this distinction must not become an approval or safety guarantee."
+    },
+    {
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Check the soil, slope, drainage and storm flow, and plan a safe overflow with a trained local adviser",
+      "currentRegionalDraft": "Check the soil, slope, drainage and storm flow, and plan a safe overflow with a trained local adviser",
+      "candidateRegionalDraft": "Kambela soil, slope, drainage and storm flow, kutani u plan a safe overflow with a trained local adviser.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Check soil, slope, drainage and storm flow, then plan a safe overflow with a trained local adviser.",
+      "uncertainty": "Only the check/then framing is localized. Retain all four site factors, the requirement for a safe overflow, and the trained local adviser. Do not invent a route, placement rule, geometry, or dimensions."
+    },
+    {
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
+      "currentRegionalDraft": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
+      "candidateRegionalDraft": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
+      "candidateStatus": "hold",
+      "backTranslation": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
+      "uncertainty": "Independent check flagged does-not versus cannot-show force. Root retained the whole rationale as exact English; it is not a new translation."
+    }
+  ],
+  "constraintsPreserved": [
+    "A-frame marks points at the same height but does not assess site suitability or approve earthworks.",
+    "Swale and dam-spillway questions stay exact English; no construction or geometry advice is added.",
+    "Before digging, check soil, slope, drainage, storm flow, and plan a safe overflow with a trained local adviser.",
+    "Poorly laid contours can increase erosion; excess water needs a safe route."
+  ],
+  "reviewNote": "Machine-draft regional fields remain unreviewed by fluent/local farming reviewers. Canonical source, question order, and answer indexes [0, 1] are unchanged.",
+  "implementation": {
+    "registryPath": "lib/course-translation-drafts-ts.ts",
+    "testPath": "tests/course-translation-drafts-ts.test.ts",
+    "provenance": "Candidate wording and exact source fields come from the checked packet. Only quiz0 rationale and quiz1 option1 were drafted; the three technical/semantic holds remain exact English."
+  },
+  "additionalModelBackcheck": {
+    "provider": "Agy desktop",
+    "model": "Gemini 3.7 Flash High",
+    "conversation": "faa20c6a-05b3-4df4-83cb-9cd08cc5372c",
+    "scope": "quiz[0].rationale only",
+    "observedResponse": true,
+    "result": "Can-help modality and does-not-assess negation retained. Direct learner you adds an addressee without changing agronomic limits; A-frame repetition changes style only. Technical code-switching remains unreviewed.",
+    "fluentOrLocalFarmingApproval": false
+  }
+}

@@ -285,9 +285,16 @@ test('Reading Landscape safety and terminology holds remain exact in their paire
       else if (optionIndex !== undefined) pair = quiz?.options[Number(optionIndex)];
     }
     assert.ok(pair, `hold ${hold.lessonId} ${hold.field} must resolve`);
-    if (bodyField) assert.ok(pair.xitsongaDraft.includes(hold.sourceText), `${hold.field} must retain its exact held text`);
-    else assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} must remain exact English`);
-    if (!bodyField) assert.equal(pair.reviewStatus, 'hold');
+    // Assessment fields now mix checked ordinary prose with exact technical clauses, like bodies.
+    // A hold must belong to the actual source and remain verbatim; whole-field holds stay labelled hold.
+    assert.ok(pair.sourceEnglish.includes(hold.sourceText), `${hold.field} hold must belong to its exact source`);
+    assert.ok(pair.xitsongaDraft.includes(hold.sourceText), `${hold.field} must retain its exact held text`);
+    if (pair.sourceEnglish === hold.sourceText) {
+      assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} whole-field hold must stay exact English`);
+      assert.equal(pair.reviewStatus, 'hold');
+    } else {
+      assert.equal(pair.reviewStatus, 'machine-draft', 'a mixed field must not masquerade as a whole English hold');
+    }
     assert.ok(hold.reason.length > 0);
   }
 });
@@ -365,4 +372,78 @@ test('Reading Landscape L3 drafts ordinary body guidance while keeping precise c
   const fallback = resolveLearnerLessonPresentation(changedSource, 'ts');
   assert.equal(fallback.status, 'english-fallback');
   assert.equal(fallback.content.body, changedSource.body, 'source drift must not serve stale regional safety instructions');
+});
+
+test('Reading Landscape L1 assessment drafts keep the A-frame limit and safe-overflow conditions', async () => {
+  const sourceLesson = COURSE_MODULES.find(module => module.id === 'reading-landscape')!.lessons
+    .find(lesson => lesson.id === 'reading-landscape-l1')!;
+  const lesson = readingDraft.lessons.find(item => item.id === sourceLesson.id)!;
+  const sourceQ0 = sourceLesson.quiz[0];
+  const sourceQ1 = sourceLesson.quiz[1];
+  const q0 = lesson.quiz[0];
+  const q1 = lesson.quiz[1];
+  assert.deepEqual(lesson.quiz.map(item => item.sourceCorrectIndex), [0, 1]);
+  assert.deepEqual(q0.options.map(option => option.sourceEnglish), sourceQ0.options);
+  assert.deepEqual(q1.options.map(option => option.sourceEnglish), sourceQ1.options);
+  assert.equal(q0.rationale.sourceEnglish, sourceQ0.rationale);
+  assert.equal(q1.options[1].sourceEnglish, sourceQ1.options[1]);
+  assert.equal(q0.rationale.reviewStatus, 'machine-draft');
+  assert.equal(q1.options[1].reviewStatus, 'machine-draft');
+  assert.ok(q0.rationale.xitsongaDraft.startsWith('A-frame yi nga ku pfuna'));
+  assert.ok(q0.rationale.xitsongaDraft.includes('points at the same height'));
+  assert.ok(q0.rationale.xitsongaDraft.includes('a yi assess soil, drainage, storm flow'));
+  assert.ok(q0.rationale.xitsongaDraft.includes('whether earthworks are suitable'));
+  assert.ok(q1.options[1].xitsongaDraft.startsWith('Kambela soil, slope, drainage and storm flow'));
+  assert.ok(q1.options[1].xitsongaDraft.includes('safe overflow'));
+  assert.ok(q1.options[1].xitsongaDraft.includes('trained local adviser'));
+  assert.equal(q1.rationale.xitsongaDraft, sourceQ1.rationale,
+    'the uncertainty over “cannot show” remains an exact English hold');
+  assert.equal(q1.rationale.reviewStatus, 'hold');
+  assert.ok(q0.options[1].xitsongaDraft === sourceQ0.options[1]);
+  assert.ok(q0.options[3].xitsongaDraft === sourceQ0.options[3]);
+  for (const field of ['quiz[0].rationale', 'quiz[1].options[1]']) {
+    assert.ok(!readingDraft.holds.some(hold => hold.lessonId === sourceLesson.id && hold.field === field),
+      `${field} must not remain listed as an exact-English hold`);
+  }
+  assert.ok(readingDraft.holds.some(hold => hold.lessonId === sourceLesson.id && hold.field === 'quiz[1].rationale'
+    && hold.sourceText === sourceQ1.rationale));
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const changedQuiz = sourceLesson.quiz.map((item, index) => index === 0
+    ? { ...item, rationale: `${item.rationale} A new source condition.` }
+    : item);
+  const fallback = resolveLearnerLessonPresentation({ ...sourceLesson, quiz: changedQuiz }, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.equal(fallback.content.quiz[0].rationale, changedQuiz[0].rationale,
+    'changed canonical assessment wording must not serve a stale translated rationale');
+});
+
+test('Reading module assessment drafts preserve frost uncertainty, seasonal checks and incomplete disease control', async () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
+  const l2 = readingDraft.lessons.find(lesson => lesson.id === 'reading-landscape-l2')!;
+  const l3 = readingDraft.lessons.find(lesson => lesson.id === 'reading-landscape-l3')!;
+  const l4 = readingDraft.lessons.find(lesson => lesson.id === 'reading-landscape-l4')!;
+  for (const lesson of [l2, l3, l4]) {
+    const original = sourceModule.lessons.find(item => item.id === lesson.id)!;
+    assert.deepEqual(lesson.quiz.map(q => q.sourceCorrectIndex), original.quiz.map(q => q.correct));
+  }
+  assert.ok(l2.quiz[0].rationale.xitsongaDraft.includes('A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.'));
+  assert.ok(l2.quiz[1].rationale.xitsongaDraft.includes('8am, midday, and 4pm before fixing it in place.'));
+  assert.ok(l3.quiz[0].rationale.xitsongaDraft.includes('kumbe u vutisa a local agriculture adviser before making a permanent choice.'));
+  assert.ok(l3.quiz[0].rationale.xitsongaDraft.includes('Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.'));
+  assert.ok(l3.quiz[1].question.xitsongaDraft.startsWith("A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells."));
+  assert.ok(l3.quiz[1].question.xitsongaDraft.includes('nga pfunaka') && l3.quiz[1].question.xitsongaDraft.includes('alongside local crop-health advice'));
+  assert.ok(l3.quiz[1].rationale.xitsongaDraft.includes('Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.'));
+  assert.ok(l4.quiz[0].rationale.xitsongaDraft.includes('Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction.'));
+  assert.ok(l4.quiz[0].rationale.xitsongaDraft.includes('u nga se teka xiboho'));
+  const sourceWind = sourceModule.lessons.find(lesson => lesson.id === l4.id)!.quiz[1].rationale;
+  assert.ok(l4.quiz[1].rationale.xitsongaDraft.startsWith(sourceWind.split(' — ')[0]),
+    'can be wrong must not weaken to merely may not work');
+  assert.ok(l4.quiz[1].rationale.xitsongaDraft.includes('ximumu na wa vuxika hi ku hambana'));
+  const original = sourceModule.lessons.find(lesson => lesson.id === l3.id)!;
+  const quiz = original.quiz.map((q, index) => index === 1 ? { ...q, q: `${q.q} New crop-health condition.` } : q);
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const fallback = resolveLearnerLessonPresentation({ ...original, quiz }, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.notEqual(quiz[1].q, original.quiz[1].q, 'fixture changes the canonical question field');
+  assert.equal(fallback.content.quiz[1].q, quiz[1].q);
 });
