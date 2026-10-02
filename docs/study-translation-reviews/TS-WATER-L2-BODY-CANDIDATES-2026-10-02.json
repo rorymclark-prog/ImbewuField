@@ -3,7 +3,7 @@
   "language": "ts (itsonga)",
   "lessonId": "water-harvesting-l2",
   "sourceMainSha": "8f187e6750a0510d581d4ebc82b64051c4a85e09",
-  "currentSourceCheckedAt": "8f187e6750a0510d581d4ebc82b64051c4a85e09",
+  "currentSourceCheckedAt": "f76814b2aa256a9610f7bd02d36a4c04183955db",
   "canonicalPath": "lib/course-modules.ts",
   "registryPath": "lib/course-translation-drafts-ts-water-harvesting.ts",
   "registryLanguageConfirmed": "ts",
@@ -31,12 +31,12 @@
   ],
   "candidateBody": [
     "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.",
-    "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwaro. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
+    "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
     "Loko u nga si cinca watercourse kumbe ku aka storage works, kamba authorisation leyi lavekaka eka water authority.",
     "Damu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.",
     "U nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.",
     "An uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.",
-    "Mati ma nga lahleka hi ku phyaphyarha na ku nwelela ehansi ka misava. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
+    "Mati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
     "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
     "Animals can damage banks and add manure to the water. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka."
   ],
@@ -54,10 +54,10 @@
       "index": 2,
       "sourceEnglish": "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
       "currentDraft": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona kunguhatela minkarhi ya dyandza; damu leri teleke a ri tiyisiwangi.",
-      "candidateDraft": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwaro. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
+      "candidateDraft": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
       "status": "partial English retained for precision",
-      "literalBacktranslation": "Rain seasons vary across all of South Africa. Use nearby records and plan for dry periods; a full dam is not assured.",
-      "uncertainty": "The existing localized version narrowed “dry periods” to drought; retaining the exact phrase “dry periods” avoids that narrower meaning."
+      "literalBacktranslation": "Rainfall seasons differ across South Africa. Use nearby records and plan for dry periods; a full dam is not guaranteed.",
+      "uncertainty": "Preserves the existing localized South Africa sentence exactly and keeps the no-guarantee wording. “Dry periods” remains exact English because the previous local rendering narrowed it to drought."
     },
     {
       "index": 3,
@@ -99,10 +99,10 @@
       "index": 7,
       "sourceEnglish": "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
       "currentDraft": "Mati ma nga lahleka hi ku phyaphyarha na ku nwelela ehansi ka misava. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
-      "candidateDraft": "Mati ma nga lahleka hi ku phyaphyarha na ku nwelela ehansi ka misava. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
+      "candidateDraft": "Mati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
       "status": "preserve existing localized draft",
-      "literalBacktranslation": "Water may be lost by evaporation and seepage. Check level and look for leaks or erosion.",
-      "uncertainty": "Existing localized draft preserved without revision."
+      "literalBacktranslation": "Water may be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+      "uncertainty": "The candidate retains the technical terms “evaporation and seepage” in English because the earlier Xitsonga rendering could mean steam; the existing water-level, leak and erosion checks remain unchanged."
     },
     {
       "index": 8,
@@ -138,7 +138,7 @@
     6,
     9
   ],
-  "packetStatus": "data-only-unwired-machine-draft-candidate",
-  "independentBackcheck": "Root and independent semantic review accepted the full nine-paragraph source-paired candidate with final repairs to paragraph 2 dry-period wording, paragraph 6 breach wording, paragraph 9 animal scope, and paragraph 8 retained as exact English. No fluent-speaker approval is claimed.",
-  "wiringStatus": "Not wired in this batch; saved for a later source-checked implementation."
+  "packetStatus": "wired-machine-draft",
+  "wiringStatus": "Wired only to the source-matched learner body; other lesson fields, assessments and media are unchanged.",
+  "finalIndependentBackcheck": "Root review retained the pre-existing South Africa sentence exactly in paragraph 2 and retained “dry periods”; the technical terms “evaporation and seepage” remain exact English in paragraph 7 to avoid a steam reading. Paragraph 6 keeps the overflow/breach sentence exact English; paragraph 8 is an exact English hold; paragraph 9 keeps the all-animals sentence exact English. No fluent-speaker approval is claimed."
 }

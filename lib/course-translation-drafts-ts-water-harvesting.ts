@@ -146,8 +146,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       },
       "body": {
         "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
-        "xitsongaDraft": "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.\n\nTinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona kunguhatela minkarhi ya dyandza; damu leri teleke a ri tiyisiwangi.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nU nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.\n\nKu khuluka loku nga lawulekiki ka mati lama taleke ngopfu ku nga dya misava kutani ku mbundzumuxa rirhangu. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.\n\nMati ma nga lahleka hi ku phyaphyarha na ku nwelela ehansi ka misava. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nSwifuwo swi nga onha maribuwa naswona swi nga chela vulongo ematini. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka.",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.\n\nTinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.\n\nLoko u nga si cinca watercourse kumbe ku aka storage works, kamba authorisation leyi lavekaka eka water authority.\n\nDamu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.\n\nU nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.\n\nAn uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.\n\nMati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka.",
+        "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
@@ -542,18 +542,6 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "field": "quiz[1].rationale",
       "sourceText": "Slope alone is not enough to choose an earthwork. Soil, drainage, stability and storm flow must also be assessed.",
       "reason": "This rationale contains earthwork or wastewater-safety judgement; retain exact English pending fluent technical review."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "body[2]",
-      "sourceText": "Before changing a watercourse or building storage works, check the required authorisation with the water authority.",
-      "reason": "This is a water-law and authorisation instruction; preserve its exact source wording pending local legal and fluent-language review."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
-      "field": "body[3]",
-      "sourceText": "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
-      "reason": "This is a dam-safety design qualification; preserve its exact technical requirements pending fluent-language review."
     },
     {
       "lessonId": "water-harvesting-l2",

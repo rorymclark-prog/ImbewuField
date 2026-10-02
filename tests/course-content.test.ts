@@ -121,12 +121,12 @@ test('Sesotho Water Harvesting uses a source-paired learner draft and keeps unre
   }
   assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} Changed.` }, 'st').status,
     'english-fallback', 'changed module description withdraws the card draft');
-  // Rory resumed Xitsonga on 26 September. Only the first Water lesson is connected;
-  // later lessons still use exact English until their machine drafts are checked.
+  // Xitsonga Water lessons enter learner copy only after their source-paired bodies are checked.
   assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'draft');
   assert.equal(resolveLearnerLessonPresentation(module.lessons[0], 'ts').status, 'draft');
   for (const lesson of module.lessons.slice(1)) {
-    assert.equal(resolveLearnerLessonPresentation(lesson, 'ts').status, 'english-fallback');
+    assert.equal(resolveLearnerLessonPresentation(lesson, 'ts').status,
+      lesson.id === 'water-harvesting-l2' ? 'draft' : 'english-fallback');
   }
 });
 

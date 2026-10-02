@@ -89,6 +89,36 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
     'lessons[3] water-harvesting-l4.body',
   ], 'unreviewed contour key point and other held safety wording must remain exact English');
 
+  const waterL2Source = source.lessons.find(lesson => lesson.id === 'water-harvesting-l2');
+  const waterL2Draft = draft.lessons.find(lesson => lesson.id === 'water-harvesting-l2');
+  assert.ok(waterL2Source && waterL2Draft);
+  assert.equal(waterL2Draft.body.sourceEnglish, waterL2Source.body);
+  assert.equal(waterL2Draft.body.reviewStatus, 'machine-draft');
+  const waterL2SourceParagraphs = waterL2Source.body.split('\n\n');
+  const waterL2Paragraphs = waterL2Draft.body.sesothoDraft.split('\n\n');
+  assert.equal(waterL2SourceParagraphs.length, 9);
+  assert.equal(waterL2Paragraphs.length, waterL2SourceParagraphs.length);
+  const waterL2Visible = resolveLearnerLessonPresentation(waterL2Source, 'st');
+  assert.equal(waterL2Visible.status, 'draft');
+  assert.equal(waterL2Visible.content.body, waterL2Draft.body.sesothoDraft,
+    'show the exact source-paired Sesotho body as a visibly unreviewed learner draft');
+  assert.ok(waterL2Paragraphs[1].includes('dry periods') && waterL2Paragraphs[1].includes('ha le a tiisetswa'),
+    'keep dry periods broader than drought and retain the no-guarantee qualifier');
+  assert.ok(waterL2Paragraphs[6].startsWith('Metsi a ka lahleha ka evaporation and seepage.') &&
+    waterL2Paragraphs[6].includes('Hlahloba boemo ba metsi') && waterL2Paragraphs[6].includes('kgoholeho'),
+  'retain the correct evaporation/seepage terms and preserve the checks');
+  assert.ok(waterL2Paragraphs[7].startsWith('Keep the spillway clear and maintain the bank cover specified in the design.') &&
+    waterL2Paragraphs[7].endsWith('O se ke wa jala difate hodima lerako la letamo la mobu.'),
+  'preserve unobstructed spillway and design-specified cover, plus the existing tree prohibition');
+  const changedWaterL2 = {
+    ...waterL2Source,
+    body: waterL2Source.body.replace('dry periods', 'drought only'),
+  };
+  assert.notEqual(changedWaterL2.body, waterL2Source.body);
+  const waterL2Fallback = resolveLearnerLessonPresentation(changedWaterL2, 'st');
+  assert.equal(waterL2Fallback.status, 'english-fallback', 'withdraw the paired lesson if its water-planning source changes');
+  assert.equal(waterL2Fallback.content.body, changedWaterL2.body);
+
   const swaleSource = source.lessons[0];
   const visible = resolveLearnerLessonPresentation(swaleSource, 'st');
   assert.equal(visible.status, 'draft');
