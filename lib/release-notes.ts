@@ -50,7 +50,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       href: '/student',
       detail: 'Try lessons 1–4, then compare draft feedback with English. Difficult terms stay English.' },
   ] },
-  { when: '2 October 2026', sha: '4729738d', changes: [
+  { when: '2 October 2026', sha: 'bbdb1952', changes: [
     'Plans for fruit trees and animals work without a vegetable bed.',
     'Harvest totals add decimal measurements without rounding whole egg counts.',
   ], tour: [
