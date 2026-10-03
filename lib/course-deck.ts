@@ -259,7 +259,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
     slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
-    // Regional frames are silent source-paired review drafts. Since 2 October 2026 every heading and
+    // Regional frames are silent source-paired review drafts. Since 3 October 2026 every heading and
     // paragraph on all 20 slides is an unreviewed machine draft beside its exact English source; terms
     // such as canopy, mulch and support plant stay in English inside the translated sentences.
     missingSlides: {
@@ -320,7 +320,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),
   },
   'plant-guilds': {
-    // Regional frames are silent source-paired review drafts. Since 2 October 2026 every heading and
+    // Regional frames are silent source-paired review drafts. Since 3 October 2026 every heading and
     // paragraph on all 51 slides is an unreviewed machine draft beside its exact English source; terms
     // such as guild, support plant and chop-and-drop stay in English inside the translated sentences.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],

@@ -15,7 +15,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
   },
   "title": {
     "sourceEnglish": "Food Forest Design",
-    "sesothoDraft": "Moralo wa Moru wa Dijo",
+    "sesothoDraft": "Moralo wa Moru wa Dijo (Food Forest)",
     "reviewStatus": "machine-draft"
   },
   "description": {
@@ -28,17 +28,17 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
       "id": "food-forest-l1",
       "infographicAlt": {
         "sourceEnglish": "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
-        "sesothoDraft": "Karolo e kgaotsweng ya moru wa dijo e nang le sefate se setelele bohareng, difate tse nyane, dihlahla, dimela tse emeng hodimo, dimela tse koahelang mobu le semela se nyolohang, metso ya tsona e andang mobung; kganya ya letsatsi e kena ho tloha kgutlong e hodimo ya letshehadi.",
+        "sesothoDraft": "Karolo e kgaotsweng ya moru wa dijo e nang le sefate se setelele bohareng, difate tse nyane, dihlahla, dimela tse emeng hodimo, dimela tse kwahelang mobu le semela se nyolohang, metso ya tsona e andang mobung; lesedi la letsatsi le kena ho tloha kgutlong e hodimo ya letshehadi.",
         "reviewStatus": "machine-draft"
       },
       "title": {
         "sourceEnglish": "The Seven Layers: How a Forest Feeds Itself",
-        "sesothoDraft": "Mekgahlelo e 7: Kamoo Moru o Iphelisang Ka Teng",
+        "sesothoDraft": "Mekgahlelo e 7: Kamoo Moru o Iphedisang Ka Teng",
         "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "An indigenous forest fills the space from the highest branches to the roots.\n\nDifferent plants use the light and moisture available at their level.\n\nA food forest copies this pattern with productive species.\n\nThe result is not one crop in one row, but many useful layers growing together.\n\nThink of tall canopy, smaller trees, shrubs and herbaceous plants.\n\nGround cover protects the surface, root crops grow below it, and climbers use suitable supports.\n\nThe heights and spacing depend on the plants and site. These are planning layers, not fixed height bands.\n\nThe original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.\n\nIt places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.\n\nTreat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first.\n\nYoung plants need establishment care: moisture checks, weed control and protection from damage.\n\nAs plants grow, shade and leaf litter change conditions below them.\n\nCheck competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday.",
-        "sesothoDraft": "Moru wa indigenous o tlatsa sebaka ho tloha makaleng a phahameng ka ho fetisisa ho isa metsong.\n\nDimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.\n\nMoru wa dijo o etsisa mokgwa ona ka mefuta ya dimela e hlahisang.\n\nSephetho ha se sejalo se le seng moleng o le mong, empa ke mekgahlelo e mengata e molemo e melang hammoho.\n\nNahana ka canopy e telele, difate tse nyane, dihlahla le dimela tsa herbaceous.\n\nDimela tse koahelang mobu di sireletsa bokaholimo, dijalo tsa metso di hola ka tlase ho bona, mme dimela tse nyolohang di sebedisa dintho tse loketseng tseo di ka nyolohelang ho tsona.\n\nBophahamo le sebaka sa ho jala di itshetlehile ka dimela le sebaka. Mekgahlelo ena ke ya ho rala; ha e bolele dibaka tse tsitsitseng tsa bophahamo.\n\nMohlala wa pele wa Highveld o kenyelletsa Wild Fig kapa pecan tse hodimo ho lemon, naartjie le black mulberry.\n\nMohlala oo o beha Cape gooseberry le Wild Medlar mmoho le meroho, wild garlic, sweet potato le granadilla.\n\nNka sena e le mohlala wa moralo, e seng tumello ya ho jala mofuta o mong le o mong. Pele ho tsohle, hlahloba hore semela ke sefe, frost tolerance, boholo ba ho hola ka botlalo le dithibelo tsa lehae.\n\nDimela tse nyane di hloka tlhokomelo ya ho hlongwa: ho hlahloba mongobo, ho laola dimela tse sa batleheng le ho di sireletsa ho tshenyeho.\n\nHa dimela di ntse di hola, moriti le leaf litter di fetola maemo a ka tlase ho tsona.\n\nHlahloba tlhodisano le phihlello. Faola, etsa thinning kapa fetola dimela tse ka tlase tse jetsweng ha seo o se bonang se bontsha hore ho hlokahala jwalo; tsamaiso ena ha e fetohe e se hlokeng tlhokomelo hobane feela selemo se behilweng se fihlile.",
+        "sesothoDraft": "Moru wa indigenous o tlatsa sebaka ho tloha makaleng a phahameng ka ho fetisisa ho isa metsong.\n\nDimela tse fapaneng di sebedisa lesedi le mongobo tse fumanehang boemong ba tsona.\n\nMoru wa dijo o etsisa mokgwa ona ka mefuta ya dimela e hlahisang.\n\nSephetho ha se sejalo se le seng moleng o le mong, empa ke mekgahlelo (layers) e mengata e nang le molemo e melang hammoho.\n\nNahana ka canopy e telele, difate tse nyane, dihlahla le dimela tsa herbaceous.\n\nDimela tse kwahelang mobu di sireletsa bokahodimo ba mobu, dijalo tsa metso di mela ka tlase ho bokahodimo boo, mme dimela tse nyolohang di sebedisa ditshehetso tse loketseng tseo di nyolohelang ho tsona.\n\nBophahamo le sebaka pakeng tsa dimela di ipapisitse le dimela le sebaka. Tsena ke mekgahlelo ya moralo, e seng dibaka tse tsitsitseng tsa bophahamo.\n\nMohlala wa pele wa Highveld o kenyeletsa Wild Fig kapa pecan hodima lemon, naartjie le black mulberry.\n\nO beha Cape gooseberry le Wild Medlar hammoho le merogo, wild garlic, sweet potato le granadilla.\n\nNka sena e le mohlala wa moralo, e seng tumello ya ho jala mofuta o mong le o mong. Pele, hlahloba hore semela ke sefe, frost tolerance, boholo ba ho hola ka botlalo le dithibelo tsa sebaka.\n\nDimela tse nyane di hloka tlhokomelo ya nako ya pele kamora ho jala (establishment care): ho hlahloba mongobo, ho laola dimela tse sa batleheng le ho sireletsa dimela tse nyane tshenyong.\n\nHa dimela di ntse di hola, moriti le leaf litter di fetola maemo a ka tlase ho tsona.\n\nHlahloba tlhodisano le tsela ya ho fihlella. Faola, etsa thinning kapa lokisa dimela tse ka tlase tse jetsweng ha seo o se bonang se bontsha hore ho hlokahala jwalo; tsamaiso ena ha e fetohe e se hloke tlhokomelo ka letsatsi le behilweng la selemo le selemo.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -49,17 +49,17 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Plants can compete for light, water and nutrients",
-          "sesothoDraft": "Dimela di ka qothisana lehlokwa bakeng sa kganya, metsi le nutrients",
+          "sesothoDraft": "Dimela di ka tlhodisana ka lesedi, metsi le nutrients",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Establishment and ongoing care depend on observed conditions",
-          "sesothoDraft": "Ho hlongwa le tlhokomelo e tswelang pele di itshetlehile ka maemo a hlokometsweng",
+          "sesothoDraft": "Nako ya pele kamora ho jala (establishment) le tlhokomelo e tswelang pele di itshetlehile ka maemo a hlokometsweng",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Confirm local suitability before copying any example planting",
-          "sesothoDraft": "Netefatsa ho tshwaneleha ha sebaka pele o kopitsa mohlala ofe kapa ofe wa ho lema",
+          "sesothoDraft": "Netefatsa ho tshwaneleha ha sebaka pele o kopitsa mohlala ofe kapa ofe wa ho jala",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -67,7 +67,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Weeds are competing strongly with young lower-layer plants. What should guide the next action?",
-            "sesothoDraft": "Dimela tse sa batleheng di qothisana lehlokwa haholo le dimela tse nyane tsa mekgahlelo e ka tlase. Ke eng e lokelang ho tataisa ketso e latelang?",
+            "sesothoDraft": "Dimela tse sa batleheng di tlhodisana haholo le dimela tse nyane tsa mekgahlelo e ka tlase. Ke eng e lokelang ho tataisa ketso e latelang?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -95,7 +95,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Observe actual competition and plant condition. A fixed establishment calendar cannot tell you which plants need care now.",
-            "sesothoDraft": "Hlokomela tlhodisano ya nnete le boemo ba dimela. Kalendara e behilweng ya ho hlongwa e ke ke ya o bolella hore ke dimela dife tse hlokang tlhokomelo hona jwale.",
+            "sesothoDraft": "Hlokomela tlhodisano ya nnete le boemo ba dimela. Kalendara e behilweng ya nako ya pele kamora ho jala (establishment) e ke ke ya o bolella hore ke dimela dife tse hlokang tlhokomelo hona jwale.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -108,7 +108,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "They guarantee access to groundwater",
-              "sesothoDraft": "Di tiisa phihlello ya metsi a ka tlasa lefatshe",
+              "sesothoDraft": "Di tiisa tsela ya ho fihlella metsi a ka tlasa lefatshe",
               "reviewStatus": "machine-draft"
             },
             {
@@ -118,7 +118,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "They guarantee higher yield per litre in every system",
-              "sesothoDraft": "Di tiisa kotulo e kgolo ka litara e nngwe le e nngwe ya metsi tsamaisong efe kapa efe",
+              "sesothoDraft": "Di tiisa kotulo e phahameng ka litara e nngwe le e nngwe ya metsi tsamaisong efe kapa efe",
               "reviewStatus": "machine-draft"
             },
             {
@@ -130,7 +130,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Shade and suitable mulch can reduce surface evaporation. Plant water demand and establishment needs still require attention.",
-            "sesothoDraft": "Moriti le mulch e loketseng di ka fokotsa ho nyamela ha metsi ka mouwane bokaholimong ba mobu. Tlhoko ya metsi ya dimela le ditlhoko tsa ho hlongwa di sa hloka tlhokomelo.",
+            "sesothoDraft": "Moriti le mulch e loketseng di ka fokotsa ho nyamela ha metsi ka mouwane bokahodimong ba mobu. Tlhoko ya metsi ya dimela le ditlhoko tsa nako ya pele kamora ho jala (establishment) di sa hloka tlhokomelo.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -140,7 +140,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
       "id": "food-forest-l2",
       "infographicAlt": {
         "sourceEnglish": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
-        "sesothoDraft": "Sebopeho se bonolo sa South Africa se arotsweng dibaka tse tharo tsa kgolo ka mmala wa mobu le sebopeho sa lefatshe feela: sebaka se phahameng se bataletseng sa kahare ho naha se nang le mmala o bosoeu bo bobebe le dithaba tse nyane, lebopo le letala le mongobo, le sebaka se tlase se tjhesang se bofubedu bo bosootho. Dibopeho tse fapaneng tsa difate di eme sebakeng ka seng.",
+        "sesothoDraft": "Sebopeho se bonolo sa South Africa se arotsweng dibaka tse tharo tsa ho lema ka mmala wa mobu le sebopeho sa lefatshe feela: sebaka se phahameng se bataletseng sa kahare ho naha se nang le mmala o bosweu bo bobebe le dithaba tse nyane, lebopo le lesesane le letala le mongobo, le sebaka se tlase se tjhesang se bofubedu bo bosootho. Dibopeho tse fapaneng tsa difate di eme sebakeng ka seng.",
         "reviewStatus": "machine-draft"
       },
       "title": {
@@ -150,7 +150,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Check local rainfall, frost, heat, soil and water availability before choosing plants.\n\nMango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.\n\nA regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.\n\nThe original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.\n\nThis list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.\n\nKeep existing legal and project restrictions in force. Do not plant from a picture alone.\n\nThe original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.\n\nMarula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.\n\nUseful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.\n\nLocally appropriate indigenous plants can support habitat as part of the design.\n\nChoose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.\n\nProtect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.",
-        "sesothoDraft": "Hlahloba pula ya lehae, serame, motjheso, mobu le phumano ya metsi pele o kgetha dimela.\n\nMango e ka senyeha ke serame. Quince e hloka winter chilling e loketseng e le hore e behe ditholwana ka tshepahalo.\n\nLetshwao la sebaka kapa sekgutlo se sireletsehileng ha se lekane. Netefatsa semela se seng le se seng le mofuta ka tataiso e tshepahalang ya lehae.\n\nLenane la pele le kenyelletsa pecan, walnut le indigenous fig; apple, pear, plum, black mulberry le loquat; rosemary, Wild Medlar, Cape gooseberry le Barbados cherry.\n\nLenane lena ha se kgothaletso e akaretsang dimela tsohle. Hlahloba semela se seng le se seng ho ya ka serame, mobu, boholo ba ho hola ka botlalo le approved local species list.\n\nBoloka dithibelo tsa molao le tsa projeke tse seng di le teng di sebetsa. O se ke wa jala ka setshwantsho feela.\n\nMehlala ya pele ya dibaka tse futhumetseng e kenyelletsa mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry le Wild Dagga.\n\nMarula, Mopane le baobab di hlaha le mehlaleng ya Limpopo. Ho tshwaneleha ha lehae ho sa hloka ho hlahlojwa.\n\nHore difate di na le molemo ha ho bolele ka boyona hore di ka jewa. Netefatsa hore semela ke sefe le tshebediso e bolokehileng; setshwantsho sa sebaka ha se tataiso ya ho tseba dimela tse jewang.\n\nDimela tsa indigenous tse loketseng sebaka di ka tshehetsa habitat e le karolo ya moralo.\n\nKgetha bakeng sa ecosystem ya hao le karolo e molemo ya semela se seng le se seng. Ha ho na sepheo sa peresente se nang le mohlodi thutong ena.\n\nSireletsa dimela tsa tlhaho tse seng di le teng. O se ke wa fetola naha ya jwang e phetseng hantle hore e be moru wa dijo hobane feela difate di na le molemo dibakeng tse ding.",
+        "sesothoDraft": "Hlahloba pula ya sebaka, serame, motjheso, mobu le ho fumaneha ha metsi pele o kgetha dimela.\n\nMango e ka senyeha ke serame. Quince e hloka winter chilling e loketseng bakeng sa kotulo e tshepehang.\n\nLetshwao la sebaka kapa sekgutlo se sireletsehileng ha di lekane. Netefatsa semela se seng le se seng le mofuta ka tataiso e tshepehang ya sebaka.\n\nLenane la pele le kenyeletsa pecan, walnut le indigenous fig; apple, pear, plum, black mulberry le loquat; rosemary, Wild Medlar, Cape gooseberry le Barbados cherry.\n\nLenane lena ha se kgothaletso e akaretsang dimela tsohle. Hlahloba semela se seng le se seng ho ya ka serame, mobu, boholo ba ho hola ka botlalo le approved local species list.\n\nBoloka dithibelo tsa molao le tsa projeke tse seng di le teng di sebetsa. O se ke wa jala ka setshwantsho feela.\n\nMehlala ya pele ya dibaka tse futhumetseng e kenyeletsa mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry le Wild Dagga.\n\nMarula, Mopane le baobab le tsona di hlaha mehlaleng ya Limpopo. Hore na di loketse sebaka ho ntse ho hloka ho hlahlojwa.\n\nHore difate di na le molemo ha ho bolele ka boyona hore di ka jewa. Netefatsa hore ke sefate sefe le tshebediso e bolokehileng; foto ya naha ha se tataiso ya ho tseba hore ke dijo dife.\n\nDimela tsa indigenous tse loketseng sebaka di ka tshehetsa habitat e le karolo ya moralo.\n\nKgetha ho latela ecosystem ya hao le karolo e nang le molemo ya semela se seng le se seng. Thutong ena ha ho na sepheo sa peresente se nang le mohlodi.\n\nSireletsa dimela tsa tlhaho tse seng di le teng. O se ke wa fetola naha ya jwang e phetseng hantle hore e be moru wa dijo hobane feela difate di na le molemo dibakeng tse ding.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -161,7 +161,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Check identity, safe use and current local restrictions",
-          "sesothoDraft": "Hlahloba hore semela ke sefe, tshebediso e bolokehileng le dithibelo tsa hajwale tsa lehae",
+          "sesothoDraft": "Hlahloba hore semela ke sefe, tshebediso e bolokehileng le dithibelo tsa hajwale tsa sebaka",
           "reviewStatus": "machine-draft"
         },
         {
@@ -195,7 +195,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "It's likely killed or badly damaged by frost, especially as a young tree",
-              "sesothoDraft": "Ho na le monyetla wa hore e bolawe kapa e senngwe hampe ke serame, haholoholo e le sefate se sa le senyane",
+              "sesothoDraft": "Ho kgonahala haholo hore e bolawe kapa e senngwe hampe ke serame, haholoholo e le sefate se sa le senyane",
               "reviewStatus": "machine-draft"
             },
             {
@@ -207,7 +207,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Young mango can be damaged by frost. Check actual site conditions and reliable local guidance rather than assuming a sheltered spot removes the risk.",
-            "sesothoDraft": "Mango e nyane e ka senyeha ke serame. Hlahloba maemo a nnete a sebaka le tataiso e tshepahalang ya lehae ho e na le ho nka hore sebaka se sireletsehileng se tlosa kotsi.",
+            "sesothoDraft": "Mango e nyane e ka senyeha ke serame. Hlahloba maemo a nnete a sebaka le tataiso e tshepehang ya sebaka ho e na le ho nka hore sebaka se sireletsehileng se tlosa kotsi.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -220,12 +220,12 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "They always yield more food per square metre",
-              "sesothoDraft": "Kamehla di hlahisa dijo tse ngata ka mithara e le nngwe ya sekwere",
+              "sesothoDraft": "Kamehla di hlahisa dijo tse ngata ho feta ka mithara e le nngwe ya sekwere",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "They can support local habitat, pollinators and other wildlife",
-              "sesothoDraft": "Di ka tshehetsa habitat ya lehae, pollinators le diphoofolo tse ding tsa naha",
+              "sesothoDraft": "Di ka tshehetsa habitat ya sebaka, pollinators le diphoofolo tse ding tsa naha",
               "reviewStatus": "machine-draft"
             },
             {
@@ -235,14 +235,14 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "They never need establishment care",
-              "sesothoDraft": "Ha di hloke tlhokomelo ya ho hlongwa le ka mohla",
+              "sesothoDraft": "Ha di hloke tlhokomelo ya nako ya pele kamora ho jala (establishment care) le ka mohla",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability.",
-            "sesothoDraft": "Kgetha dimela bakeng sa ecosystem ya lehae le karolo ya tsona. Sena ha se theha peresente e akaretsang mme ha se tlose tlhoko ya ho hlahloba ho tshwaneleha.",
+            "sesothoDraft": "Kgetha dimela bakeng sa ecosystem ya sebaka le karolo ya tsona. Sena ha se theha peresente e akaretsang mme ha se tlose tlhoko ya ho hlahloba ho tshwaneleha.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -252,23 +252,23 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
       "id": "food-forest-l3",
       "infographicAlt": {
         "sourceEnglish": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
-        "sesothoDraft": "Sebaka se le seng sa mobu se tshwanang ka dikgato tse nne, ho tloha ka letshehadi ho ya ka le letona: mulch e lokolohileng e hasuwa hodima cardboard mobung, ka mora moo dimela tse tlase tsa pele tse holang ka potlako, ka mora moo difate tsa canopy tse sa le dinyane tse nang le mekgahlelo e ka tlase e ntseng e tlatsa, mme qetellong dimela tse jetsweng ka mekgahlelo tse seng di tsitsitse.",
+        "sesothoDraft": "Sebaka se le seng sa mobu se tshwanang ka mehato e mene, ho tloha ka letshehadi ho ya ka le letona: mulch e lokolohileng e hasuwa hodima cardboard mobung, ka mora moo dimela tse tlase tsa pele tse holang ka potlako, ka mora moo difate tsa canopy tse sa le dinyane tse nang le mekgahlelo e ka tlase e ntseng e tlatsa, mme qetellong dimela tse jetsweng ka mekgahlelo tse seng di tsitsitse.",
         "reviewStatus": "machine-draft"
       },
       "title": {
         "sourceEnglish": "Establishing a Food Forest: Observe and Adjust",
-        "sesothoDraft": "Ho Theha Moru wa Dijo: Hlokomela, O Fetole",
+        "sesothoDraft": "Ho Theha Moru wa Dijo: Hlokomela, O Lokise",
         "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "Start by checking the site, water supply and care available. Protect exposed soil early.\n\nTemporary support plants may provide shelter and useful cut material where appropriate.\n\nMain trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.\n\nBegin with an area you can water and maintain. Check existing vegetation before clearing.\n\nWhere appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.\n\nPlan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.\n\nWatch how shade, roots and available water affect neighbouring plants.\n\nComfrey and wild garlic appear in the original underplanting example; check their local suitability before use.\n\nPrune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.\n\nChoose a planting opportunity when soil moisture and expected weather support establishment.\n\nRain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.\n\nCheck young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.",
-        "sesothoDraft": "Qala ka ho hlahloba sebaka, phepelo ya metsi le tlhokomelo e fumanehang. Sireletsa mobu o pepesitsweng esale pele.\n\nSupport plants tsa nakwana di ka fana ka setshabelo le thepa e molemo e sehilweng ya dimela moo ho loketseng.\n\nDifate tsa sehlooho le mekgahlelo e ka tlase di ka kenngwa ha maemo a dumela. Dimela tse koahelang mobu ha di hloke ho ema ho fihlela qetellong; qoba dimela tse qothisanang le difate tse nyane.\n\nQala ka sebaka seo o ka se nosetsang le ho se hlokomela. Hlahloba dimela tse seng di le teng pele o di tlosa.\n\nMoo ho loketseng, cardboard e tlwaelehileng tlasa mulch e loketseng e ka hatella kgolo e sa batleheng. Dumella metsi hore a kene mobung mme o boloke mebele ya difate e hlakile.\n\nRera sebaka ho ya ka boholo ba dimela ha di hole ka botlalo. Lokisetsa nursery plants bakeng sa monyetla o latelang o loketseng wa ho jala.\n\nSheba kamoo moriti, metso le metsi a fumanehang di amang dimela tse haufi kateng.\n\nComfrey le wild garlic di hlaha mohlaleng wa pele wa dimela tse jetsweng tlasa difate; hlahloba hore na di loketse sebaka pele o di sebedisa.\n\nFaola kapa etsa thinning ya support plants ha ho hlokahala, o sebedisa mekgwa e loketseng mofuta o mong le o mong. Dikotwana tse hlwekileng tse loketseng di ka kgutlela e le mulch. O se ke wa emela selemo se behilweng haeba tlhodisano e se e senya dimela.\n\nKgetha monyetla wa ho lema mohla mongobo wa mobu le maemo a lehodimo a lebelletsweng di tshehetsa ho hlongwa ha dimela.\n\nPula e ka thusa, empa hlahloba root zone mme o boloke leano la tlatsetso la nosetso. Qoba ho lema mobung o tletseng metsi.\n\nHlahloba dimela tse nyane ka mora ho jala. Nako ya kotulo le dintho tse tlisetswang kantle di itshetlehile ka mofuta, sebaka le tlhokomelo; ha ho na sephetho se tiisitsweng sa selemo sa bohlano.",
+        "sesothoDraft": "Qala ka ho hlahloba sebaka, phepelo ya metsi le tlhokomelo e fumanehang. Sireletsa mobu o pepeneneng esale pele.\n\nSupport plants tsa nakwana di ka fana ka setshabelo le thepa e sehilweng e nang le molemo moo ho loketseng.\n\nDifate tsa sehlooho le mekgahlelo e ka tlase di ka kenngwa ha maemo a dumella. Dimela tse kwahelang mobu ha di hloke ho emela ho fihlela qetellong; qoba hore dimela di tlhodisane le difate tse sa le dinyane.\n\nQala ka sebaka seo o ka se nosetsang le ho se hlokomela. Hlahloba dimela tse seng di le teng pele o di tlosa.\n\nMoo ho loketseng, cardboard e tlwaelehileng ka tlasa mulch e loketseng e ka hatella kgolo e sa batleheng. Dumella metsi hore a kene mobung mme o boloke dikutu tsa difate (trunks) di hlakile.\n\nRala sebaka pakeng tsa dimela ho latela boholo ba tsona ha di se di hodile ka botlalo. Lokisa nursery plants bakeng sa monyetla o latelang o loketseng wa ho jala.\n\nSheba hore moriti, metso le metsi a fumanehang di ama jwang dimela tse haufi.\n\nComfrey le wild garlic di hlaha mohlaleng wa pele wa dimela tse jetsweng ka tlasa difate; hlahloba hore na di loketse sebaka pele o di sebedisa.\n\nFaola kapa etsa thinning ya support plants ha ho hlokahala, o sebedisa mekgwa e loketseng mofuta o mong le o mong. Thepa e sehilweng e hlwekileng e loketseng e ka kgutlela e le mulch. O se ke wa emela selemo se behilweng haeba tlhodisano e se e senya dimela.\n\nKgetha monyetla wa ho jala ha mongobo wa mobu le maemo a lehodimo a lebelletsweng di thusa dimela nakong ya pele kamora ho jala (establishment).\n\nPula e ka thusa, empa hlahloba root zone mme o boloke leano la bobedi la ho nosetsa. Qoba ho jala mobung o tletseng metsi.\n\nHlahloba dimela tse nyane kamora ho jala. Nako ya kotulo le dintho tse tswang kantle di itshetlehile ka mofuta, sebaka le tlhokomelo; ha ho na tiisetso ya sephetho selemong sa bohlano.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Protect exposed soil early",
-          "sesothoDraft": "Sireletsa mobu o pepesilweng esale pele",
+          "sesothoDraft": "Sireletsa mobu o pepeneneng esale pele",
           "reviewStatus": "machine-draft"
         },
         {
@@ -291,7 +291,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer puts plain cardboard under suitable mulch where grass is growing. What can it help do?",
-            "sesothoDraft": "Molemi o beha cardboard e tlwaelehileng tlasa mulch e loketseng moo jwang bo melang teng. E ka thusa ho etsa eng?",
+            "sesothoDraft": "Molemi o beha cardboard e tlwaelehileng ka tlasa mulch e loketseng moo jwang bo melang teng. E ka thusa ho etsa eng?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -302,7 +302,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Block light and help suppress grass while it breaks down; check for regrowth",
-              "sesothoDraft": "Ho thibela kganya le ho thusa ho hatella jwang ha e ntse e bola; hlahloba hore na bo a mela hape",
+              "sesothoDraft": "Ho thibela lesedi le ho thusa ho hatella jwang ha e ntse e bola; hlahloba hore na jwang bo a mela hape",
               "reviewStatus": "machine-draft"
             },
             {
@@ -319,7 +319,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Cardboard under suitable mulch can block light and reduce grass growth. Existing grass may regrow, so check the area. Keep water able to enter the soil and mulch clear of trunks.",
-            "sesothoDraft": "Cardboard tlasa mulch e loketseng e ka thibela kganya mme ya fokotsa kgolo ya jwang. Jwang bo seng bo le teng bo ka mela hape, ka hona hlahloba sebaka. Dumella metsi hore a kene mobung mme o boloke mulch hole le mebele ya difate.",
+            "sesothoDraft": "Cardboard ka tlasa mulch e loketseng e ka thibela lesedi mme ya fokotsa kgolo ya jwang. Jwang bo seng bo le teng bo ka mela hape, ka hona hlahloba sebaka. Dumella metsi hore a kene mobung mme o boloke mulch hole le dikutu tsa difate (trunks).",
             "reviewStatus": "machine-draft"
           }
         },
@@ -342,19 +342,19 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "As soon as any leaf falls",
-              "sesothoDraft": "Hang ha lekgasi leha e le lefe le wa",
+              "sesothoDraft": "Hang ha lehlaku leha e le lefe le wa",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Never, because support plants cannot compete",
-              "sesothoDraft": "Le ka mohla, hobane support plants di ke ke tsa qothisana lehlokwa",
+              "sesothoDraft": "Le ka mohla, hobane support plants di ke ke tsa tlhodisana",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Temporary support plants can become competitors. Observe light, water and growth, then choose suitable management rather than relying on a fixed year.",
-            "sesothoDraft": "Support plants tsa nakwana di ka fetoha dimela tse qothisanang le tse ding. Hlokomela kganya, metsi le kgolo, ebe o kgetha tsamaiso e loketseng ho e na le ho itshetleha ka selemo se behilweng.",
+            "sesothoDraft": "Support plants tsa nakwana di ka fetoha dimela tse tlhodisanang le tse ding. Hlokomela lesedi, metsi le kgolo, ebe o kgetha tsamaiso e loketseng ho e na le ho itshetleha ka selemo se behilweng.",
             "reviewStatus": "machine-draft"
           }
         }

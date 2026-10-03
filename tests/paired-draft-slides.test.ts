@@ -18,10 +18,11 @@ import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
+import { defaultOfflinePackVariant, offlinePack } from '../lib/offline-pack.ts';
 import {
   FOREST_GUILD_FORBIDDEN_WORDS, FOREST_GUILD_KEPT_TERMS, FOREST_GUILD_NAMES, assertKeeps, assertKeepsTerms, checkAnimalNames,
-  checkCompleteSlideDrafts, checkConsistentDrafts, checkGlossedWords, checkKeptTerms, checkNamesVerbatim, checkSouthAfricanSesotho,
-  checkSupportPlantTerms, checkThinningKept, sourceDraftPairs,
+  checkCompleteSlideDrafts, checkConsistentDrafts, checkCreatureWords, checkGlossedWords, checkKeptTerms, checkNamesVerbatim,
+  checkRepeatedSentences, checkSouthAfricanSesotho, checkSupportPlantTerms, checkThinningKept, sourceDraftPairs,
 } from './regional-full-draft-checks.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
@@ -240,9 +241,35 @@ const forestGuildLessonDrafts = {
   'food-forest': { st: SESOTHO_FOOD_FOREST_DRAFT, ts: XITSONGA_FOOD_FOREST_DRAFT, ve: TSHIVENDA_FOOD_FOREST_DRAFT },
   'plant-guilds': { st: SESOTHO_PLANT_GUILDS_DRAFT, ts: XITSONGA_PLANT_GUILDS_DRAFT, ve: TSHIVENDA_PLANT_GUILDS_DRAFT },
 };
+/** Food Forest slides repeat lesson passages only whole (counted in `repeated`); Plant Guilds slides also repeat
+ * 37 lesson sentences inside longer paragraphs (counted in `runs`). */
 const forestGuildMinimums = {
-  'food-forest': { slides: 20, names: 40, support: 4, thinning: 2, kept: 25, glossed: 0, repeated: 38 },
-  'plant-guilds': { slides: 51, names: 22, support: 28, thinning: 4, kept: 71, glossed: 10, repeated: 26 },
+  'food-forest': { slides: 20, names: 40, support: 4, thinning: 2, kept: 25, glossed: 0, repeated: 38, runs: 0 },
+  'plant-guilds': { slides: 51, names: 22, support: 28, thinning: 4, kept: 71, glossed: 10, repeated: 26, runs: 37 },
+};
+/** Qualifications each draft keeps wherever the English carries them, in the lessons and on the slides. */
+const forestGuildQualifiers: Record<'food-forest' | 'plant-guilds', Array<[string, Record<'st' | 'ts' | 've', string[]>]>> = {
+  'food-forest': [
+    ['may provide shelter and useful cut material where appropriate',
+      { st: ['di ka fana', 'moo ho loketseng'], ts: ['swi nga nyika', 'laha swi faneleke'], ve: ['dzi nga ṋea', 'hune ha fanela'] }],
+    ['Do not wait for a fixed year',
+      { st: ['O se ke wa emela selemo'], ts: ['U nga rindzi lembe'], ve: ['Ni songo lindela ṅwaha'] }],
+    ['Do not plant from a picture alone', { st: ['O se ke wa jala ka setshwantsho feela'],
+      ts: ['U nga byali hi xifaniso ntsena'], ve: ['Ni songo ṱavha nga u sedza tshifanyiso fhedzi'] }],
+  ],
+  'plant-guilds': [
+    ['Support plants can supply food', { st: ['di ka fana'], ts: ['swi nga nyika'], ve: ['dzi nga ṋea'] }],
+    ['Flowers can supply resources, but their presence does not guarantee pest control',
+      { st: ['di ka fana', 'ha ho tiise'], ts: ['swi nga nyika', 'a ku tiyisekisi'], ve: ['a nga ṋea', 'a si khwaṱhisedzo'] }],
+    ['A flowering plant does not guarantee pest control',
+      { st: ['ha se tiise'], ts: ['a xi tiyisekisi'], ve: ['a si khwaṱhisedzo'] }],
+    ['Bocking 14 does not spread by viable seed', { st: ['Bocking 14 ha e phatlalale ka viable seed'],
+      ts: ['Bocking 14 a yi hangalali hi viable seed'], ve: ['a i andi nga viable seed'] }],
+    ['Do not promise that a ring of wild garlic',
+      { st: ['O se ke wa tshepisa'], ts: ['U nga tshembisi'], ve: ['Ni songo fulufhedzisa'] }],
+    ['thinning does not instantly stop root competition',
+      { st: ['ha ho emise hang-hang'], ts: ['a yi herisi hi ku hatlisa-hatlisa'], ve: ['a i imisi', 'nga u ṱavhanya'] }],
+  ],
 };
 const sha256 = (path: string) => createHash('sha256').update(readFileSync(path)).digest('hex');
 
@@ -250,7 +277,8 @@ const sha256 = (path: string) => createHash('sha256').update(readFileSync(path))
  * unreviewed draft beside its exact English. Species names, "support plant", "thinning", the other kept technical
  * terms and the insect/pest glosses survive, and a sentence the lessons repeat on a slide shows the lesson's own
  * draft. Each learner still is the frame rendered from this exact paired draft and English source, with no
- * language or farming review, regional narration or English hold claimed. */
+ * language or farming review, regional narration or English hold claimed, and the deck saves offline as every
+ * frame with no narration unless English narration is chosen. */
 function checkForestGuildDeck(module: 'food-forest' | 'plant-guilds', lang: 'st' | 'ts' | 've') {
   const minimum = forestGuildMinimums[module];
   const englishPath = `docs/narration/${module}.en.md`;
@@ -270,6 +298,14 @@ function checkForestGuildDeck(module: 'food-forest' | 'plant-guilds', lang: 'st'
   const lessonPairs = sourceDraftPairs(forestGuildLessonDrafts[module][lang], lang);
   assert.ok(checkConsistentDrafts([...lessonPairs, ...pairs], `${lang} ${module}`) >= minimum.repeated,
     `${lang} ${module}: every passage repeated between the lessons and slides checked`);
+  assert.ok(checkRepeatedSentences(lessonPairs, pairs, path) >= minimum.runs,
+    `${path}: every lesson passage repeated inside a slide paragraph checked`);
+  checkCreatureWords([...lessonPairs, ...pairs], lang, `${lang} ${module}`);
+  for (const [english, phrases] of forestGuildQualifiers[module]) {
+    const found = [...lessonPairs, ...pairs].filter(([passage]) => passage.includes(english));
+    assert.ok(found.length > 0, `${path}: "${english}" is still in the English`);
+    for (const [, draft] of found) assertKeeps(draft, phrases[lang], `${path}: "${english}" keeps its qualification`);
+  }
 
   const qa = module === 'food-forest' ? 'docs/media/food-forest/qa' : 'docs/media/plant-guilds-regional/qa';
   const report = JSON.parse(readFileSync(`${qa}/${lang}-paired-verification.json`, 'utf8'));
@@ -285,6 +321,14 @@ function checkForestGuildDeck(module: 'food-forest' | 'plant-guilds', lang: 'st'
     assert.equal(report.slides[slide.n - 1].path, still);
     assert.equal(sha256(still), report.slides[slide.n - 1].sha256, `${still} is the rendered source-paired frame`);
   }
+  const variant = defaultOfflinePackVariant([module], lang);
+  const pack = offlinePack(module, lang, 'standard', variant);
+  assert.equal(variant, 'slides', `${path}: the silent deck saves slides only unless English narration is chosen`);
+  assert.deepEqual(pack.missing, [], `${path}: every slide-only offline file exists`);
+  assert.equal(pack.entries.filter((entry) => entry.url.includes(`/course-decks/${module}/${lang}/`)).length, minimum.slides,
+    `${path}: every frame is saved for offline use`);
+  assert.ok(pack.entries.every((entry) => entry.kind === 'slide' || entry.kind === 'poster'),
+    `${path}: the slide-only pack carries no narration or animation`);
   return slides;
 }
 

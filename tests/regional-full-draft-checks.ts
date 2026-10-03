@@ -239,12 +239,65 @@ export function checkCompleteSlideDrafts(
 }
 
 /** Food Forest and Plant Guilds: words an independent blind reader took for something else ("rotted" for
- * chopped, a tree species for a trunk, a wrong form of insects, blossoms where the guide uses flowers). */
+ * chopped, a tree species for a trunk, a wrong form of insects, blossoms where the guide uses flowers), and words
+ * that differ from the drafts already live in the course: Tshivenda words used where the course says u ṱavha,
+ * u zwala, u lima, khaṋo and Vhalani, Tshivenda words written without their marks (madi for maḓi, matari for
+ * maṱari, ndila for nḓila), west (vhukovhela) written for left, the Xitsonga banzi for narrow and ku nyama (meat)
+ * for soil moisture, and the Sesotho kganya where the course says lesedi. */
 export const FOREST_GUILD_FORBIDDEN_WORDS: Record<RegionalLanguage, RegExp[]> = {
-  st: [/dithunya/i, /kokonyana/i],
-  ts: [],
-  ve: [/gwiwa/i, /gwima/i, /mutshe wa muri/i],
+  st: [/dithunya/i, /kokonyana/i, /\bkganya\b/i, /tlholisano/i, /ka tlasa ho mulch/i],
+  ts: [/\bbanzi\b/i, /\bku nyama\b/i, /mati ya le misaveni/i],
+  ve: [/gwiwa/i, /gwima/i, /mutshe wa muri/i, /\b(?:sima|byala|dzima|vhuna|zwijalo|zwiimiswa|balani|vhukovhela|vhulia)\b/i,
+    /\bkoloṱ/i, /\b(?:madi|matari|madavhi|ndila|tshanda|divha|hanu|yanu|hunwe)\b/i],
 };
+
+// Creature words a blind reader took for insects: the Tshivenda zwipuka (animals) and the Xitsonga swinyenyana
+// (small birds) are right only where the English itself names animals, livestock or birds.
+const FOREST_GUILD_CREATURE_WORDS: Record<RegionalLanguage, Array<[RegExp, RegExp]>> = {
+  st: [],
+  ts: [[/\bswinyenyana\b/i, /\bbirds?\b/i]],
+  ve: [[/\bzwipuka\b/i, /\banimals?\b|\blivestock\b/i]],
+};
+
+/** A creature word stands only where the English names that creature, so insects are never written as animals or
+ * birds. Returns how many creature words were checked. */
+export function checkCreatureWords(pairs: Array<[string, string]>, language: RegionalLanguage, path: string): number {
+  let checked = 0;
+  for (const [english, draft] of pairs) {
+    for (const [word, named] of FOREST_GUILD_CREATURE_WORDS[language]) {
+      if (!word.test(draft)) continue;
+      checked += 1;
+      assert.match(english, named, `${path}: "${draft}" names a creature the English "${english}" does not`);
+    }
+  }
+  return checked;
+}
+
+/** A lesson passage that a slide repeats inside a longer paragraph reads the same there: wherever a slide paragraph's
+ * English contains a whole lesson passage as a run of complete sentences, the slide draft contains that passage's
+ * draft word for word. Returns how many repeats were checked. */
+export function checkRepeatedSentences(
+  lessonPairs: Array<[string, string]>,
+  slidePairs: Array<[string, string]>,
+  path: string,
+): number {
+  let checked = 0;
+  for (const [english, draft] of lessonPairs) {
+    const passage = english.trim();
+    if (passage.length <= 40 || !/[.!?]$/.test(passage)) continue;
+    for (const [slideEnglish, slideDraft] of slidePairs) {
+      const at = slideEnglish.indexOf(passage);
+      if (at < 0 || slideEnglish.trim() === passage) continue;
+      const before = slideEnglish.slice(0, at);
+      const after = slideEnglish.slice(at + passage.length);
+      if ((before && !/[.!?:]\s+$/.test(before)) || (after && !/^\s/.test(after))) continue;
+      checked += 1;
+      assert.ok(slideDraft.normalize('NFC').includes(draft.trim().normalize('NFC')),
+        `${path}: the slide paragraph repeating "${passage}" shows the lesson draft "${draft}"`);
+    }
+  }
+  return checked;
+}
 
 /** Species, cultivar and place names that must appear exactly as in the English (a capital at the start
  * of a sentence is allowed). */
@@ -360,7 +413,10 @@ export function checkGlossedWords(pairs: Array<[string, string]>, path: string):
 // in loanwords) keep their l. English words kept inside a sentence are skipped.
 const SESOTHO_LOANWORDS = new Set(['litara', 'establishment', 'thinning', 'support', 'supports']);
 
-/** No Sesotho word in a draft uses the Lesotho l before i or u. Returns how many Sesotho words were checked. */
+/** No Sesotho word in a draft uses a Lesotho spelling where the South African orthography of the Free State/QwaQwa
+ * edition differs: l before i or u (lesedi, not leseli), ch (motjheso, not mocheso), the o semivowel after a consonant
+ * (kwahela and jwang, not koahela and joang) and the words oa, ea, eena, eona, oona and moea (wa, ya, yena, yona, wona,
+ * moya). Returns how many Sesotho words were checked. */
 export function checkSouthAfricanSesotho(pairs: Array<[string, string]>, path: string): number {
   const words = (text: string) => text.toLowerCase().match(/[a-zÀ-ſ'-]+/g) ?? [];
   const kept = new Set([...FOREST_GUILD_KEPT_TERMS, ...FOREST_GUILD_NAMES].flatMap(words));
@@ -371,6 +427,9 @@ export function checkSouthAfricanSesotho(pairs: Array<[string, string]>, path: s
       if (englishWords.has(word) || kept.has(word) || SESOTHO_LOANWORDS.has(word)) continue;
       checked += 1;
       assert.doesNotMatch(word, /(?<![tkhl])l[iu]/, `${path}: "${word}" in "${draft}" uses the Lesotho l before i or u`);
+      assert.doesNotMatch(word, /(?<!t)(?<!tj)ch/, `${path}: "${word}" in "${draft}" uses the Lesotho ch, not tjh`);
+      assert.doesNotMatch(word, /(?<=[kjtsnlrh])o(?=[ae])|^(?:oa|ea|eena|eona|oona|moea)$/,
+        `${path}: "${word}" in "${draft}" uses the Lesotho o or e semivowel, not w or y`);
     }
   }
   return checked;

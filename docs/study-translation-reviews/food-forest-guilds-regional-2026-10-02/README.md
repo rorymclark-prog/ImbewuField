@@ -30,10 +30,27 @@ frames exist.
 3. Independent semantic checks of each draft against the exact English, followed by Claude Opus revision rounds for
    the passages they flagged. Passages that changed were back-translated again; a back-translation only counts if
    it was made from the exact current text.
-4. Automated checks in `tests/regional-full-draft-checks.ts` and `tests/paired-draft-slides.test.ts`: species
+4. A harmonisation round gave each language one word for the main recurring concepts across both modules (for
+   example plant and tree, leaf, trunk and harvest). It also wrote every Sesotho passage in South African spelling
+   (lesedi, motjheso, kwahela and jwang, not the Lesotho leseli, mocheso, koahela and joang). It replaced two
+   wrong creature words used for insects: a Xitsonga word for small birds and a Tshivenda word for animals. Each
+   language now uses the insect word of its live Seeds and Small Livestock drafts. Every passage this round changed
+   was back-translated blind and checked again.
+5. A last consistency round checked each recurring word against the drafts already live in the course. It changed
+   the Tshivenda planting, harvest, crop and count words, the Xitsonga words for soil moisture and narrow, and the
+   Sesotho word for light to match them. It restored Tshivenda diacritics (maḓi, maṱari, nḓila) and corrected left
+   and right in two Tshivenda picture descriptions, where an earlier draft wrote west. It also made every lesson
+   sentence that a slide repeats read the same on the slide. A final small pass fixed a Xitsonga word that read as
+   meat instead of soil moisture, a Sesotho negative, Tshivenda noun-class agreement, a spelling, an insect gloss
+   and one unclear Tshivenda quiz option. Every passage these rounds changed was back-translated blind and checked
+   again.
+6. Automated checks in `tests/regional-full-draft-checks.ts` and `tests/paired-draft-slides.test.ts`: species
    names verbatim, numbers unchanged, "support plant" and "thinning" kept, the listed technical terms kept, glosses
-   present, words that must never appear, and one draft for each passage that the English repeats word for word
-   (a lesson sentence repeated on a slide reads the same in both places).
+   present, South African Sesotho spelling, and one draft for each passage that the English repeats word for word.
+   A lesson sentence repeated on a slide, alone or inside a longer slide paragraph, reads the same in both places.
+   A list of words that must never appear includes the wrong creature, direction and planting words that the last
+   rounds replaced. The Tshivenda word for animals and the Xitsonga word for small birds may appear only where the
+   English names animals or birds.
 
 The `*.back-translations.json` files in this folder list each passage key, exact English source, draft and blind
 back-translation.
@@ -55,15 +72,61 @@ back-translation.
 
 ## Look at these first
 
-TODO-AFTER-ROUND-5
+These are the words and phrases that a blind back-translation misread or a checker questioned, or that have no
+earlier use in the live course. Each was kept for the reason given; a fluent reader should confirm them first.
+
+**All three languages**
+
+- The insect words are the ones already live in Seeds and Small Livestock: Sesotho dikokwanyana, Xitsonga
+  switsotswana and Tshivenda zwikhokhonono. If a facilitator prefers another word, change it course-wide.
+- Where the English says a young tree, the Sesotho (sefate se senyane) and Tshivenda (muri muṱuku) say a small tree.
+- Picture descriptions name left and right: Sesotho letshehadi, Xitsonga cheu ra ximatsi and cheu ra xinene,
+  Tshivenda tshanḓa tsha monde and tshanḓa tsha u ḽa. An earlier Tshivenda draft wrote west for left.
+
+**Sesotho**
+
+- "Bocking 14 ha e phatlalale ka viable seed" (does not spread by viable seed) is a regular negative, but a blind
+  reader took it as positive in all three places it appears.
+- "se sa phelang nako e telele" (short-lived) was once read as long-lived.
+- Please also check mekgahlelo (layers), dikutu tsa difate (tree trunks), naha ya jwang (grassland), sedikadikwe
+  (ring), dimela tse sa batleheng (weeds), faola (prune), hatella (suppress), ntjhafatsa (renew) and pitlaganya
+  (crowd).
+
+**Xitsonga**
+
+- "ku tsakama ka misava" (soil moisture) replaced a phrase that read as meat, and "lama nga anamangiki" (narrow)
+  replaced banzi, which means wide.
+- Please also check "switsotswana leswi onhaka swibyariwa" (pests), "nsinya wa murhi" (trunk), ntshovelo
+  (harvest), phikizana (compete), "ku hunyuka ka mati" (evaporation), hundzuluxa (convert), xirhendzevutani
+  (ring), goza (step), mpfhuka (spacing), "lexi nga lavekiki" (spare), "hi ku hatlisa-hatlisa" (instantly) and
+  "swiphunga swo tiya" (woody).
+- Mulch takes class 3 agreement (lowu, wu) throughout.
+
+**Tshivenda**
+
+- u ṱavha (plant), u zwala (sow), khaṋo (harvest) and Vhalani (count) follow the live course. Blind readers
+  sometimes took u ṱavha for prune. Pruning is gunyula, cutting down is u rema, and thinning stays in English.
+- tshinyalelo (damage) takes class 9 agreement because it is a noun made from a verb, like ṱhogomelo; one checker
+  expected class 7. "vhupo ho vuliwaho" (the opening) uses the class 14 form that matches the possessive ha; one
+  checker expected vho. khombo (risk) takes class 9 agreement, as in the live course.
+- Words a blind reader misread: miṱaṱo (layers, read as cuts), "dza u fhisa" (warm, read as burning), "mavu a tsela
+  maḓi zwavhuḓi (draining)", "maḓi o ḓungaho" (waterlogging), mathibo (edges), hwele and hwelana (crowd), mapheṋa
+  (the wings of a pod) and "u mela hafhu" (regrowth).
+- "zwithu zwine zwikhokhonono zwi zwi ṱoḓa" (resources) narrows the English to the things insects need, and
+  "zwithu zwi bvaho kha zwimela" (organic material) narrows it to plant material.
+- Ground cover is "zwi fukaho fhasi" in Food Forest and "zwi fukaho mavu" in Plant Guilds; soil moisture is
+  "maḓi a kha mavu" in Food Forest and "maḓi a re mavuni" in Plant Guilds. Both pairs mean the same thing.
+- The wrong quiz option "Planting as many trees as will physically fit" reads "as many trees as possible in the
+  place", using "nga hune zwa konadzea ngaho", the live course's phrase for as … as possible. Checkers rejected two
+  earlier versions, and the last check asked a reviewer to confirm the closing "ngaho fhethu".
 
 ## Slides, narration and offline use
 
 Each silent regional frame keeps its illustration and the exact English source and shows the drafted text in a
 regional panel, so the deck can be read without narration. No regional narration was generated or published;
-optional narration stays in English. Sesotho, Tshivenda and Xitsonga learners are offered a slide-only offline pack
-for these modules. A selection with a voice in the learner's own language (the Sesotho Introduction, or the whole
-course in Sesotho) keeps the full pack.
+optional narration stays in English and is an explicit choice. Sesotho, Tshivenda and Xitsonga learners save these
+modules as a slide-only offline pack by default (the shared regional download setting already on main), which now
+carries the re-rendered frames.
 
 ## Older review documents
 
