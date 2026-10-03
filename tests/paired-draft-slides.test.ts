@@ -18,6 +18,8 @@ import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
+import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { defaultOfflinePackVariant, offlinePack } from '../lib/offline-pack.ts';
 import {
   FOREST_GUILD_FORBIDDEN_WORDS, FOREST_GUILD_KEPT_TERMS, FOREST_GUILD_NAMES, assertKeeps, assertKeepsTerms, checkAnimalNames,
@@ -504,7 +506,7 @@ test('Tshivenda Food Forest slides draft habitat, field-care and grassland guida
   assertKeepsTerms(slides[19].target.body[1].text, ['nursery plants'], 've slide 20: prepare nursery plants');
 });
 
-test('Vegetables slide 14 pairs both regional resilience drafts while keeping the one-crop limit exact', () => {
+test('Vegetables paired drafts keep the one-crop limit and source-bound seasonal framing', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const sesothoPacket = JSON.parse(readFileSync('docs/narration/vegetables-staples.st.paired-draft.json', 'utf8'));
   const sesothoSlides = validatePairedDraft(sesothoPacket, source, 'st');
@@ -517,10 +519,15 @@ test('Vegetables slide 14 pairs both regional resilience drafts while keeping th
 
   const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'ts');
-  const drafted = slides.flatMap((slide: any) => slide.target.body
-    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-    .filter(Boolean));
-  assert.deepEqual(drafted, ['2:3', '2:5', '13:6', '14:1', '14:2', '14:5']);
+  assert.equal(slides[0].target.body[2].status, 'mixed');
+  assert.equal(slides[0].target.body[2].segments.at(-1).status, 'english-hold',
+    'the uncertain “what to do when pests arrive” agenda clause stays exact English');
+  assert.equal(slides[1].english.body[1], source[1].body[1]);
+  assert.equal(slides[1].target.body[1].status, 'draft',
+    'the four-part sowing-gap example remains a visibly unreviewed draft beside its exact source');
+  assert.equal(slides[1].english.body[3], source[1].body[3]);
+  assert.equal(slides[1].target.body[3].status, 'draft',
+    'the sowing, tending and harvesting overlap remains a draft tied to the correct seasonal sentence');
   const lesson = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body;
   const english = lesson.sourceEnglish.split('\n\n');
   const translated = lesson.xitsongaDraft.split('\n\n');
@@ -531,10 +538,48 @@ test('Vegetables slide 14 pairs both regional resilience drafts while keeping th
   assert.equal(slides[13].target.body[2].status, 'english-hold',
     'the one-crop point-of-failure claim remains exact English in this slide packet');
   assert.equal(slides[13].target.body[3].status, 'english-hold');
-  assert.equal(slides[1].target.body[1].status, 'english-hold',
-    'the Xitsonga glut wording still needs fluent review');
-  assert.equal(slides[1].target.body[3].status, 'english-hold',
-    'coming ready must not become already ready to harvest');
+});
+
+test('Vegetables opening frames retain exact source holds and reuse L1 wording only at matching passages', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
+  const lesson = COURSE_MODULES.find(({ id }) => id === 'vegetables-staples')!.lessons
+    .find(({ id }) => id === 'vegetables-staples-l1')!;
+  const canonicalBody = lesson.body.split('\n\n');
+  for (const lang of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/vegetables-staples.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    const welcome = slides[0].target.body[0];
+    assert.equal(welcome.status, 'mixed');
+    assert.equal(welcome.segments.map((segment: any) => segment.sourceEnglish).join(''), source[0].body[0]);
+    assert.ok(welcome.segments.some((segment: any) => segment.status === 'english-hold' &&
+      segment.sourceEnglish === 'Vegetables and Staple Crops.'),
+    `${lang}: the official module title stays an exact, visibly held name`);
+    assert.ok(slides[2].target.body.slice(1, 5).every((part: any) => part.status === 'english-hold'),
+      `${lang}: the four technical/action-sensitive decisions stay paired in English`);
+    const closing = slides[2].target.body[5];
+    assert.equal(closing.status, 'mixed');
+    assert.equal(closing.segments.map((segment: any) => segment.sourceEnglish).join(''), source[2].body[5]);
+    assert.deepEqual(closing.segments.filter((segment: any) => segment.status === 'english-hold')
+      .map((segment: any) => segment.sourceEnglish), [
+      'A well-shaped bed still fails if everything goes in on one day. ',
+      'A diverse planting still struggles if you treat every yellow leaf as an insect problem.',
+    ], `${lang}: only the connective sentence is newly drafted; the two source cautions remain exact English`);
+
+    const learner = resolveLearnerLessonPresentation(lesson, lang);
+    assert.equal(learner.status, 'draft');
+    const learnerBody = learner.content.body.split('\n\n');
+    for (let index = 0; index < 14; index++) {
+      const slideNumber = index < 4 ? 4 : index < 11 ? 5 : 6;
+      const bodyIndex = index < 4 ? index : index < 11 ? index - 4 : index - 11;
+      const part = slides[slideNumber - 1].target.body[bodyIndex];
+      assert.equal(slides[slideNumber - 1].english.body[bodyIndex], canonicalBody[index],
+        `${lang} slide ${slideNumber}: the whole lesson passage is the exact reuse source`);
+      assert.equal(part.status, 'draft');
+      assert.equal(part.text, learnerBody[index],
+        `${lang} slide ${slideNumber}: reuse only the resolver's current source-bound learner passage`);
+    }
+  }
 });
 
 test('Sesotho Market records slides retain six learner draft sentences as the deck grows', () => {
@@ -578,13 +623,12 @@ test('Tshivenda staples media holds the unresolved staple placeholder in English
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ve.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 've');
-  assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
-    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-    .filter(Boolean)), ['2:2', '14:2']);
-  assert.equal(slides[1].target.body[2].status, 'english-hold',
-    'the Tshivenda harvest verb must not become the word for drinking');
-  assert.equal(slides[1].target.body[3].status, 'english-hold');
-  assert.equal(slides[1].target.body[4].status, 'english-hold');
+  assert.equal(slides[1].target.body[2].status, 'mixed',
+    'the garden/no-food clause stays exact English where a reliable Tshivenda garden concord is unresolved');
+  assert.equal(slides[1].target.body[2].segments.at(-1).sourceEnglish,
+    "The garden is full of plants, but there's no food in it.");
+  assert.equal(slides[1].target.body[3].status, 'draft');
+  assert.equal(slides[1].target.body[4].status, 'draft');
   assert.equal(slides[11].target.body[0].status, 'english-hold',
     'the literal [staple] placeholder cannot be shown as a learner draft');
   assert.equal(slides[13].english.body[1], TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.sourceEnglish);
@@ -593,7 +637,7 @@ test('Tshivenda staples media holds the unresolved staple placeholder in English
   assert.equal(slides[13].target.body[3].status, 'english-hold');
 });
 
-test('Vegetables study headings never turn field tasks into translated instructions', () => {
+test('Vegetables orientation drafts leave the numbered field decisions and field tasks source-held', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   for (const lang of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/vegetables-staples.${lang}.paired-draft.json`, 'utf8'));
@@ -601,36 +645,58 @@ test('Vegetables study headings never turn field tasks into translated instructi
     for (const n of [3, 17, 18]) {
       assert.equal(slides[n - 1].target.heading.status, 'draft', `${lang} slide ${n} has a visibly unreviewed heading`);
       assert.equal(slides[n - 1].english.heading, source[n - 1].heading, `${lang} slide ${n} preserves the exact heading source`);
-      assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
-        `${lang} slide ${n} keeps the field instructions in English`);
     }
+    assert.ok(slides[2].target.body.slice(1, 5).every((part: any) => part.status === 'english-hold'),
+      `${lang}: bed matching, named planting methods, crop resilience and pest diagnosis remain exact English`);
+    assert.equal(slides[2].target.body[5].status, 'mixed');
+    assert.deepEqual(slides[2].target.body[5].segments.slice(1).map((segment: any) => segment.sourceEnglish), [
+      'A well-shaped bed still fails if everything goes in on one day. ',
+      'A diverse planting still struggles if you treat every yellow leaf as an insect problem.',
+    ], `${lang}: only the connective first sentence is drafted; both exact farming cautions remain held`);
+    for (const n of [17, 18]) assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+      `${lang} slide ${n} keeps field instructions in English`);
     assert.equal(slides[1].english.heading, 'Why This Matters');
-    assert.equal(slides[1].target.body[3].status, 'english-hold',
-      `${lang} must not imply food is already ready to harvest`);
+    assert.equal(slides[1].english.body[3], source[1].body[3], `${lang}: keep the seasonal-overlap source attached to its draft`);
   }
 });
 
 test('regional Study frames draft screened observations while risky advice stays in exact English', () => {
   const cases = [
-    { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '2:2', '2:3', '2:5', '8:1', '8:4', '9:1'], held: ['2:4', '8:2', '8:3', '8:5', '8:6'] },
+    { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '1:3', '2:1', '2:2', '2:3', '2:4', '2:5', '8:1', '8:4', '9:1'], held: ['8:2', '8:3', '8:5', '8:6'], mixed: ['2:4'] },
     { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '2:3', '3:4', '18:1', '18:3'], held: ['7:2', '15:4'] },
     // Soil ordinary framing/observation cells are now source-paired visible drafts; technical or action-sensitive holds remain exact English below.
     { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['2:3', '4:1', '4:2', '5:4', '20:4'] },
     { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: ['3:3', '4:1'] },
     { moduleId: 'soil-health', lang: 've', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['4:1', '4:2', '5:4', '20:4'] },
   ] as const;
-  for (const { moduleId, lang, drafted, held } of cases) {
+  for (const { moduleId, lang, drafted, held, ...rest } of cases) {
     const source = englishSlideRecords(readFileSync(`docs/narration/${moduleId}.en.md`, 'utf8'));
     const packet = JSON.parse(readFileSync(`docs/narration/${moduleId}.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
     for (const item of drafted) {
       const [n, p] = item.split(':').map(Number);
-      assert.equal(slides[n - 1].target.body[p - 1].status, 'draft',
+      assert.ok(['draft', 'mixed'].includes(slides[n - 1].target.body[p - 1].status),
         `${lang} ${moduleId} ${item} keeps its source-paired draft as the deck grows`);
     }
     for (const item of held) {
       const [n, p] = item.split(':').map(Number);
       assert.equal(slides[n - 1].target.body[p - 1].status, 'english-hold', `${lang} ${moduleId} ${item} keeps the exact source`);
+    }
+    for (const item of (rest as { mixed?: readonly string[] }).mixed ?? []) {
+      const [n, p] = item.split(':').map(Number);
+      const part = slides[n - 1].target.body[p - 1];
+      assert.equal(part.status, 'mixed', `${lang} ${moduleId} ${item} keeps its unresolved source clause visibly held`);
+      assert.equal(part.segments[0].sourceEnglish, 'Small sowings create a rhythm instead. ',
+        'small quantities sown must not silently turn into small plants');
+      assert.equal(part.segments[0].status, 'english-hold');
+      if (lang === 'st' && moduleId === 'vegetables-staples') {
+        assert.equal(part.segments[0].sourceEnglish, 'Small sowings create a rhythm instead. ',
+          'the sowing-scale contrast stays exact English instead of shifting to small plants');
+        assert.deepEqual(part.segments.at(-1), { sourceEnglish: 'Something is always coming ready.', status: 'english-hold' },
+          'the last sentence must retain progressive coming-ready timing, not say food is already ready');
+        assert.equal(part.segments[1].sourceEnglish, 'Planting, tending and harvesting overlap. ');
+        assert.equal(part.segments[1].status, 'draft');
+      }
     }
   }
 });

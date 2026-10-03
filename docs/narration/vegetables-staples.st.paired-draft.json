@@ -20,14 +20,31 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Welcome. This is ",
+                "status": "draft",
+                "text": "Rea le amohela. Ena ke "
+              },
+              {
+                "sourceEnglish": "Vegetables and Staple Crops.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+                "status": "draft",
+                "text": " Ke e nngwe ya dimmojule tse leshome tsa thupelo ya ImbewuField."
+              }
+            ]
           },
           {
             "status": "draft",
             "text": "Jarete e hlahisang hantle ha se e shebahalang e tletse ka ho fetisisa ka letsatsi le le leng. Ke e tswelang pele ho isa dijo ka tlung beke le beke."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Metsotsong e mmalwa e tlang, re tla bua ka dintho tse nne. Ho lokisa bethe. Ho etsa hore kotulo e nne e tswele pele. Hore na ke dijalo dife tsa staple tse lokelang ho jalwa. Le seo o ka se etsang ha disenyi di fihla."
           }
         ]
       }
@@ -64,7 +81,22 @@
             "text": "Joale ho latela nako ea khaello. Ha ho letho le loketseng ho kotuloa. Serapa se tletse limela, empa ha ho lijo tse ho sona."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Small sowings create a rhythm instead. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Planting, tending and harvesting overlap. ",
+                "status": "draft",
+                "text": "Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. "
+              },
+              {
+                "sourceEnglish": "Something is always coming ready.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "draft",
@@ -94,7 +126,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qetellong ya mojule ona, o tla kgona ho etsa diqeto tse nne tshimong ya hao."
           },
           {
             "status": "english-hold"
@@ -109,7 +142,22 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These four belong together. ",
+                "status": "draft",
+                "text": "Dintho tsena tse nne di tsamaya mmoho. "
+              },
+              {
+                "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+                "status": "english-hold"
+              }
+            ]
           }
         ]
       }
@@ -132,16 +180,20 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshireletso e bonolo. Permanent paths, and a bed narrow enough to reach into from both sides."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "One metre to one point two metres wide. Ke yona working number. At that width you can reach the centre from either path, and your feet never touch the growing area."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jwale nahana ka dibethe tsa hao. Na o ka fihla bohareng ntle le ho hata ka hare? Eya o leke pele o lema eng kapa eng hape."
           }
         ]
       }
@@ -167,25 +219,32 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ha ho sebopeho se le seng sa bethe se loketseng dibaka tsohle."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qala ka least disturbance that solves your problem."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "No-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme build fertility on top."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U se ke ua cheka wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Raised beds di loketse wet ground, moo water needs somewhere to drain away to."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sunken beds di loketse dry ground, moo you want to catch and hold what rain you get."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ka mora pula e matla, sheba hore na metsi a sala hokae kapa a phalla a fete hokae. Kopanya seo o se boneng le keletso mabapi le mobu le phallo ya metsi pele o kgetha bethe."
           }
         ]
       }
@@ -207,13 +266,16 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Others do better with a protected start in a nursery, then transplanting. Tomatoes le brassicas ke tsa sehlopha seo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa spacing guidance for the crop, variety and local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola."
           }
         ]
       }

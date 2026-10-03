@@ -20,13 +20,41 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Welcome. This is ",
+                "status": "draft",
+                "text": "Hi mi amukela. Leyi i "
+              },
+              {
+                "sourceEnglish": "Vegetables and Staple Crops.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+                "status": "draft",
+                "text": " I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField."
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nsimu leyi humesaka kahle a hi leyi vonakaka yi tele ngopfu hi siku rin'we ntsena. I leyi yi yisaka swakudya endlwini vhiki rin'wana ni rin'wana."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. ",
+                "status": "draft",
+                "text": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. "
+              },
+              {
+                "sourceEnglish": "And what to do when pests arrive.",
+                "status": "english-hold"
+              }
+            ]
           }
         ]
       }
@@ -46,21 +74,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ha Yini Leswi Swi Ri Swa Nkoka"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A hi sunguleni hi xiphiqo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku byala swo tala hi nkarhi wun'we swi endla leswaku ku va ni swakudya swo tala hi nkarhi wun'we. Hinkwato swi lulamela hi nkarhi wun'we. U dya leswi u swi kotaka, u nyika van'wana swin'wana, kutani leswi salaka swa lahleka."
           },
           {
             "status": "draft",
             "text": "Kutani ku landzela nkarhi wa ku pfumala ntshovelo. Ku hava lexi lunghekeleke ku tshoveriwa. Nsimu yi tele hi swibyariwa, kambe a ku na swakudya eka yona."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku byala switsongo swi endla rhithimi ematshan'weni ya ku byala swo tala hi nkarhi wun'we. Ku byala, ku khathalela ni ku tshovela swa hlangana. Ku ni lexi tshamelaka ku lungheka ku tshoveriwa."
           },
           {
             "status": "draft",
@@ -90,7 +122,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko modula lowu wu hela, u ta kota ku endla swiboho swa mune ensin'wini ya wena."
           },
           {
             "status": "english-hold"
@@ -105,7 +138,22 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These four belong together. ",
+                "status": "draft",
+                "text": "Swilo leswi swa mune swi fambisana. "
+              },
+              {
+                "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+                "status": "english-hold"
+              }
+            ]
           }
         ]
       }
@@ -128,16 +176,20 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Compacted soil loses its air spaces. Roots slow down. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nsirhelelo wu olova. Permanent paths, and a bed narrow enough to reach into from both sides."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "One metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. At that width you can reach the centre from either path, and your feet never touch the growing area."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sweswi ehleketa hi mabedhe ya wena. Can you reach the middle without stepping inside? Famba u ya ringeta leswi u nga si byala swin'wana."
           }
         ]
       }
@@ -163,25 +215,32 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula hi least disturbance that solves your problem."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "No-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga keli wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Raised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Endzhaku ka heavy rain, kambisisa. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
           }
         ]
       }
@@ -203,13 +262,16 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Landzelela spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
           }
         ]
       }

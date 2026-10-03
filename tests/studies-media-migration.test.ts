@@ -1578,3 +1578,62 @@ test('a saved regional Soil Health pack retires only the twelve refreshed stills
   assert.equal(puts, 1, 'the dated marker makes the migration one-time');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must leave replacement downloads to the learner');
 });
+
+test('a saved Vegetables pack retires only the refreshed opening regional stills once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateVegetablesOpeningRegionalStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateReadingLandscapeRegionalStills\)\.then\(migrateVegetablesOpeningRegionalStills\)/,
+    'the saved-pack cleanup must run during worker activation');
+
+  const origin = 'https://field.test';
+  const changed = ['st', 've', 'ts'].flatMap(language => Array.from({ length: 6 }, (_, index) =>
+    `/course-decks/vegetables-staples/${language}/slide-${String(index + 1).padStart(2, '0')}.webp`
+  ));
+  const preserved = [
+    ...['st', 've', 'ts'].flatMap(language => Array.from({ length: 12 }, (_, index) =>
+      `/course-decks/vegetables-staples/${language}/slide-${String(index + 7).padStart(2, '0')}.webp`
+    )),
+    ...['en', 'zu'].flatMap(language => Array.from({ length: 18 }, (_, index) =>
+      `/course-decks/vegetables-staples/${language}/slide-${String(index + 1).padStart(2, '0')}.jpg`
+    )),
+    ...['en', 'zu'].flatMap(language => [
+      ...Array.from({ length: 18 }, (_, index) => `/course-audio/vegetables-staples/${language}/slide-${String(index + 1).padStart(2, '0')}.mp3`),
+      `/course-audio/vegetables-staples/${language}/full.mp3`,
+    ]),
+    '/course-decks/market-community/st/slide-01.webp',
+    '/course-audio/soil-health/en/slide-01.mp3',
+  ];
+  const obsoleteUrls = changed.flatMap(path => [
+    new URL(path + '?saved=old', origin).href,
+    new URL(path + '?width=small', origin).href,
+  ]);
+  const preservedUrls = [...new Set(preserved)].map(path => new URL(path + '?saved=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...obsoleteUrls.map(url => [url, new Response('superseded opening still')] as const),
+    ...preservedUrls.map(url => [url, new Response('keep saved media')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+
+  for (const url of obsoleteUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/vegetables-staples/.opening-regional-stills-20261003';
+  assert.equal(rows.has(marker), true);
+  assert.equal(puts, 1, 'the first activation records one migration marker');
+
+  const replacement = new URL(changed[0], origin).href;
+  rows.set(replacement, new Response('new opening still downloaded later'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new opening still downloaded later');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'later activations leave replacements alone');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation must not spend learner airtime downloading replacement stills');
+});
