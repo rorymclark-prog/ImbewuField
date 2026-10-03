@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: '6fd0e40f', changes: [
+    'Market lessons 1 and 2 add marked regional wording beside English.',
+    'Price examples stay exact; selling questions add regional drafts.',
+  ], tour: [
+    { title: 'Review regional Market drafts',
+      where: 'Study → Market Gardening and Community → Lessons 1 and 2',
+      detail: 'Read the marked draft paragraphs and compare English before trying the quizzes.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: '55b6c11b', changes: [
     'Seasonal food-gap questions add marked regional drafts beside English.',
     'Customer agreement points add regional drafts; price examples stay in English.',

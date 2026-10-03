@@ -1,4 +1,4 @@
-/** Unreviewed source-paired Xitsonga Market learner drafts. */
+/** Unreviewed, source-paired Xitsonga ordinary-wording drafts for Market L1/L2; technical anchors remain English. */
 import type { XitsongaCourseModuleDraft } from './course-translation-drafts-ts.ts';
 
 export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
@@ -34,7 +34,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
-        "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nUse the same simple habit eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nMatsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nLanguta price, costs na ku byala loku landzelaka. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+        "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nTirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nMatsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.\n\nHi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?\n\nHi swihi swibyariwa leswi tirhisaka seeds, water na compost swo tala ku tlurisa leswi swi swi vuyisaka?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nLoko u nga se veka price, tsala production, packing and selling costs, ku katsa labour na transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nLanguta price, costs na ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombelaka a wu tiyisisi leswaku ku ta va ni ku xavisiwa.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nHlawula swibyariwa leswi lulameleke ndhawu ya wena, kutani u hlela u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa planting conditions na expected time to harvest.\n\nSiku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Engetela backup plan loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -45,54 +45,54 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Include production and selling costs when assessing a price",
-          "xitsongaDraft": "Include production and selling costs when assessing a price",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Katsa production ni selling costs loko u kambisisa price.",
+          "reviewStatus": 'machine-draft'
         },
         {
           "sourceEnglish": "Label worked examples; use your actual costs for decisions",
-          "xitsongaDraft": "Label worked examples; use your actual costs for decisions",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Marka worked examples; tirhisa costs ta wena ta xiviri eka swiboho.",
+          "reviewStatus": 'machine-draft'
         },
         {
           "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
-          "xitsongaDraft": "Plan for food gaps using local growing conditions and harvest timing",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Pulana ku pfumaleka ka swakudya hi ku tirhisa swiyimo swa ku byala swa ndhawu ya wena ni nkarhi wa ntshovelo.",
+          "reviewStatus": 'machine-draft'
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
-            "xitsongaDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Murimi u fanele a kambisisa yini?",
+            "reviewStatus": 'machine-draft'
           },
           "options": [
             {
               "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
-              "xitsongaDraft": "Keep selling at R15 — short-term loss builds relationships",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Tshama u xavisa hi R15 — short-term loss yi aka vuxaka.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Stop growing tomatoes entirely",
-              "xitsongaDraft": "Stop growing tomatoes entirely",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Tshika ku byala matamatisi hi ku helela.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
-              "xitsongaDraft": "The selling price, costs and whether another crop would give a better return",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Selling price, costs ni loko xibyariwa xin’wana xi nga nyika return yo antswa.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Apply for a subsidy to cover the gap",
-              "xitsongaDraft": "Apply for a subsidy to cover the gap",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Endla xikombelo xa subsidy ku pfala gap.",
+              "reviewStatus": 'machine-draft'
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
-            "xitsongaDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Languta ku hambana ni customer demand u nga se endla xiboho xa production leyi landzelaka.",
+            "reviewStatus": 'machine-draft'
           }
         },
         {
@@ -161,17 +161,17 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         ].join("\n\n"),
         "xitsongaDraft": [
           "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
-          "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+          "Pimanisa market fees, transport, packing na unsold produce, swin’we ni selling price.",
           "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
           "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
-          "A box scheme supplies a regular selection to agreed customers.",
-          "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+          "Box scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.",
+          "Pfumelelanani hi contents, price, payment na leswi humelelaka loko crops are short. Tioda ta nkarhi na nkarhi ti pfuna ku pulana only when customers and growers can keep the agreement.",
           "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
-          "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
-          "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
-          "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+          "Kambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.",
+          "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta arrangement leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+          "Loko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.",
           "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
-          "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label.",
+          "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Loko u nga se tirhisa label, kambisisa any certification or claim the buyer requires.",
         ].join("\n\n"),
         "reviewStatus": "machine-draft"
       },
@@ -188,72 +188,72 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           },
         {
           "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
-          "xitsongaDraft": "Promise regular boxes only when supply and customer terms support them",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Tshembisa regular boxes ntsena loko supply ni customer terms swi swi seketela.",
+          "reviewStatus": 'machine-draft'
         },
         {
           "sourceEnglish": "Check market rules and describe growing practices honestly",
-          "xitsongaDraft": "Check market rules and describe growing practices honestly",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Kambisisa market rules kutani u hlamusela growing practices ta wena hi ku vula ntiyiso.",
+          "reviewStatus": 'machine-draft'
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
-            "xitsongaDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Murimi wa purasi leritsongo u ni production leyi nga faniki vhiki ni vhiki — surplus hi mavhiki man’wana, yi va yitsongo hi man’wana. Hi yihi channel leyi n’wi fanelaka best?",
+            "reviewStatus": 'machine-draft'
           },
           "options": [
             {
               "sourceEnglish": "A formal market stall needing consistent weekly supply",
-              "xitsongaDraft": "A formal market stall needing consistent weekly supply",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Formal market stall leyi lavaka consistent weekly supply.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "A box scheme needing the same produce weekly",
-              "xitsongaDraft": "A box scheme needing the same produce weekly",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Box scheme leyi lavaka produce leyi fanaka vhiki ni vhiki.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
-              "xitsongaDraft": "An informal market or neighbour sales with no fixed commitment",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Informal market kumbe ku xavisa eka vaakelani ku nga ri na fixed commitment.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "A daily-delivery school contract",
-              "xitsongaDraft": "A daily-delivery school contract",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Kontraka ya xikolo leyi lavaka ku yisa siku ni siku.",
+              "reviewStatus": 'machine-draft'
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
-            "xitsongaDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Leyi hi yona channel yin’we ntsena leyi nga laviki leswaku a tshembisa fixed amount vhiki ni vhiki — u xavisa leswi a nga na swona hakunene.",
+            "reviewStatus": 'machine-draft'
           }
         },
         {
           "question": {
             "sourceEnglish": "How can agreed regular orders help a grower plan?",
-            "xitsongaDraft": "How can agreed regular orders help a grower plan?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Tioda ta nkarhi na nkarhi leti ku pfumelelaneke ti nga n’wi pfuna njani murimi ku pulana?",
+            "reviewStatus": 'machine-draft'
           },
           "options": [
             {
               "sourceEnglish": "Box customers always pay more per kilogram",
-              "xitsongaDraft": "Box customers always pay more per kilogram",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Vaxavi va box va hakela mali yo tala hi kilogram minkarhi hinkwato.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Box schemes let you charge extra for packaging",
-              "xitsongaDraft": "Box schemes let you charge extra for packaging",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Box schemes ti ku pfumelela ku charge extra for packaging.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
-              "xitsongaDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Committed subscription income yi ku pfuna ku pulana production hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Box schemes avoid tax obligations",
@@ -264,8 +264,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
-            "xitsongaDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, payment ni costs ta ku ti hetisisa.",
+            "reviewStatus": 'machine-draft'
           }
         }
       ]

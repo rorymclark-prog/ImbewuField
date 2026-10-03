@@ -1,0 +1,1068 @@
+{
+  "title": "Independent semantic backcheck: Market Community L1/L2 ordinary closure candidates",
+  "date": "2026-10-03",
+  "packet": "/tmp/imbewu-regional-market-remaining-ordinary-closure-candidates-20261003.json",
+  "checkedWorktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "checkedHead": "0778c66698596249cfdc69af7716e3f21f1dfaa8",
+  "sourceRegistryFinding": {
+    "requestedPath": "lib/course-content.ts",
+    "exists": false,
+    "actualCanonicalEnglishRegistry": "lib/course-modules.ts",
+    "regionalRegistries": [
+      "lib/course-translation-drafts-st-market-community.ts",
+      "lib/course-translation-drafts-ve-market-community.ts",
+      "lib/course-translation-drafts-ts-market-community.ts"
+    ],
+    "note": "Candidate packet source pairs identify canonical fields and current regional registry values. The specified lib/course-content.ts path does not exist at this exact worktree/head; canonical English resides in lib/course-modules.ts. Worktree HEAD matches packet worktreeHead."
+  },
+  "scope": "Changed candidates only; Market L1/L2 for st, ve, ts. No edits to repository files. Source option order and correct indices are not altered by these semantic repairs.",
+  "semanticReviewLimit": "This is an independent meaning check, not fluent/local approval. Keep fields marked unreviewed and provide facilitator review after publication as authorized.",
+  "preservationChecks": [
+    "R15/kg sale versus R18/kg stated production cost remain unchanged wherever shown.",
+    "No candidate reviewed here changes only/when/before/may/can or turns conditional supply/payment/fulfilment into a guarantee, except the Tshivenda inconsistent-production reversal flagged for repair.",
+    "Harvest versus cash, proceeds versus production decisions, and option ordering/correct index remain source-bound in the candidate packet.",
+    "No new farming recommendation, crop, species, figure, market guarantee, or law identified."
+  ],
+  "counts": {
+    "changedCandidates": 108,
+    "repairs": 5,
+    "semanticallyPlausibleUnreviewed": 103,
+    "ordinaryEnglishResidueForAuthor": 12
+  },
+  "entries": [
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[5]",
+      "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "currentDraft": "Sebelisa mokgwa o tshwanang o bonolo bakeng sa food kept at home, produce sold, produce gifted, le produce composted.",
+      "candidate": "Sebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[8]",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentDraft": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka highest return for each hour of work?",
+      "candidate": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka poelo e ngata bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[9]",
+      "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+      "currentDraft": "Ke crops dife tse sebedisang more seeds, water and compost than they return?",
+      "candidate": "Ke crops dife tse sebedisang dipeo, metsi le compost tse ngata ho feta return ya tsona?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[11]",
+      "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "currentDraft": "Pele o beha price, rekota production, packing and selling costs, ho kenyeletsa labour le transport.",
+      "candidate": "Pele o beha price, rekota production, packing le selling costs, ho kenyeletsa labour le transport.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[13]",
+      "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "currentDraft": "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; a higher asking price is not a guaranteed sale.",
+      "candidate": "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e netefatse thekiso.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[15]",
+      "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "currentDraft": "Khetha crops tse loketseng sebaka sa heno, mme o work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "candidate": "Khetha crops tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha ho harvest eo o e hlokang. Check planting conditions and expected time to harvest.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[16]",
+      "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "currentDraft": "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya leano la backup ha pula, metsi kapa crops di hloleha.",
+      "candidate": "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya moralo wa tlatsetso ha pula, metsi kapa dijalo di hloleha.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].keyPoints[1]",
+      "sourceEnglish": "Include production and selling costs when assessing a price",
+      "currentDraft": "Include production and selling costs when assessing a price",
+      "candidate": "Kenyelletsa production le selling costs ha o lekola price.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].keyPoints[2]",
+      "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+      "currentDraft": "Label worked examples; use your actual costs for decisions",
+      "candidate": "Tshwaya worked examples; sebedisa costs tsa hao tsa nnete ha o etsa diqeto.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].keyPoints[3]",
+      "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+      "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+      "candidate": "Rera bakeng sa dikgeo tsa dijo o sebedisa maemo a ho lema a lehae le nako ya kotulo.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].question",
+      "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Ke eng seo molemi a lokelang ho se hlahloba?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+      "candidate": "Tswela pele o rekisa ka R15 — short-term loss builds relationships.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "currentDraft": "Stop growing tomatoes entirely",
+      "candidate": "Emisa ho lema tamati ka ho felletseng.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "currentDraft": "The selling price, costs and whether another crop would give a better return",
+      "candidate": "Selling price, costs, le hore na crop e nngwe e ka fana ka return e betere.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "currentDraft": "Apply for a subsidy to cover the gap",
+      "candidate": "Etsa kopo ya subsidy ho kwahela gap.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidate": "The example price is below the stated cost. Hlahloba phapang le customer demand pele o etsa qeto ya production e latelang.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].body.paragraphs[1]",
+      "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "currentDraft": "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+      "candidate": "Bapisa market fees, lipalangoang, ho paka le dihlahiswa tse sa rekiswang hammoho le selling price.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].body.paragraphs[2]",
+      "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentDraft": "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+      "candidate": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Tafole ya informal stall ha e bolele ka boyona hore ha e na melao kapa ditjeo.",
+      "verdict": "repair",
+      "repairedCandidate": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
+      "reason": "“Tafole ya informal stall” says a table of informal stall; source means the stall itself. This repair avoids changing the venue into furniture. Semantic proposal only."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].body.paragraphs[6]",
+      "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+      "currentDraft": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+      "candidate": "Qala ka seo o ka fanang ka sona ka botshepehi le seo bareki ba se batlang.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].body.paragraphs[7]",
+      "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+      "currentDraft": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+      "candidate": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].body.paragraphs[11]",
+      "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentDraft": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.",
+      "candidate": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].keyPoints[2]",
+      "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+      "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+      "candidate": "Tshepisa regular boxes feela ha supply le customer terms di di tshehetsa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].keyPoints[3]",
+      "sourceEnglish": "Check market rules and describe growing practices honestly",
+      "currentDraft": "Check market rules and describe growing practices honestly",
+      "candidate": "Hlahloba market rules mme o hlalose growing practices tsa hao ka botshepehi.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidate": "Molemi e monyenyane o na le tlhahiso e sa tshwaneng beke le beke — o na le surplus dibekeng tse ding, mme e nyane tse ding. Ke channel efe e mo loketseng ka ho fetisisa?",
+      "verdict": "repair",
+      "repairedCandidate": "Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke mocha ofe oa thekiso o mo loketseng?",
+      "reason": "The candidate “Molemi e monyenyane” can mean a small/young farmer, rather than a farmer with a smallholding. This repair makes the farm, not the person, small. Semantic proposal only; fluent Sesotho review is still needed."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentDraft": "A formal market stall needing consistent weekly supply",
+      "candidate": "Formal market stall e hlokang consistent weekly supply.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "currentDraft": "A box scheme needing the same produce weekly",
+      "candidate": "Box scheme e hlokang produce e tshwanang beke le beke.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+      "candidate": "Informal market kapa thekiso ho baahisani ntle le fixed commitment.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "currentDraft": "A daily-delivery school contract",
+      "candidate": "Konteraka ya sekolo e hlokang ho tlisa letsatsi le letsatsi.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].rationale",
+      "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "candidate": "Ena ke yona feela channel e sa mo hlokeng ho tshepisa fixed amount beke le beke — o rekisa seo a nang le sona ka nnete.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].question",
+      "sourceEnglish": "How can agreed regular orders help a grower plan?",
+      "currentDraft": "How can agreed regular orders help a grower plan?",
+      "candidate": "Ditaelo tsa kamehla tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "currentDraft": "Box customers always pay more per kilogram",
+      "candidate": "Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "currentDraft": "Box schemes let you charge extra for packaging",
+      "candidate": "Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "candidate": "Committed subscription income e o dumella ho rera production ho potoloha real demand ho e-na le ho lema ka ho hakanya.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentDraft": "Box schemes avoid tax obligations",
+      "candidate": "Box schemes ha di qobe tax obligations.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].rationale",
+      "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "candidate": "Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, payment le costs tsa ho di phethahatsa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[5]",
+      "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "currentDraft": "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+      "candidate": "Shumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[8]",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentDraft": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "candidate": "Ndi zwimela zwifhio zwine zwa bveledza yield khulwane kha bed iṅwe na iṅwe? Ndi zwifhio zwine zwa vhuisa tshelede nnzhi kha awara iṅwe na iṅwe ya mushumo?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[9]",
+      "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+      "currentDraft": "Which crops use more seeds, water, and compost than they return?",
+      "candidate": "Ndi crops dzifhio dzine dza shumisa seeds, water na compost zwinzhi u fhira zwine dza vhuisa?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[11]",
+      "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "currentDraft": "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+      "candidate": "Musi ni sa athu vhea price, ṅwalani production, packing na selling costs, u katela labour na transport.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[13]",
+      "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "currentDraft": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+      "candidate": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; asking a higher price does not guarantee a sale.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[15]",
+      "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "currentDraft": "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+      "candidate": "Nangani locally suitable crops, ni humbele murahu u bva kha harvest ine na i ṱoḓa. Ṱolani planting conditions and expected time to harvest.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[16]",
+      "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "currentDraft": "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail.",
+      "candidate": "A date that works on another farm may not work here. Engedzani a backup plan musi mvula, maḓi kana zwimela zwi tshi kundelwa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].keyPoints[1]",
+      "sourceEnglish": "Include production and selling costs when assessing a price",
+      "currentDraft": "Include production and selling costs when assessing a price",
+      "candidate": "Katelani production na selling costs musi ni tshi sedza price.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].keyPoints[2]",
+      "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+      "currentDraft": "Label worked examples; use your actual costs for decisions",
+      "candidate": "Label worked examples; shumisani costs dzaṋu dza vhukuma u dzhia tsheo.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].keyPoints[3]",
+      "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+      "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+      "candidate": "Pulani nga ha zwikhala zwa zwiḽiwa ni tshi shumisa nyimele dza u alusa dza henefho na tshifhinga tsha khanwiwa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].question",
+      "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Mulimi u fanela u sedza mini?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+      "candidate": "Bvelani phanḓa ni tshi rengisa nga R15 — short-term loss builds relationships.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "currentDraft": "Stop growing tomatoes entirely",
+      "candidate": "Litshani u tavha matamatisi nga hoṱhe.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "currentDraft": "The selling price, costs and whether another crop would give a better return",
+      "candidate": "Mutengo wa u rengisa, costs, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "currentDraft": "Apply for a subsidy to cover the gap",
+      "candidate": "Apply for a subsidy to cover the gap.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidate": "The example price is below the stated cost. Sedzani phambano na customer demand musi ni sa athu dzhia tsheo ya production i tevhelaho.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[1]",
+      "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "currentDraft": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "candidate": "Pimanisani market fees, transport, packing na unsold produce, khathihi na selling price.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[2]",
+      "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentDraft": "Sedzani market rules na local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidate": "Sedzani market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[5]",
+      "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "currentDraft": "Tendelanani nga contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidate": "Tendelani nga contents, price, payment, na uri hu itea mini when crops are short. Maoda a tshifhinga tshoṱhe a thusa u pulana only when customers and growers can keep the agreement.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[7]",
+      "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+      "currentDraft": "Check the costs and household food needs before promising regular boxes.",
+      "candidate": "Ṱolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[8]",
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentDraft": "Garden area or customer count alone does not predict income. Try a manageable arrangement and ni rekhode results.",
+      "candidate": "Garden area or customer count alone does not predict income. Ringetani arrangement ine na nga kona u i langula, ni ṅwale results.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[11]",
+      "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentDraft": "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Check any certification or claim the buyer requires before using a label.",
+      "candidate": "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, check any certification or claim the buyer requires.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].keyPoints[2]",
+      "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+      "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+      "candidate": "Fulufhedzisani regular boxes fhedzi musi supply na customer terms zwi tshi zwi tendela.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].keyPoints[3]",
+      "sourceEnglish": "Check market rules and describe growing practices honestly",
+      "currentDraft": "Check market rules and describe growing practices honestly",
+      "candidate": "Sedzani market rules, nahone ni ṱaluse growing practices dzaṋu nga u fulufhedzea.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidate": "Smallholder u na na production ine ya sa shandukiswaho vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+      "verdict": "repair",
+      "repairedCandidate": "Murimi wa tsimu ṱhukhu u na na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+      "reason": "The candidate says production “ine ya sa shandukiswaho” (production that does not change), which reverses inconsistent weekly production. Use “fhambana” (vary/differ) to preserve the stated pattern. Semantic proposal only; fluent Tshivenda review is still needed."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentDraft": "A formal market stall needing consistent weekly supply",
+      "candidate": "Formal market stall ine ya ṱoḓa consistent weekly supply.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "currentDraft": "A box scheme needing the same produce weekly",
+      "candidate": "Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+      "candidate": "Informal market kana u rengisa kha vhahura hu si na fixed commitment.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "currentDraft": "A daily-delivery school contract",
+      "candidate": "Thendelano ya tshikolo ine ya ṱoḓa u isa zwithu ḓuvha ḽiṅwe na ḽiṅwe.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].rationale",
+      "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "candidate": "Iyi ndi yone channel nthihi ine ya si ṱoḓe uri a fulufhedzise fixed amount vhege iṅwe na iṅwe — u rengisa zwe a vha nazwo zwa vhukuma.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].question",
+      "sourceEnglish": "How can agreed regular orders help a grower plan?",
+      "currentDraft": "How can agreed regular orders help a grower plan?",
+      "candidate": "Zwi nga thusa hani muḓimi u pulana musi hu na dzioda dzo tendelwaho dza tshifhinga tshoṱhe?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "currentDraft": "Box customers always pay more per kilogram",
+      "candidate": "Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "currentDraft": "Box schemes let you charge extra for packaging",
+      "candidate": "Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "candidate": "Committed subscription income i ni thusa u pulana production u tevhela real demand, nṱhani ha u alusa nga speculation.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentDraft": "Box schemes avoid tax obligations",
+      "candidate": "Box schemes a dzi fhelisi tax obligations.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].rationale",
+      "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "candidate": "Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, payment na costs dza u dzi swikisa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].body.paragraphs[5]",
+      "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "currentDraft": "Use the same simple habit eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+      "candidate": "Tirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].body.paragraphs[8]",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentDraft": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "candidate": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka mali yo tala hi awara yin’wana ni yin’wana ya mitirho?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].body.paragraphs[9]",
+      "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+      "currentDraft": "Which crops use more seeds, water, and compost than they return?",
+      "candidate": "Hi swihi swibyariwa leswi tirhisaka seeds, water na compost swo tala ku tlurisa leswi swi swi vuyisaka?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].body.paragraphs[11]",
+      "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "currentDraft": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "candidate": "Loko u nga se veka price, tsala production, packing and selling costs, ku katsa labour na transport.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].body.paragraphs[13]",
+      "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "currentDraft": "Languta price, costs na ku byala loku landzelaka. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "candidate": "Languta price, costs na ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombelaka a wu tiyisisi leswaku ku ta va ni ku xavisiwa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].body.paragraphs[15]",
+      "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "currentDraft": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "candidate": "Hlawula swibyariwa leswi lulameleke ndhawu ya wena, kutani u hlela u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa planting conditions na expected time to harvest.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].body.paragraphs[16]",
+      "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "currentDraft": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "candidate": "Siku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Engetela backup plan loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].keyPoints[1]",
+      "sourceEnglish": "Include production and selling costs when assessing a price",
+      "currentDraft": "Include production and selling costs when assessing a price",
+      "candidate": "Katsa production ni selling costs loko u kambisisa price.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].keyPoints[2]",
+      "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+      "currentDraft": "Label worked examples; use your actual costs for decisions",
+      "candidate": "Marka worked examples; tirhisa costs ta wena ta xiviri eka swiboho.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].keyPoints[3]",
+      "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+      "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+      "candidate": "Pulana ku pfumaleka ka swakudya hi ku tirhisa swiyimo swa ku byala swa ndhawu ya wena ni nkarhi wa ntshovelo.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].question",
+      "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Murimi u fanele a kambisisa yini?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+      "candidate": "Tshama u xavisa hi R15 — short-term loss builds relationships.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "currentDraft": "Stop growing tomatoes entirely",
+      "candidate": "Tshika ku byala matamatisi hi ku helela.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "currentDraft": "The selling price, costs and whether another crop would give a better return",
+      "candidate": "Selling price, costs ni loko xibyariwa xin’wana xi nga nyika return yo antswa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "currentDraft": "Apply for a subsidy to cover the gap",
+      "candidate": "Endla xikombelo xa subsidy ku pfala gap.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidate": "The example price is below the stated cost. Languta ku hambana ni customer demand u nga se endla xiboho xa production leyi landzelaka.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].body.paragraphs[1]",
+      "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "currentDraft": "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+      "candidate": "Pimanisa market fees, transport, packing na unsold produce, swin’we ni selling price.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].body.paragraphs[4]",
+      "sourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+      "currentDraft": "A box scheme supplies a regular selection to agreed customers.",
+      "candidate": "Box scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].body.paragraphs[5]",
+      "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "currentDraft": "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidate": "Pfumelelanani hi contents, price, payment na leswi humelelaka loko crops are short. Tioda ta nkarhi na nkarhi ti pfuna ku pulana only when customers and growers can keep the agreement.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].body.paragraphs[7]",
+      "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+      "currentDraft": "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
+      "candidate": "Kambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].body.paragraphs[8]",
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentDraft": "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+      "candidate": "Vukulu bya ndhawu ya murimi kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta arrangement leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+      "verdict": "repair",
+      "repairedCandidate": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta arrangement leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+      "reason": "“Ndhawu ya murimi” means the farmer’s area and is less specific than the source’s garden area. “Ndhawu ya xirhapa” restores the garden reference. Technical terms retained pending fluent review."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].body.paragraphs[9]",
+      "sourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "currentDraft": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "candidate": "Loko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].body.paragraphs[11]",
+      "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentDraft": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label.",
+      "candidate": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Loko u nga se tirhisa label, kambisisa any certification or claim the buyer requires.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].keyPoints[2]",
+      "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+      "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+      "candidate": "Tshembisa regular boxes ntsena loko supply ni customer terms swi swi seketela.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].keyPoints[3]",
+      "sourceEnglish": "Check market rules and describe growing practices honestly",
+      "currentDraft": "Check market rules and describe growing practices honestly",
+      "candidate": "Kambisisa market rules kutani u hlamusela growing practices ta wena hi ku vula ntiyiso.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidate": "Mutswari wa purasi leritsongo u ni production leyi nga faniki vhiki ni vhiki — surplus hi mavhiki man’wana, yi va yitsongo hi man’wana. Hi yihi channel leyi n’wi fanelaka swinene?",
+      "verdict": "repair",
+      "repairedCandidate": "Murimi wa purasi leritsongo u ni production leyi nga faniki vhiki ni vhiki — surplus hi mavhiki man’wana, yi va yitsongo hi man’wana. Hi yihi channel leyi n’wi fanelaka swinene?",
+      "reason": "“Mutswari” means parent, which changes the actor from farmer to parent. “Murimi wa purasi leritsongo” identifies the farmer with a small farm. Semantic proposal only; fluent Xitsonga review is still needed."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentDraft": "A formal market stall needing consistent weekly supply",
+      "candidate": "Formal market stall leyi lavaka consistent weekly supply.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "currentDraft": "A box scheme needing the same produce weekly",
+      "candidate": "Box scheme leyi lavaka produce leyi fanaka vhiki ni vhiki.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+      "candidate": "Informal market kumbe ku xavisa eka vaakelani ku nga ri na fixed commitment.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "currentDraft": "A daily-delivery school contract",
+      "candidate": "Kontraka ya xikolo leyi lavaka ku yisa siku ni siku.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].rationale",
+      "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "candidate": "Leyi hi yona channel yin’we ntsena leyi nga laviki leswaku a tshembisa fixed amount vhiki ni vhiki — u xavisa leswi a nga na swona hakunene.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].question",
+      "sourceEnglish": "How can agreed regular orders help a grower plan?",
+      "currentDraft": "How can agreed regular orders help a grower plan?",
+      "candidate": "Tioda ta nkarhi na nkarhi leti ku pfumelelaneke ti nga n’wi pfuna njani murimi ku pulana?",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "currentDraft": "Box customers always pay more per kilogram",
+      "candidate": "Vaxavi va box va hakela mali yo tala hi kilogram minkarhi hinkwato.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "currentDraft": "Box schemes let you charge extra for packaging",
+      "candidate": "Box schemes ti ku pfumelela ku hakela mali yo engeteleka hi ku paka.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "candidate": "Committed subscription income yi ku pfuna ku pulana production hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentDraft": "Box schemes avoid tax obligations",
+      "candidate": "Box schemes a ti herisi tax obligations.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].rationale",
+      "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "candidate": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, payment ni costs ta ku ti hetisisa.",
+      "verdict": "meaning-preserved; unreviewed",
+      "repairedCandidate": null,
+      "reason": "No material semantic shift found against the exact English source in this independent check. This is not fluent/local approval; retain the unreviewed publication label. Where English technical/business anchors remain, they do not alone invalidate the translated framing."
+    }
+  ],
+  "ordinaryEnglishResidueForAuthor": [
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[15]",
+      "residue": "Check planting conditions and expected time to harvest.",
+      "note": "This is ordinary procedural framing. Translate the instruction while retaining technical harvest terminology as needed."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[15]",
+      "residue": "locally suitable crops; Check planting conditions and expected time to harvest.",
+      "note": "Most of the source instruction remains English. Preserve the planting/harvest anchors but localize the ordinary action framing."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[0]",
+      "residue": "short-term loss builds relationships",
+      "note": "Ordinary claim remains English; translate the framing while preserving the distractor claim."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[0]",
+      "residue": "short-term loss builds relationships",
+      "note": "Ordinary claim remains English; translate the framing while preserving the distractor claim."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[3]",
+      "residue": "Apply for a subsidy to cover the gap.",
+      "note": "Entire option is ordinary English. Translate the application action; subsidy may remain an anchor if needed."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[0]",
+      "residue": "short-term loss builds relationships",
+      "note": "Ordinary claim remains English; translate the framing while preserving the distractor claim."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].rationale",
+      "residue": "The example price is below the stated cost.",
+      "note": "This ordinary explanatory sentence remains English. Translate it while preserving the R15/R18 teaching example."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].rationale",
+      "residue": "The example price is below the stated cost.",
+      "note": "This ordinary explanatory sentence remains English. Translate it while preserving the R15/R18 teaching example."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[2]",
+      "residue": "An informal stall does not automatically have no rules or costs.",
+      "note": "The candidate leaves the whole caveat in English. Translate its ordinary logic and retain only “informal stall” if necessary."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[7]",
+      "residue": "before promising regular boxes",
+      "note": "The permission/timing relation is source-critical and still English; localize it, retaining the “regular boxes” term if useful."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[8]",
+      "residue": "Garden area or customer count alone does not predict income.",
+      "note": "This entire caution is ordinary English. Translate while retaining “income” as an anchor if needed."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[11]",
+      "residue": "Before using a label, check any certification or claim the buyer requires.",
+      "note": "The conditional timing and checking instruction remain English. Translate them, retaining certification/claim/label terms if needed."
+    }
+  ]
+}

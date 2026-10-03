@@ -1,0 +1,627 @@
+{
+  "title": "Focused root semantic audit: Market comparison, reliability and all quiz distractors",
+  "date": "2026-10-03",
+  "packet": "/tmp/imbewu-regional-market-remaining-ordinary-closure-candidates-20261003.json",
+  "scope": "Semantic review of the five preceding points plus all 48 quiz distractor options across ST/VE/TS. No repository writes; no fluent approval.",
+  "packetHead": "0778c66698596249cfdc69af7716e3f21f1dfaa8",
+  "entries": [
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[8]",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "current": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka highest return for each hour of work?",
+      "packetCandidate": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka poelo e ngata bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+      "recommendedCandidate": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+      "verdict": "meaning preserved by recommended wording",
+      "reason": "Keeps best/the most and preserves return without narrowing to money."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "current": "Keep selling at R15 — short-term loss builds relationships",
+      "packetCandidate": "Tswela pele o rekisa ka R15 — tahlehelo ya nako e khutshwane e aga dikamano.",
+      "recommendedCandidate": "Tswela pele o rekisa ka R15 — tahlehelo ya nako e khutshwane e aga dikamano.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "current": "Stop growing tomatoes entirely",
+      "packetCandidate": "Emisa ho lema tamati ka ho felletseng.",
+      "recommendedCandidate": "Emisa ho lema tamati ka ho felletseng.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "current": "The selling price, costs and whether another crop would give a better return",
+      "packetCandidate": "Selling price, costs, le hore na crop e nngwe e ka fana ka return e betere.",
+      "recommendedCandidate": "Selling price, costs, le hore na crop e nngwe e ka fana ka return e betere.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "current": "Apply for a subsidy to cover the gap",
+      "packetCandidate": "Etsa kopo ya subsidy ho kwahela gap.",
+      "recommendedCandidate": "Etsa kopo ya subsidy ho kwahela gap.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[1].options[0]",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "current": "Reka meroho mmarakeng ka June le July e nngwe le e nngwe.",
+      "packetCandidate": "Reka meroho mmarakeng ka June le July e nngwe le e nngwe.",
+      "recommendedCandidate": "Reka meroho mmarakeng ka June le July e nngwe le e nngwe.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[1].options[1]",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "current": "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo.",
+      "packetCandidate": "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo.",
+      "recommendedCandidate": "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[1].options[2]",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "current": "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha.",
+      "packetCandidate": "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha.",
+      "recommendedCandidate": "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[1].options[3]",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "current": "Direkoto di bontsha bothata ba monono wa mobu.",
+      "packetCandidate": "Direkoto di bontsha bothata ba monono wa mobu.",
+      "recommendedCandidate": "Direkoto di bontsha bothata ba monono wa mobu.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].body.paragraphs[6]",
+      "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+      "current": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+      "packetCandidate": "Qala ka seo o ka fanang ka sona ka botshepehi le seo bareki ba se batlang.",
+      "recommendedCandidate": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+      "verdict": "repair recommended",
+      "reason": "Keeps reliable supply rather than shifting the meaning to honesty/trustworthiness."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "current": "A formal market stall needing consistent weekly supply",
+      "packetCandidate": "Formal market stall e hlokang consistent weekly supply.",
+      "recommendedCandidate": "Formal market stall e hlokang consistent weekly supply.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "current": "A box scheme needing the same produce weekly",
+      "packetCandidate": "Box scheme e hlokang produce e tshwanang beke le beke.",
+      "recommendedCandidate": "Box scheme e hlokang produce e tshwanang beke le beke.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "current": "An informal market or neighbour sales with no fixed commitment",
+      "packetCandidate": "Informal market kapa thekiso ho baahisani ntle le fixed commitment.",
+      "recommendedCandidate": "Informal market kapa thekiso ho baahisani ntle le fixed commitment.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "current": "A daily-delivery school contract",
+      "packetCandidate": "Konteraka ya sekolo e hlokang ho tlisa letsatsi le letsatsi.",
+      "recommendedCandidate": "Konteraka ya sekolo e hlokang ho tlisa letsatsi le letsatsi.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "current": "Box customers always pay more per kilogram",
+      "packetCandidate": "Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.",
+      "recommendedCandidate": "Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "current": "Box schemes let you charge extra for packaging",
+      "packetCandidate": "Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.",
+      "recommendedCandidate": "Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "current": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "packetCandidate": "Committed subscription income e o dumella ho rera production ho potoloha real demand ho e-na le ho lema ka ho hakanya.",
+      "recommendedCandidate": "Committed subscription income e o dumella ho rera production ho potoloha real demand ho e-na le ho lema ka ho hakanya.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "current": "Box schemes avoid tax obligations",
+      "packetCandidate": "Box schemes ha di qobe tax obligations.",
+      "recommendedCandidate": "Box schemes avoid tax obligations",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "hold exact source",
+      "reason": "Hold source-exact to preserve the false distractor proposition and avoid creating a second correct answer."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "current": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "packetCandidate": "Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke mocha ofe oa thekiso o mo loketseng?",
+      "recommendedCandidate": "Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke channel efe e mo loketseng ka ho fetisisa?",
+      "verdict": "meaning preserved by recommended wording",
+      "reason": "Adds explicit best/suitability degree."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[8]",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "current": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "packetCandidate": "Ndi zwimela zwifhio zwine zwa bveledza yield khulwane kha bed iṅwe na iṅwe? Ndi zwifhio zwine zwa vhuisa tshelede nnzhi kha awara iṅwe na iṅwe ya mushumo?",
+      "recommendedCandidate": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+      "verdict": "meaning preserved by recommended wording",
+      "reason": "Restores the best/the most comparisons, bed/hour units, and avoids narrowing return to cash."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "current": "Keep selling at R15 — short-term loss builds relationships",
+      "packetCandidate": "Bvelani phanḓa ni tshi rengisa nga R15 — short-term loss i fhaṱa vhushaka.",
+      "recommendedCandidate": "Bvelani phanḓa ni tshi rengisa nga R15 — short-term loss i fhaṱa vhushaka.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "current": "Stop growing tomatoes entirely",
+      "packetCandidate": "Litshani u tavha matamatisi nga hoṱhe.",
+      "recommendedCandidate": "Litshani u tavha matamatisi nga hoṱhe.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "current": "The selling price, costs and whether another crop would give a better return",
+      "packetCandidate": "Mutengo wa u rengisa, costs, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+      "recommendedCandidate": "Mutengo wa u rengisa, costs, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "current": "Apply for a subsidy to cover the gap",
+      "packetCandidate": "Apply for subsidy u vala gap.",
+      "recommendedCandidate": "Apply for subsidy u vala gap.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[1].options[0]",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "current": "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe.",
+      "packetCandidate": "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe.",
+      "recommendedCandidate": "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[1].options[1]",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "current": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "packetCandidate": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "recommendedCandidate": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[1].options[2]",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "current": "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria.",
+      "packetCandidate": "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria.",
+      "recommendedCandidate": "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[1].options[3]",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "current": "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.",
+      "packetCandidate": "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.",
+      "recommendedCandidate": "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[5]",
+      "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "current": "Tendelanani nga contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "packetCandidate": "Tendelani nga contents, price, payment, na uri hu itea mini when crops are short. Maoda a tshifhinga tshoṱhe a thusa u pulana only when customers and growers can keep the agreement.",
+      "recommendedCandidate": "Regular orders a thusa u pulana only when customers and growers can keep the agreement.",
+      "verdict": "repair recommended",
+      "reason": "Avoids tshifhinga tshoṱhe (“all the time”); preserves only-when agreement condition."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "current": "A formal market stall needing consistent weekly supply",
+      "packetCandidate": "Formal market stall ine ya ṱoḓa consistent weekly supply.",
+      "recommendedCandidate": "Formal market stall ine ya ṱoḓa consistent weekly supply.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "current": "A box scheme needing the same produce weekly",
+      "packetCandidate": "Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.",
+      "recommendedCandidate": "Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "current": "An informal market or neighbour sales with no fixed commitment",
+      "packetCandidate": "Informal market kana u rengisa kha vhahura hu si na fixed commitment.",
+      "recommendedCandidate": "Informal market kana u rengisa kha vhahura hu si na fixed commitment.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "current": "A daily-delivery school contract",
+      "packetCandidate": "Thendelano ya tshikolo ine ya ṱoḓa u isa zwithu ḓuvha ḽiṅwe na ḽiṅwe.",
+      "recommendedCandidate": "Thendelano ya tshikolo ine ya ṱoḓa u isa zwithu ḓuvha ḽiṅwe na ḽiṅwe.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "current": "Box customers always pay more per kilogram",
+      "packetCandidate": "Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.",
+      "recommendedCandidate": "Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "current": "Box schemes let you charge extra for packaging",
+      "packetCandidate": "Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.",
+      "recommendedCandidate": "Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "current": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "packetCandidate": "Committed subscription income i ni thusa u pulana production u tevhela real demand, nṱhani ha u alusa nga speculation.",
+      "recommendedCandidate": "Committed subscription income i ni thusa u pulana production u tevhela real demand, nṱhani ha u alusa nga speculation.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "current": "Box schemes avoid tax obligations",
+      "packetCandidate": "Box schemes a dzi fhelisi tax obligations.",
+      "recommendedCandidate": "Box schemes avoid tax obligations",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "hold exact source",
+      "reason": "Hold source-exact to preserve the false distractor proposition and avoid creating a second correct answer."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "current": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "packetCandidate": "Murimi wa tsimu ṱhukhu u na na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+      "recommendedCandidate": "Mulimi wa bulasi ḽiṱuku u na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+      "verdict": "meaning preserved by recommended wording",
+      "reason": "Uses canonical Tshivenda Mulimi/Bulasi terms and preserves smallholding and inconsistent supply."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].body.paragraphs[8]",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "current": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "packetCandidate": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka mali yo tala hi awara yin’wana ni yin’wana ya mitirho?",
+      "recommendedCandidate": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+      "verdict": "meaning preserved by recommended wording",
+      "reason": "Restores the best/the most comparisons, bed/hour units, and avoids narrowing return to cash."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "current": "Keep selling at R15 — short-term loss builds relationships",
+      "packetCandidate": "Tshama u xavisa hi R15 — short-term loss yi aka vuxaka.",
+      "recommendedCandidate": "Tshama u xavisa hi R15 — short-term loss yi aka vuxaka.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "current": "Stop growing tomatoes entirely",
+      "packetCandidate": "Tshika ku byala matamatisi hi ku helela.",
+      "recommendedCandidate": "Tshika ku byala matamatisi hi ku helela.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "current": "The selling price, costs and whether another crop would give a better return",
+      "packetCandidate": "Selling price, costs ni loko xibyariwa xin’wana xi nga nyika return yo antswa.",
+      "recommendedCandidate": "Selling price, costs ni loko xibyariwa xin’wana xi nga nyika return yo antswa.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "current": "Apply for a subsidy to cover the gap",
+      "packetCandidate": "Endla xikombelo xa subsidy ku pfala gap.",
+      "recommendedCandidate": "Endla xikombelo xa subsidy ku pfala gap.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[1].options[0]",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "current": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+      "packetCandidate": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+      "recommendedCandidate": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[1].options[1]",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "current": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+      "packetCandidate": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+      "recommendedCandidate": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[1].options[2]",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "current": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+      "packetCandidate": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+      "recommendedCandidate": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[1].options[3]",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "current": "The records show a soil fertility problem",
+      "packetCandidate": "The records show a soil fertility problem",
+      "recommendedCandidate": "The records show a soil fertility problem",
+      "sourceCorrectIndex": 1,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "current": "A formal market stall needing consistent weekly supply",
+      "packetCandidate": "Formal market stall leyi lavaka consistent weekly supply.",
+      "recommendedCandidate": "Formal market stall leyi lavaka consistent weekly supply.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "current": "A box scheme needing the same produce weekly",
+      "packetCandidate": "Box scheme leyi lavaka produce leyi fanaka vhiki ni vhiki.",
+      "recommendedCandidate": "Box scheme leyi lavaka produce leyi fanaka vhiki ni vhiki.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "current": "An informal market or neighbour sales with no fixed commitment",
+      "packetCandidate": "Informal market kumbe ku xavisa eka vaakelani ku nga ri na fixed commitment.",
+      "recommendedCandidate": "Informal market kumbe ku xavisa eka vaakelani ku nga ri na fixed commitment.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "current": "A daily-delivery school contract",
+      "packetCandidate": "Kontraka ya xikolo leyi lavaka ku yisa siku ni siku.",
+      "recommendedCandidate": "Kontraka ya xikolo leyi lavaka ku yisa siku ni siku.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "current": "Box customers always pay more per kilogram",
+      "packetCandidate": "Vaxavi va box va hakela mali yo tala hi kilogram minkarhi hinkwato.",
+      "recommendedCandidate": "Vaxavi va box va hakela mali yo tala hi kilogram minkarhi hinkwato.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 0,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "current": "Box schemes let you charge extra for packaging",
+      "packetCandidate": "Box schemes ti ku pfumelela ku hakela mali yo engeteleka hi ku paka.",
+      "recommendedCandidate": "Box schemes ti ku pfumelela ku charge extra for packaging.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 1,
+      "verdict": "repair recommended",
+      "reason": "Preserves charging as the seller’s action, not paying as the seller’s action."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "current": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "packetCandidate": "Committed subscription income yi ku pfuna ku pulana production hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
+      "recommendedCandidate": "Committed subscription income yi ku pfuna ku pulana production hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 2,
+      "verdict": "meaning preserved",
+      "reason": "Compared with source proposition, including actor, negation, quantity/comparison, and distractor truth value; no material shift found in this focused semantic check."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "current": "Box schemes avoid tax obligations",
+      "packetCandidate": "Box schemes a ti herisi tax obligations.",
+      "recommendedCandidate": "Box schemes avoid tax obligations",
+      "sourceCorrectIndex": 2,
+      "optionIndex": 3,
+      "verdict": "hold exact source",
+      "reason": "Hold source-exact to preserve the false distractor proposition and avoid creating a second correct answer."
+    }
+  ],
+  "findings": {
+    "taxDistractors": {
+      "count": 3,
+      "verdict": "hold exact English source",
+      "reason": "Each source option asserts that box schemes avoid tax obligations. The current translated candidates negate that proposition (“do not avoid/eliminate”), changing a false distractor into a true claim and creating a second correct answer. Preserve the exact English source for all three."
+    },
+    "tsPackagingDistractor": {
+      "verdict": "repair recommended",
+      "reason": "“ku hakela” means pay; source says the seller can charge extra. Root wording retains charge, preserving actor and direction of payment."
+    },
+    "otherDistractors": {
+      "verdict": "no additional material truth-value, negation, or actor shifts found in this scan",
+      "optionsChecked": 48
+    },
+    "earlierComparativeReliabilityPoints": {
+      "bestAndMost": "Root proposals restore explicit best/the most and do not narrow return to money.",
+      "sesothoReliability": "Use exact “reliably supply” anchor; candidate “ka botshepehi” can shift toward honesty.",
+      "tshivendaRegularOrders": "“Maoda a tshifhinga tshoṱhe” can mean orders all the time; retain “Regular orders” anchor. The only-when qualification stays exact.",
+      "smallholderQuestions": "ST root wording restores “best”; VE root wording uses Mulimi/Bulasi phrasing and preserves that the farm, not the farmer, is small."
+    }
+  },
+  "preservation": {
+    "sourceCorrectIndicesAndOptionOrder": "unchanged in packet; no option relocation recommended",
+    "falseDistractorTruthValue": "preserved by holding all three tax options source-exact",
+    "noNewGuaranteesOrConditions": true
+  },
+  "reviewLimit": "Not fluent/local approval; publication remains unreviewed pending facilitator review."
+}

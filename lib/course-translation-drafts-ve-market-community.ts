@@ -1,4 +1,4 @@
-/** Source-paired Tshivenda learner draft for one Market lesson field. */
+/** Unreviewed, source-paired Tshivenda ordinary-wording drafts for Market L1/L2; technical anchors remain English. */
 import type { TshivendaCourseModuleDraft, TshivendaSourcePair } from './course-translation-drafts-ve.ts';
 
 const pair = (sourceEnglish: string, tshivendaDraft: string): TshivendaSourcePair => ({
@@ -35,7 +35,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
-        "tshivendaDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nSedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail.",
+        "tshivendaDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nNdi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?\n\nNdi crops dzifhio dzine dza shumisa seeds, water na compost zwinzhi u fhira zwine dza vhuisa?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea price, ṅwalani production, packing na selling costs, u katela labour na transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nSedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; asking a higher price does not guarantee a sale.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani crops dzine dza tea vhupo haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.\n\nA date that works on another farm may not work here. Engedzani a backup plan musi mvula, maḓi kana zwimela zwi tshi kundelwa.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -46,54 +46,54 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Include production and selling costs when assessing a price",
-          "tshivendaDraft": "Include production and selling costs when assessing a price",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Katelani production na selling costs musi ni tshi sedza price.",
+          "reviewStatus": 'machine-draft'
         },
         {
           "sourceEnglish": "Label worked examples; use your actual costs for decisions",
-          "tshivendaDraft": "Label worked examples; use your actual costs for decisions",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Label worked examples; shumisani costs dzaṋu dza vhukuma u dzhia tsheo.",
+          "reviewStatus": 'machine-draft'
         },
         {
           "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
-          "tshivendaDraft": "Plan for food gaps using local growing conditions and harvest timing",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Pulani nga ha zwikhala zwa zwiḽiwa ni tshi shumisa nyimele dza u alusa dza henefho na tshifhinga tsha khanwiwa.",
+          "reviewStatus": 'machine-draft'
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
-            "tshivendaDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Mulimi u fanela u sedza mini?",
+            "reviewStatus": 'machine-draft'
           },
           "options": [
             {
               "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
-              "tshivendaDraft": "Keep selling at R15 — short-term loss builds relationships",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Bvelani phanḓa ni tshi rengisa nga R15 — short-term loss i fhaṱa vhushaka.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Stop growing tomatoes entirely",
-              "tshivendaDraft": "Stop growing tomatoes entirely",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Litshani u tavha matamatisi nga hoṱhe.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
-              "tshivendaDraft": "The selling price, costs and whether another crop would give a better return",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Mutengo wa u rengisa, costs, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+              "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Apply for a subsidy to cover the gap",
-              "tshivendaDraft": "Apply for a subsidy to cover the gap",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Apply for subsidy u vala gap.",
+              "reviewStatus": 'machine-draft'
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
-            "tshivendaDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Mutengo wa tsumbo u re fhasi ha cost yo ambiwaho. Sedzani phambano na customer demand musi ni sa athu dzhia tsheo ya production i tevhelaho.",
+            "reviewStatus": 'machine-draft'
           }
         },
         {
@@ -248,17 +248,17 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         ].join('\n\n'),
         [
           "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
-          "Compare market fees, transport, packing and unsold produce as well as the selling price.",
-          "Sedzani market rules na local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+          "Pimanisani market fees, transport, packing na unsold produce, khathihi na selling price.",
+          "Sedzani market rules and local trading and food requirements. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
           "Direct selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.",
           "Box scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.",
-          "Tendelanani nga contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+          "Tendelani nga contents, price, payment, na uri hu itea mini when crops are short. Regular orders a thusa u pulana only when customers and growers can keep the agreement.",
           "Thomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
-          "Check the costs and household food needs before promising regular boxes.",
-          "Garden area or customer count alone does not predict income. Try a manageable arrangement and ni rekhode results.",
+          "Ṱolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.",
+          "Tshikalo tsha ngade kana tshivhalo tsha vharengi, zwone fhedzi, a zwi anganyeli income. Ringetani arrangement ine na nga kona u i langula, ni ṅwale results.",
           "Arali production i tshi shanduka vhege nga vhege, avoid promising a fixed delivery you cannot supply.",
           "Offer the surplus you have and tendelanani nga clear terms na vharengi.",
-          "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Check any certification or claim the buyer requires before using a label.",
+          "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
         ].join('\n\n'),
       ),
       keyPoints: [
@@ -267,31 +267,31 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
           'Compare costs and losses as well as selling price',
           'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.',
         ),
-        hold('Promise regular boxes only when supply and customer terms support them'),
-        hold('Check market rules and describe growing practices honestly'),
+        pair('Promise regular boxes only when supply and customer terms support them', 'Fulufhedzisani regular boxes fhedzi musi supply na customer terms zwi tshi zwi tendela.'),
+        pair('Check market rules and describe growing practices honestly', 'Sedzani market rules, nahone ni ṱaluse growing practices dzaṋu nga u fulufhedzea.'),
       ],
       quiz: [
         {
-          question: hold('A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?'),
+          question: pair('A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?', 'Mulimi wa bulasi ḽiṱuku u na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?'),
           options: [
-            hold('A formal market stall needing consistent weekly supply'),
-            hold('A box scheme needing the same produce weekly'),
-            hold('An informal market or neighbour sales with no fixed commitment'),
-            hold('A daily-delivery school contract'),
+            pair('A formal market stall needing consistent weekly supply', 'Formal market stall ine ya ṱoḓa consistent weekly supply.'),
+            pair('A box scheme needing the same produce weekly', 'Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.'),
+            pair('An informal market or neighbour sales with no fixed commitment', 'Informal market kana u rengisa kha vhahura hu si na fixed commitment.'),
+            pair('A daily-delivery school contract', 'Thendelano ya tshikolo ine ya ṱoḓa u isa zwithu ḓuvha ḽiṅwe na ḽiṅwe.'),
           ],
           sourceCorrectIndex: 2,
-          rationale: hold("This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has."),
+          rationale: pair("This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.", "Iyi ndi yone channel nthihi ine ya si ṱoḓe uri a fulufhedzise fixed amount vhege iṅwe na iṅwe — u rengisa zwe a vha nazwo zwa vhukuma."),
         },
         {
-          question: hold('How can agreed regular orders help a grower plan?'),
+          question: pair('How can agreed regular orders help a grower plan?', 'Agreed regular orders zwi nga thusa hani mulimi u pulana?'),
           options: [
-            hold('Box customers always pay more per kilogram'),
-            hold('Box schemes let you charge extra for packaging'),
-            hold('Committed subscription income lets you plan production around real demand instead of growing speculatively'),
+            pair('Box customers always pay more per kilogram', 'Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.'),
+            pair('Box schemes let you charge extra for packaging', 'Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.'),
+            pair('Committed subscription income lets you plan production around real demand instead of growing speculatively', 'Committed subscription income i ni thusa u pulana production u tevhela real demand, nṱhani ha u alusa nga speculation.'),
             hold('Box schemes avoid tax obligations'),
           ],
           sourceCorrectIndex: 2,
-          rationale: hold('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.'),
+          rationale: pair('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.', 'Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, payment na costs dza u dzi swikisa.'),
         },
       ],
     },
