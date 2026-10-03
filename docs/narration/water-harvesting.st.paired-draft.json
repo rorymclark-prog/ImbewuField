@@ -14,7 +14,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ho bokella metsi",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
@@ -69,7 +71,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Meralo e mmedi ya swale",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
@@ -146,13 +150,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rera safe overflow pele o tjheka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Route eo ha e a tshwanela ho senya slope ka erosion kapa ho romela metsi a senyang ho moahisani. Downstream swale kapa dam e lokela ho kgona ho amohela metsi ao ka polokeho.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kopa trained local adviser hore a hlahlobe mobu, slope le storm flow. Setshwantsho ha se construction design.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -193,14 +203,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlahloba sebaka pele o tjheka",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Slope feela ha e bolele hore swale e a lokela. Soil, drainage, unstable ground le metsi a tswang upslope kaofela di bohlokwa.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boloka ground cover e ntle. Fumana local assessment pele o tjheka mobung o steep, wet kapa unstable. Grass barriers le terraces le tsona di hloka design e loketseng site.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -217,11 +233,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sheba: metso e thusa ho tshwara mobu",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Metso e thusa ho tshwara mobu moleng o lenngweng wa contour.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
             "status": "english-hold"
@@ -242,28 +262,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Boloka metsi a pula bakeng sa Dry Season",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Rainfall seasons differ across South Africa.",
-                "status": "draft",
-                "text": "Dihla tsa dipula di fapana ho pholletsa le Afrika Borwa."
-              },
-              {
-                "sourceEnglish": " Use local records and plan for dry periods; a full dam is not guaranteed.",
-                "status": "english-hold"
-              }
-            ]
+            "status": "draft",
+            "text": "Dihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dry periods; letamo le tletseng ha le a tiisetswa.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -285,13 +302,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Letamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Phallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -337,13 +360,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Metsi a ka lahleha ka evaporation and seepage. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Keep the spillway clear and maintain the bank cover specified in the design. O se ke wa jala difate hodima lerako la letamo la mobu.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Diphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -362,20 +391,30 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Marulelo a hao ke sebaka sa ho bokella metsi",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Marulelo a hao a ka bokella metsi a pula. Bongata bo itshetlehile ka boholo ba marulelo, pula le tahlehelo.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlahloba hore na thepa ya marulelo e loketse ho bokella metsi a pula pele o hokela tanka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa boholo ba marulelo jwalo ka ha bo bonwa ho tloha hodimo le ditlaleho tsa pula ya sebaka seo. Ebe o dumella metsi a fosang koto, a kgelohang kapa a kgaphatsehang ha tanka e tletse.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "An annual total does not tell you how much water will be available during a dry spell. Bapisa phepelo le tshebediso eo o e rerileng.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -397,13 +436,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Metsi a theohang marulelong a ka nka lerole, mantle le tshilafalo e nngwe. Sekgelo sa ho qala ha phallo (first-flush diverter) se boloka karolo e nngwe ya metsi a pele a phallang kantle ho tanka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bongata bo hlokahalang ba ho kgeloha bo itshetlehile ka marulelo le tsamaiso. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sekgelo (diverter) ha se etse hore metsi a setseng a bolokehele ho nowa.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -449,13 +494,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boholo ba tanka bo itshetlehile ka tlhoko ya metsi, pula, boholo ba marulelo le the length of dry periods.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ngola tshebediso e rerilweng mme o hakanye tlhoko ya yona ho tswa ditlalehong tsa hao. Bapisa seo le phepelo ho pholletsa le dihla.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rala seo o tla se etsa ha metsi a bolokilweng a qala ho fela. Lebitso la provense feela le ke ke la o jwetsa boholo ba tanka eo o e hlokang.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -477,13 +528,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boloka tanka e kwahetswe, screen openings against insects, mme o hlokomele marulelo, dikoto le sekgelo (diverter). Boloka metsi a pula a arohane le diphaephe tsa metsi a nowang.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Water that looks clear may still contain germs or chemicals. Botsa balaodi ba bophelo bo botle ba sebaka seo ka diteko le kalafo tse loketseng tshebediso e rerilweng.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sefa sa mantlha feela hase tiiso ya metsi a nowang. Metsi a sebediswang dijalong tsa dijo le ona a hloka tlhahlobo ya polokeho.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -500,7 +557,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Metsi a sebedisitsweng a fapana ho ya ka mohlodi",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
@@ -579,7 +638,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Haeba reuse system e se e sebetsa and the water smells bad, pools or harms plants, emisa ho e sebedisa mme seek qualified local advice.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -603,13 +664,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Haha A-frame level ka poles tse tharo le weighted string.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E sebedise ho fumana mola o le mong wa level ho parola letsoapong la hao.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nka foto ya A-frame le mola oo o o tshwaileng.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           }
         ]
       }
@@ -629,23 +696,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlahloba mosebetsi wa hao",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A-frame ya ka e ahilwe mme ke e lekile.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E fetole — it should read the same.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke tshwaile bonyane dintlha tse tharo tse bophahamong bo le bong ho parola letsoapong la ka.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mola oo ke o tshwaileng o parola letsoapong, ha o ye tlase letsoapong.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nako e nyane e utlwahalang bakeng sa mosebetsi wa nnete: matsatsi a 5.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           }
         ]
       }

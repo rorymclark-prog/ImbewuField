@@ -14,7 +14,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ku hlengeleta mati",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
@@ -146,13 +148,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -193,14 +201,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kambela ndhawu u nga si cela",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet or unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -217,11 +231,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: timitsu ti pfuna ku khoma misava",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Timitsu ti pfuna ku khoma misava eka layini ya contour leyi byariweke.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
             "status": "english-hold"
@@ -242,28 +260,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlayisa mati ya mpfula ya nguva yo oma",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Rainfall seasons differ across South Africa.",
-                "status": "draft",
-                "text": "Tinguva ta mpfula ta hambana eAfrika Dzonga."
-              },
-              {
-                "sourceEnglish": " Use local records and plan for dry periods; a full dam is not guaranteed.",
-                "status": "english-hold"
-              }
-            ]
+            "status": "draft",
+            "text": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko u nga si cinca watercourse kumbe ku aka storage works, kamba authorisation leyi lavekaka eka water authority.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -285,13 +300,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Damu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "An uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -337,13 +358,17 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Animals can damage banks and add manure to the water. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -362,17 +387,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lwangu ra wena i ndhawu yo hlengeleta mati",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
             "status": "english-hold"
@@ -397,13 +430,17 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Roof runoff can carry dust, droppings and other contamination. First-flush diverter yi endla leswaku some of the first runoff yi nga ngheni etankini.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Diverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -449,13 +486,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya dry periods.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala intended uses kutani u estimate demand ya wona u tirhisa tirhekhodo ta wena n'wini. Compare that with supply through the seasons.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. A province name alone cannot tell you the tank size you need.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -477,13 +520,17 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayisa thanki yi funengetiwile. Screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Basic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka food crops na wona ya lava safety assessment.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -500,7 +547,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mati lama tirhisiweke ya hambana hi xihlovo",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
@@ -603,13 +652,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vaka A-frame level hi tipolo tinharhu ni ntambhu leyi nga ni ntiko.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi tirhisa ku kuma layini yin’we yo ringana across slope ya wena.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Teka xifaniso xa A-frame ni layini leyi u yi funghileke.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           }
         ]
       }
@@ -629,23 +684,35 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kambela ntirho wa wena",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A-frame ya mina yi akiwile naswona ndzi yi ringile.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi hundzuluxele; yi fanele yi hlaya leswi fanaka.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndzi funghile at least three points eka height yo fana across slope ya mina.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Layini leyi ndzi yi funghileke yi tsemakanya slope; a yi yi ehansi ka slope.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nkarhi wa le hansi lowu twalaka wa ntirho wa xiviri: 5 wa masiku.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           }
         ]
       }
