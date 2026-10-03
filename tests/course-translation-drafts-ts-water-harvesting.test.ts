@@ -98,10 +98,10 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
       assert.ok(draftParagraphs[10].startsWith('Offer surplus leyi u nga na yona'),
         'the surplus offer and customer-agreement framing is now drafted');
       assert.ok(draftParagraphs[1].startsWith('Pimanisa '));
-      assert.ok(draftParagraphs[1].includes('market fees, transport, packing na unsold produce'));
-      assert.ok(draftParagraphs[1].includes('selling price'));
-      assert.ok(draftParagraphs[2].startsWith('Kambisisa market rules'));
-      assert.ok(draftParagraphs[2].includes('An informal stall does not automatically have no rules or costs.'));
+      assert.ok(draftParagraphs[1].includes('market fees, transport, ku paka ni leswi nga xavisiwangiki'));
+      assert.ok(draftParagraphs[1].includes('nxavo wo xavisa'));
+      assert.ok(draftParagraphs[2].startsWith('Kambisisa milawu ya makete'));
+      assert.ok(draftParagraphs[2].includes('Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.'));
       assert.ok(draftParagraphs[3].includes('can retain more of the sale price'));
       assert.ok(draftParagraphs[3].startsWith('Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi,'),
         'the bounded price claim and ordinary time/customer-care conditions stay together');
@@ -137,8 +137,8 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
         'select the source-paired end-of-season memory reminder');
       assert.equal(draftParagraphs[1], 'Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.',
         'the distinct harvest uses remain visible beside the exact English source');
-      assert.equal(draftParagraphs[7], 'Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.',
-        'the season-of-records concept is screened while crop and price decisions stay in English');
+      assert.equal(draftParagraphs[7], 'Nguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.',
+        'one season of records answers practical questions without weakening the source claim with “can”');
       assert.equal(draftParagraphs[2], 'Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.');
       assert.equal(draftParagraphs[4], 'Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin\'wana ni xin\'wana xi yeke kona.',
         'unit labels and produce names stay exact while the recording action is drafted');
@@ -149,7 +149,7 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
       assert.equal(draftParagraphs[12], sourceParagraphs[12], 'the R18/R15 numeric worked example remains exact English');
       assert.ok(draftParagraphs[8].includes('best yield per bed') && draftParagraphs[8].includes('the most return for each hour of work'), 'the best/most comparison stays exact');
       assert.ok(draftParagraphs[11].includes('production, packing and selling costs'), 'the cost categories remain named in English');
-      assert.ok(draftParagraphs[15].includes('planting conditions') && draftParagraphs[15].includes('expected time to harvest'), 'planting conditions and harvest timing remain explicit');
+      assert.ok(draftParagraphs[15].includes('swiyimo swa ku byala') && draftParagraphs[15].includes('nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona'), 'planting conditions and expected harvest time stay explicit in learner wording');
       assert.ok(draftParagraphs[16].includes('loko mpfula, mati kumbe swibyariwa swi tsandzeka'), 'backup planning remains tied to failure conditions');
       for (const index of [5, 10, 13]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
       assert.ok(draftParagraphs[5].includes('mukhuva lowu wo olova'), 'ordinary simple-habit wording is localized');

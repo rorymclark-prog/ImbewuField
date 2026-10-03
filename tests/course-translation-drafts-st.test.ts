@@ -254,7 +254,7 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
   // Checked ordinary prose now replaces whole-paragraph holds; the worked price example remains exact.
   assert.equal(draftParagraphs[12], sourceParagraphs[12], 'R18 cost and R15 sale teaching example remain exact English');
-  assert.ok(draftParagraphs[13].includes('ha e netefatse thekiso'), 'the sale remains explicitly non-guaranteed');
+  assert.ok(draftParagraphs[13].includes('ha e tiise thekiso'), 'the sale remains explicitly non-guaranteed');
   for (const index of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index], `selected record-keeping paragraph ${index + 1} should be a visible draft`);
   }
@@ -265,7 +265,7 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
     'Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.');
   assert.equal(draftParagraphs[14],
     'Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.',
-    'the household food-gap prompt is a screened draft, while crop and price decisions stay exact English');
+    'the household food-gap prompt remains source-paired before the translated planning guidance');
 
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.equal(lesson.keyPoints[0].reviewStatus, 'machine-draft', 'the previously drafted harvest destination point remains a draft');

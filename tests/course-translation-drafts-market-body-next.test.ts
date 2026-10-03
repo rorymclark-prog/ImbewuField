@@ -18,8 +18,8 @@ test('Tshivenda Market L1 body keeps record examples and sale limits paired to t
   assert.equal(draft.body.reviewStatus, 'machine-draft');
   assert.equal(paragraphs.length, 17);
   assert.equal(paragraphs[6], 'Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.');
-  assert.ok(paragraphs[13].startsWith('Sedzani price, costs na u ṱavha hu tevhelaho.'));
-  assert.ok(paragraphs[13].includes('asking a higher price does not guarantee a sale.'), 'higher prices remain explicitly non-guaranteed');
+  assert.ok(paragraphs[13].startsWith('Sedzani mutengo, costs na u ṱavha hu tevhelaho.'));
+  assert.ok(paragraphs[13].includes('mutengo wa nṱha une na u humbela a u fulufhedzisi uri hu ḓo rengiswa.'), 'higher prices remain explicitly non-guaranteed');
   assert.notEqual(paragraphs[15], sourceParagraphs[15], 'ordinary crop and work-backwards framing is paired as a draft');
   assert.ok(paragraphs[15].includes('crops') && paragraphs[15].includes('harvest') && paragraphs[15].includes('Ṱolani nyimele dza u zwala') && paragraphs[15].includes('tshifhinga tsho lavhelelwaho tsha u kaṋa'), 'crop choice and backwards planning keep planting conditions and expected harvest timing');
   assert.equal(paragraphs[12], sourceParagraphs[12], 'preserve the teaching-example disclaimer and exact R18/R15 comparison');
@@ -55,7 +55,7 @@ test('Xitsonga Market L2 body preserves reliability, conditional commitments and
   assert.ok(paragraphs[10].startsWith('Offer surplus leyi u nga na yona'));
   assert.ok(paragraphs[10].includes('terms leti nga erivaleni ni vaxavi.'));
   assert.notEqual(paragraphs[2], sourceParagraphs[2], 'ordinary market-rule framing is now a paired draft');
-  assert.ok(paragraphs[2].includes('informal') && paragraphs[2].includes('rules') && paragraphs[2].includes('costs'), 'the informal-trade caveat remains explicit');
+  assert.ok(paragraphs[2].includes('milawu ya makete') && paragraphs[2].includes('local trading and food requirements') && paragraphs[2].includes('a ku na milawu kumbe costs'), 'the informal-trade caveat remains explicit');
   // Paragraph 11 was already mixed at base 00abeeb7; preserve that draft and its exact compliance condition.
   assert.ok(paragraphs[4].includes('regular') && paragraphs[4].includes('vaxavi'), 'box schemes are described as serving customers who agreed to them');
   assert.ok(paragraphs[9].includes('fixed delivery') && paragraphs[9].includes('u nga ta ka u nga swi koti ku yi nyika'), 'variable production does not become a promise the grower cannot meet');
@@ -76,8 +76,8 @@ test('Sesotho Market L2 body retains business conditions around localized framin
   assert.equal(draft.body.reviewStatus, 'machine-draft');
   assert.equal(paragraphs.length, 12);
   assert.equal(paragraphs[0], 'Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.');
-  assert.ok(paragraphs[1].includes('market fees') && paragraphs[1].includes('ho paka') && paragraphs[1].includes('dihlahiswa tse sa rekiswang') && paragraphs[1].includes('selling price'), 'compare costs and unsold produce alongside price');
-  assert.ok(paragraphs[1].includes('selling price'), 'selling price remains part of the comparison');
+  assert.ok(paragraphs[1].includes('ditefello tsa mmaraka') && paragraphs[1].includes('dipalangoang') && paragraphs[1].includes('ho paka') && paragraphs[1].includes('dihlahiswa tse sa rekiswang') && paragraphs[1].includes('theko ya thekiso'), 'compare market fees, transport, packing and unsold produce alongside sale price');
+  assert.ok(paragraphs[1].includes('theko ya thekiso'), 'selling price remains part of the comparison');
   assert.notEqual(paragraphs[2], sourceParagraphs[2], 'ordinary market-rule wording is paired as a draft');
   assert.ok(paragraphs[2].toLowerCase().includes('informal') && paragraphs[2].includes('ha ho na melao kapa ditjeo'), 'an informal stall is not treated as having no rules or costs');
   assert.ok(paragraphs[3].includes('can retain more of the sale price'));

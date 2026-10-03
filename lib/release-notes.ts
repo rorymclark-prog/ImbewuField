@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: 'ba1f4b08', changes: [
+    'Market lessons add fuller regional wording beside the complete English source.',
+    'The price example and sales conditions remain visible for facilitator review.',
+  ], tour: [
+    { title: 'Review regional Market lesson wording',
+      where: 'Study → Market Gardening & Community → Lessons 1 and 2',
+      detail: 'Compare the unreviewed drafts with English when reviewing costs and sales.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: '39873b35', changes: [
     'Soil slides add marked regional drafts beside their complete English source.',
     'Jar-test limits and leachate warnings stay visible in the silent slide pack.',
