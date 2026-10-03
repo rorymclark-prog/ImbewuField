@@ -1,0 +1,990 @@
+{
+  "_lang": "zu",
+  "_status": "DRAFT — machine-assisted; must be read back by a first-language isiZulu speaker who farms before printing",
+  "posters": {
+    "T-P01": {
+      "headline": "Isivumelwano sethu sokufunda",
+      "labels": [
+        "Sisenzile",
+        "Siyasigcina"
+      ],
+      "question": "Yini ekusizayo ukuthi ufunde?"
+    },
+    "T-P02": {
+      "headline": "Abantu abadala bafunda kanjani",
+      "labels": [
+        "Yenza",
+        "Buka emuva",
+        "Qonda",
+        "Kusebenzise"
+      ],
+      "question": "Izifundo zakho zima kuphi?"
+    },
+    "T-P03": {
+      "headline": "Buka · Zama · Khuluma · Hamba nakho",
+      "labels": [
+        "Baheheni",
+        "Izandla emsebenzini",
+        "Imibuzo emithathu",
+        "Isenzo esisodwa"
+      ],
+      "question": "Ubani okhuluma kakhulu esinyathelweni ngasinye?"
+    },
+    "T-P04": {
+      "headline": "Uthisha akhulume: 30% noma ngaphansi",
+      "labels": [
+        "Uthisha: 3 kwangu-10",
+        "Abafundi: 7 kwangu-10",
+        "Umaka owodwa ngomzuzu"
+      ],
+      "question": "Ubani obale namuhla?"
+    },
+    "T-P05": {
+      "headline": "Qala ngesenzo",
+      "labels": [
+        "Isenzo",
+        "Kuyini",
+        "Kahle kangakanani"
+      ],
+      "question": "Ungakubona ngaphambi kwasemini?"
+    },
+    "T-P06": {
+      "headline": "Abantu abahlanu, imisebenzi emihlanu",
+      "labels": [
+        "Umholi",
+        "Ogcina isikhathi",
+        "Ophethe izinto",
+        "Umbhali",
+        "Umbiki"
+      ],
+      "question": "Ithuba likabani kusasa?"
+    },
+    "T-P07": {
+      "headline": "Izandla emsebenzini, hhayi i-demo",
+      "labels": [
+        "I-kit eqenjini ngalinye",
+        "I-demo: imizuzu 3",
+        "Amaqembu abantu 5",
+        "Iziteshi zihlukene",
+        "Izandla ngemuva",
+        "I-kit eyodwa? Jikelezani"
+      ],
+      "question": "Ubani obebuka nje?"
+    },
+    "T-P08": {
+      "headline": "Khwela isitebhisi semibuzo",
+      "labels": [
+        "Umbuzo ovaliwe",
+        "Umbuzo ovulekile",
+        "Umbuzo ojulile",
+        "Linda imizuzwana 5",
+        "Wubuyisele eqenjini"
+      ],
+      "question": "Abanye bacabangani?"
+    },
+    "T-P09": {
+      "headline": "Iphosta efundisayo",
+      "labels": [
+        "Umqondo owodwa",
+        "Amagama 25, akwedlule",
+        "Isihloko esifushane",
+        "Isithombe esikhulu, ngaphandle kwamagama",
+        "Amalebula anezinombolo",
+        "Umbuzo owodwa"
+      ],
+      "question": "Iyafundeka kude ngo-6 m?"
+    },
+    "T-P10": {
+      "headline": "Izinkanyezi ezimbili nesifiso",
+      "labels": [
+        "Uthisha ukhuluma kuqala",
+        "Inkanyezi: ecacile",
+        "Inkanyezi: ecacile",
+        "Isifiso: \"ngokuzayo mhlawumbe\"",
+        "Yithi ngiyabonga"
+      ],
+      "question": "Yini ozoyizama ngokuzayo?"
+    },
+    "T-P11": {
+      "headline": "Vusa igumbi",
+      "labels": [
+        "Ilanga Nomthunzi",
+        "Inqwaba ye-Compost",
+        "Uxhumano Lwempilo",
+        "Isiphepho Semvula",
+        "Dlulisa Ukushaya Izandla",
+        "Ukushintshana Ngembewu"
+      ],
+      "question": "Ubani ozohola olandelayo?"
+    },
+    "T-P12": {
+      "headline": "Fundisa ngalokho onakho",
+      "labels": [
+        "Ilanga ngemuva kwabafundi",
+        "Iphosta ezingeni lamehlo",
+        "Isiyingi: bonke bayabona",
+        "Umhlane wakho emoyeni",
+        "Yima, bese ukhuluma"
+      ],
+      "question": "Yini engafundisa?"
+    },
+    "T-P13": {
+      "headline": "Isifundo esisodwa, izindlela ezintathu",
+      "labels": [
+        "Iphosta",
+        "Ama-slide",
+        "I-app",
+        "Iphepha elisekelayo"
+      ],
+      "question": "Kuthiwani uma ugesi ucima?"
+    },
+    "T-P14": {
+      "headline": "Dlulisela, ungathathi izintambo",
+      "labels": [
+        "Hlelani ozohola",
+        "Dlulisela ngezwi",
+        "Umngane usebenza ngokuthula",
+        "Thinta indlebe: ngingengeza?",
+        "Nikanani izinkanyezi"
+      ],
+      "question": "Ubani ohola olandelayo?"
+    },
+    "T-P15": {
+      "headline": "Ingabe bakufundile?",
+      "labels": [
+        "Babuke bekwenza",
+        "Imibuzo ngezithombe",
+        "Babuze"
+      ],
+      "question": "Yini abangayenza manje?"
+    },
+    "T-P16": {
+      "headline": "Silungile ngoSuku 0",
+      "labels": [
+        "Ama-crate eqenjini ngalinye",
+        "Amaphosta alengisiwe",
+        "I-flip folder",
+        "Ikhithi yosizo lokuqala ivuliwe",
+        "Amadivayisi ashajiwe"
+      ],
+      "question": "Yini engekho?"
+    },
+    "T-P17": {
+      "headline": "Wonke umuntu uyafunda",
+      "labels": [
+        "Izithombe, hhayi amagama kuphela",
+        "Isikhathi solimi",
+        "Umsebenzi womuntu wonke",
+        "Imisebenzi yokuhlala phansi",
+        "Buzani abadala"
+      ],
+      "question": "Ubani ongabambi iqhaza?"
+    },
+    "T-P18": {
+      "headline": "Gcina uthisha eqinile",
+      "labels": [
+        "Izifundo ezintathu, bese uphumula",
+        "Usuku 0 njalo",
+        "Londoloza izwi lakho",
+        "Isigqoko, amanzi, umthunzi",
+        "Umngane wakusihlwa",
+        "Lalela, bese udlulisela"
+      ],
+      "question": "Yini ekuqeda amandla?"
+    },
+    "T-P19": {
+      "headline": "Izinto eziyishumi ze-agroecology",
+      "labels": [
+        "Ukwehlukahlukana",
+        "Ukwabelana ngolwazi",
+        "Ukusizana kwezinto",
+        "Ukonga",
+        "Ukusebenzisa kabusha",
+        "Ukuqina",
+        "Ubuntu",
+        "Amasiko okudla",
+        "Ukubusa ngobulungiswa",
+        "Umnotho wokubambisana"
+      ],
+      "question": "Yikuphi esiqine kakhulu kukho?"
+    },
+    "T-P20": {
+      "headline": "Imigomo yokuhlela eyi-12",
+      "labels": [
+        "Buka",
+        "Bamba amandla",
+        "Thola isivuno",
+        "Yamukela impendulo",
+        "Sebenzisa okuvuselelekayo",
+        "Ungamoshi lutho",
+        "Qala ngesimo esikhulu",
+        "Hlanganisa",
+        "Okuncane, kancane",
+        "Azisa ukwehlukahlukana",
+        "Sebenzisa imiphetho",
+        "Yamukela ushintsho"
+      ],
+      "question": ""
+    },
+    "T-P21": {
+      "headline": "Hlola eceleni ngeceleni",
+      "labels": [
+        "Iziqephu ezimbili, ushintsho olulodwa",
+        "Bheka njalo ngeviki",
+        "Linganisa futhi udwebe",
+        "Iqembu liyanquma"
+      ],
+      "question": "Yini ozoyihlola?"
+    },
+    "T-P22": {
+      "headline": "Ukuzola esikhathini esinzima",
+      "labels": [
+        "Phefumula",
+        "Kusho ngomusa",
+        "Lalela, ubuze",
+        "Nikeza indlela eya phambili",
+        "Landelela ngasese"
+      ],
+      "question": "Ingabe wonke umuntu uphephile?"
+    }
+  },
+  "slides": {
+    "T-D1-01": {
+      "title": "Siyanamukela",
+      "screen": [
+        "Teach the Teachers (Fundisa Abafundisi)",
+        "Usuku 1 kwezi-5 · Abafundi kuqala"
+      ]
+    },
+    "T-D1-02": {
+      "title": "Igama nento",
+      "screen": [
+        "Igama lenu, lapho nisebenza khona",
+        "Into eyodwa eningafundisa ngayo",
+        "Imizuzwana 30 ngamunye"
+      ]
+    },
+    "T-D1-03": {
+      "title": "Isivumelwano sethu sokufunda",
+      "screen": [
+        "Imithetho emithathu esisiza ukufunda",
+        "Umqondo owodwa ku-sticky note",
+        "Sisenzile, siyasigcina"
+      ]
+    },
+    "T-D1-04": {
+      "title": "Uthisha wakho ongcono kakhulu",
+      "screen": [
+        "Uthisha ongcono kakhulu owake waba naye",
+        "Wenzani?",
+        "Ngababili, imizuzu 3"
+      ]
+    },
+    "T-D1-05": {
+      "title": "Songani imvilophu yembewu",
+      "screen": [
+        "Igumbi A: tshela kuphela",
+        "Ngaphandle: bonisa bese bezama",
+        "Qhathanisani izimvilophu zenu"
+      ]
+    },
+    "T-D1-06": {
+      "title": "Abantu abadala bafunda kanjani",
+      "screen": [
+        "Yenza · Buka emuva",
+        "Qonda · Kusebenzise",
+        "Zungeza lonke isiyingi"
+      ]
+    },
+    "T-D1-07": {
+      "title": "Buka · Zama · Khuluma · Hamba nakho",
+      "screen": [
+        "Baheheni · Izandla emsebenzini",
+        "Imibuzo emithathu · Isenzo esisodwa",
+        "Ukuzama kuza kuqala"
+      ]
+    },
+    "T-D1-08": {
+      "title": "Isifundo esiyisibonelo",
+      "screen": [
+        "Manje ningabalimi",
+        "Ababhali: balani ukukhuluma kukathisha"
+      ]
+    },
+    "T-D1-09": {
+      "title": "Izingadi ezimbili",
+      "screen": [
+        "Yini ehlukile eniyibonayo?",
+        "Iyiphi ezonondla esomisweni?"
+      ]
+    },
+    "T-D1-10": {
+      "title": "Hlelani izindlela zokulima",
+      "screen": [
+        "Beka isithombe ngasinye ngaphansi komqondo",
+        "Ezintathu esiqine kuzo, eyodwa ebuthakathaka",
+        "Imizuzu 15"
+      ]
+    },
+    "T-D1-11": {
+      "title": "Izinto eziyishumi, imigomo eyi-12",
+      "screen": [
+        "I-agroecology: ukulima nohlelo lokudla",
+        "I-permaculture: imigomo yokuziphatha nethuluzi lokuhlela",
+        "Sisebenzisa kokubili"
+      ]
+    },
+    "T-D1-12": {
+      "title": "Phumani: sihlaziye",
+      "screen": [
+        "Imizuzu emingaki yokukhuluma?",
+        "Uthisha wenzeni?",
+        "Iyiphi into ongayiqondi kahle?"
+      ]
+    },
+    "T-D1-13": {
+      "title": "Isikhungo samaphosta",
+      "screen": [
+        "Iphosta efundisayo"
+      ]
+    },
+    "T-D1-14": {
+      "title": "Imithetho eyisithupha yephosta",
+      "screen": [
+        "Umqondo owodwa, amagama 25 kuphela",
+        "Isithombe esikhulu, akukho magama ngaphakathi",
+        "Amalebula anezinombolo, umbuzo owodwa"
+      ]
+    },
+    "T-D1-15": {
+      "title": "Dwebani iphosta yenu",
+      "screen": [
+        "Khethani ikhadi le-Round 1",
+        "Ipensela kuqala, imizuzu 25",
+        "Bese nihlola ku-6 m"
+      ]
+    },
+    "T-D1-16": {
+      "title": "Ukufundisa okuncane: Round 1",
+      "screen": [
+        "Imizuzu 5, uwedwa, eqenjini lakho",
+        "Bese imizuzu 5 yempendulo",
+        "Yimani ngesikhathi"
+      ]
+    },
+    "T-D1-17": {
+      "title": "Izinkanyezi ezimbili nesifiso",
+      "screen": [
+        "Uthisha ukhuluma kuqala",
+        "Izinkanyezi ezimbili, isifiso esisodwa",
+        "Yithi ngiyabonga"
+      ]
+    },
+    "T-D1-18": {
+      "title": "Ubuciko besifundo: irejista",
+      "screen": [
+        "Ekuseni kuqala, ekugcineni uma sivala",
+        "Umqeqeshi uyasayina, isithombe nsuku zonke",
+        "Ungalokothi ubhale ngenhloko"
+      ]
+    },
+    "T-D2-01": {
+      "title": "Usuku 2",
+      "screen": [
+        "Khuluma kancane, buza kakhulu",
+        "Usuku 2 kwezi-5"
+      ]
+    },
+    "T-D2-02": {
+      "title": "Nilale nicabanga ngani?",
+      "screen": [
+        "Into eyodwa oyikhumbulayo",
+        "Umbuzo owodwa ovuke nawo"
+      ]
+    },
+    "T-D2-03": {
+      "title": "Yimuphi umphumela ongawubona?",
+      "screen": [
+        "A: ukuqonda i-compost",
+        "B: ukwakha inqwaba ye-compost engu-1 m enezingqimba"
+      ]
+    },
+    "T-D2-04": {
+      "title": "Qala ngesenzo",
+      "screen": [
+        "Isenzo · Kuyini · Kahle kangakanani",
+        "Yenza, bonisa, thola, linganisa, chaza",
+        "Ungakubona ngaphambi kwasemini?"
+      ]
+    },
+    "T-D2-05": {
+      "title": "Imibuzo emithathu",
+      "screen": [
+        "Ingabe inhlabathi iyaphila?",
+        "Yini ephila enhlabathini?",
+        "Ungathola kanjani?"
+      ]
+    },
+    "T-D2-06": {
+      "title": "Khwela isitebhisi semibuzo",
+      "screen": [
+        "Ovaliwe · Ovulekile · Ojulile",
+        "Linda imizuzwana 5",
+        "Wubuyisele eqenjini"
+      ]
+    },
+    "T-D2-07": {
+      "title": "Lindani futhi nibuyisele",
+      "screen": [
+        "Balani iminwe emihlanu buthule",
+        "Ningaphenduli — wubuyiseleni eqenjini",
+        "Imizuzu 12"
+      ]
+    },
+    "T-D2-08": {
+      "title": "Isifundo esiyisibonelo ngaphansi kwesihlahla",
+      "screen": [
+        "Funda umhlaba namanzi",
+        "Ababhali: balani izinhlobo zemibuzo"
+      ]
+    },
+    "T-D2-09": {
+      "title": "Ilanga likuphi?",
+      "screen": [
+        "Iwindi libheke enyakatho",
+        "Makani umthunzi wasebusika ngezinduku",
+        "Isithunzi sikhomba ngaphi?"
+      ]
+    },
+    "T-D2-10": {
+      "title": "Amanzi aya kuphi?",
+      "screen": [
+        "Thelani 500 ml ebhodleleni ngalinye",
+        "Bambani nilinganise amanzi agelezayo",
+        "Tholani izimpawu ezintathu zamanzi"
+      ]
+    },
+    "T-D2-11": {
+      "title": "Ukufundisa ngaphansi kwesihlahla",
+      "screen": [
+        "Ilanga ngemuva kwabafundi",
+        "Iphosta ezingeni lamehlo",
+        "Yima, bese ukhuluma"
+      ]
+    },
+    "T-D2-12": {
+      "title": "Indlela 1: amaphosta kuphela",
+      "screen": [
+        "Isifundo esisodwa, izindlela ezintathu",
+        "Namuhla: iphosta"
+      ]
+    },
+    "T-D2-13": {
+      "title": "Fundisa ngephosta",
+      "screen": [
+        "Mboza bese uyambula",
+        "Khomba bese ubuza",
+        "Abafundi beza ephosteni"
+      ]
+    },
+    "T-D2-14": {
+      "title": "Wonke umuntu uyafunda",
+      "screen": [
+        "Isikhathi solimi: bayaphinda bayixoxe",
+        "Umsebenzi womuntu wonke",
+        "Imisebenzi yokuhlala phansi, amalebula ezithombe"
+      ]
+    },
+    "T-D2-15": {
+      "title": "Ukufundisa okuncane: Round 2",
+      "screen": [
+        "Imizuzu 10, uwedwa, amaphosta kuphela",
+        "Umbukeli ubala ukukhuluma nemibuzo",
+        "Imizuzu 6 yempendulo"
+      ]
+    },
+    "T-D2-16": {
+      "title": "Ibhodi lokukhuluma",
+      "screen": [
+        "Bhala i-% yakho yokukhuluma",
+        "Yini ekusizile ukuthi ukhulume kancane?"
+      ]
+    },
+    "T-D2-17": {
+      "title": "Ubuciko besifundo: i-POPIA",
+      "screen": [
+        "Imvume ngaphambi kwekhamera",
+        "Ichashaza eliluhlaza = azikho izithombe",
+        "Yabelana ngalokho okuvunyelwene ngakho kuphela"
+      ]
+    },
+    "T-D3-01": {
+      "title": "Usuku 3",
+      "screen": [
+        "Izandla emsebenzini, njalo",
+        "Usuku 3 kwezi-5"
+      ]
+    },
+    "T-D3-02": {
+      "title": "Indaba ka-2022",
+      "screen": [
+        "Umuntu oyedwa uyamba",
+        "Abangu-25 bayabuka",
+        "I-kit yamaqembu amane isemotweni"
+      ]
+    },
+    "T-D3-03": {
+      "title": "Izandla emsebenzini, hhayi i-demo",
+      "screen": [
+        "I-kit eqenjini ngalinye · I-demo imizuzu 3",
+        "Amaqembu abantu 5 · Iziteshi zihlukene",
+        "Izandla zakho ngemuva"
+      ]
+    },
+    "T-D3-04": {
+      "title": "Sindisani umsebenzi wezandla",
+      "screen": [
+        "Ikhadi elilodwa eqenjini ngalinye",
+        "Hlelani ukusindisa, imizuzu 12",
+        "Imizuzu 2 yokwethula"
+      ]
+    },
+    "T-D3-05": {
+      "title": "I-kit eyodwa? Jikelezani",
+      "screen": [
+        "I-A-frame eyodwa, abafundi abangu-25",
+        "Iziteshi ezinhlanu, imizuzu 8 ngasinye",
+        "Akekho obuka ngaphezu kwemizuzu 10"
+      ]
+    },
+    "T-D3-06": {
+      "title": "Thola ingozi",
+      "screen": [
+        "Tholani izingozi ezi-8 ngemizuzu 4",
+        "Amathuluzi akhombe phansi",
+        "Ikhithi yosizo lokuqala ivuliwe"
+      ]
+    },
+    "T-D3-07": {
+      "title": "Umsebenzi wezandla oyisibonelo: inhlabathi ephilayo",
+      "screen": [
+        "Manje ningabalimi",
+        "Ababhali: ikhadi lokuhlola umsebenzi wezandla"
+      ]
+    },
+    "T-D3-08": {
+      "title": "Izivivinyo ezine zenhlabathi",
+      "screen": [
+        "Cindezela · Imbiza · Imisundu · Ukungena kwamanzi",
+        "Wonke umuntu wenza ngasinye",
+        "Imizuzu 27"
+      ]
+    },
+    "T-D3-09": {
+      "title": "Hlolani eceleni ngeceleni",
+      "screen": [
+        "Amabhodwe amabili, ushintsho olulodwa",
+        "Hlwanyelani, nibhale, ninisele ngokufanayo",
+        "Qagelani, bese nibheka ngoSuku 5"
+      ]
+    },
+    "T-D3-10": {
+      "title": "Phumani: sihlaziye",
+      "screen": [
+        "Ubani othole ama-tick angaphansi kuka-4?",
+        "Yini egcine zonke izandla zimatasa?"
+      ]
+    },
+    "T-D3-11": {
+      "title": "Indlela 2: ama-slide",
+      "screen": [
+        "Ungakufunda usemuva?"
+      ]
+    },
+    "T-D3-12": {
+      "title": "Lapho ama-slide esiza khona",
+      "screen": [
+        "Izinto ezihambayo noma ezikhulayo",
+        "Izinambuzane ezingekho ngalesi sikhathi",
+        "Iqembu elikhulu egumbini elimnyama"
+      ]
+    },
+    "T-D3-13": {
+      "title": "Hlela ukuze kubonakale",
+      "screen": [
+        "Hlola usemuva, emini",
+        "I-TV ingcono kune-projector; cindezela B",
+        "Ithebhulethi eqenjini ngalinye labantu 5"
+      ]
+    },
+    "T-D3-14": {
+      "title": "Iziteshi ezintathu",
+      "screen": [
+        "A: isikrini esikhulu, ama-slide 2",
+        "B: ividiyo kuthebhulethi, yifundiseni",
+        "C: incwajana yezithombe yephepha"
+      ]
+    },
+    "T-D3-15": {
+      "title": "Dlulisela, ungathathi izintambo",
+      "screen": [
+        "Hlelani ozohola isinyathelo ngasinye",
+        "Dlulisela ngezwi elizwakalayo",
+        "Thinta indlebe yakho ukuze unikele"
+      ]
+    },
+    "T-D3-16": {
+      "title": "Ukufundisa okuncane: Round 3",
+      "screen": [
+        "Imizuzu 15, ngababili, ingxenye yekilasi",
+        "Umsebenzi wezandla ngamaqembu amabili aba-4",
+        "Imizuzu 7 yempendulo"
+      ]
+    },
+    "T-D3-17": {
+      "title": "Impendulo yababili",
+      "screen": [
+        "Abangane banikana izinkanyezi",
+        "Umbukeli 1: ukukhuluma nemibuzo",
+        "Umbukeli 2: izandla nokudlulisela"
+      ]
+    },
+    "T-D3-18": {
+      "title": "Ubuciko besifundo: i-kit",
+      "screen": [
+        "Bala ngeqembu, kanye nesisodwa esengeziwe",
+        "I-kit ingena, i-kit iphuma, nsuku zonke",
+        "Izitifiketi: ababhalisile + 10%"
+      ]
+    },
+    "T-D4-01": {
+      "title": "Usuku 4",
+      "screen": [
+        "Izindlela eziningi zokungena",
+        "Usuku 4 kwezi-5"
+      ]
+    },
+    "T-D4-02": {
+      "title": "Abafowethu ababili",
+      "screen": [
+        "Ungacela imbewu komuphi umfowabo?"
+      ]
+    },
+    "T-D4-03": {
+      "title": "Isimo sendaba",
+      "screen": [
+        "Umuntu ofana nathi, nenkinga",
+        "Lokho akuzamile, nokwenzekile",
+        "Umbuzo kulabo abasegumbini"
+      ]
+    },
+    "T-D4-04": {
+      "title": "Qambani ingoma",
+      "screen": [
+        "Iculo wonke umuntu alaziyo",
+        "Umlayezo owodwa obalulekile",
+        "Imizuzu 13"
+      ]
+    },
+    "T-D4-05": {
+      "title": "Ukuzola esikhathini esinzima",
+      "screen": [
+        "Phefumula · Kusho ngomusa",
+        "Lalela, ubuze · Nikeza indlela eya phambili",
+        "Landelela ngasese"
+      ]
+    },
+    "T-D4-06": {
+      "title": "Lingisani ngabathathu",
+      "screen": [
+        "Umqeqeshi · Umfundi · Umbukeli",
+        "Imizuzu 3 yokulingisa, imizuzu 3 yokukhuluma",
+        "Shintshanani kathathu"
+      ]
+    },
+    "T-D4-07": {
+      "title": "Isifundo esiyisibonelo: ukuhamba emibukisweni",
+      "screen": [
+        "Ubani owenze lezi zimbobo?"
+      ]
+    },
+    "T-D4-08": {
+      "title": "Iziteshi eziyisithupha",
+      "screen": [
+        "Umsebenzi esiteshini ngasinye",
+        "Imizuzu 6, bese niya phambili njengewashi",
+        "Shiyani uphawu lweqembu lenu"
+      ]
+    },
+    "T-D4-09": {
+      "title": "Vimbela kuqala, fafaza ekugcineni",
+      "screen": [
+        "Inhlabathi ephilile, izitshalo ezixubile",
+        "Bheka njalo, wenze masinyane",
+        "Fafaza ekugcineni"
+      ]
+    },
+    "T-D4-10": {
+      "title": "Phumani: sihlaziye",
+      "screen": [
+        "Yini eyenze ukuhamba kwaphumelela?",
+        "Uzokusebenzisa nini?"
+      ]
+    },
+    "T-D4-11": {
+      "title": "Indlela 3: i-app",
+      "screen": [
+        "Bonisa · Rekhoda · Buza ubheke"
+      ]
+    },
+    "T-D4-12": {
+      "title": "My Studies, ngaphandle kwe-inthanethi",
+      "screen": [
+        "Vulani i-flight mode",
+        "Bukani ividiyo, bese niyenza",
+        "Ividiyo ingabonisa ini?"
+      ]
+    },
+    "T-D4-13": {
+      "title": "Mentor → Training",
+      "screen": [
+        "Indawo, usuku, ababekhona",
+        "Amasiginesha nesithombe",
+        "Impendulo, igcinwe ngaphandle kwe-inthanethi"
+      ]
+    },
+    "T-D4-14": {
+      "title": "Lima Vision: siyavumelana?",
+      "screen": [
+        "Thathani isithombe seqabunga",
+        "Fundani umphumela ndawonye",
+        "Singahlola kanjani?"
+      ]
+    },
+    "T-D4-15": {
+      "title": "Ukufundisa okuncane: Round 4",
+      "screen": [
+        "Imizuzu 20, ngababili",
+        "Ama-slide noma i-app — khethani",
+        "Idivayisi ingahluleka ngamabomu"
+      ]
+    },
+    "T-D4-16": {
+      "title": "Uma idivayisi ihluleka",
+      "screen": [
+        "Shintsha ngemizuzwana 30",
+        "Iphosta noma incwajana yezithombe",
+        "Ungaxolisi, qhubeka"
+      ]
+    },
+    "T-D4-17": {
+      "title": "Ubuciko besifundo: umbiko nezitifiketi",
+      "screen": [
+        "Umbiko wansuku zonke nesithombe serejista",
+        "Ukuba khona, hhayi iziqu",
+        "Kusasa: Round 5, imizuzu 30"
+      ]
+    },
+    "T-D5-01": {
+      "title": "Usuku 5",
+      "screen": [
+        "Silungele ukufundisa",
+        "Usuku 5 kwezi-5"
+      ]
+    },
+    "T-D5-02": {
+      "title": "Gcwalisa ipuleti",
+      "screen": [
+        "Gcwalisa ipuleti lengane losuku lonke",
+        "Yini engekho?"
+      ]
+    },
+    "T-D5-03": {
+      "title": "Ubhontshisi namathini",
+      "screen": [
+        "Ubhontshisi owodwa = R5",
+        "Hambisani ubhontshisi esenzakalweni ngasinye",
+        "Kudwebeni encwadini yemali"
+      ]
+    },
+    "T-D5-04": {
+      "title": "Izinombolo ngaphandle kokufunda",
+      "screen": [
+        "Ubhontshisi, amathini, amakhadi ezithombe",
+        "Isenzakalo esisodwa ngesikhathi",
+        "Amaqembu ayahlolana"
+      ]
+    },
+    "T-D5-05": {
+      "title": "Ukuzilolonga kokugcina ukufundisa",
+      "screen": [
+        "Imizuzu 30, ngababili",
+        "Isifundo sangempela se-Course 1"
+      ]
+    },
+    "T-D5-06": {
+      "title": "Thina singabalimi benu",
+      "screen": [
+        "Iphosta yenu eniyenze ngezandla ilengisiwe",
+        "Umsebenzi wezandla ngamaqembu amabili aba-4",
+        "Lindelani imibuzo yangempela"
+      ]
+    },
+    "T-D5-07": {
+      "title": "Impendulo: imizuzu 10",
+      "screen": [
+        "Abangane banikana izinkanyezi",
+        "Ababukeli: izinombolo nezinkanyezi",
+        "Umqeqeshi: izinkanyezi ezimbili nesifiso"
+      ]
+    },
+    "T-D5-08": {
+      "title": "Ingabe bakufundile?",
+      "screen": [
+        "Buka · Imibuzo ngezithombe · Buza"
+      ]
+    },
+    "T-D5-09": {
+      "title": "Imibuzo ngezithombe",
+      "screen": [
+        "Hambani niye ekhoneni A, B noma C",
+        "Balani amakhanda, hhayi amagama"
+      ]
+    },
+    "T-D5-10": {
+      "title": "Izindlela ezintathu zokuhlola",
+      "screen": [
+        "Babuke bekwenza",
+        "Imibuzo ngezithombe, Usuku 1 noSuku 5",
+        "Babuze: iminwe nama-sticker"
+      ]
+    },
+    "T-D5-11": {
+      "title": "I-flip folder",
+      "screen": [
+        "Amafomu ayisishiyagalombili, ngokulandelana",
+        "Ifomu ngalinye lisetshenziswa nini?"
+      ]
+    },
+    "T-D5-12": {
+      "title": "Bhekani ukuthi nifike kude kangakanani",
+      "screen": [
+        "I-% yokukhuluma: Round 2 kuya ku-Round 5"
+      ]
+    },
+    "T-D5-13": {
+      "title": "Gcina uthisha eqinile",
+      "screen": [
+        "Izifundo ezintathu, bese uphumula",
+        "Usuku 0 njalo, londoloza izwi lakho",
+        "Umngane wakusihlwa, lalela bese udlulisela"
+      ]
+    },
+    "T-D5-14": {
+      "title": "Uhlelo lwami lokufundisa",
+      "screen": [
+        "Isifundo sami sokuqala, izikhathi zami",
+        "Amandla amabili, into eyodwa yokukhula",
+        "Ngizobukwa futhi phakathi kwamaviki angu-8"
+      ]
+    },
+    "T-D5-15": {
+      "title": "Ukuhlola kwenu",
+      "screen": [
+        "Iminwe 1 kuya ku-5",
+        "Ama-sticker amabili ohlwini ngalunye"
+      ]
+    },
+    "T-D5-16": {
+      "title": "Kuhle kakhulu, bothisha",
+      "screen": [
+        "Isitifiketi sokuba khona",
+        "Abalimi benu bokuqala bayanilinda"
+      ]
+    }
+  },
+  "glossary": {
+    "teacher": "uthisha",
+    "facilitator / trainer": "umqeqeshi",
+    "learner": "umfundi (abafundi)",
+    "lesson / session": "isifundo (izifundo)",
+    "poster": "iphosta (amaphosta)",
+    "slides": "ama-slide",
+    "app": "i-app",
+    "device": "idivayisi (amadivayisi)",
+    "tablet": "ithebhulethi",
+    "clip / video": "ividiyo",
+    "flip-book": "incwajana yezithombe (flip-book)",
+    "flip folder": "i-flip folder",
+    "sticky note": "i-sticky note",
+    "sticker": "i-sticker (ama-sticker)",
+    "label (on a poster)": "ilebula (amalebula)",
+    "headline": "isihloko",
+    "question": "umbuzo (imibuzo)",
+    "group": "iqembu (amaqembu)",
+    "pairs": "ngababili",
+    "station": "isiteshi (iziteshi)",
+    "carousel (rotate between stations)": "jikelezani",
+    "practical (hands-on)": "umsebenzi wezandla",
+    "hands on": "izandla emsebenzini",
+    "demo": "i-demo",
+    "kit": "i-kit",
+    "crate": "i-crate (ama-crate)",
+    "first aid kit": "ikhithi yosizo lokuqala",
+    "micro-teaching": "ukufundisa okuncane",
+    "Round (1–5)": "Round (unchanged)",
+    "feedback": "impendulo",
+    "star (praise)": "inkanyezi (izinkanyezi)",
+    "wish": "isifiso",
+    "handover / refer on": "dlulisela",
+    "observer": "umbukeli (ababukeli)",
+    "leader": "umholi",
+    "timekeeper": "ogcina isikhathi",
+    "materials (role)": "ophethe izinto",
+    "recorder": "umbhali (ababhali)",
+    "reporter": "umbiki",
+    "outcome": "umphumela",
+    "doing word (verb)": "isenzo",
+    "closed / open / deeper question": "umbuzo ovaliwe / ovulekile / ojulile",
+    "bounce it back": "wubuyisele eqenjini",
+    "teacher talk": "ukukhuluma kukathisha",
+    "Look · Try · Talk · Take home": "Buka · Zama · Khuluma · Hamba nakho",
+    "learning agreement": "isivumelwano sokufunda",
+    "energiser": "umdlalo wokuvusa (vusa igumbi)",
+    "model lesson": "isifundo esiyisibonelo",
+    "unpack (step out)": "phumani: sihlaziye",
+    "register": "irejista",
+    "consent": "imvume",
+    "certificate": "isitifiketi (izitifiketi)",
+    "attendance": "ukuba khona",
+    "report": "umbiko",
+    "picture quiz": "imibuzo ngezithombe",
+    "evaluation": "ukuhlola",
+    "role play": "ukulingisa",
+    "hazard": "ingozi (izingozi)",
+    "side-by-side trial": "ukuhlola eceleni ngeceleni",
+    "plot": "isiqephu (iziqephu)",
+    "agroecology": "i-agroecology",
+    "permaculture": "i-permaculture",
+    "design principle": "umgomo wokuhlela (imigomo yokuhlela)",
+    "element (of agroecology)": "into (izinto) ye-agroecology",
+    "diversity": "ukwehlukahlukana",
+    "resilience": "ukuqina",
+    "offline": "ngaphandle kwe-inthanethi",
+    "power (electricity)": "ugesi",
+    "Day 0 … Day 5": "Usuku 0 … Usuku 5",
+    "buddy / co-facilitator": "umngane (buddy)",
+    "compost": "i-compost",
+    "compost heap": "inqwaba ye-compost",
+    "layer": "ungqimba (izingqimba)",
+    "soil": "inhlabathi",
+    "worm": "umsundu (imisundu)",
+    "seed": "imbewu",
+    "A-frame": "i-A-frame",
+    "drought": "isomiso",
+    "harvest / yield": "isivuno",
+    "pest": "isitha (inambuzane eyonayo)",
+    "spray": "fafaza",
+    "My Studies / Mentor → Training / Lima Vision": "unchanged (app screen names)"
+  }
+}

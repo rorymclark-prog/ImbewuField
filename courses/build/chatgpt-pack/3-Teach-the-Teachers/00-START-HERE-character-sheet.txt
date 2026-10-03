@@ -1,0 +1,29 @@
+Teach the Teachers — look: Chalk & Kraft
+
+STEP 1 — open a NEW ChatGPT chat just for this course. Paste this whole prompt first.
+Save the result as: character-sheet.png (keep it; attach it to later prompts so faces stay the same).
+
+---- COPY FROM HERE ----
+Style: hand-drawn sketch-note illustration made with thick markers and chalk on brown kraft paper
+(#C9A77C) — or chalk on a dark green-black blackboard (#2F3A33) when stated. Confident marker
+outlines in black, highlights in red (#D2452C), blue (#2C6FB7) for water only, and yellow
+(#F2C230); simple doodle icons, arrows, stars, yellow sticky notes and masking-tape corners.
+Loose, friendly, clearly hand-made, like a great trainer's flipchart. Figures are simple but
+expressive; people are Black South Africans of mixed ages and genders. If the outdoors appears:
+SOUTHERN HEMISPHERE, sun in the NORTH, shadows fall SOUTH.
+ABSOLUTELY NO WORDS OR LETTERS anywhere — sticky notes and flipcharts are blank or show only
+icons and scribble-lines.
+
+Make a CHARACTER SHEET: all of these recurring characters standing side by side, full body,
+front view, plain background, so they can be reused consistently in later images:
+- **Mandla** (trainer) — early 30s, shaved head, round glasses, rolled-up denim shirt, marker in
+  hand, often squatting beside a group rather than standing in front.
+- **Trainees** — a mixed group of 8: young graduates, an older lead farmer in a hat, a woman
+  with a baby on her back, a man with a walking stick.
+---- TO HERE ----
+
+STEP 2 — paste the prompts in 01-images.md one at a time (attach the character sheet when people
+appear). Save each image with the file name shown above its prompt.
+STEP 3 — paste 02-posters.md prompts for the finished bilingual posters. CHECK EVERY WORD
+(ChatGPT misspells isiZulu); if wrong, reply: "Keep everything the same, only correct the
+spelling of X to Y."
