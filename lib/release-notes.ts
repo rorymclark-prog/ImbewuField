@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: '2e67395f', changes: [
+    'Vegetable lessons add marked regional wording for observation and pest checks.',
+    'Treatment labels and harvest-waiting instructions stay exact in English.',
+  ], tour: [
+    { title: 'Review regional vegetable observation',
+      where: 'Study → Vegetables and Staple Crops → Lessons 2 and 4',
+      detail: 'Read the unreviewed drafts beside English before acting on a pest problem.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: '8fbba78e', changes: [
     'Vegetable slides add marked regional drafts beside the full English source.',
     'Save the updated silent slides; English narration remains an optional choice.',
