@@ -1,0 +1,1235 @@
+{
+  "title": "Reading Landscape first water-observation block root-accepted candidates",
+  "date": "2026-10-03",
+  "baseHead": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+  "scope": {
+    "slideRange": [
+      3,
+      7
+    ],
+    "languageCodes": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "candidateFieldCount": 10,
+    "changedTargetsByLanguage": {
+      "st": 3,
+      "ve": 3,
+      "ts": 4
+    },
+    "coherentGroup": "learning outcome, safe field observation, and the no-single-placement/observe-water rule",
+    "repoEdits": 0,
+    "rendered": false,
+    "repairedRows": 3
+  },
+  "sourceFiles": [
+    "lib/course-modules.ts",
+    "lib/course-localization.ts",
+    "lib/course-translation-drafts-st-reading-landscape.ts",
+    "lib/course-translation-drafts-ve-reading-landscape.ts",
+    "lib/course-translation-drafts-ts.ts",
+    "docs/narration/reading-landscape.en.md",
+    "docs/narration/reading-landscape.st.paired-draft.json",
+    "docs/narration/reading-landscape.ve.paired-draft.json",
+    "docs/narration/reading-landscape.ts.paired-draft.json"
+  ],
+  "sourceSHA256": {
+    "englishMarkdown": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+    "canonicalModule": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "currentResolverDraft-st": "c715838def50a0cea744281255f7a5c93cf7812d6e306aae86d63f1ba1ef0360",
+    "currentResolverDraft-ve": "5d7087f834eb2586557b133b40d826d2e0819f0bd67ae59cc09f822704c80b67",
+    "currentResolverDraft-ts": "4da845821ec081cd9d19ae94c67540fe2a4a9da34d84f9e544a51efc0b00a021"
+  },
+  "pairedTargetFileSHA256": {
+    "docs/narration/reading-landscape.st.paired-draft.json": "d9422924d24574c57b927ac7cdb2fe584be1d9695d31df996d8213debbced2de",
+    "docs/narration/reading-landscape.ve.paired-draft.json": "751fe87b0ee28d5d4d079e8351efe20f02b06c1e5ac6802f055d85312fb27f7e",
+    "docs/narration/reading-landscape.ts.paired-draft.json": "b55b72b44df963f261386737a6e84909f6e8b76ea131850185035f6cb20945e5"
+  },
+  "canonicalSourceCommit": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+  "sourceCurrentOrderAssertions": {
+    "allThreeLanguageSlideCounts": {
+      "st": 21,
+      "ve": 21,
+      "ts": 21
+    },
+    "allEnglishSlidesExactlyMatchCurrentMarkdown": true,
+    "everyCandidateCurrentTargetWasExactEnglishHold": true,
+    "allMixedSourceSegmentsConcatenateToCompleteCurrentEnglishField": true
+  },
+  "candidateFields": [
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 0,
+      "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Root accepted translating only the end-of-module capability and follow-water lead-in; retain the full source phrase naming the land-wide scope and exit location because localization could shift either meaning.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 3,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi across your land and find where it leaves.",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "By the end of this module, you will be able to follow water ",
+          "status": "draft",
+          "text": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi "
+        },
+        {
+          "sourceEnglish": "across your land and find where it leaves.",
+          "status": "english-hold"
+        }
+      ],
+      "independentRepair": "Root accepted narrower mixed scope on 2026-10-03; only lead-in translated, land-wide scope and exit clause held exactly."
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 0,
+      "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Root accepted translating only the end-of-module capability and follow-water lead-in; retain the full source phrase naming the land-wide scope and exit location because localization could shift either meaning.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 3,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Loko modula lowu wu hela, u ta kota ku landzelela mati across your land and find where it leaves.",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "By the end of this module, you will be able to follow water ",
+          "status": "draft",
+          "text": "Loko modula lowu wu hela, u ta kota ku landzelela mati "
+        },
+        {
+          "sourceEnglish": "across your land and find where it leaves.",
+          "status": "english-hold"
+        }
+      ],
+      "independentRepair": "Root accepted narrower mixed scope on 2026-10-03; only lead-in translated, land-wide scope and exit clause held exactly."
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Localize only the safe-afterward walk instruction using the exact matching current resolver sentence; keep the heavy-rain safety warning and water-feature/property checklist exact.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch from a safe place during heavy rain. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "When it is safe afterward, walk your land. ",
+          "status": "draft",
+          "text": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+        },
+        {
+          "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Watch from a safe place during heavy rain. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 0,
+        "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+        "resolverParagraphText": "Pele o kotula metsi, ithute moo a seng a ntse a ya teng. Shebella o le sebakeng se sireletsehileng nakong ya pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla dikotopo tse nyane (rills), dibaka tseo metsi a phallelang ho tsona a hasana, moo a emang teng, le moo a tlohang setsheng sa hao. Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+        "exactEnglishClause": "When it is safe afterward, walk your land.",
+        "reuseType": "sentence-level source span within current resolver paragraph",
+        "resolverCandidateText": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Localize only the safe-afterward walk instruction using the exact matching current resolver sentence; keep the heavy-rain safety warning and water-feature/property checklist exact.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch from a safe place during heavy rain. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "When it is safe afterward, walk your land. ",
+          "status": "draft",
+          "text": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+        },
+        {
+          "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Watch from a safe place during heavy rain. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 0,
+        "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+        "resolverParagraphText": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+        "exactEnglishClause": "When it is safe afterward, walk your land.",
+        "reuseType": "sentence-level source span within current resolver paragraph",
+        "resolverCandidateText": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+      }
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 2,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 0,
+        "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+        "resolverParagraphText": "Pele o kotula metsi, ithute moo a seng a ntse a ya teng. Shebella o le sebakeng se sireletsehileng nakong ya pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla dikotopo tse nyane (rills), dibaka tseo metsi a phallelang ho tsona a hasana, moo a emang teng, le moo a tlohang setsheng sa hao. Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+        "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+        "reuseType": "sentence-level source span within current resolver paragraph",
+        "resolverCandidateText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 2,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 0,
+        "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+        "resolverParagraphText": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+        "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+        "reuseType": "sentence-level source span within current resolver paragraph",
+        "resolverCandidateText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Independent review found the candidate could lose the away-direction of the safe route. Translate only the current resolver prefix and retain the exact source clause about the safe route away and preventing damage.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 2,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Mati man'wana lama taleke ma lava a safe route away so it does not cause damage.",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Some excess water needs ",
+          "status": "draft",
+          "text": "Mati man'wana lama taleke ma lava "
+        },
+        {
+          "sourceEnglish": "a safe route away so it does not cause damage.",
+          "status": "english-hold"
+        }
+      ],
+      "independentRepair": "2026-10-03: narrowed translation to keep the uncertain source-scope/direction phrase exact in English."
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 7,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 2,
+        "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "exactEnglishClauses": [
+          "There is no one placement rule for every slope.",
+          "Observe where water moves and gathers."
+        ],
+        "resolverParagraphText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng. Di-contour tse entsweng hampe di ka eketsa kgoholeho ya mobu, mme mobu o monyang metsi butle o ka tshwara metsi a mangata haholo. Kgetha mosebetsi ofe kapa ofe wa metsi o loketseng setsha mme o rale tsela e sireletsehileng ya metsi a mangata haholo.",
+        "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+        "resolverCandidateText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 7,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 2,
+        "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "exactEnglishClauses": [
+          "There is no one placement rule for every slope.",
+          "Observe where water moves and gathers."
+        ],
+        "resolverParagraphText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Nangani water works u ya nga tshitentsi nahone ni pulane nḓila yo tsireledzeaho ya maḓi a re manzhisa.",
+        "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+        "resolverCandidateText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 7,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 2,
+        "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "exactEnglishClauses": [
+          "There is no one placement rule for every slope.",
+          "Observe where water moves and gathers."
+        ],
+        "resolverParagraphText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+        "resolverCandidateText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona."
+      }
+    }
+  ],
+  "existingDraftsPreserved": [
+    {
+      "language": "st",
+      "slide": 3,
+      "bodyIndex": 0,
+      "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Qetellong ea mojule ona, u tla khona ho latela metsi ho pholletsa le naha ea hao le ho fumana moo a tlohang teng."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "st",
+      "slide": 3,
+      "bodyIndex": 1,
+      "sourceEnglish": "You will read sun angles, shade, wind, frost, and slope.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "U tla read sun angles, shade, wind, frost, and slope."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "st",
+      "slide": 3,
+      "bodyIndex": 2,
+      "sourceEnglish": "You will use an A-frame level to trace contours.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "U tla sebelisa A-frame level ho latela contours."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "st",
+      "slide": 3,
+      "bodyIndex": 3,
+      "sourceEnglish": "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "U tla taka a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Before you harvest water, learn where it already goes.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Pele u kotula metsi, ithute moo a seng a ea teng."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 1,
+      "sourceEnglish": "You will read sun angles, shade, wind, frost, and slope.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ni ḓo read sun angles, shade, wind, frost, and slope."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 2,
+      "sourceEnglish": "You will use an A-frame level to trace contours.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ni ḓo shumisa A-frame level u tevhela contours."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 3,
+      "sourceEnglish": "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ni ḓo ola a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Before you harvest water, learn where it already goes.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ni sa kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Watch from a safe place during heavy rain. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Look for rills, places where water fans out, ponds, and where water leaves your property."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 1,
+      "sourceEnglish": "You will read sun angles, shade, wind, frost, and slope.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "U ta read sun angles, shade, wind, frost, and slope."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 2,
+      "sourceEnglish": "You will use an A-frame level to trace contours.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "U ta tirhisa A-frame level ku landzelerisa contours."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 3,
+      "sourceEnglish": "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "U ta dirowa a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Before you harvest water, learn where it already goes.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Loko u nga si hlengeleta mati, dyondza laha se ma yaka kona."
+      },
+      "decision": "preserve-existing-target; no proposed revision"
+    }
+  ],
+  "remainingEnglishHoldsWithinGroup": [
+    {
+      "language": "st",
+      "slide": 5,
+      "bodyIndex": 0,
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Hydrological process sequence (downhill movement, speed, spread, infiltration/sinking, gathering and exit) needs a meaning check; hold until directional terms are independently checked."
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "A-frame tool and pole/string construction terms and the exact three-pole weighted-string setup require a terminology check."
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "The measured contour task depends on finding points at the same height and joining them in the correct way; retain the full geometry sentence pending independent review."
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Earthworks are high risk: retain the observation-not-design/approval distinction, before-digging site assessment, soil/slope/drainage/storm-flow/overflow route, and trained-adviser requirement in exact English."
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 0,
+      "sourceEnglish": "Water picks up speed and erosive force as it runs downhill.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Water velocity and erosive force are hydrological causal claims; preserve the full source wording pending independent review."
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 2,
+      "sourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "The contour/slow-infiltration erosion risk and site-specific safe excess-water route are construction/safety conditions; preserve the complete source paragraph in English."
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "bodyIndex": 0,
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Hydrological process sequence (downhill movement, speed, spread, infiltration/sinking, gathering and exit) needs a meaning check; hold until directional terms are independently checked."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "A-frame tool and pole/string construction terms and the exact three-pole weighted-string setup require a terminology check."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "The measured contour task depends on finding points at the same height and joining them in the correct way; retain the full geometry sentence pending independent review."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Earthworks are high risk: retain the observation-not-design/approval distinction, before-digging site assessment, soil/slope/drainage/storm-flow/overflow route, and trained-adviser requirement in exact English."
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 0,
+      "sourceEnglish": "Water picks up speed and erosive force as it runs downhill.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Water velocity and erosive force are hydrological causal claims; preserve the full source wording pending independent review."
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 2,
+      "sourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "The contour/slow-infiltration erosion risk and site-specific safe excess-water route are construction/safety conditions; preserve the complete source paragraph in English."
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "bodyIndex": 0,
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Hydrological process sequence (downhill movement, speed, spread, infiltration/sinking, gathering and exit) needs a meaning check; hold until directional terms are independently checked."
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "A-frame tool and pole/string construction terms and the exact three-pole weighted-string setup require a terminology check."
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "The measured contour task depends on finding points at the same height and joining them in the correct way; retain the full geometry sentence pending independent review."
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Earthworks are high risk: retain the observation-not-design/approval distinction, before-digging site assessment, soil/slope/drainage/storm-flow/overflow route, and trained-adviser requirement in exact English."
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 0,
+      "sourceEnglish": "Water picks up speed and erosive force as it runs downhill.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "Water velocity and erosive force are hydrological causal claims; preserve the full source wording pending independent review."
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 2,
+      "sourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "holdReason": "The contour/slow-infiltration erosion risk and site-specific safe excess-water route are construction/safety conditions; preserve the complete source paragraph in English."
+    }
+  ],
+  "reviewLimits": [
+    "Machine candidates only; no fluency, local farming, or engineering approval.",
+    "Candidate text reused from the current resolver is still unreviewed.",
+    "No repo files or rendered assets were changed."
+  ],
+  "independentReviewProvenance": {
+    "initialIndependentCheck": "/tmp/imbewu-reading-landscape-deck-fuller-independent-check-20261003.json",
+    "repairPacket": "/tmp/imbewu-reading-landscape-deck-three-repaired-candidates-20261003.json",
+    "rootAcceptedDisposition": "Translate only the ordinary lead-in for VE/TS slide 3; preserve “across your land and find where it leaves.” as one exact English hold. TS slide 4 translates only the excess-water lead-in and preserves the safe-away/no-harm clause exactly.",
+    "reviewStatus": "machine-draft for facilitator review; not fluent-approved"
+  },
+  "learnerWiring": "data-only; apply in a fresh source-bound deck batch after final render/phone/offline gates",
+  "rootReview": "Root accepted exact clause order and English holds after two independent semantic checks; no fluent/local approval.",
+  "independentChecks": [
+    {
+      "title": "Independent semantic review: Reading Landscape first water-observation block candidates",
+      "date": "2026-10-03",
+      "sourcePacket": "/tmp/imbewu-reading-landscape-deck-fuller-candidates-20261003.json",
+      "baseHead": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+      "scope": {
+        "slideRange": [
+          3,
+          7
+        ],
+        "languageCodes": [
+          "st",
+          "ve",
+          "ts"
+        ],
+        "candidateFieldCount": 10,
+        "changedTargetsByLanguage": {
+          "st": 3,
+          "ve": 3,
+          "ts": 4
+        },
+        "coherentGroup": "learning outcome, safe field observation, and the no-single-placement/observe-water rule",
+        "repoEdits": 0,
+        "rendered": false
+      },
+      "sourceProvenance": {
+        "englishHash": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+        "pairedHashes": {
+          "docs/narration/reading-landscape.st.paired-draft.json": "d9422924d24574c57b927ac7cdb2fe584be1d9695d31df996d8213debbced2de",
+          "docs/narration/reading-landscape.ve.paired-draft.json": "751fe87b0ee28d5d4d079e8351efe20f02b06c1e5ac6802f055d85312fb27f7e",
+          "docs/narration/reading-landscape.ts.paired-draft.json": "b55b72b44df963f261386737a6e84909f6e8b76ea131850185035f6cb20945e5"
+        },
+        "resolverSourceHashes": {
+          "englishMarkdown": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "canonicalModule": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+          "currentResolverDraft-st": "c715838def50a0cea744281255f7a5c93cf7812d6e306aae86d63f1ba1ef0360",
+          "currentResolverDraft-ve": "5d7087f834eb2586557b133b40d826d2e0819f0bd67ae59cc09f822704c80b67",
+          "currentResolverDraft-ts": "4da845821ec081cd9d19ae94c67540fe2a4a9da34d84f9e544a51efc0b00a021"
+        },
+        "sourceSentenceBindingFromPacket": true,
+        "reviewMethod": "Clause-level back-translation against exact English source; checked safe timing, land/property scope, route-away direction, damage negation, ordered checklist, and no-single-placement-rule/no-prescription meaning."
+      },
+      "summary": {
+        "reviewedFields": 10,
+        "retainDraftCandidate": 7,
+        "repairedEnglishHolds": 3,
+        "repairs": {
+          "ve-slide3-body0": "exact English hold (land vs country scope)",
+          "ts-slide3-body0": "exact English hold (land vs soil/ground scope)",
+          "ts-slide4-body2": "exact English hold (away direction uncertain)"
+        }
+      },
+      "fields": [
+        {
+          "language": "ve",
+          "slide": 3,
+          "bodyIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Ordinary learning outcome; preserve the future capability and the source destination where water leaves the land.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 3,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi kha shango ḽaṋu na u wana hune a bva hone.",
+          "independentDecision": "revise-to-exact-English-hold",
+          "recommendedText": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "independentBackTranslation": "“Shango” can be read as country; source “your land” is a local property/plot, not necessarily country. Retain source wording rather than guess at range. Future ability and destination are retained exactly.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ts",
+          "slide": 3,
+          "bodyIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Ordinary learning outcome; preserve the future capability and the source destination where water leaves the land.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 3,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Loko modula lowu wu hela, u ta kota ku landzelela mati eka misava ya wena ni ku kuma laha ma humaka kona.",
+          "independentDecision": "revise-to-exact-English-hold",
+          "recommendedText": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "independentBackTranslation": "“Misava” can point to soil/earth/ground and may narrow or shift the source “your land.” Preserve exact English to retain future capability, across-land scope, and where water leaves.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "st",
+          "slide": 4,
+          "bodyIndex": 1,
+          "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "mixed",
+          "candidateReason": "Localize only the safe-afterward walk instruction using the exact matching current resolver sentence; keep the heavy-rain safety warning and water-feature/property checklist exact.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Watch from a safe place during heavy rain. ",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": "When it is safe afterward, walk your land. ",
+              "status": "draft",
+              "text": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+            },
+            {
+              "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+              "status": "english-hold"
+            }
+          ],
+          "candidateText": "Watch from a safe place during heavy rain. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Pele o kotula metsi, ithute moo a seng a ntse a ya teng. Shebella o le sebakeng se sireletsehileng nakong ya pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla dikotopo tse nyane (rills), dibaka tseo metsi a phallelang ho tsona a hasana, moo a emang teng, le moo a tlohang setsheng sa hao. Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+            "exactEnglishClause": "When it is safe afterward, walk your land.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+          },
+          "independentDecision": "retain-mixed-candidate",
+          "recommendedText": "Watch from a safe place during heavy rain. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "independentBackTranslation": "The localized sentence keeps the required later timing (“when safe afterward”) before walking. Rain-time safety and the whole observation checklist/property boundary remain exact English holds and in source order.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ts",
+          "slide": 4,
+          "bodyIndex": 1,
+          "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "mixed",
+          "candidateReason": "Localize only the safe-afterward walk instruction using the exact matching current resolver sentence; keep the heavy-rain safety warning and water-feature/property checklist exact.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Watch from a safe place during heavy rain. ",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": "When it is safe afterward, walk your land. ",
+              "status": "draft",
+              "text": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+            },
+            {
+              "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+              "status": "english-hold"
+            }
+          ],
+          "candidateText": "Watch from a safe place during heavy rain. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+            "exactEnglishClause": "When it is safe afterward, walk your land.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+          },
+          "independentDecision": "retain-mixed-candidate",
+          "recommendedText": "Watch from a safe place during heavy rain. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "independentBackTranslation": "The localized sentence keeps the later safe timing before walking. Rain-time safety and complete checklist/property destination remain exact English holds in source order.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "st",
+          "slide": 4,
+          "bodyIndex": 2,
+          "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 2,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Pele o kotula metsi, ithute moo a seng a ntse a ya teng. Shebella o le sebakeng se sireletsehileng nakong ya pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla dikotopo tse nyane (rills), dibaka tseo metsi a phallelang ho tsona a hasana, moo a emang teng, le moo a tlohang setsheng sa hao. Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+            "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo."
+          },
+          "independentDecision": "retain-resolver-sentence-candidate",
+          "recommendedText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+          "independentBackTranslation": "“Metsi a mangata haholo” conveys excess water; “tsela e sireletsehileng ya ho tswa” conveys a safe route to exit; the final clause preserves the no-damage purpose. Whole source sentence remains present.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ve",
+          "slide": 4,
+          "bodyIndex": 2,
+          "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 2,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+            "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo."
+          },
+          "independentDecision": "retain-resolver-sentence-candidate",
+          "recommendedText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+          "independentBackTranslation": "“Maḓi maṅwe a re manzhisa” preserves some excess water; “nḓila yo tsireledzeaho ya u bva ngayo” denotes a safe way/route to exit; the no-damage result remains. Whole source sentence retained.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ts",
+          "slide": 4,
+          "bodyIndex": 2,
+          "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 2,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+            "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo."
+          },
+          "independentDecision": "revise-to-exact-English-hold",
+          "recommendedText": "Some excess water needs a safe route away so it does not cause damage.",
+          "independentBackTranslation": "“Yo famba” reads as a way to travel/move and may omit that the route carries excess water away. The no-harm clause survives, but retain the exact English sentence to protect the away direction.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "st",
+          "slide": 7,
+          "bodyIndex": 1,
+          "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 7,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 2,
+            "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+            "exactEnglishClauses": [
+              "There is no one placement rule for every slope.",
+              "Observe where water moves and gathers."
+            ],
+            "resolverParagraphText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng. Di-contour tse entsweng hampe di ka eketsa kgoholeho ya mobu, mme mobu o monyang metsi butle o ka tshwara metsi a mangata haholo. Kgetha mosebetsi ofe kapa ofe wa metsi o loketseng setsha mme o rale tsela e sireletsehileng ya metsi a mangata haholo.",
+            "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+            "resolverCandidateText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng."
+          },
+          "independentDecision": "retain-resolver-two-sentence-candidate",
+          "recommendedText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng.",
+          "independentBackTranslation": "Both translated sentences preserve that there is no single placement rule for every slope and ask the learner to observe where water moves and gathers. No placement prescription is added.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ve",
+          "slide": 7,
+          "bodyIndex": 1,
+          "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 7,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 2,
+            "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+            "exactEnglishClauses": [
+              "There is no one placement rule for every slope.",
+              "Observe where water moves and gathers."
+            ],
+            "resolverParagraphText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Nangani water works u ya nga tshitentsi nahone ni pulane nḓila yo tsireledzeaho ya maḓi a re manzhisa.",
+            "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+            "resolverCandidateText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone."
+          },
+          "independentDecision": "retain-resolver-two-sentence-candidate",
+          "recommendedText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone.",
+          "independentBackTranslation": "The wording preserves no one rule working for all slope sites and the instruction to observe where water moves and gathers. It does not add a placement prescription.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ts",
+          "slide": 7,
+          "bodyIndex": 1,
+          "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 7,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 2,
+            "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+            "exactEnglishClauses": [
+              "There is no one placement rule for every slope.",
+              "Observe where water moves and gathers."
+            ],
+            "resolverParagraphText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+            "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+            "resolverCandidateText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona."
+          },
+          "independentDecision": "retain-mixed-two-sentence-candidate",
+          "recommendedText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona.",
+          "independentBackTranslation": "“Placement rule” and “slope” are preserved exactly in English; the negative universal rule remains, followed by localized observation of both water movement and gathering. No design instruction is added.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        }
+      ],
+      "limitations": [
+        "Machine semantic check only; not fluent/local farming approval.",
+        "Unreviewed localized text remains draft candidate for facilitator review after publication.",
+        "Source segments marked English hold remain byte-exact in the proposed recomposition.",
+        "No repository files, tests, or rendered assets were changed."
+      ]
+    },
+    {
+      "title": "Independent check of three repaired Reading Landscape fields",
+      "date": "2026-10-03",
+      "inputPacket": "/tmp/imbewu-reading-landscape-deck-three-repaired-candidates-20261003.json",
+      "sourceEnglishSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceCommit": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+      "checkedFields": 3,
+      "fields": [
+        {
+          "language": "ve",
+          "slide": 3,
+          "bodyIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "canonicalSourceBinding": {
+            "pairedRecordN": 3,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "packetCandidateBeforeReview": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi across your land na u wana hune a bva hone.",
+          "candidateAfterIndependentCheck": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi across your land and find where it leaves.",
+          "candidateSegmentsAfterIndependentCheck": [
+            {
+              "sourceEnglish": "By the end of this module, you will be able to follow water ",
+              "status": "draft",
+              "text": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi "
+            },
+            {
+              "sourceEnglish": "across your land",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " and find where it leaves.",
+              "status": "english-hold"
+            }
+          ],
+          "decision": "retain-mixed-after-second-narrowing",
+          "reason": "The translated frame preserves end-of-module timing and future capability, while “across your land” remains exact. “Hune a bva hone” may mean where water comes from/originates; the English destination clause avoids reversing or obscuring where water exits the plot.",
+          "status": "unreviewed machine semantic candidate; local grammar approval pending"
+        },
+        {
+          "language": "ts",
+          "slide": 3,
+          "bodyIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "canonicalSourceBinding": {
+            "pairedRecordN": 3,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "packetCandidateBeforeReview": "Loko modula lowu wu hela, u ta kota ku landzelela mati across your land ni ku kuma laha ma humaka kona.",
+          "candidateAfterIndependentCheck": "Loko modula lowu wu hela, u ta kota ku landzelela mati across your land and find where it leaves.",
+          "candidateSegmentsAfterIndependentCheck": [
+            {
+              "sourceEnglish": "By the end of this module, you will be able to follow water ",
+              "status": "draft",
+              "text": "Loko modula lowu wu hela, u ta kota ku landzelela mati "
+            },
+            {
+              "sourceEnglish": "across your land",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " and find where it leaves.",
+              "status": "english-hold"
+            }
+          ],
+          "decision": "retain-mixed-after-second-narrowing",
+          "reason": "The translated frame preserves end-of-module timing and future capability. Keep “across your land” exact as scoped to a plot; “laha ma humaka kona” can read as where water comes from/originates, so retain exact English for the exit location.",
+          "status": "unreviewed machine semantic candidate; local grammar approval pending"
+        },
+        {
+          "language": "ts",
+          "slide": 4,
+          "bodyIndex": 2,
+          "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+          "canonicalSourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 2,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "packetCandidateBeforeReview": "Mati man'wana lama taleke ma lava a safe route away so it does not cause damage.",
+          "candidateAfterIndependentCheck": "Mati man'wana lama taleke ma lava a safe route away so it does not cause damage.",
+          "candidateSegmentsAfterIndependentCheck": [
+            {
+              "sourceEnglish": "Some excess water ",
+              "status": "draft",
+              "text": "Mati man'wana lama taleke "
+            },
+            {
+              "sourceEnglish": "needs ",
+              "status": "draft",
+              "text": "ma lava "
+            },
+            {
+              "sourceEnglish": "a safe route away so it does not cause damage.",
+              "status": "english-hold"
+            }
+          ],
+          "decision": "retain-prefix-plus-exact-source-clause",
+          "reason": "The Xitsonga prefix conveys some plentiful/excess water needing a route; exact English keeps the required safe direction away and the no-damage result, avoiding the ambiguous “yo famba” (travel/move). This mixed construction is a semantic candidate only; local grammar remains unverified.",
+          "status": "unreviewed machine semantic candidate; local grammar approval pending"
+        }
+      ],
+      "summary": "VE and TS slide 3 body 0 keep “across your land” exact and now also keep “and find where it leaves” exact because the localized destination wording may invert exit and origin. TS slide 4 body 2 retains the exact safe-route-away and no-damage clause after a localized excess-water lead-in. Candidate punctuation/order follow source. This is a machine semantic check, not local-language approval.",
+      "limitations": [
+        "No repository changes.",
+        "Mixed-language grammar and farmer comprehension were not validated by a fluent speaker.",
+        "Source clause segmentation must concatenate in the original order."
+      ]
+    }
+  ]
+}

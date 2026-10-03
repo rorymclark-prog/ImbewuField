@@ -270,10 +270,10 @@ test('Sesotho Market L1 keeps the source-aligned season, sale and harvest safegu
   assert.equal(paragraphs.length, canonical.length, 'paragraph positions carry the lesson safeguards');
   for (const index of changed) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} has localized framing`);
   assert.equal(paragraphs[12], canonical[12], 'the example remains exact English, including R18 cost and R15 sale price');
-  assert.ok(paragraphs[13].includes('ha e netefatse thekiso'), 'the price review keeps its no-guarantee condition');
+  assert.ok(paragraphs[13].includes('ha e tiise thekiso'), 'the price review keeps its no-guarantee condition');
   assert.ok(paragraphs[15].includes('maemo a ho jala') && paragraphs[15].includes('nako e lebelletsweng ya kotulo'), 'planting advice keeps its site and timing qualification');
   assert.ok(paragraphs[16].includes('Letsatsi le sebetsang polasing e nngwe'), 'the timing comparison remains local to this farm');
-  assert.ok(paragraphs[16].includes('ha pula, metsi kapa dijalo di hloleha'), 'the backup plan remains tied to rain, water or crop failure');
+  assert.ok(paragraphs[16].includes('haeba pula, metsi kapa dijalo di hloleha'), 'the backup plan remains tied to rain, water or crop failure');
 
   const shown = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(shown.status, 'draft');
