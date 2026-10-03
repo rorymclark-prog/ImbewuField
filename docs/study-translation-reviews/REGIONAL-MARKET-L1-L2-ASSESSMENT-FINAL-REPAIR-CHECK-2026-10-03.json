@@ -1,0 +1,166 @@
+{
+  "title": "Focused source check of final Xitsonga Market assessment repairs",
+  "date": "2026-10-03",
+  "input": "/tmp/imbewu-regional-market-l1-l2-assessment-final-20261003.json",
+  "scope": "Three specified Xitsonga Market L1 fields; read-only.",
+  "summary": {
+    "fieldsChecked": 3,
+    "sourceMatchesCanonical": true,
+    "correctIndicesMatchCanonical": true,
+    "conditionalMeaningPreserved": true,
+    "financialExampleGuidanceRemainsHeld": true,
+    "verdicts": {
+      "accept": 3,
+      "repair": 0,
+      "hold": 0
+    },
+    "fluencyApproved": false
+  },
+  "findings": [
+    {
+      "topic": "Seasonal question",
+      "result": "June and July each year and the household vegetable shortage stay exact English; the short Xitsonga follow-up asks which action is useful."
+    },
+    {
+      "topic": "False distractor",
+      "result": "The soil-fertility claim is exact-English held, retaining its role as the source’s false distractor without shifting “records” into the candidate wording."
+    },
+    {
+      "topic": "Rationale",
+      "result": "“Records identify the gap” and “local climate” are held exact English. The surrounding Xitsonga retains crop choice/sowing dates, water, and expected harvest time as conditions."
+    },
+    {
+      "topic": "Answer order",
+      "result": "All six language/lesson correct-index arrays in the packet match canonical; TS Market L1 keeps correct option index 1 for the seasonal question."
+    },
+    {
+      "topic": "Financial guidance",
+      "result": "All TS Market L1 quiz[0] fields remain exact-English holds, including the R15/R18 example."
+    }
+  ],
+  "repairs": [
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question",
+      "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "canonicalSource": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "sourceMatchesCanonical": true,
+      "previousCandidate": "Switsari swa murimi swi komba leswaku u kayivela matsavu hi June na July lembe rin'wana na rin'wana. Hi rihi goza leri pfunaka?",
+      "finalCandidate": "A farmer's records show she's short of vegetables every June and July. Hi rihi goza leri pfunaka?",
+      "status": "candidate",
+      "sourceCheck": "The repeated June/July shortage remains exact; the useful-action prompt follows in Xitsonga.",
+      "verdict": "accept",
+      "fluencyApproved": false
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "canonicalSource": "The records show a soil fertility problem",
+      "sourceMatchesCanonical": true,
+      "previousCandidate": "Switsari swi komba xiphiqo xa ku nona ka misava.",
+      "finalCandidate": "The records show a soil fertility problem",
+      "status": "hold",
+      "sourceCheck": "The soil-fertility diagnosis remains the original exact-English false distractor; no diagnosis is introduced as fact.",
+      "verdict": "accept",
+      "fluencyApproved": false
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "canonicalSource": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "sourceMatchesCanonical": true,
+      "previousCandidate": "Switsari swi komba mpfumaleko. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni maxelo ya ndhawu, mati ni nkarhi lowu languteriweke wa ntshovelo.",
+      "finalCandidate": "Records identify the gap. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni local climate, mati ni nkarhi lowu languteriweke wa ntshovelo.",
+      "status": "candidate",
+      "sourceCheck": "“Records identify the gap” and “local climate” remain exact English; candidate keeps water and expected harvest-time conditions in the same rationale.",
+      "verdict": "accept",
+      "fluencyApproved": false
+    }
+  ],
+  "indexChecks": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    }
+  ],
+  "reviewLimit": "Source and semantic-scope check only. This does not establish fluent or learner-ready Xitsonga."
+}

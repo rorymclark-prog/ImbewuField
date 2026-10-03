@@ -98,36 +98,36 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
-            "xitsongaDraft": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "A farmer's records show she's short of vegetables every June and July. Hi rihi goza leri pfunaka?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
-              "sourceEnglish": "Buy vegetables at market each June and July",
-              "xitsongaDraft": "Buy vegetables at market each June and July",
-              "reviewStatus": "hold"
-            },
+            "sourceEnglish": "Buy vegetables at market each June and July",
+            "xitsongaDraft": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+            "reviewStatus": "machine-draft"
+          },
             {
-              "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
-              "xitsongaDraft": "Work backwards from the food gap using suitable local crops and their harvest timing",
-              "reviewStatus": "hold"
-            },
+            "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+            "xitsongaDraft": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+            "reviewStatus": "machine-draft"
+          },
             {
-              "sourceEnglish": "Accept her farm can't produce in winter",
-              "xitsongaDraft": "Accept her farm can't produce in winter",
-              "reviewStatus": "hold"
-            },
+            "sourceEnglish": "Accept her farm can't produce in winter",
+            "xitsongaDraft": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+            "reviewStatus": "machine-draft"
+          },
             {
-              "sourceEnglish": "The records show a soil fertility problem",
-              "xitsongaDraft": "The records show a soil fertility problem",
-              "reviewStatus": "hold"
-            }
+            "sourceEnglish": "The records show a soil fertility problem",
+            "xitsongaDraft": "The records show a soil fertility problem",
+            "reviewStatus": "hold"
+          }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
-            "xitsongaDraft": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Records identify the gap. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni local climate, mati ni nkarhi lowu languteriweke wa ntshovelo.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -177,15 +177,15 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       },
       "keyPoints": [
         {
-          "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
-          "xitsongaDraft": "Agree product, quantity, quality, delivery and payment",
-          "reviewStatus": "hold"
-        },
+            "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+            "xitsongaDraft": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+            "reviewStatus": "machine-draft"
+          },
         {
-          "sourceEnglish": "Compare costs and losses as well as selling price",
-          "xitsongaDraft": "Compare costs and losses as well as selling price",
-          "reviewStatus": "hold"
-        },
+            "sourceEnglish": "Compare costs and losses as well as selling price",
+            "xitsongaDraft": "Pimanisa costs ni losses xikan’we ni selling price.",
+            "reviewStatus": "machine-draft"
+          },
         {
           "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
           "xitsongaDraft": "Promise regular boxes only when supply and customer terms support them",
