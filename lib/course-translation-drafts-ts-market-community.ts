@@ -290,8 +290,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
-          "xitsongaDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Tsala seed identity, source and quality, kutani check if permission is needed before sharing.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
@@ -300,32 +300,32 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Measure losses and net returns for each selling route",
-          "xitsongaDraft": "Measure losses and net returns for each selling route",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Pima losses and net returns for each selling route.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Combine shared experience with qualified help when needed",
-          "xitsongaDraft": "Combine shared experience with qualified help when needed",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Hlanganisa shared experience with qualified help when needed.",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
-            "xitsongaDraft": "Neighbours want to share saved seed. What helps make the shared seed useful?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Vaakelani va lava ku avelana saved seed. Xana i yini lexi pfunaka leswaku shared seed yi va useful?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Mix all varieties without labels",
-              "xitsongaDraft": "Mix all varieties without labels",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Hlanganisa all varieties without labels.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
-              "xitsongaDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Pfumelelana hi seed-quality checks naswona check whether permission is needed to share the variety.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume sharing automatically improves every seed lot",
@@ -334,8 +334,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Rely only on the size of the group",
-              "xitsongaDraft": "Rely only on the size of the group",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Tshemba ntsena eka size of the group.",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
@@ -348,36 +348,36 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
-            "xitsongaDraft": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Murimi u pimanisa distant market na nearby customers. Xana i yini lexi faneleke ku kongomisa xiboho?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Always choose the highest headline price",
-              "xitsongaDraft": "Always choose the highest headline price",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Always hlawula the highest headline price.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Always choose the shortest journey",
-              "xitsongaDraft": "Always choose the shortest journey",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Always hlawula the shortest journey.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
-              "xitsongaDraft": "Compare money received after fees, transport, unsold produce and losses",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Pimanisa money received after fees, transport, unsold produce and losses.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume joining a group removes all costs",
-              "xitsongaDraft": "Assume joining a group removes all costs",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Assume leswaku joining a group removes all costs.",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
-            "xitsongaDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Distance affects costs, kambe it is not the only factor. Tirhisa actual returns and losses to compare the options.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]

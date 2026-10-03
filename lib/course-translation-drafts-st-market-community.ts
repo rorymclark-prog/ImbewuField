@@ -220,13 +220,22 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         ].join('\n\n'),
       ),
       keyPoints: [
-        hold('Record seed identity, source and quality, and check if permission is needed before sharing'),
+        machineDraft(
+          "Record seed identity, source and quality, and check if permission is needed before sharing",
+          "Ngola seed identity, source and quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+        ),
         machineDraft(
           'Agree care, booking and repair responsibilities for shared tools',
           'Dumellanang ka boikarabelo ba tlhokomelo, ho behela nako le ho lokisa disebediswa tse arolelwanwang',
         ),
-        hold('Measure losses and net returns for each selling route'),
-        hold('Combine shared experience with qualified help when needed'),
+        machineDraft(
+          "Measure losses and net returns for each selling route",
+          "Lekanya losses le net returns bakeng sa selling route ka nngwe.",
+        ),
+        machineDraft(
+          "Combine shared experience with qualified help when needed",
+          "Kopanya shared experience le qualified help ha ho hlokahala.",
+        ),
       ],
       quiz: [
         {
@@ -235,10 +244,22 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
             'Baahelani ba batla ho arolelana dipeo tseo ba di bolokileng. Ke eng e thusang hore peo e arolelwanwang e be molemo?',
           ),
           options: [
-            hold('Mix all varieties without labels'),
-            hold('Agree seed-quality checks and check whether permission is needed to share the variety'),
-            hold('Assume sharing automatically improves every seed lot'),
-            hold('Rely only on the size of the group'),
+            machineDraft(
+              "Mix all varieties without labels",
+              "Kopanya mefuta yohle ntle le labels.",
+            ),
+            machineDraft(
+              "Agree seed-quality checks and check whether permission is needed to share the variety",
+              "Lumellanang ka seed-quality checks, mme le hlahlobe hore na permission e a hlokahala ho arolelana variety.",
+            ),
+            machineDraft(
+              "Assume sharing automatically improves every seed lot",
+              "Nka hore sharing e ntlafatsa seed lot e nngwe le e nngwe ka boyona.",
+            ),
+            machineDraft(
+              "Rely only on the size of the group",
+              "Itshetlehe feela ka size ya group.",
+            ),
           ],
           sourceCorrectIndex: 1,
           rationale: hold('Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.'),
@@ -249,13 +270,25 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
             'Molemi o bapisa mmaraka o hole le bareki ba haufi. Ke eng e lokelang ho tataisa qeto?',
           ),
           options: [
-            hold('Always choose the highest headline price'),
-            hold('Always choose the shortest journey'),
-            hold('Compare money received after fees, transport, unsold produce and losses'),
-            hold('Assume joining a group removes all costs'),
+            machineDraft(
+              "Always choose the highest headline price",
+              "Khetha kamehla highest headline price.",
+            ),
+            machineDraft(
+              "Always choose the shortest journey",
+              "Khetha kamehla shortest journey.",
+            ),
+            machineDraft(
+              "Compare money received after fees, transport, unsold produce and losses",
+              "Bapisa money received ka mora fees, transport, unsold produce le losses.",
+            ),
+            machineDraft(
+              "Assume joining a group removes all costs",
+              "Nka hore ho kena group ho tlosa costs tsohle.",
+            ),
           ],
           sourceCorrectIndex: 2,
-          rationale: hold('Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.'),
+          rationale: machineDraft("Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.", "Distance e ama costs, empa ha se yona feela factor. Sebedisa actual returns le losses ho bapisa options."),
         },
       ],
     },

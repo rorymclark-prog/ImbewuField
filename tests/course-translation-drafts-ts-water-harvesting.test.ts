@@ -67,16 +67,20 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
       ]);
       assert.equal(draftLesson.keyPoints[0].reviewStatus, 'machine-draft');
       assert.deepEqual(draftLesson.keyPoints.slice(1).map(point => point.reviewStatus), ['hold', 'hold', 'hold']);
-    } else {
+    } else if (draftLesson.id !== 'market-community-l3') {
       assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
     }
     assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), sourceLesson.quiz.map(question => question.correct));
     const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
     assert.equal(shown.status, 'draft');
-    assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
-    assert.deepEqual(shown.content.keyPoints, draftLesson.id === 'market-community-l1'
-      ? ['Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali', ...sourceLesson.keyPoints.slice(1)]
-      : sourceLesson.keyPoints);
+    // Checked L3 ordinary assessments are source-paired drafts; other lessons retain existing holds.
+    assert.deepEqual(shown.content.quiz, draftLesson.id === 'market-community-l3' ? sourceLesson.quiz.map((question, index) => ({
+      q: draftLesson.quiz[index].question.xitsongaDraft,
+      options: draftLesson.quiz[index].options.map(pair => pair.xitsongaDraft),
+      correct: question.correct,
+      rationale: draftLesson.quiz[index].rationale.xitsongaDraft,
+    })) : sourceLesson.quiz);
+    assert.deepEqual(shown.content.keyPoints, draftLesson.keyPoints.map(pair => pair.xitsongaDraft));
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);

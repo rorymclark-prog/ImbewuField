@@ -1,0 +1,32 @@
+[
+  {
+    "language": "st",
+    "checkedFields": 13,
+    "newDraftFields": 12,
+    "indices": [
+      1,
+      2
+    ],
+    "wholeModulePreservation": true
+  },
+  {
+    "language": "ve",
+    "checkedFields": 15,
+    "newDraftFields": 14,
+    "indices": [
+      1,
+      2
+    ],
+    "wholeModulePreservation": true
+  },
+  {
+    "language": "ts",
+    "checkedFields": 15,
+    "newDraftFields": 13,
+    "indices": [
+      1,
+      2
+    ],
+    "wholeModulePreservation": true
+  }
+]
