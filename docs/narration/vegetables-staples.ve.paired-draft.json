@@ -292,26 +292,33 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Maka tshivhumbeo tshine tsha shumiswa."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni sa athu ṱavha, swayani bed."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "One point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani zwipiki na thambo. Swayani rectangle, and mark both access paths."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nga murahu ni lugiselele u ya nga mavu aṋu — no-dig first, and dig deeper only if your ground genuinely needs it."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "String line i shandula muhumbulo wa vha tsheo. Musi paths dzi no vha hone, ni dzi litshe dzi dzule hone. Musi growing area i no vha hone, ni i tsireledze."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bed yeneyo i a leluwa u khwinifhadza khalaṅwaha iṅwe na iṅwe, ngauri no litsha u tshimbila khayo."
           }
         ]
       }
@@ -332,26 +339,43 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "A Sowing Rhythm",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Keeps Food Moving",
+              "status": "draft",
+              "text": " i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala."
+            }
+          ]
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Succession planting ndi maitele a kalenda, hu si tshimela tsho khetheaho."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu sow a small amount of it, hafhu na hafhu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱavhani muduba mupfufhi every two to three weeks."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Less waste during a glut. Fresh food for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Separate sowings dzi nga fhungudza risk ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. They do not guarantee a harvest if difficult conditions continue."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Which fast crop could you sow in small batches? Nangani tshithihi, ni tshi thome ino vhege."
           }
         ]
       }
@@ -371,23 +395,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱavhani zwiṱuku nahone lunzhi."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hezwi ndi zwine zwa itea ngazwo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sow one. Nga murahu ha two to three weeks, sow two. Nga murahu, sow three. Nga murahu, sow four."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Arali crop timing yo tea, harvests dzi nga thoma u overlap. The first batch will not always be ready by the fourth sowing."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Two to three weeks ndi starting rhythm, hu si law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani zwine zwa itea tsimuni yaṋu, ni shandule interval. U sedza nga nḓila iyi ndi yone skill."
           }
         ]
       }
@@ -413,25 +443,32 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Intercropping is not just crowding different plants together. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "The Three Sisters ndi tsumbo from Indigenous farming traditions in the Americas."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maize i fha height and structure."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Beans dzi gonya maize, and store as protein."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pumpkin spreads across the ground, i ita murunzi kha mavu na u vhulunga moisture."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Timing ndi ya ndeme. Establish the maize first, so it's strong enough to carry the beans when they start to climb."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "The plants can still compete. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
           }
         ]
       }
@@ -451,23 +488,39 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Plan Backwards From ",
+              "status": "draft",
+              "text": "Planani ni tshi humela murahu u bva kha "
+            },
+            {
+              "sourceEnglish": "Your Hungry Gap",
+              "status": "english-hold"
+            }
+          ]
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Muṱa u nga vha na hungry gap: weeks when stored food runs low before the next harvest is ready."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hungry gap yaṋu i nga ḓa nga murahu ha musi stored maize yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni songo kopolola calendar ya muṅwe muthu. Thomani nga u bula miṅwedzi yaṋu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Iṅwaleni fhasi. Ni kone u khetha crop na sowing date ine ya isa zwiḽiwa kha hungry gap yeneyo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hezwi ndi planning backwards, nahone ndi zwone zwi fhambanyisaho garden ine ya vhonala i tshi bveledza na muṱa une wa wana zwiḽiwa."
           }
         ]
       }
@@ -491,19 +544,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Alusani zwivhili kana zwo engaho. Hu si tshithihi."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion."
           }
         ]
       }
@@ -524,26 +582,33 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Staples dzo fhambanaho dzi tsireledza kha khombo dzo fhambanaho."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Beans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Amadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa."
           }
         ]
       }
@@ -563,24 +628,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U fhambana ha zwimela zwi ita uri zwiliwa zwi dzule zwi tshi wanala."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Resilience a zwi ambi uri a hu na zwine zwa kundwa."
           },
           {
             "status": "draft",
             "text": "Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshibyariwa tshithihi ndi point nthihi ya failure."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo."
           }
         ]
       }
@@ -604,19 +674,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pest pressure i anzela u engedzea nga tshiitisi."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwimela zwi re na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "So before you treat anything, sedzani system yoṱhe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”? Are predators already working on the problem for you?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha water, nutrition, kana root damage. Wanani uri ndi zwifhio ni sa athu dzhia vhukando."
           }
         ]
       }
@@ -638,29 +713,36 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Langa tshiitisi phanḓa ha tshikhokhonono."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tevhelani vhukando vhuṋa nga u tevhekana."
+          },
+          {
+            "status": "draft",
+            "text": "Tsha u thoma. Sedzani. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby."
+          },
+          {
+            "status": "draft",
+            "text": "Tsha vhuvhili. Sedzani stress. Soil moisture, midzi, spacing ya zwimela, nutrition na drainage."
+          },
+          {
+            "status": "draft",
+            "text": "Tsha vhuraru. Tsireledzani zwine zwa khou ni thusa. Beneficial insects (zwikhokhonono zwine zwa thusa) zwi khou ni itela mushumo une na inwi na vha ni tshi ḓo u ita."
+          },
+          {
+            "status": "draft",
+            "text": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni ḓi ambele ngoho nga ha vhukando vhune na anzela u vhu pfuka."
           }
         ]
       }
@@ -686,13 +768,44 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwino ngudo i fhela mavuni."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Build one bed that can keep feeding you. ",
+                "status": "draft",
+                "text": "Fhaṱani bed nthihi ine ya nga bvela phanḓa u ni ṋea zwiliwa. "
+              },
+              {
+                "sourceEnglish": "One point two metres by three metres.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Reach the middle from both sides. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Keep every foot on the paths. ",
+                "status": "draft",
+                "text": "Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. "
+              },
+              {
+                "sourceEnglish": "Space your plants for your own climate. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Mulch the bed.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "english-hold"
@@ -741,13 +854,25 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nga murahu ni sedze. Ni lulamise. Ni ṅwale fhasi."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Season by season,",
+                "status": "draft",
+                "text": "Khalaṅwaha iṅwe na iṅwe,"
+              },
+              {
+                "sourceEnglish": " your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "english-hold"

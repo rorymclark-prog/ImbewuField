@@ -1,0 +1,391 @@
+{
+  "date": "2026-10-03",
+  "module": "vegetables-staples",
+  "languages": [
+    "st",
+    "ve",
+    "ts"
+  ],
+  "scope": "Slides7–18 source-paired silent machine drafts; not complete fluency approval",
+  "changedTargetFields": 191,
+  "wholeLearnerParagraphReuses": 156,
+  "ordinaryDeckBodyFields": 15,
+  "headingFields": 20,
+  "canonicalEnglishAndOpeningRecordsUnchanged": true,
+  "publishedOpeningAssetsUnchanged": true,
+  "reviewStatus": "unreviewed",
+  "sourceAndArtPreserved": true,
+  "narration": "No new regional voice; explicit optional English unchanged",
+  "layout": {
+    "baseWidth": 1440,
+    "baseHeight": 5400,
+    "maxTargetExtension": 800,
+    "actualExpandedFrames": [
+      {
+        "language": "st",
+        "slide": 16,
+        "height": 5584
+      },
+      {
+        "language": "ve",
+        "slide": 13,
+        "height": 5508
+      },
+      {
+        "language": "ve",
+        "slide": 16,
+        "height": 5554
+      },
+      {
+        "language": "ts",
+        "slide": 16,
+        "height": 5518
+      }
+    ],
+    "bodyFontPx": 58,
+    "allParagraphsRetained": true
+  },
+  "cacheMigration": "Only regionalWebP7–18 paths retire once; no replacement autodownload; all recordings/openingframes/othercourses preserved",
+  "rootVisualEvidence": [
+    "/tmp/imbewu-veg-remaining-st-contact.png",
+    "/tmp/imbewu-veg-remaining-ve-contact.png",
+    "/tmp/imbewu-veg-remaining-ts-contact.png",
+    "/tmp/imbewu-veg-remaining-st-16-phone.png",
+    "/tmp/imbewu-veg-remaining-ve-16-phone.png",
+    "/tmp/imbewu-veg-remaining-ts-16-phone.png",
+    "/tmp/imbewu-veg-remaining-st-17-phone.png",
+    "/tmp/imbewu-ts13-panel-separation.png"
+  ],
+  "frames": [
+    {
+      "language": "st",
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/st/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 552704,
+      "sha256": "8bd07d39fb2dd0b201a3c75095aca8e7afb610c27151305ce03fedb63b275bc0"
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "path": "public/course-decks/vegetables-staples/st/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 363718,
+      "sha256": "6d30593d48f6573278506c83f3e8cf2ae3e79e9baa5a8e9d434024b708830586"
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "path": "public/course-decks/vegetables-staples/st/slide-09.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 294378,
+      "sha256": "3b199e38ccf288d6845bbc9fa6aa50a9264a0c1e3a70a7fcaa4d0a79c2c78278"
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "path": "public/course-decks/vegetables-staples/st/slide-10.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 650614,
+      "sha256": "7fa31128bdedcd6cc56a790ac3943b2ef20f300a222c4ca069328f45882c854f"
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "path": "public/course-decks/vegetables-staples/st/slide-11.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 322910,
+      "sha256": "ca8ab801336a3aa955988680dacccbce14ac54f5cac72440a10cfa3e0f5839f6"
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "path": "public/course-decks/vegetables-staples/st/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 371294,
+      "sha256": "11c16a76c9ef20930248c68374bbcdc1bd2b73044a330ba75733d476ee76fe85"
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "path": "public/course-decks/vegetables-staples/st/slide-13.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 363884,
+      "sha256": "f54f3b1302b8e8be08fd7ab1f231f6c1f997c8682e7058603aa2883e091cb6cf"
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "path": "public/course-decks/vegetables-staples/st/slide-14.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 215692,
+      "sha256": "fbd59b56e33135f7b2fb22048cb1fd8b3323698d7f83aefb10812c451c8cd7f8"
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/st/slide-15.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 464216,
+      "sha256": "e6d29c62652c9f657380206b44b317729190279603bd5cee47806f8d9bf1fe81"
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/st/slide-16.webp",
+      "width": 1440,
+      "height": 5584,
+      "bytes": 476692,
+      "sha256": "7e0e44e7c588a942677ae2ed00f7a96d0a0f38918238fc57d8859ded3e47ab79"
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "path": "public/course-decks/vegetables-staples/st/slide-17.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 315420,
+      "sha256": "1dc2f458c9d5749686bff74108fd91b7680ecd02d8d5940d664fa35effd70e1e"
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "path": "public/course-decks/vegetables-staples/st/slide-18.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 283964,
+      "sha256": "8d2683a00731788ea127d995d09642acd398a780b281277f781cbab3b96165c3"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/ve/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 558144,
+      "sha256": "49c34405383082cd1f9c983cfa29bee84f89c1df53e9fa11a8ecab2acdce2aef"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "path": "public/course-decks/vegetables-staples/ve/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 353184,
+      "sha256": "ec2b6028e0f6b87a0fed0e2a5991ccd21890a782a4cc3ce24d4b621bed36951c"
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "path": "public/course-decks/vegetables-staples/ve/slide-09.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 273872,
+      "sha256": "18dc830462ce4888e528ea941248bfe4af7e842456e1be9287ea40a31ce17001"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "path": "public/course-decks/vegetables-staples/ve/slide-10.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 630620,
+      "sha256": "70f6f385286a6108a1f9ae06417ea8a9d1e432726e50c204c3a8a5a2f229deb6"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "path": "public/course-decks/vegetables-staples/ve/slide-11.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 329820,
+      "sha256": "63b1be9945685ce4f0a630fb8cc658ead958de47be8549e18e0d9f70a09f9957"
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "path": "public/course-decks/vegetables-staples/ve/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 401156,
+      "sha256": "0bdad7fa2f6c067ba146d02d6790eb786baad18af96eaf9ff001b51bc064b906"
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "path": "public/course-decks/vegetables-staples/ve/slide-13.webp",
+      "width": 1440,
+      "height": 5508,
+      "bytes": 388806,
+      "sha256": "35357117e59663742a195d7345584ece009c84129297f02c685dc915a34821aa"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "path": "public/course-decks/vegetables-staples/ve/slide-14.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 231284,
+      "sha256": "d042c892c876ee7f20d5d7e96a7f7e8d2ba5720f7d965775e44a57140fb1b67d"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/ve/slide-15.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 457382,
+      "sha256": "9a2075ef0429bf7ae4b1b17f524cc06efdc7d2c833137d3d5f68798a8e29a422"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/ve/slide-16.webp",
+      "width": 1440,
+      "height": 5554,
+      "bytes": 468998,
+      "sha256": "598e1c588cf03e080b3a2ed6fe567abb41a2ecea1567a3e4cfe9aceb79539c62"
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "path": "public/course-decks/vegetables-staples/ve/slide-17.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 313592,
+      "sha256": "36772f365537ea9efcb47cf55eaedfa4cff608ec945b2ba09669a730e435ec1a"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "path": "public/course-decks/vegetables-staples/ve/slide-18.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 286678,
+      "sha256": "32d472a6be2f59e8c9fbcfd59541ec9bcd8cb1f3db2036e960ef930d3c048aeb"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/ts/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 557248,
+      "sha256": "b80f7ef0290495b9ad842376c2b268468115f7ee644a92c3e97da7278abb93bd"
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "path": "public/course-decks/vegetables-staples/ts/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 376568,
+      "sha256": "3500bf59eb4d436534065e7a7fe551899dd145f560649b478feefa512811efcd"
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "path": "public/course-decks/vegetables-staples/ts/slide-09.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 283306,
+      "sha256": "227c50373ccd6443093c85339dcdf88b6aff6166bda32476e5fac830b164d89b"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "path": "public/course-decks/vegetables-staples/ts/slide-10.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 640144,
+      "sha256": "5b21ec830af1014a97badfc95882eb5174d0ca4dafe6ab4c9b8d581e20b0f982"
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "path": "public/course-decks/vegetables-staples/ts/slide-11.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 324748,
+      "sha256": "52531150b946822957daae2311fd1fd805e9380aaf12a025be85b1e31131efc7"
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "path": "public/course-decks/vegetables-staples/ts/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 375858,
+      "sha256": "838b9bac8a74dc8a8b8b98617ea67efa49b1ed749b4a30cddd88caa90b17730b"
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "path": "public/course-decks/vegetables-staples/ts/slide-13.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 370390,
+      "sha256": "7d3295a7d5eda74cec5e53b11599fcac0f7567b2a937bb140db45765492ab572"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "path": "public/course-decks/vegetables-staples/ts/slide-14.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 230166,
+      "sha256": "5e0a78fdf57a1852f19483dadb07ecc9e27d42e6d67d872e2fe9b72e4237bca3"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/ts/slide-15.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 463098,
+      "sha256": "fd5b720bc63262c17065abe39663aa34aa5a2d296abcf207066e1896cab18b1f"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/ts/slide-16.webp",
+      "width": 1440,
+      "height": 5518,
+      "bytes": 467394,
+      "sha256": "306e2e1a665f107d4477b144e2b2476e9c83116a24a4dda742e999ecdc2bc88b"
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "path": "public/course-decks/vegetables-staples/ts/slide-17.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 318756,
+      "sha256": "66b0e18499b4c39a70776a19201bc12fd27c862b1b387b2a1e5e9e95fd6884a2"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "path": "public/course-decks/vegetables-staples/ts/slide-18.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 285842,
+      "sha256": "ecd5e201a7e48644c913cf6f57a4784c644e38cc69bafc627e3bc9d66962aa0e"
+    }
+  ],
+  "remainingDependencies": [
+    "Fluent regional and local farming feedback remains pending after publication.",
+    "Some ordinary or technical passages still contain exact English holds; changed field counts do not establish completion.",
+    "No publication rights for additional regional narration are established."
+  ],
+  "prepublicationStatus": "Localfullgates passed; remoteexactheadCI/preview/actualphoneoffline still required."
+}
