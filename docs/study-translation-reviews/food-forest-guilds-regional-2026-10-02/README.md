@@ -27,9 +27,11 @@ frames exist.
    "do not"; never add farming guidance.
 2. A blind English back-translation of every passage by a separate agent (Claude Sonnet) that never saw the
    English source.
-3. Independent semantic checks of each draft against the exact English, followed by Claude Opus revision rounds for
-   the passages they flagged. Passages that changed were back-translated again; a back-translation only counts if
-   it was made from the exact current text.
+3. Independent semantic checks (Claude Sonnet) of each draft against the exact English, followed by revision rounds
+   for the passages they flagged. Claude Sonnet agents made most revisions, including the harmonisation round in
+   step 4; Claude Opus wrote the word rules of the last consistency round and made the final small fixes in step 5.
+   Passages that changed were back-translated again; a back-translation only counts if it was made from the exact
+   current text.
 4. A harmonisation round gave each language one word for the main recurring concepts across both modules (for
    example plant and tree, leaf, trunk and harvest). It also wrote every Sesotho passage in South African spelling
    (lesedi, motjheso, kwahela and jwang, not the Lesotho leseli, mocheso, koahela and joang). It replaced two
