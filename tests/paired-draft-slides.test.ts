@@ -531,13 +531,18 @@ test('Vegetables paired drafts keep the one-crop limit and source-bound seasonal
   const lesson = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body;
   const english = lesson.sourceEnglish.split('\n\n');
   const translated = lesson.xitsongaDraft.split('\n\n');
-  for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 1, 12], [13, 4, 15]]) {
+  for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 1, 12], [13, 2, 13], [13, 3, 14], [13, 4, 15]]) {
     assert.equal(slides[slideIndex].english.body[slideParagraph], english[lessonParagraph]);
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
   }
-  assert.equal(slides[13].target.body[2].status, 'english-hold',
-    'the one-crop point-of-failure claim remains exact English in this slide packet');
-  assert.equal(slides[13].target.body[3].status, 'english-hold');
+  assert.equal(slides[13].target.body[2].status, 'draft');
+  assert.ok(slides[13].target.body[2].text.includes('point of failure'),
+    'the source-matched draft keeps the one-crop point-of-failure claim explicit');
+  assert.equal(slides[13].target.body[3].status, 'draft');
+  assert.ok(slides[13].target.body[3].text.includes('Two or more staples'),
+    'the source-matched next paragraph preserves the minimum of two staple crops');
+  assert.ok(slides[13].target.body[3].text.includes('tindlela to tala ta ku ya mahlweni u dya'),
+    'the Xitsonga wording keeps the continued-food benefit tied to multiple staples');
 });
 
 test('Vegetables opening frames retain exact source holds and reuse L1 wording only at matching passages', () => {
@@ -582,6 +587,69 @@ test('Vegetables opening frames retain exact source holds and reuse L1 wording o
   }
 });
 
+test('Vegetables middle slides reuse whole source-matched lesson paragraphs and keep treatment safeguards intact', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
+  const module = COURSE_MODULES.find(({ id }) => id === 'vegetables-staples')!;
+  const expectedHolds = new Set([
+    'st:16:6', 've:16:6', 'ts:10:2', 'ts:10:3', 'ts:10:4', 'ts:16:6',
+  ]);
+  let sourceMatches = 0;
+  let reusedDrafts = 0;
+  const actualHolds = new Set<string>();
+
+  for (const lang of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/vegetables-staples.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    for (let slideIndex = 6; slideIndex < 16; slideIndex++) {
+      for (let bodyIndex = 0; bodyIndex < slides[slideIndex].english.body.length; bodyIndex++) {
+        const exactSource = slides[slideIndex].english.body[bodyIndex];
+        const bindings = module.lessons.flatMap((lesson) => lesson.body.split('\n\n')
+          .flatMap((paragraph, paragraphIndex) => paragraph === exactSource
+            ? [{ lesson, paragraph, paragraphIndex }]
+            : []));
+        if (bindings.length === 0) continue;
+
+        sourceMatches++;
+        assert.equal(bindings.length, 1, `${lang} slide ${slideIndex + 1}: source paragraph has one canonical lesson binding`);
+        const [{ lesson, paragraph, paragraphIndex }] = bindings;
+        assert.equal(paragraph, exactSource, `${lang} slide ${slideIndex + 1}: keep the entire English lesson paragraph byte-identical`);
+        const learnerBody = resolveLearnerLessonPresentation(lesson, lang).content.body.split('\n\n');
+        const part = slides[slideIndex].target.body[bodyIndex];
+        const key = `${lang}:${slideIndex + 1}:${bodyIndex + 1}`;
+
+        if (part.status === 'draft') {
+          reusedDrafts++;
+          assert.notEqual(learnerBody[paragraphIndex], exactSource,
+            `${key}: an unchanged English paragraph must remain an explicit hold`);
+          assert.equal(part.text, learnerBody[paragraphIndex],
+            `${key}: deck prose must exactly match the current learner resolver for its complete source paragraph`);
+        } else {
+          assert.equal(part.status, 'english-hold', `${key}: a source match cannot be silently dropped or relabelled`);
+          actualHolds.add(key);
+        }
+      }
+    }
+  }
+
+  assert.equal(sourceMatches, 171, 'slides 7–16 contain 171 complete source-matched paragraphs across the three languages');
+  assert.equal(reusedDrafts, 165, 'all available source-matched learner drafts appear in the deck');
+  assert.deepEqual(actualHolds, expectedHolds,
+    'only the held Indigenous example and crop-treatment guidance remain outside learner prose reuse');
+
+  const treatmentSource = 'If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.';
+  for (const lang of ['st', 've', 'ts'] as const) {
+    const slides = validatePairedDraft(
+      JSON.parse(readFileSync(`docs/narration/vegetables-staples.${lang}.paired-draft.json`, 'utf8')),
+      source,
+      lang,
+    );
+    const treatment = slides[15].target.body[5];
+    assert.equal(slides[15].english.body[5], treatmentSource, `${lang}: preserve the exact registered-product source`);
+    assert.deepEqual(treatment, { status: 'english-hold' },
+      `${lang}: crop/pest registration, label, neem, harvest waiting, and no-mixture/no-stronger-dose safeguards stay together`);
+  }
+});
+
 test('Sesotho Market records slides retain six learner draft sentences as the deck grows', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/market-community.st.paired-draft.json', 'utf8'));
@@ -619,7 +687,7 @@ test('Xitsonga Market media retains two established learner concepts beside exac
   assert.equal(slides[17].english.body[2], source[17].body[2]);
 });
 
-test('Tshivenda staples media holds the unresolved staple placeholder in English', () => {
+test('Tshivenda staples media keeps unresolved crop terminology visible beside source-matched prose', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ve.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 've');
@@ -629,40 +697,218 @@ test('Tshivenda staples media holds the unresolved staple placeholder in English
     "The garden is full of plants, but there's no food in it.");
   assert.equal(slides[1].target.body[3].status, 'draft');
   assert.equal(slides[1].target.body[4].status, 'draft');
-  assert.equal(slides[11].target.body[0].status, 'english-hold',
-    'the literal [staple] placeholder cannot be shown as a learner draft');
+  const stapleLesson = COURSE_MODULES.find(({ id }) => id === 'vegetables-staples')!.lessons
+    .find(({ id }) => id === 'vegetables-staples-l3')!;
+  const stapleParagraph = stapleLesson.body.split('\n\n').findIndex((paragraph) => paragraph === slides[11].english.body[0]);
+  const stapleCandidate = resolveLearnerLessonPresentation(stapleLesson, 've').content.body.split('\n\n')[stapleParagraph];
+  assert.equal(slides[11].target.body[0].status, 'draft',
+    'the complete source-matched paragraph is reusable as a visibly unreviewed learner draft');
+  assert.equal(slides[11].target.body[0].text, stapleCandidate,
+    'reuse the current resolver wording instead of retaining an obsolete English-only status');
+  assert.ok(stapleCandidate.includes('[staple]'),
+    'keep the unresolved crop-category label visibly in English inside the draft');
   assert.equal(slides[13].english.body[1], TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.sourceEnglish);
   assert.equal(slides[13].target.body[1].text, TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept.tshivendaDraft);
-  assert.equal(slides[11].target.body[3].status, 'english-hold');
-  assert.equal(slides[13].target.body[3].status, 'english-hold');
+  const minimumCrops = stapleLesson.body.split('\n\n').findIndex((paragraph) => paragraph === slides[11].english.body[3]);
+  assert.equal(slides[11].target.body[3].status, 'draft');
+  assert.equal(slides[11].target.body[3].text,
+    resolveLearnerLessonPresentation(stapleLesson, 've').content.body.split('\n\n')[minimumCrops]);
+  assert.match(slides[11].target.body[3].text, /zwivhili kana zwo engaho/i,
+    'the action minimum remains two or more crops after the English-only claim is drafted');
+  const multiStaples = stapleLesson.body.split('\n\n').findIndex((paragraph) => paragraph === slides[13].english.body[3]);
+  assert.equal(slides[13].target.body[3].status, 'draft');
+  assert.equal(slides[13].target.body[3].text,
+    resolveLearnerLessonPresentation(stapleLesson, 've').content.body.split('\n\n')[multiStaples]);
+  assert.ok(slides[13].target.body[3].text.includes('u bvela phanḓa ni tshiḽa'),
+    'the additional staple crops keep the stated benefit of more ways to continue eating');
 });
 
-test('Vegetables orientation drafts leave the numbered field decisions and field tasks source-held', () => {
+test('Vegetables field assignment drafts keep measurements, paths, checkpoints and source conditions intact', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   for (const lang of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/vegetables-staples.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
-    for (const n of [3, 17, 18]) {
-      assert.equal(slides[n - 1].target.heading.status, 'draft', `${lang} slide ${n} has a visibly unreviewed heading`);
-      assert.equal(slides[n - 1].english.heading, source[n - 1].heading, `${lang} slide ${n} preserves the exact heading source`);
-    }
+    assert.equal(slides[2].target.heading.status, 'draft');
+    assert.equal(slides[2].english.heading, source[2].heading,
+      `${lang} slide3 keeps the exact English heading source`);
     assert.ok(slides[2].target.body.slice(1, 5).every((part: any) => part.status === 'english-hold'),
       `${lang}: bed matching, named planting methods, crop resilience and pest diagnosis remain exact English`);
     assert.equal(slides[2].target.body[5].status, 'mixed');
     assert.deepEqual(slides[2].target.body[5].segments.slice(1).map((segment: any) => segment.sourceEnglish), [
       'A well-shaped bed still fails if everything goes in on one day. ',
       'A diverse planting still struggles if you treat every yellow leaf as an insect problem.',
-    ], `${lang}: only the connective first sentence is drafted; both exact farming cautions remain held`);
-    for (const n of [17, 18]) assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
-      `${lang} slide ${n} keeps field instructions in English`);
+    ], `${lang}: both one-day planting and yellow-leaf diagnostic cautions remain held`);
     assert.equal(slides[1].english.heading, 'Why This Matters');
-    assert.equal(slides[1].english.body[3], source[1].body[3], `${lang}: keep the seasonal-overlap source attached to its draft`);
+    assert.equal(slides[1].english.body[3], source[1].body[3],
+      `${lang}: preserve the exact seasonal-overlap source clause`);
+    assert.ok(['draft', 'mixed'].includes(slides[1].target.body[3].status),
+      `${lang}: keep the seasonal-overlap draft attached to its exact source`);
+    if (slides[1].target.body[3].status === 'mixed') {
+      assert.equal(slides[1].target.body[3].segments.map((segment: any) => segment.sourceEnglish).join(''),
+        slides[1].english.body[3], `${lang}: keep every held clause in the exact seasonal source`);
+    }
+
+    for (const n of [17, 18]) {
+      assert.equal(slides[n - 1].target.heading.status, 'draft', `${lang} slide ${n} keeps its visible heading draft`);
+      assert.equal(slides[n - 1].english.heading, source[n - 1].heading,
+        `${lang} slide ${n} keeps its exact English heading source`);
+    }
+
+    const hungryGapHeading = slides[10];
+    assert.equal(hungryGapHeading.english.heading, 'Plan Backwards From Your Hungry Gap');
+    assert.equal(hungryGapHeading.target.heading.status, 'mixed');
+    assert.deepEqual(hungryGapHeading.target.heading.segments.map((segment: any) => ({
+      sourceEnglish: segment.sourceEnglish,
+      status: segment.status,
+    })), [
+      { sourceEnglish: 'Plan Backwards From ', status: 'draft' },
+      { sourceEnglish: 'Your Hungry Gap', status: 'english-hold' },
+    ], `${lang}: retain “Your” with the technical Hungry Gap term so the source's possessive is not lost`);
+
+    const staplesRiskHeading = slides[12];
+    assert.equal(staplesRiskHeading.english.heading, 'Different Staples Protect Against Different Risks');
+    assert.equal(staplesRiskHeading.target.heading.status, 'draft');
+    assert.ok(staplesRiskHeading.target.heading.text.includes('Staples'), `${lang}: retain the source staple category`);
+    const riskAnchors = {
+      st: ['tse fapaneng', 'sireletsa', 'dikotsi tse fapaneng'],
+      ve: ['dzo fhambanaho', 'tsireledza', 'khombo dzo fhambanaho'],
+      ts: ['to hambana', 'sirhelela', 'makhombo yo hambana'],
+    } as const;
+    for (const anchor of riskAnchors[lang]) {
+      assert.ok(staplesRiskHeading.target.heading.text.includes(anchor),
+        `${lang}: preserve the claim that different staples protect against different risks`);
+    }
+
+    const pestMessengerHeading = slides[14];
+    assert.equal(pestMessengerHeading.english.heading, 'Pests Are Messengers Before They Are Enemies');
+    assert.deepEqual(pestMessengerHeading.target.heading, { status: 'english-hold' },
+      `${lang}: keep the whole pest-messenger claim in exact English until its relationship is safely drafted`);
+
+    const soil = slides[16];
+    assert.equal(soil.english.body[0], 'Now the lesson finishes in the soil.');
+    if (lang === 'st' || lang === 've') {
+      assert.equal(soil.target.body[0].status, 'draft');
+      assert.notEqual(soil.target.body[0].text, soil.english.body[0]);
+      assert.ok(soil.target.body[0].text.includes(lang === 'st' ? 'mobung' : 'mavuni'),
+        `${lang}: the localized sentence keeps the source's soil meaning`);
+    } else {
+      assert.deepEqual(soil.target.body[0], { status: 'english-hold' },
+        'the Xitsonga candidate that shifted soil to fields remains held in exact English');
+    }
+
+    const bed = soil.target.body[1];
+    assert.equal(soil.english.body[1], 'Build one bed that can keep feeding you. One point two metres by three metres.');
+    assert.equal(bed.status, 'mixed');
+    assert.deepEqual(bed.segments.map((segment: any) => segment.sourceEnglish), [
+      'Build one bed that can keep feeding you. ',
+      'One point two metres by three metres.',
+    ], `${lang}: each source segment remains attached to its exact sentence`);
+    assert.equal(bed.segments[0].status, 'draft');
+    assert.ok(bed.segments[0].text.includes('bed'), `${lang}: retain the intentional English bed term`);
+    assert.deepEqual(bed.segments[1], { sourceEnglish: 'One point two metres by three metres.', status: 'english-hold' },
+      `${lang}: keep the exact 1.2 × 3 metre instruction held with the source`);
+
+    const access = soil.target.body[2];
+    assert.equal(soil.english.body[2], 'Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.');
+    assert.equal(access.status, 'mixed');
+    assert.equal(access.segments.map((segment: any) => segment.sourceEnglish).join(''), soil.english.body[2],
+      `${lang}: preserve the complete four-sentence access and care source`);
+    const bothSides = access.segments.find((segment: any) => segment.sourceEnglish === 'Reach the middle from both sides. ');
+    if (lang === 've') {
+      assert.deepEqual(bothSides, { sourceEnglish: 'Reach the middle from both sides. ', status: 'english-hold' },
+        'Tshivenda keeps the uncertain “both sides” wording exact rather than broadening it to all sides');
+    } else {
+      assert.equal(bothSides.status, 'draft');
+      assert.ok(bothSides.text.includes(lang === 'st' ? 'mahlakoreng ka bobedi' : 'matlhelo hamambirhi'),
+        `${lang}: the target keeps both sides, not all sides`);
+    }
+    const pathRule = access.segments.find((segment: any) => segment.sourceEnglish === 'Keep every foot on the paths. ');
+    assert.equal(pathRule.status, 'draft');
+    assert.ok(pathRule.text.includes(lang === 'st' ? 'ditseleng' : lang === 've' ? 'paths' : 'etindleleni'),
+      `${lang}: foot traffic remains on paths`);
+    assert.deepEqual(access.segments.slice(-2), [
+      { sourceEnglish: 'Space your plants for your own climate. ', status: 'english-hold' },
+      { sourceEnglish: 'Mulch the bed.', status: 'english-hold' },
+    ], `${lang}: keep climate-specific spacing and mulch clauses in their exact source English`);
+
+    for (const paragraphIndex of [3, 4]) {
+      assert.deepEqual(soil.target.body[paragraphIndex], { status: 'english-hold' },
+        `${lang} slide17 paragraph ${paragraphIndex + 1}: retain the exact bed-check and planted/ten-day photo checkpoint instructions`);
+      assert.equal(soil.english.body[paragraphIndex], source[16].body[paragraphIndex]);
+    }
+    const aim = soil.target.body[5];
+    assert.equal(soil.english.body[5], source[16].body[5]);
+    if (lang === 've') {
+      assert.ok(aim.status === 'english-hold' || (aim.status === 'mixed' && aim.segments.every((segment: any) => segment.status === 'english-hold')),
+        'Tshivenda keeps uncertain aim/intent language held rather than emitting a pseudo-draft');
+    } else {
+      assert.equal(aim.status, 'mixed');
+      assert.equal(aim.segments[0].sourceEnglish, "The aim isn't a perfect picture. ");
+      assert.equal(aim.segments[0].status, 'draft');
+      assert.deepEqual(aim.segments[1], {
+        sourceEnglish: 'The aim is a bed whose shape, spacing and rhythm you chose on purpose.',
+        status: 'english-hold',
+      }, `${lang}: exact bed/shape/spacing/rhythm and intentional-choice wording stays source-held`);
+    }
+
+    const action = slides[17];
+    const requiredActions = [
+      'This week, put one bed into production.',
+      'One. Mark the bed and the paths.',
+      'Two. Plant, with your spacing and your sowing rhythm.',
+      'Three. Return after ten days, with a photo.',
+    ];
+    for (let index = 0; index < requiredActions.length; index++) {
+      assert.equal(action.english.body[index], requiredActions[index], `${lang}: retain the numbered source action`);
+      assert.deepEqual(action.target.body[index], { status: 'english-hold' },
+        `${lang}: keep week/production, bed marking, spacing/sowing rhythm and ten-day photo conditions exact`);
+    }
+    assert.equal(action.english.body[4], 'Then observe. Adjust. And write it down.');
+    assert.equal(action.target.body[4].status, 'draft', `${lang}: ordinary observe-adjust-record framing is drafted`);
+    const observationAnchors = {
+      st: ['sheba', 'fetole', 'ngole fatshe'],
+      ve: ['sedze', 'lulamise', 'ṅwale fhasi'],
+      ts: ['languta', 'Lulamisa', 'Tsala leswi ehansi'],
+    } as const;
+    let previous = -1;
+    for (const anchor of observationAnchors[lang]) {
+      const index = action.target.body[4].text.indexOf(anchor);
+      assert.ok(index > previous, `${lang}: keep observe, adjust and write-down actions in order`);
+      previous = index;
+    }
+    assert.equal(action.english.body[5], 'Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.');
+    assert.deepEqual(action.target.body[5], { status: 'english-hold' },
+      `${lang}: preserve the complete record checklist, including pest pressure and harvest`);
+    if (lang === 'st') {
+      const seasonEvidence = action.target.body[6];
+      assert.equal(action.english.body[6], "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.");
+      assert.equal(seasonEvidence.status, 'mixed');
+      assert.deepEqual(seasonEvidence.segments.map((segment: any) => ({
+        sourceEnglish: segment.sourceEnglish,
+        status: segment.status,
+        ...(segment.text === undefined ? {} : { text: segment.text }),
+      })), [
+        { sourceEnglish: 'Season by season, ', status: 'draft', text: 'Sehla ka seng, ' },
+        {
+          sourceEnglish: "your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+          status: 'english-hold',
+        },
+      ], 'Sesotho keeps the season framing localized while holding the full comparative and observed-evidence claim');
+    }
+    assert.equal(action.english.body[7], 'Use your record with reliable local advice when making the next decision.');
+    assert.deepEqual(action.target.body[7], { status: 'english-hold' },
+      `${lang}: retain the reliable-local-advice condition on the next decision`);
+
+    const changed = structuredClone(packet);
+    changed.slides[16].english.body[0] += ' Changed source.';
+    assert.throws(() => validatePairedDraft(changed, source, lang), /slide 17: English body differs/,
+      `${lang}: a changed canonical source still blocks these paired field drafts`);
   }
 });
 
 test('regional Study frames draft screened observations while risky advice stays in exact English', () => {
   const cases = [
-    { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '1:3', '2:1', '2:2', '2:3', '2:4', '2:5', '8:1', '8:4', '9:1'], held: ['8:2', '8:3', '8:5', '8:6'], mixed: ['2:4'] },
+    { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '1:3', '2:1', '2:2', '2:3', '2:4', '2:5', '8:1', '8:2', '8:3', '8:4', '8:5', '8:6', '9:1'], held: [], mixed: ['2:4'] },
     { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '2:3', '3:4', '18:1', '18:3'], held: ['7:2', '15:4'] },
     // Soil ordinary framing/observation cells are now source-paired visible drafts; technical or action-sensitive holds remain exact English below.
     { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['2:3', '4:1', '4:2', '5:4', '20:4'] },
@@ -988,7 +1234,40 @@ test('a long draft fails layout instead of shrinking or dropping a farming parag
       { cwd: process.cwd(), encoding: 'utf8' });
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /slide 1 paired text needs .*phone-readable type size/);
+    assert.match(result.stderr, /maximum extra space 800 px/);
     assert.equal(existsSync(output), false);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('a moderately longer paired draft expands only its frame and keeps the readable type size', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'imbewu-paired-frame-growth-'));
+  try {
+    const draft: any = completeHold();
+    draft.slides[0].target.body[0] = {
+      status: 'draft',
+      text: 'Read the full translated instruction at the same readable size. '.repeat(13),
+    };
+    const json = join(temp, 'draft.json');
+    const output = join(temp, 'slides');
+    writeFileSync(json, JSON.stringify(draft));
+    const result = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'st', output,
+        '--paired-draft', json],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.equal(result.status, 0, result.stderr);
+
+    const expandedSlide = readFileSync(join(output, 'slide-01.png'));
+    assert.equal(expandedSlide.readUInt32BE(16), 1440);
+    const expandedHeight = expandedSlide.readUInt32BE(20);
+    assert.ok(expandedHeight > 5400 && expandedHeight <= 6200,
+      `only the slide whose target panel overflows may grow by up to 800 px; got ${expandedHeight}`);
+
+    const unchangedSlide = readFileSync(join(output, 'slide-02.png'));
+    assert.equal(unchangedSlide.readUInt32BE(16), 1440);
+    assert.equal(unchangedSlide.readUInt32BE(20), 5400,
+      'a fitting frame retains the established 1440x5400 canvas');
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }

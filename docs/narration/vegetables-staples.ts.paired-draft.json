@@ -292,26 +292,33 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tshwaya xivumbeko lexi tirhaka."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko u nga si byala, mark the bed out."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "One point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa pegs and string. Mark the rectangle, and mark both access paths."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u dig deeper ntsena loko misava ya wena hakunene yi swi lava."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ntila wa ntambhu wu hundzula miehleketo wu va xiboho. Loko tindlela ti ri kona, ti hlayise. Loko ndhawu yo byala yi ri kona, yi sirhelele."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bed yoleyo yi ya olova ku antswisa eka nguva yin'wana ni yin'wana, hikuva u tshike ku famba ehenhla ka yona."
           }
         ]
       }
@@ -332,26 +339,43 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "A Sowing Rhythm",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Keeps Food Moving",
+              "status": "draft",
+              "text": " yi endla leswaku swakudya swi hambeta swi kumeka."
+            }
+          ]
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku byala swibyariwa hi ku landzelelana i ntolovelo wa khalendara, a hi xibyariwa xo hlawuleka."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula swakudya leswi ndyangu wa wena wu talaka ku swi dya. Kutani byala xitsongo xa swona, u tlhela u endla tano hi ku phindha-phindha."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Byala short row every two to three weeks."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku lahleka ka swakudya ka hunguteka loko ku ri na ntshovelo wo tala. Ku va na swakudya swo tenga nkarhi wo leha. Ntirho wu hangalaka hi nkarhi wa nguva, ematshan'weni yo ku wu humelela hinkwawo hi nkarhi wun'we."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Separate sowings swi nga hunguta risk ya ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we. They do not guarantee a harvest if difficult conditions continue."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi xihi fast crop lexi u nga xi byalaka hi small batches? Hlawula xin'we, u sungula hi vhege leyi."
           }
         ]
       }
@@ -371,23 +395,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Byala switsongo naswona nkarhi na nkarhi."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi leswi swi langutekaka hakona hi ku tirhisa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Byala xin'we. Then two to three weeks later, byala xa vumbirhi. Kutani byala xa vunharhu. Kutani byala xa vumune."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko crop timing yi lulamile, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Two to three weeks i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta leswi humelelaka ensin'wini ya wena, u lulamisa interval. Ku xiyisisa leswi hi swona vutshila."
           }
         ]
       }
@@ -413,7 +443,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Intercropping is not just crowding different plants together. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla."
           },
           {
             "status": "english-hold"
@@ -425,13 +456,16 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pumpkin yi hangalaka ehenhla ka misava, yi endla ndzhuti ehenhla ka misava, yi tlhela yi hlayisa moisture."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Timing i ya nkoka. Establish the maize first, so it's strong enough to carry the beans when they start to climb."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swibyariwa swi nga ha phikizana. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
           }
         ]
       }
@@ -451,23 +485,39 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Plan Backwards From ",
+              "status": "draft",
+              "text": "Hlela u tlhelela endzhaku ku suka eka "
+            },
+            {
+              "sourceEnglish": "Your Hungry Gap",
+              "status": "english-hold"
+            }
+          ]
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndyangu wu nga va na hungry gap: weeks when stored food runs low before the next harvest is ready."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hungry gap ya wena yi nga fika endzhaku ka loko stored maize yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga tekeleli calendar ya munhu un'wana. Rhanga hi ku vula tin'hweti ta wena."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ti tsale ehansi. Then choose the crop and the sowing date that puts food into that gap."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Leswi i planning backwards, naswona hi swona swi hambanisaka garden leyi vonakaka yi ri productive ni ndyangu lowu dyaka."
           }
         ]
       }
@@ -491,19 +541,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion."
           }
         ]
       }
@@ -524,23 +579,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Staples to hambana ti sirhelela eka makhombo yo hambana."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Staple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Beans na cowpeas swi nyika protein harvest leyi nga hlayisiwa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle."
           },
           {
             "status": "draft",
@@ -564,7 +625,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ku hambana ka swibyariwa ku endla leswaku swakudya swi hambeta swi kumeka."
         },
         "body": [
           {
@@ -576,10 +638,12 @@
             "text": "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xibyariwa xin'we i \"point of failure\" yin'we."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya."
           },
           {
             "status": "draft",
@@ -607,19 +671,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pest pressure hi ntolovelo yi engetseka hi xivangelo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swibyariwa leswi nga na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani, loko u nga si tshungula xin'wana ni xin'wana, languta system hinkwawu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A yellow leaf is not automatically an insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza."
           }
         ]
       }
@@ -645,25 +714,31 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirha hi magoza ya mune, hi ku landzelelana."
+          },
+          {
+            "status": "draft",
+            "text": "Xo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi."
+          },
+          {
+            "status": "draft",
+            "text": "Vumbirhi. Kambela stress. Ndzhongo wa misava, timitsu, mpfhuka wa swimilani, nutrition na drainage."
+          },
+          {
+            "status": "draft",
+            "text": "Vunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects (switsotswana leswi pfunaka) swi endla ntirho lowu wena a wu ta wu endla hi wexe."
+          },
+          {
+            "status": "draft",
+            "text": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula."
           }
         ]
       }
@@ -692,7 +767,41 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Build one bed that can keep feeding you. ",
+                "status": "draft",
+                "text": "Aka bed yin'we leyi nga tshamaka yi ku nyika swakudya. "
+              },
+              {
+                "sourceEnglish": "One point two metres by three metres.",
+                "status": "english-hold"
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Reach the middle from both sides. ",
+                "status": "draft",
+                "text": "Fika exivindzini hi matlhelo hamambirhi. "
+              },
+              {
+                "sourceEnglish": "Keep every foot on the paths. ",
+                "status": "draft",
+                "text": "Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. "
+              },
+              {
+                "sourceEnglish": "Space your plants for your own climate. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Mulch the bed.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "english-hold"
@@ -701,10 +810,18 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The aim isn't a perfect picture. ",
+                "status": "draft",
+                "text": "Xikongomelo a hi xifaniso lexi hetisekeke. "
+              },
+              {
+                "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+                "status": "english-hold"
+              }
+            ]
           }
         ]
       }
@@ -744,7 +861,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani languta. Lulamisa. Tsala leswi ehansi."
           },
           {
             "status": "english-hold"

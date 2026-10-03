@@ -296,26 +296,33 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tšoaea sebopeho seo u tla se sebelisa."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pele o lema, mark the bed out."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bophara ba One point two metres. Bolelele ba Three metres. Bethe e le nngwe ya boikwetliso."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa pegs le string. Tshwaya rectangle, le mark both access paths."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jwale lokisetsa ho ya ka mobu wa hao — no-dig first, and dig deeper only if your ground genuinely needs it."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mohala wa thapo o fetola mohopolo qeto. Ha ditsela di se di le teng, di boloke. Ha sebaka sa temo se se se le teng, se sireletse."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bethe eo e ba bonolo ho e ntlafatsa sehla se seng le se seng, hobane o kgaolitse ho e hata."
           }
         ]
       }
@@ -336,7 +343,18 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "A Sowing Rhythm",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Keeps Food Moving",
+              "status": "draft",
+              "text": " e boloka lijo li ntse li fumaneha."
+            }
+          ]
         },
         "body": [
           {
@@ -344,20 +362,24 @@
             "text": "Temo e latellanang ke mokgwa wa almanaka, eseng sejalo se kgethehileng."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kgetha ntho eo ba lelapa la hao ba hlileng ba e jang kgafetsa. Ebe o jala e nyane ya yona, kgafetsa le hape."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jala mola o mokgutshwane dibeke dingwe le dingwe tse pedi ho isa ho tse tharo."
           },
           {
             "status": "draft",
             "text": "Tshenyo e fokolang nakong ya ha di le ngata haholo. Dijo tse foreshe ka nako e telele. Mme mosebetsi o a arohana hohle sehleng ho e na le ho wela hodima hao kaofela ka nako e le nngwe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dijalo tse arohaneng di ka fokotsa kotsi ya ho lahlehelwa ke tsohle hang-hang. Ha di netefatse kotulo haeba maemo a thata a tswela pele."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke sejalo sefe se potlakang seo o ka se jalang ka dihlopha tse nyane? Etsa qeto ka se le seng, mme o se qale bekeng ena."
           }
         ]
       }
@@ -377,7 +399,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Jala hanyenyane khafetsa."
         },
         "body": [
           {
@@ -385,16 +408,20 @@
             "text": "Ke sena seo e shebahalang ka teng tshebetsong."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Jala ya pele. Ebe dibeke tse pedi ho isa ho tse tharo hamorao, o jala ya bobedi. Ebe o jala ya boraro. Ebe o jala ya bone."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ka nako e nepahetseng ya sejalo, dikotulo di ka qala ho kopana. Sehlopha sa pele ha se na ho dula se lokile kamehla ka nako ya jalo ya bone."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dibeke tse pedi ho isa ho tse tharo ke morethetho wa ho qala, eseng molao. Sejalo sa mahlaku sa sehla se batang se ka nka nako e telele. Mofuthu o ka potlakisa dintho, kapa wa baka ho hloleha."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba se etsahalang jareteng ya hao, mme o fetole nako ya kgefutso. Pono eo ke bokgoni."
           }
         ]
       }
@@ -420,25 +447,32 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Temo e kopantsweng ha se feela ho pitlaganya dimela tse fapaneng mmoho. Semela ka seng se hloka mosebetsi, le sebaka se lekaneng sa ho o etsa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matswallo a Amerika (Indigenous farming traditions in the Americas)."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Poone e fana ka bophahamo le sebopeho."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dinawa di hlwella pooneng, mme di bolokeha jwalo ka protheine."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mokopu o nama fatshe, o etsa moriti mobung le ho boloka mongobo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nako e bohlokwa. Hlahisa poone pele, e le hore e be matla a lekaneng ho jara dinawa ha di qala ho hlwella."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dimela di ntse di ka qothisana lehlokwa. Di fe sebaka se loketseng, metsi le lesedi. Dinawa di tlama naetrojene ka baktheriya ya metso, empa o se ke wa nahana hore di fepa poone hang-hang; phepo e matlakaleng a setseng e lokollwa nakong ya ha a bola."
           }
         ]
       }
@@ -458,23 +492,39 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Plan Backwards From ",
+              "status": "draft",
+              "text": "Rera u khutlela morao ho tloha ho "
+            },
+            {
+              "sourceEnglish": "Your Hungry Gap",
+              "status": "english-hold"
+            }
+          ]
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lelapa le ka ba le nako ya sekgeo sa tlala (hungry gap): dibeke tseo ka tsona dijo tse bolokilweng di fellang pele kotulo e latelang e loka."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ya hao e ka tla ka mora hore poone e bolokilweng e fele. E ka tla pele meroho ya mariha e loka. E ka tla nakong ya komello ha metsi a lekanyetsa jarete."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "O se ke wa kopitsa almanaka ya motho e mong. Reha dikgwedi tsa hao pele."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Di ngole fatshe. Ebe o kgetha sejalo le letsatsi la ho jala le kenyang dijo sekgeong seo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eo ke thero e qalellang morao, mme ke phapang dipakeng tsa jarete e shebahalang e hlahisa le lelapa le jang."
           }
         ]
       }
@@ -498,19 +548,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lema bonyane tse pedi. E seng se le seng."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion."
           }
         ]
       }
@@ -531,26 +586,33 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Staples tse fapaneng li sireletsa kgahlanong le dikotsi tse fapaneng."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Staple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Beans le cowpeas li fana ka protein harvest e ka bolokoang."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Amadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle."
           }
         ]
       }
@@ -570,7 +632,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mefuta-futa e boloka lijo li ntse li fumaneha."
         },
         "body": [
           {
@@ -578,16 +641,20 @@
             "text": "Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sejalo se le seng ke point of failure e le nngwe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection."
           }
         ]
       }
@@ -611,19 +678,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pest pressure hangata e a eketseha ka lebaka le itseng."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dimela tse nang le stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ka hona, pele o phekola eng kapa eng, sheba system yohle."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Na semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato."
           }
         ]
       }
@@ -645,29 +717,36 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Phekola sesosa pele ho kokoanyana."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebetsa ka mehato e mene, ka tatellano."
+          },
+          {
+            "status": "draft",
+            "text": "Ntlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane."
+          },
+          {
+            "status": "draft",
+            "text": "Ntlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi."
+          },
+          {
+            "status": "draft",
+            "text": "Ntlha ya boraro: Sireletsa se o thusang. Beneficial insects (likokoanyana tse molemo) li etsa mosebetsi oo u neng u tla o etsa ka bouena."
+          },
+          {
+            "status": "draft",
+            "text": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ipolelle nnete, hore na ke mohato ofe oo hangata o o tlolang."
           }
         ]
       }
@@ -693,7 +772,45 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Joale thuto e fella mobung."
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Build one bed that can keep feeding you. ",
+                "status": "draft",
+                "text": "Haha bed e le nngwe e ka tswelang pele ho o fepa. "
+              },
+              {
+                "sourceEnglish": "One point two metres by three metres.",
+                "status": "english-hold"
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Reach the middle from both sides. ",
+                "status": "draft",
+                "text": "Fihla bohareng ho tloha mahlakoreng ka bobedi. "
+              },
+              {
+                "sourceEnglish": "Keep every foot on the paths. ",
+                "status": "draft",
+                "text": "Etsa bonnete ba hore leoto le leng le le leng le sala ditseleng. "
+              },
+              {
+                "sourceEnglish": "Space your plants for your own climate. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Mulch the bed.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "english-hold"
@@ -702,13 +819,18 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The aim isn't a perfect picture. ",
+                "status": "draft",
+                "text": "Sepheo ha se setshwantsho se phethahetseng. "
+              },
+              {
+                "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+                "status": "english-hold"
+              }
+            ]
           }
         ]
       }
@@ -748,13 +870,25 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ebe o sheba. O fetole. Mme o ngole fatshe."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Season by season, ",
+                "status": "draft",
+                "text": "Sehla ka seng, "
+              },
+              {
+                "sourceEnglish": "your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "english-hold"

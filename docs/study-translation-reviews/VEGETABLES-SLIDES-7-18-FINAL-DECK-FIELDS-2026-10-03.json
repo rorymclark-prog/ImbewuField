@@ -1,0 +1,1299 @@
+{
+  "title": "Repaired source-paired Vegetables deck candidates — slides 7–18",
+  "date": "2026-10-03",
+  "canonicalHead": "3ffef7a897c6a0aaf97043f15852d5c87222959e",
+  "languageCodes": {
+    "st": "Sesotho",
+    "ve": "Tshivenda",
+    "ts": "itsonga"
+  },
+  "sourceCandidatePackets": [
+    "/tmp/imbewu-vegetables-remaining-slides-exact-reuse-scope-20261003.json",
+    "/tmp/imbewu-regional-vegetables-slides-7-18-heading-candidates-20261003.json"
+  ],
+  "scope": {
+    "newBodyPositions": 18,
+    "newHeadingPositions": 30,
+    "preservedExistingHeadingPositions": 6,
+    "fieldsAreMachineDraftsOnly": true
+  },
+  "repairDecisions": [
+    "Explicitly segmented all reused exact English phrases in new proposals as english-hold; each segment list reconstructs its full exact English source in order.",
+    "VE slide 17 body 2 now holds “Reach the middle from both sides.” exactly; removed “Swikani” and all-sides wording. The paths sentence remains a separate unreviewed draft; climate and mulch sentences remain holds.",
+    "TS slide 17 body 0 is an exact English hold because the proposed “fields” term did not preserve soil.",
+    "Aim wording remains held where the target term was uncertain. Ordinary intentional-choice wording is retained only where it can be separated without changing the held technical bed/shape/spacing/rhythm clause.",
+    "Bed is retained as English in the build-bed sentence across languages; dimensions remain exact holds. Xitsonga xibedlwana is removed from revised body proposals.",
+    "The VE/TS slide 18 observation/evidence sentence preserves exact season, comparative, and own-observation clauses as holds where target wording was uncertain; Sesotho keeps a short season-by-season/less-guesswork draft but holds the full observed-ground clause.",
+    "Headings for crop earns-its-place and uncertain backwards-planning are held exactly. Sowing Rhythm, staples/food insurance, Different Staples and pest/messenger technical/metaphor anchors have explicit english-hold segment statuses or full exact-source holds.",
+    "Applied second independent backcheck repairs to additive heading 9, seasonal comparison at ST18, headings 11/13/15/16; all source spans recompose byte-exactly."
+  ],
+  "validation": {
+    "newBodyFieldPositions": 18,
+    "newHeadingFieldPositions": 30,
+    "preservedExistingHeadingPositions": 6,
+    "sourceSegmentErrors": [],
+    "allSourceSegmentsRecomposeByteExactly": true,
+    "englishHoldSegmentsUnchanged": true,
+    "repoEdits": 0,
+    "fluentApproval": false,
+    "allEnglishHoldSegmentsAreExactSourceSpans": true,
+    "repairRound": "second-independent-backcheck-repairs"
+  },
+  "newBodyFields": [
+    {
+      "language": "st",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 0,
+      "sourceEnglish": "Now the lesson finishes in the soil.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Now the lesson finishes in the soil."
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Now the lesson finishes in the soil.",
+            "status": "draft",
+            "text": "Joale thuto e fella mobung."
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 1,
+      "sourceEnglish": "Build one bed that can keep feeding you. One point two metres by three metres.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Build one bed that can keep feeding you. One point two metres by three metres."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Build one bed that can keep feeding you. ",
+            "status": "draft",
+            "text": "Haha bed e le nngwe e ka tswelang pele ho o fepa. "
+          },
+          {
+            "sourceEnglish": "One point two metres by three metres.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 2,
+      "sourceEnglish": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Reach the middle from both sides. ",
+            "status": "draft",
+            "text": "Fihla bohareng ho tloha mahlakoreng ka bobedi. "
+          },
+          {
+            "sourceEnglish": "Keep every foot on the paths. ",
+            "status": "draft",
+            "text": "Etsa bonnete ba hore leoto le leng le le leng le sala ditseleng. "
+          },
+          {
+            "sourceEnglish": "Space your plants for your own climate. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mulch the bed.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 5,
+      "sourceEnglish": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The aim isn't a perfect picture. ",
+            "status": "draft",
+            "text": "Sepheo ha se setshwantsho se phethahetseng. "
+          },
+          {
+            "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 4,
+      "sourceEnglish": "Then observe. Adjust. And write it down.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Then observe. Adjust. And write it down."
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Then observe. ",
+            "status": "draft",
+            "text": "Ebe o sheba. "
+          },
+          {
+            "sourceEnglish": "Adjust. ",
+            "status": "draft",
+            "text": "O fetole. "
+          },
+          {
+            "sourceEnglish": "And write it down.",
+            "status": "draft",
+            "text": "Mme o ngole fatshe."
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 6,
+      "sourceEnglish": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Season by season, ",
+            "status": "draft",
+            "text": "Sehla ka seng, "
+          },
+          {
+            "sourceEnglish": "your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Only the season-by-season frame is drafted; the progressive less-guesswork comparison and own-ground evidence remain exact English."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 0,
+      "sourceEnglish": "Now the lesson finishes in the soil.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Now the lesson finishes in the soil."
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Now the lesson finishes in the soil.",
+            "status": "draft",
+            "text": "Zwino ngudo i fhela mavuni."
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 1,
+      "sourceEnglish": "Build one bed that can keep feeding you. One point two metres by three metres.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Build one bed that can keep feeding you. One point two metres by three metres."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Build one bed that can keep feeding you. ",
+            "status": "draft",
+            "text": "Fhaṱani bed nthihi ine ya nga bvela phanḓa u ni ṋea zwiliwa. "
+          },
+          {
+            "sourceEnglish": "One point two metres by three metres.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 2,
+      "sourceEnglish": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Reach the middle from both sides. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Keep every foot on the paths. ",
+            "status": "draft",
+            "text": "Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. "
+          },
+          {
+            "sourceEnglish": "Space your plants for your own climate. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mulch the bed.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 5,
+      "sourceEnglish": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "The aim isn't a perfect picture. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 4,
+      "sourceEnglish": "Then observe. Adjust. And write it down.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Then observe. Adjust. And write it down."
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Then observe. ",
+            "status": "draft",
+            "text": "Nga murahu ni sedze. "
+          },
+          {
+            "sourceEnglish": "Adjust. ",
+            "status": "draft",
+            "text": "Ni lulamise. "
+          },
+          {
+            "sourceEnglish": "And write it down.",
+            "status": "draft",
+            "text": "Ni ṅwale fhasi."
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 6,
+      "sourceEnglish": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Season by season,",
+            "status": "draft",
+            "text": "Khalaṅwaha iṅwe na iṅwe,"
+          },
+          {
+            "sourceEnglish": " your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 0,
+      "sourceEnglish": "Now the lesson finishes in the soil.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Now the lesson finishes in the soil."
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Now the lesson finishes in the soil.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Root found packet still contained fields instead of soil despite repair report; exact soil sentence held."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 1,
+      "sourceEnglish": "Build one bed that can keep feeding you. One point two metres by three metres.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Build one bed that can keep feeding you. One point two metres by three metres."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Build one bed that can keep feeding you. ",
+            "status": "draft",
+            "text": "Aka bed yin'we leyi nga tshamaka yi ku nyika swakudya. "
+          },
+          {
+            "sourceEnglish": "One point two metres by three metres.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 2,
+      "sourceEnglish": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Reach the middle from both sides. ",
+            "status": "draft",
+            "text": "Fika exivindzini hi matlhelo hamambirhi. "
+          },
+          {
+            "sourceEnglish": "Keep every foot on the paths. ",
+            "status": "draft",
+            "text": "Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. "
+          },
+          {
+            "sourceEnglish": "Space your plants for your own climate. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mulch the bed.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 5,
+      "sourceEnglish": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The aim isn't a perfect picture. ",
+            "status": "draft",
+            "text": "Xikongomelo a hi xifaniso lexi hetisekeke. "
+          },
+          {
+            "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 4,
+      "sourceEnglish": "Then observe. Adjust. And write it down.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Then observe. Adjust. And write it down."
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Then observe. ",
+            "status": "draft",
+            "text": "Kutani languta. "
+          },
+          {
+            "sourceEnglish": "Adjust. ",
+            "status": "draft",
+            "text": "Lulamisa. "
+          },
+          {
+            "sourceEnglish": "And write it down.",
+            "status": "draft",
+            "text": "Tsala leswi ehansi."
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldType": "body",
+      "paragraphIndexZeroBased": 6,
+      "sourceEnglish": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground."
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Conservative source-aligned deck candidate; English holds are explicit and preserve exact source clauses. Machine draft only; facilitator review required."
+    }
+  ],
+  "newHeadingFields": [
+    {
+      "language": "st",
+      "slide": 7,
+      "fieldType": "heading",
+      "sourceEnglish": "Mark the Working Shape",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Mark the Working Shape"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Mark the Working Shape",
+            "status": "draft",
+            "text": "Tšoaea sebopeho seo u tla se sebelisa."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "fieldType": "heading",
+      "sourceEnglish": "A Sowing Rhythm Keeps Food Moving",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "A Sowing Rhythm Keeps Food Moving"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A Sowing Rhythm",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Keeps Food Moving",
+            "status": "draft",
+            "text": " e boloka lijo li ntse li fumaneha."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "fieldType": "heading",
+      "sourceEnglish": "Sow Little and Often",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Sow Little and Often"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Sow Little and Often",
+            "status": "draft",
+            "text": "Jala hanyenyane khafetsa."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "fieldType": "heading",
+      "sourceEnglish": "Each Crop Earns Its Place",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Each Crop Earns Its Place"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Each Crop Earns Its Place",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "fieldType": "heading",
+      "sourceEnglish": "Plan Backwards From Your Hungry Gap",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Plan Backwards From Your Hungry Gap"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plan Backwards From ",
+            "status": "draft",
+            "text": "Rera u khutlela morao ho tloha ho "
+          },
+          {
+            "sourceEnglish": "Your Hungry Gap",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Root retains exact Your Hungry Gap to preserve source possessive; planning clause independently checked."
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "fieldType": "heading",
+      "sourceEnglish": "Staples Are Food Insurance",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Staples Are Food Insurance"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Staples Are Food Insurance",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "fieldType": "heading",
+      "sourceEnglish": "Different Staples Protect Against Different Risks",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Different Staples Protect Against Different Risks"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Different Staples ",
+            "status": "draft",
+            "text": "Staples tse fapaneng "
+          },
+          {
+            "sourceEnglish": "Protect Against Different Risks",
+            "status": "draft",
+            "text": "li sireletsa kgahlanong le dikotsi tse fapaneng."
+          }
+        ]
+      },
+      "reason": "Meaningful mixed candidate keeps the technical crop category “Staples” in English and translates the different-category and protection-against-different-risks relationship. Machine wording needs facilitator review."
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "fieldType": "heading",
+      "sourceEnglish": "Diversity Keeps Food Moving",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Diversity Keeps Food Moving"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Diversity Keeps Food Moving",
+            "status": "draft",
+            "text": "Mefuta-futa e boloka lijo li ntse li fumaneha."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "fieldType": "heading",
+      "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Pests Are Messengers Before They Are Enemies"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "The previous version translated only grammar glue around English Pests and Messengers. Hold the whole metaphor until a meaningful local rendering is checked."
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "fieldType": "heading",
+      "sourceEnglish": "Treat the Cause Before the Insect",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Treat the Cause Before the Insect"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Treat the Cause Before the Insect",
+            "status": "draft",
+            "text": "Phekola sesosa pele ho kokoanyana."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "fieldType": "heading",
+      "sourceEnglish": "Mark the Working Shape",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Mark the Working Shape"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Mark the Working Shape",
+            "status": "draft",
+            "text": "Maka tshivhumbeo tshine tsha shumiswa."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "fieldType": "heading",
+      "sourceEnglish": "A Sowing Rhythm Keeps Food Moving",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "A Sowing Rhythm Keeps Food Moving"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A Sowing Rhythm",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Keeps Food Moving",
+            "status": "draft",
+            "text": " i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "fieldType": "heading",
+      "sourceEnglish": "Sow Little and Often",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Sow Little and Often"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Sow Little and Often",
+            "status": "draft",
+            "text": "Ṱavhani zwiṱuku nahone lunzhi."
+          }
+        ]
+      },
+      "reason": "Replaces the adversative “but” with an additive “and”; source retains little and often without adding a schedule."
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "fieldType": "heading",
+      "sourceEnglish": "Each Crop Earns Its Place",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Each Crop Earns Its Place"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Each Crop Earns Its Place",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "fieldType": "heading",
+      "sourceEnglish": "Plan Backwards From Your Hungry Gap",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Plan Backwards From Your Hungry Gap"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plan Backwards From ",
+            "status": "draft",
+            "text": "Planani ni tshi humela murahu u bva kha "
+          },
+          {
+            "sourceEnglish": "Your Hungry Gap",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Root retains exact Your Hungry Gap to preserve source possessive; planning clause independently checked."
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "fieldType": "heading",
+      "sourceEnglish": "Staples Are Food Insurance",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Staples Are Food Insurance"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Staples Are Food Insurance",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "fieldType": "heading",
+      "sourceEnglish": "Different Staples Protect Against Different Risks",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Different Staples Protect Against Different Risks"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Different Staples ",
+            "status": "draft",
+            "text": "Staples dzo fhambanaho "
+          },
+          {
+            "sourceEnglish": "Protect Against Different Risks",
+            "status": "draft",
+            "text": "dzi tsireledza kha khombo dzo fhambanaho."
+          }
+        ]
+      },
+      "reason": "Meaningful mixed candidate keeps the technical crop category “Staples” in English and translates the different-category and protection-against-different-risks relationship. Machine wording needs facilitator review."
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "fieldType": "heading",
+      "sourceEnglish": "Diversity Keeps Food Moving",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Diversity Keeps Food Moving"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Diversity Keeps Food Moving",
+            "status": "draft",
+            "text": "U fhambana ha zwimela zwi ita uri zwiliwa zwi dzule zwi tshi wanala."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "fieldType": "heading",
+      "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Pests Are Messengers Before They Are Enemies"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "The previous version translated only grammar glue around English Pests and Messengers. Hold the whole metaphor until a meaningful local rendering is checked."
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "fieldType": "heading",
+      "sourceEnglish": "Treat the Cause Before the Insect",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Treat the Cause Before the Insect"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Treat the Cause Before the Insect",
+            "status": "draft",
+            "text": "Langa tshiitisi phanḓa ha tshikhokhonono."
+          }
+        ]
+      },
+      "reason": "Replaces dangling “the Insect” with the ordinary Tshivenda insect noun “tshikhokhonono”; preserves cause-before-insect order. Machine wording needs facilitator review."
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "fieldType": "heading",
+      "sourceEnglish": "Mark the Working Shape",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Mark the Working Shape"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Mark the Working Shape",
+            "status": "draft",
+            "text": "Tshwaya xivumbeko lexi tirhaka."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "fieldType": "heading",
+      "sourceEnglish": "A Sowing Rhythm Keeps Food Moving",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "A Sowing Rhythm Keeps Food Moving"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A Sowing Rhythm",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Keeps Food Moving",
+            "status": "draft",
+            "text": " yi endla leswaku swakudya swi hambeta swi kumeka."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "fieldType": "heading",
+      "sourceEnglish": "Sow Little and Often",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Sow Little and Often"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Sow Little and Often",
+            "status": "draft",
+            "text": "Byala switsongo naswona nkarhi na nkarhi."
+          }
+        ]
+      },
+      "reason": "Replaces the adversative “but” with an additive “and”; source retains little and often without adding a schedule."
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "fieldType": "heading",
+      "sourceEnglish": "Each Crop Earns Its Place",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Each Crop Earns Its Place"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Each Crop Earns Its Place",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "fieldType": "heading",
+      "sourceEnglish": "Plan Backwards From Your Hungry Gap",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Plan Backwards From Your Hungry Gap"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plan Backwards From ",
+            "status": "draft",
+            "text": "Hlela u tlhelela endzhaku ku suka eka "
+          },
+          {
+            "sourceEnglish": "Your Hungry Gap",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Root retains exact Your Hungry Gap to preserve source possessive; planning clause independently checked."
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "fieldType": "heading",
+      "sourceEnglish": "Staples Are Food Insurance",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Staples Are Food Insurance"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Staples Are Food Insurance",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "fieldType": "heading",
+      "sourceEnglish": "Different Staples Protect Against Different Risks",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Different Staples Protect Against Different Risks"
+      },
+      "proposed": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Different Staples ",
+            "status": "draft",
+            "text": "Staples to hambana "
+          },
+          {
+            "sourceEnglish": "Protect Against Different Risks",
+            "status": "draft",
+            "text": "ti sirhelela eka makhombo yo hambana."
+          }
+        ]
+      },
+      "reason": "Meaningful mixed candidate keeps the technical crop category “Staples” in English and translates the different-category and protection-against-different-risks relationship. Machine wording needs facilitator review."
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "fieldType": "heading",
+      "sourceEnglish": "Diversity Keeps Food Moving",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Diversity Keeps Food Moving"
+      },
+      "proposed": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Diversity Keeps Food Moving",
+            "status": "draft",
+            "text": "Ku hambana ka swibyariwa ku endla leswaku swakudya swi hambeta swi kumeka."
+          }
+        ]
+      },
+      "reason": "Repaired heading segmentation makes retained English explicit; machine draft only, facilitator review required."
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "fieldType": "heading",
+      "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Pests Are Messengers Before They Are Enemies"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "The previous version translated only grammar glue around English Pests and Messengers. Hold the whole metaphor until a meaningful local rendering is checked."
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "fieldType": "heading",
+      "sourceEnglish": "Treat the Cause Before the Insect",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Treat the Cause Before the Insect"
+      },
+      "proposed": {
+        "status": "english-hold",
+        "segments": [
+          {
+            "sourceEnglish": "Treat the Cause Before the Insect",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "reason": "The previous wording left the whole noun phrase “the Insect” in English after translated framing. Hold the whole heading until an ordinary Xitsonga insect noun and agreement are locally checked."
+    }
+  ],
+  "preservedExistingHeadings": [
+    {
+      "language": "st",
+      "slide": 17,
+      "fieldType": "heading",
+      "sourceEnglish": "Field Assignment",
+      "current": {
+        "status": "draft",
+        "renderedText": "Mosebetsi oa tšimong"
+      },
+      "proposed": {
+        "status": "draft",
+        "text": "Mosebetsi oa tšimong"
+      },
+      "reason": "Existing unreviewed heading retained verbatim; this check does not approve it."
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldType": "heading",
+      "sourceEnglish": "Field Action",
+      "current": {
+        "status": "draft",
+        "renderedText": "Ketso ea tšimong"
+      },
+      "proposed": {
+        "status": "draft",
+        "text": "Ketso ea tšimong"
+      },
+      "reason": "Existing unreviewed heading retained verbatim; this check does not approve it."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "fieldType": "heading",
+      "sourceEnglish": "Field Assignment",
+      "current": {
+        "status": "draft",
+        "renderedText": "Mushumo wa tsimuni"
+      },
+      "proposed": {
+        "status": "draft",
+        "text": "Mushumo wa tsimuni"
+      },
+      "reason": "Existing unreviewed heading retained verbatim; this check does not approve it."
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldType": "heading",
+      "sourceEnglish": "Field Action",
+      "current": {
+        "status": "draft",
+        "renderedText": "Nyito ya tsimuni"
+      },
+      "proposed": {
+        "status": "draft",
+        "text": "Nyito ya tsimuni"
+      },
+      "reason": "Existing unreviewed heading retained verbatim; this check does not approve it."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "fieldType": "heading",
+      "sourceEnglish": "Field Assignment",
+      "current": {
+        "status": "draft",
+        "renderedText": "Ntirho wa le nsinini"
+      },
+      "proposed": {
+        "status": "draft",
+        "text": "Ntirho wa le nsinini"
+      },
+      "reason": "Existing unreviewed heading retained verbatim; this check does not approve it."
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldType": "heading",
+      "sourceEnglish": "Field Action",
+      "current": {
+        "status": "draft",
+        "renderedText": "Xiendlo xa le nsinini"
+      },
+      "proposed": {
+        "status": "draft",
+        "text": "Xiendlo xa le nsinini"
+      },
+      "reason": "Existing unreviewed heading retained verbatim; this check does not approve it."
+    }
+  ],
+  "limitations": [
+    "Machine semantic review only; no fluent-speaker, cultural, or local farming approval.",
+    "English technical anchors are intentionally visible holds, not target-language translations."
+  ],
+  "rootRepairs": [
+    "TS17p0 actual Englishhold for soil, not fields.",
+    "All3H11 exact Your Hungry Gap preserves possession.",
+    "All-draft segment lists normalized to complete draft text on application; technical English loans retained."
+  ]
+}

@@ -282,7 +282,14 @@ cfg = json.load(open(sys.argv[1]))
 PAIRED = cfg.get('pairedSlides')
 PAIRED_LANGUAGE = cfg.get('pairedLanguageLabel') or 'TARGET LANGUAGE'
 PAIRED_NATIVE_SOURCE = cfg.get('pairedNativeSource', False)
-W, H = (1440, 5400) if PAIRED else (1920, 1080)
+PAIRED_BASE_HEIGHT = 5400
+PAIRED_TARGET_TOP = 1070
+PAIRED_TARGET_BOTTOM = 3060
+PAIRED_SOURCE_TOP = 3090
+PAIRED_SOURCE_BOTTOM = 5080
+PAIRED_FOOTER_Y = 5220
+PAIRED_MAX_TARGET_EXTENSION = 800
+W, H = (1440, PAIRED_BASE_HEIGHT) if PAIRED else (1920, 1080)
 
 # Palette read off the produced Seeds deck, which is the standard the rest of the course is
 # measured against — warm paper, forest green for anything structural, ochre for the small
@@ -387,7 +394,18 @@ if PAIRED:
     F_PAIR_LABEL = font(SANS_B, 43)
     F_PAIR_STATUS = font(SANS_B, 48)
 
-    def panel_plan(draw, heading, body, top, bottom, n):
+    # Headings can retain a technical English phrase while translating its ordinary
+    # framing. The same exact-source segments checked for body text also bind titles.
+    def paired_heading_text(pair):
+        part = pair['target']['heading']
+        if part['status'] == 'english-hold':
+            return pair['english']['heading']
+        if part['status'] == 'mixed':
+            return ''.join(segment['sourceEnglish'] if segment['status'] == 'english-hold'
+                           else segment['text'] for segment in part['segments'])
+        return part['text']
+
+    def panel_plan(draw, heading, body, top, bottom, n, max_extra=0):
         width = W - 192
         heading_lines = paired_lines(draw, heading, F_PAIR_TITLE, width, n)
         # The complete Xitsonga Market heading needs three lines at the readable
@@ -407,10 +425,11 @@ if PAIRED:
                 y += sum(body_pitches(lines)) + 8
             paragraphs.append(segment_plans)
             y += 4
-        if y > bottom - 48:
-            raise ValueError('slide %d paired text needs %d px but panel has %d px at phone-readable type size' %
-                             (n, y - top, bottom - 48 - top))
-        return heading_lines, paragraphs
+        required_extra = max(0, y - (bottom - 48))
+        if required_extra > max_extra:
+            raise ValueError('slide %d paired text needs %d px but panel has %d px at phone-readable type size (maximum extra space %d px)' %
+                             (n, y - top, bottom - 48 - top, max_extra))
+        return heading_lines, paragraphs, required_extra
 
     # Measure the complete deck before writing any image. A partial deck can look complete
     # enough to register by mistake, especially when its remaining source claims are hidden.
@@ -427,7 +446,7 @@ if PAIRED:
                 raise ValueError('slide %d English illustration is too small for the paired proof' % pair['n'])
         target = pair['target']
         held = pair.get('hasEnglishHolds', False)
-        target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
+        target_heading = paired_heading_text(pair)
         target_body = []
         for source, part in zip(pair['english']['body'], target['body']):
             if part['status'] == 'mixed':
@@ -438,15 +457,17 @@ if PAIRED:
             else:
                 target_body.append(source if part['status'] == 'english-hold' else part['text'])
         paired_plans.append((
-            panel_plan(probe, target_heading, target_body, 1070, 3060, pair['n']),
-            panel_plan(probe, pair['english']['heading'], pair['english']['body'], 3090, 5080, pair['n']),
+            panel_plan(probe, target_heading, target_body, PAIRED_TARGET_TOP, PAIRED_TARGET_BOTTOM,
+                       pair['n'], PAIRED_MAX_TARGET_EXTENSION),
+            panel_plan(probe, pair['english']['heading'], pair['english']['body'],
+                       PAIRED_SOURCE_TOP, PAIRED_SOURCE_BOTTOM, pair['n']),
             held,
         ))
 
     def draw_panel(draw, label, heading, body, top, bottom, plan, target=None):
         draw.rounded_rectangle([64, top, W - 64, bottom], radius=26, fill=(255, 252, 246), outline=RULE, width=4)
         draw.text((96, top + 32), label, font=F_PAIR_LABEL, fill=AMBER)
-        heading_lines, paragraphs = plan
+        heading_lines, paragraphs, _ = plan
         y = top + 120
         title_color = RUST if target and target['heading']['status'] == 'english-hold' else GREEN
         for line in heading_lines:
@@ -474,7 +495,8 @@ if PAIRED:
         raise ValueError('paired draft output directory must be empty to avoid stale slides')
     os.makedirs(cfg['outDir'], exist_ok=True)
     for pair, source_image, (target_plan, source_plan, held) in zip(PAIRED, cfg['pairedSourceSlides'], paired_plans):
-        image = Image.new('RGB', (W, H), PAPER)
+        target_extra = target_plan[2]
+        image = Image.new('RGB', (W, H + target_extra), PAPER)
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle([64, 40, W - 64, 175], radius=20, fill=RUST)
         draw.text((96, 75), PAIRED_LANGUAGE + ' AI DRAFT / NOT REVIEWED', font=F_PAIR_STATUS, fill=(255, 255, 255))
@@ -487,7 +509,7 @@ if PAIRED:
                 original.thumbnail((1280, 720), Image.Resampling.LANCZOS)
             image.paste(original, ((W - original.width) // 2, 290))
         target = pair['target']
-        target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
+        target_heading = paired_heading_text(pair)
         target_body = []
         for source, part in zip(pair['english']['body'], target['body']):
             if part['status'] == 'mixed':
@@ -498,11 +520,13 @@ if PAIRED:
             else:
                 target_body.append(source if part['status'] == 'english-hold' else part['text'])
         draw_panel(draw, PAIRED_LANGUAGE + ' · RUST TEXT = ENGLISH HOLD' if held else PAIRED_LANGUAGE + ' · AI DRAFT',
-                   target_heading, target_body, 1070, 3060, target_plan, target)
+                   target_heading, target_body, PAIRED_TARGET_TOP, PAIRED_TARGET_BOTTOM + target_extra,
+                   target_plan, target)
         draw_panel(draw, 'ENGLISH SOURCE · EXACT TEXT', pair['english']['heading'],
-                   pair['english']['body'], 3090, 5080, source_plan)
-        draw.text((96, 5220), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
-        draw.text((W - 96, 5220), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
+                   pair['english']['body'], PAIRED_SOURCE_TOP + target_extra,
+                   PAIRED_SOURCE_BOTTOM + target_extra, source_plan)
+        draw.text((96, PAIRED_FOOTER_Y + target_extra), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
+        draw.text((W - 96, PAIRED_FOOTER_Y + target_extra), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
         image.save(os.path.join(cfg['outDir'], 'slide-%02d.png' % pair['n']), 'PNG')
         print('  %2d  %s' % (pair['n'], pair['english']['heading'][:58]))
     sys.exit(0)
