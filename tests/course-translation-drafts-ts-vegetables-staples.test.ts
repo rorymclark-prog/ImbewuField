@@ -30,21 +30,21 @@ const checkedL3DraftParagraphs = [
   "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.",
   "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.",
   "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we.",
-  "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+  "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.",
   "Staple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.",
-  "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
-  "Beans and cowpeas give a storable protein harvest.",
-  "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
-  "Amadumbe handles wetter ground, where other staples struggle.",
+  "Maize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.",
+  "Beans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.",
+  "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.",
+  "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.",
   "Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.",
   "Resilience a swi vuli leswaku a ku na lexi tsandzekaka.",
   "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.",
   "Xibyariwa xin'we i \"point of failure\" yin'we.",
-  "Two or more staples give you more ways to keep eating.",
+  "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
   "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo."
 ];
 
-test('Vegetables & Staple Crops L3 keeps its checked source frozen while adding bounded Xitsonga framing', () => {
+test('Vegetables & Staple Crops L3 keeps source-bound framing and crop conditions while leaving technical clauses exact', () => {
   const draft = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0];
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.id, sourceModule.id);
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.language, 'ts');
@@ -63,10 +63,18 @@ test('Vegetables & Staple Crops L3 keeps its checked source frozen while adding 
   assert.equal(localizedParagraphs.length, sourceParagraphs.length);
   assert.deepEqual(localizedParagraphs, checkedL3DraftParagraphs,
     'ordinary framing is localized while checked existing paragraphs and holds stay in place');
-  for (const index of [4, 6, 7, 8, 9, 14]) {
-    assert.equal(localizedParagraphs[index], sourceParagraphs[index],
-      `paragraph ${index} retains its unresolved superlative or crop-specific agronomic claim exactly`);
-  }
+  assert.match(localizedParagraphs[4], /^Hi xihi staple.*sweswi\? That's the one whose failure would hurt most — so that's the one that needs a companion\.$/,
+    'the reliance question is localized while its counterfactual consequence and companion claim stay exact English');
+  assert.match(localizedParagraphs[6], /calories.*loko yi omile.*Open-pollinated maize.*loko.*isolation na selection/,
+    'seed saving stays conditional on isolation and selection');
+  assert.match(localizedParagraphs[7], /Beans na cowpeas.*protein harvest.*nga hlayisiwa/,
+    'beans and cowpeas retain the storable protein claim');
+  assert.match(localizedParagraphs[8], /drought tolerance.*endzhaku ka loko storage roots.*mavhiki yo sungula.*storage roots.*water stress.*yi nga hunguta harvest.*Its young leaves are edible too\.$/,
+    'drought tolerance follows root formation, water timing and possible stress loss remain, and the young-leaves clause stays exact');
+  assert.match(localizedParagraphs[9], /^Amadumbe.*wetter ground, where other staples struggle\.$/,
+    'Amadumbe retains its wetter-ground comparison without broadening the site claim');
+  assert.match(localizedParagraphs[14], /Two or more staples/,
+    'the two-or-more staple resilience threshold remains explicit');
   for (const index of [10, 11, 12, 13, 15]) {
     assert.equal(localizedParagraphs[index], checkedL3DraftParagraphs[index],
       `existing Xitsonga paragraph ${index} remains byte-for-byte preserved`);
@@ -125,13 +133,12 @@ test('Vegetables & Staple Crops L3 source drift and undrafted lesson sources fal
   assert.equal(resolveLearnerLessonPresentation(changedFourth, 'ts').content.body, changedFourth.body);
 });
 
-test('Vegetables & Staple Crops L3 preserves the one-failure scope while holding the staple-count claim', () => {
+test('Vegetables & Staple Crops L3 preserves the one-failure scope and the minimum two-crop safeguard', () => {
   const paragraphs = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
   assert.match(paragraphs[11], /Resilience a swi vuli leswaku a ku na lexi tsandzekaka/);
   assert.match(paragraphs[12], /ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena/);
   assert.match(paragraphs[13], /point of failure/);
-  assert.equal(paragraphs[14], sourceLesson.body.split('\n\n')[14]);
-  assert.match(paragraphs[14], /^Two or more staples give you more ways to keep eating\.$/);
+  assert.match(paragraphs[14], /Two or more staples/, 'at least two staples still provide multiple ways to continue eating');
   assert.match(paragraphs[15], /mati, misava na tinguva/);
 });
 

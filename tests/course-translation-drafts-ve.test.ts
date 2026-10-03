@@ -537,7 +537,7 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
 });
 
-test('Vegetables L3 shows screened concept sentences while crop advice and answers stay English', async () => {
+test('Vegetables L3 preserves crop conditions and exact technical clauses while showing source-paired prose', async () => {
   const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
   const { resolveCourseModulePresentation } = await import('../lib/course-module-translation-drafts.ts');
   const module = COURSE_MODULES.find(candidate => candidate.id === vegetablesL3Draft.moduleId);
@@ -567,18 +567,30 @@ test('Vegetables L3 shows screened concept sentences while crop advice and answe
     expectedParagraphs[concept.paragraphIndex] = expectedParagraphs[concept.paragraphIndex]
       .replace(concept.sourceEnglish, concept.tshivendaDraft);
   }
+  expectedParagraphs[6] = "Maize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.";
+  expectedParagraphs[7] = "Beans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.";
+  expectedParagraphs[8] = "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.";
+  expectedParagraphs[9] = "Amadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.";
   assert.deepEqual(translated, expectedParagraphs,
     'preserve both existing drafts and every other body sentence exactly, including counts and crop guidance');
   assert.match(translated[2], /zwivhili kana zwo engaho/, 'the two-or-more qualifier must survive the new draft');
   assert.match(translated[3], /zwivhili kana zwo engaho/, 'grow-at-least-two threshold stays explicit');
   assert.match(translated[14], /zwivhili kana zwo engaho/, 'two-or-more staples remains explicit');
   assert.equal(translated[4], "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.", 'only the checked ordinary reliance question is localized; consequence and companion reasoning stay English');
+  assert.match(translated[6], /calories.*yo oma.*Open-pollinated maize.*arali.*isolation na selection/,
+    'seed-saving permission remains conditional on managed isolation and selection');
+  assert.match(translated[7], /Beans na cowpeas.*protein harvest.*nga vhulungwa/,
+    'both named crops still yield storable protein');
+  assert.match(translated[8], /drought tolerance.*nga murahu ha musi storage roots.*vhege dza u thoma.*storage roots.*water stress.*i nga fhungudza harvest.*Its young leaves are edible too\.$/,
+    'the drought tolerance timing, water needs, conditional loss, and exact young-leaves claim remain');
+  assert.match(translated[9], /Amadumbe.*maḓi manzhi.*u fhira.*zwiṅwe zwimela.*konḓelwa/,
+    'the wetter-ground comparison remains bounded to the source claim');
   assert.ok(translated[15].endsWith('Phambano yeneyo ndi yone tsireledzo.'), 'difference remains the protection');
-  paragraphs.forEach((paragraph, index) => {
-    if (![0, 1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15].includes(index)) {
-      assert.equal(translated[index], paragraph, `paragraph ${index + 1} stays English`);
-    }
-  });
+  // All sixteen paragraphs now have draft prose; retained technical clauses,
+  // rather than whole English paragraphs, are the remaining source safeguards.
+  assert.equal(translated.length, paragraphs.length, 'no paragraph is lost when the crop prose is drafted');
+  assert.equal(translated[8].split('. ').at(-1), paragraphs[8].split('. ').at(-1),
+    'the young-leaf food claim remains the exact source clause, never a broader leaf claim');
   assert.equal(shown.content.title, lesson.title);
   assert.equal(shown.content.infographicAlt, lesson.infographicAlt);
   assert.deepEqual(shown.content.keyPoints, lesson.keyPoints);

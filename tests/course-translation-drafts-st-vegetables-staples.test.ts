@@ -111,13 +111,13 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
     "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.",
     "E fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.",
     "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.",
-    "Grow at least two. Not one.",
-    "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+    "Lema bonyane tse pedi. E seng se le seng.",
+    "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.",
     "Staple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.",
-    "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
-    "Beans and cowpeas give a storable protein harvest.",
-    "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
-    "Amadumbe handles wetter ground, where other staples struggle.",
+    "Maize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.",
+    "Beans le cowpeas li fana ka protein harvest e ka bolokoang.",
+    "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.",
+    "Amadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.",
     "Hlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.",
     "Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.",
     "Ho bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.",
@@ -132,10 +132,17 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
     'no paragraph can be dropped or shifted away from its agronomic source');
   assert.equal(staplesDraft[11], 'Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.',
     'the already localized resilience paragraph remains byte-for-byte unchanged');
-  for (const index of [3, 4, 6, 7, 8, 9]) {
-    assert.equal(staplesDraft[index], staplesSource[index],
-      `staple paragraph ${index + 1}: unresolved agreement, comparative or crop-specific conditions stay exact English`);
-  }
+  assert.match(staplesDraft[3], /bonyane tse pedi.*E seng se le seng/, 'the minimum remains two, never one');
+  assert.match(staplesDraft[4], /^Ke staple efe.*?hona joale\? That's the one whose failure would hurt most — so that's the one that needs a companion\.$/,
+    'the household reliance question is localized while the conditional failure and companion consequence remain exact English');
+  assert.match(staplesDraft[6], /calories.*bolokoa e omme.*Open-pollinated maize.*peo.*haeba.*isolation le selection/,
+    'seed saving remains conditional on managing isolation and selection');
+  assert.match(staplesDraft[7], /Beans le cowpeas.*protein harvest.*bolokoang/,
+    'both named crops still provide a storable protein harvest');
+  assert.match(staplesDraft[8], /drought tolerance.*ka mor’a hore storage roots.*libekeng tsa pele.*storage roots.*water stress.*e ka fokotsa harvest.*Its young leaves are edible too\.$/,
+    'limited drought tolerance starts after storage roots form; early/root-forming water needs and possible loss under stress remain, with the young-leaves clause exact');
+  assert.match(staplesDraft[9], /^Amadumbe.*wetter ground.*lijalo tse ling tsa staple li thatafalloang teng\.$/,
+    'the wetter-ground anchor stays English while the comparison remains limited to other staples struggling there');
   for (const index of [0, 1, 2, 5, 10, 12, 13, 14, 15]) {
     assert.notEqual(staplesDraft[index], staplesSource[index],
       `staple paragraph ${index + 1}: defensible ordinary framing is drafted rather than left wholly in English`);

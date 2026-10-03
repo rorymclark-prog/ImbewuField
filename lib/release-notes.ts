@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: '8c07f29a', changes: [
+    'Staple crop lessons add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Seed-saving and water conditions stay exact; difficult farming terms remain English.',
+  ], tour: [
+    { title: 'Review regional staple crop wording',
+      where: 'Study → Vegetables and Staple Crops → Lesson 3',
+      detail: 'Compare the unreviewed draft paragraphs with their exact English source.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: '80bbb19d', changes: [
     'Reading lessons and silent slides add marked regional drafts beside exact English.',
     'Difficult farming terms stay English; draft wording is still awaiting facilitator review.',
