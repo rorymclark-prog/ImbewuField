@@ -1,0 +1,208 @@
+{
+  "packetId": "IMBEWU-VE-MARKET-L3-ASSESSMENT-BACKCHECK-REPAIRED-2026-10-03",
+  "checkedAt": "2026-10-03T05:11:39.019Z",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "liveCheckoutHead": "5b6ab5d8823c9f5f9c195d170792b34fdc898453",
+  "languageCode": "ve",
+  "languageName": "Tshivenda",
+  "moduleId": "market-community",
+  "lessonId": "market-community-l3",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ve-market-community.ts",
+  "reviewStatus": "independent-source-and-repair-semantic-check-not-fluency-approval",
+  "decision": "accept candidates with review flags; retain exact English technical holds",
+  "sourceChecks": {
+    "sourceFieldsMatchCanonical": true,
+    "currentFieldsMatchRegistry": true,
+    "allCandidateEntriesPaired": true,
+    "entryCount": 15,
+    "correctIndicesMatchCanonical": [
+      1,
+      2
+    ],
+    "optionOrderUnchanged": true
+  },
+  "fieldChecks": [
+    {
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "currentDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "candidate": "Ṅwalani seed identity, source and quality, nahone ni sedze arali permission i tshi ṱoḓea musi ni sa athu u kovhelana.",
+      "backTranslation": "Record seed identity, source and quality, and check whether permission is needed before sharing.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Seed identity/quality and before-sharing permission condition remain explicit; technical/legal anchors stay English."
+    },
+    {
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Measure losses and net returns for each selling route",
+      "currentDraft": "Measure losses and net returns for each selling route",
+      "candidate": "Measure losses and net returns kha selling route iṅwe na iṅwe.",
+      "backTranslation": "Measure losses and net returns for each selling route.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Business terms losses/net returns and each-route scope remain exact."
+    },
+    {
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "Combine shared experience with qualified help when needed",
+      "currentDraft": "Combine shared experience with qualified help when needed",
+      "candidate": "Ṱanganyisani tshenzhemo tsho kovhekanywaho na qualified help musi zwi tshi ṱoḓea.",
+      "backTranslation": "Combine shared experience with qualified help when needed.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Qualified-help term and when-needed condition remain explicit.",
+      "candidateReview": "Ṱanganyisani shared experience na qualified help musi zwi tshi ṱoḓea.",
+      "semanticAssessment": "The repair removes the earlier ambiguity that Tshivenda wording meant distributed/apportioned experience. Keeping “shared experience” exact English retains the source concept; qualified help and the when-needed condition are explicit.",
+      "rootRepairIndependentlyRechecked": true
+    },
+    {
+      "fieldPath": "quiz[0].question",
+      "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "currentDraft": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "candidate": "Vhahura vha ṱoḓa u kovhelana saved seed. Ndi mini tshine tsha thusa uri shared seed i shume zwavhuḓi?",
+      "backTranslation": "Neighbours want to share saved seed. What helps make shared seed useful?",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Preserves neighbors, saved seed, and question about usefulness.",
+      "candidateReview": "Vhahura vha ṱoḓa u kovhelana saved seed. What helps make the shared seed useful?",
+      "semanticAssessment": "The subject, desire to share, and saved-seed context are retained in the Tshivenda framing. The question about whether the shared seed is useful stays exact English after the earlier “works well” ambiguity.",
+      "rootRepairIndependentlyRechecked": true
+    },
+    {
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "Mix all varieties without labels",
+      "currentDraft": "Mix all varieties without labels",
+      "candidate": "Ṱanganyisani mifuda yoṱhe ni songo i ṅwala labels.",
+      "backTranslation": "Mix all varieties without labels.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Localized ordinary imperative while preserving all-varieties/no-label condition."
+    },
+    {
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "currentDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "candidate": "Thendelanani nga seed-quality checks nahone ni sedze arali permission i tshi ṱoḓea u kovhelana variety.",
+      "backTranslation": "Agree on seed-quality checks and check whether permission is needed to share the variety.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Seed identity/quality and before-sharing permission condition remain explicit; technical/legal anchors stay English."
+    },
+    {
+      "fieldPath": "quiz[0].options[2]",
+      "sourceEnglish": "Assume sharing automatically improves every seed lot",
+      "currentDraft": "Assume sharing automatically improves every seed lot",
+      "candidate": "Humbulani uri sharing automatically improves every seed lot.",
+      "backTranslation": "Assume sharing automatically improves every seed lot.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Preserves false automatic-improvement claim and every seed lot scope."
+    },
+    {
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Rely only on the size of the group",
+      "currentDraft": "Rely only on the size of the group",
+      "candidate": "Fulufhelani fhedzi kha size ya group.",
+      "backTranslation": "Rely only on the size of the group.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Preserves only-group-size limitation."
+    },
+    {
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentDraft": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "candidate": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "backTranslation": "Exact English hold.",
+      "verdict": "retain exact English hold",
+      "semanticCheck": "Entire crop-specific quality/right explanation remains exact English; checks do not imply permission to exchange a protected variety."
+    },
+    {
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "currentDraft": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "candidate": "Mulimi u khou vhambedza distant market na nearby customers. Ndi mini tshine tsha tea u livhisa phetho?",
+      "backTranslation": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Preserves grower, distant-market/nearby-customer comparison, and decision framing."
+    },
+    {
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentDraft": "Always choose the highest headline price",
+      "candidate": "Khethani tshifhinga tshoṱhe highest headline price.",
+      "backTranslation": "Always choose the highest headline price.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Preserves always and highest headline price absolute."
+    },
+    {
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Always choose the shortest journey",
+      "currentDraft": "Always choose the shortest journey",
+      "candidate": "Khethani tshifhinga tshoṱhe shortest journey.",
+      "backTranslation": "Always choose the shortest journey.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Preserves always and shortest journey absolute."
+    },
+    {
+      "fieldPath": "quiz[1].options[2]",
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "currentDraft": "Compare money received after fees, transport, unsold produce and losses",
+      "candidate": "Vhambedzani money received after fees, transport, unsold produce and losses.",
+      "backTranslation": "Compare money received after fees, transport, unsold produce and losses.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Compares returned money while retaining fees, transport, unsold produce and losses verbatim."
+    },
+    {
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "Assume joining a group removes all costs",
+      "currentDraft": "Assume joining a group removes all costs",
+      "candidate": "Humbulani uri u dzhena kha group zwi fhelisa costs dzoṱhe.",
+      "backTranslation": "Assume joining a group removes all costs.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "Preserves the absolute all-costs claim."
+    },
+    {
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "currentDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "candidate": "Distance affects costs, but it is not the only factor. Shumisani actual returns and losses u vhambedza options.",
+      "backTranslation": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "verdict": "accept with facilitator-review flag",
+      "semanticCheck": "First sentence remains exact and preserves distance-cost effect and not-the-only-factor caveat; comparison measures stay English."
+    }
+  ],
+  "semanticSummary": {
+    "seedSafety": "Seed quality checks do not create permission to exchange protected varieties. The full technical rationale remains exact English; the before-sharing and variety-permission conditions remain visible.",
+    "businessComparison": "The correct choice at quiz 1 index 2 retains money received after fees, transport, unsold produce and losses. Distance is not the only factor; actual returns/losses remain comparison criteria.",
+    "distractors": "All varieties/no labels, automatically/every lot, only group size, always/highest price, always/shortest journey, and all costs remain explicit.",
+    "qualifiedHelp": "Key point 3 retains qualified help and its when-needed qualifier.",
+    "sharedExperience": "Exact English “shared experience” avoids the previously identified distributed/apportioned meaning shift; qualified help and when-needed condition remain.",
+    "seedUsefulness": "Exact English usefulness question avoids translating usefulness as “works well”; neighbor/share/saved-seed framing remains."
+  },
+  "repairs": [
+    {
+      "fieldPath": "keyPoints[3]",
+      "change": "Replaced ambiguous Tshivenda rendering of shared experience with exact English anchor.",
+      "verdict": "accepted",
+      "backTranslation": "Combine shared experience with qualified help when needed."
+    },
+    {
+      "fieldPath": "quiz[0].question",
+      "change": "Kept ambiguous question clause exact English while retaining localized neighbor/share framing.",
+      "verdict": "accepted",
+      "backTranslation": "Neighbours want to share saved seed. What helps make the shared seed useful?"
+    }
+  ],
+  "uncertainty": [
+    "Tshivenda grammar, concord and local learner register require facilitator review; this is not fluent approval.",
+    "English technical/legal and business terms remain intentionally exact."
+  ],
+  "noClaims": [
+    "No source, plant species, number, correct answer index, or canonical text changed."
+  ],
+  "candidatePacket": "/tmp/imbewu-ve-market-l3-assessment-candidates-repaired-20261003.json",
+  "sourceAndCurrentRecheck": {
+    "repairedFieldsMatchCanonicalAndRegistryPairs": true,
+    "allOtherCandidateFieldsRetainPreviouslyCheckedSources": true,
+    "sourceCorrectIndicesMatchCanonical": [
+      1,
+      2
+    ],
+    "sourceRevisionContentVerifiedUnchangedSince": "18734826c631798ebbec7c0f3f37ea2f9ab6a386"
+  },
+  "caveat": "No fluent approval. The English question clause is an intentional bounded hold pending reliable Tshivenda phrasing."
+}

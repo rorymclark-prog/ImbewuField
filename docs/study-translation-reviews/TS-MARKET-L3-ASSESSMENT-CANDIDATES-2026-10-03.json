@@ -1,0 +1,548 @@
+{
+  "packetId": "IMBEWU-TS-MARKET-L3-ASSESSMENT-CANDIDATES-2026-10-03",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "liveCheckoutHead": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "languageCode": "ts",
+  "languageName": "itsonga",
+  "verifiedVisibleLanguageName": "itsonga",
+  "moduleId": "market-community",
+  "lessonId": "market-community-l3",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "registryPath": "lib/course-translation-drafts-ts-market-community.ts",
+  "provenance": "Read-only source-paired ordinary assessment candidates from current canonical lesson and Xitsonga registry; no repo edits or learner wiring. A read-only independent review led to bounded wording and punctuation repairs recorded here; canonical English remains unchanged.",
+  "reviewStatus": "machine-draft-candidates-for-independent-review; unreviewed",
+  "canonicalAssessment": {
+    "keyPoints": [
+      "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "Agree care, booking and repair responsibilities for shared tools",
+      "Measure losses and net returns for each selling route",
+      "Combine shared experience with qualified help when needed"
+    ],
+    "quiz": [
+      {
+        "q": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+        "options": [
+          "Mix all varieties without labels",
+          "Agree seed-quality checks and check whether permission is needed to share the variety",
+          "Assume sharing automatically improves every seed lot",
+          "Rely only on the size of the group"
+        ],
+        "correct": 1,
+        "rationale": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing."
+      },
+      {
+        "q": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+        "options": [
+          "Always choose the highest headline price",
+          "Always choose the shortest journey",
+          "Compare money received after fees, transport, unsold produce and losses",
+          "Assume joining a group removes all costs"
+        ],
+        "correct": 2,
+        "rationale": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options."
+      }
+    ]
+  },
+  "currentAssessment": {
+    "keyPoints": [
+      {
+        "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+        "xitsongaDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
+        "reviewStatus": "hold"
+      },
+      {
+        "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+        "xitsongaDraft": "Agree care, booking and repair responsibilities for shared tools",
+        "reviewStatus": "hold"
+      },
+      {
+        "sourceEnglish": "Measure losses and net returns for each selling route",
+        "xitsongaDraft": "Measure losses and net returns for each selling route",
+        "reviewStatus": "hold"
+      },
+      {
+        "sourceEnglish": "Combine shared experience with qualified help when needed",
+        "xitsongaDraft": "Combine shared experience with qualified help when needed",
+        "reviewStatus": "hold"
+      }
+    ],
+    "quiz": [
+      {
+        "question": {
+          "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+          "xitsongaDraft": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+          "reviewStatus": "hold"
+        },
+        "options": [
+          {
+            "sourceEnglish": "Mix all varieties without labels",
+            "xitsongaDraft": "Mix all varieties without labels",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+            "xitsongaDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Assume sharing automatically improves every seed lot",
+            "xitsongaDraft": "Assume sharing automatically improves every seed lot",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Rely only on the size of the group",
+            "xitsongaDraft": "Rely only on the size of the group",
+            "reviewStatus": "hold"
+          }
+        ],
+        "sourceCorrectIndex": 1,
+        "rationale": {
+          "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+          "xitsongaDraft": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+          "reviewStatus": "hold"
+        }
+      },
+      {
+        "question": {
+          "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+          "xitsongaDraft": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+          "reviewStatus": "hold"
+        },
+        "options": [
+          {
+            "sourceEnglish": "Always choose the highest headline price",
+            "xitsongaDraft": "Always choose the highest headline price",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Always choose the shortest journey",
+            "xitsongaDraft": "Always choose the shortest journey",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+            "xitsongaDraft": "Compare money received after fees, transport, unsold produce and losses",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Assume joining a group removes all costs",
+            "xitsongaDraft": "Assume joining a group removes all costs",
+            "reviewStatus": "hold"
+          }
+        ],
+        "sourceCorrectIndex": 2,
+        "rationale": {
+          "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+          "xitsongaDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+          "reviewStatus": "hold"
+        }
+      }
+    ]
+  },
+  "answerIndices": [
+    1,
+    2
+  ],
+  "entries": [
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "keyPoints[0]",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "currentDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Record/check verbs and connectors",
+      "retainExact": [
+        "seed identity",
+        "source",
+        "quality",
+        "permission",
+        "before sharing"
+      ],
+      "scopeReason": "Do not alter seed identity, quality, or legal permission checks.",
+      "candidate": "Tsala seed identity, source and quality, kutani check if permission is needed before sharing.",
+      "currentRegistryText": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Record seed identity, source and quality, and check whether permission is needed before sharing.",
+      "retainedEnglishTerms": [
+        "seed identity, source and quality",
+        "check if permission is needed before sharing"
+      ],
+      "uncertainty": "Translate record/check verbs, keep seed identity, quality and the complete permission condition exact."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "keyPoints[2]",
+      "sourceIndex": 2,
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Measure losses and net returns for each selling route",
+      "currentDraft": "Measure losses and net returns for each selling route",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Measure and for-each framing",
+      "retainExact": [
+        "losses",
+        "net returns",
+        "selling route"
+      ],
+      "scopeReason": "Preserve the business measures and the comparison scope.",
+      "candidate": "Pima losses and net returns for each selling route.",
+      "currentRegistryText": "Measure losses and net returns for each selling route",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Measure losses and net returns for each selling route.",
+      "retainedEnglishTerms": [
+        "losses and net returns for each selling route"
+      ],
+      "uncertainty": "Translate the measure verb only; keep each selling route comparison exact."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "keyPoints[3]",
+      "sourceIndex": 3,
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Combine shared experience with qualified help when needed",
+      "currentDraft": "Combine shared experience with qualified help when needed",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Combine/shared-experience framing and needed-condition connector",
+      "retainExact": [
+        "qualified help",
+        "when needed"
+      ],
+      "scopeReason": "Keep the qualified-advice threshold explicit.",
+      "candidate": "Hlanganisa shared experience with qualified help when needed.",
+      "currentRegistryText": "Combine shared experience with qualified help when needed",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Combine shared experience with qualified help when needed.",
+      "retainedEnglishTerms": [
+        "shared experience",
+        "qualified help when needed"
+      ],
+      "uncertainty": "Translate combine only; preserve the qualification threshold."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[0].question",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "currentDraft": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Ordinary question framing",
+      "retainExact": [
+        "Neighbours",
+        "saved seed",
+        "shared seed usefulness"
+      ],
+      "scopeReason": "Preserve who wants to share and what is being evaluated.",
+      "candidate": "Vaakelani va lava ku avelana saved seed. Xana i yini lexi pfunaka leswaku shared seed yi va useful?",
+      "currentRegistryText": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Neighbours want to share saved seed. What helps the shared seed be useful?",
+      "retainedEnglishTerms": [
+        "saved seed",
+        "shared seed useful"
+      ],
+      "uncertainty": "The ordinary neighbour/question frame is Xitsonga; seed terms remain exact English. Removed nga to avoid adding a could-possibility. Confirm mixed wording locally."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Mix all varieties without labels",
+      "currentDraft": "Mix all varieties without labels",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Mix/without-labels framing",
+      "retainExact": [
+        "all varieties",
+        "without labels"
+      ],
+      "scopeReason": "Keep the all-varieties and no-labels absolute intact.",
+      "candidate": "Hlanganisa all varieties without labels.",
+      "currentRegistryText": "Mix all varieties without labels",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Mix all varieties without labels.",
+      "retainedEnglishTerms": [
+        "all varieties without labels"
+      ],
+      "uncertainty": "Translate the action verb; keep all and without-labels absolutes exact."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "currentDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Agree/check verbs",
+      "retainExact": [
+        "seed-quality checks",
+        "whether permission is needed",
+        "share the variety"
+      ],
+      "scopeReason": "Keep the quality and permission requirements explicit.",
+      "candidate": "Pfumelelana hi seed-quality checks naswona check whether permission is needed to share the variety.",
+      "currentRegistryText": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Agree seed-quality checks and check whether permission is needed to share the variety.",
+      "retainedEnglishTerms": [
+        "seed-quality checks",
+        "whether permission is needed to share the variety"
+      ],
+      "uncertainty": "Translate agree/check connectors; retain quality and permission requirements."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[0].options[2]",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Assume sharing automatically improves every seed lot",
+      "currentDraft": "Assume sharing automatically improves every seed lot",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": null,
+      "retainExact": [
+        "whole option"
+      ],
+      "scopeReason": "Hold exact because its absolute automatic quality-improvement claim must remain unmistakable.",
+      "candidate": "Assume sharing automatically improves every seed lot",
+      "currentRegistryText": "Assume sharing automatically improves every seed lot",
+      "candidateStatus": "english-hold",
+      "backTranslation": "Exact English hold, including source punctuation.",
+      "retainedEnglishTerms": [
+        "whole option, byte-for-byte including punctuation"
+      ],
+      "uncertainty": "Preserve the incorrect automatic-improvement claim exactly as canonical English; the source has no final period."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Rely only on the size of the group",
+      "currentDraft": "Rely only on the size of the group",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Entire ordinary distractor",
+      "retainExact": [
+        "only",
+        "size of the group"
+      ],
+      "scopeReason": "Preserve the limiting only-group-size claim.",
+      "candidate": "Tshemba ntsena eka size of the group.",
+      "currentRegistryText": "Rely only on the size of the group",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Rely only on the size of the group",
+      "retainedEnglishTerms": [
+        "only",
+        "size of the group"
+      ],
+      "uncertainty": "Translate rely/only framing and retain group-size limit exactly."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[0].rationale",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentDraft": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": null,
+      "retainExact": [
+        "whole rationale"
+      ],
+      "scopeReason": "Hold exact; seed-quality procedures and protected-variety rights form one technical/safety explanation.",
+      "candidate": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentRegistryText": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "candidateStatus": "english-hold",
+      "backTranslation": "Whole source rationale",
+      "retainedEnglishTerms": [
+        "whole rationale"
+      ],
+      "uncertainty": "Keep the full seed procedure and protected-variety rights explanation exact."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[1].question",
+      "sourceIndex": 1,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "currentDraft": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Entire ordinary question",
+      "retainExact": [
+        "distant market",
+        "nearby customers",
+        "decision guidance"
+      ],
+      "scopeReason": "No prices or technical conditions appear in this question; retain comparison roles.",
+      "candidate": "Murimi u pimanisa distant market na nearby customers. Xana i yini lexi faneleke ku kongomisa xiboho?",
+      "currentRegistryText": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "A grower/farmer is comparing a distant market with nearby customers. What should guide the decision?",
+      "retainedEnglishTerms": [
+        "distant market",
+        "nearby customers",
+        "decision guidance"
+      ],
+      "uncertainty": "Use murimi, the Xitsonga farmer/grower form found in existing project translations; fluent-speaker review remains open."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceIndex": 1,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentDraft": "Always choose the highest headline price",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Entire ordinary distractor",
+      "retainExact": [
+        "Always",
+        "highest headline price"
+      ],
+      "scopeReason": "Preserve the absolute Always and highest headline price.",
+      "candidate": "Always hlawula the highest headline price.",
+      "currentRegistryText": "Always choose the highest headline price",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Always choose the highest headline price",
+      "retainedEnglishTerms": [
+        "Always",
+        "highest headline price"
+      ],
+      "uncertainty": "Translate the verb only; preserve the absolute and price criterion."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceIndex": 1,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Always choose the shortest journey",
+      "currentDraft": "Always choose the shortest journey",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Entire ordinary distractor",
+      "retainExact": [
+        "Always",
+        "shortest journey"
+      ],
+      "scopeReason": "Preserve the absolute Always and shortest journey.",
+      "candidate": "Always hlawula the shortest journey.",
+      "currentRegistryText": "Always choose the shortest journey",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Always choose the shortest journey",
+      "retainedEnglishTerms": [
+        "Always",
+        "shortest journey"
+      ],
+      "uncertainty": "Translate the verb only; preserve the absolute and shortest-journey criterion."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[1].options[2]",
+      "sourceIndex": 1,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "currentDraft": "Compare money received after fees, transport, unsold produce and losses",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Compare framing",
+      "retainExact": [
+        "money received after fees, transport, unsold produce and losses"
+      ],
+      "scopeReason": "Keep the business calculation and all cost/loss terms exact.",
+      "candidate": "Pimanisa money received after fees, transport, unsold produce and losses.",
+      "currentRegistryText": "Compare money received after fees, transport, unsold produce and losses",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Compare money received after fees, transport, unsold produce and losses",
+      "retainedEnglishTerms": [
+        "money received after fees, transport, unsold produce and losses"
+      ],
+      "uncertainty": "Translate compare only; retain the full business calculation."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[1].options[3]",
+      "sourceIndex": 1,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Assume joining a group removes all costs",
+      "currentDraft": "Assume joining a group removes all costs",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Assume/group framing",
+      "retainExact": [
+        "all costs"
+      ],
+      "scopeReason": "Preserve the absolute all-costs claim.",
+      "candidate": "Assume leswaku joining a group removes all costs.",
+      "currentRegistryText": "Assume joining a group removes all costs",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Assume that joining a group removes all costs.",
+      "retainedEnglishTerms": [
+        "all costs"
+      ],
+      "uncertainty": "Retain Assume, joining a group and all costs in English to preserve the presumption and absolute claim."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "itsonga",
+      "fieldPath": "quiz[1].rationale",
+      "sourceIndex": 1,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "currentDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "reviewStatus": "hold",
+      "proposedOrdinaryScope": "Sentence framing/connectors",
+      "retainExact": [
+        "distance affects costs",
+        "not the only factor",
+        "actual returns and losses",
+        "compare options"
+      ],
+      "scopeReason": "Translate ordinary connectors only while preserving the full business reasoning and comparison direction.",
+      "candidate": "Distance affects costs, kambe it is not the only factor. Tirhisa actual returns and losses to compare the options.",
+      "currentRegistryText": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "retainedEnglishTerms": [
+        "distance affects costs",
+        "not the only factor",
+        "actual returns and losses",
+        "compare options"
+      ],
+      "uncertainty": "Translate connectors/use framing only; retain all business reasoning exact."
+    }
+  ],
+  "constraints": [
+    "Preserve exact question, option, rationale sources, order and correct indices [1,2].",
+    "Preserve seed identity, quality, germination, protected-variety and permission meaning; no automatic quality claim.",
+    "Preserve cost/measurement terms and nearest buyer is not always best-return warning.",
+    "No added prices, numbers, seed species or guarantees.",
+    "Exact English holds where a full clause cannot be safely localized.",
+    "No Sesotho or Tshivenda borrowing; language is standard written Xitsonga.",
+    "Draft remains unreviewed and is not a fluent approval claim."
+  ],
+  "sourceRegistryProof": {
+    "canonicalAssessmentMatchesAudit": true,
+    "currentRegistryFieldCount": 15,
+    "sourceStringsExact": true,
+    "answerIndicesExact": true
+  },
+  "sourcePairingSha256": "5b48a9ef7b8b21ea29a48ef0856fe8f2241b559a90525eadcfb004eeb662c560",
+  "checkedAgainstHead": "5b6ab5d8823c9f5f9c195d170792b34fdc898453",
+  "repairSummary": [
+    "Removed nga from the saved-seed question to preserve source modality.",
+    "Changed Mutimi to Murimi based on established Xitsonga usage in the project; not a fluent approval.",
+    "Kept Q0 option 2 byte-for-byte equal to the canonical source, which has no terminal period.",
+    "Retained Assume in English in Q1 option 3; preserved all costs absolute."
+  ]
+}

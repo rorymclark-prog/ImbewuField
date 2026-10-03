@@ -40,12 +40,19 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     assert.equal(draft.body.sourceEnglish, source.body);
     assert.equal(draft.body.reviewStatus, 'machine-draft');
     assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
-    assert.deepEqual(draft.keyPoints.map(point => point.tshivendaDraft), source.keyPoints);
+    assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+    if (lessonId !== 'market-community-l3') assert.deepEqual(draft.keyPoints.map(point => point.tshivendaDraft), source.keyPoints);
     assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
     const shown = resolveLearnerLessonPresentation(source, 've');
     assert.equal(shown.status, 'draft');
-    assert.deepEqual(shown.content.quiz, source.quiz);
-    assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+    // L3 checked ordinary assessments now draft while L1 safeguards keep their English holds.
+    assert.deepEqual(shown.content.quiz, lessonId === 'market-community-l3' ? source.quiz.map((question, index) => ({
+      q: draft.quiz[index].question.tshivendaDraft,
+      options: draft.quiz[index].options.map(pair => pair.tshivendaDraft),
+      correct: question.correct,
+      rationale: draft.quiz[index].rationale.tshivendaDraft,
+    })) : source.quiz);
+    assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(pair => pair.tshivendaDraft));
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);

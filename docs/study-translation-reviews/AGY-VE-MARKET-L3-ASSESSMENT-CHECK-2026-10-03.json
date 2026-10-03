@@ -1,0 +1,20 @@
+{
+  "session": "7310cfdf-fd5d-4c2c-a119-3b0a24dee6dc",
+  "provider": "Antigravity desktop Gemini 3.7 Flash High",
+  "method": "Actual native accessibility response read after refreshing stale app binding; text-only, no repository edits",
+  "checkedFields": [
+    "keyPoints[0]",
+    "keyPoints[3]",
+    "quiz[0].question"
+  ],
+  "findings": {
+    "keyPoints[0]": "before-sharing temporal permission condition preserved",
+    "keyPoints[3]": "tsho kovhekanywaho suggests apportioned/distributed experience rather than shared experience",
+    "quiz[0].question": "i shume zwavhuḓi means works well rather than useful"
+  },
+  "rootRepairs": {
+    "keyPoints[3]": "Ṱanganyisani shared experience na qualified help musi zwi tshi ṱoḓea.",
+    "quiz[0].question": "Vhahura vha ṱoḓa u kovhelana saved seed. What helps make the shared seed useful?"
+  },
+  "status": "unreviewed-machine-draft; model check is not fluent approval"
+}

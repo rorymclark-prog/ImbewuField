@@ -153,8 +153,8 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
-          "tshivendaDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Ṅwalani seed identity, source and quality, nahone ni sedze arali permission i tshi ṱoḓea musi ni sa athu u kovhelana.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
@@ -163,42 +163,42 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Measure losses and net returns for each selling route",
-          "tshivendaDraft": "Measure losses and net returns for each selling route",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Measure losses and net returns kha selling route iṅwe na iṅwe.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Combine shared experience with qualified help when needed",
-          "tshivendaDraft": "Combine shared experience with qualified help when needed",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Ṱanganyisani shared experience na qualified help musi zwi tshi ṱoḓea.",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
-            "tshivendaDraft": "Neighbours want to share saved seed. What helps make the shared seed useful?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Vhahura vha ṱoḓa u kovhelana saved seed. What helps make the shared seed useful?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Mix all varieties without labels",
-              "tshivendaDraft": "Mix all varieties without labels",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Ṱanganyisani mifuda yoṱhe ni songo i ṅwala labels.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
-              "tshivendaDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Thendelanani nga seed-quality checks nahone ni sedze arali permission i tshi ṱoḓea u kovhelana variety.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume sharing automatically improves every seed lot",
-              "tshivendaDraft": "Assume sharing automatically improves every seed lot",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Humbulani uri sharing automatically improves every seed lot.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Rely only on the size of the group",
-              "tshivendaDraft": "Rely only on the size of the group",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Fulufhelani fhedzi kha size ya group.",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
@@ -211,36 +211,36 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
-            "tshivendaDraft": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Mulimi u khou vhambedza distant market na nearby customers. Ndi mini tshine tsha tea u livhisa phetho?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Always choose the highest headline price",
-              "tshivendaDraft": "Always choose the highest headline price",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Khethani tshifhinga tshoṱhe highest headline price.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Always choose the shortest journey",
-              "tshivendaDraft": "Always choose the shortest journey",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Khethani tshifhinga tshoṱhe shortest journey.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
-              "tshivendaDraft": "Compare money received after fees, transport, unsold produce and losses",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Vhambedzani money received after fees, transport, unsold produce and losses.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume joining a group removes all costs",
-              "tshivendaDraft": "Assume joining a group removes all costs",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Humbulani uri u dzhena kha group zwi fhelisa costs dzoṱhe.",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
-            "tshivendaDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
-            "reviewStatus": "hold"
+            "tshivendaDraft": "Distance affects costs, but it is not the only factor. Shumisani actual returns and losses u vhambedza options.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]

@@ -1,0 +1,233 @@
+{
+  "packetId": "IMBEWU-TS-MARKET-L3-ASSESSMENT-BACKCHECK-2026-10-03",
+  "checkedAt": "2026-10-03T05:10:42.521Z",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "checkedHead": "5b6ab5d8823c9f5f9c195d170792b34fdc898453",
+  "candidatePacket": "/tmp/imbewu-ts-market-l3-assessment-candidates-repaired-20261003.json",
+  "languageCode": "ts",
+  "languageName": "itsonga",
+  "reviewStatus": "independent-source-and-semantic-check-not-fluency-approval",
+  "sourceBinding": {
+    "packetBaseMatchesHead": false,
+    "fullCanonicalAssessmentMatchesPacket": true,
+    "fullCurrentRegistryAssessmentMatchesPacket": true,
+    "all15EntriesMatchCanonicalAndCurrent": true
+  },
+  "answerIndices": {
+    "packet": [
+      1,
+      2
+    ],
+    "canonical": [
+      1,
+      2
+    ],
+    "registry": [
+      1,
+      2
+    ],
+    "preserved": true
+  },
+  "repairedFindings": {
+    "quiz0Question": {
+      "candidate": "Vaakelani va lava ku avelana saved seed. Xana i yini lexi pfunaka leswaku shared seed yi va useful?",
+      "noAddedCouldModal": true,
+      "backTranslation": "Neighbours want to share saved seed. What helps the shared seed be useful.",
+      "assessment": "Repair removes the added could-possibility and retains the saved-seed question target."
+    },
+    "quiz1Question": {
+      "candidate": "Murimi u pimanisa distant market na nearby customers. Xana i yini lexi faneleke ku kongomisa xiboho?",
+      "term": "Murimi",
+      "assessment": "Use Murimi: existing Xitsonga course translations consistently use murimi for farmer/grower; no project usage of Mutimi was found. This is corpus evidence, not fluent-speaker approval."
+    },
+    "quiz0Option2": {
+      "canonicalSource": "Assume sharing automatically improves every seed lot",
+      "candidate": "Assume sharing automatically improves every seed lot",
+      "byteExactHold": true,
+      "sourceEndsWithPeriod": false,
+      "assessment": "Candidate is byte-for-byte exact; canonical source does not have a final period."
+    },
+    "quiz1Option3": {
+      "candidate": "Assume leswaku joining a group removes all costs.",
+      "keepsAssumeExact": true,
+      "keepsAllCosts": true,
+      "assessment": "Assume remains exact English; joining a group and the all-costs absolute remain exact."
+    }
+  },
+  "semantics": {
+    "seedTerms": "Seed identity/source/quality and permission-before-sharing are retained. The protected-variety rights and germination rationale remains an exact English hold.",
+    "falseQualityClaim": "Option 2 is an exact source hold, preserving the absolute automatic-improvement claim as the incorrect distractor.",
+    "marketCostMeaning": "Fees, transport, unsold produce, losses, actual returns and nearest-buyer caveat remain intact; Always/highest/shortest/all and not-the-only-factor are preserved.",
+    "languageCheck": "Changed lexical material is Xitsonga (including Vaakelani, Tsala, Pima, Hlanganisa, Pimanisa, kambe, Tirhisa, Murimi); no obvious ST/VE leakage."
+  },
+  "fieldChecks": [
+    {
+      "fieldPath": "keyPoints[0]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": null,
+      "canonicalCorrectIndex": null,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Tsala seed identity, source and quality, kutani check if permission is needed before sharing.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "keyPoints[2]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": null,
+      "canonicalCorrectIndex": null,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Pima losses and net returns for each selling route.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "keyPoints[3]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": null,
+      "canonicalCorrectIndex": null,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Hlanganisa shared experience with qualified help when needed.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[0].question",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 1,
+      "canonicalCorrectIndex": 1,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Vaakelani va lava ku avelana saved seed. Xana i yini lexi pfunaka leswaku shared seed yi va useful?",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[0].options[0]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 1,
+      "canonicalCorrectIndex": 1,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Hlanganisa all varieties without labels.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[0].options[1]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 1,
+      "canonicalCorrectIndex": 1,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Pfumelelana hi seed-quality checks naswona check whether permission is needed to share the variety.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[0].options[2]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": true,
+      "correctIndex": 1,
+      "canonicalCorrectIndex": 1,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Assume sharing automatically improves every seed lot",
+      "status": "english-hold"
+    },
+    {
+      "fieldPath": "quiz[0].options[3]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 1,
+      "canonicalCorrectIndex": 1,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Tshemba ntsena eka size of the group.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[0].rationale",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": true,
+      "correctIndex": 1,
+      "canonicalCorrectIndex": 1,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "status": "english-hold"
+    },
+    {
+      "fieldPath": "quiz[1].question",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 2,
+      "canonicalCorrectIndex": 2,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Murimi u pimanisa distant market na nearby customers. Xana i yini lexi faneleke ku kongomisa xiboho?",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[1].options[0]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 2,
+      "canonicalCorrectIndex": 2,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Always hlawula the highest headline price.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[1].options[1]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 2,
+      "canonicalCorrectIndex": 2,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Always hlawula the shortest journey.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[1].options[2]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 2,
+      "canonicalCorrectIndex": 2,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Pimanisa money received after fees, transport, unsold produce and losses.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[1].options[3]",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 2,
+      "canonicalCorrectIndex": 2,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Assume leswaku joining a group removes all costs.",
+      "status": "machine-draft"
+    },
+    {
+      "fieldPath": "quiz[1].rationale",
+      "sourceExact": true,
+      "currentRegistryExact": true,
+      "candidateExactSourceHold": null,
+      "correctIndex": 2,
+      "canonicalCorrectIndex": 2,
+      "correctIndexPreserved": true,
+      "repairedCandidate": "Distance affects costs, kambe it is not the only factor. Tirhisa actual returns and losses to compare the options.",
+      "status": "machine-draft"
+    }
+  ],
+  "repairsRequired": [],
+  "caveat": "Semantic and source check only; no claim of fluent approval.",
+  "repoWritesMade": false
+}

@@ -46,10 +46,11 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
     'the shared-experience sentence keeps the source can-work-together modality');
 
   assert.deepEqual(draft.keyPoints.map(pair => pair.sourceEnglish), source.keyPoints);
-  assert.deepEqual(draft.keyPoints.map(pair => pair.reviewStatus), ['hold', 'machine-draft', 'hold', 'hold']);
-  assert.equal(draft.keyPoints[0].sesothoDraft, source.keyPoints[0], 'seed permission remains exact English');
-  assert.equal(draft.keyPoints[2].sesothoDraft, source.keyPoints[2], 'net return advice remains exact English');
-  assert.equal(draft.keyPoints[3].sesothoDraft, source.keyPoints[3], 'qualification for technical help remains exact English');
+  // Reviewed ordinary framing now ships as drafts; safeguards remain source-bound.
+  assert.ok(draft.keyPoints.every(pair => pair.reviewStatus === 'machine-draft'));
+  assert.match(draft.keyPoints[0].sesothoDraft, /permission.*pele o arolelana/, 'permission is checked before sharing');
+  assert.match(draft.keyPoints[2].sesothoDraft, /losses le net returns.*selling route/, 'every route retains the loss and return measures');
+  assert.match(draft.keyPoints[3].sesothoDraft, /qualified help ha ho hlokahala/, 'qualified help is required when needed');
 
   assert.equal(draft.quiz.length, source.quiz.length);
   draft.quiz.forEach((question, questionIndex) => {
@@ -59,14 +60,18 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
     assert.equal(question.options.length, original.options.length);
     question.options.forEach((option, optionIndex) => {
       assert.equal(option.sourceEnglish, original.options[optionIndex]);
-      assert.equal(option.sesothoDraft, original.options[optionIndex]);
-      assert.equal(option.reviewStatus, 'hold', 'all choices remain exact English to preserve quiz meaning');
+      assert.equal(option.reviewStatus, 'machine-draft', 'checked ordinary choices are drafts with exact English beside them');
     });
     assert.equal(question.sourceCorrectIndex, original.correct);
     assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, original.options[original.correct]);
     assert.equal(question.rationale.sourceEnglish, original.rationale);
-    assert.equal(question.rationale.sesothoDraft, original.rationale);
-    assert.equal(question.rationale.reviewStatus, 'hold');
+    if (questionIndex === 0) {
+      assert.equal(question.rationale.sesothoDraft, original.rationale);
+      assert.equal(question.rationale.reviewStatus, 'hold', 'protected-variety rights and crop-specific seed checks remain exact');
+    } else {
+      assert.equal(question.rationale.reviewStatus, 'machine-draft');
+      assert.match(question.rationale.sesothoDraft, /actual returns le losses/);
+    }
   });
 
   const presentation = resolveLearnerLessonPresentation(source, 'st');
@@ -77,9 +82,9 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
   assert.deepEqual(presentation.content.keyPoints, draft.keyPoints.map(pair => pair.sesothoDraft));
   assert.deepEqual(presentation.content.quiz, source.quiz.map((question, index) => ({
     q: draft.quiz[index].question.sesothoDraft,
-    options: question.options,
+    options: draft.quiz[index].options.map(pair => pair.sesothoDraft),
     correct: question.correct,
-    rationale: question.rationale,
+    rationale: draft.quiz[index].rationale.sesothoDraft,
   })));
 
   const changedSource = { ...source, title: `${source.title} ` };
@@ -152,7 +157,14 @@ test('regional Market L3 drafts ordinary sharing and produce framing while keepi
     const shown = resolveLearnerLessonPresentation(source, language);
     assert.equal(shown.status, 'draft');
     assert.equal(shown.content.body, translatedBody);
-    assert.deepEqual(shown.content.quiz, source.quiz, 'quiz and answer meanings remain exact English');
+    // Checked ordinary assessment fields replace old all-English holds without changing answer keys.
+    const lessonDraft: { quiz: { question: RegionalPair; options: RegionalPair[]; rationale: RegionalPair }[] } = language === 've' ? veDraft : tsDraft;
+    assert.deepEqual(shown.content.quiz, source.quiz.map((question, index) => ({
+      q: regionalText(lessonDraft.quiz[index].question),
+      options: lessonDraft.quiz[index].options.map(pair => regionalText(pair)),
+      correct: question.correct,
+      rationale: regionalText(lessonDraft.quiz[index].rationale),
+    })));
   }
 });
 
@@ -186,3 +198,44 @@ test('Sesotho Market L1 records four destinations while keeping units and busine
   assert.ok(draft.keyPoints.slice(1).every(point => point.reviewStatus === 'hold'),
     'price, worked-example and crop-timing key points remain held');
 });
+
+
+test('regional community assessments keep permission, business comparisons and answer keys source-bound', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'market-community')!.lessons.find(lesson => lesson.id === 'market-community-l3')!;
+  for (const [language, moduleDraft, key] of [
+    ['st', SESOTHO_MARKET_COMMUNITY_DRAFT, 'sesothoDraft'],
+    ['ve', TSHIVENDA_MARKET_COMMUNITY_DRAFT, 'tshivendaDraft'],
+    ['ts', XITSONGA_MARKET_COMMUNITY_DRAFT, 'xitsongaDraft'],
+  ] as const) {
+    const draft = moduleDraft.lessons.find(lesson => lesson.id === source.id)!;
+    assert.deepEqual(draft.keyPoints.map(pair => pair.sourceEnglish), source.keyPoints);
+    assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), [1, 2]);
+    draft.quiz.forEach((question, index) => {
+      assert.equal(question.question.sourceEnglish, source.quiz[index].q);
+      assert.deepEqual(question.options.map(pair => pair.sourceEnglish), source.quiz[index].options);
+      assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
+    });
+    assert.equal(regionalText(draft.quiz[0].rationale), source.quiz[0].rationale, 'seed checks do not establish protected-variety permission');
+    assert.equal(draft.quiz[0].rationale.reviewStatus, 'hold');
+    assert.match(regionalText(draft.quiz[0].options[1]), /seed-quality checks/);
+    assert.match(regionalText(draft.quiz[0].options[1]), /permission/);
+    for (const term of ['fees', 'transport', 'unsold produce', 'losses']) {
+      assert.ok(regionalText(draft.quiz[1].options[2]).includes(term), `${language}: all cost and loss components survive`);
+    }
+    assert.match(regionalText(draft.keyPoints[3]), /qualified help/);
+    const changedQuestion = { ...source, quiz: source.quiz.map((question, index) => index ? question : { ...question, q: `${question.q} Changed condition.` }) };
+    assert.equal(resolveLearnerLessonPresentation(changedQuestion, language).status, 'english-fallback', 'source question edits withdraw stale drafts');
+    const changedKey = { ...source, quiz: source.quiz.map((question, index) => index ? question : { ...question, correct: 0 }) };
+    assert.equal(resolveLearnerLessonPresentation(changedKey, language).status, 'english-fallback', 'answer-key edits withdraw stale drafts');
+  }
+  const ts = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === source.id)!;
+  assert.equal(ts.quiz[0].options[2].xitsongaDraft, source.quiz[0].options[2], 'automatic improvement absolute stays byte-exact English');
+});
+
+type RegionalPair = { sourceEnglish: string; sesothoDraft?: string; tshivendaDraft?: string; xitsongaDraft?: string };
+
+function regionalText(pair: RegionalPair): string {
+  const text = pair.sesothoDraft ?? pair.tshivendaDraft ?? pair.xitsongaDraft;
+  assert.equal(typeof text, 'string', 'every registered regional pair carries its learner wording');
+  return text!;
+}
