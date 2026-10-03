@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 October 2026', sha: '47ab60de', changes: [
+  { when: '3 October 2026', sha: 'e4761b2b', changes: [
     'Market slides add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
     'Silent slide packs keep the exact price example and seed-permission guidance.',
   ], tour: [
