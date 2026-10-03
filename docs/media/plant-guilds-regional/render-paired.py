@@ -15,10 +15,12 @@ MEDIA = Path(__file__).resolve().parent
 QA = MEDIA / "qa"
 PAIRED_TEMPLATE = ROOT / "docs/narration/plant-guilds.{lang}.paired-draft.json"
 ENGLISH = ROOT / "docs/narration/plant-guilds.en.md"
-LANGUAGES = ("st", "ve", "ts")
+LANGUAGES = {"st": "Sesotho", "ve": "Tshivenda", "ts": "Xitsonga"}
 W, H = 1440, 5400
 SLIDES = 51
-REVIEW_SLIDES = (46, 47)
+# The opening, both support-plant slides with the longest bodies, the Bocking 14 propagation
+# warning, the observation slides and the close.
+PHONE_SAMPLES = (1, 2, 16, 22, 32, 43, 46, 47, 51)
 
 
 def sha(path: Path) -> str:
@@ -27,14 +29,11 @@ def sha(path: Path) -> str:
 
 def main() -> None:
     QA.mkdir(parents=True, exist_ok=True)
-    composite = Image.new("RGB", (3 * 480, 2 * 1840), (238, 233, 220))
-    composite_draw = ImageDraw.Draw(composite)
-    font = ImageFont.load_default()
-
-    for language in LANGUAGES:
+    for language, name in LANGUAGES.items():
         paired = PAIRED_TEMPLATE.with_name(PAIRED_TEMPLATE.name.format(lang=language))
-        output = ROOT / "public/course-decks/plant-guilds" / language
+        output_dir = ROOT / "public/course-decks/plant-guilds" / language
         rows: list[dict[str, object]] = []
+        thumbs: list[Image.Image] = []
         with tempfile.TemporaryDirectory(prefix=f"plant-guilds-{language}-") as temp:
             generated = Path(temp) / "slides"
             subprocess.run([
@@ -45,22 +44,17 @@ def main() -> None:
             expected = [generated / f"slide-{n:02d}.png" for n in range(1, SLIDES + 1)]
             if not all(path.is_file() for path in expected):
                 raise SystemExit(f"{language}: renderer did not produce all {SLIDES} slides")
-            output.mkdir(parents=True, exist_ok=True)
+            output_dir.mkdir(parents=True, exist_ok=True)
             for n, png in enumerate(expected, 1):
                 with Image.open(png) as source:
                     if source.size != (W, H):
                         raise SystemExit(f"{language} slide {n}: unexpected size {source.size}")
                     image = source.convert("RGB")
-                    target = output / f"slide-{n:02d}.webp"
-                    if language == "st" and n not in REVIEW_SLIDES:
-                        if not target.is_file():
-                            raise SystemExit(f"preserving Sesotho slide {n}: existing frame is missing")
-                        with Image.open(target) as existing:
-                            if existing.size != (W, H):
-                                raise SystemExit(f"preserving Sesotho slide {n}: unexpected size {existing.size}")
-                        image = existing.convert("RGB")
-                    else:
-                        image.save(target, "WEBP", quality=88, method=6)
+                    target = output_dir / f"slide-{n:02d}.webp"
+                    image.save(target, "WEBP", quality=88, method=6)
+                    thumb = image.copy()
+                    thumb.thumbnail((140, 525), Image.Resampling.LANCZOS)
+                    thumbs.append(thumb)
                     rows.append({
                         "slide": n,
                         "path": str(target.relative_to(ROOT)),
@@ -68,17 +62,32 @@ def main() -> None:
                         "bytes": target.stat().st_size,
                         "sha256": sha(target),
                     })
-                    if n in REVIEW_SLIDES:
-                        phone = image.resize((390, 1463), Image.Resampling.LANCZOS)
-                        phone_path = QA / f"{language}-slide-{n:02d}-390.jpg"
-                        phone.save(phone_path, quality=92, optimize=True)
-                        thumb = image.resize((480, 1800), Image.Resampling.LANCZOS)
-                        x = (LANGUAGES.index(language) * 480)
-                        y = ((n - REVIEW_SLIDES[0]) * 1840)
-                        composite.paste(thumb, (x, y))
-                        composite_draw.text((x + 8, y + 1804), f"{language.upper()} · slide {n}",
-                                            font=font, fill=(32, 25, 15))
 
+        contact = Image.new("RGB", (9 * 160, 6 * 555), (238, 233, 220))
+        for index, (thumb, row) in enumerate(zip(thumbs, rows)):
+            x, y = (index % 9) * 160 + 10, (index // 9) * 555 + 8
+            contact.paste(thumb, (x, y))
+            ImageDraw.Draw(contact).text(
+                (x, y + thumb.height + 4), f"Slide {row['slide']:02d}",
+                font=ImageFont.load_default(), fill=(32, 25, 15),
+            )
+        contact_path = QA / f"{language}-contact-sheet.jpg"
+        contact.save(contact_path, quality=92, optimize=True)
+
+        samples = []
+        for n in PHONE_SAMPLES:
+            with Image.open(output_dir / f"slide-{n:02d}.webp") as source:
+                phone = source.convert("RGB").resize((390, 1463), Image.Resampling.LANCZOS)
+            phone_path = QA / f"{language}-slide-{n:02d}-390.jpg"
+            phone.save(phone_path, quality=92, optimize=True)
+            samples.append({"slide": n, "path": str(phone_path.relative_to(ROOT)),
+                            "pixels": "390x1463", "sha256": sha(phone_path)})
+
+        packet = json.loads(paired.read_text(encoding="utf-8"))
+        passages = [item for slide in packet["slides"]
+                    for item in [slide["target"]["heading"], *slide["target"]["body"]]]
+        draft_count = sum(item["status"] == "draft" for item in passages)
+        hold_count = len(passages) - draft_count
         report = {
             "module": "plant-guilds",
             "language": language,
@@ -90,23 +99,20 @@ def main() -> None:
             "pairedSourceSha256": sha(paired),
             "englishSource": str(ENGLISH.relative_to(ROOT)),
             "englishSourceSha256": sha(ENGLISH),
-            "translatedScope": [46, 47],
             "slides": rows,
-            "phoneSamples": [
-                {"slide": n, "path": str((QA / f"{language}-slide-{n:02d}-390.jpg").relative_to(ROOT)),
-                 "pixels": "390x1463", "sha256": sha(QA / f"{language}-slide-{n:02d}-390.jpg")}
-                for n in REVIEW_SLIDES
-            ],
-            "note": "All 51 silent frames show the unchanged English illustration and exact English source. Only observation framing and a reflection prompt on slides 46–47 carry marked language drafts. Plant-growth observations and management advice remain in English. The word guild is retained. No regional narration or fluent/local farming approval is claimed.",
+            "contactSheet": str(contact_path.relative_to(ROOT)),
+            "phoneSamples": samples,
+            "draftPassageCount": draft_count,
+            "englishHoldCount": hold_count,
+            "note": (f"All {SLIDES} silent frames keep the unchanged English illustration. {draft_count} of {len(passages)} headings and passages are unreviewed machine drafts, each beside its exact English source"
+                     + (f"; {hold_count} remain exact English holds. " if hold_count else "; no English holds remain. ")
+                     + "Species names stay exact, and technical terms such as guild, support plant, mulch and chop-and-drop stay in English inside translated sentences. Optional narration stays exact English. No fluent-speaker, local-farming or translation approval is claimed."),
         }
         (QA / f"{language}-paired-verification.json").write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
-
-    contact = QA / "regional-observation-contact-sheet.jpg"
-    composite.save(contact, quality=92, optimize=True)
-    print(f"Rendered {SLIDES} source-paired stills for each of {', '.join(LANGUAGES)}")
-    print(f"Contact sheet: {contact}")
+        print(f"Rendered {SLIDES} {name} review frames to {output_dir}")
+        print(f"Contact sheet: {contact_path}")
 
 
 if __name__ == "__main__":

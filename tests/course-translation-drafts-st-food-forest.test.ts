@@ -8,186 +8,68 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveDeckLang } from '../lib/course-deck.ts';
 import { resolveNarrationLang } from '../lib/course-audio.ts';
-import { assertKeeps, checkCompleteLessonDraft, draftText } from './regional-full-draft-checks.ts';
+import {
+  FOREST_GUILD_FORBIDDEN_WORDS,
+  FOREST_GUILD_KEPT_TERMS,
+  FOREST_GUILD_NAMES,
+  assertKeeps,
+  assertKeepsTerms,
+  checkCompleteLessonDraft,
+  checkCompleteModuleDraft,
+  checkKeptTerms,
+  checkNamesVerbatim,
+  checkSouthAfricanSesotho,
+  checkSupportPlantTerms,
+  checkThinningKept,
+  draftText,
+  sourceDraftPairs,
+} from './regional-full-draft-checks.ts';
 
-test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz answer', () => {
+// Rewritten 2 October 2026: Food Forest is now a complete Sesotho draft (card, every lesson field and
+// both quizzes in all three lessons), so the old pins on a few translated sentences and on the English
+// holds give way to complete-draft checks. Species names, "support plant", "thinning", numbers, quiz
+// order and correct answers still have to stay exact, and source drift still withdraws the draft.
+test('Food Forest Sesotho draft translates every field and keeps species, support plants and quiz answers', () => {
   const source = COURSE_MODULES.find(module => module.id === 'food-forest');
   assert.ok(source, 'the canonical Food Forest module must remain available');
   const draft = SESOTHO_FOOD_FOREST_DRAFT;
-  assert.equal(draft.id, source.id);
-  assert.equal(draft.language, 'st');
-  assert.equal(draft.reviewStatus, 'machine-draft');
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
   assert.equal(draft.sourceMetadata.category, source.category);
+  checkCompleteModuleDraft(source, draft, 'st', FOREST_GUILD_FORBIDDEN_WORDS.st);
 
+  const pairs = sourceDraftPairs(draft, 'st');
   const nonLatin = /[^\p{Script=Latin}\p{Script=Common}\p{Script=Inherited}\s]/u;
-  const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   const placeholders = (text: string) => text.match(/\{[^{}]+\}/g) ?? [];
-  const holds: string[] = [];
-  const checkPair = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string, path: string) => {
-    assert.equal(pair.sourceEnglish, english, `${path}: keep exact English source`);
-    assert.ok(pair.sesothoDraft.trim(), `${path}: draft or exact-English hold must exist`);
-    assert.ok(['machine-draft', 'hold'].includes(pair.reviewStatus), `${path}: review status must be explicit`);
-    assert.doesNotMatch(pair.sesothoDraft, nonLatin, `${path}: draft must use Latin script`);
-    assert.deepEqual(placeholders(pair.sesothoDraft), placeholders(english), `${path}: preserve placeholders`);
-    assert.deepEqual(numberTokens(pair.sesothoDraft), numberTokens(english), `${path}: preserve numeric claims`);
-    if (pair.reviewStatus === 'hold') {
-      assert.equal(pair.sesothoDraft, english, `${path}: held wording must remain exact English`);
-      holds.push(path);
-    }
-  };
-
-  checkPair(draft.title, source.title, 'module.title');
-  checkPair(draft.description, source.description, 'module.description');
-  assert.equal(draft.lessons.length, source.lessons.length, 'all source lessons must be present');
-  for (const [lessonIndex, lesson] of draft.lessons.entries()) {
-    const original: (typeof source.lessons)[number] = source.lessons[lessonIndex];
-    const path = `lessons[${lessonIndex}] ${original.id}`;
-    assert.equal(lesson.id, original.id, `${path}: IDs and order must match`);
-    if (original.infographicAlt) {
-      assert.ok(lesson.infographicAlt, `${path}: source image description needs a pair`);
-      checkPair(lesson.infographicAlt, original.infographicAlt, `${path}.infographicAlt`);
-    } else assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent image text`);
-    checkPair(lesson.title, original.title, `${path}.title`);
-    checkPair(lesson.body, original.body, `${path}.body`);
-    assert.equal(lesson.body.sesothoDraft.split('\n\n').length, original.body.split('\n\n').length,
-      `${path}.body: keep paragraph boundaries`);
-    if (original.id === 'food-forest-l1') {
-      const sourceParagraphs = original.body.split('\n\n');
-      const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
-      assert.equal(lesson.body.reviewStatus, 'machine-draft');
-      const translatedParagraphs = new Map([
-        [0, 'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.'],
-        [1, 'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.'],
-        // The two descriptive forest-pattern lines now accompany the silent slide; planting advice stays held.
-        [2, 'Food forest e etsisa mokgwa ona ka productive species.'],
-        [3, 'Phello ha se sejalo se le seng moleng o le mong, empa ke mekhahlelo (layers) e mengata e molemo e melang hammoho.'],
-        [4, 'Nahana ka canopy e telele, difate tse nyane, dihlahla le dimela tsa herbaceous.'],
-        [6, 'Bophahamo ba dimela le dibaka tsa ho di jala di itshetlehile ka mofuta wa semela le sebaka. Mekgahlelo ena ke ya ho rala; ha e bolele meedi e behilweng ya bophahamo.'],
-        [7, 'Mohlala wa pele wa Highveld o kenyelletsa Wild Fig kapa pecan tse hodimo ho lemon, naartjie le black mulberry.'],
-        [8, 'Mohlala oo o beha Cape gooseberry le Wild Medlar mmoho le vegetables, wild garlic, sweet potato le granadilla.'],
-        [11, 'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.'],
-      ]);
-      for (const [index, expected] of translatedParagraphs) assert.equal(draftParagraphs[index], expected);
-      sourceParagraphs.forEach((paragraph, index) => {
-        if (!translatedParagraphs.has(index)) assert.equal(draftParagraphs[index], paragraph, `Food Forest L1 paragraph ${index + 1} stays English`);
-      });
-    }
-    if (original.id === 'food-forest-l2') {
-      const sourceParagraphs = original.body.split('\n\n');
-      const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
-      assert.equal(lesson.body.reviewStatus, 'machine-draft');
-      assert.equal(lesson.title.reviewStatus, 'machine-draft', 'retain the already-visible L2 title draft');
-      assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft', 'retain the already-visible L2 image-description draft');
-      assert.deepEqual(lesson.keyPoints.map(point => point.reviewStatus), ['hold', 'hold', 'hold', 'hold'],
-        'retain existing L2 key-point holds');
-      assert.deepEqual(lesson.quiz.map(question => [question.question.reviewStatus, question.options.map(option => option.reviewStatus), question.rationale.reviewStatus]), [
-        ['hold', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
-        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
-      ], 'retain all pre-existing L2 quiz draft and hold statuses');
-      assert.equal(draftParagraphs[9],
-        'Dimela tsa tlhaho (indigenous plants) tse loketseng sebaka di ka tshehetsa habitat e le karolo ya moralo.');
-      sourceParagraphs.forEach((paragraph, index) => {
-        if (index !== 9) assert.equal(draftParagraphs[index], paragraph, `Food Forest L2 paragraph ${index + 1} stays English`);
-      });
-    }
-    if (original.id === 'food-forest-l3') {
-      const sourceParagraphs = original.body.split('\n\n');
-      const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
-      assert.equal(lesson.body.reviewStatus, 'machine-draft');
-      assert.equal(lesson.title.reviewStatus, 'hold', 'retain the existing L3 title hold');
-      assert.equal(lesson.infographicAlt?.reviewStatus, 'hold', 'retain the existing L3 image-description hold');
-      assert.deepEqual(lesson.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'],
-        'retain the already-visible L3 key-point drafts');
-      assert.deepEqual(lesson.quiz.map(question => [question.question.reviewStatus, question.options.map(option => option.reviewStatus), question.rationale.reviewStatus]), [
-        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
-        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
-      ], 'retain all pre-existing L3 quiz draft and hold statuses');
-      assert.equal(draftParagraphs[0],
-        'Qala ka ho hlahloba site, phepelo ya metsi le tlhokomelo e fumanehang. Sireletsa mobu o pepesitsweng esale pele.');
-      assert.equal(draftParagraphs[2],
-        'Difate tsa sehlooho (main trees) le mekgahlelo e ka tlase (lower layers) di ka kenngwa ha maemo a dumela. ' +
-        'Ground cover ha e hloke ho ema ho fihlela qetellong; qoba dimela tse qothisanang le difate tse nyane.');
-      assert.equal(draftParagraphs[3],
-        'Qala ka sebaka seo o ka se nosetsang le ho se hlokomela. Hlahloba dimela tse seng di le teng pele o di tlosa.');
-      assert.equal(draftParagraphs[6],
-        'Sheba kamoo moriti, metso le metsi a fumanehang di amang dimela tse haufi kateng.');
-      assert.equal(draftParagraphs[9],
-        'Kgetha monyetla wa ho lema ha mongobo wa mobu le maemo a lehodimo a lebelletsweng di tshehetsa establishment.');
-      assert.equal(draftParagraphs[10],
-        'Pula e ka thusa, empa hlahloba root zone mme o boloke leano la nosetso la backup. Qoba ho lema mobung o tletseng metsi.');
-      sourceParagraphs.forEach((paragraph, index) => {
-        if (![0, 2, 3, 6, 9, 10].includes(index)) assert.equal(draftParagraphs[index], paragraph, `Food Forest L3 paragraph ${index + 1} stays English`);
-      });
-    }
-    assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: keep key-point count/order`);
-    for (const [pointIndex, point] of lesson.keyPoints.entries()) {
-      checkPair(point, original.keyPoints[pointIndex], `${path}.keyPoints[${pointIndex}]`);
-    }
-    assert.equal(lesson.quiz.length, original.quiz.length, `${path}: keep quiz count/order`);
-    for (const [questionIndex, question] of lesson.quiz.entries()) {
-      const english = original.quiz[questionIndex];
-      const questionPath = `${path}.quiz[${questionIndex}]`;
-      checkPair(question.question, english.q, `${questionPath}.question`);
-      assert.equal(question.options.length, english.options.length, `${questionPath}: keep option count/order`);
-      for (const [optionIndex, option] of question.options.entries()) {
-        checkPair(option, english.options[optionIndex], `${questionPath}.options[${optionIndex}]`);
-      }
-      assert.equal(question.sourceCorrectIndex, english.correct, `${questionPath}: answer index must not change`);
-      assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, english.options[english.correct],
-        `${questionPath}: keyed answer must still match its source`);
-      checkPair(question.rationale, english.rationale, `${questionPath}.rationale`);
-    }
+  for (const [english, text] of pairs) {
+    assert.doesNotMatch(text, nonLatin, `"${english}": the Sesotho draft uses Latin script`);
+    assert.deepEqual(placeholders(text), placeholders(english), `"${english}": placeholders unchanged`);
   }
-
-  assert.deepEqual(holds.filter(path => path.startsWith('lessons[0]')), [
-    'lessons[0] food-forest-l1.infographicAlt',
-    'lessons[0] food-forest-l1.title',
-    'lessons[0] food-forest-l1.quiz[0].rationale',
-    'lessons[0] food-forest-l1.quiz[1].rationale',
-  ], 'uncertain planting, legal, and visually corrected image wording stay exact English');
-  assert.deepEqual(holds.filter(path => path.startsWith('lessons[1]') || path.startsWith('lessons[2]')), [
-    'lessons[1] food-forest-l2.keyPoints[0]',
-    'lessons[1] food-forest-l2.keyPoints[1]',
-    'lessons[1] food-forest-l2.keyPoints[2]',
-    'lessons[1] food-forest-l2.keyPoints[3]',
-    'lessons[1] food-forest-l2.quiz[0].question',
-    'lessons[1] food-forest-l2.quiz[0].rationale',
-    'lessons[1] food-forest-l2.quiz[1].rationale',
-    'lessons[2] food-forest-l3.infographicAlt',
-    'lessons[2] food-forest-l3.title',
-    'lessons[2] food-forest-l3.quiz[0].rationale',
-    'lessons[2] food-forest-l3.quiz[1].rationale',
-  ], 'retain existing holds; the only new drafts are the selected L2/L3 body sentences');
+  assert.ok(checkNamesVerbatim(pairs, FOREST_GUILD_NAMES, 'Sesotho Food Forest') >= 41, 'every species mention checked');
+  assert.ok(checkSupportPlantTerms(pairs, 'Sesotho Food Forest') >= 6, 'support plants and suitable supports checked');
+  assert.ok(checkThinningKept(pairs, 'Sesotho Food Forest') >= 3, 'every thinning mention checked');
+  assert.ok(checkKeptTerms(pairs, FOREST_GUILD_KEPT_TERMS, 'Sesotho Food Forest') >= 33, 'every kept technical term checked');
+  checkSouthAfricanSesotho(pairs, 'Sesotho Food Forest');
   assert.doesNotMatch(source.lessons[0].infographicAlt ?? '', /root crops|seven layers/i,
     'the pictured woody roots and overlapping plant heights cannot support an exact crop or layer count');
-
-  const namesAndClaims = [
-    'Wild Fig', 'pecan', 'lemon', 'naartjie', 'black mulberry', 'Cape gooseberry', 'Wild Medlar',
-    'wild garlic', 'sweet potato', 'granadilla', 'Mango', 'Quince', 'walnut', 'apple', 'pear', 'plum',
-    'loquat', 'rosemary', 'Barbados cherry', 'avocado', 'Natal Mahogany', 'banana', 'pawpaw', 'litchi',
-    'Wild Dagga', 'Marula', 'Mopane', 'baobab', 'Comfrey',
-  ];
-  const heldEnglish = draft.lessons.map(lesson => lesson.body.sesothoDraft).join('\n');
-  for (const name of namesAndClaims) assert.ok(heldEnglish.includes(name), `held source must preserve ${name}`);
+  assert.deepEqual(resolveDeckLang(source.id, 'st'), { lang: 'st', exact: true },
+    'the silent Sesotho deck pairs its unreviewed text with the exact English source');
+  assert.deepEqual(resolveNarrationLang(source.id, 'st'), { lang: 'en', exact: false },
+    'narration stays optional English; no regional audio is published');
 });
 
-test('Sesotho Food Forest site-care draft keeps uncertain material and pruning guidance in English', () => {
+// Rewritten 2 October 2026: the site-care lesson is translated in full instead of holding its material,
+// pruning and timing guidance in English. The conditions that guidance depends on must survive: support
+// plants and thinning stay named in English, cardboard stays under the mulch, and no year is promised.
+test('Sesotho Food Forest site-care draft keeps its support-plant, cardboard, thinning and timing conditions', () => {
   const source = COURSE_MODULES.find(module => module.id === 'food-forest')!;
   const lesson = source.lessons.find(item => item.id === 'food-forest-l3')!;
   const draft = SESOTHO_FOOD_FOREST_DRAFT.lessons.find(item => item.id === lesson.id)!;
-  assert.equal(draft.body.sourceEnglish, lesson.body);
-  const shown = resolveLearnerLessonPresentation(lesson, 'st');
-  assert.equal(shown.status, 'draft');
-  assert.equal(shown.content.body, draft.body.sesothoDraft);
-  assert.equal(draft.body.sesothoDraft.split('\n\n').length, lesson.body.split('\n\n').length);
-  for (const held of [
-    'Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth.',
-    'Prune or thin support plants when needed, using methods suited to each species.',
-    'Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.',
-  ]) assert.ok(draft.body.sesothoDraft.includes(held), `keep meaning-sensitive guidance exact English: ${held}`);
-  assert.match(draft.body.sesothoDraft, /Sireletsa mobu o pepesitsweng esale pele/);
-  assert.match(draft.body.sesothoDraft, /Qoba ho lema mobung o tletseng metsi/);
+  checkCompleteLessonDraft(lesson, draft, 'st');
+  const paragraphs = draftText(draft.body, 'st').split('\n\n');
+  assertKeepsTerms(paragraphs[1], ['support plants'], 'temporary support plants stay named as support plants');
+  assertKeepsTerms(paragraphs[4], ['cardboard', 'mulch'], 'plain cardboard under suitable mulch');
+  assertKeepsTerms(paragraphs[8], ['support plants', 'thinning', 'mulch'], 'prune or thin support plants; cuttings as mulch');
+  assertKeepsTerms(draftText(draft.quiz[1].question, 'st'), ['thinning', 'support plants'], 'the pruning-or-thinning question');
 });
 
 // Rewritten 2 October 2026: the chicken lesson is now a complete Sesotho draft, so the old pins on six

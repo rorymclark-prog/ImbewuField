@@ -1,0 +1,1172 @@
+{
+  "module": "plant-guilds",
+  "language": "ts",
+  "reviewStatus": "unreviewed-machine-draft",
+  "method": "Claude Sonnet drafting, with Claude Opus revision of passages flagged by checks; blind English back-translation by a separate agent that never saw the source; independent semantic checks against the exact English",
+  "items": [
+    {
+      "key": "module.title",
+      "sourceEnglish": "Plant Selection & Guilds",
+      "draft": "Ku Hlawula Swimila ni Guilds",
+      "blindBackTranslation": "Choosing Plants and Guilds"
+    },
+    {
+      "key": "module.description",
+      "sourceEnglish": "Choose useful plant partners, return mulch and manage the guild as trees grow.",
+      "draft": "Hlawula swimila swa vanghana leswi pfunaka, vuyisela mulch u tlhela u lawula guild loko mirhi yi ri karhi yi kula.",
+      "blindBackTranslation": "Choose helpful companion plants, return mulch, and manage the guild while the trees are growing."
+    },
+    {
+      "key": "L1.body.p0",
+      "sourceEnglish": "These bacteria convert nitrogen from the air into forms the legume can use.",
+      "draft": "Bakteriya (bacteria) leti ti hundzuluxa nitrogen leyi humaka emoyeni ku va swivumbeko leswi legume yi nga swi tirhisaka.",
+      "blindBackTranslation": "Bacteria that convert nitrogen from the air into forms that a legume can use."
+    },
+    {
+      "key": "L1.body.p1",
+      "sourceEnglish": "Find nodules on a spare legume plant. Nodulation and growth depend on the plant, suitable bacteria and growing conditions.",
+      "draft": "Kuma nodules eka ximila xa legume lexi nga lavekiki. Nodulation ni ku kula swi titshege hi ximila, bakteriya (bacteria) leti faneleke ni swiyimo swa ku kula.",
+      "blindBackTranslation": "Find nodules on a legume plant that is not needed (unwanted/not required?). Nodulation and growth depend on the plant, the right bacteria and the growing conditions."
+    },
+    {
+      "key": "L1.body.p2",
+      "sourceEnglish": "Return suitable leafy prunings, fallen leaves and crop residues as mulch. Soil organisms release nutrients during decomposition.",
+      "draft": "Vuyisela matluka lama tsemiweke lama faneleke, matluka lama wileke ni swisaleli swa swibyariwa tanihi mulch. Swivumbiwa swa le misaveni swi humesa nutrients hi nkarhi wa decomposition.",
+      "blindBackTranslation": "Return suitable cut leaves, fallen leaves and crop residues as mulch. Things from the soil release nutrients during decomposition."
+    },
+    {
+      "key": "L1.body.p3",
+      "sourceEnglish": "This takes time. A living legume is not an instant fertiliser pipe into the fruit tree.",
+      "draft": "Leswi swi teka nkarhi. Legume leyi hanyaka a hi payipi ya manyoro ya xihatla leyi yaka eka murhi wa mihandzu.",
+      "blindBackTranslation": "This takes time. A living legume is not a fast fertiliser pipe going to a fruit tree."
+    },
+    {
+      "key": "L1.body.p4",
+      "sourceEnglish": "It is indigenous to KwaZulu-Natal. In suitable warm conditions, manage this short-lived shrub or small tree as a support plant.",
+      "draft": "Yi indigenous eka KwaZulu-Natal. Eka swiyimo leswi faneleke swa ku hisa, lawula xihlahla lexi hanyaka nkarhi wo koma kumbe murhi lowuntsongo tanihi support plant.",
+      "blindBackTranslation": "It is indigenous to KwaZulu-Natal. In suitable warm conditions, manage the short-lived shrub or small tree as a support plant."
+    },
+    {
+      "key": "L1.body.p5",
+      "sourceEnglish": "Allow room for its growth. Prune for mulch and reassess it when shade or water competition increases.",
+      "draft": "Siya ndhawu yo kula ka yona. Tsema marhavi ya yona ku endla mulch u tlhela u yi kambisisa nakambe loko ndzhuti kumbe ku phikizana ka mati swi engeteleka.",
+      "blindBackTranslation": "Leave a place for it to grow. Cut its branches to make mulch and check it again when shade or competition for water increases."
+    },
+    {
+      "key": "L1.body.p6",
+      "sourceEnglish": "Sesbania punicea is the invasive red sesbania. Its pods have four lengthwise wings. Confirm identity using reliable botanical guidance.",
+      "draft": "Sesbania punicea i red sesbania leyi invasive. Swikhumba swa yona swa mbewu (pods) swi ni tipapa ta mune leti leha hi ku leha ka xikhumba. Tiyisisa leswaku i xihi hi ku tirhisa botanical guidance leyi tshembekaka.",
+      "blindBackTranslation": "Sesbania punicea is the invasive red sesbania. Its seed pods have four wings running along the length of the pod. Make sure which one it is by using reliable botanical guidance."
+    },
+    {
+      "key": "L1.body.p7",
+      "sourceEnglish": "Check the full name before planting. Respect the agreed project species list, including any restriction on Sesbania sesban.",
+      "draft": "Kambisisa vito hinkwaro ku nga si byala. Xixima project species list leyi pfumeleriweke, ku katsa ni nsivelo wihi na wihi eka Sesbania sesban.",
+      "blindBackTranslation": "Check the full name before planting. Respect the approved project species list, including any restriction on Sesbania sesban."
+    },
+    {
+      "key": "L1.body.p8",
+      "sourceEnglish": "Use a sunny, freely draining position. It is a short-lived support shrub; frost and waterlogging can limit it.",
+      "draft": "Tirhisa ndhawu leyi nga ni dyambu laha mati ma hundzaka kahle ekhatsi ka misava. I support shrub leyi hanyaka nkarhi wo koma; xiqhwa (frost) ni ku yima ka mati emisaveni swi nga yi hunguta ku kula.",
+      "blindBackTranslation": "Use a sunny place where water drains well through the soil. It is a short-lived support shrub; frost and standing water in the soil can reduce its growth."
+    },
+    {
+      "key": "L1.body.p9",
+      "sourceEnglish": "Decide whether each plant mainly supplies peas or leafy material. Frequent severe cutting can damage it and reduce the food harvest.",
+      "draft": "Endla xiboho xa leswaku ximila xin'wana ni xin'wana xi ta nyika tinyawa (peas) hi ku tala kumbe swilo swa matluka. Ku xi tsema hi matimba minkarhi yo tala swi nga xi onha, swi tlhela swi hunguta ntshovelo wa swakudya.",
+      "blindBackTranslation": "Decide whether each plant will mainly give peas or leaf material. Cutting it hard many times can damage it and also reduce the food harvest."
+    },
+    {
+      "key": "L1.body.p10",
+      "sourceEnglish": "Cowpea covers sunny gaps. Pigeon pea provides food and leafy material. Managed Sesbania sesban can supply taller temporary support.",
+      "draft": "Cowpea yi funengeta tindhawu leti pfulekeke leti nga ni dyambu. Pigeon pea yi nyika swakudya ni swilo swa matluka. Sesbania sesban leyi lawuriweke yi nga nyika support plant ya nkarhi wo koma leyi leheke ku tlula swin'wana.",
+      "blindBackTranslation": "Cowpea covers open sunny areas. Pigeon pea provides food and leaf material. A managed Sesbania sesban can provide a short-lived support plant that is taller than others."
+    },
+    {
+      "key": "L1.body.p11",
+      "sourceEnglish": "Add suitable flowering and mulch plants. Keep the mango trunk clear and manage light, water and access.",
+      "draft": "Engetela swimila leswi faneleke leswi nga ni swiluva ni swimila swa mulch. Hlayisa nsinya wa murhi wa mango (trunk) wu nga ri na nchumu, u lawula ku vonakala ka dyambu, mati ni ndlela yo fikelela.",
+      "blindBackTranslation": "Add suitable flowering plants and mulch plants. Keep the trunk of the mango tree clear (trunk), controlling sunlight, water and access."
+    },
+    {
+      "key": "L1.body.p12",
+      "sourceEnglish": "Count woody supports across the spaces between fruit trees. Sow suitable ground cover by area.",
+      "draft": "Hlaya nhlayo ya support plants leti nga swa khuni (woody) leti nga eka tindhawu hinkwato exikarhi ka mirhi ya mihandzu. Byala swimila leswi funengetaka misava leswi faneleke hi ku ya hi vukulu bya ndhawu.",
+      "blindBackTranslation": "Count the number of woody support plants in all the spaces between the fruit trees. Plant suitable ground-covering plants according to the size of the space."
+    },
+    {
+      "key": "L1.body.p13",
+      "sourceEnglish": "There is no universal number per fruit tree. Adjust density to water, soil, plant size and your ability to prune and thin.",
+      "draft": "A ku na nhlayo yin'we leyi tirhaka hinkwako eka murhi wa mihandzu wun'wana ni wun'wana. Cinca support density hi ku ya hi mati, misava, vukulu bya swimila ni vuswikoti bya wena bya ku tsema marhavi ni ku endla thinning.",
+      "blindBackTranslation": "There is no single number that works everywhere for every fruit tree. Change the support density according to water, soil, plant size and your ability to cut branches and do thinning."
+    },
+    {
+      "key": "L1.infographicAlt",
+      "sourceEnglish": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "draft": "Xifaniso xa ku dyondzisa lexi kombisaka mianakanyo ya guild; tiyisisa leswaku i ximila xihi hi ku tirhisa botanical guidance leyi tshembekaka.",
+      "blindBackTranslation": "A teaching picture showing guild ideas; make sure which plant it is by using reliable botanical guidance."
+    },
+    {
+      "key": "L1.title",
+      "sourceEnglish": "Nitrogen Fixers: Choose and Manage Support Plants",
+      "draft": "Nitrogen Fixers: Hlawula ni ku Lawula Support Plants",
+      "blindBackTranslation": "Nitrogen Fixers: Choosing and Managing Support Plants"
+    },
+    {
+      "key": "L1.keyPoint0",
+      "sourceEnglish": "Legumes work with rhizobia in root nodules; fixation depends on suitable conditions.",
+      "draft": "Legumes ti tirha ni rhizobia eka nodules ya timitsu; nitrogen fixation yi titshege hi swiyimo leswi faneleke.",
+      "blindBackTranslation": "Legumes work with rhizobia in the nodules of the roots; nitrogen fixation depends on suitable conditions."
+    },
+    {
+      "key": "L1.keyPoint1",
+      "sourceEnglish": "Return useful cut material to the soil; nutrient release takes time.",
+      "draft": "Vuyisela swilo leswi tsemiweke leswi pfunaka emisaveni; ku humesiwa ka nutrients ku teka nkarhi.",
+      "blindBackTranslation": "Return the cut things that help to the soil; the release of nutrients takes time."
+    },
+    {
+      "key": "L1.keyPoint2",
+      "sourceEnglish": "Use suitable seasonal cover, support shrubs and temporary trees.",
+      "draft": "Tirhisa swimila swo funengeta swa minkarhi ya lembe leswi faneleke, support shrubs ni mirhi ya nkarhi wo koma.",
+      "blindBackTranslation": "Use suitable seasonal cover plants, support shrubs and short-lived trees."
+    },
+    {
+      "key": "L1.keyPoint3",
+      "sourceEnglish": "Manage support density as plants grow; there is no universal count per fruit tree.",
+      "draft": "Lawula support density loko swimila swi ri karhi swi kula; a ku na nhlayo yin'we leyi tirhaka hinkwako eka murhi wa mihandzu wun'wana ni wun'wana.",
+      "blindBackTranslation": "Manage support density as the plants grow; there is no single number that works everywhere for every fruit tree."
+    },
+    {
+      "key": "L1.quiz0.question",
+      "sourceEnglish": "When does nitrogen in cut legume material become available to other plants?",
+      "draft": "Nitrogen leyi nga eka swilo swa legume leswi tsemiweke yi kumeka rini eka swimila swin'wana?",
+      "blindBackTranslation": "When does the nitrogen in cut legume material become available to other plants?"
+    },
+    {
+      "key": "L1.quiz0.option0",
+      "sourceEnglish": "Immediately when it is cut",
+      "draft": "Hi ku hatlisa loko yi tsemiwa",
+      "blindBackTranslation": "Quickly when it is cut"
+    },
+    {
+      "key": "L1.quiz0.option1",
+      "sourceEnglish": "As soil organisms decompose the material",
+      "draft": "Loko swivumbiwa swa le misaveni swi endla decomposition ya swilo leswi",
+      "blindBackTranslation": "When the living things of the soil do decomposition of these things"
+    },
+    {
+      "key": "L1.quiz0.option2",
+      "sourceEnglish": "Only when the fruit tree touches the legume",
+      "draft": "Ntsena loko murhi wa mihandzu wu khumba legume",
+      "blindBackTranslation": "Only when the fruit tree touches the legume"
+    },
+    {
+      "key": "L1.quiz0.option3",
+      "sourceEnglish": "It can never become available",
+      "draft": "A yi nge he yi kumeka nikatsongo",
+      "blindBackTranslation": "It will never be found at all"
+    },
+    {
+      "key": "L1.quiz0.rationale",
+      "sourceEnglish": "Decomposition releases nutrients over time. The rate depends on the material and growing conditions.",
+      "draft": "Decomposition yi humesa nutrients hi ku famba ka nkarhi. Ku hatlisa ka kona ku titshege hi swilo leswi swi volaka ni swiyimo swa ku kula.",
+      "blindBackTranslation": "Decomposition releases nutrients over time. How fast it is depends on the things that rot and on the growing conditions."
+    },
+    {
+      "key": "L1.quiz1.question",
+      "sourceEnglish": "What should decide how many support plants you establish?",
+      "draft": "I yini leyi faneleke ku endla xiboho xa nhlayo ya support plants leyi u yi byalaka?",
+      "blindBackTranslation": "What must make the decision of the number of support plants that you plant?"
+    },
+    {
+      "key": "L1.quiz1.option0",
+      "sourceEnglish": "The same fixed number at every site",
+      "draft": "Nhlayo yin'we leyi nga cinciki eka ndhawu yin'wana ni yin'wana",
+      "blindBackTranslation": "One number that does not change in every place"
+    },
+    {
+      "key": "L1.quiz1.option1",
+      "sourceEnglish": "Water, soil, plant size and the care you can provide",
+      "draft": "Mati, misava, vukulu bya swimila ni ku khathalela loku u kotaka ku ku endla",
+      "blindBackTranslation": "Water, soil, plant size and the care that you are able to give"
+    },
+    {
+      "key": "L1.quiz1.option2",
+      "sourceEnglish": "Always placing every support uphill",
+      "draft": "Minkarhi hinkwayo ku veka support plant yin'wana ni yin'wana endhawini leyi nga ehenhla loko u tlhandlukela",
+      "blindBackTranslation": "Always, to put each support plant in a place that is above when you go uphill"
+    },
+    {
+      "key": "L1.quiz1.option3",
+      "sourceEnglish": "Planting as many trees as will physically fit",
+      "draft": "Ku byala mirhi yo tala hilaha ndhawu yi nga yi kotaka hakona",
+      "blindBackTranslation": "Planting as many trees as the place can take"
+    },
+    {
+      "key": "L1.quiz1.rationale",
+      "sourceEnglish": "Support plants need resources and management too. Observe growth and competition, then adjust.",
+      "draft": "Support plants na tona ti lava swihlovo ni ku lawuriwa. Languta ku kula ni ku phikizana, kutani u cinca.",
+      "blindBackTranslation": "Support plants also need resources and management. Watch the growth and competition, then adjust."
+    },
+    {
+      "key": "L2.body.p0",
+      "sourceEnglish": "The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.",
+      "draft": "Vhidiyo yi kombisa ku tsemiwa ka rhavi: support tree yi sala yi yimile. Siya matluka lama hanyaka lama ringaneke leswaku ximila xi tlhela xi tiyisa.",
+      "blindBackTranslation": "The video shows cutting a branch: the support tree remains standing. Leave enough living leaves so that the plant can recover and strengthen again."
+    },
+    {
+      "key": "L2.body.p1",
+      "sourceEnglish": "Match cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas.",
+      "draft": "Tsema hi ku ya hi muxaka wa ximila. Papalata ku tsema hi matimba minkarhi yo tala eka pigeon pea, ngopfu-ngopfu loko u yi byala leswaku u kuma tinyawa (peas).",
+      "blindBackTranslation": "Cut according to the type of plant. Avoid hard cutting many times on pigeon pea, especially when you plant it to get peas."
+    },
+    {
+      "key": "L2.body.p2",
+      "sourceEnglish": "Mulch protects the surface, helps conserve moisture and returns organic material.",
+      "draft": "Mulch wu sirhelela misava ya le henhla, wu pfuna ku hlayisa ku tsakama ka misava naswona wu vuyisela swilo leswi humaka eka swilo leswi hanyaka.",
+      "blindBackTranslation": "Mulch protects the topsoil, helps to keep the moisture (wetness) of the soil, and returns things that come from living things (to the soil)."
+    },
+    {
+      "key": "L2.body.p3",
+      "sourceEnglish": "Leave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition.",
+      "draft": "Siya ndlela yo fikelela ya ku cheleta mati ni ya ku kambisisa. Tsema swilo swi va swiphemu leswi swi nga khomekaka, u tlhela u ya emahlweni u languta ku tsakama ka misava ni decomposition.",
+      "blindBackTranslation": "These are the ways to reach (arrive at) pouring water and checking/examining. Cut things into parts that can be handled (held/managed), and go on to look at the looseness (softness/crumbliness) of the soil and decomposition."
+    },
+    {
+      "key": "L2.body.p4",
+      "sourceEnglish": "Obtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.",
+      "draft": "Kuma cultivar leyi lulameke. Bocking 14 a yi hangalali hi viable seed, kambe swiphemu swa timitsu swi nga mila nakambe.",
+      "blindBackTranslation": "Find a suitable cultivar. Bocking 14 does not spread by viable seed, but pieces of root can grow again."
+    },
+    {
+      "key": "L2.body.p5",
+      "sourceEnglish": "Place it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree.",
+      "draft": "Yi veke laha yi nga ni ndhawu ni ku tsakama ka misava loku ringaneke. Tsema matluka loko yi ri karhi yi tlhela yi tiyisa; u nga yi tshiki yi phikizana ni murhi wa mihandzu lowuntshwa.",
+      "blindBackTranslation": "Put it where it has enough space and soil moisture. Cut the leaves while it is growing and getting strong; do not let it compete with the young fruit tree."
+    },
+    {
+      "key": "L2.body.p6",
+      "sourceEnglish": "Many ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.",
+      "draft": "Ladybirds to tala ti dya aphids; parasitoid wasps tin'wana ti hlasela switsotswana leswi onhaka swibyariwa (pests). Swimila leswi nga ni swiluva ku fana ni African basil swi nga engetela swihlovo.",
+      "blindBackTranslation": "Many ladybirds eat aphids; some parasitoid wasps attack insects that damage crops (pests). Plants that have flowers, like African basil, can add (food) sources."
+    },
+    {
+      "key": "L2.body.p7",
+      "sourceEnglish": "Watch which insects visit and whether damage changes. A flowering plant does not guarantee pest control.",
+      "draft": "Languta switsotswana (insects) leswi endzelaka ni loko ku onhaka ku cinca. Ximila lexi nga ni swiluva a xi tiyisekisi ku lawula switsotswana leswi onhaka swibyariwa (pests).",
+      "blindBackTranslation": "Watch for insects that visit, and when damage changes. A plant that has flowers does not guarantee control of insects that damage crops (pests)."
+    },
+    {
+      "key": "L2.body.p8",
+      "sourceEnglish": "Tulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.",
+      "draft": "Tulbaghia violacea yi ni matluka lama nga anamangiki ni swiluva leswi nga ni muhlovo wa lilac. Veka xihlopha xa swimila swa yona laha xi nga ni ku vonakala ka dyambu ni ndhawu yo kula.",
+      "blindBackTranslation": "Tulbaghia violacea has leaves that are not spreading and flowers that are lilac in colour. Place a group of its plants where it has sunlight and room to grow."
+    },
+    {
+      "key": "L2.body.p9",
+      "sourceEnglish": "Observe visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak.",
+      "draft": "Languta switsotswana (insects) leswi endzelaka. U nga tshembisi leswaku xirhendzevutani xa wild garlic xi ta hlongola switsotswana leswi onhaka swibyariwa (pests) kumbe ku herisa ku hangalala ka swona.",
+      "blindBackTranslation": "Watch for insects that visit. Do not promise that a wild garlic border/hedge will drive away insects that damage crops (pests) or stop their spreading."
+    },
+    {
+      "key": "L2.infographicAlt",
+      "sourceEnglish": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "draft": "Xifaniso xa ku dyondzisa lexi kombisaka mianakanyo ya guild; tiyisisa leswaku i ximila xihi hi ku tirhisa botanical guidance leyi tshembekaka.",
+      "blindBackTranslation": "A teaching picture showing guild ideas; make sure which plant it is by using reliable botanical guidance."
+    },
+    {
+      "key": "L2.title",
+      "sourceEnglish": "Mulch Plants and Helpful Insects",
+      "draft": "Swimila swa Mulch ni Switsotswana (insects) swo Pfuna",
+      "blindBackTranslation": "Mulch plants and helpful insects"
+    },
+    {
+      "key": "L2.keyPoint0",
+      "sourceEnglish": "Pruning cuts branches while keeping the support plant.",
+      "draft": "Ku tsema marhavi swi vula ku tsema marhavi ya support plant ku ri karhi yi hlayisiwa.",
+      "blindBackTranslation": "Cutting branches means cutting the branches of a support plant while it is kept/preserved [i.e. the plant is kept alive]."
+    },
+    {
+      "key": "L2.keyPoint1",
+      "sourceEnglish": "Return suitable cut leaves as mulch while keeping the trunk clear.",
+      "draft": "Vuyisela matluka lama tsemiweke lama faneleke tanihi mulch, u siya nsinya wa murhi (trunk) wu nga ri na nchumu.",
+      "blindBackTranslation": "Return suitable cut leaves as mulch, leaving the tree trunk clear."
+    },
+    {
+      "key": "L2.keyPoint2",
+      "sourceEnglish": "Bocking 14 does not spread by viable seed, but root pieces can regrow.",
+      "draft": "Bocking 14 a yi hangalali hi viable seed, kambe swiphemu swa timitsu swi nga mila nakambe.",
+      "blindBackTranslation": "Bocking 14 does not spread by viable seed, but pieces of root can grow again."
+    },
+    {
+      "key": "L2.keyPoint3",
+      "sourceEnglish": "Flowering plants can support useful insects; watch actual visits and crop damage.",
+      "draft": "Swimila leswi nga ni swiluva swi nga pfuna switsotswana (insects) swo pfuna; languta leswi swi endzelaka hakunene ni ku onhaka ka swibyariwa.",
+      "blindBackTranslation": "Plants that have flowers can help helpful insects; watch what they actually visit and the damage to crops."
+    },
+    {
+      "key": "L2.quiz0.question",
+      "sourceEnglish": "What does the branch-cutting clip show?",
+      "draft": "Vhidiyo ya ku tsema rhavi yi kombisa yini?",
+      "blindBackTranslation": "What does the video of cutting a branch show?"
+    },
+    {
+      "key": "L2.quiz0.option0",
+      "sourceEnglish": "Removing the whole support tree",
+      "draft": "Ku susa support tree hinkwayo",
+      "blindBackTranslation": "Removing the whole support tree"
+    },
+    {
+      "key": "L2.quiz0.option1",
+      "sourceEnglish": "Pruning a retained support tree for light and mulch",
+      "draft": "Ku tsema marhavi ya support tree leyi hlayisiweke ku kuma dyambu ni mulch",
+      "blindBackTranslation": "Cutting the branches of a support tree that is kept, to get sun and mulch"
+    },
+    {
+      "key": "L2.quiz0.option2",
+      "sourceEnglish": "Harvesting the fruit tree",
+      "draft": "Ku tshovela mihandzu eka murhi wa mihandzu",
+      "blindBackTranslation": "Harvesting fruit from the fruit tree"
+    },
+    {
+      "key": "L2.quiz0.option3",
+      "sourceEnglish": "Proof that root competition has stopped",
+      "draft": "Vumbhoni bya leswaku ku phikizana ka timitsu ku herile",
+      "blindBackTranslation": "Evidence that competition of roots has ended"
+    },
+    {
+      "key": "L2.quiz0.rationale",
+      "sourceEnglish": "A branch falls, while the support tree remains standing. That is pruning and chop-and-drop.",
+      "draft": "Rhavi ri wa, kasi support tree yi sala yi yimile. Leswi i ku tsema marhavi ni chop-and-drop.",
+      "blindBackTranslation": "The branch falls, while the support tree remains standing. This is branch cutting and chop-and-drop."
+    },
+    {
+      "key": "L2.quiz1.question",
+      "sourceEnglish": "How should you assess flowering plants used to support helpful insects?",
+      "draft": "U fanele ku kambisisa njhani swimila leswi nga ni swiluva leswi tirhisiwaka ku pfuna switsotswana (insects) swo pfuna?",
+      "blindBackTranslation": "How should you check flowering plants that are used to help helpful insects?"
+    },
+    {
+      "key": "L2.quiz1.option0",
+      "sourceEnglish": "Assume they will eliminate pests",
+      "draft": "Ku ehleketa leswaku swi ta herisa switsotswana leswi onhaka swibyariwa (pests)",
+      "blindBackTranslation": "Thinking/assuming that it will get rid of insects that damage crops (pests)"
+    },
+    {
+      "key": "L2.quiz1.option1",
+      "sourceEnglish": "Observe insect visitors and changes in crop damage",
+      "draft": "Languta switsotswana (insects) leswi endzelaka ni ku cinca ka ku onhaka ka swibyariwa",
+      "blindBackTranslation": "Watch for insects that visit and changes in damage to crops."
+    },
+    {
+      "key": "L2.quiz1.option2",
+      "sourceEnglish": "Remove all flowers before they open",
+      "draft": "Susa swiluva hinkwaswo swi nga si pfuleka",
+      "blindBackTranslation": "Remove all the flowers before they open"
+    },
+    {
+      "key": "L2.quiz1.option3",
+      "sourceEnglish": "Count every flowering plant as a nitrogen fixer",
+      "draft": "Hlaya ximila xin'wana ni xin'wana lexi nga ni swiluva tanihi nitrogen fixer",
+      "blindBackTranslation": "Count every plant that has flowers as a nitrogen fixer"
+    },
+    {
+      "key": "L2.quiz1.rationale",
+      "sourceEnglish": "Flowers can supply resources, but their presence does not guarantee pest control.",
+      "draft": "Swiluva swi nga nyika swihlovo, kambe ku va kona ka swona a ku tiyisekisi ku lawula switsotswana leswi onhaka swibyariwa (pests).",
+      "blindBackTranslation": "Flowers can provide (food) sources, but their presence does not guarantee control of insects that damage crops (pests)."
+    },
+    {
+      "key": "L3.body.p0",
+      "sourceEnglish": "Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Some plants serve several functions.",
+      "draft": "Hlanganisa support functions leswi ndhawu ya wena yi swi lavaka: nitrogen fixation, swakudya, mulch, swiluva ni swimila leswi funengetaka misava. Swimila swin'wana swi endla mintirho yo hlayanyana.",
+      "blindBackTranslation": "Combine the support functions that your site needs: nitrogen fixation, food, mulch, flowers and ground-covering plants. Some plants perform several functions."
+    },
+    {
+      "key": "L3.body.p1",
+      "sourceEnglish": "Keep the trunk area and path open. Reassess each member as the mango and its neighbours grow.",
+      "draft": "Siya ndhawu leyi rhendzeleke nsinya wa murhi (trunk) ni ndlela swi pfulekile. Kambisisa nakambe ximila xin'wana ni xin'wana loko mango ni swimila leswi nga ekusuhi na yona swi ri karhi swi kula.",
+      "blindBackTranslation": "Leave the area around the tree trunk and the path open. Check again each plant when the mango and nearby plants are growing."
+    },
+    {
+      "key": "L3.body.p2",
+      "sourceEnglish": "Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.",
+      "draft": "Hlayisa marhavi ya yona (vines) ma ri ekule ni murhi wa mihandzu lowuntshwa, u tlhela u siya ndlela yo khathalela. Timitsu ta yona na tona ti tirhisa mati ni nutrients.",
+      "blindBackTranslation": "Keep its branches (vines) away from the young fruit tree, and leave a way to tend it. Its roots also use water and nutrients."
+    },
+    {
+      "key": "L3.body.p3",
+      "sourceEnglish": "Where resources are tight, compare living cover with an ordinary mulch basin.",
+      "draft": "Laha swihlovo swi nga ringani, pimanisa swimila leswi funengetaka misava leswi hanyaka ni mulch basin ya ntolovelo.",
+      "blindBackTranslation": "Where resources are insufficient, compare living ground-covering plants with an ordinary mulch basin."
+    },
+    {
+      "key": "L3.body.p4",
+      "sourceEnglish": "Plant into a suitable season, mulch and maintain establishment water. Keep the access gap open.",
+      "draft": "Byala hi nkarhi lowu faneleke, veka mulch u tlhela u hlayisa ku cheleta mati hi nkarhi wo sungula ku mila endzhaku ka ku byala (establishment). Siya ndhawu yo fikelela yi pfulekile.",
+      "blindBackTranslation": "Plant at a suitable time, put on mulch and keep up watering during the early growth period after planting (establishment). Leave the access area open."
+    },
+    {
+      "key": "L3.body.p5",
+      "sourceEnglish": "Start with the number of support plants you can care for. Observe survival and growth before adding more.",
+      "draft": "Sungula hi nhlayo ya support plants leyi u nga kotaka ku yi khathalela. Languta ku hanya ni ku kula ku nga si engetela swin'wana.",
+      "blindBackTranslation": "Start with a number of support plants that you can care for. Watch survival and growth before adding others."
+    },
+    {
+      "key": "L3.body.p6",
+      "sourceEnglish": "Cut down selected competing supports to open space. Suitable cut material can stay as mulch: this is thinning through chop-and-drop.",
+      "draft": "Tsema ehansi support plants leti phikizanaka leti hlawuriweke ku pfula ndhawu. Swilo leswi tsemiweke leswi faneleke swi nga sala tanihi mulch: leswi i thinning hi chop-and-drop.",
+      "blindBackTranslation": "Cut down competing support plants that are chosen to open space. Suitable cut things can remain as mulch: this is thinning by chop-and-drop."
+    },
+    {
+      "key": "L3.body.p7",
+      "sourceEnglish": "Manage regrowth to keep the opening. Check light, soil moisture and growth; thinning does not instantly stop root competition.",
+      "draft": "Lawula ku mila nakambe ku hlayisa ndhawu leyi pfuleke. Kambisisa ku vonakala ka dyambu, ku tsakama ka misava ni ku kula; thinning a yi herisi hi ku hatlisa-hatlisa ku phikizana ka timitsu.",
+      "blindBackTranslation": "Manage regrowth to keep the area open. Check sunlight, soil moisture and growth; thinning does not quickly end competition between roots."
+    },
+    {
+      "key": "L3.body.p8",
+      "sourceEnglish": "Carry useful prunings back to established trees. Keep nearby plants only where they still perform well.",
+      "draft": "Rhwala swilo leswi tsemiweke leswi pfunaka u swi tlherisela eka mirhi leyi simekeke. Hlayisa swimila leswi nga ekusuhi ntsena laha swi ha tirhaka kahle kona.",
+      "blindBackTranslation": "Carry the useful cut material and return it to the established trees. Keep nearby plants only where they are still working well."
+    },
+    {
+      "key": "L3.body.p9",
+      "sourceEnglish": "Mature fruit trees still need nutrients. Monitor growth, harvest and soil conditions; support plants do not remove that need.",
+      "draft": "Mirhi ya mihandzu leyi kuleke yi ha lava nutrients. Languta ku kula, ntshovelo ni swiyimo swa misava; support plants a swi susi xilaveko lexi.",
+      "blindBackTranslation": "Grown fruit trees still need nutrients. Watch growth, harvest and soil conditions; support plants do not remove this need."
+    },
+    {
+      "key": "L3.body.p10",
+      "sourceEnglish": "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.",
+      "draft": "Kambisisa ku kula ka murhi wa mihandzu, ndzhuti, ku tsakama ka misava, ntshovelo wo pfuna ni ku onhiwa hi switsotswana leswi onhaka swibyariwa (pests). Tsala leswi tsemiweke, leswi vuyiseriweke kumbe leswi susiweke.",
+      "blindBackTranslation": "Check the growth of the fruit tree, shade, soil moisture, helpful harvest and damage by small creatures that damage crops (pests). Write down what has been cut, what has been returned, or what has been removed."
+    },
+    {
+      "key": "L3.body.p11",
+      "sourceEnglish": "Use these observations to change the layout and care. A plant earns its place through what it does here.",
+      "draft": "Tirhisa leswi u swi voneke ku cinca ndlela leyi swimila swi vekiwaka ha yona ni ndlela leyi u swi khathalelaka ha yona. Ximila xi kuma ndhawu ya xona hi leswi xi swi endlaka laha.",
+      "blindBackTranslation": "Use what you have seen to change how the plants are placed and how you care for them. A plant gets its place by what it does here."
+    },
+    {
+      "key": "L3.infographicAlt",
+      "sourceEnglish": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "draft": "Xifaniso xa ku dyondzisa lexi kombisaka mianakanyo ya guild; tiyisisa leswaku i ximila xihi hi ku tirhisa botanical guidance leyi tshembekaka.",
+      "blindBackTranslation": "A teaching picture showing guild ideas; make sure which plant it is by using reliable botanical guidance."
+    },
+    {
+      "key": "L3.title",
+      "sourceEnglish": "Build a Guild and Adjust It as It Grows",
+      "draft": "Aka Guild u yi Cinca Loko yi Ri Karhi yi Kula",
+      "blindBackTranslation": "Build the Guild and Change It While It Is Growing"
+    },
+    {
+      "key": "L3.keyPoint0",
+      "sourceEnglish": "Give each plant a useful role while protecting the fruit tree's space.",
+      "draft": "Nyika ximila xin'wana ni xin'wana ntirho wo pfuna, u ri karhi u sirhelela ndhawu ya murhi wa mihandzu.",
+      "blindBackTranslation": "Give each plant a helpful job, while protecting the area of the fruit tree."
+    },
+    {
+      "key": "L3.keyPoint1",
+      "sourceEnglish": "Living ground cover also competes for water and nutrients.",
+      "draft": "Swimila leswi funengetaka misava leswi hanyaka na swona swi phikizana ku kuma mati ni nutrients.",
+      "blindBackTranslation": "Living ground-covering plants also compete for water and nutrients."
+    },
+    {
+      "key": "L3.keyPoint2",
+      "sourceEnglish": "Thin selected whole support plants when pruning no longer gives enough room.",
+      "draft": "Endla thinning hi ku susa hi ku helela support plants leti hlawuriweke loko ku tsema marhavi ku nga ha nyiki ndhawu leyi ringaneke.",
+      "blindBackTranslation": "Do thinning by removing completely the support plants that were chosen when cutting branches does not give enough space."
+    },
+    {
+      "key": "L3.keyPoint3",
+      "sourceEnglish": "Suitable cut biomass can stay as mulch; manage regrowth to retain the opening.",
+      "draft": "Biomass leyi tsemiweke leyi faneleke yi nga sala tanihi mulch; lawula ku mila nakambe ku hlayisa ndhawu leyi pfuleke.",
+      "blindBackTranslation": "Biomass that is cut that is suitable can remain as mulch; manage regrowth to keep the open place."
+    },
+    {
+      "key": "L3.quiz0.question",
+      "sourceEnglish": "A support plant still crowds the mango after pruning. What can thinning involve?",
+      "draft": "Support plant yi ha phikizana ni mango endzhaku ka ku tsema marhavi. Thinning yi nga katsa yini?",
+      "blindBackTranslation": "A support plant is still competing with the mango after cutting of branches. What can thinning include?"
+    },
+    {
+      "key": "L3.quiz0.option0",
+      "sourceEnglish": "Only cutting another small twig",
+      "draft": "Ku tsema ntsena rhavi rin'wana ro tsongo",
+      "blindBackTranslation": "Cutting only one small branch"
+    },
+    {
+      "key": "L3.quiz0.option1",
+      "sourceEnglish": "Cutting down a selected competing support and managing regrowth",
+      "draft": "Ku tsema ehansi support plant leyi phikizanaka leyi hlawuriweke ni ku lawula ku mila nakambe",
+      "blindBackTranslation": "Cutting down the competing support plant that is chosen and managing regrowth"
+    },
+    {
+      "key": "L3.quiz0.option2",
+      "sourceEnglish": "Removing the mango instead",
+      "draft": "Ku susa mango ematshan'wini ya sweswo",
+      "blindBackTranslation": "Removing the mango instead of that"
+    },
+    {
+      "key": "L3.quiz0.option3",
+      "sourceEnglish": "Always carrying all cut biomass off the site",
+      "draft": "Minkarhi hinkwayo ku rhwala biomass hinkwayo leyi tsemiweke u yi susa endhawini",
+      "blindBackTranslation": "Always carrying all the biomass that is cut and removing it from the place"
+    },
+    {
+      "key": "L3.quiz0.rationale",
+      "sourceEnglish": "Thinning reduces selected standing support plants. Suitable cut material may stay as mulch.",
+      "draft": "Thinning yi hunguta support plants leti yimeke leti hlawuriweke. Swilo leswi tsemiweke leswi faneleke swi nga sala tanihi mulch.",
+      "blindBackTranslation": "Thinning reduces support plants that are standing that are chosen. Suitable cut things can remain as mulch."
+    },
+    {
+      "key": "L3.quiz1.question",
+      "sourceEnglish": "Is sweet potato always better than a mulch basin around a young fruit tree?",
+      "draft": "Xana sweet potato minkarhi hinkwayo yi antswa ku tlula mulch basin leyi rhendzeleke murhi wa mihandzu lowuntshwa?",
+      "blindBackTranslation": "Is sweet potato always better than a mulch basin around a young fruit tree?"
+    },
+    {
+      "key": "L3.quiz1.option0",
+      "sourceEnglish": "Yes, because it never uses water",
+      "draft": "Ina, hikuva a yi tirhisi mati nikatsongo",
+      "blindBackTranslation": "Yes, because it does not use any water"
+    },
+    {
+      "key": "L3.quiz1.option1",
+      "sourceEnglish": "Yes, because it fixes nitrogen",
+      "draft": "Ina, hikuva yi endla nitrogen fixation",
+      "blindBackTranslation": "Yes, because it does nitrogen fixation"
+    },
+    {
+      "key": "L3.quiz1.option2",
+      "sourceEnglish": "No; compare its food and cover benefits with competition for resources",
+      "draft": "Ee-e; pimanisa mpfuno wa swakudya ni wa ku funengeta loku yi ku nyikaka ni ku phikizana ku kuma swihlovo",
+      "blindBackTranslation": "No; compare the food and cover support it gives with the competition for resources."
+    },
+    {
+      "key": "L3.quiz1.option3",
+      "sourceEnglish": "No, because no ground cover can ever be useful",
+      "draft": "Ee-e, hikuva a ku na swimila leswi funengetaka misava leswi nga pfunaka nikatsongo",
+      "blindBackTranslation": "No, because there are no ground-covering plants that help at all."
+    },
+    {
+      "key": "L3.quiz1.rationale",
+      "sourceEnglish": "Choose cover for the site. Keep access and the trunk area clear, and observe the young tree.",
+      "draft": "Hlawula swimila leswi funengetaka leswi faneleke ndhawu. Hlayisa ndlela yo fikelela ni ndhawu leyi rhendzeleke nsinya wa murhi (trunk) swi nga ri na nchumu, u languta murhi lowuntshwa.",
+      "blindBackTranslation": "Choose covering plants (ground covers) that suit the place. Keep access and the area around the tree trunk clear (empty), looking after the young tree."
+    },
+    {
+      "key": "slide.s1.h",
+      "sourceEnglish": "Plant Selection and Guilds",
+      "draft": "Ku Hlawula Swimila na Guilds",
+      "blindBackTranslation": "Choosing Plants and Guilds"
+    },
+    {
+      "key": "slide.s1.b0",
+      "sourceEnglish": "Choose plants that work together—and change the planting as it grows.",
+      "draft": "Hlawula swimila leswi tirhaka swin'we—kutani u cinca ku byala loko swi ya swi kula.",
+      "blindBackTranslation": "Choose plants that work together—and then change the planting as they keep growing."
+    },
+    {
+      "key": "slide.s2.h",
+      "sourceEnglish": "Plant Selection and Guilds",
+      "draft": "Ku Hlawula Swimila na Guilds",
+      "blindBackTranslation": "Choosing Plants and Guilds"
+    },
+    {
+      "key": "slide.s2.b0",
+      "sourceEnglish": "A fruit tree needs light, water, soil nutrients and room. Support plants can supply food, leafy mulch, flowers and living cover.  Give each plant a useful job. Keep observing whether it helps the tree and the household. Which jobs does your planting need?",
+      "draft": "Murhi wa mihandzu wu lava ku vonakala ka dyambu, mati, nutrients ta misava ni ndhawu. Support plants swi nga nyika swakudya, mulch wa matluka, swiluva ni xifunengeto xa swimila leswi hanyaka. Nyika ximila xin'wana ni xin'wana ntirho lowu pfunaka. Tshama u langutisisa leswaku xana xi pfuna murhi ni ndyangu. Hi tihi tintirho leti ku byala ka wena ku ti lavaka?",
+      "blindBackTranslation": "A fruit tree needs sunlight, water, soil nutrients and space. Support plants can provide food, leaf mulch, flowers and a covering of living plants. Give each plant a helpful job. Keep watching carefully whether it helps the tree and the family. What jobs does your planting need?"
+    },
+    {
+      "key": "slide.s3.h",
+      "sourceEnglish": "Start With the Site",
+      "draft": "Sungula Hi Ndhawu",
+      "blindBackTranslation": "Start With the Site"
+    },
+    {
+      "key": "slide.s3.b0",
+      "sourceEnglish": "Find out what is limiting growth before choosing a plant.",
+      "draft": "Kuma leswi hungutaka ku kula u nga si hlawula ximila.",
+      "blindBackTranslation": "Find what reduces growth before you choose a plant."
+    },
+    {
+      "key": "slide.s4.h",
+      "sourceEnglish": "Start With the Site",
+      "draft": "Sungula Hi Ndhawu",
+      "blindBackTranslation": "Start With the Site"
+    },
+    {
+      "key": "slide.s4.b0",
+      "sourceEnglish": "Check sunlight, drainage, soil condition and water availability. Nitrogen is only one possible limitation.  Compare the soil beneath mulch with exposed soil. Choose support plants that fit the actual conditions. What does this site need first?",
+      "draft": "Languta ku vonakala ka dyambu, ndlela leyi mati ma hundzaka ha yona ekhatsi ka misava, xiyimo xa misava ni leswaku mati ma kona. Nitrogen i xin'wana ntsena xa swilo leswi nga ha hungutaka ku kula. Fananisa misava leyi nga ehansi ka mulch ni misava leyi nga funeriwangiki. Hlawula support plants leswi fambisanaka ni swiyimo leswi nga kona hakunene. Xana ndhawu leyi yi sungula yi lava yini?",
+      "blindBackTranslation": "Look at how the sun shows/appears [?], the way water passes through inside the soil, the condition of the soil, and whether water is present. Nitrogen is only one of the things that can decrease growth [?: 'ku hungutaka ku kula' = decrease growing]. Compare the soil that is under mulch and soil that is not covered. Choose support plants that fit together with the conditions that are really there. What does this place begin by needing?"
+    },
+    {
+      "key": "slide.s5.h",
+      "sourceEnglish": "Give Every Plant a Job",
+      "draft": "Nyika Ximila Xin'wana Ni Xin'wana Ntirho",
+      "blindBackTranslation": "Give Each Plant a Job"
+    },
+    {
+      "key": "slide.s5.b0",
+      "sourceEnglish": "A useful guild produces benefits you can observe.",
+      "draft": "Guild leyi pfunaka yi humesa mimpfuno leyi u nga yi vonaka.",
+      "blindBackTranslation": "A guild that helps produces benefits that you can see."
+    },
+    {
+      "key": "slide.s6.h",
+      "sourceEnglish": "Give Every Plant a Job",
+      "draft": "Nyika Ximila Xin'wana Ni Xin'wana Ntirho",
+      "blindBackTranslation": "Give Each Plant a Job"
+    },
+    {
+      "key": "slide.s6.b0",
+      "sourceEnglish": "Choose members for food, nitrogen fixation, mulch, flowers or ground cover. One plant may do several jobs.  By the end, plan a guild, explain how residues feed soil, and decide which support plants to keep, cut or remove. Which job is still missing?",
+      "draft": "Hlawula swirho swa guild ku va swakudya, nitrogen fixation, mulch, swiluva kumbe ku funengeta misava. Ximila xin'we xi nga endla mintirho yo hlayanyana. Eku heleni, hlela guild, hlamusela ndlela leyi swisaleli swi phamelaka misava swakudya ha yona, u tlhela u endla xiboho xa leswaku hi swihi support plants leswi u faneleke ku swi hlayisa, ku swi tsema kumbe ku swi susa. Hi wihi ntirho lowu ha pfumalaka?",
+      "blindBackTranslation": "Choose guild members to be food, nitrogen fixation, mulch, flowers or soil cover. One plant can do several jobs. At the end, plan the guild, explain how the crop remains feed the soil, and decide which support plants you should keep, cut or remove. Which job is still missing?"
+    },
+    {
+      "key": "slide.s7.h",
+      "sourceEnglish": "Look for Root Nodules",
+      "draft": "Lava Nodules eka Timitsu",
+      "blindBackTranslation": "Look for Nodules on the Roots"
+    },
+    {
+      "key": "slide.s7.b0",
+      "sourceEnglish": "Legumes work with rhizobia in nodules on their roots.",
+      "draft": "Legumes swi tirha swin'we ni rhizobia eka nodules etimitsini ta swona.",
+      "blindBackTranslation": "Legumes work together with rhizobia at the nodules on their roots."
+    },
+    {
+      "key": "slide.s8.h",
+      "sourceEnglish": "Look for Root Nodules",
+      "draft": "Lava Nodules eka Timitsu",
+      "blindBackTranslation": "Look for Nodules on the Roots"
+    },
+    {
+      "key": "slide.s8.b0",
+      "sourceEnglish": "These bacteria convert nitrogen from the air into forms the legume can use.  Find nodules on a spare legume plant. Nodulation and growth depend on the plant, suitable bacteria and growing conditions. Can you find the nodules?",
+      "draft": "Bakteriya (bacteria) leti ti hundzuluxa nitrogen leyi humaka emoyeni ku va swivumbeko leswi legume yi nga swi tirhisaka. Kuma nodules eka ximila xa legume lexi nga lavekiki. Nodulation ni ku kula swi titshege hi ximila, bakteriya (bacteria) leti faneleke ni swiyimo swa ku kula. Xana u nga kuma nodules?",
+      "blindBackTranslation": "Bacteria that convert nitrogen from the air into forms that the legume can use. Find nodules on a legume plant that is not required/needed. Nodulation and growth depend on the plant, the right bacteria and the growing conditions. Can you find nodules?"
+    },
+    {
+      "key": "slide.s9.h",
+      "sourceEnglish": "Return Leaves to the Soil",
+      "draft": "Vuyisela Matluka Emisaveni",
+      "blindBackTranslation": "Return Leaves to the Soil"
+    },
+    {
+      "key": "slide.s9.b0",
+      "sourceEnglish": "Nitrogen in plant material becomes useful as that material breaks down.",
+      "draft": "Nitrogen leyi nga eka swilo swa swimila yi va yi pfunaka loko swilo leswo swi bola.",
+      "blindBackTranslation": "The nitrogen in plant material becomes helpful when that material rots."
+    },
+    {
+      "key": "slide.s10.h",
+      "sourceEnglish": "Return Leaves to the Soil",
+      "draft": "Vuyisela Matluka Emisaveni",
+      "blindBackTranslation": "Return Leaves to the Soil"
+    },
+    {
+      "key": "slide.s10.b0",
+      "sourceEnglish": "Return suitable leafy prunings, fallen leaves and crop residues as mulch. Soil organisms release nutrients during decomposition.  This takes time. A living legume is not an instant fertiliser pipe into the fruit tree. Which residues can you return?",
+      "draft": "Vuyisela matluka lama tsemiweke lama faneleke, matluka lama wileke ni swisaleli swa swibyariwa tanihi mulch. Swivumbiwa swa le misaveni swi humesa nutrients hi nkarhi wa decomposition. Leswi swi teka nkarhi. Legume leyi hanyaka a hi payipi ya manyoro ya xihatla leyi yaka eka murhi wa mihandzu. Hi swihi swisaleli leswi u nga swi vuyiselaka?",
+      "blindBackTranslation": "Return suitable cut leaves, fallen leaves and crop residues as mulch. Things from the soil release nutrients during decomposition. This takes time. A living legume is not a fast fertiliser pipe going to a fruit tree. Which residues can you return?"
+    },
+    {
+      "key": "slide.s11.h",
+      "sourceEnglish": "Sesbania Has a Useful Role",
+      "draft": "Sesbania Yi Ni Ntirho Wo Pfuna",
+      "blindBackTranslation": "Sesbania Has a Helpful Job"
+    },
+    {
+      "key": "slide.s11.b0",
+      "sourceEnglish": "Sesbania sesban can supply fast growth and leafy mulch.",
+      "draft": "Sesbania sesban yi nga nyika ku kula hi xihatla ni mulch wa matluka.",
+      "blindBackTranslation": "Sesbania sesban can give quick growth and leaf mulch."
+    },
+    {
+      "key": "slide.s12.h",
+      "sourceEnglish": "Sesbania Has a Useful Role",
+      "draft": "Sesbania Yi Ni Ntirho Wo Pfuna",
+      "blindBackTranslation": "Sesbania Has a Helpful Job"
+    },
+    {
+      "key": "slide.s12.b0",
+      "sourceEnglish": "It is indigenous to KwaZulu-Natal. In suitable warm conditions, manage this short-lived shrub or small tree as a support plant.  Allow room for its growth. Prune for mulch and reassess it when shade or water competition increases. Where could you manage its growth?",
+      "draft": "Yi indigenous eka KwaZulu-Natal. Eka swiyimo leswi faneleke swa ku hisa, lawula xihlahla lexi hanyaka nkarhi wo koma kumbe murhi lowuntsongo tanihi support plant. Siya ndhawu yo kula ka yona. Tsema marhavi ya yona ku endla mulch u tlhela u yi kambisisa nakambe loko ndzhuti kumbe ku phikizana ka mati swi engeteleka. Xana u nga lawula ku kula ka yona kwihi?",
+      "blindBackTranslation": "It is indigenous to KwaZulu-Natal. In suitable warm conditions, manage it as a short-lived shrub or a small tree as a support plant. Leave room for it to grow. Cut its branches to make mulch and check it again if shade or water competition increases. Where can you manage its growth?"
+    },
+    {
+      "key": "slide.s13.h",
+      "sourceEnglish": "Check the Full Plant Name",
+      "draft": "Kambela Vito Leri Heleleke Ra Ximila",
+      "blindBackTranslation": "Check the Full Name of the Plant"
+    },
+    {
+      "key": "slide.s13.b0",
+      "sourceEnglish": "Sesbania sesban and Sesbania punicea are different species.",
+      "draft": "Sesbania sesban na Sesbania punicea i mixaka leyi hambaneke ya swimila.",
+      "blindBackTranslation": "Sesbania sesban and Sesbania punicea are different kinds of plants."
+    },
+    {
+      "key": "slide.s14.h",
+      "sourceEnglish": "Check the Full Plant Name",
+      "draft": "Kambela Vito Leri Heleleke Ra Ximila",
+      "blindBackTranslation": "Check the Full Name of the Plant"
+    },
+    {
+      "key": "slide.s14.b0",
+      "sourceEnglish": "Sesbania punicea is the invasive red sesbania. Its pods have four lengthwise wings. Confirm identity using reliable botanical guidance.  Check the full name before planting. Respect the agreed project species list, including any restriction on Sesbania sesban. Can the supplier verify the species?",
+      "draft": "Sesbania punicea i red sesbania leyi invasive. Swikhumba swa yona swa mbewu (pods) swi ni tipapa ta mune leti leha hi ku leha ka xikhumba. Tiyisisa leswaku i xihi hi ku tirhisa botanical guidance leyi tshembekaka. Kambisisa vito hinkwaro ku nga si byala. Xixima project species list leyi pfumeleriweke, ku katsa ni nsivelo wihi na wihi eka Sesbania sesban. Xana muphakeri a nga tiyisisa leswaku i xihi ximila?",
+      "blindBackTranslation": "Sesbania punicea is the invasive red sesbania. Its seed pods have four wings running along the length of the pod. Make sure which one it is by using reliable botanical guidance. Check the whole name before planting. Respect the approved project species list, including any restriction on Sesbania sesban. Can the supplier confirm which plant it is?"
+    },
+    {
+      "key": "slide.s15.h",
+      "sourceEnglish": "Pigeon Pea Gives Food Too",
+      "draft": "Pigeon Pea Na Yona Yi Nyika Swakudya",
+      "blindBackTranslation": "Pigeon Pea Also Gives Food"
+    },
+    {
+      "key": "slide.s15.b0",
+      "sourceEnglish": "Pigeon pea—Cajanus cajan—can provide peas, leafy material and nitrogen fixation.",
+      "draft": "Pigeon pea—Cajanus cajan—yi nga nyika tinyawa (peas), swilo swa matluka ni nitrogen fixation.",
+      "blindBackTranslation": "Pigeon pea (Cajanus cajan) can give peas, leaf material and nitrogen fixation."
+    },
+    {
+      "key": "slide.s16.h",
+      "sourceEnglish": "Pigeon Pea Gives Food Too",
+      "draft": "Pigeon Pea Na Yona Yi Nyika Swakudya",
+      "blindBackTranslation": "Pigeon Pea Also Gives Food"
+    },
+    {
+      "key": "slide.s16.b0",
+      "sourceEnglish": "Use a sunny, freely draining position. It is a short-lived support shrub; frost and waterlogging can limit it.  Decide whether each plant mainly supplies peas or leafy material. Frequent severe cutting can damage it and reduce the food harvest. Are you growing this plant for peas or mulch?",
+      "draft": "Tirhisa ndhawu leyi nga ni dyambu laha mati ma hundzaka kahle ekhatsi ka misava. I support shrub leyi hanyaka nkarhi wo koma; xiqhwa (frost) ni ku yima ka mati emisaveni swi nga yi hunguta ku kula. Endla xiboho xa leswaku ximila xin'wana ni xin'wana xi ta nyika tinyawa (peas) hi ku tala kumbe swilo swa matluka. Ku xi tsema hi matimba minkarhi yo tala swi nga xi onha, swi tlhela swi hunguta ntshovelo wa swakudya. Xana u byala ximila lexi ku kuma tinyawa kumbe mulch?",
+      "blindBackTranslation": "Use a sunny place where water drains well through the soil. It is a short-lived support shrub; frost and standing water in the soil can reduce its growth. Decide whether each plant will mainly give peas or leaf material. Cutting it hard many times can damage it and also reduce the food harvest. Do you plant this plant to get peas or mulch?"
+    },
+    {
+      "key": "slide.s17.h",
+      "sourceEnglish": "Choose for Place and Size",
+      "draft": "Hlawula Hi Ndhawu Ni Vukulu",
+      "blindBackTranslation": "Choose by Site and Size"
+    },
+    {
+      "key": "slide.s17.b0",
+      "sourceEnglish": "A useful support tree in one place may be too large or unsuitable in another.",
+      "draft": "Support tree leyi pfunaka ndhawu yin'wana yi nga va yikulu ngopfu kumbe yi nga faneleki ndhawu yin'wana.",
+      "blindBackTranslation": "A support tree that helps one site can be too big or not suitable for another site."
+    },
+    {
+      "key": "slide.s18.h",
+      "sourceEnglish": "Choose for Place and Size",
+      "draft": "Hlawula Hi Ndhawu Ni Vukulu",
+      "blindBackTranslation": "Choose by Site and Size"
+    },
+    {
+      "key": "slide.s18.b0",
+      "sourceEnglish": "Compare mature crown, roots, shade, rainfall and temperature. Check locally appropriate species and planting rules.  Put large support trees where they have space. For a small young guild, a manageable shrub may be easier to maintain. How large will this plant become?",
+      "draft": "Fananisa crown leyi kuleke, timitsu, ndzhuti, mpfula ni ku hisa kumbe ku titimela. Kambela mixaka leyi faneleke ndhawu ya laha ni milawu ya ku byala. Veka support trees leti kulu laha ti nga ni ndhawu. Eka guild yitsongo leyi ntshwa, xihlahla lexi nga lawuleka xi nga olova ku xi hlayisa. Xana ximila lexi xi ta va xikulu ku fika kwihi?",
+      "blindBackTranslation": "Compare a grown crown, roots, shade, rain and heat or shelter [?]. Check the kinds that suit the site here and the rules of planting. Put big support trees where they have space. For a small new guild, a shrub that can be controlled may be easier to look after. How big will this plant become, up to where?"
+    },
+    {
+      "key": "slide.s19.h",
+      "sourceEnglish": "Annual Cover Has a Place",
+      "draft": "Annual Cover Yi Ni Ndhawu Ya Yona",
+      "blindBackTranslation": "Annual Cover Has Its Place"
+    },
+    {
+      "key": "slide.s19.b0",
+      "sourceEnglish": "Sunn hemp can cover a suitable warm-season gap before the next crop.",
+      "draft": "Sunn hemp yi nga funengeta ndhawu leyi nga riki na swilo hi nkarhi wa ku hisa lowu faneleke, ku nga si va xibyariwa lexi landzelaka.",
+      "blindBackTranslation": "Sunn hemp can cover ground that has no things on it during a suitable hot season, before the next crop comes."
+    },
+    {
+      "key": "slide.s20.h",
+      "sourceEnglish": "Annual Cover Has a Place",
+      "draft": "Annual Cover Yi Ni Ndhawu Ya Yona",
+      "blindBackTranslation": "Annual Cover Has Its Place"
+    },
+    {
+      "key": "slide.s20.b0",
+      "sourceEnglish": "Grow it where its season and space fit the plan. Its contribution depends on growth, nodulation and the material returned.  After cutting, allow for decomposition. An annual cover crop plays a different role from a longer-lived support shrub. When will this space be needed again?",
+      "draft": "Yi byale laha nkarhi wa yona ni ndhawu swi fambisanaka ni ku hlela. Mpfuno wa yona wu titshege hi ku kula, nodulation ni swilo leswi vuyiseriweke. Endzhaku ka ku yi tsema, siyela nkarhi wa decomposition. Annual cover crop yi endla ntirho wo hambana ni support shrub leyi hanyaka nkarhi wo leha. Xana ndhawu leyi yi ta lavekela rini nakambe?",
+      "blindBackTranslation": "Plant it where its time and place fit with the plan. Its help depends on growth, nodulation and the material returned. After cutting it, allow time for decomposition. An annual cover crop does a different job from a long-lived support shrub. When will this place be needed again?"
+    },
+    {
+      "key": "slide.s21.h",
+      "sourceEnglish": "Leave Room Around the Tree",
+      "draft": "Siya Ndhawu Ku Rhendzela Murhi",
+      "blindBackTranslation": "Leave Space Around the Tree"
+    },
+    {
+      "key": "slide.s21.b0",
+      "sourceEnglish": "Keep the young fruit tree in light and retain access for care.",
+      "draft": "Hlayisa murhi wa mihandzu lowuntshwa wu ri eka ku vonakala ka dyambu, u tlhela u siya ndlela yo fikelela yo wu khathalela.",
+      "blindBackTranslation": "Keep the young fruit tree in the sunlight, and leave a way of access to tend it."
+    },
+    {
+      "key": "slide.s22.h",
+      "sourceEnglish": "Leave Room Around the Tree",
+      "draft": "Siya Ndhawu Ku Rhendzela Murhi",
+      "blindBackTranslation": "Leave Space Around the Tree"
+    },
+    {
+      "key": "slide.s22.b0",
+      "sourceEnglish": "Keep an open establishment basin and access to the fruit tree. Place temporary support plants where their size and water use can be managed.  Put leafy cuttings where mulch is needed. Neighbouring fruit trees can share support strips between them. Can you reach both plants as they grow?",
+      "draft": "Hlayisa establishment basin yi pfulekile ni ndlela yo fikelela murhi wa mihandzu. Veka support plants ta nkarhi wo koma laha vukulu ni ku tirhisa ka tona mati swi nga lawuriwaka. Veka matluka lama tsemiweke laha mulch yi lavekaka. Mirhi ya mihandzu leyi tshamaka ekusuhi yi nga avelana support strips leti nga exikarhi ka yona. Xana u nga fikelela swimila swimbirhi leswi loko swi ya swi kula?",
+      "blindBackTranslation": "Keep the establishment basin open with access to the fruit tree. Put long-lived support plants where their size and water use can be managed. Put cut leaves where mulch is needed. Fruit trees that stand close together may share support strips between them. Can you reach these two plants as they grow?"
+    },
+    {
+      "key": "slide.s23.h",
+      "sourceEnglish": "Build a Layered Support Guild",
+      "draft": "Aka Support Guild Ya Swiyenge (layers)",
+      "blindBackTranslation": "Build a Support Guild Of Layers (layers)"
+    },
+    {
+      "key": "slide.s23.b0",
+      "sourceEnglish": "Combine seasonal cover, support shrubs and temporary small trees.",
+      "draft": "Hlanganisa xifunengeto xa nkarhi wun'wana wa lembe, support shrubs ni mirhi yitsongo ya nkarhi wo koma.",
+      "blindBackTranslation": "Combine a covering of one season of the year, support shrubs and small short-lived trees."
+    },
+    {
+      "key": "slide.s24.h",
+      "sourceEnglish": "Build a Layered Support Guild",
+      "draft": "Aka Support Guild Ya Swiyenge (layers)",
+      "blindBackTranslation": "Build a Layered Support Guild"
+    },
+    {
+      "key": "slide.s24.b0",
+      "sourceEnglish": "Cowpea covers sunny gaps. Pigeon pea provides food and leafy material. Managed Sesbania sesban can supply taller temporary support.  Add suitable flowering and mulch plants. Keep the mango trunk clear and manage light, water and access. Which layers fit your site?",
+      "draft": "Cowpea yi funengeta tindhawu leti pfulekeke leti nga ni dyambu. Pigeon pea yi nyika swakudya ni swilo swa matluka. Sesbania sesban leyi lawuriweke yi nga nyika support plant ya nkarhi wo koma leyi leheke ku tlula swin'wana. Engetela swimila leswi faneleke leswi nga ni swiluva ni swimila swa mulch. Hlayisa nsinya wa murhi wa mango (trunk) wu nga ri na nchumu, u lawula ku vonakala ka dyambu, mati ni ndlela yo fikelela. Hi swihi swiyenge (layers) leswi fambisanaka ni ndhawu ya wena?",
+      "blindBackTranslation": "Cowpea covers open areas that have sun. Pigeon pea gives food and leaf materials. Managed Sesbania sesban can give a support plant for a short period that is taller than the others. Add suitable flowering plants and mulch plants. Keep the mango tree trunk clear, controlling sunlight, water and access. Which layers fit your place?"
+    },
+    {
+      "key": "slide.s25.h",
+      "sourceEnglish": "How Many Support Plants?",
+      "draft": "Support Plants Tingani?",
+      "blindBackTranslation": "How many Support Plants?"
+    },
+    {
+      "key": "slide.s25.b0",
+      "sourceEnglish": "Plan abundant support where the site and your care can sustain it.",
+      "draft": "Hlela support plants yo tala laha ndhawu ni vuhlayisi bya wena swi nga swi kondletelaka.",
+      "blindBackTranslation": "Plan many support plants where your place and your care can provide for them."
+    },
+    {
+      "key": "slide.s26.h",
+      "sourceEnglish": "How Many Support Plants?",
+      "draft": "Support Plants Tingani?",
+      "blindBackTranslation": "How many Support Plants?"
+    },
+    {
+      "key": "slide.s26.b0",
+      "sourceEnglish": "Count woody supports across the spaces between fruit trees. Sow suitable ground cover by area.  There is no universal number per fruit tree. Adjust density to water, soil, plant size and your ability to prune and thin. How much support can you maintain?",
+      "draft": "Hlaya nhlayo ya support plants leti nga swa khuni (woody) leti nga eka tindhawu hinkwato exikarhi ka mirhi ya mihandzu. Byala swimila leswi funengetaka misava leswi faneleke hi ku ya hi vukulu bya ndhawu. A ku na nhlayo yin'we leyi tirhaka hinkwako eka murhi wa mihandzu wun'wana ni wun'wana. Cinca support density hi ku ya hi mati, misava, vukulu bya swimila ni vuswikoti bya wena bya ku tsema marhavi ni ku endla thinning. Xana u nga hlayisa support plants tingani?",
+      "blindBackTranslation": "Count the number of woody support plants in all the spaces between the fruit trees. Plant suitable ground-covering plants according to the size of the space. There is no single number that works everywhere for every fruit tree. Change the support density according to water, soil, plant size and your ability to cut branches and do thinning. How many support plants can you keep?"
+    },
+    {
+      "key": "slide.s27.h",
+      "sourceEnglish": "Chop-and-Drop for Light and Mulch",
+      "draft": "Chop-and-Drop ya Ku Vonakala ka Dyambu na Mulch",
+      "blindBackTranslation": "Chop-and-Drop of Sun Exposure [?] and Mulch"
+    },
+    {
+      "key": "slide.s27.b0",
+      "sourceEnglish": "Watch the branch fall onto the cut leaves.",
+      "draft": "Languta rhavi ri wela eka matluka lama tsemiweke.",
+      "blindBackTranslation": "Watch a branch fall onto the cut leaves."
+    },
+    {
+      "key": "slide.s28.h",
+      "sourceEnglish": "Chop-and-Drop for Light and Mulch",
+      "draft": "Chop-and-Drop ya Ku Vonakala ka Dyambu na Mulch",
+      "blindBackTranslation": "Chop-and-Drop of Sun Exposure [?] and Mulch"
+    },
+    {
+      "key": "slide.s28.b0",
+      "sourceEnglish": "Prune a support tree and return suitable leafy cuttings to the soil. The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.  Match cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas. Which plant needs a cut—and how much?",
+      "draft": "Tsema marhavi ya support tree kutani u vuyisela misava matluka lama faneleke lama tsemiweke. Vhidiyo yi kombisa ku tsemiwa ka rhavi: support tree yi sala yi yimile. Siya matluka lama hanyaka lama ringaneke leswaku ximila xi tlhela xi tiyisa. Tsema hi ku ya hi muxaka wa ximila. Papalata ku tsema hi matimba minkarhi yo tala eka pigeon pea, ngopfu-ngopfu loko u yi byala leswaku u kuma tinyawa (peas). I ximila xihi lexi lavaka ku tsemiwa, naswona ku tsemiwa hi mpimo wihi?",
+      "blindBackTranslation": "Cut the branches of the support tree and return suitable cut leaves to the soil. The video shows cutting a branch: the support tree remains standing. Leave enough living leaves so the plant can recover and strengthen. Cut according to the type of plant. Avoid hard cutting many times on pigeon pea, especially when you plant it for peas. Which plant needs cutting, and cutting to what measure?"
+    },
+    {
+      "key": "slide.s29.h",
+      "sourceEnglish": "Keep Mulch Off the Trunk",
+      "draft": "Hlayisa mulch kule ni nsinya wa murhi (trunk)",
+      "blindBackTranslation": "Keep mulch away from the tree trunk."
+    },
+    {
+      "key": "slide.s29.b0",
+      "sourceEnglish": "Spread suitable cut material over the soil, with the trunk and root collar clear.",
+      "draft": "Hangalasa swilo leswi tsemiweke leswi faneleke ehenhla ka misava, nsinya wa murhi (trunk) ni root collar swi nga ri na nchumu.",
+      "blindBackTranslation": "Spread suitable cut materials on top of the soil, keeping the trunk and root collar clear."
+    },
+    {
+      "key": "slide.s30.h",
+      "sourceEnglish": "Keep Mulch Off the Trunk",
+      "draft": "Hlayisa mulch kule ni nsinya wa murhi (trunk)",
+      "blindBackTranslation": "Keep mulch away from the tree trunk."
+    },
+    {
+      "key": "slide.s30.b0",
+      "sourceEnglish": "Mulch protects the surface, helps conserve moisture and returns organic material.  Leave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition. Is the root collar still clear?",
+      "draft": "Mulch wu sirhelela misava ya le henhla, wu pfuna ku hlayisa ku tsakama ka misava naswona wu vuyisela swilo leswi humaka eka swilo leswi hanyaka. Siya ndlela yo fikelela ya ku cheleta mati ni ya ku kambisisa. Tsema swilo swi va swiphemu leswi swi nga khomekaka, u tlhela u ya emahlweni u languta ku tsakama ka misava ni decomposition. Xana root collar yi ha nga ri na nchumu?",
+      "blindBackTranslation": "Mulch protects the topsoil, helps to keep the moisture (wetness) of the soil, and returns things that come from living things (to the soil). Leave a way of access for watering and for checking. Cut things into pieces that can be handled, and go on looking at the moisture of the soil and the decomposition. Is the root collar still without anything (i.e. is there nothing on it / is it still clear)?"
+    },
+    {
+      "key": "slide.s31.h",
+      "sourceEnglish": "Choose the Right Comfrey",
+      "draft": "Hlawula Comfrey Leyi Faneleke",
+      "blindBackTranslation": "Choose the Suitable Comfrey"
+    },
+    {
+      "key": "slide.s31.b0",
+      "sourceEnglish": "Bocking 14 comfrey can supply cut leaves for mulch.",
+      "draft": "Bocking 14 comfrey yi nga nyika matluka lama tsemiweke yo endla mulch.",
+      "blindBackTranslation": "Bocking 14 comfrey can give cut leaves for making mulch."
+    },
+    {
+      "key": "slide.s32.h",
+      "sourceEnglish": "Choose the Right Comfrey",
+      "draft": "Hlawula Comfrey Leyi Faneleke",
+      "blindBackTranslation": "Choose the Suitable Comfrey"
+    },
+    {
+      "key": "slide.s32.b0",
+      "sourceEnglish": "Obtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.  Place it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree. Is this a good permanent place for the clump?",
+      "draft": "Kuma cultivar leyi lulameke. Bocking 14 a yi hangalali hi viable seed, kambe swiphemu swa timitsu swi nga mila nakambe. Yi veke laha yi nga ni ndhawu ni ku tsakama ka misava loku ringaneke. Tsema matluka loko yi ri karhi yi tlhela yi tiyisa; u nga yi tshiki yi phikizana ni murhi wa mihandzu lowuntshwa. Xana lexi i ndhawu leyinene leyi xihlopha xa swimila swa Bocking 14 xi nga ta tshama eka yona nkarhi hinkwawo?",
+      "blindBackTranslation": "Get a suitable cultivar. Bocking 14 does not spread by viable seed, but pieces of roots can grow again. Put it where it has enough space and soil moisture. Cut the leaves while it is growing and getting strong; do not let it compete with the young fruit tree. Is this a good place where the group of Bocking 14 plants can stay all the time?"
+    },
+    {
+      "key": "slide.s33.h",
+      "sourceEnglish": "Observe Helpful Insects",
+      "draft": "Languta Switsotswana (insects) Leswi Pfunaka",
+      "blindBackTranslation": "Watch Helpful Insects"
+    },
+    {
+      "key": "slide.s33.b0",
+      "sourceEnglish": "Flowers can provide resources for useful insects.",
+      "draft": "Swiluva swi nga nyika swihlovo eka switsotswana (insects) leswi pfunaka.",
+      "blindBackTranslation": "Flowers can provide (food) sources for helpful insects."
+    },
+    {
+      "key": "slide.s34.h",
+      "sourceEnglish": "Observe Helpful Insects",
+      "draft": "Languta Switsotswana (insects) Leswi Pfunaka",
+      "blindBackTranslation": "Watch Helpful Insects"
+    },
+    {
+      "key": "slide.s34.b0",
+      "sourceEnglish": "Many ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.  Watch which insects visit and whether damage changes. A flowering plant does not guarantee pest control. What is the insect actually doing?",
+      "draft": "Ladybirds to tala ti dya aphids; parasitoid wasps tin'wana ti hlasela switsotswana leswi onhaka swibyariwa (pests). Swimila leswi nga ni swiluva ku fana ni African basil swi nga engetela swihlovo. Languta switsotswana (insects) leswi endzelaka ni loko ku onhaka ku cinca. Ximila lexi nga ni swiluva a xi tiyisekisi ku lawula switsotswana leswi onhaka swibyariwa (pests). Xana xitsotswana lexi xi endla yini hakunene?",
+      "blindBackTranslation": "Most ladybirds eat aphids; some other parasitoid wasps attack small creatures that damage crops (pests). Plants with flowers like African basil can add sources (of food?). Watch the insects that visit and when the damage changes. A plant with flowers does not guarantee control of the small creatures that damage crops (pests). What does this insect actually do?"
+    },
+    {
+      "key": "slide.s35.h",
+      "sourceEnglish": "Give Flowers Their Space",
+      "draft": "Nyika Swiluva Ndhawu Ya Swona",
+      "blindBackTranslation": "Give Flowers Their Place"
+    },
+    {
+      "key": "slide.s35.b0",
+      "sourceEnglish": "Wild garlic can be a flowering member where the site suits it.",
+      "draft": "Wild garlic yi nga va ximila lexi nga ni swiluva laha ndhawu yi yi fanelaka kona.",
+      "blindBackTranslation": "Wild garlic can be a flowering plant where the place suits it."
+    },
+    {
+      "key": "slide.s36.h",
+      "sourceEnglish": "Give Flowers Their Space",
+      "draft": "Nyika Swiluva Ndhawu Ya Swona",
+      "blindBackTranslation": "Give Flowers Their Place"
+    },
+    {
+      "key": "slide.s36.b0",
+      "sourceEnglish": "Tulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.  Observe visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak. Where can flowers grow without crowding?",
+      "draft": "Tulbaghia violacea yi ni matluka lama nga anamangiki ni swiluva leswi nga ni muhlovo wa lilac. Veka xihlopha xa swimila swa yona laha xi nga ni ku vonakala ka dyambu ni ndhawu yo kula. Languta switsotswana (insects) leswi endzelaka. U nga tshembisi leswaku xirhendzevutani xa wild garlic xi ta hlongola switsotswana leswi onhaka swibyariwa (pests) kumbe ku herisa ku hangalala ka swona. Xana swiluva swi nga kula kwihi handle ka ku phikizana?",
+      "blindBackTranslation": "Tulbaghia violacea has leaves that are not spreading and lilac-coloured flowers. Place a group of its plants where it has sunlight and room to grow. Watch the insects that visit. Do not promise that a border/ring of wild garlic will chase away the small creatures that damage crops (pests) or stop their spreading. Where can the flowers grow apart from competition?"
+    },
+    {
+      "key": "slide.s37.h",
+      "sourceEnglish": "Bring the Jobs Together",
+      "draft": "Hlanganisa Mintirho",
+      "blindBackTranslation": "Combine Functions"
+    },
+    {
+      "key": "slide.s37.b0",
+      "sourceEnglish": "Choose useful partners while protecting the mango's growing space.",
+      "draft": "Hlawula vanghana lava pfunaka loko u sirhelela ndhawu yo kula ya mango.",
+      "blindBackTranslation": "Choose helper companions when you protect the growing area of the mango."
+    },
+    {
+      "key": "slide.s38.h",
+      "sourceEnglish": "Bring the Jobs Together",
+      "draft": "Hlanganisa Mintirho",
+      "blindBackTranslation": "Combine Functions"
+    },
+    {
+      "key": "slide.s38.b0",
+      "sourceEnglish": "Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Some plants serve several functions.  Keep the trunk area and path open. Reassess each member as the mango and its neighbours grow. Does each member have space and a job?",
+      "draft": "Hlanganisa support functions leswi ndhawu ya wena yi swi lavaka: nitrogen fixation, swakudya, mulch, swiluva ni swimila leswi funengetaka misava. Swimila swin'wana swi endla mintirho yo hlayanyana. Siya ndhawu leyi rhendzeleke nsinya wa murhi (trunk) ni ndlela swi pfulekile. Kambisisa nakambe ximila xin'wana ni xin'wana loko mango ni swimila leswi nga ekusuhi na yona swi ri karhi swi kula. Xana ximila xin'wana ni xin'wana xi ni ndhawu ni ntirho?",
+      "blindBackTranslation": "Combine the support functions that your place needs: nitrogen fixation, food, mulch, flowers and ground-covering plants. Some plants do several jobs. Leave the area around the tree trunk and the path open. Check again each plant when the mango and nearby plants are growing. Does each plant have a place and a job?"
+    },
+    {
+      "key": "slide.s39.h",
+      "sourceEnglish": "Food Cover Also Competes",
+      "draft": "Xakudya Lexi Funengetaka Na Xona Xa Phikizana",
+      "blindBackTranslation": "Food That Also Covers and Also Competes"
+    },
+    {
+      "key": "slide.s39.b0",
+      "sourceEnglish": "Sweet potato can cover ground and provide food in a suitable sunny space.",
+      "draft": "Sweet potato yi nga funengeta misava yi tlhela yi nyika swakudya endhawini leyi faneleke leyi nga ni dyambu.",
+      "blindBackTranslation": "Sweet potato can cover the soil and give food in a suitable place that has sun."
+    },
+    {
+      "key": "slide.s40.h",
+      "sourceEnglish": "Food Cover Also Competes",
+      "draft": "Xakudya Lexi Funengetaka Na Xona Xa Phikizana",
+      "blindBackTranslation": "Food That Also Covers and Also Competes"
+    },
+    {
+      "key": "slide.s40.b0",
+      "sourceEnglish": "Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.  Where resources are tight, compare living cover with an ordinary mulch basin. Is this cover helping the tree establish?",
+      "draft": "Hlayisa marhavi ya yona (vines) ma ri ekule ni murhi wa mihandzu lowuntshwa, u tlhela u siya ndlela yo khathalela. Timitsu ta yona na tona ti tirhisa mati ni nutrients. Laha swihlovo swi nga ringani, pimanisa swimila leswi funengetaka misava leswi hanyaka ni mulch basin ya ntolovelo. Xana leswi swimila swi pfuna murhi ku tshama hi ku tiyisa timitsu?",
+      "blindBackTranslation": "Keep its branches (vines) away from the young fruit tree, and leave a way to tend it. Its roots also use water and nutrients. Where resources are insufficient, compare living ground-covering plants with an ordinary mulch basin. Do these plants help the tree to stay with strong roots?"
+    },
+    {
+      "key": "slide.s41.h",
+      "sourceEnglish": "First, Establish the Guild",
+      "draft": "Sungula Hi Ku Simekisa Guild",
+      "blindBackTranslation": "Start by Establishing the Guild"
+    },
+    {
+      "key": "slide.s41.b0",
+      "sourceEnglish": "Start while the young fruit tree and its support plants have enough light and water.",
+      "draft": "Sungula loko murhi wa mihandzu lowuntshwa ni support plants ta wona swi ri ni ku vonakala ka dyambu loku ringaneke ni mati lama ringaneke.",
+      "blindBackTranslation": "Begin when the young fruit tree and its support plants have enough sunlight and enough water."
+    },
+    {
+      "key": "slide.s42.h",
+      "sourceEnglish": "First, Establish the Guild",
+      "draft": "Sungula Hi Ku Simekisa Guild",
+      "blindBackTranslation": "Start by Establishing the Guild"
+    },
+    {
+      "key": "slide.s42.b0",
+      "sourceEnglish": "Plant into a suitable season, mulch and maintain establishment water. Keep the access gap open.  Start with the number of support plants you can care for. Observe survival and growth before adding more. Can you care for every plant through establishment?",
+      "draft": "Byala hi nkarhi lowu faneleke, veka mulch u tlhela u hlayisa ku cheleta mati hi nkarhi wo sungula ku mila endzhaku ka ku byala (establishment). Siya ndhawu yo fikelela yi pfulekile. Sungula hi nhlayo ya support plants leyi u nga kotaka ku yi khathalela. Languta ku hanya ni ku kula ku nga si engetela swin'wana. Xana u nga khathalela ximila xin'wana ni xin'wana hi nkarhi hinkwawo wa ku sungula ku mila?",
+      "blindBackTranslation": "Plant at a suitable time, put on mulch and keep up watering during the early growth period after planting (establishment). Leave the access area open. Begin with a number of support plants that you can manage to care for. Watch survival and growth before adding more. Can you care for each plant at all times in the early growth period?"
+    },
+    {
+      "key": "slide.s43.h",
+      "sourceEnglish": "Thin as the Fruit Tree Grows",
+      "draft": "Thinning Loko Murhi Wa Mihandzu Wu Kula",
+      "blindBackTranslation": "Thinning When the Fruit Tree Grows"
+    },
+    {
+      "key": "slide.s43.b0",
+      "sourceEnglish": "When pruning is no longer enough, reduce selected support plants. Cut down selected competing supports to open space. Suitable cut material can stay as mulch: this is thinning through chop-and-drop.  Manage regrowth to keep the opening. Check light, soil moisture and growth; thinning does not instantly stop root competition. Which support plants should now give way?",
+      "draft": "Loko ku tsema marhavi ku nga ha ringani, hunguta support plants leti hlawuriweke. Tsema ehansi support plants leti phikizanaka leti hlawuriweke ku pfula ndhawu. Swilo leswi tsemiweke leswi faneleke swi nga sala tanihi mulch: leswi i thinning hi chop-and-drop. Lawula ku mila nakambe ku hlayisa ndhawu leyi pfuleke. Kambisisa ku vonakala ka dyambu, ku tsakama ka misava ni ku kula; thinning a yi herisi hi ku hatlisa-hatlisa ku phikizana ka timitsu. I support plants tihi leti nga fanela ku tshika ndhawu sweswi?",
+      "blindBackTranslation": "When cutting branches is no longer enough, reduce the selected support plants. Cut down the competing selected support plants to open space. Cut material that is suitable can remain as mulch: this is thinning by chop-and-drop. Manage regrowth to keep the area open. Check sunlight, soil moisture and growth; thinning does not quickly end competition between roots. Which support plants should leave the place now?"
+    },
+    {
+      "key": "slide.s44.h",
+      "sourceEnglish": "Move Support Into the Light",
+      "draft": "Fambisa Support Plants Eka Ku Vonakala ka Dyambu",
+      "blindBackTranslation": "Move Support Plants To Sun Exposure [?]"
+    },
+    {
+      "key": "slide.s44.b0",
+      "sourceEnglish": "As shade increases, renew sun-loving support plants in open edges and younger plantings.",
+      "draft": "Loko ndzhuti wu engeteleka, tlhela u byala support plants leti rhandzaka dyambu emakumu lama pfulekeke ni eka swibyariwa leswintshwa.",
+      "blindBackTranslation": "When shade increases, plant support plants that like the sun again at the open edges and in the new plantings."
+    },
+    {
+      "key": "slide.s45.h",
+      "sourceEnglish": "Move Support Into the Light",
+      "draft": "Fambisa Support Plants Eka Ku Vonakala ka Dyambu",
+      "blindBackTranslation": "Move Support Plants To Sun Exposure [?]"
+    },
+    {
+      "key": "slide.s45.b0",
+      "sourceEnglish": "Carry useful prunings back to established trees. Keep nearby plants only where they still perform well.  Mature fruit trees still need nutrients. Monitor growth, harvest and soil conditions; support plants do not remove that need. Where is the next useful sunny space?",
+      "draft": "Rhwala swilo leswi tsemiweke leswi pfunaka u swi tlherisela eka mirhi leyi simekeke. Hlayisa swimila leswi nga ekusuhi ntsena laha swi ha tirhaka kahle kona. Mirhi ya mihandzu leyi kuleke yi ha lava nutrients. Languta ku kula, ntshovelo ni swiyimo swa misava; support plants a swi susi xilaveko lexi. Xana i kwihi ndhawu leyi landzelaka leyi pfunaka leyi nga ni dyambu?",
+      "blindBackTranslation": "Carry the useful cut material and return it to the established trees. Keep nearby plants only where they are still working well. Grown fruit trees still need nutrients. Watch growth, harvest and soil conditions; support plants do not remove this need. Which is the next helpful sunny place?"
+    },
+    {
+      "key": "slide.s46.h",
+      "sourceEnglish": "Let Observation Decide",
+      "draft": "A Leswi U Swi Vonaka Swi Endle Xiboho",
+      "blindBackTranslation": "What You See Made the Decision"
+    },
+    {
+      "key": "slide.s46.b0",
+      "sourceEnglish": "Keep a short record of how the guild performs.",
+      "draft": "Tsala rhekhodo yo koma ya ndlela leyi guild yi tirhaka ha yona.",
+      "blindBackTranslation": "Write a short record of how the guild works."
+    },
+    {
+      "key": "slide.s47.h",
+      "sourceEnglish": "Let Observation Decide",
+      "draft": "A Leswi U Swi Vonaka Swi Endle Xiboho",
+      "blindBackTranslation": "What You See Made the Decision"
+    },
+    {
+      "key": "slide.s47.b0",
+      "sourceEnglish": "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. What evidence would make you change the guild?",
+      "draft": "Kambisisa ku kula ka murhi wa mihandzu, ndzhuti, ku tsakama ka misava, ntshovelo wo pfuna ni ku onhiwa hi switsotswana leswi onhaka swibyariwa (pests). Tsala leswi tsemiweke, leswi vuyiseriweke kumbe leswi susiweke. Tirhisa leswi u swi voneke ku cinca ndlela leyi swimila swi vekiwaka ha yona ni ndlela leyi u swi khathalelaka ha yona. Ximila xi kuma ndhawu ya xona hi leswi xi swi endlaka laha. I vumbhoni byihi lebyi nga ku endlaka u cinca guild?",
+      "blindBackTranslation": "Check the growth of the fruit tree, shade, soil moisture, helpful harvest and damage by insects that damage crops (pests). Write down what has been cut, returned or removed. Use what you have seen to change how the plants are placed and how you care for them. A plant gets its place by what it does there. What evidence makes you change a guild?"
+    },
+    {
+      "key": "slide.s48.h",
+      "sourceEnglish": "Plan One Real Guild",
+      "draft": "Kunguhata Guild Yin'we Ya Ntiyiso",
+      "blindBackTranslation": "Plan One Real Guild"
+    },
+    {
+      "key": "slide.s48.b0",
+      "sourceEnglish": "Choose one fruit tree and mark a layout you can manage.",
+      "draft": "Hlawula murhi wun'we wa mihandzu u tlhela u kombisa ndlela yo vekisa leyi u nga yi lawulaka.",
+      "blindBackTranslation": "Choose one fruit tree and show a way of placing that you can control."
+    },
+    {
+      "key": "slide.s49.h",
+      "sourceEnglish": "Plan One Real Guild",
+      "draft": "Kunguhata Guild Yin'we Ya Ntiyiso",
+      "blindBackTranslation": "Plan One Real Guild"
+    },
+    {
+      "key": "slide.s49.b0",
+      "sourceEnglish": "Record the tree, site conditions and missing jobs. Name the support species fully, mark the starting number and leave access.  Write down what will trigger pruning or thinning. Agree the species list with the project team where required. Can someone else explain your plan back to you?",
+      "draft": "Tsala murhi, swiyimo swa ndhawu ni mintirho leyi pfumalaka. Thya mavito ya support species hi ku helela, kombisa nhlayo yo sungula u tlhela u siya ndlela yo fikelela. Tsala leswi nga ta endla leswaku ku tsemiwa marhavi kumbe thinning. Pfumelelana hi species list ni ntlawa wa phurojeke laha swi lavekaka kona. Xana munhu un'wana a nga ku hlamuselela nakambe pulani ya wena?",
+      "blindBackTranslation": "Write down the tree, the site conditions and the missing functions. Name the support species in full, show the starting number and leave an access way. Write down what will lead to branch cutting or thinning. Agree on the species list with the project group where needed. Can someone else explain your plan back to you?"
+    },
+    {
+      "key": "slide.s50.h",
+      "sourceEnglish": "Plant, Observe, Adjust",
+      "draft": "Byala, Languta, Cinca",
+      "blindBackTranslation": "Plant, Watch, Change"
+    },
+    {
+      "key": "slide.s50.b0",
+      "sourceEnglish": "Start one suitable guild and care for it through its first stage.",
+      "draft": "Sungula guild yin'we leyi faneleke, u yi hlayisa ku fika emakumu ka nkarhi wa yona wo sungula.",
+      "blindBackTranslation": "Start one suitable guild, and look after it until the end of its starting time."
+    },
+    {
+      "key": "slide.s51.h",
+      "sourceEnglish": "Plant, Observe, Adjust",
+      "draft": "Byala, Languta, Cinca",
+      "blindBackTranslation": "Plant, Watch, Change"
+    },
+    {
+      "key": "slide.s51.b0",
+      "sourceEnglish": "Use the right species, a manageable number of plants and room to grow. Return useful biomass and protect the fruit tree.  Review the planting as crowns expand. Keep, cut, replace or remove each support plant when its role changes. What will you do first—and when will you review it?",
+      "draft": "Tirhisa muxaka wa ximila lowu faneleke, nhlayo leyi nga lawuriwaka ya swimila ni ndhawu yo kula. Vuyisela biomass leyi pfunaka u tlhela u sirhelela murhi wa mihandzu. Kambela nakambe ku byala loko crowns ti ri karhi ti anama. Hlayisa, tsema, cinca hi yin'wana kumbe susa support plant yin'wana ni yin'wana loko ntirho wa yona wu cinca. I yini leswi u nga ta swi endla ku sungula, naswona u ta yi kambela nakambe rini?",
+      "blindBackTranslation": "Use a suitable type of plant, a manageable number of plants and room to grow. Return helpful biomass and protect the fruit tree. Re-check the planting when the crowns are spreading. Keep, cut, swap for another, or remove any support plant when its function changes. What will you do to begin, and when will you re-check it?"
+    }
+  ]
+}

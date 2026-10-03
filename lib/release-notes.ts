@@ -51,6 +51,15 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Choose a regional language and scroll through draft wording and English.',
       href: '/student' },
   ] },
+  { when: '3 October 2026', sha: '015f7ec9', changes: [
+    'Food Forest and Plant Guilds are fully drafted in Sesotho, Tshivenda and Xitsonga.',
+    'Each draft is marked unreviewed beside its exact English; support plant stays English.',
+    'Every silent slide shows the drafted heading and text beside the unchanged English.',
+  ], tour: [
+    { title: 'Review regional Food Forest and Guilds',
+      where: 'Study → Food Forest Design / Plant Selection & Guilds', href: '/student',
+      detail: 'Compare drafts with English, answer a quiz, play silent slides and save slides offline.' },
+  ] },
   { when: '3 October 2026', sha: '6fd0e40f', changes: [
     'Market lessons 1 and 2 add marked regional wording beside English.',
     'Price examples stay exact; selling questions add regional drafts.',
