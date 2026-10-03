@@ -95,7 +95,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "By the end of this module, you will be able to follow water ",
+                "status": "draft",
+                "text": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi "
+              },
+              {
+                "sourceEnglish": "across your land and find where it leaves.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "draft",
@@ -139,7 +151,9 @@
             "text": "Watch from a safe place during heavy rain. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Look for rills, places where water fans out, ponds, and where water leaves your property."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           }
         ]
       }
@@ -215,7 +229,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone.",
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "english-hold"
@@ -241,7 +257,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "In much of South Africa, especially in winter, ",
+                "status": "draft",
+                "text": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), "
+              },
+              {
+                "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "english-hold"
@@ -348,7 +376,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Muya u nga tshinyadza zwimela kha smallholding.",
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "english-hold"
@@ -398,7 +428,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "On a clear, still night, ",
+                "status": "draft",
+                "text": "Vhusiku vhu sa na makole, hu si na muya, "
+              },
+              {
+                "sourceEnglish": "cold air can flow downhill and collect in low places.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " These places can be colder than nearby slopes.",
+                "status": "draft",
+                "text": " Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini."
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "english-hold"
