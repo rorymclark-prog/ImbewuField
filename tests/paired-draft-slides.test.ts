@@ -1,19 +1,29 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { englishSlideRecords, pairedDraftLanguageLabel, pairedTargetHasEnglishHolds, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
+import { XITSONGA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ts-food-forest.ts';
+import { SESOTHO_PLANT_GUILDS_DRAFT } from '../lib/course-translation-drafts-st-plant-guilds.ts';
+import { TSHIVENDA_PLANT_GUILDS_DRAFT } from '../lib/course-translation-drafts-ve-plant-guilds.ts';
+import { XITSONGA_PLANT_GUILDS_DRAFT } from '../lib/course-translation-drafts-ts-plant-guilds.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
-import { assertKeeps, checkAnimalNames, checkCompleteSlideDrafts } from './regional-full-draft-checks.ts';
+import { defaultOfflinePackVariant, offlinePack } from '../lib/offline-pack.ts';
+import {
+  FOREST_GUILD_FORBIDDEN_WORDS, FOREST_GUILD_KEPT_TERMS, FOREST_GUILD_NAMES, assertKeeps, assertKeepsTerms, checkAnimalNames,
+  checkCompleteSlideDrafts, checkConsistentDrafts, checkCreatureWords, checkGlossedWords, checkKeptTerms, checkNamesVerbatim,
+  checkRepeatedSentences, checkSouthAfricanSesotho, checkSupportPlantTerms, checkThinningKept, sourceDraftPairs,
+} from './regional-full-draft-checks.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const marketSource = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
@@ -227,32 +237,109 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   assert.equal(pairedDraftLanguageLabel('xh'), null);
 });
 
-test('Food Forest Xitsonga orientation is drafted while site-specific field guidance stays in English', () => {
-  const foodForestSource = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
-  const packet = JSON.parse(readFileSync('docs/narration/food-forest.ts.paired-draft.json', 'utf8'));
-  const slides = validatePairedDraft(packet, foodForestSource, 'ts');
+const forestGuildLessonDrafts = {
+  'food-forest': { st: SESOTHO_FOOD_FOREST_DRAFT, ts: XITSONGA_FOOD_FOREST_DRAFT, ve: TSHIVENDA_FOOD_FOREST_DRAFT },
+  'plant-guilds': { st: SESOTHO_PLANT_GUILDS_DRAFT, ts: XITSONGA_PLANT_GUILDS_DRAFT, ve: TSHIVENDA_PLANT_GUILDS_DRAFT },
+};
+/** Food Forest slides repeat lesson passages only whole (counted in `repeated`); Plant Guilds slides also repeat
+ * 37 lesson sentences inside longer paragraphs (counted in `runs`). */
+const forestGuildMinimums = {
+  'food-forest': { slides: 20, names: 40, support: 4, thinning: 2, kept: 25, glossed: 0, repeated: 38, runs: 0 },
+  'plant-guilds': { slides: 51, names: 22, support: 28, thinning: 4, kept: 71, glossed: 10, repeated: 26, runs: 37 },
+};
+/** Qualifications each draft keeps wherever the English carries them, in the lessons and on the slides. */
+const forestGuildQualifiers: Record<'food-forest' | 'plant-guilds', Array<[string, Record<'st' | 'ts' | 've', string[]>]>> = {
+  'food-forest': [
+    ['may provide shelter and useful cut material where appropriate',
+      { st: ['di ka fana', 'moo ho loketseng'], ts: ['swi nga nyika', 'laha swi faneleke'], ve: ['dzi nga ṋea', 'hune ha fanela'] }],
+    ['Do not wait for a fixed year',
+      { st: ['O se ke wa emela selemo'], ts: ['U nga rindzi lembe'], ve: ['Ni songo lindela ṅwaha'] }],
+    ['Do not plant from a picture alone', { st: ['O se ke wa jala ka setshwantsho feela'],
+      ts: ['U nga byali hi xifaniso ntsena'], ve: ['Ni songo ṱavha nga u sedza tshifanyiso fhedzi'] }],
+  ],
+  'plant-guilds': [
+    ['Support plants can supply food', { st: ['di ka fana'], ts: ['swi nga nyika'], ve: ['dzi nga ṋea'] }],
+    ['Flowers can supply resources, but their presence does not guarantee pest control',
+      { st: ['di ka fana', 'ha ho tiise'], ts: ['swi nga nyika', 'a ku tiyisekisi'], ve: ['a nga ṋea', 'a si khwaṱhisedzo'] }],
+    ['A flowering plant does not guarantee pest control',
+      { st: ['ha se tiise'], ts: ['a xi tiyisekisi'], ve: ['a si khwaṱhisedzo'] }],
+    ['Bocking 14 does not spread by viable seed', { st: ['Bocking 14 ha e phatlalale ka viable seed'],
+      ts: ['Bocking 14 a yi hangalali hi viable seed'], ve: ['a i andi nga viable seed'] }],
+    ['Do not promise that a ring of wild garlic',
+      { st: ['O se ke wa tshepisa'], ts: ['U nga tshembisi'], ve: ['Ni songo fulufhedzisa'] }],
+    ['thinning does not instantly stop root competition',
+      { st: ['ha ho emise hang-hang'], ts: ['a yi herisi hi ku hatlisa-hatlisa'], ve: ['a i imisi', 'nga u ṱavhanya'] }],
+  ],
+};
+const sha256 = (path: string) => createHash('sha256').update(readFileSync(path)).digest('hex');
+
+/** A complete silent Food Forest or Plant Guilds deck. Every heading and paragraph is a labelled, back-translated
+ * unreviewed draft beside its exact English. Species names, "support plant", "thinning", the other kept technical
+ * terms and the insect/pest glosses survive, and a sentence the lessons repeat on a slide shows the lesson's own
+ * draft. Each learner still is the frame rendered from this exact paired draft and English source, with no
+ * language or farming review, regional narration or English hold claimed, and the deck saves offline as every
+ * frame with no narration unless English narration is chosen. */
+function checkForestGuildDeck(module: 'food-forest' | 'plant-guilds', lang: 'st' | 'ts' | 've') {
+  const minimum = forestGuildMinimums[module];
+  const englishPath = `docs/narration/${module}.en.md`;
+  const pairedPath = `docs/narration/${module}.${lang}.paired-draft.json`;
+  const packet = JSON.parse(readFileSync(pairedPath, 'utf8'));
+  const slides = validatePairedDraft(packet, englishSlideRecords(readFileSync(englishPath, 'utf8')), lang);
+  const path = `${lang} ${module} slides`;
   assert.equal(packet.reviewStatus, 'unreviewed');
-  assert.equal(slides.length, 20);
-  // The former exact draft list blocked legitimate translation of the introduction.
-  // Keep the learner-facing rule: introductory copy is localised, and each later hold is explicit.
-  assert.ok(slides.slice(0, 4).every((slide: any) =>
-    slide.target.heading.status === 'draft' &&
-    slide.target.body.every((part: any) => part.status === 'draft')),
-  'the four introductory slides should not silently revert to English');
-  for (const slide of slides) {
-    for (const [index, part] of slide.target.body.entries()) {
-      if (part.status === 'english-hold') {
-        assert.equal(part.text, undefined, `slide ${slide.n} paragraph ${index + 1} is an explicit English hold`);
-      }
-    }
+  assert.equal(slides.length, minimum.slides);
+  const pairs = checkCompleteSlideDrafts(slides, lang, path, FOREST_GUILD_FORBIDDEN_WORDS[lang]);
+  assert.ok(checkNamesVerbatim(pairs, FOREST_GUILD_NAMES, path) >= minimum.names, `${path}: every species mention checked`);
+  assert.ok(checkSupportPlantTerms(pairs, path) >= minimum.support, `${path}: every support-plant mention checked`);
+  assert.ok(checkThinningKept(pairs, path) >= minimum.thinning, `${path}: every thinning mention checked`);
+  assert.ok(checkKeptTerms(pairs, FOREST_GUILD_KEPT_TERMS, path) >= minimum.kept, `${path}: every kept term checked`);
+  assert.ok(checkGlossedWords(pairs, path) >= minimum.glossed, `${path}: every insect, pest, bacteria and pod checked`);
+  if (lang === 'st') checkSouthAfricanSesotho(pairs, path);
+  const lessonPairs = sourceDraftPairs(forestGuildLessonDrafts[module][lang], lang);
+  assert.ok(checkConsistentDrafts([...lessonPairs, ...pairs], `${lang} ${module}`) >= minimum.repeated,
+    `${lang} ${module}: every passage repeated between the lessons and slides checked`);
+  assert.ok(checkRepeatedSentences(lessonPairs, pairs, path) >= minimum.runs,
+    `${path}: every lesson passage repeated inside a slide paragraph checked`);
+  checkCreatureWords([...lessonPairs, ...pairs], lang, `${lang} ${module}`);
+  for (const [english, phrases] of forestGuildQualifiers[module]) {
+    const found = [...lessonPairs, ...pairs].filter(([passage]) => passage.includes(english));
+    assert.ok(found.length > 0, `${path}: "${english}" is still in the English`);
+    for (const [, draft] of found) assertKeeps(draft, phrases[lang], `${path}: "${english}" keeps its qualification`);
   }
-  assert.ok(slides.filter((slide: any) => slide.n === 7 || (slide.n >= 9 && slide.n < 20)).every((slide: any) =>
-    slide.target.body.every((part: any) => part.status === 'english-hold')),
-  'species, site, water and legal guidance slides retain all teaching text in English');
-  assert.equal(slides[19].target.body[0].status, 'draft');
-  assert.equal(slides[19].target.body[1].status, 'english-hold');
-  assert.equal(slides[19].target.body[2].status, 'mixed',
-    'the closing action draft keeps its follow-up checks paired in English');
+
+  const qa = module === 'food-forest' ? 'docs/media/food-forest/qa' : 'docs/media/plant-guilds-regional/qa';
+  const report = JSON.parse(readFileSync(`${qa}/${lang}-paired-verification.json`, 'utf8'));
+  assert.equal(report.pairedSourceSha256, sha256(pairedPath), `${path}: the stills were rendered from this paired draft`);
+  assert.equal(report.englishSourceSha256, sha256(englishPath), `${path}: the stills were rendered against this English`);
+  assert.deepEqual(
+    [report.reviewStatus, report.humanLanguageReview, report.localFarmingReview, report.narration, report.englishHoldCount],
+    ['unreviewed-machine-draft', false, false, null, 0],
+    `${path}: no review or regional narration is claimed and no English hold remains`);
+  assert.equal(report.slides.length, minimum.slides);
+  for (const slide of slides) {
+    const still = `public/course-decks/${module}/${lang}/slide-${String(slide.n).padStart(2, '0')}.webp`;
+    assert.equal(report.slides[slide.n - 1].path, still);
+    assert.equal(sha256(still), report.slides[slide.n - 1].sha256, `${still} is the rendered source-paired frame`);
+  }
+  const variant = defaultOfflinePackVariant([module], lang);
+  const pack = offlinePack(module, lang, 'standard', variant);
+  assert.equal(variant, 'slides', `${path}: the silent deck saves slides only unless English narration is chosen`);
+  assert.deepEqual(pack.missing, [], `${path}: every slide-only offline file exists`);
+  assert.equal(pack.entries.filter((entry) => entry.url.includes(`/course-decks/${module}/${lang}/`)).length, minimum.slides,
+    `${path}: every frame is saved for offline use`);
+  assert.ok(pack.entries.every((entry) => entry.kind === 'slide' || entry.kind === 'poster'),
+    `${path}: the slide-only pack carries no narration or animation`);
+  return slides;
+}
+
+// Rewritten 2 October 2026: the Xitsonga deck no longer drafts only its four orientation slides. Every heading and
+// paragraph on all 20 slides, including the species, site, water and legal guidance that was held in English, is
+// now a back-translated unreviewed draft beside its exact English, with the closing follow-up checks drafted too.
+test('Food Forest Xitsonga slides draft every passage, including the species, site and legal guidance once held in English', () => {
+  const slides = checkForestGuildDeck('food-forest', 'ts');
+  assertKeepsTerms(slides[16].target.body[2].text, ['support plants', 'thinning', 'mulch'],
+    'ts slide 17: prune or thin support plants and return clean cuttings as mulch');
+  assertKeepsTerms(slides[15].target.body[1].text, ['cardboard', 'mulch'], 'ts slide 16: plain cardboard under mulch');
 });
 
 test('regional Introduction drafts stay source-paired while uncertain farming, safety and permission advice stays English', () => {
@@ -349,112 +436,53 @@ test('regional Introduction drafts stay source-paired while uncertain farming, s
   }
 });
 
-test('Food Forest Xitsonga media pairs every unreviewed sentence with its current English narration', () => {
+// Rewritten 2 October 2026: with no English holds left, every Food Forest passage in all three languages is a
+// draft, so the pairing check covers the whole deck: no draft repeats its English, and a changed English
+// sentence anywhere, including the closing follow-up checks that used to stay in English, blocks the packet.
+test('regional Food Forest media pairs every drafted sentence with its current English narration', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
-  const packet = JSON.parse(readFileSync('docs/narration/food-forest.ts.paired-draft.json', 'utf8'));
-  const slides = validatePairedDraft(packet, source, 'ts');
-  for (const slide of slides) {
-    for (const [index, paragraph] of slide.target.body.entries()) {
-      if (paragraph.status === 'draft') {
+  for (const lang of ['st', 'ts', 've'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/food-forest.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    for (const slide of slides) {
+      for (const [index, paragraph] of slide.target.body.entries()) {
+        assert.equal(paragraph.status, 'draft', `${lang} slide ${slide.n} paragraph ${index + 1} is drafted`);
         assert.notEqual(paragraph.text, slide.english.body[index],
-          `slide ${slide.n} paragraph ${index + 1} must not disguise English as a translation`);
-      } else {
-        assert.equal(paragraph.text, undefined,
-          `slide ${slide.n} paragraph ${index + 1} must visibly hold exact English`);
+          `${lang} slide ${slide.n} paragraph ${index + 1} must not disguise English as a translation`);
       }
     }
+    for (const [slideIndex, paragraphIndex] of [[19, 2], [12, 2], [6, 2]]) {
+      const changed = structuredClone(source);
+      changed[slideIndex].body[paragraphIndex] += ' Water every day.';
+      assert.throws(() => validatePairedDraft(packet, changed, lang),
+        new RegExp(`slide ${slideIndex + 1}: English body differs`), `${lang}: a changed English sentence blocks the deck`);
+    }
   }
-  assert.equal(slides[7].target.heading.status, 'draft');
-  assert.equal(slides[12].target.heading.status, 'draft');
-  assert.equal(slides[12].target.body[0].status, 'english-hold',
-    'the candidate narrowed habitat support to habitat protection');
-  assert.equal(slides[12].target.body[2].status, 'english-hold',
-    'healthy grassland advice remains exact English pending local review');
-  const closing = slides[19].target.body[2];
-  assert.equal(closing.status, 'mixed');
-  assert.deepEqual(closing.segments.map((segment: any) => segment.status), ['draft', 'english-hold']);
-  assert.equal(closing.segments.map((segment: any) => segment.sourceEnglish).join(''),
-    slides[19].english.body[2], 'the follow-up checks remain the exact English source');
-  assert.equal(closing.segments[0].text,
-    'Byala ntsena loko swiyimo swi lulamile naswona u ta kota ku ya mahlweni u hlayisa swimilana.');
 });
 
-test('Food Forest Sesotho slides pair low-risk orientation drafts with exact English and hold technical guidance', () => {
-  const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
-  const packet = JSON.parse(readFileSync('docs/narration/food-forest.st.paired-draft.json', 'utf8'));
-  const slides = validatePairedDraft(packet, source, 'st');
-  assert.equal(slides.length, 20);
-  const drafted = slides.flatMap((slide: any) => slide.target.body
-    .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-    .filter(Boolean));
-  for (const field of ['1:1', '1:4', '2:1', '4:1', '4:2', '4:3', '4:4', '8:2', '13:1']) {
-    assert.ok(drafted.includes(field), `the source-paired draft at ${field} should remain available`);
-  }
-  assert.equal(slides[1].target.heading.status, 'draft');
-  assert.equal(slides[2].target.heading.status, 'draft');
-  for (const n of [8, 13]) {
-    assert.equal(slides[n - 1].target.heading.status, 'draft',
-      `slide ${n} offers an unreviewed orientation heading beside exact English`);
-  }
-  assert.equal(slides[12].target.body[1].status, 'english-hold',
-    'ecosystem and percentage guidance remains exact English');
-  assert.equal(slides[12].target.body[2].status, 'english-hold',
-    'healthy-grassland protection remains exact English');
-  for (const [slideIndex, paragraphIndex] of [[0, 0], [0, 3], [1, 0]]) {
-    const slide = slides[slideIndex];
-    const draft = slide.target.body[paragraphIndex];
-    assert.equal(draft.status, 'draft');
-    assert.ok(draft.text && draft.text !== slide.english.body[paragraphIndex]);
-    assert.ok(draft.provenance?.includes('unreviewed-draft'));
-  }
-  assert.equal(slides[0].target.body[1].status, 'english-hold',
-    'canopy-to-root-crop claim needs local language and farming review');
-  assert.equal(slides[1].target.body[1].status, 'english-hold',
-    'plant competition and soil-cover guidance remains exact English');
-  assert.ok(slides[2].target.body.every((part: any) => part.status === 'english-hold'),
-    'layers, approved species and establishment timing must not be improvised');
-  assert.deepEqual([
-    slides[3].target.body[0].text,
-    slides[3].target.body[1].text,
-    slides[7].target.body[1].text,
-  ], [
-    'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.',
-    'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.',
-    'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.',
-  ]);
-  assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
-    part.status === 'draft' || part.status === 'mixed' || (part.status === 'english-hold' && part.text === undefined))));
+// Rewritten 2 October 2026: the Sesotho deck no longer holds its canopy, competition, layer, approved-species,
+// ecosystem and grassland guidance in English; all 20 slides are drafted in full. The forest-pattern sentences
+// shared with lesson 1 must still show the lesson's own Sesotho draft, now alongside every other repeat.
+test('Food Forest Sesotho slides draft every passage and reuse the lesson draft wherever a lesson sentence repeats', () => {
+  const slides = checkForestGuildDeck('food-forest', 'st');
   const lessonBody = SESOTHO_FOOD_FOREST_DRAFT.lessons[0].body;
   const lessonEnglish = lessonBody.sourceEnglish.split('\n\n');
   const lessonSesotho = lessonBody.sesothoDraft.split('\n\n');
-  // These two forest-pattern sentences now appear in both the learner text and silent slide.
   for (const [slideIndex, slideParagraph, lessonParagraph] of [[3, 0, 0], [3, 1, 1], [3, 2, 2], [3, 3, 3], [7, 1, 11]]) {
     assert.equal(slides[slideIndex].english.body[slideParagraph], lessonEnglish[lessonParagraph],
       `slide ${slideIndex + 1} must use the exact lesson source sentence`);
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, lessonSesotho[lessonParagraph],
-      `slide ${slideIndex + 1} must reuse the existing Sesotho draft sentence`);
+      `slide ${slideIndex + 1} must reuse the lesson's Sesotho draft sentence`);
   }
-  assert.equal(slides[19].target.body[0].text,
-    'Hlahloba karolo ya sebaka seo o ka se hlokomelang, ebe o kgetha mohato o le mong o latelang.');
-  assert.equal(slides[19].target.body[1].text,
-    'Sireletsa mobu o pepeneneng, hlahloba hore dimela di loketse sebaka, kapa lokisa dimela tsa nursery.');
-  const closing = slides[19].target.body[2];
-  assert.equal(closing.status, 'mixed');
-  assert.deepEqual(closing.segments.map((segment: any) => segment.status), ['draft', 'english-hold']);
-  assert.equal(closing.segments.map((segment: any) => segment.sourceEnglish).join(''),
-    slides[19].english.body[2], 'the return visit and checks remain exact English');
-  assert.ok(slides.every((slide: any) => slide.target.body.every((part: any) =>
-    part.status === 'draft' || part.status === 'english-hold' || part.status === 'mixed')));
+  assertKeepsTerms(slides[12].target.body[0].text, ['indigenous', 'habitat'], 'st slide 13: indigenous plants and habitat');
+  assertKeepsTerms(slides[19].target.body[1].text, ['nursery plants'], 'st slide 20: prepare nursery plants');
 });
 
-test('Tshivenda Food Forest drafts pair habitat context while field care and grassland guidance stay English', () => {
-  const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
-  const packet = JSON.parse(readFileSync('docs/narration/food-forest.ve.paired-draft.json', 'utf8'));
-  const slides = validatePairedDraft(packet, source, 've');
-  assert.ok(slides.slice(0, 4).every((slide: any) =>
-    slide.target.heading.status === 'draft' &&
-    slide.target.body.every((part: any) => part.status === 'draft')),
-  'the four introductory slides should not silently revert to English');
+// Rewritten 2 October 2026: the Tshivenda deck no longer keeps its field care, ecosystem and grassland guidance in
+// English; all 20 slides are drafted in full beside exact English. Sentences shared with lesson 1 must still show
+// the lesson's own Tshivenda draft.
+test('Tshivenda Food Forest slides draft habitat, field-care and grassland guidance and reuse the lesson draft', () => {
+  const slides = checkForestGuildDeck('food-forest', 've');
   const lesson = TSHIVENDA_FOOD_FOREST_DRAFT.lessons[0].body;
   const english = lesson.sourceEnglish.split('\n\n');
   const translated = lesson.tshivendaDraft.split('\n\n');
@@ -462,22 +490,8 @@ test('Tshivenda Food Forest drafts pair habitat context while field care and gra
     assert.equal(slides[slideIndex].english.body[slideParagraph], english[lessonParagraph]);
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
   }
-  assert.equal(slides[5].target.body[1].status, 'english-hold');
-  assert.equal(slides[7].target.heading.status, 'draft');
-  assert.equal(slides[12].target.heading.status, 'draft');
-  assert.equal(slides[12].target.body[0].status, 'draft');
-  assert.equal(slides[12].target.body[1].status, 'english-hold');
-  assert.equal(slides[12].target.body[2].status, 'english-hold',
-    'the healthy-grassland protection instruction cannot silently become an unreviewed draft');
-  assert.equal(slides[19].target.body[0].text,
-    'Ṱolisisani fhethu hune na nga kona u hu ṱhogomela, ni nange vhukando vhuthihi vhu tevhelaho.');
-  assert.equal(slides[19].target.body[1].text,
-    'Tsireledzani mavu o vuleaho, sedzani arali zwimela zwi tshi fanelea fhethu, kana ni lugise zwimela zwa nursery.');
-  const closing = slides[19].target.body[2];
-  assert.equal(closing.status, 'mixed');
-  assert.deepEqual(closing.segments.map((segment: any) => segment.status), ['draft', 'english-hold']);
-  assert.equal(closing.segments.map((segment: any) => segment.sourceEnglish).join(''),
-    slides[19].english.body[2], 'the follow-up checks remain exact English');
+  assertKeepsTerms(slides[12].target.body[1].text, ['ecosystem'], 've slide 13: choose for your ecosystem');
+  assertKeepsTerms(slides[19].target.body[1].text, ['nursery plants'], 've slide 20: prepare nursery plants');
 });
 
 test('Vegetables slide 14 pairs both regional resilience drafts while keeping the one-crop limit exact', () => {
@@ -892,100 +906,34 @@ test('a long draft fails layout instead of shrinking or dropping a farming parag
 });
 
 
-test('Sesotho Plant Guilds learner draft keeps exact source pairing, labeled field holds and all 51 rendered slides', () => {
-  const source = englishSlideRecords(readFileSync('docs/narration/plant-guilds.en.md', 'utf8'));
-  const packet = JSON.parse(readFileSync('docs/narration/plant-guilds.st.paired-draft.json', 'utf8'));
-  const slides = validatePairedDraft(packet, source, 'st');
-  assert.equal(packet.reviewStatus, 'unreviewed');
-  assert.equal(slides.length, 51);
-  assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
-    .map((slide: any) => slide.n), [1, 2, 3, 4, 5, 6, 7, 8, 33, 34, 37, 38, 46, 47, 48, 49]);
-
-  const draftedBodySlides = slides.filter((slide: any) => slide.target.body.some((part: any) => part.status === 'draft'))
-    .map((slide: any) => slide.n);
-  assert.deepEqual(draftedBodySlides, [1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 20, 22, 24, 27, 33, 34, 36, 38, 42, 46, 48, 49]);
-  assert.equal(slides.flatMap((slide: any) => slide.target.body).filter((part: any) => part.status === 'draft').length, 22);
-  assert.equal(slides.flatMap((slide: any) => slide.target.body)
-    .filter((part: any) => part.status === 'draft' && part.text.includes('ENGLISH HOLD —')).length, 12,
-  'legacy Sesotho and English paragraphs explicitly mark every held sentence for facilitator review');
-  assert.equal(slides.flatMap((slide: any) => slide.target.body)
-    .filter((part: any) => part.status === 'english-hold').length, 28,
-  'uncertain field guidance stays fully in English instead of being presented as Sesotho');
-
+// Rewritten 2 October 2026: the Sesotho Plant Guilds deck no longer mixes legacy "ENGLISH HOLD —" sentences into
+// 22 drafted paragraphs and leaves 28 paragraphs fully English. All 51 slides are drafted in full beside exact
+// English, with nitrogen, nodule, bacteria and insect wording checked alongside the support-plant terms.
+test('Sesotho Plant Guilds slides draft all 51 slides in full, with no English hold sentences inside the drafts', () => {
+  const slides = checkForestGuildDeck('plant-guilds', 'st');
   for (const slide of slides) {
-    const image = `public/course-decks/plant-guilds/st/slide-${String(slide.n).padStart(2, '0')}.webp`;
-    assert.ok(existsSync(image), `published paired learner slide ${slide.n} has its rendered image`);
+    for (const part of [slide.target.heading, ...slide.target.body]) {
+      assert.doesNotMatch(part.text, /ENGLISH HOLD/, `st slide ${slide.n}: no legacy hold sentence inside a draft`);
+    }
   }
-
-  const slide4 = slides[3].target.body[0].text;
-  assert.ok(slide4.includes('ENGLISH HOLD — Check sunlight, drainage, soil condition and water availability.'));
-  assert.ok(slide4.includes('Nitrojene ke e nngwe feela ya dintho tse ka nnang tsa thibela kgolo.'));
-  const slide8 = slides[7].target.body[0].text;
-  assert.ok(slide8.includes('ENGLISH HOLD — Find nodules on a spare legume plant.'));
-  assert.ok(slide8.includes('ENGLISH HOLD — Nodulation and growth depend on the plant, suitable bacteria and growing conditions.'));
-  const slide34 = slides[33].target.body[0].text;
-  assert.ok(slide34.includes('ENGLISH HOLD — Many ladybirds eat aphids; some parasitoid wasps attack crop pests.'));
-  assert.ok(slide34.includes('Ha e le hantle kokonyana ena e etsa eng?'));
-  assert.ok(slides[48].target.body[0].text.includes('ENGLISH HOLD — Write down what will trigger pruning or thinning.'));
-  assert.equal(slides[45].target.heading.text, 'Etsa qeto ka seo o se bonang');
-  assert.equal(slides[45].target.body[0].text,
-    'Boloka rekoto e kgutshwane ya kamoo sehlopha sa dimela tse tshehetsanang (guild) se sebetsang kateng.');
-  assert.equal(slides[46].target.heading.text, 'Etsa qeto ka seo o se bonang');
-  assert.equal(slides[46].target.body[0].status, 'mixed');
-  assert.equal(slides[46].target.body[0].segments.map((segment: any) => segment.sourceEnglish).join(''),
-    slides[46].english.body[0], 'the field observations remain exact-English and source-paired');
-  assert.equal(slides[46].target.body[0].segments[1].text,
-    'Ke bopaki bofe bo ka etsang hore o fetole sehlopha sena sa dimela tse tshehetsanang (guild)?');
+  assertKeepsTerms(slides[7].target.body[0].text, ['(bacteria)', 'nitrogen', 'legume', 'nodules', 'nodulation'],
+    'st slide 8: bacteria, nitrogen, nodules and nodulation');
+  assertKeepsTerms(slides[13].target.body[0].text, ['invasive', '(pods)', 'botanical guidance', 'project species list'],
+    'st slide 14: invasive red sesbania, its pods and the project species list');
 });
 
-test('Tshivenda and Xitsonga Plant Guilds localise only observation prompts in silent paired decks', () => {
-  const source = englishSlideRecords(readFileSync('docs/narration/plant-guilds.en.md', 'utf8'));
-  const headingDrafts = {
-    ve: 'Ni tendele zwe na zwi vhona zwi ni thuse u dzhia phetho.',
-    ts: 'Leswi u swi vonaka a swi ku pfuna ku endla xiboho.',
-  };
-  const recordDrafts = {
-    ve: null,
-    ts: 'Tsala rhekhodo yo koma ya ndlela leyi guild yi tirhaka ha yona.',
-  };
-  const questionDrafts = {
-    ve: 'Ndi vhuṱanzi vhufhio vhune ha nga ita uri ni shandule guild?',
-    ts: 'Hi vumbhoni byihi byi nga ku endla u cinca guild?',
-  };
-  for (const language of ['ve', 'ts'] as const) {
-    const packet = JSON.parse(readFileSync(`docs/narration/plant-guilds.${language}.paired-draft.json`, 'utf8'));
-    const slides = validatePairedDraft(packet, source, language);
-    assert.equal(packet.reviewStatus, 'unreviewed');
-    assert.equal(slides.length, 51);
-    assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
-      .map((slide: any) => slide.n), [46, 47], `${language} only localises observation headings`);
-    assert.equal(slides[45].target.heading.text, headingDrafts[language]);
-    assert.equal(slides[46].target.heading.text, headingDrafts[language]);
-    if (recordDrafts[language]) {
-      assert.equal(slides[45].target.body[0].status, 'draft');
-      assert.equal(slides[45].target.body[0].text, recordDrafts[language]);
-    } else {
-      assert.deepEqual(slides[45].target.body, [{ status: 'english-hold' }],
-        'Tshivenda keeps the record-over-time instruction exact English until its wording is clear');
-    }
-    assert.equal(slides[46].target.body[0].status, 'mixed');
-    assert.equal(slides[46].target.body[0].segments.map((segment: any) => segment.sourceEnglish).join(''),
-      slides[46].english.body[0], `${language} preserves exact source for all held observations`);
-    assert.equal(slides[46].target.body[0].segments[1].sourceEnglish,
-      'What evidence would make you change the guild?');
-    assert.equal(slides[46].target.body[0].segments[1].text, questionDrafts[language]);
-    for (const slide of slides.filter((item: any) => item.n !== 46 && item.n !== 47)) {
-      assert.equal(slide.target.heading.status, 'english-hold', `${language} slide ${slide.n} heading stays English`);
-      assert.ok(slide.target.body.every((part: any) => part.status === 'english-hold'),
-        `${language} slide ${slide.n} body stays English`);
-    }
+// Rewritten 2 October 2026: the Tshivenda and Xitsonga Plant Guilds decks no longer localise only the observation
+// prompts on slides 46 and 47; every heading and paragraph on all 51 slides is drafted beside exact English,
+// including the chop-and-drop clip caption on slide 27 that stayed English.
+test('Tshivenda and Xitsonga Plant Guilds slides draft all 51 slides, observation prompts and clip caption included', () => {
+  for (const lang of ['ve', 'ts'] as const) {
+    const slides = checkForestGuildDeck('plant-guilds', lang);
     assert.equal(slides[26].english.body[0], 'Watch the branch fall onto the cut leaves.');
-    assert.deepEqual(slides[26].target.body, [{ status: 'english-hold' }]);
-    for (const slide of slides) {
-      assert.ok(slide.target.body.every((part: any) => ['draft', 'mixed', 'english-hold'].includes(part.status)),
-        `${language} slide ${slide.n} has an explicit draft or hold marker`);
-      assert.ok(existsSync(`public/course-decks/plant-guilds/${language}/slide-${String(slide.n).padStart(2, '0')}.webp`),
-        `${language} silent slide ${slide.n} exists for Study and offline use`);
-    }
+    assertKeepsTerms(slides[31].target.body[0].text, ['Bocking 14', 'cultivar', 'viable seed'],
+      `${lang} slide 32: the Bocking 14 cultivar and viable seed`);
+    assertKeepsTerms(slides[33].target.body[0].text, ['ladybirds', 'aphids', 'parasitoid wasps', '(pests)', '(insects)'],
+      `${lang} slide 34: helpful insects and crop pests`);
+    assertKeepsTerms(slides[42].target.body[0].text, ['support plants', 'thinning', 'chop-and-drop', 'mulch'],
+      `${lang} slide 43: thinning support plants through chop-and-drop`);
   }
 });

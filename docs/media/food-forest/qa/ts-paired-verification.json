@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/food-forest.ts.paired-draft.json",
-  "pairedSourceSha256": "525148953b047f7ce66ed33955f3625ec89a485f6f285ad2b550c2eda802609d",
+  "pairedSourceSha256": "0218191aea4ce8d01c341ca2764470eabfaf29fdca501ade8fb23479ea315c45",
   "englishSource": "docs/narration/food-forest.en.md",
   "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
   "slides": [
@@ -14,157 +14,207 @@
       "slide": 1,
       "path": "public/course-decks/food-forest/ts/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 343056,
-      "sha256": "32e44b087e3d4bbb2a6dbf8e817b567b64769efdac02b72d3598642e2f9eb88c"
+      "bytes": 347106,
+      "sha256": "7ed7ac64542c34a22ca146155f2cfd5c77134a2d7e5005f1d77e0ca4c9a5f4f6"
     },
     {
       "slide": 2,
       "path": "public/course-decks/food-forest/ts/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 217798,
-      "sha256": "42c67ee78b96bc13bc6da2673e054467df96c70dd6792821a46de545610e2b59"
+      "bytes": 221558,
+      "sha256": "5f0700d66f0d4d82169ef60866fe69e6287ac4724c72d78629cc03f4a5381ffe"
     },
     {
       "slide": 3,
       "path": "public/course-decks/food-forest/ts/slide-03.webp",
       "pixels": "1440x5400",
-      "bytes": 220636,
-      "sha256": "2a42d41436fa2684e51a379276538a76ad9f75bbe383a2086fdf65bf968d54e8"
+      "bytes": 221788,
+      "sha256": "623d69855e864703deed98e8852e06f1374808e4b8c72ed7e59ed0d0319f5e53"
     },
     {
       "slide": 4,
       "path": "public/course-decks/food-forest/ts/slide-04.webp",
       "pixels": "1440x5400",
-      "bytes": 260322,
-      "sha256": "4c3de814e26bcb26c225c84fd3f0b6bffe961e955033affc451d584333491103"
+      "bytes": 268080,
+      "sha256": "d439af697ed30fb63b4087b015a64e4dfc92266eb344b8564b1f9e77181ef12b"
     },
     {
       "slide": 5,
       "path": "public/course-decks/food-forest/ts/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 407032,
-      "sha256": "1fb79fd7ce03c8e8b77e8f774c90dcbd7cc23ae95ab3f8a8f927983b9512ef4a"
+      "bytes": 441224,
+      "sha256": "b6bdcfe7d9bad553c0b451c57298ed88ecda7d78de58bea73366c23484a98390"
     },
     {
       "slide": 6,
       "path": "public/course-decks/food-forest/ts/slide-06.webp",
       "pixels": "1440x5400",
-      "bytes": 344152,
-      "sha256": "9e421be991adb5ec5c6ba9db2e27579e6de3039763193ad427be84252f6f26b5"
+      "bytes": 378748,
+      "sha256": "737e5d93ec5b13f9bcbba4e699130374541d9f8359f62787971efca961ec2184"
     },
     {
       "slide": 7,
       "path": "public/course-decks/food-forest/ts/slide-07.webp",
       "pixels": "1440x5400",
-      "bytes": 298870,
-      "sha256": "3b7e9a84486c9ec01bf8073b8f17d121f171c336c16f98c4adf57c00512d434d"
+      "bytes": 293702,
+      "sha256": "eccac9a52937f33784a56f39a7b207891370a74c97922e7588adfcbd86a3e4f1"
     },
     {
       "slide": 8,
       "path": "public/course-decks/food-forest/ts/slide-08.webp",
       "pixels": "1440x5400",
-      "bytes": 659646,
-      "sha256": "a6a7ebf152801b2e72d0cd5481e03d5f8ea5d6cb14e19a3b07e62423b901734a"
+      "bytes": 691752,
+      "sha256": "8a44c18f9be34437cf59ded395740273a428be4b9a8f2afad8bbe0e5e6df8953"
     },
     {
       "slide": 9,
       "path": "public/course-decks/food-forest/ts/slide-09.webp",
       "pixels": "1440x5400",
-      "bytes": 290810,
-      "sha256": "ee62d552029392ba618f701a88a3f392f96c268fb0c933c23e7da78067a4de44"
+      "bytes": 294630,
+      "sha256": "aae72ae768aaa8c4ff91468a99871f014a412b06309748afa8d11b827beb8ad6"
     },
     {
       "slide": 10,
       "path": "public/course-decks/food-forest/ts/slide-10.webp",
       "pixels": "1440x5400",
-      "bytes": 235004,
-      "sha256": "d60954dcf6d1aef13e11e8b07cc3957b0fb16c6f6f958f7e008e65f37a56d86b"
+      "bytes": 230034,
+      "sha256": "6a6fe92639dd90de16903fe015c06b52d30ef6aafb5a12fdb035bf8bae5d6dd0"
     },
     {
       "slide": 11,
       "path": "public/course-decks/food-forest/ts/slide-11.webp",
       "pixels": "1440x5400",
-      "bytes": 312658,
-      "sha256": "6194e3f1eef0da3bc45b9dfdb465425418500a77e51b771270ae1b54430b4cc3"
+      "bytes": 301730,
+      "sha256": "45a56a48df8f21fb4f2d249beac30b9ec1063ff90101e9390e9792aab302611c"
     },
     {
       "slide": 12,
       "path": "public/course-decks/food-forest/ts/slide-12.webp",
       "pixels": "1440x5400",
-      "bytes": 321670,
-      "sha256": "174d9cc5ae176f3a66d95f01d5b263677a47ce50816a23fe3e73c681040a0bb9"
+      "bytes": 317520,
+      "sha256": "2fe2e888225e39dfc521dbac892bd65cf6e285ee93df0178a1c205dbb7ae6c18"
     },
     {
       "slide": 13,
       "path": "public/course-decks/food-forest/ts/slide-13.webp",
       "pixels": "1440x5400",
-      "bytes": 602956,
-      "sha256": "ed5fc8ed00aa2005d69fcaf4ccf3f0b73c840b9a2eab670fc2a53f07d9c16789"
+      "bytes": 597630,
+      "sha256": "63499bc7ac8fc95bc586fc7095400aa06953008f22d5d1b099fa8a4759d41f80"
     },
     {
       "slide": 14,
       "path": "public/course-decks/food-forest/ts/slide-14.webp",
       "pixels": "1440x5400",
-      "bytes": 322376,
-      "sha256": "ce0d38c9ace5174d16b2ae5058e3ab0e6894db90f44a11ded2c1327d3094459f"
+      "bytes": 332748,
+      "sha256": "ac69a9417759692618370796eb76ff1edb20c974f70672bea96d97b7da1d4bf6"
     },
     {
       "slide": 15,
       "path": "public/course-decks/food-forest/ts/slide-15.webp",
       "pixels": "1440x5400",
-      "bytes": 589304,
-      "sha256": "58aca0c706fc388f9055ece82f7ec3eaea5c26da998898b1cd270fc1c4d479bf"
+      "bytes": 595912,
+      "sha256": "c0007696eeb99e8cb992d639706ccabea1473936adb99835d0a30cb26721c026"
     },
     {
       "slide": 16,
       "path": "public/course-decks/food-forest/ts/slide-16.webp",
       "pixels": "1440x5400",
-      "bytes": 645092,
-      "sha256": "b89b5d226bd474b1ce62e92e5571a9a44eb50d1d71884114b2fe1a0766f81bcd"
+      "bytes": 657682,
+      "sha256": "2e51a6cdfa56ba87f41ff4b65b756581816629c842006538ec30553b56647ae3"
     },
     {
       "slide": 17,
       "path": "public/course-decks/food-forest/ts/slide-17.webp",
       "pixels": "1440x5400",
-      "bytes": 345614,
-      "sha256": "c4494389732c977b76b54699120a9d639ea951e5409ad79227fdf93465cd2506"
+      "bytes": 359058,
+      "sha256": "fa8147c39880be55f8155ea63ea5f4a89a0b4f922f8c7ea029c40dc66ab7cda6"
     },
     {
       "slide": 18,
       "path": "public/course-decks/food-forest/ts/slide-18.webp",
       "pixels": "1440x5400",
-      "bytes": 560256,
-      "sha256": "a33d00eb18ec82bb545dcc887d6f3d007cad7580ff5f8dfaa8e60bc88089a77c"
+      "bytes": 562574,
+      "sha256": "a3719056f5288df090976726ffbdfea665d31826c03c52cc8eb99dda7afcfb8e"
     },
     {
       "slide": 19,
       "path": "public/course-decks/food-forest/ts/slide-19.webp",
       "pixels": "1440x5400",
-      "bytes": 233728,
-      "sha256": "8ebc7fa415c9dd214147243bade6583a2657f01a0aec25f5a571bed16958b018"
+      "bytes": 241950,
+      "sha256": "6aa271a200e10dac4411fbdb5194e0dbc5507b2a382ac901c46bbfda1f86fbb6"
     },
     {
       "slide": 20,
       "path": "public/course-decks/food-forest/ts/slide-20.webp",
       "pixels": "1440x5400",
-      "bytes": 231820,
-      "sha256": "4ab2359eff7a342872c3578d1ab386113a909f4c50ad7e61c63b4c1272519fa6"
+      "bytes": 223278,
+      "sha256": "d9dd3c9795737d26ffd764960941f7ed71d92db65a351edb3f18c98474f3bf26"
     }
   ],
   "contactSheet": "docs/media/food-forest/qa/ts-paired-contact-sheet.jpg",
   "phoneSamples": [
     {
+      "slide": 1,
+      "path": "docs/media/food-forest/qa/ts-slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "af2b2ab7f27e8ec29d9bfc4ee8d6fa93679a68eef41ad345deff7f3ea9671cba"
+    },
+    {
+      "slide": 2,
+      "path": "docs/media/food-forest/qa/ts-slide-02-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "5bc8782199a0a3244373a8f66ab7cc2ec5a10e4baa668fb638f8bf0d4aad0dc4"
+    },
+    {
+      "slide": 3,
+      "path": "docs/media/food-forest/qa/ts-slide-03-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "64d1364af21db0431c34a226d9196e9e48d00a3f0c376d3e071a83071732fe1f"
+    },
+    {
       "slide": 4,
       "path": "docs/media/food-forest/qa/ts-slide-04-390.jpg",
       "pixels": "390x1463",
-      "sha256": "3359f8f02f793f6643274f7358b89b5babddb0458e49fe251b773c0833651c60"
+      "sha256": "444fad8a034dbb48e2d840cdc7a8d8e3132f3d91c4a1e285334ae130a86e74b4"
+    },
+    {
+      "slide": 5,
+      "path": "docs/media/food-forest/qa/ts-slide-05-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "8723867727735c758660b45956e0533434a832b7c257259adb26801d22e7c92f"
+    },
+    {
+      "slide": 6,
+      "path": "docs/media/food-forest/qa/ts-slide-06-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "8a3c35e5d13f260ec09f89143a8cb4fc2644ba049d60e1037859f948112fa48d"
+    },
+    {
+      "slide": 7,
+      "path": "docs/media/food-forest/qa/ts-slide-07-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "36134f32f93f94c2af8843436a59730f2486520923c7b1c3061b6d95e75418f5"
     },
     {
       "slide": 8,
       "path": "docs/media/food-forest/qa/ts-slide-08-390.jpg",
       "pixels": "390x1463",
-      "sha256": "43321becee56d4391aac5c597798c5dc37503a0b856e9eaefcdc4ba78de09f94"
+      "sha256": "cafece117933daf3f239753f5e42d023d8d1a0a01c6d2093ca988789ed6b2587"
+    },
+    {
+      "slide": 15,
+      "path": "docs/media/food-forest/qa/ts-slide-15-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "87e671cb1df77014face642ecbcd6f75be43d91dfe2d9eb30fe6b4e8d9e8f9a0"
+    },
+    {
+      "slide": 20,
+      "path": "docs/media/food-forest/qa/ts-slide-20-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "2cd84987c8b82282d7d24f2a5152cb6f2fb02f849065d7c2a36a29a4305e66ae"
     }
   ],
-  "note": "All 20 silent frames pair the unchanged English illustration and exact English source. Slides 1–4 now carry fuller marked Xitsonga machine-draft wording; later held passages remain visibly English. No Xitsonga narration or farming approval is claimed."
+  "draftPassageCount": 90,
+  "englishHoldCount": 0,
+  "note": "All 20 silent frames keep the unchanged English illustration. 90 of 90 headings and passages are unreviewed machine drafts, each beside its exact English source; no English holds remain. Difficult technical terms such as canopy, mulch and support plant stay in English inside translated sentences. Optional narration stays exact English. No fluent-speaker, local-farming or translation approval is claimed."
 }

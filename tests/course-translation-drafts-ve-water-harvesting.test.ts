@@ -9,6 +9,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveDeckLang } from '../lib/course-deck.ts';
 import { resolveNarrationLang } from '../lib/course-audio.ts';
+import { checkCompleteLessonDraft } from './regional-full-draft-checks.ts';
 
 test('regional Study cards distinguish English module copy from available lesson drafts', () => {
   const source = (id: string) => {
@@ -629,7 +630,11 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     'english-fallback', 'changed module source withdraws the card draft');
 });
 
-test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated and preserves the planting safeguards', () => {
+// Rewritten 2 October 2026 (Food Forest batch; the Water and Soil tests in this file are unchanged): Food
+// Forest L1 is now a complete Tshivenda draft. The old pins on seven translated paragraphs, four English
+// paragraphs and held key points and quiz fields give way to a complete-lesson check; the species names
+// and "frost tolerance" stay exact English, and "local restrictions" and "fixed birthday" are translated.
+test('Tshivenda Food Forest L1 draft translates every field and preserves the planting safeguards', () => {
   const source = COURSE_MODULES.find(module => module.id === 'food-forest');
   assert.ok(source, 'Food Forest must remain paired to the canonical English module');
   const draft = TSHIVENDA_FOOD_FOREST_DRAFT;
@@ -638,68 +643,20 @@ test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
   assert.equal(draft.sourceMetadata.category, source.category);
   assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['food-forest-l1', 'food-forest-l2', 'food-forest-l3'],
-    'only the bounded L1, L2 and L3 learner drafts are included');
+    'every lesson is drafted, in source order');
 
   const lesson = source.lessons.find(item => item.id === 'food-forest-l1');
   assert.ok(lesson, 'the canonical L1 must remain available');
   const lessonDraft = draft.lessons[0];
-  const checkPair = (pair: { sourceEnglish: string; tshivendaDraft: string; reviewStatus: string }, english: string, path: string) => {
-    assert.equal(pair.sourceEnglish, english, `${path}: keep the canonical English beside its draft`);
-    assert.ok(pair.tshivendaDraft.trim(), `${path}: keep a draft or exact-English hold`);
-    if (pair.reviewStatus === 'hold') assert.equal(pair.tshivendaDraft, english, `${path}: hold must remain exact English`);
-    else assert.equal(pair.reviewStatus, 'machine-draft', `${path}: unreviewed wording must remain labelled`);
-  };
-
-  checkPair(draft.title, source.title, 'module.title');
-  checkPair(draft.description, source.description, 'module.description');
-  checkPair(lessonDraft.title, lesson.title, 'lesson.title');
   assert.ok(lesson.infographicAlt);
-  assert.ok(lessonDraft.infographicAlt);
-  checkPair(lessonDraft.infographicAlt, lesson.infographicAlt, 'lesson.infographicAlt');
   assert.doesNotMatch(lesson.infographicAlt, /root crops|seven layers/i,
     'the actual diagram shows woody roots and overlapping heights, not identifiable root crops or seven countable layers');
-  assert.equal(lessonDraft.infographicAlt.reviewStatus, 'hold',
-    'the corrected image description needs a new Tshivenda translation');
-  checkPair(lessonDraft.body, lesson.body, 'lesson.body');
-  const originalParagraphs = lesson.body.split('\n\n');
-  const draftParagraphs = lessonDraft.body.tshivendaDraft.split('\n\n');
-  assert.equal(draftParagraphs.length, 13, 'the body keeps all thirteen original paragraph boundaries');
-  for (const index of [0, 1, 2, 3, 4, 5, 6]) {
-    assert.notEqual(draftParagraphs[index], originalParagraphs[index], `paragraph ${index + 1} carries its machine draft`);
-  }
-  assert.equal(draftParagraphs[1],
-    'Zwimela zwo fhambanaho zwi shumisa tshedza na u tsakama zwine zwa vha hone hune zwi aluwa hone.',
-    'describe the light and moisture available at each layer for Tshivenda learners');
-  assert.equal(draftParagraphs[10],
-    'Zwimela zwiṱuku zwi ṱoḓa ṱhogomelo musi zwi tshi thoma u ḓowela fhethu: sedzani u tsakama ha mavu, ni lange tsheṋe, ni zwi tsireledze kha u huvhala.',
-    'pair the bounded establishment-care sentence with its English source');
-  assert.equal(draftParagraphs[11],
-    'Musi zwimela zwi tshi aluwa, murunzi na matoko a maṱari zwi shandula nyimele fhasi hazwo.',
-    'describe the changing conditions below growing plants');
-  for (const index of [7, 8, 9, 12]) {
-    assert.equal(draftParagraphs[index], originalParagraphs[index], `paragraph ${index + 1} stays exact English`);
-  }
-  assert.equal(lessonDraft.keyPoints.length, lesson.keyPoints.length);
-  for (const [index, point] of lessonDraft.keyPoints.entries()) {
-    checkPair(point, lesson.keyPoints[index], `keyPoints[${index}]`);
-    assert.equal(point.reviewStatus, index === 0 || index === 1 || index === 3 ? 'machine-draft' : 'hold');
-  }
-  assert.equal(lessonDraft.quiz.length, lesson.quiz.length);
-  for (const [index, question] of lessonDraft.quiz.entries()) {
-    const originalQuestion: (typeof lesson.quiz)[number] = lesson.quiz[index];
-    checkPair(question.question, originalQuestion.q, `quiz[${index}].question`);
-    assert.equal(question.options.length, originalQuestion.options.length);
-    for (const [optionIndex, option] of question.options.entries()) {
-      checkPair(option, originalQuestion.options[optionIndex], `quiz[${index}].options[${optionIndex}]`);
-    }
-    assert.equal(question.sourceCorrectIndex, originalQuestion.correct, `quiz[${index}]: retain source answer index`);
-    assert.equal(question.options[question.sourceCorrectIndex].sourceEnglish, originalQuestion.options[originalQuestion.correct]);
-    checkPair(question.rationale, originalQuestion.rationale, `quiz[${index}].rationale`);
-  }
+  checkCompleteLessonDraft(lesson, lessonDraft, 've');
+  assert.equal(lessonDraft.body.tshivendaDraft.split('\n\n').length, 13, 'the body keeps all thirteen original paragraph boundaries');
 
   const sensitiveEnglish = [
     'Wild Fig', 'pecan', 'lemon', 'naartjie', 'black mulberry', 'Cape gooseberry', 'Wild Medlar',
-    'wild garlic', 'sweet potato', 'granadilla', 'local restrictions', 'frost tolerance', 'fixed birthday',
+    'wild garlic', 'sweet potato', 'granadilla', 'frost tolerance',
   ];
   for (const term of sensitiveEnglish) {
     assert.ok(lessonDraft.body.tshivendaDraft.includes(term), `source-sensitive content remains present: ${term}`);
@@ -709,26 +666,6 @@ test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated
   assert.equal(modulePresentation.status, 'draft');
   assert.equal(modulePresentation.title, draft.title.tshivendaDraft);
   assert.equal(modulePresentation.description, draft.description.tshivendaDraft);
-  const learnerPresentation = resolveLearnerLessonPresentation(lesson, 've');
-  assert.equal(learnerPresentation.status, 'draft');
-  assert.equal(learnerPresentation.content.title, lessonDraft.title.tshivendaDraft);
-  assert.equal(learnerPresentation.content.body, lessonDraft.body.tshivendaDraft);
-  assert.equal(learnerPresentation.content.keyPoints[0], lessonDraft.keyPoints[0].tshivendaDraft);
-  assert.equal(learnerPresentation.content.keyPoints[1], lessonDraft.keyPoints[1].tshivendaDraft);
-  assert.equal(learnerPresentation.content.keyPoints[2], lesson.keyPoints[2],
-    'ambiguous establishment wording stays exact English');
-  assert.equal(learnerPresentation.content.keyPoints[3], lessonDraft.keyPoints[3].tshivendaDraft);
-  assert.equal(learnerPresentation.content.quiz[0].q, lesson.quiz[0].q,
-    'the unclear next-action question stays exact English');
-  assert.deepEqual(learnerPresentation.content.quiz[0].options.slice(0, 2), lesson.quiz[0].options.slice(0, 2));
-  assert.equal(learnerPresentation.content.quiz[0].options[2], lessonDraft.quiz[0].options[2].tshivendaDraft);
-  assert.equal(learnerPresentation.content.quiz[0].options[3], lessonDraft.quiz[0].options[3].tshivendaDraft);
-  assert.equal(learnerPresentation.content.quiz[0].correct, lesson.quiz[0].correct,
-    'the translated options must not move the correct answer');
-  assert.equal(learnerPresentation.content.quiz[0].rationale, lessonDraft.quiz[0].rationale.tshivendaDraft);
-  assert.deepEqual(learnerPresentation.content.quiz[1], lesson.quiz[1],
-    'the water-demand question remains exact English');
-  assert.equal(learnerPresentation.content.infographicAlt, lessonDraft.infographicAlt.tshivendaDraft);
   assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
     'english-fallback', 'a changed English source withdraws the whole paired lesson draft');
   assert.equal(resolveCourseModulePresentation({ ...source, description: `${source.description} changed` }, 've').status,

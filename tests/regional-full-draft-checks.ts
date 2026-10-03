@@ -1,4 +1,5 @@
-// Shared assertions for complete regional Study drafts (Seeds and Small Livestock, 2 October 2026).
+// Shared assertions for complete regional Study drafts (Seeds and Small Livestock, then Food Forest and
+// Plant Guilds, 2 October 2026).
 // Not a test file: the module tests import it. Every learner-facing field must be a labelled machine
 // draft beside its exact English source, with numbers, quiz order and correct answers unchanged, and
 // the learner view must fall back to English as soon as any source text drifts.
@@ -91,6 +92,9 @@ export function checkCompleteLessonDraft(lesson: Lesson, draft: DraftLesson, lan
   assert.equal(shown.status, 'draft', `${path}: the learner view labels this as an unreviewed draft`);
   assert.equal(shown.content.title, draftText(draft.title, language));
   assert.equal(shown.content.body, draftText(draft.body, language));
+  if (draft.infographicAlt) {
+    assert.equal(shown.content.infographicAlt, draftText(draft.infographicAlt, language), `${path}: Study shows the image-description draft`);
+  }
   assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => draftText(point, language)));
   assert.deepEqual(shown.content.quiz.map(question => question.q), draft.quiz.map(question => draftText(question.question, language)));
   assert.deepEqual(shown.content.quiz.map(question => question.correct), lesson.quiz.map(question => question.correct),
@@ -197,13 +201,25 @@ export function assertKeeps(text: string, phrases: string[], path: string) {
   }
 }
 
+/** English technical terms kept inside a translated sentence; a capital at the start of the sentence is fine. */
+export function assertKeepsTerms(text: string, terms: string[], path: string) {
+  for (const term of terms) {
+    assert.ok(text.toLowerCase().includes(term.toLowerCase()), `${path}: keeps "${term}" in English`);
+  }
+}
+
 type SlidePart = { status: string; text?: string; provenance?: string; backTranslation?: string };
 type PairedSlide = { n: number; english: { heading: string; body: string[] }; target: { heading: SlidePart; body: SlidePart[] } };
 
 /** Every heading and paragraph of a silent regional deck is a visibly unreviewed machine draft with its blind
  * back-translation, the source numbers unchanged and no forbidden word. Returns [English, draft] pairs so a
  * caller can run the separate animal-name check on the slide text as well. */
-export function checkCompleteSlideDrafts(slides: PairedSlide[], language: RegionalLanguage, path: string): Array<[string, string]> {
+export function checkCompleteSlideDrafts(
+  slides: PairedSlide[],
+  language: RegionalLanguage,
+  path: string,
+  forbidden: RegExp[] = FORBIDDEN_WORDS[language],
+): Array<[string, string]> {
   const pairs: Array<[string, string]> = [];
   for (const slide of slides) {
     const parts: Array<[SlidePart, string, string]> = [[slide.target.heading, slide.english.heading, `${path} slide ${slide.n} heading`]];
@@ -215,9 +231,224 @@ export function checkCompleteSlideDrafts(slides: PairedSlide[], language: Region
       assert.match(part.provenance ?? '', /unreviewed-machine-draft/, `${at}: visibly unreviewed`);
       assert.ok(part.backTranslation?.trim(), `${at}: keeps its blind back-translation`);
       assertSameNumbers(text, english, at);
-      for (const word of FORBIDDEN_WORDS[language]) assert.doesNotMatch(text, word, `${at}: no forbidden word`);
+      for (const word of forbidden) assert.doesNotMatch(text, word, `${at}: no forbidden word`);
       pairs.push([english, text]);
     }
   }
   return pairs;
+}
+
+/** Food Forest and Plant Guilds: words an independent blind reader took for something else ("rotted" for
+ * chopped, a tree species for a trunk, a wrong form of insects, blossoms where the guide uses flowers), and words
+ * that differ from the drafts already live in the course: Tshivenda words used where the course says u ṱavha,
+ * u zwala, u lima, khaṋo and Vhalani, Tshivenda words written without their marks (madi for maḓi, matari for
+ * maṱari, ndila for nḓila), west (vhukovhela) written for left, the Xitsonga banzi for narrow and ku nyama (meat)
+ * for soil moisture, and the Sesotho kganya where the course says lesedi. */
+export const FOREST_GUILD_FORBIDDEN_WORDS: Record<RegionalLanguage, RegExp[]> = {
+  st: [/dithunya/i, /kokonyana/i, /\bkganya\b/i, /tlholisano/i, /ka tlasa ho mulch/i],
+  ts: [/\bbanzi\b/i, /\bku nyama\b/i, /mati ya le misaveni/i],
+  ve: [/gwiwa/i, /gwima/i, /mutshe wa muri/i, /\b(?:sima|byala|dzima|vhuna|zwijalo|zwiimiswa|balani|vhukovhela|vhulia)\b/i,
+    /\bkoloṱ/i, /\b(?:madi|matari|madavhi|ndila|tshanda|divha|hanu|yanu|hunwe)\b/i],
+};
+
+// Creature words a blind reader took for insects: the Tshivenda zwipuka (animals) and the Xitsonga swinyenyana
+// (small birds) are right only where the English itself names animals, livestock or birds.
+const FOREST_GUILD_CREATURE_WORDS: Record<RegionalLanguage, Array<[RegExp, RegExp]>> = {
+  st: [],
+  ts: [[/\bswinyenyana\b/i, /\bbirds?\b/i]],
+  ve: [[/\bzwipuka\b/i, /\banimals?\b|\blivestock\b/i]],
+};
+
+/** A creature word stands only where the English names that creature, so insects are never written as animals or
+ * birds. Returns how many creature words were checked. */
+export function checkCreatureWords(pairs: Array<[string, string]>, language: RegionalLanguage, path: string): number {
+  let checked = 0;
+  for (const [english, draft] of pairs) {
+    for (const [word, named] of FOREST_GUILD_CREATURE_WORDS[language]) {
+      if (!word.test(draft)) continue;
+      checked += 1;
+      assert.match(english, named, `${path}: "${draft}" names a creature the English "${english}" does not`);
+    }
+  }
+  return checked;
+}
+
+/** A lesson passage that a slide repeats inside a longer paragraph reads the same there: wherever a slide paragraph's
+ * English contains a whole lesson passage as a run of complete sentences, the slide draft contains that passage's
+ * draft word for word. Returns how many repeats were checked. */
+export function checkRepeatedSentences(
+  lessonPairs: Array<[string, string]>,
+  slidePairs: Array<[string, string]>,
+  path: string,
+): number {
+  let checked = 0;
+  for (const [english, draft] of lessonPairs) {
+    const passage = english.trim();
+    if (passage.length <= 40 || !/[.!?]$/.test(passage)) continue;
+    for (const [slideEnglish, slideDraft] of slidePairs) {
+      const at = slideEnglish.indexOf(passage);
+      if (at < 0 || slideEnglish.trim() === passage) continue;
+      const before = slideEnglish.slice(0, at);
+      const after = slideEnglish.slice(at + passage.length);
+      if ((before && !/[.!?:]\s+$/.test(before)) || (after && !/^\s/.test(after))) continue;
+      checked += 1;
+      assert.ok(slideDraft.normalize('NFC').includes(draft.trim().normalize('NFC')),
+        `${path}: the slide paragraph repeating "${passage}" shows the lesson draft "${draft}"`);
+    }
+  }
+  return checked;
+}
+
+/** Species, cultivar and place names that must appear exactly as in the English (a capital at the start
+ * of a sentence is allowed). */
+export const FOREST_GUILD_NAMES = ['Wild Fig', 'pecan', 'lemon', 'naartjie', 'black mulberry', 'Cape gooseberry',
+  'Wild Medlar', 'wild garlic', 'sweet potato', 'granadilla', 'mango', 'quince', 'walnut', 'indigenous fig', 'apple',
+  'pear', 'plum', 'loquat', 'rosemary', 'Barbados cherry', 'avocado', 'Natal Mahogany', 'banana', 'pawpaw', 'litchi',
+  'Wild Dagga', 'Marula', 'Mopane', 'baobab', 'comfrey', 'Sesbania sesban', 'Sesbania punicea', 'red sesbania',
+  'pigeon pea', 'Cajanus cajan', 'cowpea', 'sunn hemp', 'Bocking 14', 'African basil', 'Tulbaghia violacea',
+  'ladybirds', 'aphids', 'parasitoid wasps', 'pollinators', 'Highveld', 'Lowveld', 'KwaZulu-Natal', 'Limpopo',
+  'South Africa'];
+
+const escapeRegExp = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** Every listed name the English uses appears verbatim in the draft. Returns how many mentions were checked. */
+export function checkNamesVerbatim(pairs: Array<[string, string]>, names: string[], path: string): number {
+  let checked = 0;
+  for (const [english, draft] of pairs) {
+    for (const name of names) {
+      if (!new RegExp(`(?<![A-Za-z])${escapeRegExp(name)}(?![a-z])`).test(english)) continue;
+      checked += 1;
+      const capital = name[0].toUpperCase() + name.slice(1);
+      assert.ok(draft.includes(name) || draft.includes(capital), `${path}: "${english}" keeps the name "${name}" exactly`);
+    }
+  }
+  return checked;
+}
+
+// Where the English uses "support" alone as a noun for these plants, the draft writes "support plant" so a
+// learner cannot read it as a pole or stake.
+const BARE_SUPPORT_NOUNS =
+  /\b(?:woody|competing|temporary|every|abundant) supports?\b(?! (?:plant|tree|shrub|function|densit|strip|guild|species))|\bmove support into\b|\bhow much support\b/gi;
+
+/** "Support plant" (and support tree or shrub) is a technical term kept in English inside the translated
+ * sentence, and a bare noun "support" meaning these plants becomes "support plant". The physical
+ * "suitable supports" that climbers grow up are not support plants. Returns how many mentions were checked. */
+export function checkSupportPlantTerms(pairs: Array<[string, string]>, path: string): number {
+  let checked = 0;
+  for (const [english, draft] of pairs) {
+    for (const match of english.toLowerCase().matchAll(/support (plant|tree|shrub)s?/g)) {
+      checked += 1;
+      assert.ok(draft.toLowerCase().includes(`support ${match[1]}`), `${path}: "${english}" keeps "support ${match[1]}"`);
+    }
+    for (const match of english.matchAll(BARE_SUPPORT_NOUNS)) {
+      checked += 1;
+      assert.ok(draft.toLowerCase().includes('support plant'), `${path}: "${match[0]}" in "${english}" is written as "support plant"`);
+    }
+    if (/suitable supports/i.test(english)) {
+      checked += 1;
+      assert.doesNotMatch(draft, /support plant/i, `${path}: "${english}" means physical supports, not support plants`);
+    }
+  }
+  return checked;
+}
+
+/** Thinning (removing selected whole plants) keeps its English name inside the translated sentence, so it
+ * can never share a word with pruning (cutting branches while the plant keeps standing). Returns how many
+ * mentions were checked. */
+export function checkThinningKept(pairs: Array<[string, string]>, path: string): number {
+  let checked = 0;
+  for (const [english, draft] of pairs) {
+    if (!/\bthin(?:s|ned|ning)?\b/i.test(english)) continue;
+    checked += 1;
+    assert.match(draft, /thinning/i, `${path}: "${english}" keeps "thinning" in English`);
+  }
+  return checked;
+}
+
+/** Technical terms the Food Forest and Plant Guilds drafts keep in English inside the translated sentence
+ * ("thinning" and "support plant" have their own checks). */
+export const FOREST_GUILD_KEPT_TERMS = ['guild', 'canopy', 'herbaceous', 'mulch', 'chop-and-drop', 'legume', 'rhizobia',
+  'nodule', 'nodulation', 'nitrogen', 'biomass', 'cover crop', 'cultivar', 'viable seed', 'root collar', 'root zone',
+  'leaf litter', 'frost tolerance', 'winter chilling', 'cardboard', 'habitat', 'ecosystem', 'indigenous', 'invasive',
+  'pollen', 'pollination', 'decomposition', 'nutrients', 'establishment basin', 'mulch basin',
+  'approved local species list', 'project species list', 'botanical guidance', 'nursery plants'];
+
+/** Each listed term the English uses is still written in English in the draft (any capitalisation). Returns how
+ * many mentions were checked. */
+export function checkKeptTerms(pairs: Array<[string, string]>, terms: string[], path: string): number {
+  let checked = 0;
+  for (const [english, draft] of pairs) {
+    for (const term of terms) {
+      if (!new RegExp(`\\b${escapeRegExp(term)}`, 'i').test(english)) continue;
+      checked += 1;
+      assert.ok(draft.toLowerCase().includes(term.toLowerCase()), `${path}: "${english}" keeps "${term}" in English`);
+    }
+  }
+  return checked;
+}
+
+// One regional word can cover insects, pests and other small creatures, so each passage that names insects,
+// pests, bacteria or seed pods keeps the English word beside the regional one, normally as "(insects)".
+const GLOSSED_WORDS: Array<[RegExp, string]> = [
+  [/\binsects?\b/i, 'insects'], [/\bpests?\b/i, 'pests'], [/\bbacteri(?:a|um)\b/i, 'bacteria'], [/\bpods?\b/i, 'pods'],
+];
+
+/** Every passage that mentions insects, pests, bacteria or pods carries the English word as a gloss. Returns how
+ * many mentions were checked. */
+export function checkGlossedWords(pairs: Array<[string, string]>, path: string): number {
+  let checked = 0;
+  for (const [english, draft] of pairs) {
+    for (const [pattern, gloss] of GLOSSED_WORDS) {
+      if (!pattern.test(english)) continue;
+      checked += 1;
+      assert.ok(draft.toLowerCase().includes(`(${gloss})`) || pattern.test(draft),
+        `${path}: "${english}" keeps "${gloss}" beside the regional word`);
+    }
+  }
+  return checked;
+}
+
+// The Free State/QwaQwa edition uses South African Sesotho spelling, which writes d where Lesotho spelling
+// writes l before i and u (lesedi, not leseli; sebedisa, not sebelisa). The tl, tlh, hl and ll clusters (and kl
+// in loanwords) keep their l. English words kept inside a sentence are skipped.
+const SESOTHO_LOANWORDS = new Set(['litara', 'establishment', 'thinning', 'support', 'supports']);
+
+/** No Sesotho word in a draft uses a Lesotho spelling where the South African orthography of the Free State/QwaQwa
+ * edition differs: l before i or u (lesedi, not leseli), ch (motjheso, not mocheso), the o semivowel after a consonant
+ * (kwahela and jwang, not koahela and joang) and the words oa, ea, eena, eona, oona and moea (wa, ya, yena, yona, wona,
+ * moya). Returns how many Sesotho words were checked. */
+export function checkSouthAfricanSesotho(pairs: Array<[string, string]>, path: string): number {
+  const words = (text: string) => text.toLowerCase().match(/[a-zÀ-ſ'-]+/g) ?? [];
+  const kept = new Set([...FOREST_GUILD_KEPT_TERMS, ...FOREST_GUILD_NAMES].flatMap(words));
+  let checked = 0;
+  for (const [english, draft] of pairs) {
+    const englishWords = new Set(words(english));
+    for (const word of words(draft)) {
+      if (englishWords.has(word) || kept.has(word) || SESOTHO_LOANWORDS.has(word)) continue;
+      checked += 1;
+      assert.doesNotMatch(word, /(?<![tkhl])l[iu]/, `${path}: "${word}" in "${draft}" uses the Lesotho l before i or u`);
+      assert.doesNotMatch(word, /(?<!t)(?<!tj)ch/, `${path}: "${word}" in "${draft}" uses the Lesotho ch, not tjh`);
+      assert.doesNotMatch(word, /(?<=[kjtsnlrh])o(?=[ae])|^(?:oa|ea|eena|eona|oona|moea)$/,
+        `${path}: "${word}" in "${draft}" uses the Lesotho o or e semivowel, not w or y`);
+    }
+  }
+  return checked;
+}
+
+/** Wherever the English repeats a passage word for word (a lesson sentence shown again on a slide, or a
+ * heading on two slides), every copy shows the same draft, so learners and reviewers meet one translation
+ * of it. Returns how many repeated passages were checked. */
+export function checkConsistentDrafts(pairs: Array<[string, string]>, path: string): number {
+  const seen = new Map<string, { draft: string; count: number }>();
+  for (const [english, draft] of pairs) {
+    const key = english.trim();
+    const earlier = seen.get(key);
+    if (!earlier) {
+      seen.set(key, { draft, count: 1 });
+      continue;
+    }
+    assert.equal(draft, earlier.draft, `${path}: "${english}" has one draft wherever it appears`);
+    earlier.count += 1;
+  }
+  return [...seen.values()].filter(entry => entry.count > 1).length;
 }
