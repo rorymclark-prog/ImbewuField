@@ -1,0 +1,58 @@
+{
+  "title": "Vegetables and Staple Crops L3 source preservation proof",
+  "date": "2026-10-03",
+  "branch": "codex/regional-staples-prose-next-20261003",
+  "baseRevision": "0c214618ef8aa6b2ed5dfada8eb67ef18e1542ad",
+  "canonicalSource": "lib/course-modules.ts",
+  "resolver": "resolveLearnerLessonPresentation",
+  "lessonId": "vegetables-staples-l3",
+  "canonicalParagraphCount": 16,
+  "changedLearnerParagraphCount": 16,
+  "changedByLanguage": {
+    "st": [
+      3,
+      4,
+      6,
+      7,
+      8,
+      9
+    ],
+    "ve": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "ts": [
+      4,
+      6,
+      7,
+      8,
+      9,
+      14
+    ]
+  },
+  "checks": {
+    "all16BindingsMatchCanonicalSourceAndPriorCurrentText": true,
+    "resolverReturnsDraftForAllThreeLanguages": true,
+    "bodyParagraphCountAndOrderRemain16": true,
+    "bodySourcePairsRemainExact": true,
+    "allStatusesRemainMachineDraft": true,
+    "quizWordingAndCorrectIndicesUntouched": true,
+    "nonTargetParagraphsPreserved": true,
+    "canonicalEnglishUnchanged": true,
+    "noFluentOrLocalApprovalClaimed": true,
+    "nonTargetParagraphsComparedWithBaseSnapshot": true
+  },
+  "conditionsPreserved": [
+    "minimum two staples, not one",
+    "household reliance question with exact English conditional failure/companion consequence",
+    "seed saving conditional on isolation and selection",
+    "maize calories and dry storage",
+    "beans and cowpeas storable protein harvest",
+    "sweet potato drought tolerance only after storage roots form; water early and during root formation; stress can reduce harvest then; young leaves exact source clause",
+    "Amadumbe comparison retains exact “wetter ground” technical anchor"
+  ],
+  "verification": "Runtime imports verified the current canonical lesson, all three registered draft values, resolver status and every exact source/current/candidate index. AST comparison confirmed every non-target learner paragraph is byte-for-byte equal to base. Registered focused tests passed 20/20; original full npm test reported 4,527 pass, 0 fail, 1 existing shape-sync TODO; npx tsc --noEmit and git diff --check are clean. Canonical source has no diff from base.",
+  "reviewStatus": "Unreviewed machine drafts; facilitator and fluent review still required."
+}

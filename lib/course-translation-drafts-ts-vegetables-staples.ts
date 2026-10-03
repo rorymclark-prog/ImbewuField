@@ -43,6 +43,13 @@ draftParagraphs[12] = "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra
 draftParagraphs[13] = "Xibyariwa xin'we i \"point of failure\" yin'we.";
 draftParagraphs[15] = "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.";
 
+draftParagraphs[4] = "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.";
+draftParagraphs[6] = "Maize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.";
+draftParagraphs[7] = "Beans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.";
+draftParagraphs[8] = "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.";
+draftParagraphs[9] = "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.";
+draftParagraphs[14] = "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.";
+
 export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
   id: sourceModule.id,
   language: 'ts',

@@ -1,0 +1,21 @@
+{
+  "reviewStatus": "Unreviewed machine drafts; not fluent approval",
+  "reason": "Independent final check found important crops/foods broader than source staples in two TS fields. Retain exact English anchors for crop scope. Historical candidate preserved; current learner repairs supersede those two candidates.",
+  "repairs": [
+    {
+      "language": "ts",
+      "paragraphIndex": 9,
+      "draft": "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle."
+    },
+    {
+      "language": "ts",
+      "paragraphIndex": 14,
+      "draft": "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya."
+    }
+  ],
+  "independentFinalCheck": "Both repaired lines accepted for source meaning; no material semantic or clear concord issue, not fluent approval.",
+  "otherRootChanges": [
+    "VE hold metadata indentation corrected",
+    "Obsolete vacuous whole-English paragraph loop replaced with paragraph-count and exact young-leaf-clause safeguard; all16 expected paragraphs still compared."
+  ]
+}
