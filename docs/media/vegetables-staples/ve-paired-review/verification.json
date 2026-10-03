@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/vegetables-staples.ve.paired-draft.json",
-  "pairedSourceSha256": "7f5be3a012ef094289d03a189adca0146ef140d9ac7ee9a4d8514c6d6fca8843",
+  "pairedSourceSha256": "eef0e40f70cc28da6fd7fe7ee5094ecfb77707eb74a3bf312167678a233efd1b",
   "englishSource": "docs/narration/vegetables-staples.en.md",
   "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
   "slides": [
@@ -14,43 +14,43 @@
       "slide": 1,
       "path": "public/course-decks/vegetables-staples/ve/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 330986,
-      "sha256": "d1941cdbf2d7922f8ff282686317dfc5cf5e141e5c3b8ae159916ce249354212"
+      "bytes": 322960,
+      "sha256": "c1e11fc841d12c48f45450b920f634a02cf7daa53ab438cd1a3c1dc7109fb712"
     },
     {
       "slide": 2,
       "path": "public/course-decks/vegetables-staples/ve/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 313518,
-      "sha256": "440aac608ddd1d8ffce3766ab86bc13e8cb93faa145970c135ee33665877472f"
+      "bytes": 339676,
+      "sha256": "7652815641b73d276f5e2dc0eb3abd54edd2b6f5091bf77c7b0168950edb9605"
     },
     {
       "slide": 3,
       "path": "public/course-decks/vegetables-staples/ve/slide-03.webp",
       "pixels": "1440x5400",
-      "bytes": 373144,
-      "sha256": "20e06076b6c77a7c07161eb01980e3f303070433b2fa8ea696f8da02576b958f"
+      "bytes": 361972,
+      "sha256": "89db0d09e6c7a1e2bf2c4b3493de892c7b6e085f5d1e5ca1819059991f2b4fb2"
     },
     {
       "slide": 4,
       "path": "public/course-decks/vegetables-staples/ve/slide-04.webp",
       "pixels": "1440x5400",
-      "bytes": 707442,
-      "sha256": "0d147bd537aa85be70f960368fca35331c410a30495a39cdfaeccf8d1639ab88"
+      "bytes": 693460,
+      "sha256": "1398bf207253549f2cf3dce92c71a47122950107948a154d1046e43e43e21296"
     },
     {
       "slide": 5,
       "path": "public/course-decks/vegetables-staples/ve/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 430866,
-      "sha256": "9767b32ae6e037092f14ca5977de359e05d03d614416a9d6f0d0e296b63cb46c"
+      "bytes": 397604,
+      "sha256": "9cf8049bdc5e1acbc15ec6bb64e7b60b699e707b9c5a4948947b487813081ab6"
     },
     {
       "slide": 6,
       "path": "public/course-decks/vegetables-staples/ve/slide-06.webp",
       "pixels": "1440x5400",
-      "bytes": 594366,
-      "sha256": "6e3c15d4ef3e9aef991929d52fac3291683cb225c983ce9f480022df539a87d3"
+      "bytes": 590562,
+      "sha256": "b0549ca83c3c993721784cb01ec3f7fcd71ef20b333c3bb4c20d3ab66d76d979"
     },
     {
       "slide": 7,
@@ -126,43 +126,55 @@
       "slide": 17,
       "path": "public/course-decks/vegetables-staples/ve/slide-17.webp",
       "pixels": "1440x5400",
-      "bytes": 374786,
-      "sha256": "4df43e2b02d0267026718061f50c6041bbf95baf60b8118a5685af1e95a28289"
+      "bytes": 375152,
+      "sha256": "565c2f451771c57fedb201d0659de31e8e245e88f8a6adaca9be019926317fbe"
     },
     {
       "slide": 18,
       "path": "public/course-decks/vegetables-staples/ve/slide-18.webp",
       "pixels": "1440x5400",
-      "bytes": 345310,
-      "sha256": "a8861d0ab411475a0d53184810c838d34ce4326db10f1ab427a60eaa207a898a"
+      "bytes": 346368,
+      "sha256": "bffaf788de32a4324dbed8652cf07dac5565d113fc524ca57b57011977decf39"
     }
   ],
-  "contactSheet": "docs/media/vegetables-staples/ve-paired-review/contact-sheet.jpg",
+  "contactSheet": "docs/media/vegetables-staples/opening-six-review/ve-contact-sheet.jpg",
   "phoneSamples": [
     {
       "slide": 1,
-      "path": "docs/media/vegetables-staples/ve-paired-review/slide-01-390.jpg",
+      "path": "docs/media/vegetables-staples/opening-six-review/ve-slide-01-390.jpg",
       "pixels": "390x1463",
-      "sha256": "d339bd90fc1c9ee471853d9633c72c70a6dc474da456390aba1fdcb9f94b2d86"
+      "sha256": "1a09d5f48a129054644b77e03a43df3098539c97fbfc4f6f40203dd71d2d09b8"
     },
     {
-      "slide": 12,
-      "path": "docs/media/vegetables-staples/ve-paired-review/slide-12-390.jpg",
+      "slide": 2,
+      "path": "docs/media/vegetables-staples/opening-six-review/ve-slide-02-390.jpg",
       "pixels": "390x1463",
-      "sha256": "13bde37836d08b5bacbddb39422461e0974996322c65e8d2f804fb767fc08060"
+      "sha256": "7b249fed026a4f3476e5e95574baa31edf2b603d9e9419a216c6551f372a0639"
     },
     {
-      "slide": 14,
-      "path": "docs/media/vegetables-staples/ve-paired-review/slide-14-390.jpg",
+      "slide": 3,
+      "path": "docs/media/vegetables-staples/opening-six-review/ve-slide-03-390.jpg",
       "pixels": "390x1463",
-      "sha256": "049bfa9667bbf0c4e2f1ac0f24b2a436459e71dae69ea580e43b780d6787b9d7"
+      "sha256": "48b19f81aa39655a50d705af369fc440357d4a9deeea338a0c12615ffd90b4a1"
     },
     {
-      "slide": 18,
-      "path": "docs/media/vegetables-staples/ve-paired-review/slide-18-390.jpg",
+      "slide": 4,
+      "path": "docs/media/vegetables-staples/opening-six-review/ve-slide-04-390.jpg",
       "pixels": "390x1463",
-      "sha256": "e543a3dbd2bb53a2f83a4f447f31188c280f1e45ce51d0dc81b601d1dbde9bac"
+      "sha256": "b307136439368087cb55db06ab823f6281baf34a67226c9d04fc4cd544ad82ef"
+    },
+    {
+      "slide": 5,
+      "path": "docs/media/vegetables-staples/opening-six-review/ve-slide-05-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "444d04baf082010acdad1e9bba5d40cad00d43d969d9f97b368e17d4cf18c08d"
+    },
+    {
+      "slide": 6,
+      "path": "docs/media/vegetables-staples/opening-six-review/ve-slide-06-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "f9aeb8dd8827a8712081e8180458ec9b5c9d2a5cb0a4fb2207f8867e274c7d18"
     }
   ],
-  "note": "All 18 frames retain existing English art and exact English source text. One existing Tshivenda body draft (slide 14) is shown as unreviewed; other headings and body text are exact English holds. No narration was created or registered."
+  "note": "The opening six frames now show source-paired unreviewed framing drafts and exact-source reuses; frames 7–18 remain unchanged. No regional narration, fluent review, or local farming approval is claimed."
 }

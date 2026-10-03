@@ -20,13 +20,31 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Welcome. This is ",
+                "status": "draft",
+                "text": "Ri a ni ṱanganedza. Leyi ndi "
+              },
+              {
+                "sourceEnglish": "Vegetables and Staple Crops.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+                "status": "draft",
+                "text": " Ndi muṅwe wa modules dza fumi kha ngudo ya ImbewuField."
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nsimu ine ya bveledza zwavhuḓi a si ine ya vhonala yo ḓala nga ḓuvha ḽithihi fhedzi. Ndi ine ya bvela phanḓa na u isa zwiḽiwa muṱani, vhege nga vhege."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kha minetse i si gathi i tevhelaho, ri ḓo haseledza zwithu zwiṋa. U lugisa bed. U ita uri harvest i bvele phanḓa. Uri ndi zwifhio zwimela zwa staple zwine zwa fanela u ṱavhiwa. Na zwine na nga ita musi pests dzi tshi swika."
           }
         ]
       }
@@ -51,20 +69,34 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kha ri thome nga thaidzo."
           },
           {
             "status": "draft",
             "text": "U tavha zwinzhi nga tshifhinga tshithihi zwi ita uri hu vhe na zwibveledzwa zwinzhi nga tshifhinga tshithihi. Zwoṱhe zwi lugela nga tshifhinga tshithihi. Niḽa zwine na kona, ni ṋea vhaṅwe zwiṅwe, nahone zwo salaho zwi a sina."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then comes the gap. Nothing is ready. ",
+                "status": "draft",
+                "text": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. "
+              },
+              {
+                "sourceEnglish": "The garden is full of plants, but there's no food in it.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ṱavha zwipiḓa zwiṱuku nga zwifhinga zwo fhambanaho zwi ita uri hu vhe na mutevhetsindo. U ṱavha, u ṱhogomela na u kaṋa zwi bvela phanḓa zwi tshi itea nga zwifhinga zwi fanaho. Hu dzula hu na tshiṅwe tshine tsha khou lugela u kaṋiwa."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Wonoyo mutevhetsindo ndi wone une wa fusha muṱa. A si vhuhulwane ha garden."
           }
         ]
       }
@@ -90,7 +122,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Musi ri tshi fhedza iyi module, ni ḓo kona u dzhia tsheo nṋa tsimuni yaṋu."
           },
           {
             "status": "english-hold"
@@ -105,7 +138,22 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These four belong together. ",
+                "status": "draft",
+                "text": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. "
+              },
+              {
+                "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+                "status": "english-hold"
+              }
+            ]
           }
         ]
       }
@@ -128,16 +176,20 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsireledzo ndi yo leluwaho. Permanent paths, and a bed narrow enough to reach into from both sides."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "One metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. At that width you can reach the centre from either path, and your feet never touch the growing area."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati without stepping inside? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu."
           }
         ]
       }
@@ -163,25 +215,32 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thomani nga least disturbance that solves your problem."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility on top."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni songo bwa wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Raised beds suit wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sunken beds suit dry ground, hune na ṱoḓa u catch and hold mvula ine na i wana."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a run off ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice u sa athu khetha bed."
           }
         ]
       }
@@ -203,13 +262,16 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better sown straight where they'll grow. Beans, carrots na maize zwi wela kha tshigwada itsho."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwimela zwiṅwe zwi ita zwavhuḓi arali zwi thoma zwi tshi tsireledzwa nursery, then transplanting. Tomatoes na brassicas zwi wela henefho."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa."
           }
         ]
       }

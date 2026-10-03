@@ -1,0 +1,1469 @@
+{
+  "title": "Final independent source-bound check of repaired Vegetables and Staple Crops opening six-slide packet",
+  "date": "2026-10-03",
+  "candidatePacket": "/tmp/imbewu-regional-vegetables-opening-six-slide-root-repaired-20261003.json",
+  "authority": {
+    "commit": "add09cfface3dcc06836ebc978f4efc4cb444b5c",
+    "result": "Rechecked source, current text, and status against the registered paired drafts at this commit."
+  },
+  "summary": {
+    "entryCount": 65,
+    "repairedEntries": 4,
+    "sourceCurrentBindingFailures": 0,
+    "repairPaths": [
+      "docs/narration/vegetables-staples.st.paired-draft.json#/slides/1/target/body/3",
+      "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/2",
+      "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/4",
+      "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/2"
+    ]
+  },
+  "finalAssessment": "The four repaired entries preserve intended source meaning conservatively; retained English avoids the identified semantic or lexical uncertainty. Other 61 fields remain source/current-bound. All target text remains unreviewed machine draft or reuse; no fluent or local approval is claimed.",
+  "entries": [
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/0/target/body/0",
+      "language": "st",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training."
+      },
+      "candidateText": "Rea le amohela. Ena ke Vegetables and Staple Crops. Ke e nngwe ya dimmojule tse leshome tsa thupelo ya ImbewuField.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/0/target/body/2",
+      "language": "st",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+      },
+      "candidateText": "Metsotsong e mmalwa e tlang, re tla bua ka dintho tse nne. Ho lokisa bethe. Ho etsa hore kotulo e nne e tswele pele. Hore na ke dijalo dife tsa staple tse lokelang ho jalwa. Le seo o ka se etsang ha disenyi di fihla.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/1/target/body/3",
+      "language": "st",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready."
+      },
+      "candidateText": "Small sowings create a rhythm instead. Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. Something is always coming ready.",
+      "rootRepair": "Independent recheck found the previous localized final sentence could change “coming ready” into already ready. Keep both temporal source sentences exact English and draft only the overlap sentence; no fluent approval.",
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "safe-conservative-repair",
+      "findings": [
+        "The exact opening sentence preserves the sowing-vs-size distinction. Only the overlapping planting/tending/harvesting sentence is drafted; the exact final sentence preserves the progressive coming-ready timing."
+      ],
+      "retainedEnglish": [
+        "Small sowings create a rhythm instead.",
+        "Something is always coming ready."
+      ],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve small sowing scale, overlapping actions, and the progressive coming-ready timing."
+      ]
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/2/target/body/0",
+      "language": "st",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "By the end of this module, you'll be able to make four decisions in your own field.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "By the end of this module, you'll be able to make four decisions in your own field."
+      },
+      "candidateText": "Qetellong ya mojule ona, o tla kgona ho etsa diqeto tse nne tshimong ya hao.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/2/target/body/5",
+      "language": "st",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      },
+      "candidateText": "Dintho tsena tse nne di tsamaya mmoho. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/3/target/body/0",
+      "language": "st",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season."
+      },
+      "candidateText": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/3/target/body/1",
+      "language": "st",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides."
+      },
+      "candidateText": "Tshireletso e bonolo. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/3/target/body/2",
+      "language": "st",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area."
+      },
+      "candidateText": "One metre to one point two metres wide. Ke yona working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/3/target/body/3",
+      "language": "st",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      },
+      "candidateText": "Jwale nahana ka dibethe tsa hao. Na o ka fihla bohareng ntle le ho hata ka hare? Eya o leke pele o lema eng kapa eng hape.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/0",
+      "language": "st",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "There's no single bed shape that's right everywhere.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "There's no single bed shape that's right everywhere."
+      },
+      "candidateText": "Ha ho sebopeho se le seng sa bethe se loketseng dibaka tsohle.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/1",
+      "language": "st",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Start with the least disturbance that solves your problem."
+      },
+      "candidateText": "Qala ka least disturbance that solves your problem.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/2",
+      "language": "st",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "No-dig suits most garden soils. Leave the structure alone and build fertility on top."
+      },
+      "candidateText": "No-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme build fertility on top.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/3",
+      "language": "st",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      },
+      "candidateText": "U se ke ua cheka wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/4",
+      "language": "st",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 4,
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Raised beds suit wet ground, where water needs somewhere to drain away to."
+      },
+      "candidateText": "Raised beds di loketse wet ground, moo water needs somewhere to drain away to.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/5",
+      "language": "st",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Sunken beds suit dry ground, where you want to catch and hold what rain you get."
+      },
+      "candidateText": "Sunken beds di loketse dry ground, moo you want to catch and hold what rain you get.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/6",
+      "language": "st",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 6,
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      },
+      "candidateText": "Ka mora pula e matla, sheba hore na metsi a sala hokae kapa a phalla a fete hokae. Kopanya seo o se boneng le keletso mabapi le mobu le phallo ya metsi pele o kgetha bethe.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/5/target/body/0",
+      "language": "st",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
+      },
+      "candidateText": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/5/target/body/1",
+      "language": "st",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there."
+      },
+      "candidateText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/5/target/body/2",
+      "language": "st",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+      },
+      "candidateText": "Sebedisa spacing guidance for the crop, variety and local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/0/target/body/0",
+      "language": "ve",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training."
+      },
+      "candidateText": "Ri a ni ṱanganedza. Leyi ndi Vegetables and Staple Crops. Ndi muṅwe wa modules dza fumi kha ngudo ya ImbewuField.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/0/target/body/1",
+      "language": "ve",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week."
+      },
+      "candidateText": "Nsimu ine ya bveledza zwavhuḓi a si ine ya vhonala yo ḓala nga ḓuvha ḽithihi fhedzi. Ndi ine ya bvela phanḓa na u isa zwiḽiwa muṱani, vhege nga vhege.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/0/target/body/2",
+      "language": "ve",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+      },
+      "candidateText": "Kha minetse i si gathi i tevhelaho, ri ḓo haseledza zwithu zwiṋa. U lugisa bed. U ita uri harvest i bvele phanḓa. Uri ndi zwifhio zwimela zwa staple zwine zwa fanela u ṱavhiwa. Na zwine na nga ita musi pests dzi tshi swika.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/0",
+      "language": "ve",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Let's start with the problem.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Let's start with the problem."
+      },
+      "candidateText": "Kha ri thome nga thaidzo.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/2",
+      "language": "ve",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it."
+      },
+      "candidateText": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. The garden is full of plants, but there's no food in it.",
+      "rootRepair": "Exact final English sentence avoids unresolved garden loan concord.",
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "safe-conservative-repair",
+      "findings": [
+        "The exact English garden sentence preserves the empty-food-in-a-garden claim without unresolved garden noun/concord."
+      ]
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/3",
+      "language": "ve",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready."
+      },
+      "candidateText": "U ṱavha zwipiḓa zwiṱuku nga zwifhinga zwo fhambanaho zwi ita uri hu vhe na mutevhetsindo. U ṱavha, u ṱhogomela na u kaṋa zwi bvela phanḓa zwi tshi itea nga zwifhinga zwi fanaho. Hu dzula hu na tshiṅwe tshine tsha khou lugela u kaṋiwa.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/4",
+      "language": "ve",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 4,
+      "sourceEnglish": "That rhythm is what feeds a household. Not the size of the garden.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "That rhythm is what feeds a household. Not the size of the garden."
+      },
+      "candidateText": "Wonoyo mutevhetsindo ndi wone une wa fusha muṱa. A si vhuhulwane ha garden.",
+      "rootRepair": "Independent semantic concern repaired; no fluent approval.",
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "safe-conservative-repair",
+      "findings": [
+        "The household-feeding clause and exact English “Not the size of the garden.” preserve the contrast; garden remains an English anchor."
+      ]
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/2/target/body/0",
+      "language": "ve",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "By the end of this module, you'll be able to make four decisions in your own field.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "By the end of this module, you'll be able to make four decisions in your own field."
+      },
+      "candidateText": "Musi ri tshi fhedza iyi module, ni ḓo kona u dzhia tsheo nṋa tsimuni yaṋu.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/2/target/body/5",
+      "language": "ve",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      },
+      "candidateText": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/3/target/body/0",
+      "language": "ve",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season."
+      },
+      "candidateText": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/3/target/body/1",
+      "language": "ve",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides."
+      },
+      "candidateText": "Tsireledzo ndi yo leluwaho. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/3/target/body/2",
+      "language": "ve",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area."
+      },
+      "candidateText": "One metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/3/target/body/3",
+      "language": "ve",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      },
+      "candidateText": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati without stepping inside? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/0",
+      "language": "ve",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "There's no single bed shape that's right everywhere.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "There's no single bed shape that's right everywhere."
+      },
+      "candidateText": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/1",
+      "language": "ve",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Start with the least disturbance that solves your problem."
+      },
+      "candidateText": "Thomani nga least disturbance that solves your problem.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/2",
+      "language": "ve",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "No-dig suits most garden soils. Leave the structure alone and build fertility on top."
+      },
+      "candidateText": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility on top.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/3",
+      "language": "ve",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      },
+      "candidateText": "Ni songo bwa wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/4",
+      "language": "ve",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 4,
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Raised beds suit wet ground, where water needs somewhere to drain away to."
+      },
+      "candidateText": "Raised beds suit wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/5",
+      "language": "ve",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Sunken beds suit dry ground, where you want to catch and hold what rain you get."
+      },
+      "candidateText": "Sunken beds suit dry ground, hune na ṱoḓa u catch and hold mvula ine na i wana.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/6",
+      "language": "ve",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 6,
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      },
+      "candidateText": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a run off ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice u sa athu khetha bed.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/5/target/body/0",
+      "language": "ve",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
+      },
+      "candidateText": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better sown straight where they'll grow. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/5/target/body/1",
+      "language": "ve",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there."
+      },
+      "candidateText": "Zwimela zwiṅwe zwi ita zwavhuḓi arali zwi thoma zwi tshi tsireledzwa nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/5/target/body/2",
+      "language": "ve",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+      },
+      "candidateText": "Shumisani spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/0",
+      "language": "ts",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training."
+      },
+      "candidateText": "Hi mi amukela. Leyi i Vegetables and Staple Crops. I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/1",
+      "language": "ts",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week."
+      },
+      "candidateText": "Nsimu leyi humesaka kahle a hi leyi vonakaka yi tele ngopfu hi siku rin'we ntsena. I leyi yi yisaka swakudya endlwini vhiki rin'wana ni rin'wana.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/2",
+      "language": "ts",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+      },
+      "candidateText": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. And what to do when pests arrive.",
+      "rootRepair": "Independent semantic concern repaired; no fluent approval.",
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "safe-conservative-repair",
+      "findings": [
+        "Exact English “And what to do when pests arrive.” avoids potentially ambiguous modal wording; the localized lead-in preserves the next-few-minutes timeframe and four-item agenda."
+      ]
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/1/target/heading",
+      "language": "ts",
+      "slideNumber": 2,
+      "fieldType": "heading",
+      "bodyParagraphIndexZeroBased": null,
+      "sourceEnglish": "Why This Matters",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Why This Matters"
+      },
+      "candidateText": "Ha Yini Leswi Swi Ri Swa Nkoka",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/1/target/body/0",
+      "language": "ts",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Let's start with the problem.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Let's start with the problem."
+      },
+      "candidateText": "A hi sunguleni hi xiphiqo.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/1/target/body/1",
+      "language": "ts",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted."
+      },
+      "candidateText": "Ku byala swo tala hi nkarhi wun'we swi endla leswaku ku va ni swakudya swo tala hi nkarhi wun'we. Hinkwato swi lulamela hi nkarhi wun'we. U dya leswi u swi kotaka, u nyika van'wana swin'wana, kutani leswi salaka swa lahleka.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/1/target/body/3",
+      "language": "ts",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready."
+      },
+      "candidateText": "Ku byala switsongo swi endla rhithimi ematshan'weni ya ku byala swo tala hi nkarhi wun'we. Ku byala, ku khathalela ni ku tshovela swa hlangana. Ku ni lexi tshamelaka ku lungheka ku tshoveriwa.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/2/target/body/0",
+      "language": "ts",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "By the end of this module, you'll be able to make four decisions in your own field.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "By the end of this module, you'll be able to make four decisions in your own field."
+      },
+      "candidateText": "Loko modula lowu wu hela, u ta kota ku endla swiboho swa mune ensin'wini ya wena.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/2/target/body/5",
+      "language": "ts",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      },
+      "candidateText": "Swilo leswi swa mune swi fambisana. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/3/target/body/0",
+      "language": "ts",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season."
+      },
+      "candidateText": "Compacted soil loses its air spaces. Roots slow down. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/3/target/body/1",
+      "language": "ts",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides."
+      },
+      "candidateText": "Nsirhelelo wu olova. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/3/target/body/2",
+      "language": "ts",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area."
+      },
+      "candidateText": "One metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/3/target/body/3",
+      "language": "ts",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      },
+      "candidateText": "Sweswi ehleketa hi mabedhe ya wena. Can you reach the middle without stepping inside? Famba u ya ringeta leswi u nga si byala swin'wana.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/0",
+      "language": "ts",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "There's no single bed shape that's right everywhere.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "There's no single bed shape that's right everywhere."
+      },
+      "candidateText": "A ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/1",
+      "language": "ts",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Start with the least disturbance that solves your problem."
+      },
+      "candidateText": "Sungula hi least disturbance that solves your problem.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/2",
+      "language": "ts",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "No-dig suits most garden soils. Leave the structure alone and build fertility on top."
+      },
+      "candidateText": "No-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/3",
+      "language": "ts",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      },
+      "candidateText": "U nga keli wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/4",
+      "language": "ts",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 4,
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Raised beds suit wet ground, where water needs somewhere to drain away to."
+      },
+      "candidateText": "Raised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/5",
+      "language": "ts",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Sunken beds suit dry ground, where you want to catch and hold what rain you get."
+      },
+      "candidateText": "Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/6",
+      "language": "ts",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 6,
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      },
+      "candidateText": "Endzhaku ka heavy rain, kambisisa. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/5/target/body/0",
+      "language": "ts",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
+      },
+      "candidateText": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/5/target/body/1",
+      "language": "ts",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there."
+      },
+      "candidateText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/5/target/body/2",
+      "language": "ts",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "registeredCurrent": {
+        "status": "english-hold",
+        "renderedText": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+      },
+      "candidateText": "Landzelela spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "rootRepair": null,
+      "finalBinding": {
+        "sourceExact": true,
+        "currentExact": true,
+        "statusExact": true,
+        "passed": true
+      },
+      "independentResult": "binding-verified",
+      "findings": []
+    }
+  ]
+}

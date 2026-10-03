@@ -1,0 +1,1513 @@
+{
+  "title": "Vegetables and Staple Crops opening six-slide source-bound candidate packet",
+  "date": "2026-10-03",
+  "workspace": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "baseHead": "add09cfface3dcc06836ebc978f4efc4cb444b5c",
+  "readOnly": true,
+  "scope": {
+    "newOrdinaryFramingTargets": 23,
+    "reusedExactLessonParagraphs": 42,
+    "excludedFormalCourseHeading": "Vegetables and Staple Crops retained as official English title pending title convention",
+    "excludedSlide3DecisionClauses": "The four numbered farming decisions remain unchanged English because they contain bed matching, named methods, crop-resilience claim, and pest diagnosis/treatment sequence.",
+    "slides4to6": "Reuse only source-identical learner L1 paragraph drafts; no new translation composed."
+  },
+  "entries": [
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/0/target/body/0",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training."
+      },
+      "candidateText": "Rea le amohela. Ena ke Vegetables and Staple Crops. Ke e nngwe ya dimmojule tse leshome tsa thupelo ya ImbewuField.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/0/target/body/0",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training."
+      },
+      "candidateText": "Ri a ni ṱanganedza. Leyi ndi Vegetables and Staple Crops. Ndi muṅwe wa modules dza fumi kha ngudo ya ImbewuField.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/0",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training."
+      },
+      "candidateText": "Hi mi amukela. Leyi i Vegetables and Staple Crops. I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/0/target/body/1",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week."
+      },
+      "candidateText": "Nsimu ine ya bveledza zwavhuḓi a si ine ya vhonala yo ḓala nga ḓuvha ḽithihi fhedzi. Ndi ine ya bvela phanḓa na u isa zwiḽiwa muṱani, vhege nga vhege.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/1",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week."
+      },
+      "candidateText": "Nsimu leyi humesaka kahle a hi leyi vonakaka yi tele ngopfu hi siku rin'we ntsena. I leyi yi yisaka swakudya endlwini vhiki rin'wana ni rin'wana.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/0/target/body/2",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+      },
+      "candidateText": "Metsotsong e mmalwa e tlang, re tla bua ka dintho tse nne. Ho lokisa bethe. Ho etsa hore kotulo e nne e tswele pele. Hore na ke dijalo dife tsa staple tse lokelang ho jalwa. Le seo o ka se etsang ha disenyi di fihla.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/0/target/body/2",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+      },
+      "candidateText": "Kha minetse i si gathi i tevhelaho, ri ḓo haseledza zwithu zwiṋa. U lugisa bed. U ita uri harvest i bvele phanḓa. Uri ndi zwifhio zwimela zwa staple zwine zwa fanela u ṱavhiwa. Na zwine na nga ita musi pests dzi tshi swika.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/2",
+      "slideNumber": 1,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+      },
+      "candidateText": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. And what to do when pests arrive.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ],
+      "originalCandidateText": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. Ni leswi u nga swi endleke loko pests ti fika.",
+      "rootRepair": "Independent semantic concern repaired; no fluent approval."
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/1/target/heading",
+      "slideNumber": 2,
+      "fieldType": "heading",
+      "bodyParagraphIndexZeroBased": null,
+      "sourceEnglish": "Why This Matters",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Why This Matters"
+      },
+      "candidateText": "Ha Yini Leswi Swi Ri Swa Nkoka",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/0",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Let's start with the problem.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Let's start with the problem."
+      },
+      "candidateText": "Kha ri thome nga thaidzo.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/1/target/body/0",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Let's start with the problem.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Let's start with the problem."
+      },
+      "candidateText": "A hi sunguleni hi xiphiqo.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/1/target/body/1",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted."
+      },
+      "candidateText": "Ku byala swo tala hi nkarhi wun'we swi endla leswaku ku va ni swakudya swo tala hi nkarhi wun'we. Hinkwato swi lulamela hi nkarhi wun'we. U dya leswi u swi kotaka, u nyika van'wana swin'wana, kutani leswi salaka swa lahleka.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/2",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it."
+      },
+      "candidateText": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. The garden is full of plants, but there's no food in it.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ],
+      "originalCandidateText": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. Dira ḽo ḓala nga zwimela, fhedzi a hu na zwiḽiwa khayo.",
+      "rootRepair": "Exact final English sentence avoids unresolved garden loan concord."
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/1/target/body/3",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready."
+      },
+      "candidateText": "Small sowings create a rhythm instead. Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. Something is always coming ready.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [
+        "Small sowings create a rhythm instead.",
+        "Something is always coming ready."
+      ],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve small sowing scale, overlapping actions, and the progressive coming-ready timing."
+      ],
+      "originalCandidateText": "Dijalwana tse nyane di etsa morethetho ho e na le hoo. Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. Kamehla ho na le se seng se seng se loketse ho kotulwa.",
+      "rootRepair": "Independent recheck found the previous localized final sentence could change “coming ready” into already ready. Keep both temporal source sentences exact English and draft only the overlap sentence; no fluent approval."
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/3",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready."
+      },
+      "candidateText": "U ṱavha zwipiḓa zwiṱuku nga zwifhinga zwo fhambanaho zwi ita uri hu vhe na mutevhetsindo. U ṱavha, u ṱhogomela na u kaṋa zwi bvela phanḓa zwi tshi itea nga zwifhinga zwi fanaho. Hu dzula hu na tshiṅwe tshine tsha khou lugela u kaṋiwa.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/1/target/body/3",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready."
+      },
+      "candidateText": "Ku byala switsongo swi endla rhithimi ematshan'weni ya ku byala swo tala hi nkarhi wun'we. Ku byala, ku khathalela ni ku tshovela swa hlangana. Ku ni lexi tshamelaka ku lungheka ku tshoveriwa.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/4",
+      "slideNumber": 2,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 4,
+      "sourceEnglish": "That rhythm is what feeds a household. Not the size of the garden.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "That rhythm is what feeds a household. Not the size of the garden."
+      },
+      "candidateText": "Wonoyo mutevhetsindo ndi wone une wa fusha muṱa. A si vhuhulwane ha garden.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ],
+      "originalCandidateText": "Wonoyo mutevhetsindo ndi wone une wa fusha muṱa. A si vhuhulwane ha ḓirata.",
+      "rootRepair": "Independent semantic concern repaired; no fluent approval."
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/2/target/body/0",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "By the end of this module, you'll be able to make four decisions in your own field.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "By the end of this module, you'll be able to make four decisions in your own field."
+      },
+      "candidateText": "Qetellong ya mojule ona, o tla kgona ho etsa diqeto tse nne tshimong ya hao.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/2/target/body/0",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "By the end of this module, you'll be able to make four decisions in your own field.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "By the end of this module, you'll be able to make four decisions in your own field."
+      },
+      "candidateText": "Musi ri tshi fhedza iyi module, ni ḓo kona u dzhia tsheo nṋa tsimuni yaṋu.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/2/target/body/0",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "By the end of this module, you'll be able to make four decisions in your own field.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "By the end of this module, you'll be able to make four decisions in your own field."
+      },
+      "candidateText": "Loko modula lowu wu hela, u ta kota ku endla swiboho swa mune ensin'wini ya wena.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/2/target/body/5",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      },
+      "candidateText": "Dintho tsena tse nne di tsamaya mmoho. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [
+        "A well-shaped bed still fails if everything goes in on one day.",
+        "A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      ],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/2/target/body/5",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      },
+      "candidateText": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [
+        "A well-shaped bed still fails if everything goes in on one day.",
+        "A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      ],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/2/target/body/5",
+      "slideNumber": 3,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      },
+      "candidateText": "Swilo leswi swa mune swi fambisana. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "candidateStatus": "machine-draft",
+      "provenance": "ordinary framing candidate; source and current target rechecked against paired deck at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c",
+      "retainedEnglish": [
+        "A well-shaped bed still fails if everything goes in on one day.",
+        "A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      ],
+      "riskFlags": [
+        "Unreviewed machine draft; language and local farming review required.",
+        "Preserve source counts, temporal contrast, and causal/conditional scope."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/3/target/body/0",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season."
+      },
+      "candidateText": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 0; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 0,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/3/target/body/1",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides."
+      },
+      "candidateText": "Tshireletso e bonolo. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 1; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 1,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/3/target/body/2",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area."
+      },
+      "candidateText": "One metre to one point two metres wide. Ke yona working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 2; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 2,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/3/target/body/3",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      },
+      "candidateText": "Jwale nahana ka dibethe tsa hao. Na o ka fihla bohareng ntle le ho hata ka hare? Eya o leke pele o lema eng kapa eng hape.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 3; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 3,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/0",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "There's no single bed shape that's right everywhere.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "There's no single bed shape that's right everywhere."
+      },
+      "candidateText": "Ha ho sebopeho se le seng sa bethe se loketseng dibaka tsohle.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 4; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 4,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/1",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Start with the least disturbance that solves your problem."
+      },
+      "candidateText": "Qala ka least disturbance that solves your problem.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 5; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 5,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/2",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "No-dig suits most garden soils. Leave the structure alone and build fertility on top."
+      },
+      "candidateText": "No-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme build fertility on top.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 6; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 6,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/3",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      },
+      "candidateText": "U se ke ua cheka wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 7; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 7,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/4",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 4,
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Raised beds suit wet ground, where water needs somewhere to drain away to."
+      },
+      "candidateText": "Raised beds di loketse wet ground, moo water needs somewhere to drain away to.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 8; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 8,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/5",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Sunken beds suit dry ground, where you want to catch and hold what rain you get."
+      },
+      "candidateText": "Sunken beds di loketse dry ground, moo you want to catch and hold what rain you get.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 9; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 9,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/4/target/body/6",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 6,
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      },
+      "candidateText": "Ka mora pula e matla, sheba hore na metsi a sala hokae kapa a phalla a fete hokae. Kopanya seo o se boneng le keletso mabapi le mobu le phallo ya metsi pele o kgetha bethe.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 10; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 10,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/5/target/body/0",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
+      },
+      "candidateText": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 11; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 11,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/5/target/body/1",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there."
+      },
+      "candidateText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 12; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 12,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "st",
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json#/slides/5/target/body/2",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+      },
+      "candidateText": "Sebedisa spacing guidance for the crop, variety and local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 13; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 13,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/3/target/body/0",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season."
+      },
+      "candidateText": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 0; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 0,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/3/target/body/1",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides."
+      },
+      "candidateText": "Tsireledzo ndi yo leluwaho. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 1; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 1,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/3/target/body/2",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area."
+      },
+      "candidateText": "One metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 2; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 2,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/3/target/body/3",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      },
+      "candidateText": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati without stepping inside? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 3; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 3,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/0",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "There's no single bed shape that's right everywhere.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "There's no single bed shape that's right everywhere."
+      },
+      "candidateText": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 4; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 4,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/1",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Start with the least disturbance that solves your problem."
+      },
+      "candidateText": "Thomani nga least disturbance that solves your problem.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 5; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 5,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/2",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "No-dig suits most garden soils. Leave the structure alone and build fertility on top."
+      },
+      "candidateText": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility on top.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 6; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 6,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/3",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      },
+      "candidateText": "Ni songo bwa wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 7; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 7,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/4",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 4,
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Raised beds suit wet ground, where water needs somewhere to drain away to."
+      },
+      "candidateText": "Raised beds suit wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 8; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 8,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/5",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Sunken beds suit dry ground, where you want to catch and hold what rain you get."
+      },
+      "candidateText": "Sunken beds suit dry ground, hune na ṱoḓa u catch and hold mvula ine na i wana.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 9; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 9,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/4/target/body/6",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 6,
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      },
+      "candidateText": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a run off ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice u sa athu khetha bed.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 10; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 10,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/5/target/body/0",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
+      },
+      "candidateText": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better sown straight where they'll grow. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 11; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 11,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/5/target/body/1",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there."
+      },
+      "candidateText": "Zwimela zwiṅwe zwi ita zwavhuḓi arali zwi thoma zwi tshi tsireledzwa nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 12; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 12,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/5/target/body/2",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+      },
+      "candidateText": "Shumisani spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 13; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 13,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/3/target/body/0",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season."
+      },
+      "candidateText": "Compacted soil loses its air spaces. Roots slow down. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 0; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 0,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/3/target/body/1",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides."
+      },
+      "candidateText": "Nsirhelelo wu olova. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 1; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 1,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/3/target/body/2",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area."
+      },
+      "candidateText": "One metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 2; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 2,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/3/target/body/3",
+      "slideNumber": 4,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      },
+      "candidateText": "Sweswi ehleketa hi mabedhe ya wena. Can you reach the middle without stepping inside? Famba u ya ringeta leswi u nga si byala swin'wana.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 3; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 3,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/0",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "There's no single bed shape that's right everywhere.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "There's no single bed shape that's right everywhere."
+      },
+      "candidateText": "A ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 4; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 4,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/1",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Start with the least disturbance that solves your problem."
+      },
+      "candidateText": "Sungula hi least disturbance that solves your problem.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 5; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 5,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/2",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "No-dig suits most garden soils. Leave the structure alone and build fertility on top."
+      },
+      "candidateText": "No-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 6; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 6,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/3",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 3,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      },
+      "candidateText": "U nga keli wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 7; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 7,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/4",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 4,
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Raised beds suit wet ground, where water needs somewhere to drain away to."
+      },
+      "candidateText": "Raised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 8; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 8,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/5",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 5,
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Sunken beds suit dry ground, where you want to catch and hold what rain you get."
+      },
+      "candidateText": "Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 9; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 9,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/4/target/body/6",
+      "slideNumber": 5,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 6,
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      },
+      "candidateText": "Endzhaku ka heavy rain, kambisisa. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 10; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 10,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/5/target/body/0",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 0,
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
+      },
+      "candidateText": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 11; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 11,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/5/target/body/1",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there."
+      },
+      "candidateText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 12; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 12,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/5/target/body/2",
+      "slideNumber": 6,
+      "fieldType": "body",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "current": {
+        "status": "english-hold",
+        "renderedText": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+      },
+      "candidateText": "Landzelela spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "candidateStatus": "reuse-existing-machine-draft",
+      "provenance": "Exact full English source match to canonical vegetables-staples-l1 body paragraph 13; reuse resolver output from lib/course-localization.ts at HEAD add09cfface3dcc06836ebc978f4efc4cb444b5c.",
+      "reuseSource": {
+        "canonicalLessonId": "vegetables-staples-l1",
+        "lessonParagraphIndexZeroBased": 13,
+        "resolverStatus": "draft"
+      },
+      "riskFlags": [
+        "Reused existing learner machine draft verbatim; not a new translation or language approval.",
+        "Do not infer that lesson draft resolves technical wording; facilitator review remains required."
+      ]
+    }
+  ],
+  "candidateEntryCount": 65,
+  "approval": "No fluent approval. All additions/reuse remain machine-draft source-paired material for facilitator and language review.",
+  "validation": {
+    "openingTargetsSourceAndCurrentMatchedScope": true,
+    "slides4to6EachFullEnglishParagraphMatchedCanonicalL1": true,
+    "slides4to6ResolverStatus": "draft for st, ve, ts",
+    "canonicalOrMediaModified": false,
+    "repositoryFilesModified": false
+  }
+}
