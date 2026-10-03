@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: 'b95e7922', changes: [
+    'Water slides add marked regional drafts beside their complete English source.',
+    'Save the silent slide pack; English narration remains an optional choice.',
+  ], tour: [
+    { title: 'Review the regional Water slides',
+      where: 'Study → Water Harvesting → Slides',
+      detail: 'Compare the unreviewed drafts with English before using the field checklist.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: 'ef688935', changes: [
     'Vegetable slides add regional drafts beside English through the final field task.',
     'Longer slide text stays readable; save slides only or choose English narration.',
