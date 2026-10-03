@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: 'd81c93a2', changes: [
+    'Vegetable bed lessons add marked regional wording beside exact English.',
+    'Bed sizes, soil precautions and nursery order stay anchored to their source.',
+  ], tour: [
+    { title: 'Review regional vegetable lessons',
+      where: 'Study → Vegetables and Staple Crops → Lessons 1 and 2',
+      detail: 'Read the unreviewed drafts with their English source and retained farming terms.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: '8c07f29a', changes: [
     'Staple crop lessons add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
     'Seed-saving and water conditions stay exact; difficult farming terms remain English.',
