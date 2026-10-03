@@ -1185,6 +1185,119 @@ test('Soil Health deck reuses complete resolver paragraphs only at exact sources
   assert.equal(fallback.content.body, changedLesson.body);
 });
 
+test('Reading Landscape drafts keep exact sources, field-safety conditions and directional claims paired', () => {
+  const readingSource = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const accepted = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-SLIDES-3-14-ROOT-ACCEPTED-CANDIDATES-2026-10-04.json', 'utf8'));
+  const preservation = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-SLIDES-3-14-IMPLEMENTATION-PRESERVATION-2026-10-04.json', 'utf8'));
+  assert.equal(accepted.scope.targetFields, 20);
+  assert.equal(accepted.scope.uniqueFrames, 17);
+  assert.equal(accepted.candidateFields.length, 20);
+  assert.equal(preservation.targetFieldsChanged, 20);
+  assert.equal(preservation.uniqueFramesChanged, 17);
+
+  const changed = new Set<string>();
+  for (const language of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, readingSource, language);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    for (const field of accepted.candidateFields.filter((item: any) => item.language === language)) {
+      const slide = slides[field.slide - 1];
+      const key = `${language}:${field.slide}:${field.bodyIndex}`;
+      assert.equal(slide.english.body[field.bodyIndex], field.sourceEnglish,
+        `${key}: the candidate remains attached to its exact English narration`);
+      const target = slide.target.body[field.bodyIndex];
+      assert.equal(target.status, field.candidateStatus, `${key}: keep the accepted draft or mixed state visible`);
+      changed.add(key);
+      if (field.candidateStatus === 'mixed') {
+        assert.deepEqual(target.segments, field.candidateSegments, `${key}: retain the reviewed segment boundaries`);
+        assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), field.sourceEnglish,
+          `${key}: every translated clause and English hold follows the complete source in order`);
+        for (const segment of target.segments) {
+          if (segment.status === 'english-hold') {
+            assert.equal(segment.text, undefined, `${key}: an English hold stays exact source text, not a second draft`);
+          } else {
+            assert.ok(typeof segment.text === 'string' && segment.text.trim(), `${key}: each localized segment is present`);
+          }
+        }
+      } else {
+        assert.equal(target.text, field.candidateText, `${key}: keep the accepted source-bound draft`);
+        assert.notEqual(target.text.trim(), field.sourceEnglish.trim(), `${key}: translated copy cannot masquerade as an English hold`);
+      }
+    }
+    for (const snapshot of preservation.preservedTargets[language]) {
+      const slide = slides[snapshot.slide - 1];
+      const current = snapshot.field === 'heading'
+        ? slide.target.heading
+        : slide.target.body[snapshot.bodyIndex];
+      assert.deepEqual(current, snapshot.target,
+        `${language} slide ${snapshot.slide}: every heading and non-target body keeps its earlier wording and review state`);
+    }
+
+    // The field walk remains conditional on safety: heavy-rain observation and the full feature/property checklist stay exact.
+    if (language === 'st' || language === 'ts') {
+      const walk = slides[3].target.body[1];
+      assert.equal(walk.status, 'mixed');
+      assert.deepEqual(walk.segments.map((segment: any) => [segment.sourceEnglish, segment.status]), [
+        ['Watch from a safe place during heavy rain. ', 'english-hold'],
+        ['When it is safe afterward, walk your land. ', 'draft'],
+        ['Look for rills, places where water fans out, ponds, and where water leaves your property.', 'english-hold'],
+      ]);
+    }
+
+    // The learner must not infer one universal slope placement rule from the observation prompt.
+    const placement = slides[6].target.body[1];
+    assert.equal(placement.status, 'draft');
+    const noRuleAndObserve = {
+      st: ['Ha ho na molao o le mong wa sebaka', 'metsi a tsamayang le ho bokellana teng'],
+      ve: ['A hu na mulayo muthihi', 'maḓi a tshimbila na hune a kuvhangana hone'],
+      ts: ['A ku na placement rule yin’we', 'mati ma fambaka kona ni laha ma hlengeletanaka kona'],
+    } as const;
+    for (const anchor of noRuleAndObserve[language]) {
+      assert.ok(placement.text.includes(anchor), `${language}: retain the no-single-rule and observe-water meaning`);
+    }
+
+    // Directional claims stay source-exact; translators cannot silently flip the sun or cold-air movement.
+    const winterSun = slides[7].target.body[0];
+    assert.equal(winterSun.status, 'mixed');
+    assert.ok(winterSun.segments.some((segment: any) => segment.status === 'english-hold' &&
+      segment.sourceEnglish === 'the sun is to the north. Its path changes with the season and your location.'));
+    const coldAir = slides[13].target.body[0];
+    assert.equal(coldAir.status, 'mixed');
+    assert.ok(coldAir.segments.some((segment: any) => segment.status === 'english-hold' &&
+      segment.sourceEnglish === 'cold air can flow downhill and collect in low places.'));
+    if (language === 'st') assert.ok(coldAir.segments.at(-1).text.includes('di ka bata ho feta'),
+      'ST keeps the source possibility (“can be colder”), without strengthening it to a certainty');
+    if (language === 've') assert.ok(coldAir.segments.at(-1).text.includes('hu nga rothola u fhira'),
+      'VE keeps the source possibility (“can be colder”), without strengthening it to a certainty');
+    if (language === 'ts') assert.ok(coldAir.segments.at(-1).sourceEnglish === ' These places can be colder than nearby slopes.' &&
+      coldAir.segments.at(-1).status === 'english-hold', 'TS keeps the uncertain comparative exact');
+
+    // Damaging-wind direction and the weather-record check before a windbreak remain exact where they are held.
+    const wind = slides[11].target.body[1];
+    assert.ok(['draft', 'mixed', 'english-hold'].includes(wind.status));
+    const windText = wind.status === 'mixed'
+      ? wind.segments.filter((segment: any) => segment.status === 'english-hold').map((segment: any) => segment.sourceEnglish).join('')
+      : wind.status === 'english-hold' ? slides[11].english.body[1] : '';
+    if (language === 've' || language === 'ts') {
+      assert.equal(wind.status, 'english-hold', `${language}: retain the full wind-direction and record-before-windbreak paragraph`);
+    } else {
+      assert.ok(windText.includes("The direction and strength of damaging wind change with region, season and your site's ridges and gaps."));
+      assert.ok(windText.includes('Check local weather records before placing a windbreak.'));
+      assert.ok(wind.status === 'mixed' && wind.segments.some((segment: any) =>
+        segment.status === 'draft' && segment.sourceEnglish === 'Walk the land on windy days. '));
+    }
+
+    // A changed source must block the whole paired deck instead of presenting this draft against stale English.
+    const drifted = structuredClone(readingSource);
+    drifted[13].body[0] += ' Changed source.';
+    assert.throws(() => validatePairedDraft(packet, drifted, language), /slide 14: English body differs/,
+      `${language}: source drift blocks these paired field notes`);
+  }
+  assert.equal(changed.size, 20, 'all 20 accepted target fields remain represented once');
+});
+
 test('regional Market slides preserve exact price and seed holds plus conditions inside unreviewed drafts', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   const safetyAnchors = {

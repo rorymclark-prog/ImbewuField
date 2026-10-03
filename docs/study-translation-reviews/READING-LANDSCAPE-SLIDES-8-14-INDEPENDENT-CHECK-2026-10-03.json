@@ -1,0 +1,464 @@
+{
+  "title": "Independent semantic backcheck: Reading Landscape slides 8–14 candidates",
+  "date": "2026-10-04",
+  "inputPacket": "/tmp/imbewu-reading-landscape-slides8-14-candidates-20261003.json",
+  "sourceProvenance": {
+    "sourceCommit": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+    "sourceMarkdownPath": "docs/narration/reading-landscape.en.md",
+    "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+    "matchesPacketHash": true,
+    "sourceSegmentsMatchedPacketAssertions": {
+      "allCandidateEnglishExactlyMatchesPairedSource": true,
+      "allCandidateTargetFieldsWereEnglishHolds": true,
+      "allSegmentsConcatenateExactly": true,
+      "everyEnglishHoldIsVerbatimSource": true
+    }
+  },
+  "scope": {
+    "candidateFieldsReviewed": 12,
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "slides": [
+      8,
+      12,
+      14
+    ],
+    "repositoryFilesChanged": false
+  },
+  "summary": {
+    "acceptedAsCandidate": 10,
+    "revisedToExactEnglishHold": 2,
+    "repairTextAdjustment": 1,
+    "specificRepairs": [
+      "VE slide12 body1: exact English hold for site walk due shango land/country ambiguity",
+      "TS slide12 body1: exact English hold for site walk due misava soil/ground scope",
+      "ST slide14 body0: remove unsupported intensity word “haholo” from comparative clause"
+    ]
+  },
+  "fields": [
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Dikarolong tse ngata tsa South Africa, haholo mariha, the sun is to the north. Its path changes with the season and your location.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "In much of South Africa, especially in winter, ",
+          "status": "draft",
+          "text": "Dikarolong tse ngata tsa South Africa, haholo mariha, "
+        },
+        {
+          "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "Dikarolong tse ngata tsa South Africa, haholo mariha, the sun is to the north. Its path changes with the season and your location.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "Wind can damage crops on a smallholding.",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Moya o ka senya dijalo polasing e nyane.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "status": "draft",
+          "text": "Moya o ka senya dijalo polasing e nyane."
+        }
+      ],
+      "finalCandidateText": "Moya o ka senya dijalo polasing e nyane.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": false,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Tsamaya lefatsheng matsatsing a nang le moya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Walk the land on windy days. ",
+          "status": "draft",
+          "text": "Tsamaya lefatsheng matsatsing a nang le moya. "
+        },
+        {
+          "sourceEnglish": "Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Tsamaya lefatsheng matsatsing a nang le moya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "Only “Walk the land on windy days” is translated; damaging-wind direction/strength variation by region/season/site ridges and gaps, recording where it comes from/what it affects, and checking local weather records before placement remain exact in source order. “Le fatshe” is broad land/ground but context of site observation bounds it; tentative machine check.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "bodyIndex": 0,
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Bosiu bo hlakileng, bo kgutsitseng, cold air can flow downhill and collect in low places. Dibaka tsena di ka bata haholo ho feta matswapo a haufi.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "On a clear, still night, ",
+          "status": "draft",
+          "text": "Bosiu bo hlakileng, bo kgutsitseng, "
+        },
+        {
+          "sourceEnglish": "cold air can flow downhill and collect in low places.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " These places can be colder than nearby slopes.",
+          "status": "draft",
+          "text": " Dibaka tsena di ka bata ho feta matswapo a haufi."
+        }
+      ],
+      "finalCandidateText": "Bosiu bo hlakileng, bo kgutsitseng, cold air can flow downhill and collect in low places. Dibaka tsena di ka bata ho feta matswapo a haufi.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "The clear/still-night framing and “can be colder than nearby slopes” comparison are represented. Remove “haholo” (“very”) because it intensifies source without support. Keep exact English for cold-air downhill flow and low-place collection.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), the sun is to the north. Its path changes with the season and your location.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "In much of South Africa, especially in winter, ",
+          "status": "draft",
+          "text": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), "
+        },
+        {
+          "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), the sun is to the north. Its path changes with the season and your location.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "Wind can damage crops on a smallholding.",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Muya u nga tshinyadza zwimela kha smallholding.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "status": "draft",
+          "text": "Muya u nga tshinyadza zwimela kha smallholding."
+        }
+      ],
+      "finalCandidateText": "Muya u nga tshinyadza zwimela kha smallholding.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": false,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "decision": "revise-to-exact-English-hold-for-windy-day-clause",
+      "independentBackTranslation": "“Shango” can mean country and may expand an ordinary site walk to the country. Preserve the whole source paragraph exactly; all conditions, observation, recording and pre-placement weather check stay in order.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 0,
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Vhusiku vhu sa na makole, hu si na muya, cold air can flow downhill and collect in low places. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "On a clear, still night, ",
+          "status": "draft",
+          "text": "Vhusiku vhu sa na makole, hu si na muya, "
+        },
+        {
+          "sourceEnglish": "cold air can flow downhill and collect in low places.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " These places can be colder than nearby slopes.",
+          "status": "draft",
+          "text": " Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini."
+        }
+      ],
+      "finalCandidateText": "Vhusiku vhu sa na makole, hu si na muya, cold air can flow downhill and collect in low places. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "“Vhusiku vhu sa na makole, hu si na muya” conveys clear/still conditions. The cold-air flow-downhill/low-place mechanism remains exact English. The final translated clause preserves these places can be colder than nearby slopes; “can” remains potential.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, the sun is to the north. Its path changes with the season and your location.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "In much of South Africa, especially in winter, ",
+          "status": "draft",
+          "text": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, "
+        },
+        {
+          "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, the sun is to the north. Its path changes with the season and your location.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "Wind can damage crops on a smallholding.",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Moya wu nga onha swibyariwa eka purasi leritsongo.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "status": "draft",
+          "text": "Moya wu nga onha swibyariwa eka purasi leritsongo."
+        }
+      ],
+      "finalCandidateText": "Moya wu nga onha swibyariwa eka purasi leritsongo.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": false,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "decision": "revise-to-exact-English-hold-for-windy-day-clause",
+      "independentBackTranslation": "“Misava” can mean soil/ground/earth and may shift “walk the land” toward walking in/on soil. Preserve the whole source paragraph exactly; retain conditions, recording task, and weather-record check before placement.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 0,
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "Loko ku ri vusiku byo basa, ku nga ri na moya, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "On a clear, still night, ",
+          "status": "draft",
+          "text": "Loko ku ri vusiku byo basa, ku nga ri na moya, "
+        },
+        {
+          "sourceEnglish": "cold air can flow downhill and collect in low places.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " These places can be colder than nearby slopes.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "Loko ku ri vusiku byo basa, ku nga ri na moya, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "decision": "retain-candidate",
+      "independentBackTranslation": "Candidate localizes clear/still-night framing and keeps the complete cold-air mechanism and comparative claim exact in English. This preserves direction, collection location and potential comparison without adding specificity.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    }
+  ],
+  "limitations": [
+    "Machine semantic check, not fluent/local farming approval.",
+    "All directional, seasonal, wind-risk, weather-record, and cold-air process source clauses remain exact English where technically important.",
+    "ST/VE/TS ordinary localized clauses are draft candidates for facilitator review."
+  ]
+}

@@ -98,7 +98,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "By the end of this module, you will be able to follow water ",
+                "status": "draft",
+                "text": "Loko modula lowu wu hela, u ta kota ku landzelela mati "
+              },
+              {
+                "sourceEnglish": "across your land and find where it leaves.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "draft",
@@ -138,10 +150,38 @@
             "text": "Loko u nga si hlengeleta mati, dyondza laha se ma yaka kona."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Watch from a safe place during heavy rain. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "When it is safe afterward, walk your land. ",
+                "status": "draft",
+                "text": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+              },
+              {
+                "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Some excess water needs ",
+                "status": "draft",
+                "text": "Mati man'wana lama taleke ma lava "
+              },
+              {
+                "sourceEnglish": "a safe route away so it does not cause damage.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           }
         ]
       }
@@ -217,7 +257,9 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona.",
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "english-hold"
@@ -244,7 +286,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "In much of South Africa, especially in winter, ",
+                "status": "draft",
+                "text": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, "
+              },
+              {
+                "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "english-hold"
@@ -351,7 +405,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Moya wu nga onha swibyariwa eka purasi leritsongo.",
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "english-hold"
@@ -401,7 +457,23 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "On a clear, still night, ",
+                "status": "draft",
+                "text": "Loko ku ri vusiku byo basa, ku nga ri na moya, "
+              },
+              {
+                "sourceEnglish": "cold air can flow downhill and collect in low places.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " These places can be colder than nearby slopes.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "english-hold"
