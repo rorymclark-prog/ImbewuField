@@ -14,7 +14,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U kuvhanganya maḓi",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
@@ -69,7 +71,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mivhumbekanyo mivhili ya swale",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
@@ -146,13 +150,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pula khulwane i nga ḓadza swale nga u ṱavhanya u fhira u dzhena ha maḓi mavuni. Plan a safe overflow before digging.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Route a i tei u erode slope kana u rumela damaging water kha neighbour. A downstream swale or dam must be able to receive it safely.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ask a trained local adviser to assess the soil, slope and storm flow. Tshifanyiso a si construction design.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -193,14 +203,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱolani fhethu musi ni sa athu u bwa",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Slope fhedzi a i sumbedzi arali swale i suitable. Soil, drainage, unstable ground na maḓi ane a bva upslope zwoṱhe zwi na ndeme.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Keep good ground cover. Wanani local assessment before digging on steep, wet or unstable land. Grass barriers na terraces na zwone zwi ṱoḓa a design suited to the site.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -217,11 +233,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani: midzi i thusa u fara mavu",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Midzi i thusa u fara mavu kha mutalo wa contour wo ṱavhiwaho.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
             "status": "english-hold"
@@ -242,28 +262,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vhulungani maḓi a mvula u itela dry season",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dam kana pond i nga vhulunga runoff, fhedzi amount i re hone i bva kha local rain, catchment, losses na uri ni shumisa maḓi mangana.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Rainfall seasons differ across South Africa.",
-                "status": "draft",
-                "text": "Zwifhinga zwa mvula zwi a fhambana kha Afrika Tshipembe."
-              },
-              {
-                "sourceEnglish": " Use local records and plan for dry periods; a full dam is not guaranteed.",
-                "status": "english-hold"
-              }
-            ]
+            "status": "draft",
+            "text": "Tshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe. Shumisani local records ni pulanele dry periods; dam yo ḓalaho a yo khwaṱhisedzwi.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Musi ni sa athu shandula watercourse kana u fhaṱa storage works, check the required authorisation with the water authority.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -285,13 +302,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dam i ṱoḓa site investigation na design yo itwaho nga suitably qualified person. Catchment runoff, soil, foundations, downstream risk na safe spillway zwoṱhe zwi na ndeme.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni songo humbula uri annual rainfall i ni vhudza size ya flood kana storage ine na ḓo vha nayo.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Overflow i songo langiwaho i nga erode na breach wall. Plan safe route ya excess water before construction.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -337,13 +360,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maḓi a nga xela nga evaporation na seepage. Check water level ni sedze leaks kana erosion.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Keep spillway i clear nahone maintain bank cover yo bulwaho kha design. Do not plant trees on earth dam wall.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Animals can damage banks and add manure to the water. U vha hone hazwi iti uri maḓi a vhe clean kana safe.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -362,20 +391,30 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱhanga yaṋu ndi fhethu ha u kuvhanganya maḓi",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱhanga ya ṋu i nga kuvhanganya madi a mvula. Madi ane a wanala a bva kha vhuhulwane ha ṱhanga, mvula na madi a xelaho.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱolani arali roof material yo tea u kuvhanganya maḓi a mvula musi ni sa athu u ṱumanya tank.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani roof area ine ya vhonala u bva nṱha na local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshivhalo tsha ṅwaha woṱhe a tshi ni vhudzi uri hu ḓo vha na madi mangana during a dry spell. Compare supply with the uses you plan.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -397,13 +436,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Roof runoff i nga hwala buse, droppings na iṅwe contamination. First-flush diverter i thivhela maṅwe maḓi a first runoff uri a si dzhene kha tank.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Diversion ine ya ṱoḓea i ḓitika nga ṱhanga na system. Shumisani ndaela dza supplier dza sizing na maintenance; a hu na volume nthihi fhedzi ine ya shuma kha ṱhanga iṅwe na iṅwe.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Diverter a i iti uri maḓi o salaho a vhe o tsireledzea u nwiwa.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -449,13 +494,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tank size i ḓitika nga water demand, mvula, roof area na vhulapfu ha tshifhinga tsha dry periods.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṅwalani mutevhe wa intended uses nahone ni anganyele demand yayo u bva kha records dzaṋu vhaṋe. Compare that with supply through the seasons.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulannani zwine na ḓo zwi ita musi maḓi o vhulungwaho a tshi thoma u vha maṱuku. A province name alone cannot tell you the tank size you need.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -477,13 +528,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Itani uri tank i dzule yo tibifhiwa; screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Water that looks clear may still contain germs or chemicals. Vhudzisani local health authority nga ha testing na treatment yo teelaho intended use.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Basic filter fhedzi a si drinking-water guarantee. Maḓi ane a shumiswa kha food crops na one a ṱoḓa safety assessment.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           }
         ]
       }
@@ -500,7 +557,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Maḓi o shumiswaho a a fhambana u ya nga tshiko",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
@@ -603,13 +662,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fhaṱani A-frame level nga poles tharu na weighted string.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I shumiseni u wana line nthihi yo levelaho across slope yaṋu.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Take a photo ya A-frame na line ye na swaya.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           }
         ]
       }
@@ -629,23 +694,33 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱolani mushumo waṋu",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A-frame yanga yo fhaṱiwa nahone ndo i linga.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "I shandukedzeni — it should read the same.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Ndo swaya at least three points at the same height across my slope.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Minimum time ine ya pfala ya mushumo wa vhukuma: 5 days.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
           }
         ]
       }

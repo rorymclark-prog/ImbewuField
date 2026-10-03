@@ -100,54 +100,169 @@ test('Market record slides reuse L1 wording and keep quantity and destination an
   }
 });
 
-test('Water Harvesting keeps technical teaching in English under localized generic headings', () => {
+test('Water Harvesting source-paired decks expose only exact-source resolver drafts and bounded candidates', () => {
   const waterSource = englishSlideRecords(readFileSync('docs/narration/water-harvesting.en.md', 'utf8'));
-  const candidates = {
-    st: 'Dihla tsa dipula di fapana ho pholletsa le Afrika Borwa.',
-    ve: 'Zwifhinga zwa mvula zwi a fhambana kha Afrika Tshipembe.',
-    ts: 'Tinguva ta mpfula ta hambana eAfrika Dzonga.',
-  };
   const safeHeadings = {
     st: { 2: 'Liphetho tsa ho ithuta', 23: 'Mosebetsi oa tšimong' },
     ve: { 2: 'Zwine na ḓo guda', 23: 'Mushumo wa tsimuni' },
     ts: { 2: 'Leswi u nga ta swi dyondza', 23: 'Ntirho wa le nsinini' },
   };
+  const waterModule = COURSE_MODULES.find(({ id }) => id === 'water-harvesting')!;
+  const exactLessonParagraphs = new Map<string, Array<{ status: string; text: string }>>();
+  for (const language of ['st', 've', 'ts'] as const) {
+    for (const lesson of waterModule.lessons) {
+      const resolved = resolveLearnerLessonPresentation(lesson, language);
+      const sourceParagraphs = lesson.body.split('\n\n');
+      const resolvedParagraphs = resolved.content.body.split('\n\n');
+      assert.equal(resolvedParagraphs.length, sourceParagraphs.length,
+        `${language} ${lesson.id}: learner resolver keeps paragraph boundaries`);
+      sourceParagraphs.forEach((sourceParagraph, index) => {
+        const key = `${language}\0${sourceParagraph}`;
+        exactLessonParagraphs.set(key, [
+          ...(exactLessonParagraphs.get(key) ?? []),
+          { status: resolved.status, text: resolvedParagraphs[index] },
+        ]);
+      });
+    }
+  }
+
+  const criticalEnglishHolds: Array<[number, number[]]> = [
+    [2, [0, 1, 2, 3]], // learning outcomes on swale design, spillway, tank safety and greywater separation
+    [3, [0, 1]],       // contour, grade, outlet, site conditions and adviser before digging
+    [4, [0, 1]],       // concept-only geometry and site-specific depth/overflow
+    [5, [0, 1]],       // downhill placement and conditional soil-moisture benefit
+    [7, [0, 1]],       // assessed overflow route and receiving capacity
+    [12, [0, 1]],      // catastrophic overtopping and professional assessment
+    [16, [0, 1]],      // first-flush sizing and safety check
+    [19, [0, 1]],      // used-water source and contamination guidance
+    [20, [0, 1]],      // required local sanitation advice and no-reuse condition
+    [21, [0, 1]],      // unapproved design and advice before any reuse
+    [22, [0]],         // contact, plumbing, spraying, pooling and runoff restrictions
+  ];
+
+  const reusedParagraphRows: string[] = [];
+  const exactEnglishResolverRows: string[] = [];
+  const machineDraftRows: string[] = [];
+  const existingHeadingRows: string[] = [];
+  const statusCounts: Record<string, number> = {};
   assert.equal(waterSource.length, 24);
-  for (const [language, candidate] of Object.entries(candidates)) {
+  for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/water-harvesting.${language}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, waterSource, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
     assert.equal(slides.length, 24);
-    const drafted = [];
     for (const slide of slides) {
       const genericHeading = safeHeadings[language as keyof typeof safeHeadings][slide.n as 2 | 23];
-      if (genericHeading) {
-        assert.equal(slide.target.heading.status, 'draft');
+      if (slide.n === 2 || slide.n === 23) {
+        assert.equal(slide.target.heading.status, 'draft', `${language} slide ${slide.n}: preserve existing heading draft`);
         assert.equal(slide.target.heading.text, genericHeading);
         assert.match(slide.target.heading.provenance, /unreviewed.*exact English source paired/);
-      } else {
-        assert.equal(slide.target.heading.status, 'english-hold',
-          `${language} slide ${slide.n}: technical or unreviewed title remains English`);
       }
+      statusCounts[slide.target.heading.status] = (statusCounts[slide.target.heading.status] ?? 0) + 1;
+      if (slide.target.heading.status === 'draft') {
+        assert.ok(slide.target.heading.text && slide.target.heading.text !== slide.english.heading,
+          `${language} slide ${slide.n}: heading draft is not a copied English source`);
+        assert.match(slide.target.heading.provenance, /unreviewed|machine draft/i);
+        if (slide.target.heading.provenance.startsWith('existing unreviewed course heading reused verbatim;')) {
+          existingHeadingRows.push(`${language}:${slide.n}`);
+        } else if (slide.target.heading.provenance.startsWith('Bounded deck-only machine draft')) {
+          machineDraftRows.push(`${language}:${slide.n}:heading`);
+        }
+      }
+
       for (const [index, part] of slide.target.body.entries()) {
-        if (part.status === 'mixed') {
-          assert.equal(slide.n, 10);
-          assert.equal(index, 1);
-          assert.deepEqual(part.segments.map(({ status }: { status: string }) => status), ['draft', 'english-hold']);
-          assert.equal(pairedTargetHasEnglishHolds(slide.target), true,
-            'a mixed passage with held English text must retain the visible English-hold label');
-          assert.equal(part.segments[0].sourceEnglish, 'Rainfall seasons differ across South Africa.');
-          assert.equal(part.segments[0].text, candidate);
-          assert.equal(part.segments.map(({ sourceEnglish }: { sourceEnglish: string }) => sourceEnglish).join(''), slide.english.body[index]);
-          drafted.push(slide.n);
-        } else {
-          assert.equal(part.status, 'english-hold');
+        statusCounts[part.status] = (statusCounts[part.status] ?? 0) + 1;
+        const sourceParagraph = slide.english.body[index];
+        const matches = exactLessonParagraphs.get(`${language}\0${sourceParagraph}`) ?? [];
+        if (part.status === 'english-hold') {
           assert.equal(part.text, undefined);
+          if (matches.length > 0) {
+            assert.ok(matches.every(({ text }) => text === sourceParagraph),
+              `${language} slide ${slide.n} body ${index}: an exact resolver English fallback stays held`);
+            exactEnglishResolverRows.push(`${language}:${slide.n}:${index}`);
+          }
+          continue;
+        }
+        assert.ok(part.text && part.text !== sourceParagraph,
+          `${language} slide ${slide.n} body ${index}: a draft must contain target text, not an English copy`);
+
+        if (part.provenance?.startsWith('Complete byte-exact English source learner paragraph reused;')) {
+          assert.ok(matches.length > 0, `${language} slide ${slide.n} body ${index}: reused paragraph has an exact canonical source match`);
+          assert.ok(matches.every(({ text }) => text === part.text),
+            `${language} slide ${slide.n} body ${index}: reuse equals the current resolver paragraph byte for byte`);
+          assert.ok(matches.every(({ status }) => status === 'draft'),
+            `${language} slide ${slide.n} body ${index}: reused resolver paragraph is a draft`);
+          reusedParagraphRows.push(`${language}:${slide.n}:${index}`);
+        } else if (part.provenance?.startsWith('Bounded deck-only machine draft')) {
+          machineDraftRows.push(`${language}:${slide.n}:${index}`);
+        } else if (matches.length > 0) {
+          assert.ok(matches.every(({ text }) => text === sourceParagraph),
+            `${language} slide ${slide.n} body ${index}: a localized exact source match must use the full resolver paragraph`);
+          assert.fail(`${language} slide ${slide.n} body ${index}: source-matched learner text must be marked as a resolver reuse`);
         }
       }
     }
-    assert.deepEqual(drafted, [10], `${language}: every technical or actionable passage stays held`);
+
+    for (const [slideNumber, indices] of criticalEnglishHolds) {
+      const slide = slides[slideNumber - 1];
+      for (const index of indices) {
+        assert.equal(slide.target.body[index].status, 'english-hold',
+          `${language} slide ${slideNumber} body ${index}: technical or sanitation guidance stays in exact English`);
+        assert.equal(slide.target.body[index].text, undefined);
+        assert.equal(slide.english.body[index], waterSource[slideNumber - 1].body[index]);
+      }
+    }
+    assert.equal(pairedTargetHasEnglishHolds(slides[2].target), true,
+      `${language}: technical holds remain visibly paired with their source`);
+
+    const damDesign = slides[10].target.body;
+    assert.match(damDesign[0].text, /suitably qualified|ditshwaneleho tse loketseng|suitable qualifications/i,
+      `${language}: dam design remains assigned to a suitably qualified person`);
+    assert.match(damDesign[0].text, /catchment runoff|sebaka sa pokellelo/i);
+    assert.match(damDesign[0].text, /downstream risk|kotsi e ka tlase/i);
+    assert.match(damDesign[0].text, /safe spillway|tsela e bolokehileng ya metsi a tletseng/i);
+    assert.match(damDesign[1].text, /annual rainfall|pula ya selemo le selemo|mpfula ya lembe/i);
+    assert.match(damDesign[1].text, /flood|morwallo|ndhambi/i);
+    assert.match(damDesign[2].text, /erode|kgohola/i);
+    assert.match(damDesign[2].text, /breach wall|pshatla lerako|breach the wall/i);
+    assert.match(damDesign[2].text, /safe route|tsela e bolokehileng|ndlela leyi hlayisekeke/i);
+
+    const assignment = slides[22];
+    const build = assignment.target.body[0].text;
+    assert.match(build, /A-frame level/);
+    assert.match(build, language === 'ts' ? /ntambhu leyi nga ni ntiko/ : /weighted string/);
+    assert.match(build, language === 'ts' ? /tinharhu/ : language === 've' ? /tharu/ : /tse tharo/,
+      `${language}: the assignment retains exactly three poles`);
+    const turnAround = slides[23].target.body[1];
+    if (language === 'st' || language === 've') assert.match(turnAround.text, /it should read the same/);
+    else assert.match(turnAround.text, /yi fanele yi hlaya leswi fanaka/);
+    const points = slides[23].target.body[2].text;
+    assert.match(points, /at least three points|bonyane dintlha tse tharo|three points/i);
+    assert.match(points, /same height|bophahamong bo le bong|height yo fana/i);
+    assert.match(points, /across my slope|ho parola letsoapong|across slope/i);
+    const direction = slides[23].target.body[3];
+    if (language === 've') {
+      assert.equal(direction.status, 'english-hold');
+      assert.equal(direction.text, undefined);
+    } else {
+      assert.equal(direction.status, 'draft');
+      assert.match(direction.text, /not down|ha o ye tlase|a yi yi ehansi/i);
+      assert.match(direction.text, /across|parola|tsemakanya/i);
+    }
+    assert.match(slides[23].target.body[4].text, /5/);
+    assert.match(slides[23].target.body[4].text, /day|matsatsi|masiku/i);
   }
+
+  assert.equal(reusedParagraphRows.length, 78,
+    'all 78 target-language reuses are exact full paragraphs from current canonical learner resolution');
+  assert.equal(exactEnglishResolverRows.length, 6,
+    'the six exact-source resolver paragraphs that remain English are labeled holds, not translations');
+  assert.equal(machineDraftRows.length, 49,
+    'new deck-only prose remains a bounded, separately labeled unreviewed draft');
+  assert.equal(existingHeadingRows.length, 6,
+    'the two established generic headings per language remain unchanged');
+  assert.deepEqual(statusCounts, { 'english-hold': 125, draft: 133 },
+    'the three paired decks retain 125 exact-English holds and 133 clearly marked draft panels');
 });
 
 // Rewritten 2 October 2026: slides 12-16 and 18-20 were exact-English holds. Every heading and paragraph is
