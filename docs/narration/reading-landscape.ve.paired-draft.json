@@ -11,7 +11,8 @@
   "reviewNotes": [
     "A fluent Tshivenda speaker and local agriculture adviser must review each candidate for meaning, register, and local terminology before classroom use. No fluent-language or farming approval is implied.",
     "English source text is paired sentence by sentence and checked against docs/narration/reading-landscape.en.md.",
-    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. Machine checks are not fluent-speaker approval."
+    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. Machine checks are not fluent-speaker approval.",
+    "3 October: ordinary framing expanded using independently checked, source-bound unreviewed drafts. Difficult technical English holds remain exact. No regional narration or fluent/local farming approval."
   ],
   "slides": [
     {
@@ -97,14 +98,16 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni ḓo read sun angles, shade, wind, frost, and slope."
           },
           {
             "status": "draft",
             "text": "Ni ḓo shumisa A-frame level u tevhela contours."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni ḓo ola a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
           }
         ]
       }
@@ -128,10 +131,12 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni sa kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Watch from a safe place during heavy rain. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Look for rills, places where water fans out, ponds, and where water leaves your property."
           },
           {
             "status": "english-hold"
@@ -150,7 +155,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani: Water Slows, Sinks, and Leaves"
         },
         "body": [
           {
@@ -172,7 +178,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Trace Contours nga A-Frame"
         },
         "body": [
           {
@@ -200,7 +207,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani maḓi ni sa athu fhaṱa"
         },
         "body": [
           {
@@ -228,7 +236,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ngudo 2: Vhalani ḓuvha na murunzi"
         },
         "body": [
           {
@@ -238,7 +247,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani site yaṋu ni sa athu nanga where to place tender crops, trees, or buildings."
           }
         ]
       }
@@ -254,7 +264,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani: Follow the Sun Across the Site"
         },
         "body": [
           {
@@ -276,17 +287,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani Winter Shadows ni sa athu u fhaṱa"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma before you build or fix a shade structure in place."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Imani fhethu at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
           }
         ]
       }
@@ -303,7 +317,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tsireledzani frost-tender plants"
         },
         "body": [
           {
@@ -328,7 +343,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ngudo 3: Read Wind, Frost, and Slope"
         },
         "body": [
           {
@@ -354,7 +370,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani: See Wind and Cold Air kha Map"
         },
         "body": [
           {
@@ -387,7 +404,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
           },
           {
             "status": "english-hold"
@@ -407,7 +425,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nangani Airflow and Warmth"
         },
         "body": [
           {
@@ -432,17 +451,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ngudo 4: Thomani mepe wa site"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ita site map zwi ṱoḓa paper, a tape measure, a compass, and time to walk your land."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshimbilani kha boundary ni ite sketch ya u thoma. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nga murahu olani the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
           }
         ]
       }
@@ -458,11 +481,13 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani: Draw the Land You Already Have"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani tshifanyiso sa guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes."
           }
         ]
       }
@@ -480,17 +505,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tendelani zwilimela zwi ni thuse u read Soil"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani fhethu where frost sits longest and where the ground smells damp during dry months."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani existing vegetation. Mark where khakibos or blackjack grows thick."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Sedzani soil before deciding what the patch means for your design."
           }
         ]
       }
@@ -508,17 +537,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Engedzani seasons, zones na sectors"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Funzhani summer and winter wind nga thungo. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vheani your zones and sectors on the same base map."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Khwinisani sketch nga tshifhinga tsha khalanwaha. A pencil map you actually use is worth more than a perfect map drawn once."
           }
         ]
       }
@@ -542,13 +575,16 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "When it is safe after heavy rain, walk your land. Funzhani rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhuyelelani nga dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kha bammbiri, olani your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
           }
         ]
       }
@@ -575,10 +611,12 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I shumiseni u mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Engedzani summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
           }
         ]
       }

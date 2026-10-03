@@ -11,7 +11,8 @@
   "reviewNotes": [
     "A fluent Xitsonga speaker and local agriculture adviser must review each candidate for meaning, register, and dialect fit before classroom use. This draft has not established comprehension for a Shangani-speaking cohort. No fluent-language or farming approval is implied.",
     "English source text is paired sentence by sentence and checked against docs/narration/reading-landscape.en.md.",
-    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. The separate 2026-09-30 orientation screen kept ambiguous water direction, sun angles, ridges, hollows and frost pockets in exact English. Machine checks are not fluent-speaker approval."
+    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. The separate 2026-09-30 orientation screen kept ambiguous water direction, sun angles, ridges, hollows and frost pockets in exact English. Machine checks are not fluent-speaker approval.",
+    "3 October: ordinary framing expanded using independently checked, source-bound unreviewed drafts. Difficult technical English holds remain exact. No regional narration or fluent/local farming approval."
   ],
   "slides": [
     {
@@ -100,14 +101,16 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ta read sun angles, shade, wind, frost, and slope."
           },
           {
             "status": "draft",
             "text": "U ta tirhisa A-frame level ku landzelerisa contours."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U ta dirowa a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
           }
         ]
       }
@@ -131,7 +134,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko u nga si hlengeleta mati, dyondza laha se ma yaka kona."
           },
           {
             "status": "english-hold"
@@ -153,7 +157,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Water Slows, Sinks, and Leaves"
         },
         "body": [
           {
@@ -175,7 +180,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Trace Contours hi A-Frame"
         },
         "body": [
           {
@@ -203,7 +209,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta mati u nga si aka"
         },
         "body": [
           {
@@ -243,7 +250,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta ndhawu ya wena u nga si hlawula where to place tender crops, trees, or buildings."
           }
         ]
       }
@@ -259,7 +267,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Follow the Sun Across the Site"
         },
         "body": [
           {
@@ -281,17 +290,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kambela Winter Shadows u nga si aka"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yima endhawini yoleyo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
           }
         ]
       }
@@ -308,7 +320,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sirhelela frost-tender plants"
         },
         "body": [
           {
@@ -333,7 +346,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dyondzo 3: Read Wind, Frost, and Slope"
         },
         "body": [
           {
@@ -359,7 +373,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: See Wind and Cold Air eka Map"
         },
         "body": [
           {
@@ -392,7 +407,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
           },
           {
             "status": "english-hold"
@@ -412,7 +428,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlawula Airflow and Warmth"
         },
         "body": [
           {
@@ -437,17 +454,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dyondzo 4: Sungula mepe wa ndhawu"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku endla mepe wa ndhawu swi lava paper, a tape measure, a compass, and time to walk your land."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Famba emindzilakaneni kutani u endla xifaniso xo sungula. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kutani dirowa the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
           }
         ]
       }
@@ -463,11 +484,13 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Dirowa the Land You Already Have"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa xifaniso xi va nkongomiso: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes."
           }
         ]
       }
@@ -485,17 +508,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Pfumelela swimilani swi ku pfuna ku read Soil"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta tindhawu where frost sits longest and where the ground smells damp during dry months."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xiya existing vegetation. Mark where khakibos or blackjack grows thick."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Kambela soil before deciding what the patch means for your design."
           }
         ]
       }
@@ -513,17 +540,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Engetela seasons, zones na sectors"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fungha summer na winter wind hi ku hambana. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vekela your zones and sectors on the same base map."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. A pencil map you actually use is worth more than a perfect map drawn once."
           }
         ]
       }
@@ -547,13 +578,16 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "When it is safe after heavy rain, walk your land. Fungha rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vuya hi dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ephepheni, dirowa your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
           }
         ]
       }
@@ -580,10 +614,12 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Yi tirhise ku mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Engetela summer na winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
           }
         ]
       }

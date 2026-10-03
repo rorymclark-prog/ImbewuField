@@ -199,9 +199,9 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
       assert.ok(draftParagraphs[1].startsWith(
         'Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.'),
         `${path}.body: preserve the clear/still-night condition and can-be-colder comparison`);
-      assert.ok(draftParagraphs[1].includes('Frost patterns also depend on the site.') &&
-        draftParagraphs[1].includes('Compare candidate places through the local frost season.') &&
-        draftParagraphs[1].includes('Check local minimum-temperature records where available.') &&
+      assert.ok(draftParagraphs[1].includes('Frost patterns zwi dovha zwa ya nga site.') &&
+        draftParagraphs[1].includes('Vhambedzani candidate places through the local frost season.') &&
+        draftParagraphs[1].includes('Sedzani local minimum-temperature records where available.') &&
         draftParagraphs[1].includes('If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.'),
         `${path}.body: retain the full-season comparison, record availability, no-record fallback, observations and adviser-before-placement condition`);
       assert.ok(draftParagraphs[2].startsWith(
@@ -253,13 +253,27 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
   // Ordinary shade/drying/soil-check framing is now independently checked and source-paired;
   // precise technical clauses remain English and are checked separately below.
   assert.deepEqual(holds, [
-    'lessons[0] reading-landscape-l1.keyPoints[1]',
     'lessons[0] reading-landscape-l1.quiz[0].options[0]',
     'lessons[0] reading-landscape-l1.quiz[0].options[2]',
     'lessons[2] reading-landscape-l3.keyPoints[1]',
     'lessons[2] reading-landscape-l3.quiz[0].rationale',
-    'lessons[3] reading-landscape-l4.quiz[1].options[1]',
   ], 'remaining whole-field technical holds remain exact English; new drafts remain unreviewed');
+
+  const aFrameSuitability = draft.lessons[0].keyPoints[1];
+  assert.equal(aFrameSuitability.sourceEnglish, source.lessons[0].keyPoints[1]);
+  assert.equal(aFrameSuitability.reviewStatus, 'machine-draft');
+  assert.ok(aFrameSuitability.tshivendaDraft.includes('points at the same height') &&
+    aFrameSuitability.tshivendaDraft.includes('whether earthworks are suitable'),
+  'ordinary A-frame framing is drafted while equal-height and site-suitability limits stay exact');
+  assert.doesNotMatch(aFrameSuitability.tshivendaDraft, /earthworks should/i,
+    'marking equal-height points must not become an instruction to build earthworks');
+
+  const seasonalWindOption = draft.lessons[3].quiz[1].options[1];
+  assert.equal(seasonalWindOption.sourceEnglish, source.lessons[3].quiz[1].options[1]);
+  assert.equal(draft.lessons[3].quiz[1].sourceCorrectIndex, source.lessons[3].quiz[1].correct);
+  assert.equal(seasonalWindOption.reviewStatus, 'machine-draft');
+  assert.ok(seasonalWindOption.tshivendaDraft.includes('changing where windbreaks and tender crops should go'),
+    'the exact different-directions consequence remains attached to its original quiz option');
 
   const landscapeL1Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l1');
   const landscapeL1Draft = draft.lessons.find(lesson => lesson.id === 'reading-landscape-l1');
@@ -330,12 +344,10 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     'preserve the existing Tshivenda north/south slope and local observation paragraph byte-for-byte');
   assert.equal(l2DraftParagraphs[1], "Ḓuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.",
     'preserve the existing Tshivenda winter shade observation paragraph byte-for-byte');
-  assert.equal(l2DraftParagraphs[2],
-    'Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.',
-    'retain the exact young-citrus and frost-pocket directions while preserving the existing local-frost sentence');
   assert.ok(l2DraftParagraphs[2].includes('Pawpaw and young citrus are sensitive to frost.') &&
-    l2DraftParagraphs[2].includes('Keep tender plants out of known low frost pockets.'),
-  'preserve age, frost sensitivity, and the direction to keep tender plants outside known low pockets');
+    l2DraftParagraphs[2].includes('Ni songo vhea tender plants kha known low frost pockets.') &&
+    l2DraftParagraphs[2].includes('Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.'),
+  'preserve the named young plants, frost sensitivity, keep-out direction, and local check before planting');
   const changedL2Source = { ...landscapeL2Source, body: landscapeL2Source.body.replace('young citrus', 'mature citrus') };
   assert.notEqual(changedL2Source.body, landscapeL2Source.body);
   assert.equal(resolveLearnerLessonPresentation(changedL2Source, 've').status, 'english-fallback',
@@ -478,8 +490,11 @@ test('Reading assessment drafts retain before-building shade, conditional drying
   assert.ok(l4.keyPoints[2].tshivendaDraft.includes('zwa mela zwo tsitsikana'));
   assert.ok(l4.keyPoints[2].tshivendaDraft.includes('it does not prove compaction.'));
   const sourceL4 = sourceModule.lessons.find(lesson => lesson.id === l4.id)!;
-  assert.equal(l4.quiz[1].options[1].tshivendaDraft, sourceL4.quiz[1].options[1],
-    'uncertain seasonal-wind pronoun remains exact English');
+  assert.equal(l4.quiz[1].options[1].sourceEnglish, sourceL4.quiz[1].options[1],
+    'the localized seasonal-wind option remains bound to its exact source and position');
+  assert.equal(l4.quiz[1].options[1].reviewStatus, 'machine-draft');
+  assert.ok(l4.quiz[1].options[1].tshivendaDraft.includes('changing where windbreaks and tender crops should go'),
+    'retain the exact placement consequence after localizing the direction clause');
   const drifted = { ...sourceL4, keyPoints: sourceL4.keyPoints.map((point, index) => index === 2 ? `${point} A new diagnostic condition.` : point) };
   assert.equal(resolveLearnerLessonPresentation(drifted, 've').status, 'english-fallback');
 });

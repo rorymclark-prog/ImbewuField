@@ -5,6 +5,9 @@ import {
   XITSONGA_INTRO_PERMACULTURE_DRAFT as draft,
   XITSONGA_READING_LANDSCAPE_DRAFT as readingDraft,
 } from '../lib/course-translation-drafts-ts.ts';
+import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
+import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
 const source = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];
@@ -241,7 +244,9 @@ test('Reading Landscape Xitsonga body candidates preserve paragraph order and bo
   assert.equal(l2Paragraphs[1], `Dyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.`,
     'the previously localized shade and time-of-day paragraph must remain unchanged');
   assert.ok(l2Paragraphs[2].includes('Pawpaw and young citrus are sensitive to frost.'), 'the frost-sensitive crops must remain exactly named');
-  assert.ok(l2Paragraphs[2].includes('Keep tender plants out of known low frost pockets.'), 'the known-frost-pocket instruction must remain exact');
+  assert.ok(l2Paragraphs[2].includes('known low frost pockets') &&
+    l2Paragraphs[2].includes('Hlayisa tender plants swi nga ri eka'),
+  'retain the keep-out direction and exact known-pocket anchor in the mixed sentence');
   assert.ok(l2Paragraphs[2].endsWith('Xiya local frost u nga se byala.'), 'observe local frost before planting');
 });
 
@@ -370,8 +375,10 @@ test('Reading Landscape L3 drafts ordinary body guidance while keeping precise c
   assert.ok(draftParagraphs[0].includes('Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho'));
 
   assert.ok(draftParagraphs[1].startsWith('On a clear, still night, cold air can flow downhill and collect in low places.'));
-  assert.ok(draftParagraphs[1].includes('These places can be colder than nearby slopes.'));
-  assert.ok(draftParagraphs[1].includes('Frost patterns also depend on the site.'));
+  assert.ok(draftParagraphs[1].includes('can be colder than nearby slopes.'),
+    'keep the colder-than comparison and its can-modality after translating the subject');
+  assert.ok(draftParagraphs[1].includes('Frost patterns na tona ti ya hi site.'),
+    'preserve the site-dependence qualifier while localizing its ordinary framing');
   assert.ok(draftParagraphs[1].includes('Pimanisa candidate places through the local frost season.'));
   assert.ok(draftParagraphs[1].includes('Kambela local minimum-temperature records where available.'));
   assert.ok(draftParagraphs[1].includes('Loko records ti nga ri kona'));
@@ -456,12 +463,27 @@ test('Reading module assessment drafts preserve frost uncertainty, seasonal chec
     const original = sourceModule.lessons.find(item => item.id === lesson.id)!;
     assert.deepEqual(lesson.quiz.map(q => q.sourceCorrectIndex), original.quiz.map(q => q.correct));
   }
-  assert.ok(l2.quiz[0].rationale.xitsongaDraft.includes('A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.'));
-  assert.ok(l2.quiz[1].rationale.xitsongaDraft.includes('8am, midday, and 4pm before fixing it in place.'));
+  assert.ok(l2.quiz[0].rationale.xitsongaDraft.includes('known frost pocket') &&
+    l2.quiz[0].rationale.xitsongaDraft.includes('swi nga ha hunguta risk') &&
+    l2.quiz[0].rationale.xitsongaDraft.includes('local frost observations must guide the final position.'),
+  'retain the frost-pocket condition, uncertainty, and local-observation rule across mixed prose');
+  assert.ok(l2.quiz[1].rationale.xitsongaDraft.includes('at 8am, midday, and 4pm') &&
+    l2.quiz[1].rationale.xitsongaDraft.includes('u nga se yi tiyisa endhawini'),
+  'preserve all three observation times and the before-fixing condition');
   assert.ok(l3.quiz[0].rationale.xitsongaDraft.includes('kumbe u vutisa a local agriculture adviser before making a permanent choice.'));
   assert.ok(l3.quiz[0].rationale.xitsongaDraft.includes('Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.'));
-  assert.ok(l3.quiz[1].question.xitsongaDraft.startsWith("A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells."));
-  assert.ok(l3.quiz[1].question.xitsongaDraft.includes('nga pfunaka') && l3.quiz[1].question.xitsongaDraft.includes('alongside local crop-health advice'));
+  assert.equal(l3.quiz[1].question.sourceEnglish,
+    sourceModule.lessons.find(lesson => lesson.id === 'reading-landscape-l3')!.quiz[1].q,
+    'the localized crop scenario must remain paired to quiz 1, where its source actually appears');
+  assert.ok(l3.quiz[1].question.xitsongaDraft.startsWith('Matamatisi ya murimi wa KZN '),
+    'localize the farmer-and-tomato subject without moving the question to another quiz item');
+  assert.ok(l3.quiz[1].question.xitsongaDraft.includes('repeatedly develop late blight during cool, damp spells.'),
+    'retain the repeated disease and cool, damp weather condition exactly');
+  assert.ok(l3.quiz[1].question.xitsongaDraft.includes('nga pfunaka') &&
+    l3.quiz[1].question.xitsongaDraft.includes('alongside local crop-health advice'));
+  assert.equal(l3.quiz[1].sourceCorrectIndex,
+    sourceModule.lessons.find(lesson => lesson.id === 'reading-landscape-l3')!.quiz[1].correct,
+    'translating the scenario subject must not change its answer binding');
   assert.ok(l3.quiz[1].rationale.xitsongaDraft.includes('Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.'));
   assert.ok(l4.quiz[0].rationale.xitsongaDraft.includes('Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction.'));
   assert.ok(l4.quiz[0].rationale.xitsongaDraft.includes('u nga se teka xiboho'));
@@ -476,4 +498,126 @@ test('Reading module assessment drafts preserve frost uncertainty, seasonal chec
   assert.equal(fallback.status, 'english-fallback');
   assert.notEqual(quiz[1].q, original.quiz[1].q, 'fixture changes the canonical question field');
   assert.equal(fallback.content.quiz[1].q, quiz[1].q);
+});
+test('Reading Landscape ordinary drafts keep frost instructions, suitability limits and quiz identity source-bound', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
+  const source = sourceModule;
+  const drafts = [
+    { language: 'st' as const, code: 'st' as const, module: SESOTHO_READING_LANDSCAPE_DRAFT },
+    { language: 've' as const, code: 've' as const, module: TSHIVENDA_READING_LANDSCAPE_DRAFT },
+    { language: 'ts' as const, code: 'ts' as const, module: readingDraft },
+  ];
+
+  for (const { language, code, module } of drafts) {
+    const sourceLesson = source.lessons.find(lesson => lesson.id === 'reading-landscape-l2')!;
+    const draftLesson = module.lessons.find(lesson => lesson.id === 'reading-landscape-l2')!;
+    assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body,
+      `${language}: keep the complete English source paired`);
+    assert.equal(draftLesson.body.reviewStatus, 'machine-draft',
+      `${language}: mixed prose remains visibly unreviewed`);
+    const sourceParagraphs = sourceLesson.body.split('\n\n');
+    const draftText = 'sesothoDraft' in draftLesson.body
+      ? draftLesson.body.sesothoDraft
+      : 'tshivendaDraft' in draftLesson.body
+        ? draftLesson.body.tshivendaDraft
+        : draftLesson.body.xitsongaDraft;
+    const draftParagraphs = draftText.split('\n\n');
+    assert.equal(draftParagraphs.length, sourceParagraphs.length,
+      `${language}: preserve the complete paragraph sequence`);
+    assert.ok(draftParagraphs[2].includes('Pawpaw and young citrus are sensitive to frost.'),
+      `${language}: preserve the named plants and frost sensitivity`);
+    if (language === 've') {
+      assert.ok(draftParagraphs[2].includes('Ni songo vhea tender plants kha known low frost pockets.'),
+        'VE: retain the prohibition and the exact known-pocket anchor');
+    } else if (language === 'ts') {
+      assert.ok(draftParagraphs[2].includes('Hlayisa tender plants swi nga ri eka known low frost pockets.'),
+        'TS: retain the keep-out direction and the exact known-pocket anchor');
+    } else {
+      assert.ok(draftParagraphs[2].includes('Keep tender plants out of known low frost pockets.'),
+        'ST: keep the full safety instruction exact');
+    }
+
+    const changedSource = { ...sourceLesson, body: `${sourceLesson.body} New source condition.` };
+    const fallback = resolveLearnerLessonPresentation(changedSource, code);
+    assert.equal(fallback.status, 'english-fallback',
+      `${language}: any changed source body must withdraw the full paired draft`);
+    assert.equal(fallback.content.body, changedSource.body,
+      `${language}: show the new English guidance after source drift`);
+  }
+
+  const veL1Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l1')!;
+  const veL1 = TSHIVENDA_READING_LANDSCAPE_DRAFT.lessons.find(lesson => lesson.id === veL1Source.id)!;
+  const aFrame = veL1.keyPoints[1];
+  assert.equal(aFrame.sourceEnglish, veL1Source.keyPoints[1]);
+  assert.equal(aFrame.reviewStatus, 'machine-draft');
+  assert.ok(aFrame.tshivendaDraft.includes('points at the same height') &&
+    aFrame.tshivendaDraft.includes('whether earthworks are suitable'),
+  'the candidate must retain both the measurement and site-suitability limits');
+  assert.doesNotMatch(aFrame.tshivendaDraft, /earthworks should/i,
+    'a measurement aid must not become an instruction to do earthworks');
+  const changedKeyPoint = {
+    ...veL1Source,
+    keyPoints: veL1Source.keyPoints.map((point, index) => index === 1 ? `${point} Changed.` : point),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedKeyPoint, 've').status, 'english-fallback',
+    'changed A-frame suitability guidance must invalidate its mixed draft');
+
+  const veL4Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l4')!;
+  const veL4 = TSHIVENDA_READING_LANDSCAPE_DRAFT.lessons.find(lesson => lesson.id === veL4Source.id)!;
+  const windQuiz = veL4.quiz[1];
+  assert.equal(windQuiz.sourceCorrectIndex, veL4Source.quiz[1].correct);
+  assert.equal(windQuiz.options[1].sourceEnglish, veL4Source.quiz[1].options[1]);
+  assert.equal(windQuiz.options[1].reviewStatus, 'machine-draft');
+  assert.ok(windQuiz.options[1].tshivendaDraft.includes('changing where windbreaks and tender crops should go'),
+    'the localized direction phrase must retain the original option consequence');
+
+  const tsL2Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l2')!;
+  const tsL2 = readingDraft.lessons.find(lesson => lesson.id === tsL2Source.id)!;
+  const frostRationale = tsL2.quiz[0].rationale;
+  assert.equal(tsL2.quiz[0].sourceCorrectIndex, tsL2Source.quiz[0].correct);
+  assert.equal(frostRationale.sourceEnglish, tsL2Source.quiz[0].rationale);
+  assert.ok(frostRationale.xitsongaDraft.includes('known frost pocket') &&
+    frostRationale.xitsongaDraft.includes('swi nga ha hunguta risk') &&
+    frostRationale.xitsongaDraft.includes('local frost observations must guide the final position'),
+  'the local wording must not remove the known-pocket condition, uncertainty, or final-position instruction');
+  const shadeRationale = tsL2.quiz[1].rationale;
+  assert.equal(tsL2.quiz[1].sourceCorrectIndex, tsL2Source.quiz[1].correct);
+  assert.ok(shadeRationale.xitsongaDraft.includes('Winter sun is lower and farther north.') &&
+    shadeRationale.xitsongaDraft.includes('Shade cloth yi nga cinca the hours of sun on a bed.') &&
+    shadeRationale.xitsongaDraft.includes('at 8am, midday, and 4pm') &&
+    shadeRationale.xitsongaDraft.includes('u nga se yi tiyisa endhawini'),
+  'preserve seasonal direction, the shade effect, all observation times, and the before-fixing condition');
+
+  const tsL3Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l3')!;
+  const tsL3 = readingDraft.lessons.find(lesson => lesson.id === tsL3Source.id)!;
+  const sourceQuestion = tsL3Source.quiz[1];
+  const cropQuestion = tsL3.quiz[1].question;
+  assert.equal(cropQuestion.sourceEnglish, source.lessons.find(lesson => lesson.id === 'reading-landscape-l3')!.quiz[1].q,
+    'the translated KZN crop scenario must bind to quiz 1, where that source question occurs');
+  assert.equal(tsL3.quiz[1].sourceCorrectIndex, sourceQuestion.correct);
+  assert.ok(cropQuestion.xitsongaDraft.startsWith('Matamatisi ya murimi wa KZN '));
+  assert.ok(cropQuestion.xitsongaDraft.includes('repeatedly develop late blight during cool, damp spells.'),
+    'preserve the repeated disease and weather condition exactly');
+  assert.ok(cropQuestion.xitsongaDraft.includes('alongside local crop-health advice?'),
+    'keep the crop-health qualification attached to the question');
+  assert.notEqual(cropQuestion.sourceEnglish, tsL3Source.quiz[0].q,
+    'the disease scenario must not be wired to quiz 0');
+  const metadata = readingDraft.holds.find(hold =>
+    hold.lessonId === tsL3Source.id && hold.field === 'quiz[1].q' &&
+    hold.sourceText === 'repeatedly develop late blight during cool, damp spells.');
+  assert.ok(metadata, 'hold metadata should identify the exact technical clause that remains English');
+  assert.ok(cropQuestion.xitsongaDraft.includes(metadata.sourceText));
+  assert.ok(!readingDraft.holds.some(hold =>
+    hold.lessonId === tsL3Source.id && hold.field === 'quiz[1].q' &&
+    hold.sourceText === sourceQuestion.q),
+  'metadata must not label the entire source sentence held after its subject has been localized');
+
+  const changedQuestion = {
+    ...tsL3Source,
+    quiz: tsL3Source.quiz.map((question, index) => index === 1
+      ? { ...question, q: `${question.q} New crop-health condition.` }
+      : question),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedQuestion, 'ts').status, 'english-fallback',
+    'changed quiz wording must withdraw the source-paired disease question and its answer binding');
 });
