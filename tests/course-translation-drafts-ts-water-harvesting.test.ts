@@ -8,42 +8,28 @@ import { XITSONGA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ts-
 import type { XitsongaCourseModuleDraft, XitsongaSourcePair } from '../lib/course-translation-drafts-ts.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
+import { checkCompleteLessonDraft } from './regional-full-draft-checks.ts';
 
 const source = COURSE_MODULES.find(module => module.id === 'water-harvesting')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];
 
-test('Food Forest Xitsonga draft keeps species caution and crop care exact English', () => {
+// Rewritten 2 October 2026 (Food Forest batch; the Water tests in this file are unchanged): Food Forest
+// L1 is now a complete Xitsonga draft, so the pins on three paragraphs held in English give way to a
+// complete-lesson check. Species caution and care are translated; every species name stays exact.
+test('Food Forest Xitsonga L1 draft translates species caution and crop care with species names exact', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'food-forest');
   assert.ok(sourceModule);
   const sourceLesson = sourceModule.lessons[0];
   const draftLesson = XITSONGA_FOOD_FOREST_DRAFT.lessons[0];
-  assert.equal(draftLesson.id, sourceLesson.id);
-  assert.equal(draftLesson.title.sourceEnglish, sourceLesson.title);
-  assert.equal(draftLesson.title.reviewStatus, 'hold');
-  assert.equal(draftLesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
-  assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
-  assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
-  assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), sourceLesson.quiz.map(question => question.correct));
-  const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
-  assert.equal(shown.status, 'draft');
-  assert.equal(shown.content.title, sourceLesson.title);
-  assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
-  assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
-  const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
-  const shownParagraphs: string[] = shown.content.body.split('\n\n');
-  assert.equal(shownParagraphs.length, sourceParagraphs.length);
-  for (const [index, paragraph] of sourceParagraphs.entries()) {
-    if ([0, 1, 2, 3, 4, 5, 6, 7, 8, 11].includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
-    else assert.equal(shownParagraphs[index], paragraph);
+  checkCompleteLessonDraft(sourceLesson, draftLesson, 'ts');
+  const paragraphs = draftLesson.body.xitsongaDraft.split('\n\n');
+  for (const name of ['Highveld', 'Wild Fig', 'pecan', 'lemon', 'naartjie', 'black mulberry']) {
+    assert.ok(paragraphs[7].includes(name), `the Highveld example keeps ${name}`);
   }
-  assert.equal(shownParagraphs[9], sourceParagraphs[9],
-    'local species suitability and permission remain exact English');
-  assert.equal(shownParagraphs[10], sourceParagraphs[10],
-    'establishment care remains exact English');
-  assert.equal(shownParagraphs[12], sourceParagraphs[12],
-    'competition and care guidance remain exact English');
-  assert.equal(resolveLearnerLessonPresentation({ ...sourceLesson, body: `${sourceLesson.body} Changed.` }, 'ts').status,
-    'english-fallback');
+  for (const name of ['Cape gooseberry', 'Wild Medlar', 'wild garlic', 'sweet potato', 'granadilla']) {
+    assert.ok(paragraphs[8].includes(name), `the lower-layer example keeps ${name}`);
+  }
+  assert.ok(paragraphs[9].includes('frost tolerance'), 'check identity, frost tolerance, mature size and local restrictions first');
 });
 
 test('Xitsonga Market drafts pair bounded sales text and keep uncertain decisions and quizzes in English', () => {

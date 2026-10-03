@@ -14,11 +14,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U Nanga Miṱshelo na Guilds",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choosing Plants and Guilds"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nangani miṱshelo ine ya shumisana, ni shandukise u byala hu tshi tevhela u kula ha yo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose plants that work together, and change your planting following how it grows."
           }
         ]
       }
@@ -34,11 +40,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U Nanga Miṱshelo na Guilds",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choosing Plants and Guilds"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Muri wa mitshelo u ṱoḓa tshedza, madi, nutrients dza ḓaka na fhethu. Support plants dzi nga ṋea zwiḽiwa, mulch ya matali, maluvha na u funika ḓaka nga miṱshelo i tshilaho. Ṋeani muṱshelo muṅwe na muṅwe mushumo une wa thusa. Dzulani ni tshi sedzesa arali u thusa muri na muṱa. Ndi mishumo ifhio ine u byala hwanu hu ṱoḓa?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A fruit tree needs light, water, nutrients from the soil and a place. Support plants can give food, mulch of leaves, flowers and covering the soil with living trees [?: miṱshelo = fruit trees/crops]. Give each tree [muṱshelo = crop/fruit tree] a job that it helps with. Stay watching whether it helps the tree and the household [?: muṱa = home/family]. What jobs does your planting need?"
           }
         ]
       }
@@ -54,11 +66,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U Thoma nga Fhethu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Starting by Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Wanani zwine zwa khakhisa u kula, ni sa athu nanga muṱshelo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Find what hinders growth, before you have chosen a plant."
           }
         ]
       }
@@ -74,11 +92,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U Thoma nga Fhethu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Starting by Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani tshedza ḽa ḓuvha, u elela ha madi, nyimele ya ḓaka na u wanala ha madi. Nitrogen ndi tshithu tshithihi fhedzi tshine tsha nga khakhisa. Vhambedzani ḓaka ya fhasi ha mulch na ḓaka i sa funikwi. Nangani support plants dzine dza tendelana na nyimele dza ngoho. Ndi mini tshine fhethu hanu ha ṱoḓa u thoma?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at the sunlight of the day, the flow of water, the condition of the soil and the availability of water. Nitrogen is only one thing that can hinder. Compare the soil under mulch and soil that is not covered. Choose support plants that agree with the real conditions. What does your place need to start with?"
           }
         ]
       }
@@ -94,11 +118,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṋeani Muṱshelo Muṅwe na Muṅwe Mushumo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Give Each Plant a Job"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Guild i thusaho i bveledza mbuyelo dzine ni nga dzi sedza.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A guild that helps produces yields that you can observe."
           }
         ]
       }
@@ -114,11 +144,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṋeani Muṱshelo Muṅwe na Muṅwe Mushumo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Give Each Plant a Job"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nangani miṱshelo ya guild u itela zwiḽiwa, nitrogen fixation, mulch, maluvha kana u funika ḓaka. Muṱshelo muthihi u nga ita mishumo minzhi. Nga u fhedza, ni ḓo dzudzanya guild, ni ṱalutshedze uri masalela a miṱshelo a ṋea ḓaka zwiḽiwa hani, ni dovhe ni ḓiṋee uri ndi support plants dzifhio dzine dza dzula, dza kerwa kana dza bviswa. Ndi mushumo ufhio une wa kha ḓi shayea?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose guild plants for food, nitrogen fixation, mulch, flowers or covering the soil. One plant can do many jobs. At the end, you will arrange the guild, explain how the remains of the plants give the soil food, and also commit yourselves to which support plants will stay, be cut or be removed. Which job is still lacking?"
           }
         ]
       }
@@ -134,11 +170,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani Nodules dza Midzi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look at Root Nodules"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Legumes dzi shumisana na rhizobia kha nodules dzi re kha midzi ya dzo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Legumes work together with rhizobia in nodules that are on their roots."
           }
         ]
       }
@@ -154,11 +196,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani Nodules dza Midzi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look at Root Nodules"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Izwi zwiṱukusa (bacteria) zwi shandukisa nitrogen i bvaho muyani i vha zwine legume ya nga zwi shumisa. Wanani nodules kha muṱshelo wa legume une u sa ṱoḓiwi. Nodulation na u kula zwi ḓitika nga muṱshelo, bacteria dzo teaho na nyimele dza u kula. Ni nga wana nodules?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "These plants change the nitrogen that comes from the air into what a legume can use. Find nodules on a legume plant that is not wanted/required. Nodulation and growth depend on the plant, suitable bacteria and growing conditions. Can you find nodules?"
           }
         ]
       }
@@ -174,11 +222,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vhuyedzani Maḽauḓi Ḓakani",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Try Out the Leaves on the Soil"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nitrogen i re kha zwishumiswa zwa muṱshelo i vha i thusaho musi zwenezwo zwi tshi vhola.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Nitrogen that is in the plant materials is helpful when they rot."
           }
         ]
       }
@@ -194,11 +248,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vhuyedzani Maḽauḓi Ḓakani",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Try Out the Leaves on the Soil"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhuyedzani zwikerwa zwa matali zwo teaho, maḽauḓi o wayo na masalela a miṱshelo sa mulch. Zwipuka zwi tshilaho zwi re ḓakani zwi ṱutshela nutrients musi decomposition i tshi khou itea. Hezwi zwi dzhia tshifhinga. Legume i tshilaho a si phaiphi ya u ḓisa fertiliser kha muri wa mitshelo nga u ṱavhanya. Ni nga vhuyedza masalela afhio?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Try the right leaf cuttings/pieces [?: zwikerwa = things cut], dry leaves and crop remains as mulch. Living things that are in the soil release nutrients when decomposition is happening. This takes time. A living legume is not a way to bring fertiliser to a fruit tree quickly [?: 'a si phaiphi ya u ḓisa' = is not a pipe/way of bringing]. Which remains can you try?"
           }
         ]
       }
@@ -214,11 +274,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sesbania i na Mushumo une wa Thusa",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Sesbania Has a Job That Helps"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sesbania sesban i nga ḓisa u kula nga u ṱavhanya na mulch ya matali.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sesbania sesban can bring quick growth and green mulch."
           }
         ]
       }
@@ -234,11 +300,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sesbania i na Mushumo une wa Thusa",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Sesbania Has a Job That Helps"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I vha indigenous kha KwaZulu-Natal. Kha nyimele dzo teaho dza u fhisa, langani tshisaṱa kana muri muṱuku uyu une wa dzula tshifhinga tshipfufhi sa support plant. Ṋeani fhethu ha u kula ha wo. Kerani u itela mulch, ni dovhe ni sedzulusa musi ndazhi kana u kondelana ha madi zwi tshi engedzea. Ndi ngafhi hune na nga langa u kula ha wo?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It is indigenous in KwaZulu-Natal. In suitable hot conditions, manage the shrub or this small tree that stays a short time as a support plant. Give it space to grow. Cut it for mulch, and also check when shade or competition for water increases. Where can you manage its growth?"
           }
         ]
       }
@@ -254,11 +326,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani Dzina Ḽoṱhe ḽa Muṱshelo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look at the Whole Name of the Plant"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sesbania sesban na Sesbania punicea ndi miṱshelo yo fhambanaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sesbania sesban and Sesbania punicea are different plants."
           }
         ]
       }
@@ -274,11 +352,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzani Dzina Ḽoṱhe ḽa Muṱshelo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look at the Whole Name of the Plant"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sesbania punicea ndi red sesbania i re invasive. Zwikhoba (pods) zwa yo zwi na mapheṋa mana a tevhelaho u lapfa ha zwikhoba. Khwaṱhisedzani uri ndi muṱshelo ufhio nga u shumisa botanical guidance i fulufhedzeaho. Sedzani dzina ḽoṱhe ni sa athu byala. Ṱhonifhani project species list yo tendelanwaho, ho katelwa thivhelo ifhio na ifhio kha Sesbania sesban. Naa muṋetshedzi a nga khwaṱhisedza uri ndi muṱshelo ufhio?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sesbania punicea is red sesbania, which is invasive. Its pods have four wings that follow the length/shape of the pods [?]. Confirm which tree it is by using reliable botanical guidance. Look at every name before you have planted. Respect the approved project species list, including any restriction on Sesbania sesban. Can the supplier confirm which tree it is?"
           }
         ]
       }
@@ -294,11 +378,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Pigeon pea i Ṋea Zwiḽiwa Hafhu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Pigeon pea Gives Food Too"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pigeon pea—Cajanus cajan—i nga ṋea mapea, zwishumiswa zwa matali na nitrogen fixation.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Pigeon pea—Cajanus cajan—can give peas, green plant parts and nitrogen fixation."
           }
         ]
       }
@@ -314,11 +404,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Pigeon pea i Ṋea Zwiḽiwa Hafhu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Pigeon pea Gives Food Too"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani fhethu ha ḓuvha hu re na u elela havhuḓi ha madi. Ndi support shrub i dzulaho tshifhinga tshipfufhi; mutsho (frost) na madi o ḓungaho zwi nga i khakhisa. Dzhiani tsheo ya uri muṱshelo muṅwe na muṅwe u ṋea zwihulwane mapea kana zwishumiswa zwa matali. U kera nga maanḓa kanzhi zwi nga i tshinyadza na u fhungudza zwiḽiwa zwi koloṱwaho. Naa ni khou byala muṱshelo uyu u itela mapea kana mulch?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use a sunny place that has good water drainage. It is a support shrub that stays for a short time; frost (frost) and standing/accumulated water can harm it. Make a decision whether each crop/tree gives livestock seeds or green materials. Pruning/cutting heavily often can damage it and reduce the food that is harvested. Are you planting this plant for seeds or mulch?"
           }
         ]
       }
@@ -334,11 +430,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nangani u Ya nga Fhethu na Vhuhulu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose Going by Place and Size"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Support tree i thusaho fhethu huthihi i nga vha khulwane u fhirisa kana i sa fanelei fhethu huṅwe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A support tree that helps in one place can be bigger than, or not suitable for, another place."
           }
         ]
       }
@@ -354,11 +456,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nangani u Ya nga Fhethu na Vhuhulu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose Going by Place and Size"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhambedzani crown yo kulaho, midzi, ndazhi, mvula na u fhisa na u dzudzuma. Sedzani miṱshelo i teaho fhethu hanu na milayo ya u byala. Vhekani support trees khulwane hune dza vha na fhethu. Kha guild ṱuku ntswa, tshisaṱa tshine tsha nga langwa tshi nga leluwa u tshi londa. Muṱshelo uyu u ḓo vha khulwane hani?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Compare the grown crown, roots, shade, rain and heat and frost [?u dzudzuma = to be cold/shiver]. Look at plants that suit your place and the rules of planting. Place larger support trees where there is space. In a new small guild, a shrub that can be managed can be easier to look after. How big will this plant be?"
           }
         ]
       }
@@ -374,11 +482,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Annual Cover i na Fhethu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Annual Cover Has a Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sunn hemp i nga funika fhethu ho teaho hu si na muṱshelo tshifhinga tsha u fhisa, phanḓa ha muṱshelo u tevhelaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sunn hemp can cover a suitable place that has no plant in the hot season, before the next plant that follows."
           }
         ]
       }
@@ -394,11 +508,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Annual Cover i na Fhethu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Annual Cover Has a Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "I byaleni hune tshifhinga tsha yo na fhethu zwa tendelana na pulane. U thusa ha yo hu ḓitika nga u kula, nodulation na zwishumiswa zwine zwa vhuyedzwa. Nga murahu ha u kera, ṋeani tshifhinga tsha decomposition. Annual cover crop i na mushumo une wa fhambana na support shrub i dzulaho tshifhinga tshilapfu. Fhethu hafha hu ḓo ṱoḓiwa lini hafhu?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It is planted where its time and the place agree with the plan. Its helping depends on growth, nodulation and the plant parts that are returned. After cutting, give time for decomposition. An annual cover crop has a job that differs from a support shrub that stays a long time. When will this place be needed again?"
           }
         ]
       }
@@ -414,11 +534,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Siani Fhethu Hoṱhe Tsini ha Muri",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look at the Places All Around the Base of the Tree"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱhogomelani uri muri muswa wa mitshelo u dzule kha tshedza, ni dzule ni tshi nga swika u u londa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take care that the fruit tree stays in the light, and that you always can reach it to prune/tend it [?: londa = look after/keep/tend; possibly prune]."
           }
         ]
       }
@@ -434,11 +560,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Siani Fhethu Hoṱhe Tsini ha Muri",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look at the Places All Around the Base of the Tree"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱhogomelani uri establishment basin i dzule yo vulea na uri ni dzule ni tshi nga swika kha muri wa mitshelo. Vhekani support plants dza tshifhinga tshipfufhi hune vhuhulu ha dzo na u shumisa madi zwi nga langwa. Vhekani zwikerwa zwa matali hune mulch i ṱoḓea. Miri ya mitshelo i re tsini i nga kovhelana support strips dzi re vhukati ha yo. Naa ni nga swika kha miṱshelo yoṱhe mivhili musi i tshi kula?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take care that the establishment basin stays open and that you can always reach the fruit tree. Look at the support plants of short duration [temporary] where their size and use of water can be controlled/managed. Look at the places [?: zwikerwa = cut/pruned/measured spots] of green material where mulch is needed. Fruit trees that are close by can share the support strips that are between them. Can you reach all the fruit trees [both/two] when it grows?"
           }
         ]
       }
@@ -454,11 +586,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fhaṱani Support Guild i Re na Dziḽeya",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Build a Support Guild That Has Layers"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṱanganyani u funika ha tshifhinga, support shrubs na miri miṱuku ya tshifhinga tshipfufhi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Combine seasonal covering, support shrubs and small short-time trees."
           }
         ]
       }
@@ -474,11 +612,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fhaṱani Support Guild i Re na Dziḽeya",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Build a Support Guild That Has Layers"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Cowpea i funika zwikhala zwi re na ḓuvha. Pigeon pea i ṋea zwiḽiwa na zwishumiswa zwa matali. Sesbania sesban i langwaho i nga ṋea support plants dza tshifhinga tshipfufhi dzi re dzilapfu u fhirisa. Engedzani miṱshelo yo teaho ya maluvha na mulch. Siani muvhili wa muri wa mango u si na zwithu, ni dovhe ni lange tshedza, madi na u swika. Ndi layers dzifhio dzine dza tendelana na fhethu hanu?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Cowpea covers the places that have sun. Pigeon pea gives food and green materials. Sesbania sesban that is managed/tended can give support plants of short duration that are taller/longer-lasting [?: ambiguous, 'dzilapfu u fhirisa' = longer/taller than others]. Add suitable flower crops and mulch. Leave the trunk of the mango tree free of things, and also manage the light, water and access. Which layers agree/fit with your place?"
           }
         ]
       }
@@ -494,11 +638,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Support Plants Ndi Ngafhani?",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "How Many Support Plants?"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pulanani support plants dzinzhi hune fhethu na u londa hanu zwi nga dzi tikedza.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan many support plants where your place and caring can support them."
           }
         ]
       }
@@ -514,11 +664,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Support Plants Ndi Ngafhani?",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "How Many Support Plants?"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhalani support plants dzi no fana na miri dzi re hoṱhe kha zwikhala zwi re vhukati ha miri ya mitshelo. Byalani tshifunikelo tsha ḓaka tshi teaho u ya nga vhuhulu ha fhethu. A hu na nomboro i shumaho kha fhethu hoṱhe kha muri muṅwe wa mitshelo. Lugisani support density u ya nga madi, ḓaka, vhuhulu ha muṱshelo na vhukoni hanu ha u kera na u bvisa miṱshelo. Ni nga londa support plants dzingafhani?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Count the support plants that are like trees that are all/tall [?: hoṱhe = all/everywhere] in the places that are between the fruit trees. Plant a suitable ground cover/soil covering according to the size of the place. There is no number that works in all places for one of the fruit trees. Adjust the support density according to water, soil, the size of the crop/tree and your ability to cut/prune and remove the plants. How many support plants can you keep/look after?"
           }
         ]
       }
@@ -534,11 +690,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Chop-and-Drop ya Tshedza na Mulch",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Chop-and-Drop of Shade and Mulch"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani davhi ḽa muri ḽi tshi wela kha mauṋa o ṱemiwaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at a branch of a tree falling onto the cut leaves."
           }
         ]
       }
@@ -554,11 +716,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Chop-and-Drop ya Tshedza na Mulch",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Chop-and-Drop of Shade and Mulch"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Temani madavhi a support tree ni vhuyedze mavuni zwipiḓa zwa mauṋa zwo teaho. Vhidio i sumbedza davhi ḽo ṱemiwaho: support tree i dzula i tshi eme. Sia mauṋa a mutakalo a ringaneaho uri tshimela tshi kone u vha na maanda hafhu. Ṱemani u ya nga species. Ni songo ṱema pigeon pea nga maanda na lunzhi, zwihulwane musi ni tshi i melela u wana peas. Ndi tshimela tshifhio tshine tsha ṱoḓa u ṱemiwa, nahone ndi zwingafhani?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Cut the branches of the support tree and return to the soil suitable pieces of leaves. The video shows a cut branch: the support tree remains standing. Leave healthy leaves that are sufficient so that the plant can be strong again. Cut according to species. Do not cut pigeon pea strongly and often, especially when you are growing it to get peas. Which plant is the one that needs to be cut, and how much is it?"
           }
         ]
       }
@@ -574,11 +742,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzulisani Mulch Kule na Tsinde ḽa Muri",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Keep Mulch Away from the Trunk of the Tree"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Andani zwiṱemiwa zwo teaho nṱha ha mavu, tsinde ḽa muri na root collar zwi tshi dzula zwi sa fukiwi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Spread suitable cut pieces above the soil, with the trunk of the tree and the root collar always remaining uncovered."
           }
         ]
       }
@@ -594,11 +768,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzulisani Mulch Kule na Tsinde ḽa Muri",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Keep Mulch Away from the Trunk of the Tree"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mulch i tsireledza nṱha ha mavu, i thusa u vhulunga madi a re mavuni nahone i vhuyedza organic material. Sia ndila ya u dzhena ya u unela madi na u sedzulusa. Ṱemani zwiṱemiwa zwi vhe zwipiḓa zwine na kona u zwi langa, ni dzule ni tshi sedzulusa madi a re mavuni na decomposition. Naa root collar i kha ḓi dzula i sa fukiwi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Mulch protects the top of the soil, it helps to keep the water that is in the soil, and it also returns organic material. Leave a way in for taking in water and for checking. Cut the cuttings/plants into pieces that you are able to manage, and keep checking the water that is in the soil and the decomposition. Is the root collar still always uncovered? [Literal: 'i kha ḓi dzula i sa fukiwi' = 'it still keeps staying not covered']"
           }
         ]
       }
@@ -614,11 +794,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Khethani Comfrey i Teaho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose Suitable Comfrey"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bocking 14 comfrey i nga ṋea mauṋa o ṱemiwaho a u shumisa sa mulch.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bocking 14 comfrey can give cut leaves to use as mulch."
           }
         ]
       }
@@ -634,11 +820,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Khethani Comfrey i Teaho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose Suitable Comfrey"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Wanani cultivar yo teaho. Bocking 14 a i andi nga viable seed, fhedzi zwipiḓa zwa midzi zwi nga mela hafhu. I vheeni fhethu hune ha vha na fhethu ha u hula na madi o linganaho. Ṱemani mauṋa musi i tshi vhuyelela; ni songo ita uri i hwele muri wa mitshelo une wa kha ḓi vha muṱuku. Naa heyi ndi fhethu ha tshifhinga tshoṱhe ho teaho ha tshigwada itshi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Find a suitable cultivar. Bocking 14 does not give viable seed, but pieces of roots can grow again. Put it where there is a place to grow and sufficient water. Cut the leaves when it returns/regrows; do not let it cover the fruit tree that is still small. Is this a suitable all-time/permanent place [?] for this group?"
           }
         ]
       }
@@ -654,11 +846,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzulusani Zwipuka (insects) zwi Thusaho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Check Helpful Insects"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maluvha a nga ṋea zwithu zwine zwipuka zwi thusaho (insects) zwa vha zwi tshi zwi ṱoḓa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Flowers can give things that helpful insects need [?: 'zwipuka' read as insects]."
           }
         ]
       }
@@ -674,11 +872,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sedzulusani Zwipuka (insects) zwi Thusaho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Check Helpful Insects"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ladybirds dzinzhi dzi ḽa aphids; dziṅwe parasitoid wasps dzi lwa na zwikhakhisi (pests) zwa zwimela zwa u lima. Miraḓo ya guild i re na maluvha, sa African basil, i nga engedza zwithu zwi thusaho. Sedzani zwipuka (insects) zwine zwa dzhena na arali u tshinyea hu tshi shanduka. Tshimela tshi re na maluvha, a tshi khwathisedzi u lawula zwikhakhisi. Naa tshipuka itshi tshi khou ita mini ngoho?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Ladybirds are many [?: dzinzhi = many/most; possibly 'Ladybirds eat many'] of the aphids; other parasitoid wasps fight with the pests of cultivated plants. Members of the guild that have flowers, like African basil, can increase things that help. Look at the animals/creatures [?] that come in and if damage is changing. A plant that has flowers does not guarantee control of pests. So what is this creature/plant [?] actually doing?"
           }
         ]
       }
@@ -694,11 +898,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṋeani Maluvha Fhethu havho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Give Flowers Their Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Wild garlic i nga vha muraḓo u bvisaho maluvha hune fhethu ha tendelana nayo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Wild garlic can be a flower-producing member where the place agrees with it."
           }
         ]
       }
@@ -714,11 +924,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṋeani Maluvha Fhethu havho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Give Flowers Their Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tulbaghia violacea i na mauṋa a re ṱhukhu na maluvha a rangi ya lilac. Vheani tshigwada tsha zwimela fhethu hune ha vha na tshedza na fhethu ha u hula. Sedzulusani zwipuka (insects) zwi dzhenaho. Ni songo fulufhedzisa uri tshiviringi tsha wild garlic tshi ḓo thivhela zwikhakhisi (pests) kana u fhodza u engedzea ha zwikhakhisi hu ṱavhanyaho. Ndi ngafhi hune maluvha a nga mela hu si na u hwelana?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Tulbaghia violacea has small/short leaves and flowers of lilac colour. Put a group of plants where there is light and a place to grow. Review the plants that come in. Do not promise that a ring of wild garlic will prevent pests or stop the quick increase of pests. Where can the flowers grow without getting in each other's way/tangling [?]?"
           }
         ]
       }
@@ -734,11 +950,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tanganyani Mishumo Fhethu Huthihi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Combine Functions in One Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Khethani zwimela zwi thusaho zwine zwa shumisana nayo musi ni tshi tsireledza fhethu ha u hula ha mango.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose helping plants that work together with it when you protect the growing place of mangoes."
           }
         ]
       }
@@ -754,11 +976,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tanganyani Mishumo Fhethu Huthihi",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Combine Functions in One Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tanganyani support functions dzine fhethu hanu ha dzi ṱoḓa: nitrogen fixation, zwiḓiwa, mulch, maluvha na zwimela zwi fukaho mavu. Zwiṅwe zwimela zwi shuma mishumo minzhi. Dzulisani fhethu ha tsinde na ndila zwo vuleaho. Sedzulusani muraḓo muṅwe na muṅwe musi mango na zwimela zwi re tsini nayo zwi tshi hula. Naa muraḓo muṅwe na muṅwe u na fhethu na mushumo?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Combine support functions that your place needs: nitrogen fixation, food, mulch, flowers and plants that cover the soil. Some plants do many functions. Keep the place of the trunk and the path open. Check each member when the mango and the plants that are near it are growing. Does each member have a place and a function?"
           }
         ]
       }
@@ -774,11 +1002,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Zwiḓiwa zwi Fukaho Zwi Dovha Zwa Pikisana",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Soil-Covering Foods Also Compete"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sweet potato i nga fuka mavu nahone ya ṋea zwiḓiwa fhethu ho teaho hune ḓuvha ḽa swika.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sweet potato can cover the soil and give food in a suitable place where the sun arrives."
           }
         ]
       }
@@ -794,11 +1028,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Zwiḓiwa zwi Fukaho Zwi Dovha Zwa Pikisana",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Soil-Covering Foods Also Compete"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzulisani mitsinde yayo i kule na muri wa mitshelo une wa kha ḓi vha muṱuku, ni sie ndila ya u u londa. Midzi yayo i dovha ya shumisa madi na nutrients. Hune zwiko zwi si zwinzhi, vhambedzani zwimela zwi tshilaho zwi fukaho mavu na mulch basin ya ḓoweleo. Naa zwimela izwi zwi fukaho zwi khou thusa muri u dzhia midzi na u dzula zwavhuḓi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plant its stems far from the fruit tree that is still small, and leave a way to care for it. Its roots also use water and nutrients. Where resources are not many, compare living plants that cover the soil with a mulch basin that is used to [?: 'ya ḓoweleo' unclear, perhaps 'of the usual/customary kind']. Are these covering plants helping the tree to take roots and to stay well?"
           }
         ]
       }
@@ -814,11 +1054,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Thoma nga u Imisa Guild",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Start by Establishing the Guild"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thomani guild musi muri wa mitshelo une wa kha ḓi vha muṱuku na support plants dzawo zwi tshi na tshedza na madi zwo linganaho.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take (or: Harvest) the guild when the fruit tree that is still small and its support plants have sufficient light and water. [?: 'Thomani' is ambiguous; could be 'Choose/Start/Pick' the guild]"
           }
         ]
       }
@@ -834,11 +1080,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Thoma nga u Imisa Guild",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Start by Establishing the Guild"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzimani kha tshifhinga tsho teaho, ni fukele nga mulch ni dzule ni tshi unela madi a tshifhinga tsha u dzhia midzi. Dzulisani fhethu ha u dzhena ho vuleaho. Thomani nga tshivhalo tsha support plants dzine na dzi londa. Sedzulusani u tshila na u hula ni sa athu u engedza dziṅwe. Naa ni nga londa tshimela tshiṅwe na tshiṅwe lwa tshifhinga tsha u dzhia midzi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plant at a suitable time, cover with mulch, and always water during the time of taking root. Keep the entry place open. Start with the number of support plants that you can look after. Check survival and growth before you add others. Can you look after every plant for the whole period of taking root?"
           }
         ]
       }
@@ -854,11 +1106,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Thinning Musi Muri wa Mitshelo u Tshi Hula",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Thinning When the Fruit Tree Is Growing"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Musi u ṱema madavhi zwi tshi sa tsha ringana, fhungudzani support plants dzo khethiwaho. Ṱemani support plants dzo khethiwaho dzi pikisanaho dzi wele fhasi, uri hu vule fhethu. Zwiṱemiwa zwo teaho zwi nga sia zwi tshi vha mulch: heyi ndi thinning nga chop-and-drop. Langani u mela hafhu uri fhethu ho vuleaho hu dzule. Sedzani tshedza, madi a re mavuni na u hula; thinning a i imisi nga u ṱavhanya u pikisana ha midzi. Ndi support plants dzifhio dzine dza fanela u bva zwino?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When cutting branches is no longer enough, reduce the chosen support plants. Cut down the chosen support plants that are competing, so that they fall down, so that a place opens up. Suitable cut pieces can be left to become mulch: this is thinning by chop-and-drop. Manage regrowth so that the opened place stays. Watch light, water that is in the soil, and growth; thinning does not stop root competition quickly. Which support plants should be removed now?"
           }
         ]
       }
@@ -874,11 +1132,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fambisani Support Plants kha Tshedza",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Move Support Plants into Light"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Musi ndindi i tshi engedzea, vusuludzani support plants dzi funaho ḓuvha kha mathibo o vuleaho na kha zwidzimiwa zwiswa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When the shade increases, renew the sun-loving support plants in open edges and in new gaps [?: 'zwidzimiwa' read as gaps/places planted]."
           }
         ]
       }
@@ -894,11 +1158,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fambisani Support Plants kha Tshedza",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Move Support Plants into Light"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ḓisani madavhi a thusaho o ṱemiwaho kha miri yo dzhiaho midzi. Dzulisani zwimela zwa tsini fhedzi hune zwi tshi kha ḓi shuma zwavhuḓi. Miri ya mitshelo yo hulaho i kha ḓi ṱoḓa nutrients. Sedzulusani u hula, mavuno na nyimele ya mavu; support plants a dzi fhelisi u ṱoḓa nutrients ha miri. Ndi ngafhi fhethu hu tevhelaho hune ha vha na ḓuvha, hune ha nga thusa?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bring helpful pits/holes [?] that have been cut/pruned to trees that have taken roots. Plant plants that are near only where they are still working well. Fruit trees that have grown still need nutrients. Review growing, harvests and the condition of the soil; support plants do not end the need for nutrients of the trees. Where is the next place where there is a day, that could help? [?: 'ḓuvha' = day/sun; possibly 'sunny spot']"
           }
         ]
       }
@@ -915,11 +1185,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ni tendele zwe na zwi vhona zwi ni thuse u dzhia phetho."
+          "text": "Tendelani Zwine na Zwi Vhona Zwi Dzhie Phetho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Allow What You See to Make the Decision"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzulani ni tshi ṅwala zwipfufhi zwa uri guild i khou shuma hani.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Always write short notes on how the guild is working."
           }
         ]
       }
@@ -936,22 +1211,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ni tendele zwe na zwi vhona zwi ni thuse u dzhia phetho."
+          "text": "Tendelani Zwine na Zwi Vhona Zwi Dzhie Phetho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Allow What You See to Make the Decision"
         },
         "body": [
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "status": "english-hold",
-                "sourceEnglish": "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. "
-              },
-              {
-                "status": "draft",
-                "sourceEnglish": "What evidence would make you change the guild?",
-                "text": "Ndi vhuṱanzi vhufhio vhune ha nga ita uri ni shandule guild?"
-              }
-            ]
+            "status": "draft",
+            "text": "Sedzani u hula ha muri wa mitshelo, muvhundu, madi a re mavuni, mavuno a thusaho na u tshinyea nga zwikhakhisi (pests). Ṅwalani zwo ṱemiwaho, zwo vhuyedzwaho kana zwo bviswaho. Shumisani zwo sedzwaho izwi u shandukisa ndila ya u dzudzanya na u londa. Tshimela tshi wana fhethu hatsho nga zwine tsha zwi ita fhano. Ndi vhuṱanzi vhufhio vhune ha ni ita uri ni shandukise guild?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at the growing of the fruit tree, the soil, the water that is in the soils, the helpful soils/harvests [?], and damage by pests. Write down what has been cut, what has been replaced/returned, or what has been removed. Use these things observed to change the way of arranging and caring for [it]. A plant finds its place by what it does here. What is the evidence that makes you change the guild?"
           }
         ]
       }
@@ -967,11 +1236,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzudzanyani Guild Ithihi ya Ngoho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Arrange One Real Guild"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Khethani muri muthihi wa mitshelo ni maka ndila ya u dzudzanya ine na nga i langa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose one fruit tree and mark a way of arranging that you can manage."
           }
         ]
       }
@@ -987,11 +1262,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzudzanyani Guild Ithihi ya Ngoho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Arrange One Real Guild"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṅwalani muri, nyimele dza fhethu na mishumo yo shayeaho. Ṅwalani madzina a support species o fhelelaho, ni maka tshivhalo tsha u thoma ni sie fhethu ha u dzhena. Ṅwalani zwine zwa ḓo ita uri hu ṱemiwe madavhi kana hu ite thinning. Tendelanani nga mutevhe wa species na tshigwada tsha projeke hune zwa ṱoḓea. Naa muṅwe muthu a nga ni ṱalutshedza hafhu pulane yanu?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write the tree, the conditions of the place and the missing functions. Write the names of the complete support species, and mark the starting number and leave a place to enter. Write what will cause branches to be cut or thinning to be done. Agree on the list of species with the project group where it is needed. Can someone explain your plan to you again?"
           }
         ]
       }
@@ -1007,11 +1288,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzimani, Sedzulusani, Shandukisani",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Plant, Check, Change"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thomani guild ithihi yo teaho ni i londe lwa tshifhinga tsha u thoma.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start one suitable guild and look after it for the starting period."
           }
         ]
       }
@@ -1027,11 +1314,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzimani, Sedzulusani, Shandukisani",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Plant, Check, Change"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani species dzo teaho, tshivhalo tsha zwimela tshine na tshi langa na fhethu ha u hula. Vhuyedzani biomass i thusaho ni tsireledze muri wa mitshelo. Sedzulusani zwo dzimiwaho musi crowns dzi tshi andela. Dzulisani, ṱemani, shandukisani kana bvisani support plant tshiṅwe na tshiṅwe musi mushumo wa tsho u tshi shanduka. Ndi mini hune na ḓo thoma nga hone, nahone ni ḓo sedzulusa lini?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use suitable species, the number of plants that you manage and a place to grow. Return helpful biomass and protect the fruit tree. Check what was planted when crowns are spreading. Keep, cut, change or remove each support plant when its function has changed. What will you start with, and when will you check?"
           }
         ]
       }

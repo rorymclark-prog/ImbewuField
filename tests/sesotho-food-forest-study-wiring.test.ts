@@ -6,7 +6,11 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
 
-test('Food Forest Sesotho appears as a source-paired draft and all held fields stay English', () => {
+// Rewritten 2 October 2026: every Food Forest field now has a Sesotho machine draft, so Study shows a
+// labelled draft for each one. The old per-lesson hold lists and the pins on nine L1 sentences are
+// replaced by a check that every displayed field is its draft (never the English, never a hold); the
+// presentation wiring and the source-drift fallbacks are checked exactly as before.
+test('Food Forest Sesotho appears in Study as a labelled source-paired draft in every field', () => {
   const draft = SESOTHO_FOOD_FOREST_DRAFT;
   const module = COURSE_MODULES.find(candidate => candidate.id === draft.id);
   assert.ok(module, 'the source module must exist');
@@ -22,15 +26,10 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
   assert.equal(draft.sourceMetadata.category, module.category);
 
   assert.equal(draft.lessons.length, module.lessons.length);
-  const holds: string[] = [];
-  const resolved = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, source: string, path: string) => {
+  const shownDraft = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, source: string, path: string) => {
     assert.equal(pair.sourceEnglish, source, `${path}: retain the exact English source`);
-    if (pair.reviewStatus === 'hold') {
-      assert.equal(pair.sesothoDraft, source, `${path}: held text must stay exact English`);
-      holds.push(path);
-      return source;
-    }
-    assert.equal(pair.reviewStatus, 'machine-draft', `${path}: only a machine draft can be shown`);
+    assert.equal(pair.reviewStatus, 'machine-draft', `${path}: shown as an unreviewed machine draft, not held in English`);
+    assert.notEqual(pair.sesothoDraft.trim(), source.trim(), `${path}: the draft is translated, not a copy of the English`);
     return pair.sesothoDraft;
   };
 
@@ -40,52 +39,14 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
     assert.equal(translation.id, lesson.id, `${prefix}: retain lesson order and ID`);
     const presentation = resolveLearnerLessonPresentation(lesson, 'st');
     assert.equal(presentation.status, 'draft', `${prefix}: never claim approval`);
-    assert.equal(presentation.content.title, resolved(translation.title, lesson.title, `${prefix}.title`));
-    assert.equal(presentation.content.body, resolved(translation.body, lesson.body, `${prefix}.body`));
+    assert.equal(presentation.content.title, shownDraft(translation.title, lesson.title, `${prefix}.title`));
+    assert.equal(presentation.content.body, shownDraft(translation.body, lesson.body, `${prefix}.body`));
     assert.equal(presentation.content.body.split('\n\n').length, lesson.body.split('\n\n').length,
       `${prefix}: keep the source's paragraph breaks`);
-    if (lesson.id === 'food-forest-l2') {
-      assert.equal(translation.title.reviewStatus, 'machine-draft');
-      assert.equal(translation.infographicAlt?.reviewStatus, 'machine-draft');
-      assert.deepEqual(translation.keyPoints.map(point => point.reviewStatus), ['hold', 'hold', 'hold', 'hold']);
-      assert.deepEqual(translation.quiz.map(question => [question.question.reviewStatus, question.options.map(option => option.reviewStatus), question.rationale.reviewStatus]), [
-        ['hold', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
-        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
-      ], 'keep the learner-visible L2 quiz content in its pre-existing state');
-    }
-    if (lesson.id === 'food-forest-l3') {
-      assert.equal(translation.title.reviewStatus, 'hold');
-      assert.equal(translation.infographicAlt?.reviewStatus, 'hold');
-      assert.deepEqual(translation.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft']);
-      assert.deepEqual(translation.quiz.map(question => [question.question.reviewStatus, question.options.map(option => option.reviewStatus), question.rationale.reviewStatus]), [
-        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
-        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
-      ], 'keep the learner-visible L3 quiz content in its pre-existing state');
-    }
-    if (lesson.id === 'food-forest-l1') {
-      const sourceParagraphs = lesson.body.split('\n\n');
-      const shownParagraphs = presentation.content.body.split('\n\n');
-      const translatedParagraphs = new Map([
-        [0, 'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.'],
-        [1, 'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.'],
-        // The lesson now matches its silent source-paired slide; species choices and care still stay English.
-        [2, 'Food forest e etsisa mokgwa ona ka productive species.'],
-        [3, 'Phello ha se sejalo se le seng moleng o le mong, empa ke mekhahlelo (layers) e mengata e molemo e melang hammoho.'],
-        [4, 'Nahana ka canopy e telele, difate tse nyane, dihlahla le dimela tsa herbaceous.'],
-        [6, 'Bophahamo ba dimela le dibaka tsa ho di jala di itshetlehile ka mofuta wa semela le sebaka. Mekgahlelo ena ke ya ho rala; ha e bolele meedi e behilweng ya bophahamo.'],
-        [7, 'Mohlala wa pele wa Highveld o kenyelletsa Wild Fig kapa pecan tse hodimo ho lemon, naartjie le black mulberry.'],
-        [8, 'Mohlala oo o beha Cape gooseberry le Wild Medlar mmoho le vegetables, wild garlic, sweet potato le granadilla.'],
-        [11, 'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.'],
-      ]);
-      for (const [index, expected] of translatedParagraphs) assert.equal(shownParagraphs[index], expected);
-      sourceParagraphs.forEach((paragraph, index) => {
-        if (!translatedParagraphs.has(index)) assert.equal(shownParagraphs[index], paragraph, `Food Forest L1 paragraph ${index + 1} stays English`);
-      });
-    }
     assert.equal(translation.keyPoints.length, lesson.keyPoints.length, `${prefix}: key-point count/order`);
     for (const [pointIndex, point] of translation.keyPoints.entries()) {
       assert.equal(presentation.content.keyPoints[pointIndex],
-        resolved(point, lesson.keyPoints[pointIndex], `${prefix}.keyPoints[${pointIndex}]`));
+        shownDraft(point, lesson.keyPoints[pointIndex], `${prefix}.keyPoints[${pointIndex}]`));
     }
     assert.equal(translation.quiz.length, lesson.quiz.length, `${prefix}: quiz count/order`);
     for (const [questionIndex, question] of translation.quiz.entries()) {
@@ -94,39 +55,19 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
       const shown = presentation.content.quiz[questionIndex];
       assert.equal(question.sourceCorrectIndex, source.correct, `${questionPath}: preserve answer index`);
       assert.equal(shown.correct, source.correct, `${questionPath}: displayed answer still matches source`);
-      assert.equal(shown.q, resolved(question.question, source.q, `${questionPath}.question`));
-      assert.equal(shown.rationale, resolved(question.rationale, source.rationale, `${questionPath}.rationale`));
+      assert.equal(shown.q, shownDraft(question.question, source.q, `${questionPath}.question`));
+      assert.equal(shown.rationale, shownDraft(question.rationale, source.rationale, `${questionPath}.rationale`));
       assert.equal(question.options.length, source.options.length, `${questionPath}: option count/order`);
       for (const [optionIndex, option] of question.options.entries()) {
-        assert.equal(shown.options[optionIndex], resolved(option, source.options[optionIndex], `${questionPath}.options[${optionIndex}]`));
+        assert.equal(shown.options[optionIndex], shownDraft(option, source.options[optionIndex], `${questionPath}.options[${optionIndex}]`));
       }
     }
     if (lesson.infographicAlt) {
       assert.ok(translation.infographicAlt, `${prefix}: keep the source image description`);
       assert.equal(presentation.content.infographicAlt,
-        resolved(translation.infographicAlt, lesson.infographicAlt, `${prefix}.infographicAlt`));
+        shownDraft(translation.infographicAlt, lesson.infographicAlt, `${prefix}.infographicAlt`));
     }
   }
-
-  assert.deepEqual(holds.filter(path => path.startsWith('lessons[0]')), [
-    'lessons[0] food-forest-l1.title',
-    'lessons[0] food-forest-l1.quiz[0].rationale',
-    'lessons[0] food-forest-l1.quiz[1].rationale',
-    'lessons[0] food-forest-l1.infographicAlt',
-  ], 'planting, species-selection, frost and image wording holds must not drift');
-  assert.deepEqual(holds.filter(path => path.startsWith('lessons[1]') || path.startsWith('lessons[2]')), [
-    'lessons[1] food-forest-l2.keyPoints[0]',
-    'lessons[1] food-forest-l2.keyPoints[1]',
-    'lessons[1] food-forest-l2.keyPoints[2]',
-    'lessons[1] food-forest-l2.keyPoints[3]',
-    'lessons[1] food-forest-l2.quiz[0].question',
-    'lessons[1] food-forest-l2.quiz[0].rationale',
-    'lessons[1] food-forest-l2.quiz[1].rationale',
-    'lessons[2] food-forest-l3.title',
-    'lessons[2] food-forest-l3.quiz[0].rationale',
-    'lessons[2] food-forest-l3.quiz[1].rationale',
-    'lessons[2] food-forest-l3.infographicAlt',
-  ], 'preserve existing holds while adding only the selected body drafts');
 
   assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} changed` }, 'st').status,
     'english-fallback', 'changed module description must withdraw the card draft');

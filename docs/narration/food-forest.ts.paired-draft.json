@@ -17,24 +17,34 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ku Hlela Food Forest"
+          "text": "Ku Hlela Food Forest",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "To Plan a Food Forest"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Aka sisiteme ya swakudya leyi hanyaka hi swiyenge swo hambana."
+            "text": "Aka sisiteme ya swakudya leyi hanyaka hi swiyenge swo hambana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Build a food system that lives in different layers."
           },
           {
             "status": "draft",
-            "text": "Byala swakudya ku suka eka canopy ya mirhi yo leha ku fika eka root crops."
+            "text": "Byala swakudya ku suka eka canopy ya mirhi yo leha ku fika eka root crops.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plant food from the canopy of tall trees down to root crops."
           },
           {
             "status": "draft",
-            "text": "Tirhisa ndhawu ya le henhla ni le hansi, leswi hanyaka emisaveni, ndzhuti na moisture swin’we."
+            "text": "Tirhisa ndhawu ya le henhla ni le hansi, leswi hanyaka emisaveni, ndzhuti ni ku tsakama swin’we.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use the space above and below, what lives in the soil, shade and moisture together."
           },
           {
             "status": "draft",
-            "text": "Dyondza ku hlela ni ku sungula food forest epurasini ra wena."
+            "text": "Dyondza ku hlela ni ku sungula food forest epurasini ra wena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Learn to plan and start a food forest on your farm."
           }
         ]
       }
@@ -52,20 +62,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ha yini leswi swi ri swa nkoka"
+          "text": "Ha yini leswi swi ri swa nkoka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Why this is important"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Food forest yi kurisa swimilana leswi pfunaka eka ku leha ko hambana."
+            "text": "Food forest yi kurisa swimilana leswi pfunaka leswi nga ni ku leha ko hambana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Food forest grows plants that help that have different heights."
           },
           {
             "status": "draft",
-            "text": "Nkunguhato lowunene wu nga hlanganisa ntshovelo, ndzhuti ni ku funengeta misava. Swimilana swa ha phikizana hi ku vonakala, mati ni soil nutrients."
+            "text": "Nkunguhato lowunene wu nga hlanganisa ntshovelo, ndzhuti ni ku funengeta misava. Swimilana swa ha phikizana hi ku vonakala, mati ni nutrients.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A good plan can combine harvest, shade and covering the soil. Plants still compete for light, water and nutrients."
           },
           {
             "status": "draft",
-            "text": "Hlela nhlayiso lowu u nga kotaka ku wu endla, kutani u languta ndlela leyi swimilana swi cincaka ha yona."
+            "text": "Hlela nhlayiso lowu u nga kotaka ku wu endla, kutani u languta ndlela leyi swimilana swi cincaka ha yona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan maintenance that you can manage to do, then watch how the plants change."
           }
         ]
       }
@@ -83,20 +101,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Leswi u nga ta kota ku swi endla"
+          "text": "Leswi u nga ta kota ku swi endla",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "What you will be able to do"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Boxa swiyenge swa nkombo leswi tolovelekeke ku hlamusela food forest."
+            "text": "Boxa swiyenge swa 7 leswi tolovelekeke ku hlamusela food forest.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Box the 7 layers that are commonly used to describe a food forest."
           },
           {
             "status": "draft",
-            "text": "Kambela swimilana hi ku ya hi ndhawu ya wena, ecology ya laha kaya, ni approved project list."
+            "text": "Kambela swimilana hi ku ya hi ndhawu ya wena, ecology ya laha kaya, ni approved project list.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check plants according to your place, the local ecology, and the approved project list."
           },
           {
             "status": "draft",
-            "text": "Hlela ku sungula ni ku ya mahlweni u hlayisa swimilana u nga ringanyeti siku leri tiyeke ra ntshovelo kumbe ku pfaleka ka canopy."
+            "text": "Hlela ku sungula ka swimilana ni nhlayiso lowu yaka emahlweni, u nga teki leswaku ku ta va ni siku leri tiyeke ra ntshovelo kumbe ra ku pfaleka ka canopy.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan the start of the plants and the care that goes ahead, do not assume that there will be a firm day of harvest or of canopy closing."
           }
         ]
       }
@@ -115,24 +141,34 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Nhova yi tirhisa swiyenge hinkwato"
+          "text": "Nhova yi tirhisa swiyenge hinkwato",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "The forest uses all the layers"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Indigenous forest yi tata ndhawu ku sukela eka marhavi ya yona ya le henhla swinene ku fika eka timitsu."
+            "text": "Indigenous forest yi tata ndhawu ku sukela eka marhavi ya yona ya le henhla swinene ku fika eka timitsu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "An indigenous forest fills the space from its very highest branches down to the roots."
           },
           {
             "status": "draft",
-            "text": "Swimilana swo hambana swi tirhisa ku vonakala na ku tsakama loku kumekaka eka xiyenge xa swona."
+            "text": "Swimilana swo hambana swi tirhisa ku vonakala na ku tsakama loku kumekaka eka xiyenge xa swona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Different plants use the light and the moisture found in their layer."
           },
           {
             "status": "draft",
-            "text": "Food forest yi landzela xivumbeko lexi hi productive species."
+            "text": "Food forest yi landzela xivumbeko lexi hi ku tirhisa tinxaka ta swimilana leswi humesaka vuyelo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Food forest follows a pattern/form by using kinds of plants that produce results (yield)."
           },
           {
             "status": "draft",
-            "text": "Vuyelo a hi xibyariwa xin’we eka layini yin’we, kambe i swiyenge swo tala leswi pfunaka swi ri karhi swi kula swin’we."
+            "text": "Vuyelo a hi xibyariwa xin’we eka layini yin’we, kambe i swiyenge swo tala leswi pfunaka swi ri karhi swi kula swin’we.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The yield is not one crop on one line, but many layers that help while they grow together."
           }
         ]
       }
@@ -155,43 +191,65 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Hlaya Swiyenge swa 7 swa Ku Byala",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Read the 7 Layers of Planting"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kuma swiyenge swa 7 swa ku byala.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Find the 7 layers of planting."
           },
           {
             "status": "draft",
-            "text": "Mirhi yo leha yi vumba xifunengeto xa le henhla (canopy).",
-            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
+            "text": "Mirhi yo leha yi vumba canopy.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Tall trees form the canopy."
           },
           {
             "status": "draft",
-            "text": "Mirhi leyitsongo yi kula ehansi ka xona.",
-            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "text": "Mirhi leyitsongo yi kula ehansi ka canopy.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Small trees grow below the canopy."
           },
           {
             "status": "draft",
-            "text": "Swimilani leswi funengetaka misava swi hangalaka ehenhla ka yona.",
-            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
-          },
-          {
-            "status": "english-hold"
+            "text": "Kutani languta swihlahla swa murhi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Come and look after the medicinal [?] trees/shrubs. (\"Kutani\" = come (plural/imperative); \"languta\" = look after/look at; \"swihlahla\" = trees/shrubs; \"swa murhi\" = of medicine/of a tree [?] — \"murhi\" can mean medicine or tree, so \"medicinal shrubs\" or \"shrubs of trees\" [?])."
           },
           {
             "status": "draft",
-            "text": "Swimilani swo khandziya swi tirhisa switiyiso leswi faneleke.",
-            "provenance": "cross-checked-unreviewed-machine-draft; exact English source paired; difficult technical terms retained where needed"
+            "text": "Swimilana swa herbaceous swi ni swiphunga swo olova.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Herbaceous plants have soft stems [?]."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swimilana leswi funengetaka misava swi hangalaka ehenhla ka misava.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plants that cover the soil spread above the ground."
+          },
+          {
+            "status": "draft",
+            "text": "Root crops swi kula ehansi ka misava.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Root crops grow under the soil."
+          },
+          {
+            "status": "draft",
+            "text": "Swimilana swo khandziya swi tirhisa switiyiso leswi faneleke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Climbing plants use suitable supports."
+          },
+          {
+            "status": "draft",
+            "text": "Leswi i swiyenge swo hlela, a hi swiyenge swa ku leha leswi nga cinciki. Hlawula swimilana ni ndhawu leyi nga exikarhi ka swona hi ku ya hi ndhawu ya wena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "These are layers for planning, they are not layers of unchanging heights. Choose plants and the space that is between them according to your place."
           }
         ]
       }
@@ -208,17 +266,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Swiyenge swa 7",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "7 layers"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Anakanyisa hi canopy yo leha, mirhi leyitsongo, swihlahla ni swimilana swa herbaceous.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Think about the tall canopy, small trees, shrubs and herbaceous plants."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swimilana leswi funengetaka misava swi sirhelela ehenhla ka misava, root crops swi kula ehansi ka yona, naswona swimilana swo khandziya swi tirhisa switiyiso leswi faneleke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plants that cover the soil protect above the ground, root crops grow below it, and climbing plants use suitable supports."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku leha ni ndhawu leyi nga exikarhi ka swimilana swi titshege hi swimilana ni ndhawu. Leswi i swiyenge swo hlela, a hi swiyenge swa ku leha leswi nga cinciki.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Height and the space that is between plants depend on the plants and the place. These are layers for planning, they are not layers of unchanging heights."
           }
         ]
       }
@@ -235,17 +305,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlaya Xikombiso xa Ku Byala hi Swiyenge",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Read the Example of Planting by Layers"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xikombiso xo sungula xa le Highveld xi katsa Wild Fig kumbe pecan ehenhla ka lemon, naartjie ni black mulberry.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A starting example for the Highveld includes Wild Fig or pecan above lemon, naartjie and black mulberry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xi veka Cape gooseberry ni Wild Medlar swin’we ni miroho, wild garlic, sweet potato ni granadilla.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It places Cape gooseberry and Wild Medlar together with vegetables, wild garlic, sweet potato and granadilla."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Teka leswi tanihi xikombiso xa ku vekiwa ka swimilana, a hi mpfumelelo wo byala tinxaka hinkwato. Rhanga u kambela leswi swi nga xiswona, frost tolerance, vukulu bya swona loko swi kurile ni swiyimiso swa laha kaya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take this as an example of the placing of plants, it is not permission to plant all kinds. First check what they are, frost tolerance, their size when they have grown and the local regulations/standards."
           }
         ]
       }
@@ -263,19 +345,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Nhlayiso ya cinca loko swimilana swi ri karhi swi kula.",
-          "provenance": "unreviewed-machine-draft; independent-semantic-backcheck; exact English source paired"
+          "text": "Nhlayiso yi cinca loko swimilana swi kula",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Maintenance changes when the plants grow"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swimilana leswitsongo swi lava nhlayiso wa ku sungula: ku kambela mati ya le misaveni, ku lawula swimilana leswi nga lavekiki ni ku sirheleriwa eka ku onhaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Small plants need starting care: checking the water in the soil, controlling plants that are not wanted, and being protected from damage/spoiling [?]."
           },
           {
             "status": "draft",
-            "text": "Loko swimilana swi ri karhi swi kula, shade na leaf litter swi cinca xiyimo xa le hansi ka swona."
+            "text": "Loko swimilana swi ri karhi swi kula, ndzhuti na leaf litter swi cinca xiyimo xa le hansi ka swona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "While plants are growing, shade and leaf litter change the condition of the ground beneath them."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kambela ku phikizana ni ndlela yo fikelela. Tsema marhavi, susa swimilana leswi hlawuriweke hi ku helela kumbe lulamisa ku byala ka le hansi loko leswi u swi voneke swi vula tano; sisiteme a yi hundzuki yo nga lavi nhlayiso hi siku leri tiyeke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check competition and the way of access. Cut branches, remove chosen plants completely, or adjust the lower planting when what you have seen says so; the system does not become one that needs no maintenance on a firm day."
           }
         ]
       }
@@ -292,17 +383,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlawula hi ku ya hi Ndhawu ya Wena",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose according to Your Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kambela mpfula ya laha, xiqhwa, ku hisa, misava ni mati lama kumekaka u nga si hlawula swimilana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check the local rain, frost, heat, soil and available water before you choose plants."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mango yi nga onhiwa hi xiqhwa. Quince yi lava winter chilling leyi faneleke leswaku yi humesa mihandzu hi ndlela leyi tshembekaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Mango can be damaged by frost. Quince needs suitable winter chilling so that it produces fruit reliably."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vito ra xifundzha kumbe ndhawu yin'we leyi sirhelelekeke a swi ringananga. Tiyisisa swimilana swin'wana ni swin'wana ni tinxaka ta swona hi ndzayo leyi tshembekaka ya laha kaya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The name of a province/district [?] or one protected place is not enough. Make sure of each and every plant and their kinds with advice that is trustworthy from where home is / local [?]."
           }
         ]
       }
@@ -319,17 +422,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Fambisa Tinxaka ni Xiyimo xa Moya",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Match Kinds and Climate"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xiyimo xa moya xi hlawula leswaku i tinxaka tihi leti fanelaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The condition of the air/weather determines which kinds are suitable."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eka Highveld, hlawula mirhi ni swihlahla leswi tiyiselaka vuhola; eka KZN coast ni Lowveld, hlawula tinxaka ta ndhawu leyi hisaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "On the Highveld, choose trees and shrubs that tolerate cold; on the KZN coast and Lowveld, choose kinds of a hot area."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fambisa swimilana hinkwaswo ni ndhawu ya wena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Match all the plants with your place."
           }
         ]
       }
@@ -346,17 +461,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kambela Swikombiso swa Highveld",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Check Highveld Examples"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lisiti yo sungula yi katsa pecan, walnut ni indigenous fig; apple, pear, plum, black mulberry ni loquat; rosemary, Wild Medlar, Cape gooseberry ni Barbados cherry.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A starting list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lisiti leyi a hi xitsundzuxo lexi tirhaka eka swimilana hinkwaswo ni swiyimo hinkwaswo. Kambela swimilana swin’wana ni swin’wana hi xiqhwa, misava, vukulu bya swona loko swi kurile ni approved local species list.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This list is not a recommendation that works for all plants and all conditions. Check each plant by cold/frost, soil, their size when they have grown and approved local species list."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swiyimiso swa nawu ni swa phurojeke leswi nga kona swi fanele ku tshama swi tirha. U nga byali hi ku vona xifaniso ntsena.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "The existing legal and project rules must always keep working. Do not plant by seeing a picture only."
           }
         ]
       }
@@ -373,17 +500,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kambela Swikombiso swa Ndhawu leyi Hisaka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Check Examples of a Hot Area"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swikombiso swo sungula swa ndhawu leyi hisaka swi katsa mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry ni Wild Dagga.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Starting examples for a hot place/area include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Marula, Mopane ni baobab swi tlhela swi humelela eka swikombiso swa Limpopo. Ku fanela ka laha kaya ku ha lava ku kambeliwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs to be checked."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku va mirhi yi pfuna a swi vuli leswaku yi nga dyiwa. Tiyisisa leswi yi nga xiswona ni ku yi tirhisa hi ndlela leyi sirhelelekeke; xifaniso xa ndhawu a hi nkongomiso wo tiva leswaku i swakudya swihi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "That trees help does not say that they can be eaten. Make sure what they are and use them in a safe way; a picture of a place is not a guide to know which are foods."
           }
         ]
       }
@@ -401,18 +540,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Katsa indigenous plants leti faneleke ndhawu ya wena.",
-          "provenance": "unreviewed-machine-draft; independent-semantic-backcheck; exact English source paired"
+          "text": "Katsa swimilana indigenous leswi faneleke laha",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Include suitable indigenous plants here"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swimilana indigenous leswi faneleke laha kaya swi nga seketela habitat tanihi xiphemu xa nkunguhato.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Indigenous plants suitable to the local area can support habitat as part of the plan."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula hi ku ya hi ecosystem ya wena ni ntirho wa nkoka wa swimilana swin’wana ni swin’wana. A ku na xikongomelo xa phesenti lexi nga ni xihlovo eka dyondzo leyi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose according to your ecosystem and the important role of each plant. There is no percentage target that has a source in this lesson."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sirhelela swimilana swa ntumbuluko leswi nga kona. U nga hundzuli ndhawu ya byanyi leyi nga ni rihanyo yi va food forest ntsena hikuva mirhi yi pfuna kun’wana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Protect the natural plants that are there. Do not turn a healthy grass area into a food forest only because trees help elsewhere."
           }
         ]
       }
@@ -429,17 +578,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlela Ku Landzelelana ka Ndhawu",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Plan the Sequence of the Place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula hi ku kambela ndhawu, mati lama kumekaka ni nhlayiso lowu u nga wu endlaka. Sirhelela misava leyi nga funengetiwangiki eku sunguleni.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Begin by checking the place, the water that is available and the care that you can do. Protect soil that is not covered at the start."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Support plants swa nkarhi wo koma swi nga nyika xisirhelelo ni swilo leswi tsemiweke leswi pfunaka laha swi faneleke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Support plants of a short time can give protection and cut material that helps where suitable."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mirhi leyikulu ni swiyenge swa le hansi swi nga engeteriwa loko swiyimo swi pfumelela. Swimilana leswi funengetaka misava a swi lavi ku rindza ku fika emakumu; papalata swimilana leswi phikizanaka ni mirhi leyintshwa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Big trees and the lower layers can be added if conditions allow. Plants that cover the ground do not need to wait until the end; avoid plants that compete with new trees."
           }
         ]
       }
@@ -458,23 +619,41 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Languta: Hlayisa Food Forest leyitsongo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look: Maintain a small Food Forest"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xifaniso lexi xi komba food forest leyitsongo. Sungula hi ndhawu leyi u nga yi hlayisaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "This picture shows a small food forest. Start with a place that you can maintain."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sirhelela misava leyi nga funengetiwangiki eku sunguleni. Laha, mulch wo olova wu funengeta misava.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Protect soil that is not covered at the start. Here, light mulch covers the soil."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayisa mulch kule ni nsinya wa murhi. Xiya ndhawu leyi pfulekeke ehansi swinene ka nsinya wa murhi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep mulch far from the trunk of the tree. Notice the open space very low/near the bottom at the trunk of the tree."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tivonele ku phikizana. Mulimi u susa byanyi ekusuhi ni murhi lowutsongo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Watch for competition. The farmer removes grass/weeds near the small tree."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga si engetela swimilana swin’wana, kambela ku tsakama, xisirhelelo ni nhlayiso lowu u nga wu endlaka. Tshika leswi u swi xiyaka swi kongomisa goza leri landzelaka.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Before adding other plants, check moisture, protection and the maintenance you can do. Leave what you notice to direct the next step."
           }
         ]
       }
@@ -491,17 +670,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lulamisa Ndhawu yo Sungula leyi Hlayisekaka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Prepare a Starting Place that can be Maintained"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula hi ndhawu leyi u nga yi cheletaka mati ni ku yi hlayisa. Kambela swimilana leswi nga kona u nga si yi basisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start with a place that you can water and maintain. Check the plants that are there before you clear it."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Laha swi faneleke, cardboard ya ntolovelo ehansi ka mulch lowu faneleke yi nga sivela ku mila loku nga lavekiki. Tshika mati ma kota ku nghena emisaveni, u tshika swinsinya swi basile.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Where suitable, ordinary cardboard under suitable mulch can prevent unwanted growth. Let water be able to enter the soil, and leave the trunks clean."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlela ndhawu leyi nga exikarhi ka swimilana hi ku ya hi vukulu bya swona loko swi kurile. Lunghiselela nursery plants nkarhi wo byala lowu landzelaka lowu faneleke.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan the space that is in between plants according to their size when they have grown. Prepare nursery plants for the next suitable planting time."
           }
         ]
       }
@@ -518,17 +709,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lulamisa Loko Mirhi Yi Kula",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Adjust When Trees Grow"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta ndlela leyi ndzhuti, timitsu ni mati lama kumekaka swi khumbaka ha yona swimilana leswi nga ekusuhi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Watch how shade, roots and available water affect the plants that are near."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Comfrey ni wild garlic swi kumeka eka xikombiso xo sungula xa swimilana leswi byariweke ehansi ka mirhi; kambela ku fanela ka swona laha kaya u nga si swi tirhisa.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Comfrey and wild garlic are found in a starting example of plants/herbs that are planted underneath trees; check their suitability at home [?] (\"laha kaya\" = where home is / locally) before you use them."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsema marhavi ya support plants kumbe u susa support plants hi ku helela loko swi laveka, u tirhisa tindlela leti fanelaka xinxaka xin’wana ni xin’wana. Switsemiwa leswi faneleke leswi basileke swi nga tlhela swi va mulch. U nga rindzi lembe leri tiyeke loko ku phikizana se ku onha swimilana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Cut the branches of support plants or remove support plants completely when needed, using methods that suit each kind. Suitable cuttings that are clean can also become mulch. Do not wait for a firm year when competition is already damaging the plants."
           }
         ]
       }
@@ -545,17 +748,29 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Byala hi Ku Tsakama loku Tshembekaka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Plant with Reliable Moisture"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula nkarhi wo byala loko ku tsakama ka misava ni xiyimo xa moya lexi languteriweke swi seketela ku sungula.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose a planting time when the moisture of the soil and the expected climate support starting."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mpfula yi nga pfuna, kambela root zone u tlhela u va ni pulani yo seketela ya ku cheleta mati. Papalata ku byala emisaveni leyi tatiweke hi mati.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Rain can help; check the root zone and also have a supporting plan for watering. Avoid planting in soil that is filled with water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kambela swimilana leswitsongo endzhaku ka ku byala. Nkarhi wa ntshovelo ni swilo leswi tisiwaka ku suka handle swi titshege hi xinxaka, ndhawu ni nhlayiso; a ku na xitshembiso xa vuyelo eka lembe ra vuntlhanu.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check small plants after planting. Harvest time and things that are brought from outside depend on the kind, place and care; there is no promise of results in year five."
           }
         ]
       }
@@ -573,18 +788,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ntirho wa le nsinini",
-          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
+          "text": "Ntirho lowu u nyikiweke wa le nsimini",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "The task given of the field"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dirowa swiyenge swa ku byala loku u ku kunguhateke. Komba ndlela yo fikelela, mati ni swimilana swa ntumbuluko leswi nga kona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Draw the layers of planting that you have planned. Show the way of access, water and natural plants that are there."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala xiqhwa, mpfula, misava ni nhlayiso lowu kumekaka laha kaya.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write down the frost, rain, soil and maintenance found here/locally."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eka swimilana swin’wana ni swin’wana leswi nga eka lisiti leyi pfumeriweke, tsala ntirho lowu swi kunguhatiweke ku wu endla ni ndzayo ya laha kaya leyi ha lavekaka u nga si byala.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "For each plant that is on the approved list, write the task that it is planned to do and the local advice that is still needed before you plant."
           }
         ]
       }
@@ -602,32 +827,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Xiendlo xa le nsinini",
-          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
+          "text": "Xiendlo xa le nsimini",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Field activity"
         },
         "body": [
           {
             "status": "draft",
             "text": "Languta ndhawu leyi u nga kotaka ku yi hlayisa, kutani u hlawula goza rin’we leri landzelaka.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at the place that you can maintain, then choose one next step."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sirhelela misava leyi nga funengetiwangiki, kambela ku fanela ka swimilana kumbe u lulamisa nursery plants.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Protect bare soil, check the suitability of plants or prepare nursery plants."
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "status": "draft",
-                "sourceEnglish": "Plant only when conditions and follow-up care are suitable.",
-                "text": "Byala ntsena loko swiyimo swi lulamile naswona u ta kota ku ya mahlweni u hlayisa swimilana.",
-                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-              },
-              {
-                "status": "english-hold",
-                "sourceEnglish": " Return to the same spot to check survival, soil moisture and competition."
-              }
-            ]
+            "status": "draft",
+            "text": "Byala ntsena loko swiyimo ni nhlayiso lowu landzelaka swi fanerile. Tlhelela endhawini yin’we ku ya kambela ku hanya, ku tsakama ka misava ni ku phikizana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plant only when the conditions and the maintenance that follows are right. Return to the same place to check survival, soil moisture and competition."
           }
         ]
       }

@@ -1,102 +1,74 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { COURSE_MODULES, type Lesson, type QuizQuestion } from '../lib/course-modules.ts';
+import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
 import { XITSONGA_PLANT_GUILDS_DRAFT } from '../lib/course-translation-drafts-ts-plant-guilds.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveDeckLang } from '../lib/course-deck.ts';
+import { resolveNarrationLang } from '../lib/course-audio.ts';
+import {
+  FOREST_GUILD_FORBIDDEN_WORDS,
+  FOREST_GUILD_KEPT_TERMS,
+  FOREST_GUILD_NAMES,
+  assertKeepsTerms,
+  checkCompleteModuleDraft,
+  checkGlossedWords,
+  checkKeptTerms,
+  checkNamesVerbatim,
+  checkSupportPlantTerms,
+  checkThinningKept,
+  draftText,
+  sourceDraftPairs,
+} from './regional-full-draft-checks.ts';
 
 const sourceModule = COURSE_MODULES.find(module => module.id === 'plant-guilds')!;
-const selectedParagraphs: Record<string, Record<number, string>> = {
-  'plant-guilds-l2': {
-    2: 'Mulch yi sirhelela misava ya le henhla, yi pfuna ku hlayisa ku tsakama naswona yi vuyisela organic material.',
-  },
-  'plant-guilds-l3': {
-    0: "Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Swimilana swin'wana swi tirha mintirho yo hlayanyana.",
-    1: "Siyisani ndhawu leyi rhendzeleke nsinya ni ndlela swi pfulekile. Tlhela u kambisisa ximilana xin'wana ni xin'wana loko mango ni swimilana leswi nga ekusuhi swi ri karhi swi kula.",
-    5: "Sungula hi nhlayo ya swimilana leswi pfunaka leyi u nga kotaka ku yi khathalela. Languta leswaku swa hanya ni ku kula ku fikela kwihi u nga si engetela swin'wana.",
-    8: 'Tlherisela swilo leswi tsemiweke leswi nga tirhisiwaka eminsinyeni leyi se yi dzimeke kahle. Hlayisa swimilana swa le kusuhi ntsena laha swa ha tirhaka kahle.',
-    11: 'Tirhisa leswi u swi voneke ku cinca ndlela leyi swimilana swi vekiwaka ha yona ni ndlela leyi u swi khathalelaka ha yona. Ximilana xi fanele ku sala laha ntsena loko xi pfuna eka ndhawu leyi.',
-  },
-};
-
 const sourceLessonById = new Map(sourceModule.lessons.map(lesson => [lesson.id, lesson]));
 
-test('Plant Guilds Xitsonga drafts replace screened concepts while preserving every source paragraph', () => {
-  assert.equal(XITSONGA_PLANT_GUILDS_DRAFT.id, sourceModule.id);
-  assert.equal(XITSONGA_PLANT_GUILDS_DRAFT.language, 'ts');
-  assert.equal(XITSONGA_PLANT_GUILDS_DRAFT.reviewStatus, 'machine-draft');
-  assert.equal(XITSONGA_PLANT_GUILDS_DRAFT.sourceMetadata.durationMins, sourceModule.durationMins);
-  assert.equal(XITSONGA_PLANT_GUILDS_DRAFT.sourceMetadata.category, sourceModule.category);
-  assert.deepEqual(XITSONGA_PLANT_GUILDS_DRAFT.lessons.map(lesson => lesson.id), ['plant-guilds-l2', 'plant-guilds-l3']);
+// Rewritten 2 October 2026: Plant Guilds is now a complete Xitsonga draft (all three lessons, card, both
+// quizzes per lesson), so the old pins on six selected paragraphs, exact-English holds and the hold list
+// give way to complete-draft checks. Species, "support plant", "thinning", numbers, quiz order and
+// correct answers stay exact, and the hold list is empty because nothing is left in English.
+test('Plant Guilds Xitsonga draft translates every field and keeps species, support plants and quiz answers', () => {
+  const draft = XITSONGA_PLANT_GUILDS_DRAFT;
+  assert.equal(draft.sourceMetadata.durationMins, sourceModule.durationMins);
+  assert.equal(draft.sourceMetadata.category, sourceModule.category);
+  assert.deepEqual(draft.holds, [], 'no passage is held in English');
+  checkCompleteModuleDraft(sourceModule, draft, 'ts', FOREST_GUILD_FORBIDDEN_WORDS.ts);
 
-  for (const draftLesson of XITSONGA_PLANT_GUILDS_DRAFT.lessons) {
-    const sourceLesson = sourceLessonById.get(draftLesson.id);
-    assert.ok(sourceLesson);
-    assert.equal(draftLesson.title.sourceEnglish, sourceLesson.title);
-    assert.equal(draftLesson.title.xitsongaDraft, sourceLesson.title);
-    assert.equal(draftLesson.title.reviewStatus, 'hold');
-    assert.equal(draftLesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
-    assert.equal(draftLesson.infographicAlt?.xitsongaDraft, sourceLesson.infographicAlt);
-    assert.equal(draftLesson.infographicAlt?.reviewStatus, 'hold');
-    assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
-
-    const sourceParagraphs = sourceLesson.body.split('\n\n');
-    const localizedParagraphs = draftLesson.body.xitsongaDraft.split('\n\n');
-    assert.equal(localizedParagraphs.length, sourceParagraphs.length, `${sourceLesson.id}: keep body paragraph boundaries`);
-    for (const [paragraphIndex, sourceParagraph] of sourceParagraphs.entries()) {
-      const candidate: string | undefined = selectedParagraphs[sourceLesson.id]?.[paragraphIndex];
-      assert.equal(localizedParagraphs[paragraphIndex], candidate ?? sourceParagraph,
-        `${sourceLesson.id} body paragraph ${paragraphIndex}: only selected learner sentence may change`);
-    }
-
-    assert.deepEqual(draftLesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
-    assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
-    assert.ok(draftLesson.keyPoints.every(point => point.reviewStatus === 'hold'));
-    assert.equal(draftLesson.quiz.length, sourceLesson.quiz.length);
-    for (const [quizIndex, item] of draftLesson.quiz.entries()) {
-      const sourceQuiz: QuizQuestion = sourceLesson.quiz[quizIndex];
-      assert.equal(item.question.sourceEnglish, sourceQuiz.q);
-      assert.equal(item.question.xitsongaDraft, sourceQuiz.q);
-      assert.equal(item.question.reviewStatus, 'hold');
-      assert.deepEqual(item.options.map(option => option.sourceEnglish), sourceQuiz.options);
-      assert.deepEqual(item.options.map(option => option.xitsongaDraft), sourceQuiz.options);
-      assert.ok(item.options.every(option => option.reviewStatus === 'hold'));
-      assert.equal(item.sourceCorrectIndex, sourceQuiz.correct, `${sourceLesson.id} quiz ${quizIndex}: answer index changed`);
-      assert.equal(item.rationale.sourceEnglish, sourceQuiz.rationale);
-      assert.equal(item.rationale.xitsongaDraft, sourceQuiz.rationale);
-      assert.equal(item.rationale.reviewStatus, 'hold');
-    }
-
-    const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
-    assert.equal(shown.status, 'draft');
-    assert.equal(shown.content.title, sourceLesson.title);
-    assert.equal(shown.content.body, draftLesson.body.xitsongaDraft);
-    assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
-    assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
-  }
+  const pairs = sourceDraftPairs(draft, 'ts');
+  assert.ok(checkNamesVerbatim(pairs, FOREST_GUILD_NAMES, 'Xitsonga Plant Guilds') >= 19, 'every species mention checked');
+  assert.ok(checkSupportPlantTerms(pairs, 'Xitsonga Plant Guilds') >= 21, 'every support-plant mention checked');
+  assert.ok(checkThinningKept(pairs, 'Xitsonga Plant Guilds') >= 6, 'every thinning mention checked');
+  assert.ok(checkKeptTerms(pairs, FOREST_GUILD_KEPT_TERMS, 'Xitsonga Plant Guilds') >= 61, 'every kept technical term checked');
+  assert.ok(checkGlossedWords(pairs, 'Xitsonga Plant Guilds') >= 15, 'insects, pests, bacteria and pods glossed at each mention');
+  assert.deepEqual(resolveDeckLang(sourceModule.id, 'ts'), { lang: 'ts', exact: true },
+    'the silent Xitsonga deck pairs its unreviewed text with the exact English source');
+  assert.deepEqual(resolveNarrationLang(sourceModule.id, 'ts'), { lang: 'en', exact: false },
+    'narration stays optional English; no regional audio is published');
 });
 
-test('Plant Guilds lesson 1 stays English because it has no Xitsonga learner text', () => {
-  const lesson = sourceModule.lessons.find(item => item.id === 'plant-guilds-l1')!;
+// Rewritten 2 October 2026: lesson 1 used to fall back to English because it had no Xitsonga text. It
+// now has a complete draft, so Study shows that draft, labelled unreviewed, beside the English.
+test('Plant Guilds lesson 1 shows its labelled Xitsonga draft', () => {
+  const lesson = sourceLessonById.get('plant-guilds-l1')!;
+  const draft = XITSONGA_PLANT_GUILDS_DRAFT.lessons.find(item => item.id === lesson.id)!;
   const shown = resolveLearnerLessonPresentation(lesson, 'ts');
-  assert.equal(shown.status, 'english-fallback');
-  assert.equal(shown.content.title, lesson.title);
-  assert.equal(shown.content.body, lesson.body);
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.title, draftText(draft.title, 'ts'));
+  assert.equal(shown.content.body, draftText(draft.body, 'ts'));
 });
 
-test('Plant Guilds legal, biological and management advice stays exact English in lessons 2 and 3', () => {
-  const heldSources = XITSONGA_PLANT_GUILDS_DRAFT.holds.map(item => item.sourceText);
-  for (const required of [
-    'Bocking 14 does not spread by viable seed, but root pieces can regrow.',
-    'Many ladybirds eat aphids; some parasitoid wasps attack crop pests.',
-    'Tulbaghia violacea has narrow leaves and lilac flowers.',
-    'Plant into a suitable season, mulch and maintain establishment water.',
-    'Manage regrowth to keep the opening.',
-  ]) assert.ok(heldSources.some(source => source.includes(required)), `must document the exact English hold: ${required}`);
-
-  for (const lesson of XITSONGA_PLANT_GUILDS_DRAFT.lessons) {
-    assert.ok(lesson.quiz.every(question => [question.question, ...question.options, question.rationale]
-      .every(pair => pair.xitsongaDraft === pair.sourceEnglish)), `${lesson.id}: quiz content stays exact English`);
-  }
+// Rewritten 2 October 2026: the legal, biological and management sentences that used to be held in
+// English are translated, with the names and technical terms they depend on kept exact in English.
+test('Plant Guilds legal, biological and management drafts keep their names and technical terms', () => {
+  const [nitrogen, insects, guild] = XITSONGA_PLANT_GUILDS_DRAFT.lessons.map(lesson => draftText(lesson.body, 'ts').split('\n\n'));
+  assertKeepsTerms(nitrogen[6], ['Sesbania punicea', 'red sesbania'], 'the invasive species is named exactly');
+  assertKeepsTerms(nitrogen[7], ['Sesbania sesban'], 'the project species-list restriction names the plant');
+  assertKeepsTerms(insects[4], ['Bocking 14', 'viable seed'], 'Bocking 14 does not spread by viable seed');
+  assertKeepsTerms(insects[6], ['ladybirds', 'aphids', 'parasitoid wasps', 'African basil'], 'helpful insects and flowers');
+  assertKeepsTerms(insects[8], ['Tulbaghia violacea'], 'wild garlic is named exactly');
+  assertKeepsTerms(guild[4], ['mulch'], 'plant into a suitable season and mulch');
+  assertKeepsTerms(guild[6], ['support plant', 'thinning', 'chop-and-drop'], 'thinning through chop-and-drop');
+  assertKeepsTerms(guild[7], ['thinning'], 'thinning does not instantly stop root competition');
 });
 
 test('Plant Guilds source drift sends the affected lesson back to exact English', () => {

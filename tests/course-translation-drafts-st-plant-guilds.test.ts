@@ -4,115 +4,69 @@ import assert from 'node:assert/strict';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_PLANT_GUILDS_DRAFT } from '../lib/course-translation-drafts-st-plant-guilds.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveDeckLang } from '../lib/course-deck.ts';
+import { resolveNarrationLang } from '../lib/course-audio.ts';
+import {
+  FOREST_GUILD_FORBIDDEN_WORDS,
+  FOREST_GUILD_KEPT_TERMS,
+  FOREST_GUILD_NAMES,
+  assertKeepsTerms,
+  checkCompleteModuleDraft,
+  checkGlossedWords,
+  checkKeptTerms,
+  checkNamesVerbatim,
+  checkSouthAfricanSesotho,
+  checkSupportPlantTerms,
+  checkThinningKept,
+  draftText,
+  sourceDraftPairs,
+} from './regional-full-draft-checks.ts';
 
-test('Plant Selection & Guilds Sesotho draft keeps exact sources, holds and quiz answers', () => {
+// Rewritten 2 October 2026: Plant Selection & Guilds is now a complete Sesotho draft, so the old list of
+// exact-English holds and the pins on individual sentences give way to complete-draft checks. Species,
+// "support plant" (including bare "support" meaning these plants), "thinning", numbers, quiz order and
+// correct answers stay exact; source drift still withdraws the draft.
+test('Plant Selection & Guilds Sesotho draft translates every field and keeps species, support plants and quiz answers', () => {
   const source = COURSE_MODULES.find(module => module.id === 'plant-guilds');
   assert.ok(source, 'the canonical Plant Selection & Guilds module must remain available');
   const draft = SESOTHO_PLANT_GUILDS_DRAFT;
-  assert.equal(draft.id, source.id);
-  assert.equal(draft.language, 'st');
-  assert.equal(draft.reviewStatus, 'machine-draft');
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
   assert.equal(draft.sourceMetadata.category, source.category);
+  checkCompleteModuleDraft(source, draft, 'st', FOREST_GUILD_FORBIDDEN_WORDS.st);
 
-  const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
+  const pairs = sourceDraftPairs(draft, 'st');
   const placeholders = (text: string) => text.match(/\{[^{}]+\}/g) ?? [];
-  const holds: string[] = [];
-  const checkPair = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string, path: string) => {
-    assert.equal(pair.sourceEnglish, english, `${path}: keep exact English source`);
-    assert.ok(pair.sesothoDraft.trim(), `${path}: draft or exact-English hold must exist`);
-    assert.ok(['machine-draft', 'hold'].includes(pair.reviewStatus), `${path}: review status must be explicit`);
-    assert.deepEqual(placeholders(pair.sesothoDraft), placeholders(english), `${path}: preserve placeholders`);
-    assert.deepEqual(numberTokens(pair.sesothoDraft), numberTokens(english), `${path}: preserve numeric claims`);
-    if (pair.reviewStatus === 'hold') {
-      assert.equal(pair.sesothoDraft, english, `${path}: held wording must remain exact English`);
-      holds.push(path);
-    }
-  };
-
-  checkPair(draft.title, source.title, 'module.title');
-  checkPair(draft.description, source.description, 'module.description');
-  assert.equal(draft.lessons.length, source.lessons.length, 'all source lessons must be present');
-  for (const [lessonIndex, lesson] of draft.lessons.entries()) {
-    const original: (typeof source.lessons)[number] = source.lessons[lessonIndex];
-    const path = `lessons[${lessonIndex}] ${original.id}`;
-    assert.equal(lesson.id, original.id, `${path}: IDs and order must match`);
-    if (original.infographicAlt) {
-      assert.ok(lesson.infographicAlt, `${path}: source image description needs a pair`);
-      checkPair(lesson.infographicAlt, original.infographicAlt, `${path}.infographicAlt`);
-    } else assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent image text`);
-    checkPair(lesson.title, original.title, `${path}.title`);
-    checkPair(lesson.body, original.body, `${path}.body`);
-    assert.equal(lesson.body.sesothoDraft.split('\n\n').length, original.body.split('\n\n').length,
-      `${path}.body: keep paragraph boundaries`);
-    assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: keep key-point count/order`);
-    for (const [pointIndex, point] of lesson.keyPoints.entries()) {
-      checkPair(point, original.keyPoints[pointIndex], `${path}.keyPoints[${pointIndex}]`);
-    }
-    assert.equal(lesson.quiz.length, original.quiz.length, `${path}: keep quiz count/order`);
-    for (const [questionIndex, question] of lesson.quiz.entries()) {
-      const english = original.quiz[questionIndex];
-      const questionPath = `${path}.quiz[${questionIndex}]`;
-      checkPair(question.question, english.q, `${questionPath}.question`);
-      assert.equal(question.options.length, english.options.length, `${questionPath}: keep option count/order`);
-      for (const [optionIndex, option] of question.options.entries()) {
-        checkPair(option, english.options[optionIndex], `${questionPath}.options[${optionIndex}]`);
-      }
-      assert.equal(question.sourceCorrectIndex, english.correct, `${questionPath}: answer index must not change`);
-      assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, english.options[english.correct],
-        `${questionPath}: keyed answer must still match its source`);
-      checkPair(question.rationale, english.rationale, `${questionPath}.rationale`);
-    }
+  for (const [english, text] of pairs) {
+    assert.deepEqual(placeholders(text), placeholders(english), `"${english}": placeholders unchanged`);
   }
+  assert.ok(checkNamesVerbatim(pairs, FOREST_GUILD_NAMES, 'Sesotho Plant Guilds') >= 19, 'every species mention checked');
+  assert.ok(checkSupportPlantTerms(pairs, 'Sesotho Plant Guilds') >= 21, 'every support-plant mention checked');
+  assert.ok(checkThinningKept(pairs, 'Sesotho Plant Guilds') >= 6, 'every thinning mention checked');
+  assert.ok(checkKeptTerms(pairs, FOREST_GUILD_KEPT_TERMS, 'Sesotho Plant Guilds') >= 61, 'every kept technical term checked');
+  checkSouthAfricanSesotho(pairs, 'Sesotho Plant Guilds');
+  assert.ok(checkGlossedWords(pairs, 'Sesotho Plant Guilds') >= 15, 'insects, pests, bacteria and pods glossed at each mention');
 
-  assert.deepEqual(holds, [
-    'lessons[0] plant-guilds-l1.infographicAlt',
-    'lessons[0] plant-guilds-l1.keyPoints[1]',
-    'lessons[0] plant-guilds-l1.keyPoints[2]',
-    'lessons[0] plant-guilds-l1.keyPoints[3]',
-    'lessons[0] plant-guilds-l1.quiz[0].rationale',
-    'lessons[0] plant-guilds-l1.quiz[1].rationale',
-    'lessons[1] plant-guilds-l2.infographicAlt',
-    'lessons[1] plant-guilds-l2.body',
-    'lessons[1] plant-guilds-l2.keyPoints[2]',
-    'lessons[1] plant-guilds-l2.keyPoints[3]',
-    'lessons[1] plant-guilds-l2.quiz[0].options[1]',
-    'lessons[1] plant-guilds-l2.quiz[0].rationale',
-    'lessons[1] plant-guilds-l2.quiz[1].options[1]',
-    'lessons[2] plant-guilds-l3.infographicAlt',
-    'lessons[2] plant-guilds-l3.body',
-    'lessons[2] plant-guilds-l3.quiz[0].options[1]',
-    'lessons[2] plant-guilds-l3.quiz[0].rationale',
-  ], 'species and unscreened advice stay exact English');
+  const [nitrogen, insects, guild] = draft.lessons.map(lesson => draftText(lesson.body, 'st').split('\n\n'));
+  assertKeepsTerms(nitrogen[0], ['nitrogen', 'legume'], 'rhizobia convert nitrogen for the legume');
+  assertKeepsTerms(nitrogen[6], ['Sesbania punicea', 'red sesbania'], 'the invasive species is named exactly');
+  assertKeepsTerms(nitrogen[7], ['Sesbania sesban'], 'the project species-list restriction names the plant');
+  assertKeepsTerms(insects[4], ['Bocking 14', 'viable seed'], 'Bocking 14 does not spread by viable seed');
+  assertKeepsTerms(insects[8], ['Tulbaghia violacea'], 'wild garlic is named exactly');
+  assertKeepsTerms(guild[6], ['support plant', 'thinning', 'chop-and-drop'], 'thinning through chop-and-drop');
 
-  const guildOpening = draft.lessons[0].body;
-  assert.equal(guildOpening.reviewStatus, 'machine-draft');
-  assert.ok(guildOpening.sesothoDraft.startsWith('Dibaktheria tsena di fetola nitrogen'),
-    'the screened nitrogen concept reaches the learner');
-  for (const safetyHold of [
-    'Sesbania punicea is the invasive red sesbania.',
-    'Check the full name before planting.',
-    'There is no universal number per fruit tree.',
-  ]) assert.ok(guildOpening.sesothoDraft.includes(safetyHold),
-    `plant identity and density guidance remains exact English: ${safetyHold}`);
+  const sweetPotato = draft.lessons[2].quiz[1];
+  assert.equal(sweetPotato.sourceCorrectIndex, 2);
+  assert.equal(sweetPotato.options[2].sourceEnglish, source.lessons[2].quiz[1].options[2],
+    'the keyed answer is still the comparison of food and cover benefits with competition');
+  assertKeepsTerms(draftText(sweetPotato.question, 'st'), ['sweet potato', 'mulch'], 'the question names both choices');
+
   const shown = resolveLearnerLessonPresentation(source.lessons[0], 'st');
-  assert.equal(shown.content.body, guildOpening.sesothoDraft);
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draftText(draft.lessons[0].body, 'st'));
   assert.equal(resolveLearnerLessonPresentation({ ...source.lessons[0], body: `${source.lessons[0].body} ` }, 'st').status,
-    'english-fallback', 'a changed English source withdraws the machine draft');
-
-  for (const point of [...draft.lessons[1].keyPoints.slice(0, 2), ...draft.lessons[2].keyPoints]) {
-    assert.equal(point.reviewStatus, 'machine-draft', 'screened guild concepts remain visibly unreviewed');
-    assert.notEqual(point.sesothoDraft, point.sourceEnglish);
-  }
-  assert.equal(draft.lessons[2].quiz[1].rationale.reviewStatus, 'machine-draft');
-  assert.equal(draft.lessons[2].quiz[1].options[2].sourceEnglish,
-    source.lessons[2].quiz[1].options[source.lessons[2].quiz[1].correct],
-    'the screened rationale cannot change which answer is correct');
-
-  assert.ok(draft.lessons[0].body.sesothoDraft.includes('Sesbania punicea'));
-  assert.ok(draft.lessons[0].body.sesothoDraft.includes('Sesbania sesban'));
-  assert.ok(draft.lessons[1].body.sesothoDraft.includes('Bocking 14'));
-  assert.ok(draft.lessons[1].body.sesothoDraft.includes('Tulbaghia violacea'));
-  assert.ok(draft.lessons[2].quiz[1].question.sourceEnglish.includes('sweet potato'));
-  assert.equal(draft.lessons[2].quiz[1].question.sesothoDraft, 'Na sweet potato e dula e le molemo ho feta basin ya mulch ho potoloha sefate se senyane sa ditholwana?');
+    'english-fallback', 'even whitespace drift in the English withdraws the draft');
+  assert.deepEqual(resolveDeckLang(source.id, 'st'), { lang: 'st', exact: true },
+    'the silent Sesotho deck pairs its unreviewed text with the exact English source');
+  assert.deepEqual(resolveNarrationLang(source.id, 'st'), { lang: 'en', exact: false },
+    'narration stays optional English; no regional audio is published');
 });

@@ -15,12 +15,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Kgetho ya dimela le dihlopha tsa dimela (guilds)"
+          "text": "Kgetho ya dimela le dihlopha tsa dimela (guilds)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Selection of plants and plant groups (guilds)"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Kgetha dimela tse sebetsang mmoho—mme o fetole temo ha e ntse e hola."
+            "text": "Kgetha dimela tse sebetsang mmoho—mme o fetole temo ha e ntse e hola.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose plants that work together—and change the farming/garden as it grows."
           }
         ]
       }
@@ -37,12 +41,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Kgetho ya dimela le dihlopha tsa dimela (guilds)"
+          "text": "Kgetho ya dimela le dihlopha tsa dimela (guilds)",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Selection of plants and plant groups (guilds)"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Sefate sa ditholwana se hloka lesedi, metsi, phepo ya mobu le sebaka.\n\nDimela tsa tshehetso di ka fana ka dijo, masalla a mahlaku a kwahelang mobu, dipalesa le sekoaelo se phelang sa mobu.\n\nFa semela ka seng mosebetsi o molemo.\n\nTswela pele ho ela hloko hore na se thusa sefate hammoho le lelapa.\n\nKe mesebetsi efe e hlokehang temong ya hao?"
+            "text": "Sefate sa ditholwana se hloka lesedi, metsi, nutrients tsa mobu le sebaka. Support plants di ka fana ka dijo, mulch ya mahlaku, dipalesa le sekoaelo se phelang. Fa semela ka seng mosebetsi o molemo. Tswela pele o hlokomela hore na se thusa sefate le lelapa. Ke mesebetsi efe e hlokehang temong ya hao?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A fruit tree needs light, water, soil nutrients and space. Support plants can provide food, leaf mulch, flowers and a living cover. Give each plant a good job. Continue to watch whether it helps the tree and the household/family. What jobs are needed in your farm/garden?"
           }
         ]
       }
@@ -59,12 +67,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Qala ka sebaka"
+          "text": "Qala ka sebaka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Start with the place"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Fumana hore na ke eng e thibelang kgolo pele o kgetha semela."
+            "text": "Fumana hore na ke eng e thibelang kgolo pele o kgetha semela.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Find out what is blocking growth before you choose a plant."
           }
         ]
       }
@@ -81,12 +93,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Qala ka sebaka"
+          "text": "Qala ka sebaka",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Start with the place"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Check sunlight, drainage, soil condition and water availability.\n\nNitrojene ke e nngwe feela ya dintho tse ka nnang tsa thibela kgolo.\n\nENGLISH HOLD — Compare the soil beneath mulch with exposed soil.\n\nENGLISH HOLD — Choose support plants that fit the actual conditions.\n\nSebaka sena se hloka eng pele?"
+            "text": "Hlahloba lesedi la letsatsi, ho tswa ha metsi mobung, boemo ba mobu le ho fumaneha ha metsi. Nitrogen ke e nngwe feela ya dintho tse ka nnang tsa thibela kgolo. Bapisa mobu o ka tlasa mulch le mobu o pepeneneng. Kgetha support plants tse loketseng maemo a sebele. Sebaka sena se hloka eng pele?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check sunlight, water draining/coming out in the soil, soil condition and availability of water. Nitrogen is only one of the things that can possibly hinder growth. Compare soil under mulch with bare/exposed soil. Choose support plants suited to the actual conditions. What does this place need first?"
           }
         ]
       }
@@ -103,12 +119,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Fana ka mosebetsi ho semela ka seng"
+          "text": "Fana ka mosebetsi ho semela ka seng",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Give each plant a job"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Sehlopha se molemo sa dimela tse tshehetsanang (guild) se hlahisa melemo eo o ka e bonang."
+            "text": "Guild e molemo e hlahisa melemo eo o ka e bonang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A good guild produces benefits that you can see."
           }
         ]
       }
@@ -125,12 +145,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Fana ka mosebetsi ho semela ka seng"
+          "text": "Fana ka mosebetsi ho semela ka seng",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Give each plant a job"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Choose members for food, nitrogen fixation, mulch, flowers or ground cover.\n\nSemela se le seng se ka etsa mesebetsi e mengata.\n\nENGLISH HOLD — By the end, plan a guild, explain how residues feed soil, and decide which support plants to keep, cut or remove.\n\nKe mosebetsi ofe o ntseng o haella?"
+            "text": "Kgetha ditho tsa guild bakeng sa dijo, nitrogen fixation, mulch, dipalesa kapa sekoaelo sa mobu. Semela se le seng se ka etsa mesebetsi e mengata. Qetellong, rera guild, hlalosa kamoo masalla a fepang mobu kateng, mme o etse qeto ya hore na ke support plants dife tseo o tla di boloka, ho di seha kapa ho di tlosa. Ke mosebetsi ofe o ntseng o haella?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose guild members for food, nitrogen fixation, mulch, flowers or soil cover. One plant can do many jobs. At the end, plan the guild, explain how the residues/remains feed the soil, and make a decision about which support plants you will keep, cut (prune) or remove. Which job is still lacking?"
           }
         ]
       }
@@ -147,12 +171,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Batla mafito a metso"
+          "text": "Batla nodules metsong",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look for nodules on the roots"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Dimela tsa dinawa di sebetsa mmoho le baktheria tsa rhizobia ka mafito a metso ya tsona."
+            "text": "Legumes di sebetsa mmoho le rhizobia ka nodules tse metsong ya tsona.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Legumes work together with rhizobia through nodules that are on their roots."
           }
         ]
       }
@@ -169,12 +197,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Batla mafito a metso"
+          "text": "Batla nodules metsong",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Look for nodules on the roots"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Dibaktheria tsena di fetola nitrogen e tswang moyeng hore e be mefuta eo semela sa dinawa se ka e sebedisang.\n\nENGLISH HOLD — Find nodules on a spare legume plant.\n\nENGLISH HOLD — Nodulation and growth depend on the plant, suitable bacteria and growing conditions.\n\nNa o ka fumana mafito a metso?"
+            "text": "Dibaktheria (bacteria) tsena di fetola nitrogen e tswang moyeng hore e be mefuta eo legume e ka e sebedisang. Fumana nodules semeleng sa legume seo o sa se hloke. Nodulation le kgolo di ipapisitse le semela, dibaktheria tse loketseng le maemo a kgolo. Na o ka fumana nodules?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "These bacteria change nitrogen that comes from the air so that it becomes forms that the legume can use. Find nodules on a legume plant that you do not need. Nodulation and growth depend on the plant, the suitable bacteria and the growing conditions. Can you find nodules?"
           }
         ]
       }
@@ -190,12 +222,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Busetsa mahlaku mobung",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Return leaves to the soil"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Naetrojene e ka hara dikarolo tsa semela e ba molemo ha dikarolo tseo di bola."
+            "text": "Nitrogen e ka hara dikarolo tsa semela e ba molemo ha dikarolo tseo di bola.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Nitrogen that is inside the parts of the plant becomes good/useful when those parts rot."
           }
         ]
       }
@@ -211,11 +248,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Busetsa mahlaku mobung",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Return leaves to the soil"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Busetsa mahlaku a kgaboletsweng a loketseng, mahlaku a oleng le masalla a dijalo e le mulch. Dintho tse phelang mobung di lokolla nutrients nakong ya decomposition. Sena se nka nako. Legume e phelang ha se phaephe ya manyolo e kenang kapele-pele sefateng sa ditholwana. Ke masalla afe ao o ka a busetsang?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Return suitable cut-off leaves, fallen leaves and crop residues as mulch. Living things in the soil release nutrients during decomposition. This takes time. A living legume is not a fertiliser pipe that enters the fruit tree quickly. Which residues can you return?"
           }
         ]
       }
@@ -231,11 +274,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sesbania e na le mosebetsi o molemo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Sesbania has a good job"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sesbania sesban e ka fana ka kgolo e potlakileng le mulch ya mahlaku.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sesbania sesban can provide fast growth and leaf mulch."
           }
         ]
       }
@@ -251,11 +300,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sesbania e na le mosebetsi o molemo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Sesbania has a good job"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke semela se indigenous ho KwaZulu-Natal. Maemong a futhumetseng a loketseng, laola sehlahlana kapa sefate se senyenyane sena se phelang nakwana e le support plant. Fa kgolo ya sona sebaka. Kgabola bakeng sa mulch mme o hlahlobe hape ha moriti kapa phehisano ya metsi e eketseha. O ka laola kgolo ya sona kae?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "It is a plant that is indigenous to KwaZulu-Natal. In suitable warm conditions, manage this shrub or small tree, which lives temporarily/for a short time, as a support plant. Give its growth space. Cut [it] for mulch and check again when shade or water competition increases. Where can you manage its growth?"
           }
         ]
       }
@@ -271,11 +326,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlahloba lebitso le felletseng la semela",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Check the full name of the plant"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sesbania sesban le Sesbania punicea ke mefuta e fapaneng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sesbania sesban and Sesbania punicea are different species."
           }
         ]
       }
@@ -291,11 +352,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlahloba lebitso le felletseng la semela",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Check the full name of the plant"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sesbania punicea ke red sesbania e invasive. Dikgoba tsa yona (pods) di na le mapheo a mane a elang ka bolelele ba lekgoba. Netefatsa hore ke semela sefe ka ho sebedisa botanical guidance e tshepehang. Hlahloba lebitso le felletseng pele o jala. Hlompha project species list e dumellanweng, ho akaretsa dithibelo dife kapa dife mabapi le Sesbania sesban. Na morekisi a ka netefatsa mofuta?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sesbania punicea is a red sesbania that is invasive. Its pods have four wings running along the length of the pod. Confirm which plant it is by using reliable botanical guidance. Check the full name before you plant. Respect the agreed project species list, including any restrictions regarding Sesbania sesban. Can the seller confirm the species?"
           }
         ]
       }
@@ -311,11 +378,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Pigeon pea e fana le ka dijo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Pigeon pea also provides food"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pigeon pea—Cajanus cajan—e ka fana ka dierekisi, thepa ya mahlaku le nitrogen fixation.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Pigeon pea—Cajanus cajan—can provide peas, leaf material and nitrogen fixation."
           }
         ]
       }
@@ -331,11 +404,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Pigeon pea e fana le ka dijo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Pigeon pea also provides food"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebelisa sebaka se nang le letsatsi, se tswang metsi hantle. Ke support shrub e phelang nakwana; serame le metsi a emeng di ka e thibela. Etsa qeto ya hore na semela ka seng se fana haholo ka dierekisi kapa ka thepa ya mahlaku. Ho e seha hangata ka matla ho ka e senya mme ya fokotsa thoro ya dijo. Na o hodisa semela sena bakeng sa dierekisi kapa mulch?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use a place that has sun and drains water well. It is a support shrub that lives temporarily/for a short while; frost and standing water can block it. Decide whether each plant provides mostly peas or leaf material. Cutting it heavily/with force often can damage it and reduce the seed/food harvest. Are you growing this plant for peas or mulch?"
           }
         ]
       }
@@ -351,11 +430,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kgetha ho latela sebaka le boholo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose according to place and size"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Support tree e sebetsang sebakeng se seng e ka ba kgolo ho feta tekano kapa e sa loketse sebakeng se seng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "A support tree that works in one place can be bigger than appropriate or unsuitable in another place."
           }
         ]
       }
@@ -371,12 +456,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kgetha ho latela sebaka le boholo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose according to place and size"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Compare mature crown, roots, shade, rainfall and temperature.\n\nENGLISH HOLD — Check locally appropriate species and planting rules.\n\nENGLISH HOLD — Put large support trees where they have space.\n\nENGLISH HOLD — For a small young guild, a manageable shrub may be easier to maintain.\n\nSemela sena se tla ba seholo hakae?"
+            "text": "Bapisa crown e hodileng ka botlalo, metso, moriti, pula le mocheso. Hlahloba mefuta e loketseng sebaka le melao ya ho jala. Beha support trees tse kgolo moo di nang le sebaka. Bakeng sa guild e nyenyane e ntjha, sehlahlana se laolehang se ka ba bonolo ho feta ho se hlokomela. Semela sena se tla ba seholo hakae?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plant the crown that has dried up completely, roots, shade, rain and heat [?]. Examine the species suited to the place and the planting rules. Place big support trees where they have space. For a new small guild, a manageable shrub can be easier than looking after it [?]. How big will this plant be?"
           }
         ]
       }
@@ -392,11 +482,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Annual cover e na le sebaka sa yona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Annual cover has its place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sunn hemp e ka koahela sekgeo se loketseng nakong e futhumetseng pele ho sejalo se latelang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sunn hemp can cover a suitable gap in the warm season before the next crop."
           }
         ]
       }
@@ -412,12 +508,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Annual cover e na le sebaka sa yona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Annual cover has its place"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Grow it where its season and space fit the plan.\n\nENGLISH HOLD — Its contribution depends on growth, nodulation and the material returned.\n\nENGLISH HOLD — After cutting, allow for decomposition.\n\nENGLISH HOLD — An annual cover crop plays a different role from a longer-lived support shrub.\n\nSebaka sena se tla hlokahala neng hape?"
+            "text": "E hodise moo nako ya yona ya selemo le sebaka di lekanang le morero. Seabo sa yona se itshetlehile ka kgolo, nodulation le thepa e busetswang. Ka mora ho e seha, dumella nako ya decomposition. Annual cover crop e bapala karolo e fapaneng le support shrub e phelang nako e telele ho feta. Sebaka sena se tla hlokahala neng hape?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Grow it where its time of year (season) and place match the purpose. Its contribution depends on growth, nodulation and the material returned. After cutting it [down/back], allow time for decomposition. An annual cover crop plays a different role from a support shrub that lives longer. When will this place be needed again?"
           }
         ]
       }
@@ -433,11 +534,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Siya sebaka ho potoloha sefate",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Leave space around the tree"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boloka sefate sa ditholwana se sa le senyenyane se na le lesedi, mme o boloke phihlello bakeng sa tlhokomelo.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep the fruit tree, while it is still small, with light, and keep access for care."
           }
         ]
       }
@@ -453,12 +560,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Siya sebaka ho potoloha sefate",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Leave space around the tree"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Keep an open establishment basin and access to the fruit tree.\n\nENGLISH HOLD — Place temporary support plants where their size and water use can be managed.\n\nENGLISH HOLD — Put leafy cuttings where mulch is needed.\n\nENGLISH HOLD — Neighbouring fruit trees can share support strips between them.\n\nNa o ka kgona ho fihlella dimela tsena ka bobedi ha di ntse di hola?"
+            "text": "Boloka establishment basin e bulehileng le phihlello ho sefate sa ditholwana. Beha support plants tsa nakwana moo boholo le tshebediso ya tsona ya metsi di ka laolwang. Beha mahlaku a sehilweng moo mulch e hlokahalang. Difate tse haufi tsa ditholwana di ka arolelana support strips tse pakeng tsa tsona. Na o ka kgona ho fihlella dimela tsena ka bobedi ha di ntse di hola?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep the establishment basin open and keep access to the fruit tree. Put temporary support plants where their size and water use can be managed. Put the cut leaves where mulch is needed. Nearby fruit trees can share support strips that are between them. Can you reach both these plants while they grow?"
           }
         ]
       }
@@ -474,11 +586,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Haha support guild ya mekgahlelo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Build a support guild of stages"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kopanya sekoaelo sa nako ya selemo, support shrubs le difate tse nyenyane tsa nakwana.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Combine seasonal cover, support shrubs and small temporary trees."
           }
         ]
       }
@@ -494,12 +612,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Haha support guild ya mekgahlelo",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Build a support guild of stages"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Cowpea covers sunny gaps.\n\nENGLISH HOLD — Pigeon pea provides food and leafy material.\n\nENGLISH HOLD — Managed Sesbania sesban can supply taller temporary support.\n\nENGLISH HOLD — Add suitable flowering and mulch plants.\n\nENGLISH HOLD — Keep the mango trunk clear and manage light, water and access.\n\nKe mekgahlelo efe e loketseng sebaka sa hao?"
+            "text": "Cowpea e koahela dikgeo tse nang le letsatsi. Pigeon pea e fana ka dijo le thepa ya mahlaku. Sesbania sesban e laoliweng e ka fana ka support plant ya nakwana e phahameng ho feta. Eketsa dimela tse loketseng tsa dipalesa le tsa mulch. Boloka kutu ya sefate sa mango e hlakile mme o laole lesedi, metsi le phihlello. Ke mekgahlelo efe e loketseng sebaka sa hao?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Cowpea covers the sunny gaps/areas [?]. Pigeon pea gives food and leaf material. A managed Sesbania sesban can give a temporary support plant that is taller than [the others]. Add suitable flower plants and mulch plants. Keep the trunk of the mango tree clear and manage light, water and access. Which layers/stages [?] suit your place?"
           }
         ]
       }
@@ -515,11 +638,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ke Support Plants tse Kae?",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "How Many Support Plants?"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rera support plants tse ngata moo sebaka le tlhokomelo ya hao di ka di tswelletsang pele.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plan many support plants where your space and care can keep them going."
           }
         ]
       }
@@ -535,11 +664,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ke Support Plants tse Kae?",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "How Many Support Plants?"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bala support plants tsa lehong dibakeng tse pakeng tsa difate tsa ditholwana. Jala dimela tse koahelang mobu tse loketseng ho latela boholo ba sebaka. Ha ho na palo e le nngwe e sebetsang bakeng sa sefate se seng le se seng sa ditholwana. Fetola bongata ba dimela ho latela metsi, mobu, boholo ba semela le bokgoni ba hao ba ho kgabola le ho etsa thinning. O ka hlokomela support plants tse kae?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Count the support plants of wood [?] in the places between the fruit trees. Plant ground-covering plants suited according to the size of the place. There is no one number that works for each fruit tree. Change the quantity of plants according to water, soil, plant size and your ability to chop [?] and to do thinning. How many support plants can you look after?"
           }
         ]
       }
@@ -555,12 +690,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Chop-and-drop bakeng sa lesedi le mulch",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Chop-and-drop for light and mulch"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Shebella ha lekala le wela hodima mahlaku a pomilweng."
+            "text": "Shebella ha lekala le wela hodima makgasi a kgaotsweng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Look at whether the branch falls on top of the cut stems/leaves [?: makgasi]."
           }
         ]
       }
@@ -576,11 +716,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Chop-and-drop bakeng sa lesedi le mulch",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Chop-and-drop for light and mulch"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kgaola makala a support tree mme o kgutlisetse mmung makgasi a loketseng a kgaotsweng. Video e kgutshwane e bontsha ho kgaolwa ha lekala: support tree e dula e eme. Siya makgasi a phetseng hantle a lekaneng hore semela se iphole. Kgaola ho ya ka mofuta wa semela. O qobe ho kgaola pigeon pea ka matla ka makgetlo a mangata, haholoholo ha o e lema bakeng sa dierekisi (peas). Ke semela sefe se hlokang ho kgaolwa, mme ka bokae?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Cut the branches of the support tree and return the suitable cut leaves [?makgasi] to the soil. A short video shows the cutting of a branch: the support tree stays standing. Leave enough healthy leaves [?makgasi] for the plant to recover. Cut according to the type of plant. Avoid cutting pigeon pea heavily many times, especially when you plant it for peas (dierekisi). Which plant needs to be cut, and by how much?"
           }
         ]
       }
@@ -596,11 +742,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Boloka mulch hole le kutu ya sefate",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Keep mulch away from the tree trunk"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hasa thepa e loketseng e kgaotsweng hodima mmu, kutu le root collar di sa koahelwe.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Spread suitable cut material over the soil, with the trunk and root collar not covered."
           }
         ]
       }
@@ -616,11 +768,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Boloka mulch hole le kutu ya sefate",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Keep mulch away from the tree trunk"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mulch e sireletsa bokaholimo ba mmu, e thusa ho boloka mongobo mme e kgutlisetsa thepa ya organic. Siya tsela ya ho fihlella bakeng sa ho nosetsa le ho hlahloba. Seha thepa dikotoana tse ka laolwang mme o tswelele ho shebella mongobo le decomposition. Na root collar e ntse e sa koahelwe?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Mulch protects the surface of the soil, helps to keep moisture and returns organic material. Leave a way of access for watering and inspecting. Cut the material into pieces that can be managed and keep watching moisture and decomposition. Is the root collar still uncovered?"
           }
         ]
       }
@@ -636,11 +794,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kgetha comfrey e nepahetseng",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose the right comfrey"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bocking 14 comfrey e ka fana ka makgasi a seholotsweng bakeng sa mulch.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Bocking 14 comfrey can give pruned/chopped stalks [?] for mulch."
           }
         ]
       }
@@ -656,11 +820,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kgetha comfrey e nepahetseng",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Choose the right comfrey"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fumana cultivar e nepahetseng. Bocking 14 ha e phatlalale ka viable seed, empa dikotoana tsa medu di ka hlola di mela hape. E bee moo e nang le sebaka le mongobo o lekaneng. Seha makgasi ha e ntse e iphola; o se ke wa pitlaganya sefate sa ditholwana se sa le senyane. Na ona ke sebaka se setle sa ka ho sa feleng sa sehlopha sena sa comfrey?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose a suitable cultivar. Bocking 14 ha is spread by viable seed, but root pieces [?] can still sprout again. Put it where there is space and enough moisture. Cut the leaves [?makgasi] while it is recovering; do not [?pitlaganya: crowd/press/squeeze] a fruit tree while it is still young. Is this a good permanent [?] place for this group of comfrey?"
           }
         ]
       }
@@ -677,12 +847,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ela hloko dikokonyana tse thusang"
+          "text": "Ela hloko dikokwanyana (insects) tse thusang",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Take note of helpful insects"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Dipalesa di ka fana ka mehlodi bakeng sa dikokonyana tse thusang."
+            "text": "Dipalesa di ka fana ka mehlodi bakeng sa dikokwanyana (insects) tse thusang.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Flowers can give resources [?] for helpful insects."
           }
         ]
       }
@@ -699,12 +873,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ela hloko dikokonyana tse thusang"
+          "text": "Ela hloko dikokwanyana (insects) tse thusang",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Take note of helpful insects"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Many ladybirds eat aphids; some parasitoid wasps attack crop pests.\n\nENGLISH HOLD — Flowering members such as African basil can add resources.\n\nENGLISH HOLD — Watch which insects visit and whether damage changes.\n\nENGLISH HOLD — A flowering plant does not guarantee pest control.\n\nHa e le hantle kokonyana ena e etsa eng?"
+            "text": "Ladybirds tse ngata di ja aphids; parasitoid wasps tse ding di tlhasela dikokwanyana tse senyang dijalo (pests). Ditho tse nang le dipalesa, tjena ka African basil, di ka eketsa mehlodi. Shebella hore ke dikokwanyana (insects) dife tse etelang le hore na tshenyo e a fetoha. Semela se nang le dipalesa ha se tiisetse taolo ya dikokwanyana tse senyang. Kokwanyana eo ka nnete e etsa eng?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Many ladybirds eat aphids; some parasitoid wasps attack insects that damage crops. Members that have flowers, like African basil, can add resources [?]. Watch which insects visit and whether damage changes. A plant with flowers does not guarantee control of pests. What does that insect really do?"
           }
         ]
       }
@@ -720,11 +898,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fa dipalesa sebaka sa tsona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Give flowers their place"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Wild garlic e ka ba setho se nang le dipalesa moo sebaka se e loketseng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Wild garlic can be a member that has flowers where the place suits it."
           }
         ]
       }
@@ -740,12 +924,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fa dipalesa sebaka sa tsona",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Give flowers their place"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Tulbaghia violacea has narrow leaves and lilac flowers.\n\nENGLISH HOLD — Place a clump where it has light and room to grow.\n\nENGLISH HOLD — Observe visiting insects.\n\nENGLISH HOLD — Do not promise that a ring of wild garlic will repel pests or cure an outbreak.\n\nDipalesa di ka mela kae ntle le ho pitlagana?"
+            "text": "Tulbaghia violacea e na le makgasi a masesane le dipalesa tse mmala wa lilac. Bea sehlopha sa wild garlic moo se nang le lesedi le sebaka sa ho gola. Shebella dikokwanyana (insects) tse etelang. O se ke wa tshepisa hore sedikadikwe sa dimela tsa wild garlic se tla leleka dikokwanyana tse senyang (pests) kapa se fedise tlhaselo e kgolo ya tsona. Dipalesa di ka mela kae ntle le ho pitlagana?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Tulbaghia violacea has narrow [?: makgasi, leaves] and flowers of lilac colour. Place a group of wild garlic where it has light and space to grow. Watch the visiting insects. Do not promise that a circle of wild garlic plants will chase away harmful insects or end a big attack of them. Where can the flowers grow without crowding?"
           }
         ]
       }
@@ -762,11 +951,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Kopanya mesebetsi mmoho"
+          "text": "Kopanya mesebetsi mmoho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Combine functions together"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kgetha balekane ba thusang ha o ntse o sireletsa sebaka sa ho gola sa mango.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose partners that help while you protect the growing space of the mango."
           }
         ]
       }
@@ -783,12 +977,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Kopanya mesebetsi mmoho"
+          "text": "Kopanya mesebetsi mmoho",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Combine functions together"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover.\n\nENGLISH HOLD — Some plants serve several functions.\n\nENGLISH HOLD — Keep the trunk area and path open.\n\nENGLISH HOLD — Reassess each member as the mango and its neighbours grow.\n\nNa setho ka seng se na le sebaka hammoho le mosebetsi?"
+            "text": "Kopanya support functions tseo sebaka sa hao se di hlokang: nitrogen fixation, dijo, mulch, dipalesa le dimela tse koahelang mmu. Dimela tse ding di sebetsa mesebetsi e mengata. Boloka sebaka se potileng kutu le tsela di bulehile. Hlahloba setho ka seng hape ha mango le baahisani ba yona ba ntse ba gola. Na setho ka seng se na le sebaka hammoho le mosebetsi?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Combine support functions that your place needs: nitrogen fixation, food, mulch, flowers and plants that cover the soil. Some plants perform many functions. Keep the space around the trunk and the path open. Check each member again as the mango and their neighbours are growing. Does each member have space together with its function?"
           }
         ]
       }
@@ -804,11 +1002,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sekoahelo sa dijo le sona se a phehisana",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Food ground cover also competes"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sweet potato e ka koahela mmu mme ya fana ka dijo sebakeng se loketseng se nang le letsatsi.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Sweet potato can cover the soil and give food in a suitable place that has sun."
           }
         ]
       }
@@ -824,11 +1028,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sekoahelo sa dijo le sona se a phehisana",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Food ground cover also competes"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boloka makala a yona a hasanang hole le sefate sa ditholwana se senyane mme o boloke tsela ya tlhokomelo. Medu ya yona le yona e sebedisa metsi le nutrients. Moo disebediswa di haellang, bapisa sekoahelo se phelang le mulch basin e tlwaelehileng. Na sekoahelo sena se thusa sefate ho ikemela (establishment)?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep its spreading branches away from the small fruit tree and keep a path of care. Its roots too use water and nutrients. Where resources are lacking, compare the living cover with a normal mulch basin. Does this cover help the tree to stand on its own?"
           }
         ]
       }
@@ -844,11 +1054,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Pele, theha guild",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "First, create the guild"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qala ha sefate sa ditholwana se senyane le support plants tsa sona di na le lesedi le metsi a lekaneng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start when the small fruit tree and its support plants have enough light and water."
           }
         ]
       }
@@ -864,12 +1080,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Pele, theha guild",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "First, create the guild"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Plant into a suitable season, mulch and maintain establishment water.\n\nENGLISH HOLD — Keep the access gap open.\n\nENGLISH HOLD — Start with the number of support plants you can care for.\n\nENGLISH HOLD — Observe survival and growth before adding more.\n\nNa o ka kgona ho hlokomela semela se seng le se seng ho fihlela se mela hantle le ho ikemela (establishment)?"
+            "text": "Jala nakong e loketseng, o hase mulch mme o boloke metsi a establishment. Boloka sekgeo sa ho fihlella se bulehile. Qala ka palo ya support plants eo o ka e hlokomelang. Shebella ho phela le kgolo pele o eketsa tse ding. Na o ka kgona ho hlokomela semela se seng le se seng ho fihlela se mela hantle le ho ikemela (establishment)?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Plant at a suitable time, spread mulch and keep the water of establishment. Keep the gap of access open. Start with the number of support plants that you can look after. Watch survival and growth before you add others. Can you manage to look after each plant until it grows well and stands on its own?"
           }
         ]
       }
@@ -885,11 +1106,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Thinning ha sefate sa ditholwana se gola",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Thinning as the fruit tree grows"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ha ho kgaola makala ho se ho sa lekana, fokotsa support plants tse kgethilweng. Seha fatshe support plants tse phehisanang tse kgethilweng ho bula sebaka. Thepa e loketseng e kgaotsweng e ka sala e le mulch: ena ke thinning ka chop-and-drop. Laola kgolo e tswang hape ho boloka sebaka se butsweng. Hlahloba lesedi, mongobo wa mmu le kgolo; thinning ha e emise kapele phehisano ya medu. Ke support plants dife tse lokelang ho tlohela sebaka jwale?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When cutting branches is no longer enough, reduce the chosen support plants. Cut down to the ground the competing chosen support plants to open space. Suitable material that has been cut can remain as mulch: this is thinning by chop-and-drop. Control the regrowth to keep the opened space. Check light, soil moisture and growth; thinning does not quickly stop root competition. Which support plants should leave the space now?"
           }
         ]
       }
@@ -905,11 +1132,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Isa support plants leseding",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Take support plants to the light"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ha moriti o eketseha, nchafatsa support plants tse ratang letsatsi mahlakoreng a bulehileng le dijalong tse ncha.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "When shade increases, renew sun-loving support plants on the open sides and in new beds/gardens [?: dijalong]."
           }
         ]
       }
@@ -925,11 +1158,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Isa support plants leseding",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Take support plants to the light"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Isa dikotoana tse thusang tse kgaotsweng ho difate tse ikemetseng. Boloka dimela tse haufi feela moo di ntseng di sebetsa hantle. Difate tsa ditholwana tse godileng di ntse di hloka nutrients. Shebella kgolo, thobo le maemo a mmu; support plants ha di tlose tlhoko eo. Sebaka se latelang se nang le letsatsi se bohlokwa ke kae?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Take the helpful pieces that have been cut to the trees that stand on their own. Keep nearby plants only where they are still working well. Grown fruit trees still need nutrients. Watch growth, harvest and soil conditions; support plants do not remove that need. Where is the next important sunny place?"
           }
         ]
       }
@@ -946,12 +1185,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Etsa qeto ka seo o se bonang"
+          "text": "Etsa qeto ka seo o se bonang",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Make a decision about what you see"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Boloka rekoto e kgutshwane ya kamoo sehlopha sa dimela tse tshehetsanang (guild) se sebetsang kateng."
+            "text": "Boloka rekoto e kgutshwane ya kamoo guild e sebetsang kateng.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Keep a short record of how the guild is working."
           }
         ]
       }
@@ -968,22 +1211,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Etsa qeto ka seo o se bonang"
+          "text": "Etsa qeto ka seo o se bonang",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Make a decision about what you see"
         },
         "body": [
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "status": "english-hold",
-                "sourceEnglish": "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. "
-              },
-              {
-                "status": "draft",
-                "sourceEnglish": "What evidence would make you change the guild?",
-                "text": "Ke bopaki bofe bo ka etsang hore o fetole sehlopha sena sa dimela tse tshehetsanang (guild)?"
-              }
-            ]
+            "status": "draft",
+            "text": "Hlahloba kgolo ya sefate sa ditholwana, moriti, mongobo wa mmu, thobo e thusang le tshenyo ya dikokwanyana tse senyang dijalo (pests). Ngola seo se kgaotsweng, se kgutlisitsweng kapa se tlositsweng. Sebedisa dintho tseo o di bonang ho fetola moralo le tlhokomelo. Semela se fumana sebaka sa sona ka seo se se etsang mona. Ke bopaki bofe bo ka o etsang hore o fetole guild?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Check the growth of the fruit tree, shade, soil moisture, helpful harvest and damage from crop-damaging insects. Write down what was cut, what was returned or what was removed. Use the things you see to change the design and care. A plant gets its place by what it does here. What evidence can make you change the guild?"
           }
         ]
       }
@@ -1000,12 +1237,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Rala sehlopha sa sebele sa dimela tse tshehetsanang"
+          "text": "Rala guild e le nngwe ya sebele",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Design one real guild"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Kgetha sefate se le seng sa ditholwana mme o tshwaye moralo oo o ka kgonang ho o laola."
+            "text": "Kgetha sefate se le seng sa ditholwana mme o tshwaye moralo oo o ka kgonang ho o laola.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Choose one fruit tree and mark the design that you can manage."
           }
         ]
       }
@@ -1022,12 +1263,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Rala sehlopha sa sebele sa dimela tse tshehetsanang"
+          "text": "Rala guild e le nngwe ya sebele",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Design one real guild"
         },
         "body": [
           {
             "status": "draft",
-            "text": "ENGLISH HOLD — Record the tree, site conditions and missing jobs.\n\nENGLISH HOLD — Name the support species fully, mark the starting number and leave access.\n\nENGLISH HOLD — Write down what will trigger pruning or thinning.\n\nENGLISH HOLD — Agree the species list with the project team where required.\n\nNa ho na le motho e mong ya ka kgonang ho o hlalosetsa leano la hao hape?"
+            "text": "Ngola sefate, maemo a sebaka le mesebetsi e haellang. Reha support species ka botlalo, o tshwaye palo ya ho qala mme o siye tsela ya ho fihlella. Ngola seo se tla susumetsa ho kgaola makala kapa thinning. Dumellana ka lenane la mefuta le sehlopha sa porojeke moo ho hlokahalang. Na ho na le motho e mong ya ka kgonang ho o hlalosetsa leano la hao hape?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Write the tree, the conditions of the place and the missing functions. Name the support species completely, mark the starting number and leave a way of access. Write what will prompt cutting branches or thinning. Agree on the list of species with the project group where needed. Is there another person who can explain your plan to you again?"
           }
         ]
       }
@@ -1043,11 +1288,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Jala, shebella, fetola",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Plant, watch, change"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qala guild e le nngwe e loketseng mme o e hlokomele mohatong wa yona wa pele.",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Start one suitable guild and look after it in its first stage."
           }
         ]
       }
@@ -1063,11 +1314,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Jala, shebella, fetola",
+          "provenance": "unreviewed-machine-draft; blind back-translation checked",
+          "backTranslation": "Plant, watch, change"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa mefuta e nepahetseng, palo ya dimela e ka laolwang le sebaka sa ho gola. Kgutlisetsa biomass e thusang mme o sireletse sefate sa ditholwana. Hlahloba jalo hape ha crowns di ntse di hola. Boloka, kgaola, nchafatsa kapa tlosa support plant ka nngwe ha mosebetsi wa yona o fetoha. O tla etsa eng pele, mme o tla e hlahloba neng?",
+            "provenance": "unreviewed-machine-draft; blind back-translation checked",
+            "backTranslation": "Use suitable types, a number of plants that can be managed and space to grow. Return helpful biomass and protect the fruit tree. Check the planting again as the crowns keep growing. Keep, cut, renew or remove each support plant when its function changes. What will you do first, and when will you check it?"
           }
         ]
       }

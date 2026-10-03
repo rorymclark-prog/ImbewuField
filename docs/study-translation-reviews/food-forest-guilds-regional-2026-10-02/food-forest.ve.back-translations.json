@@ -1,0 +1,1106 @@
+{
+  "module": "food-forest",
+  "language": "ve",
+  "reviewStatus": "unreviewed-machine-draft",
+  "method": "Claude Sonnet drafting, with Claude Opus revision of passages flagged by checks; blind English back-translation by a separate agent that never saw the source; independent semantic checks against the exact English",
+  "items": [
+    {
+      "key": "module.title",
+      "sourceEnglish": "Food Forest Design",
+      "draft": "Pulane ya Ḓaka ḽa Zwiḽiwa",
+      "blindBackTranslation": "Pulane ya Ḓaka ḽa Zwiḽiwa [?] (Food Garden Plan/Design [?])"
+    },
+    {
+      "key": "module.description",
+      "sourceEnglish": "Layer a multi-storey food system from tall canopy right down to root crops.",
+      "draft": "Dzudzanyani sisiteme ya zwiḽiwa ya miṱaṱo minzhi u bva kha canopy ya miri milapfu nṱha u swika fhasi kha zwimela zwa midzi (root crops).",
+      "blindBackTranslation": "Arrange a food system of many layers from the canopy of tall trees above down to the root crops below (root crops)."
+    },
+    {
+      "key": "L1.body.p0",
+      "sourceEnglish": "An indigenous forest fills the space from the highest branches to the roots.",
+      "draft": "Ḓaka ḽa indigenous ḽi ḓadza fhethu u bva kha maṱavhi a nṱhesa u swika kha midzi.",
+      "blindBackTranslation": "An indigenous garden fills the space from the branches above down to the roots."
+    },
+    {
+      "key": "L1.body.p1",
+      "sourceEnglish": "Different plants use the light and moisture available at their level.",
+      "draft": "Zwimela zwo fhambanaho zwi shumisa tshedza na u tsakama zwo no vha hone kha mutaṱo wazwo.",
+      "blindBackTranslation": "Different plants use light and moisture that are already present in their layer."
+    },
+    {
+      "key": "L1.body.p2",
+      "sourceEnglish": "A food forest copies this pattern with productive species.",
+      "draft": "Ḓaka ḽa zwiḽiwa ḽi edzisa nḓila heyi nga zwimela zwi bveledzaho.",
+      "blindBackTranslation": "The food garden imitates this way as plants produce/bring forth."
+    },
+    {
+      "key": "L1.body.p3",
+      "sourceEnglish": "The result is not one crop in one row, but many useful layers growing together.",
+      "draft": "Mvelelo a si tshiliṅwa tshithihi kha muduba muthihi, fhedzi ndi miṱaṱo minzhi i vhuyedzaho zwi tshi aluwa zwo ṱangana.",
+      "blindBackTranslation": "The harvest is not one crop on one bed, but it is many layers that yield when they grow together."
+    },
+    {
+      "key": "L1.body.p4",
+      "sourceEnglish": "Think of tall canopy, smaller trees, shrubs and herbaceous plants.",
+      "draft": "Humbulani nga canopy ya vhulapfu, miri miṱuku, zwiṱaka na zwimela zwa herbaceous.",
+      "blindBackTranslation": "Think about the canopy of height, small trees, shrubs and herbaceous plants."
+    },
+    {
+      "key": "L1.body.p5",
+      "sourceEnglish": "Ground cover protects the surface, root crops grow below it, and climbers use suitable supports.",
+      "draft": "Ground cover i tsireledza nṱha ha mavu, root crops dzi aluwa fhasi hayo, nahone climbers dzi shumisa zwitikhi zwo teaho u gonya.",
+      "blindBackTranslation": "Ground cover protects the top of the soil, root crops grow below it, and climbers use suitable stakes/supports to climb."
+    },
+    {
+      "key": "L1.body.p6",
+      "sourceEnglish": "The heights and spacing depend on the plants and site. These are planning layers, not fixed height bands.",
+      "draft": "Vhulapfu na tshikhala zwi ḓitika nga zwimela na fhethu. Heyi ndi miṱaṱo ya u pulana, a si mielo ya vhulapfu yo tiwaho.",
+      "blindBackTranslation": "Height and space depend on the plants and the place. These are layers for planning, not fixed height measurements."
+    },
+    {
+      "key": "L1.body.p7",
+      "sourceEnglish": "The original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.",
+      "draft": "Tsumbo ya u thoma ya Highveld i katela Wild Fig kana pecan nṱha ha lemon, naartjie na black mulberry.",
+      "blindBackTranslation": "The first example for the Highveld includes Wild Fig or pecan above lemon, naartjie and black mulberry."
+    },
+    {
+      "key": "L1.body.p8",
+      "sourceEnglish": "It places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.",
+      "draft": "Tsumbo heyo i vhea Cape gooseberry na Wild Medlar na miroho, wild garlic, sweet potato na granadilla.",
+      "blindBackTranslation": "That example places Cape gooseberry and Wild Medlar and vegetables/leafy greens, wild garlic, sweet potato and granadilla."
+    },
+    {
+      "key": "L1.body.p9",
+      "sourceEnglish": "Treat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first.",
+      "draft": "Dzhiani heyi sa tsumbo ya u dzudzanya, a si mvumo ya u sima species dzoṱhe. Thoma ni khwaṱhisedze uri zwi ndi zwifhio, frost tolerance, vhuhulu ha zwo kula na thivhelo dza fhethu.",
+      "blindBackTranslation": "Take this as an example of arranging, not an instruction/order to plant all species. Start and make sure what they are, frost tolerance, size of what has grown and local restrictions."
+    },
+    {
+      "key": "L1.body.p10",
+      "sourceEnglish": "Young plants need establishment care: moisture checks, weed control and protection from damage.",
+      "draft": "Zwimela zwiṱuku zwi ṱoḓa ṱhogomelo ya u ḓowela fhethu: u sedza u tsakama ha mavu, u langa zwimela zwi sa ṱoḓeaho na u zwi tsireledza kha u sinyea.",
+      "blindBackTranslation": "Small plants need care of getting used to the place: watching the soil's moisture [?], managing unwanted plants and protecting them from being damaged."
+    },
+    {
+      "key": "L1.body.p11",
+      "sourceEnglish": "As plants grow, shade and leaf litter change conditions below them.",
+      "draft": "Musi zwimela zwi tshi aluwa, murunzi na leaf litter zwi shandula nyimele fhasi hazwo.",
+      "blindBackTranslation": "When plants are growing, shade and leaf litter change the conditions beneath them."
+    },
+    {
+      "key": "L1.body.p12",
+      "sourceEnglish": "Check competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday.",
+      "draft": "Sedzani ṱaṱisano na nḓila ya u swikelela. Gunyulani maṱavhi, bvisani zwimela zwo nangiwaho (thinning) kana ni lugise u sima ha fhasi musi zwo sedzwaho zwi tshi ṱoḓa; sisiteme a i shanduki u vha i si na ṱhogomelo nga ḓuvha ḽo tiwaho ḽa mabebo.",
+      "blindBackTranslation": "Look at competition and the way of access. Prune the branches, remove planted plants (thinning) or arrange the planting below when they are looked at and need it; the system does not change to be without care on a set day of birthdays [?]."
+    },
+    {
+      "key": "L1.infographicAlt",
+      "sourceEnglish": "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
+      "draft": "Tshifanyiso tsha ḓaka ḽa zwiḽiwa tsho kovhekanywaho tshi na muri mulapfu u re vhukati, miri miṱuku, zwiṱaka, zwimela zwo emaho, ground cover na climber, midzi yazwo i tshi andaladza kha mavu; tshedza ya ḓuvha i dzhena u bva nṱha kha tshanda tsha vhukovhela.",
+      "blindBackTranslation": "A picture of a divided food garden with a tall tree that is in the middle, small trees, shrubs, upright plants [?], ground cover and climber, their roots spreading in the soil; sunlight is entering from above on the left-hand side."
+    },
+    {
+      "key": "L1.title",
+      "sourceEnglish": "The Seven Layers: How a Forest Feeds Itself",
+      "draft": "Miṱaṱo ya Supa: Nḓila ine Ḓaka ḽa ḓiṋea Zwiḽiwa Ngayo",
+      "blindBackTranslation": "Seven Layers: The Way a Food Garden Feeds Itself [?] (feeds itself/gives itself food)"
+    },
+    {
+      "key": "L1.keyPoint0",
+      "sourceEnglish": "Seven planning layers can combine useful plants at different heights",
+      "draft": "Miṱaṱo ya supa ya u pulana i nga ṱanganya zwimela zwi re na mushumo kha vhulapfu ho fhambanaho",
+      "blindBackTranslation": "Seven-layer planning can combine plants that have a role at different heights"
+    },
+    {
+      "key": "L1.keyPoint1",
+      "sourceEnglish": "Plants can compete for light, water and nutrients",
+      "draft": "Zwimela zwi nga ṱaṱisana nga ha tshedza, maḓi na nutrients.",
+      "blindBackTranslation": "Plants can compete for light, water and nutrients."
+    },
+    {
+      "key": "L1.keyPoint2",
+      "sourceEnglish": "Establishment and ongoing care depend on observed conditions",
+      "draft": "Establishment na ṱhogomelo i tevhelaho zwi ḓitika nga nyimele dzo sedzwaho",
+      "blindBackTranslation": "Establishment and the care that follows depend on the conditions observed"
+    },
+    {
+      "key": "L1.keyPoint3",
+      "sourceEnglish": "Confirm local suitability before copying any example planting",
+      "draft": "Khwaṱhisedzani uri zwimela zwo tea fhethu haṋu ni sa athu u edzisa tsumbo ifhio na ifhio ya u sima.",
+      "blindBackTranslation": "Make sure that the plants are suitable for your place before you copy any example of planting."
+    },
+    {
+      "key": "L1.quiz0.question",
+      "sourceEnglish": "Weeds are competing strongly with young lower-layer plants. What should guide the next action?",
+      "draft": "Zwimela zwi sa ṱoḓeaho zwi khou ṱaṱisana nga maanḓa na zwimela zwiṱuku zwa miṱaṱo ya fhasi. Ndi mini zwine zwa fanela u livhisa tshiito tshi tevhelaho?",
+      "blindBackTranslation": "Unwanted plants are competing strongly with small plants of the lower layers. What should the next action be directed at?"
+    },
+    {
+      "key": "L1.quiz0.option0",
+      "sourceEnglish": "Wait until the fifth year",
+      "draft": "Lindelani u swika nwaha wa vhuṱanu",
+      "blindBackTranslation": "Wait until year five"
+    },
+    {
+      "key": "L1.quiz0.option1",
+      "sourceEnglish": "Add more plants regardless of water",
+      "draft": "Engedzani zwimela zwinzhi hu sa sedzwi maḓi",
+      "blindBackTranslation": "Add many more plants without watching the water"
+    },
+    {
+      "key": "L1.quiz0.option2",
+      "sourceEnglish": "Check the affected plants and manage competition",
+      "draft": "Ṱolani zwimela zwo kwameaho nahone ni lange u ṱaṱisana hazwo.",
+      "blindBackTranslation": "Check the affected plants and manage their competition."
+    },
+    {
+      "key": "L1.quiz0.option3",
+      "sourceEnglish": "Assume all seven layers take care of themselves",
+      "draft": "Humbulani uri miṱaṱo yoṱhe ya supa i a ḓiṱhogomela.",
+      "blindBackTranslation": "Think that all seven layers look after themselves."
+    },
+    {
+      "key": "L1.quiz0.rationale",
+      "sourceEnglish": "Observe actual competition and plant condition. A fixed establishment calendar cannot tell you which plants need care now.",
+      "draft": "Sedzani u ṱaṱisana hune ha khou itea na nyimele ya zwimela. Khalenda yo tiwaho ya u thoma u aluwa a i nga ni vhudzi uri ndi zwifhio zwimela zwi ṱoḓaho u ṱhogomelwa zwino.",
+      "blindBackTranslation": "Watch the competition that is happening and the condition of the plants. A fixed calendar of starting growth does not tell you which plants need to be cared for now."
+    },
+    {
+      "key": "L1.quiz1.question",
+      "sourceEnglish": "How can leaf litter and shade help protect soil moisture?",
+      "draft": "Leaf litter na murunzi zwi nga thusa hani u tsireledza u tsakama ha mavu?",
+      "blindBackTranslation": "How can leaf litter and shade help protect soil moisture?"
+    },
+    {
+      "key": "L1.quiz1.option0",
+      "sourceEnglish": "They guarantee access to groundwater",
+      "draft": "Zwi khwaṱhisedza u swikelela maḓi a fhasi ha mavu",
+      "blindBackTranslation": "They make sure of access to water below the soil"
+    },
+    {
+      "key": "L1.quiz1.option1",
+      "sourceEnglish": "They can reduce water loss from the soil surface",
+      "draft": "Zwi nga fhungudza u lahlea ha maḓi kha nṱha ha mavu",
+      "blindBackTranslation": "They can reduce water loss from the top of the soil"
+    },
+    {
+      "key": "L1.quiz1.option2",
+      "sourceEnglish": "They guarantee higher yield per litre in every system",
+      "draft": "Zwi khwaṱhisedza mbuyelo i fhiraho kha ḽitha ḽiṅwe na ḽiṅwe ḽa maḓi kha sisiteme dzoṱhe",
+      "blindBackTranslation": "It guarantees a yield that exceeds every litre of water in all systems"
+    },
+    {
+      "key": "L1.quiz1.option3",
+      "sourceEnglish": "They remove the need to check watering",
+      "draft": "Zwi bvisa ṱhoḓea ya u sedza u nwesa",
+      "blindBackTranslation": "They remove the need to watch watering"
+    },
+    {
+      "key": "L1.quiz1.rationale",
+      "sourceEnglish": "Shade and suitable mulch can reduce surface evaporation. Plant water demand and establishment needs still require attention.",
+      "draft": "Murunzi na mulch yo teaho zwi nga fhungudza u fhelela ha maḓi kha nṱha ha mavu (evaporation). Ṱhoḓea ya maḓi a zwimela na zwi ṱoḓwaho nga establishment zwi kha ḓi ṱoḓa u sedzwa.",
+      "blindBackTranslation": "Shade and suitable mulch can reduce the loss of water from the top of the soil (evaporation). The water need of plants and what is needed by establishment still need to be watched."
+    },
+    {
+      "key": "L2.body.p0",
+      "sourceEnglish": "Check local rainfall, frost, heat, soil and water availability before choosing plants.",
+      "draft": "Sedzani mvula ya fhethu, frost, vhudifhi, mavu na u vha hone ha maḓi musi ni sa athu nanga zwimela.",
+      "blindBackTranslation": "Look at the local rain, frost, heat, soil and presence of water before you choose plants."
+    },
+    {
+      "key": "L2.body.p1",
+      "sourceEnglish": "Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.",
+      "draft": "Mango i nga vhaisalwa nga frost. Quince i ṱoḓa winter chilling yo teaho u itela uri i vhuye zwi tshi fulufhedzea.",
+      "blindBackTranslation": "Mango can be hurt by frost. Quince needs suitable winter chilling so that it bears fruit reliably."
+    },
+    {
+      "key": "L2.body.p2",
+      "sourceEnglish": "A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.",
+      "draft": "Dzina ḽa vhupo kana khona yo tsireledzwaho a zwi ngo linga. Khwaṱhisedzani zwimela zwoṱhe na mixono yazwo nga ndivhiso dza fhethu dzi fulufhedzeaho.",
+      "blindBackTranslation": "The name of the area or a protected nook/corner is not enough. Make sure all plants and their types by reliable local guidelines."
+    },
+    {
+      "key": "L2.body.p3",
+      "sourceEnglish": "The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.",
+      "draft": "Mutevhe wa u thoma u katela pecan, walnut na indigenous fig; apple, pear, plum, black mulberry na loquat; rosemary, Wild Medlar, Cape gooseberry na Barbados cherry.",
+      "blindBackTranslation": "The first list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry."
+    },
+    {
+      "key": "L2.body.p4",
+      "sourceEnglish": "This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.",
+      "draft": "Mutevhe heyu a si tsivhudzo ya u katela zwoṱhe. Sedzani muṅwe na muṅwe kha frost, mavu, vhuhulu ha zwo kula na approved local species list.",
+      "blindBackTranslation": "This list is not a recommendation to include everything. Check each one for frost, soil, size of what has grown and the approved local species list."
+    },
+    {
+      "key": "L2.body.p5",
+      "sourceEnglish": "Keep existing legal and project restrictions in force. Do not plant from a picture alone.",
+      "draft": "Dzulisani thivhelo dza mulayo na dza project dzo no vha hone dzi tshi kha ḓi shuma. Ni songo sima ni tshi sedza foto fhedzi.",
+      "blindBackTranslation": "Let the restrictions of the law and of the project that already exist, while still working, remain/be respected. Do not plant looking at a photo only."
+    },
+    {
+      "key": "L2.body.p6",
+      "sourceEnglish": "The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.",
+      "draft": "Tsumbo dza u thoma dza fhethu hu na vhudifhi dzi katela mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry na Wild Dagga.",
+      "blindBackTranslation": "First examples for a hot place include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga."
+    },
+    {
+      "key": "L2.body.p7",
+      "sourceEnglish": "Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.",
+      "draft": "Marula, Mopane na baobab zwi vhonala na kha tsumbo dza Limpopo. U tea ha fhethu ha kha ḓi ṱoḓa u sedzwa.",
+      "blindBackTranslation": "Marula, Mopane and baobab also appear in the Limpopo examples. Suitability of the place still needs to be checked."
+    },
+    {
+      "key": "L2.body.p8",
+      "sourceEnglish": "Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.",
+      "draft": "Miri ine ya vha na mushumo a si yoṱhe ine ya liwa. Khwaṱhisedzani uri ndi mini na u i shumisa zwo tsireledzeaho; foto ya vhupo ha mupo a si thahelelo ya u divha zwiḽiwa.",
+      "blindBackTranslation": "A tree that has no use is not one that is eaten. Confirm what is even [?] using it safely; a photo of the natural area is not a guarantee of knowing the food plants."
+    },
+    {
+      "key": "L2.body.p9",
+      "sourceEnglish": "Locally appropriate indigenous plants can support habitat as part of the design.",
+      "draft": "Zwimela zwa indigenous zwi teaho fhethu zwi nga tikedza habitat sa tshipiḓa tsha pulane.",
+      "blindBackTranslation": "Indigenous plants that suit the place can support habitat as part of the plan."
+    },
+    {
+      "key": "L2.body.p10",
+      "sourceEnglish": "Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.",
+      "draft": "Nangani zwi tshi ya nga ecosystem yaṋu na mushumo une wa thusa wa muṅwe na muṅwe wa zwimela. Kha ino ngudo a hu na tshipikwa tsha phesenthe tshine tsha bva kha tshiko tsha ndivhiso dzo ṅwalwaho.",
+      "blindBackTranslation": "Choose according to your ecosystem and the helpful function of each one of the plants. In this study there is no percentage target that comes from the list of written intentions [?]."
+    },
+    {
+      "key": "L2.body.p11",
+      "sourceEnglish": "Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.",
+      "draft": "Tsireledzani zwimela zwa mupo zwo no vha hone. Ni songo shandukisa fhethu ha mitani hu re na mutakalo u vha ḓaka ḽa zwiḽiwa fhedzi nga ngauri miri i na mushumo kha fhethu huṅwe.",
+      "blindBackTranslation": "Protect natural plants that are already there. Do not change a place of weeds [?] that has health to become a food garden only because trees have a function in some place."
+    },
+    {
+      "key": "L2.infographicAlt",
+      "sourceEnglish": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
+      "draft": "Tshifanyiso tshi leluwaho tsha South Africa tsho kovhekanywaho nga mavhala a mavu na vhuimo ha fhethu fhedzi kha fhethu hu raru ha u mela: fhethu ha nṱha ha vhukati ha shango ha mavhala a tshenaho ho vha na mathavha maṱuku, tshipiḓa tsha tsini na lwanzhe tsha mavhala a green tshi na mpfumbi, na fhethu ha fhasi ha vhudifhi ha mavhala a tswuku-brown. Zwivhumbeo zwo fhambanaho zwa miri zwi vha hone kha tshipiḓa tshiṅwe na tshiṅwe.",
+      "blindBackTranslation": "A simple picture of South Africa divided by soil colours and height of places, only in three places of growing: the upper middle part of the country in white colours, there were small mountains [?]; the near part and the [lwanzhe?] of green colours that has [mpfumbi?], and the low-lying hot area of red-brown colours. Different shapes of trees are present in each and every part."
+    },
+    {
+      "key": "L2.title",
+      "sourceEnglish": "Species Selection for South African Food Forests",
+      "draft": "U Nanga Zwimela zwa Ḓaka ḽa Zwiḽiwa ḽa Afrika Tshipembe",
+      "blindBackTranslation": "Choosing Plants for a South African Food Garden"
+    },
+    {
+      "key": "L2.keyPoint0",
+      "sourceEnglish": "Match each plant and variety to the actual site",
+      "draft": "Linganisani muṅwe na muṅwe wa zwimela na mixono yazwo na fhethu ha ngoho",
+      "blindBackTranslation": "Match each of the plants and their types to the real place"
+    },
+    {
+      "key": "L2.keyPoint1",
+      "sourceEnglish": "Check identity, safe use and current local restrictions",
+      "draft": "Sedzani uri zwi ndi zwifhio, u zwi shumisa zwo tsireledzeaho na thivhelo dza zwino dza fhethu",
+      "blindBackTranslation": "Check what they are, their safe use and the current local restrictions"
+    },
+    {
+      "key": "L2.keyPoint2",
+      "sourceEnglish": "A regional example is not approval for every species on its list",
+      "draft": "Tsumbo ya vhupo a si mvumo ya species dzoṱhe dzi re kha mutevhe wayo",
+      "blindBackTranslation": "A regional example is not a recommendation of all the species that are on its list"
+    },
+    {
+      "key": "L2.keyPoint3",
+      "sourceEnglish": "Use locally appropriate indigenous plants and protect existing natural habitat",
+      "draft": "Shumisani zwimela zwa indigenous zwo teaho fhethu ni tsireledze habitat ya mupo yo no vha hone",
+      "blindBackTranslation": "Use suitable indigenous plants and protect the natural habitat that is already there"
+    },
+    {
+      "key": "L2.quiz0.question",
+      "sourceEnglish": "A grower wants to plant a young mango where hard frost occurs. What risk needs attention?",
+      "draft": "Mulimi u ṱoḓa u sima mango ṱuku fhethu hune frost ya maanḓa ya itea. Ndi khombo lifhio ḽine ḽa ṱoḓa u sedzwa?",
+      "blindBackTranslation": "A farmer wants to plant a small mango where severe frost occurs. What risk needs to be checked?"
+    },
+    {
+      "key": "L2.quiz0.option0",
+      "sourceEnglish": "It thrives — the position offsets frost",
+      "draft": "I bvelela — fhethu hu fhelisa khombo ḽa frost",
+      "blindBackTranslation": "It succeeds — the place removes the risk of frost"
+    },
+    {
+      "key": "L2.quiz0.option1",
+      "sourceEnglish": "It fruits early from the temperature swings",
+      "draft": "I vhuya hu si kale nga mashandukele a vhudifhi",
+      "blindBackTranslation": "It bears fruit soon through changes of heat"
+    },
+    {
+      "key": "L2.quiz0.option2",
+      "sourceEnglish": "It's likely killed or badly damaged by frost, especially as a young tree",
+      "draft": "Zwi nga itea nga maanḓa uri i vhulahiwe kana ya vhaisalwa nga maanḓa nga frost, zwihulwane musi i tshi kha ḓi vha muri muṱuku",
+      "blindBackTranslation": "It could well be killed or badly hurt by frost, especially while it is still a small tree"
+    },
+    {
+      "key": "L2.quiz0.option3",
+      "sourceEnglish": "It survives with heavy mulch but needs annual replacement",
+      "draft": "I tshila nga mulch muhulwane fhedzi i ṱoḓa u shandukiswa ṅwaha muṅwe na muṅwe",
+      "blindBackTranslation": "It lives with a big mulch but needs to be changed every year"
+    },
+    {
+      "key": "L2.quiz0.rationale",
+      "sourceEnglish": "Young mango can be damaged by frost. Check actual site conditions and reliable local guidance rather than assuming a sheltered spot removes the risk.",
+      "draft": "Mango ṱuku i nga vhaisalwa nga frost. Sedzani nyimele dza ngoho dza fhethu na ndivhiso dza fhethu dzi fulufhedzeaho u fhira u dzhiela nṱha uri fhethu ho tsireledzwaho hu bvisa khombo.",
+      "blindBackTranslation": "A small mango can be hurt by frost. Check the real conditions of the place and reliable local guidelines rather than assuming that a protected place removes the risk."
+    },
+    {
+      "key": "L2.quiz1.question",
+      "sourceEnglish": "Why include locally appropriate indigenous plants in a design?",
+      "draft": "Ndi ngani ni tshi tea u katela zwimela zwa indigenous zwo teaho fhethu kha design?",
+      "blindBackTranslation": "Why should you include suitable indigenous plants in the design?"
+    },
+    {
+      "key": "L2.quiz1.option0",
+      "sourceEnglish": "They always yield more food per square metre",
+      "draft": "Zwi dzula zwi tshi bveledza zwiḽiwa zwinzhi kha mitara ya khwadirata muthihi",
+      "blindBackTranslation": "They always produce much food on one square metre"
+    },
+    {
+      "key": "L2.quiz1.option1",
+      "sourceEnglish": "They can support local habitat, pollinators and other wildlife",
+      "draft": "Zwi nga tikedza habitat ya fhethu, pollinators na phukha dziṅwe dza mupo",
+      "blindBackTranslation": "They can support local habitat, pollinators and other wild creatures"
+    },
+    {
+      "key": "L2.quiz1.option2",
+      "sourceEnglish": "Every introduced species is illegal",
+      "draft": "Species yoṱhe yo ḓisiwaho i tshinya mulayo",
+      "blindBackTranslation": "All introduced species break the law"
+    },
+    {
+      "key": "L2.quiz1.option3",
+      "sourceEnglish": "They never need establishment care",
+      "draft": "A dzi ṱoḓi na luthihi ṱhogomelo ya establishment",
+      "blindBackTranslation": "They never need establishment care"
+    },
+    {
+      "key": "L2.quiz1.rationale",
+      "sourceEnglish": "Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability.",
+      "draft": "Nangani zwimela zwi tshi ya nga ecosystem ya fhethu na mushumo wazwo. Hezwi a zwi khwaṱhisedzi phesenthe i shumaho fhethu hoṱhe kana u bvisa ṱhoḓea ya u sedza u tea.",
+      "blindBackTranslation": "Choose plants according to the ecosystem of the place and their function. These do not guarantee a percentage that works everywhere or remove the need to look at suitability."
+    },
+    {
+      "key": "L3.body.p0",
+      "sourceEnglish": "Start by checking the site, water supply and care available. Protect exposed soil early.",
+      "draft": "Thomani nga u sedza fhethu, tshiko tsha maḓi na ṱhogomelo i re hone. Tsireledzani mavu a si na tsireledzo kha u thoma.",
+      "blindBackTranslation": "Start by looking at the place, the water source and the care that is there. Protect the soil that has no protection at the start."
+    },
+    {
+      "key": "L3.body.p1",
+      "sourceEnglish": "Temporary support plants may provide shelter and useful cut material where appropriate.",
+      "draft": "Support plants dza tshifhinganyana dzi nga ṋea tsireledzo na zwipiḓa zwo gunyulwaho zwi re na mushumo hune ha tea.",
+      "blindBackTranslation": "Temporary support plants can give protection and pruned parts that have a suitable role."
+    },
+    {
+      "key": "L3.body.p2",
+      "sourceEnglish": "Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.",
+      "draft": "Miri ya ndeme na miṱaṱo ya fhasi zwi nga ḓiswa musi nyimele dzi tshi tendela. Ground cover a i ṱoḓi u lindela u swika magumoni; dzivhani zwimela zwi ṱaṱisanaho na miri miṱuku.",
+      "blindBackTranslation": "Important trees and lower layers can be brought in when conditions allow. Ground cover does not need to wait until the end; avoid plants that compete with small trees."
+    },
+    {
+      "key": "L3.body.p3",
+      "sourceEnglish": "Begin with an area you can water and maintain. Check existing vegetation before clearing.",
+      "draft": "Thomani nga fhethu hune ni nga hu nwesa na u hu ṱhogomela. Sedzani zwimela zwo no vha hone musi ni sa athu u zwi bvisa.",
+      "blindBackTranslation": "Begin at a place you can water and care for. Watch the plants already there before you remove them."
+    },
+    {
+      "key": "L3.body.p4",
+      "sourceEnglish": "Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.",
+      "draft": "Hune ha tea, cardboard i si na zwiṅwe zwo penyiwaho kana zwo ṅwaliwaho fhasi ha mulch yo teaho i nga thivhela zwimela zwi sa ṱoḓeaho. Dzulisani maḓi a tshi nga dzhena kha mavu ni sie miviliwa ya miri i si na zwo i fhumbaho.",
+      "blindBackTranslation": "Where suitable, cardboard without other things printed or written [?] under suitable mulch can block unwanted plants. Let water be able to enter the soil and leave tree trunks without things that cover them."
+    },
+    {
+      "key": "L3.body.p5",
+      "sourceEnglish": "Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.",
+      "draft": "Pulanani tshikhala u bva kha vhuhulu ha zwimela zwo kulaho. Lugisani nursery plants u itela tshifhinga tshi tevhelaho tsho teaho tsha u sima.",
+      "blindBackTranslation": "Plan space from the size of fully grown plants. Prepare nursery plants for the next suitable time of planting."
+    },
+    {
+      "key": "L3.body.p6",
+      "sourceEnglish": "Watch how shade, roots and available water affect neighbouring plants.",
+      "draft": "Sedzani uri murunzi, midzi na maḓi o no vha hone zwi shanduka hani kha zwimela zwi re tsini.",
+      "blindBackTranslation": "Watch how shade, roots and the water that is already there change among the plants near by."
+    },
+    {
+      "key": "L3.body.p7",
+      "sourceEnglish": "Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.",
+      "draft": "Comfrey na wild garlic zwi vhonala kha tsumbo ya u thoma ya zwimela zwi simiwaho fhasi; sedzani u tea ha zwo fhethu haṋu musi ni sa athu zwi shumisa.",
+      "blindBackTranslation": "Comfrey and wild garlic appear in the first example of plants planted below; check the suitability of them in your place before you use them."
+    },
+    {
+      "key": "L3.body.p8",
+      "sourceEnglish": "Prune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.",
+      "draft": "Gunyulani maṱavhi a support plants kana ni bvise support plants dzo nangiwaho musi hu tshi ṱoḓea, ni tshi shumisa ndila dzo teaho kha species muṅwe na muṅwe. Zwipiḓa zwi tshena zwo gunyulwaho zwo teaho zwi nga dovha zwa shumiswa sa mulch. Ni songo lindela nwaha wo tiwaho arali ṱaṱisano i tshi khou vhaisala zwimela.",
+      "blindBackTranslation": "Prune the branches of support plants or remove selected support plants when it is needed, using suitable ways for each species. Suitable clean pruned parts can be used again as mulch. Do not wait for a fixed year if competition is hurting the plants."
+    },
+    {
+      "key": "L3.body.p9",
+      "sourceEnglish": "Choose a planting opportunity when soil moisture and expected weather support establishment.",
+      "draft": "Nangani tshifhinga tsha u sima musi u tsakama ha mavu na nyimele ya tshifhinga ine ya lavhelelwa zwi tshi tikedza establishment.",
+      "blindBackTranslation": "Choose the time of planting when soil moisture and the expected weather support establishment."
+    },
+    {
+      "key": "L3.body.p10",
+      "sourceEnglish": "Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.",
+      "draft": "Mvula i nga thusa, fhedzi sedzani root zone ni vhe na pulane ya u nwesa ya tsireledzo. Dzivhani u sima kha mavu o ḓalaho maḓi.",
+      "blindBackTranslation": "Rain can help, but watch the root zone and have a protective watering plan. Avoid planting in soil that is full of water."
+    },
+    {
+      "key": "L3.body.p11",
+      "sourceEnglish": "Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.",
+      "draft": "Sedzani zwimela zwiṱuku musi zwo no simiwa. Tshifhinga tsha u vhuna zwiḽiwa na zwishumiswa zwi bvaho nnḓa zwi ḓitika nga species, fhethu na ndondolo; a hu na mvelelo ya nwaha wa vhuṱanu ine ya khwaṱhisedzwa.",
+      "blindBackTranslation": "Look after small plants once they have been planted. The time of harvesting food and products that come from outside depends on species, place and maintenance; there is no fifth-year result that is guaranteed."
+    },
+    {
+      "key": "L3.infographicAlt",
+      "sourceEnglish": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+      "draft": "Fhethu hu thihi ha mavu hu tshi vhonala kha nyimele ṋa dza u aluwa, u bva kha tshanda tsha vhukovhela u ya kha tshanda tsha vhulia: mulch i sa khwaṱhaho i tshi andiswa nṱha ha cardboard kha mavu, zwenezwo zwimela zwiṱuku zwa pioneer zwi ṱavhanyaho u aluwa, zwenezwo miri miṱuku ya canopy ine miṱaṱo ya fhasi i khou ḓadza, na magumoni u sima ho dzudzanywaho ho dzulaho miṱaṱo.",
+      "blindBackTranslation": "One piece of soil seen in four stages of growing, from the left-hand side to the right-hand side: loose mulch being spread on top of cardboard on the soil, then small pioneer plants that grow fast, then small canopy trees while the lower layers are filling, and finally an arranged planting that has settled the layers."
+    },
+    {
+      "key": "L3.title",
+      "sourceEnglish": "Establishing a Food Forest: Observe and Adjust",
+      "draft": "U Thoma Ḓaka ḽa Zwiḽiwa: U Sedza na U Lugisa",
+      "blindBackTranslation": "Starting a Food Garden: Looking and Preparing"
+    },
+    {
+      "key": "L3.keyPoint0",
+      "sourceEnglish": "Protect exposed soil early",
+      "draft": "Tsireledzani mavu a si na tsireledzo kha u thoma",
+      "blindBackTranslation": "Protect the soil that has no protection at the start"
+    },
+    {
+      "key": "L3.keyPoint1",
+      "sourceEnglish": "Plan the sequence around conditions and available care",
+      "draft": "Pulani u tevhekana ha zwiito u ya nga nyimele na ṱhogomelo i re hone",
+      "blindBackTranslation": "Plan the sequence of actions according to the conditions and care that are there"
+    },
+    {
+      "key": "L3.keyPoint2",
+      "sourceEnglish": "Check root-zone moisture even during the rainy season",
+      "draft": "Sedzani u tsakama ha mavu kha root zone naho hu tshi vha tshifhinga tsha mvula",
+      "blindBackTranslation": "Watch soil moisture in the root zone even when it is rainy season"
+    },
+    {
+      "key": "L3.keyPoint3",
+      "sourceEnglish": "Manage competition as it develops; harvest dates are not guaranteed",
+      "draft": "Langani ṱaṱisano i tshi khou aluwa; maḓuvha a u vhuna zwiḽiwa a a khwaṱhisedzwi",
+      "blindBackTranslation": "Manage competition while it is growing; the days of harvesting foods are not guaranteed"
+    },
+    {
+      "key": "L3.quiz0.question",
+      "sourceEnglish": "A farmer puts plain cardboard under suitable mulch where grass is growing. What can it help do?",
+      "draft": "Mulimi u vhea cardboard i si na zwo penyiwaho fhasi ha mulch yo teaho hune mitani i khou mela. Cardboard i nga thusa u ita mini?",
+      "blindBackTranslation": "A farmer puts cardboard with nothing planted [?] beneath suitable mulch where weeds are growing. What can the cardboard help do?"
+    },
+    {
+      "key": "L3.quiz0.option0",
+      "sourceEnglish": "Creating a moisture barrier that blocks water from the soil",
+      "draft": "U ita tshithivheli tsha u tsakama tshine tsha thivhela maḓi uri a si dzhene kha mavu",
+      "blindBackTranslation": "To make a moisture barrier that stops water from entering the soil"
+    },
+    {
+      "key": "L3.quiz0.option1",
+      "sourceEnglish": "Block light and help suppress grass while it breaks down; check for regrowth",
+      "draft": "U thivhela tshedza na u thusa u fhungudza mitani musi cardboard i tshi khou vola; sedzani arali mitani i tshi mela hafhu",
+      "blindBackTranslation": "Block light and help reduce weeds while the cardboard is rotting; watch whether weeds grow again"
+    },
+    {
+      "key": "L3.quiz0.option2",
+      "sourceEnglish": "Providing a stable base so wood chips don't shift",
+      "draft": "U ṋea tshiimiswa tsho khwaṱhaho uri wood chips dzi songo ṱhuthuwa",
+      "blindBackTranslation": "To give a strong support so that wood chips do not move"
+    },
+    {
+      "key": "L3.quiz0.option3",
+      "sourceEnglish": "Reflecting heat upward to warm the soil",
+      "draft": "U vhonadza vhudifhi u ya nṱha u itela u fhisa mavu",
+      "blindBackTranslation": "To make heat appear upward in order to burn the soil"
+    },
+    {
+      "key": "L3.quiz0.rationale",
+      "sourceEnglish": "Cardboard under suitable mulch can block light and reduce grass growth. Existing grass may regrow, so check the area. Keep water able to enter the soil and mulch clear of trunks.",
+      "draft": "Cardboard fhasi ha mulch yo teaho i nga thivhela tshedza na u fhungudza u mela ha mitani. Mitani yo no vha hone i nga mela hafhu, ngauralo sedzani fhethu. Dzulisani maḓi a tshi nga dzhena kha mavu na mulch i si kwame mivhili ya miri.",
+      "blindBackTranslation": "Cardboard under suitable mulch can block light and reduce the growing of weeds. Weeds that are already there can grow again, therefore look at the place. Let water enter the soil, with mulch not touching the roots [?] of the trees."
+    },
+    {
+      "key": "L3.quiz1.question",
+      "sourceEnglish": "When should a grower consider pruning or thinning temporary support plants?",
+      "draft": "Ndi musi ifhio mulimi a tshi fanela u humbula u gunyula maṱavhi kana u bvisa support plants dza tshifhinganyana?",
+      "blindBackTranslation": "When should a farmer think about pruning branches or removing temporary support plants?"
+    },
+    {
+      "key": "L3.quiz1.option0",
+      "sourceEnglish": "Only on a fixed anniversary",
+      "draft": "Fhedzi nga ḓuvha ḽo tiwaho ḽa ṅwaha",
+      "blindBackTranslation": "Only on a fixed day of the year"
+    },
+    {
+      "key": "L3.quiz1.option1",
+      "sourceEnglish": "When observed competition requires it, using methods suited to the species",
+      "draft": "Musi ṱaṱisano yo sedzwaho i tshi ṱoḓa, ni tshi shumisa ndila dzo teaho kha species",
+      "blindBackTranslation": "When watched competition needs it, using ways suitable for the species"
+    },
+    {
+      "key": "L3.quiz1.option2",
+      "sourceEnglish": "As soon as any leaf falls",
+      "draft": "Hu tshi bva u wela ḽiṱari ḽiṅwe na ḽiṅwe",
+      "blindBackTranslation": "From the time any litre falls [?]"
+    },
+    {
+      "key": "L3.quiz1.option3",
+      "sourceEnglish": "Never, because support plants cannot compete",
+      "draft": "A hu na tshifhinga, ngauri support plants a dzi nga ṱaṱisani",
+      "blindBackTranslation": "Never, because support plants cannot compete"
+    },
+    {
+      "key": "L3.quiz1.rationale",
+      "sourceEnglish": "Temporary support plants can become competitors. Observe light, water and growth, then choose suitable management rather than relying on a fixed year.",
+      "draft": "Support plants dza tshifhinganyana dzi nga vha vhaṱaṱisani. Sedzani tshedza, maḓi na u aluwa, ni nange u langa hu teaho u fhira u ḓitika nga nwaha wo tiwaho.",
+      "blindBackTranslation": "Temporary support plants can be competitors. Watch light, water and growth, and choose suitable management rather than depending on a fixed year."
+    },
+    {
+      "key": "slide.s1.h",
+      "sourceEnglish": "Food Forest Design",
+      "draft": "Pulane ya Ḓaka ḽa Zwiḽiwa",
+      "blindBackTranslation": "Pulane ya Ḓaka ḽa Zwiḽiwa [Plan of the Food Garden/Food Forest [?]]"
+    },
+    {
+      "key": "slide.s1.b0",
+      "sourceEnglish": "Build a living food system in layers.",
+      "draft": "Fhaṱani sisiteme ya zwiḽiwa i tshilaho nga miṱaṱo.",
+      "blindBackTranslation": "Build a food system that lives by layers."
+    },
+    {
+      "key": "slide.s1.b1",
+      "sourceEnglish": "Grow food from tall canopy down to root crops.",
+      "draft": "Alusani zwiḽiwa u bva kha canopy ya miri milapfu u swika kha zwimela zwa midzi (root crops).",
+      "blindBackTranslation": "Grow food from the canopy of tall trees down to root crops (root crops)."
+    },
+    {
+      "key": "slide.s1.b2",
+      "sourceEnglish": "Use vertical space, soil life, shade, and moisture together.",
+      "draft": "Shumisani tshikhala tsha nṱha na fhasi, vhutshilo ha mavu, murunzi na maḓi a kha mavu zwo ṱangana.",
+      "blindBackTranslation": "Use the space above and below, soil life, shade and water in the soil, all together."
+    },
+    {
+      "key": "slide.s1.b3",
+      "sourceEnglish": "Learn how to design and establish a food forest for your farm.",
+      "draft": "Gudani u pulana na u thoma ḓaka ḽa zwiḽiwa kha bulasi ḽaṋu.",
+      "blindBackTranslation": "Learn to plan and to start a food garden on your farm."
+    },
+    {
+      "key": "slide.s2.h",
+      "sourceEnglish": "Why This Matters",
+      "draft": "Ndi ngani hezwi zwi zwa ndeme",
+      "blindBackTranslation": "Why these matter"
+    },
+    {
+      "key": "slide.s2.b0",
+      "sourceEnglish": "A food forest grows useful plants at different heights.",
+      "draft": "Ḓaka ḽa zwiḽiwa ḽi alusa zwimela zwi shumiseaho kha vhulapfu ho fhambanaho.",
+      "blindBackTranslation": "A food forest grows plants that are used at different heights."
+    },
+    {
+      "key": "slide.s2.b1",
+      "sourceEnglish": "Good design can combine harvests, shade and soil cover. Plants still compete for light, water and nutrients.",
+      "draft": "Pulane yavhuḓi i nga ṱanganya khaṋo, murunzi na u fukedza mavu. Zwimela zwi kha ḓi ṱaṱisana nga tshedza, maḓi na nutrients dza mavu.",
+      "blindBackTranslation": "A good plan can combine fruit, shade and covering the soil. Plants still compete for light, water and nutrients of the soil."
+    },
+    {
+      "key": "slide.s2.b2",
+      "sourceEnglish": "Plan the care you can provide and watch how the planting changes.",
+      "draft": "Pulani ṱhogomelo ine na nga i ita, ni dzule ni tshi sedza uri zwimela zwi khou shanduka hani.",
+      "blindBackTranslation": "Plan the care that you can do, and keep watching how the plants are changing."
+    },
+    {
+      "key": "slide.s3.h",
+      "sourceEnglish": "Learning Outcomes",
+      "draft": "Zwine na ḓo kona u zwi ita",
+      "blindBackTranslation": "What you will be able to do"
+    },
+    {
+      "key": "slide.s3.b0",
+      "sourceEnglish": "Name the seven commonly described food-forest layers.",
+      "draft": "Ṋeani madzina a miṱaṱo 7 ya ḓaka ḽa zwiḽiwa ine ya anzela u ṱalutshedzwa.",
+      "blindBackTranslation": "Give the names of 7 layers of a food forest that are often explained."
+    },
+    {
+      "key": "slide.s3.b1",
+      "sourceEnglish": "Check plants against your site, local ecology and the approved project list.",
+      "draft": "Sedzani uri zwimela zwi tshi fana na fhethu haṋu, ecology ya fhethu na approved project list.",
+      "blindBackTranslation": "Look that the plants are like your place, the ecology of the place and the approved project list."
+    },
+    {
+      "key": "slide.s3.b2",
+      "sourceEnglish": "Plan establishment and ongoing care without assuming a fixed date for harvest or canopy closure.",
+      "draft": "Pulani u thoma na u dzula ni tshi ṱhogomela, ni sa humbuli uri hu na ḓuvha ḽo tiwaho ḽa khaṋo kana ḽa u valwa ha canopy.",
+      "blindBackTranslation": "Plan to start and to keep caring, and do not assume there is a set day of harvest or of canopy closing."
+    },
+    {
+      "key": "slide.s4.h",
+      "sourceEnglish": "The Forest Uses Every Layer",
+      "draft": "Ḓaka ḽi shumisa miṱaṱo yoṱhe",
+      "blindBackTranslation": "The garden uses all layers"
+    },
+    {
+      "key": "slide.s4.b0",
+      "sourceEnglish": "An indigenous forest fills the space from the highest branches to the roots.",
+      "draft": "Ḓaka ḽa indigenous ḽi ḓadza fhethu u bva kha maṱavhi a nṱhesa u swika kha midzi.",
+      "blindBackTranslation": "An indigenous garden fills the place from the high branches down to the roots."
+    },
+    {
+      "key": "slide.s4.b1",
+      "sourceEnglish": "Different plants use the light and moisture available at their level.",
+      "draft": "Zwimela zwo fhambanaho zwi shumisa tshedza na maḓi zwi re hone kha muṱaṱo wazwo.",
+      "blindBackTranslation": "Different plants use the light and water that are there in their shade/canopy [?]."
+    },
+    {
+      "key": "slide.s4.b2",
+      "sourceEnglish": "A food forest copies this pattern with productive species.",
+      "draft": "Ḓaka ḽa zwiḽiwa ḽi edzisa nḓila heyi nga zwimela zwi bveledzaho.",
+      "blindBackTranslation": "The food garden imitates this way with plants that produce."
+    },
+    {
+      "key": "slide.s4.b3",
+      "sourceEnglish": "The result is not one crop in one row, but many useful layers growing together.",
+      "draft": "Mvelelo a si tshiliṅwa tshithihi kha muduba muthihi, fhedzi ndi miṱaṱo minzhi i shumiseaho i tshi aluwa i tshi ṱangana.",
+      "blindBackTranslation": "The result is not one crop on one bed, but many used layers [?: miṱaṱo = plantings/trees/layers] growing while they meet together."
+    },
+    {
+      "key": "slide.s5.h",
+      "sourceEnglish": "Watch: Read the Seven Planting Layers",
+      "draft": "Sedzani: Vhalani Miṱaṱo 7 ya U Dzima",
+      "blindBackTranslation": "Look: Count the 7 Layers of Planting"
+    },
+    {
+      "key": "slide.s5.b0",
+      "sourceEnglish": "Find seven planting layers.",
+      "draft": "Wanani miṱaṱo 7 ya u dzima.",
+      "blindBackTranslation": "Find the 7 layers of planting."
+    },
+    {
+      "key": "slide.s5.b1",
+      "sourceEnglish": "Tall trees form the canopy.",
+      "draft": "Miri milapfu i vhumba canopy.",
+      "blindBackTranslation": "Tall trees form the canopy."
+    },
+    {
+      "key": "slide.s5.b2",
+      "sourceEnglish": "Smaller trees grow below it.",
+      "draft": "Miri miṱuku i aluwa nga fhasi hayo.",
+      "blindBackTranslation": "Small trees grow beneath it."
+    },
+    {
+      "key": "slide.s5.b3",
+      "sourceEnglish": "Then look for woody shrubs.",
+      "draft": "Zwa u tevhela, ṱoḓani zwiṱaka zwi re na thanda dza muri dzo khwaṱhaho.",
+      "blindBackTranslation": "Next, look for shrubs that have strong tree branches [?]."
+    },
+    {
+      "key": "slide.s5.b4",
+      "sourceEnglish": "Herbaceous plants have soft stems.",
+      "draft": "Zwimela zwa herbaceous zwi na thanda dzi si dza muri, dzi sa khwaṱhaho.",
+      "blindBackTranslation": "Herbaceous plants have branches that are not woody and not strong."
+    },
+    {
+      "key": "slide.s5.b5",
+      "sourceEnglish": "Ground cover spreads across the surface.",
+      "draft": "Zwimela zwi fukaho fhasi zwi a ṱandavhuwa nṱha ha mavu.",
+      "blindBackTranslation": "Plants that creep on the ground spread above the soil."
+    },
+    {
+      "key": "slide.s5.b6",
+      "sourceEnglish": "Root crops grow below the surface.",
+      "draft": "Zwimela zwa midzi (root crops) zwi aluwa fhasi ha mavu.",
+      "blindBackTranslation": "Root crops (root crops) grow under the soil."
+    },
+    {
+      "key": "slide.s5.b7",
+      "sourceEnglish": "Climbers use suitable supports.",
+      "draft": "Zwimela zwi gonyaho zwi shumisa zwi tikedzaho zwi fanelaho zwa u gonya khazwo.",
+      "blindBackTranslation": "Climbing plants use suitable supports for climbing on."
+    },
+    {
+      "key": "slide.s5.b8",
+      "sourceEnglish": "These are planning layers, not fixed height bands. Choose plants and spacing for your site.",
+      "draft": "Heyi ndi miṱaṱo ya u pulana, a si mitshetshelo yo tiwaho ya vhulapfu. Nangani zwimela na tshikhala zwi tshi ya nga fhethu haṋu.",
+      "blindBackTranslation": "These are layers for planning, not set measurements of height. Choose plants and space according to your place."
+    },
+    {
+      "key": "slide.s6.h",
+      "sourceEnglish": "The Seven Layers",
+      "draft": "Miṱaṱo 7",
+      "blindBackTranslation": "7 layers"
+    },
+    {
+      "key": "slide.s6.b0",
+      "sourceEnglish": "Think of tall canopy, smaller trees, shrubs and herbaceous plants.",
+      "draft": "Humbulani nga ha canopy ya miri milapfu, miri miṱuku, zwiṱaka na zwimela zwa herbaceous.",
+      "blindBackTranslation": "Think about the canopy of tall trees, small trees, shrubs and herbaceous plants."
+    },
+    {
+      "key": "slide.s6.b1",
+      "sourceEnglish": "Ground cover protects the surface, root crops grow below it, and climbers use suitable supports.",
+      "draft": "Zwimela zwi fukaho fhasi zwi tsireledza mavu a nṱha, zwimela zwa midzi zwi aluwa fhasi hayo, nahone zwimela zwi gonyaho zwi shumisa zwi tikedzaho zwi fanelaho.",
+      "blindBackTranslation": "Plants that cover the ground protect the upper soil, root crops grow beneath it, and climbing plants use suitable supports."
+    },
+    {
+      "key": "slide.s6.b2",
+      "sourceEnglish": "The heights and spacing depend on the plants and site. These are planning layers, not fixed height bands.",
+      "draft": "Vhulapfu na tshikhala zwi ya nga zwimela na fhethu. Heyi ndi miṱaṱo ya u pulana, a si mitshetshelo yo tiwaho ya vhulapfu.",
+      "blindBackTranslation": "Height and space depend on the plants and the place. These are layers for planning, not set measurements of height."
+    },
+    {
+      "key": "slide.s7.h",
+      "sourceEnglish": "Read a Layered Planting Example",
+      "draft": "Vhalani Tsumbo ya U Dzima nga Miṱaṱo",
+      "blindBackTranslation": "Read an Example of Planting by Layers"
+    },
+    {
+      "key": "slide.s7.b0",
+      "sourceEnglish": "The original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.",
+      "draft": "Tsumbo ya mathomo ya Highveld i katela Wild Fig kana pecan nṱha ha lemon, naartjie na black mulberry.",
+      "blindBackTranslation": "The starting example of the Highveld includes Wild Fig or pecan above lemon, naartjie and black mulberry."
+    },
+    {
+      "key": "slide.s7.b1",
+      "sourceEnglish": "It places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.",
+      "draft": "I dzudzanya Cape gooseberry na Wild Medlar na miroho, wild garlic, sweet potato na granadilla.",
+      "blindBackTranslation": "It arranges Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla."
+    },
+    {
+      "key": "slide.s7.b2",
+      "sourceEnglish": "Treat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first.",
+      "draft": "Dzhiani heyi sa tsumbo ya u dzudzanya, hu si tendelo ya u dzima zwimela zwoṱhe. Phanḓa ha u dzima, khwaṱhisedzani uri zwimela ndi mini, frost tolerance, vhukhulu ha zwimela zwo aluwa zwo fhelela na mikano ya fhethu.",
+      "blindBackTranslation": "Take this as an example of arranging, not a permission to plant all plants. Before planting, make sure what the plants are, the frost tolerance, the size of the fully grown plants and the local limits [?: mikano = limits/restrictions/regulations]."
+    },
+    {
+      "key": "slide.s8.h",
+      "sourceEnglish": "Care Changes as Plants Grow",
+      "draft": "Ṱhogomelo i a shanduka zwimela zwi tshi aluwa",
+      "blindBackTranslation": "Care changes as plants grow"
+    },
+    {
+      "key": "slide.s8.b0",
+      "sourceEnglish": "Young plants need establishment care: moisture checks, weed control and protection from damage.",
+      "draft": "Zwimela zwiṱuku zwi ṱoḓa establishment care: u sedza uri mavu a na maḓi, u pfuka zwimela zwi sa funwi (weeds) na u tsireledzwa kha khombo.",
+      "blindBackTranslation": "Small plants need establishment care: checking that the soil has water, weeding plants that are not wanted (weeds) and protection from danger."
+    },
+    {
+      "key": "slide.s8.b1",
+      "sourceEnglish": "As plants grow, shade and leaf litter change conditions below them.",
+      "draft": "Musi zwimela zwi tshi aluwa, murunzi na leaf litter zwi shandukisa tshiimo fhasi hazwo.",
+      "blindBackTranslation": "When plants grow, shade and leaf litter change the conditions beneath them."
+    },
+    {
+      "key": "slide.s8.b2",
+      "sourceEnglish": "Check competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday.",
+      "draft": "Sedzani ṱhaṱisano na nḓila ya u swika. Remani maṱavhi, ni ite thinning kana ni lugise zwimela zwa fhasi musi zwine na zwi vhona zwi tshi zwi ṱoḓa; sisiteme a i vhi ya u sa ṱoḓa ṱhogomelo nga ḓuvha ḽo tiwaho.",
+      "blindBackTranslation": "Check competition and the way of access. Cut the branches, do thinning or tidy the plants below [?] when you see that they need it; the system is not one that does not need care on a set day."
+    },
+    {
+      "key": "slide.s9.h",
+      "sourceEnglish": "Choose for Your Site",
+      "draft": "Nangani Zwi Fanelaho Fhethu haṋu",
+      "blindBackTranslation": "Choose What Suits Your Place"
+    },
+    {
+      "key": "slide.s9.b0",
+      "sourceEnglish": "Check local rainfall, frost, heat, soil and water availability before choosing plants.",
+      "draft": "Sedzani mvula, mutsho (frost), u fhisa, mavu na maḓi zwi re hone fhethu haṋu phanḓa ha u nanga zwimela.",
+      "blindBackTranslation": "Look at the rain, frost, heat, soil and water that are present at your place before choosing plants."
+    },
+    {
+      "key": "slide.s9.b1",
+      "sourceEnglish": "Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.",
+      "draft": "Mango i nga vhaisala nga mutsho. Quince i ṱoḓa winter chilling i fanelaho uri i bveledze khaṋo nga nḓila i fulufhedzeaho.",
+      "blindBackTranslation": "Mango can be harmed by frost. Quince needs the winter chilling that is suitable so that it brings fruit in a reliable way."
+    },
+    {
+      "key": "slide.s9.b2",
+      "sourceEnglish": "A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.",
+      "draft": "Dzina ḽa vhupo kana kona ḽo tsireledzwaho a zwi ngo linga. Khwaṱhisedzani tshimela tshiṅwe na tshiṅwe na cultivar yatsho nga nyeletshedzo i fulufhedzeaho ya fhethu.",
+      "blindBackTranslation": "The name of the region or a protected corner is not enough. Make sure each plant and its cultivar with reliable local information."
+    },
+    {
+      "key": "slide.s10.h",
+      "sourceEnglish": "Watch: Match the Species to the Climate",
+      "draft": "Sedzani: Fhelekedzani Zwimela na Climate",
+      "blindBackTranslation": "Look: Match Plants and Climate"
+    },
+    {
+      "key": "slide.s10.b0",
+      "sourceEnglish": "Climate decides which species belong.",
+      "draft": "Climate i nanga uri ndi zwimela zwifhio zwi fanelaho.",
+      "blindBackTranslation": "Climate chooses which plants are suitable."
+    },
+    {
+      "key": "slide.s10.b1",
+      "sourceEnglish": "On the Highveld, choose cold-tolerant trees and shrubs; on the KZN coast and Lowveld, choose warm-climate species.",
+      "draft": "Kha Highveld, nanganini miri na zwiṱaka zwi kondelaho mutsho; kha KZN coast na Lowveld, nanganini zwimela zwa fhethu ha u fhisa.",
+      "blindBackTranslation": "On the Highveld, choose trees and shrubs that withstand frost; on the KZN coast and the Lowveld, choose plants of hot places."
+    },
+    {
+      "key": "slide.s10.b2",
+      "sourceEnglish": "Match every plant to your site.",
+      "draft": "Fhelekedzani tshimela tshiṅwe na tshiṅwe na fhethu haṋu.",
+      "blindBackTranslation": "Match each plant to your place."
+    },
+    {
+      "key": "slide.s11.h",
+      "sourceEnglish": "Check the Highveld Examples",
+      "draft": "Sedzani Tsumbo dza Highveld",
+      "blindBackTranslation": "Look at Highveld Examples"
+    },
+    {
+      "key": "slide.s11.b0",
+      "sourceEnglish": "The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.",
+      "draft": "Mutevhe wa mathomo u katela pecan, walnut na indigenous fig; apple, pear, plum, black mulberry na loquat; rosemary, Wild Medlar, Cape gooseberry na Barbados cherry.",
+      "blindBackTranslation": "The starting list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry."
+    },
+    {
+      "key": "slide.s11.b1",
+      "sourceEnglish": "This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.",
+      "draft": "Heyi mutevhe a si themendelo ya zwimela zwoṱhe kha fhethu hoṱhe. Sedzani tshimela tshiṅwe na tshiṅwe nga mutsho, mavu, vhukhulu ha zwimela zwo aluwa zwo fhelela na approved local species list.",
+      "blindBackTranslation": "This advice is not a recommendation for all plants in all places. Check each plant by climate, soil, size of the plants when fully grown, and the approved local species list."
+    },
+    {
+      "key": "slide.s11.b2",
+      "sourceEnglish": "Keep existing legal and project restrictions in force. Do not plant from a picture alone.",
+      "draft": "Tevhelani mikano ya mulayo na ya pulojeke yo no vha hone. Ni songo dzima nga u sedza tshifanyiso fhedzi.",
+      "blindBackTranslation": "Follow the rules of the law and of the project that already exist. Do not plant by looking at a picture only."
+    },
+    {
+      "key": "slide.s12.h",
+      "sourceEnglish": "Check the Warm-Region Examples",
+      "draft": "Sedzani Tsumbo dza Fhethu ha u Fhisa",
+      "blindBackTranslation": "Look at Examples of a Hot Place"
+    },
+    {
+      "key": "slide.s12.b0",
+      "sourceEnglish": "The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.",
+      "draft": "Tsumbo dza mathomo dza fhethu ha u fhisa dzi katela mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry na Wild Dagga.",
+      "blindBackTranslation": "Starting examples of a hot place include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga."
+    },
+    {
+      "key": "slide.s12.b1",
+      "sourceEnglish": "Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.",
+      "draft": "Marula, Mopane na baobab zwi a vhonala na kha tsumbo dza Limpopo. U fanela ha fhethu hu kha ḓi ṱoḓa u sedzwa.",
+      "blindBackTranslation": "Marula, Mopane and baobab are also seen in the Limpopo examples. Suitability of the place still needs to be checked."
+    },
+    {
+      "key": "slide.s12.b2",
+      "sourceEnglish": "Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.",
+      "draft": "Miri i shumiseaho a si yoṱhe i nga liwaho. Khwaṱhisedzani uri ndi mini na u i shumisa nga tsireledzo; tshifanyiso tsha vhupo a si nḓila ya u divha zwiḽiwa.",
+      "blindBackTranslation": "Trees that are useful are not all edible [?]. Make sure what it is and use it safely; a picture of the place [?] is not a way to know foods."
+    },
+    {
+      "key": "slide.s13.h",
+      "sourceEnglish": "Include Locally Appropriate Indigenous Plants",
+      "draft": "Katelani zwimela zwa indigenous zwi tea fhethu",
+      "blindBackTranslation": "Include indigenous plants that are suitable for the place"
+    },
+    {
+      "key": "slide.s13.b0",
+      "sourceEnglish": "Locally appropriate indigenous plants can support habitat as part of the design.",
+      "draft": "Zwimela zwa indigenous zwi fanaho na fhethu haṋu zwi nga tikedza habitat sa tshipiḓa tsha pulane.",
+      "blindBackTranslation": "Indigenous plants that are like your place can support habitat as a part of the plan."
+    },
+    {
+      "key": "slide.s13.b1",
+      "sourceEnglish": "Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.",
+      "draft": "Nangani zwi tshi ya nga ecosystem yaṋu na mushumo u shumiseaho wa tshimela tshiṅwe na tshiṅwe. Kha ino ngudo a hu na phesenthe ya ndivho yo bvaho kha tshiko tshi sumbedzwaho.",
+      "blindBackTranslation": "Choose according to your ecosystem and the usable function of each plant. In this study there is no percent of intention that came from the indicated component [?]."
+    },
+    {
+      "key": "slide.s13.b2",
+      "sourceEnglish": "Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.",
+      "draft": "Tsireledzani zwimela zwa mupo zwo no vha hone. Ni songo shandukisa tshisi tshi re na mutakalo kha ḓaka ḽa zwiḽiwa fhedzi ngauri miri i a thusa kha fhethu hunwe.",
+      "blindBackTranslation": "Protect natural plants that are already there. Do not change a healthy grass/veld [?] into a food garden only because trees help in some places."
+    },
+    {
+      "key": "slide.s14.h",
+      "sourceEnglish": "Plan the Sequence for the Site",
+      "draft": "Pulani Tevhekanyo ya Mishumo Fhethu haṋu",
+      "blindBackTranslation": "Plan the Order of Jobs in Your Place"
+    },
+    {
+      "key": "slide.s14.b0",
+      "sourceEnglish": "Start by checking the site, water supply and care available. Protect exposed soil early.",
+      "draft": "Thomani nga u sedza fhethu, tshiko tsha maḓi na ṱhogomelo i re hone. Tsireledzani mavu o vuleaho nga u ṱavhanya.",
+      "blindBackTranslation": "Start by looking at the place, the water source and the care that is there. Protect open soil quickly."
+    },
+    {
+      "key": "slide.s14.b1",
+      "sourceEnglish": "Temporary support plants may provide shelter and useful cut material where appropriate.",
+      "draft": "Support plants dza tshifhinga tshipfufhi dzi nga ṋea tsireledzo na zwo remiwaho zwi shumiseaho hune zwa fanela.",
+      "blindBackTranslation": "Short-term support plants (Support plants of a short time) can give protection and cuttings that are used where suitable."
+    },
+    {
+      "key": "slide.s14.b2",
+      "sourceEnglish": "Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.",
+      "draft": "Miri ya ndeme na miṱaṱo ya fhasi zwi nga ḓisiwa musi tshiimo tshi tshi tendela. Zwimela zwi fukaho fhasi a zwi ṱoḓi u lindela u swika magumoni; dzivhani zwimela zwi tshi ṱaṱisana na miri ine ya kha ḓi aluwa.",
+      "blindBackTranslation": "Important trees and the lower [?] shade-trees/shrubs [?] can be brought when the situation allows. Plants that spread low [?] do not need to wait until the end; avoid plants competing with trees that are still growing."
+    },
+    {
+      "key": "slide.s15.h",
+      "sourceEnglish": "Watch: Care for a Young Food Forest",
+      "draft": "Sedzani: Ṱhogomelo ya Ḓaka ḽa Zwiḽiwa ḽi Aluwaho",
+      "blindBackTranslation": "Look: Care of a Growing Food Forest"
+    },
+    {
+      "key": "slide.s15.b0",
+      "sourceEnglish": "This picture shows a young food forest. Start with an area you can care for.",
+      "draft": "Tshifanyiso itshi tshi sumbedza ḓaka ḽa zwiḽiwa ḽi kha ḓi aluwa. Thomani nga fhethu hune na nga kona u hu ṱhogomela.",
+      "blindBackTranslation": "This picture shows a food forest [?] that is still growing. Start at a place where you are able to care for it."
+    },
+    {
+      "key": "slide.s15.b1",
+      "sourceEnglish": "Protect exposed soil early. Here, loose mulch covers the soil.",
+      "draft": "Tsireledzani mavu o vuleaho nga u ṱavhanya. Henefho, mulch yo sa vhofhelelwaho i fhukedza mavu.",
+      "blindBackTranslation": "Protect open soil quickly. There, mulch that is not tied/blocked [?] covers the soil."
+    },
+    {
+      "key": "slide.s15.b2",
+      "sourceEnglish": "Keep mulch away from the trunk. Notice the clear space at the tree's base.",
+      "draft": "Vhulungani mulch kule na muvhili wa muri. Vhonani tshikhala tshi si na tshithu kha fhasi ha muvhili wa muri.",
+      "blindBackTranslation": "Keep mulch away from the trunk of the tree. See an empty space on the ground at the trunk of the tree."
+    },
+    {
+      "key": "slide.s15.b3",
+      "sourceEnglish": "Watch for competition. The farmer is removing grass near the young tree.",
+      "draft": "Sedzani ṱhaṱisano. Mulimi u khou bvisa tshisi tshi re tsini na muri u kha ḓi aluwa.",
+      "blindBackTranslation": "Look at the competition. The farmer is removing grass that is near a tree that is still growing."
+    },
+    {
+      "key": "slide.s15.b4",
+      "sourceEnglish": "Before adding more plants, check moisture, shelter and the care you can provide. Let what you observe guide your next step.",
+      "draft": "Phanḓa ha u engedza zwimela zwiṅwe, sedzani maḓi a kha mavu, tsireledzo na ṱhogomelo ine na nga i ita. Zwine na zwi vhona zwi ni livhise kha vhukando vhu tevhelaho.",
+      "blindBackTranslation": "Before adding other plants, look at the water in the soil, protection and the care that you can do. What you see leads you to the next step."
+    },
+    {
+      "key": "slide.s16.h",
+      "sourceEnglish": "Prepare a Manageable First Area",
+      "draft": "Lugisani Fhethu ha u Thoma hu nga Ṱhogomelwaho",
+      "blindBackTranslation": "Prepare a Starting Place that Can Be Cared For"
+    },
+    {
+      "key": "slide.s16.b0",
+      "sourceEnglish": "Begin with an area you can water and maintain. Check existing vegetation before clearing.",
+      "draft": "Thomani nga fhethu hune na nga hu nwesa maḓi na u hu ṱhogomela. Sedzani zwimela zwo no vha hone phanḓa ha u bvisa.",
+      "blindBackTranslation": "Start at a place that you can water and take care of. Look at the plants that are already there before removing."
+    },
+    {
+      "key": "slide.s16.b1",
+      "sourceEnglish": "Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.",
+      "draft": "Hune ha fanela, cardboard i si na zwiṅwe fhasi ha mulch i fanelaho i nga fhungudza zwimela zwi sa funwi. Tendelani maḓi u dzhena kha mavu, ni siye miri i si na tshithu tsini na muvhili wayo.",
+      "blindBackTranslation": "Where suitable, cardboard with nothing else under a suitable mulch can reduce unwanted plants. Allow water to enter the soil, and leave the trees with nothing near their trunk."
+    },
+    {
+      "key": "slide.s16.b2",
+      "sourceEnglish": "Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.",
+      "draft": "Pulani tshikhala nga vhukhulu ha zwimela zwo aluwa zwo fhelela. Lugisani nursery plants kha tshifhinga tshi tevhelaho tshi fanelaho tsha u dzima.",
+      "blindBackTranslation": "Plan the space by the size of the fully grown plants. Arrange nursery plants for the next suitable time of planting."
+    },
+    {
+      "key": "slide.s17.h",
+      "sourceEnglish": "Adjust as the Trees Grow",
+      "draft": "Shandukani Musi Miri i tshi Aluwa",
+      "blindBackTranslation": "Change When Trees Are Growing"
+    },
+    {
+      "key": "slide.s17.b0",
+      "sourceEnglish": "Watch how shade, roots and available water affect neighbouring plants.",
+      "draft": "Sedzani uri murunzi, midzi na maḓi a re hone zwi ita hani kha zwimela zwa tsini.",
+      "blindBackTranslation": "Watch how the shade, roots and water that are present affect the nearby plants."
+    },
+    {
+      "key": "slide.s17.b1",
+      "sourceEnglish": "Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.",
+      "draft": "Comfrey na wild garlic zwi a vhonala kha tsumbo ya mathomo ya u dzima fhasi ha miri; sedzani u fanela hazwo fhethu haṋu phanḓa ha u zwi shumisa.",
+      "blindBackTranslation": "Comfrey and wild garlic are seen in the first example of planting under trees; look at their suitability in your place before using them."
+    },
+    {
+      "key": "slide.s17.b2",
+      "sourceEnglish": "Prune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.",
+      "draft": "Remani maṱavhi kana ni ite thinning ya support plants musi hu tshi ṱoḓea, ni tshi shumisa nḓila dzi fanelaho tshimela tshiṅwe na tshiṅwe. Zwo remiwaho zwo kunaho zwi fanelaho zwi nga vhuya zwa vha mulch. Ni songo lindela ṅwaha wo tiwaho arali ṱhaṱisano yo no thoma u vhaisa zwimela.",
+      "blindBackTranslation": "Cut the branches or do thinning of support plants when it is needed, using the methods that suit each plant. What has been cut that is soft [?] and suitable may later become mulch. Do not wait for a set year if competition has already begun to harm the plants."
+    },
+    {
+      "key": "slide.s18.h",
+      "sourceEnglish": "Plant with Reliable Moisture",
+      "draft": "Dzimani ni na Maḓi a Mavu a Fulufhedzeaho",
+      "blindBackTranslation": "Plant with Reliable Soil Water"
+    },
+    {
+      "key": "slide.s18.b0",
+      "sourceEnglish": "Choose a planting opportunity when soil moisture and expected weather support establishment.",
+      "draft": "Nangani tshifhinga tsha u dzima musi maḓi a mavu na leo ḽo lindelwaho zwi tshi tikedza establishment.",
+      "blindBackTranslation": "Choose the time of planting when soil water and the expected weather support establishment."
+    },
+    {
+      "key": "slide.s18.b1",
+      "sourceEnglish": "Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.",
+      "draft": "Mvula i nga thusa, fhedzi sedzani root zone ni vhe na pulane ya u nwesa maḓi i shumiswaho arali mvula i sa wa. Dzivhani u dzima kha mavu o ḓalaho maḓi.",
+      "blindBackTranslation": "Rain can help, but check the root zone and have a plan for watering that is used if rain does not fall. Avoid planting in soil that is full of water."
+    },
+    {
+      "key": "slide.s18.b2",
+      "sourceEnglish": "Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.",
+      "draft": "Sedzani zwimela zwiṱuku musi zwo no dzimiwa. Tshifhinga tsha khaṋo na zwi ḓisiwaho kha nnḓa zwi ya nga tshimela, fhethu na ṱhogomelo; a hu na mvelelo i khwaṱhisedzwaho ya ṅwaha wa vhuṱanu.",
+      "blindBackTranslation": "Watch small plants once they have been planted. The time of fruit/harvest [?] and what is brought in from outside depend on the plant, the place and the care; there is no guaranteed yield of the fifth year."
+    },
+    {
+      "key": "slide.s19.h",
+      "sourceEnglish": "Field Assignment",
+      "draft": "Mushumo wa tsimuni",
+      "blindBackTranslation": "Work on the farm/homestead [?]"
+    },
+    {
+      "key": "slide.s19.b0",
+      "sourceEnglish": "Draw the layers for your own proposed planting. Mark access, water and existing natural vegetation.",
+      "draft": "Ṅwalani tshifanyiso tsha miṱaṱo ya u dzima ha ṋoṋe ho pulaniwaho. Sumbedzani nḓila ya u swika, maḓi na zwimela zwa mupo zwo no vha hone.",
+      "blindBackTranslation": "Write a picture of the layers of planting of your own planned planting. Show the way of access, water and natural plants that are already there."
+    },
+    {
+      "key": "slide.s19.b1",
+      "sourceEnglish": "Record local frost, rain, soil and available care.",
+      "draft": "Ṅwalani mutsho, mvula, mavu na ṱhogomelo ine ya wanala fhethu haṋu.",
+      "blindBackTranslation": "Write the frost, rain, soil and care that can be found at your place."
+    },
+    {
+      "key": "slide.s19.b2",
+      "sourceEnglish": "For each plant from the approved list, record its intended role and the local advice still needed before planting.",
+      "draft": "Kha tshimela tshiṅwe na tshiṅwe kha approved list, ṅwalani mushumo une na ṱoḓa uri tshi u ite na nyeletshedzo ya fhethu i kha ḓi ṱoḓea phanḓa ha u dzima.",
+      "blindBackTranslation": "For each plant on the approved list, write the job you want it to do and the local information that is still needed before planting."
+    },
+    {
+      "key": "slide.s20.h",
+      "sourceEnglish": "Field Action",
+      "draft": "Nyito ya tsimuni",
+      "blindBackTranslation": "Action on the farm/homestead [?]"
+    },
+    {
+      "key": "slide.s20.b0",
+      "sourceEnglish": "Inspect a manageable area and choose one next step.",
+      "draft": "Ṱolisisani fhethu hune na nga kona u hu ṱhogomela, ni nange vhukando vhuthihi vhu tevhelaho.",
+      "blindBackTranslation": "Examine closely the place that you can take care of, and choose one next step."
+    },
+    {
+      "key": "slide.s20.b1",
+      "sourceEnglish": "Protect exposed soil, check plant suitability, or prepare nursery plants.",
+      "draft": "Tsireledzani mavu o vuleaho, sedzani arali zwimela zwi tshi fanelea fhethu, kana ni lugise zwimela zwa nursery.",
+      "blindBackTranslation": "Protect open soil, check if plants suit the place, or prepare nursery plants."
+    },
+    {
+      "key": "slide.s20.b2",
+      "sourceEnglish": "Plant only when conditions and follow-up care are suitable. Return to the same spot to check survival, soil moisture and competition.",
+      "draft": "Dzimani fhedzi musi tshiimo na ṱhogomelo ya u tevhela zwi tshi fanela. Vhuyani fhethu ho fanaho u sedza u tshila, maḓi a kha mavu na ṱhaṱisano.",
+      "blindBackTranslation": "Plant only when the conditions and the care that follows are suitable. Return to the same place to check survival, water in the soil and competition."
+    }
+  ]
+}
