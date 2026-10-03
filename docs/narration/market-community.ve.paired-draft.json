@@ -16,7 +16,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "U Ṱavha Zwimela U Itela Maraga na Vhadzulapo",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
@@ -30,7 +32,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshipikwa ndi uri bulasi ḽiṋee muṱa zwiḽiwa, ḽi dovhe ḽi shume sa ikonomi ṱhukhu, i pfalaho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -64,7 +68,9 @@
             "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani mafhungo ayo u tsireledza zwiḽiwa zwa muṱa na u dzhia better business decisions.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -94,10 +100,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni nga vhalela true cost of production, musi ni sa athu vhea mutengo wa u rengisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ni nga match surplus na murengi kana channel ya u rengisa yo teaho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -130,7 +140,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhalani rekhodo u bva mathomoni u swika magumoni a khalaṅwaha u vhona bulasi sa ikonomi, musi ni sa athu dzhia tsheo ya bindu.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -160,10 +172,14 @@
             "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekhodani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo, ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani nḓowelo iyi yo leluwaho kha zwiḽiwa zwi re hayani, zwibveledzwa zwo rengiswaho, zwe zwa ṋewa vhaṅwe, na zwe zwa vhewa kha compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -198,10 +214,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi zwifhio zwimela zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi zwifhio zwimela zwine zwa shumisa mbeu, maḓi na compost nnzhi u fhira zwine zwa zwi bveledza?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -224,17 +244,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Wanani True Cost.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Musi ni sa athu vhea mutengo, ṅwalani production, packing and selling costs, hu tshi katelwa mushumo na transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u fulufhedzisi uri hu ḓo rengiswa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -263,10 +289,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nangani crops dzine dza tea fhethu haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Sedzani nyimele dza u ṱavha na tshifhinga tshine khaṋo ya lavhelelwa u swika ngatsho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Datumu ine ya shuma kha ḽiṅwe bulasi i nga sa shuma hafha. Include a backup plan when rain, water or crops fail.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -289,7 +319,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwo salaho zwi nga bva bulasini nga stall ya tsini na bada, delivery ya tshigwada u ya shopuni, kana box ine ya ḓiswa muṱani.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -318,13 +350,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhudzisani uri murengi u ṱoḓa mini: tshibveledzwa, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -342,17 +380,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vhalani Mushumo Wa Direct Selling",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Direct selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Box scheme i ṋea vharengi vho tendelanaho regular selection ya zwibveledzwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tendelanani nga contents, price, payment na what happens when crops are short. Regular orders dzi thusa u dzudzanya only when customers and growers can keep the agreement.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -370,17 +416,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dzudzanyani U Tshi Tevhela Order Dza Vhukuma",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Thomani nga what you can reliably supply na zwine vharengi vha zwi ṱoḓa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani costs na zwiḽiwa zwine muṱa wa zwi ṱoḓa musi ni sa athu fulufhedzisa regular boxes.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshikalo tsha ngade kana tshivhalo tsha vharengi, zwone fhedzi, a zwi anganyeli income. Ringetani arrangement ine na nga kona u i langula, ni ṅwale results.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -398,17 +452,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Nangani Channel U Ya Nga Supply Yaṋu",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Arali production ya shanduka vhege nga vhege, ni songo fulufhedzisa delivery yo tiwaho ine na nga si kone u i ṋea.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ṋeani zwo salaho zwine na vha nazwo, ni tendelane na vharengi nga clear terms.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Talusani nga ngoho maitele aṋu a u ṱavha. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -426,7 +488,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ṱolisisani: Nḓila Ine Vhahura Vha Khwaṱhisa Khaṋo Ngayo",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
@@ -435,10 +499,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshigwada tshi nga kovhekana mbeu, zwishumiswa, vhukoni na transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhalimi vho fhambanaho vha vhumba stronger local food network, muṱa muṅwe na muṅwe u tshi shela zwine wa kona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -457,17 +525,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Save Seed Roṱhe.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhahura vha nga kovhekana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekhodani crop, variety, source na collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U kovhekana a zwi engedzi diversity kana u khwinisa quality nga zwone zwine zwa ḓitika. Check identity and germination before relying on shared seed.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "english-hold"
@@ -488,17 +564,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kovhekani Zwishumiswa Zwi Dureaho",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U kovhekana zwishumiswa zwi ita uri zwishumiswa zwi dureaho zwi swikele tshigwada.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Water pump kana grain mill i nga vha i nṱha ha budget ya muṱa muthihi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U shumisa ro kovhekana zwi phaḓaladza ndeme ya tshishumiswa kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽo vha ḽi sa ḓo kona u u ita ḽoṱhe.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -516,17 +600,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Reduce Loss vhukati ha khaṋo na u rengisa.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Farani zwibveledzwa nga vhulenda, ni zwi vhee murunzini wo teaho, kha packaging na fhethu ha u vhulunga zwo teaho u swika zwi tshi swika.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Murengi wa tsini a nga fhungudza lwendo, fhedzi losses na selling costs zwi kha ḓi fanela u lingwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhambedzani tshelede yo tanganwaho nga murahu ha fees, transport na spoilage kha khetho iṅwe na iṅwe. Ni songo humbula uri murengi wa tsini u dzula a tshi ṋea the best return.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -544,7 +636,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kovhelanani Vhukoni na U Sedza Mvelelo",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
@@ -558,7 +652,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience na specialist help zwi nga shuma zwoṱhe.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -583,7 +679,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shumisani headings dza khaṋo, hune ya ya hone, costs na mushumo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -596,7 +694,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Musi khalaṅwaha nthihi yo fhela, wanani tshimela tshi vhuyedzaho zwavhuḓi na ṅwedzi une muṱa wa renga zwiḽiwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -625,10 +725,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhambedzani costs na return ya tshimela kana nḓila ya u rengisa, kana ni dzudzanye u shaya zwiḽiwa ha muṱa ni tshi shumisa nyimele dza u lima dza henefho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nga murahu tendelanani na vhahura nga one practical action: seed swap, u kovhekana tshishumiswa, delivery ya tshigwada kana dzulo ḽa u kovhekana vhukoni. Before a seed swap, check whether the variety is protected and whether permission is needed. Rekhodani vhudifhinduleli, ni dovhe ni sedze zwe zwa itea.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }

@@ -176,7 +176,7 @@ def render(language: str) -> dict:
         "phoneSamples": phone_samples,
         "draftPassageCount": draft_count,
         "note": (f"All 20 silent {name} frames use the paired packet. Only passages marked draft appear beside their exact English source. "
-                 "Slides with no draft show one English source card labelled translation pending. Price calculations, planting and local trading rules remain exact English holds in this batch. No regional narration, fluent review or local farming approval is claimed."),
+                 "Slides with no draft show one English source card labelled translation pending. The price example and protected-variety permission passage remain exact English holds. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."),
     }
     report_path = qa / "verification.json"
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

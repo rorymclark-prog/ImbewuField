@@ -390,8 +390,11 @@ if PAIRED:
     def panel_plan(draw, heading, body, top, bottom, n):
         width = W - 192
         heading_lines = paired_lines(draw, heading, F_PAIR_TITLE, width, n)
-        if len(heading_lines) > 2:
-            raise ValueError('slide %d heading needs more than two lines' % n)
+        # The complete Xitsonga Market heading needs three lines at the readable
+        # title size. Keep its wording and type size; the full-panel check below
+        # still rejects any title/body combination that would hide a paragraph.
+        if len(heading_lines) > 3:
+            raise ValueError('slide %d heading needs more than three lines' % n)
         y = top + 120 + len(heading_lines) * 92 + 22
         paragraphs = []
         for para in body:
