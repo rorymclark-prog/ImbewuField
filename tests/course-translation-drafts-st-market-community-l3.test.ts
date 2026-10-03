@@ -46,10 +46,11 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
     'the shared-experience sentence keeps the source can-work-together modality');
 
   assert.deepEqual(draft.keyPoints.map(pair => pair.sourceEnglish), source.keyPoints);
-  assert.deepEqual(draft.keyPoints.map(pair => pair.reviewStatus), ['hold', 'machine-draft', 'hold', 'hold']);
-  assert.equal(draft.keyPoints[0].sesothoDraft, source.keyPoints[0], 'seed permission remains exact English');
-  assert.equal(draft.keyPoints[2].sesothoDraft, source.keyPoints[2], 'net return advice remains exact English');
-  assert.equal(draft.keyPoints[3].sesothoDraft, source.keyPoints[3], 'qualification for technical help remains exact English');
+  // Reviewed ordinary framing now ships as drafts; safeguards remain source-bound.
+  assert.ok(draft.keyPoints.every(pair => pair.reviewStatus === 'machine-draft'));
+  assert.match(draft.keyPoints[0].sesothoDraft, /permission.*pele o arolelana/, 'permission is checked before sharing');
+  assert.match(draft.keyPoints[2].sesothoDraft, /losses le net returns.*selling route/, 'every route retains the loss and return measures');
+  assert.match(draft.keyPoints[3].sesothoDraft, /qualified help ha ho hlokahala/, 'qualified help is required when needed');
 
   assert.equal(draft.quiz.length, source.quiz.length);
   draft.quiz.forEach((question, questionIndex) => {
@@ -59,14 +60,18 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
     assert.equal(question.options.length, original.options.length);
     question.options.forEach((option, optionIndex) => {
       assert.equal(option.sourceEnglish, original.options[optionIndex]);
-      assert.equal(option.sesothoDraft, original.options[optionIndex]);
-      assert.equal(option.reviewStatus, 'hold', 'all choices remain exact English to preserve quiz meaning');
+      assert.equal(option.reviewStatus, 'machine-draft', 'checked ordinary choices are drafts with exact English beside them');
     });
     assert.equal(question.sourceCorrectIndex, original.correct);
     assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, original.options[original.correct]);
     assert.equal(question.rationale.sourceEnglish, original.rationale);
-    assert.equal(question.rationale.sesothoDraft, original.rationale);
-    assert.equal(question.rationale.reviewStatus, 'hold');
+    if (questionIndex === 0) {
+      assert.equal(question.rationale.sesothoDraft, original.rationale);
+      assert.equal(question.rationale.reviewStatus, 'hold', 'protected-variety rights and crop-specific seed checks remain exact');
+    } else {
+      assert.equal(question.rationale.reviewStatus, 'machine-draft');
+      assert.match(question.rationale.sesothoDraft, /actual returns le losses/);
+    }
   });
 
   const presentation = resolveLearnerLessonPresentation(source, 'st');
@@ -77,9 +82,9 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
   assert.deepEqual(presentation.content.keyPoints, draft.keyPoints.map(pair => pair.sesothoDraft));
   assert.deepEqual(presentation.content.quiz, source.quiz.map((question, index) => ({
     q: draft.quiz[index].question.sesothoDraft,
-    options: question.options,
+    options: draft.quiz[index].options.map(pair => pair.sesothoDraft),
     correct: question.correct,
-    rationale: question.rationale,
+    rationale: draft.quiz[index].rationale.sesothoDraft,
   })));
 
   const changedSource = { ...source, title: `${source.title} ` };
@@ -152,7 +157,14 @@ test('regional Market L3 drafts ordinary sharing and produce framing while keepi
     const shown = resolveLearnerLessonPresentation(source, language);
     assert.equal(shown.status, 'draft');
     assert.equal(shown.content.body, translatedBody);
-    assert.deepEqual(shown.content.quiz, source.quiz, 'quiz and answer meanings remain exact English');
+    // Checked ordinary assessment fields replace old all-English holds without changing answer keys.
+    const lessonDraft: { quiz: { question: RegionalPair; options: RegionalPair[]; rationale: RegionalPair }[] } = language === 've' ? veDraft : tsDraft;
+    assert.deepEqual(shown.content.quiz, source.quiz.map((question, index) => ({
+      q: regionalText(lessonDraft.quiz[index].question),
+      options: lessonDraft.quiz[index].options.map(pair => regionalText(pair)),
+      correct: question.correct,
+      rationale: regionalText(lessonDraft.quiz[index].rationale),
+    })));
   }
 });
 
@@ -171,12 +183,15 @@ test('Sesotho Market L1 records four destinations while keeping units and busine
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
   assert.equal(draftParagraphs[4],
     'Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.');
-  assert.equal(draftParagraphs[5],
-    sourceParagraphs[5], 'keep compost destination wording exact until its meaning is reviewed');
-  for (const index of [5, 8, 9, 11, 12, 13, 15, 16]) {
-    assert.equal(draftParagraphs[index], sourceParagraphs[index],
-      `body paragraph ${index + 1}: yield, cost, price and crop timing guidance stays exact English`);
+  // The reviewed ordinary framing replaces old whole-paragraph holds; the four destinations stay explicit.
+  for (const term of ['food kept at home', 'produce sold', 'produce gifted', 'produce composted']) {
+    assert.ok(draftParagraphs[5].includes(term), `the ${term} destination must survive localization`);
   }
+  for (const index of [5, 8, 9, 11, 13, 15, 16]) {
+    assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
+      `body paragraph ${index + 1}: checked ordinary framing is drafted beside its source`);
+  }
+  assert.equal(draftParagraphs[12], sourceParagraphs[12], 'the numerical teaching example stays exact English');
 
   const shown = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(shown.status, 'draft');
@@ -185,4 +200,146 @@ test('Sesotho Market L1 records four destinations while keeping units and busine
   assert.equal(draft.keyPoints[0].reviewStatus, 'machine-draft');
   assert.ok(draft.keyPoints.slice(1).every(point => point.reviewStatus === 'hold'),
     'price, worked-example and crop-timing key points remain held');
+});
+
+
+test('regional community assessments keep permission, business comparisons and answer keys source-bound', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'market-community')!.lessons.find(lesson => lesson.id === 'market-community-l3')!;
+  for (const [language, moduleDraft, key] of [
+    ['st', SESOTHO_MARKET_COMMUNITY_DRAFT, 'sesothoDraft'],
+    ['ve', TSHIVENDA_MARKET_COMMUNITY_DRAFT, 'tshivendaDraft'],
+    ['ts', XITSONGA_MARKET_COMMUNITY_DRAFT, 'xitsongaDraft'],
+  ] as const) {
+    const draft = moduleDraft.lessons.find(lesson => lesson.id === source.id)!;
+    assert.deepEqual(draft.keyPoints.map(pair => pair.sourceEnglish), source.keyPoints);
+    assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), [1, 2]);
+    draft.quiz.forEach((question, index) => {
+      assert.equal(question.question.sourceEnglish, source.quiz[index].q);
+      assert.deepEqual(question.options.map(pair => pair.sourceEnglish), source.quiz[index].options);
+      assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
+    });
+    assert.equal(regionalText(draft.quiz[0].rationale), source.quiz[0].rationale, 'seed checks do not establish protected-variety permission');
+    assert.equal(draft.quiz[0].rationale.reviewStatus, 'hold');
+    assert.match(regionalText(draft.quiz[0].options[1]), /seed-quality checks/);
+    assert.match(regionalText(draft.quiz[0].options[1]), /permission/);
+    for (const term of ['fees', 'transport', 'unsold produce', 'losses']) {
+      assert.ok(regionalText(draft.quiz[1].options[2]).includes(term), `${language}: all cost and loss components survive`);
+    }
+    assert.match(regionalText(draft.keyPoints[3]), /qualified help/);
+    const changedQuestion = { ...source, quiz: source.quiz.map((question, index) => index ? question : { ...question, q: `${question.q} Changed condition.` }) };
+    assert.equal(resolveLearnerLessonPresentation(changedQuestion, language).status, 'english-fallback', 'source question edits withdraw stale drafts');
+    const changedKey = { ...source, quiz: source.quiz.map((question, index) => index ? question : { ...question, correct: 0 }) };
+    assert.equal(resolveLearnerLessonPresentation(changedKey, language).status, 'english-fallback', 'answer-key edits withdraw stale drafts');
+  }
+  const ts = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === source.id)!;
+  assert.equal(ts.quiz[0].options[2].xitsongaDraft, source.quiz[0].options[2], 'automatic improvement absolute stays byte-exact English');
+});
+
+type RegionalPair = { sourceEnglish: string; sesothoDraft?: string; tshivendaDraft?: string; xitsongaDraft?: string };
+
+function regionalText(pair: RegionalPair): string {
+  const text = pair.sesothoDraft ?? pair.tshivendaDraft ?? pair.xitsongaDraft;
+  assert.equal(typeof text, 'string', 'every registered regional pair carries its learner wording');
+  return text!;
+}
+
+const marketProseModule = COURSE_MODULES.find(item => item.id === 'market-community');
+assert.ok(marketProseModule, 'canonical market module is registered');
+
+const marketProseLesson = (id: string) => {
+  const result = marketProseModule.lessons.find(item => item.id === id);
+  assert.ok(result, `canonical ${id} lesson is registered`);
+  return result;
+};
+
+const marketProsePairedBody = (draft: { lessons: Array<{ id: string; body: { sourceEnglish: string; reviewStatus: string; sesothoDraft?: string; tshivendaDraft?: string; xitsongaDraft?: string } }> }, id: string, field: 'sesothoDraft' | 'tshivendaDraft' | 'xitsongaDraft') => {
+  const result = draft.lessons.find(item => item.id === id);
+  assert.ok(result, `${id} body draft is registered`);
+  const body = result.body[field];
+  assert.ok(body, `${id} has its ${field} body`);
+  return { pair: result.body, body };
+};
+
+test('Sesotho Market L1 localizes only the approved paragraphs and keeps the worked example exact', () => {
+  const source = marketProseLesson('market-community-l1');
+  const { pair, body } = marketProsePairedBody(SESOTHO_MARKET_COMMUNITY_DRAFT, source.id, 'sesothoDraft');
+  const canonical = source.body.split('\n\n');
+  const paragraphs = body.split('\n\n');
+  const changed = new Set([5, 8, 9, 11, 13, 15, 16]);
+
+  assert.equal(pair.sourceEnglish, source.body, 'a translation must remain tied to the current canonical body');
+  assert.equal(pair.reviewStatus, 'machine-draft');
+  assert.equal(paragraphs.length, canonical.length, 'paragraph positions carry the lesson safeguards');
+  for (const index of changed) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} has localized framing`);
+  assert.equal(paragraphs[12], canonical[12], 'the example remains exact English, including R18 cost and R15 sale price');
+  assert.ok(paragraphs[13].includes('a higher asking price is not a guaranteed sale.'), 'the price review keeps its no-guarantee condition');
+  assert.ok(paragraphs[15].includes('Check planting conditions and expected time to harvest.'), 'planting advice keeps its site and timing qualification');
+  assert.ok(paragraphs[16].includes('Letsatsi le sebetsang polasing e nngwe'), 'the timing comparison remains local to this farm');
+  assert.ok(paragraphs[16].includes('ha pula, metsi kapa crops di hloleha'), 'the backup plan remains tied to failure conditions');
+
+  const shown = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, body, 'Study resolves this source-paired Sesotho body');
+  const changedSource = { ...source, body: `${source.body}\n\nA changed canonical paragraph.` };
+  const fallback = resolveLearnerLessonPresentation(changedSource, 'st');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.equal(fallback.content.body, changedSource.body);
+});
+
+test('Tshivenda Market L2 keeps order reliability and conditional supply commitments', () => {
+  const source = marketProseLesson('market-community-l2');
+  const { pair, body } = marketProsePairedBody(TSHIVENDA_MARKET_COMMUNITY_DRAFT, source.id, 'tshivendaDraft');
+  const canonical = source.body.split('\n\n');
+  const paragraphs = body.split('\n\n');
+  const changed = new Set([2, 3, 4, 5, 8, 9, 10, 11]);
+
+  assert.equal(pair.sourceEnglish, source.body);
+  assert.equal(pair.reviewStatus, 'machine-draft');
+  assert.equal(paragraphs.length, canonical.length);
+  for (const index of changed) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} is localized`);
+  assert.ok(paragraphs[5].includes('Regular orders help planning only when customers and growers can keep the agreement.'), 'regular orders remain conditional on both sides keeping the agreement');
+  assert.ok(paragraphs[6].includes('nga u fulufhedzea') && paragraphs[6].includes('zwine vharengi vha zwi ṱoḓa'), 'channel choice pairs dependable supply with customer demand');
+  assert.ok(paragraphs[7].includes('before promising regular boxes'), 'costs and household food needs precede a regular commitment');
+  assert.ok(paragraphs[9].includes('avoid promising a fixed delivery you cannot supply'), 'unreliable weekly production cannot be turned into a delivery promise');
+  assert.ok(paragraphs[11].includes('Check any certification or claim the buyer requires before using a label.'), 'buyer-required claims remain checked before labeling');
+
+  const shown = resolveLearnerLessonPresentation(source, 've');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, body);
+  const changedSource = { ...source, body: source.body.replace('what you can reliably supply', 'what you might supply') };
+  const fallback = resolveLearnerLessonPresentation(changedSource, 've');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.equal(fallback.content.body, changedSource.body);
+});
+
+test('New Xitsonga Market L1 prose preserves the held English prefix and assessment fields', () => {
+  const source = marketProseLesson('market-community-l1');
+  const draft = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === source.id);
+  assert.ok(draft);
+  const canonical = source.body.split('\n\n');
+  const paragraphs = draft.body.xitsongaDraft.split('\n\n');
+  const changed = new Set([5, 10, 13]);
+
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  assert.equal(paragraphs.length, canonical.length);
+  for (let index = 0; index < canonical.length; index++) {
+    if (changed.has(index)) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} is localized`);
+  }
+  assert.ok(paragraphs[5].startsWith('Use the same simple habit'), 'retain the previously established English opening exactly');
+  assert.equal(paragraphs[12], canonical[12], 'R18/R15 example remains exact English');
+  assert.ok(paragraphs[13].includes('a higher asking price is not a guaranteed sale.'), 'the no-guarantee condition remains explicit');
+  assert.deepEqual(draft.keyPoints.map(item => [item.sourceEnglish, item.xitsongaDraft, item.reviewStatus]),
+    source.keyPoints.map((text, index) => [text, index === 0 ? draft.keyPoints[0].xitsongaDraft : text, index === 0 ? draft.keyPoints[0].reviewStatus : 'hold']),
+    'existing key point translation and remaining holds retain their source pairing');
+  assert.deepEqual(draft.quiz.map(item => [item.question.xitsongaDraft, item.options.map(option => option.xitsongaDraft), item.sourceCorrectIndex, item.rationale.xitsongaDraft]),
+    source.quiz.map(item => [item.q, item.options, item.correct, item.rationale]), 'question wording, answer options, keys and rationales stay unchanged');
+
+  const shown = resolveLearnerLessonPresentation(source, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.xitsongaDraft);
+  const changedSource = { ...source, body: `${source.body} Changed.` };
+  const fallback = resolveLearnerLessonPresentation(changedSource, 'ts');
+  assert.equal(fallback.status, 'english-fallback');
+  assert.equal(fallback.content.body, changedSource.body);
 });

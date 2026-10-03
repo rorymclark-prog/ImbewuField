@@ -42,6 +42,24 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: 'c2d16459', changes: [
+    'Market record and selling lessons add marked regional drafts beside English.',
+    'Technical price examples and supply conditions remain explicit in English.',
+  ], tour: [
+    { title: 'Review market record and selling drafts',
+      where: 'Study → Market Gardening and Community → Lessons 1 and 2',
+      detail: 'Compare the marked regional paragraphs with their English source.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '2f928064', changes: [
+    'Community lesson questions add marked regional drafts beside English.',
+    'Seed safeguards and difficult business terms remain in English.',
+  ], tour: [
+    { title: 'Review community lesson questions',
+      where: 'Study → Market Gardening and Community → Lesson 3',
+      detail: 'Try the marked regional questions and compare their English source.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: 'd9c227f3', changes: [
     'Community food lessons add marked regional drafts beside the exact English source.',
     'Seed safeguards and difficult handling or business terms stay in English.',

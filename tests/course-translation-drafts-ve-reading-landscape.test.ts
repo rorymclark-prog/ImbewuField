@@ -40,12 +40,19 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     assert.equal(draft.body.sourceEnglish, source.body);
     assert.equal(draft.body.reviewStatus, 'machine-draft');
     assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
-    assert.deepEqual(draft.keyPoints.map(point => point.tshivendaDraft), source.keyPoints);
+    assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
+    if (lessonId !== 'market-community-l3') assert.deepEqual(draft.keyPoints.map(point => point.tshivendaDraft), source.keyPoints);
     assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
     const shown = resolveLearnerLessonPresentation(source, 've');
     assert.equal(shown.status, 'draft');
-    assert.deepEqual(shown.content.quiz, source.quiz);
-    assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+    // L3 checked ordinary assessments now draft while L1 safeguards keep their English holds.
+    assert.deepEqual(shown.content.quiz, lessonId === 'market-community-l3' ? source.quiz.map((question, index) => ({
+      q: draft.quiz[index].question.tshivendaDraft,
+      options: draft.quiz[index].options.map(pair => pair.tshivendaDraft),
+      correct: question.correct,
+      rationale: draft.quiz[index].rationale.tshivendaDraft,
+    })) : source.quiz);
+    assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(pair => pair.tshivendaDraft));
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
@@ -348,9 +355,13 @@ test('Tshivenda Market L2 pairs bounded customer text and holds uncertain terms 
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = lesson.body.tshivendaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  for (const index of [0, 6]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
-  for (const index of [1, 2, 3, 4, 5, 7, 8, 9, 10, 11]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-    'price, box promises and uncertain delivery wording stay exact English');
+  // Independently checked ordinary customer framing replaces old full holds; commitment clauses stay exact.
+  for (const index of [0, 2, 3, 4, 5, 6, 8, 9, 10, 11]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
+  for (const index of [1, 7]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
+    'cost comparisons and household food checks before box promises stay exact English');
+  assert.ok(draftParagraphs[3].startsWith('Direct selling can retain more of the sale price,'));
+  assert.ok(draftParagraphs[5].includes('Regular orders help planning only when customers and growers can keep the agreement.'));
+  assert.ok(draftParagraphs[9].includes('avoid promising a fixed delivery you cannot supply'));
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
   assert.equal(lesson.keyPoints[1].tshivendaDraft, 'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.');

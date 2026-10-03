@@ -60,18 +60,18 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.',
           "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
           'Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.',
-          'Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.',
+          "Sebelisa mokgwa o tshwanang o bonolo bakeng sa food kept at home, produce sold, produce gifted, le produce composted.",
           'O se ke wa itshetleha ka mohopolo qetellong ya sehla.',
           'Sehla se le seng sa direkoto se araba dipotso tse sebetsang.',
-          'Which crops give the best yield per bed? Which return the most for each hour of work?',
-          'Which crops use more seeds, water, and compost than they return?',
+          "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka highest return for each hour of work?",
+          "Ke crops dife tse sebedisang more seeds, water and compost than they return?",
           'Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.',
-          'Before setting a price, record production, packing and selling costs, including labour and transport.',
+          "Pele o beha price, rekota production, packing and selling costs, ho kenyeletsa labour le transport.",
           'Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.',
-          'Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.',
+          "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; a higher asking price is not a guaranteed sale.",
           'Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.',
-          'Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.',
-          'A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.',
+          "Khetha crops tse loketseng sebaka sa heno, mme o work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya leano la backup ha pula, metsi kapa crops di hloleha.",
         ].join('\n\n'),
       ),
       keyPoints: [
@@ -220,13 +220,22 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         ].join('\n\n'),
       ),
       keyPoints: [
-        hold('Record seed identity, source and quality, and check if permission is needed before sharing'),
+        machineDraft(
+          "Record seed identity, source and quality, and check if permission is needed before sharing",
+          "Ngola seed identity, source and quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+        ),
         machineDraft(
           'Agree care, booking and repair responsibilities for shared tools',
           'Dumellanang ka boikarabelo ba tlhokomelo, ho behela nako le ho lokisa disebediswa tse arolelwanwang',
         ),
-        hold('Measure losses and net returns for each selling route'),
-        hold('Combine shared experience with qualified help when needed'),
+        machineDraft(
+          "Measure losses and net returns for each selling route",
+          "Lekanya losses le net returns bakeng sa selling route ka nngwe.",
+        ),
+        machineDraft(
+          "Combine shared experience with qualified help when needed",
+          "Kopanya shared experience le qualified help ha ho hlokahala.",
+        ),
       ],
       quiz: [
         {
@@ -235,10 +244,22 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
             'Baahelani ba batla ho arolelana dipeo tseo ba di bolokileng. Ke eng e thusang hore peo e arolelwanwang e be molemo?',
           ),
           options: [
-            hold('Mix all varieties without labels'),
-            hold('Agree seed-quality checks and check whether permission is needed to share the variety'),
-            hold('Assume sharing automatically improves every seed lot'),
-            hold('Rely only on the size of the group'),
+            machineDraft(
+              "Mix all varieties without labels",
+              "Kopanya mefuta yohle ntle le labels.",
+            ),
+            machineDraft(
+              "Agree seed-quality checks and check whether permission is needed to share the variety",
+              "Lumellanang ka seed-quality checks, mme le hlahlobe hore na permission e a hlokahala ho arolelana variety.",
+            ),
+            machineDraft(
+              "Assume sharing automatically improves every seed lot",
+              "Nka hore sharing e ntlafatsa seed lot e nngwe le e nngwe ka boyona.",
+            ),
+            machineDraft(
+              "Rely only on the size of the group",
+              "Itshetlehe feela ka size ya group.",
+            ),
           ],
           sourceCorrectIndex: 1,
           rationale: hold('Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.'),
@@ -249,13 +270,25 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
             'Molemi o bapisa mmaraka o hole le bareki ba haufi. Ke eng e lokelang ho tataisa qeto?',
           ),
           options: [
-            hold('Always choose the highest headline price'),
-            hold('Always choose the shortest journey'),
-            hold('Compare money received after fees, transport, unsold produce and losses'),
-            hold('Assume joining a group removes all costs'),
+            machineDraft(
+              "Always choose the highest headline price",
+              "Khetha kamehla highest headline price.",
+            ),
+            machineDraft(
+              "Always choose the shortest journey",
+              "Khetha kamehla shortest journey.",
+            ),
+            machineDraft(
+              "Compare money received after fees, transport, unsold produce and losses",
+              "Bapisa money received ka mora fees, transport, unsold produce le losses.",
+            ),
+            machineDraft(
+              "Assume joining a group removes all costs",
+              "Nka hore ho kena group ho tlosa costs tsohle.",
+            ),
           ],
           sourceCorrectIndex: 2,
-          rationale: hold('Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.'),
+          rationale: machineDraft("Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.", "Distance e ama costs, empa ha se yona feela factor. Sebedisa actual returns le losses ho bapisa options."),
         },
       ],
     },

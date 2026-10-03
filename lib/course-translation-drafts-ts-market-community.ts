@@ -34,7 +34,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
-        "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nMatsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+        "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nUse the same simple habit eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nMatsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nLanguta price, costs na ku byala loku landzelaka. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -290,8 +290,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
-          "xitsongaDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Tsala seed identity, source and quality, kutani check if permission is needed before sharing.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
@@ -300,32 +300,32 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Measure losses and net returns for each selling route",
-          "xitsongaDraft": "Measure losses and net returns for each selling route",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Pima losses and net returns for each selling route.",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Combine shared experience with qualified help when needed",
-          "xitsongaDraft": "Combine shared experience with qualified help when needed",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Hlanganisa shared experience with qualified help when needed.",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
-            "xitsongaDraft": "Neighbours want to share saved seed. What helps make the shared seed useful?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Vaakelani va lava ku avelana saved seed. Xana i yini lexi pfunaka leswaku shared seed yi va useful?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Mix all varieties without labels",
-              "xitsongaDraft": "Mix all varieties without labels",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Hlanganisa all varieties without labels.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
-              "xitsongaDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Pfumelelana hi seed-quality checks naswona check whether permission is needed to share the variety.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume sharing automatically improves every seed lot",
@@ -334,8 +334,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Rely only on the size of the group",
-              "xitsongaDraft": "Rely only on the size of the group",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Tshemba ntsena eka size of the group.",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
@@ -348,36 +348,36 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
-            "xitsongaDraft": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Murimi u pimanisa distant market na nearby customers. Xana i yini lexi faneleke ku kongomisa xiboho?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Always choose the highest headline price",
-              "xitsongaDraft": "Always choose the highest headline price",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Always hlawula the highest headline price.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Always choose the shortest journey",
-              "xitsongaDraft": "Always choose the shortest journey",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Always hlawula the shortest journey.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
-              "xitsongaDraft": "Compare money received after fees, transport, unsold produce and losses",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Pimanisa money received after fees, transport, unsold produce and losses.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume joining a group removes all costs",
-              "xitsongaDraft": "Assume joining a group removes all costs",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Assume leswaku joining a group removes all costs.",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
-            "xitsongaDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Distance affects costs, kambe it is not the only factor. Tirhisa actual returns and losses to compare the options.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]

@@ -53,21 +53,25 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
       ]);
       assert.equal(draftLesson.keyPoints[0].reviewStatus, 'machine-draft');
       assert.deepEqual(draftLesson.keyPoints.slice(1).map(point => point.reviewStatus), ['hold', 'hold', 'hold']);
-    } else {
+    } else if (draftLesson.id !== 'market-community-l3') {
       assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
     }
     assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), sourceLesson.quiz.map(question => question.correct));
     const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
     assert.equal(shown.status, 'draft');
-    assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
-    assert.deepEqual(shown.content.keyPoints, draftLesson.id === 'market-community-l1'
-      ? ['Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali', ...sourceLesson.keyPoints.slice(1)]
-      : sourceLesson.keyPoints);
+    // Checked L3 ordinary assessments are source-paired drafts; other lessons retain existing holds.
+    assert.deepEqual(shown.content.quiz, draftLesson.id === 'market-community-l3' ? sourceLesson.quiz.map((question, index) => ({
+      q: draftLesson.quiz[index].question.xitsongaDraft,
+      options: draftLesson.quiz[index].options.map(pair => pair.xitsongaDraft),
+      correct: question.correct,
+      rationale: draftLesson.quiz[index].rationale.xitsongaDraft,
+    })) : sourceLesson.quiz);
+    assert.deepEqual(shown.content.keyPoints, draftLesson.keyPoints.map(pair => pair.xitsongaDraft));
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
-    // Checked Market L2/L3 ordinary framing is drafted; seed, handling and commercial holds stay exact.
-    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 6, 7, 14]
+    // Reviewed Market L1 destinations/months/price framing join the prior drafts; technical holds stay exact.
+    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 10, 13, 14]
       : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 5, 6, 7, 8, 10, 11] : [0, 3, 4, 5, 7, 8, 9, 10];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
@@ -125,8 +129,12 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
       assert.equal(draftParagraphs[4], 'Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin\'wana ni xin\'wana xi yeke kona.',
         'unit labels and produce names stay exact while the recording action is drafted');
       assert.equal(draftParagraphs[14], 'Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.');
-      for (const index of [5, 8, 9, 10, 11, 12, 13, 15, 16]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-        'crop comparisons, prices, financial examples and planting timing remain exact English');
+      // Checked ordinary destinations/months/price framing replaces its holds; decision safeguards remain exact.
+      for (const index of [8, 9, 11, 12, 15, 16]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
+        'crop comparisons, cost categories, numerical example and planting timing remain exact English');
+      for (const index of [5, 10, 13]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
+      assert.ok(draftParagraphs[5].startsWith('Use the same simple habit'));
+      assert.ok(draftParagraphs[13].includes('a higher asking price is not a guaranteed sale.'));
       assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), [2, 1],
         'the held quizzes keep their original answer keys');
     }
