@@ -32,7 +32,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sepheo ke hore polasi e fepe lelapa, hape e sebetse e le a small, clear economy.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -66,7 +68,9 @@
             "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebelisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa better business decisions.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -168,10 +172,14 @@
             "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekota kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe o ngola hore e nngwe le e nngwe e ile hokae.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebelisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekiswang, tse fanwang e le mpho, le tse kenngwang compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -206,11 +214,13 @@
           },
           {
             "status": "draft",
-            "text": "Ke dijalo dife tse fanang ka kotulo e ntle ka ho fetisisa beteng ka nngwe? Ke dife tse fanang ka puseletso e ngata ka hora ka nngwe ya mosebetsi?",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "text": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -232,17 +242,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fumana ditjeo tsa nnete",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlahloba theko, ditjeo le next planting. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -271,7 +287,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kgetha dijalo tse loketseng sebaka sa heno, mme o bale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebeletsweng ya ho fihla kotulong.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -299,7 +317,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Masalla a ka tloha polasing ka setala se pela tsela, ka ho isa thepa lebenkeleng e le sehlopha, kapa ka lebokose le iswang lelapeng.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -328,13 +348,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Botsa hore na moreki o hloka eng: sehlahiswa, bongata, boleng, ho iswa le letsatsi la tefo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -358,13 +384,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho nka nako, ho paka, dipalangoang le ho hlokomela bareki.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mokgwa wa mabokose o fa bareki ba dumellaneng regular selection ya dihlahiswa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dumellanang ka tse ka lebokoseng, theko, tefo le se tla etsahala ha dijalo di haella. Diodara tsa kamehla di thusa ho rera feela ha bareki le balemi ba kgona ho boloka tumellano.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -388,13 +420,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlahloba ditjeo le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boholo ba serapa kapa palo ya bareki feela ha e bolele esale pele lekeno. Leka manageable arrangement mme o rekote diphetho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -418,13 +456,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa thomello e sa fetoheng eo o ke keng wa kgona ho fana ka yona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fana ka masalla ao o nang le ona, mme le dumellane ka dipehelo tse hlakileng le bareki.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlalosa ka botshepehi mekgwa ya hao ya ho lema. Pele o sebedisa letshwao, hlahloba setifikeiti kapa tseko efe kapa efe eo moreki a e hlokang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -479,17 +523,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Bolokang peo mmoho",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Rekota sejalo, mofuta, mohlodi le letsatsi la pokello. Plan suitable isolation, selection, drying and storage for each crop.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho arolelana ha ho atise mefuta-futa kapa ho ntlafatsa boleng ka bohona. Check identity and germination before relying on shared seed.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "english-hold"
@@ -510,17 +562,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Arolelanang disebediswa tse turang",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho arolelana disebediswa ho etsa hore sehlopha se fihlele disebediswa tse turang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pompo ya metsi kapa tshilo ya dijo-thollo e ka ba kahodimo ho tekanyetso ya lelapa le le leng.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tšebeliso e arolelanoang e aba boleng ba sesebediswa hara sehlopha mme e thusa polasi ka nngwe ho etsa mosebetsi oo e neng e ke ke ya o etsa e le nngwe.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -544,13 +604,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshwara dihlahiswa ka hloko, mme o di boloke moriting o loketseng, diphuthelong le polokelong e loketseng nakong yohle ya ho di isa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Moreki ya haufi a ka fokotsa leeto, empa tahlehelo le ditjeo tsa thekiso di ntse di lokela ho lekanngwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bapisa tjhelete e amohetsweng kamora ditefello, dipalangoang le ho senyeha bakeng sa kgetho ka nngwe. O se ke wa nahana hore moreki ya haufi ka mehla o fana ka poelo e ntle ka ho fetisisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -584,7 +650,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Seek qualified advice for unfamiliar disease or technical problems. Phihlelo e arolelanoang le thuso ya ditsebi di ka sebetsa mmoho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -624,7 +692,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Qetellong ya sehla se le seng, supa sejalo se fanang ka poelo e ntle le kgwedi eo lelapa le rekang dijo ka yona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -653,10 +723,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bapisa ditjeo le poelo ya sejalo kapa mokgwa wa thekiso, kapa o rere bakeng sa kgaello ya dijo tsa lelapa o sebedisa maemo a ho lema a lehae.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ebe le dumellane le baahisani ka one practical action: peo swap, ho arolelana sesebediswa, thomello e kopanetsweng kapa kopano ya ho arolelana bokgoni. Before a seed swap, check whether the variety is protected and whether permission is needed. Rekota boikarabelo, mme le hlahlobe se etsahalang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }

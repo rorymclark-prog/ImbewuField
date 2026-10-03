@@ -34,7 +34,7 @@ test('the Sesotho pilot pairs all 22 actual English introduction slides in autho
   assert.equal(validatePairedDraft(completeHold(), source).length, 22);
 });
 
-test('Market record slides reuse L1 wording and hold business, quantity and produce-destination advice', () => {
+test('Market record slides reuse L1 wording and keep quantity and destination anchors beside drafts', () => {
   const batches = [
     { language: 'st' },
     { language: 've' },
@@ -53,7 +53,11 @@ test('Market record slides reuse L1 wording and hold business, quantity and prod
     { slide: 5, body: 0, lesson: 3 },
     { slide: 5, body: 3, lesson: 6 },
   ];
-  const held = [{ slide: 2, body: 2 }, { slide: 5, body: 1 }, { slide: 5, body: 2 }];
+  const newlyDrafted = [
+    { slide: 2, body: 2, source: 'Use that information to protect household food and make better business decisions.', anchors: ['better business decisions'] },
+    { slide: 5, body: 1, source: 'Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.', anchors: ['kilograms', 'dozens', 'bundles'] },
+    { slide: 5, body: 2, source: 'Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.', anchors: ['compost'] },
+  ];
 
   assert.equal(marketSource.length, 20);
   for (const { language } of batches) {
@@ -68,13 +72,19 @@ test('Market record slides reuse L1 wording and hold business, quantity and prod
       assert.equal(slide.target.body[item.body].text, lessonParagraphs[item.lesson],
         `${language} slide ${item.slide}: reuse the existing L1 machine candidate verbatim`);
     }
-    for (const item of held) {
-      const part = slides[item.slide - 1].target.body[item.body];
-      assert.equal(part.status, 'english-hold', `${language} slide ${item.slide}: sensitive wording stays in English`);
-      assert.equal(part.text, undefined, `${language} slide ${item.slide}: do not present a held passage as translated`);
+    for (const item of newlyDrafted) {
+      const slide = slides[item.slide - 1];
+      const part = slide.target.body[item.body];
+      assert.equal(slide.english.body[item.body], item.source, `${language} slide ${item.slide}: keep the exact source pairing`);
+      assert.equal(part.status, 'draft', `${language} slide ${item.slide}: expose the source-bound unreviewed draft`);
+      assert.ok(part.text && part.text !== item.source);
+      assert.ok(part.provenance?.includes('unreviewed'));
+      for (const anchor of item.anchors) assert.ok(part.text.includes(anchor), `${language} keeps the ${anchor} anchor`);
     }
-    assert.equal(pairedTargetHasEnglishHolds(slides[1].target), true);
-    assert.equal(pairedTargetHasEnglishHolds(slides[4].target), true);
+    assert.ok(slides[1].target.body.every((part: any) => part.status === 'draft'),
+      `${language} pairs each ordinary harvest-use explanation with its exact English source`);
+    assert.ok(slides[4].target.body.every((part: any) => part.status === 'draft'),
+      `${language} records every harvest while retaining quantity and destination wording`);
   }
 });
 
@@ -526,8 +536,10 @@ test('Sesotho Market records slides retain six learner draft sentences as the de
     assert.equal(slides[n - 1].english.body[p - 1], english[i]);
     assert.equal(slides[n - 1].target.body[p - 1].text, translated[i]);
   }
-  assert.equal(slides[4].target.body[1].status, 'english-hold',
-    'kilograms, dozens and bundles remain English until the units are checked');
+  const units = slides[4].target.body[1];
+  assert.equal(units.status, 'draft', 'the record sentence is source-paired while its units remain explicit');
+  assert.ok(['kilograms', 'dozens', 'bundles'].every((unit) => units.text.includes(unit)),
+    'the draft preserves the stated harvest units instead of relabelling quantities');
 });
 
 test('Xitsonga Market media retains two established learner concepts beside exact English', () => {
@@ -541,7 +553,11 @@ test('Xitsonga Market media retains two established learner concepts beside exac
     assert.equal(slides[n - 1].english.body[p - 1], body.sourceEnglish.split('\n\n')[paragraphIndex]);
     assert.equal(slides[n - 1].target.body[p - 1].text, body.xitsongaDraft.split('\n\n')[paragraphIndex]);
   }
-  assert.equal(slides[17].target.body[2].status, 'english-hold');
+  const specialistAdvice = slides[17].target.body[2];
+  assert.equal(specialistAdvice.status, 'draft');
+  assert.ok(specialistAdvice.text.startsWith('Seek qualified advice for unfamiliar disease or technical problems.'),
+    'the unresolved specialist advice remains exact English inside the visibly unreviewed draft');
+  assert.equal(slides[17].english.body[2], source[17].body[2]);
 });
 
 test('Tshivenda staples media holds the unresolved staple placeholder in English', () => {
@@ -583,7 +599,7 @@ test('Vegetables study headings never turn field tasks into translated instructi
 test('regional Study frames draft screened observations while risky advice stays in exact English', () => {
   const cases = [
     { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '2:1', '2:2', '2:3', '2:5', '8:1', '8:4', '9:1'], held: ['2:4', '8:2', '8:3', '8:5', '8:6'] },
-    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '3:4', '18:1'], held: ['2:3', '18:3'] },
+    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '2:3', '3:4', '18:1', '18:3'], held: ['7:2', '15:4'] },
     // Soil ordinary framing/observation cells are now source-paired visible drafts; technical or action-sensitive holds remain exact English below.
     { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['2:3', '4:1', '4:2', '5:4', '20:4'] },
     { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: ['3:3', '4:1'] },
@@ -605,60 +621,67 @@ test('regional Study frames draft screened observations while risky advice stays
   }
 });
 
-test('regional Market slides keep financial, seed, tool and specialist advice in exact English', () => {
+test('regional Market slides preserve exact price and seed holds plus conditions inside unreviewed drafts', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
-  for (const lang of ['st', 've', 'ts'] as const) {
-    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
-    const slides = validatePairedDraft(packet, source, lang);
-    for (const n of [7, 10, 11, 12, 15, 16, 17]) {
-      assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
-        `${lang} slide ${n} keeps action or trading advice in English`);
-    }
-    assert.equal(slides[7].target.body[1].status, 'english-hold',
-      `${lang} slide 8 keeps crop choice and harvest timing advice in English`);
-    assert.equal(slides[17].target.body[2].status, 'english-hold',
-      `${lang} slide 18 keeps specialist disease and technical advice in English`);
-    assert.equal(slides[0].target.body[1].status, 'draft', `${lang} slide 1 pairs its records overview`);
-    assert.equal(slides[5].target.body[0].status, 'draft', `${lang} slide 6 pairs its records prompt`);
-    assert.equal(slides[17].target.body[1].status, 'draft', `${lang} slide 18 pairs its records method`);
-    assert.equal(slides[18].target.body[3].status, 'english-hold',
-      `${lang} slide 19 keeps the crop-return conclusion in English`);
-    for (const part of slides[19].target.body.slice(1)) {
-      assert.equal(part.status, 'english-hold', `${lang} slide 20 keeps financial and seed-swap decisions in English`);
-    }
-  }
-});
-
-test('regional closing records passages keep their stated source meaning and exact source pairing', () => {
-  const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
-  const expected = {
-    st: [
-      [1, 1, 'Thuto ena e bontsha kamoo o ka bolokang direkoto, wa rekisa masalla, le ho haha marangrang a dijo a lehae.'],
-      [6, 0, 'Sehla se le seng sa direkoto se araba dipotso tse sebetsang.'],
-      [18, 1, 'Ngola mokgwa, maemo le sephetho hore ba bang ba kgone ho bona hore na o ka tshwanelana le naha ya bona.'],
-    ],
-    ve: [
-      [1, 1, 'Modulu uyu u sumbedza nḓila ya u vhulunga rekhodo, u rengisa zwo salaho, na u fhaṱa vhukwamani ha zwiḽiwa ha henefho.'],
-      [6, 0, 'Khalaṅwaha nthihi ya rekhodo i fhindula mbudziso dzine dza thusa.'],
-      [18, 1, 'Ṅwalani maitele, nyimele na mvelelo uri vhaṅwe vha kone u vhona arali zwi tshi nga tea mavu avho.'],
-    ],
-    ts: [
-      [1, 1, 'Dyondzo leyi yi komba ndlela yo hlayisa tirhekhodo, ku xavisa leswi saleke, ni ku aka vuxaka bya swakudya bya laha kaya.'],
-      [6, 0, 'Nguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.'],
-      [18, 1, 'Tsala ndlela leyi tirhisiweke, swiyimo ni mbuyelo leswaku van’wana va kota ku kambisisa loko swi nga va fanelerile eka misava ya vona.'],
-    ],
+  const safetyAnchors = {
+    st: { beforePrice: 'Pele o beha theko', noGuarantee: 'ha e tiise thekiso', agreement: 'feela ha', beforeBoxes: 'pele o tshepisa' },
+    ve: { beforePrice: 'Musi ni sa athu', noGuarantee: 'a u fulufhedzisi', agreement: 'only when customers and growers can keep the agreement', beforeBoxes: 'musi ni sa athu fulufhedzisa' },
+    ts: { beforePrice: 'U nga si veka', noGuarantee: 'a wu tiyisisi', agreement: 'ntsena loko', beforeBoxes: 'u nga si tiyisekisa' },
   } as const;
   for (const lang of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
-    for (const [slideNumber, paragraphIndex, text] of expected[lang]) {
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    for (const [slideNumber, paragraphIndex] of [[7, 1], [15, 3]] as const) {
+      const slide = slides[slideNumber - 1];
+      const held = slide.target.body[paragraphIndex];
+      assert.equal(held.status, 'english-hold', `${lang} slide ${slideNumber} retains the high-risk exact English hold`);
+      assert.equal(held.text, undefined, `${lang} does not show a held claim as localized text`);
+      assert.equal(slide.english.body[paragraphIndex], source[slideNumber - 1].body[paragraphIndex]);
+    }
+    const beforePrice = slides[6].target.body[0];
+    assert.equal(beforePrice.status, 'draft');
+    assert.ok(beforePrice.text.startsWith(safetyAnchors[lang].beforePrice), `${lang} keeps the before-price instruction`);
+    const noGuarantee = slides[6].target.body[2];
+    assert.equal(noGuarantee.status, 'draft');
+    assert.ok(noGuarantee.text.includes(safetyAnchors[lang].noGuarantee), `${lang} keeps the no-guarantee condition`);
+    const orders = slides[10].target.body[2];
+    assert.equal(orders.status, 'draft');
+    assert.ok(orders.text.includes(safetyAnchors[lang].agreement), `${lang} keeps the only-when agreement condition`);
+    if (lang === 'ts') assert.ok(orders.text.includes('vaxavi ni varimi'),
+      'the Xitsonga condition still names both customers and growers');
+    const beforeBoxes = slides[11].target.body[1];
+    assert.equal(beforeBoxes.status, 'draft');
+    assert.ok(beforeBoxes.text.includes(safetyAnchors[lang].beforeBoxes), `${lang} keeps the condition before promising boxes`);
+    for (const [slideNumber, paragraphIndex, exactClause] of [
+      [15, 1, 'Plan suitable isolation, selection, drying and storage for each crop.'],
+      [15, 2, 'Check identity and germination before relying on shared seed.'],
+      [18, 2, 'Seek qualified advice for unfamiliar disease or technical problems.'],
+      [20, 2, 'Before a seed swap, check whether the variety is protected and whether permission is needed.'],
+    ] as const) {
+      const slide = slides[slideNumber - 1];
+      const draft = slide.target.body[paragraphIndex];
+      assert.equal(draft.status, 'draft', `${lang} labels the source-paired wording as unreviewed`);
+      assert.ok(draft.text.includes(exactClause), `${lang} preserves the difficult source clause in English`);
+      assert.ok(draft.provenance?.includes('unreviewed'));
+    }
+  }
+});
+
+test('regional closing records passages remain visibly unreviewed and source-paired after wording refinements', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
+  for (const lang of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    for (const [slideNumber, paragraphIndex] of [[1, 1], [6, 0], [18, 1]] as const) {
       const part = slides[slideNumber - 1].target.body[paragraphIndex];
       assert.equal(part.status, 'draft', `${lang} slide ${slideNumber} shows the records draft`);
-      assert.equal(part.text, text);
-      if (lang !== 'st' || slideNumber === 18) {
-        assert.equal(part.provenance, 'unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired');
-      }
+      assert.equal(slides[slideNumber - 1].english.body[paragraphIndex], source[slideNumber - 1].body[paragraphIndex]);
+      assert.ok(part.text && part.text !== source[slideNumber - 1].body[paragraphIndex]);
+      if (part.provenance) assert.ok(part.provenance.includes('unreviewed'));
     }
+    if (lang === 'ts') assert.ok(slides[0].target.body[1].text.includes('local food networks'),
+      'keep the local network meaning explicit where the prior wording could imply food relationships');
   }
 });
 
@@ -886,6 +909,41 @@ test('a long draft fails layout instead of shrinking or dropping a farming parag
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /slide 1 paired text needs .*phone-readable type size/);
     assert.equal(existsSync(output), false);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('the reviewed three-line Market channel heading passes at readable size while runaway headings still fail', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'imbewu-market-heading-fit-'));
+  try {
+    const market = JSON.parse(readFileSync('docs/narration/market-community.ts.paired-draft.json', 'utf8'));
+    assert.equal(market.slides[12].english.heading, 'Match the Channel to Your Supply');
+    assert.equal(market.slides[12].target.heading.status, 'draft');
+
+    const validJson = join(temp, 'market-three-line.json');
+    const validOutput = join(temp, 'valid-slides');
+    writeFileSync(validJson, JSON.stringify(market));
+    const valid = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'market-community', 'ts', validOutput,
+        '--paired-draft', validJson, '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.equal(valid.status, 0, valid.stderr);
+    assert.match(valid.stdout, /validated 20 source-paired slides; no images written/);
+    assert.equal(existsSync(validOutput), false);
+
+    const tooLong = structuredClone(market);
+    tooLong.slides[12].target.heading.text = 'A deliberately excessive Market heading '.repeat(30);
+    const invalidJson = join(temp, 'market-runaway-heading.json');
+    const invalidOutput = join(temp, 'invalid-slides');
+    writeFileSync(invalidJson, JSON.stringify(tooLong));
+    const invalid = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'market-community', 'ts', invalidOutput,
+        '--paired-draft', invalidJson, '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.notEqual(invalid.status, 0);
+    assert.match(invalid.stderr, /heading needs more than three lines/);
+    assert.equal(existsSync(invalidOutput), false);
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }

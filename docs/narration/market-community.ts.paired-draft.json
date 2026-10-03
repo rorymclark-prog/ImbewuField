@@ -16,7 +16,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Vurimi Bya Masimu Ya Mbuyelo Ni Vuxaka Bya Vaaki",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
@@ -26,11 +28,13 @@
           },
           {
             "status": "draft",
-            "text": "Dyondzo leyi yi komba ndlela yo hlayisa tirhekhodo, ku xavisa leswi saleke, ni ku aka vuxaka bya swakudya bya laha kaya.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "text": "Dyondzo leyi yi komba ndlela yo hlayisa tirhekhodo, ku xavisa leswi saleke, ni ku aka local food networks.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xikongomelo i ku va ni na purasi leri phamelaka ndyangu naswona ri tirhaka tani hi ikhonomi leyitsongo, leyi twisisekaka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -64,7 +68,9 @@
             "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa rungula rero ku hlayisa swakudya swa ndyangu ni ku endla better business decisions.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -84,8 +90,8 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Swikongomelo Swa Dyondzo",
-          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          "text": "Kuma True Cost.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
@@ -94,13 +100,19 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga hlayela true cost of production u nga si veka nxavo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga fambelanisa leswi saleke ni muxavi kumbe ndlela yo xavisa leyi faneleke.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga aka local network ya mbewu, switirhisiwa, vuswikoti ni swakudya.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -128,7 +140,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlaya rhekhodo hinkwaro ya nguva ku vona purasi tani hi ikhonomi, u nga si endla xiboho xa bindzu.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -158,10 +172,14 @@
             "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, u tlhela u tsala laha xin’wana ni xin’wana xi yeke kona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tirhisa mukhuva lowu wo olova eka swakudya leswi hlayisiwaka ekaya, leswi xavisiwaka, leswi nyikiwaka van’wana, ni leswi endliwaka compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -196,10 +214,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hi swihi swimilana leswi tirhisaka mbewu, mati ni compost yo tala ku hundza leswi swi swi humesaka?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -222,17 +244,23 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kuma Ntsengo Wa Xiviri",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta nxavo, ntsengo ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -261,10 +289,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula swimilana leswi faneleke ndhawu ya ka n’wina, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Siku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swimilana swi tsandzeka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -282,12 +314,14 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Vona: Laha Surplus Yi Nga Yaka Kona",
-          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          "text": "Vona: Laha Leswi Saleke Swi Nga Yaka Kona",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Leswi saleke swi nga huma epurasini hi roadside stall, ku yisiwa swin’we exitolo kumbe bokisi leri yisiwaka ekaya ka muxavi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -316,13 +350,19 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vutisa leswi muxavi a swi lavaka: product, nhlayo, quality, delivery ni siku ro hakela.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -340,17 +380,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlayela Ntirho Wa Ku Xavisa Hi Ku Kongoma",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku xavisa hi ku kongoma ku nga retain more of the sale price, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maqhinga ya mabokisi ma nyika vaxavi lava pfumelelaneke nhlawulo wa nkarhi na nkarhi wa leswi nga emabokisini.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pfumelelanani hi leswi nga ta va ebokisini, nxavo, ku hakela ni leswi nga ta endliwa loko swimilana swi kayivela. Tiodara ta nkarhi na nkarhi ti pfuna ku kunguhata ntsena loko vaxavi ni varimi va kota ku hetisisa ntwanano.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -368,17 +416,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kunguhata Hi Ku Ya Hi Tiodara Ta Xiviri",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula hi what you can reliably supply ni leswi vaxavi va swi lavaka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kambisisa ntsengo ni swilaveko swa swakudya swa ndyangu u nga si tiyisekisa ku yisa mabokisi nkarhi na nkarhi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta manageable arrangement leyi u nga kotaka ku yi lawula, kutani u tsala vuyelo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -396,17 +452,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Fambelanisa Ndlela Ya Ku Xavisa Ni leswi U Nga Na Swona",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko leswi u swi humesaka swi cinca vhiki ni vhiki, papalata ku tiyisekisa ku yisa nhlayo leyi nga cinciki leyi u nga ta ka u nga swi koti ku yi humesa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nyika leswi saleke leswi u nga na swona, u tlhela u pfumelelana ni vaxavi hi swipimelo leswi twisisekaka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlamusela maendlelo ya wena yo byala hi ku lulama. Loko u nga si tirhisa lepulu, kambisisa certification kumbe claim leyi muxavi a yi lavaka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -435,12 +499,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ntlawa wu nga avelana mbewu, switirhisiwa, vuswikoti ni swo famba.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Varimi vo hambana-hambana va vumba food network ya laha kaya leyi tiyeke, laha ndyangu wun’wana ni wun’wana wu hoxaka xandla hi leswi wu kotaka.",
-            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            "text": "Varimi vo hambana-hambana va vumba stronger local food network, laha ndyangu wun’wana ni wun’wana wu hoxaka xandla hi leswi wu kotaka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -459,17 +525,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlayisani Mbewu Swin’we",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vaakelani va nga avelana mixaka yo hambana-hambana ni ku tirha swin’we ku hlayisa mbewu.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsala muxaka wa swimilana, muxaka wa mbewu, laha yi humaka kona ni siku leri yi hlengeletiweke ha rona. Plan suitable isolation, selection, drying and storage for each crop.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku avelana a ku engeteli diversity kumbe ku antswisa quality hi koxe. Check identity and germination before relying on shared seed.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "english-hold"
@@ -490,17 +564,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Avelanani Switirhisiwa Swo Durha",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku avelana switirhisiwa swi endla leswaku equipment leyi durhaka yi kumeka eka ntlawa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pompo ya mati kumbe grain mill swi nga ha va ehandle ka budget ya ndyangu wun’we.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ku tirhisa switirhisiwa swin’we swi hangalasa nkoka wa swona eka ntlawa, kutani swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a yi nga ta kota ku yi endla ri ri roxe.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -518,17 +600,25 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hunguta Ku Lahleka Ku Suka Eka Ntshovelo Ku Ya Eku Xaviseni",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Khoma leswi humesiweke hi vukheta, u swi hlayisa emurhinyini, eka ku pakiwa ni vuhlayiselo byo faneleka loko swi yisiwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Muxavi wa le kusuhi a nga hunguta riendzo, kambe ku lahleka ni ntsengo wa ku xavisa swi fanele ku pimiwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pimanisa mali leyi amukeriweke endzhaku ka fees, transport ni spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku muxavi wa le kusuhi u tshamela ku nyika the best return.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -561,7 +651,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Seek qualified advice for unfamiliar disease or technical problems. Vutivi byo avelana ni mpfuneto wa mutivi swi nga tirha swin’we.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -601,7 +693,9 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eku heleni ka nguva yin’we, kuma crop leyi nyikaka mbuyelo lowunene ni n’hweti leyi ndyangu wu xava swakudya.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }
@@ -630,10 +724,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u plan for a household food gap using local growing conditions.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Endzhaku pfumelelanani ni vaakelani hi one practical action: ku cincana mbewu, ku avelana xitirhisiwa, ku yisa swilo swin’we kumbe nhlengeletano ya vuswikoti. Before a seed swap, check whether the variety is protected and whether permission is needed. Tsala vutihlamuleri, kutani u kambisisa leswi humelelaka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }

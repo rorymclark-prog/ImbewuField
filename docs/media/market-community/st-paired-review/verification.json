@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.st.paired-draft.json",
-  "pairedSourceSha256": "2cc946b8009f5f915b91e0d4593febba53e8e987135eed52be635e6deb3efda6",
+  "pairedSourceSha256": "4d2d7645e975004ec3829d15ebb3044dea3c8ee60a65d0747f5406b432f0bee0",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -14,15 +14,15 @@
       "slide": 1,
       "path": "public/course-decks/market-community/st/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 317566,
-      "sha256": "9327501df07d9e036bf333dc9c8c1b6fe11a9769b9a834e6f4b7bf4374f4c210"
+      "bytes": 308138,
+      "sha256": "f7e443fabc444a910048e42ca24f7904d20bc948c13946a5eb01ad429359a9fc"
     },
     {
       "slide": 2,
       "path": "public/course-decks/market-community/st/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 238940,
-      "sha256": "69dcb125d2fa5e03e0628d4449168840f833e2bc07dfdea9f01fe7d493da128a"
+      "bytes": 228666,
+      "sha256": "9028d7b7d6b9bce972278a7ea87e63c3632a880c9de89893b79d95cfaee09bf9"
     },
     {
       "slide": 3,
@@ -42,64 +42,64 @@
       "slide": 5,
       "path": "public/course-decks/market-community/st/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 381434,
-      "sha256": "e200ee5ec88a51ef8f523338dfcbe7d7523b80346679e7dcf9dab2214893bcc9"
+      "bytes": 383372,
+      "sha256": "ecb3bccf8ffe1112ddf90f18a1b6b8223be62242f276eaab00cabd6085ad46e4"
     },
     {
       "slide": 6,
       "path": "public/course-decks/market-community/st/slide-06.webp",
       "pixels": "1440x5400",
-      "bytes": 268734,
-      "sha256": "aa94b23a9d1bb11c3ed9037731ecae53b52545316e9e80f014b531978269c20e"
+      "bytes": 256118,
+      "sha256": "92de501477b34ea1331469364017d702d1fe5b0b39e29c712f3493c082dc06bf"
     },
     {
       "slide": 7,
       "path": "public/course-decks/market-community/st/slide-07.webp",
       "pixels": "1440x5400",
-      "bytes": 136720,
-      "sha256": "5697380b9712d2b6595bff8618e039ff421b2f5d1756919ab110ffb6793d96ef"
+      "bytes": 533028,
+      "sha256": "e5594342c333fdeb3fd1a7dc853ad55119b35373eda0f50323c07b064589fb5a"
     },
     {
       "slide": 8,
       "path": "public/course-decks/market-community/st/slide-08.webp",
       "pixels": "1440x5400",
-      "bytes": 258492,
-      "sha256": "2b4d7b5bd01b994fd928fd19bbb5b2500e1cd2499492b8a8b599d2f246a81032"
+      "bytes": 251262,
+      "sha256": "d8a886d34a9e6d14fc46dee49a751f278bebf71406555e1cb84312109a27d7f7"
     },
     {
       "slide": 9,
       "path": "public/course-decks/market-community/st/slide-09.webp",
       "pixels": "1440x5400",
-      "bytes": 190914,
-      "sha256": "823eaf131480cb16e17304c7e156a82a2516be1b068e8cf52e05055058d3331e"
+      "bytes": 183484,
+      "sha256": "53d836c45aa59ea01f0d53347b81825544db0ced1008221672b9840b6bd2dbf4"
     },
     {
       "slide": 10,
       "path": "public/course-decks/market-community/st/slide-10.webp",
       "pixels": "1440x5400",
-      "bytes": 505224,
-      "sha256": "6940f8fb9a9c38b8fbabc91bcf2549533070b892d9ec6d6cc0d1a836a03550f0"
+      "bytes": 502830,
+      "sha256": "fffa77616eba8990d7b3bc93aaa825e1e7399608a38b11e94657e9bd55bf158c"
     },
     {
       "slide": 11,
       "path": "public/course-decks/market-community/st/slide-11.webp",
       "pixels": "1440x5400",
-      "bytes": 293782,
-      "sha256": "bf9ab7786ca70777eba081e5df09bdff387b3a58b36409f5af1b54ddf8099a2c"
+      "bytes": 275258,
+      "sha256": "2b1915c8c5794d54a9820fb29c733e88368b2873daa1c3a78e395a5c5fb1b844"
     },
     {
       "slide": 12,
       "path": "public/course-decks/market-community/st/slide-12.webp",
       "pixels": "1440x5400",
-      "bytes": 243316,
-      "sha256": "957633cbb0a8ee846f9a68f2c1d4ddb7eff0bceb79f1380500072f23a515db10"
+      "bytes": 225434,
+      "sha256": "b1fafb970015240b525585a45f324e1e858ac11a846f626db7edaba04c563aa6"
     },
     {
       "slide": 13,
       "path": "public/course-decks/market-community/st/slide-13.webp",
       "pixels": "1440x5400",
-      "bytes": 269716,
-      "sha256": "2b2b65522d9f7abf39434ae09527d073d5dd20cff2ac808c4fccc46fb5b2a230"
+      "bytes": 258964,
+      "sha256": "fd3f8875acde184a7bbe5e85d124d16dee0ff711aa00afefa247662b09f271eb"
     },
     {
       "slide": 14,
@@ -112,43 +112,43 @@
       "slide": 15,
       "path": "public/course-decks/market-community/st/slide-15.webp",
       "pixels": "1440x5400",
-      "bytes": 149798,
-      "sha256": "12dcb5382f179b887ba90548e150ba1e59066b62987bbd950778f5d0dedfbafc"
+      "bytes": 529666,
+      "sha256": "382dc99008ee3ab90df29e56248cb1d2e394ef04b5a7045971eae8ffea4b77e7"
     },
     {
       "slide": 16,
       "path": "public/course-decks/market-community/st/slide-16.webp",
       "pixels": "1440x5400",
-      "bytes": 107840,
-      "sha256": "3c7c074420ac9e0b2d969eb45a7e7e45652247bb000ad6ed9d532439be6c0196"
+      "bytes": 509110,
+      "sha256": "b0d5622185c73342631e0343c6bd36de52fb984be3fff7a8837f0db54a4bb3fd"
     },
     {
       "slide": 17,
       "path": "public/course-decks/market-community/st/slide-17.webp",
       "pixels": "1440x5400",
-      "bytes": 295312,
-      "sha256": "070b87f204fbdac282dc0276d8043c47309f43bc3fa5e5e62ae4f24c7ddc053d"
+      "bytes": 289632,
+      "sha256": "2d665925e402812b82b4307af87aa67c3d24aa4d1db596d5b1d827fd8b535c33"
     },
     {
       "slide": 18,
       "path": "public/course-decks/market-community/st/slide-18.webp",
       "pixels": "1440x5400",
-      "bytes": 534566,
-      "sha256": "5bee5b887062b1f76d21059b032459a7baf71fa97cb99f71ee1ab9f986e5ca10"
+      "bytes": 526988,
+      "sha256": "3f1263447d853b337277b121eb513f80de690c8cf514e0f2ed5d82dd7838f8ef"
     },
     {
       "slide": 19,
       "path": "public/course-decks/market-community/st/slide-19.webp",
       "pixels": "1440x5400",
-      "bytes": 285668,
-      "sha256": "ae0f2dc5820426d171d95c63e6878edb3dcc1b64cadf40f4b8d7f36e010b0efa"
+      "bytes": 277076,
+      "sha256": "be977ec0d8b99188eb04eff024835faf4b0c182cbf19ad769b241e938289f220"
     },
     {
       "slide": 20,
       "path": "public/course-decks/market-community/st/slide-20.webp",
       "pixels": "1440x5400",
-      "bytes": 369290,
-      "sha256": "48f1132437f49470572af71a5437357f9aa69dd162c5c89d73bc1e76a61af1c6"
+      "bytes": 356740,
+      "sha256": "4f384c904525eefde711055699bc9c117fa861fdd991cac930880e7cb1d83662"
     }
   ],
   "contactSheet": "docs/media/market-community/st-paired-review/contact-sheet.jpg",
@@ -157,13 +157,13 @@
       "slide": 1,
       "path": "docs/media/market-community/st-paired-review/slide-01-390.jpg",
       "pixels": "390x1463",
-      "sha256": "b61c8152bfb07ac0c921c4ef3f881cd978a17d181cb53deb57abaf06e881cafc"
+      "sha256": "179be549c23f85534c7b400e1da4656cdfab621f3399220a8165c08017d427f2"
     },
     {
       "slide": 2,
       "path": "docs/media/market-community/st-paired-review/slide-02-390.jpg",
       "pixels": "390x1463",
-      "sha256": "5f7e6bb87af80701aa1257b69811d6e6ded492cf710c3d72075777de0f9b0d50"
+      "sha256": "9ad8ce1cd9840c746e7d592957452c5dc024b2a3b3182d0b1455c00362252a48"
     },
     {
       "slide": 3,
@@ -181,45 +181,45 @@
       "slide": 5,
       "path": "docs/media/market-community/st-paired-review/slide-05-390.jpg",
       "pixels": "390x1463",
-      "sha256": "8b44e882d657097a3f1768fedd8f02f135f027eaffdff40f738b452d44575ffc"
+      "sha256": "0d49ced20a795d30a3724347678159b4c0876282a66d2858e235f1244a235056"
     },
     {
       "slide": 6,
       "path": "docs/media/market-community/st-paired-review/slide-06-390.jpg",
       "pixels": "390x1463",
-      "sha256": "8ef3fc0231fd910eeb33d60a0bc0c2b884e9f1f3a3b8884b0688b793c812ec77"
+      "sha256": "80cc38cf6f2e061eee8b62495e6e0ecdf1c0581588f4f1df3d5fba9846a8c6a1"
     },
     {
       "slide": 7,
       "path": "docs/media/market-community/st-paired-review/slide-07-390.jpg",
       "pixels": "390x1463",
-      "sha256": "3d2fb0797ea4e83158a954da7b3b1b8639f9d32e7c144a5fab8b748082bf00e4"
+      "sha256": "a3384e3a6f1ab7e2bfffb5687db93c088e11dfeea2b91020e6c89f2b1744d767"
     },
     {
       "slide": 8,
       "path": "docs/media/market-community/st-paired-review/slide-08-390.jpg",
       "pixels": "390x1463",
-      "sha256": "602be10f1c5cf73315cba577a3b9a4a4ca39846a4cf054b772ed0c1b300d8d6f"
+      "sha256": "15002a051b9ce42c4a612070bfc5a5812ceb9711323801955e3b497c22fde626"
     },
     {
       "slide": 9,
       "path": "docs/media/market-community/st-paired-review/slide-09-390.jpg",
       "pixels": "390x1463",
-      "sha256": "9fdebd5f029b9f83cded3c94dcbdeed8e013c7ae80fef812bf47de4123b883f7"
+      "sha256": "5598d6d31c45489bd8e4f27f7e1df1969f6d49278850ef041227d4f814aeca60"
     },
     {
       "slide": 10,
       "path": "docs/media/market-community/st-paired-review/slide-10-390.jpg",
       "pixels": "390x1463",
-      "sha256": "513ef4d2aca583a4d3725264235875a0bb9a0e3aa708ad7b53761d24b42d86cc"
+      "sha256": "db930109a06e7c8edccff8995f5ee7dab72ec186b562cca6094d57c0bd65019b"
     },
     {
       "slide": 20,
       "path": "docs/media/market-community/st-paired-review/slide-20-390.jpg",
       "pixels": "390x1463",
-      "sha256": "10adb5391515ab8478dc2f46c59ce9a487cf78f55a24ae704ddef997af68b692"
+      "sha256": "6915d3dbe6c2974373906a6a50ce78d682722f16d4c89a8a17bddc635d78b83d"
     }
   ],
-  "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. The business-decision line, quantity examples, and household/sold/gifted/composted destination sentence on slides 2 and 5 remain exact English holds. Price calculations, planting and local trading rules remain exact English holds. No regional narration, fluent review or local farming approval is claimed.",
-  "draftPassageCount": 44
+  "draftPassageCount": 81,
+  "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The price example and protected-variety permission passage remain exact English holds. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
 }
