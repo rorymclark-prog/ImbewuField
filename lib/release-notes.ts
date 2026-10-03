@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '3 October 2026', sha: '2428b4d7', changes: [
+  { when: '3 October 2026', sha: '015f7ec9', changes: [
     'Food Forest and Plant Guilds are fully drafted in Sesotho, Tshivenda and Xitsonga.',
     'Each draft is marked unreviewed beside its exact English; support plant stays English.',
     'Every silent slide shows the drafted heading and text beside the unchanged English.',
