@@ -1,0 +1,180 @@
+{
+  "title": "Final independent semantic backcheck of repaired Market L1/L2 closure strings",
+  "date": "2026-10-03",
+  "packet": "/tmp/imbewu-regional-market-remaining-ordinary-closure-candidates-20261003.json",
+  "repairReport": "/tmp/imbewu-regional-market-remaining-ordinary-closure-repair-check-20261003.json",
+  "checkedWorktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "checkedHead": "0778c66698596249cfdc69af7716e3f21f1dfaa8",
+  "scope": "Second check of the five targeted semantic repairs and twelve ordinary-English residue updates only. No repository writes.",
+  "sourceCurrentBinding": {
+    "checkedChangedFields": 108,
+    "sourceMismatches": 0,
+    "currentRegistryMismatches": 0,
+    "canonicalSource": "lib/course-modules.ts",
+    "regionalCurrentRegistries": [
+      "lib/course-translation-drafts-st-market-community.ts",
+      "lib/course-translation-drafts-ve-market-community.ts",
+      "lib/course-translation-drafts-ts-market-community.ts"
+    ],
+    "headMatchesPacket": true
+  },
+  "preservation": {
+    "packetReportsRootReviewedAppliedFieldsPreservedByteForByte": 20,
+    "checkedAssessmentFieldCount": 96,
+    "meaning": "The 20 PR908 fields are within the packet-reported preserved set; unchanged assessment fields checked against live registry and canonical English had no mismatch.",
+    "allPreservedAssessmentFieldsMatchCanonicalAndLiveRegistry": true
+  },
+  "structureAndNumbers": {
+    "R15kgAndR18kgPremiseRetained": true,
+    "optionOrderAndCorrectIndicesUnchanged": true,
+    "onlyWhenBeforeMayCanAndNoGuaranteeConditionsReviewed": true
+  },
+  "reviewLimit": "Semantic check only; no fluent/local approval. Keep publication marked unreviewed and send for facilitator review afterward.",
+  "counts": {
+    "stringsSecondChecked": 17,
+    "newRepairRecommendations": 2
+  },
+  "entries": [
+    {
+      "path": "languages[st].lessons[market-community-l2].body.paragraphs[2]",
+      "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidateInPacket": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
+      "packetMatchesPriorRepair": true,
+      "verdict": "semantic repair confirmed",
+      "repairedCandidate": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
+      "reason": "“Tafole ya informal stall” says a table of informal stall; source means the stall itself. This repair avoids changing the venue into furniture. Semantic proposal only."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l2].quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidateInPacket": "Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke mocha ofe oa thekiso o mo loketseng?",
+      "packetMatchesPriorRepair": true,
+      "verdict": "semantic repair confirmed",
+      "repairedCandidate": "Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke mocha ofe oa thekiso o mo loketseng?",
+      "reason": "The candidate “Molemi e monyenyane” can mean a small/young farmer, rather than a farmer with a smallholding. This repair makes the farm, not the person, small. Semantic proposal only; fluent Sesotho review is still needed."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidateInPacket": "Murimi wa tsimu ṱhukhu u na na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+      "packetMatchesPriorRepair": true,
+      "verdict": "semantic repair confirmed",
+      "repairedCandidate": "Murimi wa tsimu ṱhukhu u na na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+      "reason": "The candidate says production “ine ya sa shandukiswaho” (production that does not change), which reverses inconsistent weekly production. Use “fhambana” (vary/differ) to preserve the stated pattern. Semantic proposal only; fluent Tshivenda review is still needed."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].body.paragraphs[8]",
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "candidateInPacket": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta arrangement leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+      "packetMatchesPriorRepair": true,
+      "verdict": "semantic repair confirmed",
+      "repairedCandidate": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta arrangement leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+      "reason": "“Ndhawu ya murimi” means the farmer’s area and is less specific than the source’s garden area. “Ndhawu ya xirhapa” restores the garden reference. Technical terms retained pending fluent review."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l2].quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidateInPacket": "Murimi wa purasi leritsongo u ni production leyi nga faniki vhiki ni vhiki — surplus hi mavhiki man’wana, yi va yitsongo hi man’wana. Hi yihi channel leyi n’wi fanelaka swinene?",
+      "packetMatchesPriorRepair": true,
+      "verdict": "semantic repair confirmed",
+      "repairedCandidate": "Murimi wa purasi leritsongo u ni production leyi nga faniki vhiki ni vhiki — surplus hi mavhiki man’wana, yi va yitsongo hi man’wana. Hi yihi channel leyi n’wi fanelaka swinene?",
+      "reason": "“Mutswari” means parent, which changes the actor from farmer to parent. “Murimi wa purasi leritsongo” identifies the farmer with a small farm. Semantic proposal only; fluent Xitsonga review is still needed."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].body.paragraphs[15]",
+      "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "candidateInPacket": "Khetha crops tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha ho harvest eo o e hlokang. Sheba maemo a ho jala le nako e lebelletsweng ya kotulo.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[15]",
+      "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "candidateInPacket": "Nangani crops dzine dza tea vhupo haṋu, ni humbele murahu u bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+      "verdict": "repair recommended",
+      "repairedCandidate": "Nangani crops dzine dza tea vhupo haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+      "reason": "“Humbele murahu” can read as “ask/request backwards,” which does not convey the planning idiom work backwards. This repair makes planning explicit and preserves the harvest anchor. Semantic proposal only; fluent review remains needed."
+    },
+    {
+      "path": "languages[st].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "candidateInPacket": "Tswela pele o rekisa ka R15 — tahlehelo ya nako e khutshwane e aga dikamano.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "candidateInPacket": "Bvelani phanḓa ni tshi rengisa nga R15 — short-term loss i fhaṱa vhushaka.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "candidateInPacket": "Kombelani subsidy u vala gap.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "candidateInPacket": "Tshama u xavisa hi R15 — short-term loss yi aka vuxaka.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidateInPacket": "Mutengo wa tsumbo u re fhasi ha cost yo ambiwaho. Sedzani phambano na customer demand musi ni sa athu dzhia tsheo ya production i tevhelaho.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidateInPacket": "Nxavo wa xifaniso wu le hansi ka cost leyi boxiweke. Languta ku hambana ni customer demand u nga se endla xiboho xa production leyi landzelaka.",
+      "verdict": "repair recommended",
+      "repairedCandidate": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Languta ku hambana ni customer demand u nga se endla xiboho xa production leyi landzelaka.",
+      "reason": "“Xifaniso” commonly means a picture/image; this is a price in a worked example. “Xikombiso” is the clearer example term. Semantic proposal only; fluent review remains needed."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[2]",
+      "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidateInPacket": "Sedzani market rules and local trading and food requirements. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[7]",
+      "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+      "candidateInPacket": "Ṱolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[8]",
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "candidateInPacket": "Tshikalo tsha ngade kana tshivhalo tsha vharengi, zwone fhedzi, a zwi anganyeli income. Ringetani arrangement ine na nga kona u i langula, ni ṅwale results.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l2].body.paragraphs[11]",
+      "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "candidateInPacket": "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+      "verdict": "meaning preserved",
+      "repairedCandidate": null,
+      "reason": "The updated wording preserves the English source claim, condition, timing, and actor. Remaining English terms function as technical/business anchors in this field; semantic check is not language approval."
+    }
+  ]
+}

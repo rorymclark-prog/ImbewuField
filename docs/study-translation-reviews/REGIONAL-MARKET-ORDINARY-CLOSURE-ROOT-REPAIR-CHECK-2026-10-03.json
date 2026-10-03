@@ -1,0 +1,49 @@
+{
+  "title": "Focused final check of repaired Market closure strings and Tshivenda changed candidates",
+  "date": "2026-10-03",
+  "packet": "/tmp/imbewu-regional-market-remaining-ordinary-closure-candidates-20261003.json",
+  "scope": "Read-only semantic check of the three final strings and scan of all 36 changed Tshivenda candidate strings for likely Xitsonga contamination. No learner-visible registry writes. No fluent approval.",
+  "worktree": {
+    "path": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "packetHead": "0778c66698596249cfdc69af7716e3f21f1dfaa8",
+    "observedHead": "c4fec7bd106de5b9457152798ea600ff5dc361d",
+    "headNote": "Observed HEAD is the PR908 merge commit. A read-only diff from packet head 0778c666 to observed HEAD showed no changes in lib/course-modules.ts or the Sesotho, Tshivenda, and Xitsonga Market draft registry files, so the source/current content checked here remains stable across the merge."
+  },
+  "finalStrings": [
+    {
+      "path": "languages[ve].lessons[market-community-l1].body.paragraphs[15]",
+      "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "candidate": "Nangani crops dzine dza tea vhupo haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+      "verdict": "meaning preserved",
+      "reason": "The revised clause makes planning explicit and counts backwards from the needed harvest. Planting conditions and expected harvest timing remain present. No modality or condition was added."
+    },
+    {
+      "path": "languages[ts].lessons[market-community-l1].quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidate": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Languta ku hambana ni customer demand u nga se endla xiboho xa production leyi landzelaka.",
+      "verdict": "meaning preserved",
+      "reason": "“Xikombiso” clearly refers to an example. The below-cost relationship and the instruction to review the gap and demand before the next production decision remain intact."
+    },
+    {
+      "path": "languages[ve].lessons[market-community-l1].quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "candidate": "Apply for subsidy u vala gap.",
+      "verdict": "meaning preserved with explicit English anchor",
+      "reason": "The English application phrase is retained as the requested anchor; the Tshivenda purpose clause conveys covering the gap. This does not introduce a guarantee or additional condition. It is not evidence of Xitsonga contamination."
+    }
+  ],
+  "tshivendaContaminationScan": {
+    "changedStringsChecked": 36,
+    "searchedForms": ["Hlayisani", "Kombelani", "Ku xelelwa", "xelelwa"],
+    "matches": [],
+    "result": "No occurrences of those suspected forms were found in changed Tshivenda candidates. No other clear Xitsonga-form contamination was identified in this focused scan.",
+    "remainingEnglishNote": "market-community-l2 body.paragraphs[5] still includes the English conditional clause “only when customers and growers can keep the agreement” and the phrase “when crops are short.” Their source conditions are preserved exactly; they are English residue, not identified as wrong-language forms."
+  },
+  "conditionsAndStructure": {
+    "noNewConditionsOrGuarantees": true,
+    "onlyWhenBeforeAndReliabilityQualificationsPreserved": true,
+    "sourceOptionOrderAndCorrectIndicesUnchanged": true,
+    "r15kgAndR18kgPremiseUnchanged": true
+  },
+  "reviewLimit": "Semantic check only. Keep publication marked unreviewed and send for facilitator review afterward."
+}

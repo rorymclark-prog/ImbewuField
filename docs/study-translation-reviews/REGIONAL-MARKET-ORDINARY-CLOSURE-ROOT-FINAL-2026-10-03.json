@@ -1,0 +1,2343 @@
+{
+  "title": "Market Community L1/L2 remaining ordinary wording closure candidates",
+  "date": "2026-10-03",
+  "workspace": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "worktreeHead": "0778c66698596249cfdc69af7716e3f21f1dfaa8",
+  "canonicalSourceBase": "ab50dba (provided by parent; canonical English unchanged)",
+  "provenance": "Read-only candidate packet built from the current worktree. Root-reviewed applied L1/L2 assessment drafts are copied byte-for-byte into candidate fields wherever this packet makes no new candidate. Canonical English and repository files were not changed. New strings are unreviewed source-paired machine drafts pending independent/root semantic checks before learner wiring/publication; no fluent-review prerequisite is asserted.",
+  "selection": "Complete Market Community L1/L2 body paragraphs, keypoints, and all quiz questions/options/rationales for Sesotho (ST), Tshivenda (VE), and Xitsonga (TS). Market L3 excluded.",
+  "bindingAndStructure": {
+    "allSourceFieldsByteMatchCanonical": true,
+    "allCurrentFieldsFromLiveRegionalRegistry": true,
+    "bodyParagraphOrderPreserved": true,
+    "quizOptionOrderPreserved": true,
+    "correctIndicesCopiedFromCanonical": true,
+    "preservedCurrentFields": "Every existing localized/applied current draft remains candidate-identical unless a previously held exact-English field or ordinary clause is explicitly drafted below.",
+    "sourcePairChecks": {
+      "canonicalSourceAndCurrentRegistryPairsEqual": true,
+      "optionOrderAndCorrectIndicesCopiedExactly": true,
+      "allNewCandidatePathsHaveSourceEnglishCurrentDraftCandidate": true
+    }
+  },
+  "preservationRules": [
+    "R15/kg and R18/kg teaching premise remains exact English in question framing; all figures/units and the worked-example explanatory paragraph stay source-exact.",
+    "Keep only/when/before/may/can/not-guaranteed/customer agreement/reliable supply/payment/fulfilment-cost qualifications explicit.",
+    "Preserve the difference between recording cash vs harvest destinations, giving/composting/selling produce, offering surplus, and promising a regular box.",
+    "No law, species, figure, market guarantee, or farming recommendation has been invented."
+  ],
+  "languages": [
+    {
+      "language": "st",
+      "lessons": [
+        {
+          "lessonId": "market-community-l1",
+          "bodyParagraphs": [
+            {
+              "field": "body.paragraphs[0]",
+              "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+              "currentDraft": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+              "candidate": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[1]",
+              "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+              "currentDraft": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+              "candidate": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[2]",
+              "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+              "currentDraft": "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+              "candidate": "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[3]",
+              "sourceEnglish": "Write down every harvest as it happens.",
+              "currentDraft": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+              "candidate": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[4]",
+              "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+              "currentDraft": "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+              "candidate": "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[5]",
+              "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+              "currentDraft": "Sebelisa mokgwa o tshwanang o bonolo bakeng sa food kept at home, produce sold, produce gifted, le produce composted.",
+              "candidate": "Sebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[6]",
+              "sourceEnglish": "Do not rely on memory at the end of the season.",
+              "currentDraft": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+              "candidate": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[7]",
+              "sourceEnglish": "One season of records answers practical questions.",
+              "currentDraft": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+              "candidate": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[8]",
+              "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "currentDraft": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka highest return for each hour of work?",
+              "candidate": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release.",
+              "rootRepairReason": "Keeps best/the most and preserves return without narrowing to money."
+            },
+            {
+              "field": "body.paragraphs[9]",
+              "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+              "currentDraft": "Ke crops dife tse sebedisang more seeds, water and compost than they return?",
+              "candidate": "Ke crops dife tse sebedisang dipeo, metsi le compost tse ngata ho feta return ya tsona?",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[10]",
+              "sourceEnglish": "The record also shows which months leave the household buying food.",
+              "currentDraft": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+              "candidate": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[11]",
+              "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "currentDraft": "Pele o beha price, rekota production, packing and selling costs, ho kenyeletsa labour le transport.",
+              "candidate": "Pele o beha price, rekota production, packing le selling costs, ho kenyeletsa labour le transport.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[12]",
+              "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "currentDraft": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "candidate": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [
+                "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost."
+              ],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[13]",
+              "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "currentDraft": "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; a higher asking price is not a guaranteed sale.",
+              "candidate": "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e netefatse thekiso.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[14]",
+              "sourceEnglish": "Use your record to find when household food runs short.",
+              "currentDraft": "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+              "candidate": "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[15]",
+              "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "currentDraft": "Khetha crops tse loketseng sebaka sa heno, mme o work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "candidate": "Khetha crops tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha ho harvest eo o e hlokang. Sheba maemo a ho jala le nako e lebelletsweng ya kotulo.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "crops",
+                "harvest"
+              ],
+              "riskNote": "The planting-condition and expected-harvest-time check is now localized; crop/harvest anchors remain to preserve the farming concepts."
+            },
+            {
+              "field": "body.paragraphs[16]",
+              "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "currentDraft": "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya leano la backup ha pula, metsi kapa crops di hloleha.",
+              "candidate": "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya moralo wa tlatsetso ha pula, metsi kapa dijalo di hloleha.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            }
+          ],
+          "keyPoints": [
+            {
+              "field": "keyPoints[0]",
+              "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+              "currentDraft": "Rekota bongata ba kotulo le moo e yang teng ka thoko ho tjhelete",
+              "candidate": "Rekota bongata ba kotulo le moo e yang teng ka thoko ho tjhelete",
+              "currentReviewStatus": "machine-draft",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[1]",
+              "sourceEnglish": "Include production and selling costs when assessing a price",
+              "currentDraft": "Include production and selling costs when assessing a price",
+              "candidate": "Kenyelletsa production le selling costs ha o lekola price.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "production and selling costs",
+                "price assessment"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            },
+            {
+              "field": "keyPoints[2]",
+              "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+              "currentDraft": "Label worked examples; use your actual costs for decisions",
+              "candidate": "Tshwaya worked examples; sebedisa costs tsa hao tsa nnete ha o etsa diqeto.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "worked examples",
+                "actual costs"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            },
+            {
+              "field": "keyPoints[3]",
+              "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+              "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+              "candidate": "Rera bakeng sa dikgeo tsa dijo o sebedisa maemo a ho lema a lehae le nako ya kotulo.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "local growing conditions",
+                "harvest timing"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            }
+          ],
+          "quiz": [
+            {
+              "quizIndex": 0,
+              "question": {
+                "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Ke eng seo molemi a lokelang ho se hlahloba?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce."
+                ],
+                "heldClauseReason": "Retain the exact teaching-example figures, units, and cost comparison; translate only the question prompt."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+                  "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+                  "candidate": "Tswela pele o rekisa ka R15 — tahlehelo ya nako e khutshwane e aga dikamano.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "R15"
+                  ],
+                  "heldClauseReason": "Retain the exact amount and preserve the source distractor claim that the short-term loss builds relationships; translate the ordinary action and relationship framing."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Stop growing tomatoes entirely",
+                  "currentDraft": "Stop growing tomatoes entirely",
+                  "candidate": "Emisa ho lema tamati ka ho felletseng.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [],
+                  "heldClauseReason": "Preserve any financial distractor assertion/term exactly while translating only the ordinary action framing; option position remains unchanged."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+                  "currentDraft": "The selling price, costs and whether another crop would give a better return",
+                  "candidate": "Selling price, costs, le hore na crop e nngwe e ka fana ka return e betere.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "selling price",
+                    "costs",
+                    "return"
+                  ],
+                  "heldClauseReason": "Preserve any financial distractor assertion/term exactly while translating only the ordinary action framing; option position remains unchanged."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "Apply for a subsidy to cover the gap",
+                  "currentDraft": "Apply for a subsidy to cover the gap",
+                  "candidate": "Etsa kopo ya subsidy ho kwahela gap.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "subsidy"
+                  ],
+                  "heldClauseReason": "Preserve any financial distractor assertion/term exactly while translating only the ordinary action framing; option position remains unchanged."
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "candidate": "The example price is below the stated cost. Hlahloba phapang le customer demand pele o etsa qeto ya production e latelang.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "The example price is below the stated cost.",
+                  "customer demand",
+                  "before making the next production decision"
+                ],
+                "heldClauseReason": "Retain the source arithmetic relation and before-decision/customer-demand conditions; translate the explanatory action frame only."
+              }
+            },
+            {
+              "quizIndex": 1,
+              "question": {
+                "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+                "currentDraft": "Direkoto tsa molemi di bontsha hore meroho ya hae e a haella ka June le July selemo se seng le se seng. Ke kgato efe e thusang?",
+                "candidate": "Direkoto tsa molemi di bontsha hore meroho ya hae e a haella ka June le July selemo se seng le se seng. Ke kgato efe e thusang?",
+                "currentReviewStatus": "machine-draft",
+                "changed": false
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Buy vegetables at market each June and July",
+                  "currentDraft": "Reka meroho mmarakeng ka June le July e nngwe le e nngwe.",
+                  "candidate": "Reka meroho mmarakeng ka June le July e nngwe le e nngwe.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+                  "currentDraft": "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo.",
+                  "candidate": "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "Accept her farm can't produce in winter",
+                  "currentDraft": "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha.",
+                  "candidate": "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "The records show a soil fertility problem",
+                  "currentDraft": "Direkoto di bontsha bothata ba monono wa mobu.",
+                  "candidate": "Direkoto di bontsha bothata ba monono wa mobu.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+                "currentDraft": "Direkoto di bontsha kgaello. Kgetho ya dijalo le matsatsi a ho jala di lokela ho dumellana le tlelaemete ya sebaka, metsi le nako e lebelletsweng ya kotulo.",
+                "candidate": "Direkoto di bontsha kgaello. Kgetho ya dijalo le matsatsi a ho jala di lokela ho dumellana le tlelaemete ya sebaka, metsi le nako e lebelletsweng ya kotulo.",
+                "currentReviewStatus": "machine-draft",
+                "changed": false
+              }
+            }
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "bodyParagraphs": [
+            {
+              "field": "body.paragraphs[0]",
+              "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+              "currentDraft": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+              "candidate": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[1]",
+              "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "currentDraft": "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+              "candidate": "Bapisa market fees, lipalangoang, ho paka le dihlahiswa tse sa rekiswang hammoho le selling price.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[2]",
+              "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "currentDraft": "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+              "candidate": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Independent backcheck corrected a venue noun (“stall”) that had become “table”; retain the no-automatic-rules-or-costs qualification."
+            },
+            {
+              "field": "body.paragraphs[3]",
+              "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+              "currentDraft": "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+              "candidate": "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[4]",
+              "sourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+              "currentDraft": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+              "candidate": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[5]",
+              "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "currentDraft": "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "candidate": "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[6]",
+              "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+              "currentDraft": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+              "candidate": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release.",
+              "rootRepairReason": "Keeps reliable supply rather than shifting the meaning to honesty/trustworthiness."
+            },
+            {
+              "field": "body.paragraphs[7]",
+              "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+              "currentDraft": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+              "candidate": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[8]",
+              "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+              "currentDraft": "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+              "candidate": "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[9]",
+              "sourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "currentDraft": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+              "candidate": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[10]",
+              "sourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+              "currentDraft": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+              "candidate": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[11]",
+              "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+              "currentDraft": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.",
+              "candidate": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            }
+          ],
+          "keyPoints": [
+            {
+              "field": "keyPoints[0]",
+              "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+              "currentDraft": "Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo.",
+              "candidate": "Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo.",
+              "currentReviewStatus": "machine-draft",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[1]",
+              "sourceEnglish": "Compare costs and losses as well as selling price",
+              "currentDraft": "Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso",
+              "candidate": "Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso",
+              "currentReviewStatus": "machine-draft",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[2]",
+              "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+              "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+              "candidate": "Tshepisa regular boxes feela ha supply le customer terms di di tshehetsa.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "only when",
+                "supply",
+                "customer terms"
+              ],
+              "heldClauseReason": "Retain the only-when condition and commercial terms exactly; for the growing-practices keypoint, keep the compliance label “market rules” exact."
+            },
+            {
+              "field": "keyPoints[3]",
+              "sourceEnglish": "Check market rules and describe growing practices honestly",
+              "currentDraft": "Check market rules and describe growing practices honestly",
+              "candidate": "Hlahloba market rules mme o hlalose growing practices tsa hao ka botshepehi.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "market rules",
+                "growing practices"
+              ],
+              "heldClauseReason": "Retain the only-when condition and commercial terms exactly; for the growing-practices keypoint, keep the compliance label “market rules” exact."
+            }
+          ],
+          "quiz": [
+            {
+              "quizIndex": 0,
+              "question": {
+                "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "candidate": "Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke channel efe e mo loketseng ka ho fetisisa?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "inconsistent weekly production",
+                  "surplus some weeks, little in others"
+                ],
+                "heldClauseReason": "Preserve week-to-week variability and surplus contrast; channel term is retained where needed.",
+                "rootRepairReason": "Adds explicit best/suitability degree."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                  "currentDraft": "A formal market stall needing consistent weekly supply",
+                  "candidate": "Formal market stall e hlokang consistent weekly supply.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "formal market stall",
+                    "consistent weekly supply"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "A box scheme needing the same produce weekly",
+                  "currentDraft": "A box scheme needing the same produce weekly",
+                  "candidate": "Box scheme e hlokang produce e tshwanang beke le beke.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "box scheme",
+                    "same produce weekly"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                  "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+                  "candidate": "Informal market kapa thekiso ho baahisani ntle le fixed commitment.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "informal market",
+                    "no fixed commitment"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "A daily-delivery school contract",
+                  "currentDraft": "A daily-delivery school contract",
+                  "candidate": "Konteraka ya sekolo e hlokang ho tlisa letsatsi le letsatsi.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "daily-delivery school contract"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "candidate": "Ena ke yona feela channel e sa mo hlokeng ho tshepisa fixed amount beke le beke — o rekisa seo a nang le sona ka nnete.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "one channel",
+                  "fixed amount every week",
+                  "what she actually has"
+                ],
+                "heldClauseReason": "Retain the “one channel” uniqueness, no-fixed-amount condition, and actual-surplus distinction."
+              }
+            },
+            {
+              "quizIndex": 1,
+              "question": {
+                "sourceEnglish": "How can agreed regular orders help a grower plan?",
+                "currentDraft": "How can agreed regular orders help a grower plan?",
+                "candidate": "Ditaelo tsa kamehla tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "agreed regular orders"
+                ],
+                "heldClauseReason": "Preserve that the orders are agreed and recurring; the question frame is localized."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Box customers always pay more per kilogram",
+                  "currentDraft": "Box customers always pay more per kilogram",
+                  "candidate": "Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "always",
+                    "per kilogram"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Box schemes let you charge extra for packaging",
+                  "currentDraft": "Box schemes let you charge extra for packaging",
+                  "candidate": "Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "extra",
+                    "packaging"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "candidate": "Committed subscription income e o dumella ho rera production ho potoloha real demand ho e-na le ho lema ka ho hakanya.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "Committed subscription income",
+                    "real demand",
+                    "speculatively"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "Box schemes avoid tax obligations",
+                  "currentDraft": "Box schemes avoid tax obligations",
+                  "candidate": "Box schemes avoid tax obligations",
+                  "currentReviewStatus": "hold",
+                  "changed": false,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "tax obligations"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing.",
+                  "rootRepairReason": "Hold source-exact to preserve the false distractor proposition and avoid creating a second correct answer.",
+                  "status": "preserve-current"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "candidate": "Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, payment le costs tsa ho di phethahatsa.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "Confirmed orders",
+                  "demand",
+                  "still depends on reliable supply, payment and the costs of fulfilling them"
+                ],
+                "heldClauseReason": "Keep confirmation, demand, and the complete supply/payment/fulfillment-cost condition intact."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "lessons": [
+        {
+          "lessonId": "market-community-l1",
+          "bodyParagraphs": [
+            {
+              "field": "body.paragraphs[0]",
+              "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+              "currentDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+              "candidate": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[1]",
+              "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+              "currentDraft": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+              "candidate": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[2]",
+              "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+              "currentDraft": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+              "candidate": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[3]",
+              "sourceEnglish": "Write down every harvest as it happens.",
+              "currentDraft": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+              "candidate": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[4]",
+              "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+              "currentDraft": "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+              "candidate": "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[5]",
+              "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+              "currentDraft": "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+              "candidate": "Shumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "compost"
+              ],
+              "riskNote": "The source categories are distinguished; the already localized introductory habit remains intact."
+            },
+            {
+              "field": "body.paragraphs[6]",
+              "sourceEnglish": "Do not rely on memory at the end of the season.",
+              "currentDraft": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+              "candidate": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[7]",
+              "sourceEnglish": "One season of records answers practical questions.",
+              "currentDraft": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+              "candidate": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[8]",
+              "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "currentDraft": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "candidate": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release.",
+              "rootRepairReason": "Restores the best/the most comparisons, bed/hour units, and avoids narrowing return to cash."
+            },
+            {
+              "field": "body.paragraphs[9]",
+              "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+              "currentDraft": "Which crops use more seeds, water, and compost than they return?",
+              "candidate": "Ndi crops dzifhio dzine dza shumisa seeds, water na compost zwinzhi u fhira zwine dza vhuisa?",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[10]",
+              "sourceEnglish": "The record also shows which months leave the household buying food.",
+              "currentDraft": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+              "candidate": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[11]",
+              "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "currentDraft": "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+              "candidate": "Musi ni sa athu vhea price, ṅwalani production, packing na selling costs, u katela labour na transport.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[12]",
+              "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "currentDraft": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "candidate": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [
+                "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost."
+              ],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[13]",
+              "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "currentDraft": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+              "candidate": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; asking a higher price does not guarantee a sale.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[14]",
+              "sourceEnglish": "Use your record to find when household food runs short.",
+              "currentDraft": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+              "candidate": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[15]",
+              "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "currentDraft": "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+              "candidate": "Nangani crops dzine dza tea vhupo haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "harvest"
+              ],
+              "riskNote": "Translate suitability/harvest-check framing; retain crop/harvest anchors. The locally suitable phrase is drafted as crops suited to your area."
+            },
+            {
+              "field": "body.paragraphs[16]",
+              "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "currentDraft": "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail.",
+              "candidate": "A date that works on another farm may not work here. Engedzani a backup plan musi mvula, maḓi kana zwimela zwi tshi kundelwa.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "A date that works on another farm may not work here."
+              ],
+              "riskNote": "Keep the exact may-not modal in English; translate the backup-plan instruction and when-failure frame without adding direction or a remedy."
+            }
+          ],
+          "keyPoints": [
+            {
+              "field": "keyPoints[0]",
+              "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+              "currentDraft": "Record harvest amounts and destinations separately from cash",
+              "candidate": "Record harvest amounts and destinations separately from cash",
+              "currentReviewStatus": "hold",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[1]",
+              "sourceEnglish": "Include production and selling costs when assessing a price",
+              "currentDraft": "Include production and selling costs when assessing a price",
+              "candidate": "Katelani production na selling costs musi ni tshi sedza price.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "production and selling costs",
+                "price assessment"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            },
+            {
+              "field": "keyPoints[2]",
+              "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+              "currentDraft": "Label worked examples; use your actual costs for decisions",
+              "candidate": "Label worked examples; shumisani costs dzaṋu dza vhukuma u dzhia tsheo.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "worked examples",
+                "actual costs"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            },
+            {
+              "field": "keyPoints[3]",
+              "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+              "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+              "candidate": "Pulani nga ha zwikhala zwa zwiḽiwa ni tshi shumisa nyimele dza u alusa dza henefho na tshifhinga tsha khanwiwa.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "local growing conditions",
+                "harvest timing"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            }
+          ],
+          "quiz": [
+            {
+              "quizIndex": 0,
+              "question": {
+                "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Mulimi u fanela u sedza mini?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce."
+                ],
+                "heldClauseReason": "Retain the exact teaching-example figures, units, and cost comparison; translate only the question prompt."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+                  "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+                  "candidate": "Bvelani phanḓa ni tshi rengisa nga R15 — short-term loss i fhaṱa vhushaka.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "R15",
+                    "short-term loss"
+                  ],
+                  "heldClauseReason": "Retain the exact amount and preserve the source distractor claim that the short-term loss builds relationships; translate the ordinary action and relationship framing."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Stop growing tomatoes entirely",
+                  "currentDraft": "Stop growing tomatoes entirely",
+                  "candidate": "Litshani u tavha matamatisi nga hoṱhe.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [],
+                  "heldClauseReason": "Preserve any financial distractor assertion/term exactly while translating only the ordinary action framing; option position remains unchanged."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+                  "currentDraft": "The selling price, costs and whether another crop would give a better return",
+                  "candidate": "Mutengo wa u rengisa, costs, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "selling price",
+                    "costs",
+                    "return"
+                  ],
+                  "heldClauseReason": "Preserve any financial distractor assertion/term exactly while translating only the ordinary action framing; option position remains unchanged."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "Apply for a subsidy to cover the gap",
+                  "currentDraft": "Apply for a subsidy to cover the gap",
+                  "candidate": "Apply for subsidy u vala gap.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "subsidy"
+                  ],
+                  "heldClauseReason": "Translate applying/requesting and covering the gap; retain subsidy as the financial mechanism term."
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "candidate": "Mutengo wa tsumbo u re fhasi ha cost yo ambiwaho. Sedzani phambano na customer demand musi ni sa athu dzhia tsheo ya production i tevhelaho.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "cost",
+                  "customer demand",
+                  "before next production decision"
+                ],
+                "heldClauseReason": "Translate the ordinary explanatory relation; preserve the below-cost meaning, demand check and before-decision condition. The R15/R18 figures stay exact in the question."
+              }
+            },
+            {
+              "quizIndex": 1,
+              "question": {
+                "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+                "currentDraft": "A farmer's records show she's short of vegetables every June and July. Ndi vhukando vhufhio vhune ha thusa?",
+                "candidate": "A farmer's records show she's short of vegetables every June and July. Ndi vhukando vhufhio vhune ha thusa?",
+                "currentReviewStatus": "machine-draft",
+                "changed": false
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Buy vegetables at market each June and July",
+                  "currentDraft": "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe.",
+                  "candidate": "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+                  "currentDraft": "Work backwards from the food gap using suitable local crops and their harvest timing",
+                  "candidate": "Work backwards from the food gap using suitable local crops and their harvest timing",
+                  "currentReviewStatus": "hold",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "Accept her farm can't produce in winter",
+                  "currentDraft": "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria.",
+                  "candidate": "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "The records show a soil fertility problem",
+                  "currentDraft": "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.",
+                  "candidate": "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+                "currentDraft": "Rekhodo dzi sumbedza u shaya. U nanga zwimela na maḓuvha a u zwala zwi tea u tendelana na mutsho wa henefho, maḓi na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+                "candidate": "Rekhodo dzi sumbedza u shaya. U nanga zwimela na maḓuvha a u zwala zwi tea u tendelana na mutsho wa henefho, maḓi na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+                "currentReviewStatus": "machine-draft",
+                "changed": false
+              }
+            }
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "bodyParagraphs": [
+            {
+              "field": "body.paragraphs[0]",
+              "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+              "currentDraft": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+              "candidate": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[1]",
+              "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "currentDraft": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "candidate": "Pimanisani market fees, transport, packing na unsold produce, khathihi na selling price.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[2]",
+              "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "currentDraft": "Sedzani market rules na local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "candidate": "Sedzani market rules and local trading and food requirements. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "market rules",
+                "local trading and food requirements",
+                "informal stall",
+                "rules",
+                "costs"
+              ],
+              "riskNote": "The informal-stall caveat is localized as “does not automatically mean no rules or costs”; compliance labels remain English anchors."
+            },
+            {
+              "field": "body.paragraphs[3]",
+              "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+              "currentDraft": "Direct selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.",
+              "candidate": "Direct selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[4]",
+              "sourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+              "currentDraft": "Box scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.",
+              "candidate": "Box scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[5]",
+              "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "currentDraft": "Tendelanani nga contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "candidate": "Tendelani nga contents, price, payment, na uri hu itea mini when crops are short. Regular orders a thusa u pulana only when customers and growers can keep the agreement.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "when crops are short",
+                "only when customers and growers can keep the agreement"
+              ],
+              "riskNote": "Translate ordinary agreement/planning frames; retain the shortage and only-when/customer-and-grower agreement conditions exact.",
+              "rootRepairReason": "Avoids tshifhinga tshoṱhe (“all the time”); preserves only-when agreement condition."
+            },
+            {
+              "field": "body.paragraphs[6]",
+              "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+              "currentDraft": "Thomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+              "candidate": "Thomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[7]",
+              "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+              "currentDraft": "Check the costs and household food needs before promising regular boxes.",
+              "candidate": "Ṱolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "costs",
+                "household food needs",
+                "regular boxes"
+              ],
+              "riskNote": "Localize the before-promising relation; retain the cost, household-needs and recurring-box terms."
+            },
+            {
+              "field": "body.paragraphs[8]",
+              "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+              "currentDraft": "Garden area or customer count alone does not predict income. Try a manageable arrangement and ni rekhode results.",
+              "candidate": "Tshikalo tsha ngade kana tshivhalo tsha vharengi, zwone fhedzi, a zwi anganyeli income. Ringetani arrangement ine na nga kona u i langula, ni ṅwale results.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "income",
+                "arrangement",
+                "results"
+              ],
+              "riskNote": "Translate the full non-prediction caution while keeping income as an anchor; retain manageable arrangement and recording-results scope."
+            },
+            {
+              "field": "body.paragraphs[9]",
+              "sourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "currentDraft": "Arali production i tshi shanduka vhege nga vhege, avoid promising a fixed delivery you cannot supply.",
+              "candidate": "Arali production i tshi shanduka vhege nga vhege, avoid promising a fixed delivery you cannot supply.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[10]",
+              "sourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+              "currentDraft": "Offer the surplus you have and tendelanani nga clear terms na vharengi.",
+              "candidate": "Offer the surplus you have and tendelanani nga clear terms na vharengi.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[11]",
+              "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+              "currentDraft": "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Check any certification or claim the buyer requires before using a label.",
+              "candidate": "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "growing practices",
+                "label",
+                "certification",
+                "claim"
+              ],
+              "riskNote": "Translate the before/using-label/check frame; retain buyer-required certification/claim condition and key compliance terms."
+            }
+          ],
+          "keyPoints": [
+            {
+              "field": "keyPoints[0]",
+              "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+              "currentDraft": "Tendelani nga ha tshibveledzwa, tshivhalo, quality, delivery na payment.",
+              "candidate": "Tendelani nga ha tshibveledzwa, tshivhalo, quality, delivery na payment.",
+              "currentReviewStatus": "machine-draft",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[1]",
+              "sourceEnglish": "Compare costs and losses as well as selling price",
+              "currentDraft": "Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.",
+              "candidate": "Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.",
+              "currentReviewStatus": "machine-draft",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[2]",
+              "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+              "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+              "candidate": "Fulufhedzisani regular boxes fhedzi musi supply na customer terms zwi tshi zwi tendela.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "only when",
+                "supply",
+                "customer terms"
+              ],
+              "heldClauseReason": "Retain the only-when condition and commercial terms exactly; for the growing-practices keypoint, keep the compliance label “market rules” exact."
+            },
+            {
+              "field": "keyPoints[3]",
+              "sourceEnglish": "Check market rules and describe growing practices honestly",
+              "currentDraft": "Check market rules and describe growing practices honestly",
+              "candidate": "Sedzani market rules, nahone ni ṱaluse growing practices dzaṋu nga u fulufhedzea.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "market rules",
+                "growing practices"
+              ],
+              "heldClauseReason": "Retain the only-when condition and commercial terms exactly; for the growing-practices keypoint, keep the compliance label “market rules” exact."
+            }
+          ],
+          "quiz": [
+            {
+              "quizIndex": 0,
+              "question": {
+                "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "candidate": "Mulimi wa bulasi ḽiṱuku u na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "inconsistent weekly production",
+                  "surplus some weeks, little in others"
+                ],
+                "heldClauseReason": "Preserve week-to-week variability and surplus contrast; channel term is retained where needed.",
+                "rootRepairReason": "Uses canonical Tshivenda Mulimi/Bulasi terms and preserves smallholding and inconsistent supply."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                  "currentDraft": "A formal market stall needing consistent weekly supply",
+                  "candidate": "Formal market stall ine ya ṱoḓa consistent weekly supply.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "formal market stall",
+                    "consistent weekly supply"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "A box scheme needing the same produce weekly",
+                  "currentDraft": "A box scheme needing the same produce weekly",
+                  "candidate": "Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "box scheme",
+                    "same produce weekly"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                  "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+                  "candidate": "Informal market kana u rengisa kha vhahura hu si na fixed commitment.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "informal market",
+                    "no fixed commitment"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "A daily-delivery school contract",
+                  "currentDraft": "A daily-delivery school contract",
+                  "candidate": "Thendelano ya tshikolo ine ya ṱoḓa u isa zwithu ḓuvha ḽiṅwe na ḽiṅwe.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "daily-delivery school contract"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "candidate": "Iyi ndi yone channel nthihi ine ya si ṱoḓe uri a fulufhedzise fixed amount vhege iṅwe na iṅwe — u rengisa zwe a vha nazwo zwa vhukuma.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "one channel",
+                  "fixed amount every week",
+                  "what she actually has"
+                ],
+                "heldClauseReason": "Retain the “one channel” uniqueness, no-fixed-amount condition, and actual-surplus distinction."
+              }
+            },
+            {
+              "quizIndex": 1,
+              "question": {
+                "sourceEnglish": "How can agreed regular orders help a grower plan?",
+                "currentDraft": "How can agreed regular orders help a grower plan?",
+                "candidate": "Agreed regular orders zwi nga thusa hani mulimi u pulana?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "agreed regular orders"
+                ],
+                "heldClauseReason": "Preserve that the orders are agreed and recurring; the question frame is localized.",
+                "rootRepairReason": "Retain agreed recurring orders rather than all-the-time orders; independent semantic check accepted, not fluent approval."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Box customers always pay more per kilogram",
+                  "currentDraft": "Box customers always pay more per kilogram",
+                  "candidate": "Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "always",
+                    "per kilogram"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Box schemes let you charge extra for packaging",
+                  "currentDraft": "Box schemes let you charge extra for packaging",
+                  "candidate": "Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "extra",
+                    "packaging"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "candidate": "Committed subscription income i ni thusa u pulana production u tevhela real demand, nṱhani ha u alusa nga speculation.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "Committed subscription income",
+                    "real demand",
+                    "speculatively"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "Box schemes avoid tax obligations",
+                  "currentDraft": "Box schemes avoid tax obligations",
+                  "candidate": "Box schemes avoid tax obligations",
+                  "currentReviewStatus": "hold",
+                  "changed": false,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "tax obligations"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing.",
+                  "rootRepairReason": "Hold source-exact to preserve the false distractor proposition and avoid creating a second correct answer.",
+                  "status": "preserve-current"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "candidate": "Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, payment na costs dza u dzi swikisa.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "Confirmed orders",
+                  "demand",
+                  "still depends on reliable supply, payment and the costs of fulfilling them"
+                ],
+                "heldClauseReason": "Keep confirmation, demand, and the complete supply/payment/fulfillment-cost condition intact."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "lessons": [
+        {
+          "lessonId": "market-community-l1",
+          "bodyParagraphs": [
+            {
+              "field": "body.paragraphs[0]",
+              "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+              "currentDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+              "candidate": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[1]",
+              "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+              "currentDraft": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+              "candidate": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[2]",
+              "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+              "currentDraft": "Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.",
+              "candidate": "Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[3]",
+              "sourceEnglish": "Write down every harvest as it happens.",
+              "currentDraft": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+              "candidate": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[4]",
+              "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+              "currentDraft": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.",
+              "candidate": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[5]",
+              "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+              "currentDraft": "Use the same simple habit eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+              "candidate": "Tirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[6]",
+              "sourceEnglish": "Do not rely on memory at the end of the season.",
+              "currentDraft": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+              "candidate": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[7]",
+              "sourceEnglish": "One season of records answers practical questions.",
+              "currentDraft": "Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.",
+              "candidate": "Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[8]",
+              "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "currentDraft": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "candidate": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release.",
+              "rootRepairReason": "Restores the best/the most comparisons, bed/hour units, and avoids narrowing return to cash."
+            },
+            {
+              "field": "body.paragraphs[9]",
+              "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+              "currentDraft": "Which crops use more seeds, water, and compost than they return?",
+              "candidate": "Hi swihi swibyariwa leswi tirhisaka seeds, water na compost swo tala ku tlurisa leswi swi swi vuyisaka?",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[10]",
+              "sourceEnglish": "The record also shows which months leave the household buying food.",
+              "currentDraft": "Rekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.",
+              "candidate": "Rekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[11]",
+              "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "currentDraft": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "candidate": "Loko u nga se veka price, tsala production, packing and selling costs, ku katsa labour na transport.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "production",
+                "packing and selling costs",
+                "labour",
+                "transport"
+              ],
+              "riskNote": "Translate before/record framing, preserve exact cost categories and included labour/transport terms."
+            },
+            {
+              "field": "body.paragraphs[12]",
+              "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "currentDraft": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "candidate": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [
+                "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost."
+              ],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[13]",
+              "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "currentDraft": "Languta price, costs na ku byala loku landzelaka. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "candidate": "Languta price, costs na ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombelaka a wu tiyisisi leswaku ku ta va ni ku xavisiwa.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[14]",
+              "sourceEnglish": "Use your record to find when household food runs short.",
+              "currentDraft": "Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.",
+              "candidate": "Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[15]",
+              "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "currentDraft": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "candidate": "Hlawula swibyariwa leswi lulameleke ndhawu ya wena, kutani u hlela u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa planting conditions na expected time to harvest.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[16]",
+              "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "currentDraft": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "candidate": "Siku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Engetela backup plan loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            }
+          ],
+          "keyPoints": [
+            {
+              "field": "keyPoints[0]",
+              "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+              "currentDraft": "Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali",
+              "candidate": "Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali",
+              "currentReviewStatus": "machine-draft",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[1]",
+              "sourceEnglish": "Include production and selling costs when assessing a price",
+              "currentDraft": "Include production and selling costs when assessing a price",
+              "candidate": "Katsa production ni selling costs loko u kambisisa price.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "production and selling costs",
+                "price assessment"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            },
+            {
+              "field": "keyPoints[2]",
+              "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+              "currentDraft": "Label worked examples; use your actual costs for decisions",
+              "candidate": "Marka worked examples; tirhisa costs ta wena ta xiviri eka swiboho.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "worked examples",
+                "actual costs"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            },
+            {
+              "field": "keyPoints[3]",
+              "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+              "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+              "candidate": "Pulana ku pfumaleka ka swakudya hi ku tirhisa swiyimo swa ku byala swa ndhawu ya wena ni nkarhi wa ntshovelo.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "local growing conditions",
+                "harvest timing"
+              ],
+              "heldClauseReason": "These terms carry the cost-evaluation/example/season-planning scope; ordinary instruction framing is drafted in the learner language."
+            }
+          ],
+          "quiz": [
+            {
+              "quizIndex": 0,
+              "question": {
+                "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Murimi u fanele a kambisisa yini?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce."
+                ],
+                "heldClauseReason": "Retain the exact teaching-example figures, units, and cost comparison; translate only the question prompt."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+                  "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+                  "candidate": "Tshama u xavisa hi R15 — short-term loss yi aka vuxaka.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "R15",
+                    "short-term loss"
+                  ],
+                  "heldClauseReason": "Retain the exact amount and preserve the source distractor claim that the short-term loss builds relationships; translate the ordinary action and relationship framing."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Stop growing tomatoes entirely",
+                  "currentDraft": "Stop growing tomatoes entirely",
+                  "candidate": "Tshika ku byala matamatisi hi ku helela.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [],
+                  "heldClauseReason": "Preserve any financial distractor assertion/term exactly while translating only the ordinary action framing; option position remains unchanged."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+                  "currentDraft": "The selling price, costs and whether another crop would give a better return",
+                  "candidate": "Selling price, costs ni loko xibyariwa xin’wana xi nga nyika return yo antswa.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "selling price",
+                    "costs",
+                    "return"
+                  ],
+                  "heldClauseReason": "Preserve any financial distractor assertion/term exactly while translating only the ordinary action framing; option position remains unchanged."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "Apply for a subsidy to cover the gap",
+                  "currentDraft": "Apply for a subsidy to cover the gap",
+                  "candidate": "Endla xikombelo xa subsidy ku pfala gap.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "subsidy"
+                  ],
+                  "heldClauseReason": "Preserve any financial distractor assertion/term exactly while translating only the ordinary action framing; option position remains unchanged."
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "candidate": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Languta ku hambana ni customer demand u nga se endla xiboho xa production leyi landzelaka.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "cost",
+                  "customer demand",
+                  "before next production decision"
+                ],
+                "heldClauseReason": "Translate the ordinary explanatory relation; preserve the below-cost meaning, demand check and before-decision condition. The R15/R18 figures stay exact in the question."
+              }
+            },
+            {
+              "quizIndex": 1,
+              "question": {
+                "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+                "currentDraft": "A farmer's records show she's short of vegetables every June and July. Hi rihi goza leri pfunaka?",
+                "candidate": "A farmer's records show she's short of vegetables every June and July. Hi rihi goza leri pfunaka?",
+                "currentReviewStatus": "machine-draft",
+                "changed": false
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Buy vegetables at market each June and July",
+                  "currentDraft": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+                  "candidate": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+                  "currentDraft": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+                  "candidate": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "Accept her farm can't produce in winter",
+                  "currentDraft": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+                  "candidate": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+                  "currentReviewStatus": "machine-draft",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "The records show a soil fertility problem",
+                  "currentDraft": "The records show a soil fertility problem",
+                  "candidate": "The records show a soil fertility problem",
+                  "currentReviewStatus": "hold",
+                  "changed": false,
+                  "riskNote": "Existing applied/current option preserved."
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+                "currentDraft": "Records identify the gap. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni local climate, mati ni nkarhi lowu languteriweke wa ntshovelo.",
+                "candidate": "Records identify the gap. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni local climate, mati ni nkarhi lowu languteriweke wa ntshovelo.",
+                "currentReviewStatus": "machine-draft",
+                "changed": false
+              }
+            }
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "bodyParagraphs": [
+            {
+              "field": "body.paragraphs[0]",
+              "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+              "currentDraft": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+              "candidate": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[1]",
+              "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "currentDraft": "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+              "candidate": "Pimanisa market fees, transport, packing na unsold produce, swin’we ni selling price.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[2]",
+              "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "currentDraft": "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "candidate": "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[3]",
+              "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+              "currentDraft": "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
+              "candidate": "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[4]",
+              "sourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+              "currentDraft": "A box scheme supplies a regular selection to agreed customers.",
+              "candidate": "Box scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[5]",
+              "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "currentDraft": "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "candidate": "Pfumelelanani hi contents, price, payment na leswi humelelaka loko crops are short. Tioda ta nkarhi na nkarhi ti pfuna ku pulana only when customers and growers can keep the agreement.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "contents",
+                "price",
+                "payment",
+                "when crops are short",
+                "only when customers and growers can keep the agreement"
+              ],
+              "riskNote": "Translate connecting/framing clauses while retaining the shortage and only-when agreement conditions exact."
+            },
+            {
+              "field": "body.paragraphs[6]",
+              "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+              "currentDraft": "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
+              "candidate": "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[7]",
+              "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+              "currentDraft": "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
+              "candidate": "Kambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Mixed-language semantic draft; verify clause scope and modality against the exact source before release."
+            },
+            {
+              "field": "body.paragraphs[8]",
+              "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+              "currentDraft": "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+              "candidate": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta arrangement leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [],
+              "riskNote": "Independent backcheck narrowed “garden area” to garden area; preserve the alone/no-income-prediction claim and manageable-trial instruction."
+            },
+            {
+              "field": "body.paragraphs[9]",
+              "sourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "currentDraft": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "candidate": "Loko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "fixed delivery"
+              ],
+              "riskNote": "Translate the if/avoid/cannot-supply framing and preserve the fixed-delivery constraint."
+            },
+            {
+              "field": "body.paragraphs[10]",
+              "sourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+              "currentDraft": "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
+              "candidate": "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
+              "changed": false,
+              "status": "preserve-current",
+              "heldEnglishClauses": [],
+              "riskNote": "Current localized wording preserved byte-for-byte."
+            },
+            {
+              "field": "body.paragraphs[11]",
+              "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+              "currentDraft": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label.",
+              "candidate": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Loko u nga se tirhisa label, kambisisa any certification or claim the buyer requires.",
+              "changed": true,
+              "status": "candidate",
+              "heldEnglishClauses": [
+                "any certification or claim the buyer requires"
+              ],
+              "riskNote": "Translate the before/using-label frame; keep the buyer-required compliance terms source-exact."
+            }
+          ],
+          "keyPoints": [
+            {
+              "field": "keyPoints[0]",
+              "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+              "currentDraft": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+              "candidate": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+              "currentReviewStatus": "machine-draft",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[1]",
+              "sourceEnglish": "Compare costs and losses as well as selling price",
+              "currentDraft": "Pimanisa costs ni losses xikan’we ni selling price.",
+              "candidate": "Pimanisa costs ni losses xikan’we ni selling price.",
+              "currentReviewStatus": "machine-draft",
+              "changed": false,
+              "status": "preserve-current",
+              "riskNote": "Existing applied/current field preserved byte-for-byte."
+            },
+            {
+              "field": "keyPoints[2]",
+              "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+              "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+              "candidate": "Tshembisa regular boxes ntsena loko supply ni customer terms swi swi seketela.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "only when",
+                "supply",
+                "customer terms"
+              ],
+              "heldClauseReason": "Retain the only-when condition and commercial terms exactly; for the growing-practices keypoint, keep the compliance label “market rules” exact."
+            },
+            {
+              "field": "keyPoints[3]",
+              "sourceEnglish": "Check market rules and describe growing practices honestly",
+              "currentDraft": "Check market rules and describe growing practices honestly",
+              "candidate": "Kambisisa market rules kutani u hlamusela growing practices ta wena hi ku vula ntiyiso.",
+              "currentReviewStatus": "hold",
+              "changed": true,
+              "status": "candidate",
+              "riskNote": "Ordinary framing localized; technical or financial nouns remain English where retained. Unreviewed draft.",
+              "heldEnglishClauses": [
+                "market rules",
+                "growing practices"
+              ],
+              "heldClauseReason": "Retain the only-when condition and commercial terms exactly; for the growing-practices keypoint, keep the compliance label “market rules” exact."
+            }
+          ],
+          "quiz": [
+            {
+              "quizIndex": 0,
+              "question": {
+                "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "candidate": "Murimi wa purasi leritsongo u ni production leyi nga faniki vhiki ni vhiki — surplus hi mavhiki man’wana, yi va yitsongo hi man’wana. Hi yihi channel leyi n’wi fanelaka best?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "inconsistent weekly production",
+                  "surplus some weeks, little in others"
+                ],
+                "heldClauseReason": "Preserve week-to-week variability and surplus contrast; channel term is retained where needed."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                  "currentDraft": "A formal market stall needing consistent weekly supply",
+                  "candidate": "Formal market stall leyi lavaka consistent weekly supply.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "formal market stall",
+                    "consistent weekly supply"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "A box scheme needing the same produce weekly",
+                  "currentDraft": "A box scheme needing the same produce weekly",
+                  "candidate": "Box scheme leyi lavaka produce leyi fanaka vhiki ni vhiki.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "box scheme",
+                    "same produce weekly"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                  "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+                  "candidate": "Informal market kumbe ku xavisa eka vaakelani ku nga ri na fixed commitment.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "informal market",
+                    "no fixed commitment"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "A daily-delivery school contract",
+                  "currentDraft": "A daily-delivery school contract",
+                  "candidate": "Kontraka ya xikolo leyi lavaka ku yisa siku ni siku.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "daily-delivery school contract"
+                  ],
+                  "heldClauseReason": "Keep the channel and its supply/commitment requirement exact; translate only ordinary linking/action words."
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "candidate": "Leyi hi yona channel yin’we ntsena leyi nga laviki leswaku a tshembisa fixed amount vhiki ni vhiki — u xavisa leswi a nga na swona hakunene.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "one channel",
+                  "fixed amount every week",
+                  "what she actually has"
+                ],
+                "heldClauseReason": "Retain the “one channel” uniqueness, no-fixed-amount condition, and actual-surplus distinction."
+              }
+            },
+            {
+              "quizIndex": 1,
+              "question": {
+                "sourceEnglish": "How can agreed regular orders help a grower plan?",
+                "currentDraft": "How can agreed regular orders help a grower plan?",
+                "candidate": "Tioda ta nkarhi na nkarhi leti ku pfumelelaneke ti nga n’wi pfuna njani murimi ku pulana?",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "agreed regular orders"
+                ],
+                "heldClauseReason": "Preserve that the orders are agreed and recurring; the question frame is localized."
+              },
+              "options": [
+                {
+                  "optionIndex": 0,
+                  "sourceEnglish": "Box customers always pay more per kilogram",
+                  "currentDraft": "Box customers always pay more per kilogram",
+                  "candidate": "Vaxavi va box va hakela mali yo tala hi kilogram minkarhi hinkwato.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "always",
+                    "per kilogram"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing."
+                },
+                {
+                  "optionIndex": 1,
+                  "sourceEnglish": "Box schemes let you charge extra for packaging",
+                  "currentDraft": "Box schemes let you charge extra for packaging",
+                  "candidate": "Box schemes ti ku pfumelela ku charge extra for packaging.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "extra",
+                    "packaging"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing.",
+                  "rootRepairReason": "Preserves charging as the seller’s action, not paying as the seller’s action."
+                },
+                {
+                  "optionIndex": 2,
+                  "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "candidate": "Committed subscription income yi ku pfuna ku pulana production hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
+                  "currentReviewStatus": "hold",
+                  "changed": true,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "Committed subscription income",
+                    "real demand",
+                    "speculatively"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing."
+                },
+                {
+                  "optionIndex": 3,
+                  "sourceEnglish": "Box schemes avoid tax obligations",
+                  "currentDraft": "Box schemes avoid tax obligations",
+                  "candidate": "Box schemes avoid tax obligations",
+                  "currentReviewStatus": "hold",
+                  "changed": false,
+                  "riskNote": "Option order retained; translate only framing while preserving the source claim/distractor.",
+                  "heldEnglishClauses": [
+                    "tax obligations"
+                  ],
+                  "heldClauseReason": "Preserve source guarantee/financial/tax concepts and option assertion strength while localizing ordinary framing.",
+                  "rootRepairReason": "Hold source-exact to preserve the false distractor proposition and avoid creating a second correct answer.",
+                  "status": "preserve-current"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "candidate": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, payment ni costs ta ku ti hetisisa.",
+                "currentReviewStatus": "hold",
+                "changed": true,
+                "heldEnglishClauses": [
+                  "Confirmed orders",
+                  "demand",
+                  "still depends on reliable supply, payment and the costs of fulfilling them"
+                ],
+                "heldClauseReason": "Keep confirmation, demand, and the complete supply/payment/fulfillment-cost condition intact."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "candidateInventory": {
+    "assessmentFieldCount": 96,
+    "newAssessmentCandidateFields": 66,
+    "assessmentFieldsPreservedByteForByte": 30,
+    "bodyParagraphCount": 87,
+    "bodyParagraphsWithCandidateChanges": 38,
+    "note": "All current machine-draft/applied assessment strings are candidate-identical; new candidates target held English fields only.",
+    "assessmentFieldsWithSemanticRepairs": 3,
+    "bodyParagraphsWithSemanticRepairs": 2,
+    "allCurrentAssessmentFieldsSourceBound": true,
+    "rootReviewedAppliedFieldsPreservedByteForByte": 20
+  },
+  "semanticReviewRequirements": [
+    "Root/independent check all new mixed-language candidates against the exact source before wiring.",
+    "Do not use this packet as fluency or learner-readiness approval.",
+    "Numeric premise R15/kg and R18/kg is preserved exactly; verify it remains exact in every candidate question."
+  ],
+  "independentBackcheck": {
+    "report": "/tmp/imbewu-regional-market-remaining-ordinary-closure-backcheck-20261003.json",
+    "changedCandidatesChecked": 108,
+    "repairsAppliedToCandidatePacketOnly": 5,
+    "repairNotes": [
+      "Sesotho stall is a stall, not a table.",
+      "Sesotho smallholder wording describes a farmer with a small farm, not a young farmer.",
+      "Tshivenda “fhambana” restores varying weekly output rather than unchanged output.",
+      "Tsonga garden area is a garden area, not the farmer’s area.",
+      "Tsonga actor is a farmer, not a parent."
+    ],
+    "fluencyApproval": false,
+    "repositoryAndCurrentRegistryEdited": false,
+    "acceptedRepairProposalsAppliedToPacketOnly": 5
+  },
+  "ordinaryEnglishResidueReview": {
+    "inputBackcheck": "/tmp/imbewu-regional-market-remaining-ordinary-closure-backcheck-20261003.json",
+    "residueNotesReviewed": 12,
+    "ordinaryFramingResiduesAddressed": 12,
+    "notes": "Each of the 12 independent residue notes has a candidate translation or explicit technical anchor; numeric, condition, comparison, and distractor semantics are recorded at field level."
+  },
+  "rootFinalRepairs": {
+    "date": "2026-10-03",
+    "paths": [
+      "languages[st].lessons[market-community-l1].body.paragraphs[8]",
+      "languages[st].lessons[market-community-l2].body.paragraphs[6]",
+      "languages[st].lessons[market-community-l2].quiz[1].options[3]",
+      "languages[st].lessons[market-community-l2].quiz[0].question",
+      "languages[ve].lessons[market-community-l1].body.paragraphs[8]",
+      "languages[ve].lessons[market-community-l2].body.paragraphs[5]",
+      "languages[ve].lessons[market-community-l2].quiz[1].options[3]",
+      "languages[ve].lessons[market-community-l2].quiz[0].question",
+      "languages[ts].lessons[market-community-l1].body.paragraphs[8]",
+      "languages[ts].lessons[market-community-l2].quiz[1].options[1]",
+      "languages[ts].lessons[market-community-l2].quiz[1].options[3]",
+      "languages[ve].lessons[market-community-l2].quiz[1].question"
+    ],
+    "reviewLimit": "Unreviewed machine drafts; no fluent approval",
+    "pending": []
+  }
+}

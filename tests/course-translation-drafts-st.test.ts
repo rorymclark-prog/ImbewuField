@@ -254,7 +254,7 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
   // Checked ordinary prose now replaces whole-paragraph holds; the worked price example remains exact.
   assert.equal(draftParagraphs[12], sourceParagraphs[12], 'R18 cost and R15 sale teaching example remain exact English');
-  assert.ok(draftParagraphs[13].includes('a higher asking price is not a guaranteed sale.'));
+  assert.ok(draftParagraphs[13].includes('ha e netefatse thekiso'), 'the sale remains explicitly non-guaranteed');
   for (const index of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index], `selected record-keeping paragraph ${index + 1} should be a visible draft`);
   }
@@ -269,18 +269,17 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
 
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.equal(lesson.keyPoints[0].reviewStatus, 'machine-draft', 'the previously drafted harvest destination point remains a draft');
-  assert.deepEqual(lesson.keyPoints.slice(1).map(point => [point.sesothoDraft, point.reviewStatus]),
-    sourceLesson.keyPoints.slice(1).map(point => [point, 'hold']));
+  assert.ok(lesson.keyPoints.every(point => point.reviewStatus === 'machine-draft'), 'ordinary key point wording remains visibly unreviewed');
   assert.equal(lesson.quiz.length, sourceLesson.quiz.length);
   const priceQuestion = lesson.quiz[0];
   assert.equal(priceQuestion.question.sourceEnglish, sourceLesson.quiz[0].q);
-  assert.equal(priceQuestion.question.sesothoDraft, sourceLesson.quiz[0].q);
-  assert.equal(priceQuestion.question.reviewStatus, 'hold');
-  assert.equal(priceQuestion.rationale.sesothoDraft, sourceLesson.quiz[0].rationale);
-  assert.equal(priceQuestion.rationale.reviewStatus, 'hold');
-  assert.deepEqual(priceQuestion.options.map(option => [option.sourceEnglish, option.sesothoDraft, option.reviewStatus]),
-    sourceLesson.quiz[0].options.map(option => [option, option, 'hold']),
-    'the R15 sale/R18 cost example and every price distractor stay exact English');
+  assert.ok(priceQuestion.question.sesothoDraft.startsWith('In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce.'), 'the R15/R18 premise remains exact while the ordinary question is drafted');
+  assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
+  assert.ok(priceQuestion.rationale.sesothoDraft.startsWith('The example price is below the stated cost.'), 'the numeric conclusion remains exact while ordinary review wording is drafted');
+  assert.equal(priceQuestion.rationale.reviewStatus, 'machine-draft');
+  assert.deepEqual(priceQuestion.options.map(option => option.sourceEnglish), sourceLesson.quiz[0].options,
+    'price-example answer wording remains paired in canonical order');
+  assert.ok(priceQuestion.options.every(option => option.reviewStatus === 'machine-draft'), 'ordinary options remain visibly unreviewed');
   assert.equal(priceQuestion.sourceCorrectIndex, sourceLesson.quiz[0].correct);
 
   const gapQuestion = lesson.quiz[1];
@@ -312,7 +311,7 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 'st');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.body, lesson.body.sesothoDraft);
-  assert.deepEqual(presentation.content.keyPoints.slice(1), sourceLesson.keyPoints.slice(1));
+  assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints.map(point => point.sesothoDraft), 'Study displays each source-paired unreviewed point');
   assert.deepEqual(presentation.content.quiz, sourceLesson.quiz.map((question, index) => ({
     q: lesson.quiz[index].question.sesothoDraft,
     options: lesson.quiz[index].options.map(option => option.sesothoDraft),
@@ -354,15 +353,15 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
     'the bounded sale-price claim remains English while ordinary time and customer-care wording is drafted');
   assert.ok(draftParagraphs[6].startsWith('Qala ka what you can reliably supply'),
     'the reliability criterion stays exact English inside its checked Sesotho framing');
-  assert.ok(draftParagraphs[2].startsWith('Hlahloba market rules le ditlhoko tsa lehae'));
-  assert.ok(draftParagraphs[2].endsWith('ha ho na rules kapa costs.'),
+  assert.notEqual(draftParagraphs[2], sourceParagraphs[2], 'ordinary market compliance framing is now source-paired');
+  assert.ok(draftParagraphs[2].includes('Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.'),
     'the Sesotho framing keeps the caveat that informal stalls may still have rules and costs');
-  assert.ok(draftParagraphs[5].endsWith('Regular orders help planning only when customers and growers can keep the agreement.'));
-  assert.ok(draftParagraphs[7].includes('ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes'));
+  assert.ok(draftParagraphs[5].includes('only when customers and growers can keep the agreement.'), 'orders remain conditional on both sides honoring terms');
+  assert.ok(draftParagraphs[7].includes('ditlhoko tsa dijo tsa lelapa pele o tshepisa'), 'household food needs are checked before promising regular boxes');
   assert.ok(draftParagraphs[8].startsWith('Garden area or customer count alone does not predict income.'));
   assert.ok(draftParagraphs[10].includes('surplus eo o nang le yona'));
   assert.ok(draftParagraphs[11].startsWith('Hlalosa ditsela tseo o lemang ka tsona ka botshepehi.'));
-  assert.ok(draftParagraphs[11].includes('Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.'),
+  assert.ok(draftParagraphs[11].includes('Pele o sebedisa label') && draftParagraphs[11].includes('certification efe kapa efe kapa claim'),
     'the certification and buyer-claim check remains present in the Sesotho framing');
   assert.equal(lesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft');
@@ -371,23 +370,23 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
   assert.equal(lesson.title.reviewStatus, 'hold');
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
-  assert.deepEqual(lesson.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'hold', 'hold'],
-    'the two checked customer and cost points are drafts; supply and compliance cautions keep their prior holds');
-  assert.equal(lesson.keyPoints[0].sesothoDraft, 'Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo.');
-  assert.equal(lesson.keyPoints[1].sesothoDraft, 'Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso');
-  for (const index of [2, 3]) {
-    assert.equal(lesson.keyPoints[index].reviewStatus, 'hold');
-    assert.equal(lesson.keyPoints[index].sesothoDraft, sourceLesson.keyPoints[index]);
-  }
+  assert.ok(lesson.keyPoints.every(point => point.reviewStatus === 'machine-draft'), 'ordinary key-point wording remains visibly unreviewed');
+  assert.ok(lesson.keyPoints[2].sesothoDraft.includes('supply') && lesson.keyPoints[2].sesothoDraft.includes('customer'), 'the supply and customer agreement safeguard remains explicit');
+  assert.ok(lesson.keyPoints[3].sesothoDraft.includes('market rules') && lesson.keyPoints[3].sesothoDraft.includes('growing practices'), 'compliance and honest-description safeguards remain explicit');
 
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 'st');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].sesothoDraft);
   assert.equal(presentation.content.keyPoints[0], lesson.keyPoints[0].sesothoDraft);
-  assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
+  assert.equal(presentation.content.keyPoints[2], lesson.keyPoints[2].sesothoDraft);
   assert.equal(presentation.content.infographicAlt, lesson.infographicAlt?.sesothoDraft);
   assert.equal(presentation.content.body, lesson.body.sesothoDraft);
-  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz, 'both L2 assessments remain exact-English holds with source answer keys');
+  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz.map((question, index) => ({
+    q: lesson.quiz[index].question.sesothoDraft,
+    options: lesson.quiz[index].options.map(option => option.sesothoDraft),
+    correct: question.correct,
+    rationale: lesson.quiz[index].rationale.sesothoDraft,
+  })), 'Study displays paired assessments without changing canonical answer indices');
 
   const changedSource = {
     ...sourceLesson,

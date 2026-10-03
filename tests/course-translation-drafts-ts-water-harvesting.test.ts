@@ -32,7 +32,7 @@ test('Food Forest Xitsonga L1 draft translates species caution and crop care wit
   assert.ok(paragraphs[9].includes('frost tolerance'), 'check identity, frost tolerance, mature size and local restrictions first');
 });
 
-test('Xitsonga Market drafts pair bounded sales text and keep uncertain decisions and quizzes in English', () => {
+test('Xitsonga Market drafts retain exact sources, conditional sales and unchanged quiz meanings', () => {
   const market = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(market);
   assert.deepEqual(XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.map(lesson => lesson.id),
@@ -47,16 +47,13 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
     assert.equal(draftLesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
     assert.deepEqual(draftLesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
     if (draftLesson.id === 'market-community-l1') {
-      assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), [
-        'Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali',
-        sourceLesson.keyPoints[1], sourceLesson.keyPoints[2], sourceLesson.keyPoints[3],
-      ]);
-      assert.equal(draftLesson.keyPoints[0].reviewStatus, 'machine-draft');
-      assert.deepEqual(draftLesson.keyPoints.slice(1).map(point => point.reviewStatus), ['hold', 'hold', 'hold']);
+      assert.ok(draftLesson.keyPoints.every(point => point.reviewStatus === 'machine-draft'), 'ordinary harvest, price and crop-timing key points remain unreviewed drafts');
+      assert.ok(draftLesson.keyPoints[0].xitsongaDraft.includes('ntshovelo') && draftLesson.keyPoints[0].xitsongaDraft.includes('mali'), 'the harvest-versus-cash distinction remains explicit');
     } else if (draftLesson.id === 'market-community-l2') {
-      assert.deepEqual(draftLesson.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'hold', 'hold']);
-      assert.deepEqual(draftLesson.keyPoints.slice(2).map(point => point.xitsongaDraft), sourceLesson.keyPoints.slice(2),
-        'regular-supply and compliance key points keep their prior exact-English holds');
+      assert.ok(draftLesson.keyPoints.every(point => point.reviewStatus === 'machine-draft'),
+        'checked ordinary supply and compliance framing now joins the existing customer/cost drafts');
+      assert.ok(draftLesson.keyPoints[2].xitsongaDraft.includes('ntsena loko supply ni customer terms'),
+      'the box promise remains conditional on supporting supply and customer terms');
       assert.ok(draftLesson.keyPoints[0].xitsongaDraft.includes('product') && draftLesson.keyPoints[0].xitsongaDraft.includes('nhlayo'),
         'the agreed product category and quantity remain explicit');
       assert.ok(draftLesson.keyPoints[1].xitsongaDraft.includes('costs') && draftLesson.keyPoints[1].xitsongaDraft.includes('selling price'),
@@ -68,54 +65,63 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
     const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
     assert.equal(shown.status, 'draft');
     // Study renders each paired draft while exact-English holds keep their source wording.
-    assert.deepEqual(shown.content.quiz, ['market-community-l1', 'market-community-l3'].includes(draftLesson.id) ? sourceLesson.quiz.map((question, index) => ({
+    assert.deepEqual(shown.content.quiz, sourceLesson.quiz.map((question, index) => ({
       q: draftLesson.quiz[index].question.xitsongaDraft,
       options: draftLesson.quiz[index].options.map(pair => pair.xitsongaDraft),
       correct: question.correct,
       rationale: draftLesson.quiz[index].rationale.xitsongaDraft,
-    })) : sourceLesson.quiz);
+    })));
     assert.deepEqual(shown.content.keyPoints, draftLesson.keyPoints.map(pair => pair.xitsongaDraft));
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
     // Reviewed Market L1 destinations/months/price framing join the prior drafts; technical holds stay exact.
-    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 10, 13, 14]
-      : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 5, 6, 7, 8, 10, 11] : [0, 3, 4, 5, 7, 8, 9, 10];
+    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]
+      : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] : [0, 3, 4, 5, 7, 8, 9, 10];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
       else assert.equal(draftParagraphs[index], paragraph);
+    }
+    if (draftLesson.id === 'market-community-l1') {
+      assert.ok(draftParagraphs[8].includes('best yield per bed') && draftParagraphs[8].includes('the most return for each hour of work'), 'the ranking comparison keeps both best and most anchors exact');
     }
     if (draftLesson.id === 'market-community-l2') {
       assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
       assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
       assert.equal(draftParagraphs[0], 'Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.',
         'the existing localized customer-needs paragraph is preserved byte-for-byte');
-      for (const index of [4, 9]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-        `unresolved commercial commitment paragraph ${index} remains exact English`);
+      assert.ok(draftParagraphs[4].includes('regular selection eka vaxavi lava pfumelelaneke'),
+        'regular selection is for agreed customers');
+      assert.ok(draftParagraphs[9].includes('Loko production yi cinca vhiki na vhiki') &&
+        draftParagraphs[9].includes('papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika'),
+      'variable production must not become an unsupportable fixed promise');
       assert.ok(draftParagraphs[10].startsWith('Offer surplus leyi u nga na yona'),
         'the surplus offer and customer-agreement framing is now drafted');
       assert.ok(draftParagraphs[1].startsWith('Pimanisa '));
-      assert.ok(draftParagraphs[1].includes('market fees, transport, packing and unsold produce'));
+      assert.ok(draftParagraphs[1].includes('market fees, transport, packing na unsold produce'));
       assert.ok(draftParagraphs[1].includes('selling price'));
       assert.ok(draftParagraphs[2].startsWith('Kambisisa market rules'));
       assert.ok(draftParagraphs[2].includes('An informal stall does not automatically have no rules or costs.'));
       assert.ok(draftParagraphs[3].includes('can retain more of the sale price'));
       assert.ok(draftParagraphs[3].startsWith('Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi,'),
         'the bounded price claim and ordinary time/customer-care conditions stay together');
-      assert.ok(draftParagraphs[5].startsWith('Pfumelelanani hi contents, price, payment and what happens when crops are short.'));
-      assert.ok(draftParagraphs[5].endsWith('Regular orders help planning only when customers and growers can keep the agreement.'),
+      assert.ok(draftParagraphs[5].startsWith('Pfumelelanani hi contents, price, payment na leswi humelelaka loko crops are short.'));
+      assert.ok(draftParagraphs[5].endsWith('only when customers and growers can keep the agreement.'),
         'regular orders remain conditional on both sides keeping the agreement');
       assert.ok(draftParagraphs[6].startsWith('Sungula hi '));
       assert.ok(draftParagraphs[6].includes('what you can reliably supply') && draftParagraphs[6].includes('na leswi vaxavi va swi lavaka'),
         'the exact reliable-supply condition stays English while ordinary customer framing is drafted');
       assert.ok(draftParagraphs[7].startsWith('Kambisisa costs'));
-      assert.ok(draftParagraphs[7].includes('before promising regular boxes'));
-      assert.ok(draftParagraphs[8].startsWith('Garden area or customer count alone does not predict income.'));
-      assert.ok(draftParagraphs[8].includes('Ringeta ndlela leyi u nga kotaka ku yi lawula'));
+      assert.ok(draftParagraphs[7].includes('u nga se tshembisa ku nyika regular boxes'),
+        'household food and cost checks must precede the promise');
+      assert.ok(draftParagraphs[8].includes('Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka.'),
+        'area or customer count alone must not predict income');
+      assert.ok(draftParagraphs[8].includes('Ringeta arrangement leyi u nga kotaka ku yi lawula'));
       assert.ok(draftParagraphs[8].includes(' kutani u tsala results'),
         'ordinary manageable-trial framing and recording results are localized');
       assert.ok(draftParagraphs[11].startsWith('Hlamusela maendlelo ya wena ya ku byala hi vutshembeki.'));
-      assert.ok(draftParagraphs[11].endsWith('Check any certification or claim the buyer requires before using a label.'));
+      assert.ok(draftParagraphs[11].endsWith('Loko u nga se tirhisa label, kambisisa any certification or claim the buyer requires.'),
+        'the buyer-required claim check remains before label use');
       const changedBody = { ...sourceLesson, body: `${sourceLesson.body} Changed commercial condition.` };
       const changedPresentation = resolveLearnerLessonPresentation(changedBody, 'ts');
       assert.equal(changedPresentation.status, 'english-fallback');
@@ -138,20 +144,28 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
         'unit labels and produce names stay exact while the recording action is drafted');
       assert.equal(draftParagraphs[14], 'Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.');
       // Checked ordinary destinations/months/price framing replaces its holds; decision safeguards remain exact.
-      for (const index of [8, 9, 11, 12, 15, 16]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-        'crop comparisons, cost categories, numerical example and planting timing remain exact English');
+      for (const index of [8, 9, 11, 15, 16]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
+        `approved ordinary paragraph ${index + 1} is paired as a draft`);
+      assert.equal(draftParagraphs[12], sourceParagraphs[12], 'the R18/R15 numeric worked example remains exact English');
+      assert.ok(draftParagraphs[8].includes('best yield per bed') && draftParagraphs[8].includes('the most return for each hour of work'), 'the best/most comparison stays exact');
+      assert.ok(draftParagraphs[11].includes('production, packing and selling costs'), 'the cost categories remain named in English');
+      assert.ok(draftParagraphs[15].includes('planting conditions') && draftParagraphs[15].includes('expected time to harvest'), 'planting conditions and harvest timing remain explicit');
+      assert.ok(draftParagraphs[16].includes('loko mpfula, mati kumbe swibyariwa swi tsandzeka'), 'backup planning remains tied to failure conditions');
       for (const index of [5, 10, 13]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
-      assert.ok(draftParagraphs[5].startsWith('Use the same simple habit'));
-      assert.ok(draftParagraphs[13].includes('a higher asking price is not a guaranteed sale.'));
+      assert.ok(draftParagraphs[5].includes('mukhuva lowu wo olova'), 'ordinary simple-habit wording is localized');
+      assert.ok(draftParagraphs[13].includes('a wu tiyisisi'), 'the higher asking price is not presented as a guaranteed sale');
       assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), [2, 1],
         'both quiz answer keys remain in canonical order');
       const priceQuestion = draftLesson.quiz[0];
-      assert.equal(priceQuestion.question.reviewStatus, 'hold');
-      assert.equal(priceQuestion.question.xitsongaDraft, sourceLesson.quiz[0].q);
-      assert.equal(priceQuestion.rationale.xitsongaDraft, sourceLesson.quiz[0].rationale);
-      assert.deepEqual(priceQuestion.options.map(option => [option.xitsongaDraft, option.reviewStatus]),
-        sourceLesson.quiz[0].options.map(option => [option, 'hold']),
-        'the full R15 sale/R18 cost quiz remains exact English');
+      assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
+      assert.ok(priceQuestion.question.xitsongaDraft.startsWith(
+        'In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce.'),
+      'the numerical premise remains exact while the question tail is localized');
+      assert.deepEqual(priceQuestion.options.map(option => option.sourceEnglish), sourceLesson.quiz[0].options);
+      assert.ok(priceQuestion.options.every(option => option.reviewStatus === 'machine-draft'));
+      assert.ok(priceQuestion.rationale.xitsongaDraft.includes('le hansi ka cost') &&
+        priceQuestion.rationale.xitsongaDraft.includes('u nga se endla xiboho'),
+      'price remains below cost, with review before the next decision');
 
       const gapQuestion = draftLesson.quiz[1];
       const gapSource = sourceLesson.quiz[1];
@@ -181,13 +195,18 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
     if (draftLesson.id === 'market-community-l2') {
       assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), [2, 2]);
       for (const question of draftLesson.quiz) {
-        assert.equal(question.question.reviewStatus, 'hold');
-        assert.equal(question.question.xitsongaDraft, question.question.sourceEnglish);
-        assert.equal(question.rationale.reviewStatus, 'hold');
-        assert.equal(question.rationale.xitsongaDraft, question.rationale.sourceEnglish);
-        assert.ok(question.options.every(option => option.reviewStatus === 'hold' && option.xitsongaDraft === option.sourceEnglish),
-          'both L2 quizzes retain exact-English stems, options and rationales');
+        assert.equal(question.question.reviewStatus, 'machine-draft');
+        assert.equal(question.rationale.reviewStatus, 'machine-draft');
+        assert.ok(question.options.every(option => option.reviewStatus === 'machine-draft' ||
+          (option.reviewStatus === 'hold' && option.xitsongaDraft === option.sourceEnglish)));
       }
+      assert.ok(draftLesson.quiz[0].question.xitsongaDraft.endsWith('Hi yihi channel leyi n’wi fanelaka best?'),
+        'the best-channel comparison must not become merely a suitable-channel question');
+      assert.equal(draftLesson.quiz[1].options[3].reviewStatus, 'hold');
+      assert.equal(draftLesson.quiz[1].options[3].xitsongaDraft, 'Box schemes avoid tax obligations',
+        'negating this false distractor would create a second correct answer');
+      assert.ok(draftLesson.quiz[1].options[1].xitsongaDraft.includes('ku charge extra for packaging'),
+        'the distractor describes charging a customer, not the grower paying');
     }
     const changedSource: Lesson = { ...sourceLesson, body: `${sourceLesson.body} Changed.` };
     assert.equal(resolveLearnerLessonPresentation(changedSource, 'ts').status, 'english-fallback');
