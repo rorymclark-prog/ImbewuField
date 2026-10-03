@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: '39873b35', changes: [
+    'Soil slides add marked regional drafts beside their complete English source.',
+    'Jar-test limits and leachate warnings stay visible in the silent slide pack.',
+  ], tour: [
+    { title: 'Review the regional Soil slides',
+      where: 'Study → Soil Health → Slides',
+      detail: 'Compare the unreviewed drafts with English and save slides without narration.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: 'b95e7922', changes: [
     'Water slides add marked regional drafts beside their complete English source.',
     'Save the silent slide pack; English narration remains an optional choice.',
