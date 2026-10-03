@@ -268,22 +268,41 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
     'the household food-gap prompt is a screened draft, while crop and price decisions stay exact English');
 
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
+  assert.equal(lesson.keyPoints[0].reviewStatus, 'machine-draft', 'the previously drafted harvest destination point remains a draft');
   assert.deepEqual(lesson.keyPoints.slice(1).map(point => [point.sesothoDraft, point.reviewStatus]),
     sourceLesson.keyPoints.slice(1).map(point => [point, 'hold']));
   assert.equal(lesson.quiz.length, sourceLesson.quiz.length);
-  lesson.quiz.forEach((question, questionIndex) => {
-    const original = sourceLesson.quiz[questionIndex];
-    assert.equal(question.sourceCorrectIndex, original.correct);
-    assert.equal(question.question.sesothoDraft, original.q);
-    assert.equal(question.question.reviewStatus, 'hold');
-    assert.equal(question.rationale.sesothoDraft, original.rationale);
-    assert.equal(question.options.length, original.options.length);
-    question.options.forEach((option, optionIndex) => {
-      assert.equal(option.sourceEnglish, original.options[optionIndex]);
-      assert.equal(option.sesothoDraft, original.options[optionIndex]);
-      assert.equal(option.reviewStatus, 'hold');
-    });
-  });
+  const priceQuestion = lesson.quiz[0];
+  assert.equal(priceQuestion.question.sourceEnglish, sourceLesson.quiz[0].q);
+  assert.equal(priceQuestion.question.sesothoDraft, sourceLesson.quiz[0].q);
+  assert.equal(priceQuestion.question.reviewStatus, 'hold');
+  assert.equal(priceQuestion.rationale.sesothoDraft, sourceLesson.quiz[0].rationale);
+  assert.equal(priceQuestion.rationale.reviewStatus, 'hold');
+  assert.deepEqual(priceQuestion.options.map(option => [option.sourceEnglish, option.sesothoDraft, option.reviewStatus]),
+    sourceLesson.quiz[0].options.map(option => [option, option, 'hold']),
+    'the R15 sale/R18 cost example and every price distractor stay exact English');
+  assert.equal(priceQuestion.sourceCorrectIndex, sourceLesson.quiz[0].correct);
+
+  const gapQuestion = lesson.quiz[1];
+  const gapSource = sourceLesson.quiz[1];
+  assert.equal(gapQuestion.question.sourceEnglish, gapSource.q);
+  assert.equal(gapQuestion.question.reviewStatus, 'machine-draft');
+  assert.equal(gapQuestion.options.length, gapSource.options.length);
+  assert.deepEqual(gapQuestion.options.map(option => option.sourceEnglish), gapSource.options,
+    'translation keeps all four choices in their canonical order');
+  assert.ok(gapQuestion.question.sesothoDraft.includes('June le July selemo se seng le se seng'),
+    'the recurring food gap keeps its exact months and yearly frequency');
+  assert.ok(gapQuestion.options[gapSource.correct].sesothoDraft.includes('dijalo tse loketseng sebaka sa heno') &&
+    gapQuestion.options[gapSource.correct].sesothoDraft.includes('nako ya tsona ya kotulo'),
+    'the correct action still uses locally suitable crops and their harvest timing');
+  assert.ok(gapQuestion.rationale.sesothoDraft.includes('tlelaemete ya sebaka') &&
+    gapQuestion.rationale.sesothoDraft.includes('metsi') &&
+    gapQuestion.rationale.sesothoDraft.includes('nako e lebelletsweng ya kotulo'),
+    'the rationale keeps local climate, water and expected harvest time as conditions');
+  assert.deepEqual(gapQuestion.options.map(option => option.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft']);
+  assert.equal(gapQuestion.rationale.sourceEnglish, gapSource.rationale);
+  assert.equal(gapQuestion.rationale.reviewStatus, 'machine-draft');
+  assert.equal(gapQuestion.sourceCorrectIndex, 1, 'the same source answer remains correct after translation');
 
   const modulePresentation = resolveCourseModulePresentation(sourceModule, 'st');
   assert.equal(modulePresentation.status, 'draft');
@@ -294,7 +313,19 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.body, lesson.body.sesothoDraft);
   assert.deepEqual(presentation.content.keyPoints.slice(1), sourceLesson.keyPoints.slice(1));
-  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
+  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz.map((question, index) => ({
+    q: lesson.quiz[index].question.sesothoDraft,
+    options: lesson.quiz[index].options.map(option => option.sesothoDraft),
+    correct: question.correct,
+    rationale: lesson.quiz[index].rationale.sesothoDraft,
+  })));
+
+  const changedQuestion = { ...sourceLesson, quiz: sourceLesson.quiz.map((question, index) => index === 1
+    ? { ...question, q: `${question.q} Changed season.` }
+    : question) };
+  const staleQuestionPresentation = resolveLearnerLessonPresentation(changedQuestion, 'st');
+  assert.equal(staleQuestionPresentation.status, 'english-fallback', 'changed seasonal assessment wording withdraws its paired draft');
+  assert.deepEqual(staleQuestionPresentation.content.quiz, changedQuestion.quiz);
 
   const changedSource = { ...sourceLesson, body: `${sourceLesson.body} ` };
   const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
@@ -340,9 +371,11 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
   assert.equal(lesson.title.reviewStatus, 'hold');
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
-  assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
+  assert.deepEqual(lesson.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'hold', 'hold'],
+    'the two checked customer and cost points are drafts; supply and compliance cautions keep their prior holds');
+  assert.equal(lesson.keyPoints[0].sesothoDraft, 'Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo.');
   assert.equal(lesson.keyPoints[1].sesothoDraft, 'Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso');
-  for (const index of [0, 2, 3]) {
+  for (const index of [2, 3]) {
     assert.equal(lesson.keyPoints[index].reviewStatus, 'hold');
     assert.equal(lesson.keyPoints[index].sesothoDraft, sourceLesson.keyPoints[index]);
   }
@@ -350,11 +383,11 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 'st');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].sesothoDraft);
-  assert.equal(presentation.content.keyPoints[0], sourceLesson.keyPoints[0]);
+  assert.equal(presentation.content.keyPoints[0], lesson.keyPoints[0].sesothoDraft);
   assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
   assert.equal(presentation.content.infographicAlt, lesson.infographicAlt?.sesothoDraft);
   assert.equal(presentation.content.body, lesson.body.sesothoDraft);
-  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
+  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz, 'both L2 assessments remain exact-English holds with source answer keys');
 
   const changedSource = {
     ...sourceLesson,
