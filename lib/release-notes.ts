@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: '8c7c6427', changes: [
+    'Reading lessons and silent slides add marked regional drafts beside exact English.',
+    'Difficult farming terms stay English; draft wording is still awaiting facilitator review.',
+  ], tour: [
+    { title: 'Review regional Reading drafts',
+      where: 'Study → Reading the Landscape → Lessons and Slides',
+      detail: 'Compare the marked drafts with English and save the silent slides offline.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: 'e4761b2b', changes: [
     'Market slides add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
     'Silent slide packs keep the exact price example and seed-permission guidance.',
