@@ -1,4 +1,4 @@
-/** Unreviewed, source-paired Sesotho learner draft for selected Market lesson fields. */
+/** Unreviewed, source-paired Sesotho ordinary-wording drafts for Market L1/L2; technical anchors remain English. */
 import type { SesothoCourseModuleDraft, SesothoSourcePair } from './course-translation-drafts-st.ts';
 
 const machineDraft = (sourceEnglish: string, sesothoDraft: string): SesothoSourcePair => ({
@@ -33,7 +33,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         'Record-Keeping: Knowing What Your Farm Is Actually Producing',
         'Ho Boloka Direkoto: Ho Tseba Hantle Seo Polasi ya Hao e se Hlahisang',
       ),
-      // Paragraphs 1–5, 7–8 and 11 are proposed. Risky farming/business guidance stays English.
+      // Ordinary record questions and food-gap framing are paired; keep the comparative yield/return and numeric price anchors exact so the lesson does not imply an unverified ranking or local market price.
       body: machineDraft(
         [
           'A harvest can feed the household, be sold, be shared, or be lost.',
@@ -60,18 +60,18 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.',
           "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
           'Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.',
-          "Sebelisa mokgwa o tshwanang o bonolo bakeng sa food kept at home, produce sold, produce gifted, le produce composted.",
+          "Sebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
           'O se ke wa itshetleha ka mohopolo qetellong ya sehla.',
           'Sehla se le seng sa direkoto se araba dipotso tse sebetsang.',
-          "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka highest return for each hour of work?",
-          "Ke crops dife tse sebedisang more seeds, water and compost than they return?",
+          "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+          "Ke crops dife tse sebedisang dipeo, metsi le compost tse ngata ho feta return ya tsona?",
           'Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.',
-          "Pele o beha price, rekota production, packing and selling costs, ho kenyeletsa labour le transport.",
+          "Pele o beha price, rekota production, packing le selling costs, ho kenyeletsa labour le transport.",
           'Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.',
-          "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; a higher asking price is not a guaranteed sale.",
+          "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e netefatse thekiso.",
           'Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.',
-          "Khetha crops tse loketseng sebaka sa heno, mme o work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
-          "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya leano la backup ha pula, metsi kapa crops di hloleha.",
+          "Khetha crops tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha ho harvest eo o e hlokang. Sheba maemo a ho jala le nako e lebelletsweng ya kotulo.",
+          "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya moralo wa tlatsetso ha pula, metsi kapa dijalo di hloleha.",
         ].join('\n\n'),
       ),
       keyPoints: [
@@ -79,21 +79,21 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Record harvest amounts and destinations separately from cash',
           'Rekota bongata ba kotulo le moo e yang teng ka thoko ho tjhelete',
         ),
-        hold('Include production and selling costs when assessing a price'),
-        hold('Label worked examples; use your actual costs for decisions'),
-        hold('Plan for food gaps using local growing conditions and harvest timing'),
+        machineDraft('Include production and selling costs when assessing a price', 'Kenyelletsa production le selling costs ha o lekola price.'),
+        machineDraft('Label worked examples; use your actual costs for decisions', 'Tshwaya worked examples; sebedisa costs tsa hao tsa nnete ha o etsa diqeto.'),
+        machineDraft('Plan for food gaps using local growing conditions and harvest timing', 'Rera bakeng sa dikgeo tsa dijo o sebedisa maemo a ho lema a lehae le nako ya kotulo.'),
       ],
       quiz: [
         {
-          question: hold('In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?'),
+          question: machineDraft('In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?', 'In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Ke eng seo molemi a lokelang ho se hlahloba?'),
           options: [
-            hold('Keep selling at R15 — short-term loss builds relationships'),
-            hold('Stop growing tomatoes entirely'),
-            hold('The selling price, costs and whether another crop would give a better return'),
-            hold('Apply for a subsidy to cover the gap'),
+            machineDraft('Keep selling at R15 — short-term loss builds relationships', 'Tswela pele o rekisa ka R15 — tahlehelo ya nako e khutshwane e aga dikamano.'),
+            machineDraft('Stop growing tomatoes entirely', 'Emisa ho lema tamati ka ho felletseng.'),
+            machineDraft('The selling price, costs and whether another crop would give a better return', 'Selling price, costs, le hore na crop e nngwe e ka fana ka return e betere.'),
+            machineDraft('Apply for a subsidy to cover the gap', 'Etsa kopo ya subsidy ho kwahela gap.'),
           ],
           sourceCorrectIndex: 2,
-          rationale: hold('The example price is below the stated cost. Review the gap and customer demand before making the next production decision.'),
+          rationale: machineDraft('The example price is below the stated cost. Review the gap and customer demand before making the next production decision.', 'The example price is below the stated cost. Hlahloba phapang le customer demand pele o etsa qeto ya production e latelang.'),
         },
         {
           question: machineDraft("A farmer's records show she's short of vegetables every June and July. What's the useful action here?", "Direkoto tsa molemi di bontsha hore meroho ya hae e a haella ka June le July selemo se seng le se seng. Ke kgato efe e thusang?"),
@@ -132,17 +132,17 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         ].join('\n\n'),
         [
           "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
-          "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
-          "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+          "Bapisa market fees, lipalangoang, ho paka le dihlahiswa tse sa rekiswang hammoho le selling price.",
+          "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
           "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
           "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
           "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
           "Qala ka what you can reliably supply le seo bareki ba se batlang.",
-          "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+          "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
           "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
           "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
           "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
-          "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.",
+          "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
         ].join('\n\n'),
       ),
       keyPoints: [
@@ -151,31 +151,31 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Compare costs and losses as well as selling price',
           'Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso',
         ),
-        hold('Promise regular boxes only when supply and customer terms support them'),
-        hold('Check market rules and describe growing practices honestly'),
+        machineDraft('Promise regular boxes only when supply and customer terms support them', 'Tshepisa regular boxes feela ha supply le customer terms di di tshehetsa.'),
+        machineDraft('Check market rules and describe growing practices honestly', 'Hlahloba market rules mme o hlalose growing practices tsa hao ka botshepehi.'),
       ],
       quiz: [
         {
-          question: hold('A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?'),
+          question: machineDraft('A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?', 'Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke channel efe e mo loketseng ka ho fetisisa?'),
           options: [
-            hold('A formal market stall needing consistent weekly supply'),
-            hold('A box scheme needing the same produce weekly'),
-            hold('An informal market or neighbour sales with no fixed commitment'),
-            hold('A daily-delivery school contract'),
+            machineDraft('A formal market stall needing consistent weekly supply', 'Formal market stall e hlokang consistent weekly supply.'),
+            machineDraft('A box scheme needing the same produce weekly', 'Box scheme e hlokang produce e tshwanang beke le beke.'),
+            machineDraft('An informal market or neighbour sales with no fixed commitment', 'Informal market kapa thekiso ho baahisani ntle le fixed commitment.'),
+            machineDraft('A daily-delivery school contract', 'Konteraka ya sekolo e hlokang ho tlisa letsatsi le letsatsi.'),
           ],
           sourceCorrectIndex: 2,
-          rationale: hold("This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has."),
+          rationale: machineDraft("This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.", "Ena ke yona feela channel e sa mo hlokeng ho tshepisa fixed amount beke le beke — o rekisa seo a nang le sona ka nnete."),
         },
         {
-          question: hold('How can agreed regular orders help a grower plan?'),
+          question: machineDraft('How can agreed regular orders help a grower plan?', 'Ditaelo tsa kamehla tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?'),
           options: [
-            hold('Box customers always pay more per kilogram'),
-            hold('Box schemes let you charge extra for packaging'),
-            hold('Committed subscription income lets you plan production around real demand instead of growing speculatively'),
+            machineDraft('Box customers always pay more per kilogram', 'Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.'),
+            machineDraft('Box schemes let you charge extra for packaging', 'Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.'),
+            machineDraft('Committed subscription income lets you plan production around real demand instead of growing speculatively', 'Committed subscription income e o dumella ho rera production ho potoloha real demand ho e-na le ho lema ka ho hakanya.'),
             hold('Box schemes avoid tax obligations'),
           ],
           sourceCorrectIndex: 2,
-          rationale: hold('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.'),
+          rationale: machineDraft('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.', 'Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, payment le costs tsa ho di phethahatsa.'),
         },
       ],
     },

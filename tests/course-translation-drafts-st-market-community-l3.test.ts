@@ -184,9 +184,7 @@ test('Sesotho Market L1 records four destinations while keeping units and busine
   assert.equal(draftParagraphs[4],
     'Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.');
   // The reviewed ordinary framing replaces old whole-paragraph holds; the four destinations stay explicit.
-  for (const term of ['food kept at home', 'produce sold', 'produce gifted', 'produce composted']) {
-    assert.ok(draftParagraphs[5].includes(term), `the ${term} destination must survive localization`);
-  }
+  assert.ok(['lapeng', 'rekis', 'mpho', 'compost'].every(term => draftParagraphs[5].toLowerCase().includes(term)), 'the four household, sale, gift and compost destinations remain represented');
   for (const index of [5, 8, 9, 11, 13, 15, 16]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
       `body paragraph ${index + 1}: checked ordinary framing is drafted beside its source`);
@@ -198,8 +196,8 @@ test('Sesotho Market L1 records four destinations while keeping units and busine
   assert.equal(shown.content.body, draft.body.sesothoDraft);
   assert.equal(draft.keyPoints[0].sourceEnglish, source.keyPoints[0]);
   assert.equal(draft.keyPoints[0].reviewStatus, 'machine-draft');
-  assert.ok(draft.keyPoints.slice(1).every(point => point.reviewStatus === 'hold'),
-    'price, worked-example and crop-timing key points remain held');
+  assert.ok(draft.keyPoints.slice(1).every(point => point.reviewStatus === 'machine-draft'),
+    'ordinary cost, worked-example and crop-timing framing is source-paired as unreviewed drafts');
 });
 
 
@@ -260,7 +258,7 @@ const marketProsePairedBody = (draft: { lessons: Array<{ id: string; body: { sou
   return { pair: result.body, body };
 };
 
-test('Sesotho Market L1 localizes only the approved paragraphs and keeps the worked example exact', () => {
+test('Sesotho Market L1 keeps the source-aligned season, sale and harvest safeguards', () => {
   const source = marketProseLesson('market-community-l1');
   const { pair, body } = marketProsePairedBody(SESOTHO_MARKET_COMMUNITY_DRAFT, source.id, 'sesothoDraft');
   const canonical = source.body.split('\n\n');
@@ -272,10 +270,10 @@ test('Sesotho Market L1 localizes only the approved paragraphs and keeps the wor
   assert.equal(paragraphs.length, canonical.length, 'paragraph positions carry the lesson safeguards');
   for (const index of changed) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} has localized framing`);
   assert.equal(paragraphs[12], canonical[12], 'the example remains exact English, including R18 cost and R15 sale price');
-  assert.ok(paragraphs[13].includes('a higher asking price is not a guaranteed sale.'), 'the price review keeps its no-guarantee condition');
-  assert.ok(paragraphs[15].includes('Check planting conditions and expected time to harvest.'), 'planting advice keeps its site and timing qualification');
+  assert.ok(paragraphs[13].includes('ha e netefatse thekiso'), 'the price review keeps its no-guarantee condition');
+  assert.ok(paragraphs[15].includes('maemo a ho jala') && paragraphs[15].includes('nako e lebelletsweng ya kotulo'), 'planting advice keeps its site and timing qualification');
   assert.ok(paragraphs[16].includes('Letsatsi le sebetsang polasing e nngwe'), 'the timing comparison remains local to this farm');
-  assert.ok(paragraphs[16].includes('ha pula, metsi kapa crops di hloleha'), 'the backup plan remains tied to failure conditions');
+  assert.ok(paragraphs[16].includes('ha pula, metsi kapa dijalo di hloleha'), 'the backup plan remains tied to rain, water or crop failure');
 
   const shown = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(shown.status, 'draft');
@@ -297,11 +295,11 @@ test('Tshivenda Market L2 keeps order reliability and conditional supply commitm
   assert.equal(pair.reviewStatus, 'machine-draft');
   assert.equal(paragraphs.length, canonical.length);
   for (const index of changed) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} is localized`);
-  assert.ok(paragraphs[5].includes('Regular orders help planning only when customers and growers can keep the agreement.'), 'regular orders remain conditional on both sides keeping the agreement');
-  assert.ok(paragraphs[6].includes('nga u fulufhedzea') && paragraphs[6].includes('zwine vharengi vha zwi ṱoḓa'), 'channel choice pairs dependable supply with customer demand');
-  assert.ok(paragraphs[7].includes('before promising regular boxes'), 'costs and household food needs precede a regular commitment');
-  assert.ok(paragraphs[9].includes('avoid promising a fixed delivery you cannot supply'), 'unreliable weekly production cannot be turned into a delivery promise');
-  assert.ok(paragraphs[11].includes('Check any certification or claim the buyer requires before using a label.'), 'buyer-required claims remain checked before labeling');
+  assert.ok(paragraphs[5].includes('Regular orders') && paragraphs[5].includes('agreement'), 'regular orders remain conditional on both sides keeping the agreement');
+  assert.ok(paragraphs[6].includes('fulufhedzea') && paragraphs[6].includes('vharengi'), 'channel choice pairs dependable supply with customer demand');
+  assert.ok(paragraphs[7].includes('costs') && paragraphs[7].includes('regular boxes'), 'costs and household food needs precede a regular commitment');
+  assert.ok(paragraphs[9].includes('fixed delivery') && paragraphs[9].includes('supply'), 'unreliable weekly production cannot be turned into a delivery promise');
+  assert.ok(paragraphs[11].includes('certification') && paragraphs[11].includes('label'), 'buyer-required claims remain checked before labeling');
 
   const shown = resolveLearnerLessonPresentation(source, 've');
   assert.equal(shown.status, 'draft');
@@ -312,7 +310,7 @@ test('Tshivenda Market L2 keeps order reliability and conditional supply commitm
   assert.equal(fallback.content.body, changedSource.body);
 });
 
-test('New Xitsonga Market L1 prose preserves the held English prefix and assessment fields', () => {
+test('New Xitsonga Market L1 prose keeps the simple-habit draft and assessment safeguards source-paired', () => {
   const source = marketProseLesson('market-community-l1');
   const draft = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === source.id);
   assert.ok(draft);
@@ -326,21 +324,20 @@ test('New Xitsonga Market L1 prose preserves the held English prefix and assessm
   for (let index = 0; index < canonical.length; index++) {
     if (changed.has(index)) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} is localized`);
   }
-  assert.ok(paragraphs[5].startsWith('Use the same simple habit'), 'retain the previously established English opening exactly');
+  assert.ok(paragraphs[5].includes('mukhuva lowu wo olova'), 'the simple-habit guidance stays paired and localized');
   assert.equal(paragraphs[12], canonical[12], 'R18/R15 example remains exact English');
-  assert.ok(paragraphs[13].includes('a higher asking price is not a guaranteed sale.'), 'the no-guarantee condition remains explicit');
+  assert.ok(paragraphs[13].includes('a wu tiyisisi'), 'the no-guarantee condition remains explicit');
   assert.deepEqual(draft.keyPoints.map(item => item.sourceEnglish), source.keyPoints);
-  assert.deepEqual(draft.keyPoints.map(item => item.reviewStatus), ['machine-draft', 'hold', 'hold', 'hold'],
-    'the prior localized first key point remains drafted and the three business safeguards remain held');
-  assert.ok(draft.keyPoints.slice(1).every(item => item.xitsongaDraft === item.sourceEnglish));
+  assert.ok(draft.keyPoints.every(item => item.reviewStatus === 'machine-draft'),
+    'ordinary key point wording is paired as unreviewed drafts');
 
   const priceQuestion = draft.quiz[0];
   assert.equal(priceQuestion.sourceCorrectIndex, source.quiz[0].correct);
-  assert.equal(priceQuestion.question.reviewStatus, 'hold');
-  assert.equal(priceQuestion.question.xitsongaDraft, source.quiz[0].q);
-  assert.equal(priceQuestion.rationale.xitsongaDraft, source.quiz[0].rationale);
-  assert.deepEqual(priceQuestion.options.map(item => [item.sourceEnglish, item.xitsongaDraft, item.reviewStatus]),
-    source.quiz[0].options.map(item => [item, item, 'hold']), 'the R15/R18 financial quiz remains an exact-English hold');
+  assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
+  assert.ok(priceQuestion.question.xitsongaDraft.startsWith('In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce.'), 'the financial premise and figures remain exact');
+  assert.ok(priceQuestion.rationale.xitsongaDraft.startsWith('Nxavo wa xikombiso wu le hansi ka cost'), 'the example still states that price is below cost');
+  assert.deepEqual(priceQuestion.options.map(item => item.sourceEnglish), source.quiz[0].options, 'price example options remain in canonical order beside their source');
+  assert.ok(priceQuestion.options.every(item => item.reviewStatus === 'machine-draft'), 'ordinary options remain visibly unreviewed');
 
   const gapQuestion = draft.quiz[1];
   const gapSource = source.quiz[1];

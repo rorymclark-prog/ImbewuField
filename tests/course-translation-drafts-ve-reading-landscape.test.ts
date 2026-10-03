@@ -26,7 +26,7 @@ test('Tshivenda Seeds drafts every lesson field, keeps English genetics terms an
     ['yo omaho', 'yo valiwaho', 'ho rotholaho', 'swiswi'], 'storage keeps dry seed in a sealed container, cool and dark');
 });
 
-test('Tshivenda Market lesson drafts retain exact English guidance around short descriptive drafts', () => {
+test('Tshivenda Market drafts keep exact sources, numeric premises and answer safeguards', () => {
   const market = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(market);
   assert.deepEqual(TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.map(lesson => lesson.id),
@@ -41,11 +41,15 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     assert.equal(draft.body.reviewStatus, 'machine-draft');
     assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
     assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
-    if (lessonId !== 'market-community-l3') assert.deepEqual(draft.keyPoints.map(point => point.tshivendaDraft), source.keyPoints);
+    for (const point of draft.keyPoints) {
+      assert.ok(['hold', 'machine-draft'].includes(point.reviewStatus));
+      if (point.reviewStatus === 'hold') assert.equal(point.tshivendaDraft, point.sourceEnglish,
+        'remaining holds must be exact English, not unmarked translations');
+    }
     assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
     const shown = resolveLearnerLessonPresentation(source, 've');
     assert.equal(shown.status, 'draft');
-    // Study resolves only the fields paired in the draft; the R15/R18 question remains held in English.
+    // The price question now localizes its question tail; its numerical premise stays exact.
     assert.deepEqual(shown.content.quiz, ['market-community-l1', 'market-community-l3'].includes(lessonId) ? source.quiz.map((question, index) => ({
       q: draft.quiz[index].question.tshivendaDraft,
       options: draft.quiz[index].options.map(pair => pair.tshivendaDraft),
@@ -57,22 +61,28 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
     // Checked household and community framing is now drafted; source-bound seed and advice holds stay exact.
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 13, 14, 15, 16] : [0, 3, 4, 5, 6, 7, 8, 9, 10];
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16] : [0, 3, 4, 5, 6, 7, 8, 9, 10];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);
     }
     if (lessonId === 'market-community-l1') {
-      assert.deepEqual(draft.keyPoints.map(point => point.reviewStatus), ['hold', 'hold', 'hold', 'hold'],
-        'all four L1 key point holds retain their prior status');
+      assert.deepEqual(draft.keyPoints.map(point => point.reviewStatus),
+        ['hold', 'machine-draft', 'machine-draft', 'machine-draft'],
+        'the existing record/cash hold is preserved while the checked cost and planning frames become drafts');
       const priceQuestion = draft.quiz[0];
       assert.equal(priceQuestion.sourceCorrectIndex, 2);
-      assert.equal(priceQuestion.question.reviewStatus, 'hold');
-      assert.equal(priceQuestion.question.tshivendaDraft, source.quiz[0].q);
-      assert.equal(priceQuestion.rationale.tshivendaDraft, source.quiz[0].rationale);
-      assert.deepEqual(priceQuestion.options.map(option => [option.tshivendaDraft, option.reviewStatus]),
-        source.quiz[0].options.map(option => [option, 'hold']),
-        'the full R15 sale/R18 cost assessment stays exact English');
+      assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
+      assert.ok(priceQuestion.question.tshivendaDraft.startsWith(
+        'In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce.'),
+      'the question must not reverse costs and sale price or present the example as a market price');
+      assert.deepEqual(priceQuestion.options.map(option => option.sourceEnglish), source.quiz[0].options);
+      assert.ok(priceQuestion.options.every(option => option.reviewStatus === 'machine-draft'));
+      assert.ok(priceQuestion.options[2].tshivendaDraft.includes('tshi nga netshedza return i khwine'),
+        'the correct answer still compares another crop conditionally rather than promising a better return');
+      assert.ok(priceQuestion.rationale.tshivendaDraft.includes('fhasi ha cost') &&
+        priceQuestion.rationale.tshivendaDraft.includes('musi ni sa athu dzhia tsheo'),
+      'cost comparison and review before the next production decision remain explicit');
 
       const gapQuestion = draft.quiz[1];
       const gapSource = source.quiz[1];
@@ -112,17 +122,18 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
       assert.equal(shownParagraphs[4],
         'Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.',
         'keep unit labels and morogo exact while recording where each item went');
-      assert.equal(shownParagraphs[5],
-        'Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.',
-        'ordinary habit framing is drafted while the four exact destination categories remain English');
+      assertKeeps(shownParagraphs[5], ['hayani', 'rengiswaho', 'mpho', 'compost'],
+        'the four destinations stay distinct after localizing the old English category labels');
       assert.equal(shownParagraphs[10],
         'Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.',
         'state only which months the household buys food');
       assert.equal(shownParagraphs[14], 'Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.',
         'the household food-gap prompt is screened while crop and price decisions stay in English');
       assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), market.lessons[0].keyPoints);
-      assert.ok(draft.keyPoints.every(point => point.reviewStatus === 'hold' && point.tshivendaDraft === point.sourceEnglish),
-        'cash, cost, price and local crop timing key points remain exact English');
+      assert.ok(draft.keyPoints[1].tshivendaDraft.includes('production na selling costs'),
+        'the price assessment still includes both production and selling costs');
+      assert.ok(draft.keyPoints[2].tshivendaDraft.includes('costs dzaṋu dza vhukuma'),
+        'decisions must use actual costs rather than the teaching example');
     }
     assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed.` }, 've').status,
       'english-fallback');
@@ -373,7 +384,7 @@ test('Tshivenda Small Livestock drafts the module card and every lesson, with an
     'english-fallback', 'changed module metadata withdraws the paired draft');
 });
 
-test('Tshivenda Market L2 pairs bounded customer text and holds uncertain terms in English', () => {
+test('Tshivenda Market L2 pairs customer and assessment drafts without weakening commitments', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(sourceModule);
   const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l2');
@@ -391,43 +402,56 @@ test('Tshivenda Market L2 pairs bounded customer text and holds uncertain terms 
   const draftParagraphs = lesson.body.tshivendaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
   // Independently checked ordinary customer framing replaces old full holds; commitment clauses stay exact.
-  for (const index of [0, 2, 3, 4, 5, 6, 8, 9, 10, 11]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
-  for (const index of [1, 7]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-    'cost comparisons and household food checks before box promises stay exact English');
+  for (const index of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
   assert.ok(draftParagraphs[3].startsWith('Direct selling can retain more of the sale price,'));
-  assert.ok(draftParagraphs[5].includes('Regular orders help planning only when customers and growers can keep the agreement.'));
+  assert.ok(draftParagraphs[5].includes('Regular orders') &&
+    draftParagraphs[5].includes('only when customers and growers can keep the agreement.'),
+  'ordinary planning wording must retain the only-when qualification for both sides');
+  assert.ok(draftParagraphs[7].includes('costs na household food needs musi ni sa athu fulufhedzisa regular boxes.'),
+    'cost and household checks precede the promise, rather than follow it');
   assert.ok(draftParagraphs[9].includes('avoid promising a fixed delivery you cannot supply'));
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
   assert.equal(lesson.keyPoints[1].tshivendaDraft, 'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.');
-  assert.deepEqual(lesson.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'hold', 'hold'],
-    'the two checked customer and cost points are drafted while supply and compliance points retain their prior holds');
+  assert.ok(lesson.keyPoints.every(point => point.reviewStatus === 'machine-draft'),
+    'checked supply and compliance framing now joins the existing source-paired customer/cost drafts');
   assert.ok(lesson.keyPoints[0].tshivendaDraft.includes('tshibveledzwa') && lesson.keyPoints[0].tshivendaDraft.includes('tshivhalo'),
     'the agreement still names product and quantity');
   assert.ok(lesson.keyPoints[1].tshivendaDraft.includes('tsengo') && lesson.keyPoints[1].tshivendaDraft.includes('ndozwo'),
     'the comparison still names costs and losses alongside price');
-  for (const index of [2, 3]) {
-    assert.equal(lesson.keyPoints[index].reviewStatus, 'hold');
-    assert.equal(lesson.keyPoints[index].tshivendaDraft, sourceLesson.keyPoints[index]);
-  }
+  assert.ok(lesson.keyPoints[2].tshivendaDraft.includes('fhedzi musi supply na customer terms'),
+    'regular boxes cannot be promised without supporting supply and customer terms');
+  assert.ok(lesson.keyPoints[3].tshivendaDraft.includes('nga u fulufhedzea'),
+    'claims about growing practices must remain honest');
   assert.deepEqual(lesson.quiz.map(question => question.sourceCorrectIndex), sourceLesson.quiz.map(question => question.correct));
 
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 've');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].tshivendaDraft);
   assert.equal(presentation.content.keyPoints[0], lesson.keyPoints[0].tshivendaDraft);
-  assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
+  assert.equal(presentation.content.keyPoints[2], lesson.keyPoints[2].tshivendaDraft);
   assert.equal(presentation.content.body, lesson.body.tshivendaDraft);
   assert.deepEqual(lesson.quiz.map(question => question.sourceCorrectIndex), [2, 2]);
   for (const question of lesson.quiz) {
-    assert.equal(question.question.reviewStatus, 'hold');
-    assert.equal(question.question.tshivendaDraft, question.question.sourceEnglish);
-    assert.equal(question.rationale.reviewStatus, 'hold');
-    assert.equal(question.rationale.tshivendaDraft, question.rationale.sourceEnglish);
-    assert.ok(question.options.every(option => option.reviewStatus === 'hold' && option.tshivendaDraft === option.sourceEnglish),
-      'both L2 commercial quizzes stay exact-English holds in original option order');
+    assert.equal(question.question.reviewStatus, 'machine-draft');
+    assert.equal(question.rationale.reviewStatus, 'machine-draft');
+    assert.ok(question.options.every(option => option.reviewStatus === 'machine-draft' ||
+      (option.reviewStatus === 'hold' && option.tshivendaDraft === option.sourceEnglish)));
   }
-  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
+  assert.equal(lesson.quiz[1].options[3].reviewStatus, 'hold');
+  assert.equal(lesson.quiz[1].options[3].tshivendaDraft, 'Box schemes avoid tax obligations',
+    'negating this false distractor would create a second correct answer');
+  assert.ok(lesson.quiz[0].question.tshivendaDraft.includes('Mulimi wa bulasi ḽiṱuku') &&
+    lesson.quiz[0].question.tshivendaDraft.includes('production ine ya fhambana vhege nga vhege'),
+  'the farm is small and weekly production varies; neither actor nor the supply condition may change');
+  assert.ok(lesson.quiz[1].rationale.tshivendaDraft.includes('reliable supply, payment na costs'),
+    'confirmed orders do not guarantee income independently of supply, payment and fulfilment costs');
+  assert.deepEqual(presentation.content.quiz, lesson.quiz.map(question => ({
+    q: question.question.tshivendaDraft,
+    options: question.options.map(option => option.tshivendaDraft),
+    correct: question.sourceCorrectIndex,
+    rationale: question.rationale.tshivendaDraft,
+  })));
 
   const changedSource = {
     ...sourceLesson,
