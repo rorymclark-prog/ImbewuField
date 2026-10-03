@@ -1,0 +1,356 @@
+{
+  "title": "Conservative final repair check — regional vegetables L2/L4",
+  "date": "2026-10-03",
+  "reviewType": "Read-only machine semantic check; no fluent-speaker or local farming approval.",
+  "bindingSource": "Executed resolver results at add09cff-compatible inputs from /tmp/imbewu-regional-resolver-at-add09cff-20261003.json; all code inputs had been verified identical to the canonical commit before execution.",
+  "packetBinding": {
+    "positions": 42,
+    "allSourceAndCurrentBindingsMatch": true,
+    "entries": [
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 0,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 1,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 2,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 3,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 4,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 5,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 6,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 7,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 8,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 9,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 10,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "st",
+        "index": 11,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 0,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 1,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 2,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 3,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 4,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 5,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 6,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 7,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 8,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 9,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 10,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ve",
+        "index": 11,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 0,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 1,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 2,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 3,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 4,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 5,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 6,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 7,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 8,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 9,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 10,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "language": "ts",
+        "index": 11,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l2",
+        "language": "ts",
+        "index": 10,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l2",
+        "language": "ts",
+        "index": 12,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l2",
+        "language": "ts",
+        "index": 13,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l2",
+        "language": "ts",
+        "index": 14,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l2",
+        "language": "ts",
+        "index": 15,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      },
+      {
+        "lessonId": "vegetables-staples-l2",
+        "language": "ts",
+        "index": 19,
+        "sourceMatchesCanonical": true,
+        "currentMatchesResolver": true
+      }
+    ]
+  },
+  "proposedRepairs": [
+    {
+      "lessonId": "vegetables-staples-l4",
+      "language": "ts",
+      "index": 4,
+      "proposedFinal": "A yellow leaf is not automatically an insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza.",
+      "source": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "assessment": "Conservative and meaning-preserving at machine level: exact source diagnostic restores yellow and the negative ‘not automatically’ qualifier; candidate cause list and before-action sentence remain, retaining the three alternatives.",
+      "decision": "Accept proposed repair as an unreviewed draft; fluent Xitsonga review remains required."
+    },
+    {
+      "lessonId": "vegetables-staples-l4",
+      "language": "ve",
+      "index": 3,
+      "proposedFinal": "Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”? Are predators already working on the problem for you?",
+      "source": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "assessment": "Conservative repair restores the exact source predator question including ‘already’ and ‘for you’. The first two draft questions retain all diagnostic concepts but contain substantial English/code switching; they do not omit a source diagnostic item.",
+      "decision": "Accept as a conservative unreviewed composition. Fluent Tshivenda review should check the two code-switched questions."
+    },
+    {
+      "lessonId": "vegetables-staples-l4",
+      "language": "ve",
+      "index": 6,
+      "proposedFinal": "Tsha u thoma. Sedzani. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "source": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "assessment": "All four observation targets are retained exactly in English, avoiding the possible shift from damage pattern to how damage occurred. Number and observe instruction are retained in Tshivenda.",
+      "decision": "Accept as conservative unreviewed draft; English checklist is exact pending fluent translation."
+    }
+  ],
+  "correctionsToPriorReview": {
+    "vegetablesStaplesL2TsParagraph15": {
+      "source": "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+      "candidate": "Pumpkin yi hangalaka ehenhla ka misava, yi endla ndzhuti ehenhla ka misava, yi tlhela yi hlayisa moisture.",
+      "updatedFinding": "Withdraw prior concern that the candidate omits the words ‘in the soil’. The source says ‘shading the soil and holding moisture’; it does not specify ‘holding moisture in the soil’. Candidate names the soil as shaded and says moisture is held. No source-specificity repair is warranted here.",
+      "disposition": "No repair on this point; keep draft subject to fluent review."
+    },
+    "vegetablesStaplesL4VeParagraph4": {
+      "source": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "candidate": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha water, nutrition, kana root damage. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.",
+      "updatedFinding": "This candidate begins with the exact English noun phrase ‘Yellow leaf’, so it does not appear to change yellow to red. It is substantially code-switched; fluency and whether the remainder cleanly means ‘not automatically an insect’ need Tshivenda review. My earlier color-mismatch flag for VE was incorrect.",
+      "disposition": "Do not describe this as a color error. Preserve the exact English source sentence as the conservative choice if no fluent review is available."
+    },
+    "vegetablesStaplesL4TsParagraph4": {
+      "source": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "candidate": "Tluka leri tshukaka a ri vuli leswaku i insect hi ku tisungulela. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza.",
+      "updatedFinding": "The phrase ‘Tluka leri tshukaka’ remains a potential red/reddening versus yellow mismatch. Restore exact English diagnostic sentence as proposed.",
+      "disposition": "Color-risk flag retained for TS only."
+    }
+  },
+  "limits": "This check does not certify target-language grammar, idiom, or local acceptability."
+}

@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: '8fbba78e', changes: [
+    'Vegetable slides add marked regional drafts beside the full English source.',
+    'Save the updated silent slides; English narration remains an optional choice.',
+  ], tour: [
+    { title: 'Review the opening vegetable slides',
+      where: 'Study → Vegetables and Staple Crops → Slides 1–6',
+      detail: 'Read the unreviewed wording with its English source and save slides only.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: 'd81c93a2', changes: [
     'Vegetable bed lessons add marked regional wording beside exact English.',
     'Bed sizes, soil precautions and nursery order stay anchored to their source.',
