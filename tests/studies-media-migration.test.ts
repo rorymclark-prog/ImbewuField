@@ -1515,3 +1515,66 @@ test('a saved livestock module refreshes its loop-framing stills and speech afte
   assert.equal(await rows.get(replacement)!.text(), 'new learner-selected still');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
 });
+
+
+test('a saved regional Soil Health pack retires only the twelve refreshed stills without spending airtime', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSoilHealthRegionalStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateSoilHealthRegionalStills\)\.then\(migrateSoilL3ComparisonStill\)/);
+
+  const origin = 'https://field.test';
+  const changed = ['st', 've', 'ts'].flatMap(language => [1, 2, 5, 19].map(slide =>
+    `/course-decks/soil-health/${language}/slide-${String(slide).padStart(2, '0')}.webp`
+  ));
+  const regionalStills = ['st', 've', 'ts'].flatMap(language => Array.from({ length: 20 }, (_, index) =>
+    `/course-decks/soil-health/${language}/slide-${String(index + 1).padStart(2, '0')}.webp`
+  ));
+  const preserved = [
+    ...regionalStills.filter(path => !changed.includes(path)),
+    ...['en', 'zu'].flatMap(language => Array.from({ length: 20 }, (_, index) =>
+      `/course-decks/soil-health/${language}/slide-${String(index + 1).padStart(2, '0')}.jpg`
+    )),
+    ...['en', 'zu'].flatMap(language => [
+      ...Array.from({ length: 20 }, (_, index) => `/course-audio/soil-health/${language}/slide-${String(index + 1).padStart(2, '0')}.mp3`),
+      `/course-audio/soil-health/${language}/full.mp3`,
+    ]),
+    ...Array.from({ length: 22 }, (_, index) => `/course-audio/intro-permaculture/st/slide-${String(index + 1).padStart(2, '0')}.mp3`),
+    '/course-audio/intro-permaculture/st/full.mp3',
+    '/course-decks/soil-health/zu/slide-01.jpg',
+    '/course-decks/intro-permaculture/st/slide-01.jpg',
+  ];
+  const obsoleteUrls = changed.flatMap(path => [
+    new URL(path + '?saved=old', origin).href,
+    new URL(path + '?width=small', origin).href,
+  ]);
+  const preservedUrls = [...new Set(preserved)].map(path => new URL(path + '?saved=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...obsoleteUrls.map(url => [url, new Response('superseded regional still')] as const),
+    ...preservedUrls.map(url => [url, new Response('keep downloaded media')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+
+  for (const url of obsoleteUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(rows.size - preservedUrls.length, 1, 'only the migration marker is added');
+  const marker = origin + '/course-decks/soil-health/.regional-stills-20261003';
+  assert.equal(rows.has(marker), true);
+  assert.equal(puts, 1);
+
+  const learnerSelectedDownload = new URL(changed[0], origin).href;
+  rows.set(learnerSelectedDownload, new Response('replacement selected and downloaded later'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(learnerSelectedDownload)!.text(), 'replacement selected and downloaded later');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'the dated marker makes the migration one-time');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must leave replacement downloads to the learner');
+});

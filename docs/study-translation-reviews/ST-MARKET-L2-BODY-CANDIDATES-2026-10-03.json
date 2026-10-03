@@ -1,0 +1,241 @@
+{
+  "packetId": "IMBEWU-ST-MARKET-L2-FULLER-BODY-BACKCHECK-2026-10-03",
+  "languageCode": "st",
+  "languageName": "Sesotho",
+  "lessonId": "market-community-l2",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-market-community.ts",
+  "candidatePacketSourceRevision": "e0a87b57731eb7bfbca9b08cfa01dc4fd46c680d",
+  "liveSourceRevisionVerified": "c2ad8e033b4758b34f288c31d459d23ebaccb5f4",
+  "sourceParagraphCount": 12,
+  "exactSourceParagraphs": [
+    "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+    "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+    "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+    "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+    "A box scheme supplies a regular selection to agreed customers.",
+    "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+    "Start from what you can reliably supply and what customers want.",
+    "Check the costs and household food needs before promising regular boxes.",
+    "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+    "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+    "Offer the surplus you have and agree clear terms with customers.",
+    "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+  ],
+  "currentRegistryParagraphs": [
+    "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+    "Bapisa market fees, transport, packing and unsold produce, hammoho le selling price.",
+    "Hlahloba market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+    "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+    "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+    "Dumellanang ka contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+    "Start from what you can reliably supply and what customers want.",
+    "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+    "Garden area or customer count alone does not predict income. Leka arrangement e ka laolehang mme o record results.",
+    "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+    "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+    "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Check any certification or claim the buyer requires before using a label."
+  ],
+  "candidateParagraphs": [
+    "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+    "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+    "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+    "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+    "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+    "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+    "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+    "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+    "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+    "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+    "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+    "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label."
+  ],
+  "changedParagraphIndices": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    8,
+    11
+  ],
+  "preservedParagraphIndices": [
+    0,
+    4,
+    7,
+    9,
+    10
+  ],
+  "entries": [
+    {
+      "paragraphIndex": 0,
+      "fieldPath": "body.paragraphs[0]",
+      "exactSourceParagraph": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "currentRegistryParagraph": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+      "candidateParagraph": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+      "backtranslation": "Existing text preserved byte-for-byte.",
+      "semanticCheck": "Unchanged neighbor; source and current regional text retained.",
+      "uncertainty": "No new translation claim.",
+      "status": "preserved"
+    },
+    {
+      "paragraphIndex": 1,
+      "fieldPath": "body.paragraphs[1]",
+      "exactSourceParagraph": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "currentRegistryParagraph": "Bapisa market fees, transport, packing and unsold produce, hammoho le selling price.",
+      "candidateParagraph": "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+      "backtranslation": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "semanticCheck": "Compare the fees, transport, packing and produce not sold, as well as the sale price.",
+      "uncertainty": "The comparison includes each unchanged cost/loss category and the selling price; no category or amount was added. “theko ya thekiso” is a reasonable literal sale-price rendering, but should receive local review.",
+      "status": "accepted mixed candidate; unreviewed"
+    },
+    {
+      "paragraphIndex": 2,
+      "fieldPath": "body.paragraphs[2]",
+      "exactSourceParagraph": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentRegistryParagraph": "Hlahloba market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidateParagraph": "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+      "backtranslation": "Check market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "semanticCheck": "Check the market rules and local trading/food requirements. An informal stall by itself does not mean there are no rules or costs.",
+      "uncertainty": "The first sentence retains market rules and local trading/food requirements as English anchors. The second translates “does not automatically” as “does not by itself mean,” preserving the negation and scope; it adds no exemption.",
+      "status": "accepted mixed candidate; unreviewed"
+    },
+    {
+      "paragraphIndex": 3,
+      "fieldPath": "body.paragraphs[3]",
+      "exactSourceParagraph": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentRegistryParagraph": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "candidateParagraph": "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+      "backtranslation": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "semanticCheck": "Direct selling can retain more of the sale price, but it also requires time, packing, transport and customer care.",
+      "uncertainty": "The comparative price-retention claim stays exact English; the contrast/action framing is localized while packing, transport and customer care remain enumerated.",
+      "status": "accepted mixed candidate; unreviewed"
+    },
+    {
+      "paragraphIndex": 4,
+      "fieldPath": "body.paragraphs[4]",
+      "exactSourceParagraph": "A box scheme supplies a regular selection to agreed customers.",
+      "currentRegistryParagraph": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+      "candidateParagraph": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+      "backtranslation": "Existing text preserved byte-for-byte.",
+      "semanticCheck": "Unchanged neighbor; source and current regional text retained.",
+      "uncertainty": "No new translation claim.",
+      "status": "preserved"
+    },
+    {
+      "paragraphIndex": 5,
+      "fieldPath": "body.paragraphs[5]",
+      "exactSourceParagraph": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "currentRegistryParagraph": "Dumellanang ka contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidateParagraph": "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "backtranslation": "Agree the contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "semanticCheck": "Agree the contents, price and payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "uncertainty": "The full crop-shortage clause and only-when agreement condition remain exact English; the root-directed punctuation repair removes the comma after payment.",
+      "status": "repaired mixed candidate; unreviewed"
+    },
+    {
+      "paragraphIndex": 6,
+      "fieldPath": "body.paragraphs[6]",
+      "exactSourceParagraph": "Start from what you can reliably supply and what customers want.",
+      "currentRegistryParagraph": "Start from what you can reliably supply and what customers want.",
+      "candidateParagraph": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+      "backtranslation": "Start from what you can reliably supply and what customers want.",
+      "semanticCheck": "Start with what you can reliably supply and what customers want.",
+      "uncertainty": "The complete reliability clause stays exact English; localized framing and customer-wants clause introduce no supply guarantee.",
+      "status": "accepted mixed candidate; unreviewed"
+    },
+    {
+      "paragraphIndex": 7,
+      "fieldPath": "body.paragraphs[7]",
+      "exactSourceParagraph": "Check the costs and household food needs before promising regular boxes.",
+      "currentRegistryParagraph": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+      "candidateParagraph": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+      "backtranslation": "Existing text preserved byte-for-byte.",
+      "semanticCheck": "Unchanged neighbor; source and current regional text retained.",
+      "uncertainty": "No new translation claim.",
+      "status": "preserved"
+    },
+    {
+      "paragraphIndex": 8,
+      "fieldPath": "body.paragraphs[8]",
+      "exactSourceParagraph": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentRegistryParagraph": "Garden area or customer count alone does not predict income. Leka arrangement e ka laolehang mme o record results.",
+      "candidateParagraph": "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+      "backtranslation": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "semanticCheck": "Garden area or customer count alone does not predict income. Try an arrangement that can be managed and write down the results.",
+      "uncertainty": "The no-income-prediction limit stays exact English; the localized second sentence only recommends a manageable trial and recording results.",
+      "status": "accepted mixed candidate; unreviewed"
+    },
+    {
+      "paragraphIndex": 9,
+      "fieldPath": "body.paragraphs[9]",
+      "exactSourceParagraph": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "currentRegistryParagraph": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+      "candidateParagraph": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+      "backtranslation": "Existing text preserved byte-for-byte.",
+      "semanticCheck": "Unchanged neighbor; source and current regional text retained.",
+      "uncertainty": "No new translation claim.",
+      "status": "preserved"
+    },
+    {
+      "paragraphIndex": 10,
+      "fieldPath": "body.paragraphs[10]",
+      "exactSourceParagraph": "Offer the surplus you have and agree clear terms with customers.",
+      "currentRegistryParagraph": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+      "candidateParagraph": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+      "backtranslation": "Existing text preserved byte-for-byte.",
+      "semanticCheck": "Unchanged neighbor; source and current regional text retained.",
+      "uncertainty": "No new translation claim.",
+      "status": "preserved"
+    },
+    {
+      "paragraphIndex": 11,
+      "fieldPath": "body.paragraphs[11]",
+      "exactSourceParagraph": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentRegistryParagraph": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Check any certification or claim the buyer requires before using a label.",
+      "candidateParagraph": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.",
+      "backtranslation": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "semanticCheck": "Describe your growing practices honestly. Check any certification or claim that the buyer requires before using a label.",
+      "uncertainty": "The proposed wording translates the check action, buyer-required scope and before-label prerequisite. “any certification or claim” remains inclusive; certification/claim/label terms stay English anchors.",
+      "status": "accepted mixed candidate; unreviewed"
+    }
+  ],
+  "backcheck": {
+    "sourceOrderAndPairing": "Canonical Market L2 body and current Sesotho registry were checked at live revision c2ad8e033b4758b34f288c31d459d23ebaccb5f4. The candidate packet source revision is older; canonical L2 text matches its included source array. Paragraph arrays are complete and ordered; each entry matches its indexed source/current/candidate values.",
+    "paragraphFindings": [
+      {
+        "index": 1,
+        "result": "Accept as unreviewed candidate",
+        "detail": "All cost/loss categories and the sale-price comparison remain. No new figures or business categories."
+      },
+      {
+        "index": 2,
+        "result": "Accept with scope caveat documented",
+        "detail": "The “informal stall does not automatically have no rules/costs” negation is represented as “does not by itself mean there are no rules/costs”; no exemption is implied. Market rules and local trading/food requirement anchors remain."
+      },
+      {
+        "index": 5,
+        "result": "Repair",
+        "detail": "Kept localized agreement framing and restored the complete exact English clause “what happens when crops are short,” because the earlier mixed local wording could leave tense ambiguous. The complete only-when-agreement condition remains exact English."
+      },
+      {
+        "index": 11,
+        "result": "Accept as unreviewed candidate",
+        "detail": "Buyer-required certification/claim scope and the before-label-use prerequisite remain; technical compliance terms stay English."
+      }
+    ],
+    "businessSafety": "No extra costs, prices, quantities, products, commitments, reliable-supply promises, guaranteed sales/income, or legal exemptions. The only-when agreement prerequisite, household-food-before-promising condition, and cannot-supply warning remain explicit.",
+    "neighborCheck": "All unlisted indices [0,4,7,9,10] remain byte-for-byte equal to the current Sesotho registry. Previously checked p3/p6/p8 wording is retained.",
+    "limitations": "Unreviewed machine-draft candidates; no fluent approval. Confirm terminology with a local Sesotho facilitator."
+  },
+  "provenance": "Freshly re-read actual canonical lesson and Sesotho registry at the stated worktree. Arrays matched the checked source-paired packet exactly. Paragraphs 3, 6 and 8 use the independently checked candidates from /tmp/imbewu-market-ordinary-body-backcheck-20261003.json; other current wording is preserved exactly. No repository edits; no fluent approval. After parent feedback, paragraphs 1, 2, 5 and 11 were newly drafted to localize remaining ordinary comparison/check/agreement/sequencing framing. These new four candidates have not been independently checked; no repository edits or approval.",
+  "constraints": [
+    "No repository edits.",
+    "No canonical English changes.",
+    "No invented business promises, prices, quantities or products.",
+    "Facilitator/local Sesotho review remains required."
+  ],
+  "sourceRevision": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+  "implementationProvenance": "Canonical English lesson and current regional registry were checked at HEAD 00abeeb7ae967e733971f5af70d9da9fa2d5d0c0; exact source/current arrays matched before implementation. This packet records source-bound body candidates only. No title, keypoint, quiz, canonical content, species, number, or media was changed. Candidate remains unreviewed machine draft.",
+  "reviewStatus": "machine-draft; facilitator/local language review pending"
+}

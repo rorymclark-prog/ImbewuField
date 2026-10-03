@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: '9e9ec86a', changes: [
+    'Market lessons add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Silent Soil slides add regional wording beside the unchanged English source.',
+    'Saved Soil slides refresh without removing your saved narration or other slides.',
+  ], tour: [
+    { title: 'Review market and soil drafts',
+      where: 'Study → Market Gardening and Soil Health',
+      detail: 'Read the marked drafts beside English; narration remains optional.',
+      href: '/student' },
+  ] },
   { when: '3 October 2026', sha: 'fe3bff8f', changes: [
     'Reading lessons add marked Tshivenda and Xitsonga drafts beside English.',
     'Precise frost, soil and safe-site conditions stay in exact English.',

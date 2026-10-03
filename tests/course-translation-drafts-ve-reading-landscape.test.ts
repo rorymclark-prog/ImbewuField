@@ -49,7 +49,8 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 3, 4, 6, 10, 14] : [3, 4, 5, 9];
+    // These added indices now translate ordinary household-use and records framing; source-bound holds stay exact.
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 13, 14, 15, 16] : [3, 4, 5, 9];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);
@@ -64,14 +65,14 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
         'select the source-paired end-of-season memory reminder');
       assert.equal(shownParagraphs[1], draftParagraphs[1],
         'show the paired sentence about recording uses and what reaches customers');
-      assert.equal(shownParagraphs[7], originalParagraphs[7],
-        'keep the phrase about practical questions in English until reviewed');
+      assert.equal(shownParagraphs[7], 'Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.',
+        'the ordinary practical-questions sentence is now a Tshivenda draft paired with its English source');
       assert.equal(shownParagraphs[4],
         'Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.',
         'keep unit labels and morogo exact while recording where each item went');
       assert.equal(shownParagraphs[5],
-        originalParagraphs[5],
-        'keep the compost destination exact until its meaning is confirmed');
+        'Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.',
+        'ordinary habit framing is drafted while the four exact destination categories remain English');
       assert.equal(shownParagraphs[10],
         'Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.',
         'state only which months the household buys food');
