@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: '2428b4d7', changes: [
+    'Food Forest and Plant Guilds are fully drafted in Sesotho, Tshivenda and Xitsonga.',
+    'Each draft is marked unreviewed beside its exact English; support plant stays English.',
+    'Every silent slide shows the drafted heading and text beside the unchanged English.',
+  ], tour: [
+    { title: 'Review regional Food Forest and Guilds',
+      where: 'Study → Food Forest Design / Plant Selection & Guilds', href: '/student',
+      detail: 'Compare drafts with English, answer a quiz, play silent slides and save slides offline.' },
+  ] },
   { when: '3 October 2026', sha: '55b6c11b', changes: [
     'Seasonal food-gap questions add marked regional drafts beside English.',
     'Customer agreement points add regional drafts; price examples stay in English.',
