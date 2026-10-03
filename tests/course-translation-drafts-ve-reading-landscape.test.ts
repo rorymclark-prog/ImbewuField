@@ -49,8 +49,8 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
-    // These added indices now translate ordinary household-use and records framing; source-bound holds stay exact.
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 13, 14, 15, 16] : [3, 4, 5, 9];
+    // Checked household and community framing is now drafted; source-bound seed and advice holds stay exact.
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 13, 14, 15, 16] : [0, 3, 4, 5, 6, 7, 8, 9, 10];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);

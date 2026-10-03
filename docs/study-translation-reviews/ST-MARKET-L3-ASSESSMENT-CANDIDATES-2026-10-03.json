@@ -1,0 +1,185 @@
+{
+  "packetId": "IMBEWU-ST-MARKET-L3-ASSESSMENT-CANDIDATES-2026-10-03",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "languageCode": "st",
+  "languageName": "Sesotho",
+  "moduleId": "market-community",
+  "lessonId": "market-community-l3",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-market-community.ts",
+  "provenance": "Read-only candidate packet sourced from live canonical Market L3 and Sesotho registry at HEAD 18734826c631798ebbec7c0f3f37ea2f9ab6a386. Existing localized title, key point 1, and quiz questions are excluded and unchanged. Fields are unreviewed machine-draft candidates for facilitator review; protected seed procedures and rights rationale remain exact English. Verified against canonical lesson and current Sesotho registry at HEAD 18734826c631798ebbec7c0f3f37ea2f9ab6a386. This review packet is data-only and unwired; do not treat candidates as learner-facing until incorporated into a separately checked learner batch.",
+  "sourceCorrectIndices": [
+    1,
+    2
+  ],
+  "entries": [
+    {
+      "fieldPath": "keyPoints[0]",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "currentDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "sesothoDraft": "Ngola seed identity, source and quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Record seed identity, source and quality, and check whether permission is needed before sharing.",
+      "uncertainty": "Seed identity, quality and permission terms remain exact English; check Sesotho agreement and legal-rights terminology."
+    },
+    {
+      "fieldPath": "keyPoints[2]",
+      "sourceIndex": 2,
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Measure losses and net returns for each selling route",
+      "currentDraft": "Measure losses and net returns for each selling route",
+      "sesothoDraft": "Lekanya losses le net returns bakeng sa selling route ka nngwe.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Measure losses and net returns for each selling route.",
+      "uncertainty": "Business calculation terms remain exact English; check route-comparison phrasing."
+    },
+    {
+      "fieldPath": "keyPoints[3]",
+      "sourceIndex": 3,
+      "sourceCorrectIndex": null,
+      "sourceEnglish": "Combine shared experience with qualified help when needed",
+      "currentDraft": "Combine shared experience with qualified help when needed",
+      "sesothoDraft": "Kopanya shared experience le qualified help ha ho hlokahala.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Combine shared experience with qualified help when needed.",
+      "uncertainty": "Qualified-help threshold and when-needed condition remain exact English."
+    },
+    {
+      "fieldPath": "quiz[0].options[0]",
+      "sourceIndex": 0,
+      "optionIndex": 0,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Mix all varieties without labels",
+      "currentDraft": "Mix all varieties without labels",
+      "sesothoDraft": "Kopanya mefuta yohle ntle le labels.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Mix all varieties without labels.",
+      "uncertainty": "All varieties and the without-labels condition are preserved; verify imperative form."
+    },
+    {
+      "fieldPath": "quiz[0].options[1]",
+      "sourceIndex": 0,
+      "optionIndex": 1,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "currentDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "sesothoDraft": "Lumellanang ka seed-quality checks, mme le hlahlobe hore na permission e a hlokahala ho arolelana variety.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Agree seed-quality checks and check whether permission is needed to share the variety.",
+      "uncertainty": "Quality and permission checks remain exact English; confirm agreement and sharing scope."
+    },
+    {
+      "fieldPath": "quiz[0].options[2]",
+      "sourceIndex": 0,
+      "optionIndex": 2,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Assume sharing automatically improves every seed lot",
+      "currentDraft": "Assume sharing automatically improves every seed lot",
+      "sesothoDraft": "Nka hore sharing e ntlafatsa seed lot e nngwe le e nngwe ka boyona.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Assume sharing automatically improves every seed lot.",
+      "uncertainty": "The absolute every-lot and automatic-improvement claim remains explicit."
+    },
+    {
+      "fieldPath": "quiz[0].options[3]",
+      "sourceIndex": 0,
+      "optionIndex": 3,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Rely only on the size of the group",
+      "currentDraft": "Rely only on the size of the group",
+      "sesothoDraft": "Itshetlehe feela ka size ya group.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Rely only on the size of the group.",
+      "uncertainty": "Only and group-size limitation are retained."
+    },
+    {
+      "fieldPath": "quiz[0].rationale",
+      "sourceIndex": 0,
+      "sourceCorrectIndex": 1,
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentDraft": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "sesothoDraft": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewStatus": "hold",
+      "backTranslation": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "uncertainty": "Crop-specific seed procedures and protected-variety rights form a technical/safety explanation; keep the full rationale exact English."
+    },
+    {
+      "fieldPath": "quiz[1].options[0]",
+      "sourceIndex": 1,
+      "optionIndex": 0,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentDraft": "Always choose the highest headline price",
+      "sesothoDraft": "Khetha kamehla highest headline price.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Always choose the highest headline price.",
+      "uncertainty": "Always and highest headline price remain explicit."
+    },
+    {
+      "fieldPath": "quiz[1].options[1]",
+      "sourceIndex": 1,
+      "optionIndex": 1,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Always choose the shortest journey",
+      "currentDraft": "Always choose the shortest journey",
+      "sesothoDraft": "Khetha kamehla shortest journey.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Always choose the shortest journey.",
+      "uncertainty": "Always and shortest journey remain explicit."
+    },
+    {
+      "fieldPath": "quiz[1].options[2]",
+      "sourceIndex": 1,
+      "optionIndex": 2,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "currentDraft": "Compare money received after fees, transport, unsold produce and losses",
+      "sesothoDraft": "Bapisa money received ka mora fees, transport, unsold produce le losses.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Compare money received after fees, transport, unsold produce and losses.",
+      "uncertainty": "All cost and loss terms remain exact English; verify comparison phrasing."
+    },
+    {
+      "fieldPath": "quiz[1].options[3]",
+      "sourceIndex": 1,
+      "optionIndex": 3,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Assume joining a group removes all costs",
+      "currentDraft": "Assume joining a group removes all costs",
+      "sesothoDraft": "Nka hore ho kena group ho tlosa costs tsohle.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Assume joining a group removes all costs.",
+      "uncertainty": "All-costs absolute remains explicit."
+    },
+    {
+      "fieldPath": "quiz[1].rationale",
+      "sourceIndex": 1,
+      "sourceCorrectIndex": 2,
+      "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "currentDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "sesothoDraft": "Distance e ama costs, empa ha se yona feela factor. Sebedisa actual returns le losses ho bapisa options.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "uncertainty": "Direction of comparison, not-the-only-factor qualifier, and actual-return/loss measures remain explicit in English."
+    }
+  ],
+  "unchangedLocalizedFields": {
+    "title": "Ho Aha Marang-rang a Dijo tsa Setjhaba: Matla a Kopanelo",
+    "keyPoints": {
+      "1": "Dumellanang ka boikarabelo ba tlhokomelo, ho behela nako le ho lokisa disebediswa tse arolelwanwang"
+    },
+    "quizQuestions": [
+      "Baahelani ba batla ho arolelana dipeo tseo ba di bolokileng. Ke eng e thusang hore peo e arolelwanwang e be molemo?",
+      "Molemi o bapisa mmaraka o hole le bareki ba haufi. Ke eng e lokelang ho tataisa qeto?"
+    ]
+  },
+  "guardrails": [
+    "No canonical English changed.",
+    "Option order and correct indices remain unchanged: quiz 0 index 1; quiz 1 index 2.",
+    "Protected variety permission, seed quality procedures, cost/loss measures and absolute distractor claims remain explicit.",
+    "No fluent approval is claimed."
+  ],
+  "wiringStatus": "data-only-unwired-pending-next-fresh-learner-batch"
+}

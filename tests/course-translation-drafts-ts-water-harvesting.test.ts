@@ -80,9 +80,9 @@ test('Xitsonga Market drafts pair bounded sales text and keep uncertain decision
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
-    // Market L2 now translates additional ordinary framing; exact English commercial commitments remain below.
+    // Checked Market L2/L3 ordinary framing is drafted; seed, handling and commercial holds stay exact.
     const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 6, 7, 14]
-      : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 5, 6, 7, 8, 10, 11] : [3, 4, 5, 9];
+      : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 5, 6, 7, 8, 10, 11] : [0, 3, 4, 5, 7, 8, 9, 10];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
       else assert.equal(draftParagraphs[index], paragraph);
