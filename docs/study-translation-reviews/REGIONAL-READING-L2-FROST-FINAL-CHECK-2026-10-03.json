@@ -1,0 +1,43 @@
+{
+  "title": "Reading Landscape L2 root-repair final semantic check",
+  "date": "2026-10-03",
+  "packet": "/tmp/imbewu-regional-reading-l2-body-root-repaired-20261003.json",
+  "checkedWorkspace": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "checkedHead": "c4fec7bdc106de5b9457152798ea600ff5dc361d",
+  "packetSourceRevision": "fdf6398f0b85cdd2727ee5aeefde97a55251f51d",
+  "scope": "Read-only check of complete source/current/candidate paragraph arrays across Sesotho (ST), Tshivenda (VE), and Xitsonga (TS).",
+  "bindingChecks": {
+    "canonicalLessonBodyContainsExactSource": true,
+    "allNineSourceParagraphsMatchCanonical": true,
+    "allNineCurrentDraftsBoundToPacketLiveRegistrySnapshot": true,
+    "paragraphOrderPreservedForAllLanguages": true,
+    "paragraphCountPerLanguage": 3,
+    "liveRegistryCheck": "Compared each paragraph currentDraft exactly with the ST, VE, and TS reading-landscape-l2 body arrays in the checked worktree at checkedHead."
+  },
+  "paragraph3Checks": {
+    "sourceExact": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+    "youngCitrusAndFrostSensitivity": {
+      "result": "preserved verbatim in all three candidates",
+      "st": "exact English source sentence",
+      "ve": "exact English source sentence",
+      "ts": "exact English source sentence"
+    },
+    "keepOutMeaning": {
+      "result": "preserved; no distance or buffer added",
+      "st": "exact English source sentence retained",
+      "ve": "Ni songo vhea tender plants kha known low frost pockets.",
+      "ts": "Hlayisa tender plants swi nga ri eka known low frost pockets."
+    },
+    "finalObservationCondition": {
+      "result": "existing localized current sentence preserved byte-for-byte in each candidate",
+      "st": "Hlokomela serame sa lehae pele o jala.",
+      "ve": "Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.",
+      "ts": "Xiya local frost u nga se byala."
+    },
+    "addedSpeciesNumbersOrPrescriptions": false
+  },
+  "wrongLanguageWording": "No erroneous root-reviewed language wording observed. ST deliberately retains both source frost clauses in English; VE/TS retain only the exact first source sentence and translate the keep-out imperative. Technical plant/frost-pocket terms remain English as recorded.",
+  "decision": "accept semantic repair for root review only; candidates remain unreviewed and not fluent-approved.",
+  "repositoryEdits": false,
+  "fluencyApproval": false
+}
