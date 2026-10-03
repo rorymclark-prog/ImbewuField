@@ -355,9 +355,13 @@ test('Tshivenda Market L2 pairs bounded customer text and holds uncertain terms 
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = lesson.body.tshivendaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  for (const index of [0, 6]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
-  for (const index of [1, 2, 3, 4, 5, 7, 8, 9, 10, 11]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-    'price, box promises and uncertain delivery wording stay exact English');
+  // Independently checked ordinary customer framing replaces old full holds; commitment clauses stay exact.
+  for (const index of [0, 2, 3, 4, 5, 6, 8, 9, 10, 11]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
+  for (const index of [1, 7]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
+    'cost comparisons and household food checks before box promises stay exact English');
+  assert.ok(draftParagraphs[3].startsWith('Direct selling can retain more of the sale price,'));
+  assert.ok(draftParagraphs[5].includes('Regular orders help planning only when customers and growers can keep the agreement.'));
+  assert.ok(draftParagraphs[9].includes('avoid promising a fixed delivery you cannot supply'));
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
   assert.equal(lesson.keyPoints[1].tshivendaDraft, 'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.');

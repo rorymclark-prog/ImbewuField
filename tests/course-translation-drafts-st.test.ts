@@ -252,10 +252,10 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  for (const index of [5, 8, 9, 11, 12, 13, 15, 16]) {
-    assert.equal(draftParagraphs[index], sourceParagraphs[index], `held source paragraph ${index + 1} must remain exact English`);
-  }
-  for (const index of [0, 1, 2, 3, 4, 6, 7, 10, 14]) {
+  // Checked ordinary prose now replaces whole-paragraph holds; the worked price example remains exact.
+  assert.equal(draftParagraphs[12], sourceParagraphs[12], 'R18 cost and R15 sale teaching example remain exact English');
+  assert.ok(draftParagraphs[13].includes('a higher asking price is not a guaranteed sale.'));
+  for (const index of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index], `selected record-keeping paragraph ${index + 1} should be a visible draft`);
   }
   assert.equal(draftParagraphs[4],

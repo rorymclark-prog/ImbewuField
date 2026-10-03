@@ -1,0 +1,143 @@
+{
+  "title": "Final semantic check of repaired regional Market candidates",
+  "checkedAt": "2026-10-03",
+  "input": "/tmp/imbewu-regional-market-next-candidates-repaired-20261003.json",
+  "backcheck": "/tmp/imbewu-regional-market-next-backcheck-20261003.json",
+  "verdict": "Semantic check only; no fluent or learner-ready approval. Repaired clauses preserve the source meaning where accepted. Mixed English remains in several fields by design.",
+  "fields": [
+    {
+      "language": "VE",
+      "lesson": "Market L2",
+      "field": "body paragraph 3",
+      "status": "accept",
+      "source": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "candidate": "Sedzani market rules na local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "reason": "The instruction to check is localized; the scope (market rules, local trading, food requirements) and the qualification that an informal stall does not automatically have no rules or costs remain explicit. No broad claim about absence of rules or costs is introduced. Mixed English is substantial but preserves the precise compliance clause."
+    },
+    {
+      "language": "VE",
+      "lesson": "Market L2",
+      "field": "body paragraph 4",
+      "status": "accept",
+      "source": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "candidate": "Direct selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.",
+      "reason": "The comparative claim remains exact in English, including can (not a guarantee); fhedzi preserves the contrast, and the added time, packing, transport and customer-care costs are all present."
+    },
+    {
+      "language": "VE",
+      "lesson": "Market L2",
+      "field": "body paragraph 5",
+      "status": "accept",
+      "source": "A box scheme supplies a regular selection to agreed customers.",
+      "candidate": "Box scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.",
+      "reason": "The repaired field retains “regular selection” explicitly, avoiding the earlier possible shift to “all the time”; it also retains the agreed-customer qualification."
+    },
+    {
+      "language": "VE",
+      "lesson": "Market L2",
+      "field": "body paragraph 6",
+      "status": "accept",
+      "source": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidate": "Tendelanani nga contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "reason": "Contents, price, payment and the crop-shortage contingency remain explicit. The second sentence preserves both the benefit qualification (“only when”) and the customer-and-grower ability condition. English clauses prevent uncertainty from changing these terms."
+    },
+    {
+      "language": "VE",
+      "lesson": "Market L2",
+      "field": "body paragraph 9",
+      "status": "accept",
+      "source": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "candidate": "Garden area or customer count alone does not predict income. Try a manageable arrangement and ni rekhode results.",
+      "reason": "The non-prediction qualification and “manageable arrangement” remain exact English; the localized continuation asks the reader to record results. This does not promise income."
+    },
+    {
+      "language": "VE",
+      "lesson": "Market L2",
+      "field": "body paragraph 10",
+      "status": "accept",
+      "source": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "candidate": "Arali production i tshi shanduka vhege nga vhege, avoid promising a fixed delivery you cannot supply.",
+      "reason": "The week-to-week condition is localized and the prohibition plus inability qualification remain exact English. No guarantee or weaker advice is introduced."
+    },
+    {
+      "language": "VE",
+      "lesson": "Market L2",
+      "field": "body paragraph 11",
+      "status": "accept",
+      "source": "Offer the surplus you have and agree clear terms with customers.",
+      "candidate": "Offer the surplus you have and tendelanani nga clear terms na vharengi.",
+      "reason": "“Offer the surplus you have” stays exact, preserving offer versus give; agreement on clear terms with customers is retained."
+    },
+    {
+      "language": "VE",
+      "lesson": "Market L2",
+      "field": "body paragraph 12",
+      "status": "accept",
+      "source": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "candidate": "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Check any certification or claim the buyer requires before using a label.",
+      "reason": "Honest description is localized. The buyer-required certification/claim condition and requirement to check before using a label remain exact English."
+    },
+    {
+      "language": "TS",
+      "lesson": "Market L1",
+      "field": "body paragraph 6",
+      "status": "repair",
+      "source": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "candidate": "Tirhisa mukhuva lowu wo olova eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+      "reason": "The four destinations/actions are represented, but the candidate does not clearly preserve “same” (continuity with the previously described recording habit). Please retain or locally verify an equivalent for “same”; do not change the four listed categories. This is a semantic repair flag, not a claim about fluency."
+    },
+    {
+      "language": "TS",
+      "lesson": "Market L1",
+      "field": "body paragraph 11",
+      "status": "accept",
+      "source": "The record also shows which months leave the household buying food.",
+      "candidate": "Rekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hwети tihi.",
+      "reason": "The record's additional function and the months when the household buys food are retained. This does not add a claim about how much food is bought."
+    },
+    {
+      "language": "TS",
+      "lesson": "Market L1",
+      "field": "body paragraph 14",
+      "status": "accept",
+      "source": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "candidate": "Languta price, costs na ku byala loku landzelaka. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "reason": "Reviewing price, costs and next planting is localized; the customer-demand check and explicit no-guarantee qualification remain exact."
+    },
+    {
+      "language": "VE",
+      "lesson": "Market L3",
+      "field": "lesson.keyPoints[1]",
+      "status": "accept",
+      "source": "Agree care, booking and repair responsibilities for shared tools",
+      "candidate": "Tendelani nga ha vhuḓifhinduleli ha u ṱhogomela, u vheha tshifhinga na u lugisa zwishumiswa zwine na kovhekana.",
+      "reason": "The candidate appears to preserve agreement on care, setting/scheduling a time, and repair responsibilities for tools shared by the group. “Booking” and the shared-tool term still need local facilitator review; accept here means no clear semantic contradiction was found, not fluent approval."
+    },
+    {
+      "language": "TS",
+      "lesson": "Market L3",
+      "field": "lesson.keyPoints[1]",
+      "status": "accept",
+      "source": "Agree care, booking and repair responsibilities for shared tools",
+      "candidate": "Pfumelelanani hi vutihlamuleri byo hlayisa, ku booka nkarhi ni ku lunghisa switirhisiwa leswi mi swi avelanaka.",
+      "reason": "The candidate appears to preserve agreement on care, booking a time, and repair responsibilities for tools shared by the group. The loanword “booka” and shared-tool term still need local facilitator review; accept here means no clear semantic contradiction was found, not fluent approval."
+    }
+  ],
+  "heldEnglishContext": [
+    {
+      "language": "TS",
+      "lesson": "Market L1",
+      "field": "body paragraph 17",
+      "status": "hold",
+      "reason": "The repaired packet keeps “A date that works on another farm may not work here” exact in English. Retaining it preserves the source modal and local qualification; the appended backup-plan instruction is also exact."
+    },
+    {
+      "language": "TS",
+      "lesson": "Market L2",
+      "field": "body paragraph 5",
+      "status": "hold",
+      "reason": "This source paragraph remains exact English in the packet. Retaining “regular selection” preserves the time/frequency meaning; no translated candidate was supplied for checking."
+    }
+  ],
+  "limitations": "Read-only semantic comparison of the supplied source and candidate strings. This check does not establish regional fluency, literacy suitability, or publication readiness."
+}
