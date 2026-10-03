@@ -42,6 +42,6 @@ Root rendered each language sequentially with the shared paired-slide renderer:
 node scripts/make-lesson-slides.mjs water-harvesting <lang> /tmp/imbewu-water-final-<lang>-20261003 --paired-draft docs/narration/water-harvesting.<lang>.paired-draft.json
 ```
 
-Root copied only the 45 changed frames, preserving the other 27 regional files byte for byte. Root inspected contact sheets for all 45 changed frames and compressed 390-pixel examples for Sesotho slide 6, Tshivenda slide 23 and Xitsonga slide 24. The separate render-verification packet records paths, hashes, dimensions and source preservation. Actual deployed phone and offline verification remains pending.
+Root copied only the 45 changed frames, preserving the other 27 regional files byte for byte. Root inspected contact sheets for all 45 changed frames and compressed 390-pixel examples for Sesotho slide 6, Tshivenda slide 23 and Xitsonga slide 24. The separate [render-verification packet](WATER-SOURCE-PAIRED-SLIDES-RENDER-VERIFICATION-2026-10-03.json) records paths, hashes, dimensions and source preservation. This application review did not run rendering; root performed the render and static image inspection summarized above. Runtime preview, deployed phone, and offline verification remain pending.
 
-No fluent review, local farming review, sanitation approval, rendering, commit, or push is claimed here.
+No fluent or local farming review, sanitation approval, commit, or push is claimed here.

@@ -1025,10 +1025,10 @@ test('regional Study frames draft screened observations while risky advice stays
   const cases = [
     { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '1:3', '2:1', '2:2', '2:3', '2:4', '2:5', '8:1', '8:2', '8:3', '8:4', '8:5', '8:6', '9:1'], held: [], mixed: ['2:4'] },
     { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '2:3', '3:4', '18:1', '18:3'], held: ['7:2', '15:4'] },
-    // Soil ordinary framing/observation cells are now source-paired visible drafts; technical or action-sensitive holds remain exact English below.
-    { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['2:3', '4:1', '4:2', '5:4', '20:4'] },
-    { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: ['3:3', '4:1'] },
-    { moduleId: 'soil-health', lang: 've', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['4:1', '4:2', '5:4', '20:4'] },
+    // Full soil paragraphs are now reused only at byte-exact canonical matches; the dedicated Soil test checks resolver equality and keeps safety claims paired.
+    { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '4:1', '4:2', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['2:3', '5:4', '20:4'] },
+    { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '4:1', '4:2', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: ['3:3'] },
+    { moduleId: 'soil-health', lang: 've', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '4:1', '4:2', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['5:4', '20:4'] },
   ] as const;
   for (const { moduleId, lang, drafted, held, ...rest } of cases) {
     const source = englishSlideRecords(readFileSync(`docs/narration/${moduleId}.en.md`, 'utf8'));
@@ -1060,6 +1060,129 @@ test('regional Study frames draft screened observations while risky advice stays
       }
     }
   }
+});
+
+test('Soil Health deck reuses complete resolver paragraphs only at exact sources and keeps safety claims intact', () => {
+  const soilModule = COURSE_MODULES.find((module) => module.id === 'soil-health');
+  assert.ok(soilModule);
+  const source = englishSlideRecords(readFileSync('docs/narration/soil-health.en.md', 'utf8'));
+  const exactResolverMatches = { st: 32, ve: 32, ts: 31 } as const;
+  const safetySources = [
+    'Sand settles first. Silt settles next, while clay can remain suspended much longer.',
+    'This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.',
+    'A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.',
+    'Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.',
+    'A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.',
+    'Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.',
+    'Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.',
+    'Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.',
+    'Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.',
+    'Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.',
+    'Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.',
+  ];
+
+  for (const lang of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/soil-health.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    let mappedParagraphs = 0;
+    let resolverParagraphsVisible = 0;
+
+    for (const slide of slides) {
+      for (let bodyIndex = 0; bodyIndex < slide.english.body.length; bodyIndex++) {
+        const english = slide.english.body[bodyIndex];
+        const matches: Array<{ lesson: (typeof COURSE_MODULES)[number]['lessons'][number]; canonicalIndex: number }> = soilModule.lessons.flatMap((lesson) => lesson.body.split('\n\n')
+          .flatMap((paragraph, canonicalIndex) => paragraph === english
+            ? [{ lesson, canonicalIndex }]
+            : []));
+        assert.ok(matches.length <= 1,
+          `${lang} slide ${slide.n} body ${bodyIndex}: a complete source paragraph cannot identify multiple canonical paragraphs`);
+        if (matches.length === 0) continue;
+
+        mappedParagraphs++;
+        const { lesson, canonicalIndex } = matches[0];
+        const resolved = resolveLearnerLessonPresentation(lesson, lang);
+        const learnerParagraph = resolved.content.body.split('\n\n')[canonicalIndex];
+        const target = slide.target.body[bodyIndex];
+        if (learnerParagraph === english) {
+          assert.deepEqual(target, { status: 'english-hold' },
+            `${lang} slide ${slide.n} keeps a resolver English fallback visible as an exact hold`);
+          continue;
+        }
+
+        assert.ok(['draft', 'mixed'].includes(target.status),
+          `${lang} slide ${slide.n} body ${bodyIndex}: do not leave a source-matched learner draft hidden in English`);
+        if (target.status === 'draft' && target.text === learnerParagraph) resolverParagraphsVisible++;
+        if (target.status === 'mixed') {
+          assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), english,
+            `${lang} slide ${slide.n} keeps every mixed clause attached to the whole source paragraph`);
+        }
+      }
+    }
+    assert.equal(mappedParagraphs, 37, `${lang}: verify the complete set of exact source paragraph matches`);
+    assert.equal(resolverParagraphsVisible, exactResolverMatches[lang],
+      `${lang}: retain each complete current resolver paragraph in the slide deck`);
+
+    for (const english of safetySources) {
+      const matches: Array<{ lesson: (typeof COURSE_MODULES)[number]['lessons'][number]; canonicalIndex: number }> = soilModule.lessons.flatMap((lesson) => lesson.body.split('\n\n')
+        .flatMap((paragraph, canonicalIndex) => paragraph === english
+          ? [{ lesson, canonicalIndex }]
+          : []));
+      assert.equal(matches.length, 1, `keep the exact canonical soil safety source: ${english}`);
+      const { lesson, canonicalIndex } = matches[0];
+      const deckMatches = slides.flatMap((slide: any) => slide.english.body
+        .flatMap((paragraph: string, bodyIndex: number) => paragraph === english ? [{ slide, bodyIndex }] : []));
+      assert.equal(deckMatches.length, 1, `pair the complete safety source with one deck field: ${english}`);
+      const [{ slide, bodyIndex }] = deckMatches;
+      const resolved = resolveLearnerLessonPresentation(lesson, lang);
+      assert.equal(slide.target.body[bodyIndex].status, 'draft');
+      assert.equal(slide.target.body[bodyIndex].text, resolved.content.body.split('\n\n')[canonicalIndex],
+        `${lang} retains the current full resolver wording for the jar, compost, or leachate safety condition`);
+    }
+
+    const inspection = slides[18];
+    assert.equal(inspection.english.body[0], 'Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.');
+    const inspectionDraft = inspection.target.body[0];
+    assert.equal(inspectionDraft.status, 'mixed');
+    assert.deepEqual(inspectionDraft.segments.map((segment: any) => ({
+      sourceEnglish: segment.sourceEnglish,
+      status: segment.status,
+    })), [
+      { sourceEnglish: 'Inspect soil in a working area. ', status: 'draft' },
+      { sourceEnglish: 'Record colour, structure, roots, moisture and any worm channels.', status: 'english-hold' },
+    ], `${lang}: localize the ordinary inspection lead-in while keeping the complete technical checklist held`);
+    const inspectionAnchors = {
+      st: 'Hlahloba mobu',
+      ve: 'Sedzani mavu',
+      ts: 'Kambela misava',
+    } as const;
+    assert.ok(inspectionDraft.segments[0].text.startsWith(inspectionAnchors[lang]));
+
+    const firstAction = slides[19];
+    assert.equal(firstAction.english.body[0], 'Start one soil-building action from this module.');
+    const action = firstAction.target.body[0];
+    assert.equal(action.status, 'draft');
+    assert.ok(action.text.includes('soil-building'), `${lang}: retain the technical soil-building phrase in English`);
+    const actionAnchors = {
+      st: { one: "'ngoe", action: 'ketso', scope: 'ho tsoa mojulung ona' },
+      ve: { one: 'nthihi', action: 'nyito', scope: 'u bva kha module iyi' },
+      ts: { one: "rin'we", action: 'goza', scope: 'ku suka eka modula lowu' },
+    } as const;
+    for (const anchor of Object.values(actionAnchors[lang])) {
+      assert.ok(action.text.includes(anchor), `${lang}: preserve the one-action instruction and its module scope`);
+    }
+
+    const drifted = structuredClone(packet);
+    drifted.slides[18].english.body[0] += ' Changed source.';
+    assert.throws(() => validatePairedDraft(drifted, source, lang), /slide 19: English body differs/,
+      `${lang}: source drift blocks reuse of the inspection and action drafts`);
+  }
+
+  const changedLesson = structuredClone(soilModule.lessons[0]);
+  changedLesson.body += '\n\nNew source paragraph.';
+  const fallback = resolveLearnerLessonPresentation(changedLesson, 'st');
+  assert.equal(fallback.status, 'english-fallback', 'a changed canonical lesson must fail closed to English');
+  assert.equal(fallback.content.body, changedLesson.body);
 });
 
 test('regional Market slides preserve exact price and seed holds plus conditions inside unreviewed drafts', () => {

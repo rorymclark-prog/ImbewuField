@@ -1762,3 +1762,68 @@ test('a saved Water pack refreshes changed regional frames without deleting unto
   assert.equal(puts, 1, 'later activations leave downloaded replacements alone');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must leave replacement downloads to the learner');
 });
+
+test('a saved Soil pack refreshes source-paired regional frames and preserves untouched media', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSoilRegionalDraftStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateWaterRegionalDraftStills\)\.then\(migrateSoilRegionalDraftStills\)/,
+    'the Soil cleanup runs during activation after the Water migration');
+
+  const origin = 'https://field.test';
+  const slideNumbers = {
+    st: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19, 20],
+    ve: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 18, 19, 20],
+    ts: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19, 20],
+  };
+  const changed = Object.entries(slideNumbers).flatMap(([language, slides]) => slides.map(slide =>
+    `/course-decks/soil-health/${language}/slide-${String(slide).padStart(2, '0')}.webp`
+  ));
+  const preserved = [
+    ...['st', 've', 'ts'].flatMap(language => Array.from({ length: 20 }, (_, index) =>
+      `/course-decks/soil-health/${language}/slide-${String(index + 1).padStart(2, '0')}.webp`
+    ).filter(path => !changed.includes(path))),
+    ...['en', 'zu'].flatMap(language => Array.from({ length: 20 }, (_, index) =>
+      `/course-decks/soil-health/${language}/slide-${String(index + 1).padStart(2, '0')}.jpg`
+    )),
+    ...['en', 'zu', 'st', 've', 'ts'].flatMap(language => [
+      ...Array.from({ length: 20 }, (_, index) => `/course-audio/soil-health/${language}/slide-${String(index + 1).padStart(2, '0')}.mp3`),
+      `/course-audio/soil-health/${language}/full.mp3`,
+    ]),
+    '/course-decks/vegetables-staples/st/slide-07.webp',
+    '/course-decks/market-community/st/slide-01.webp',
+  ];
+  const obsoleteUrls = changed.flatMap(path => [
+    new URL(path + '?saved=old', origin).href,
+    new URL(path + '?width=small', origin).href,
+  ]);
+  const preservedUrls = [...new Set(preserved)].map(path => new URL(path + '?saved=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...obsoleteUrls.map(url => [url, new Response('superseded regional Soil still')] as const),
+    ...preservedUrls.map(url => [url, new Response('keep saved media')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+
+  for (const url of obsoleteUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/soil-health/.regional-draft-stills-20261003';
+  assert.equal(rows.has(marker), true);
+  assert.equal(rows.size - preservedUrls.length, 1, 'only the migration marker is added');
+  assert.equal(puts, 1, 'the first activation records exactly one marker');
+
+  const learnerSelectedDownload = new URL(changed[0], origin).href;
+  rows.set(learnerSelectedDownload, new Response('replacement chosen and downloaded later'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(learnerSelectedDownload)!.text(), 'replacement chosen and downloaded later');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'later activations leave downloaded replacements alone');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must leave replacement downloads to the learner');
+});
