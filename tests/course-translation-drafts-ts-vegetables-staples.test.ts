@@ -232,10 +232,27 @@ test('Pest framing retains four-step order and exact treatment safeguards beside
   const english = source.body.split('\n\n');
   const paragraphs = draft.body.xitsongaDraft.split('\n\n');
   assert.equal(paragraphs.length, 12);
-  for (const index of [1, 3, 4, 6, 7, 10]) assert.equal(paragraphs[index], english[index]);
+  assert.ok(paragraphs[1].startsWith('Swibyariwa leswi nga na stress. '));
+  assert.ok(paragraphs[1].endsWith('One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.'),
+    'the localized stress cue does not erase the exact single-crop and already-removed-predators causes');
+  assert.ok(paragraphs[3].startsWith('Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”?'));
+  assert.ok(paragraphs[3].includes('predators se ti ku pfuna hi ku tirha eka xiphiqo lexi'),
+    'the diagnostic question still asks whether predators are already helping');
+  assert.equal(paragraphs[4].startsWith('A yellow leaf is not automatically an insect.'), true,
+    'the diagnostic negative and yellow-leaf subject remain exact before the cause list');
+  assert.ok(paragraphs[4].includes('mati') && paragraphs[4].includes('nutrition') && paragraphs[4].includes('timitsu'));
+  assert.ok(paragraphs[4].endsWith('Kuma leswaku i yini u nga si teka goza.'),
+    'the grower must identify which cause before acting');
+  assert.ok(paragraphs[6].startsWith('Xo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi.'));
+  assert.ok(paragraphs[7].startsWith('Vumbirhi. Kambela stress.') && /timitsu/.test(paragraphs[7]) && /nutrition/.test(paragraphs[7]) && /drainage/.test(paragraphs[7]));
+  assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
+  assert.ok(paragraphs[9].includes('and start with the lightest thing that works.'));
+  assert.ok(paragraphs[9].endsWith('Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.'));
+  assert.equal(paragraphs[10], english[10],
+    'registration for the crop and pest, label directions, harvest waiting instructions, and the ban on improvised or stronger doses stay exact');
   for (const index of [0, 2, 5, 8, 9, 11]) assert.notEqual(paragraphs[index], english[index]);
   assert.equal(paragraphs[5], 'Tirha hi magoza ya mune, hi ku landzelelana.');
-  assert.ok(paragraphs[8].endsWith("Beneficial insects are doing work you'd otherwise do yourself."));
+  assert.ok(paragraphs[8].includes('Beneficial insects') && paragraphs[8].includes('ntirho'));
   assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
   assert.ok(paragraphs[9].endsWith(english[9].slice(english[9].indexOf('—') + 2)));
   assert.ok(paragraphs[11].startsWith("Tshembeka eka wena n'winyi"));

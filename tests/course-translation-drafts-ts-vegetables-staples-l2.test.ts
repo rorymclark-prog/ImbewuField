@@ -30,8 +30,8 @@ test('Vegetables & Staple Crops L2 exposes its source-paired body and bounded as
   assert.equal(localizedParagraphs.length, sourceParagraphs.length);
   assert.deepEqual([0, 3].map(index => sourceParagraphs[index]), sourceParagraphsSelected);
   assert.deepEqual([0, 3].map(index => localizedParagraphs[index]), draftParagraphsSelected);
-  for (const index of [10, 12, 13, 14, 15, 19]) {
-    assert.equal(localizedParagraphs[index], sourceParagraphs[index], `body paragraph ${index} keeps its complete crop-specific or conditional claim exact English`);
+  for (const index of [12, 13, 14]) {
+    assert.equal(localizedParagraphs[index], sourceParagraphs[index], `body paragraph ${index} keeps its Indigenous attribution or named crop claim exact English`);
   }
   assert.ok(localizedParagraphs[1].includes('Hlawula swakudya') && localizedParagraphs[1].includes('xitsongo'));
   assert.ok(localizedParagraphs[2].includes('short row') && localizedParagraphs[2].includes('two to three weeks'));
@@ -105,12 +105,24 @@ test('Vegetables & Staple Crops L2 exposes its source-paired body and bounded as
   assert.equal(shown.content.quiz[1].q, sourceLesson.quiz[1].q);
 });
 
-test('Vegetables & Staple Crops L2 retains precise crop, timing and sowing conditions', () => {
+test('Vegetables L2 drafts garden observation and seasonal possibilities while holding cultural and crop-specific claims', () => {
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = XITSONGA_VEGETABLES_STAPLES_L2_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
-  for (const index of [10, 12, 13, 14, 15, 19]) {
+  assert.equal(draftParagraphs.length, sourceParagraphs.length,
+    'the learner paragraph order and count must stay aligned to the English source');
+  for (const index of [12, 13, 14]) {
     assert.equal(draftParagraphs[index], sourceParagraphs[index]);
   }
+  assert.ok(draftParagraphs[10].startsWith("Languta leswi humelelaka ensin'wini ya wena, u lulamisa interval."));
+  assert.ok(draftParagraphs[10].endsWith('Ku xiyisisa leswi hi swona vutshila.'),
+    'the observation skill is still explicit after translating the instruction');
+  assert.ok(draftParagraphs[15].startsWith('Pumpkin yi hangalaka'));
+  assert.ok(draftParagraphs[15].includes('misava') && draftParagraphs[15].includes('ndzhuti') && draftParagraphs[15].includes('hlayisa moisture'),
+    'the draft keeps the soil-shading and moisture-holding effects without adding a soil-moisture location claim');
+  assert.ok(draftParagraphs[19].startsWith('Hungry gap ya wena yi nga fika endzhaku ka loko stored maize yi herile.'));
+  assert.ok(draftParagraphs[19].includes('winter greens ti nga si lulama'));
+  assert.ok(draftParagraphs[19].endsWith('Yi nga fika hi nkarhi wo oma loko water limits the garden.'),
+    'all three possible gap timings and the water-limiting condition remain present');
   assert.ok(draftParagraphs[2].includes('two to three weeks'));
   assert.ok(draftParagraphs[7].includes('Then two to three weeks later'));
   assert.ok(draftParagraphs[12].includes('Indigenous farming traditions in the Americas'));

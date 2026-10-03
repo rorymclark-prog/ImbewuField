@@ -695,10 +695,30 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   assert.match(l2[17], /nutrients in residues are released during decomposition/);
   const sourceL4 = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.split('\n\n');
   const l4 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.tshivendaDraft.split('\n\n');
-  for (const index of [1, 3, 4, 7, 8, 10]) assert.equal(l4[index], sourceL4[index]);
-  assert.match(l4[2], /^So before you treat anything,/);
-  assert.match(l4[9], /start with the lightest thing that works/);
-  assert.match(l4[9], /may help\. Check that the action suits the problem and monitor the result/);
+  assert.ok(l4[1].startsWith('Zwimela zwi re na stress. '));
+  assert.ok(l4[1].endsWith('One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.'),
+    'the exact remaining causes preserve chemical removal of predators as an already-happened condition');
+  assert.match(l4[2], /^So before you treat anything,/,
+    'whole-system observation remains explicitly before treatment');
+  assert.ok(l4[3].startsWith('Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”?'));
+  assert.equal(l4[3].slice(l4[3].lastIndexOf('Are predators')), sourceL4[3].slice(sourceL4[3].lastIndexOf('Are predators')),
+    'the final diagnostic question retains already-working predators and “for you” exactly');
+  assert.ok(l4[4].startsWith('Yellow leaf a i ambi automatically uri ndi insect.'));
+  assert.ok(l4[4].includes('water') && l4[4].includes('nutrition') && l4[4].includes('root damage'));
+  assert.ok(l4[4].endsWith('Wanani uri ndi zwifhio ni sa athu dzhia vhukando.'),
+    'the cause list still asks the grower to find which cause before acting');
+  assert.ok(l4[6].startsWith('Tsha u thoma. Sedzani. '));
+  for (const target of ['damage pattern', 'the underside of the leaf', 'the stem', 'the plants nearby']) {
+    assert.ok(l4[6].includes(target), `the source observation checklist keeps ${target} exact`);
+  }
+  for (const target of ['Soil moisture', 'midzi', 'spacing', 'nutrition', 'drainage']) assert.ok(l4[7].includes(target));
+  assert.ok(l4[8].includes('Beneficial insects') && l4[8].includes('mushumo'),
+    'the translated protection sentence still says beneficial insects do useful work');
+  assert.match(l4[9], /^Tsha vhuṋa\. Ndi hone fhedzi ni tshi dzhia vhukando —/);
+  assert.ok(l4[9].includes('start with the lightest thing that works.'));
+  assert.ok(l4[9].endsWith('Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.'));
+  assert.equal(l4[10], sourceL4[10],
+    'registration for the crop and pest, label directions, harvest waiting instructions, and the ban on improvised or stronger doses stay exact');
 });
 
 

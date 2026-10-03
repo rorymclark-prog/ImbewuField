@@ -99,15 +99,29 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
   assert.match(bedDraft[15], /Bophara ba One point two metres\. Bolelele ba Three metres/, 'width and length cannot swap');
   const pestSource = source.lessons[3].body.split('\n\n');
   const pestDraft = draft.lessons[3].body.sesothoDraft.split('\n\n');
-  // Ordinary step framing now has checked drafts; causal ecology and treatment safeguards remain English.
-  for (const index of [1, 10]) {
-    assert.equal(pestDraft[index], pestSource[index], `pest paragraph ${index + 1}: precise ecology and treatment safeguards stay exact English`);
-  }
+  // Translate the opening diagnosis cue, but keep the single-crop and chemical/predator causes exact.
+  assert.ok(pestDraft[1].startsWith('Dimela tse nang le stress. '));
+  assert.ok(pestDraft[1].endsWith('One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.'),
+    'the remaining causes, especially that broad chemical use has already removed helpful predators, stay exact');
   assert.match(pestDraft[2], /pele o phekola eng kapa eng.*system yohle/);
+  assert.ok(pestDraft[3].includes('metsi') && pestDraft[3].includes('mobu o petetsane') && pestDraft[3].includes('ha o na phepo'));
+  assert.ok(pestDraft[3].includes('dibatana tsa disenyi di se di thusa'),
+    'the full water/soil/nutrient/predator diagnostic list and already-helping condition stay present');
   assert.match(pestDraft[5], /mehato e mene, ka tatellano/);
   assert.match(pestDraft[9], /Ke ka morao feela moo o nkang kgato/);
   assert.ok(pestDraft[9].endsWith('and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.'));
-  assert.ok(pestDraft[8].endsWith('Beneficial insects are doing work you\'d otherwise do yourself.'));
+  assert.ok(pestDraft[8].includes('Beneficial insects') && pestDraft[8].includes('mosebetsi'),
+    'the ordinary protection framing now includes the benefit insects provide');
+  assert.equal(pestDraft[10], pestSource[10],
+    'registration for the crop and pest, label directions, harvest waiting instructions, and the ban on improvised or stronger doses stay exact');
+  const shownPests = resolveLearnerLessonPresentation(source.lessons[3], 'st');
+  assert.equal(shownPests.status, 'draft');
+  assert.deepEqual(shownPests.content.body.split('\n\n'), pestDraft,
+    'the learner sees the same source-aligned diagnostic sequence covered above');
+  const changedPestSource = { ...source.lessons[3], body: `${source.lessons[3].body}\nChanged diagnostic.` };
+  assert.equal(resolveLearnerLessonPresentation(changedPestSource, 'st').status, 'english-fallback',
+    'a changed diagnostic source cannot inherit these machine drafts');
+  assert.equal(resolveLearnerLessonPresentation(changedPestSource, 'st').content.body, changedPestSource.body);
   const staplesSource = source.lessons[2].body.split('\n\n');
   const staplesDraft = draft.lessons[2].body.sesothoDraft.split('\n\n');
   const expectedStapleDraft = [
