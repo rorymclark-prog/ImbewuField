@@ -1,0 +1,30 @@
+{
+  "title": "ST/VE Vegetables establishment implementation record",
+  "date": "2026-10-03",
+  "branch": "codex/regional-vegetables-establishment-next-20261003",
+  "baseRevision": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+  "scope": {
+    "changedFields": 7,
+    "carriedForwardTSFields": 8
+  },
+  "filesChanged": [
+    "lib/course-translation-drafts-st-vegetables-staples.ts",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts",
+    "tests/course-translation-drafts-st-vegetables-staples.test.ts",
+    "tests/course-translation-drafts-st.test.ts",
+    "tests/course-translation-drafts-ve.test.ts"
+  ],
+  "additionalChanges": "Rewrote the related Sesotho L1 registered test that still required the wet-clay sentence to be wholly English. It now protects the localized prohibition and exact severity/adviser/timing condition; its source-drift fallback remains.",
+  "evidence": [
+    "docs/study-translation-reviews/ST-VE-VEGETABLES-ESTABLISHMENT-CANDIDATES-2026-10-03.json",
+    "docs/study-translation-reviews/ST-VE-VEGETABLES-ESTABLISHMENT-INDEPENDENT-CHECK-2026-10-03.json",
+    "docs/study-translation-reviews/ST-VE-VEGETABLES-ESTABLISHMENT-PRESERVATION-2026-10-03.json"
+  ],
+  "verification": {
+    "typecheck": "passed",
+    "focusedTests": "28 passed",
+    "fullSuite": "4,527 passed, 0 non-TODO failures, 1 existing shape-sync TODO",
+    "diffCheck": "passed"
+  },
+  "publication": "Machine drafts only; fluent approval is not claimed. No commit or push."
+}

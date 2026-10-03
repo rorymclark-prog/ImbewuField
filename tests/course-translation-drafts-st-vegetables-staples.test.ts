@@ -76,10 +76,13 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
 
   const bedSource = source.lessons[0].body.split('\n\n');
   const bedDraft = draft.lessons[0].body.sesothoDraft.split('\n\n');
-  // New source-paired ordinary prose replaces whole-paragraph holds; precise conditions still bind.
-  for (const index of [7, 12, 17]) {
-    assert.equal(bedDraft[index], bedSource[index], `bed paragraph ${index + 1}: soil prohibition, crop grouping and deeper-cultivation conditions stay English`);
-  }
+  // Localize simple framing while the soil decision and nursery sequence remain anchored to their source.
+  assert.match(bedDraft[7], /^U se ke ua cheka wet clay\. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation\.$/,
+    'the no-dig wet-clay prohibition and full severity/adviser/before-deeper-cultivation safeguard remain');
+  assert.match(bedDraft[12], /^Others do better with a protected start in a nursery, then transplanting\. Tomatoes le brassicas ke tsa sehlopha seo\.$/,
+    'the nursery/transplanting sequence is retained and tomato/brassica grouping is localized');
+  assert.match(bedDraft[17], /^Jwale lokisetsa ho ya ka mobu wa hao — no-dig first, and dig deeper only if your ground genuinely needs it\.$/,
+    'no-dig remains first and deeper digging is still limited to ground that genuinely needs it');
   for (const [index, condition] of [
     [1, 'Permanent paths, and a bed narrow enough to reach into from both sides.'],
     [2, 'At that width you can reach the centre from either path, and your feet never touch the growing area.'],

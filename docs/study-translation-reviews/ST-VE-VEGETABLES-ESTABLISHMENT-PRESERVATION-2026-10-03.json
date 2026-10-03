@@ -1,0 +1,87 @@
+{
+  "title": "ST/VE Vegetables establishment implementation preservation proof",
+  "date": "2026-10-03",
+  "branch": "codex/regional-vegetables-establishment-next-20261003",
+  "baseRevision": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+  "canonicalModule": "vegetables-staples",
+  "changedFields": [
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l1",
+      "paragraphIndexZeroBased": 7
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l1",
+      "paragraphIndexZeroBased": 12
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l1",
+      "paragraphIndexZeroBased": 17
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "paragraphIndexZeroBased": 0
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "paragraphIndexZeroBased": 7
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "paragraphIndexZeroBased": 17
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndexZeroBased": 8
+    }
+  ],
+  "changedFieldCount": 7,
+  "carriedForwardTS8Fields": {
+    "lessonId": "vegetables-staples-l1",
+    "language": "ts",
+    "paragraphIndexesZeroBased": [
+      2,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15,
+      17
+    ],
+    "valuesMatchAcceptedPacket": true
+  },
+  "checks": {
+    "allSevenSTVECurrentAndSourceBindingsExactBeforeApplication": true,
+    "allSevenCandidatesMatchLiveResolver": true,
+    "canonicalEnglishSourcePairsUnchanged": true,
+    "paragraphCountAndOrderPreserved": true,
+    "allUnlistedSTVEParagraphsEqualBase": true,
+    "TS8ValuesUnchanged": true,
+    "allDraftStatusesRemainMachineDraft": true,
+    "sourceDriftFallbackTestsRetained": true,
+    "quizWordingAndCorrectIndicesUntouched": true,
+    "mediaUntouched": true,
+    "noFluentApprovalClaimed": true
+  },
+  "protectedMeaning": [
+    "Never dig wet clay; severe compaction/poor drainage requires identifying the cause with local advice before choosing deeper cultivation.",
+    "Nursery start and transplanting sequence remains exact; tomatoes/brassicas stay in the source group.",
+    "No-dig first; deeper cultivation only if the ground genuinely needs it.",
+    "Tshivenda L1 compaction mechanism remains exact while its effects are localized.",
+    "Tshivenda L2 only localizes suitable timing and possible overlap; the exact “not always ready by the fourth sowing” sentence remains."
+  ],
+  "verification": {
+    "typecheck": "npx tsc --noEmit passed",
+    "focusedTests": "28 passed, 0 failed across the four ST/VE/TS translation test files",
+    "fullSuite": "4,527 passed; zero non-TODO failures; one existing shape-sync TODO remains",
+    "diffCheck": "git diff --check passed"
+  },
+  "reviewStatus": "Unreviewed machine drafts; no fluent/local approval."
+}

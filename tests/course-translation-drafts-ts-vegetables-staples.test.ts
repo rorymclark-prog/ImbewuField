@@ -152,9 +152,22 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
   const english = source.body.split('\n\n');
   assert.equal(draft.body.sourceEnglish, source.body);
   assert.equal(paragraphs.length, english.length);
-  for (const index of [2, 6, 7, 8, 9, 12, 15, 17]) {
-    assert.equal(paragraphs[index], english[index], 'hold geometry, soil suitability, establishment sequence and dimensions');
-  }
+  assert.match(paragraphs[2], /^One metre to one point two metres hi ku anama\. Lowu hi wona mpimo lowu tirhaka\. At that width you can reach the centre from either path, and your feet never touch the growing area\.$/,
+    'keep both source dimensions, working-width meaning, reach from either path and the no-step growing-area limit');
+  assert.match(paragraphs[6], /^No-dig yi lulamela most garden soils\. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla\.$/,
+    'no-dig remains suitable for most garden soils and does not disturb the soil structure');
+  assert.match(paragraphs[7], /^U nga keli wet clay\. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation\.$/,
+    'the wet-clay prohibition and full severe-condition/adviser/before-deeper-cultivation safeguard remain');
+  assert.match(paragraphs[8], /^Raised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona\.$/,
+    'raised-bed advice stays bounded to wet ground and a drainage outlet');
+  assert.match(paragraphs[9], /^Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka\.$/,
+    'sunken-bed advice retains the dry-ground condition and source-limited rain-catching purpose');
+  assert.match(paragraphs[12], /^Others do better with a protected start in a nursery, then transplanting\. Tomatoes na brassicas swi wela eka ntlawa wolowo\.$/,
+    'preserve the nursery-first/transplanting sequence and exact crop names while translating their grouping');
+  assert.match(paragraphs[15], /^One point two metres hi ku anama\. Three metres hi ku leha\. I bed yin'we ya ku titoloveta\.$/,
+    'retain both dimensions in source order while translating width, length and the one-bed practice framing');
+  assert.match(paragraphs[17], /^Kutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u dig deeper ntsena loko misava ya wena hakunene yi swi lava\.$/,
+    'no-dig stays first and deeper digging stays conditional on the ground genuinely needing it');
   assert.ok(paragraphs[0].includes('Roots slow down.'));
   assert.ok(paragraphs[1].endsWith('Permanent paths, and a bed narrow enough to reach into from both sides.'));
   assert.ok(paragraphs[11].endsWith("They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."));

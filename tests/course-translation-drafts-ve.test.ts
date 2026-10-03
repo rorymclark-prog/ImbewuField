@@ -628,8 +628,14 @@ test('Tshivenda bed preparation preserves reachability, soil conditions and crop
   const paragraphs = draft.body.tshivendaDraft.split('\n\n');
   assert.equal(paragraphs.length, english.length);
   assert.equal(paragraphs.length, 20);
-  for (const index of [0, 7, 17]) assert.equal(paragraphs[index], english[index], `unresolved paragraph ${index} remains precise English`);
-  assert.equal(paragraphs.filter((paragraph, index) => paragraph !== english[index]).length, 17);
+  assert.match(paragraphs[0], /^Compacted soil loses its air spaces\. Midzi i aluwa nga u ongolowa\. Maḓi a nwela nga nḓila yo fhambanaho\. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe\.$/,
+    'the technical compaction mechanism remains exact while root, water and seasonal work effects are localized');
+  assert.match(paragraphs[7], /^Ni songo bwa wet clay\. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation\.$/,
+    'the prohibition and full severe-condition/adviser/timing safeguard remain');
+  assert.match(paragraphs[17], /^Nga murahu ni lugiselele u ya nga mavu aṋu — no-dig first, and dig deeper only if your ground genuinely needs it\.$/,
+    'no-dig remains first and deeper cultivation is conditional on genuine need');
+  assert.equal(paragraphs.filter((paragraph, index) => paragraph !== english[index]).length, 20);
+
   assert.match(paragraphs[1], /narrow enough to reach into from both sides/);
   assert.match(paragraphs[2], /One metre to one point two metres wide/);
   assert.match(paragraphs[2], /feet never touch the growing area/);
@@ -681,7 +687,7 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   assert.match(l2[9], /Heat may speed things up, or cause a failure/);
   assert.match(l2[12], /Indigenous farming traditions in the Americas/);
   assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi stored maize yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho when water limits the garden\.$/, 'L2 p19 retains each possible hungry-gap timing and the exact water-limits condition');
-  assert.equal(l2[8], module.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!.body.split('\n\n')[8], 'ambiguous by-fourth-sowing outcome remains exact English');
+  assert.equal(l2[8], 'Arali crop timing yo tea, harvests dzi nga thoma u overlap. The first batch will not always be ready by the fourth sowing.', 'suitable timing and possible overlap are localized while the first-batch/fourth-sowing caveat stays exact');
   assert.match(l2[14], /and store as protein/);
   assert.match(l2[15], /^Pumpkin spreads across the ground/);
   assert.match(l2[16], /Establish the maize first, so it's strong enough to carry the beans when they start to climb/);
