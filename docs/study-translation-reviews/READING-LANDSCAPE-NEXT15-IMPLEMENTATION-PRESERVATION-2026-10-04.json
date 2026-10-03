@@ -1,0 +1,475 @@
+{
+  "title": "Reading Landscape next15 paired target preservation proof",
+  "date": "2026-10-04",
+  "baseHead": "d0b5b846b30935c6b6f0498a1889033602ba8fb5",
+  "sourceFile": "docs/narration/reading-landscape.en.md",
+  "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+  "targetFieldsChanged": 15,
+  "changedTargets": [
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Hlahloba letsatsi le moya o senyang le tsona. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 1,
+      "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Batla keletso ya lehae ka bophelo ba dijalo le yona."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Haha A-frame level ka poles tse tharo le weighted string.",
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sheba sebaka sa hao pele u khetha where to place tender crops, trees, or buildings."
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Watch your own site before choosing where to place ",
+            "status": "draft",
+            "text": "Sheba sebaka sa hao pele u khetha moo o ka behang "
+          },
+          {
+            "sourceEnglish": "tender crops, trees, or buildings.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Ema sebakeng seo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Stand in the spot ",
+            "status": "draft",
+            "text": "Ema sebakeng seo "
+          },
+          {
+            "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Watch where the shade falls.",
+            "status": "draft",
+            "text": "Shebella moo moriti o welang teng."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Vhambedzani candidate places through the local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Sedzani ḓuvha na muya wa tshinyadzaho na zwone. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 1,
+      "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Fhaṱani A-frame level nga poles tharu na weighted string.",
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sedzani site yaṋu ni sa athu nanga where to place tender crops, trees, or buildings."
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Watch your own site before choosing where to place ",
+            "status": "draft",
+            "text": "Sedzani site yaṋu ni sa athu nanga hune na nga vhea "
+          },
+          {
+            "sourceEnglish": "tender crops, trees, or buildings.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Imani fhethu at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Stand in the spot ",
+            "status": "draft",
+            "text": "Imani fhethu "
+          },
+          {
+            "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Watch where the shade falls.",
+            "status": "draft",
+            "text": "Sedzani hune murunzi wa wela hone."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Pimanisa candidate places through the local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Kambela dyambu ni moya lowu onhaka na swona. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 1,
+      "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Vaka A-frame level hi tipolo tinharhu ni ntambhu leyi nga ni ntiko.",
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Languta ndhawu ya wena u nga si hlawula where to place tender crops, trees, or buildings."
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Watch your own site before choosing where to place ",
+            "status": "draft",
+            "text": "Languta ndhawu ya wena u nga si hlawula laha u nga vekaka "
+          },
+          {
+            "sourceEnglish": "tender crops, trees, or buildings.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Yima endhawini yoleyo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Stand in the spot ",
+            "status": "draft",
+            "text": "Yima endhawini yoleyo "
+          },
+          {
+            "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Watch where the shade falls.",
+            "status": "draft",
+            "text": "Languta laha ndzhuti wu welaka kona."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    }
+  ],
+  "unlistedFieldsDeepEqualToBase": true,
+  "unlistedCountsByLanguage": {
+    "st": {
+      "slides": 21,
+      "headings": 21,
+      "bodyFields": 50,
+      "changedFields": 5
+    },
+    "ve": {
+      "slides": 21,
+      "headings": 21,
+      "bodyFields": 50,
+      "changedFields": 5
+    },
+    "ts": {
+      "slides": 21,
+      "headings": 21,
+      "bodyFields": 50,
+      "changedFields": 5
+    }
+  },
+  "canonicalEnglishUnchanged": true,
+  "evidenceCopies": [
+    "READING-LANDSCAPE-NEXT15-ROOT-ACCEPTED-CANDIDATES-2026-10-04.json",
+    "READING-LANDSCAPE-NEXT15-RAW-CANDIDATE-EVIDENCE-2026-10-04.json",
+    "READING-LANDSCAPE-NEXT15-INDEPENDENT-CHECK-2026-10-04.json",
+    "READING-LANDSCAPE-NEXT15-ROOT-REPAIR-CHECK-2026-10-04.json",
+    "READING-LANDSCAPE-NEXT15-FULLER-ORDINARY-CANDIDATE-EVIDENCE-2026-10-04.json",
+    "READING-LANDSCAPE-NEXT15-FULLER-ORDINARY-INDEPENDENT-CHECK-2026-10-04.json"
+  ],
+  "note": "Exact previous target values are retained in this proof. The three slide 10 body 1 proposals from the broader audit are excluded because independent review matched the existing target exactly; no status-only changes were made.",
+  "excludedUnchangedTargets": [
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 1,
+      "reason": "Independent repair returns existing exact mixed rendering; preserve current target rather than count a status-only change as translation.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele before you build or fix a shade structure in place."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 1,
+      "reason": "Independent repair returns existing exact mixed rendering; preserve current target rather than count a status-only change as translation.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma before you build or fix a shade structure in place."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 1,
+      "reason": "Independent repair returns existing exact mixed rendering; preserve current target rather than count a status-only change as translation.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place."
+      }
+    }
+  ]
+}

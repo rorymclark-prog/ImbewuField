@@ -5,7 +5,7 @@
   "humanLanguageReview": false,
   "localFarmingReview": false,
   "narration": null,
-  "pairedSourceSha256": "751fe87b0ee28d5d4d079e8351efe20f02b06c1e5ac6802f055d85312fb27f7e",
+  "pairedSourceSha256": "36aedcdc3e53be60e6c98bac3c233973d62e32b3950b54e717190ab8e6aa008b",
   "englishSourceSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
   "slides": [
     {
@@ -23,14 +23,14 @@
     {
       "slide": 3,
       "path": "public/course-decks/reading-landscape/ve/slide-03.webp",
-      "bytes": 258294,
-      "sha256": "5892be4ac2ba0cf1b618a32fd7db047046f62c45d3f7c1b921d1b68442560aa8"
+      "bytes": 253608,
+      "sha256": "43e289d94b534f53050598f22eb6fa26a31aa273f7a655a7f26de296d0cd2490"
     },
     {
       "slide": 4,
       "path": "public/course-decks/reading-landscape/ve/slide-04.webp",
-      "bytes": 259372,
-      "sha256": "05789385ec5a557509b1e9692a77b49539b9fb8bd8eaef92ff26ffb94cb86afc"
+      "bytes": 253432,
+      "sha256": "f914cf3e9d59703aaec8e48f5c750640da2ab4d1f4c926663eae5db6c0f1cd2e"
     },
     {
       "slide": 5,
@@ -47,14 +47,14 @@
     {
       "slide": 7,
       "path": "public/course-decks/reading-landscape/ve/slide-07.webp",
-      "bytes": 285314,
-      "sha256": "1ff1a81a0b00018084fcd88fd4420a982e52ed10346faaed1dbc7051cb830860"
+      "bytes": 287414,
+      "sha256": "6aae55cbe93bc679884bce4f7fe1ecb9092c27e8901c8c5d651b9aafbfc136a7"
     },
     {
       "slide": 8,
       "path": "public/course-decks/reading-landscape/ve/slide-08.webp",
-      "bytes": 339658,
-      "sha256": "c12e6351c4348597de7a5f7aacb11a34d4ca1bb80e0fc85d6a2524371ce13c5e"
+      "bytes": 343954,
+      "sha256": "6e9d3e150f261f65b27016b9b22354ee16aa3e6c6d2263ea0cfa0bee723abe13"
     },
     {
       "slide": 9,
@@ -65,8 +65,8 @@
     {
       "slide": 10,
       "path": "public/course-decks/reading-landscape/ve/slide-10.webp",
-      "bytes": 576250,
-      "sha256": "54b50b31ee13ada7f93a4d10743f69d0d49db26f33fe1302f96b7e8367bb736a"
+      "bytes": 579904,
+      "sha256": "1ee4e7ad04bfbb09318a22915d39d956e5c134b7465d0beecd37d4db2e87e01d"
     },
     {
       "slide": 11,
@@ -77,8 +77,8 @@
     {
       "slide": 12,
       "path": "public/course-decks/reading-landscape/ve/slide-12.webp",
-      "bytes": 481672,
-      "sha256": "b522115094c5a99fd79add9c2a7cb71f6d0644bcc8e2fa035d45b8f53103a05d"
+      "bytes": 480302,
+      "sha256": "1b58bfc18e96839db5d2f5ce2713e233beefbd945719ea918ddf6190b640871d"
     },
     {
       "slide": 13,
@@ -89,14 +89,14 @@
     {
       "slide": 14,
       "path": "public/course-decks/reading-landscape/ve/slide-14.webp",
-      "bytes": 454464,
-      "sha256": "f56cd517a5731c768ea7a87eef901dd5e27f7313baa4d545ae5a0a0db8a1f539"
+      "bytes": 455556,
+      "sha256": "afa430935b5eab446b3f8546ef9d97f3bcb7e2da42d5335ae6777c4fdc872c4d"
     },
     {
       "slide": 15,
       "path": "public/course-decks/reading-landscape/ve/slide-15.webp",
-      "bytes": 438160,
-      "sha256": "ac6bbda507271de4608387365485620af58f5b64144fb6643103f99aa518c6de"
+      "bytes": 439240,
+      "sha256": "f5de184b40074ee714735d7f18ba2a2ab5bba357365f0802f2bd273d5834d922"
     },
     {
       "slide": 16,
@@ -131,8 +131,8 @@
     {
       "slide": 21,
       "path": "public/course-decks/reading-landscape/ve/slide-21.webp",
-      "bytes": 286214,
-      "sha256": "47f55110dc7d2dc41f61efbb7db2476e50e4cdf5b91ac8d3683bede6395b36a5"
+      "bytes": 276008,
+      "sha256": "6d294bacf82129d91ac54401d42a735199f680dc7eddc197c2a2f0a4f55d052a"
     }
   ],
   "note": "Silent source-paired frames. Rust text remains exact English; mixed drafts retain difficult technical English. No fluent or farming approval."

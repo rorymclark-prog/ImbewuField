@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: '68626572', changes: [
+    'Reading Landscape slides 8, 10, 15 and 21 show fuller regional drafts beside English.',
+    'Frost limits, disease cautions and observation times remain visible for review.',
+  ], tour: [
+    { title: 'Review the regional Reading Landscape slides',
+      where: 'Study → Reading the Landscape → Slides 8, 10, 15 and 21',
+      detail: 'Compare the unreviewed drafts with English and save slides without narration.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: 'a805f5a1', changes: [
     'Reading Landscape slides add marked regional drafts beside the English source.',
     'Rain safety and sun, wind and frost conditions stay visible in the silent deck.',
