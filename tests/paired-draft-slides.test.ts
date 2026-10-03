@@ -1198,8 +1198,14 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
   assert.equal(preservation.uniqueFramesChanged, 17);
 
   const changed = new Set<string>();
+  const next15Proof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-NEXT15-IMPLEMENTATION-PRESERVATION-2026-10-04.json', 'utf8'));
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    // Reconstruct the prior 20-field state so its full preservation proof remains testable after this authorized batch.
+    for (const change of next15Proof.changedTargets.filter((item: any) => item.language === language)) {
+      packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
+    }
     const slides = validatePairedDraft(packet, readingSource, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
     for (const field of accepted.candidateFields.filter((item: any) => item.language === language)) {
@@ -1296,6 +1302,107 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
       `${language}: source drift blocks these paired field notes`);
   }
   assert.equal(changed.size, 20, 'all 20 accepted target fields remain represented once');
+});
+
+test('Reading Landscape next15 drafts keep frost limits, observation times and A-frame parts source-bound', () => {
+  const readingSource = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-NEXT15-ROOT-ACCEPTED-CANDIDATES-2026-10-04.json', 'utf8'));
+  const proof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-NEXT15-IMPLEMENTATION-PRESERVATION-2026-10-04.json', 'utf8'));
+  const excluded = new Set<string>(packet.excludedFields.map((field: any) =>
+    `${field.language}:${field.slide}:${field.bodyIndex}`));
+  const acceptedFields = packet.candidateFields.filter((field: any) =>
+    !excluded.has(`${field.language}:${field.slide}:${field.bodyIndex}`));
+  assert.equal(packet.scope.targetFields, 15);
+  assert.equal(acceptedFields.length, 15);
+  assert.equal(proof.targetFieldsChanged, 15);
+  assert.equal(proof.unlistedFieldsDeepEqualToBase, true);
+  assert.equal(proof.canonicalEnglishUnchanged, true);
+
+  const expected = new Set<string>();
+  const poleWords = { st: 'tse tharo', ve: 'tharu', ts: 'tinharhu' } as const;
+  const weightedStringWords = { st: 'weighted string', ve: 'weighted string', ts: 'ntambhu leyi nga ni ntiko' } as const;
+  for (const language of ['st', 've', 'ts'] as const) {
+    const pair = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(pair, readingSource, language);
+    assert.equal(pair.reviewStatus, 'unreviewed');
+    const fields = acceptedFields.filter((field: any) => field.language === language);
+    assert.equal(fields.length, 5, `${language}: only the five accepted body fields are wired`);
+    for (const field of fields) {
+      const key = `${language}:${field.slide}:${field.bodyIndex}`;
+      expected.add(key);
+      const slide = slides[field.slide - 1];
+      assert.equal(slide.english.body[field.bodyIndex], field.sourceEnglish,
+        `${key}: the source stays byte-for-byte paired`);
+      const target = slide.target.body[field.bodyIndex];
+      const storedTarget = pair.slides[field.slide - 1].target.body[field.bodyIndex];
+      assert.equal(target.status, field.candidateStatus, `${key}: keep the unreviewed state visible`);
+      assert.match(storedTarget.provenance ?? '', /unreviewed/i, `${key}: facilitator review remains pending`);
+      if (field.candidateStatus === 'mixed') {
+        assert.deepEqual(target.segments, field.candidateSegments, `${key}: retain accepted source segments`);
+        assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), field.sourceEnglish,
+          `${key}: mixed segments cover the complete source in order`);
+        for (const segment of target.segments) {
+          if (segment.status === 'english-hold') {
+            assert.equal(segment.text, undefined, `${key}: an English hold displays its exact source text`);
+          }
+        }
+      } else {
+        assert.equal(target.text, field.candidateText, `${key}: preserve the accepted draft text`);
+      }
+    }
+
+    const frost = slides[14].target.body[0];
+    assert.equal(frost.status, 'mixed');
+    const frostHolds = frost.segments.filter((segment: any) => segment.status === 'english-hold')
+      .map((segment: any) => segment.sourceEnglish).join('');
+    assert.ok(frostHolds.includes('Put a frost-sensitive seedling nursery outside the cold pockets you have observed.'));
+    assert.ok(frostHolds.includes('Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position.'));
+    assert.ok(frostHolds.includes('No hillside position guarantees freedom from frost.'));
+    assert.ok(frost.segments.some((segment: any) => segment.status === 'draft' &&
+      segment.sourceEnglish === 'Compare candidate places through the local frost season. '),
+    `${language}: comparison remains limited to the local frost season`);
+
+    const disease = slides[14].target.body[1];
+    assert.equal(disease.status, 'mixed');
+    const diseaseHolds = disease.segments.filter((segment: any) => segment.status === 'english-hold')
+      .map((segment: any) => segment.sourceEnglish).join('');
+    assert.ok(diseaseHolds.includes('For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry.'));
+    assert.ok(diseaseHolds.includes('Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight.'));
+    assert.ok(disease.segments.some((segment: any) => segment.status === 'draft' &&
+      segment.sourceEnglish === 'Seek local crop-health advice too.'), `${language}: keep the adviser recommendation`);
+
+    const times = slides[9].target.body[2];
+    assert.equal(times.status, 'mixed');
+    assert.ok(times.segments.some((segment: any) => segment.status === 'english-hold' &&
+      segment.sourceEnglish === "at 8am, midday, and 4pm on a winter's day. "),
+    `${language}: preserve all observation times and winter timing exactly`);
+
+    const frame = slides[20].target.body[0];
+    assert.equal(frame.status, 'draft');
+    assert.ok(frame.text.includes('A-frame level') && frame.text.includes(weightedStringWords[language]),
+      `${language}: retain the level and weighted-string concept`);
+    assert.ok(frame.text.includes(poleWords[language]), `${language}: keep the source count of three poles`);
+
+    const staleSource = structuredClone(readingSource);
+    staleSource[14].body[0] += ' Changed source.';
+    assert.throws(() => validatePairedDraft(pair, staleSource, language), /slide 15: English body differs/,
+      `${language}: source drift blocks stale paired copy`);
+    const canonicalLesson = COURSE_MODULES.find((module) => module.id === 'reading-landscape')!
+      .lessons.find((lesson) => lesson.id === 'reading-landscape-l2')!;
+    const changedCanonical = { ...canonicalLesson, body: `${canonicalLesson.body} Changed source.` };
+    const fallback = resolveLearnerLessonPresentation(changedCanonical, language);
+    assert.equal(fallback.status, 'english-fallback', `${language}: stale learner translations fall back to English`);
+    assert.equal(fallback.content.body, changedCanonical.body);
+  }
+  assert.equal(expected.size, 15, 'the 15 accepted language/body bindings appear exactly once');
+  for (const field of proof.excludedUnchangedTargets) {
+    const pair = JSON.parse(readFileSync(`docs/narration/reading-landscape.${field.language}.paired-draft.json`, 'utf8'));
+    const current = pair.slides[field.slide - 1].target.body[field.bodyIndex];
+    assert.deepEqual(current, field.currentTarget,
+      `${field.language} slide ${field.slide} body ${field.bodyIndex}: do not count an unchanged target as translation progress`);
+  }
 });
 
 test('regional Market slides preserve exact price and seed holds plus conditions inside unreviewed drafts', () => {

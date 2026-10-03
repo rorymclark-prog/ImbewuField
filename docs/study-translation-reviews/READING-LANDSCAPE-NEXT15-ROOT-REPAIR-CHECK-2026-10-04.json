@@ -1,0 +1,16 @@
+{
+  "title": "Root-proposed repair semantic check — Reading Landscape ST slide 15 body 0",
+  "date": "2026-10-04",
+  "candidatePacket": "/tmp/imbewu-reading-landscape-slides15-21-candidates-20261004.json",
+  "candidatePacketSHA256": "28838f26766e1899c3a9c406427442d538b56dbbebb54c9534c68db52e085ac2",
+  "priorIndependentCheck": "/tmp/imbewu-reading-landscape-slides15-21-independent-check-20261004.json",
+  "scope": "Read-only check of one proposed next-candidate repair. The previously saved nine-row independent check is unchanged.",
+  "sourceClauseExact": "Compare candidate places through the local frost season. ",
+  "previousCandidateClauseExact": "Bapisa dibaka tseo e ka bang tsona nakong ya sehla sa serame sa lehae. ",
+  "rootProposedRepairExact": "Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. ",
+  "decision": "accept_for_next_candidate",
+  "reason": "The earlier “sehla sa serame sa lehae” says local cold season and can blur the source’s specific frost-season observation window. Keeping “local frost season” in English preserves that technical qualifier while localizing the compare action and candidate places. “dibaka tseo e ka bang tsona” conveys possible/candidate places. No modality, duration, location, or outcome is added. Retain as an unreviewed mixed machine proposal; no fluency or local approval is implied.",
+  "repair": null,
+  "repositoryEdits": 0,
+  "fluencyOrLocalApprovalClaim": false
+}

@@ -1833,8 +1833,8 @@ test('a saved Reading Landscape pack retires only the seventeen changed regional
   const body = source.match(/async function migrateReadingLandscapeDraftStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(function \(\)/,
-    'Reading still invalidation follows the current regional activation migrations');
+    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(function \(\)/,
+    'the older Reading invalidation stays before the next batch in activation order');
 
   const origin = 'https://field.test';
   const slideNumbers = {
@@ -1895,4 +1895,66 @@ test('a saved Reading Landscape pack retires only the seventeen changed regional
   for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
   assert.equal(puts, 1, 'later activation leaves a learner-selected replacement intact');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation invalidates old bytes without downloading replacements');
+});
+
+test('a saved Reading Landscape pack retires only the next twelve regional stills once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateReadingLandscapeOrdinaryStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source,
+    /then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(function \(\)/,
+    'the next Reading migration runs after earlier localized still migrations during activation');
+
+  const origin = 'https://field.test';
+  const changed = (['st', 've', 'ts'] as const).flatMap(language => [8, 10, 15, 21].map(slide =>
+    `/course-decks/reading-landscape/${language}/slide-${String(slide).padStart(2, '0')}.webp`));
+  assert.equal(changed.length, 12);
+  const preserved = [
+    ...(['st', 've', 'ts'] as const).flatMap(language => Array.from({ length: 21 }, (_, index) =>
+      `/course-decks/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.webp`
+    ).filter(path => !changed.includes(path))),
+    ...(['en', 'zu'] as const).flatMap(language => Array.from({ length: 21 }, (_, index) =>
+      `/course-decks/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.jpg`)),
+    ...(['en', 'zu', 'st', 've', 'ts'] as const).flatMap(language => [
+      ...Array.from({ length: 21 }, (_, index) =>
+        `/course-audio/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.mp3`),
+      `/course-audio/reading-landscape/${language}/full.mp3`,
+    ]),
+    '/course-decks/vegetables-staples/st/slide-07.webp',
+    '/course-decks/market-community/st/slide-01.webp',
+    '/course-audio/soil-health/st/slide-04.mp3',
+  ];
+  const obsoleteUrls = changed.flatMap(path => [
+    new URL(path + '?saved=old', origin).href,
+    new URL(path + '?width=small', origin).href,
+  ]);
+  const preservedUrls = [...new Set(preserved)].map(path => new URL(path + '?saved=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...obsoleteUrls.map(url => [url, new Response('superseded Reading ordinary still')] as const),
+    ...preservedUrls.map(url => [url, new Response('keep saved course media')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+
+  for (const url of obsoleteUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/reading-landscape/.regional-ordinary-stills-20261004';
+  assert.equal(rows.has(marker), true);
+  assert.equal(rows.size - preservedUrls.length, 1, 'only the once-only migration marker is added');
+  assert.equal(puts, 1, 'the first activation records one marker');
+
+  const replacement = new URL(changed[0], origin).href;
+  rows.set(replacement, new Response('replacement downloaded later by the learner'));
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'replacement downloaded later by the learner');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'later activation leaves replacement downloads alone');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation retires old bytes without spending airtime on replacement downloads');
 });

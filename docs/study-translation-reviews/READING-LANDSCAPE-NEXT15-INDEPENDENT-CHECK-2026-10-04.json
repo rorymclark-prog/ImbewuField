@@ -1,0 +1,218 @@
+{
+  "title": "Reading Landscape slides 15–21 independent semantic backcheck",
+  "date": "2026-10-04",
+  "candidatePacket": "/tmp/imbewu-reading-landscape-slides15-21-candidates-20261004.json",
+  "candidatePacketSHA256": "28838f26766e1899c3a9c406427442d538b56dbbebb54c9534c68db52e085ac2",
+  "scope": {
+    "rowsReviewed": 9,
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "repositoryEdits": 0,
+    "rendered": false
+  },
+  "method": "Read the candidate packet and exact current narration source; checked each complete mixed concatenation and its source-paired English clause order. Reviewed target wording conservatively for semantic direction only; no fluent-speaker or agronomic approval is claimed.",
+  "rows": [
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 0,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Bapisa dibaka tseo e ka bang tsona nakong ya sehla sa serame sa lehae. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Hlahloba letsatsi le moya o senyang le tsona. No hillside position guarantees freedom from frost.",
+      "sourceAndCandidateBackcheck": "The two localized instructions mean compare possible places through the local cold/frost season and also check sun and damaging wind. “local frost season” and the cold-pocket placement, record/adviser condition, and no-guarantee statement remain source English. Full mixed concatenation preserves clause order and claims.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": true,
+        "cropHealthNotLivestockHealth": false,
+        "damagingWind": true,
+        "aframeThreePolesAndWeightedString": false,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 1,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Batla keletso ya lehae ka bophelo ba dijalo le yona.",
+      "sourceAndCandidateBackcheck": "“bophelo ba dijalo” identifies crop/plant health, and “Batla keletso ya lehae … le yona” asks for local advice too. It is about crop health, not livestock health. The late-blight identity, weather caveat, and bed-alone limitation remain exact source English.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": false,
+        "cropHealthNotLivestockHealth": true,
+        "damagingWind": false,
+        "aframeThreePolesAndWeightedString": false,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "st",
+      "slide": 21,
+      "bodyIndex": 0,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "Haha A-frame level ka poles tse tharo le weighted string.",
+      "sourceAndCandidateBackcheck": "“Haha” is build/make; “A-frame level” and “weighted string” stay English as difficult equipment terms. “poles tse tharo” preserves exactly three poles. No dimensions, extra parts, or changed geometry are introduced.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": false,
+        "cropHealthNotLivestockHealth": false,
+        "damagingWind": false,
+        "aframeThreePolesAndWeightedString": true,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 0,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Vhambedzani candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Sedzani ḓuvha na muya wa tshinyadzaho na zwone. No hillside position guarantees freedom from frost.",
+      "sourceAndCandidateBackcheck": "“Vhambedzani” expresses compare; the candidate locations and local frost season remain English. The second localized clause checks sun and damaging wind too. Full mixed text retains the exact placement, evidence/adviser condition, and no-guarantee source clauses in order.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": true,
+        "cropHealthNotLivestockHealth": false,
+        "damagingWind": true,
+        "aframeThreePolesAndWeightedString": false,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 1,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone.",
+      "sourceAndCandidateBackcheck": "“Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone” asks for local advice about plant/crop health too. This names crops/plants, not livestock. The disease, weather, and control-limit claims remain source English.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": false,
+        "cropHealthNotLivestockHealth": true,
+        "damagingWind": false,
+        "aframeThreePolesAndWeightedString": false,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 0,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "Fhaṱani A-frame level nga poles tharu na weighted string.",
+      "sourceAndCandidateBackcheck": "“Fhaṱani” is build; “A-frame level” and “weighted string” remain English technical terms. “poles tharu” preserves three poles. No measurement or added construction detail appears.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": false,
+        "cropHealthNotLivestockHealth": false,
+        "damagingWind": false,
+        "aframeThreePolesAndWeightedString": true,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 0,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Pimanisa candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Kambela dyambu ni moya lowu onhaka na swona. No hillside position guarantees freedom from frost.",
+      "sourceAndCandidateBackcheck": "“Pimanisa” means compare and “Kambela dyambu ni moya lowu onhaka na swona” checks sun and damaging wind too. Candidate places/local frost season remain English. All source conditions and the explicit no-guarantee statement remain exact English in their original order.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": true,
+        "cropHealthNotLivestockHealth": false,
+        "damagingWind": true,
+        "aframeThreePolesAndWeightedString": false,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 1,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona.",
+      "sourceAndCandidateBackcheck": "“Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona” asks for local advice about crop/plant health too, not livestock health. The late blight, weather effect, and bed-alone warning remain exact source English.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": false,
+        "cropHealthNotLivestockHealth": true,
+        "damagingWind": false,
+        "aframeThreePolesAndWeightedString": false,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 0,
+      "decision": "retain_candidate_unreviewed",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "exactCurrentLearnerState": {
+        "status": "english-hold"
+      },
+      "exactProposedCandidate": "Vaka A-frame level hi tipolo tinharhu ni ntambhu leyi nga ni ntiko.",
+      "sourceAndCandidateBackcheck": "“Vaka” is build; “A-frame level” is retained. “tipolo tinharhu” preserves three poles, while “ntambhu leyi nga ni ntiko” expresses a cord/string carrying weight. The source does not specify a weight value or further geometry, and none is added.",
+      "repair": null,
+      "fullMixedConcatenationChecked": true,
+      "scopeChecks": {
+        "frostSeasonComparison": false,
+        "cropHealthNotLivestockHealth": false,
+        "damagingWind": false,
+        "aframeThreePolesAndWeightedString": true,
+        "quantitiesConditionsPossibilityAndModalityPreserved": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    }
+  ],
+  "overallLimit": "All retained candidate wording remains unreviewed machine-draft language. These decisions only find no material semantic regression in the specified checks; they do not certify fluency or learner comprehension."
+}

@@ -304,8 +304,19 @@
             "status": "english-hold"
           },
           {
-            "status": "draft",
-            "text": "Languta ndhawu ya wena u nga si hlawula where to place tender crops, trees, or buildings."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Watch your own site before choosing where to place ",
+                "status": "draft",
+                "text": "Languta ndhawu ya wena u nga si hlawula laha u nga vekaka "
+              },
+              {
+                "sourceEnglish": "tender crops, trees, or buildings.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           }
         ]
       }
@@ -356,8 +367,24 @@
             "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place."
           },
           {
-            "status": "draft",
-            "text": "Yima endhawini yoleyo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Stand in the spot ",
+                "status": "draft",
+                "text": "Yima endhawini yoleyo "
+              },
+              {
+                "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Watch where the shade falls.",
+                "status": "draft",
+                "text": "Languta laha ndzhuti wu welaka kona."
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           }
         ]
       }
@@ -505,10 +532,51 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Compare candidate places through the local frost season. ",
+                "status": "draft",
+                "text": "Pimanisa candidate places through the local frost season. "
+              },
+              {
+                "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Check sun and damaging wind too. ",
+                "status": "draft",
+                "text": "Kambela dyambu ni moya lowu onhaka na swona. "
+              },
+              {
+                "sourceEnglish": "No hillside position guarantees freedom from frost.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Seek local crop-health advice too.",
+                "status": "draft",
+                "text": "Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona."
+              }
+            ],
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           }
         ]
       }
@@ -683,7 +751,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vaka A-frame level hi tipolo tinharhu ni ntambhu leyi nga ni ntiko.",
+            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
             "status": "draft",
