@@ -1,0 +1,50 @@
+{
+  "title": "TS Vegetables L1 implementation preservation proof",
+  "date": "2026-10-03",
+  "branch": "codex/regional-vegetables-establishment-next-20261003",
+  "baseRevision": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l1",
+  "language": "ts",
+  "resolver": "resolveLearnerLessonPresentation",
+  "resolverStatus": "draft",
+  "canonicalParagraphCount": 20,
+  "changedParagraphIndexesZeroBased": [
+    2,
+    6,
+    7,
+    8,
+    9,
+    12,
+    15,
+    17
+  ],
+  "changedParagraphCount": 8,
+  "checks": {
+    "allEightCurrentAndSourceBindingsWereExactEnglishBeforeApplication": true,
+    "allEightRuntimeValuesMatchFinalCheckedPacket": true,
+    "canonicalEnglishSourcePairUnchanged": true,
+    "bodyParagraphCountAndOrderPreserved": true,
+    "allUnlistedParagraphsByteEqualBase": true,
+    "statusRemainsMachineDraft": true,
+    "quizAndCorrectIndicesUntouched": true,
+    "assessmentAndMediaFilesUntouched": true,
+    "sourceDriftStillFallsBackToEnglish": true,
+    "fluencyApproval": false
+  },
+  "protectedMeaning": [
+    "1m–1.2m and 1.2m × 3m dimensions remain exact and in order",
+    "reach from either path and feet stay off the growing area",
+    "no-dig suitability for most garden soils and leave soil structure undisturbed",
+    "do not dig wet clay; severe compaction/poor drainage must be identified with local advice before deeper cultivation",
+    "raised beds tied to wet ground with somewhere to drain; sunken beds tied to dry ground and catching/holding rain received",
+    "nursery start precedes transplanting for exact tomato/brassica group",
+    "no-dig comes first and deeper digging only if ground genuinely needs it"
+  ],
+  "verification": {
+    "focusedTest": "tests/course-translation-drafts-ts-vegetables-staples.test.ts: 6 passed, 0 failed",
+    "candidateReview": "root-repaired packet and final independent semantic checker accepted all 8",
+    "canonicalModuleDiff": "none"
+  },
+  "reviewStatus": "Unreviewed machine draft for facilitator review. No fluent/local approval."
+}

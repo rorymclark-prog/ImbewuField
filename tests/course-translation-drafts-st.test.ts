@@ -403,7 +403,7 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
 });
 
 
-test('Sesotho bed-body drafts keep reachability, no wet clay and soil-specific preparation while withdrawing on source drift', async () => {
+test('Sesotho bed-body drafts keep reachability, wet-clay safeguards, crop grouping and soil-specific preparation while withdrawing on source drift', async () => {
   const { SESOTHO_VEGETABLES_STAPLES_DRAFT } = await import('../lib/course-translation-drafts-st-vegetables-staples.ts');
   const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
   const draft = SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons.find(lesson => lesson.id === source.id)!;
@@ -415,7 +415,9 @@ test('Sesotho bed-body drafts keep reachability, no wet clay and soil-specific p
   assert.match(paragraphs[1], /narrow enough to reach into from both sides/);
   assert.match(paragraphs[2], /One metre to one point two metres wide/);
   assert.match(paragraphs[2], /centre from either path, and your feet never touch the growing area/);
-  for (const index of [7, 12, 17]) assert.equal(paragraphs[index], english[index], 'hold wet-clay/adviser, establishment grouping and soil-specific no-dig conditions');
+  assert.match(paragraphs[7], /^U se ke ua cheka wet clay\. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation\.$/, 'wet-clay prohibition and full severity/adviser/timing safeguard remain');
+  assert.match(paragraphs[12], /^Others do better with a protected start in a nursery, then transplanting\. Tomatoes le brassicas ke tsa sehlopha seo\.$/, 'nursery-first sequence and source crop group remain intact');
+  assert.match(paragraphs[17], /^Jwale lokisetsa ho ya ka mobu wa hao — no-dig first, and dig deeper only if your ground genuinely needs it\.$/, 'no-dig remains first and deeper digging remains conditional on genuine need');
   assert.match(paragraphs[11], /They do better sown straight where they'll grow\. Beans, carrots and maize belong in that group/);
   assert.match(paragraphs[14], /mark the bed out\.$/, 'mark-out means the bed boundary, not just a mark on it');
   assert.match(paragraphs[15], /Bophara ba One point two metres\. Bolelele ba Three metres/);
