@@ -97,39 +97,19 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
           }
         },
         {
-          "question": {
-            "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
-            "tshivendaDraft": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
-            "reviewStatus": "hold"
-          },
+          "question": pair("A farmer's records show she's short of vegetables every June and July. What's the useful action here?", "A farmer's records show she's short of vegetables every June and July. Ndi vhukando vhufhio vhune ha thusa?"),
           "options": [
-            {
-              "sourceEnglish": "Buy vegetables at market each June and July",
-              "tshivendaDraft": "Buy vegetables at market each June and July",
-              "reviewStatus": "hold"
-            },
+            pair("Buy vegetables at market each June and July", "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe."),
             {
               "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
               "tshivendaDraft": "Work backwards from the food gap using suitable local crops and their harvest timing",
               "reviewStatus": "hold"
             },
-            {
-              "sourceEnglish": "Accept her farm can't produce in winter",
-              "tshivendaDraft": "Accept her farm can't produce in winter",
-              "reviewStatus": "hold"
-            },
-            {
-              "sourceEnglish": "The records show a soil fertility problem",
-              "tshivendaDraft": "The records show a soil fertility problem",
-              "reviewStatus": "hold"
-            }
+            pair("Accept her farm can't produce in winter", "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria."),
+            pair("The records show a soil fertility problem", "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.")
           ],
           "sourceCorrectIndex": 1,
-          "rationale": {
-            "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
-            "tshivendaDraft": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
-            "reviewStatus": "hold"
-          }
+          "rationale": pair("Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.", "Rekhodo dzi sumbedza u shaya. U nanga zwimela na maḓuvha a u zwala zwi tea u tendelana na mutsho wa henefho, maḓi na tshifhinga tsho lavhelelwaho tsha u kaṋa.")
         }
       ]
     },
@@ -282,7 +262,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         ].join('\n\n'),
       ),
       keyPoints: [
-        hold('Agree product, quantity, quality, delivery and payment'),
+        pair("Agree product, quantity, quality, delivery and payment", "Tendelani nga ha tshibveledzwa, tshivhalo, quality, delivery na payment."),
         pair(
           'Compare costs and losses as well as selling price',
           'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.',

@@ -329,15 +329,49 @@ test('New Xitsonga Market L1 prose preserves the held English prefix and assessm
   assert.ok(paragraphs[5].startsWith('Use the same simple habit'), 'retain the previously established English opening exactly');
   assert.equal(paragraphs[12], canonical[12], 'R18/R15 example remains exact English');
   assert.ok(paragraphs[13].includes('a higher asking price is not a guaranteed sale.'), 'the no-guarantee condition remains explicit');
-  assert.deepEqual(draft.keyPoints.map(item => [item.sourceEnglish, item.xitsongaDraft, item.reviewStatus]),
-    source.keyPoints.map((text, index) => [text, index === 0 ? draft.keyPoints[0].xitsongaDraft : text, index === 0 ? draft.keyPoints[0].reviewStatus : 'hold']),
-    'existing key point translation and remaining holds retain their source pairing');
-  assert.deepEqual(draft.quiz.map(item => [item.question.xitsongaDraft, item.options.map(option => option.xitsongaDraft), item.sourceCorrectIndex, item.rationale.xitsongaDraft]),
-    source.quiz.map(item => [item.q, item.options, item.correct, item.rationale]), 'question wording, answer options, keys and rationales stay unchanged');
+  assert.deepEqual(draft.keyPoints.map(item => item.sourceEnglish), source.keyPoints);
+  assert.deepEqual(draft.keyPoints.map(item => item.reviewStatus), ['machine-draft', 'hold', 'hold', 'hold'],
+    'the prior localized first key point remains drafted and the three business safeguards remain held');
+  assert.ok(draft.keyPoints.slice(1).every(item => item.xitsongaDraft === item.sourceEnglish));
+
+  const priceQuestion = draft.quiz[0];
+  assert.equal(priceQuestion.sourceCorrectIndex, source.quiz[0].correct);
+  assert.equal(priceQuestion.question.reviewStatus, 'hold');
+  assert.equal(priceQuestion.question.xitsongaDraft, source.quiz[0].q);
+  assert.equal(priceQuestion.rationale.xitsongaDraft, source.quiz[0].rationale);
+  assert.deepEqual(priceQuestion.options.map(item => [item.sourceEnglish, item.xitsongaDraft, item.reviewStatus]),
+    source.quiz[0].options.map(item => [item, item, 'hold']), 'the R15/R18 financial quiz remains an exact-English hold');
+
+  const gapQuestion = draft.quiz[1];
+  const gapSource = source.quiz[1];
+  assert.equal(gapQuestion.sourceCorrectIndex, 1);
+  assert.equal(gapQuestion.question.sourceEnglish, gapSource.q);
+  assert.equal(gapQuestion.question.reviewStatus, 'machine-draft');
+  assert.ok(gapQuestion.question.xitsongaDraft.startsWith("A farmer's records show she's short of vegetables every June and July."),
+    'the recurring June/July shortage statement remains exact');
+  assert.deepEqual(gapQuestion.options.map(item => item.sourceEnglish), gapSource.options,
+    'the new wording stays paired with each answer in canonical order');
+  assert.equal(gapQuestion.options[3].xitsongaDraft, gapSource.options[3]);
+  assert.equal(gapQuestion.options[3].reviewStatus, 'hold', 'the soil-fertility distractor remains exact English');
+  assert.ok(gapQuestion.options[1].xitsongaDraft.includes('swibyariwa leswi lulameleke ndhawu ya wena') &&
+    gapQuestion.options[1].xitsongaDraft.includes('nkarhi wa swona wa ntshovelo'),
+    'the keyed action retains locally suitable crops and harvest timing');
+  assert.ok(gapQuestion.rationale.xitsongaDraft.startsWith('Records identify the gap.') &&
+    gapQuestion.rationale.xitsongaDraft.includes('local climate') &&
+    gapQuestion.rationale.xitsongaDraft.includes('mati') &&
+    gapQuestion.rationale.xitsongaDraft.includes('nkarhi lowu languteriweke wa ntshovelo'),
+    'the rationale retains the gap, local climate, water and expected harvest-time conditions');
+  assert.deepEqual(gapQuestion.options.map(item => item.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'hold']);
 
   const shown = resolveLearnerLessonPresentation(source, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
+  assert.deepEqual(shown.content.quiz, source.quiz.map((question, index) => ({
+    q: draft.quiz[index].question.xitsongaDraft,
+    options: draft.quiz[index].options.map(option => option.xitsongaDraft),
+    correct: question.correct,
+    rationale: draft.quiz[index].rationale.xitsongaDraft,
+  })), 'Study displays paired assessment wording while preserving the canonical answer keys');
   const changedSource = { ...source, body: `${source.body} Changed.` };
   const fallback = resolveLearnerLessonPresentation(changedSource, 'ts');
   assert.equal(fallback.status, 'english-fallback');

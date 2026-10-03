@@ -45,8 +45,8 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
     const shown = resolveLearnerLessonPresentation(source, 've');
     assert.equal(shown.status, 'draft');
-    // L3 checked ordinary assessments now draft while L1 safeguards keep their English holds.
-    assert.deepEqual(shown.content.quiz, lessonId === 'market-community-l3' ? source.quiz.map((question, index) => ({
+    // Study resolves only the fields paired in the draft; the R15/R18 question remains held in English.
+    assert.deepEqual(shown.content.quiz, ['market-community-l1', 'market-community-l3'].includes(lessonId) ? source.quiz.map((question, index) => ({
       q: draft.quiz[index].question.tshivendaDraft,
       options: draft.quiz[index].options.map(pair => pair.tshivendaDraft),
       correct: question.correct,
@@ -63,6 +63,41 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
       else assert.equal(shownParagraphs[index], paragraph);
     }
     if (lessonId === 'market-community-l1') {
+      assert.deepEqual(draft.keyPoints.map(point => point.reviewStatus), ['hold', 'hold', 'hold', 'hold'],
+        'all four L1 key point holds retain their prior status');
+      const priceQuestion = draft.quiz[0];
+      assert.equal(priceQuestion.sourceCorrectIndex, 2);
+      assert.equal(priceQuestion.question.reviewStatus, 'hold');
+      assert.equal(priceQuestion.question.tshivendaDraft, source.quiz[0].q);
+      assert.equal(priceQuestion.rationale.tshivendaDraft, source.quiz[0].rationale);
+      assert.deepEqual(priceQuestion.options.map(option => [option.tshivendaDraft, option.reviewStatus]),
+        source.quiz[0].options.map(option => [option, 'hold']),
+        'the full R15 sale/R18 cost assessment stays exact English');
+
+      const gapQuestion = draft.quiz[1];
+      const gapSource = source.quiz[1];
+      assert.equal(gapQuestion.sourceCorrectIndex, 1);
+      assert.equal(gapQuestion.question.sourceEnglish, gapSource.q);
+      assert.equal(gapQuestion.question.reviewStatus, 'machine-draft');
+      assert.ok(gapQuestion.question.tshivendaDraft.includes('June and July'),
+        'the repeated June/July household shortage remains exact');
+      assert.deepEqual(gapQuestion.options.map(option => option.sourceEnglish), gapSource.options,
+        'the translated choices retain the exact source order');
+      assert.equal(gapQuestion.options[1].reviewStatus, 'hold');
+      assert.equal(gapQuestion.options[1].tshivendaDraft, gapSource.options[1],
+        'the keyed suitable-local-crops and harvest-timing option remains exact English');
+      assert.ok(gapQuestion.rationale.tshivendaDraft.includes('zwimela') &&
+        gapQuestion.rationale.tshivendaDraft.includes('maḓuvha a u zwala') &&
+        gapQuestion.rationale.tshivendaDraft.includes('maḓi') &&
+        gapQuestion.rationale.tshivendaDraft.includes('tshifhinga tsho lavhelelwaho tsha u kaṋa'),
+        'the rationale retains crop choice, sowing dates, water and expected harvest time');
+      assert.deepEqual(gapQuestion.options.map(option => option.reviewStatus), ['machine-draft', 'hold', 'machine-draft', 'machine-draft']);
+      const changedQuestion = { ...source, quiz: source.quiz.map((question, index) => index === 1
+        ? { ...question, q: `${question.q} Changed timing.` }
+        : question) };
+      const staleAssessment = resolveLearnerLessonPresentation(changedQuestion, 've');
+      assert.equal(staleAssessment.status, 'english-fallback', 'changed seasonal question source withdraws its paired lesson draft');
+      assert.deepEqual(staleAssessment.content.quiz, changedQuestion.quiz);
       const draftParagraphs = draft.body.tshivendaDraft.split('\n\n');
       assert.equal(shownParagraphs[0], draftParagraphs[0],
         'select the Tshivenda source-paired learner draft');
@@ -365,7 +400,13 @@ test('Tshivenda Market L2 pairs bounded customer text and holds uncertain terms 
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
   assert.equal(lesson.keyPoints[1].tshivendaDraft, 'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.');
-  for (const index of [0, 2, 3]) {
+  assert.deepEqual(lesson.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'hold', 'hold'],
+    'the two checked customer and cost points are drafted while supply and compliance points retain their prior holds');
+  assert.ok(lesson.keyPoints[0].tshivendaDraft.includes('tshibveledzwa') && lesson.keyPoints[0].tshivendaDraft.includes('tshivhalo'),
+    'the agreement still names product and quantity');
+  assert.ok(lesson.keyPoints[1].tshivendaDraft.includes('tsengo') && lesson.keyPoints[1].tshivendaDraft.includes('ndozwo'),
+    'the comparison still names costs and losses alongside price');
+  for (const index of [2, 3]) {
     assert.equal(lesson.keyPoints[index].reviewStatus, 'hold');
     assert.equal(lesson.keyPoints[index].tshivendaDraft, sourceLesson.keyPoints[index]);
   }
@@ -374,9 +415,18 @@ test('Tshivenda Market L2 pairs bounded customer text and holds uncertain terms 
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 've');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].tshivendaDraft);
-  assert.equal(presentation.content.keyPoints[0], sourceLesson.keyPoints[0]);
+  assert.equal(presentation.content.keyPoints[0], lesson.keyPoints[0].tshivendaDraft);
   assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
   assert.equal(presentation.content.body, lesson.body.tshivendaDraft);
+  assert.deepEqual(lesson.quiz.map(question => question.sourceCorrectIndex), [2, 2]);
+  for (const question of lesson.quiz) {
+    assert.equal(question.question.reviewStatus, 'hold');
+    assert.equal(question.question.tshivendaDraft, question.question.sourceEnglish);
+    assert.equal(question.rationale.reviewStatus, 'hold');
+    assert.equal(question.rationale.tshivendaDraft, question.rationale.sourceEnglish);
+    assert.ok(question.options.every(option => option.reviewStatus === 'hold' && option.tshivendaDraft === option.sourceEnglish),
+      'both L2 commercial quizzes stay exact-English holds in original option order');
+  }
   assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
 
   const changedSource = {

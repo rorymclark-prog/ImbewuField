@@ -96,15 +96,15 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           rationale: hold('The example price is below the stated cost. Review the gap and customer demand before making the next production decision.'),
         },
         {
-          question: hold("A farmer's records show she's short of vegetables every June and July. What's the useful action here?"),
+          question: machineDraft("A farmer's records show she's short of vegetables every June and July. What's the useful action here?", "Direkoto tsa molemi di bontsha hore meroho ya hae e a haella ka June le July selemo se seng le se seng. Ke kgato efe e thusang?"),
           options: [
-            hold('Buy vegetables at market each June and July'),
-            hold('Work backwards from the food gap using suitable local crops and their harvest timing'),
-            hold("Accept her farm can't produce in winter"),
-            hold('The records show a soil fertility problem'),
+            machineDraft("Buy vegetables at market each June and July", "Reka meroho mmarakeng ka June le July e nngwe le e nngwe."),
+            machineDraft("Work backwards from the food gap using suitable local crops and their harvest timing", "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo."),
+            machineDraft("Accept her farm can't produce in winter", "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha."),
+            machineDraft("The records show a soil fertility problem", "Direkoto di bontsha bothata ba monono wa mobu."),
           ],
           sourceCorrectIndex: 1,
-          rationale: hold('Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.'),
+          rationale: machineDraft("Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.", "Direkoto di bontsha kgaello. Kgetho ya dijalo le matsatsi a ho jala di lokela ho dumellana le tlelaemete ya sebaka, metsi le nako e lebelletsweng ya kotulo."),
         },
       ],
     },
@@ -146,7 +146,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         ].join('\n\n'),
       ),
       keyPoints: [
-        hold('Agree product, quantity, quality, delivery and payment'),
+        machineDraft("Agree product, quantity, quality, delivery and payment", "Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo."),
         machineDraft(
           'Compare costs and losses as well as selling price',
           'Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso',
