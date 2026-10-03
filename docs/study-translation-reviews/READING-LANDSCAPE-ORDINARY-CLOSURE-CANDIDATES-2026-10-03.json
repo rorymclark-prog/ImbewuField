@@ -1,0 +1,1286 @@
+{
+  "title": "Reading the Landscape remaining ordinary-language closure candidates",
+  "date": "2026-10-03",
+  "workspace": "/Users/roryclark/.codex/worktrees/8d62/ImbewuField",
+  "sourceRevision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+  "provenance": "Read-only semantic drafting packet, source-bound to origin/main a961b2d3 and actual current ST/VE/TS registries. Candidates are machine-drafted and unreviewed. This packet does not claim fluent approval and does not assert publication readiness; independent semantic/root release checks remain pending.",
+  "scope": "Reading the Landscape L1–L4, all ST/Sesotho, VE/Tshivenda, TS/Xitsonga registries. Candidate changes only ordinary framing within mixed fields and selected exact English fields; current localized wording is preserved except the already root-repaired L2 paragraph 3 changes. Market module excluded.",
+  "coverage": {
+    "candidateFullFields": 10,
+    "candidateParagraphEdits": 6,
+    "exactEnglishWholeFieldHolds": 8,
+    "retainedEnglishClauseHolds": 50,
+    "declaredTsHoldMetadataEntries": 37,
+    "languages": [
+      "st (Sesotho)",
+      "ve (Tshivenda)",
+      "ts (itsonga)"
+    ],
+    "sourcePairsValidated": true,
+    "lessonFieldOrderingAndQuizIndicesPreserved": true
+  },
+  "preservationRules": [
+    "No species names or numbers added or changed.",
+    "Preserve OR/AND, before/only-if conditions, may/can, observation versus diagnosis, and adviser-before-choice wording.",
+    "Preserve body paragraph order and assessment option order/correct indices.",
+    "Existing localized spans remain byte-for-byte unchanged unless a clauseChange explicitly records the replacement.",
+    "Ambiguous or safety-critical clauses remain exact English anchors with a reason."
+  ],
+  "candidates": [
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "current": "Dikarolong tse ngata tsa South Africa, haholo mariha, letsatsi le ba ka leboya. Tsela ya lona e fetoha ho latela sehla le sebaka sa hao. Matswapo a shebileng leboya hangata a fumana letsatsi le lengata mme a ka futhumala le ho omella haholwanyane. Matswapo a shebileng borwa hangata a phodile haholwanyane ebile a na le mongobo. Serame (frost) se ka bokellana dikotong tse tlase moo moya o batang o dulang teng. Shebella setsha sa hao pele o kgetha moo o ka jalang dijalo tse bonolo (tender crops) kapa ho beha meaho.\n\nLetsatsi la mariha le tlase haholo ebile le hole ka leboya ho feta letsatsi la lehlabula. Lebota kapa lesela la moriti (shade cloth) le ka etsa moriti hodima bethe ya serapa nako e telele mariha ho feta lehlabula. Pele o beha ntho leha e le efe ya nako e telele, ema sebakeng seo ka 8am, motshehare, le 4pm ka letsatsi la mariha mme o shebelle moo moriti o welang teng.\n\nPawpaw le citrus tse nyane di kotsing habonolo ke serame (frost). Boloka dimela tse bonolo hole le dibaka tse tlase tse tsejwang ka dipokotho tsa serame (frost pockets). Hlokomela serame sa lehae pele o jala.",
+      "candidate": "Dikarolong tse ngata tsa South Africa, haholo mariha, letsatsi le ba ka leboya. Tsela ya lona e fetoha ho latela sehla le sebaka sa hao. Matswapo a shebileng leboya hangata a fumana letsatsi le lengata mme a ka futhumala le ho omella haholwanyane. Matswapo a shebileng borwa hangata a phodile haholwanyane ebile a na le mongobo. Serame (frost) se ka bokellana dikotong tse tlase moo moya o batang o dulang teng. Shebella setsha sa hao pele o kgetha moo o ka jalang dijalo tse bonolo (tender crops) kapa ho beha meaho.\n\nLetsatsi la mariha le tlase haholo ebile le hole ka leboya ho feta letsatsi la lehlabula. Lebota kapa lesela la moriti (shade cloth) le ka etsa moriti hodima bethe ya serapa nako e telele mariha ho feta lehlabula. Pele o beha ntho leha e le efe ya nako e telele, ema sebakeng seo ka 8am, motshehare, le 4pm ka letsatsi la mariha mme o shebelle moo moriti o welang teng.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Hlokomela serame sa lehae pele o jala.",
+      "currentReviewStatus": "machine-draft",
+      "status": "unreviewed-candidate",
+      "reason": "Apply only the independently checked paragraph-3 candidate; preserve paragraphs 1–2 byte-for-byte and retain the existing final before-planting observation sentence.",
+      "sourceBinding": "exact canonical source field",
+      "clauseChanges": [
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+          "current": "Pawpaw le citrus tse nyane di kotsing habonolo ke serame (frost). Boloka dimela tse bonolo hole le dibaka tse tlase tse tsejwang ka dipokotho tsa serame (frost pockets). Hlokomela serame sa lehae pele o jala.",
+          "candidate": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Hlokomela serame sa lehae pele o jala."
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "current": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), ḓuvha ḽi vha ḽi devhula (north). Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu. U sendama ho lavhelesaho devhula (north-facing slopes) lunzhi hu wana ḓuvha ḽinzhisa nahone hu nga duderana ha dovha ha oma. U sendama ho lavhelesaho tshipembe (south-facing slopes) lunzhi hu fhola ha vha na vhunyisi. Tshando (frost) tshi nga kuvhangana kha milindi i re fhasi hune muya wo rotholaho wa dzula hone. Ṱhogomelani tshitentsi tshaṋu musi ni sa athu nanga hune na ḓo ṱavha zwimela zwi sa konḓeleliho tshando (tender crops) kana u vhea zwifhaṱo.\n\nḒuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.",
+      "candidate": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), ḓuvha ḽi vha ḽi devhula (north). Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu. U sendama ho lavhelesaho devhula (north-facing slopes) lunzhi hu wana ḓuvha ḽinzhisa nahone hu nga duderana ha dovha ha oma. U sendama ho lavhelesaho tshipembe (south-facing slopes) lunzhi hu fhola ha vha na vhunyisi. Tshando (frost) tshi nga kuvhangana kha milindi i re fhasi hune muya wo rotholaho wa dzula hone. Ṱhogomelani tshitentsi tshaṋu musi ni sa athu nanga hune na ḓo ṱavha zwimela zwi sa konḓeleliho tshando (tender crops) kana u vhea zwifhaṱo.\n\nḒuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.\n\nPawpaw and young citrus are sensitive to frost. Ni songo vhea tender plants kha known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.",
+      "currentReviewStatus": "machine-draft",
+      "status": "unreviewed-candidate",
+      "reason": "Apply only the independently checked paragraph-3 candidate; preserve paragraphs 1–2 byte-for-byte and retain the existing final before-planting observation sentence.",
+      "sourceBinding": "exact canonical source field",
+      "clauseChanges": [
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+          "current": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.",
+          "candidate": "Pawpaw and young citrus are sensitive to frost. Ni songo vhea tender plants kha known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha."
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "current": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Xiya local frost u nga se byala.",
+      "candidate": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Hlayisa tender plants swi nga ri eka known low frost pockets. Xiya local frost u nga se byala.",
+      "currentReviewStatus": "machine-draft",
+      "status": "unreviewed-candidate",
+      "reason": "Apply only the independently checked paragraph-3 candidate; preserve paragraphs 1–2 byte-for-byte and retain the existing final before-planting observation sentence.",
+      "sourceBinding": "exact canonical source field",
+      "clauseChanges": [
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+          "current": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Xiya local frost u nga se byala.",
+          "candidate": "Pawpaw and young citrus are sensitive to frost. Hlayisa tender plants swi nga ri eka known low frost pockets. Xiya local frost u nga se byala."
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
+      "current": "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
+      "candidate": "A-frame i nga thusa u maka points at the same height, fhedzi a i sumbedzi whether earthworks are suitable.",
+      "currentReviewStatus": "hold",
+      "status": "unreviewed-candidate",
+      "reason": "Localize ordinary framing while retaining the same-height and suitability technical anchors. Parent recommended this conservative wording; no suitability advice or should-be-done claim is added.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l4",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "They can come from different directions, changing where windbreaks and tender crops should go",
+      "current": "They can come from different directions, changing where windbreaks and tender crops should go",
+      "candidate": "Thungo dza hone dzi nga fhambana; changing where windbreaks and tender crops should go.",
+      "currentReviewStatus": "hold",
+      "status": "unreviewed-candidate",
+      "reason": "Localize the ordinary clause; retain directional consequence and placement meaning as an English anchor. Option order and correct index remain unchanged.",
+      "sourceBinding": "exact canonical source field",
+      "sourceCorrectIndex": 1,
+      "currentCorrectIndex": 1,
+      "optionOrderPreserved": true
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "current": "Muya u nga tshinyadza zwimela kha smallholding. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Check local weather records musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.\n\nVhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "candidate": "Muya u nga tshinyadza zwimela kha smallholding. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Check local weather records musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.\n\nVhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places through the local frost season. Sedzani local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "currentReviewStatus": "machine-draft",
+      "status": "unreviewed-candidate",
+      "reason": "Translate ordinary referent/actions/framing in mixed paragraph 2 while retaining cold/frost/temperature technical clauses, available-records qualification, seasonal comparison and all safety/adviser conditions.",
+      "sourceBinding": "exact canonical source field",
+      "clauseChanges": [
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+          "current": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+          "candidate": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places through the local frost season. Sedzani local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+          "replacements": [
+            {
+              "current": "Frost patterns also depend on the site.",
+              "candidate": "Frost patterns zwi dovha zwa ya nga site."
+            },
+            {
+              "current": "Compare candidate places through the local frost season.",
+              "candidate": "Vhambedzani candidate places through the local frost season."
+            },
+            {
+              "current": "Check local minimum-temperature records where available.",
+              "candidate": "Sedzani local minimum-temperature records where available."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "current": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
+      "candidate": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti can be colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
+      "currentReviewStatus": "machine-draft",
+      "status": "unreviewed-candidate",
+      "reason": "Translate ordinary reference/framing in mixed paragraph 2; retain cold-air flow, downhill direction, colder-than comparative and frost technical anchors.",
+      "sourceBinding": "exact canonical source field",
+      "clauseChanges": [
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+          "current": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.",
+          "candidate": "On a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti can be colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.",
+          "replacements": [
+            {
+              "current": "These places can be colder than nearby slopes.",
+              "candidate": "Tindhawu leti can be colder than nearby slopes."
+            },
+            {
+              "current": "Frost patterns also depend on the site.",
+              "candidate": "Frost patterns na tona ti ya hi site."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "current": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "candidate": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. Ndhawu leyi nga na dyambu swinene ehandle ka known frost pocket swi nga ha hunguta risk; kambe local frost observations must guide the final position.",
+      "currentReviewStatus": "machine-draft",
+      "status": "unreviewed-candidate",
+      "reason": "Localize ordinary framing while retaining may-reduce modality, known frost-pocket condition, contrast and instruction that local observations guide final placement. Candidate remains unreviewed; target grammar needs native semantic check.",
+      "sourceBinding": "exact canonical source field",
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "optionOrderPreserved": true
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+      "current": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Kambela the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+      "candidate": "Winter sun is lower and farther north. Shade cloth yi nga cinca the hours of sun on a bed. Kambela ndzhuti wa xiviri at 8am, midday, and 4pm u nga se yi tiyisa endhawini.",
+      "currentReviewStatus": "machine-draft",
+      "status": "unreviewed-candidate",
+      "reason": "Keep seasonal/north direction sentence as an exact anchor; localize can-change and before-fixing framing while preserving exact clock values and condition. English technical anchors remain.",
+      "sourceBinding": "exact canonical source field",
+      "sourceCorrectIndex": 0,
+      "currentCorrectIndex": 0,
+      "optionOrderPreserved": true
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+      "current": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
+      "candidate": "Matamatisi ya murimi wa KZN repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
+      "currentReviewStatus": "machine-draft",
+      "status": "unreviewed-candidate",
+      "reason": "Localize ordinary subject only; retain repeated disease/weather clause and existing question/advice qualification exactly. Prior wrong quiz0 binding rejected.",
+      "sourceBinding": "exact canonical source field",
+      "sourceCorrectIndex": 1,
+      "currentCorrectIndex": 1,
+      "optionOrderPreserved": true
+    }
+  ],
+  "holds": [
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "Points at the same height along a contour",
+      "current": "Points at the same height along a contour",
+      "decision": "hold-exact-English",
+      "reason": "Retain technical/safety answer choice verbatim where localized wording could change site suitability, structure placement, or diagnostic meaning.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "quiz[0].options[2]",
+      "sourceEnglish": "How much stormwater the soil can absorb",
+      "current": "How much stormwater the soil can absorb",
+      "decision": "hold-exact-English",
+      "reason": "Retain technical/safety answer choice verbatim where localized wording could change site suitability, structure placement, or diagnostic meaning.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "Cold air can drain downhill on clear, still nights and collect in low ground",
+      "current": "Cold air can drain downhill on clear, still nights and collect in low ground",
+      "decision": "hold-exact-English",
+      "reason": "Retain difficult technical or diagnostic statement verbatim; do not approximate the technical claim.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "current": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "decision": "hold-exact-English",
+      "reason": "Retain technical, safety, directional, or diagnostic language verbatim pending a defensible target rendering.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Whether a swale is safe to build on this slope",
+      "current": "Whether a swale is safe to build on this slope",
+      "decision": "hold-exact-English",
+      "reason": "Retain technical/safety answer choice verbatim where localized wording could change site suitability, structure placement, or diagnostic meaning.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Where a dam spillway should be built",
+      "current": "Where a dam spillway should be built",
+      "decision": "hold-exact-English",
+      "reason": "Retain technical/safety answer choice verbatim where localized wording could change site suitability, structure placement, or diagnostic meaning.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
+      "current": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
+      "decision": "hold-exact-English",
+      "reason": "Retain technical, safety, directional, or diagnostic language verbatim pending a defensible target rendering.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "A sealed, unventilated tunnel",
+      "current": "A sealed, unventilated tunnel",
+      "decision": "hold-exact-English",
+      "reason": "Retain technical/safety answer choice verbatim where localized wording could change site suitability, structure placement, or diagnostic meaning.",
+      "sourceBinding": "exact canonical source field"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "In much of South Africa, especially in winter, the sun is to the north.",
+      "currentClause": null,
+      "candidateClause": "In much of South Africa, especially in winter, the sun is to the north.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Its path changes with the season and your location.",
+      "currentClause": null,
+      "candidateClause": "Its path changes with the season and your location.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "North-facing slopes often receive more sun and can be warmer and drier.",
+      "currentClause": null,
+      "candidateClause": "North-facing slopes often receive more sun and can be warmer and drier.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "South-facing slopes are often cooler and moister.",
+      "currentClause": null,
+      "candidateClause": "South-facing slopes are often cooler and moister.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Frost can collect in low hollows where cold air settles.",
+      "currentClause": null,
+      "candidateClause": "Frost can collect in low hollows where cold air settles.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Watch your own site before choosing where to plant tender crops or place buildings.",
+      "currentClause": null,
+      "candidateClause": "Watch your own site before choosing where to plant tender crops or place buildings.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Winter sun is lower and farther north than summer sun.",
+      "currentClause": null,
+      "candidateClause": "Winter sun is lower and farther north than summer sun.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "A wall or shade cloth can shade a bed longer in winter than in summer.",
+      "currentClause": null,
+      "candidateClause": "A wall or shade cloth can shade a bed longer in winter than in summer.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.",
+      "currentClause": null,
+      "candidateClause": "Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Pawpaw and young citrus are sensitive to frost.",
+      "currentClause": null,
+      "candidateClause": "Pawpaw and young citrus are sensitive to frost.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "st",
+      "languageName": "Sesotho",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Keep tender plants out of known low frost pockets.",
+      "currentClause": null,
+      "candidateClause": "Keep tender plants out of known low frost pockets.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Its marks are an observation, not a design or approval for earthworks.",
+      "currentClause": "Its marks are an observation, not a design or approval for earthworks.",
+      "candidateClause": "Its marks are an observation, not a design or approval for earthworks.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Before digging a swale, dam, or other structure, have the site assessed.",
+      "currentClause": "Before digging a swale, dam, or other structure, have the site assessed.",
+      "candidateClause": "Before digging a swale, dam, or other structure, have the site assessed.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "currentClause": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "candidateClause": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "In much of South Africa, especially in winter, the sun is to the north.",
+      "currentClause": null,
+      "candidateClause": "In much of South Africa, especially in winter, the sun is to the north.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Its path changes with the season and your location.",
+      "currentClause": null,
+      "candidateClause": "Its path changes with the season and your location.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "North-facing slopes often receive more sun and can be warmer and drier.",
+      "currentClause": null,
+      "candidateClause": "North-facing slopes often receive more sun and can be warmer and drier.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "South-facing slopes are often cooler and moister.",
+      "currentClause": null,
+      "candidateClause": "South-facing slopes are often cooler and moister.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Frost can collect in low hollows where cold air settles.",
+      "currentClause": null,
+      "candidateClause": "Frost can collect in low hollows where cold air settles.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Watch your own site before choosing where to plant tender crops or place buildings.",
+      "currentClause": null,
+      "candidateClause": "Watch your own site before choosing where to plant tender crops or place buildings.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Winter sun is lower and farther north than summer sun.",
+      "currentClause": null,
+      "candidateClause": "Winter sun is lower and farther north than summer sun.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "A wall or shade cloth can shade a bed longer in winter than in summer.",
+      "currentClause": null,
+      "candidateClause": "A wall or shade cloth can shade a bed longer in winter than in summer.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.",
+      "currentClause": null,
+      "candidateClause": "Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Pawpaw and young citrus are sensitive to frost.",
+      "currentClause": "Pawpaw and young citrus are sensitive to frost.",
+      "candidateClause": "Pawpaw and young citrus are sensitive to frost.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentClause": "If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "candidateClause": "If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Frost is ice that forms on a cold surface.",
+      "currentClause": "Frost is ice that forms on a cold surface.",
+      "candidateClause": "Frost is ice that forms on a cold surface.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "currentClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "candidateClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Keep sensitive plants away from the cold pockets you observe.",
+      "currentClause": "Keep sensitive plants away from the cold pockets you observe.",
+      "candidateClause": "Keep sensitive plants away from the cold pockets you observe.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 3,
+      "sourceEnglishClause": "Late blight can still spread during prolonged cool, damp weather.",
+      "currentClause": "Late blight can still spread during prolonged cool, damp weather.",
+      "candidateClause": "Late blight can still spread during prolonged cool, damp weather.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 3,
+      "sourceEnglishClause": "Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "currentClause": "Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "candidateClause": "Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Its marks are an observation, not a design or approval for earthworks.",
+      "currentClause": "Its marks are an observation, not a design or approval for earthworks.",
+      "candidateClause": "Its marks are an observation, not a design or approval for earthworks.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Before digging a swale, dam, or other structure, have the site assessed.",
+      "currentClause": "Before digging a swale, dam, or other structure, have the site assessed.",
+      "candidateClause": "Before digging a swale, dam, or other structure, have the site assessed.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Soil, slope, drainage, storm flow, and a safe overflow route all matter.",
+      "currentClause": "Soil, slope, drainage, storm flow, and a safe overflow route all matter.",
+      "candidateClause": "Soil, slope, drainage, storm flow, and a safe overflow route all matter.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "currentClause": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "candidateClause": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Choose any water works for the site and plan a safe route for excess water.",
+      "currentClause": "Choose any water works for the site and plan a safe route for excess water.",
+      "candidateClause": "Choose any water works for the site and plan a safe route for excess water.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "In much of South Africa, especially in winter, the sun is to the north.",
+      "currentClause": null,
+      "candidateClause": "In much of South Africa, especially in winter, the sun is to the north.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Its path changes with the season and your location.",
+      "currentClause": null,
+      "candidateClause": "Its path changes with the season and your location.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "North-facing slopes often receive more sun and can be warmer and drier.",
+      "currentClause": null,
+      "candidateClause": "North-facing slopes often receive more sun and can be warmer and drier.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "South-facing slopes are often cooler and moister.",
+      "currentClause": null,
+      "candidateClause": "South-facing slopes are often cooler and moister.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Frost can collect in low hollows where cold air settles.",
+      "currentClause": null,
+      "candidateClause": "Frost can collect in low hollows where cold air settles.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglishClause": "Watch your own site before choosing where to plant tender crops or place buildings.",
+      "currentClause": null,
+      "candidateClause": "Watch your own site before choosing where to plant tender crops or place buildings.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Winter sun is lower and farther north than summer sun.",
+      "currentClause": null,
+      "candidateClause": "Winter sun is lower and farther north than summer sun.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "A wall or shade cloth can shade a bed longer in winter than in summer.",
+      "currentClause": null,
+      "candidateClause": "A wall or shade cloth can shade a bed longer in winter than in summer.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.",
+      "currentClause": null,
+      "candidateClause": "Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Pawpaw and young citrus are sensitive to frost.",
+      "currentClause": "Pawpaw and young citrus are sensitive to frost.",
+      "candidateClause": "Pawpaw and young citrus are sensitive to frost.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "currentClause": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "candidateClause": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Frost is ice that forms on a cold surface.",
+      "currentClause": "Frost is ice that forms on a cold surface.",
+      "candidateClause": "Frost is ice that forms on a cold surface.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "sourceEnglishClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "currentClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "candidateClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 3,
+      "sourceEnglishClause": "Late blight can still spread during prolonged cool, damp weather.",
+      "currentClause": "Late blight can still spread during prolonged cool, damp weather.",
+      "candidateClause": "Late blight can still spread during prolonged cool, damp weather.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "lessonId": "reading-landscape-l4",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "sourceEnglishClause": "These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.",
+      "currentClause": "These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.",
+      "candidateClause": "These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.",
+      "decision": "retain-English-clause",
+      "reason": "Technical, directional, safety, diagnosis, frost/disease, or site-condition wording is retained exactly; ordinary framing was localized where separable.",
+      "sourceBinding": "exact sentence from canonical body paragraph"
+    }
+  ],
+  "tsDeclaredHoldMetadataAudit": [
+    {
+      "fieldPath": null,
+      "sourceText": "A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Winter sun is lower and farther north.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Shade cloth can change the hours of sun on a bed.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Cold air can settle in low places on clear, still nights.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Compare candidate nursery sites through the local frost season.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter.",
+      "reason": "Keep the explicit limit on what an A-frame can establish, the before-dig site assessment, and all named site factors exact while the surrounding ordinary prose is drafted.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "a trained local adviser",
+      "reason": "Keep the required adviser qualification exact.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "reason": "Keep the erosion and slow-infiltration conditions exact while drafting the surrounding observation prose.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Choose any water works for the site and plan a safe route for excess water.",
+      "reason": "Keep the site-specific waterworks and safe-excess-water requirement exact.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
+      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets.",
+      "reason": "Keep the plant names, frost sensitivity, and low-frost-pocket placement instruction exact while drafting the ordinary observation-before-planting sentence.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "your site's ridges and gaps",
+      "reason": "Keep the site-landform terms exact until a fluent reviewer confirms the meaning.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "reason": "Keep the conditional cold-air movement and accumulation statement exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "These places can be colder than nearby slopes.",
+      "reason": "Keep the relative-temperature claim exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Frost patterns also depend on the site.",
+      "reason": "Keep the site-dependence qualifier exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "the local frost season",
+      "reason": "Keep the local-season condition exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "local minimum-temperature records where available",
+      "reason": "Keep the record type and availability condition exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "across cold nights",
+      "reason": "Keep the observation condition exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "local agriculture adviser",
+      "reason": "Keep the adviser role exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "permanent home for tender seedlings",
+      "reason": "Keep permanence and tender-seedling scope exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "reason": "Retain the frost definition and mist/visible-ice distinction exactly until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "low ground",
+      "reason": "Keep low-ground site terminology exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "slopes",
+      "reason": "Keep slope terminology exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "minimum temperatures",
+      "reason": "Keep minimum-temperature terminology exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "where cold or damage lasts longest.",
+      "reason": "Keep the cold-or-damage criterion and longest-duration comparison exact after translating only the ordinary instruction to mark places.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Late blight can still spread during prolonged cool, damp weather.",
+      "reason": "Keep the disease-spread condition exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "seek local crop-health guidance too.",
+      "reason": "Keep the local crop-health guidance instruction exact until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.",
+      "reason": "Keep the diagnostic limit exact while the ordinary frost, damp-ground, species-observation and check-before-deciding instructions use a machine draft.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Whether a swale is safe to build on this slope",
+      "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "Where a dam spillway should be built",
+      "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "shade cloth",
+      "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "A sealed, unventilated tunnel",
+      "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": false,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    },
+    {
+      "fieldPath": null,
+      "sourceText": "not to scale",
+      "reason": "Keep the standard scale warning exact on a field map until reviewed.",
+      "canonicalSourcePresent": true,
+      "candidateStillExact": true,
+      "registryNote": "Top-level TS holds metadata; it does not itself control resolver output."
+    }
+  ],
+  "validation": {
+    "canonicalAndRegionalSourceBindings": "All fields in candidate/hold coverage match the canonical English field exactly.",
+    "bodyShape": "Full body values included; paragraph order and counts match sources.",
+    "quizIntegrity": "Candidate quiz fields retain source option order and canonical correct indices; no quiz arrays reordered.",
+    "limitations": "No native-speaker review or learner rendering performed. Candidate quality is semantic drafting only; specifically the TS L2 rationale candidate requires grammar/semantic root check."
+  },
+  "rootRepairs": [
+    "All body candidates composed from current localized paragraphs, only declared paragraph changes applied.",
+    "Restored existing TS L2 rationale cold-air first sentence.",
+    "Rejected wrong TS L3 quiz0 binding; rebound candidate to actual quiz1 source/current/index1 with conservative technical English."
+  ]
+}

@@ -552,3 +552,56 @@ test('the Vegetables L2 still migration clears only English slides 9 and 11, onc
   assert.equal(await rows.get('/course-decks/vegetables-staples/en/slide-09.jpg')!.text(), 'new chosen slide 9');
   assert.equal(deleteCalls, replaced.length, 'the marker must leave a later chosen download intact');
 });
+
+test('Reading regional still migration retires only the 63 refreshed ST/VE/TS WebP URLs, once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const functionSource = source.match(/async function migrateReadingLandscapeRegionalStills\(\) \{[\s\S]*?\n\}/)?.[0];
+  assert.ok(functionSource, 'the worker must have a one-time migration for the refreshed regional stills');
+  assert.match(source, /\.then\(migrateReadingLandscapeRegionalStills\)/,
+    'activation must run the migration before claiming clients');
+  assert.doesNotMatch(functionSource, /\bfetch\s*\(|\.add(?:All)?\s*\(/,
+    'activation must only retire stale copies; replacement downloads remain the learner’s choice');
+
+  const old = ['st', 've', 'ts'].flatMap(language => Array.from({ length: 21 }, (_, index) =>
+    `/course-decks/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.webp`));
+  assert.equal(new Set(old).size, 63);
+  const queryVariants = [
+    `${old[0]}?revision=old`,
+    `${old[62]}?revision=old`,
+  ];
+  const kept = [
+    '/course-decks/reading-landscape/en/slide-01.jpg',
+    '/course-decks/reading-landscape/zu/slide-01.jpg',
+    '/course-audio/reading-landscape/en/slide-01.mp3',
+    '/course-audio/reading-landscape/st/slide-01.mp3',
+    '/course-decks/market-community/st/slide-01.webp',
+  ];
+  const rows = new Map<string, Response>([...old, ...queryVariants, ...kept].map(path => [path, new Response(path)]));
+  let deleteCalls = 0;
+  const fakeCache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request(`https://example.test${path}`)),
+    delete: async (request: Request) => {
+      deleteCalls += 1;
+      const url = new URL(request.url);
+      return rows.delete(url.pathname + url.search);
+    },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const migrate = new Function('caches', 'COURSE_CACHE', 'Response', `${functionSource}; return migrateReadingLandscapeRegionalStills;`)(
+    { open: async (name: string) => { assert.equal(name, COURSE_CACHE); return fakeCache; } }, COURSE_CACHE, Response,
+  ) as () => Promise<void>;
+
+  await migrate();
+  for (const path of [...old, ...queryVariants]) assert.equal(rows.has(path), false, `${path} must be removed as a cached variant`);
+  for (const path of kept) assert.equal(rows.has(path), true, `${path} must stay saved offline`);
+  const marker = '/course-decks/reading-landscape/.regional-stills-20261003';
+  assert.equal(rows.has(marker), true);
+  assert.equal(deleteCalls, old.length + queryVariants.length);
+
+  rows.set(old[1], new Response('replacement saved after migration'));
+  await migrate();
+  assert.equal(await rows.get(old[1])!.text(), 'replacement saved after migration');
+  assert.equal(deleteCalls, old.length + queryVariants.length,
+    'the durable marker prevents later activations from deleting a learner’s new chosen download');
+});

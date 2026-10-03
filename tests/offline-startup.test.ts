@@ -163,3 +163,37 @@ test('updates preserve one old build and lesson downloads while preferring the n
   assert.ok(h.buckets.has('imbewu-course-v1'));
   assert.match(await (await h.request('/unvisited', true))!.text(), /home.js/);
 });
+
+test('worker activation retires the old ST/VE/TS Reading slides and preserves other saved downloads', async () => {
+  const h = harness();
+  const course = await h.caches.open('imbewu-course-v1');
+  const old = ['st', 've', 'ts'].flatMap(language => Array.from({ length: 21 }, (_, index) =>
+    `/course-decks/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.webp`));
+  assert.equal(new Set(old).size, 63);
+  const queryVariants = [
+    `${old[0]}?revision=old`,
+    `${old[62]}?revision=old`,
+  ];
+  const kept = [
+    '/course-decks/reading-landscape/en/slide-01.jpg',
+    '/course-decks/reading-landscape/zu/slide-01.jpg',
+    '/course-audio/reading-landscape/en/slide-01.mp3',
+    '/course-audio/reading-landscape/st/slide-01.mp3',
+    '/course-decks/market-community/st/slide-01.webp',
+  ];
+  for (const path of [...old, ...queryVariants, ...kept]) await course.put(path, new Response(path));
+
+  await h.lifecycle('activate');
+
+  for (const path of [...old, ...queryVariants]) {
+    assert.equal(await course.match(path), undefined, `${path} must be retired on activation`);
+  }
+  for (const path of kept) assert.ok(await course.match(path), `${path} must remain downloaded`);
+  assert.ok(await course.match('/course-decks/reading-landscape/.regional-stills-20261003'),
+    'activation records the migration so a later install does not sweep newly chosen slides');
+
+  await course.put(old[1], new Response('replacement chosen after activation'));
+  await h.lifecycle('activate');
+  assert.equal(await (await course.match(old[1]))!.text(), 'replacement chosen after activation',
+    'the shipped worker’s later activation must respect the one-time marker');
+});

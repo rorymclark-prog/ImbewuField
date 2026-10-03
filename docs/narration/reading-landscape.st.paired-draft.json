@@ -16,7 +16,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ho Bala Ponahalo ea Naha"
         },
         "body": [
           {
@@ -88,14 +89,16 @@
             "text": "Qetellong ea mojule ona, u tla khona ho latela metsi ho pholletsa le naha ea hao le ho fumana moo a tlohang teng."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U tla read sun angles, shade, wind, frost, and slope."
           },
           {
             "status": "draft",
             "text": "U tla sebelisa A-frame level ho latela contours."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U tla taka a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
           }
         ]
       }
@@ -118,7 +121,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pele u kotula metsi, ithute moo a seng a ea teng."
           },
           {
             "status": "english-hold"
@@ -140,7 +144,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Water Slows, Sinks, and Leaves"
         },
         "body": [
           {
@@ -162,7 +167,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Trace Contours ka A-Frame"
         },
         "body": [
           {
@@ -190,7 +196,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sheba Metsi Pele U Haha"
         },
         "body": [
           {
@@ -218,7 +225,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Thuto 2: Bala Letsatsi le Moriti"
         },
         "body": [
           {
@@ -228,7 +236,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba sebaka sa hao pele u khetha where to place tender crops, trees, or buildings."
           }
         ]
       }
@@ -244,7 +253,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Follow the Sun Across the Site"
         },
         "body": [
           {
@@ -267,17 +277,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlahloba Winter Shadows pele o haha"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele before you build or fix a shade structure in place."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ema sebakeng seo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
           }
         ]
       }
@@ -294,7 +307,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sireletsa frost-tender plants"
         },
         "body": [
           {
@@ -319,7 +333,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Thuto 3: Read Wind, Frost, and Slope"
         },
         "body": [
           {
@@ -345,7 +360,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: See Wind and Cold Air on the Map"
         },
         "body": [
           {
@@ -378,7 +394,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
           },
           {
             "status": "english-hold"
@@ -398,7 +415,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Khetha Airflow and Warmth"
         },
         "body": [
           {
@@ -428,13 +446,16 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ho etsa site map ho hloka paper, a tape measure, a compass, and time to walk your land."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsamaea moeling, ebe u etsa sketch ya pele. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Joale taka the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
           }
         ]
       }
@@ -450,7 +471,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Taka the Land You Already Have"
         },
         "body": [
           {
@@ -473,17 +495,21 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lumella dimela di u thuse ho bala Soil"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba libaka where frost sits longest and where the ground smells damp during dry months."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ela hloko existing vegetation. Mark where khakibos or blackjack grows thick."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Hlahloba soil before deciding what the patch means for your design."
           }
         ]
       }
@@ -501,14 +527,17 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Eketsa seasons, zones, le sectors"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tšoaea summer and winter wind ka thoko. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Beha your zones and sectors on the same base map."
           },
           {
             "status": "draft",
@@ -536,13 +565,16 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "When it is safe after heavy rain, walk your land. Tšoaea rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Khutla ka dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pampiring, taka your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
           }
         ]
       }
@@ -569,10 +601,12 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "E sebelise ho mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eketsa summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
           }
         ]
       }
@@ -587,6 +621,7 @@
   "reviewNotes": [
     "A fluent Sesotho speaker and local agriculture adviser must review every candidate for meaning, register, and local terminology before classroom use. No fluent-language or farming approval is implied.",
     "English source text is paired sentence by sentence and checked against docs/narration/reading-landscape.en.md.",
-    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. Machine checks are not fluent-speaker approval."
+    "A 2026-09 screen of new/flagged descriptive heading candidates is recorded in READING-LANDSCAPE-DESCRIPTIVE-HEADINGS-AI-DRAFT-REVIEW.md. Machine checks are not fluent-speaker approval.",
+    "3 October: ordinary framing expanded using independently checked, source-bound unreviewed drafts. Difficult technical English holds remain exact. No regional narration or fluent/local farming approval."
   ]
 }

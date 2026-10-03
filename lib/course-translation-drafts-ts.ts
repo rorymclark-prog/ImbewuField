@@ -538,7 +538,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
-        "xitsongaDraft": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Xiya local frost u nga se byala.",
+        "xitsongaDraft": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Hlayisa tender plants swi nga ri eka known low frost pockets. Xiya local frost u nga se byala.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -595,7 +595,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
-            "xitsongaDraft": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+            "xitsongaDraft": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. Ndhawu leyi nga na dyambu swinene ehandle ka known frost pocket swi nga ha hunguta risk; kambe local frost observations must guide the final position.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -630,7 +630,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 0,
           "rationale": {
             "sourceEnglish": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
-            "xitsongaDraft": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Kambela the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+            "xitsongaDraft": "Winter sun is lower and farther north. Shade cloth yi nga cinca the hours of sun on a bed. Kambela ndzhuti wa xiviri at 8am, midday, and 4pm u nga se yi tiyisa endhawini.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -650,7 +650,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
-        "xitsongaDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
+        "xitsongaDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti can be colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -714,7 +714,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
-            "xitsongaDraft": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
+            "xitsongaDraft": "Matamatisi ya murimi wa KZN repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -862,13 +862,13 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     }
   ],
   "holds": [
-    {"lessonId": "reading-landscape-l2", "field": "quiz[0].rationale", "sourceText": "A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l2", "field": "quiz[0].rationale", "sourceText": "local frost observations must guide the final position.", "reason": "Retain the final-position rule exactly after localizing the surrounding risk statement."},
     {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "Winter sun is lower and farther north.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
-    {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "Shade cloth can change the hours of sun on a bed.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "the hours of sun on a bed.", "reason": "Retain the sun-duration effect phrase exactly after localizing the surrounding shade sentence."},
     {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Cold air can settle in low places on clear, still nights.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
     {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Compare candidate nursery sites through the local frost season.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
     {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[1].q", "sourceText": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[1].q", "sourceText": "repeatedly develop late blight during cool, damp spells.", "reason": "Retain the repeated late-blight and cool, damp weather condition exactly after translating only the KZN farmer and tomatoes subject."},
     {"lessonId": "reading-landscape-l3", "field": "quiz[1].rationale", "sourceText": "Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
     {"lessonId": "reading-landscape-l4", "field": "quiz[0].rationale", "sourceText": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
     {
@@ -904,8 +904,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "reading-landscape-l2",
       "field": "body",
-      "sourceText": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets.",
-      "reason": "Keep the plant names, frost sensitivity, and low-frost-pocket placement instruction exact while drafting the ordinary observation-before-planting sentence."
+      "sourceText": "Pawpaw and young citrus are sensitive to frost.",
+      "reason": "Keep the plant names and frost sensitivity exact; the adjacent known-pocket instruction now has a mixed unreviewed draft."
     },
 
 
@@ -924,14 +924,14 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
-      "sourceText": "These places can be colder than nearby slopes.",
-      "reason": "Keep the relative-temperature claim exact until reviewed."
+      "sourceText": "can be colder than nearby slopes.",
+      "reason": "Keep the relative-temperature comparison and can-modality exact while the subject is localized."
     },
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
-      "sourceText": "Frost patterns also depend on the site.",
-      "reason": "Keep the site-dependence qualifier exact until reviewed."
+      "sourceText": "Frost patterns",
+      "reason": "Keep the frost-pattern technical term exact while localizing the site-dependence framing."
     },
     {
       "lessonId": "reading-landscape-l3",

@@ -1,0 +1,3219 @@
+{
+  "packetId": "IMBEWU-REGIONAL-READING-SLIDE-ORDINARY-CLOSURE-CANDIDATES-2026-10-03",
+  "sourceRevision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+  "sourceAuthority": {
+    "english": "docs/narration/reading-landscape.en.md",
+    "pairedDrafts": [
+      "docs/narration/reading-landscape.st.paired-draft.json",
+      "docs/narration/reading-landscape.ve.paired-draft.json",
+      "docs/narration/reading-landscape.ts.paired-draft.json"
+    ],
+    "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5"
+  },
+  "provenance": "Read-only source/current-bound review of the exact origin/main paired narration documents. Candidate strings are unreviewed machine drafts for facilitator review; no fluent-speaker or farming approval is implied. English source was not edited. Lesson-body frost checks are separate and are not copied into this slide packet.",
+  "scope": "Revised after first audit: ordinary watch/check/choose/draw/add/with/before framing is localized across slide headings, with exact technical anchors retained. The fully directional “Cold Air Flows Downhill” titles and ST wind-damage factual body sentence remain explicit holds. Three learning-outcome candidates retain the difficult verb read exactly in English. Other exact technical source clauses stay preserved.",
+  "candidateEntries": [
+    {
+      "language": "st",
+      "slide": 1,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Reading the Landscape",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ho Bala Ponahalo ea Naha",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 3,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "You will read sun angles, shade, wind, frost, and slope.",
+      "translatedClauses": [
+        {
+          "source": "You will read",
+          "replacement": "U tla read"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "U tla read sun angles, shade, wind, frost, and slope.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Translate only the future auxiliary; retain the difficult learning verb read exactly in English so the outcome is not narrowed to looking/observing."
+    },
+    {
+      "language": "st",
+      "slide": 3,
+      "fieldPath": "target.body[3]",
+      "exactSourceEnglish": "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "translatedClauses": [
+        {
+          "source": "You will draw",
+          "replacement": "U tla taka"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "U tla taka a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Before you harvest water, learn where it already goes.",
+      "translatedClauses": [
+        {
+          "source": "Before you harvest water, learn where it already goes.",
+          "replacement": "Pele u kotula metsi, ithute moo a seng a ea teng."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Pele u kotula metsi, ithute moo a seng a ea teng.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Water Slows, Sinks, and Leaves",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Shebella: Water Slows, Sinks, and Leaves",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Trace Contours with an A-Frame",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Trace Contours ka A-Frame",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Observe Water Before You Build",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sheba Metsi Pele U Haha",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "translatedClauses": [
+        {
+          "source": "Watch your own site before choosing",
+          "replacement": "Sheba sebaka sa hao pele u khetha"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sheba sebaka sa hao pele u khetha where to place tender crops, trees, or buildings.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Lesson 2: Read Sun and Shade",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Thuto 2: Bala Letsatsi le Moriti",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Follow the Sun Across the Site",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Shebella: Follow the Sun Across the Site",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "translatedClauses": [
+        {
+          "source": "Check the actual shadows",
+          "replacement": "Hlahloba shadows tsa sebele"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele before you build or fix a shade structure in place.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "translatedClauses": [
+        {
+          "source": "Stand in the spot",
+          "replacement": "Ema sebakeng seo"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ema sebakeng seo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Check Winter Shadows Before Building",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Hlahloba Winter Shadows pele o haha",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Protect Frost-Tender Plants",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sireletsa frost-tender plants",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Lesson 3: Read Wind, Frost, and Slope",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Thuto 3: Read Wind, Frost, and Slope",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Shebella: See Wind and Cold Air on the Map",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft.",
+      "finalRepairRationale": "Conservative restoration of the exact source prepositional relation."
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "translatedClauses": [
+        {
+          "source": "Look for ice and plant damage,",
+          "replacement": "Sheba ice and plant damage,"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sheba ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Choose Airflow and Warmth",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Khetha Airflow and Warmth",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+      "translatedClauses": [
+        {
+          "source": "A site map needs",
+          "replacement": "Ho etsa site map ho hloka"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ho etsa site map ho hloka paper, a tape measure, a compass, and time to walk your land.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "translatedClauses": [
+        {
+          "source": "Walk the boundary and make a first sketch.",
+          "replacement": "Tsamaea moeling, ebe u etsa sketch ya pele."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Tsamaea moeling, ebe u etsa sketch ya pele. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "translatedClauses": [
+        {
+          "source": "Then draw",
+          "replacement": "Joale taka"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Joale taka the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Draw the Land You Already Have",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Shebella: Taka the Land You Already Have",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Look for places where frost sits longest and where the ground smells damp during dry months.",
+      "translatedClauses": [
+        {
+          "source": "Look for places",
+          "replacement": "Sheba libaka"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sheba libaka where frost sits longest and where the ground smells damp during dry months.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+      "translatedClauses": [
+        {
+          "source": "Notice existing vegetation.",
+          "replacement": "Ela hloko existing vegetation."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ela hloko existing vegetation. Mark where khakibos or blackjack grows thick.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "translatedClauses": [
+        {
+          "source": "Check the soil",
+          "replacement": "Hlahloba soil"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Hlahloba soil before deciding what the patch means for your design.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Lumella dimela di u thuse ho bala Soil",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft.",
+      "finalRepairRationale": "Change go to u; retain the candidate’s “Let plants help you read Soil” construction. This is a conservative grammar correction, not a fluent approval."
+    },
+    {
+      "language": "st",
+      "slide": 19,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+      "translatedClauses": [
+        {
+          "source": "Mark summer and winter wind separately.",
+          "replacement": "Tšoaea summer and winter wind ka thoko."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Tšoaea summer and winter wind ka thoko. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 19,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Overlay your zones and sectors on the same base map.",
+      "translatedClauses": [
+        {
+          "source": "Overlay",
+          "replacement": "Beha"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Beha your zones and sectors on the same base map.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 19,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Add Seasons, Zones, and Sectors",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Eketsa seasons, zones, le sectors",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "st",
+      "slide": 20,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "translatedClauses": [
+        {
+          "source": "Mark rills, spreading water, ponds, and where water leaves your property.",
+          "replacement": "Tšoaea rills, spreading water, ponds, and where water leaves your property."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "When it is safe after heavy rain, walk your land. Tšoaea rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 20,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "translatedClauses": [
+        {
+          "source": "Return at dawn",
+          "replacement": "Khutla ka dawn"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Khutla ka dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 20,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "translatedClauses": [
+        {
+          "source": "On paper, draw",
+          "replacement": "Pampiring, taka"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Pampiring, taka your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 21,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "translatedClauses": [
+        {
+          "source": "Use it to",
+          "replacement": "E sebelise ho"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "E sebelise ho mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "st",
+      "slide": 21,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+      "translatedClauses": [
+        {
+          "source": "Add summer and winter wind arrows,",
+          "replacement": "Eketsa summer and winter wind arrows,"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Eketsa summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "You will read sun angles, shade, wind, frost, and slope.",
+      "translatedClauses": [
+        {
+          "source": "You will read",
+          "replacement": "Ni ḓo read"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ni ḓo read sun angles, shade, wind, frost, and slope.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Translate only the future auxiliary; retain the difficult learning verb read exactly in English so the outcome is not narrowed to looking/observing."
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "fieldPath": "target.body[3]",
+      "exactSourceEnglish": "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "translatedClauses": [
+        {
+          "source": "You will draw",
+          "replacement": "Ni ḓo ola"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ni ḓo ola a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Before you harvest water, learn where it already goes.",
+      "translatedClauses": [
+        {
+          "source": "Before you harvest water, learn where it already goes.",
+          "replacement": "Ni sa kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ni sa kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "translatedClauses": [
+        {
+          "source": "When it is safe afterward, walk your land.",
+          "replacement": "Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Watch from a safe place during heavy rain. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Water Slows, Sinks, and Leaves",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani: Water Slows, Sinks, and Leaves",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Trace Contours with an A-Frame",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Trace Contours nga A-Frame",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Observe Water Before You Build",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani maḓi ni sa athu fhaṱa",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "translatedClauses": [
+        {
+          "source": "Watch your own site before choosing",
+          "replacement": "Sedzani site yaṋu ni sa athu nanga"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani site yaṋu ni sa athu nanga where to place tender crops, trees, or buildings.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Lesson 2: Read Sun and Shade",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ngudo 2: Vhalani ḓuvha na murunzi",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Follow the Sun Across the Site",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani: Follow the Sun Across the Site",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "translatedClauses": [
+        {
+          "source": "Check the actual shadows",
+          "replacement": "Sedzani shadows dza vhukuma"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma before you build or fix a shade structure in place.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "translatedClauses": [
+        {
+          "source": "Stand in the spot",
+          "replacement": "Imani fhethu"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Imani fhethu at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Check Winter Shadows Before Building",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani Winter Shadows ni sa athu u fhaṱa",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Protect Frost-Tender Plants",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Tsireledzani frost-tender plants",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Lesson 3: Read Wind, Frost, and Slope",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ngudo 3: Read Wind, Frost, and Slope",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani: See Wind and Cold Air kha Map",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "translatedClauses": [
+        {
+          "source": "Look for ice and plant damage,",
+          "replacement": "Sedzani ice and plant damage,"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Choose Airflow and Warmth",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Nangani Airflow and Warmth",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+      "translatedClauses": [
+        {
+          "source": "A site map needs",
+          "replacement": "U ita site map zwi ṱoḓa"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "U ita site map zwi ṱoḓa paper, a tape measure, a compass, and time to walk your land.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "translatedClauses": [
+        {
+          "source": "Walk the boundary and make a first sketch.",
+          "replacement": "Tshimbilani kha boundary ni ite sketch ya u thoma."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Tshimbilani kha boundary ni ite sketch ya u thoma. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "translatedClauses": [
+        {
+          "source": "Then draw",
+          "replacement": "Nga murahu olani"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Nga murahu olani the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Lesson 4: Start Your Site Map",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ngudo 4: Thomani mepe wa site",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes.",
+      "translatedClauses": [
+        {
+          "source": "Use the picture as a guide:",
+          "replacement": "Shumisani tshifanyiso sa guide:"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Shumisani tshifanyiso sa guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Draw the Land You Already Have",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani: Draw the Land You Already Have",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Look for places where frost sits longest and where the ground smells damp during dry months.",
+      "translatedClauses": [
+        {
+          "source": "Look for places",
+          "replacement": "Sedzani fhethu"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani fhethu where frost sits longest and where the ground smells damp during dry months.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+      "translatedClauses": [
+        {
+          "source": "Notice existing vegetation.",
+          "replacement": "Sedzani existing vegetation."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sedzani existing vegetation. Mark where khakibos or blackjack grows thick.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "translatedClauses": [
+        {
+          "source": "Check the soil",
+          "replacement": "Sedzani soil"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Sedzani soil before deciding what the patch means for your design.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Tendelani zwilimela zwi ni thuse u read Soil",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft.",
+      "finalRepairRationale": "Proposed directive form for facilitator review; preserve Read Soil as exact English anchor."
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+      "translatedClauses": [
+        {
+          "source": "Mark summer and winter wind separately.",
+          "replacement": "Funzhani summer and winter wind nga thungo."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Funzhani summer and winter wind nga thungo. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Overlay your zones and sectors on the same base map.",
+      "translatedClauses": [
+        {
+          "source": "Overlay",
+          "replacement": "Vheani"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Vheani your zones and sectors on the same base map.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "translatedClauses": [
+        {
+          "source": "Update the sketch season by season.",
+          "replacement": "Khwinisani sketch nga tshifhinga tsha khalanwaha."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Khwinisani sketch nga tshifhinga tsha khalanwaha. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Add Seasons, Zones, and Sectors",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Engedzani seasons, zones na sectors",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "translatedClauses": [
+        {
+          "source": "Mark rills, spreading water, ponds, and where water leaves your property.",
+          "replacement": "Funzhani rills, spreading water, ponds, and where water leaves your property."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "When it is safe after heavy rain, walk your land. Funzhani rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "translatedClauses": [
+        {
+          "source": "Return at dawn",
+          "replacement": "Vhuyelelani nga dawn"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Vhuyelelani nga dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "translatedClauses": [
+        {
+          "source": "On paper, draw",
+          "replacement": "Kha bammbiri, olani"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Kha bammbiri, olani your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "translatedClauses": [
+        {
+          "source": "Use it to",
+          "replacement": "I shumiseni u"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "I shumiseni u mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+      "translatedClauses": [
+        {
+          "source": "Add summer and winter wind arrows,",
+          "replacement": "Engedzani summer and winter wind arrows,"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Engedzani summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "You will read sun angles, shade, wind, frost, and slope.",
+      "translatedClauses": [
+        {
+          "source": "You will read",
+          "replacement": "U ta read"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "U ta read sun angles, shade, wind, frost, and slope.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Translate only the future auxiliary; retain the difficult learning verb read exactly in English so the outcome is not narrowed to looking/observing."
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "fieldPath": "target.body[3]",
+      "exactSourceEnglish": "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "translatedClauses": [
+        {
+          "source": "You will draw",
+          "replacement": "U ta dirowa"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "U ta dirowa a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Before you harvest water, learn where it already goes.",
+      "translatedClauses": [
+        {
+          "source": "Before you harvest water, learn where it already goes.",
+          "replacement": "Loko u nga si hlengeleta mati, dyondza laha se ma yaka kona."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Loko u nga si hlengeleta mati, dyondza laha se ma yaka kona.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Water Slows, Sinks, and Leaves",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Languta: Water Slows, Sinks, and Leaves",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Trace Contours with an A-Frame",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Trace Contours hi A-Frame",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Observe Water Before You Build",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Languta mati u nga si aka",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "translatedClauses": [
+        {
+          "source": "Watch your own site before choosing",
+          "replacement": "Languta ndhawu ya wena u nga si hlawula"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Languta ndhawu ya wena u nga si hlawula where to place tender crops, trees, or buildings.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Follow the Sun Across the Site",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Languta: Follow the Sun Across the Site",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "translatedClauses": [
+        {
+          "source": "Check the actual shadows",
+          "replacement": "Kambela shadows ta xiviri"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "translatedClauses": [
+        {
+          "source": "Stand in the spot",
+          "replacement": "Yima endhawini yoleyo"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Yima endhawini yoleyo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Check Winter Shadows Before Building",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Kambela Winter Shadows u nga si aka",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Protect Frost-Tender Plants",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Sirhelela frost-tender plants",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Lesson 3: Read Wind, Frost, and Slope",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Dyondzo 3: Read Wind, Frost, and Slope",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Languta: See Wind and Cold Air eka Map",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "translatedClauses": [
+        {
+          "source": "Look for ice and plant damage,",
+          "replacement": "Languta ice ni ku onhaka ka swimilani,"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Choose Airflow and Warmth",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Hlawula Airflow and Warmth",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+      "translatedClauses": [
+        {
+          "source": "A site map needs",
+          "replacement": "Ku endla mepe wa ndhawu swi lava"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ku endla mepe wa ndhawu swi lava paper, a tape measure, a compass, and time to walk your land.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "translatedClauses": [
+        {
+          "source": "Walk the boundary and make a first sketch.",
+          "replacement": "Famba emindzilakaneni kutani u endla xifaniso xo sungula."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Famba emindzilakaneni kutani u endla xifaniso xo sungula. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "translatedClauses": [
+        {
+          "source": "Then draw",
+          "replacement": "Kutani dirowa"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Kutani dirowa the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Lesson 4: Start Your Site Map",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Dyondzo 4: Sungula mepe wa ndhawu",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes.",
+      "translatedClauses": [
+        {
+          "source": "Use the picture as a guide:",
+          "replacement": "Tirhisa xifaniso xi va nkongomiso:"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Tirhisa xifaniso xi va nkongomiso: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: Draw the Land You Already Have",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Languta: Dirowa the Land You Already Have",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Look for places where frost sits longest and where the ground smells damp during dry months.",
+      "translatedClauses": [
+        {
+          "source": "Look for places",
+          "replacement": "Languta tindhawu"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Languta tindhawu where frost sits longest and where the ground smells damp during dry months.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+      "translatedClauses": [
+        {
+          "source": "Notice existing vegetation.",
+          "replacement": "Xiya existing vegetation."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Xiya existing vegetation. Mark where khakibos or blackjack grows thick.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "translatedClauses": [
+        {
+          "source": "Check the soil",
+          "replacement": "Kambela soil"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Kambela soil before deciding what the patch means for your design.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Pfumelela swimilani swi ku pfuna ku read Soil",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft.",
+      "finalRepairRationale": "Proposed directive form for facilitator review; preserve Read Soil as exact English anchor."
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+      "translatedClauses": [
+        {
+          "source": "Mark summer and winter wind separately.",
+          "replacement": "Fungha summer na winter wind hi ku hambana."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Fungha summer na winter wind hi ku hambana. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Overlay your zones and sectors on the same base map.",
+      "translatedClauses": [
+        {
+          "source": "Overlay",
+          "replacement": "Vekela"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Vekela your zones and sectors on the same base map.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "translatedClauses": [
+        {
+          "source": "Update the sketch season by season.",
+          "replacement": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Add Seasons, Zones, and Sectors",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Engetela seasons, zones na sectors",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained",
+      "reason": "Localize the ordinary watch/check/choose/draw/add/with/before framing while keeping specialized wind, frost, contour, airflow, soil, map, or seasonal terms as exact English anchors; unreviewed draft."
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "translatedClauses": [
+        {
+          "source": "Mark rills, spreading water, ponds, and where water leaves your property.",
+          "replacement": "Fungha rills, spreading water, ponds, and where water leaves your property."
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "When it is safe after heavy rain, walk your land. Fungha rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "translatedClauses": [
+        {
+          "source": "Return at dawn",
+          "replacement": "Vuya hi dawn"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Vuya hi dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "translatedClauses": [
+        {
+          "source": "On paper, draw",
+          "replacement": "Ephepheni, dirowa"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Ephepheni, dirowa your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "translatedClauses": [
+        {
+          "source": "Use it to",
+          "replacement": "Yi tirhise ku"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Yi tirhise ku mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+      "translatedClauses": [
+        {
+          "source": "Add summer and winter wind arrows,",
+          "replacement": "Engetela summer na winter wind arrows,"
+        }
+      ],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "unreviewed-machine-draft",
+      "candidateText": "Engetela summer na winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+      "retainedEnglishReason": null,
+      "provenance": "source-paired; unreviewed machine draft; exact English source retained"
+    }
+  ],
+  "remainingHolds": [
+    {
+      "language": "st",
+      "slide": 2,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This is a safety, no-guarantee, or adviser condition; retain it exactly until an independent check validates the full condition.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This is a safety, no-guarantee, or adviser condition; retain it exactly until an independent check validates the full condition.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Water picks up speed and erosive force as it runs downhill.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Winter sun is lower and farther north than summer sun.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Pawpaw and young citrus are sensitive to frost.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Wind can damage crops on a smallholding.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This is a direct crop-damage claim, not just framing. Keep the exact source until a specific Sesotho equivalent is independently checked.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Wind, cold air and slope all matter when choosing places for crops and shelter.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "fieldPath": "target.body[3]",
+      "exactSourceEnglish": "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Cold Air Flows Downhill",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "The complete heading states a directional cold-air movement claim. Keep it exact until an equivalent is independently checked.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "st",
+      "slide": 21,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 1,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "A permaculture course for South African smallholder farmers.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 1,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "These observations guide practical choices for crops, trees, buildings, roads, and water. They are the start of good design.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 1,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Reading the Landscape",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This title contains specialized land, weather, crop, or observation terminology; retain exact English until a bounded equivalent has an independent semantic check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 2,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 2,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the land.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This is a safety, no-guarantee, or adviser condition; retain it exactly until an independent check validates the full condition.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Water picks up speed and erosive force as it runs downhill.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Winter sun is lower and farther north than summer sun.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Pawpaw and young citrus are sensitive to frost.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Wind can damage crops on a smallholding.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Wind, cold air and slope all matter when choosing places for crops and shelter.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "fieldPath": "target.body[3]",
+      "exactSourceEnglish": "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Cold Air Flows Downhill",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "The complete heading states a directional cold-air movement claim. Keep it exact until an equivalent is independently checked.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 1,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 1,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "These observations guide practical choices for crops, trees, buildings, roads, and water. They are the start of good design.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 2,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 2,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the land.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This is a safety, no-guarantee, or adviser condition; retain it exactly until an independent check validates the full condition.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This is a safety, no-guarantee, or adviser condition; retain it exactly until an independent check validates the full condition.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Water picks up speed and erosive force as it runs downhill.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "This field contains instructional claims or terms whose precise scope is not safe to localize from a phrase-only check; retain exact English.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Winter sun is lower and farther north than summer sun.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Pawpaw and young citrus are sensitive to frost.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Wind can damage crops on a smallholding.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "fieldPath": "target.body[2]",
+      "exactSourceEnglish": "Wind, cold air and slope all matter when choosing places for crops and shelter.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "fieldPath": "target.body[3]",
+      "exactSourceEnglish": "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Cold Air Flows Downhill",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "The complete heading states a directional cold-air movement claim. Keep it exact until an equivalent is independently checked.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "fieldPath": "target.body[1]",
+      "exactSourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Weather, direction, or frost timing/site meaning is central; do not infer a local equivalent without a specific semantic back-check.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "fieldPath": "target.body[0]",
+      "exactSourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "translatedClauses": [],
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "retain-exact-English-hold",
+      "candidateText": null,
+      "retainedEnglishReason": "Measurement, soil, drainage, or earthworks conditions are consequential; retain the exact technical claim.",
+      "provenance": "source-paired exact-English hold; no candidate asserted"
+    }
+  ],
+  "expectedFieldCounts": {
+    "st": {
+      "existingEnglishHoldFields": 60,
+      "newUnreviewedCandidates": 34,
+      "retainedEnglishHolds": 26,
+      "existingDraftFieldsPreserved": 16,
+      "candidateHeadingFields": 14,
+      "candidateMixedBodyFields": 20
+    },
+    "ve": {
+      "existingEnglishHoldFields": 68,
+      "newUnreviewedCandidates": 37,
+      "retainedEnglishHolds": 31,
+      "existingDraftFieldsPreserved": 8,
+      "candidateHeadingFields": 14,
+      "candidateMixedBodyFields": 23
+    },
+    "ts": {
+      "existingEnglishHoldFields": 66,
+      "newUnreviewedCandidates": 35,
+      "retainedEnglishHolds": 31,
+      "existingDraftFieldsPreserved": 10,
+      "candidateHeadingFields": 13,
+      "candidateMixedBodyFields": 22
+    }
+  },
+  "preservationRules": [
+    "Do not apply a candidate unless source text and current target status/text still match exactly.",
+    "Do not change any existing draft, slide order, source English, reviewStatus, media, or lesson-body registry.",
+    "Candidates remain unreviewed. Retained English technical terms are intentional."
+  ],
+  "sourceBindingAudit": {
+    "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+    "pairedFieldCoverage": "all exact-English holds are represented once as candidate or explicit hold",
+    "sourcePairAudit": "every English heading/body source sentence in all three paired files occurs verbatim in reading-landscape.en.md at source revision",
+    "candidateComposition": "Recomputed after the first audit: body candidates differ only by listed exact English clause replacements; no clause deletion.",
+    "repositoryEdits": false
+  },
+  "independentReviewStatus": "106 exact-source/current-bound candidates accepted after four heading repairs and independent second check; unreviewed machine drafts, no fluent/local farming approval",
+  "revisionsAfterIndependentCheck": {
+    "heldSourceIdenticalFields": [
+      {
+        "language": "st",
+        "slide": 14,
+        "fieldPath": "target.heading",
+        "reason": "Candidate was source-identical English and fully directional; remains exact hold."
+      },
+      {
+        "language": "ve",
+        "slide": 14,
+        "fieldPath": "target.heading",
+        "reason": "Candidate was source-identical English and fully directional; remains exact hold."
+      },
+      {
+        "language": "ts",
+        "slide": 14,
+        "fieldPath": "target.heading",
+        "reason": "Candidate was source-identical English and fully directional; remains exact hold."
+      },
+      {
+        "language": "st",
+        "slide": 12,
+        "fieldPath": "target.body[0]",
+        "reason": "Candidate was source-identical English; factual wind-damage claim remains exact hold."
+      }
+    ],
+    "localizedHeadingCount": 25,
+    "learningOutcomeVerb": "read remains exact English in all three candidates"
+  },
+  "finalHeadingRepairs": [
+    {
+      "language": "st",
+      "slide": 13,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "currentCandidate": "Shebella: See Wind and Cold Air mapa",
+      "repairedCandidate": "Shebella: See Wind and Cold Air on the Map",
+      "independentFinding": "“mapa” names a map but the candidate does not clearly express the source relation “on the map.” Keep the locative phrase exact in English until a reviewed Sesotho form is available.",
+      "repairRationale": "Conservative restoration of the exact source prepositional relation.",
+      "reviewStatus": "unreviewed machine draft; target-language fluency and local approval not claimed"
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "currentCandidate": "Lumella dimela di go thuse ho bala Soil",
+      "repairedCandidate": "Lumella dimela di u thuse ho bala Soil",
+      "independentFinding": "“go” is the object form commonly associated with Northern Sotho/Sepedi, while Southern Sesotho uses “u” for the second-person object in examples such as “li tla u thusa” (“they will help you”). “di u thuse” keeps plants as the subject and you as object in the directive construction.",
+      "repairRationale": "Change go to u; retain the candidate’s “Let plants help you read Soil” construction. This is a conservative grammar correction, not a fluent approval.",
+      "reviewStatus": "unreviewed machine draft; target-language fluency and local approval not claimed"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "currentCandidate": "Zwilimela zwi nga ni thusa u vhala Soil",
+      "repairedCandidate": "Tendelani zwilimela zwi ni thuse u read Soil",
+      "independentFinding": "Current “Zwilimela zwi nga ni thusa...” back-translates as “Plants can help you...,” shifting the source directive “Let plants help you...” to a possibility statement. The repair uses a directive “allow/let plants...” construction and leaves the difficult technical phrase “read Soil” in English.",
+      "repairRationale": "Proposed directive form for facilitator review; preserve Read Soil as exact English anchor.",
+      "reviewStatus": "unreviewed machine draft; target-language fluency and local approval not claimed"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "currentCandidate": "Swimilani swi nga ku pfuna ku hlaya Soil",
+      "repairedCandidate": "Pfumelela swimilani swi ku pfuna ku read Soil",
+      "independentFinding": "Current “Swimilani swi nga ku pfuna...” back-translates as “Plants can help you...,” shifting the source directive “Let plants help you...” to a possibility statement. The repair uses a directive “allow/let plants...” construction and leaves the difficult technical phrase “read Soil” in English.",
+      "repairRationale": "Proposed directive form for facilitator review; preserve Read Soil as exact English anchor.",
+      "reviewStatus": "unreviewed machine draft; target-language fluency and local approval not claimed"
+    }
+  ]
+}
