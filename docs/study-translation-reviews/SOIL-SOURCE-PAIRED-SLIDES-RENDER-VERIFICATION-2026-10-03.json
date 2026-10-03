@@ -1,0 +1,1998 @@
+{
+  "changed": [
+    {
+      "language": "st",
+      "slide": 4,
+      "path": "public/course-decks/soil-health/st/slide-04.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 195014,
+      "sha256": "c5db01bde209ff682be20a4522d4e43a0a6a62382d067cad7c28cf490e5a29c7",
+      "baselineSha256": "6e5ffba8ddc3b7d946b80e158104321785dd7e5e1f77e676038b2e659193bb53"
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "path": "public/course-decks/soil-health/st/slide-06.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 318554,
+      "sha256": "8f16ace6f7334777bb8492166e2af04cfa3b8c38eab951aeb7f2f2c86784695d",
+      "baselineSha256": "d012ea7326c93bc05d7adddc4d21bd5fea85d515d2b246ef061ebad5b47e3509"
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "path": "public/course-decks/soil-health/st/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 203338,
+      "sha256": "debc002485552e3275c395e6c5cc0da2064f24fdcd6b7b1e871676e94dd256a4",
+      "baselineSha256": "55e6e1eb0c305f6d0567b3274cf578c1d5b18d37dda7c6c6fc3af55f26094182"
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "path": "public/course-decks/soil-health/st/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 472740,
+      "sha256": "5aa82741fe1d871653987dc27076b0c0451a403a96cba4efd5c2944863a0d316",
+      "baselineSha256": "ac71f2bfa889bc902753e1b0570d986dc5e444a95a93ae365a144dc5137a96fb"
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "path": "public/course-decks/soil-health/st/slide-09.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 220812,
+      "sha256": "7dcd973267e9a96dbe2be019b42621f7d36f92b9be33ce8a7ae4eef537d69bb0",
+      "baselineSha256": "ab64fed56d56a26121bf30352482ce1c4cd2a38db1e91a3faeb6c2f9495aa9cd"
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "path": "public/course-decks/soil-health/st/slide-11.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 460964,
+      "sha256": "763909b0896302b4284d13843a18457bb1036b57a453c3313c852315dd91392c",
+      "baselineSha256": "61fbc67b74ef875b18a3fb01111c3b16995686631666a9d9b591960037e97801"
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "path": "public/course-decks/soil-health/st/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 259300,
+      "sha256": "61169167206912229106c645f15e76e2799b1d5cdeff44be4bf5ce67a1c5af59",
+      "baselineSha256": "6a37fea6341376d9ec7a952a3f7cce53654ac8622a5b1cda298b6964f1b6dbf3"
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "path": "public/course-decks/soil-health/st/slide-13.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 235618,
+      "sha256": "3b8be95b763fe2f4e98f0c447d0f5f775382d6c387e925228fb5763a6e2549f7",
+      "baselineSha256": "79e9b14b3a5532d9f44ffd66820bcea4c4a46813508e8e5500b49d8e2ecde9a6"
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "path": "public/course-decks/soil-health/st/slide-15.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 431500,
+      "sha256": "5ac5f9c9b79a1982ea03ab46d6d3116e6555a8f855db29eb07e6df8c42c3a933",
+      "baselineSha256": "8b0daaa8406cccb52e0ca3350d0aa2acbc612d5286ff0eed968cf4d2cf5de6d0"
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "path": "public/course-decks/soil-health/st/slide-16.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 447488,
+      "sha256": "d215bc559b6de22243dd996e256d41874678f9761546ee010d7a547da6746c36",
+      "baselineSha256": "0261355bdc3bb5e16499047ef9f56fa774e405f41407df1d28f404ff19d4344c"
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "path": "public/course-decks/soil-health/st/slide-17.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 431010,
+      "sha256": "fc9b41903e45bd919376718dc8173e9b29915ce07354c7312451356df648dea7",
+      "baselineSha256": "429dd12ebd74125c579caf1bff1966d3bbf1d3d0b11bf46054e3713634d0f64a"
+    },
+    {
+      "language": "st",
+      "slide": 19,
+      "path": "public/course-decks/soil-health/st/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 199334,
+      "sha256": "f0e77562d1a9f9332674ff381cd610c3fa9ce426299ac82bfa3e513f80fb84a9",
+      "baselineSha256": "f0a049b327b8f32b0a9164be95eb90a043a523060bc67e95ddfba0c641aae78e"
+    },
+    {
+      "language": "st",
+      "slide": 20,
+      "path": "public/course-decks/soil-health/st/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 203980,
+      "sha256": "6e8d4c78826440ccc923269f84c4495ebe18bfa341e4f4fc8b1eba8bdd881e62",
+      "baselineSha256": "d5b188a4e8de846831f0bc4c310df9aedda5bafa8a32db143cc6f41d2615c8bc"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "path": "public/course-decks/soil-health/ve/slide-04.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 189348,
+      "sha256": "3d4d7f3f00f37ff5c8cbb80fcd33b180c75f0ca5abf674fed052914b79a9884b",
+      "baselineSha256": "633db235b3b7ac7491c92cf2f7b7da157820d3bf83d687fcca19ba88e95a3c5b"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "path": "public/course-decks/soil-health/ve/slide-06.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 310028,
+      "sha256": "74c9830d88970bc5d2c7c5e481fb20604b71d7ddbe0ea339a306bae139171fe6",
+      "baselineSha256": "5376cecdd63587895db822095181ae4371f42e479325b227173eb1af715dbe07"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "path": "public/course-decks/soil-health/ve/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 204596,
+      "sha256": "919341e28ef7374f976276504819e770539438cfd3a79384118ca0ee80ae2417",
+      "baselineSha256": "85649480d21252430a90dc6ad434e267179a6b30be75e95e1430600f75e097e6"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "path": "public/course-decks/soil-health/ve/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 461038,
+      "sha256": "8f711accfe49b6dfa5b224d74d0cebe9190cf78422c40f363cd9b37e17906213",
+      "baselineSha256": "d16afa1576b36db6f9d7d500f2925710e338e7099d5dc338d8318cb833dcf8af"
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "path": "public/course-decks/soil-health/ve/slide-09.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 230850,
+      "sha256": "f42ca5efe8a8db55b0706d42b70e7927d500a0efb0f930264d2ae9daaf429bc9",
+      "baselineSha256": "039a631264c20b1ceb14a17feb083663354725fa2a38a254ae47001bcc26e00e"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "path": "public/course-decks/soil-health/ve/slide-11.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 457000,
+      "sha256": "5b5ae641ddc6ebf59ec555e0112dd7aadbfa41a39b9d70a1207e7a8a6660f1b6",
+      "baselineSha256": "b2a5fc0f01cab211d7f20c138fb76dde59a584fb43ed1d42e43d20b55a5ecc4c"
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "path": "public/course-decks/soil-health/ve/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 252848,
+      "sha256": "71c03a898b0808986bbe73f57f880c7fc9d4fc310ab9181aef994646aa5bbf39",
+      "baselineSha256": "15a1c5d31abd3ae6cfe33ea5ffa4dece331552985874f5cc26fc86ee7ea31f14"
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "path": "public/course-decks/soil-health/ve/slide-13.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 224800,
+      "sha256": "a7be9db3b0473c0266a77d5edf6092abee162cfb0c2e65aa8a51688e4c2baf58",
+      "baselineSha256": "1889ca7fc0a84fabb1491165c70bb4e7dfd6407ab668f1f4e5d32b2080c91524"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "path": "public/course-decks/soil-health/ve/slide-15.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 426562,
+      "sha256": "eb7beace1545fb30d1f547613e422dac6f938d80c48579e1cb7fd9861147215d",
+      "baselineSha256": "c3e0c9e54065ba96ba10b43acb743d833ce599d76642dff54aa54296ecba4cb7"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "path": "public/course-decks/soil-health/ve/slide-16.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 445170,
+      "sha256": "050c18a4aca127c5098c508978996748d15ee1263e2d27612463803cef69dc79",
+      "baselineSha256": "6f6694aa70e9d8d243fdd82d03f97c07a634b043341a66e5f98b4fce71a5f3d3"
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "path": "public/course-decks/soil-health/ve/slide-17.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 423014,
+      "sha256": "c7b3f583518dc4d8fac6dc88aa72cd38fbd2287b429e4a0161bbb5784eba641a",
+      "baselineSha256": "865ef6dd3972f255dcd838c591e112ba395d6929000dc71cea4b7592739572f8"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "path": "public/course-decks/soil-health/ve/slide-18.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 401592,
+      "sha256": "243ba6d0bdd36b0205f07f90cd8ffd51d69fcecacb9815d7f0629910a5e536a5",
+      "baselineSha256": "627ec7d35f5c2e872b952e47c09770d6c95ba695b1aeb01f08aa2ecadb0c73b0"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "path": "public/course-decks/soil-health/ve/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 198378,
+      "sha256": "0014ac66b2b3f6c1f72344e3e62a198c9fc5bdfd6cd644bbf8bc2eb687dea096",
+      "baselineSha256": "79c6715172d7f184870143b9943681f3412040a9e504e0fdbf997eeebc1fd3a0"
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "path": "public/course-decks/soil-health/ve/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 202292,
+      "sha256": "012ec4dae579f0bb768ae71c1ab72dac436c468e02b8a189daaf7f85ce02e9fb",
+      "baselineSha256": "ff9bbd072a94c9dfac3657c12e26960f63bc656f9da7ec017b1e931cbcf9c2e8"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "path": "public/course-decks/soil-health/ts/slide-04.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 192758,
+      "sha256": "f435b3bbff8beffc7f4781423e05f602f0192cf284550a3542365ddb8333357e",
+      "baselineSha256": "66cc6b9908f6df355acafe4b1f16c99db1a8d7ec0b37e6d10ff15059f38b7620"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "path": "public/course-decks/soil-health/ts/slide-06.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 318104,
+      "sha256": "a3ea4bf9b95111709b72fa91c26e976a2d325830e1cac7ce1017c1007c2cafe8",
+      "baselineSha256": "128321c8808b7d639ee959f6f31daaa578a3279d02fd53d85f101e0d22fbb264"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "path": "public/course-decks/soil-health/ts/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 201686,
+      "sha256": "a65f734b07f98a25b37e095ea3b06ec67811328f56b8e952b77f1987388414c8",
+      "baselineSha256": "a9c5424356be560158205ab7d1860e5f8c55cd5e1131013bcf826f7353ebc201"
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "path": "public/course-decks/soil-health/ts/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 472326,
+      "sha256": "2c16f52c2cd2449e58435f0b1a3502f5b0913c5821bded35735c77180f0c5c15",
+      "baselineSha256": "dbf883e9595be67f92b16d40c225e32fa1a8445db7da64df840f9efb056b0031"
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "path": "public/course-decks/soil-health/ts/slide-09.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 215232,
+      "sha256": "c0f91ac5a4e3170252eebc5d5946fb1ded66c5e24f0d6edd9dec9782647f4273",
+      "baselineSha256": "875445fad9cae4a82b549bad5f8b77292b9bba3d62469b2d9190b4907bb809c2"
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "path": "public/course-decks/soil-health/ts/slide-11.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 455524,
+      "sha256": "da91b3d7df4a8d62a8a5d0f13d94d876e6e36e2d487a4a303be5d5ed858e01f4",
+      "baselineSha256": "09dea54d2fad2887d7b57dac4a714b9f99ded08c75cbec978cc97f8e6ed64919"
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "path": "public/course-decks/soil-health/ts/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 251818,
+      "sha256": "67853937cc52674ff3c07b88e7b24064c57e112e0f4fee238776d18c846a19b4",
+      "baselineSha256": "40845a27173865ca4f41f7cfe225d739eb51d0013aa19092739d321b9dbd86d0"
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "path": "public/course-decks/soil-health/ts/slide-13.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 222954,
+      "sha256": "b09c04ab3c55b26bd05ccfa726118b4c0219652508f3cfad24f20096f2746516",
+      "baselineSha256": "749f06b089dea2bf906ec9da755f11f365b6f4f5179d726ee6f6d553b26e7aab"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "path": "public/course-decks/soil-health/ts/slide-15.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 435086,
+      "sha256": "1864d7d91fc1e3a2d922d6fa3d734a1b739b3c2dc455069eda83f06b0e8a2646",
+      "baselineSha256": "c9b14dca186958cfcbb50c1a6f4463dad9606bbecc6ff8531bf8cc3c66efd085"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "path": "public/course-decks/soil-health/ts/slide-16.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 451244,
+      "sha256": "08327d775dd9f49eb3fb0a4466e793bb750226e42b3d3991490766534a0d45ef",
+      "baselineSha256": "0ff6a09d400aa4ca50c5cdb2fd4681e5be7a4134aebecdef14fa91a4404ee38d"
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "path": "public/course-decks/soil-health/ts/slide-17.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 423492,
+      "sha256": "44f1cc84eb985eaef6452b27c09e59b0caa7dfd970167f4a75e9455864cde810",
+      "baselineSha256": "b6da73ef242ad0b9bcf670f5046967c0dfce68393c0941e9750d83fc1824d080"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "path": "public/course-decks/soil-health/ts/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 198744,
+      "sha256": "a1c11ef8523af7026fda03d260a6a85856ece3b317069d2d0fb048f59dac9821",
+      "baselineSha256": "9769824c3af18066f62fc10decd51d0238560d1ce99c75c9c9da7daf24e51a71"
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "path": "public/course-decks/soil-health/ts/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 204098,
+      "sha256": "6f67535b74ea318efa3129c7bbe5de203d9519054b5e226ecc6c82d66076e808",
+      "baselineSha256": "7cd6cb7466e3a8793a7a7cd5fa2a49724faca055cca073873ecd9dcce603af1d"
+    }
+  ],
+  "unchanged": [
+    "public/course-decks/soil-health/st/slide-01.webp",
+    "public/course-decks/soil-health/st/slide-02.webp",
+    "public/course-decks/soil-health/st/slide-03.webp",
+    "public/course-decks/soil-health/st/slide-05.webp",
+    "public/course-decks/soil-health/st/slide-10.webp",
+    "public/course-decks/soil-health/st/slide-14.webp",
+    "public/course-decks/soil-health/st/slide-18.webp",
+    "public/course-decks/soil-health/ve/slide-01.webp",
+    "public/course-decks/soil-health/ve/slide-02.webp",
+    "public/course-decks/soil-health/ve/slide-03.webp",
+    "public/course-decks/soil-health/ve/slide-05.webp",
+    "public/course-decks/soil-health/ve/slide-10.webp",
+    "public/course-decks/soil-health/ve/slide-14.webp",
+    "public/course-decks/soil-health/ts/slide-01.webp",
+    "public/course-decks/soil-health/ts/slide-02.webp",
+    "public/course-decks/soil-health/ts/slide-03.webp",
+    "public/course-decks/soil-health/ts/slide-05.webp",
+    "public/course-decks/soil-health/ts/slide-10.webp",
+    "public/course-decks/soil-health/ts/slide-14.webp",
+    "public/course-decks/soil-health/ts/slide-18.webp"
+  ],
+  "sourceBase": "a351eecf9d82748481ea3e910594a898ac3659db",
+  "changedTargetFields": 100,
+  "exactSourceLearnerReuses": 94,
+  "boundedDeckOnlyFields": 6,
+  "canonicalEnglishUnchanged": true,
+  "rootViewedCompressedContactSheets": [
+    "/tmp/imbewu-soil-st-contact-20261003.jpg",
+    "/tmp/imbewu-soil-ve-contact-20261003.jpg",
+    "/tmp/imbewu-soil-ts-contact-20261003.jpg"
+  ],
+  "rootViewedCompressed390pxExamples": [
+    "/tmp/imbewu-soil-st-07-phone-20261003.png",
+    "/tmp/imbewu-soil-ve-17-phone-20261003.png",
+    "/tmp/imbewu-soil-ts-19-phone-20261003.png",
+    "/tmp/imbewu-soil-ts-20-phone-20261003.png"
+  ],
+  "reviewStatus": "Unreviewed machine drafts. No fluent/local farming approval.",
+  "runtimePhoneOfflineVerification": "pending exact preview",
+  "targetFieldChanges": [
+    {
+      "language": "st",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Fungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Kenya mobu le metsi ka clear jar, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sand e dula fatshe pele. Silt e latela, athe clay e ka nna ya dula e suspended nako e telele haholo.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ena ke rough learning exercise feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 0,
+      "sourceEnglish": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Lera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Bapisa likarolo tse lutseng, ’me u utloe mobu tšimong.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 2,
+      "sourceEnglish": "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ngola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ho thatafala ha mobu (compaction), drainage e mpe le tahlehelo ya organic matter di ka sitisa metso le bophelo ba mobu.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 1,
+      "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mmala o lerootho kapa palo e nyane ya diboko ha e pake hore dikhemikhale di bolaile mobu. Mosebetsi wa diboko le wona o a fetoha ho latela mongobo le sehla.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, metsi a phallang le kholo ea limela pele u khetha tharollo.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "bodyIndex": 1,
+      "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "bodyIndex": 2,
+      "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Nako ya hore compost e lokele ho sebediswa e fapana ho ya ka materials, mongobo, moya le thempereitjha. Lebitso la province kapa palo e behilweng ya dibeke ha se readiness test.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Kopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "bodyIndex": 1,
+      "sourceEnglish": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ha qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; recipe e le nngwe ha e tshwanele motswako o mong le o mong wa materials.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Karolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le management kaofela di bohlokwa.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Boloka meat, dairy, diseased plants, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 2,
+      "sourceEnglish": "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "U se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Boloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "bodyIndex": 1,
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sebedisa materials tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, dry grass kapa wood chips.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer ha ho hlokahala; mulch e ngata ha e dule e le betere.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Cover crops di ka sireletsa mobu pakeng tsa main crops. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le next planting.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "bodyIndex": 1,
+      "sourceEnglish": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mehlala ya thuto ena e kenyelletsa oats, lupins, sunn hemp le cowpea. Hlahloba hore di loketse sebaka sa heno pele o jala.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "bodyIndex": 2,
+      "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Legumes di hloka bacteria tse loketseng le maemo a kgolo a loketseng hore di kgone ho fix nitrogen. Dimatlafatsi tse masalleng a tsona di a fumaneha ha thepa eo e ntse e bola.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 0,
+      "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Worm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba bin ho e-na le ho lebella letsatsi le behilweng la kotulo.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 1,
+      "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Liquid that drains naturally from a worm bin e bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 2,
+      "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Leachate e ka ba le harmful organisms kapa substances. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 19,
+      "bodyIndex": 0,
+      "sourceEnglish": "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Inspect soil in a working area. ",
+            "status": "draft",
+            "text": "Hlahloba mobu sebakeng sa mosebetsi. "
+          },
+          {
+            "sourceEnglish": "Record colour, structure, roots, moisture and any worm channels.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Ordinary inspection framing is an independently checked unreviewed machine draft; complete technical checklist held exact English."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 20,
+      "bodyIndex": 0,
+      "sourceEnglish": "Start one soil-building action from this module.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Qala ketso e le 'ngoe ea soil-building ho tsoa mojulung ona.",
+        "provenance": "Independently checked unreviewed machine draft; one action from this module preserved and technical soil-building retained English."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Dziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Vheani soil na water kha clear jar, ni engedze little suitable dispersing detergent. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sand i settles pele. Silt i settles nga murahu, ngeno clay i tshi nga sala i suspended much longer.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hezwi ndi rough learning exercise. Clumps na clay i sa athu settled zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 0,
+      "sourceEnglish": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Thick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 2,
+      "sourceEnglish": "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ṅwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 1,
+      "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Pale colour kana few worms a zwi prove uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga moisture na season.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sedzani patterns tsimuni. Sedzani management history, drainage na u aluwa ha plants ni sa athu khetha remedy.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost ndi organic matter yo broken down nga fhasi ha managed conditions.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "bodyIndex": 1,
+      "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u contribute nutrients.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "bodyIndex": 2,
+      "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tshifhinga tsha u luga ha manyoro tshi a fhambana u ya nga zwishumiswa (materials), vhunyunyu, muya na thempheretsha (temperature). Dzina ḽa vundu kana mbalo yo vhewaho ya vhege a si tsedzuluso ya u luga ha manyoro.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tanganyani dry browns na fresh greens. Avoid thick, wet layers that keep air out.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 1,
+      "sourceEnglish": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Arali thulwi ya manyoro ya vha slimy kana ya nukha ammonia nga maanḓa, shelani dry browns nahone ni i rembuluse.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; recipe nthihi a i lulameli mutanganyo muṅwe na muṅwe wa materials.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hot centre a i khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Time, temperature na management zwoṱhe zwi na ndeme.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Iledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi simple household system.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 2,
+      "sourceEnglish": "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ni songo humbula uri home composting i fhedza weed seed iṅwe na iṅwe kana disease organism iṅwe na iṅwe. Shumisani recognised process hune sanitation ya ṱoḓea.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Iledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. An ordinary heap may not make every seed non-viable.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 1,
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Shumisani fhedzi clean, untreated materials. Bark breaks down slowly; dzina layo fhedzi a si proof ya uri a i na contamination.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. Keep it moist, hu si waterlogged.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Fukedzani mavu a songo fukwaho nga mulch yo kunaho, yo teaho, u fana na straw, hatsi ho omaho kana wood chips.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Keep it clear of trunks and stems. Sedzani moisture nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Cover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na next planting.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 1,
+      "sourceEnglish": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tsumbo dza course dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 2,
+      "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Legumes dzi ṱoḓa bacteria dzo teaho na growth conditions dzo teaho u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 0,
+      "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Worm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani bin, ni songo lavhelela fixed harvest date.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 1,
+      "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Liquid that drains naturally from a worm bin i vhidzwa leachate. A si tshithu tshithihi na prepared worm-casting tea.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 2,
+      "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Leachate i nga vha na harmful organisms kana substances. Do not use it on edible plants or assume that dilution makes it safe.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 2,
+      "sourceEnglish": "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Storm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha field, a nga hwala loosened soil a a bvisa.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 0,
+      "sourceEnglish": "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Inspect soil in a working area. ",
+            "status": "draft",
+            "text": "Sedzani mavu fhethu hune ha shumiwa. "
+          },
+          {
+            "sourceEnglish": "Record colour, structure, roots, moisture and any worm channels.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Ordinary inspection framing is an independently checked unreviewed machine draft; complete technical checklist held exact English."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "bodyIndex": 0,
+      "sourceEnglish": "Start one soil-building action from this module.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Thomani nyito nthihi ya soil-building u bva kha module iyi.",
+        "provenance": "Independently checked unreviewed machine draft; one action from this module preserved and technical soil-building retained English."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Chela misava na mati eka clear jar, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended much longer.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Lowu i rough learning exercise. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka accurate soil texture.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 0,
+      "sourceEnglish": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Thick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 2,
+      "sourceEnglish": "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compaction, poor drainage na ku lahleka ka organic matter can limit timitsu ni soil life.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 1,
+      "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Muhlovo lowu nga vonakaka wa pale kumbe few worms a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi moisture na season.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula remedy.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost i organic matter leyi broken down ehansi ka managed conditions.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 1,
+      "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Finished compost yi nga antswisa xivumbeko xa misava ni ku contribute nutrients.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 2,
+      "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Nkarhi wo lungheka wa hambana hi materials, moisture, air na temperature. Vito ra province kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlanganisa dry browns na fresh greens. Papalata thick, wet layers leti sivelaka air ku nghena.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 1,
+      "sourceEnglish": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Loko heap yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi turn.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Kambela moisture na air loko heap yi ri karhi yi cinca; recipe yin'we a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa materials.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hot centre ya heap a yi tiyisisi leswaku every part ya heap yi treated. Time, temperature and management all matter.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlayisani meat, dairy, diseased plants, pet waste na contaminated materials swi ri ehandle ka simple household system.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 2,
+      "sourceEnglish": "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "U nga teki leswaku home composting yi lovisa weed seed yin'wana ni yin'wana kumbe disease organism yin'wana ni yin'wana. Tirhisa recognised process laha sanitation yi lavekaka.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlayisani wattle seed pods ehandle ka compost heap. An ordinary heap may not make every seed non-viable.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 1,
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tirhisa clean, untreated materials ntsena. Bark breaks down slowly; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Kambela heap kutani u yi turn loko yi lava air yo tala kumbe mixing. Yi hlayise yi ri moist, ku nga ri waterlogged.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Funengetani misava leyi nga hava cover hi mulch leyi basekile, leyi faneleke, yo fana na straw, byanyi byo oma kumbe wood chips.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Keep it clear of trunks and stems. Kambelani moisture ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Cover crops ti nga sirhelela misava leyi nga kona between main crops. Ti hlawuleni hi ku ya hi weather ya laha, mati lama kumekaka ni next planting.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 1,
+      "sourceEnglish": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Swikombiso swa course swi katsa oats, lupins, sunn hemp na cowpea. Kambelani loko swi fanele ndhawu ya kwalaho mi nga si swi byala.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 2,
+      "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Legumes ti lava bacteria leti faneleke ni suitable growing conditions leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 0,
+      "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Worm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani bin ematshan'weni yo langutela fixed harvest date.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 1,
+      "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Liquid that drains naturally from a worm bin yi vuriwa leachate. A yi fani na prepared worm-casting tea.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 2,
+      "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Leachate yi nga va na harmful organisms kumbe substances. Do not use it on edible plants or assume that dilution makes it safe.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 0,
+      "sourceEnglish": "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Inspect soil in a working area. ",
+            "status": "draft",
+            "text": "Kambela misava endhawini leyi tirhisiwaka. "
+          },
+          {
+            "sourceEnglish": "Record colour, structure, roots, moisture and any worm channels.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Ordinary inspection framing is an independently checked unreviewed machine draft; complete technical checklist held exact English."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 0,
+      "sourceEnglish": "Start one soil-building action from this module.",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sungula goza rin'we ra soil-building ku suka eka modula lowu.",
+        "provenance": "Independently checked unreviewed machine draft; one action from this module preserved and technical soil-building retained English."
+      }
+    }
+  ],
+  "preservedAssetProof": [
+    {
+      "path": "public/course-decks/soil-health/st/slide-01.webp",
+      "sha256": "c8a1ecd8af4ec996de8baff9b33d10126032c5bdf511dae6ed8b17776f3755fc",
+      "baselineSha256": "c8a1ecd8af4ec996de8baff9b33d10126032c5bdf511dae6ed8b17776f3755fc",
+      "bytes": 292856
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-02.webp",
+      "sha256": "b498da74a840a6120c750d587da15e668dfa5406f4e9cab3660ccfb43e49ec3f",
+      "baselineSha256": "b498da74a840a6120c750d587da15e668dfa5406f4e9cab3660ccfb43e49ec3f",
+      "bytes": 203032
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-03.webp",
+      "sha256": "e02dd6969d85e9518e09438825b36404dedef0e9bfdf76c2420dbe1c5320c81d",
+      "baselineSha256": "e02dd6969d85e9518e09438825b36404dedef0e9bfdf76c2420dbe1c5320c81d",
+      "bytes": 203852
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-05.webp",
+      "sha256": "e6b758800347eb78f7663109f6c2ca37520fe2f6cb7af2c3af6fba82444a2c93",
+      "baselineSha256": "e6b758800347eb78f7663109f6c2ca37520fe2f6cb7af2c3af6fba82444a2c93",
+      "bytes": 494012
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-10.webp",
+      "sha256": "4733af1941c88e94ff29152975645c63f187f86b6e2428a60438cb2795c90d70",
+      "baselineSha256": "4733af1941c88e94ff29152975645c63f187f86b6e2428a60438cb2795c90d70",
+      "bytes": 182962
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-14.webp",
+      "sha256": "da2ad348a5f179d9cad3e1b173c7c6d20da9577695629b5a1bff128137da5950",
+      "baselineSha256": "da2ad348a5f179d9cad3e1b173c7c6d20da9577695629b5a1bff128137da5950",
+      "bytes": 199802
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-18.webp",
+      "sha256": "d53b6b6683ec22b14cbdf4a6211e55ecb7a91065e8636642958a19be2ea11305",
+      "baselineSha256": "d53b6b6683ec22b14cbdf4a6211e55ecb7a91065e8636642958a19be2ea11305",
+      "bytes": 495908
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-01.webp",
+      "sha256": "0feac139a5d6069592dca67d1e3b159aa0ffdc4a58b5870aef5c71002de8067c",
+      "baselineSha256": "0feac139a5d6069592dca67d1e3b159aa0ffdc4a58b5870aef5c71002de8067c",
+      "bytes": 294586
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-02.webp",
+      "sha256": "759789f447b4cf73548832b20a23c77532ed9fba5e7d74c829cb9607a9a1c464",
+      "baselineSha256": "759789f447b4cf73548832b20a23c77532ed9fba5e7d74c829cb9607a9a1c464",
+      "bytes": 204700
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-03.webp",
+      "sha256": "52be080e4c4f85fc4a5a2aa04b070f977593f083271ce5ededf71371b305026b",
+      "baselineSha256": "52be080e4c4f85fc4a5a2aa04b070f977593f083271ce5ededf71371b305026b",
+      "bytes": 206032
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-05.webp",
+      "sha256": "b47db4a412c289d14a5d5347459bcd62b6099c03879dc814500029609fa35f89",
+      "baselineSha256": "b47db4a412c289d14a5d5347459bcd62b6099c03879dc814500029609fa35f89",
+      "bytes": 504088
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-10.webp",
+      "sha256": "d4b5ec6481e436f97a05302114346b88efb09d51767b689aed7ea24c34ec544b",
+      "baselineSha256": "d4b5ec6481e436f97a05302114346b88efb09d51767b689aed7ea24c34ec544b",
+      "bytes": 153480
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-14.webp",
+      "sha256": "cc45b976bff1b147378ac43b49f1e06234c8f00aabce198616e6278cb7751535",
+      "baselineSha256": "cc45b976bff1b147378ac43b49f1e06234c8f00aabce198616e6278cb7751535",
+      "bytes": 202276
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-01.webp",
+      "sha256": "d66511853ab5374a7ff4bf30ccdc336b254229a1469b298b000f3969636bfbb0",
+      "baselineSha256": "d66511853ab5374a7ff4bf30ccdc336b254229a1469b298b000f3969636bfbb0",
+      "bytes": 301798
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-02.webp",
+      "sha256": "3c1d47777a37f8521f44320b3127973e60d947008785dfdbc8527e61d14797d0",
+      "baselineSha256": "3c1d47777a37f8521f44320b3127973e60d947008785dfdbc8527e61d14797d0",
+      "bytes": 215968
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-03.webp",
+      "sha256": "94ee5cf98b1f6b2a85f0ee098df3f8c1143bc9bd43d6fd90be425793a36092ab",
+      "baselineSha256": "94ee5cf98b1f6b2a85f0ee098df3f8c1143bc9bd43d6fd90be425793a36092ab",
+      "bytes": 211840
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-05.webp",
+      "sha256": "f75898c08245f784f9fe7f74562f4717513d4b9439452b9485a2190eb1cc24f4",
+      "baselineSha256": "f75898c08245f784f9fe7f74562f4717513d4b9439452b9485a2190eb1cc24f4",
+      "bytes": 505286
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-10.webp",
+      "sha256": "1c6edafc5a02004ad8d627bb61f2a1ccf34a05e40608eff6ede18266b7171574",
+      "baselineSha256": "1c6edafc5a02004ad8d627bb61f2a1ccf34a05e40608eff6ede18266b7171574",
+      "bytes": 183708
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-14.webp",
+      "sha256": "f7a484058d1dc2aa6e62386f4e5cbf7c2b8e15c32949e7307f9e2b8e4adb3f12",
+      "baselineSha256": "f7a484058d1dc2aa6e62386f4e5cbf7c2b8e15c32949e7307f9e2b8e4adb3f12",
+      "bytes": 203436
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-18.webp",
+      "sha256": "612c51f183fa27d1ee5ab9272b9af8f2c9c4b2fad72ad5f1869a407002d3b362",
+      "baselineSha256": "612c51f183fa27d1ee5ab9272b9af8f2c9c4b2fad72ad5f1869a407002d3b362",
+      "bytes": 507096
+    }
+  ]
+}
