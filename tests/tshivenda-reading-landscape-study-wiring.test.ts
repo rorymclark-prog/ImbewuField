@@ -44,8 +44,9 @@ test('Reading the Landscape keeps its Tshivenda draft source-paired and held ans
   assert.equal(draft.lessons[0].body.reviewStatus, 'machine-draft');
   assert.equal(heldWater.content.body, draft.lessons[0].body.tshivendaDraft,
     'source-paired observation drafts must reach the learner');
-  assert.ok(heldWater.content.body.includes('Musi zwo no tsireledzea nga murahu, walk your land.'),
-    'the paired draft still conditions the land walk on being safe afterward');
+  // The walking action is now translated; safety afterward and the farmer's own land remain binding.
+  assert.ok(heldWater.content.body.includes('Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu.'),
+    'the translated land walk must still be safe afterward and limited to the farmer’s own land');
   assert.ok(heldWater.content.body.includes('Before digging a swale, dam, or other structure, have the site assessed.'),
     'the technical assessment-before-digging safety sequence stays exact English');
   const heldAFrameAnswer = heldWater.content.quiz[0];

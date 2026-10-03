@@ -49,7 +49,8 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
     const originalParagraphs: string[] = source.body.split('\n\n');
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 3, 4, 6, 10, 14] : [3, 4, 5, 9];
+    // Checked household and community framing is now drafted; source-bound seed and advice holds stay exact.
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 13, 14, 15, 16] : [0, 3, 4, 5, 6, 7, 8, 9, 10];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);
@@ -64,14 +65,14 @@ test('Tshivenda Market lesson drafts retain exact English guidance around short 
         'select the source-paired end-of-season memory reminder');
       assert.equal(shownParagraphs[1], draftParagraphs[1],
         'show the paired sentence about recording uses and what reaches customers');
-      assert.equal(shownParagraphs[7], originalParagraphs[7],
-        'keep the phrase about practical questions in English until reviewed');
+      assert.equal(shownParagraphs[7], 'Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.',
+        'the ordinary practical-questions sentence is now a Tshivenda draft paired with its English source');
       assert.equal(shownParagraphs[4],
         'Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.',
         'keep unit labels and morogo exact while recording where each item went');
       assert.equal(shownParagraphs[5],
-        originalParagraphs[5],
-        'keep the compost destination exact until its meaning is confirmed');
+        'Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.',
+        'ordinary habit framing is drafted while the four exact destination categories remain English');
       assert.equal(shownParagraphs[10],
         'Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.',
         'state only which months the household buys food');
@@ -150,8 +151,20 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
         draftParagraphs[1].includes('Check local minimum-temperature records where available.') &&
         draftParagraphs[1].includes('If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.'),
         `${path}.body: retain the full-season comparison, record availability, no-record fallback, observations and adviser-before-placement condition`);
-      assert.equal(draftParagraphs[2], sourceParagraphs[2],
-        `${path}.body: keep frost diagnosis, longest-duration comparison and observed-cold-pocket direction exact`);
+      assert.ok(draftParagraphs[2].startsWith(
+        'Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.'),
+        `${path}.body: retain the frost definition, mist limitation and possibility of damage without visible ice exactly`);
+      assert.ok(draftParagraphs[2].includes('Ṱolani ice na u tshinyala ha zwimela'));
+      assert.ok(draftParagraphs[2].includes('fhethu hu re fhasi na u sendama ha mavu'),
+        `${path}.body: translate the low-ground versus slope comparison without reversing it`);
+      assert.ok(draftParagraphs[2].includes('minimum temperatures hune zwa konadzea'),
+        `${path}.body: preserve the minimum-temperature check and where-possible condition`);
+      assert.ok(draftParagraphs[2].includes('tshilapfusesa'),
+        `${path}.body: the field comparison still marks where cold or damage lasts longest`);
+      assert.ok(draftParagraphs[2].endsWith('Keep sensitive plants away from the cold pockets you observe.'),
+        `${path}.body: retain the exact sensitive-plant protection instruction`);
+      assert.ok(draftParagraphs[0].startsWith('Muya u nga tshinyadza zwimela kha smallholding.'), `${path}.body: preserve the neighboring wind paragraph`);
+      assert.ok(draftParagraphs[3].startsWith('For tomatoes troubled by late blight,'), `${path}.body: preserve the neighboring late-blight paragraph`);
       assert.ok(draftParagraphs[3].startsWith('For tomatoes troubled by late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome.'),
         `${path}.body: retain affected-tomato framing and can-help drying modality`);
       assert.ok(draftParagraphs[3].includes('Late blight can still spread during prolonged cool, damp weather.') &&
@@ -230,8 +243,12 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
   assert.ok(l1DraftParagraphs[0].startsWith(
     'Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho.'),
   'keep the two existing Tshivenda opening sentences unchanged');
-  assert.ok(l1DraftParagraphs[0].includes('walk your land') && l1DraftParagraphs[0].includes('your property'),
-    'keep the land walk and property boundary specific to the farmer’s holding');
+  assert.ok(l1DraftParagraphs[0].includes('Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu.'),
+    'translate the ordinary land-walk wording without broadening the holding to a country');
+  assert.ok(l1DraftParagraphs[0].includes('Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho.'),
+    'preserve the safe-place observation during heavy rain');
+  assert.ok(l1DraftParagraphs[0].includes('your property') && l1DraftParagraphs[0].includes('nḓila yo tsireledzeaho'),
+    'retain the property boundary and safe excess-water route conditions');
   assert.ok(l1DraftParagraphs[1].includes('u mark points at the same height and trace a contour line'),
     'the A-frame action must mark equal-height points and trace a contour');
   assert.ok(l1DraftParagraphs[1].includes('Its marks are an observation, not a design or approval for earthworks.'),
@@ -273,7 +290,7 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
 
   const waterDraft = draft.lessons[0].body.tshivendaDraft.split('\n\n');
   assert.equal(waterDraft[1], l1DraftParagraphs[1], 'show the source-paired mixed Tshivenda A-frame candidate with its exact safeguards');
-  assert.ok(waterDraft[0].includes('Musi zwo no tsireledzea nga murahu, walk your land.'),
+  assert.ok(waterDraft[0].includes('Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu.'),
     'preserve the safe-afterward condition and land scope');
   assert.ok(waterDraft[0].includes('rills') && waterDraft[0].includes('(fans out)') &&
     waterDraft[0].includes('(ponds)') && waterDraft[0].includes('your property'),

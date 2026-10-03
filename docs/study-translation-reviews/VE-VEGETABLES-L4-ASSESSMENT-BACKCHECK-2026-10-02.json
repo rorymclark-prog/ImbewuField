@@ -1,0 +1,136 @@
+{
+  "packetId": "imbewu-ve-vegetables-l4-assessment-backcheck-20261002",
+  "status": "independent semantic backcheck; unreviewed Tshivenda candidates only",
+  "language": "Tshivenda (ve)",
+  "sourceRevisionVerified": "3c82b61f70ddd86ae2d0521b9fa9174080e5184d",
+  "lessonId": "vegetables-staples-l4",
+  "canonicalCheck": "All 17 sourceEnglish values match current canonical lesson; correct indices are [1,0].",
+  "findings": [
+    {
+      "fieldPath": "title",
+      "sourceEnglish": "Observe and Manage Pests and Disease",
+      "candidate": "Sedzani ni lange Pests na Disease.",
+      "candidateStatus": "machine-draft",
+      "finding": "Observe/manage framing is translated; pests and disease remain exact technical terms."
+    },
+    {
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Identify the cause before treating damage",
+      "candidate": "Wanani tshiitisi tsha damage ni sa athu treating.",
+      "candidateStatus": "machine-draft",
+      "finding": "Find the cause before treatment is preserved."
+    },
+    {
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "Check water, roots, nutrition and beneficial insects",
+      "candidate": "Ṱolani maḓi, roots, nutrition na beneficial insects.",
+      "candidateStatus": "machine-draft",
+      "finding": "Water, roots, nutrition and beneficial insects remain the full checklist."
+    },
+    {
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Use suitable physical or crop-care measures and monitor results",
+      "candidate": "Shumisani physical kana crop-care measures zwo teaho ni monitor results.",
+      "candidateStatus": "machine-draft",
+      "finding": "Suitable physical or crop-care measures and monitoring remain explicit; no treatment is prescribed."
+    },
+    {
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "candidate": "Arali treatment i tshi ṱoḓea, use a registered product for the crop and pest and follow the label.",
+      "candidateStatus": "machine-draft",
+      "finding": "If-needed condition is localized; registered product for crop and pest and label instruction remain exact English."
+    },
+    {
+      "fieldPath": "quiz[0].question",
+      "sourceEnglish": "If a pest problem needs a treatment product, what should guide its use?",
+      "candidate": "Arali pest problem i tshi ṱoḓa treatment product, ndi mini tshine tsha fanela u langa u shumiswa hayo?",
+      "candidateStatus": "machine-draft",
+      "finding": "Conditional pest-problem/needed-product context and the question about what guides use are preserved."
+    },
+    {
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "An improvised stronger mixture",
+      "candidate": "An improvised stronger mixture",
+      "candidateStatus": "hold",
+      "finding": "Improvised stronger-mixture distractor remains exact."
+    },
+    {
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "A product registered for the crop and pest, used according to its label",
+      "candidate": "A product registered for the crop and pest, used according to its label",
+      "candidateStatus": "hold",
+      "finding": "Correct registered-product/crop+pest/label option remains exact."
+    },
+    {
+      "fieldPath": "quiz[0].options[2]",
+      "sourceEnglish": "Any product described as natural",
+      "candidate": "Product iṅwe na iṅwe ine ya ṱaluswa sa natural.",
+      "candidateStatus": "machine-draft",
+      "finding": "“Any product described as natural” distractor retains any-product scope and descriptor."
+    },
+    {
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "A neighbour’s dose for a different crop",
+      "candidate": "A neighbour’s dose for a different crop",
+      "candidateStatus": "hold",
+      "finding": "Neighbour dose and different crop remain exact."
+    },
+    {
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "candidate": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "candidateStatus": "hold",
+      "finding": "Retains crop/pest/dose/protection/harvest waiting safeguards and rejects natural origin as proof of safety/suitability."
+    },
+    {
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+      "candidate": "Musi maṱari a brassica a murimi a tshi khou vha yellow, u sa athu humbulela uri ndi pests, u fanela u thoma u ṱola mini?",
+      "candidateStatus": "machine-draft",
+      "finding": "The yellowing scenario, before-assuming-pests condition, and what-to-check-first question remain. Tshivenda uses a generic singular address without a gender distinction; question mode is preserved."
+    },
+    {
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+      "candidate": "Arali hu vhukuma thaidzo ya soil nutrient kana watering.",
+      "candidateStatus": "machine-draft",
+      "finding": "“Actually” is retained and soil-nutrient vs watering alternatives remain."
+    },
+    {
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Whether the moon phase is right for treatment",
+      "candidate": "Whether the moon phase is right for treatment",
+      "candidateStatus": "hold",
+      "finding": "Moon-phase distractor remains exact."
+    },
+    {
+      "fieldPath": "quiz[1].options[2]",
+      "sourceEnglish": "Whether her neighbour has the same problem",
+      "candidate": "Arali muhura wawe a tshi na thaidzo i fanaho.",
+      "candidateStatus": "machine-draft",
+      "finding": "Neighbour and same-problem relation preserved."
+    },
+    {
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "Whether it's aphids specifically",
+      "candidate": "Whether it's aphids specifically",
+      "candidateStatus": "hold",
+      "finding": "Root repair normalizes candidate to exact source and hold; aphids-specific identification remains exact."
+    },
+    {
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "candidate": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "candidateStatus": "hold",
+      "finding": "Preserves several-cause warning, different fix for soil/watering vs pest, and checking before wasted treatment."
+    }
+  ],
+  "answerIndices": [
+    1,
+    0
+  ],
+  "overall": "Treatment and diagnosis safeguards are preserved. Aphids-specific option is now an exact-source hold. No fluent-speaker approval is claimed.",
+  "repositoryEditsMade": false,
+  "fluencyApprovalClaim": false
+}

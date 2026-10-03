@@ -317,8 +317,22 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
   for (const index of [0, 4, 9]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
     'the screened customer, box and variable-supply concepts reach the learner');
-  for (const index of [1, 2, 3, 5, 6, 7, 8, 10, 11]) assert.equal(draftParagraphs[index], sourceParagraphs[index],
-    'price, legal, income and uncertain reliability advice stays exact English');
+  // New ordinary framing was independently checked; unresolved comparative and reliability claims still hold.
+  for (const index of [1, 2, 3, 5, 7, 8, 10, 11]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index]);
+  assert.ok(draftParagraphs[3].startsWith('Direct selling can retain more of the sale price, empa ho boetse ho hloka nako,'),
+    'the bounded sale-price claim remains English while ordinary time and customer-care wording is drafted');
+  assert.ok(draftParagraphs[6].startsWith('Qala ka what you can reliably supply'),
+    'the reliability criterion stays exact English inside its checked Sesotho framing');
+  assert.ok(draftParagraphs[2].startsWith('Hlahloba market rules le ditlhoko tsa lehae'));
+  assert.ok(draftParagraphs[2].endsWith('ha ho na rules kapa costs.'),
+    'the Sesotho framing keeps the caveat that informal stalls may still have rules and costs');
+  assert.ok(draftParagraphs[5].endsWith('Regular orders help planning only when customers and growers can keep the agreement.'));
+  assert.ok(draftParagraphs[7].includes('ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes'));
+  assert.ok(draftParagraphs[8].startsWith('Garden area or customer count alone does not predict income.'));
+  assert.ok(draftParagraphs[10].includes('surplus eo o nang le yona'));
+  assert.ok(draftParagraphs[11].startsWith('Hlalosa ditsela tseo o lemang ka tsona ka botshepehi.'));
+  assert.ok(draftParagraphs[11].includes('Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.'),
+    'the certification and buyer-claim check remains present in the Sesotho framing');
   assert.equal(lesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft');
   assert.equal(lesson.infographicAlt?.sesothoDraft,
@@ -354,4 +368,47 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
   const staleAltPresentation = resolveLearnerLessonPresentation(changedAltSource, 'st');
   assert.equal(staleAltPresentation.status, 'english-fallback');
   assert.equal(staleAltPresentation.content.infographicAlt, changedAltSource.infographicAlt);
+});
+
+
+test('Sesotho bed-body drafts keep reachability, no wet clay and soil-specific preparation while withdrawing on source drift', async () => {
+  const { SESOTHO_VEGETABLES_STAPLES_DRAFT } = await import('../lib/course-translation-drafts-st-vegetables-staples.ts');
+  const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
+  const draft = SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons.find(lesson => lesson.id === source.id)!;
+  const english = source.body.split('\n\n');
+  const paragraphs = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(paragraphs.length, english.length);
+  assert.equal(paragraphs.length, 20);
+  assert.match(paragraphs[1], /narrow enough to reach into from both sides/);
+  assert.match(paragraphs[2], /One metre to one point two metres wide/);
+  assert.match(paragraphs[2], /centre from either path, and your feet never touch the growing area/);
+  for (const index of [7, 12, 17]) assert.equal(paragraphs[index], english[index], 'hold wet-clay/adviser, establishment grouping and soil-specific no-dig conditions');
+  assert.match(paragraphs[11], /They do better sown straight where they'll grow\. Beans, carrots and maize belong in that group/);
+  assert.match(paragraphs[14], /mark the bed out\.$/, 'mark-out means the bed boundary, not just a mark on it');
+  assert.match(paragraphs[15], /Bophara ba One point two metres\. Bolelele ba Three metres/);
+  assert.match(paragraphs[16], /mark both access paths/);
+  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
+  const shown = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, draft.body.sesothoDraft);
+  assert.equal(resolveLearnerLessonPresentation({ ...source, body: source.body + ' changed soil instruction' }, 'st').status, 'english-fallback');
+});
+
+test('Sesotho pest step framing preserves diagnosis before action and treatment safeguards with source drift fallback', async () => {
+  const { SESOTHO_VEGETABLES_STAPLES_DRAFT } = await import('../lib/course-translation-drafts-st-vegetables-staples.ts');
+  const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons[3];
+  const draft = SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons[3];
+  assert.equal(draft.body.sourceEnglish, source.body);
+  const paragraphs = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(paragraphs.length, source.body.split('\n\n').length);
+  assert.match(paragraphs[2], /pele o phekola eng kapa eng.*system yohle/);
+  assert.match(paragraphs[5], /mehato e mene, ka tatellano/);
+  assert.match(paragraphs[9], /Ke ka morao feela/);
+  assert.ok(paragraphs[9].includes('lightest thing that works'));
+  assert.ok(paragraphs[9].includes('may help. Check that the action suits the problem and monitor the result.'));
+  assert.equal(paragraphs[10], source.body.split('\n\n')[10]);
+  assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
+  assert.equal(resolveLearnerLessonPresentation(source, 'st').content.body, draft.body.sesothoDraft);
+  assert.equal(resolveLearnerLessonPresentation({ ...source, body: source.body + ' Changed treatment condition.' }, 'st').status, 'english-fallback');
 });

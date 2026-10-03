@@ -42,6 +42,122 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '3 October 2026', sha: 'd9c227f3', changes: [
+    'Community food lessons add marked regional drafts beside the exact English source.',
+    'Seed safeguards and difficult handling or business terms stay in English.',
+  ], tour: [
+    { title: 'Review community food drafts',
+      where: 'Study → Market Gardening and Community → Lesson 3',
+      detail: 'Read Sesotho, Tshivenda or Xitsonga drafts beside English.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '9e9ec86a', changes: [
+    'Market lessons add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Silent Soil slides add regional wording beside the unchanged English source.',
+    'Saved Soil slides refresh without removing your saved narration or other slides.',
+  ], tour: [
+    { title: 'Review market and soil drafts',
+      where: 'Study → Market Gardening and Soil Health',
+      detail: 'Read the marked drafts beside English; narration remains optional.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: 'fe3bff8f', changes: [
+    'Reading lessons add marked Tshivenda and Xitsonga drafts beside English.',
+    'Precise frost, soil and safe-site conditions stay in exact English.',
+  ], tour: [
+    { title: 'Review landscape observations',
+      where: 'Study → Reading the Landscape',
+      detail: 'Read regional observations beside the unchanged English source.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '4143b9b9', changes: [
+    'Printed calendars keep food forest and animal products visible when dates are unknown.',
+    'Plants, hives and coops have named rows; hidden sections explain how to show them.',
+  ], tour: [
+    { title: 'Find fruit and animal products', where: 'Production plan → Download the plan → Picture calendar',
+      href: '/facilitator/crops',
+      detail: 'Read Food forest and Animal products after the vegetable rows, including sources with months to confirm.' },
+  ] },
+  { when: '3 October 2026', sha: '59edf369', changes: [
+    'Vegetable quizzes add marked Sesotho and Xitsonga drafts beside exact English.',
+    'Tshivenda household food-planning paragraphs add marked drafts beside English.',
+  ], tour: [
+    { title: 'Review vegetable drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read regional wording and answer quizzes beside the unchanged English source.' },
+  ] },
+  { when: '2 October 2026', sha: 'ce623f36', changes: [
+    'Silent regional decks now offer slide-only downloads before optional English audio.',
+    'Five Xitsonga staple paragraphs add marked drafts beside exact English.',
+  ], tour: [
+    { title: 'Save silent slides', where: 'Study → Vegetables → Download',
+      href: '/student',
+      detail: 'Sesotho downloads start with slides; English narration remains an explicit choice.' },
+  ] },
+  { when: '2 October 2026', sha: '2339d285', changes: [
+    'Sesotho staple lessons add marked body drafts beside exact English.',
+    'Unclear wording and precise crop, seed and water conditions stay English for review.',
+  ], tour: [
+    { title: 'Review staple lesson drafts', where: 'Study → Vegetables → Lesson 3',
+      href: '/student',
+      detail: 'Read Sesotho household food-plan wording beside the exact English source.' },
+  ] },
+  { when: '2 October 2026', sha: '78f8aefd', changes: [
+    'Xitsonga market lessons add marked body drafts beside exact English.',
+    'Precise market, supply and income conditions remain English for review.',
+  ], tour: [
+    { title: 'Review market body drafts', where: 'Study → Market Gardening → Lesson 2',
+      href: '/student',
+      detail: 'Read ordinary Xitsonga framing beside the unchanged English source.' },
+  ] },
+  { when: '2 October 2026', sha: 'e7f8a847', changes: [
+    'Xitsonga succession lessons add marked body drafts beside exact English.',
+    'Bed and sowing questions add draft wording; precise farming conditions stay English.',
+  ], tour: [
+    { title: 'Review vegetable drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 1 and 2 with exact English sources and unreviewed draft labels.' },
+  ] },
+  { when: '2 October 2026', sha: 'd6f77b1e', changes: [
+    'Xitsonga pest lessons add marked step-by-step drafts beside exact English.',
+    'Sesotho market lessons add draft framing; precise business conditions stay English.',
+  ], tour: [
+    { title: 'Review regional lesson drafts', where: 'Study → Vegetables and Market Gardening',
+      href: '/student',
+      detail: 'Read Xitsonga lesson 4 and Sesotho Market lesson 2 beside their English source.' },
+  ] },
+  { when: '2 October 2026', sha: '832ef38a', changes: [
+    'Sesotho pest lessons add step-by-step draft framing beside exact English.',
+    'Xitsonga bed preparation adds a marked body draft; precise planting stays English.',
+  ], tour: [
+    { title: 'Review regional vegetable bodies', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read Sesotho lesson 4 and Xitsonga lesson 1 beside their exact English source.' },
+  ] },
+  { when: '2 October 2026', sha: '96641048', changes: [
+    'Sesotho bed preparation adds marked draft paragraphs beside exact English.',
+    'Tshivenda staple lessons add resilience drafts; precise crop advice stays English.',
+  ], tour: [
+    { title: 'Review regional vegetable bodies', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read Sesotho lesson 1 and Tshivenda lesson 3 beside their exact English source.' },
+  ] },
+  { when: '2 October 2026', sha: 'a5f75077', changes: [
+    'Tshivenda Vegetables lessons 1, 2 and 4 add marked quiz and key-point drafts.',
+    'Precise planting, nitrogen and treatment wording stays English beside the drafts.',
+  ], tour: [
+    { title: 'Review vegetable quiz drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 1, 2 and 4, answer their quizzes, and compare the exact English.' },
+  ] },
+  { when: '2 October 2026', sha: 'd775a08f', changes: [
+    'Tshivenda succession and pest lessons add marked body drafts beside English.',
+    'Crop timing, nitrogen and treatment cautions retain precise English wording.',
+  ], tour: [
+    { title: 'Review succession and pest drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 2 and 4 beside English. Quizzes and silent media stay unchanged.' },
+  ] },
   { when: '2 October 2026', sha: '0895bf1b', changes: [
     'Tshivenda bed preparation adds marked draft paragraphs beside exact English.',
     'Precise soil, sizing and cultivation wording stays English for facilitator review.',

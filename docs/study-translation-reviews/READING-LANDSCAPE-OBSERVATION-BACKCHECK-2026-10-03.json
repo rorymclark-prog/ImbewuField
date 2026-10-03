@@ -1,0 +1,51 @@
+{
+  "packetId": "READING-LANDSCAPE-STUDY-NEXT-BATCH-BACKCHECK-2026-10-03",
+  "checkedAt": "2026-10-03",
+  "currentHead": "e0a87b57731eb7bfbca9b08cfa01dc4fd46c680d",
+  "packetSourceRevision": "0661ce4d38ed77099c3db6ecce6ea5ecb8312d7e",
+  "sourceRevisionNote": "Both selected canonical paragraphs and their lesson source pairs were rechecked at current HEAD e0a87b57731eb7bfbca9b08cfa01dc4fd46c680d immediately before draft-only replacement.",
+  "decision": "accepted-with-review-flags",
+  "entries": [
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l4",
+      "paragraphIndex": 1,
+      "sourceEnglish": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "currentRegistryParagraph": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "candidate": "Tsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun'hwaka yi tsakama hi tin'hweti leti omeke, na laha ku nga na ku mila ko tlhuma ka khakibos kumbe blackjack. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Kambela misava u nga si teka xiboho hi leswi ndhawu leyi yi vulaka swona eka design ya wena.",
+      "sourceAndRegistryMatch": true,
+      "paragraphCount": 3,
+      "semanticBackcheck": {
+        "frostDampSpecies": "The candidate retains the longest-frost comparison, damp smell during dry months, thick growth, and the exact names khakibos and blackjack.",
+        "diagnosticLimitation": "The entire exact English sentence that the plants may grow in disturbed places but their presence alone does not show compaction is preserved.",
+        "designDecision": "Checking soil remains before deciding what the patch means for the design.",
+        "repairs": [],
+        "uncertainty": [
+          "Local language review should confirm the ordinary wording for smelling damp, dense growth, and longest duration."
+        ]
+      }
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "sourceEnglish": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "currentRegistryParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "candidate": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets you observe.",
+      "sourceAndRegistryMatch": true,
+      "paragraphCount": 4,
+      "semanticBackcheck": {
+        "frostIceDiagnostic": "The ice definition, mist-not-proof clause, and possible damage without visible ice remain exact English.",
+        "fieldObservation": "The mixed Tshivenda asks readers to look for ice and plant damage; compare low ground with slopes; check minimum temperatures where possible.",
+        "duration": "The translated mark instruction retains cold-or-damage locations and a longest-duration comparison.",
+        "safety": "The instruction to keep sensitive plants away from observed cold pockets remains exact English.",
+        "repairs": [],
+        "uncertainty": [
+          "Local language review should confirm “u sendama ha mavu” means slopes in this comparison and “tshilapfusesa” retains the superlative."
+        ]
+      }
+    }
+  ],
+  "scope": "Read-only independent semantic and exact-source backcheck. Candidates remain unreviewed machine drafts; no fluency approval.",
+  "repositoryEdits": false
+}\n

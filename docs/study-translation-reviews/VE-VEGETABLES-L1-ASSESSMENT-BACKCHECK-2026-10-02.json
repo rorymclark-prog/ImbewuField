@@ -1,0 +1,136 @@
+{
+  "packetId": "imbewu-ve-vegetables-l1-assessment-backcheck-20261002",
+  "status": "independent semantic backcheck; unreviewed Tshivenda candidates only",
+  "language": "Tshivenda (ve)",
+  "sourceRevisionVerified": "3c82b61f70ddd86ae2d0521b9fa9174080e5184d",
+  "lessonId": "vegetables-staples-l1",
+  "canonicalCheck": "All 17 exactSourceEnglish values match current canonical lesson; correct indices are [1,2].",
+  "findings": [
+    {
+      "fieldPath": "lessons[0].title",
+      "sourceEnglish": "Preparing and Planting Your Beds",
+      "candidate": "U Lugisela na u Ṱavha Beds dzaṋu",
+      "candidateStatus": "machine-draft candidate",
+      "finding": "The Tshivenda title preserves prepare/plant and addresses the learner’s beds; “Beds” remains an English garden term."
+    },
+    {
+      "fieldPath": "lessons[0].keyPoints[0]",
+      "sourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+      "candidate": "Beds dzaṋu dzi vhe 1-1.2m wide so you never need to step on the growing area.",
+      "candidateStatus": "machine-draft candidate",
+      "finding": "The repaired candidate retains the exact 1-1.2m value and “so you never need to step on the growing area.” It no longer adds reach from all sides."
+    },
+    {
+      "fieldPath": "lessons[0].keyPoints[1]",
+      "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "candidate": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "candidateStatus": "exact-English hold",
+      "finding": "Correctly preserves the compaction/drainage assessment before deeper cultivation and do-not-work-wet-clay prohibition."
+    },
+    {
+      "fieldPath": "lessons[0].keyPoints[2]",
+      "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "candidate": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "candidateStatus": "exact-English hold",
+      "finding": "Correctly preserves the transplant/head-start versus direct-seed/root-disturbance distinction."
+    },
+    {
+      "fieldPath": "lessons[0].keyPoints[3]",
+      "sourceEnglish": "Crowded plants underperform — space generously for your local climate",
+      "candidate": "Crowded plants underperform — space generously for your local climate",
+      "candidateStatus": "exact-English hold",
+      "finding": "Root repair avoids weakening “underperform” to “may not grow well” and “generously” to merely “enough.”"
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].question",
+      "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+      "candidate": "Ndi ngani ni tshi vhulunga vegetable bed i tshi vha 1-1.2m wide, nṱhani ha u i ita wider?",
+      "candidateStatus": "machine-draft candidate",
+      "finding": "Keeps 1-1.2m and asks why rather than wider; width comparison is explicit."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].options[0]",
+      "sourceEnglish": "Wider beds get too much sun",
+      "candidate": "Wider beds get too much sun",
+      "candidateStatus": "exact-English hold",
+      "finding": "Root repair avoids possible “larger” vs “wider” ambiguity in the distractor."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].options[1]",
+      "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "candidate": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "candidateStatus": "exact-English hold",
+      "finding": "Correct answer retains reach from either side, no stepping on growing area, and compaction reason."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].options[2]",
+      "sourceEnglish": "Narrow beds drain better in all conditions",
+      "candidate": "Narrow beds drain better in all conditions",
+      "candidateStatus": "exact-English hold",
+      "finding": "Preserves the absolute incorrect claim “in all conditions.”"
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].options[3]",
+      "sourceEnglish": "It's a fixed rule with no practical reason",
+      "candidate": "Ndi mulayo wo vhewaho une wa si vha na tshiitisi tsha u shumisa.",
+      "candidateStatus": "machine-draft candidate",
+      "finding": "Preserves the distractor that the width is a fixed rule without a practical reason."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[0].rationale",
+      "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "candidate": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "candidateStatus": "exact-English hold",
+      "finding": "Retains the compaction/root-damage mechanism, both-side reach and never-step consequence."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].question",
+      "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "candidate": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "candidateStatus": "exact-English hold",
+      "finding": "Root repair preserves the superlative “best suited” and the direct-seed vs transplant comparison."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].options[0]",
+      "sourceEnglish": "Tomatoes, which need an early start",
+      "candidate": "Tomatoes, which need an early start",
+      "candidateStatus": "exact-English hold",
+      "finding": "Tomatoes and early-start claim remain exact."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].options[1]",
+      "sourceEnglish": "Brassicas, which need protection while small",
+      "candidate": "Brassicas, which need protection while small",
+      "candidateStatus": "exact-English hold",
+      "finding": "Brassicas and small-plant protection claim remain exact."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].options[2]",
+      "sourceEnglish": "Beans, which resent root disturbance",
+      "candidate": "Beans, which resent root disturbance",
+      "candidateStatus": "exact-English hold",
+      "finding": "Beans and root-disturbance criterion remain exact."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].options[3]",
+      "sourceEnglish": "Peppers, which are slow to germinate",
+      "candidate": "Peppers, which are slow to germinate",
+      "candidateStatus": "exact-English hold",
+      "finding": "Peppers and slow-germination claim remain exact."
+    },
+    {
+      "fieldPath": "lessons[0].quiz[1].rationale",
+      "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "candidate": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "candidateStatus": "exact-English hold",
+      "finding": "Preserves the sensitive-rooted crop group, transplant shock, and direct-sowing conclusion including “entirely.”"
+    }
+  ],
+  "answerIndices": [
+    1,
+    2
+  ],
+  "overall": "Accepted or retained as English holds after the root repairs described field-by-field. No fluent-speaker approval is claimed.",
+  "repositoryEditsMade": false,
+  "fluencyApprovalClaim": false
+}

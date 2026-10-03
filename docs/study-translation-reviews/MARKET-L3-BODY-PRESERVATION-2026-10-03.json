@@ -1,0 +1,57 @@
+{
+  "base": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "results": [
+    {
+      "language": "st",
+      "changedParagraphIndices": [
+        0,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "allNonTargetFieldsUnchanged": true,
+      "exactCanonicalSource": true,
+      "paragraphCount": 12,
+      "quizCorrectIndices": [
+        1,
+        2
+      ]
+    },
+    {
+      "language": "ve",
+      "changedParagraphIndices": [
+        0,
+        6,
+        7,
+        8,
+        10
+      ],
+      "allNonTargetFieldsUnchanged": true,
+      "exactCanonicalSource": true,
+      "paragraphCount": 12,
+      "quizCorrectIndices": [
+        1,
+        2
+      ]
+    },
+    {
+      "language": "ts",
+      "changedParagraphIndices": [
+        0,
+        7,
+        8,
+        10
+      ],
+      "allNonTargetFieldsUnchanged": true,
+      "exactCanonicalSource": true,
+      "paragraphCount": 12,
+      "quizCorrectIndices": [
+        1,
+        2
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
-import { appGuideOfflinePack, offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
+import { appGuideOfflinePack, offlinePack, downloadableModules, wholeCourseBytes, formatPackSize, defaultOfflinePackVariant, regionalPackNeedsNarrationChoice } from '@/lib/offline-pack';
 import { APP_GUIDES, appGuideNarrationSections } from '@/lib/course-app-guides';
 import { COURSE_DECKS, animationUrls, slideImageFor } from '@/lib/course-deck';
 import { COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
@@ -12,6 +12,24 @@ import { COURSE_MODULES } from '@/lib/course-modules';
 import { FINANCE_PATHWAY_MEDIA_URLS, STUDIES_PATHWAY_PACKS, STUDIES_PATHWAY_PAGES } from '@/lib/studies-pathway-pack';
 
 const PUBLIC = join(process.cwd(), 'public');
+
+test('silent regional downloads default to slides while Sesotho Introduction keeps its own recording', () => {
+  assert.equal(defaultOfflinePackVariant(['intro-permaculture'], 'st'), 'full');
+  assert.equal(regionalPackNeedsNarrationChoice(['intro-permaculture'], 'st'), false);
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(defaultOfflinePackVariant(['vegetables-staples'], lang), 'slides');
+    const silent = offlinePack('vegetables-staples', lang, 'standard', defaultOfflinePackVariant(['vegetables-staples'], lang));
+    assert.ok(silent.entries.length > 0);
+    assert.ok(silent.entries.every(entry => entry.kind !== 'audio' && entry.kind !== 'animation'));
+  }
+  assert.equal(defaultOfflinePackVariant(['intro-permaculture', 'vegetables-staples'], 'st'), 'slides');
+  assert.equal(defaultOfflinePackVariant(['vegetables-staples'], 'zu'), 'full');
+  const optional = offlinePack('vegetables-staples', 'st', 'standard', 'full');
+  assert.ok(optional.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/en/')));
+  const intro = offlinePack('intro-permaculture', 'st', 'standard', 'full');
+  assert.equal(intro.entries.filter(entry => entry.kind === 'audio' && entry.url.includes('/st/')).length, 22);
+  assert.ok(!intro.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/en/')));
+});
 
 test('public teaching-preview packs name every static reading route and the finance materials it links', () => {
   const finance = STUDIES_PATHWAY_PACKS.finance;

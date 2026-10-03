@@ -25,10 +25,12 @@
             "text": "Mobu ha se feela sebaka seo u hatang ho sona."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ke sebaka se phelang se fepang crops, se tshwarang metsi, mme se jereng kotulo ya hao."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mojulung ona, ithute ho bala soil, ho etsa safe compost, ho sireletsa bare ground, le ho sebedisa cover crops le worm farms."
           }
         ]
       }
@@ -55,7 +57,8 @@
             "text": "Boemo ba mobu bo ama metso, metsi le kotulo."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Repeated bare ground, compaction and loss of organic matter can damage it. Mmala feela ha o bolele pale yohle."
           },
           {
             "status": "draft",
@@ -170,7 +173,8 @@
             "text": "Sheba mehlala ena e mmedi ya mobu ka hloko."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pele, sheba soil structure. Ha o le tshimong, utlwa hore karolo ya mobu o mongobo e arohana jwang."
           },
           {
             "status": "draft",
@@ -608,7 +612,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bapisa sebaka se seng, mme o ele hloko boemo ba lehodimo ba morao tjena le management."
           },
           {
             "status": "english-hold"

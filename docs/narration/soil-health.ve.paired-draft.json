@@ -35,10 +35,12 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi fhethu hu tshilaho hune ha fha crops zwiḽiwa, ha fara maḓi, nahone ha hwala harvest yaṋu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kha module iyi, gudani u vhala soil, u ita safe compost, u tsireledza bare ground, na u shumisa cover crops na worm farms."
           }
         ]
       }
@@ -66,7 +68,8 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Repeated bare ground, compaction and loss of organic matter can damage it. Muvhala u woṱhe a u sumbedzi zwoṱhe."
           },
           {
             "status": "draft",
@@ -181,7 +184,8 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsha u thoma, lavhelesani soil structure. Musi ni tshi vha tsimuni, pfelelani uri tshipiḓa tsha mavu o tsakamaho tshi kwashea hani."
           },
           {
             "status": "draft",
@@ -603,7 +607,8 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhambedzani na uṅwe fhethu, ni ṱhogomele weather ya zwinozwino na management."
           },
           {
             "status": "english-hold"

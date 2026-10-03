@@ -7,7 +7,7 @@ import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-draf
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
-test('Sesotho Market L3 pairs tool sharing while keeping seed and return guidance exact English', () => {
+test('Sesotho Market L3 drafts neighbor, produce and selling framing while keeping seed procedures exact English', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(sourceModule);
   const source = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l3');
@@ -27,14 +27,23 @@ test('Sesotho Market L3 pairs tool sharing while keeping seed and return guidanc
   const sourceParagraphs = source.body.split('\n\n');
   const draftParagraphs = draft.body.sesothoDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  for (const index of [0, 1, 2, 6, 7, 8, 9, 10, 11]) {
+  for (const index of [1, 2]) {
     assert.equal(draftParagraphs[index], sourceParagraphs[index],
-      `paragraph ${index + 1}: seed, postharvest, selling and technical guidance stays exact English`);
+      `paragraph ${index + 1}: crop-specific seed procedures and permission checks stay exact English`);
   }
-  for (const index of [3, 4, 5]) {
+  for (const index of [0, 6, 7, 8, 9, 10]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
-      `paragraph ${index + 1}: the source-paired tool-sharing concept is visible as a draft`);
+      `paragraph ${index + 1}: checked ordinary neighbor, produce or selling framing is drafted`);
   }
+  assert.deepEqual(draftParagraphs.slice(3, 6), [
+    'Ho arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.',
+    'Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.',
+    'Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.',
+  ], 'the previously reviewed tool-sharing paragraphs remain byte-for-byte unchanged');
+  assert.ok(draftParagraphs[11].startsWith('Seek qualified advice for unfamiliar disease or technical problems.'),
+    'the qualified-advice requirement remains an exact English sentence');
+  assert.ok(draftParagraphs[11].includes('di ka sebetsa mmoho'),
+    'the shared-experience sentence keeps the source can-work-together modality');
 
   assert.deepEqual(draft.keyPoints.map(pair => pair.sourceEnglish), source.keyPoints);
   assert.deepEqual(draft.keyPoints.map(pair => pair.reviewStatus), ['hold', 'machine-draft', 'hold', 'hold']);
@@ -77,9 +86,13 @@ test('Sesotho Market L3 pairs tool sharing while keeping seed and return guidanc
   const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
   assert.equal(stalePresentation.status, 'english-fallback', 'source edits withdraw stale paired fields');
   assert.equal(stalePresentation.content.title, changedSource.title);
+  const changedBody = { ...source, body: `${source.body}\n\nNew market condition.` };
+  const staleBodyPresentation = resolveLearnerLessonPresentation(changedBody, 'st');
+  assert.equal(staleBodyPresentation.status, 'english-fallback', 'body source drift withdraws the whole stale lesson draft');
+  assert.equal(staleBodyPresentation.content.body, changedBody.body);
 });
 
-test('regional Market L3 tool-sharing drafts do not release held seed, selling or technical advice', () => {
+test('regional Market L3 drafts ordinary sharing and produce framing while keeping seed safeguards exact', () => {
   const market = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(market);
   const source = market.lessons.find(lesson => lesson.id === 'market-community-l3');
@@ -93,17 +106,48 @@ test('regional Market L3 tool-sharing drafts do not release held seed, selling o
     ['ve', veDraft.body.sourceEnglish, veDraft.body.reviewStatus, veDraft.body.tshivendaDraft],
     ['ts', tsDraft.body.sourceEnglish, tsDraft.body.reviewStatus, tsDraft.body.xitsongaDraft],
   ] as const) {
-    assert.equal(sourcePair, source.body);
+    assert.equal(sourcePair, source.body, `${language}: the whole draft stays paired to the current source`);
     assert.equal(reviewStatus, 'machine-draft');
     const draftParagraphs = translatedBody.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
-    for (const index of [0, 1, 2, 6, 7, 8, 10, 11]) {
-      assert.equal(draftParagraphs[index], sourceParagraphs[index],
-        `${language} paragraph ${index + 1}: seed, postharvest, selling and technical guidance stays English`);
-    }
-    for (const index of [3, 4, 5]) {
-      assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
-        `${language} paragraph ${index + 1}: the tool-sharing draft is visible`);
+    if (language === 've') {
+      assert.notEqual(draftParagraphs[0], sourceParagraphs[0], 'ordinary neighbor seed-sharing framing is drafted');
+      assert.equal(draftParagraphs[1], sourceParagraphs[1], 'crop-specific seed procedures remain exact English');
+      assert.equal(draftParagraphs[2], sourceParagraphs[2], 'seed quality and permission safeguards remain exact English');
+      assert.deepEqual(draftParagraphs.slice(3, 6), [
+        'U kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.',
+        'Phampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.',
+        'U zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.',
+      ], 'previously localized shared-tool paragraphs remain unchanged');
+      assert.equal(draftParagraphs[6], 'Farani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.');
+      assert.equal(draftParagraphs[7], 'Mukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.');
+      assert.equal(draftParagraphs[8], 'Vhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.');
+      assert.equal(draftParagraphs[9], 'Vhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.', 'existing localized neighbor-skills paragraph remains unchanged');
+      assert.equal(draftParagraphs[10], 'Ṅwalani method, conditions and result so others can judge whether it may suit their land.');
+      assert.equal(draftParagraphs[11], sourceParagraphs[11], 'qualified advice and specialist-help wording remains exact English');
+      const stale = resolveLearnerLessonPresentation({ ...source, body: `${source.body}\n\nNew market condition.` }, 've');
+      assert.equal(stale.status, 'english-fallback', 'source-body drift withdraws the full stale Tshivenda lesson');
+      assert.equal(stale.content.body, `${source.body}\n\nNew market condition.`);
+    } else {
+      assert.equal(draftParagraphs[0], 'Vaakelani va nga avelana different varieties and the work of saving seed.',
+        'ordinary neighbor-sharing frame is localized while variety and seed-saving terms remain exact');
+      assert.equal(draftParagraphs[1], sourceParagraphs[1], 'crop-specific seed procedures remain exact English');
+      assert.equal(draftParagraphs[2], sourceParagraphs[2], 'seed quality and permission safeguards remain exact English');
+      assert.deepEqual(draftParagraphs.slice(3, 6), [
+        'Ku avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.',
+        'Pompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.',
+        'Ku tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.',
+      ], 'previously localized shared-tool paragraphs remain unchanged');
+      assert.equal(draftParagraphs[6], sourceParagraphs[6], 'gentle produce handling and delivery preservation remain exact English');
+      assert.equal(draftParagraphs[7], 'Muxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.');
+      assert.equal(draftParagraphs[8], 'Pimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.');
+      assert.equal(draftParagraphs[9], 'Vaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.',
+        'existing localized neighbor-skills paragraph remains unchanged');
+      assert.equal(draftParagraphs[10], 'Tsala method, conditions na result so others can judge whether it may suit their land.');
+      assert.equal(draftParagraphs[11], sourceParagraphs[11], 'qualified advice and specialist-help guidance remains exact English');
+      const stale = resolveLearnerLessonPresentation({ ...source, body: `${source.body}\n\nNew market condition.` }, 'ts');
+      assert.equal(stale.status, 'english-fallback', 'source-body drift withdraws the full stale Xitsonga lesson');
+      assert.equal(stale.content.body, `${source.body}\n\nNew market condition.`);
     }
     const shown = resolveLearnerLessonPresentation(source, language);
     assert.equal(shown.status, 'draft');

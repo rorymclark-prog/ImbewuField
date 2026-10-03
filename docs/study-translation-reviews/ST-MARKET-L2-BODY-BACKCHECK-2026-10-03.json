@@ -1,0 +1,33 @@
+{
+  "packetId": "ST-MARKET-L2-BODY-BACKCHECK-2026-10-03",
+  "languageCode": "st",
+  "lessonId": "market-community-l2",
+  "sourceRevision": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+  "candidatePacket": "ST-MARKET-L2-BODY-CANDIDATES-2026-10-03.json",
+  "sourceParagraphCount": 12,
+  "changedParagraphIndices": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    8,
+    11
+  ],
+  "preservedParagraphIndices": [
+    0,
+    4,
+    7,
+    9,
+    10
+  ],
+  "sourceAndCurrentArraysMatchedBeforeWrite": true,
+  "canonicalEnglishChanged": false,
+  "otherFieldsChanged": false,
+  "reviewStatus": "unreviewed machine draft; facilitator/local language review pending",
+  "reviewBasis": "root-reviewed full-body candidate; p5 comma removed as directed",
+  "checks": {
+    "sourceDriftFallbackTestAdded": true,
+    "businessConditionsAndPreservedNeighborsCovered": true
+  }
+}

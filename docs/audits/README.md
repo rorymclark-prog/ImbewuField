@@ -16,6 +16,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Latest: [Food forest and animal visibility in printed calendars — 3 October 2026](2026-10-03/production-empty-sections-codex.md).
+
 1. [Timing narrative: dated food calendar and scoped crop comparisons — 2 October 2026](2026-10-02/production-timing-narrative-codex.md).
 2. [Live edge cases: food-only plans and decimal totals — 2 October 2026](2026-10-02/production-live-edge-cases-codex.md).
 3. [Production-plan follow-up — 2 October 2026](2026-10-02/crop-production-codex-followup.md).
@@ -58,6 +60,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-03 | [Production-plan section visibility — Codex](2026-10-03/production-empty-sections-codex.md) |
 | 2026-10-02 | [Production timing narrative: dated food and scoped crop comparisons](2026-10-02/production-timing-narrative-codex.md) |
 | 2026-10-02 | [Live production edge cases: food-only maps and decimal quantities](2026-10-02/production-live-edge-cases-codex.md) |
 | 2026-10-02 | [Production-plan follow-up: implementation, sources and verified outputs](2026-10-02/crop-production-codex-followup.md) |
