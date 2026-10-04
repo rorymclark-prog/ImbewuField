@@ -213,6 +213,160 @@ test('a slide with no animation offers none — the still is the lesson', () => 
   assert.ok(animationUrls('seeds-sovereignty', 5));
 });
 
+test('regional paired frames stay visible while English and isiZulu keep their registered films', () => {
+  const cases: Array<{
+    moduleId: string;
+    slide: number;
+    newlySuppressed: string[];
+    englishPoster: string;
+    zuluPoster: string | null;
+  }> = [
+    {
+      moduleId: 'food-forest', slide: 16, newlySuppressed: ['ve', 'ts'],
+      englishPoster: '/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg',
+      zuluPoster: '/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg',
+    },
+    {
+      moduleId: 'vegetables-staples', slide: 6, newlySuppressed: ['ve', 'ts'],
+      englishPoster: '/course-animations/vegetables-staples/posters/flow-transplant-root-plug.jpg',
+      zuluPoster: '/course-animations/vegetables-staples/posters/flow-transplant-root-plug.jpg',
+    },
+    {
+      moduleId: 'soil-health', slide: 10, newlySuppressed: ['ve', 'ts'],
+      englishPoster: '/course-animations/soil-health/posters/flow-build-compost-heap.jpg',
+      zuluPoster: null,
+    },
+    {
+      moduleId: 'soil-health', slide: 11, newlySuppressed: ['ve', 'ts'],
+      englishPoster: '/course-animations/soil-health/posters/flow-compost-materials.jpg',
+      zuluPoster: null,
+    },
+    {
+      moduleId: 'reading-landscape', slide: 6, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/reading-landscape/posters/flow-a-frame.jpg',
+      zuluPoster: '/course-animations/reading-landscape/posters/flow-a-frame.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 15, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 23, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 27, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-02-Pruning-trimmed.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-02-Pruning-trimmed-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 29, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-01-Mulch-ring.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-01-Mulch-ring-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 33, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-04-Helpful-insects.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-04-Helpful-insects-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 37, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-05-Guild-overview.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-05-Guild-overview-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 41, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-06-Succession-establish.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-06-Succession-establish-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 45, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch-zu.jpg',
+    },
+  ];
+  assert.equal(cases.reduce((count, item) => count + item.newlySuppressed.length, 0), 35,
+    'the reviewed change covers only the 35 registered regional poster overlaps');
+
+  for (const item of cases) {
+    const deckSlide = deckFor(item.moduleId)?.slides.find((slide) => slide.slide === item.slide);
+    assert.ok(deckSlide, `${item.moduleId} slide ${item.slide} remains registered`);
+
+    for (const lang of ['st', 've', 'ts']) {
+      const imageUrl = slideImageUrl(item.moduleId, lang, item.slide);
+      assert.equal(imageUrl, `/course-decks/${item.moduleId}/${lang}/slide-${String(item.slide).padStart(2, '0')}.webp`);
+      assert.ok(onDisk(imageUrl!), `paired ${lang} still exists for ${item.moduleId} slide ${item.slide}`);
+      assert.equal(animationUrls(item.moduleId, item.slide, lang), null,
+        `${lang} must see its source-paired still instead of the film poster`);
+      assert.equal(slideAudioUrl(item.moduleId, lang, item.slide), null,
+        `${lang} has no own narration track for ${item.moduleId} slide ${item.slide}`);
+
+      const pairedPath = new URL(`../docs/narration/${item.moduleId}.${lang}.paired-draft.json`, import.meta.url);
+      assert.ok(existsSync(pairedPath), `missing paired source record: ${pairedPath.pathname}`);
+      const paired = JSON.parse(readFileSync(pairedPath, 'utf8')) as {
+        language: string;
+        reviewStatus: string;
+        slides: Array<{
+          n: number;
+          english: { n?: number; heading: string; body: string[] };
+          target: {
+            heading: { status: string; text?: string };
+            body: Array<{ status: string; text?: string }>;
+          };
+        }>;
+      };
+      assert.equal(paired.language, lang);
+      assert.equal(paired.reviewStatus, 'unreviewed');
+      const sourcePair = paired.slides.find((slide) => slide.n === item.slide);
+      assert.ok(sourcePair, `${lang} source pair exists for ${item.moduleId} slide ${item.slide}`);
+      if (sourcePair.english.n !== undefined) assert.equal(sourcePair.english.n, item.slide);
+      assert.equal(sourcePair.english.heading, deckSlide.title,
+        'the paired source remains bound to the narration slide title');
+      assert.ok(sourcePair.english.body.length > 0 && sourcePair.english.body.every((line) => line.trim()));
+      assert.equal(sourcePair.target.body.length, sourcePair.english.body.length,
+        'the displayed draft/hold lines stay aligned with the complete English source');
+      for (const part of [sourcePair.target.heading, ...sourcePair.target.body]) {
+        assert.ok(['draft', 'english-hold'].includes(part.status),
+          'regional text keeps its visible unreviewed draft or English-hold status');
+        if (part.status === 'draft') assert.ok(part.text?.trim(), 'draft text must be present');
+      }
+    }
+
+    const english = animationUrls(item.moduleId, item.slide, 'en');
+    assert.equal(english?.poster, item.englishPoster,
+      'English retains its registered film and poster');
+    assert.ok(onDisk(item.englishPoster));
+    const zulu = animationUrls(item.moduleId, item.slide, 'zu');
+    if (item.zuluPoster) {
+      assert.equal(zulu?.poster, item.zuluPoster,
+        'isiZulu retains its existing film, including a labelled variant where registered');
+      assert.ok(onDisk(item.zuluPoster));
+    } else {
+      assert.equal(zulu, null, 'pre-existing isiZulu unavailability stays in force');
+    }
+  }
+});
+
+test('regional poster holds preserve the established Market film split and Introduction narration', () => {
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(animationUrls('market-community', 15, lang), null,
+      'the existing Market paired-card protection remains in force');
+  }
+  for (const lang of ['en', 'zu']) {
+    assert.equal(animationUrls('market-community', 15, lang)?.poster,
+      '/course-animations/market-community/posters/flow-seed-sharing.jpg');
+  }
+
+  const introTracks = COURSE_NARRATION['intro-permaculture']!.tracks;
+  assert.equal(introTracks.length, 22);
+  for (const track of introTracks) {
+    assert.ok(slideAudioUrl('intro-permaculture', 'st', track.slide),
+      `Sesotho Introduction narration remains available on slide ${track.slide}`);
+  }
+});
+
 test('food forest sheet mulching plays the reviewed Flow hand action once and holds its final layer order', () => {
   const clip = animationUrls('food-forest', 16);
   assert.ok(clip);
