@@ -150,6 +150,16 @@ Provenance: `unreviewed-draft; independent semantic source check; exact English 
 - Focused paired-draft tests passed: 4 tests, 0 failures. The tests check whole-paragraph matching, sentence count/order, the exact removed suffix, retained permission guidance on slide 20, and failure on source drift. `git diff --check` is clean.
 - Root rendered seven affected frames and inspected their source/draft panels. Exact sizes and hashes are in `MARKET-COMMUNITY-REUSED-FRAMES-2026-10-04.json`. A selective one-time offline migration refreshes only those frames and preserves narration and unrelated lessons.
 
+## Phone review found a hidden regional frame
+
+At exact preview `33833b71`, all three regional slide 15 image views opened the
+seed-sharing film poster rather than the paired draft/source still. The selected
+silent pack contained the correct WebP, but the player chose the animation poster.
+The Market animation now excludes `st`, `ve` and `ts`, matching the existing silent
+regional deck policy. English and isiZulu retain their registered film. A regression
+test checks the three exact still URLs and prevents the poster from obscuring them.
+Publication still requires a new exact-head phone review of this repair.
+
 ## Current file hashes
 
 - `docs/narration/market-community.st.paired-draft.json` SHA-256 `332daa6077eee3d825757da29533165c3ea2345012d8ae2eac9c6735139699fd`

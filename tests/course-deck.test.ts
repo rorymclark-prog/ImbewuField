@@ -124,6 +124,20 @@ test('silent Small Livestock review decks keep every paired frame visible and cl
   }
 });
 
+test('Market regional seed-sharing stills remain readable instead of opening the English film poster', () => {
+  for (const language of ['st', 've', 'ts']) {
+    const still = slideImageFor('market-community', language, 15);
+    assert.ok(still?.exact);
+    assert.equal(still.url, `/course-decks/market-community/${language}/slide-15.webp`);
+    assert.ok(onDisk(still.url));
+    assert.equal(animationUrls('market-community', 15, language), null,
+      'an animation poster would hide the unreviewed draft and exact English source in the player and zoom');
+  }
+  for (const language of ['en', 'zu']) {
+    assert.ok(animationUrls('market-community', 15, language), 'existing source-language film remains available');
+  }
+});
+
 test('Water Harvesting regional review decks register all 24 silent paired frames and only English narration', () => {
   const deck = deckFor('water-harvesting')!;
   assert.deepEqual(deck.slideLanguages, ['en', 'zu', 'st', 've', 'ts']);
