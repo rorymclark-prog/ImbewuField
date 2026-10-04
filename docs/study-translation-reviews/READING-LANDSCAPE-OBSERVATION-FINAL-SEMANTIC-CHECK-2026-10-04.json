@@ -1,0 +1,82 @@
+{
+  "review": "Independent semantic/source-bound check of six Reading slide-20 supplement fields and Tshivenda slide-18 body-2 repair",
+  "status": "unreviewed machine-draft proposals only; no fluency approval",
+  "checkedWorktreeHead": "4f8d11cdaa5f938b4fdc12ab2799d52f0c73eb54",
+  "sourceHashes": {
+    "docs/narration/reading-landscape.en.md": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+    "docs/narration/reading-landscape.st.paired-draft.json": "ab6b74b882a322d285f4fb119b981e5cf83103e0d802a29ae357274b41001155",
+    "docs/narration/reading-landscape.ve.paired-draft.json": "964aaf26ea8d3a94522299ae1e6442235cdf7242029236a6e0b77c2f66fc71b5",
+    "docs/narration/reading-landscape.ts.paired-draft.json": "29ba212deb204d52f707d4847b03380d2fb634aff05609cf7ef0e946429dc6d4",
+    "lib/course-translation-drafts-ve-reading-landscape.ts": "bd69014bd16c4a28ab1bef8d4bcb3fb4e010a3c61b3b5acc20e0e670258005b4"
+  },
+  "supplementalSlide20": {
+    "sourceEnglishBody1": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+    "sourceEnglishBody2": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+    "binding": "All six proposed segment lists concatenate byte-for-byte to their exact English body field in the language-specific paired JSON and each source occurs in the canonical English narration Markdown.",
+    "verdict": "Accept all six mixed-field proposals as bounded learner drafts. Segment order preserves Return then Mark and On paper/draw then boundary/Mark north/add. Cold June dawn timing and every mist/dew/frost object remain English; boundary and the complete ordered property/site-object list remain English. The localized Mark prefixes retain the action while leaving uncertain observation/geometric terms exact. No safety condition, timing, direction, object, or ownership scope is added or removed.",
+    "rows": [
+      {
+        "language": "st",
+        "slide": 20,
+        "bodyIndex": 1,
+        "proposal": "Khutla ka [English hold: dawn on a cold June morning.] Tshwaya [English hold: mist, frozen dew, and the places frost lasts longest.]"
+      },
+      {
+        "language": "ve",
+        "slide": 20,
+        "bodyIndex": 1,
+        "proposal": "Vhuyelelani nga [English hold: dawn on a cold June morning.] Swayani [English hold: mist, frozen dew, and the places frost lasts longest.]"
+      },
+      {
+        "language": "ts",
+        "slide": 20,
+        "bodyIndex": 1,
+        "proposal": "Vuya hi [English hold: dawn on a cold June morning.] Fungha [English hold: mist, frozen dew, and the places frost lasts longest.]"
+      },
+      {
+        "language": "st",
+        "slide": 20,
+        "bodyIndex": 2,
+        "proposal": "Pampiring, taka [English hold: your boundary,] Tshwaya leboya, [English hold: and add the house, water, roads, fences, slopes, and existing vegetation.]"
+      },
+      {
+        "language": "ve",
+        "slide": 20,
+        "bodyIndex": 2,
+        "proposal": "Kha bammbiri, olani [English hold: your boundary,] Swayani devhula (north), [English hold: and add the house, water, roads, fences, slopes, and existing vegetation.]"
+      },
+      {
+        "language": "ts",
+        "slide": 20,
+        "bodyIndex": 2,
+        "proposal": "Ephepheni, dirowa [English hold: your boundary,] Fungha n'walungu, [English hold: and add the house, water, roads, fences, slopes, and existing vegetation.]"
+      }
+    ],
+    "reviewNote": "These are defensible mixed constructions for facilitator review, not fluency approval. In particular, cold June timing and exact soil/site observations remain verbatim English."
+  },
+  "tshivendaSlide18Body2": {
+    "sourceEnglish": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design.",
+    "currentPairedTarget": "Zwino zwimela zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Check the soil before deciding what the patch means for your design.",
+    "finding": "Zwino is used as “now” in other current Tshivenda learner prose (for example, “Zwino humbulani…” / “Now remember…”), so “Zwino zwimela” risks adding a temporal Now where the source says These plants.",
+    "proposedMinimalRepair": {
+      "segments": [
+        {
+          "sourceEnglish": "These plants ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "can grow in disturbed places, but their presence alone does not show whether the soil is compacted. ",
+          "status": "draft",
+          "text": "zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). "
+        },
+        {
+          "sourceEnglish": "Check the soil before deciding what the patch means for your design.",
+          "status": "english-hold"
+        }
+      ]
+    },
+    "recommendation": "This subject + class-concord continuation is plausible as a mixed sentence and removes the unsupported Now and duplicated local subject. If a fluent facilitator cannot confirm the Tshivenda concord, hold the entire first source sentence in exact English instead. Keep the second sentence exact English.",
+    "secondSentenceBinding": "The exact held sentence matches the learner registry source byte-for-byte. The source is the learner registry wording ‘whether soil is compacted’ (without ‘the’); the canonical module wording differs, and neither was substituted. The paired slide sentence boundary is also exact."
+  },
+  "actions": "Read-only review; no repository writes, renders, commits, pushes, or merges."
+}

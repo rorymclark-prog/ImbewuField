@@ -626,15 +626,41 @@
         "body": [
           {
             "status": "draft",
-            "text": "Sedzani fhethu where frost sits longest and where the ground smells damp during dry months."
+            "text": "Sedzani hune tshando tsha dzula tshifhinga tshilapfusesa na hune mavu a nunukha vhunyisi kha miṅwedzi yo omaho."
           },
           {
-            "status": "draft",
-            "text": "Sedzani existing vegetation. Mark where khakibos or blackjack grows thick."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Notice existing vegetation. ",
+                "status": "draft",
+                "text": "Sedzani zwimela zwine zwa vha hone. "
+              },
+              {
+                "sourceEnglish": "Mark where khakibos or blackjack grows thick.",
+                "status": "draft",
+                "text": "Funzhani hune khakibos kana blackjack zwa mela zwo tsitsikana."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Sedzani soil before deciding what the patch means for your design."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These plants ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "can grow in disturbed places, but their presence alone does not show whether the soil is compacted. ",
+                "status": "draft",
+                "text": "zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). "
+              },
+              {
+                "sourceEnglish": "Check the soil before deciding what the patch means for your design.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed mixed learner draft; exact source subject and ambiguous patch decision are held in English. Facilitator review pending."
           }
         ]
       }
@@ -657,16 +683,46 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Funzhani summer and winter wind nga thungo. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Mark summer and winter wind separately. ",
+                "status": "draft",
+                "text": "Funzhani muya wa tshilimo na wa vhuria nga thungo. "
+              },
+              {
+                "sourceEnglish": "They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Vheani your zones and sectors on the same base map."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Overlay your zones and sectors ",
+                "status": "draft",
+                "text": "Vheani dzi-zone na dzi-sector dzaṋu "
+              },
+              {
+                "sourceEnglish": "on the same base map.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Khwinisani sketch nga tshifhinga tsha khalanwaha. A pencil map you actually use is worth more than a perfect map drawn once."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Update the sketch season by season. ",
+                "status": "draft",
+                "text": "I vusuluseni khalaṅwaha nga khalaṅwaha. "
+              },
+              {
+                "sourceEnglish": "A pencil map you actually use is worth more than a perfect map drawn once.",
+                "status": "english-hold"
+              }
+            ]
           }
         ]
       }
@@ -694,12 +750,52 @@
             "text": "When it is safe after heavy rain, walk your land. Funzhani rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away."
           },
           {
-            "status": "draft",
-            "text": "Vhuyelelani nga dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Return at ",
+                "status": "draft",
+                "text": "Vhuyelelani nga "
+              },
+              {
+                "sourceEnglish": "dawn on a cold June morning. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Mark ",
+                "status": "draft",
+                "text": "Swayani "
+              },
+              {
+                "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
           },
           {
-            "status": "draft",
-            "text": "Kha bammbiri, olani your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "On paper, draw ",
+                "status": "draft",
+                "text": "Kha bammbiri, olani "
+              },
+              {
+                "sourceEnglish": "your boundary, ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "mark north, ",
+                "status": "draft",
+                "text": "Swayani devhula (north), "
+              },
+              {
+                "sourceEnglish": "and add the house, water, roads, fences, slopes, and existing vegetation.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
           }
         ]
       }
