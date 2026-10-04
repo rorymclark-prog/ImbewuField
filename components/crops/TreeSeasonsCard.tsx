@@ -3,6 +3,7 @@
 import { Trees } from 'lucide-react';
 import { MONTHS_SHORT } from '@/lib/crop-catalog';
 import { formatMonthSpan, type PlacedTreeGroup, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import TreeAgeEditor from './TreeAgeEditor';
 
 /** Source windows remain references until the farmer confirms the plants and local months. */
 export default function TreeSeasonsCard({ groups, unidentified, choices, onChoose }: {
@@ -27,6 +28,7 @@ export default function TreeSeasonsCard({ groups, unidentified, choices, onChoos
             <input type="checkbox" checked={choice.bearing} disabled={g.existing === 0} onChange={(event) => update({ ...choice, bearing: event.target.checked })} /> All existing plants of this kind already give food here.
           </label>
           {g.existing === 0 && <p className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Only proposed plants: no current picking dates.</p>}
+          <TreeAgeEditor group={g} choice={choice} onChange={update} />
           <div className="font-sans mt-3 mb-2" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Tap the months you pick from these plants here:</div>
           <div className="flex flex-wrap gap-1.5" role="group" aria-label={`${g.harvest.name} local picking months`}>
             {MONTHS_SHORT.map((name, i) => {

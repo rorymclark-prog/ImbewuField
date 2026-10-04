@@ -16,7 +16,9 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest: [Regional production picture calendars and eight climate examples — 4 October 2026](2026-10-04/regional-production-calendar-codex.md).
+Latest: [Production by plant age and clearer graphics — 4 October 2026](2026-10-04/production-age-visuals-codex.md).
+
+Previous: [Regional production picture calendars and eight climate examples — 4 October 2026](2026-10-04/regional-production-calendar-codex.md).
 
 Previous: [Individual products, purchasing choices and variety assumptions — 4 October 2026](2026-10-04/production-products-codex.md).
 
@@ -64,6 +66,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-04 | [Production by plant age and clearer graphics — Codex](2026-10-04/production-age-visuals-codex.md) |
 | 2026-10-04 | [Regional production picture calendars — Codex](2026-10-04/regional-production-calendar-codex.md) |
 | 2026-10-04 | [Individual production products and variety assumptions — Codex](2026-10-04/production-products-codex.md) |
 | 2026-10-03 | [Production-plan section visibility — Codex](2026-10-03/production-empty-sections-codex.md) |

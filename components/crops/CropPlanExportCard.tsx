@@ -18,6 +18,7 @@ import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
 import type { PlacedTreeGroup, TreeSeasonChoices } from '@/lib/perennial-harvest';
 import type { ProductionGuide } from '@/lib/crop-export-schedule';
+import type { ProductionProjection } from '@/lib/production-projection';
 import type { PoultryGuidance } from '@/lib/animal-enterprises';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
 import {
@@ -46,13 +47,14 @@ export interface CropPlanExportCardProps {
   treeGroups?: PlacedTreeGroup[];
   treeSeasons?: TreeSeasonChoices;
   productionGuide?: ProductionGuide;
+  productionProjection?: ProductionProjection;
   poultryGuidance?: PoultryGuidance;
 }
 
 type Busy = 'ics' | 'pdf' | null;
 const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
-export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, poultryGuidance }: CropPlanExportCardProps) {
+export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
   const { lang } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -106,7 +108,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     setBusy('pdf');
     setStatus(null);
     try {
-      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, poultryGuidance, sections: FARMER_SECTIONS, ...overrides };
+      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance, sections: FARMER_SECTIONS, ...overrides };
       // Both month views reuse the app's pictures: crops growing in beds, and food to pick.
       const wantsIcons = !input.sections || input.sections.includes('availability') || input.sections.includes('calendar');
       const icons = wantsIcons ? await loadPdfIcons(availabilityIconKeys(input)) : undefined;

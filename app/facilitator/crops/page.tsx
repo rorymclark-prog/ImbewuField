@@ -36,6 +36,8 @@ import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennial
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, poultryGuidance, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
 import TreeSeasonsCard from '@/components/crops/TreeSeasonsCard';
+import ProductionProjectionCard from '@/components/crops/ProductionProjectionCard';
+import { buildProductionProjection, treeAgeCalendarNote } from '@/lib/production-projection';
 import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
 import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
 import { planningTreeSeasons, type ExpectedSeason } from '@/lib/production-product-guidance';
@@ -729,6 +731,7 @@ function FacilitatorCropsPageInner() {
   const [canvasTrees, setCanvasTrees] = useState<PlacedTreeGroup[]>([]);
   const [unidentifiedPlants, setUnidentifiedPlants] = useState<UnidentifiedPlantGroup[]>([]);
   const [treeSeasons, setTreeSeasons] = useState<TreeSeasonChoices>({});
+  const [treeSaveFailed, setTreeSaveFailed] = useState(false);
   // The same orchard switch as Money and Records (lib/produce-scope.ts) — one preference, so
   // turning the orchard off in one place is not quietly undone in another.
   const [includeTrees, setIncludeTrees] = useState(DEFAULT_INCLUDE_PERENNIALS);
@@ -1133,6 +1136,7 @@ function FacilitatorCropsPageInner() {
   // reloads facilitator state), so placing another bed in the Studio (another
   // tab) refreshes the bed list here without a reload.
   useEffect(() => {
+    setTreeSaveFailed(false);
     if (!canvasSite) { setBananaCircles(0); setCanvasTrees([]); setUnidentifiedPlants([]); setTreeSeasons({}); setCanvasAnimals([]); setAnimalChoices({}); setAnimalSeasons({}); return; }
     setAnimalChoices(loadEnterpriseChoices(canvasSite));
     setTreeSeasons(loadTreeSeasonChoices(canvasSite));
@@ -1484,9 +1488,11 @@ function FacilitatorCropsPageInner() {
   // (lib/calendar-produce.ts), over the same rolling columns as the beds above them.
   const planningTrees = useMemo(() => planningTreeSeasons(canvasTrees, growingZones, siteSurvey?.productionConditions, treeSeasons), [canvasTrees, growingZones, siteSurvey, treeSeasons]);
   const calendarProduce = useMemo(
-    () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees),
-    [canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees],
+    () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees, monthAxis),
+    [canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees, monthAxis],
   );
+  const productionProjection = useMemo(() => buildProductionProjection({ plantings, beds, trees: includeTrees ? canvasTrees : [], choices: treeSeasons, now: new Date(currentYear, currentMonth - 1, 1) }), [plantings, beds, includeTrees, canvasTrees, treeSeasons, currentYear, currentMonth]);
+  const ageCalendarNotes = canvasTrees.flatMap(g => { const note = treeAgeCalendarNote(g, treeSeasons[g.harvest.speciesId], currentYear * 12 + currentMonth - 1); return note ? [`${g.harvest.name}: ${note}.`] : []; });
   // Plants on the map whose harvest record has no sourced picking month yet: named under the row,
   // so a pawpaw that never appears is explained rather than silently missing.
   const treesWithoutSeason = useMemo(
@@ -1533,7 +1539,7 @@ function FacilitatorCropsPageInner() {
     if (!canvasSite) return;
     const next = { ...treeSeasons, [speciesId]: choice };
     setTreeSeasons(next);
-    saveTreeSeasonChoices(canvasSite, next);
+    setTreeSaveFailed(!saveTreeSeasonChoices(canvasSite, next));
   }
   function chooseAnimalSeason(housing: HousingKind, enterpriseId: string, months: number[]) {
     if (!canvasSite) return;
@@ -1550,11 +1556,12 @@ function FacilitatorCropsPageInner() {
   // The printed "Food availability" page: the first twelve columns of the chart above, with the
   // tree and animal rows only when the farmer has them switched on there.
   const printAvailability = useMemo(() => printableAvailability({
+    now: new Date(currentYear, currentMonth - 1, 1),
     yearMode: 'fromToday', veg: buildFoodAvailability(plantings, beds, currentMonth, 12), utilization: buildFieldUtilizationByMonth(plantings, beds, currentMonth, 12),
     trees: buildTreeAvailability(canvasTrees, monthOrder, true, treeSeasons), animals: buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, true, animalSeasons), includeTrees, includeAnimals,
     treeGroups: canvasTrees, unidentifiedPlants, treeSeasons, animalGroups: canvasAnimals, animalChoices, animalSeasons,
-    planning: { months: monthOrder, trees: planningTrees },
-  }), [plantings, beds, currentMonth, monthOrder, canvasTrees, treeSeasons, canvasAnimals, animalChoices, animalSeasons, includeTrees, includeAnimals, unidentifiedPlants, planningTrees]);
+    planning: { months: monthOrder, trees: planningTrees, dates: monthAxis },
+  }), [plantings, beds, currentYear, currentMonth, monthOrder, monthAxis, canvasTrees, treeSeasons, canvasAnimals, animalChoices, animalSeasons, includeTrees, includeAnimals, unidentifiedPlants, planningTrees]);
 
   // Cover-page facts for the printed plan and the calendar's name. Built from
   // the same values the header and the bed-check strip already show, so the
@@ -2133,7 +2140,7 @@ function FacilitatorCropsPageInner() {
                       months={calendarProduce}
                       axis={monthAxis}
                       emptyText="No locally confirmed picking months yet. Plants on your map are listed below; confirm when they already give food here."
-                      footnote={treesWithoutSeason.length ? `On your map, with picking months to confirm: ${treesWithoutSeason.join(', ')}. They stay listed on the printed plan.` : null}
+                      footnote={[...(treesWithoutSeason.length ? [`On your map, with picking months to confirm: ${treesWithoutSeason.join(', ')}. They stay listed on the printed plan.`] : []), ...ageCalendarNotes].join(' ') || null}
                     />
                   ) : (
                     <CalendarSectionNote action={{ label: 'Show fruit, nuts & berries', onClick: () => { setIncludeTrees(true); saveIncludePerennials(true); } }}>
@@ -2211,10 +2218,12 @@ function FacilitatorCropsPageInner() {
             </div>}
 
             <TreeSeasonsCard groups={canvasTrees} unidentified={unidentifiedPlants} choices={treeSeasons} onChoose={chooseTreeSeason} />
+            {treeSaveFailed && <p role="alert" className="font-sans mt-2" style={{ color: 'var(--gold)', fontSize: 13 }}>Plant ages and picking months could not be saved on this device. Keep this page open and download the plan before leaving.</p>}
+            <ProductionProjectionCard projection={productionProjection} />
             <ProductionGuideCard guide={productionGuide} canSurvey={!!surveySiteId} onSurvey={() => setSiteSurveyOpen(true)} />
             {chickenGuide && <PoultryGuidanceCard guidance={chickenGuide} />}
             <AnimalEnterprisesCard groups={canvasAnimals} choices={animalChoices} onChoose={chooseAnimalEnterprise} seasons={animalSeasons} onSeasonsChange={chooseAnimalSeason} compact={simple} />
-            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} poultryGuidance={includeAnimals ? chickenGuide : undefined} />}
+            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} productionProjection={productionProjection} poultryGuidance={includeAnimals ? chickenGuide : undefined} />}
 
             {!simple && (
             <>
@@ -2522,6 +2531,7 @@ function FacilitatorCropsPageInner() {
               treeGroups={includeTrees ? canvasTrees : undefined}
               treeSeasons={treeSeasons}
               productionGuide={productionGuide}
+              productionProjection={productionProjection}
               poultryGuidance={includeAnimals ? chickenGuide : undefined}
             />
 
@@ -3894,7 +3904,7 @@ function OrganicGuideCard() {
 // Rory, 2026-09-30: "I want the avocado like a cabbage planting … this makes it more clearly
 // visible." Each tree kind and each animal product is its own lane of bars across the months it
 // is picked, drawn like a bed's planting bars. Hover, focus or tap a bar for the written line.
-const PRODUCE_ICON = 16;
+const PRODUCE_ICON = 22;
 // Fills under white type, fixed like the bed bars' colours: mid-green for the food forest, the
 // deep ochre fill for animals.
 const PRODUCE_FILL = { trees: '#2E6B3A', animals: 'var(--color-ochre-dark)' } as const;
@@ -4028,7 +4038,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
               ))}
             </div>
             {lanes.map((lane) => (
-              <div key={lane.key} style={{ position: 'relative', height: 30, marginBottom: 3 }}>
+              <div key={lane.key} style={{ position: 'relative', height: 34, marginBottom: 4 }}>
                 {lane.runs.map((run, r) => {
                   const id = `${lane.key}@${r}`;
                   // Proposed plants are faded, as the month list did; year two is quieter, as a bed's is.
@@ -4063,7 +4073,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
                       <span style={{ position: 'sticky', left: BED_LABEL_WIDTH + 4, display: 'inline-flex', alignItems: 'center', gap: 4, maxWidth: '100%', minWidth: 0, overflow: 'hidden' }}>
                       {kind === 'trees' ? (
                         // A light chip, so a small fruit picture still reads on the dark bar.
-                        <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(255,255,255,0.92)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--emerald)' }}>
+                        <span style={{ width: 26, height: 26, borderRadius: 7, background: 'rgba(255,255,255,0.96)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--emerald)' }}>
                           {lane.art}
                         </span>
                       ) : lane.art}

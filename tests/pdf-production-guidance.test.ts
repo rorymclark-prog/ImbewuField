@@ -3,6 +3,17 @@ import assert from 'node:assert/strict';
 import { buildCropPlanPdf, FARMER_SECTIONS, ALL_SECTIONS, type CropPlanPdfInput } from '@/lib/crop-export-pdf';
 import { poultryGuidance } from '@/lib/animal-enterprises';
 import type { ProductionGuide } from '@/lib/crop-export-schedule';
+import { buildProductionProjection } from '@/lib/production-projection';
+import { placedTreeGroups } from '@/lib/perennial-harvest';
+
+test('the printed plan retains the ten-year age projection, missing yields and editable farm assumptions', async () => {
+  const treeGroups = placedTreeGroups([{ defId: 'tree_avocado', status: 'proposed' }]);
+  const treeSeasons = { 'persea-americana': { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [] }] } };
+  const projection = buildProductionProjection({ plantings: [], beds: [], trees: treeGroups, choices: treeSeasons, now: new Date(2026, 9, 4) });
+  const text = visibleText(await rawPdf({ sections: ['availability'], productionProjection: projection, treeGroups, treeSeasons }));
+  for (const phrase of ['As your plants grow', 'Fruit, nuts and berries by age', 'Oct 2035', 'known subtotal only', 'no growth multiplier', 'first-crop reference', '? kg']) assert.ok(text.includes(phrase), phrase);
+  assert.ok(!text.includes('100 kg'), 'the mature avocado trial figure leaked into a planting with no farm yield schedule');
+});
 
 test('the picture calendar scopes local-date confirmation to fruit rather than claiming modelled vegetables were observed', async () => {
   const text = visibleText(await rawPdf({ sections: ['availability'], availability: { yearMode: 'fromToday', veg: [], forest: [], animals: [] } }));

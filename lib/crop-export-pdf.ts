@@ -49,7 +49,8 @@ import {
   type CalendarRow, type FieldSheetSection, type MonthCount,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
-import { treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
+import { firstCropAgeLabel, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
+import { projectedKgLabel, type ProductionProjection } from '@/lib/production-projection';
 import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 import type { ExpectedSeason } from '@/lib/production-product-guidance';
 import type { PoultryGuidance } from '@/lib/animal-enterprises';
@@ -140,6 +141,7 @@ export interface CropPlanPdfInput {
   treeSeasons?: TreeSeasonChoices;
   /** The same farm observations and cultivar preparation guide shown in the app. */
   productionGuide?: ProductionGuide;
+  productionProjection?: ProductionProjection;
   /** Sourced choices to discuss locally, not a selected breed or animal yield forecast. */
   poultryGuidance?: PoultryGuidance;
 }
@@ -150,6 +152,7 @@ export interface AvailabilityEntry {
   label: string;
   /** A source reference is drawn differently and never enters food totals or picking jobs. */
   planning?: ExpectedSeason;
+  ageNote?: string;
 }
 
 /** The app chart's first twelve slots, starting at the plan's "now" month. */
@@ -169,7 +172,7 @@ export interface CropPlanAvailability {
   /** Share of mapped growing area occupied, 0–1+ per month. */
   utilization?: number[];
   /** Placed food sources stay visible even when their production dates are unknown. */
-  undated?: { iconKey: string; label: string; detail: string }[];
+  undated?: { iconKey: string; label: string; detail: string; ageNote?: string }[];
 }
 
 export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'availability' | 'guidance' | 'plan' | 'buying' | 'fieldsheets' | 'record' | 'taskSummary';
@@ -1192,6 +1195,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   const labelW = 150;
   const colW = (s.contentWidth - labelW) / 12;
   const icon = Math.min(23, colW - 6);
+  const planningLabel = (e: AvailabilityCell) => e.planning?.label.startsWith('Regional reference:') ? 'Regional season' : e.planning?.label.replace('Assumed variety:', 'Plan:') ?? '';
   const heading = () => {
     masthead(s, 'Picture calendar');
     pageTitle(s, input.meta.planTitle,
@@ -1221,6 +1225,10 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     s.doc.rect(s.margin, s.y, s.contentWidth, 24, 'F');
     s.font(10.5, true); s.ink(INK.text);
     s.doc.text(pdfSafe(`${band.title}${continued ? ' (continued)' : ''}`), s.margin + 8, s.y + 16);
+    if (band.key === 'forest') {
+      s.font(7.5); s.ink(INK.green);
+      s.doc.text('When established', s.width - s.margin - 8, s.y + 16, { align: 'right' });
+    }
     s.y += 24;
   };
   heading(); monthHead();
@@ -1244,56 +1252,75 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     const firstLines = s.doc.splitTextToSize(pdfSafe(rows[0].label), labelW - 39) as string[];
     const firstUnknown = !band.cells.some((cell) => cell.some((entry) => entry.iconKey === rows[0].iconKey));
     s.font(8);
-    const firstPlanLines = rows[0].planning ? (s.doc.splitTextToSize(pdfSafe(rows[0].planning.label.replace('Assumed variety:', 'Plan:').replace('Regional reference:', 'Ref:')), labelW - 39) as string[]).length : 0;
-    if (!s.fits(24 + Math.max(29, firstLines.length * 12 + (firstPlanLines ? firstPlanLines * 10 + 20 : firstUnknown ? 24 : 10)))) { s.page('portrait'); heading(); monthHead(); }
+    const firstPlanLines = rows[0].planning ? (s.doc.splitTextToSize(pdfSafe(planningLabel(rows[0])), labelW - 39) as string[]).length : 0;
+    const compactBandHeight = rows.length <= 3 ? rows.reduce((height, row) => {
+      s.font(10, true); const labels = (s.doc.splitTextToSize(pdfSafe(row.label), labelW - 39) as string[]).length;
+      s.font(8); const plans = planningLabel(row) ? (s.doc.splitTextToSize(pdfSafe(planningLabel(row)), labelW - 39) as string[]).length : 0;
+      return height + Math.max(36, labels * 12 + (row.planning ? plans * 10 + 12 : 24));
+    }, 24) : 24 + Math.max(36, firstLines.length * 12 + (firstPlanLines ? firstPlanLines * 10 + 12 : firstUnknown ? 24 : 10));
+    if (!s.fits(compactBandHeight)) { s.page('portrait'); heading(); monthHead(); }
     bandHead(band);
-    for (const e of rows) {
+    for (const [rowIndex, e] of rows.entries()) {
       const monthsUnknown = !band.cells.some((cell) => cell.some((entry) => entry.iconKey === e.iconKey));
       s.font(10, true);
       const label = s.doc.splitTextToSize(pdfSafe(e.label), labelW - 39) as string[];
-      const planLabel = e.planning ? e.planning.label.replace('Assumed variety:', 'Plan:').replace('Regional reference:', 'Ref:') : '';
+      const planLabel = planningLabel(e);
       s.font(8);
       const planLines = planLabel ? s.doc.splitTextToSize(pdfSafe(planLabel), labelW - 39) as string[] : [];
-      const rowH = Math.max(29, label.length * 12 + (e.planning ? planLines.length * 10 + 20 : monthsUnknown ? 24 : 10));
+      const rowH = Math.max(36, label.length * 12 + (e.planning ? planLines.length * 10 + 12 : monthsUnknown ? 24 : 10));
       if (!s.fits(rowH)) { s.page('portrait'); heading(); monthHead(); bandHead(band, true); }
+      if (rowIndex % 2 === 0) { s.fill([249, 250, 246]); s.doc.rect(s.margin, s.y, s.contentWidth, rowH, 'F'); }
+      if (dated) { s.fill([244, 239, 218]); s.doc.rect(s.margin + labelW, s.y, colW, rowH, 'F'); }
       drawIconOrCode(s, e, s.margin + 5, s.y + (rowH - 24) / 2, 24, input.icons);
       s.font(10, true); s.ink(INK.text);
       s.doc.text(label, s.margin + 34, s.y + 17, { lineHeightFactor: 1.2 });
       if (e.planning) {
         s.font(8); s.ink(INK.brown);
         s.doc.text(planLines, s.margin + 34, s.y + label.length * 12 + 16, { lineHeightFactor: 1.25 });
-        s.font(7.5); s.ink(INK.muted);
-        s.doc.text('When established', s.margin + 34, s.y + label.length * 12 + planLines.length * 10 + 16);
       } else if (monthsUnknown) {
         s.font(8.5); s.ink(INK.muted);
         s.doc.text('Months to confirm', s.margin + 34, s.y + label.length * 12 + 18);
       }
-      axis.forEach((_, i) => {
+      // One outline per contiguous season lets the eye read a span of months. Twelve little
+      // dashed boxes made the fruit page look like a collection of unrelated appointments.
+      const marks = axis.map((_, i) => band.cells[i].some(entry => entry.iconKey === e.iconKey) ? 'local' : band.planningCells?.[i]?.some(entry => entry.iconKey === e.iconKey) ? 'reference' : '');
+      for (let start = 0; start < marks.length;) {
+        if (!marks[start]) { start++; continue; }
+        let end = start + 1;
+        while (end < marks.length && marks[end] === marks[start]) end++;
+        const x = s.margin + labelW + start * colW + 2;
+        const width = (end - start) * colW - 4;
+        const h = Math.min(28, rowH - 8), y = s.y + (rowH - h) / 2;
+        const reference = marks[start] === 'reference';
+        s.fill(reference ? INK.panelCream : mixWithWhite(band.rgb, 0.24));
+        s.stroke(reference ? INK.gold : band.rgb); s.doc.setLineWidth(reference ? 0.85 : 0.45);
+        s.doc.setLineDashPattern(reference ? [3, 2] : [], 0);
+        s.doc.roundedRect(x, y, width, h, 4, 4, 'FD');
+        s.doc.setLineDashPattern([], 0);
+        start = end;
+      }
+      axis.forEach((slot, i) => {
         const x = s.margin + labelW + i * colW;
-        if (band.cells[i].some((entry) => entry.iconKey === e.iconKey)) {
-          s.fill(mixWithWhite(band.rgb, 0.2));
-          s.doc.roundedRect(x + 2, s.y + 3, colW - 4, rowH - 6, 3, 3, 'F');
+        if (marks[i]) {
           drawIconOrCode(s, e, x + (colW - icon) / 2, s.y + (rowH - icon) / 2, icon, input.icons);
-        } else if (band.planningCells?.[i]?.some((entry) => entry.iconKey === e.iconKey)) {
-          s.fill(INK.panelCream); s.stroke(INK.gold); s.doc.setLineWidth(0.8);
-          s.doc.setLineDashPattern([2, 2], 0);
-          s.doc.roundedRect(x + 2, s.y + 3, colW - 4, rowH - 6, 3, 3, 'FD');
-          s.doc.setLineDashPattern([], 0);
-          drawIconOrCode(s, e, x + (colW - icon) / 2, s.y + (rowH - icon) / 2, icon, input.icons);
-        } else {
-          s.font(9); s.ink(INK.faint);
-          s.doc.text('-', x + colW / 2, s.y + rowH / 2 + 3, { align: 'center' });
         }
-        s.stroke(INK.hair); s.doc.setLineWidth(0.4);
-        s.doc.line(x, s.y, x, s.y + rowH);
+        // January and the name column provide useful anchors without a wall of vertical grid.
+        if (i === 0 || slot.month === 1) {
+          s.stroke(INK.hair); s.doc.setLineWidth(slot.month === 1 ? 0.7 : 0.4);
+          s.doc.line(x, s.y, x, s.y + rowH);
+        }
       });
+      if (!marks.some(Boolean)) {
+        s.font(8); s.ink(INK.muted);
+        s.doc.text(pdfSafe(e.ageNote ?? (band.key === 'animals' ? 'Confirm stock and production dates' : 'Dates to confirm · see plant ages and food sources')), s.margin + labelW + 8, s.y + rowH / 2 + 3);
+      }
       s.stroke(INK.hair);
       s.doc.line(s.margin, s.y + rowH, s.width - s.margin, s.y + rowH);
       s.y += rowH;
     }
     s.y += 8;
   }
-  const calendarNote = 'Outlined marks are sourced planning references when established; they do not enter food totals or picking jobs. A dash means no picking window is marked. For months to confirm, check Food sources to check and record local months in the app. Red space figures mean the plan needs more growing space than is mapped.';
+  const calendarNote = 'Outlined bands are planning references when established; they do not enter food totals or picking jobs. Blank months have no picking window marked. Recorded planting ages keep young plants out of early reference months. Check plant ages and Food sources to check in the app. Red space figures mean the plan needs more growing space than is mapped.';
   s.font(10);
   const calendarNoteLines = s.doc.splitTextToSize(pdfSafe(calendarNote), s.contentWidth) as string[];
   if (!s.fits(56 + calendarNoteLines.length * 14 + 8)) { s.page('portrait'); heading(); monthHead(); }
@@ -1383,6 +1410,78 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   s.paragraph(ASSURANCE_ONE_LINE, { size: 9.5, ink: INK.muted, gap: 6 });
   s.paragraph(SUCCESSION_TIMING_GUIDANCE, { size: 9.5, ink: INK.muted, gap: 8 });
   if (!(input.sections ?? ALL_SECTIONS).includes('dashboard')) drawPlanNotes(s, input);
+}
+
+function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
+  const projection = input.productionProjection!;
+  const head = () => { masthead(s, 'Production over time'); pageTitle(s, input.meta.planTitle, 'As your plants grow', 'Vegetables and staples alongside fruit, nuts and berries. Ten-year projection; not a harvest promise.'); };
+  head();
+  const maximum = Math.max(1, ...projection.years.map(y => y.combinedKg?.[1] ?? y.treeKg[1]));
+  s.paragraph('Green = vegetable crop cycles. Gold = your tree yield schedule. * = known subtotal only; missing yields are not zero.', { size: 9, ink: INK.muted, gap: 12 });
+  for (const year of projection.years) {
+    if (s.need(44)) head();
+    s.font(9, true); s.ink(INK.text); s.doc.text(pdfSafe(year.label), s.margin, s.y + 12);
+    s.doc.text(pdfSafe(`${projectedKgLabel(year.combinedKg)}${year.partial ? ' *' : ''}`), s.width - s.margin, s.y + 12, { align: 'right' });
+    const x = s.margin, w = s.contentWidth, y = s.y + 20;
+    s.fill(INK.hair); s.doc.roundedRect(x, y, w, 9, 3, 3, 'F');
+    const veg = w * (year.vegetableKg ?? 0) / maximum, tree = w * year.treeKg[1] / maximum;
+    if (veg > 0) { s.fill(INK.green); s.doc.rect(x, y, veg, 9, 'F'); }
+    if (tree > 0) { s.fill(INK.gold); s.doc.rect(x + veg, y, tree, 9, 'F'); }
+    s.y += 40;
+  }
+  s.y += 12;
+  for (const assumption of projection.assumptions) s.paragraph(assumption, { size: 9, ink: INK.muted, gap: 8 });
+  if (!projection.years[0]?.trees.length) return;
+  s.page('landscape');
+  const tableHead = () => {
+    masthead(s, 'Plant ages & harvest');
+    pageTitle(s, input.meta.planTitle, 'Fruit, nuts and berries by age', 'Each column is a twelve-month period. Age is in years since planting here; kg is per age group, not per m². ? = missing information.');
+    s.fill(INK.green); s.doc.rect(s.margin, s.y, s.contentWidth, 30, 'F'); s.font(8, true); s.ink(INK.white);
+    s.doc.text('PLANT / AGE GROUPS', s.margin + 8, s.y + 19);
+    const width = (s.contentWidth - 150) / projection.years.length;
+    projection.years.forEach((year, i) => s.doc.text(pdfSafe(year.label.split(' – ')[0]), s.margin + 150 + (i + 0.5) * width, s.y + 19, { align: 'center' }));
+    s.y += 30;
+  };
+  tableHead();
+  for (const [row, tree] of projection.years[0].trees.entries()) {
+    const width = (s.contentWidth - 150) / projection.years.length;
+    s.font(7.5);
+    const cells = projection.years.map(y => {
+      const t = y.trees[row];
+      return s.doc.splitTextToSize(pdfSafe(`${t.ages}\n${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.knownKg)} *` : '? kg'}`), width - 6) as string[];
+    });
+    const height = Math.max(42, ...cells.map(c => c.length * 10 + 12));
+    if (!s.fits(height)) { s.page('landscape'); tableHead(); }
+    if (row % 2 === 0) { s.fill(INK.panelGrey); s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F'); }
+    drawIconOrCode(s, { iconKey: `tree:${tree.speciesId}`, code: fallbackCode(tree.name) }, s.margin + 4, s.y + 8, 26, input.icons);
+    s.font(9, true); s.ink(INK.text); s.doc.text(s.doc.splitTextToSize(pdfSafe(tree.name), 111), s.margin + 35, s.y + 15);
+    s.font(7.5); s.ink(INK.muted); s.doc.text(`${tree.plants} plants`, s.margin + 35, s.y + height - 10);
+    cells.forEach((cell, i) => { s.font(7.5); s.ink(INK.text); s.doc.text(cell, s.margin + 150 + (i + 0.5) * width, s.y + 15, { align: 'center', lineHeightFactor: 1.33 }); });
+    s.stroke(INK.hair); s.doc.line(s.margin, s.y + height, s.width - s.margin, s.y + height);
+    s.y += height;
+  }
+  s.y += 14;
+  for (const tree of projection.years[0].trees.filter(t => t.missing.length)) s.paragraph(`${tree.name}: ${tree.missing.join('; ')}`, { size: 8.5, ink: INK.muted, gap: 6 });
+  const recordedGroups = (input.treeGroups ?? []).filter(g => input.treeSeasons?.[g.harvest.speciesId]?.production?.length);
+  if (!recordedGroups.length) return;
+  s.page('portrait');
+  const notesHead = () => { masthead(s, 'Age assumptions'); pageTitle(s, input.meta.planTitle, 'Plant ages: assumptions and sources', 'Farm yield schedules are entered assumptions. Research first-crop ages are references to check locally.'); };
+  notesHead();
+  const ageNote = (text: string, gap = 6) => {
+    s.font(8.5);
+    const lines = s.doc.splitTextToSize(pdfSafe(text), s.contentWidth) as string[];
+    if (s.need(lines.length * 8.5 * 1.4 + gap + 16)) notesHead();
+    s.paragraph(text, { size: 8.5, ink: INK.muted, gap });
+  };
+  for (const group of recordedGroups) {
+    const choice = input.treeSeasons?.[group.harvest.speciesId];
+    for (const age of choice?.production ?? []) ageNote(`${group.harvest.name}: ${age.plants} ${age.status} plants, planted ${age.planted || 'date not recorded'}. Farm schedule: ${age.yields.filter(p => Number.isFinite(p.age) && Number.isFinite(p.kg)).map(p => `age ${p.age}: ${p.kg} kg/plant/year`).join('; ') || 'not entered'}.`);
+    if (choice?.production?.length && group.harvest.yearsToFirstCrop) {
+      const source = group.harvest.yearsToFirstCrop;
+      ageNote(`${group.harvest.name}: first-crop reference ${firstCropAgeLabel(source.value)} after planting. ${source.source.doc}${source.source.page ? `, p. ${source.source.page}` : ''}.`);
+      s.font(8.5); s.ink(INK.green); s.doc.textWithLink('First-crop source', s.margin, s.y, { url: source.source.url }); s.y += 16;
+    }
+  }
 }
 
 // ── Compact task summary (quick print) ──────────────────────────────────────
@@ -2064,6 +2163,7 @@ export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = fa
   if (!want.has('dashboard') && want.has('plan') && input.planNotes?.length) { startPage('portrait'); masthead(s, 'Plan notes'); drawPlanNotes(s, input); }
   if (want.has('calendar')) { startPage('landscape'); drawCalendar(s, input, nowMonth, calendar); }
   if (want.has('availability')) { startPage('portrait'); drawAvailability(s, input, now, nowMonth); }
+  if (want.has('availability') && input.productionProjection) { startPage('portrait'); drawProductionProjection(s, input); }
   if (want.has('guidance') && (input.productionGuide || input.poultryGuidance)) { startPage('portrait'); drawProductionGuidance(s, input); }
   if (want.has('taskSummary')) { startPage('portrait'); drawTaskSummary(s, input, nowMonth); }
   if (want.has('plan')) { startPage('landscape'); drawFullPlan(s, input); }
