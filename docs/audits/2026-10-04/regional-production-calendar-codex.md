@@ -66,6 +66,8 @@ NODE_PATH=/path/to/bundled/node_modules node --import ./tests/register-alias.mjs
 
 ## Limits and continuation
 
+Live follow-up: PR #927 deployed as `e8fbcbe`; both domains, main CI and native 27-page farmer export were checked. The final PDF review exposed CP-025: the global legend could imply that modelled vegetable dates were locally confirmed. Follow-up branch `codex/production-calendar-legend-20261004` scopes that statement to fruit, nuts and berries. This changes printed wording; the month marks and calculations stay as checked. Publication is recorded on issue #35.
+
 Private Ubhejane placements were not retrieved; the public sample lacks the owner's bananas, hives and coop. Regional PDF fixtures exercise those map entries independently. No private save/reopen, paid site-report generation, physical-device, fluent isiZulu or agronomist review was performed. No first-year production forecast can be inferred without planting dates, stock age, actual varieties, animal numbers and local conditions.
 
 Continue the separate site-survey audit with cultivar/stock-age recording, soil/chilling and purchasing checks. Add further regional windows only when their source distinguishes local/system/cultivar evidence from a combined industry supply season. Retain missing data explicitly.

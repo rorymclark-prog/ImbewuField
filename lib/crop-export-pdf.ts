@@ -1196,7 +1196,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     masthead(s, 'Picture calendar');
     pageTitle(s, input.meta.planTitle,
       dated ? `${monthShort(nowMonth)} ${now.getFullYear()} - ${monthShort(last.month)} ${last.year}` : 'Repeat-year template',
-      dated ? 'Picking and planning seasons. Solid marks: confirmed locally. Outlined marks: references when established, not food promised this year.'
+      dated ? 'Fruit, nuts and berries: solid marks are local dates. Outlined marks: references when established, not food promised this year.'
         : 'This repeats the annual planting cycle. It is not a forecast for this first year.');
     s.paragraph(`${input.meta.locationLine || input.meta.siteLine} - ${input.meta.climateLine || 'Climate not set'}`, { size: 10, ink: INK.green, gap: 8 });
   };
