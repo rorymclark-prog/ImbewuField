@@ -371,48 +371,10 @@
         },
         "body": [
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Pawpaw and young citrus",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " are sensitive to frost.",
-                "status": "draft",
-                "text": " di ameha habonolo ke serame (frost)."
-              }
-            ],
-            "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
+            "status": "english-hold"
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Keep ",
-                "status": "draft",
-                "text": "Boloka "
-              },
-              {
-                "sourceEnglish": "tender plants",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " out of ",
-                "status": "draft",
-                "text": " di le hole le "
-              },
-              {
-                "sourceEnglish": "known low frost pockets.",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " Observe local frost before planting.",
-                "status": "draft",
-                "text": " Hlokomela serame sa lehae pele o jala."
-              }
-            ],
-            "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
+            "status": "english-hold"
           }
         ]
       }

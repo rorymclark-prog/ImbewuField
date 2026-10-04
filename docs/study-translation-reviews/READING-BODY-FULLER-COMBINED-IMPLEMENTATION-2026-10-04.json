@@ -1,0 +1,398 @@
+{
+  "title": "Reading Landscape fuller body prose: combined source-bound implementation record",
+  "date": "2026-10-04",
+  "baseHead": "68719a788e0041da32eccfbbf36ca821eadfd321",
+  "authorization": "Unreviewed regional learner drafts; canonical English remains unchanged. Facilitator review is pending.",
+  "initialBatchRecord": "READING-BODY-FULLER-ROOT-READY-2026-10-04.json",
+  "secondPassCandidateRecord": "READING-BODY-FULLER-SECOND-PASS-CANDIDATES-2026-10-04.json",
+  "secondPassIndependentCheck": "READING-BODY-FULLER-SECOND-PASS-INDEPENDENT-CHECK-2026-10-04.json",
+  "uniqueChangedParagraphCount": 9,
+  "composition": "Final targets are the original 8 approved targets plus corrected recommended targets from the second pass; TS Reading L3 paragraph 2 adds one unique paragraph. The second pass supersedes three initial targets after checking each exact current resolver paragraph.",
+  "fields": [
+    {
+      "language": "st",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body.paragraph[2]",
+      "paragraphIndex": 2,
+      "sourceEnglishParagraph": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "previousTargetParagraph": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Hlokomela serame sa lehae pele o jala.",
+      "currentTargetParagraph": "Pawpaw and young citrus di ameha habonolo ke serame (frost). Boloka tender plants di le hole le known low frost pockets. Hlokomela serame sa lehae pele o jala.",
+      "segments": [
+        {
+          "sourceSpan": "Pawpaw and young citrus are sensitive to frost.",
+          "targetSpan": "Pawpaw and young citrus di ameha habonolo ke serame (frost).",
+          "segments": [
+            {
+              "source": "Pawpaw and young citrus",
+              "target": "Pawpaw and young citrus",
+              "status": "english-hold",
+              "reason": "Preserve exact crop names and young-citrus qualifier."
+            },
+            {
+              "source": " are sensitive to frost.",
+              "target": " di ameha habonolo ke serame (frost).",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            }
+          ]
+        },
+        {
+          "sourceSpan": "Keep tender plants out of known low frost pockets.",
+          "targetSpan": "Boloka tender plants di le hole le known low frost pockets.",
+          "segments": [
+            {
+              "source": "Keep ",
+              "target": "Boloka ",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": "tender plants",
+              "target": "tender plants",
+              "status": "english-hold",
+              "reason": "Preserve source plant class."
+            },
+            {
+              "source": " out of ",
+              "target": " di le hole le ",
+              "status": "draft",
+              "reason": "Preserve keep-away direction."
+            },
+            {
+              "source": "known low frost pockets.",
+              "target": "known low frost pockets.",
+              "status": "english-hold",
+              "reason": "Preserve exact observed site qualifier."
+            }
+          ]
+        }
+      ],
+      "reviewStatus": "machine-draft",
+      "finalTargetParagraph": "Pawpaw and young citrus di ameha habonolo ke serame (frost). Boloka tender plants di le hole le known low frost pockets. Hlokomela serame sa lehae pele o jala.",
+      "appliedSecondPass": false
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body.paragraph[0]",
+      "paragraphIndex": 0,
+      "sourceEnglishParagraph": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.",
+      "previousTargetParagraph": "Muya u nga tshinyadza zwimela kha smallholding. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Check local weather records musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.",
+      "currentTargetParagraph": "Muya u nga tshinyadza zwimela kha smallholding. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Sedzani local weather records musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.",
+      "segments": [
+        {
+          "sourceSpan": "Check local weather records",
+          "targetSpan": "Sedzani local weather records",
+          "segments": [
+            {
+              "source": "Check ",
+              "target": "Sedzani ",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": "local weather records",
+              "target": "local weather records",
+              "status": "english-hold",
+              "reason": "Retain the evidence-source term."
+            }
+          ]
+        }
+      ],
+      "reviewStatus": "machine-draft",
+      "finalTargetParagraph": "Muya u nga tshinyadza zwimela kha smallholding. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Sedzani local weather records musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.",
+      "appliedSecondPass": false
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "sourceEnglishParagraph": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "previousTargetParagraph": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places through the local frost season. Sedzani local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTargetParagraph": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places through the local frost season. Sedzani local minimum-temperature records where available. Arali records dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise a local agriculture adviser ni sa athu nanga a permanent home for tender seedlings.",
+      "segments": [
+        {
+          "sourceSpan": "If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+          "targetSpan": "Arali records dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise a local agriculture adviser ni sa athu nanga a permanent home for tender seedlings.",
+          "segments": [
+            {
+              "source": "If records are not available, ",
+              "target": "Arali records dzi sa wanali, ",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": "keep observing across cold nights",
+              "target": "bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": " and ask ",
+              "target": ", ni vhudzise ",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": "a local agriculture adviser",
+              "target": "a local agriculture adviser",
+              "status": "english-hold",
+              "reason": "Retain the specific adviser role."
+            },
+            {
+              "source": " before choosing ",
+              "target": " ni sa athu nanga ",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": "a permanent home for tender seedlings.",
+              "target": "a permanent home for tender seedlings.",
+              "status": "english-hold",
+              "reason": "Retain permanent placement and plant-stage anchors."
+            }
+          ]
+        }
+      ],
+      "reviewStatus": "machine-draft",
+      "finalTargetParagraph": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places through the local frost season. Ṱolani local minimum-temperature records hune dzi wanala hone. Arali records dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise a local agriculture adviser ni sa athu nanga a permanent home for tender seedlings.",
+      "appliedSecondPass": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "sourceEnglishParagraph": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "previousTargetParagraph": "On a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti can be colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.",
+      "currentTargetParagraph": "On a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti can be colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimelaka, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.",
+      "segments": [
+        {
+          "sourceSpan": "across cold nights",
+          "targetSpan": "eka vusiku byo titimelaka",
+          "segments": [
+            {
+              "source": "across cold nights",
+              "target": "eka vusiku byo titimelaka",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            }
+          ]
+        }
+      ],
+      "reviewStatus": "machine-draft",
+      "finalTargetParagraph": "On a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti ti nga va colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records loko ti kumeka. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimelaka, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.",
+      "appliedSecondPass": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body.paragraph[2]",
+      "paragraphIndex": 2,
+      "sourceEnglishParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "previousTargetParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets you observe.",
+      "currentTargetParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.",
+      "segments": [
+        {
+          "sourceSpan": "Keep sensitive plants away from the cold pockets you observe.",
+          "targetSpan": "Keep sensitive plants away from the cold pockets dzine na dzi vhona.",
+          "segments": [
+            {
+              "source": "Keep sensitive plants away from the cold pockets",
+              "target": "Keep sensitive plants away from the cold pockets",
+              "status": "english-hold",
+              "reason": "Keep the action and plant/condition terms exact because the local verb could mean store rather than keep away."
+            },
+            {
+              "source": " you observe.",
+              "target": " dzine na dzi vhona.",
+              "status": "draft",
+              "reason": "Localizes the observation qualifier."
+            }
+          ]
+        }
+      ],
+      "reviewStatus": "machine-draft",
+      "finalTargetParagraph": "Frost ndi ice that forms on a cold surface. Mist fhedzi a i sumbedzi uri ice has formed, nahone frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.",
+      "appliedSecondPass": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l4",
+      "fieldPath": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "sourceEnglishParagraph": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "previousTargetParagraph": "Ṱhogomelani hune tshando tsha dzula tshifhinga tshilapfusesa, hune mavu a nunukha vhunyisi kha miṅwedzi yo omaho, na hune khakibos kana blackjack zwa mela zwo tsitsikana. These plants zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Check the soil before deciding what the patch means for your design.",
+      "currentTargetParagraph": "Ṱhogomelani hune tshando tsha dzula tshifhinga tshilapfusesa, hune mavu a nunukha vhunyisi kha miṅwedzi yo omaho, na hune khakibos kana blackjack zwa mela zwo tsitsikana. Zwimela izwi zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Ṱolani mavu ni sa athu dzhia tsheo ya zwine patch ya amba kha design yaṋu.",
+      "segments": [
+        {
+          "sourceSpan": "These plants",
+          "targetSpan": "Zwimela izwi",
+          "segments": [
+            {
+              "source": "These plants",
+              "target": "Zwimela izwi",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            }
+          ]
+        },
+        {
+          "sourceSpan": "Check the soil before deciding what the patch means for your design.",
+          "targetSpan": "Ṱolani mavu ni sa athu dzhia tsheo ya zwine patch ya amba kha design yaṋu.",
+          "segments": [
+            {
+              "source": "Check the soil before deciding what the ",
+              "target": "Ṱolani mavu ni sa athu dzhia tsheo ya zwine ",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": "patch",
+              "target": "patch",
+              "status": "english-hold",
+              "reason": "Retain the exact ground-area scope."
+            },
+            {
+              "source": " means for your ",
+              "target": " ya amba kha ",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": "design.",
+              "target": "design yaṋu.",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            }
+          ]
+        }
+      ],
+      "reviewStatus": "machine-draft",
+      "finalTargetParagraph": "Ṱhogomelani hune tshando tsha dzula tshifhinga tshilapfusesa, hune mavu a nunukha vhunyisi kha miṅwedzi yo omaho, na hune khakibos kana blackjack zwa mela zwo tsitsikana. Zwimela izwi zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Ṱolani mavu ni sa athu dzhia tsheo ya zwine patch ya amba kha design yaṋu.",
+      "appliedSecondPass": false
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l4",
+      "fieldPath": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "sourceEnglishParagraph": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "previousTargetParagraph": "Tsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun'hwaka yi tsakama hi tin'hweti leti omeke, na laha ku nga na ku mila ko tlhuma ka khakibos kumbe blackjack. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Kambela misava u nga si teka xiboho hi leswi ndhawu leyi yi vulaka swona eka design ya wena.",
+      "currentTargetParagraph": "Tsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun'hwaka yi tsakama hi tin'hweti leti omeke, na laha ku nga na ku mila ko tlhuma ka khakibos kumbe blackjack. Swimilani leswi swi nga kula eka disturbed places, but their presence alone does not show whether soil is compacted. Kambela misava u nga si teka xiboho hi leswi ndhawu leyi yi vulaka swona eka design ya wena.",
+      "segments": [
+        {
+          "sourceSpan": "These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.",
+          "targetSpan": "Swimilani leswi swi nga kula eka disturbed places, but their presence alone does not show whether soil is compacted.",
+          "segments": [
+            {
+              "source": "These plants can grow in ",
+              "target": "Swimilani leswi swi nga kula eka ",
+              "status": "draft",
+              "reason": "Translate ordinary framing while preserving the source condition."
+            },
+            {
+              "source": "disturbed places",
+              "target": "disturbed places",
+              "status": "english-hold",
+              "reason": "Retain this site-condition term."
+            },
+            {
+              "source": ", but their presence alone does not show whether soil is compacted.",
+              "target": ", but their presence alone does not show whether soil is compacted.",
+              "status": "english-hold",
+              "reason": "Preserve the exact diagnostic limitation."
+            }
+          ]
+        }
+      ],
+      "reviewStatus": "machine-draft",
+      "finalTargetParagraph": "Tsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun'hwaka yi tsakama hi tin'hweti leti omeke, na laha ku nga na ku mila ko tlhuma ka khakibos kumbe blackjack. Swimilani leswi swi nga kula eka disturbed places, but their presence alone does not show whether soil is compacted. Kambela misava u nga si teka xiboho hi leswi ndhawu leyi yi vulaka swona eka design ya wena.",
+      "appliedSecondPass": false
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "body.paragraph[2]",
+      "paragraphIndex": 2,
+      "sourceEnglishParagraph": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "previousTargetParagraph": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTargetParagraph": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Hlawula any water works for the site, u pulana a safe route for excess water.",
+      "segments": [
+        {
+          "sourceSpan": "Choose any water works for the site and plan a safe route for excess water.",
+          "targetSpan": "Hlawula any water works for the site, u pulana a safe route for excess water.",
+          "segments": [
+            {
+              "source": "Choose ",
+              "target": "Hlawula ",
+              "status": "draft",
+              "reason": "Localizes the choice verb."
+            },
+            {
+              "source": "any water works for the site",
+              "target": "any water works for the site",
+              "status": "english-hold",
+              "reason": "Preserves “any” and exact site scope; avoids adding suitability."
+            },
+            {
+              "source": " and plan ",
+              "target": ", u pulana ",
+              "status": "draft",
+              "reason": "Localizes planning connection."
+            },
+            {
+              "source": "a safe route for excess water.",
+              "target": "a safe route for excess water.",
+              "status": "english-hold",
+              "reason": "Preserves the complete safety and excess-water condition."
+            }
+          ]
+        }
+      ],
+      "reviewStatus": "machine-draft",
+      "finalTargetParagraph": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Hlawula any water works for the site, u pulana a safe route for excess water.",
+      "appliedSecondPass": false
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "sourceEnglishParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "previousTargetParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "finalTargetParagraph": "Frost i ice that forms on a cold surface. Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "appliedSecondPass": true,
+      "provenance": "New paragraph introduced by independently checked second pass; exact pre-application current target retained here."
+    }
+  ],
+  "files": [
+    {
+      "language": "st",
+      "path": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "changedUniqueParagraphs": 1,
+      "finalFileSha256": "77333a434341b09859625e47763242eb524882912463e1c611cc8a9b3daef44f",
+      "restoringOnlyFinalBatchTargetsRecreatesSecondPassStart": true
+    },
+    {
+      "language": "ve",
+      "path": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "changedUniqueParagraphs": 4,
+      "finalFileSha256": "126c85da4cc6263b9f5a25a8d98ff9a4766b80f7d967b8bc1a8520d0bfca4b48",
+      "restoringOnlyFinalBatchTargetsRecreatesSecondPassStart": true
+    },
+    {
+      "language": "ts",
+      "path": "lib/course-translation-drafts-ts.ts",
+      "changedUniqueParagraphs": 4,
+      "finalFileSha256": "ef38b5b71127d98ae51dbad1cdf1334a916f3f1116f2da0fb0377a813a6b4bf0",
+      "restoringOnlyFinalBatchTargetsRecreatesSecondPassStart": true
+    }
+  ],
+  "canonicalEnglish": {
+    "path": "lib/course-modules.ts",
+    "unchanged": true,
+    "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397"
+  },
+  "fluentApproval": false
+}

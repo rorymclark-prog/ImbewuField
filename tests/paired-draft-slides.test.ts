@@ -1680,11 +1680,16 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
     'docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', 'utf8'));
   const seasonalMapFollowup = JSON.parse(readFileSync(
     'docs/study-translation-reviews/READING-SEASONAL-OBSERVATION-MAP-COMPARISON-IMPLEMENTATION-2026-10-04.json', 'utf8'));
+  const bodySync = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-BODY-DECK-SYNC-IMPLEMENTATION-2026-10-05.json', 'utf8'));
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
     // Reconstruct the earlier 20-field snapshot across later authorized batches.
     // Their separate tests assert the new target text; this keeps the original preservation proof meaningful.
     // Restore this newest follow-up first; older batches below then restore their own earlier snapshots.
+    for (const change of bodySync.pairedFields[language].changedFields) {
+      packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
+    }
     for (const change of seasonalMapFollowup.fields.filter((item: any) => item.language === language)) {
       packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.currentTarget;
     }
@@ -1803,6 +1808,8 @@ test('Reading observation drafts preserve exact sources, unlisted fields and sea
     'docs/study-translation-reviews/READING-SEASONAL-OBSERVATION-MAP-COMPARISON-IMPLEMENTATION-2026-10-04.json', 'utf8'));
   const proof = JSON.parse(readFileSync(
     'docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', 'utf8'));
+  const bodySync = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-BODY-DECK-SYNC-IMPLEMENTATION-2026-10-05.json', 'utf8'));
   assert.equal(proof.scope.pairedTargetFieldsChanged, 21);
   assert.equal(proof.scope.learnerRegistryParagraphRepairs, 1);
   assert.match(proof.scope.excludedTsSlide19Body2, /Pronoun antecedent/);
@@ -1810,6 +1817,9 @@ test('Reading observation drafts preserve exact sources, unlisted fields and sea
   const expectedChangedFields = new Set<string>();
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    for (const change of bodySync.pairedFields[language].changedFields) {
+      packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
+    }
     for (const addition of followup.fields.filter((field: any) => field.language === language)) {
       packet.slides[addition.slide - 1].target.body[addition.bodyIndex] = addition.currentTarget;
     }
@@ -2485,6 +2495,137 @@ test('a moderately longer paired draft expands only its frame and keeps the read
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }
+});
+
+test('mixed paired text wraps as inline color runs without losing spaces or punctuation', () => {
+  const code = String.raw`
+import json, sys
+sys.path.insert(0, 'scripts')
+from PIL import Image, ImageDraw, ImageFont
+from paired_text_flow import body_pitches, layout_mixed_segments
+segments = [
+    {'status': 'english-hold', 'text': 'Mist'},
+    {'status': 'draft', 'text': ' alone does not show that '},
+    {'status': 'english-hold', 'text': 'ice has formed'},
+    {'status': 'draft', 'text': ', and'},
+    {'status': 'english-hold', 'text': ' frost damage can happen without visible ice.'},
+]
+draw = ImageDraw.Draw(Image.new('RGB', (100, 100)))
+font = ImageFont.load_default()
+measure = lambda text: draw.textlength(text, font=font)
+max_width = measure('Mist alone does not show that') + 2
+lines, logical = layout_mixed_segments(segments, measure, max_width, 14)
+word_error = ''
+try:
+    layout_mixed_segments([
+        {'status': 'draft', 'text': 'word'},
+        {'status': 'english-hold', 'text': ','},
+    ], measure, measure('word') + measure(',') - 1, 15)
+except ValueError as error:
+    word_error = str(error)
+measure_runs = [
+    {'status': 'draft', 'text': 'abc'},
+    {'status': 'english-hold', 'text': ','},
+    {'status': 'draft', 'text': ' def'},
+]
+measured, measured_logical = layout_mixed_segments(measure_runs, measure, measure('abc') + measure(',') + 1, 16)
+under_mark_pitches = body_pitches(['ṱa', 'next'])
+print(json.dumps({'lines': lines, 'logical': logical, 'wordError': word_error,
+                  'measured': measured, 'measuredLogical': measured_logical,
+                  'underMarkPitches': under_mark_pitches, 'widthLimit': max_width,
+                  'lineWidths': [sum(measure(run['text']) for run in line) for line in lines],
+                  'measuredLimit': measure('abc') + measure(',') + 1,
+                  'measuredWidths': [sum(measure(run['text']) for run in line) for line in measured]}))
+`;
+  const result = spawnSync('python3', ['-c', code], { cwd: process.cwd(), encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  const layout = JSON.parse(result.stdout);
+  assert.equal(layout.logical,
+    'Mist alone does not show that ice has formed, and frost damage can happen without visible ice.');
+  assert.ok(layout.lines.length > 1, 'long mixed paragraphs wrap to the paired panel width');
+  assert.equal(layout.lines.flatMap((line: any[]) => line.map(run => run.rawText)).join(''), layout.logical,
+    'raw runs concatenate to the exact target text even when display lines wrap');
+  const expectedStyledCharacters = [
+    ...'Mist'.split('').map((char: string) => [char, 'english-hold']),
+    ...' alone does not show that '.split('').map((char: string) => [char, 'draft']),
+    ...'ice has formed'.split('').map((char: string) => [char, 'english-hold']),
+    ...', and'.split('').map((char: string) => [char, 'draft']),
+    ...' frost damage can happen without visible ice.'.split('').map((char: string) => [char, 'english-hold']),
+  ].filter(([char]: any[]) => !/\s/.test(char));
+  const actualStyledCharacters = layout.lines.flatMap((line: any[]) => line.flatMap(run =>
+    run.rawText.split('').filter((char: string) => !/\s/.test(char)).map((char: string) => [char, run.status])));
+  assert.deepEqual(actualStyledCharacters, expectedStyledCharacters,
+    'every nonspace character, including punctuation, keeps its source run color in order');
+  assert.ok(layout.lineWidths.every((width: number) => width <= layout.widthLimit),
+    'each visual line stays within width measured using the actual font runs');
+  for (const line of layout.lines) {
+    assert.ok(line.every((run: any) => ['draft', 'english-hold'].includes(run.status)),
+      'each inline run retains its source review/color status');
+  }
+  assert.ok(layout.lines.some((line: any[]) => new Set(line.map((run: any) => run.status)).size > 1),
+    'draft and held text share a natural wrapped line without losing color boundaries');
+  assert.ok(layout.lines.flatMap((line: any[]) => line)
+    .some((run: any) => run.status === 'draft' && run.text.includes(', and')),
+  'comma and conjunction remain attached to their translated run');
+  assert.match(layout.wordError, /slide 15 has a word wider than its paired panel/,
+    'a color boundary inside a word cannot become a visual line break before punctuation');
+  assert.equal(layout.measuredLogical, 'abc, def');
+  assert.equal(layout.measured.flatMap((line: any[]) => line.map(run => run.rawText)).join(''), 'abc, def');
+  assert.ok(layout.measuredWidths.every((width: number) => width <= layout.measuredLimit),
+    'wrapping measures the actual merged color runs drawn on the line');
+  assert.deepEqual(layout.underMarkPitches, [78, 66],
+    'Tshivenda under-marks retain their extra clearance between rendered lines');
+});
+
+test('Reading frost wording sync matches its independent source-bound seven-field proof', () => {
+  const proof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-BODY-DECK-SYNC-IMPLEMENTATION-2026-10-05.json', 'utf8'));
+  const independent = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-BODY-DECK-SYNC-INDEPENDENT-CHECK-2026-10-05.json', 'utf8'));
+  assert.equal(independent.summary.semanticChecksPassed, 7);
+  assert.equal(independent.summary.currentTargetsMatch, 7);
+  const changed = new Set<string>();
+  for (const language of ['st', 've', 'ts'] as const) {
+    const pair = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    const snapshots = JSON.parse(readFileSync(
+      `docs/study-translation-reviews/READING-BODY-DECK-SYNC-BEFORE-${language.toUpperCase()}-2026-10-05.json`, 'utf8'));
+    const fields = proof.pairedFields[language].changedFields;
+    for (const field of fields) {
+      const key = `${language}:${field.slide}:${field.bodyIndex}`;
+      changed.add(key);
+      const slide = pair.slides[field.slide - 1];
+      assert.equal(slide.english.body[field.bodyIndex], field.source,
+        `${key}: the paired English source remains unchanged`);
+      const target = slide.target.body[field.bodyIndex];
+      assert.equal(target.status, 'mixed', `${key}: unreviewed translated and held clauses stay visible`);
+      assert.deepEqual(target, field.newTarget, `${key}: preserve the approved field composition exactly`);
+      assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), field.source,
+        `${key}: source segments cover the complete original field in order`);
+      const visible = target.segments.map((segment: any) =>
+        segment.status === 'english-hold' ? segment.sourceEnglish : segment.text).join('');
+      assert.equal(visible, field.renderedText, `${key}: held text remains exact and draft text is source-paired`);
+      for (const segment of target.segments) {
+        if (segment.status === 'english-hold') assert.equal(segment.text, undefined, `${key}: holds use exact source copy`);
+      }
+      const previous = snapshots.slides[field.slide - 1].target.body[field.bodyIndex];
+      assert.deepEqual(previous, field.previousTarget, `${key}: before-state is recorded for preservation checks`);
+    }
+    for (const snapshot of snapshots.slides) {
+      const live = pair.slides[snapshot.n - 1];
+      assert.deepEqual(live.english, snapshot.english, `${language} slide ${snapshot.n}: source snapshot remains exact`);
+      assert.deepEqual(live.target.heading, snapshot.target.heading,
+        `${language} slide ${snapshot.n}: headings stay unchanged`);
+      for (let index = 0; index < snapshot.target.body.length; index++) {
+        if (!fields.some((field: any) => field.slide === snapshot.n && field.bodyIndex === index)) {
+          assert.deepEqual(live.target.body[index], snapshot.target.body[index],
+            `${language} slide ${snapshot.n} body ${index}: unlisted target remains unchanged`);
+        }
+      }
+    }
+  }
+  assert.equal(changed.size, 7);
+  assert.equal(new Set([...changed].map(key => key.split(':').slice(0, 2).join(':'))).size, 4,
+    'the seven fields affect the four intended frame numbers');
 });
 
 test('the reviewed three-line Market channel heading passes at readable size while runaway headings still fail', () => {

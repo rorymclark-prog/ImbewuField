@@ -475,7 +475,54 @@
             "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Frost",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is ",
+                "status": "draft",
+                "text": " ndi "
+              },
+              {
+                "sourceEnglish": "ice that forms on a cold surface.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Mist",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " alone",
+                "status": "draft",
+                "text": " fhedzi"
+              },
+              {
+                "sourceEnglish": " does not show that ",
+                "status": "draft",
+                "text": " a i sumbedzi uri "
+              },
+              {
+                "sourceEnglish": "ice has formed",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and",
+                "status": "draft",
+                "text": ", nahone"
+              },
+              {
+                "sourceEnglish": " frost damage can happen without visible ice.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
           },
           {
             "status": "draft",
@@ -648,7 +695,8 @@
             "segments": [
               {
                 "sourceEnglish": "These plants ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Zwimela izwi "
               },
               {
                 "sourceEnglish": "can grow in disturbed places, but their presence alone does not show whether the soil is compacted. ",
@@ -660,7 +708,7 @@
                 "status": "english-hold"
               }
             ],
-            "provenance": "Unreviewed mixed learner draft; exact source subject and ambiguous patch decision are held in English. Facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
           }
         ]
       }
