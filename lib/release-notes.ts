@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: 'fb9cbb01', changes: [
+    'Vegetables and Market lessons add fuller regional drafts beside English.',
+    'Eight silent slides match the lesson text; Study headings show more regional wording.',
+  ], tour: [
+    { title: 'Compare the regional Study drafts',
+      where: 'Study → Vegetables or Market Gardening → Lessons and Slides',
+      detail: 'Read unreviewed drafts beside English and save the silent Vegetables slides.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: '34f4d0d3', changes: [
     'Introduction slides add fuller Tshivenda and Xitsonga drafts beside English.',
     'Difficult clauses stay in English; the regional decks remain silent for review.',

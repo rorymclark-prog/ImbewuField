@@ -253,8 +253,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       },
       "title": {
         "sourceEnglish": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
-        "xitsongaDraft": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Rainwater Tanks and Roof Catchment: Ku hlengeleta ni ku sirhelela mati",
+        "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",

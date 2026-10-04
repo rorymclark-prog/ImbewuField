@@ -1,0 +1,74 @@
+[
+  {
+    "language": "st",
+    "slide": 16,
+    "path": "public/course-decks/vegetables-staples/st/slide-16.webp",
+    "pixels": "1440x5584",
+    "bytes": 560812,
+    "sha256": "d63e02333e7b1b875574ec222947cc1704bfb0818c000a99bed965ac15fb2fc1",
+    "png_sha256": "6a98bd8e7ed8bae12e7314c37d59ed386e0a4bde4a276a34f36b7ebe468b78a6"
+  },
+  {
+    "language": "ve",
+    "slide": 16,
+    "path": "public/course-decks/vegetables-staples/ve/slide-16.webp",
+    "pixels": "1440x5644",
+    "bytes": 555608,
+    "sha256": "3d2aaeac2b6174df27ec1f791cf9f9818c784fb80fa27143bad351fc3684e4f3",
+    "png_sha256": "448d130e937944489916528a1aeb063d32573f04c8b09b61d54fa2435e84c593"
+  },
+  {
+    "language": "ts",
+    "slide": 4,
+    "path": "public/course-decks/vegetables-staples/ts/slide-04.webp",
+    "pixels": "1440x5400",
+    "bytes": 690896,
+    "sha256": "2a6d35dfa7706e665ec8151a121653cf2245c87a4bc77ee4ee7ea5a35bdf3832",
+    "png_sha256": "f16b8c25f6cff7cea9ed6a216ac8fda63d5c983b93f50719e6da172bc782a8d1"
+  },
+  {
+    "language": "ts",
+    "slide": 6,
+    "path": "public/course-decks/vegetables-staples/ts/slide-06.webp",
+    "pixels": "1440x5400",
+    "bytes": 596546,
+    "sha256": "9c738cc503b77878ee6d2bd4b29c9dc381c0fe74ff7247ee9c915780d651f903",
+    "png_sha256": "57ad946201e9018be6b9f10bb2cb98d03c68cfa886fb7788be54b710b202490e"
+  },
+  {
+    "language": "ts",
+    "slide": 10,
+    "path": "public/course-decks/vegetables-staples/ts/slide-10.webp",
+    "pixels": "1440x5400",
+    "bytes": 791480,
+    "sha256": "a889aabff559a861439d48a7a2dde651c5d56b91ee7cf2cd1c23ce89fea7ef8a",
+    "png_sha256": "2ff73dbbc531813b98831ee52835a3fbed2f18facd04a5657200fef01ec0b3d2"
+  },
+  {
+    "language": "ts",
+    "slide": 11,
+    "path": "public/course-decks/vegetables-staples/ts/slide-11.webp",
+    "pixels": "1440x5400",
+    "bytes": 379560,
+    "sha256": "aa8076e48fe233c6f08feb720a3b62f6d1f6e994b3852fe26b9a11fa62caacdd",
+    "png_sha256": "9b77901fe21e2edfda826f0866b3a40512b48ab73e91a596aaac67872caf0f0d"
+  },
+  {
+    "language": "ts",
+    "slide": 15,
+    "path": "public/course-decks/vegetables-staples/ts/slide-15.webp",
+    "pixels": "1440x5400",
+    "bytes": 574266,
+    "sha256": "c419746fef00bf2e0c16cf9e4825deb65ed80e45a9ec31faa4d04bcbcd6b64d7",
+    "png_sha256": "3b3be7026e9af503815ec755ca3d062e89c015d1bb9d3b824a16f42fec2c92a4"
+  },
+  {
+    "language": "ts",
+    "slide": 16,
+    "path": "public/course-decks/vegetables-staples/ts/slide-16.webp",
+    "pixels": "1440x5584",
+    "bytes": 548518,
+    "sha256": "448a08a0787bfcb6de22282bebf80feab0d3926380fcd4a2bebd067e1ecb2aa7",
+    "png_sha256": "fbf887cd5dff06bf62c37241e811b24c517b9b79d511518557d95d15bfbd687a"
+  }
+]

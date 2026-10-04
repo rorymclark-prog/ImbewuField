@@ -28,8 +28,8 @@ test('Soil Health L1 keeps all twelve source paragraphs paired while filling the
   assert.equal(XITSONGA_SOIL_HEALTH_DRAFT.reviewStatus, 'machine-draft');
   assert.equal(draft.id, sourceLesson.id);
   assert.equal(draft.title.sourceEnglish, sourceLesson.title);
-  assert.equal(draft.title.xitsongaDraft, sourceLesson.title);
-  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.title.xitsongaDraft, 'Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo');
+  assert.equal(draft.title.reviewStatus, 'machine-draft', 'the checked foundation metaphor is published as an unreviewed title draft');
   assert.equal(draft.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
   assert.equal(draft.infographicAlt?.xitsongaDraft, sourceLesson.infographicAlt);
   assert.equal(draft.body.sourceEnglish, sourceLesson.body);
@@ -67,7 +67,8 @@ test('Soil Health L1 Xitsonga assessments preserve diagnostic limits and answer 
   const source = sourceModule.lessons[0];
   const draft = XITSONGA_SOIL_HEALTH_DRAFT.lessons.find(lesson => lesson.id === source.id);
   assert.ok(draft);
-  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.title.xitsongaDraft, 'Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo');
+  assert.equal(draft.title.reviewStatus, 'machine-draft', 'the title candidate does not alter diagnostic limits or assessment wiring');
   assert.equal(draft.infographicAlt?.reviewStatus, 'hold');
   assert.equal(draft.body.sourceEnglish, source.body, 'assessment wiring leaves the existing body pairing intact');
   assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);

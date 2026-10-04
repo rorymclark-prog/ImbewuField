@@ -440,7 +440,9 @@ test('Sesotho pest step framing preserves diagnosis before action and treatment 
   assert.match(paragraphs[5], /mehato e mene, ka tatellano/);
   assert.match(paragraphs[9], /Ke ka morao feela/);
   assert.ok(paragraphs[9].includes('lightest thing that works'));
-  assert.ok(paragraphs[9].includes('may help. Check that the action suits the problem and monitor the result.'));
+  assert.ok(paragraphs[9].includes('Netefatsa hore ketso e loketse bothata') &&
+    paragraphs[9].includes('behe leihlo sephethong'),
+  'the action-fit and result-monitoring clauses are localized without changing the preceding treatment safeguards');
   assert.equal(paragraphs[10], source.body.split('\n\n')[10]);
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
   assert.equal(resolveLearnerLessonPresentation(source, 'st').content.body, draft.body.sesothoDraft);

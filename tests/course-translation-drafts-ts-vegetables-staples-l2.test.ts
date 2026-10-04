@@ -30,7 +30,7 @@ test('Vegetables & Staple Crops L2 exposes its source-paired body and bounded as
   assert.equal(localizedParagraphs.length, sourceParagraphs.length);
   assert.deepEqual([0, 3].map(index => sourceParagraphs[index]), sourceParagraphsSelected);
   assert.deepEqual([0, 3].map(index => localizedParagraphs[index]), draftParagraphsSelected);
-  for (const index of [12, 13, 14]) {
+  for (const index of [12, 14]) {
     assert.equal(localizedParagraphs[index], sourceParagraphs[index], `body paragraph ${index} keeps its Indigenous attribution or named crop claim exact English`);
   }
   assert.ok(localizedParagraphs[1].includes('Hlawula swakudya') && localizedParagraphs[1].includes('xitsongo'));
@@ -42,9 +42,11 @@ test('Vegetables & Staple Crops L2 exposes its source-paired body and bounded as
   assert.ok(localizedParagraphs[8].startsWith('Loko crop timing yi lulamile, harvests can begin to overlap.'));
   assert.ok(localizedParagraphs[8].endsWith('The first batch will not always be ready by the fourth sowing.'));
   assert.ok(localizedParagraphs[9].startsWith('Two to three weeks i starting rhythm, a hi nawu.'));
-  assert.ok(localizedParagraphs[11].startsWith('Intercropping is not just crowding different plants together.'), 'the definition of intercropping remains exact before its localized framing');
+  assert.ok(localizedParagraphs[11].startsWith('Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we.'), 'the definition is localized while retaining exact technical anchors for intercropping and crowding');
+  assert.equal(localizedParagraphs[13], 'Maize yi nyika ku leha ni structure.', 'retain Maize and the structural role; do not narrow structure to shape/form');
+  assert.equal(localizedParagraphs[21], 'Ti tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo.', 'preserve the crop choice, sowing date and purpose of filling the previously named food gap');
   assert.ok(localizedParagraphs[16].startsWith('Timing i ya nkoka.'));
-  assert.ok(localizedParagraphs[17].startsWith('Swibyariwa swi nga ha phikizana. Give them suitable space, water and light.'));
+  assert.ok(localizedParagraphs[17].startsWith('Swibyariwa swi nga ha phikizana. Nyika swibyariwa suitable space, water and light.'), 'the instruction is localized without narrowing light to sunlight or dropping suitable');
   assert.ok(localizedParagraphs[17].includes('Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.'));
   assert.ok(localizedParagraphs[18].startsWith('Ndyangu wu nga va na hungry gap:'));
   assert.ok(localizedParagraphs[20].includes('U nga tekeleli calendar') && localizedParagraphs[20].includes("tin'hweti ta wena"));
@@ -110,7 +112,7 @@ test('Vegetables L2 drafts garden observation and seasonal possibilities while h
   const draftParagraphs = XITSONGA_VEGETABLES_STAPLES_L2_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length,
     'the learner paragraph order and count must stay aligned to the English source');
-  for (const index of [12, 13, 14]) {
+  for (const index of [12, 14]) {
     assert.equal(draftParagraphs[index], sourceParagraphs[index]);
   }
   assert.ok(draftParagraphs[10].startsWith("Languta leswi humelelaka ensin'wini ya wena, u lulamisa interval."));

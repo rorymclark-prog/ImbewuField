@@ -812,7 +812,7 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const module = COURSE_MODULES.find(({ id }) => id === 'vegetables-staples')!;
   const expectedHolds = new Set([
-    'st:16:6', 've:16:6', 'ts:10:2', 'ts:10:3', 'ts:10:4', 'ts:16:6',
+    'st:16:6', 've:16:6', 'ts:10:2', 'ts:10:4', 'ts:16:6',
   ]);
   let sourceMatches = 0;
   let reusedDrafts = 0;
@@ -853,9 +853,25 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
   }
 
   assert.equal(sourceMatches, 171, 'slides 7–16 contain 171 complete source-matched paragraphs across the three languages');
-  assert.equal(reusedDrafts, 165, 'all available source-matched learner drafts appear in the deck');
+  assert.equal(reusedDrafts, 166,
+    'all available source-matched learner drafts appear in the deck, including the new Xitsonga Maize height draft with its technical structure term held in English');
   assert.deepEqual(actualHolds, expectedHolds,
-    'only the held Indigenous example and crop-treatment guidance remain outside learner prose reuse');
+    'the Indigenous farming example, Beans claim and crop-treatment safeguards remain holds; the now-localized Maize height wording is reused');
+
+  const tsSlides = validatePairedDraft(
+    JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8')),
+    source,
+    'ts',
+  );
+  const maizeLesson = module.lessons.find(({ id }) => id === 'vegetables-staples-l2')!;
+  const maizeSource = 'Maize gives height and structure.';
+  const maizeIndex = maizeLesson.body.split('\n\n').findIndex((paragraph) => paragraph === maizeSource);
+  assert.notEqual(maizeIndex, -1, 'the maize signpost resolves to one complete canonical lesson paragraph');
+  assert.equal(tsSlides[9].english.body[2], maizeSource);
+  assert.deepEqual(tsSlides[9].target.body[2], {
+    status: 'draft',
+    text: resolveLearnerLessonPresentation(maizeLesson, 'ts').content.body.split('\n\n')[maizeIndex],
+  }, 'reuse the current source-bound Xitsonga height draft while preserving the exact English structure anchor');
 
   const treatmentSource = 'If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.';
   for (const lang of ['st', 've', 'ts'] as const) {

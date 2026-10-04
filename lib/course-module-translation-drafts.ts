@@ -12,6 +12,7 @@ import { SESOTHO_SMALL_LIVESTOCK_DRAFT } from './course-translation-drafts-st-sm
 import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-st-seeds-sovereignty.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT } from './course-translation-drafts-ts-water-harvesting.ts';
+import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from './course-translation-drafts-ts-vegetables-staples.ts';
 import { XITSONGA_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-ts-seeds-sovereignty.ts';
 import { XITSONGA_SMALL_LIVESTOCK_DRAFT } from './course-translation-drafts-ts-small-livestock.ts';
 import { XITSONGA_FOOD_FOREST_DRAFT } from './course-translation-drafts-ts-food-forest.ts';
@@ -19,6 +20,7 @@ import { XITSONGA_PLANT_GUILDS_DRAFT } from './course-translation-drafts-ts-plan
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-ve.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ve-reading-landscape.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from './course-translation-drafts-ve-water-harvesting.ts';
+import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT } from './course-translation-drafts-ve-vegetables-staples.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from './course-translation-drafts-ve-food-forest.ts';
 import { TSHIVENDA_PLANT_GUILDS_DRAFT } from './course-translation-drafts-ve-plant-guilds.ts';
 import { TSHIVENDA_SOIL_HEALTH_DRAFT } from './course-translation-drafts-ve-soil-health.ts';
@@ -99,8 +101,8 @@ export interface CourseModulePresentation {
 
 const REGIONAL_MODULE_DRAFTS = {
   st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT, SESOTHO_MARKET_COMMUNITY_DRAFT, SESOTHO_SMALL_LIVESTOCK_DRAFT, SESOTHO_SEEDS_SOVEREIGNTY_DRAFT],
-  ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT, XITSONGA_WATER_HARVESTING_DRAFT, XITSONGA_FOOD_FOREST_DRAFT, XITSONGA_PLANT_GUILDS_DRAFT, XITSONGA_SEEDS_SOVEREIGNTY_DRAFT, XITSONGA_SMALL_LIVESTOCK_DRAFT],
-  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_SOIL_HEALTH_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_PLANT_GUILDS_DRAFT, TSHIVENDA_SMALL_LIVESTOCK_DRAFT, TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT],
+  ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT, XITSONGA_WATER_HARVESTING_DRAFT, XITSONGA_VEGETABLES_STAPLES_DRAFT, XITSONGA_FOOD_FOREST_DRAFT, XITSONGA_PLANT_GUILDS_DRAFT, XITSONGA_SEEDS_SOVEREIGNTY_DRAFT, XITSONGA_SMALL_LIVESTOCK_DRAFT],
+  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, TSHIVENDA_SOIL_HEALTH_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_PLANT_GUILDS_DRAFT, TSHIVENDA_SMALL_LIVESTOCK_DRAFT, TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT],
 };
 
 /** Use a draft only while its English source pair still matches the canonical module record. */
@@ -118,16 +120,16 @@ export function resolveCourseModulePresentation(module: CourseModule, language: 
       module.durationMins === draft.sourceMetadata.durationMins &&
       module.category === draft.sourceMetadata.category) {
       const moduleDraft = draft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT |
-        typeof SESOTHO_FOOD_FOREST_DRAFT | typeof SESOTHO_PLANT_GUILDS_DRAFT | typeof SESOTHO_MARKET_COMMUNITY_DRAFT | typeof SESOTHO_SMALL_LIVESTOCK_DRAFT | typeof SESOTHO_SEEDS_SOVEREIGNTY_DRAFT | typeof XITSONGA_INTRO_PERMACULTURE_DRAFT | typeof XITSONGA_SEEDS_SOVEREIGNTY_DRAFT | typeof XITSONGA_SMALL_LIVESTOCK_DRAFT |
+        typeof SESOTHO_FOOD_FOREST_DRAFT | typeof SESOTHO_PLANT_GUILDS_DRAFT | typeof SESOTHO_MARKET_COMMUNITY_DRAFT | typeof SESOTHO_SMALL_LIVESTOCK_DRAFT | typeof SESOTHO_SEEDS_SOVEREIGNTY_DRAFT | typeof XITSONGA_INTRO_PERMACULTURE_DRAFT | typeof XITSONGA_WATER_HARVESTING_DRAFT | typeof XITSONGA_VEGETABLES_STAPLES_DRAFT | typeof XITSONGA_SEEDS_SOVEREIGNTY_DRAFT | typeof XITSONGA_SMALL_LIVESTOCK_DRAFT |
         typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT |
-        typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_SOIL_HEALTH_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT |
+        typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT | typeof TSHIVENDA_SOIL_HEALTH_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT |
         typeof TSHIVENDA_SMALL_LIVESTOCK_DRAFT;
       const title = moduleDraft.title.reviewStatus === 'hold' ? module.title : language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).title.sesothoDraft :
         language === 'ts' ? (moduleDraft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).title.xitsongaDraft :
-          (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT | typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_SOIL_HEALTH_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT | typeof TSHIVENDA_SMALL_LIVESTOCK_DRAFT).title.tshivendaDraft;
+          (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT | typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT | typeof TSHIVENDA_SOIL_HEALTH_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT | typeof TSHIVENDA_SMALL_LIVESTOCK_DRAFT).title.tshivendaDraft;
       const description = moduleDraft.description.reviewStatus === 'hold' ? module.description : language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).description.sesothoDraft :
         language === 'ts' ? (moduleDraft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).description.xitsongaDraft :
-          (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT | typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_SOIL_HEALTH_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT | typeof TSHIVENDA_SMALL_LIVESTOCK_DRAFT).description.tshivendaDraft;
+          (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT | typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT | typeof TSHIVENDA_SOIL_HEALTH_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT | typeof TSHIVENDA_SMALL_LIVESTOCK_DRAFT).description.tshivendaDraft;
       const status = moduleDraft.title.reviewStatus === 'machine-draft' ||
         moduleDraft.description.reviewStatus === 'machine-draft' ? 'draft' : 'english-fallback';
       return { title, description, status };

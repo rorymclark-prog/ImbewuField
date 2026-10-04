@@ -26,17 +26,17 @@ const draftParagraphs = [
   "Loko crop timing yi lulamile, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
   "Two to three weeks i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
   "Languta leswi humelelaka ensin'wini ya wena, u lulamisa interval. Ku xiyisisa leswi hi swona vutshila.",
-  "Intercropping is not just crowding different plants together. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla.",
+  "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla.",
   "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
-  "Maize gives height and structure.",
+  "Maize yi nyika ku leha ni structure.",
   "Beans climb the maize, and store as protein.",
   "Pumpkin yi hangalaka ehenhla ka misava, yi endla ndzhuti ehenhla ka misava, yi tlhela yi hlayisa moisture.",
   "Timing i ya nkoka. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
-  "Swibyariwa swi nga ha phikizana. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+  "Swibyariwa swi nga ha phikizana. Nyika swibyariwa suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
   "Ndyangu wu nga va na hungry gap: weeks when stored food runs low before the next harvest is ready.",
   "Hungry gap ya wena yi nga fika endzhaku ka loko stored maize yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden.",
   "U nga tekeleli calendar ya munhu un'wana. Rhanga hi ku vula tin'hweti ta wena.",
-  "Ti tsale ehansi. Then choose the crop and the sowing date that puts food into that gap.",
+  "Ti tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo.",
   "Leswi i planning backwards, naswona hi swona swi hambanisaka garden leyi vonakaka yi ri productive ni ndyangu lowu dyaka."
 ];
 

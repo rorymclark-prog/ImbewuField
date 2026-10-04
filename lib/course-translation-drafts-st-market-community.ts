@@ -206,8 +206,8 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         ].join('\n\n'),
         [
           'Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.',
-          'Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.',
-          'Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.',
+          'Ngola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.',
+          'Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.',
           'Ho arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.',
           'Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.',
           'Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.',
@@ -216,7 +216,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Bapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.',
           'Baahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.',
           'Ngolang method, conditions le result so others can judge whether it may suit their land.',
-          'Seek qualified advice for unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.',
+          'Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.',
         ].join('\n\n'),
       ),
       keyPoints: [
@@ -262,7 +262,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
             ),
           ],
           sourceCorrectIndex: 1,
-          rationale: hold('Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.'),
+          rationale: machineDraft('Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.', 'Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.'),
         },
         {
           question: machineDraft(

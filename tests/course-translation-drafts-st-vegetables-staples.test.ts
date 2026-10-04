@@ -109,7 +109,7 @@ test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic f
     'the full water/soil/nutrient/predator diagnostic list and already-helping condition stay present');
   assert.match(pestDraft[5], /mehato e mene, ka tatellano/);
   assert.match(pestDraft[9], /Ke ka morao feela moo o nkang kgato/);
-  assert.ok(pestDraft[9].endsWith('and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.'));
+  assert.ok(pestDraft[9].endsWith('and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.'), 'translate the fit and monitoring check while preserving the prior only-then/lightest/may-help sequence');
   assert.ok(pestDraft[8].includes('Beneficial insects') && pestDraft[8].includes('mosebetsi'),
     'the ordinary protection framing now includes the benefit insects provide');
   assert.equal(pestDraft[10], pestSource[10],

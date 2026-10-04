@@ -189,7 +189,7 @@
           },
           {
             "status": "draft",
-            "text": "Sweswi ehleketa hi mabedhe ya wena. Can you reach the middle without stepping inside? Famba u ya ringeta leswi u nga si byala swin'wana."
+            "text": "Sweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana."
           }
         ]
       }
@@ -271,7 +271,7 @@
           },
           {
             "status": "draft",
-            "text": "Landzelela spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+            "text": "Landzelela spacing guidance for the crop, variety and local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
           }
         ]
       }
@@ -444,13 +444,14 @@
         "body": [
           {
             "status": "draft",
-            "text": "Intercropping is not just crowding different plants together. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla."
+            "text": "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla."
           },
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maize yi nyika ku leha ni structure."
           },
           {
             "status": "english-hold"
@@ -465,7 +466,7 @@
           },
           {
             "status": "draft",
-            "text": "Swibyariwa swi nga ha phikizana. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+            "text": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
           }
         ]
       }
@@ -513,7 +514,7 @@
           },
           {
             "status": "draft",
-            "text": "Ti tsale ehansi. Then choose the crop and the sowing date that puts food into that gap."
+            "text": "Ti tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo."
           },
           {
             "status": "draft",
@@ -688,7 +689,7 @@
           },
           {
             "status": "draft",
-            "text": "A yellow leaf is not automatically an insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza."
+            "text": "A yellow leaf a swi vuli automatically leswaku ku ni insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza."
           }
         ]
       }
@@ -731,7 +732,7 @@
           },
           {
             "status": "draft",
-            "text": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result."
+            "text": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result."
           },
           {
             "status": "english-hold"

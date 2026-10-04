@@ -82,6 +82,9 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
     if (titles[original.id]) assert.equal(lesson.title.tshivendaDraft, titles[original.id]);
     else if (lesson.id === 'water-harvesting-l4') {
       assert.equal(lesson.title.reviewStatus, 'machine-draft', 'greywater reuse title is visibly unreviewed');
+    } else if (lesson.id === 'water-harvesting-l3') {
+      assert.equal(lesson.title.tshivendaDraft, 'Rainwater Tanks and Roof Catchment: U kuvhanganya na u tsireledza maḓi');
+      assert.equal(lesson.title.reviewStatus, 'machine-draft', 'the checked ordinary purpose clause is visibly unreviewed');
     } else assert.equal(lesson.title.reviewStatus, 'hold', 'untranslated title stays English');
     if (lesson.id === 'water-harvesting-l1' || lesson.id === 'water-harvesting-l2') {
       assert.equal(lesson.body.sourceEnglish, original.body, `${path}.body: retain exact canonical source`);
@@ -467,6 +470,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     ['lessons[0].quiz[1].options[3]', 'Litshani u lingedza ngauri mavu a nga si khwinifhadzee'],
     ['lessons[0].quiz[1].rationale', 'U sedza zwithu zwo vhalaho zwi thusa u wana thaidzo. Worm activity i a shanduka u ya nga conditions, ngauralo worms dzi si gathi fhedzi a dzi khwaṱhisedzi uri thaidzo yo vhangwa nga mini.'],
     ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
+    ['lessons[2].title', 'Mulching and Cover Crops: U tsireledza mavu na Building Soil'],
     ['lessons[1].keyPoints[0]', 'Linganyisani browns, greens, moisture na air.'],
     ['lessons[1].keyPoints[1]', 'Vhukati ho fhisaho a vhu sumbedzi uri heap yoṱhe yo sanitised.'],
     ['lessons[1].keyPoints[2]', 'Siyani seed pods na contaminated materials nnḓa ha heap.'],
@@ -588,7 +592,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }
   }
 
-  assert.equal(heldFields, 5, 'L1, L2 and L3 assessment drafts replace superseded holds; the module summary, three image descriptions and L3 title remain exact-English holds');
+  assert.equal(heldFields, 4, 'L1, L2 and L3 assessment drafts replace superseded holds; the module summary and three image descriptions remain exact-English holds while the L3 purpose title is a source-bound draft');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');

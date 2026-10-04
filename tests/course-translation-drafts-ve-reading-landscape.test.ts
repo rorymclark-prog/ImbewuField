@@ -61,7 +61,8 @@ test('Tshivenda Market drafts keep exact sources, numeric premises and answer sa
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
     // Checked household and community framing is now drafted; source-bound seed and advice holds stay exact.
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16] : [0, 3, 4, 5, 6, 7, 8, 9, 10];
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]
+      : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
       else assert.equal(shownParagraphs[index], paragraph);
