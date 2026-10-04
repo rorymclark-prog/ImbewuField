@@ -135,3 +135,19 @@ test('each tree kind is one lane of bars over its picking months, cut at year tw
     assert.ok(run.start > mangoLane.runs[i].end + 1 || run.start === 12, 'two touching bars were not merged');
   });
 });
+
+
+import { placedTreeGroups } from '@/lib/perennial-harvest';
+import { planningTreeSeasons } from '@/lib/production-product-guidance';
+
+test('the bed calendar can show outlined references without changing the confirmed food builder', () => {
+  const groups = placedTreeGroups([{ defId: 'tree_avocado', status: 'proposed' }]);
+  const refs = planningTreeSeasons(groups, ['subtropical-coast']);
+  const planned = calendarProduceByMonth(groups, [], {}, [5, 6, 7, 11], {}, {}, refs);
+  assert.deepEqual(planned.map(month => month.trees.length), [0, 1, 1, 0]);
+  assert.match(planned[1].trees[0].planning?.basis ?? '', /when established/);
+  assert.equal(planned[1].trees[0].standing, 0);
+  const confirmed = calendarProduceByMonth(groups, [], {}, [6, 7], { 'persea-americana': { bearing: true, months: [7] } }, {}, refs);
+  assert.deepEqual(confirmed.map(month => month.trees.length), [0, 1]);
+  assert.equal(confirmed[1].trees[0].planning, undefined, 'an independently passed stale reference must not override local confirmation');
+});

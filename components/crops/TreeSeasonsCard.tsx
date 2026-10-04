@@ -14,7 +14,7 @@ export default function TreeSeasonsCard({ groups, unidentified, choices, onChoos
   if (groups.length === 0 && unidentified.length === 0) return null;
   return <div className="rounded-2xl p-4 mt-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }} data-tree-seasons>
     <div className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}><Trees size={16} aria-hidden /> Fruit, nuts &amp; berries on your map</div>
-    <p className="font-sans mt-1 mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Picking months vary by place and variety. The calendar stays blank until you confirm months for plants that already give food here. Plants stay on the printed plan while dates are unknown.</p>
+    <p className="font-sans mt-1 mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.</p>
     <p className="font-sans mb-3" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>These confirmations are kept on this device for this design.</p>
     {unidentified.map((g) => <p key={g.speciesId ?? g.defId} className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{g.label} · {g.existing} existing{g.proposed ? `, ${g.proposed} proposed` : ''} on your map. {g.legalCheck ?? 'Choose the species in the Design Studio; picking dates are not yet known.'}</p>)}
     <div className="flex flex-col gap-3">

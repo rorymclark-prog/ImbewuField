@@ -6,6 +6,7 @@
 // (scripts/crop-plan-pdf-regions.ts), so the paper page and the screen read the same data.
 
 import type { AvailabilityEntry, CropPlanAvailability } from '@/lib/crop-export-pdf';
+import type { PlanningTreeSeason } from '@/lib/production-product-guidance';
 import type { FoodAvailabilityItem } from '@/lib/crop-plan';
 import { confirmedTreeMonths, formatMonthSpan, type PlacedTreeGroup, type TreeAvailabilityItem, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { ANIMAL_ENTERPRISES, HOUSING_ANIMALS, PRODUCT_LABEL, confirmedAnimalMonths, type AnimalAvailabilityItem, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
@@ -80,6 +81,7 @@ export function animalEntries(slots: readonly AnimalAvailabilityItem[][]): Avail
  */
 export function printableAvailability(opts: {
   yearMode: 'established' | 'fromToday';
+  planning?: { months: readonly number[]; trees: readonly PlanningTreeSeason[] };
   veg: readonly FoodAvailabilityItem[][];
   utilization: readonly number[];
   trees?: readonly TreeAvailabilityItem[][];
@@ -100,6 +102,7 @@ export function printableAvailability(opts: {
     includeTrees: opts.includeTrees !== false,
     includeAnimals: opts.includeAnimals !== false,
     forest: opts.includeTrees !== false && opts.trees ? forestEntries(opts.trees.slice(0, 12)) : undefined,
+    forestPlanning: opts.includeTrees !== false && opts.planning ? opts.planning.months.slice(0, 12).map(month => opts.planning!.trees.filter(tree => tree.season.months.includes(month)).map(tree => ({ iconKey: `tree:${tree.speciesId}`, label: tree.name, planning: tree.season }))) : undefined,
     animals: opts.includeAnimals !== false && opts.animals ? animalEntries(opts.animals.slice(0, 12)) : undefined,
     undated: undatedAvailability(opts),
   };

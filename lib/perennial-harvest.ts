@@ -15,8 +15,9 @@
 //
 // 2. Harvest months are REGIONAL. An avocado in the Lowveld is picked from June; the same cultivar
 //    in the KZN midlands from August. The table keeps every sourced window with its region label.
-//    The card keeps those windows as references. The farm calendar uses only picking months
-//    confirmed locally, after the farmer confirms that its existing plants already give food.
+//    The card keeps those windows as references. Confirmed food availability uses only local
+//    picking months after the farmer confirms bearing. The visual production calendar can show
+//    separate outlined references; these never enter food totals or picking jobs.
 //
 // 3. Kilograms per tree are orientation, not a forecast. They come from named trials at named
 //    spacings; a tree's crop swings with age, cultivar, water and alternate bearing. Nothing here

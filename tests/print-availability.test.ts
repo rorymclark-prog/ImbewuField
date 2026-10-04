@@ -10,6 +10,7 @@ import { readFileSync } from 'node:fs';
 import { monthAxisSlots } from '@/lib/month-axis';
 import { animalEntries, forestEntries, printableAvailability } from '@/lib/crop-export-availability';
 import { pdfIconUrl } from '@/lib/pdf-icons';
+import { speciesFruitArtworkUrl, speciesPickerArtworkUrl } from '@/lib/species-art';
 import { buildTreeAvailability, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, unidentifiedPlantGroups } from '@/lib/perennial-harvest';
 import { loadAnimalSeasonChoices, placedAnimalGroups, saveAnimalSeasonChoices } from '@/lib/animal-enterprises';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
@@ -74,7 +75,12 @@ test('the print takes twelve months and respects the chart switches', () => {
 
 test('every icon key resolves to the app art the chart itself shows', () => {
   assert.match(pdfIconUrl('crop:cabbage') ?? '', /^\/crop-art\/.+\.png$/);
-  assert.match(pdfIconUrl('tree:mangifera-indica') ?? '', /^\/element-art\/tree_.+\.png$/);
+  // A harvest calendar pictures the product, matching the app. Pinning tree PNGs
+  // hid berries behind letter codes and contradicted Rory's fruit-icon request.
+  for (const id of ['mangifera-indica', 'fragaria-x-ananassa', 'vaccinium-corymbosum', 'rubus-idaeus']) {
+    assert.equal(pdfIconUrl(`tree:${id}`), speciesFruitArtworkUrl(id));
+  }
+  assert.equal(pdfIconUrl('tree:olea-europaea-subsp-europaea'), speciesPickerArtworkUrl('olea-europaea-subsp-europaea'), 'a food plant without product art keeps its own available plant picture');
   assert.equal(pdfIconUrl('animal:chicken-layer'), '/animal-art/chicken-layer.png');
   assert.equal(pdfIconUrl('element:banana_circle'), '/element-art/banana_circle-v3.png');
   assert.equal(pdfIconUrl('nonsense'), null);
@@ -172,4 +178,21 @@ test('local harvest confirmations survive a reload without crossing farms or sig
     else Reflect.deleteProperty(globalThis, 'window');
     bindMountedAccountLocalStorageUid(null);
   }
+});
+
+
+import { planningTreeSeasons } from '@/lib/production-product-guidance';
+import { buildTreeAvailability as datedTrees } from '@/lib/perennial-harvest';
+
+test('printed planning references follow the rolling months but stay out of confirmed food slots', () => {
+  const treeGroups = placedTreeGroups([{ defId: 'tree_avocado', status: 'proposed' }]);
+  const months = [10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const references = planningTreeSeasons(treeGroups, ['subtropical-coast']);
+  const options = { yearMode: 'fromToday' as const, veg: [], utilization: [], treeGroups, trees: datedTrees(treeGroups, months, true), planning: { months, trees: references } };
+  const printed = printableAvailability(options);
+  assert.deepEqual(printed.forestPlanning?.map((slot, i) => slot.length ? months[i] : null).filter(Boolean), [10, 6, 7, 8, 9]);
+  assert.ok(printed.forest?.every(slot => !slot.length), 'reference seasons cannot silently become confirmed picking or monthly jobs');
+  assert.match(printed.forestPlanning?.[0][0].planning?.label ?? '', /Hass/);
+  assert.match(printed.undated?.[0].detail ?? '', /0 existing; 1 proposed/);
+  assert.equal(printableAvailability({ ...options, includeTrees: false }).forestPlanning, undefined);
 });
