@@ -1,0 +1,756 @@
+{
+  "title": "Vegetables Field Action slide 18 source-bound implementation proof",
+  "createdUtc": "2026-10-04T17:47:58.140Z",
+  "baseHead": "3ef45b27b55e3650a9b9eafe3fb9833dbca26a98",
+  "acceptedPacket": {
+    "path": "/tmp/imbewu-vegetables-field-action-cohesive-independent-check-20261004.json",
+    "sourceFileHashes": {
+      "st": "e3e51bf2177b983cb1bbd6c733868558be615e6543e8f0e224cee044176efbfa",
+      "ve": "e32a885a9f946b3d72ba9b6406e67b92d2582b70ad9ff4d16c5be91b22db2f6d",
+      "ts": "130b4f9bedfce74ef23634be68dd64163036cc3b326e864a5b517bfde40f1955"
+    }
+  },
+  "independentCheck": {
+    "path": "/tmp/imbewu-vegetables-field-action-cohesive-independent-check-20261004.json",
+    "acceptedOrRepairedRows": 18
+  },
+  "changedFields": [
+    {
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 0,
+      "source": "This week, put one bed into production.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Bekeng ena, kenya bed e le nngwe tlhahisong."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: preserves this week, exactly one existing bed, and putting it into production; no construction, extra action, quantity, or numeric instruction added."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 1,
+      "source": "One. Mark the bed and the paths.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Nngwe. Tshwaya bed le paths."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: numbered step 1 and both objects to mark (bed and paths) are retained."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 2,
+      "source": "Two. Plant, with your spacing and your sowing rhythm.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Pedi. Jala ka spacing ya hao le sowing rhythm ya hao."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: numbered step 2, planting, spacing, and sowing rhythm; no spacing value added."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 3,
+      "source": "Three. Return after ten days, with a photo.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Tharo. Kgutla ka mora matsatsi a leshome, o tshotse foto."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted with repair: return after exactly ten days and accompany with a photo. Tshivenda `Dovhani` can mean do again; use `Vhuyani` for return/come back.",
+        "`o tshotse foto` is retained as with/carrying a photo; it does not add a separate photo-taking action."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 6,
+      "source": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Season by season, ",
+            "status": "draft",
+            "text": "Sehla ka seng, "
+          },
+          {
+            "sourceEnglish": "your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "status": "mixed",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Season by season, ",
+            "status": "draft",
+            "text": "Sehla ka seng, "
+          },
+          {
+            "sourceEnglish": "your garden ",
+            "status": "draft",
+            "text": "serapa sa hao "
+          },
+          {
+            "sourceEnglish": "becomes less dependent on guesswork",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " — and more on ",
+            "status": "draft",
+            "text": " — mme haholo ka "
+          },
+          {
+            "sourceEnglish": "what you've actually seen happen",
+            "status": "draft",
+            "text": "seo o hlileng o se boneng se etsahala"
+          },
+          {
+            "sourceEnglish": " on your own ground.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "decision": "repair",
+      "reviewNote": [
+        "Repair segments to keep ordinary prose translated while preserving the progression comparison as an exact English hold. The translated final clause retains actually observed events; short `on your own ground` phrase remains an exact source hold for land scope."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 7,
+      "source": "Use your record with reliable local advice when making the next decision.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "mixed",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use your record ",
+            "status": "draft",
+            "text": "Sebedisa rekoto ya hao "
+          },
+          {
+            "sourceEnglish": "with reliable local advice",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " when making the next decision.",
+            "status": "draft",
+            "text": " ha o etsa qeto e latelang."
+          }
+        ]
+      },
+      "decision": "repair",
+      "reviewNote": [
+        "Accept with spelling repair in ST. Keep `with reliable local advice` as an exact English hold so reliability and locality are not weakened; translate record use and timing of the next decision."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 0,
+      "source": "This week, put one bed into production.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Vhege ino, shumisani bed nthihi kha production."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: preserves this week, exactly one existing bed, and putting it into production; no construction, extra action, quantity, or numeric instruction added."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 1,
+      "source": "One. Mark the bed and the paths.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Tshithihi. Swayani bed na paths."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: numbered step 1 and both objects to mark (bed and paths) are retained."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 2,
+      "source": "Two. Plant, with your spacing and your sowing rhythm.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Mbili. Ṱavhani, ni tshi tevhedza spacing yaṋu na sowing rhythm yaṋu."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: numbered step 2, planting, spacing, and sowing rhythm; no spacing value added."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 3,
+      "source": "Three. Return after ten days, with a photo.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Raru. Vhuyani nga murahu ha maḓuvha a fumi, ni na foto."
+      },
+      "decision": "repair",
+      "reviewNote": [
+        "Accepted with repair: return after exactly ten days and accompany with a photo. Tshivenda `Dovhani` can mean do again; use `Vhuyani` for return/come back."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 6,
+      "source": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Season by season,",
+            "status": "draft",
+            "text": "Khalaṅwaha iṅwe na iṅwe,"
+          },
+          {
+            "sourceEnglish": " your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "status": "mixed",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Season by season,",
+            "status": "draft",
+            "text": "Khalaṅwaha iṅwe na iṅwe,"
+          },
+          {
+            "sourceEnglish": " your garden ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "becomes less dependent on guesswork",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " — and more on ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "what you've actually seen happen",
+            "status": "draft",
+            "text": "zwe na zwi vhona zwa vhukuma zwi tshi itea"
+          },
+          {
+            "sourceEnglish": " on your own ground.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "decision": "repair",
+      "reviewNote": [
+        "Use an exact English hold for “your garden” because no independent vocabulary check for the Tshivenda garden noun is recorded. Preserve exact less-dependent and more-on comparison anchors, translate the actual-observation clause, and retain the short own-ground scope phrase as English."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 7,
+      "source": "Use your record with reliable local advice when making the next decision.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "mixed",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use your record ",
+            "status": "draft",
+            "text": "Shumisani rekhodo yaṋu "
+          },
+          {
+            "sourceEnglish": "with reliable local advice",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " when making the next decision.",
+            "status": "draft",
+            "text": " musi ni tshi dzhia tsheo i tevhelaho."
+          }
+        ]
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accept with spelling repair in ST. Keep `with reliable local advice` as an exact English hold so reliability and locality are not weakened; translate record use and timing of the next decision."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 0,
+      "source": "This week, put one bed into production.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Vhiki leri, nghenisa bed yin’we eka production."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: preserves this week, exactly one existing bed, and putting it into production; no construction, extra action, quantity, or numeric instruction added."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 1,
+      "source": "One. Mark the bed and the paths.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Xin’we. Maka bed na paths."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: numbered step 1 and both objects to mark (bed and paths) are retained."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 2,
+      "source": "Two. Plant, with your spacing and your sowing rhythm.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Mbirhi. Byala hi spacing ya wena ni sowing rhythm ya wena."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted: numbered step 2, planting, spacing, and sowing rhythm; no spacing value added."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 3,
+      "source": "Three. Return after ten days, with a photo.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "draft",
+      "target": {
+        "status": "draft",
+        "text": "Nharhu. Vuya endzhaku ka masiku ya khume, u ri na foto."
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accepted with repair: return after exactly ten days and accompany with a photo. Tshivenda `Dovhani` can mean do again; use `Vhuyani` for return/come back."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 6,
+      "source": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "mixed",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Season by season, ",
+            "status": "draft",
+            "text": "Nguva yin’wana ni yin’wana, "
+          },
+          {
+            "sourceEnglish": "your garden ",
+            "status": "draft",
+            "text": "ntanga wa wena "
+          },
+          {
+            "sourceEnglish": "becomes less dependent on guesswork",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " — and more on ",
+            "status": "draft",
+            "text": " — naswona wu titshega ngopfu hi "
+          },
+          {
+            "sourceEnglish": "what you've actually seen happen",
+            "status": "draft",
+            "text": "leswi u swi voneke swi humelela hakunene"
+          },
+          {
+            "sourceEnglish": " on your own ground.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "decision": "repair",
+      "reviewNote": [
+        "Repair segments to keep ordinary prose translated while preserving the progression comparison as an exact English hold. The translated final clause retains actually observed events; short `on your own ground` phrase remains an exact source hold for land scope."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 7,
+      "source": "Use your record with reliable local advice when making the next decision.",
+      "before": {
+        "status": "english-hold"
+      },
+      "status": "mixed",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use your record ",
+            "status": "draft",
+            "text": "Tirhisa rhekhodo ya wena "
+          },
+          {
+            "sourceEnglish": "with reliable local advice",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " when making the next decision.",
+            "status": "draft",
+            "text": " loko u endla xiboho lexi landzelaka."
+          }
+        ]
+      },
+      "decision": "accept",
+      "reviewNote": [
+        "Accept with spelling repair in ST. Keep `with reliable local advice` as an exact English hold so reliability and locality are not weakened; translate record use and timing of the next decision."
+      ]
+    }
+  ],
+  "unchangedEvidence": {
+    "byLanguage": {
+      "st": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "baseSha256": "e3e51bf2177b983cb1bbd6c733868558be615e6543e8f0e224cee044176efbfa",
+        "finalSha256": "499d3ba63a7719cdcf0972ba0f2b668b16c9f83a1237a88e87819c411bd7e4f6",
+        "englishSlidesSha256": "6e9aa05eedf52883d9afe05869aa9b24c5645b8901d487a8b4ce97c4c90143b8",
+        "englishUnchanged": true,
+        "unlistedTargetsSha256": "ab21a5b26963b49e74f0f731322fa993c10abf2543e780c7201239431c0bc8bd",
+        "unlistedTargetsUnchanged": true,
+        "preservedSlide18Body4": {
+          "unchanged": true,
+          "target": {
+            "status": "draft",
+            "text": "Ebe o sheba. O fetole. Mme o ngole fatshe."
+          }
+        },
+        "preservedSlide18Body5": {
+          "unchanged": true,
+          "target": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Record the sowing date.",
+                "status": "draft",
+                "text": "Ngola letsatsi la sowing."
+              },
+              {
+                "sourceEnglish": " The rain.",
+                "status": "draft",
+                "text": " Pula."
+              },
+              {
+                "sourceEnglish": " What germinated.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Pest pressure.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " What you harvested.",
+                "status": "draft",
+                "text": " Seo o se kotutseng."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        }
+      },
+      "ve": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "baseSha256": "e32a885a9f946b3d72ba9b6406e67b92d2582b70ad9ff4d16c5be91b22db2f6d",
+        "finalSha256": "b69a0dfdf024c452098981de2013501c6aa608dd754cc9560e8727462ce3f1a5",
+        "englishSlidesSha256": "6e9aa05eedf52883d9afe05869aa9b24c5645b8901d487a8b4ce97c4c90143b8",
+        "englishUnchanged": true,
+        "unlistedTargetsSha256": "abb009e4fc2a8f031434c294dd2c08c521f6194cf651fedbc32861cd39c86059",
+        "unlistedTargetsUnchanged": true,
+        "preservedSlide18Body4": {
+          "unchanged": true,
+          "target": {
+            "status": "draft",
+            "text": "Nga murahu ni sedze. Ni lulamise. Ni ṅwale fhasi."
+          }
+        },
+        "preservedSlide18Body5": {
+          "unchanged": true,
+          "target": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Record the sowing date.",
+                "status": "draft",
+                "text": "Ṅwalani datumu ya sowing."
+              },
+              {
+                "sourceEnglish": " The rain.",
+                "status": "draft",
+                "text": " Mvula."
+              },
+              {
+                "sourceEnglish": " What germinated.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Pest pressure.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " What you harvested.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        }
+      },
+      "ts": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "baseSha256": "130b4f9bedfce74ef23634be68dd64163036cc3b326e864a5b517bfde40f1955",
+        "finalSha256": "3afa3bac9eee9e9f70a8fc547d65630b9c74977393daaf41b7075de1b9d9b7cb",
+        "englishSlidesSha256": "6e9aa05eedf52883d9afe05869aa9b24c5645b8901d487a8b4ce97c4c90143b8",
+        "englishUnchanged": true,
+        "unlistedTargetsSha256": "f7174dfa7dd4137c9737e72abe994cd8f79904e9cb240a04e7b29e612b1b0486",
+        "unlistedTargetsUnchanged": true,
+        "preservedSlide18Body4": {
+          "unchanged": true,
+          "target": {
+            "status": "draft",
+            "text": "Kutani languta. Lulamisa. Tsala leswi ehansi."
+          }
+        },
+        "preservedSlide18Body5": {
+          "unchanged": true,
+          "target": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Record the sowing date.",
+                "status": "draft",
+                "text": "Tsala siku ra sowing."
+              },
+              {
+                "sourceEnglish": " The rain.",
+                "status": "draft",
+                "text": " Mpfula."
+              },
+              {
+                "sourceEnglish": " What germinated.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Pest pressure.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " What you harvested.",
+                "status": "draft",
+                "text": " Leswi u tshoveleke."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        }
+      }
+    },
+    "canonicalEnglish": {
+      "path": "docs/narration/vegetables-staples.en.md",
+      "sha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+      "unchanged": true
+    },
+    "learnerRegistriesUntouched": true,
+    "allOtherSlidesAndFieldsUnchanged": true,
+    "slide18TargetBodyIndexes4And5FullObjectEqualToBase": true
+  },
+  "render": {
+    "renderer": "scripts/make-lesson-slides.mjs vegetables-staples <language> <fresh-temp-dir> --paired-draft <language-packet>",
+    "conversion": "Pillow WebP quality=88, method=6",
+    "frames": [
+      {
+        "language": "st",
+        "slide": 18,
+        "rendererOutputPng": "/tmp/imbewu-field-action-render-20261004/st/slide-18.png",
+        "renderedPngSize": [
+          1440,
+          5400
+        ],
+        "renderedPngSha256": "0920947c53782099831e8cd7620b7f375126ead7b037dea522388c47cc5be545",
+        "publishedWebp": "public/course-decks/vegetables-staples/st/slide-18.webp",
+        "webpDimensions": [
+          1440,
+          5400
+        ],
+        "webpBytes": 323864,
+        "webpSha256": "75d50f81b13a756dd76aa3d7be55ba3c4b1a13282c212e0bdd117d36ee640e93",
+        "publishedBytesEqualTemporaryRender": true
+      },
+      {
+        "language": "ve",
+        "slide": 18,
+        "rendererOutputPng": "/tmp/imbewu-field-action-render-20261004/ve/slide-18.png",
+        "renderedPngSize": [
+          1440,
+          5484
+        ],
+        "renderedPngSha256": "9e93fe0c443d73b9aff26b19fa737298483d3f33f176cf81ad1eef4d97d9aa46",
+        "publishedWebp": "public/course-decks/vegetables-staples/ve/slide-18.webp",
+        "webpDimensions": [
+          1440,
+          5484
+        ],
+        "webpBytes": 336718,
+        "webpSha256": "ec3ee26087869d57989e0cbb0070c5c1673d666bd7bf43bee8ac9a6e73c9d8a9",
+        "publishedBytesEqualTemporaryRender": true
+      },
+      {
+        "language": "ts",
+        "slide": 18,
+        "rendererOutputPng": "/tmp/imbewu-field-action-render-20261004/ts/slide-18.png",
+        "renderedPngSize": [
+          1440,
+          5400
+        ],
+        "renderedPngSha256": "81e09ffa14a7060254730c49ada7855ab16bffaf51ec0c310598b7aac4fea33c",
+        "publishedWebp": "public/course-decks/vegetables-staples/ts/slide-18.webp",
+        "webpDimensions": [
+          1440,
+          5400
+        ],
+        "webpBytes": 332478,
+        "webpSha256": "04684efc1071afc3de70f21b2a46104c1d82c76c2420d0f1014ae44cb18e8d02",
+        "publishedBytesEqualTemporaryRender": true
+      }
+    ],
+    "contactSheet": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/output/playwright/field-action-review/slide18-contact.png",
+    "contactSheetSha256": "fb569e0efa7638fb20d06b141c6ae1e653ee9aa147c512717a8ac8939b7029b1",
+    "visualObservation": "All three 1440px-wide paired frames visibly show the unreviewed target panel, complete exact English source panel, and slide counter; the target text and held English clauses remain within their panels. VE renderer output is 84 pixels taller due the renderer calculated target_extra to keep its target panel from clipping. No crop or scaling was applied. Root pixel review pending."
+  },
+  "cacheMigration": {
+    "functionName": "migrateVegetablesFieldActionStills",
+    "marker": "/course-decks/vegetables-staples/.field-action-slide18-20261004",
+    "retiredPaths": [
+      "/course-decks/vegetables-staples/st/slide-18.webp",
+      "/course-decks/vegetables-staples/ve/slide-18.webp",
+      "/course-decks/vegetables-staples/ts/slide-18.webp"
+    ],
+    "queryInsensitivePathnameMatch": true,
+    "onceOnlyMarker": true,
+    "replacementFetchOnActivation": false,
+    "tests": "tests/studies-media-migration.test.ts"
+  },
+  "releaseChecks": {
+    "typescript": "npx tsc --noEmit passed",
+    "focusedTests": {
+      "command": "node --import ./tests/register-alias.mjs --test tests/paired-draft-slides.test.ts tests/studies-media-migration.test.ts",
+      "passed": 99,
+      "failed": 0,
+      "log": "/tmp/imbewu-field-action-focused-final-20261004.log"
+    },
+    "diffCheck": "git diff --check passed",
+    "fullSuite": "delegated to root; not redundantly run",
+    "changedTrackedFiles": [
+      "app/sw.js/route.ts",
+      "docs/narration/vegetables-staples.st.paired-draft.json",
+      "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "lib/course-asset-sizes.ts",
+      "public/course-decks/vegetables-staples/st/slide-18.webp",
+      "public/course-decks/vegetables-staples/ts/slide-18.webp",
+      "public/course-decks/vegetables-staples/ve/slide-18.webp",
+      "tests/paired-draft-slides.test.ts",
+      "tests/studies-media-migration.test.ts"
+    ],
+    "manifestChangedPaths": [
+      "public/course-decks/vegetables-staples/st/slide-18.webp",
+      "public/course-decks/vegetables-staples/ts/slide-18.webp",
+      "public/course-decks/vegetables-staples/ve/slide-18.webp"
+    ],
+    "noCommitOrPush": true
+  }
+}

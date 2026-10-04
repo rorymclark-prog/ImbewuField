@@ -858,16 +858,20 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bekeng ena, kenya bed e le nngwe tlhahisong."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nngwe. Tshwaya bed le paths."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Pedi. Jala ka spacing ya hao le sowing rhythm ya hao."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tharo. Kgutla ka mora matsatsi a leshome, o tshotse foto."
           },
           {
             "status": "draft",
@@ -911,13 +915,48 @@
                 "text": "Sehla ka seng, "
               },
               {
-                "sourceEnglish": "your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+                "sourceEnglish": "your garden ",
+                "status": "draft",
+                "text": "serapa sa hao "
+              },
+              {
+                "sourceEnglish": "becomes less dependent on guesswork",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " — and more on ",
+                "status": "draft",
+                "text": " — mme haholo ka "
+              },
+              {
+                "sourceEnglish": "what you've actually seen happen",
+                "status": "draft",
+                "text": "seo o hlileng o se boneng se etsahala"
+              },
+              {
+                "sourceEnglish": " on your own ground.",
                 "status": "english-hold"
               }
             ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use your record ",
+                "status": "draft",
+                "text": "Sebedisa rekoto ya hao "
+              },
+              {
+                "sourceEnglish": "with reliable local advice",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " when making the next decision.",
+                "status": "draft",
+                "text": " ha o etsa qeto e latelang."
+              }
+            ]
           }
         ]
       }

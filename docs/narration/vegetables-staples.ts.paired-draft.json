@@ -850,16 +850,20 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhiki leri, nghenisa bed yin’we eka production."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xin’we. Maka bed na paths."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbirhi. Byala hi spacing ya wena ni sowing rhythm ya wena."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Nharhu. Vuya endzhaku ka masiku ya khume, u ri na foto."
           },
           {
             "status": "draft",
@@ -895,10 +899,56 @@
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Season by season, ",
+                "status": "draft",
+                "text": "Nguva yin’wana ni yin’wana, "
+              },
+              {
+                "sourceEnglish": "your garden ",
+                "status": "draft",
+                "text": "ntanga wa wena "
+              },
+              {
+                "sourceEnglish": "becomes less dependent on guesswork",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " — and more on ",
+                "status": "draft",
+                "text": " — naswona wu titshega ngopfu hi "
+              },
+              {
+                "sourceEnglish": "what you've actually seen happen",
+                "status": "draft",
+                "text": "leswi u swi voneke swi humelela hakunene"
+              },
+              {
+                "sourceEnglish": " on your own ground.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use your record ",
+                "status": "draft",
+                "text": "Tirhisa rhekhodo ya wena "
+              },
+              {
+                "sourceEnglish": "with reliable local advice",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " when making the next decision.",
+                "status": "draft",
+                "text": " loko u endla xiboho lexi landzelaka."
+              }
+            ]
           }
         ]
       }
