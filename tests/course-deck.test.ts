@@ -11,6 +11,8 @@ import {
   hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl,
 } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_MODULES } from '@/lib/course-modules';
+import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
@@ -957,6 +959,93 @@ test('regional Study decks show every paired frame and fall back for each missin
         assert.equal(selected.lang, 'en', `${language} slide ${slide.slide} needs full English fallback`);
       }
     }
+  }
+});
+
+test('Reading slide 16 reuses only its mapped learner sentences and keeps the following source paragraph', () => {
+  const bodyRows = [
+    { lang: 'st', index: 0, source: 'A site map needs paper, a tape measure, a compass, and time to walk your land.', previous: 'Ho etsa site map ho hloka paper, a tape measure, a compass, and time to walk your land.', text: 'Mmapa wa setsha (site map) o hloka pampiri, tepi e methang (tape measure), khampase (compass), le nako ya ho tsamaya lefatsheng la hao.' },
+    { lang: 'st', index: 1, source: 'Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.', previous: 'Tsamaea moeling, ebe u etsa sketch ya pele. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.', text: "Tsamaya moeding mme o etse setshwantsho sa pele sa letsoho (sketch). Se tshwaye 'not to scale' ho fihlela o hlahlobile bohole ba sona. Tshwaya leboya. Kenya ntlo, difate, metsi, ditsela, diterata.", condition: /not to scale.*ho fihlela.*bohole/i },
+    { lang: 've', index: 0, source: 'A site map needs paper, a tape measure, a compass, and time to walk your land.', previous: 'U ita site map zwi ṱoḓa paper, a tape measure, a compass, and time to walk your land.', learnerText: 'Mmapa wa tshitentsi (site map) u ṱoḓa bapha, theiphi yo kalaho (tape measure), khamphasi (compass), na tshifhinga tsha u tshimbila muvuni waṋu.', text: 'Mmapa wa tshitentsi (site map) u ṱoḓa bapha, theiphi yo kalaho (tape measure), khamphasi (compass), na tshifhinga tsha u tshimbila kha land yaṋu.' },
+    { lang: 've', index: 1, source: 'Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.', previous: 'Tshimbilani kha boundary ni ite sketch ya u thoma. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.', learnerText: "Tshimbilani mukanoni nahone ni ite nyolo ya u thoma. I swayeni 'not to scale' u swikela ni tshi tola vhukule hayo. Swayani devhula (north). Engedzani nnḓu, miri, maḓi, bada, mitsheto.", text: "Tshimbilani mukanoni nahone ni ite nyolo ya u thoma. I swayeni 'not to scale' u swikela ni tshi tola vhukule hayo. Swayani devhula (north). Engedzani nnḓu, miri, maḓi, bada, fences.", condition: /not to scale.*u swikela.*vhukule/i },
+    { lang: 'ts', index: 0, source: 'A site map needs paper, a tape measure, a compass, and time to walk your land.', previous: 'Ku endla mepe wa ndhawu swi lava paper, a tape measure, a compass, and time to walk your land.', text: 'Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena.' },
+  ];
+  const unchangedBody2 = {
+    st: 'Joale taka the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.',
+    ve: 'Nga murahu olani the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.',
+    ts: 'Kutani dirowa the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.',
+  };
+  const lesson = COURSE_MODULES.flatMap((module) => module.lessons).find((item) => item.id === 'reading-landscape-l4');
+  assert.ok(lesson);
+
+  for (const item of bodyRows) {
+    const pairedPath = new URL(`../docs/narration/reading-landscape.${item.lang}.paired-draft.json`, import.meta.url);
+    const paired = JSON.parse(readFileSync(pairedPath, 'utf8')) as {
+      reviewStatus: string;
+      slides: Array<{ n: number; english: { body: string[] }; target: { body: Array<{ status: string; text: string }> } }>;
+    };
+    const slide = paired.slides.find((row) => row.n === 16);
+    assert.ok(slide);
+    assert.equal(paired.reviewStatus, 'unreviewed');
+    assert.equal(slide.english.body[item.index], item.source,
+      `${item.lang} slide 16 body ${item.index} must stay bound to its exact source paragraph`);
+    assert.equal(slide.target.body[item.index].status, 'draft');
+    assert.equal(slide.target.body[item.index].text, item.text);
+    const canonicalSource = item.index === 0
+      ? 'A site map needs paper, a tape measure, a compass, and time to walk your land.'
+      : "Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences.";
+    assert.ok(lesson.body.includes(canonicalSource),
+      'the canonical source keeps the map materials, checked-distance condition, north marker and ordered objects');
+    if (item.index === 1) assert.match(item.source, /roads, and fences\.$/,
+      'the paired narration uses “and” before fences; canonical source omits only that conjunction');
+
+    const resolved = resolveLearnerLessonPresentation(lesson, item.lang);
+    assert.equal(resolved.status, 'draft');
+    assert.ok(resolved.content.body.includes(item.learnerText ?? item.text),
+      'localized clauses must come from the matching current learner draft');
+    if (item.lang === 've' && item.index === 0) {
+      assert.ok(item.learnerText);
+      assert.equal(item.text, item.learnerText.replace('tsha u tshimbila muvuni waṋu.', 'tsha u tshimbila kha land yaṋu.'),
+        'retain land in English where the learner draft term could narrow the source');
+    } else if (item.index === 1 && (item.lang === 've' || item.lang === 'ts')) {
+      assert.ok(item.learnerText);
+      assert.equal(item.text, item.learnerText.replace(/mitsheto\.$/, 'fences.'),
+        'retain fences in English where the learner-draft noun is ambiguous');
+    }
+    if (item.index === 1) {
+      const firstSentence = bodyRows.find((row) => row.lang === item.lang && row.index === 0)!.text;
+      assert.ok(!item.text.includes(firstSentence), 'the map-materials sentence must not be duplicated in body 1');
+      assert.ok(item.condition);
+      assert.match(item.text, item.condition,
+        'the checked-distance condition must survive the reuse');
+      const expectedBody2 = unchangedBody2[item.lang as keyof typeof unchangedBody2];
+      assert.equal(slide.target.body[2].status, 'draft');
+      assert.equal(slide.target.body[2].text, expectedBody2,
+        'the following patterns paragraph stays untouched');
+      assert.equal(slide.english.body[2], 'Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.');
+    }
+  }
+});
+
+test('Sesotho Reading spelling corrections change only the independently checked forms', () => {
+  const rows = [
+    { slide: 1, index: 1, source: 'Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.', previous: 'Bala naha pele o e fetola. Fumana moo metsi a phallang teng, moo letsatsi le chabang teng, moo moea o fokang teng, le moo moea o batang o bokellanang teng.', current: 'Bala naha pele o e fetola. Fumana moo metsi a phallang teng, moo letsatsi le chabang teng, moo moya o fokang teng, le moo moya o batang o bokellanang teng.', oldForm: 'moea', newForm: 'moya' },
+    { slide: 3, index: 2, source: 'You will use an A-frame level to trace contours.', previous: 'U tla sebelisa A-frame level ho latela contours.', current: 'U tla sebedisa A-frame level ho latela contours.', oldForm: 'sebelisa', newForm: 'sebedisa' },
+    { slide: 17, index: 0, source: 'Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes.', previous: 'Sebelisa setšoantšo e le motataisi: moeli, meaho, litsela, metsi, matsoapo, le metsu ea tataiso. Thala se seng se ntse se le teng pele o rera liphetoho.', current: 'Sebedisa setšoantšo e le motataisi: moeli, meaho, litsela, metsi, matsoapo, le metsu ea tataiso. Thala se seng se ntse se le teng pele o rera liphetoho.', oldForm: 'Sebelisa', newForm: 'Sebedisa' },
+  ];
+  for (const item of rows) {
+    const paired = JSON.parse(readFileSync(new URL('../docs/narration/reading-landscape.st.paired-draft.json', import.meta.url), 'utf8')) as {
+      reviewStatus: string;
+      slides: Array<{ n: number; english: { body: string[] }; target: { body: Array<{ status: string; text: string }> } }>;
+    };
+    const slide = paired.slides.find((row) => row.n === item.slide);
+    assert.ok(slide);
+    assert.equal(paired.reviewStatus, 'unreviewed');
+    assert.equal(slide.english.body[item.index], item.source);
+    assert.equal(slide.target.body[item.index].status, 'draft');
+    assert.equal(slide.target.body[item.index].text, item.current);
+    assert.equal(item.previous.replaceAll(item.oldForm, item.newForm), item.current,
+      'the review-approved orthographic form changes without altering surrounding prose');
   }
 });
 

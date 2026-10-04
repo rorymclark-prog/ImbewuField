@@ -1,0 +1,220 @@
+{
+  "title": "Reading Landscape slide 16 paired-draft reuse and checked Sesotho spelling candidates",
+  "date": "2026-10-04",
+  "baseHead": "e6430bfcc53fde8fe48afac2c197c72231313a44",
+  "status": "unreviewed drafts; this record does not claim fluent-speaker or local-farming approval",
+  "reviewSources": {
+    "correctedSlide16Packet": "/tmp/imbewu-reading-16-20-safe-reuse-corrected-20261004.json",
+    "independentCheck": "/tmp/imbewu-reading-16-20-safe-reuse-independent-check-20261004.json",
+    "Sesotho spelling check": "/tmp/imbewu-st-spelling-ve-visual-independent-20261004.json"
+  },
+  "sourceAndFileHashes": {
+    "docs/narration/reading-landscape.st.paired-draft.json": {
+      "baseline": "0d7a1ec2815d55b4a544da8ca40293cd4c88939faff27f2083bf71a18ce2bb0b",
+      "current": "1a403d1668ecd9c4def52dc3b8eb07c156756114b4dac8eaf4480f2473aaa449"
+    },
+    "docs/narration/reading-landscape.ts.paired-draft.json": {
+      "baseline": "ecf695a00b5f529851295f3bef5ca1c19b92c708353a49d5104eb94a1c2ea674",
+      "current": "75dcd21435d311d1182d3241e628ea6dc9f5553c4e1fbe2cb33421d4bb71dad4"
+    },
+    "docs/narration/reading-landscape.ve.paired-draft.json": {
+      "baseline": "36aedcdc3e53be60e6c98bac3c233973d62e32b3950b54e717190ab8e6aa008b",
+      "current": "5c88ea747a16821691c79ddb6f351a50499d0258e423a352aa540b85a51f37bd"
+    }
+  },
+  "targetFieldChanges": [
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[n=16].target.body[0]",
+      "slide": 16,
+      "bodyIndex": 0,
+      "language": "st",
+      "sourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Ho etsa site map ho hloka paper, a tape measure, a compass, and time to walk your land."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mmapa wa setsha (site map) o hloka pampiri, tepi e methang (tape measure), khampase (compass), le nako ya ho tsamaya lefatsheng la hao."
+      },
+      "reason": "The exact source-paired learner draft sentence is reused.",
+      "provenance": "Source-bound existing learner draft reuse, with only the specified ambiguous noun retained in exact English; unreviewed machine draft."
+    },
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[n=16].target.body[1]",
+      "slide": 16,
+      "bodyIndex": 1,
+      "language": "st",
+      "sourceEnglish": "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Tsamaea moeling, ebe u etsa sketch ya pele. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tsamaya moeding mme o etse setshwantsho sa pele sa letsoho (sketch). Se tshwaye 'not to scale' ho fihlela o hlahlobile bohole ba sona. Tshwaya leboya. Kenya ntlo, difate, metsi, ditsela, diterata."
+      },
+      "reason": "The four mapped sentences reuse the checked learner wording; no preceding materials sentence is duplicated.",
+      "provenance": "Source-bound existing learner draft reuse, with only the specified ambiguous noun retained in exact English; unreviewed machine draft."
+    },
+    {
+      "path": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "field": "slides[n=16].target.body[0]",
+      "slide": 16,
+      "bodyIndex": 0,
+      "language": "ve",
+      "sourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "U ita site map zwi ṱoḓa paper, a tape measure, a compass, and time to walk your land."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mmapa wa tshitentsi (site map) u ṱoḓa bapha, theiphi yo kalaho (tape measure), khamphasi (compass), na tshifhinga tsha u tshimbila kha land yaṋu."
+      },
+      "reason": "VE keeps the potentially narrowing source word land in English.",
+      "provenance": "Source-bound existing learner draft reuse, with only the specified ambiguous noun retained in exact English; unreviewed machine draft."
+    },
+    {
+      "path": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "field": "slides[n=16].target.body[1]",
+      "slide": 16,
+      "bodyIndex": 1,
+      "language": "ve",
+      "sourceEnglish": "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Tshimbilani kha boundary ni ite sketch ya u thoma. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tshimbilani mukanoni nahone ni ite nyolo ya u thoma. I swayeni 'not to scale' u swikela ni tshi tola vhukule hayo. Swayani devhula (north). Engedzani nnḓu, miri, maḓi, bada, fences."
+      },
+      "reason": "VE and TS keep the potentially ambiguous object fences in English.",
+      "provenance": "Source-bound existing learner draft reuse, with only the specified ambiguous noun retained in exact English; unreviewed machine draft."
+    },
+    {
+      "path": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "field": "slides[n=16].target.body[0]",
+      "slide": 16,
+      "bodyIndex": 0,
+      "language": "ts",
+      "sourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Ku endla mepe wa ndhawu swi lava paper, a tape measure, a compass, and time to walk your land."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena."
+      },
+      "reason": "The exact source-paired learner draft sentence is reused.",
+      "provenance": "Source-bound existing learner draft reuse, with only the specified ambiguous noun retained in exact English; unreviewed machine draft."
+    },
+    {
+      "path": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "field": "slides[n=16].target.body[1]",
+      "slide": 16,
+      "bodyIndex": 1,
+      "language": "ts",
+      "sourceEnglish": "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Famba emindzilakaneni kutani u endla xifaniso xo sungula. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, fences."
+      },
+      "reason": "VE and TS keep the potentially ambiguous object fences in English.",
+      "provenance": "Source-bound existing learner draft reuse, with only the specified ambiguous noun retained in exact English; unreviewed machine draft."
+    },
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[n=1].target.body[1].text",
+      "slide": 1,
+      "bodyIndex": 1,
+      "language": "st",
+      "sourceEnglish": "Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Bala naha pele o e fetola. Fumana moo metsi a phallang teng, moo letsatsi le chabang teng, moo moea o fokang teng, le moo moea o batang o bokellanang teng."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Bala naha pele o e fetola. Fumana moo metsi a phallang teng, moo letsatsi le chabang teng, moo moya o fokang teng, le moo moya o batang o bokellanang teng."
+      },
+      "reason": "The edit changes only a documented spelling form. No change to clause order, verb, referent, or concord.",
+      "provenance": "Independent spelling-only check; machine draft remains unreviewed."
+    },
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[n=3].target.body[2].text",
+      "slide": 3,
+      "bodyIndex": 2,
+      "language": "st",
+      "sourceEnglish": "You will use an A-frame level to trace contours.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "U tla sebelisa A-frame level ho latela contours."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "U tla sebedisa A-frame level ho latela contours."
+      },
+      "reason": "The edit changes only a documented spelling form. No change to clause order, verb, referent, or concord.",
+      "provenance": "Independent spelling-only check; machine draft remains unreviewed."
+    },
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[n=17].target.body[0].text",
+      "slide": 17,
+      "bodyIndex": 0,
+      "language": "st",
+      "sourceEnglish": "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sebelisa setšoantšo e le motataisi: moeli, meaho, litsela, metsi, matsoapo, le metsu ea tataiso. Thala se seng se ntse se le teng pele o rera liphetoho."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sebedisa setšoantšo e le motataisi: moeli, meaho, litsela, metsi, matsoapo, le metsu ea tataiso. Thala se seng se ntse se le teng pele o rera liphetoho."
+      },
+      "reason": "The edit changes only a documented spelling form. No change to clause order, verb, referent, or concord.",
+      "provenance": "Independent spelling-only check; machine draft remains unreviewed."
+    }
+  ],
+  "preservedSlide16Body2": {
+    "st": {
+      "sourceEnglish": "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "target": {
+        "status": "draft",
+        "text": "Joale taka the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+      }
+    },
+    "ve": {
+      "sourceEnglish": "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "target": {
+        "status": "draft",
+        "text": "Nga murahu olani the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+      }
+    },
+    "ts": {
+      "sourceEnglish": "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "target": {
+        "status": "draft",
+        "text": "Kutani dirowa the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+      }
+    }
+  },
+  "safeguards": [
+    "The not-to-scale label stays exact English and the until-distances-checked condition is preserved in all three target body 1 fields.",
+    "The north marker and house/trees/water/roads/fences object order are retained. VE and TS keep fences exact English because mitsheto was not established as the intended physical fence term; VE keeps land exact English where muvuni could narrow the source.",
+    "Canonical English and learner registries are untouched. Each changed target remains status draft under unreviewed packet metadata.",
+    "Only the exact three Sesotho orthography fields were changed; no global substitutions were applied."
+  ],
+  "sourceVariation": "The canonical body and paired narration differ only in the list punctuation/conjunction: canonical says “roads, fences”; paired English says “roads, and fences”. Both list the same five objects in the same order. Canonical quotes “not to scale”; paired narration omits those quote marks.",
+  "visualReview": "Six frames rendered and compressed. Root pixel review pending."
+}

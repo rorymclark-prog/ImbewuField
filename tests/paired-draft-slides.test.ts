@@ -1325,11 +1325,19 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
   const changed = new Set<string>();
   const next15Proof = JSON.parse(readFileSync(
     'docs/study-translation-reviews/READING-LANDSCAPE-NEXT15-IMPLEMENTATION-PRESERVATION-2026-10-04.json', 'utf8'));
+  const pairedReuseProof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-PAIRED-REUSE-CANDIDATES-2026-10-04.json', 'utf8'));
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
-    // Reconstruct the prior 20-field state so its full preservation proof remains testable after this authorized batch.
+    // Reconstruct the earlier 20-field snapshot across both later authorized batches.
+    // Their separate tests assert the new target text; this keeps the original preservation proof meaningful.
     for (const change of next15Proof.changedTargets.filter((item: any) => item.language === language)) {
       packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
+    }
+    for (const change of pairedReuseProof.targetFieldChanges.filter((item: any) => item.language === language)) {
+      const target = packet.slides[change.slide - 1].target;
+      if (change.bodyIndex === undefined) target.heading = change.previousTarget;
+      else target.body[change.bodyIndex] = change.previousTarget;
     }
     const slides = validatePairedDraft(packet, readingSource, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
@@ -1363,7 +1371,7 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
         ? slide.target.heading
         : slide.target.body[snapshot.bodyIndex];
       assert.deepEqual(current, snapshot.target,
-        `${language} slide ${snapshot.slide}: every heading and non-target body keeps its earlier wording and review state`);
+        `${language} slide ${snapshot.slide}: after restoring the two documented later batches, every earlier heading and non-target body keeps its wording and review state`);
     }
 
     // The field walk remains conditional on safety: heavy-rain observation and the full feature/property checklist stay exact.
