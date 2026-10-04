@@ -1,0 +1,183 @@
+{
+  "title": "Reading Landscape slide 16 paired-draft reuse and Sesotho spelling preservation proof",
+  "date": "2026-10-04",
+  "baseHead": "e6430bfcc53fde8fe48afac2c197c72231313a44",
+  "reviewPacket": "docs/study-translation-reviews/READING-LANDSCAPE-PAIRED-REUSE-2026-10-04.json",
+  "changedPairedValues": [
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[0].target.body[1].text",
+      "baselineSha256": "0d7a1ec2815d55b4a544da8ca40293cd4c88939faff27f2083bf71a18ce2bb0b",
+      "currentSha256": "1a403d1668ecd9c4def52dc3b8eb07c156756114b4dac8eaf4480f2473aaa449"
+    },
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[2].target.body[2].text",
+      "baselineSha256": "0d7a1ec2815d55b4a544da8ca40293cd4c88939faff27f2083bf71a18ce2bb0b",
+      "currentSha256": "1a403d1668ecd9c4def52dc3b8eb07c156756114b4dac8eaf4480f2473aaa449"
+    },
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[15].target.body[0].text",
+      "baselineSha256": "0d7a1ec2815d55b4a544da8ca40293cd4c88939faff27f2083bf71a18ce2bb0b",
+      "currentSha256": "1a403d1668ecd9c4def52dc3b8eb07c156756114b4dac8eaf4480f2473aaa449"
+    },
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[15].target.body[1].text",
+      "baselineSha256": "0d7a1ec2815d55b4a544da8ca40293cd4c88939faff27f2083bf71a18ce2bb0b",
+      "currentSha256": "1a403d1668ecd9c4def52dc3b8eb07c156756114b4dac8eaf4480f2473aaa449"
+    },
+    {
+      "path": "docs/narration/reading-landscape.st.paired-draft.json",
+      "field": "slides[16].target.body[0].text",
+      "baselineSha256": "0d7a1ec2815d55b4a544da8ca40293cd4c88939faff27f2083bf71a18ce2bb0b",
+      "currentSha256": "1a403d1668ecd9c4def52dc3b8eb07c156756114b4dac8eaf4480f2473aaa449"
+    },
+    {
+      "path": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "field": "slides[15].target.body[0].text",
+      "baselineSha256": "36aedcdc3e53be60e6c98bac3c233973d62e32b3950b54e717190ab8e6aa008b",
+      "currentSha256": "5c88ea747a16821691c79ddb6f351a50499d0258e423a352aa540b85a51f37bd"
+    },
+    {
+      "path": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "field": "slides[15].target.body[1].text",
+      "baselineSha256": "36aedcdc3e53be60e6c98bac3c233973d62e32b3950b54e717190ab8e6aa008b",
+      "currentSha256": "5c88ea747a16821691c79ddb6f351a50499d0258e423a352aa540b85a51f37bd"
+    },
+    {
+      "path": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "field": "slides[15].target.body[0].text",
+      "baselineSha256": "ecf695a00b5f529851295f3bef5ca1c19b92c708353a49d5104eb94a1c2ea674",
+      "currentSha256": "75dcd21435d311d1182d3241e628ea6dc9f5553c4e1fbe2cb33421d4bb71dad4"
+    },
+    {
+      "path": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "field": "slides[15].target.body[1].text",
+      "baselineSha256": "ecf695a00b5f529851295f3bef5ca1c19b92c708353a49d5104eb94a1c2ea674",
+      "currentSha256": "75dcd21435d311d1182d3241e628ea6dc9f5553c4e1fbe2cb33421d4bb71dad4"
+    }
+  ],
+  "preservation": {
+    "onlyExpectedPairedTargetTextValuesChanged": true,
+    "englishSourceUnchanged": true,
+    "reviewStatusUnchanged": "unreviewed",
+    "slide16Body2SourceAndTargetUnchanged": true,
+    "learnerRegistryAndCanonicalFilesChanged": false,
+    "audioFilesChanged": false,
+    "courseDeckImagesChanged": 6,
+    "courseDeckImageRows": [
+      {
+        "language": "st",
+        "slide": 1,
+        "png": "output/playwright/reading-paired-next-20261004/st-slide-01.png",
+        "path": "public/course-decks/reading-landscape/st/slide-01.webp",
+        "width": 1440,
+        "height": 5400,
+        "bytes": 268360,
+        "sha256": "bed5ab1a47c3a195287ec0f23db5f4cd22015cb0903d6f9797c448428111e66a",
+        "baselineBytes": 268226,
+        "baselineSha256": "5ec164a26ec3d25a56ae5186d2067286012763a140784707ab0fa1bd46cac04f",
+        "changedVsBase": true
+      },
+      {
+        "language": "st",
+        "slide": 3,
+        "png": "output/playwright/reading-paired-next-20261004/st-slide-03.png",
+        "path": "public/course-decks/reading-landscape/st/slide-03.webp",
+        "width": 1440,
+        "height": 5400,
+        "bytes": 247468,
+        "sha256": "ca5f404909a357e62c07c542acc53f1bbf63a9f319a7c0653dc1fe62687e45fa",
+        "baselineBytes": 247176,
+        "baselineSha256": "59cf8b03710ee3a74a341dbfc566d281bd3f254d4e0a59afda3e86eed3ecca77",
+        "changedVsBase": true
+      },
+      {
+        "language": "st",
+        "slide": 16,
+        "png": "output/playwright/reading-paired-next-20261004/st-slide-16.png",
+        "path": "public/course-decks/reading-landscape/st/slide-16.webp",
+        "width": 1440,
+        "height": 5400,
+        "bytes": 291752,
+        "sha256": "f3029b066f39f077dfbfe8c2c3cc8f10231a2b183c5299eb79bef48e01522109",
+        "baselineBytes": 270878,
+        "baselineSha256": "94c861dac1600e6fe5153181f2cb5a61f8c15b814843f6c581d1404126e9e520",
+        "changedVsBase": true
+      },
+      {
+        "language": "st",
+        "slide": 17,
+        "png": "output/playwright/reading-paired-next-20261004/st-slide-17.png",
+        "path": "public/course-decks/reading-landscape/st/slide-17.webp",
+        "width": 1440,
+        "height": 5400,
+        "bytes": 199690,
+        "sha256": "cd6213f25d2a569309c642f72279b9ea6b14b793ee91d425d88f9a83503b6f5d",
+        "baselineBytes": 199270,
+        "baselineSha256": "9742e9e1f45e2f43bf222db16ad458e677b36c300dde98d3f6ec3827981088b8",
+        "changedVsBase": true
+      },
+      {
+        "language": "ve",
+        "slide": 16,
+        "png": "output/playwright/reading-paired-next-20261004/ve-slide-16.png",
+        "path": "public/course-decks/reading-landscape/ve/slide-16.webp",
+        "width": 1440,
+        "height": 5400,
+        "bytes": 284142,
+        "sha256": "2ddce5039a98b43b8dbf1cb2044d3bddc89084b05b63965ac517b98396c52922",
+        "baselineBytes": 268296,
+        "baselineSha256": "a1de41455abd0c3143e502494616f5236ec7a654e0b0486509d261fc5336cd01",
+        "changedVsBase": true
+      },
+      {
+        "language": "ts",
+        "slide": 16,
+        "png": "output/playwright/reading-paired-next-20261004/ts-slide-16.png",
+        "path": "public/course-decks/reading-landscape/ts/slide-16.webp",
+        "width": 1440,
+        "height": 5400,
+        "bytes": 277050,
+        "sha256": "018e1b50e7764f7c4bab9d0b9637a50084023e623bb74ad6c75d8460e43f1813",
+        "baselineBytes": 274972,
+        "baselineSha256": "63aecc34302febde803f0db61b5ad11b083b30007f5e550a7fb4e7aa0175c777",
+        "changedVsBase": true
+      }
+    ],
+    "assetSizeManifestUpdatedOnlyForSixTargets": true
+  },
+  "render": {
+    "renderer": "scripts/make-lesson-slides.mjs --paired-draft, sequential ST/VE/TS",
+    "renderedDimensions": [
+      1440,
+      5400
+    ],
+    "conversion": "Pillow WebP quality=88 method=6",
+    "contactSheet": "output/playwright/reading-paired-next-20261004/contact-sheet.png",
+    "fullPngDir": "output/playwright/reading-paired-next-20261004"
+  },
+  "cacheMigration": {
+    "marker": "/course-decks/reading-landscape/.regional-paired-reuse-stills-20261004",
+    "paths": {
+      "st": [
+        1,
+        3,
+        16,
+        17
+      ],
+      "ve": [
+        16
+      ],
+      "ts": [
+        16
+      ]
+    },
+    "queryInsensitive": true,
+    "noAutomaticDownload": true,
+    "runtimeTest": "tests/studies-media-migration.test.ts"
+  },
+  "visualReview": "Rendered contact sheet inspected locally; root pixel review is pending. No facilitator fluency approval is claimed."
+}

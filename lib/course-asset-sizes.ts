@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1882 files, 694.7 MB total.
+// 1882 files, 694.8 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -1196,9 +1196,9 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/en/slide-19.jpg': 105724,
   '/course-decks/reading-landscape/en/slide-20.jpg': 1136835,
   '/course-decks/reading-landscape/en/slide-21.jpg': 114448,
-  '/course-decks/reading-landscape/st/slide-01.webp': 268226,
+  '/course-decks/reading-landscape/st/slide-01.webp': 268360,
   '/course-decks/reading-landscape/st/slide-02.webp': 268538,
-  '/course-decks/reading-landscape/st/slide-03.webp': 247176,
+  '/course-decks/reading-landscape/st/slide-03.webp': 247468,
   '/course-decks/reading-landscape/st/slide-04.webp': 265468,
   '/course-decks/reading-landscape/st/slide-05.webp': 190652,
   '/course-decks/reading-landscape/st/slide-06.webp': 619272,
@@ -1211,8 +1211,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/st/slide-13.webp': 181404,
   '/course-decks/reading-landscape/st/slide-14.webp': 452578,
   '/course-decks/reading-landscape/st/slide-15.webp': 432710,
-  '/course-decks/reading-landscape/st/slide-16.webp': 270878,
-  '/course-decks/reading-landscape/st/slide-17.webp': 199270,
+  '/course-decks/reading-landscape/st/slide-16.webp': 291752,
+  '/course-decks/reading-landscape/st/slide-17.webp': 199690,
   '/course-decks/reading-landscape/st/slide-18.webp': 550890,
   '/course-decks/reading-landscape/st/slide-19.webp': 266506,
   '/course-decks/reading-landscape/st/slide-20.webp': 657746,
@@ -1232,7 +1232,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/ts/slide-13.webp': 181300,
   '/course-decks/reading-landscape/ts/slide-14.webp': 458320,
   '/course-decks/reading-landscape/ts/slide-15.webp': 435540,
-  '/course-decks/reading-landscape/ts/slide-16.webp': 274972,
+  '/course-decks/reading-landscape/ts/slide-16.webp': 277050,
   '/course-decks/reading-landscape/ts/slide-17.webp': 202374,
   '/course-decks/reading-landscape/ts/slide-18.webp': 556982,
   '/course-decks/reading-landscape/ts/slide-19.webp': 257616,
@@ -1253,7 +1253,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/ve/slide-13.webp': 182170,
   '/course-decks/reading-landscape/ve/slide-14.webp': 455556,
   '/course-decks/reading-landscape/ve/slide-15.webp': 439240,
-  '/course-decks/reading-landscape/ve/slide-16.webp': 268296,
+  '/course-decks/reading-landscape/ve/slide-16.webp': 284142,
   '/course-decks/reading-landscape/ve/slide-17.webp': 201668,
   '/course-decks/reading-landscape/ve/slide-18.webp': 561116,
   '/course-decks/reading-landscape/ve/slide-19.webp': 256916,
