@@ -30,9 +30,17 @@
     }
   ],
   "yearsToFirstCrop": {
-    "value": null,
-    "evidence": null,
-    "notes": "Set to null in editor review: inferred from the timing of a fertiliser calendar; the leaflet never states when the first bunch is cut. Withdrawn value: [1, 1.2]."
+    "value": [
+      1.0833333333333333,
+      1.6666666666666667
+    ],
+    "evidence": {
+      "quote": "time ranges from 13 to 20 months",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Bearing age",
+      "page": 8
+    },
+    "notes": "KZN DARD explicitly states the planting-to-harvest and harvest-to-harvest range. Converted months to years (13/12 to 20/12). This is not a dated forecast or an annual all-month harvest window."
   },
   "yearsToFullBearing": {
     "value": null,
@@ -79,6 +87,7 @@
     "Pollination evidence is a global banana-biology source (ProMusa), not a South African one specifically, since the trait is intrinsic to the triploid cultivar genetics rather than a regional growing condition; searched ARC-ITSC and KZN DARD documents directly but neither discussed pollination/seedlessness.",
     "Yield-per-plant figure is converted from a KZN-specific (Williams cultivar, cooler subtropics) t/ha target and planting density in one ARC/KZN DARD source; a separate density and yield figure specific to Dwarf Cavendish (the other cultivar named in the species brief) was not found.",
     "Editor review 2026-09-28: yearsToFirstCrop withdrawn — inferred from the timing of a fertiliser calendar; the leaflet never states when the first bunch is cut.",
-    "Editor review 2026-09-28: harvest window emptied — no quoted South African source states a year-round harvest; needs a DALRRD banana value-chain profile or ARC-ITSC statement."
+    "Editor review 2026-09-28: harvest window emptied — no quoted South African source states a year-round harvest; needs a DALRRD banana value-chain profile or ARC-ITSC statement.",
+    "2026-10-04: First-crop reference updated after retrieving and inspecting the KZN DARD PDF; regional conditions retained in the note."
   ]
 }

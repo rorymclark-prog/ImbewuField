@@ -209,3 +209,14 @@ test('animal art: every picture belongs to an enterprise, exists, and is a 256×
     }
   }
 });
+
+test('commercial first eggs are sourced as egg onset, not inferred from the earlier receiving age of pullets', () => {
+  const first = ANIMAL_ENTERPRISES['chicken-layer'].weeksToFirstProduct;
+  assert.ok(first);
+  assert.match(first.source.quote, /first eggs/i);
+  const sourcedAge = Number(first.source.quote.match(/at (\d+) weeks of age/)?.[1]);
+  assert.ok(Number.isFinite(sourcedAge));
+  assert.deepEqual(first.value, [sourcedAge, sourcedAge]);
+  assert.match(first.note ?? '', /bird age from hatch/i);
+  assert.match(first.note ?? '', /receiving\/housing age, not evidence of first eggs/);
+});

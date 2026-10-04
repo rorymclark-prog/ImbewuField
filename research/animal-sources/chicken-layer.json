@@ -56,16 +56,16 @@
   },
   "timeToFirstProductWeeks": {
     "value": [
-      16,
-      17
+      21,
+      21
     ],
     "evidence": {
-      "quote": "Receiving and housing point-of-lay pullets at 16 / 17 weeks of age",
-      "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
-      "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
-      "page": 5
+      "quote": "The first eggs, which are small in size, are laid at 21 weeks of age.",
+      "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+      "doc": "ARC Climate-Smart Agriculture Training Manual, Poultry production",
+      "page": 8
     },
-    "notes": "Point-of-lay = pullets are about to begin laying when housed at 16-17 weeks; used directly as age-to-first-product (already in weeks, no conversion needed). Commercial system, South Africa."
+    "notes": "Commercial layer reference: bird age from hatch, not weeks after buying point-of-lay pullets or building housing. Supplier strain, rearing and actual onset can differ. The former 16–17 week figure was the SAPA receiving/housing age, not evidence of first eggs."
   },
   "productiveLifeYears": {
     "value": null,
@@ -199,6 +199,7 @@
   "gaps": [
     "No free-range/smallholder-specific eggs/hen/year figure was found for commercial layer breeds; the outputPerAnimal figure used (SAPA Industry Profile Table 4a) is a national commercial (intensive/barn) average across five hybrid strains, not a smallholder free-range trial.",
     "nda.gov.za and dalrrd.gov.za were unreachable for the Animal Diseases Act (connection reset / 502 on every attempted URL, consistent with this being a known-flaky host); an eccogta.gov.za (Eastern Cape district) mirror of the same Act text was used instead and verified to match the original page count and content.",
-    "Editor review 2026-09-28: outputPerAnimal was a per-year rate built from two documents (cumulative eggs ÷ a laying period from a point-of-lay age elsewhere); restored to the source's own 407.1–428.6 eggs per hen housed to 90 weeks. productiveLifeYears withdrawn on the same ground. Months relabelled as a lit commercial house (a hen without lighting is not claimed to lay all year). Legal: dropped the Act's general definition (the factsheet point names avian influenza and Newcastle) and trimmed summaries that said more than their quotes (who may sell, why nests or litter are needed)."
+    "Editor review 2026-09-28: outputPerAnimal was a per-year rate built from two documents (cumulative eggs ÷ a laying period from a point-of-lay age elsewhere); restored to the source's own 407.1–428.6 eggs per hen housed to 90 weeks. productiveLifeYears withdrawn on the same ground. Months relabelled as a lit commercial house (a hen without lighting is not claimed to lay all year). Legal: dropped the Act's general definition (the factsheet point names avian influenza and Newcastle) and trimmed summaries that said more than their quotes (who may sell, why nests or litter are needed).",
+    "2026-10-04 audit: Corrected receiving-age/first-egg confusion using the retrieved ARC manual, printed p. 467 (PDF p. 8)."
   ]
 }

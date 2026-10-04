@@ -84,10 +84,11 @@ test('every icon key resolves to the app art the chart itself shows', () => {
 test('banana, hives and coops survive printing without invented products or harvest months', () => {
   const items = [{ defId: 'banana_clump', status: 'existing' as const }, { defId: 'banana_circle', status: 'proposed' as const }, { defId: 'beehive', status: 'existing' as const }, { defId: 'chicken_coop', status: 'proposed' as const }];
   const printed = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], treeGroups: placedTreeGroups(items), unidentifiedPlants: unidentifiedPlantGroups(items), animalGroups: placedAnimalGroups(items) });
-  assert.equal(printed.undated?.length, 4);
+  assert.equal(printed.undated?.length, 3);
   const banana = printed.undated?.find((e) => e.iconKey === 'tree:musa-acuminata-aaa-group');
   assert.match(banana?.detail ?? '', /Picking months.*need local confirmation/);
-  assert.ok(printed.undated?.some((e) => e.label === 'Banana Circle'));
+  assert.ok(!printed.undated?.some((e) => e.label === 'Banana Circle'));
+  assert.match(banana?.detail ?? '', /1 existing; 3 proposed/);
   const hives = printed.undated?.find((e) => e.label === 'Hives');
   assert.match(hives?.detail ?? '', /No product or production dates assumed/);
   assert.ok(printed.undated?.some((e) => e.label === 'Coops / chicken tractors' && e.detail.includes('1 proposed')));

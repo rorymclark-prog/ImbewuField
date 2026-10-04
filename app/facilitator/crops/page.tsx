@@ -31,7 +31,7 @@ import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
-import { buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import { bananaCirclesIn, buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, poultryGuidance, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
@@ -724,6 +724,7 @@ function FacilitatorCropsPageInner() {
   const [canvasBeds, setCanvasBeds] = useState<PlanBed[]>([]);
   // The design's fruit trees, for the availability chart's own row. Read from the same canvas
   // as the beds and refreshed on the same event, so a tree placed in the Studio shows up here.
+  const [bananaCircles, setBananaCircles] = useState(0);
   const [canvasTrees, setCanvasTrees] = useState<PlacedTreeGroup[]>([]);
   const [unidentifiedPlants, setUnidentifiedPlants] = useState<UnidentifiedPlantGroup[]>([]);
   const [treeSeasons, setTreeSeasons] = useState<TreeSeasonChoices>({});
@@ -1131,7 +1132,7 @@ function FacilitatorCropsPageInner() {
   // reloads facilitator state), so placing another bed in the Studio (another
   // tab) refreshes the bed list here without a reload.
   useEffect(() => {
-    if (!canvasSite) { setCanvasTrees([]); setUnidentifiedPlants([]); setTreeSeasons({}); setCanvasAnimals([]); setAnimalChoices({}); setAnimalSeasons({}); return; }
+    if (!canvasSite) { setBananaCircles(0); setCanvasTrees([]); setUnidentifiedPlants([]); setTreeSeasons({}); setCanvasAnimals([]); setAnimalChoices({}); setAnimalSeasons({}); return; }
     setAnimalChoices(loadEnterpriseChoices(canvasSite));
     setTreeSeasons(loadTreeSeasonChoices(canvasSite));
     setAnimalSeasons(loadAnimalSeasonChoices(canvasSite));
@@ -1139,6 +1140,7 @@ function FacilitatorCropsPageInner() {
       const state = loadCanvasState(canvasSite);
       setCanvasBeds(bedsFromDesignCanvas(state));
       setCanvasTrees(placedTreeGroups(state?.items ?? []));
+      setBananaCircles(bananaCirclesIn(state?.items ?? []));
       setUnidentifiedPlants(unidentifiedPlantGroups(state?.items ?? []));
       setCanvasAnimals(placedAnimalGroups(state?.items ?? []));
     };
@@ -1281,7 +1283,7 @@ function FacilitatorCropsPageInner() {
     const bedIds = new Set(beds.map((b) => b.id));
     return (plan?.plantings ?? []).filter((p) => bedIds.has(p.bedId));
   }, [plan, beds]);
-  const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth), [siteSurvey, plantings, growingZones, currentMonth]);
+  const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth, { bananaCircles, trees: includeTrees ? canvasTrees : [], animals: includeAnimals ? canvasAnimals : [], animalChoices }), [siteSurvey, plantings, growingZones, currentMonth, bananaCircles, canvasTrees, canvasAnimals, animalChoices, includeTrees, includeAnimals]);
   const chickenGuide = useMemo(() => {
     const coop = canvasAnimals.find((group) => group.housing === 'chicken');
     if (!coop && !siteSurvey?.livestock.includes('chickens') && !siteSurvey?.poultryManagement) return undefined;
