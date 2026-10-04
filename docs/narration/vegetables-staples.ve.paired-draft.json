@@ -786,35 +786,59 @@
             ]
           },
           {
+            "status": "draft",
+            "text": "Swikani vhukati ha bed ni tshi bva thungo dzoṱhe mbili. Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. Ṋeani zwimela spacing yo teaho kha climate yaṋu. Vheani mulch kha bed."
+          },
+          {
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "Reach the middle from both sides. ",
+                "sourceEnglish": "Check the bed regularly from planting.",
                 "status": "english-hold"
               },
               {
-                "sourceEnglish": "Keep every foot on the paths. ",
+                "sourceEnglish": " Use the ",
                 "status": "draft",
-                "text": "Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. "
+                "text": " Shumisani "
               },
               {
-                "sourceEnglish": "Space your plants for your own climate. ",
+                "sourceEnglish": "ten-day photograph",
                 "status": "english-hold"
               },
               {
-                "sourceEnglish": "Mulch the bed.",
-                "status": "english-hold"
+                "sourceEnglish": " as an assignment checkpoint, ",
+                "status": "draft",
+                "text": " sa assignment checkpoint, "
+              },
+              {
+                "sourceEnglish": "not a reason to delay care.",
+                "status": "draft",
+                "text": "hu si tshiitisi tsha u lenga u tshi ṱhogomela."
               }
             ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Photograph it",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " when it's planted.",
+                "status": "draft",
+                "text": " musi bed yo no ṱavhiwa."
+              },
+              {
+                "sourceEnglish": " Then come back after ten days with what you observed.",
+                "status": "draft",
+                "text": " Nga murahu ha maḓuvha a fumi ni vhuye ni na zwe na zwi vhona."
+              }
+            ]
           },
           {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshipikwa a si tshifanyiso tsho fhelelaho. Tshipikwa ndi bed ine na khetha shape, spacing na rhythm yayo nga ndivho."
           }
         ]
       }

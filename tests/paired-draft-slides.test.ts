@@ -363,11 +363,24 @@ test('regional Introduction proposals bind all 60 fields, keep every unlisted ta
     'docs/study-translation-reviews/INTRO-PERMACULTURE-ROOT-TS19-AIRFLOW-REPAIR-2026-10-04.json', 'utf8'));
   const audioReport = JSON.parse(readFileSync(
     'docs/narration-reviews/INTRO-PERMACULTURE-ST-AUDIO-2026-09-28.json', 'utf8'));
+  const exerciseImplementation = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/INTRO-PERMACULTURE-VE-TS-EXERCISE-IMPLEMENTATION-2026-10-04.json', 'utf8'));
   const changed = new Set<string>();
   assert.equal(candidatePacket.candidateFields.length, 60);
 
   for (const lang of ['ve', 'ts'] as const) {
-    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    const currentDeck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    // Rebuild the earlier 60-field snapshot because the later approved exercise batch revises three of its
+    // target cells; the historical checks still verify their original wording and all other prior coverage.
+    const deck = structuredClone(currentDeck);
+    for (const applied of implementation.changes[lang].appliedFields) {
+      const override = implementation.finalOverrides?.find((item: any) =>
+        item.scope.language === lang && item.scope.slide === applied.slide && item.scope.bodyIndex === applied.bodyIndex);
+      const previous = override?.finalTarget ?? (applied.storedTargetStatus === 'mixed'
+        ? { status: 'mixed', segments: applied.candidateSegments, provenance: applied.provenance }
+        : { status: 'draft', text: applied.targetText, provenance: applied.provenance });
+      deck.slides[applied.slide - 1].target.body[applied.bodyIndex] = previous;
+    }
     const validated = validatePairedDraft(deck, source, lang);
     const records = candidatePacket.candidateFields.filter((field: any) => field.language === lang);
     assert.equal(records.length, lang === 've' ? 29 : 31);
@@ -431,6 +444,11 @@ test('regional Introduction proposals bind all 60 fields, keep every unlisted ta
     for (const field of normalizedPacket.candidateFields.filter((item: any) => item.language === lang)) {
       restoredBefore65.slides[field.slide - 1].target.body[field.bodyIndex] = field.currentTarget;
     }
+    // Later exercise fields were outside the historical 65-row reconstruction. Restore their recorded
+    // before-values as well, so the original digest still checks the exact pre-exercise snapshot.
+    for (const field of exerciseImplementation.changedFields.filter((item: any) => item.language === lang)) {
+      restoredBefore65.slides[field.slide - 1].target.body[field.bodyIndex] = field.before;
+    }
     const preserved = [];
     for (let slideIndex = 0; slideIndex < restoredBefore65.slides.length; slideIndex += 1) {
       preserved.push({ slide: slideIndex + 1, heading: restoredBefore65.slides[slideIndex].target.heading });
@@ -449,7 +467,7 @@ test('regional Introduction proposals bind all 60 fields, keep every unlisted ta
   }
 
   assert.equal(changed.size, 60, 'only the 60 exact source-bound body fields are changed');
-  assert.ok(!changed.has('ve:21:3'), 'the uncertain photograph imperative remains exact English');
+  // The later four-field exercise batch is checked separately below; this assertion covers its predecessor's 60-field scope only.
 
   assert.equal(airflowRepair.scope.language, 'ts');
   assert.equal(airflowRepair.scope.slide, 19);
@@ -476,10 +494,14 @@ test('regional Introduction proposals bind all 60 fields, keep every unlisted ta
     const text = (slide: number, bodyIndex: number) => targetVisibleText(deck.slides[slide - 1].target.body[bodyIndex]);
     assert.ok(targetVisibleText(deck.slides[14].target.body[0]).includes('0') &&
       targetVisibleText(deck.slides[14].target.body[0]).includes('5'), `${lang}: zone range retains 0 and 5`);
-    assert.ok(targetVisibleText(deck.slides[19].target.body[1]).includes('sun') &&
-      targetVisibleText(deck.slides[19].target.body[1]).includes('wind') &&
-      targetVisibleText(deck.slides[19].target.body[1]).includes('fire') &&
-      targetVisibleText(deck.slides[19].target.body[1]).includes('water'), `${lang}: all inward sector factors remain`);
+    const inwardFactors = targetVisibleText(deck.slides[19].target.body[1]);
+    const translatedFactors = lang === 've'
+      ? ['ḓuvha', 'muya', 'mulilo', 'maḓi']
+      : ['dyambu', 'moya', 'ndzilo', 'mati'];
+    const factorPositions = translatedFactors.map((factor) => inwardFactors.indexOf(factor));
+    assert.ok(factorPositions.every((position) => position >= 0), `${lang}: all four source energy objects remain visible`);
+    assert.deepEqual(factorPositions, [...factorPositions].sort((a, b) => a - b),
+      `${lang}: the translated sun, wind, fire and water labels retain source order`);
     const permission = deck.slides[7].target.body[2];
     assert.ok(permission.segments.some((segment: any) => segment.status === 'english-hold' &&
       segment.sourceEnglish.includes('ask permission where it is needed')), `${lang}: permission condition remains exact`);
@@ -509,6 +531,85 @@ test('regional Introduction proposals bind all 60 fields, keep every unlisted ta
   drifted.slides[0].english.body[1] += ' Changed.';
   assert.throws(() => validatePairedDraft(drifted, source, 've'), /English body differs/,
     'source drift withdraws the entire paired regional draft');
+});
+
+test('Intro exercise drafts preserve ordered energy arrows, one-sheet source and site comparison', () => {
+  const review = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/INTRO-PERMACULTURE-VE-TS-EXERCISE-IMPLEMENTATION-2026-10-04.json', 'utf8'));
+  assert.equal(review.changedTargetCount, 4);
+  const byKey = new Map(review.changedFields.map((row: any) => [`${row.language}:${row.slide}:${row.bodyIndex}`, row]));
+  for (const row of review.changedFields) {
+    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${row.language}.paired-draft.json`, 'utf8'));
+    const validated = validatePairedDraft(deck, source, row.language);
+    assert.equal(row.sourceEnglish, source[row.slide - 1].body[row.bodyIndex]);
+    assert.deepEqual(validated[row.slide - 1].target.body[row.bodyIndex], row.after,
+      `${row.language} slide ${row.slide} body ${row.bodyIndex}: keep the independently accepted target`);
+    assert.match(row.after.provenance ?? '', /unreviewed/i);
+  }
+
+  const factorsByLanguage = {
+    ve: ['ḓuvha', 'muya', 'mulilo', 'maḓi'],
+    ts: ['dyambu', 'moya', 'ndzilo', 'mati'],
+  } as const;
+  for (const lang of ['ve', 'ts'] as const) {
+    const row = byKey.get(`${lang}:20:1`) as any;
+    const actual = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'))
+      .slides[19].target.body[1];
+    assert.equal(actual.status, 'draft');
+    const text = targetVisibleText(actual);
+    const positions = factorsByLanguage[lang].map((factor) => text.indexOf(factor));
+    assert.ok(positions.every((position) => position >= 0), `${lang}: all four energy objects remain visible`);
+    assert.deepEqual(positions, [...positions].sort((a, b) => a - b), `${lang}: sun, wind, fire and water keep source order`);
+    assert.ok(lang === 've' ? /dzhena.*nnḓa/.test(text) : /nghenaka.*ehandle/.test(text),
+      `${lang}: arrows still enter from outside`);
+    assert.equal(row.sourceEnglish, 'Then draw arrows in from outside for sun, wind, fire and water.');
+  }
+
+  const vePhoto = byKey.get('ve:21:3') as any;
+  assert.equal(vePhoto.after.text, 'Dzhiani photo ya sketch.');
+  assert.doesNotMatch(vePhoto.after.text, /yaṋu|your/i, 'the source does not assign ownership of the sketch');
+  assert.equal(vePhoto.sourceEnglish, 'Photograph the sketch.');
+
+  const tsCompare = byKey.get('ts:22:0') as any;
+  assert.deepEqual(tsCompare.after.segments.map((segment: any) => [segment.sourceEnglish, segment.status]), [
+    ['Walk out and ', 'draft'], ['check your sketch', 'draft'], [' against the ground.', 'english-hold'],
+  ]);
+  assert.equal(tsCompare.after.segments.map((segment: any) => segment.sourceEnglish).join(''), tsCompare.sourceEnglish,
+    'the walk-out and sketch-to-ground relation remains bound to the complete English sentence');
+  assert.equal(tsCompare.after.segments[2].text, undefined, 'the retained site-comparison clause has no competing target');
+
+  for (const held of review.preservedHeldRows) {
+    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${held.language}.paired-draft.json`, 'utf8'));
+    const actual = deck.slides[held.slide - 1].target.body[held.bodyIndex];
+    assert.deepEqual(actual, held.target,
+      `${held.language} slide ${held.slide} body ${held.bodyIndex}: uncertain possessive/direction wording stays held`);
+    assert.equal(held.sourceEnglish, source[held.slide - 1].body[held.bodyIndex]);
+    const visible = targetVisibleText(actual);
+    if (held.sourceEnglish.includes('own zones and sectors')) {
+      assert.ok(visible.includes('own zones and sectors'), `${held.language}: do not guess possessive concord before held labels`);
+      assert.match(actual.segments.find((segment: any) => segment.status === 'english-hold')?.sourceEnglish ?? '',
+        /own zones and sectors/);
+    }
+    if (held.sourceEnglish.includes('as far as your land goes')) {
+      assert.ok(visible.includes('as far as your land goes'), 'full land extent remains explicit while its Tshivenda phrasing is held');
+    }
+    if (held.sourceEnglish.startsWith('Walk out and')) {
+      assert.ok(visible.includes('check your sketch against the ground.'),
+        'the existing Tshivenda field step stays paired until a verified replacement is available');
+      assert.doesNotMatch(visible, /Fambani|kambelani/,
+        'do not publish the rejected Xitsonga-looking verb forms as Tshivenda');
+    }
+  }
+
+  const drifted = JSON.parse(JSON.stringify(JSON.parse(readFileSync('docs/narration/intro-permaculture.ve.paired-draft.json', 'utf8'))));
+  drifted.slides[19].english.body[1] += ' Add a direction.';
+  assert.throws(() => validatePairedDraft(drifted, source, 've'), /English body differs/,
+    'changing the arrow source invalidates its paired language draft');
+  const stPath = 'docs/narration/intro-permaculture.st.paired-draft.json';
+  const audioReport = JSON.parse(readFileSync(
+    'docs/narration-reviews/INTRO-PERMACULTURE-ST-AUDIO-2026-09-28.json', 'utf8'));
+  assert.equal(createHash('sha256').update(readFileSync(stPath)).digest('hex'), audioReport.sourcePairSha256,
+    'the excluded Sesotho pair remains byte-for-byte unchanged because its narration is hash-bound');
 });
 
 function validatedDirection(language: 've' | 'ts'): boolean {
@@ -1132,15 +1233,13 @@ test('Vegetables field assignment drafts keep measurements, paths, checkpoints a
 
     const soil = slides[16];
     assert.equal(soil.english.body[0], 'Now the lesson finishes in the soil.');
-    if (lang === 'st' || lang === 've') {
-      assert.equal(soil.target.body[0].status, 'draft');
-      assert.notEqual(soil.target.body[0].text, soil.english.body[0]);
-      assert.ok(soil.target.body[0].text.includes(lang === 'st' ? 'mobung' : 'mavuni'),
-        `${lang}: the localized sentence keeps the source's soil meaning`);
-    } else {
-      assert.deepEqual(soil.target.body[0], { status: 'english-hold' },
-        'the Xitsonga candidate that shifted soil to fields remains held in exact English');
-    }
+    const soilEndings = {
+      st: 'Joale thuto e fella mobung.',
+      ve: 'Zwino ngudo i fhela mavuni.',
+      ts: 'Sweswi, dyondzo yi hela emhlabeni.',
+    } as const;
+    assert.deepEqual(soil.target.body[0], { status: 'draft', text: soilEndings[lang] },
+      `${lang}: the lesson ends in soil, and the exact source remains paired`);
 
     const bed = soil.target.body[1];
     assert.equal(soil.english.body[1], 'Build one bed that can keep feeding you. One point two metres by three metres.');
@@ -1156,46 +1255,69 @@ test('Vegetables field assignment drafts keep measurements, paths, checkpoints a
 
     const access = soil.target.body[2];
     assert.equal(soil.english.body[2], 'Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.');
-    assert.equal(access.status, 'mixed');
-    assert.equal(access.segments.map((segment: any) => segment.sourceEnglish).join(''), soil.english.body[2],
-      `${lang}: preserve the complete four-sentence access and care source`);
-    const bothSides = access.segments.find((segment: any) => segment.sourceEnglish === 'Reach the middle from both sides. ');
-    if (lang === 've') {
-      assert.deepEqual(bothSides, { sourceEnglish: 'Reach the middle from both sides. ', status: 'english-hold' },
-        'Tshivenda keeps the uncertain “both sides” wording exact rather than broadening it to all sides');
-    } else {
-      assert.equal(bothSides.status, 'draft');
-      assert.ok(bothSides.text.includes(lang === 'st' ? 'mahlakoreng ka bobedi' : 'matlhelo hamambirhi'),
-        `${lang}: the target keeps both sides, not all sides`);
-    }
-    const pathRule = access.segments.find((segment: any) => segment.sourceEnglish === 'Keep every foot on the paths. ');
-    assert.equal(pathRule.status, 'draft');
-    assert.ok(pathRule.text.includes(lang === 'st' ? 'ditseleng' : lang === 've' ? 'paths' : 'etindleleni'),
-      `${lang}: foot traffic remains on paths`);
-    assert.deepEqual(access.segments.slice(-2), [
-      { sourceEnglish: 'Space your plants for your own climate. ', status: 'english-hold' },
-      { sourceEnglish: 'Mulch the bed.', status: 'english-hold' },
-    ], `${lang}: keep climate-specific spacing and mulch clauses in their exact source English`);
+    assert.equal(access.status, 'draft');
+    const accessText = {
+      st: 'Fihla bohareng ho tloha mahlakoreng ka bobedi. Etsa bonnete ba hore leoto le leng le le leng le sala ditseleng. Beha dimela ka sebaka se tshwanetseng boemo ba lehodimo ba hao. Tshhela mulch bedeng.',
+      ve: 'Swikani vhukati ha bed ni tshi bva thungo dzoṱhe mbili. Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. Ṋeani zwimela spacing yo teaho kha climate yaṋu. Vheani mulch kha bed.',
+      ts: 'Fika exivindzini hi matlhelo hamambirhi. Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. Siyela swimilani mpfhuka lowu faneleke eka maxelo ya wena. Tirhisa mulch eka bed.',
+    } as const;
+    assert.equal(access.text, accessText[lang], `${lang}: full access, path, own-climate spacing and mulch wording stays source-paired`);
+    assert.ok(access.text.includes(lang === 'st' ? 'mahlakoreng ka bobedi' : lang === 've' ? 'thungo dzoṱhe mbili' : 'matlhelo hamambirhi'),
+      `${lang}: retain access from both sides`);
+    assert.ok(access.text.includes(lang === 'st' ? 'ditseleng' : lang === 've' ? 'paths fhedzi' : 'etindleleni ntsena'),
+      `${lang}: keep every foot on paths`);
+    assert.ok(access.text.includes(lang === 'st' ? 'boemo ba lehodimo ba hao' : lang === 've' ? 'climate yaṋu' : 'maxelo ya wena'),
+      `${lang}: spacing remains for the learner's own climate`);
+    assert.ok(access.text.includes('mulch') && access.text.includes('bed'), `${lang}: retain the mulch action and its bed`);
 
-    for (const paragraphIndex of [3, 4]) {
-      assert.deepEqual(soil.target.body[paragraphIndex], { status: 'english-hold' },
-        `${lang} slide17 paragraph ${paragraphIndex + 1}: retain the exact bed-check and planted/ten-day photo checkpoint instructions`);
-      assert.equal(soil.english.body[paragraphIndex], source[16].body[paragraphIndex]);
+    assert.equal(soil.english.body[3], 'Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.');
+    const regularCheck = soil.target.body[3];
+    assert.ok(['mixed', 'draft'].includes(regularCheck.status));
+    if (lang === 've') {
+      assert.equal(regularCheck.status, 'mixed');
+      assert.deepEqual(regularCheck.segments[0], { sourceEnglish: 'Check the bed regularly from planting.', status: 'english-hold' },
+        'hold the full regularly-from-planting sentence to avoid turning regularly into an all-the-time prescription');
+    } else {
+      assert.equal(regularCheck.status, 'mixed');
+      assert.equal(regularCheck.segments[0].sourceEnglish, 'Check the bed regularly from planting.');
+      assert.equal(regularCheck.segments[0].status, 'draft');
+      assert.ok(regularCheck.segments[0].text.includes(lang === 'st' ? 'kgafetsa' : 'nkarhi na nkarhi'),
+        `${lang}: preserve regular checking from planting without adding a schedule`);
     }
+    assert.equal(regularCheck.segments.map((segment: any) => segment.sourceEnglish).join(''), soil.english.body[3],
+      `${lang}: the complete checkpoint and no-delay-care source remains attached`);
+    assert.ok(regularCheck.segments.some((segment: any) => segment.sourceEnglish === 'not a reason to delay care.' && segment.status === 'draft'),
+      `${lang}: the ten-day checkpoint cannot be treated as a reason to postpone care`);
+    assert.equal(soil.english.body[4], 'Photograph it when it\'s planted. Then come back after ten days with what you observed.');
+    const plantedPhoto = soil.target.body[4];
+    assert.ok(['draft', 'mixed'].includes(plantedPhoto.status));
+    if (lang === 've') {
+      assert.equal(plantedPhoto.status, 'mixed');
+      assert.deepEqual(plantedPhoto.segments[0], { sourceEnglish: 'Photograph it', status: 'english-hold' },
+        'Tshivenda retains the uncertain photograph command in exact English');
+    }
+    assert.equal(plantedPhoto.status === 'draft' ? plantedPhoto.text : plantedPhoto.segments.map((segment: any) =>
+      segment.status === 'draft' ? segment.text : segment.sourceEnglish).join(''),
+    lang === 'st' ? 'Nka senepe ha bed e se e jetsoe. Ebe o kgutle ka mora matsatsi a leshome o tlisa seo o se boneng.' :
+    lang === 've' ? 'Photograph it musi bed yo no ṱavhiwa. Nga murahu ha maḓuvha a fumi ni vhuye ni na zwe na zwi vhona.' :
+    'Teka foto loko bed yi byariwile. Kutani vuya endzhaku ka masiku ya khume with what you observed.',
+    `${lang}: keep the planting-time image and ten-day return in source order`);
+    if (lang === 'ts') assert.deepEqual(plantedPhoto.segments.at(-1), { sourceEnglish: ' with what you observed.', status: 'english-hold' },
+      'keep the observer/accompaniment phrase exact rather than changing its actor');
+
     const aim = soil.target.body[5];
     assert.equal(soil.english.body[5], source[16].body[5]);
-    if (lang === 've') {
-      assert.ok(aim.status === 'english-hold' || (aim.status === 'mixed' && aim.segments.every((segment: any) => segment.status === 'english-hold')),
-        'Tshivenda keeps uncertain aim/intent language held rather than emitting a pseudo-draft');
-    } else {
-      assert.equal(aim.status, 'mixed');
-      assert.equal(aim.segments[0].sourceEnglish, "The aim isn't a perfect picture. ");
-      assert.equal(aim.segments[0].status, 'draft');
-      assert.deepEqual(aim.segments[1], {
-        sourceEnglish: 'The aim is a bed whose shape, spacing and rhythm you chose on purpose.',
-        status: 'english-hold',
-      }, `${lang}: exact bed/shape/spacing/rhythm and intentional-choice wording stays source-held`);
-    }
+    assert.equal(aim.status, 'draft');
+    const aimText = {
+      st: 'Sepheo ha se setshwantsho se phethahetseng. Sepheo ke bed eo o kgethileng shape, spacing le rhythm ya yona ka boomo.',
+      ve: 'Tshipikwa a si tshifanyiso tsho fhelelaho. Tshipikwa ndi bed ine na khetha shape, spacing na rhythm yayo nga ndivho.',
+      ts: 'Xikongomelo a hi xifaniso lexi hetisekeke. Xikongomelo i bed leyi xivumbeko, spacing ni rhythm ya yona u swi hlawuleke hi vomu.',
+    } as const;
+    assert.equal(aim.text, aimText[lang], `${lang}: retain both the not-perfect-picture and intentional-bed aims`);
+    assert.ok(aim.text.includes('bed') && aim.text.includes(lang === 'ts' ? 'xivumbeko' : 'shape') && aim.text.includes('spacing') && aim.text.includes('rhythm'),
+      `${lang}: the chosen bed's shape, spacing and rhythm remain visible`);
+    assert.ok(aim.text.includes(lang === 'st' ? 'ka boomo' : lang === 've' ? 'nga ndivho' : 'hi vomu'),
+      `${lang}: preserve that the bed design was chosen on purpose`);
 
     const action = slides[17];
     const requiredActions = [

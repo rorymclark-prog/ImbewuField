@@ -790,47 +790,45 @@
             ]
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Reach the middle from both sides. ",
-                "status": "draft",
-                "text": "Fihla bohareng ho tloha mahlakoreng ka bobedi. "
-              },
-              {
-                "sourceEnglish": "Keep every foot on the paths. ",
-                "status": "draft",
-                "text": "Etsa bonnete ba hore leoto le leng le le leng le sala ditseleng. "
-              },
-              {
-                "sourceEnglish": "Space your plants for your own climate. ",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": "Mulch the bed.",
-                "status": "english-hold"
-              }
-            ]
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fihla bohareng ho tloha mahlakoreng ka bobedi. Etsa bonnete ba hore leoto le leng le le leng le sala ditseleng. Beha dimela ka sebaka se tshwanetseng boemo ba lehodimo ba hao. Tshhela mulch bedeng."
           },
           {
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "The aim isn't a perfect picture. ",
+                "sourceEnglish": "Check the bed regularly from planting.",
                 "status": "draft",
-                "text": "Sepheo ha se setshwantsho se phethahetseng. "
+                "text": "Hlahloba bed kgafetsa ho tloha ha e lengwa."
               },
               {
-                "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+                "sourceEnglish": " Use the ",
+                "status": "draft",
+                "text": " Sebedisa "
+              },
+              {
+                "sourceEnglish": "ten-day photograph",
                 "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " as an assignment checkpoint, ",
+                "status": "draft",
+                "text": " e le assignment checkpoint, "
+              },
+              {
+                "sourceEnglish": "not a reason to delay care.",
+                "status": "draft",
+                "text": "eseng lebaka la ho diehisa tlhokomelo."
               }
             ]
+          },
+          {
+            "status": "draft",
+            "text": "Nka senepe ha bed e se e jetsoe. Ebe o kgutle ka mora matsatsi a leshome o tlisa seo o se boneng."
+          },
+          {
+            "status": "draft",
+            "text": "Sepheo ha se setshwantsho se phethahetseng. Sepheo ke bed eo o kgethileng shape, spacing le rhythm ya yona ka boomo."
           }
         ]
       }

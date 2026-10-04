@@ -765,7 +765,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sweswi, dyondzo yi hela emhlabeni."
           },
           {
             "status": "mixed",
@@ -782,47 +783,60 @@
             ]
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Reach the middle from both sides. ",
-                "status": "draft",
-                "text": "Fika exivindzini hi matlhelo hamambirhi. "
-              },
-              {
-                "sourceEnglish": "Keep every foot on the paths. ",
-                "status": "draft",
-                "text": "Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. "
-              },
-              {
-                "sourceEnglish": "Space your plants for your own climate. ",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": "Mulch the bed.",
-                "status": "english-hold"
-              }
-            ]
-          },
-          {
-            "status": "english-hold"
-          },
-          {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Fika exivindzini hi matlhelo hamambirhi. Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. Siyela swimilani mpfhuka lowu faneleke eka maxelo ya wena. Tirhisa mulch eka bed."
           },
           {
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "The aim isn't a perfect picture. ",
+                "sourceEnglish": "Check the bed regularly from planting.",
                 "status": "draft",
-                "text": "Xikongomelo a hi xifaniso lexi hetisekeke. "
+                "text": "Kambela bed nkarhi na nkarhi ku sukela loko yi byariwile."
               },
               {
-                "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+                "sourceEnglish": " Use the ",
+                "status": "draft",
+                "text": " Tirhisa "
+              },
+              {
+                "sourceEnglish": "ten-day photograph",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " as an assignment checkpoint, ",
+                "status": "draft",
+                "text": " tanihi assignment checkpoint, "
+              },
+              {
+                "sourceEnglish": "not a reason to delay care.",
+                "status": "draft",
+                "text": "ku nga ri xivangelo xo hlwela ku khathalela."
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Photograph it when it's planted.",
+                "status": "draft",
+                "text": "Teka foto loko bed yi byariwile."
+              },
+              {
+                "sourceEnglish": " Then come back after ten days",
+                "status": "draft",
+                "text": " Kutani vuya endzhaku ka masiku ya khume"
+              },
+              {
+                "sourceEnglish": " with what you observed.",
                 "status": "english-hold"
               }
             ]
+          },
+          {
+            "status": "draft",
+            "text": "Xikongomelo a hi xifaniso lexi hetisekeke. Xikongomelo i bed leyi xivumbeko, spacing ni rhythm ya yona u swi hlawuleke hi vomu."
           }
         ]
       }

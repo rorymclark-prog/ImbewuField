@@ -1,0 +1,329 @@
+{
+  "title": "Intro-permaculture VE/TS exercise source-bound implementation",
+  "createdUtc": "2026-10-04",
+  "baseHead": "af8734847a0b707e5393afb9020fe4425d8542fe",
+  "independentCheck": "/tmp/imbewu-ve-ts-intro-exercise-independent-check-20261004.json",
+  "scope": "Four approved VE/TS fields only. ST Intro/audio remains untouched. Four held candidates and every other Intro field remain byte-for-byte unchanged.",
+  "changedTargetCount": 4,
+  "changedFields": [
+    {
+      "language": "ve",
+      "slide": 20,
+      "bodyIndex": 1,
+      "sourceEnglish": "Then draw arrows in from outside for sun, wind, fire and water.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Then draw arrows in from outside for ",
+            "status": "draft",
+            "text": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza "
+          },
+          {
+            "sourceEnglish": "sun, wind, fire and water.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza ḓuvha, muya, mulilo na maḓi.",
+        "provenance": "Unreviewed source-bound machine draft; facilitator review open."
+      },
+      "reason": "All four source objects and their order are preserved; arrows remain the symbol term. Keep the existing source-paired prefix byte-for-byte."
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 3,
+      "sourceEnglish": "Photograph the sketch.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Dzhiani photo ya sketch.",
+        "provenance": "Unreviewed machine draft; exact English source remains paired; facilitator review open."
+      },
+      "reason": "The proposed yaṋu adds “your,” absent from “Photograph the sketch.” Use no ownership: “Dzhiani photo ya sketch.” keeps the ordinary action localized and the map-work noun exact English. The take-photo imperative has a project-language precedent, but facilitator review remains open."
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 1,
+      "sourceEnglish": "Then draw arrows in from outside for sun, wind, fire and water.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Then draw arrows in from outside for ",
+            "status": "draft",
+            "text": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela "
+          },
+          {
+            "sourceEnglish": "sun, wind, fire and water.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela dyambu, moya, ndzilo na mati.",
+        "provenance": "Unreviewed source-bound machine draft; facilitator review open."
+      },
+      "reason": "The source list remains in the exact order sun, wind, fire, water; the arrows-in-from-outside relation and symbol term are preserved."
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 0,
+      "sourceEnglish": "Walk out and check your sketch against the ground.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Walk out and ",
+            "status": "draft",
+            "text": "Famba ehandle u "
+          },
+          {
+            "sourceEnglish": "check your sketch against the ground.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Walk out and ",
+            "status": "draft",
+            "text": "Famba ehandle u "
+          },
+          {
+            "sourceEnglish": "check your sketch",
+            "status": "draft",
+            "text": "kambela sketch ya wena"
+          },
+          {
+            "sourceEnglish": " against the ground.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; facilitator review open."
+      },
+      "reason": "The ordinary walk/check action is localized; “against the ground” remains exact English and retains the required sketch-to-site comparison. “your” is present in the source and not an addition."
+    }
+  ],
+  "preservedHeldRows": [
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Sketch your own zones and sectors on one sheet of paper.",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Sketch your ",
+            "status": "draft",
+            "text": "Olani "
+          },
+          {
+            "sourceEnglish": "own zones and sectors",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " on one sheet of paper.",
+            "status": "draft",
+            "text": " kha bammbiri ḽithihi."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "reason": "Do not adopt dzaṋu before English zones/sectors without a reliable concord check. Keep the existing one-sheet wording and exact English technical phrase; this avoids a suspect possessive construction."
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 1,
+      "sourceEnglish": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Mark ",
+            "status": "draft",
+            "text": "Maka "
+          },
+          {
+            "sourceEnglish": "Zone 0 and Zone 1",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " first, then work outward ",
+            "status": "draft",
+            "text": " u thome, ni bvele nga nnḓa "
+          },
+          {
+            "sourceEnglish": "as far as your land goes.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "reason": "The candidate translates the land-extent clause without a verified construction and has person-concord uncertainty across Maka/u/ni. Keep the current exact English extent clause; first-then-outward order and Zone labels remain as currently paired."
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 0,
+      "sourceEnglish": "Walk out and check your sketch against the ground.",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Walk out and ",
+            "status": "draft",
+            "text": "Ibani ni "
+          },
+          {
+            "sourceEnglish": "check your sketch against the ground.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "reason": "Do not adopt Fambani/kambelani: those forms are not supported by the checked Tshivenda usage here and risk Xitsonga contamination. Preserve this field exactly as currently stored pending a verified Tshivenda clause; do not treat the proposal as approved."
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Sketch your own zones and sectors on one sheet of paper.",
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Sketch your ",
+            "status": "draft",
+            "text": "Dirowa "
+          },
+          {
+            "sourceEnglish": "own zones and sectors",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " on one sheet of paper.",
+            "status": "draft",
+            "text": " eka phepha rin’we."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "reason": "Do not adopt ta wena before English zones without a checked concord construction. Keep the current one-sheet sentence and exact English “own zones and sectors” hold."
+    }
+  ],
+  "sourceFiles": {
+    "docs/narration/intro-permaculture.en.md": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+    "docs/narration/intro-permaculture.ve.paired-draft.json": "5c2c04ac3aff70d62a59b5ea68eb3dfaedd32ef068bfa143113bce0f9a6ee2f7",
+    "docs/narration/intro-permaculture.ts.paired-draft.json": "95758a62c3b74f043233f72202bbefa51fe92481e53620e89fcf9b2c61f3f123"
+  },
+  "semanticGuards": [
+    "VE/TS source arrow directions and ordered sun/wind/fire/water elements are retained.",
+    "VE photo action has no added ownership.",
+    "TS walk/check instruction retains exact English against-the-ground comparison.",
+    "VE/TS own-zones possessive and the uncertain VE direction clauses remain held.",
+    "All targets remain visibly unreviewed; no fluent-review claim."
+  ],
+  "reviewStatus": "Four authorized machine-draft targets; source pairing is checked and facilitator review remains open. No fluent approval claimed.",
+  "baseSourceFileSha256": {
+    "docs/narration/intro-permaculture.en.md": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+    "docs/narration/intro-permaculture.ve.paired-draft.json": "3a0f2801a5c4e5bbdd2358e85a9548bd64739804f79ee32eea6ea1419073e61e",
+    "docs/narration/intro-permaculture.ts.paired-draft.json": "9e0f241cf56e0e93d6b946cd73d71d18e2b6012d5dea6750b7186028844d9522"
+  },
+  "finalPairedFileSha256": {
+    "docs/narration/intro-permaculture.ve.paired-draft.json": "5c2c04ac3aff70d62a59b5ea68eb3dfaedd32ef068bfa143113bce0f9a6ee2f7",
+    "docs/narration/intro-permaculture.ts.paired-draft.json": "95758a62c3b74f043233f72202bbefa51fe92481e53620e89fcf9b2c61f3f123"
+  },
+  "renderProof": {
+    "renderRoot": "/tmp/imbewu-intro-exercise-render-20261004",
+    "contactSheet": "/tmp/imbewu-intro-exercise-four-frame-contact-20261004.png",
+    "frames": [
+      {
+        "language": "ve",
+        "slide": 20,
+        "path": "public/course-decks/intro-permaculture/ve/slide-20.webp",
+        "bytes": 490958,
+        "sha256": "64d06405d387f354c62222a27dca4411066cde5a5969b7ed454a398558574caf",
+        "renderedDimensionsPx": [
+          1440,
+          5400
+        ],
+        "webpQuality": 88,
+        "webpMethod": 6
+      },
+      {
+        "language": "ve",
+        "slide": 21,
+        "path": "public/course-decks/intro-permaculture/ve/slide-21.webp",
+        "bytes": 219334,
+        "sha256": "35daf11de2d7ebee23fef81f1b7e5e85de5b4a242738a01d1d867f6b110e347a",
+        "renderedDimensionsPx": [
+          1440,
+          5400
+        ],
+        "webpQuality": 88,
+        "webpMethod": 6
+      },
+      {
+        "language": "ts",
+        "slide": 20,
+        "path": "public/course-decks/intro-permaculture/ts/slide-20.webp",
+        "bytes": 509464,
+        "sha256": "bcc9ec3e8c85fad6e97b9c3d5e6465027b9b16f023dfe4ec381abb684466bb22",
+        "renderedDimensionsPx": [
+          1440,
+          5400
+        ],
+        "webpQuality": 88,
+        "webpMethod": 6
+      },
+      {
+        "language": "ts",
+        "slide": 22,
+        "path": "public/course-decks/intro-permaculture/ts/slide-22.webp",
+        "bytes": 268522,
+        "sha256": "4f3c76f233798b9b42ab76085ff6b05c5c6899046ba4408d385d02ffbe81fcac",
+        "renderedDimensionsPx": [
+          1440,
+          5400
+        ],
+        "webpQuality": 88,
+        "webpMethod": 6
+      }
+    ],
+    "visualReview": "All four compressed panels reviewed. English source and draft/status remain visible; no clipping observed."
+  },
+  "cacheMigration": {
+    "worker": "app/sw.js/route.ts",
+    "function": "migrateRegionalAssignmentExerciseStills",
+    "after": "migrateVegetablesFieldActionStills",
+    "marker": "/course-decks/.regional-assignment-exercise-20261004",
+    "exactInvalidationPaths": [
+      "/course-decks/vegetables-staples/st/slide-17.webp",
+      "/course-decks/vegetables-staples/ve/slide-17.webp",
+      "/course-decks/vegetables-staples/ts/slide-17.webp",
+      "/course-decks/intro-permaculture/ve/slide-20.webp",
+      "/course-decks/intro-permaculture/ve/slide-21.webp",
+      "/course-decks/intro-permaculture/ts/slide-20.webp",
+      "/course-decks/intro-permaculture/ts/slide-22.webp"
+    ],
+    "matching": "pathname-based; query variants removed",
+    "preserved": "The already-shipped Field Action slide18 migration remains unchanged. This marker does not touch other stills, ST/EN assets, narration, animations, or later replacement downloads.",
+    "network": "No automatic fetch or pack download."
+  }
+}
