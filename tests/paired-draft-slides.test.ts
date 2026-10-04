@@ -913,7 +913,7 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const module = COURSE_MODULES.find(({ id }) => id === 'vegetables-staples')!;
   const expectedHolds = new Set([
-    'st:16:6', 've:16:6', 'ts:10:2', 'ts:10:4', 'ts:16:6',
+    'st:16:6', 've:16:6', 'ts:10:2', 'ts:16:6',
   ]);
   let sourceMatches = 0;
   let reusedDrafts = 0;
@@ -954,10 +954,10 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
   }
 
   assert.equal(sourceMatches, 171, 'slides 7–16 contain 171 complete source-matched paragraphs across the three languages');
-  assert.equal(reusedDrafts, 166,
-    'all available source-matched learner drafts appear in the deck, including the new Xitsonga Maize height draft with its technical structure term held in English');
   assert.deepEqual(actualHolds, expectedHolds,
-    'the Indigenous farming example, Beans claim and crop-treatment safeguards remain holds; the now-localized Maize height wording is reused');
+    'the Indigenous farming example and crop-treatment safeguards remain whole-field holds; the newly paired Maize and Beans passages use current learner wording');
+  assert.equal(reusedDrafts, sourceMatches - expectedHolds.size,
+    'every other whole source-matched lesson paragraph uses its current learner draft in the deck');
 
   const tsSlides = validatePairedDraft(
     JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8')),
@@ -973,6 +973,16 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
     status: 'draft',
     text: resolveLearnerLessonPresentation(maizeLesson, 'ts').content.body.split('\n\n')[maizeIndex],
   }, 'reuse the current source-bound Xitsonga height draft while preserving the exact English structure anchor');
+
+  const beansSource = 'Beans climb the maize, and store as protein.';
+  const beansIndex = maizeLesson.body.split('\n\n').findIndex((paragraph) => paragraph === beansSource);
+  assert.notEqual(beansIndex, -1, 'the Beans sentence remains a separately bound source paragraph');
+  assert.equal(tsSlides[9].english.body[3], beansSource);
+  const beansTarget = tsSlides[9].target.body[3];
+  assert.equal(beansTarget.status, 'draft');
+  assert.equal(beansTarget.text, resolveLearnerLessonPresentation(maizeLesson, 'ts').content.body.split('\n\n')[beansIndex]);
+  assert.equal(beansTarget.text.match(/and store as protein/g)?.length, 1,
+    'the protein-storage claim stays exact English within the source-bound draft');
 
   const treatmentSource = 'If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.';
   for (const lang of ['st', 've', 'ts'] as const) {

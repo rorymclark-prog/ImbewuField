@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1882 files, 695.2 MB total.
+// 1882 files, 695.8 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -1666,10 +1666,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/ts/slide-05.webp': 400092,
   '/course-decks/vegetables-staples/ts/slide-06.webp': 596546,
   '/course-decks/vegetables-staples/ts/slide-07.webp': 557248,
-  '/course-decks/vegetables-staples/ts/slide-08.webp': 376568,
-  '/course-decks/vegetables-staples/ts/slide-09.webp': 283306,
-  '/course-decks/vegetables-staples/ts/slide-10.webp': 791480,
-  '/course-decks/vegetables-staples/ts/slide-11.webp': 379560,
+  '/course-decks/vegetables-staples/ts/slide-08.webp': 456730,
+  '/course-decks/vegetables-staples/ts/slide-09.webp': 358044,
+  '/course-decks/vegetables-staples/ts/slide-10.webp': 795946,
+  '/course-decks/vegetables-staples/ts/slide-11.webp': 391148,
   '/course-decks/vegetables-staples/ts/slide-12.webp': 375858,
   '/course-decks/vegetables-staples/ts/slide-13.webp': 370390,
   '/course-decks/vegetables-staples/ts/slide-14.webp': 230166,
@@ -1684,10 +1684,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/ve/slide-05.webp': 397604,
   '/course-decks/vegetables-staples/ve/slide-06.webp': 590562,
   '/course-decks/vegetables-staples/ve/slide-07.webp': 558144,
-  '/course-decks/vegetables-staples/ve/slide-08.webp': 353184,
-  '/course-decks/vegetables-staples/ve/slide-09.webp': 273872,
-  '/course-decks/vegetables-staples/ve/slide-10.webp': 630620,
-  '/course-decks/vegetables-staples/ve/slide-11.webp': 329820,
+  '/course-decks/vegetables-staples/ve/slide-08.webp': 444256,
+  '/course-decks/vegetables-staples/ve/slide-09.webp': 347296,
+  '/course-decks/vegetables-staples/ve/slide-10.webp': 778674,
+  '/course-decks/vegetables-staples/ve/slide-11.webp': 400706,
   '/course-decks/vegetables-staples/ve/slide-12.webp': 401156,
   '/course-decks/vegetables-staples/ve/slide-13.webp': 388806,
   '/course-decks/vegetables-staples/ve/slide-14.webp': 231284,

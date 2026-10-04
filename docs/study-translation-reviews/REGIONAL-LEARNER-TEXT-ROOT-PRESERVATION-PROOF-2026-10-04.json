@@ -1,0 +1,30 @@
+{
+  "changedRegistryFiles": [
+    "lib/course-translation-drafts-st-market-community.ts",
+    "lib/course-translation-drafts-st-soil-health.ts",
+    "lib/course-translation-drafts-ts-market-community.ts",
+    "lib/course-translation-drafts-ts-soil-health.ts",
+    "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+    "lib/course-translation-drafts-ve-market-community.ts",
+    "lib/course-translation-drafts-ve-soil-health.ts",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts"
+  ],
+  "changedDraftTargets": 21,
+  "changedStatuses": 19,
+  "derivedHoldListChanges": [
+    {
+      "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "removed": [
+        {
+          "lessonId": "vegetables-staples-l2",
+          "field": "body[14]",
+          "sourceText": "Beans climb the maize, and store as protein.",
+          "reason": "Keep intercropping, Indigenous Three Sisters context, crop-specific species and timing, nitrogen/residue claims, and household crop-planning advice exact English."
+        }
+      ]
+    }
+  ],
+  "allOtherExportValuesIdentical": true,
+  "englishSourcesIdentical": true,
+  "approvedPacketsMatch": true
+}

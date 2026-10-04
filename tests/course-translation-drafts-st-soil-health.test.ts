@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import type { Lesson } from '../lib/course-modules.ts';
 import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
@@ -81,11 +82,15 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     }
   }
 
-  assert.deepEqual(holds, [
-    'lessons[0] soil-health-l1.infographicAlt',
-    'lessons[1] soil-health-l2.infographicAlt',
-    'lessons[2] soil-health-l3.infographicAlt',
-  ], 'only untranslated media descriptions remain exact-English holds after the source-checked learner drafts were completed');
+  assert.deepEqual(holds, [], 'the three formerly held infographic descriptions now have source-paired machine drafts; all other assessed fields remain covered above');
+  for (const lessonId of ['soil-health-l1', 'soil-health-l2', 'soil-health-l3']) {
+    const metadataSourceLesson: Lesson = source.lessons.find((lesson: Lesson) => lesson.id === lessonId)!;
+    const draftLesson = draft.lessons.find(lesson => lesson.id === lessonId)!;
+    assert.equal(draftLesson.infographicAlt?.sourceEnglish, metadataSourceLesson.infographicAlt);
+    assert.equal(draftLesson.infographicAlt?.reviewStatus, 'machine-draft');
+    assert.notEqual(draftLesson.infographicAlt?.sesothoDraft, metadataSourceLesson.infographicAlt,
+      `${lessonId}: the paired description is visibly drafted rather than an English copy`);
+  }
 
   const compostLesson = source.lessons.find(lesson => lesson.id === 'soil-health-l2');
   assert.ok(compostLesson);

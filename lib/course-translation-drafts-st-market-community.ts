@@ -26,9 +26,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
   lessons: [
     {
       id: 'market-community-l1',
-      infographicAlt: hold(
-        'A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.',
-      ),
+      infographicAlt: { sourceEnglish: "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.", sesothoDraft: "Motho o tshwere pentshele hodima record grid e se nang letho bukeng e bulehileng; haufi le basket le loose vegetables.", reviewStatus: 'machine-draft' },
       title: machineDraft(
         'Record-Keeping: Knowing What Your Farm Is Actually Producing',
         'Ho Boloka Direkoto: Ho Tseba Hantle Seo Polasi ya Hao e se Hlahisang',
@@ -114,7 +112,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         'Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.',
         'Mekgwa e meraro ya ho rekisa ho tswa polasing e le nngwe: setala se pela tsela, thomelo ya sehlopha lebenkeleng, le lebokose le yang ka kotloloho lapeng.',
       ),
-      title: hold('Selling Surplus: Where to Sell and How to Price'),
+      title: { sourceEnglish: "Selling Surplus: Where to Sell and How to Price", sesothoDraft: "Ho rekisa surplus: moo o ka rekisang le kamoo o ka behang theko.", reviewStatus: 'machine-draft' },
       body: machineDraft(
         [
           'Ask what the customer needs: product, quantity, quality, delivery and payment date.',

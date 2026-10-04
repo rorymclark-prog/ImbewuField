@@ -1,0 +1,943 @@
+{
+  "title": "Root-ready Soil Health and Market Community metadata candidate packet",
+  "date": "2026-10-04",
+  "baseCommit": "af8734847a0b707e5393afb9020fe4425d8542fe",
+  "actualInspectedHead": "4055b8f9570a83f15e83a85f04e784c02657ee7e",
+  "provenance": {
+    "initialCandidatePacket": "/tmp/imbewu-study-soil-market-metadata-candidates-20261004.json",
+    "independentSemanticCheck": "/tmp/imbewu-study-soil-market-metadata-independent-check-20261004.json",
+    "sourceFilesSha256": {
+      "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "lib/course-localization.ts": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+      "lib/course-translation-drafts-st-soil-health.ts": "9aa4a61bb01b3a5bb2d922dfc06915d1df7f120d926f2e9d2b6169e74f119542",
+      "lib/course-translation-drafts-ve-soil-health.ts": "0ce3283a7f22df66e579107d9d641ade78bd17bc6fb64b64b201fcfc8733848f",
+      "lib/course-translation-drafts-st-market-community.ts": "4b97656a2584264a5e061fbdecc119e781b26ddd9fd94fb29e402b65864948e5",
+      "lib/course-translation-drafts-ve-market-community.ts": "a32726787acb097c0dbdc986f24273dfd9df6f8b53316d9e1ab89c885d69b94e",
+      "lib/course-translation-drafts-ts-market-community.ts": "4aac6d74452ff242d0ce4c27c901fb8f21056a9114f59dc33669f118f10d3be7",
+      "lib/course-translation-drafts-ts-soil-health.ts": "fd133a58be88461a9b2c01ab2c6b8e3328c7f79db97efe86bec49aa61206286a"
+    },
+    "sourceImagesReviewed": [
+      {
+        "path": "public/course-images/soil-health/soil-health-l1.jpg",
+        "sha256": "8ce365d12633d237a4e6a7e2c383b9e01a280ee7c1dc95a07004a5b3b6e0cde0",
+        "visualObservation": "Two soil horizons with two worms; clear jar has three visible settled material layers."
+      },
+      {
+        "path": "public/course-images/soil-health/soil-health-l2.jpg",
+        "sha256": "54c239adb036acbd06f081254936722a9fe10ed9a858334e49e559257f386a87",
+        "visualObservation": "Compost pile has alternating brown/green layers, heat marks rising above center and a curved turning arrow."
+      },
+      {
+        "path": "public/course-images/soil-health/soil-health-l3.jpg",
+        "sha256": "7cced4ab286fbfb1ee6689ab8ec866b84a883c1844d0c624842f23785aca0ce1",
+        "visualObservation": "Same sun above two patches: bare cracked soil on left and mulched dark soil with moisture drops on right."
+      },
+      {
+        "path": "public/course-images/market-community/market-community-l1.jpg",
+        "sha256": "b1be48979b9fb59dd8f03ca3eb5a083f0dec34afc4a68fd0de181a28fbd057af",
+        "visualObservation": "Open blank record grid and pencil; basket and loose vegetables are shown adjacent, and some vegetables also appear in the basket. Candidate alt text keeps the source phrase without asserting basket contents."
+      },
+      {
+        "path": "public/course-images/market-community/market-community-l2.jpg",
+        "sha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5",
+        "visualObservation": "One farm bed branches outward to three endpoints: stall, people handing produce to a shop, and a household box."
+      },
+      {
+        "path": "public/course-images/market-community/market-community-l3.jpg",
+        "sha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251",
+        "visualObservation": "Exactly five beds point inward to one central produce crate; hand trowel and seed jar are below it."
+      }
+    ],
+    "sourceImageBindingVerified": true,
+    "sourceFieldBindingsVerified": true,
+    "reuseEvidence": "Same-language readings are cited per row. No unverified pencil/notebook/basket translations were added; the uncertain nouns remain English. The existing registered words pentshele, metsu, misevhe and miseve are reused only for exact pencil/arrows equivalents."
+  },
+  "rows": [
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l1",
+      "language": "st",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "currentTargetText": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "infographicUrl": "/course-images/soil-health/soil-health-l1.jpg",
+      "registryFile": "lib/course-translation-drafts-st-soil-health.ts",
+      "candidateTargetText": "Karolo ya soil e bontsha dark topsoil ka hodima pale subsoil, e nang le diboko tse pedi. Ka thoko, soil e ka jar e arohile ka dikarolo tse tharo — sand, silt le clay.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "soil",
+        "dark topsoil",
+        "pale subsoil",
+        "jar",
+        "sand",
+        "silt",
+        "clay"
+      ],
+      "meaningSafeguards": [
+        "Count exactly two worms and retain the three settling layers in sand, silt, clay order."
+      ],
+      "sourceImagePath": "public/course-images/soil-health/soil-health-l1.jpg",
+      "sourceImageSha256": "8ce365d12633d237a4e6a7e2c383b9e01a280ee7c1dc95a07004a5b3b6e0cde0",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, soil in a jar settles into three layers — sand, silt le clay.",
+      "repairReason": "The candidate only says section and says the jar is separated. This explicitly anchors cross-section and the soil-settling process; preserves two worms and sand/silt/clay order.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/soil-health/soil-health-l1.jpg",
+        "sha256": "8ce365d12633d237a4e6a7e2c383b9e01a280ee7c1dc95a07004a5b3b6e0cde0"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, soil in a jar settles into three layers — sand, silt le clay.",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l1",
+      "language": "ve",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "currentTargetText": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "infographicUrl": "/course-images/soil-health/soil-health-l1.jpg",
+      "registryFile": "lib/course-translation-drafts-ve-soil-health.ts",
+      "candidateTargetText": "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, soil kha jar yo dzudzana nga layers tharu — sand, silt na clay.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "soil cross-section",
+        "dark topsoil",
+        "pale subsoil",
+        "worms",
+        "jar",
+        "layers",
+        "sand",
+        "silt",
+        "clay"
+      ],
+      "meaningSafeguards": [
+        "Say there are two worms; retain the three layers and their order."
+      ],
+      "sourceImagePath": "public/course-images/soil-health/soil-health-l1.jpg",
+      "sourceImageSha256": "8ce365d12633d237a4e6a7e2c383b9e01a280ee7c1dc95a07004a5b3b6e0cde0",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, the soil in the jar settles into three layers — sand, silt na clay.",
+      "repairReason": "The candidate said the soil was arranged in layers; that loses the settling process. This keeps the process exact while preserving two worms and layer order.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/soil-health/soil-health-l1.jpg",
+        "sha256": "8ce365d12633d237a4e6a7e2c383b9e01a280ee7c1dc95a07004a5b3b6e0cde0"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, the soil in the jar settles into three layers — sand, silt na clay.",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l2",
+      "language": "st",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "currentTargetText": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "infographicUrl": "/course-images/soil-health/soil-health-l2.jpg",
+      "registryFile": "lib/course-translation-drafts-st-soil-health.ts",
+      "candidateTargetText": "Heap ya compost e butsweng ho bontsha alternating layers tsa dry brown material le fresh green material. Heat e nyoloha bohareng, mme arrow e bontsha hore heap e a fetolwa.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "compost",
+        "alternating layers",
+        "dry brown material",
+        "fresh green material",
+        "heat",
+        "arrow"
+      ],
+      "meaningSafeguards": [
+        "Describe the cut-open heap, alternating browns/greens, rising heat and turning arrow only. Heat is visible in the diagram; do not imply sanitation or proof of safe compost."
+      ],
+      "sourceImagePath": "public/course-images/soil-health/soil-health-l2.jpg",
+      "sourceImageSha256": "54c239adb036acbd06f081254936722a9fe10ed9a858334e49e559257f386a87",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Heap ya compost cut open e bontsha alternating layers tsa dry brown material le fresh green material. Heat e nyoloha ho tswa bohareng; an arrow shows it being turned.",
+      "repairReason": "Keeps “cut open” rather than merely opened, the brown/green alternation and central heat, and the exact turning action shown by the arrow.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/soil-health/soil-health-l2.jpg",
+        "sha256": "54c239adb036acbd06f081254936722a9fe10ed9a858334e49e559257f386a87"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Heap ya compost cut open e bontsha alternating layers tsa dry brown material le fresh green material. Heat e nyoloha ho tswa bohareng; an arrow shows it being turned.",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l2",
+      "language": "ve",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "currentTargetText": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "infographicUrl": "/course-images/soil-health/soil-health-l2.jpg",
+      "registryFile": "lib/course-translation-drafts-ve-soil-health.ts",
+      "candidateTargetText": "Heap ya compost yo vulungulwaho i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati, nahone arrow i sumbedza heap i tshi khou shandulwa.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "compost",
+        "alternating layers",
+        "dry brown material",
+        "fresh green material",
+        "heat",
+        "arrow"
+      ],
+      "meaningSafeguards": [
+        "Keep the brown/green alternation, heat from the middle and the arrow showing turning; make no sanitation claim."
+      ],
+      "sourceImagePath": "public/course-images/soil-health/soil-health-l2.jpg",
+      "sourceImageSha256": "54c239adb036acbd06f081254936722a9fe10ed9a858334e49e559257f386a87",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; an arrow shows the heap being turned.",
+      "repairReason": "Keeps the cut-open view and makes the arrow’s turning action specific instead of generic change.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/soil-health/soil-health-l2.jpg",
+        "sha256": "54c239adb036acbd06f081254936722a9fe10ed9a858334e49e559257f386a87"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; an arrow shows the heap being turned.",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l3",
+      "language": "st",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "currentTargetText": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "infographicUrl": "/course-images/soil-health/soil-health-l3.jpg",
+      "registryFile": "lib/course-translation-drafts-st-soil-health.ts",
+      "candidateTargetText": "Dikarolo tse pedi tsa soil ka tlasa letsatsi le le leng: mobu o sa kwahelwang o petsohile mme o omme; mobu o kwahetsweng ka mulch o ntse o le lefifi ebile o le mongobo.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "soil",
+        "mulch"
+      ],
+      "meaningSafeguards": [
+        "Retain two patches under the same sun and the contrast: bare is cracked/dry; mulched is still dark/moist. Describe the image without adding a causal claim."
+      ],
+      "sourceImagePath": "public/course-images/soil-health/soil-health-l3.jpg",
+      "sourceImageSha256": "7cced4ab286fbfb1ee6689ab8ec866b84a883c1844d0c624842f23785aca0ce1",
+      "decision": "accept",
+      "independentlyCheckedTargetText": "Dikarolo tse pedi tsa soil ka tlasa letsatsi le le leng: mobu o sa kwahelwang o petsohile mme o omme; mobu o kwahetsweng ka mulch o ntse o le lefifi ebile o le mongobo.",
+      "repairReason": "Preserves two patches under the same sun, bare cracked/dry ground, and dark moist mulched ground.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/soil-health/soil-health-l3.jpg",
+        "sha256": "7cced4ab286fbfb1ee6689ab8ec866b84a883c1844d0c624842f23785aca0ce1"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Dikarolo tse pedi tsa soil ka tlasa letsatsi le le leng: mobu o sa kwahelwang o petsohile mme o omme; mobu o kwahetsweng ka mulch o ntse o le lefifi ebile o le mongobo.",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l3",
+      "language": "ve",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "currentTargetText": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "infographicUrl": "/course-images/soil-health/soil-health-l3.jpg",
+      "registryFile": "lib/course-translation-drafts-ve-soil-health.ts",
+      "candidateTargetText": "Zwipiḓa zwivhili zwa soil nga fhasi ha ḓuvha ḽithihi: bare ground, cracked and dry; mulched ground i kha ḓi vha dark nahone i na moisture.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "soil",
+        "bare ground",
+        "cracked and dry",
+        "mulched ground",
+        "dark",
+        "moisture"
+      ],
+      "meaningSafeguards": [
+        "Keep two patches, same sun, and the exact bare-versus-mulched appearance; retain uncertain soil-state descriptors in English."
+      ],
+      "sourceImagePath": "public/course-images/soil-health/soil-health-l3.jpg",
+      "sourceImageSha256": "7cced4ab286fbfb1ee6689ab8ec866b84a883c1844d0c624842f23785aca0ce1",
+      "decision": "accept",
+      "independentlyCheckedTargetText": "Zwipiḓa zwivhili zwa soil nga fhasi ha ḓuvha ḽithihi: bare ground, cracked and dry; mulched ground i kha ḓi vha dark nahone i na moisture.",
+      "repairReason": "Preserves two patches under one sun and the bare/cracked/dry versus mulched/dark/moist contrast.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/soil-health/soil-health-l3.jpg",
+        "sha256": "7cced4ab286fbfb1ee6689ab8ec866b84a883c1844d0c624842f23785aca0ce1"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Zwipiḓa zwivhili zwa soil nga fhasi ha ḓuvha ḽithihi: bare ground, cracked and dry; mulched ground i kha ḓi vha dark nahone i na moisture.",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l1",
+      "language": "st",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "currentTargetText": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "infographicUrl": "/course-images/market-community/market-community-l1.jpg",
+      "registryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "candidateTargetText": "Motho o tshwere pencil hodima record grid e se nang letho bukeng e bulehileng; haufi ho na le basket le loose vegetables.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "pencil",
+        "record grid",
+        "basket",
+        "loose vegetables"
+      ],
+      "meaningSafeguards": [
+        "Keep the blank record grid, open notebook, basket and loose vegetables; do not imply the vegetables are in the basket."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l1.jpg",
+      "sourceImageSha256": "b1be48979b9fb59dd8f03ca3eb5a083f0dec34afc4a68fd0de181a28fbd057af",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Motho o tshwere pencil hodima record grid e se nang letho bukeng e bulehileng; haufi le basket ho na le meroho e sa kenngwang ka basket.",
+      "repairReason": "Preserves pencil, blank grid, open notebook, and vegetables beside/outside the basket. Does not infer the vegetables are inside it.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l1.jpg",
+        "sha256": "b1be48979b9fb59dd8f03ca3eb5a083f0dec34afc4a68fd0de181a28fbd057af"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Motho o tshwere pentshele hodima record grid e se nang letho bukeng e bulehileng; haufi le basket le loose vegetables.",
+      "finalAdjustments": [
+        "Retained exact source phrase “loose vegetables”; no claim that vegetables are outside/absent from the basket."
+      ],
+      "sameLanguageReuseEvidence": [
+        {
+          "term": "pentshele",
+          "borrowedFrom": "lib/course-translation-drafts-st-reading-landscape.ts",
+          "field": "reading-landscape-l4 body",
+          "sourcePhrase": "A pencil sketch you actually use is worth more than a perfect one drawn once.",
+          "existingTargetPhrase": "Setshwantsho sa pentshele seo o hlileng o se sebedisang",
+          "reason": "Existing same-language learner draft uses pentshele for pencil."
+        }
+      ]
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l1",
+      "language": "ve",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "currentTargetText": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "infographicUrl": "/course-images/market-community/market-community-l1.jpg",
+      "registryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "candidateTargetText": "Muthu u fara pencil nga nṱha ha record grid i si na tshithu kha notebook yo vuleaho, tsini na basket na loose vegetables.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "pencil",
+        "record grid",
+        "notebook",
+        "basket",
+        "loose vegetables"
+      ],
+      "meaningSafeguards": [
+        "Describe the grid as blank and vegetables as beside/loose near the basket, not inside it."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l1.jpg",
+      "sourceImageSha256": "b1be48979b9fb59dd8f03ca3eb5a083f0dec34afc4a68fd0de181a28fbd057af",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Muthu u fara pencil nga nṱha ha record grid i si na tshithu kha notebook yo vuleaho, tsini na basket na miroho i songo dzheniswaho kha basket.",
+      "repairReason": "Preserves all pictured items and explicitly keeps the vegetables loose beside the basket.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l1.jpg",
+        "sha256": "b1be48979b9fb59dd8f03ca3eb5a083f0dec34afc4a68fd0de181a28fbd057af"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Muthu u fara pencil nga nṱha ha record grid i si na tshithu kha notebook yo vuleaho, tsini na basket na loose vegetables.",
+      "finalAdjustments": [
+        "Retained exact source phrase “loose vegetables”; no claim that vegetables are outside/absent from the basket."
+      ],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l1",
+      "language": "ts",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "currentTargetText": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "infographicUrl": "/course-images/market-community/market-community-l1.jpg",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "candidateTargetText": "Munhu u khome pencil e henhla ka record grid leyi nga tsariwangiki eka notebook leyi pfulekeke, ekusuhi ni basket ni loose vegetables.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "pencil",
+        "record grid",
+        "notebook",
+        "basket",
+        "loose vegetables"
+      ],
+      "meaningSafeguards": [
+        "Preserve blank grid, open notebook, basket, and loose vegetables beside it; no quantity or destination is added."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l1.jpg",
+      "sourceImageSha256": "b1be48979b9fb59dd8f03ca3eb5a083f0dec34afc4a68fd0de181a28fbd057af",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Munhu u khome pencil e henhla ka record grid leyi nga tsariwangiki eka notebook leyi pfulekeke, ekusuhi ni basket ni matsavu lama nga nghenisiwangiki eka basket.",
+      "repairReason": "Preserves all pictured items and explicitly keeps loose vegetables beside the basket, not inside it.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l1.jpg",
+        "sha256": "b1be48979b9fb59dd8f03ca3eb5a083f0dec34afc4a68fd0de181a28fbd057af"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Munhu u khome pencil e henhla ka record grid leyi nga tsariwangiki eka notebook leyi pfulekeke, ekusuhi ni basket ni loose vegetables.",
+      "finalAdjustments": [
+        "Retained exact source phrase “loose vegetables”; no claim that vegetables are outside/absent from the basket."
+      ],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l2",
+      "language": "st",
+      "fieldPath": "title",
+      "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+      "currentTargetText": "Selling Surplus: Where to Sell and How to Price",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Selling Surplus: Where to Sell and How to Price",
+      "infographicUrl": "/course-images/market-community/market-community-l2.jpg",
+      "registryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "candidateTargetText": "Ho Rekisa Tse Setseng: Moo U ka Rekisang le Mokhoa oa ho Beha Theko",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "surplus"
+      ],
+      "meaningSafeguards": [
+        "Keep “surplus” as “what remains”; preserve both questions in the heading: where to sell and how to price."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l2.jpg",
+      "sourceImageSha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Ho rekisa surplus: moo o ka rekisang le kamoo o ka behang theko.",
+      "repairReason": "“Tse setseng” can read as leftover goods and weakens the business meaning of surplus. Keeps the difficult term exact while translating where/how to sell and price.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l2.jpg",
+        "sha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Ho rekisa surplus: moo o ka rekisang le kamoo o ka behang theko.",
+      "finalAdjustments": [
+        "Surplus remains exact English term to avoid weakening it to leftovers."
+      ],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l2",
+      "language": "ve",
+      "fieldPath": "title",
+      "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+      "currentTargetText": "Selling Surplus: Where to Sell and How to Price",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Selling Surplus: Where to Sell and How to Price",
+      "infographicUrl": "/course-images/market-community/market-community-l2.jpg",
+      "registryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "candidateTargetText": "U rengisa surplus: Hune wa nga rengisa hone na uri wa vhea mutengo hani",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "surplus"
+      ],
+      "meaningSafeguards": [
+        "Retain the business term “surplus”; keep the title limited to where to sell and how to set a price."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l2.jpg",
+      "sourceImageSha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5",
+      "decision": "accept",
+      "independentlyCheckedTargetText": "U rengisa surplus: Hune wa nga rengisa hone na uri wa vhea mutengo hani",
+      "repairReason": "Preserves selling surplus, where to sell, and how to set a price; no added financial claim.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l2.jpg",
+        "sha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "U rengisa surplus: Hune wa nga rengisa hone na uri wa vhea mutengo hani",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l2",
+      "language": "ts",
+      "fieldPath": "title",
+      "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+      "currentTargetText": "Selling Surplus: Where to Sell and How to Price",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Selling Surplus: Where to Sell and How to Price",
+      "infographicUrl": "/course-images/market-community/market-community-l2.jpg",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "candidateTargetText": "Ku xavisa surplus: laha u nga xaviselaka kona ni ku veka nxavo",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "surplus"
+      ],
+      "meaningSafeguards": [
+        "Retain the business term “surplus”; preserve both where-to-sell and how-to-price parts."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l2.jpg",
+      "sourceImageSha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5",
+      "decision": "accept",
+      "independentlyCheckedTargetText": "Ku xavisa surplus: laha u nga xaviselaka kona ni ku veka nxavo",
+      "repairReason": "Preserves selling surplus, where to sell, and setting the price; no added financial claim.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l2.jpg",
+        "sha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Ku xavisa surplus: laha u nga xaviselaka kona ni ndlela yo veka nxavo.",
+      "finalAdjustments": [
+        "Adds explicit “ni ndlela” to preserve how to price, not merely the action of setting a price."
+      ],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l2",
+      "language": "ve",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+      "currentTargetText": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+      "infographicUrl": "/course-images/market-community/market-community-l2.jpg",
+      "registryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "candidateTargetText": "Nḓila tharu dza u rengisa zwi tshi bva kha tsimu nthihi: roadside stall, u isa zwibveledzwa shop nga tshigwada, na box i yaho nga ho livhaho muṱani.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "roadside stall",
+        "shop",
+        "box"
+      ],
+      "meaningSafeguards": [
+        "Preserve exactly three routes from one farm, in source order: roadside stall; group delivery to a shop; box direct to a household. The arrows run outward from the farm to these destinations."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l2.jpg",
+      "sourceImageSha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Nḓila tharu dza u rengisa zwi tshi bva kha farm nthihi: roadside stall, u isa produce shop nga tshigwada, na box i yaho nga ho livhaho muṱani.",
+      "repairReason": "Retains “farm” as an exact scope anchor instead of the possibly narrower field/garden tsimu. Keeps roadside stall, group delivery to a shop, and direct household box.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l2.jpg",
+        "sha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Nḓila tharu dza u rengisa zwi tshi bva kha farm nthihi: roadside stall, u isa produce shop nga tshigwada, na box i yaho nga ho livhaho muṱani.",
+      "finalAdjustments": [
+        "Retains exact English “farm” scope anchor; delivery is of produce to a shop by a group."
+      ],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l2",
+      "language": "ts",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+      "currentTargetText": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+      "infographicUrl": "/course-images/market-community/market-community-l2.jpg",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "candidateTargetText": "Tindlela tinharhu to xavisa ku suka eka purasi rin’we: roadside stall, ku yisa swibyariwa eka shop hi ntlawa, ni box leri kongomaka eka ndyangu.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "roadside stall",
+        "shop",
+        "box"
+      ],
+      "meaningSafeguards": [
+        "Preserve exactly three routes from one farm, in source order: roadside stall; group delivery to a shop; box direct to a household. The arrows run outward from the farm to these destinations."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l2.jpg",
+      "sourceImageSha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Tindlela tinharhu to xavisa ku suka eka farm rin’we: roadside stall, ku yisa produce eka shop hi ntlawa, ni box leri kongomaka eka ndyangu.",
+      "repairReason": "Uses the exact “farm” and “produce” anchors to avoid field/plant ambiguity; preserves group delivery, direct box, and three routes.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l2.jpg",
+        "sha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Tindlela tinharhu to xavisa ku suka eka farm rin’we: roadside stall, ku yisa produce eka shop hi ntlawa, ni box leri kongomaka eka ndyangu.",
+      "finalAdjustments": [
+        "Retains exact English “farm” and “produce” scope anchors to avoid confusing delivered produce with plants."
+      ],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l3",
+      "language": "ve",
+      "fieldPath": "title",
+      "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+      "currentTargetText": "Building Community Food Networks: Strength in Numbers",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Building Community Food Networks: Strength in Numbers",
+      "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
+      "registryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "candidateTargetText": "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "network",
+        "Strength in Numbers"
+      ],
+      "meaningSafeguards": [
+        "Translate the ordinary building frame; retain the community-food-network concept and idiom because their local equivalent could change the business/community meaning."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l3.jpg",
+      "sourceImageSha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251",
+      "decision": "accept",
+      "independentlyCheckedTargetText": "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers",
+      "repairReason": "Preserves building community food networks and the “Strength in Numbers” message.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l3.jpg",
+        "sha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l3",
+      "language": "ve",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+      "currentTargetText": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+      "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
+      "registryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "candidateTargetText": "Mibedo miṱanu yo ṱavhiwaho i na arrows dzi tshi livha kha crate ya produce i re vhukati; hand trowel na jar ya seeds zwi re nga fhasi.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "five",
+        "arrows",
+        "crate",
+        "produce",
+        "hand trowel",
+        "jar",
+        "seeds"
+      ],
+      "meaningSafeguards": [
+        "Keep five planted beds, arrows pointing inward to the central produce crate, and the hand trowel plus seed jar below it."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l3.jpg",
+      "sourceImageSha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Mibedo miṱuku miṱanu yo ṱavhiwaho i na arrows dzi tshi livha kha crate ya produce i re vhukati; hand trowel na jar ya seeds zwi re nga fhasi.",
+      "repairReason": "Adds the omitted “small” while retaining exactly five planted beds, arrows to the central crate, trowel, and seed jar below.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l3.jpg",
+        "sha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Mibedo miṱuku miṱanu yo ṱavhiwaho i na misevhe i tshi livha kha crate ya produce i re vhukati; hand trowel na jar ya seeds zwi re nga fhasi.",
+      "finalAdjustments": [
+        "Adds the same-language learner equivalent misevhe for arrows."
+      ],
+      "sameLanguageReuseEvidence": [
+        {
+          "term": "misevhe",
+          "borrowedFrom": "lib/course-translation-drafts-ve-reading-landscape.ts",
+          "field": "reading-landscape-l4 body",
+          "sourcePhrase": "Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.",
+          "existingTargetPhrase": "Olani misevhe ya muya",
+          "reason": "Existing same-language learner draft uses misevhe for arrows."
+        }
+      ]
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l3",
+      "language": "ts",
+      "fieldPath": "title",
+      "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+      "currentTargetText": "Building Community Food Networks: Strength in Numbers",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Building Community Food Networks: Strength in Numbers",
+      "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "candidateTargetText": "Ku aka network ya swakudya swa muganga: Strength in Numbers",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "network",
+        "Strength in Numbers"
+      ],
+      "meaningSafeguards": [
+        "Translate the ordinary building frame; retain the community-food-network concept and idiom because their local equivalent could change the business/community meaning."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l3.jpg",
+      "sourceImageSha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251",
+      "decision": "accept",
+      "independentlyCheckedTargetText": "Ku aka network ya swakudya swa muganga: Strength in Numbers",
+      "repairReason": "Preserves building the community food network and “Strength in Numbers”.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l3.jpg",
+        "sha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Ku aka network ya swakudya swa muganga: Strength in Numbers",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l3",
+      "language": "ts",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+      "currentTargetText": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+      "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "candidateTargetText": "Mibed leyitsongo ya ntlhanu leyi byariweke yi ni arrows leti kombetelaka eka crate ya produce leyi nga exikarhini; hand trowel ni jar ya mbewu swi le hansi ka yona.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "five",
+        "arrows",
+        "crate",
+        "produce",
+        "hand trowel",
+        "jar",
+        "seed"
+      ],
+      "meaningSafeguards": [
+        "Keep five planted beds, arrows pointing inward to the central produce crate, and the hand trowel plus seed jar below it."
+      ],
+      "sourceImagePath": "public/course-images/market-community/market-community-l3.jpg",
+      "sourceImageSha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Five small planted beds, with arrows leti kombetelaka eka crate ya produce leyi nga exikarhini; hand trowel ni jar ya mbewu swi le hansi ka yona.",
+      "repairReason": "The candidate’s “Mibed” spelling/loan is unverified, so retain the exact bed phrase. Keeps exactly five small planted beds, arrows to a central crate, and the trowel/seed jar below.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/market-community/market-community-l3.jpg",
+        "sha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Five small planted beds, with miseve leyi kombetelaka eka crate ya produce leyi nga exikarhini; hand trowel ni jar ya mbewu swi le hansi ka yona.",
+      "finalAdjustments": [
+        "Adds the same-language learner equivalent miseve for arrows; retains the uncertain “Five small planted beds” phrase exactly."
+      ],
+      "sameLanguageReuseEvidence": [
+        {
+          "term": "miseve",
+          "borrowedFrom": "lib/course-translation-drafts-ts.ts",
+          "field": "reading-landscape-l4 body",
+          "sourcePhrase": "Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.",
+          "existingTargetPhrase": "Dirowa miseve ya moya",
+          "reason": "Existing same-language learner draft uses miseve for arrows."
+        }
+      ]
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l1",
+      "language": "ts",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "currentTargetText": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "fieldReviewStatus": "hold",
+      "lessonResolverStatus": "draft",
+      "resolvedLearnerText": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "infographicUrl": "/course-images/soil-health/soil-health-l1.jpg",
+      "registryFile": "lib/course-translation-drafts-ts-soil-health.ts",
+      "candidateTargetText": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona, jar ya misava yi settle yi va hi layers tinharhu — sand, silt na clay.",
+      "candidateStatus": "machine-draft",
+      "retainedEnglishAnchors": [
+        "soil cross-section",
+        "dark topsoil",
+        "pale subsoil",
+        "worms",
+        "jar",
+        "layers",
+        "sand",
+        "silt",
+        "clay"
+      ],
+      "meaningSafeguards": [
+        "Keep exactly two worms and the three sediment layers in sand, silt, clay order; retain the unsettled technical verb in English rather than implying a different process."
+      ],
+      "sourceImagePath": "public/course-images/soil-health/soil-health-l1.jpg",
+      "sourceImageSha256": "8ce365d12633d237a4e6a7e2c383b9e01a280ee7c1dc95a07004a5b3b6e0cde0",
+      "decision": "repair",
+      "independentlyCheckedTargetText": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.",
+      "repairReason": "The current candidate makes the jar, rather than its soil, the thing that settles. This keeps the exact subject/process, two worms, and ordered layers.",
+      "sourceBindingVerified": true,
+      "resolverStatusVerified": true,
+      "sourceImageBinding": {
+        "path": "public/course-images/soil-health/soil-health-l1.jpg",
+        "sha256": "8ce365d12633d237a4e6a7e2c383b9e01a280ee7c1dc95a07004a5b3b6e0cde0"
+      },
+      "invariants": [
+        "No counts, item order, direction, or pictured objects added or removed.",
+        "No advice, price, income, yield, or safety claim added.",
+        "These remain unreviewed candidate strings; no language-fluency approval is asserted."
+      ],
+      "rootReadyCandidateTargetText": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.",
+      "finalAdjustments": [],
+      "sameLanguageReuseEvidence": []
+    }
+  ],
+  "counts": {
+    "total": 19,
+    "accept": 6,
+    "repair": 13,
+    "hold": 0
+  },
+  "invariants": [
+    "Original sourceEnglish and currentTargetText preserved in every row.",
+    "Every source target remains a current exact whole-field hold; resolver still reports draft.",
+    "Visual object/count/order/direction claims remain source-bound.",
+    "No legal, agronomic, financial, yield, safety, or price claims added.",
+    "CandidateStatus remains machine-draft in the carried source rows; no fluency or facilitator approval is claimed."
+  ],
+  "coverageLimit": "Only the 19 held title/infographicAlt fields in Soil Health and Market Community are covered. This is review material only, not learner wiring or publication clearance."
+}

@@ -453,8 +453,9 @@ test('Tshivenda Market L2 pairs customer and assessment drafts without weakening
 
   assert.equal(lesson.id, sourceLesson.id);
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
-  assert.equal(lesson.title.reviewStatus, 'hold');
-  assert.equal(lesson.title.tshivendaDraft, sourceLesson.title);
+  assert.equal(lesson.title.reviewStatus, 'machine-draft', 'ordinary where-to-sell/how-to-price title copy is now available as an unreviewed source pair');
+  assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
+  assert.equal(lesson.title.tshivendaDraft, 'U rengisa surplus: Hune wa nga rengisa hone na uri wa vhea mutengo hani');
   assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
   assert.equal(lesson.body.reviewStatus, 'machine-draft');
   const sourceParagraphs = sourceLesson.body.split('\n\n');
