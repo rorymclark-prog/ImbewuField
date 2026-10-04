@@ -94,3 +94,18 @@ test('absence of locally confirmed products does not invent picking jobs on fiel
   assert.ok(!raw.includes('Fruit, berries and animal products - record'));
   assert.ok(!raw.includes('Pick '));
 });
+
+test('the paper shows the same assumed cultivar season with twelve months and a clear established-production qualifier', async () => {
+  const pdf = await rawPdf({ sections: ['guidance'], productionGuide: {
+    ...guide, foodForest: [{ title: 'Avocado', lines: ['Assumed variety: Hass. Expected when established; not a confirmed crop this year.'], expectedSeason: { label: 'Assumed variety: Hass', months: [6, 7, 8, 9, 10], basis: 'Warm subtropical reference' }, sources: [{ label: 'DAFF avocado guide', url: 'https://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf' }] }],
+    animalProducts: [{ title: 'Hives: choose the product', lines: ['No animal count or production dates assumed.'] }],
+  } });
+  const text = visibleText(pdf);
+  assert.match(text, /Fruit, nuts and indigenous foods/);
+  assert.match(text, /Assumed variety: Hass/);
+  assert.match(text, /expected when established/);
+  assert.match(text, /not a confirmed crop this year/);
+  for (const month of ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']) assert.ok(text.includes(month), month);
+  assert.match(text, /Animal products and care/);
+  assert.match(pdf, /\/URI \(https:\/\/www.avocadosource.com/);
+});

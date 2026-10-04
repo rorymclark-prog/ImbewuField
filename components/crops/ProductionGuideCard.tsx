@@ -3,15 +3,30 @@
 import { ClipboardList } from 'lucide-react';
 import type { ProductionGuide, ProductionGuideItem } from '@/lib/crop-export-schedule';
 
-function GuideItem({ item }: { item: ProductionGuideItem }) {
-  return <div className="py-2" style={{ borderTop: '1px solid var(--border)' }}>
-    <h4 className="font-sans font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{item.title}</h4>
-    {item.lines.map((line) => <p key={line} className="font-sans mt-1" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-secondary)' }}>{line}</p>)}
+function GuideBody({ item, lines = item.lines }: { item: ProductionGuideItem; lines?: string[] }) {
+  return <>
+    {lines.map((line) => <p key={line} className="font-sans mt-1" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-secondary)' }}>{line}</p>)}
     {!!item.sources?.length && <ul className="font-sans mt-1" style={{ fontSize: 11, lineHeight: 1.5, color: 'var(--text-muted)', listStyle: 'disc', paddingInlineStart: 18 }}>
       {item.sources.map((source) => <li key={`${source.label}:${source.url}`}>
         {source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>{source.label}</a> : source.label}
       </li>)}
     </ul>}
+  </>;
+}
+
+function GuideItem({ item, product = false }: { item: ProductionGuideItem; product?: boolean }) {
+  return <div className="py-2" style={{ borderTop: '1px solid var(--border)' }}>
+    <h4 className="font-sans font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{item.title}</h4>
+    {item.expectedSeason && <div className="my-2" role="img" aria-label={`${item.expectedSeason.label}: ${item.expectedSeason.months.map(m => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1]).join(', ')}. ${item.expectedSeason.basis}`}>
+      <p className="font-sans text-xs mb-2">{item.expectedSeason.label} · expected when established</p>
+      <div className="grid grid-cols-12 gap-0.5">{['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((label, i) => <div key={i} className="text-center font-sans text-xs rounded py-2" style={{ background: item.expectedSeason!.months.includes(i + 1) ? 'var(--emerald)' : 'var(--bg-2)', color: item.expectedSeason!.months.includes(i + 1) ? 'white' : 'var(--text-secondary)' }}>{label}</div>)}</div>
+    </div>}
+    {product && <p className="font-sans mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>{item.lines[0]}</p>}
+    {product ? <details>
+      <summary className="font-sans text-sm py-3 cursor-pointer" style={{ minHeight: 44 }}>Care and what to buy</summary>
+      <GuideBody item={item} lines={item.lines.slice(1)} />
+    </details> : <GuideBody item={item} />}
+
   </div>;
 }
 
@@ -27,6 +42,15 @@ export default function ProductionGuideCard({ guide, canSurvey, onSurvey }: {
       <button type="button" onClick={onSurvey} disabled={!canSurvey} className="font-sans px-3 rounded-lg" style={{ minHeight: 44, fontSize: 12, border: '1px solid var(--border)', color: 'var(--text-primary)', opacity: canSurvey ? 1 : 0.6 }}>Update site survey</button>
     </div>
     <p className="font-sans mt-2" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-secondary)' }}>Climate area: {guide.area}. {canSurvey ? 'Your survey supplies the observations below.' : 'Choose a mapped site before recording farm observations.'}</p>
+    {!!guide.foodForest?.length && <div className="mt-4" data-product-guidance="food-forest">
+      <h3 className="font-display text-lg font-semibold">Fruit, nuts and indigenous foods</h3>
+      <p className="font-sans text-xs my-2" style={{ color: 'var(--text-secondary)' }}>The bar uses a labelled variety assumption. New plants need time to produce. Confirmed picking months in your food calendar stay separate.</p>
+      {guide.foodForest.map(item => <GuideItem key={item.title} item={item} product />)}
+    </div>}
+    {!!guide.animalProducts?.length && <div className="mt-4" data-product-guidance="animals">
+      <h3 className="font-display text-lg font-semibold">Animal products</h3>
+      {guide.animalProducts.map(item => <GuideItem key={item.title} item={item} product />)}
+    </div>}
     {guide.siteObservations.map((item) => <GuideItem key={item.title} item={item} />)}
     {guide.cropChoices.length > 0 && <details className="mt-3">
       <summary className="font-sans font-semibold" style={{ cursor: 'pointer', minHeight: 44, fontSize: 13, color: 'var(--text-primary)' }}>Crop varieties to check locally ({guide.cropChoices.length} {guide.cropChoices.length === 1 ? 'crop' : 'crops'})</summary>

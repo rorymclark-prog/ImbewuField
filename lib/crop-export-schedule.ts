@@ -1,3 +1,4 @@
+import { buildProductGuidance, type ProductGuideContext, type ExpectedSeason } from './production-product-guidance';
 // ── Crop plan → the things a farmer takes away from the screen ──────────────
 //
 // Two exports are built on top of this module: a calendar file
@@ -644,6 +645,7 @@ export function buildTaskMonths(tasks: CropTask[], nowMonth: number): TaskMonth[
 export interface ProductionGuideItem {
   title: string;
   lines: string[];
+  expectedSeason?: ExpectedSeason;
   sources?: { label: string; url: string | null }[];
 }
 
@@ -652,11 +654,13 @@ export interface ProductionGuide {
   siteObservations: ProductionGuideItem[];
   recordedProduction: ProductionGuideItem[];
   cropChoices: ProductionGuideItem[];
+  foodForest?: ProductionGuideItem[];
+  animalProducts?: ProductionGuideItem[];
 }
 
 /** The screen and paper read one preparation checklist. Annual survey records describe
  * a past reporting year; neither their totals nor their months become a future yield curve. */
-export function buildProductionGuide(survey: SiteSurvey | null, plantings: readonly Planting[], zones: readonly GrowingZoneId[], nowMonth = new Date().getMonth() + 1): ProductionGuide {
+export function buildProductionGuide(survey: SiteSurvey | null, plantings: readonly Planting[], zones: readonly GrowingZoneId[], nowMonth = new Date().getMonth() + 1, products?: ProductGuideContext): ProductionGuide {
   // A survey draft can reach the guide before the persistence normaliser. Do not wrap an
   // invalid month to January or turn a future reporting year into historical production.
   const reportedMonths = (months: number[] | undefined): number[] => Array.isArray(months)
@@ -741,5 +745,5 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
         : 'This site\'s climate has not resolved, so no local shortlist is claimed. Open the crop card to see sources and record your choice.',
     ], sources: links }];
   });
-  return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices };
+  return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
 }

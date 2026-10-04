@@ -817,16 +817,16 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "flowRecords": [],
     "weeksToFirstProduct": {
       "value": [
-        16,
-        17
+        21,
+        21
       ],
       "source": {
-        "quote": "Receiving and housing point-of-lay pullets at 16 / 17 weeks of age",
-        "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
-        "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
-        "page": 5
+        "quote": "The first eggs, which are small in size, are laid at 21 weeks of age.",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+        "doc": "ARC Climate-Smart Agriculture Training Manual, Poultry production",
+        "page": 8
       },
-      "note": "Point-of-lay = pullets are about to begin laying when housed at 16-17 weeks; used directly as age-to-first-product (already in weeks, no conversion needed). Commercial system, South Africa."
+      "note": "Commercial layer reference: bird age from hatch, not weeks after buying point-of-lay pullets or building housing. Supplier strain, rearing and actual onset can differ. The former 16–17 week figure was the SAPA receiving/housing age, not evidence of first eggs."
     },
     "productiveLifeYears": null,
     "feedKgPerDay": {

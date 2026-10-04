@@ -202,3 +202,97 @@ test('unknown or unobserved frost does not infer a frost-free guarantee or a pla
       : /cannot establish first and last frost dates/);
   }
 });
+
+import { assumedProductSeason, buildProductGuidance, productContextFromItems, productPurchasingMarkdown, PRODUCT_PROFILES } from '@/lib/production-product-guidance';
+import { placedTreeGroups, buildTreeAvailability } from '@/lib/perennial-harvest';
+import { SPECIES } from '@/lib/species-catalog';
+import { GROWING_ZONE_IDS } from '@/lib/growing-zones';
+import { ANIMAL_ENTERPRISES, placedAnimalGroups, buildAnimalAvailability } from '@/lib/animal-enterprises';
+
+test('a warm or cool avocado assumption uses Hass alone rather than the country-wide cultivar union', () => {
+  const context = productContextFromItems([{ defId: 'tree_avocado', status: 'proposed' }]);
+  assert.deepEqual(assumedProductSeason(context.trees[0], ['subtropical-coast', 'lowveld-bushveld'])?.months, [6, 7, 8, 9, 10]);
+  assert.deepEqual(assumedProductSeason(context.trees[0], ['midlands-mistbelt', 'highveld'])?.months, [8, 9, 10, 11, 12]);
+  for (const zones of [[], ['high-mountain'], ['karoo-arid'], ['subtropical-coast', 'midlands-mistbelt']] as const) {
+    assert.equal(assumedProductSeason(context.trees[0], zones), undefined, 'unresolved, hard-frost or contradictory area must not get one invented local season');
+  }
+  for (const conditions of [{ frost: 'yes' }, { drainage: 'stays-wet' }, { sunlight: 'mostly-shade' }] as const) {
+    assert.equal(assumedProductSeason(context.trees[0], ['subtropical-coast'], conditions), undefined);
+  }
+  const guide = buildProductionGuide(null, [], ['subtropical-coast'], 10, context);
+  assert.match(JSON.stringify(guide.foodForest), /Assumed variety: Hass|not a confirmed crop this year/);
+  assert.ok(buildTreeAvailability(context.trees, [6, 7, 8], true).every(slot => !slot.length), 'research assumptions never silently feed current food availability');
+});
+
+test('purchase advice stages fruit cultivars but requires flowering compatibility separately', () => {
+  const items = [{ defId: 'tree_avocado' }, { defId: 'tree_other', speciesId: 'carya-illinoinensis' }, { defId: 'tree_other', speciesId: 'prunus-salicina' }];
+  const text = productPurchasingMarkdown(productContextFromItems(items), ['subtropical-coast']);
+  assert.match(text, /earlier Fuerte.*middle Hass.*later Ryan/);
+  assert.match(text, /seasons overlap/);
+  assert.match(text, /Ukulinga.*Cape Fear.*Choctaw/);
+  assert.match(text, /Pioneer or African Rose/);
+  assert.match(text, /compatible flowering is a separate/);
+  assert.match(text, /inventory, not repeat purchases/);
+});
+
+test('circle counts, tropical variety assumptions and missing dates survive in the shared product guide', () => {
+  const items = [{ defId: 'banana_circle', status: 'proposed' as const }, { defId: 'banana_clump' }, { defId: 'tree_pawpaw', status: 'proposed' as const }];
+  const before = structuredClone(items);
+  const context = productContextFromItems(items);
+  const guide = buildProductGuidance(context, ['subtropical-coast']);
+  const banana = guide.foodForest.find(item => item.title.includes('Banana'))!;
+  assert.match(banana.lines.join(' '), /1 existing; 3 proposed/);
+  assert.match(banana.lines.join(' '), /3 planted bananas/);
+  assert.match(banana.lines.join(' '), /13–20 months.*Grand Nain/);
+  assert.match(guide.foodForest.find(item => /pawpaw/i.test(item.title))!.lines.join(' '), /18 months.*9–11.*Sunrise Solo/);
+  assert.equal(banana.expectedSeason, undefined, 'an elapsed first-bunch range supplies no fixed picking months');
+  assert.deepEqual(items, before);
+});
+
+test('mapped coops and hives get product choices without becoming laying hens or populated colonies', () => {
+  const context = productContextFromItems([{ defId: 'chicken_coop', status: 'proposed' }, { defId: 'beehive' }]);
+  const unselected = buildProductGuidance(context, ['subtropical-coast']);
+  assert.equal(unselected.animalProducts.length, 2, 'unselected housing stays one simple options card');
+  assert.match(JSON.stringify(unselected.animalProducts), /No animal count or production dates assumed/);
+  assert.match(JSON.stringify(unselected.animalProducts), /Koekoek|commercial layers/);
+  const selected = buildProductGuidance({ ...context, animalChoices: { chicken: 'chicken-layer', bee: 'bees' } }, ['subtropical-coast']);
+  assert.match(JSON.stringify(selected.animalProducts), /vaccinated point-of-lay|rainfall/);
+  assert.ok(buildAnimalAvailability(context.animals, { chicken: 'chicken-layer', bee: 'bees' }, [1, 2], true).every(slot => !slot.length));
+  const invalid = buildProductGuidance({ ...context, animalChoices: { bee: 'chicken-layer' } }, []);
+  assert.match(invalid.animalProducts.find(item => item.title.startsWith('Bees'))!.title, /choose the product/);
+});
+
+test('indigenous food guidance retains edible portions and species-specific conditions without fake cultivars', () => {
+  const items = ['strychnos-spinosa', 'syzygium-cordatum', 'rhoicissus-tomentosa', 'pappea-capensis'].map(speciesId => ({ defId: 'tree_other', speciesId }));
+  const guide = buildProductGuidance(productContextFromItems(items), ['subtropical-coast']);
+  const text = JSON.stringify(guide.foodForest);
+  assert.match(text, /Seeds and unripe fruit are toxic/);
+  assert.match(text, /Tuberous roots are poisonous/);
+  assert.match(text, /Water-loving/);
+  assert.match(text, /not presented here as cooking oil/);
+  assert.doesNotMatch(text, /medicinal|cure|nitrogen.fix/);
+});
+
+test('all profiles refer to existing identities, and every area and animal enterprise can render a sourced guide', () => {
+  for (const [id, profile] of Object.entries(PRODUCT_PROFILES)) {
+    assert.ok(SPECIES.some(species => species.id === id), `${id}: do not create a new species through a care card`);
+    assert.ok(profile.sources.length);
+    assert.ok(profile.sources.every(source => /^https:\/\//.test(source.url)));
+  }
+  const trees = placedTreeGroups(Object.keys(PRODUCT_PROFILES).map(speciesId => ({ defId: 'tree_other', speciesId, status: 'proposed' })));
+  for (const zone of GROWING_ZONE_IDS) {
+    const guide = buildProductGuidance({ trees, animals: [] }, [zone]);
+    assert.equal(guide.foodForest.length, trees.length);
+    for (const item of guide.foodForest) assert.ok(item.sources?.length);
+  }
+  for (const enterprise of Object.values(ANIMAL_ENTERPRISES)) {
+    const defId = enterprise.animal === 'cattle' || enterprise.animal === 'sheep' ? 'kraal' : { chicken: 'chicken_coop', goat: 'goat_pen', bee: 'beehive', rabbit: 'rabbit_hutch', duck: 'duck_pond', pig: 'pig_pen', fish: 'pond_small' }[enterprise.animal];
+    const animals = placedAnimalGroups([{ defId }]);
+    assert.equal(animals.length, 1, `${enterprise.name}: fixture must exercise mapped housing`);
+    const guide = buildProductGuidance({ trees: [], animals, animalChoices: { [animals[0].housing]: enterprise.enterpriseId } }, ['highveld']);
+    assert.equal(guide.animalProducts.length, 1);
+    assert.ok(guide.animalProducts[0].sources?.length);
+    assert.match(guide.animalProducts[0].lines.join(' '), /No animal head count or output is assumed/);
+    if (enterprise.product === 'wool') assert.match(guide.animalProducts[0].lines.join(' '), /non-food/);
+  }
+});

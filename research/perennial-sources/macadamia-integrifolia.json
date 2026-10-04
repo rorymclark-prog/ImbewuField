@@ -22,9 +22,17 @@
     }
   ],
   "yearsToFirstCrop": {
-    "value": null,
-    "evidence": null,
-    "notes": "SAMAC's own information-hub page (via an AI-summarized fetch, not independently re-confirmed verbatim) suggested grafted trees can produce 'as early as 3 to 5 years, depending on the variety', but this could not be independently verified against the page's raw text (the FAQ page itself 404'd on direct fetch), so per the sourcing rules it is not used as evidence here and is left null."
+    "value": [
+      4,
+      5
+    ],
+    "evidence": {
+      "quote": "4 or 5 years",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Macadamia bearing age",
+      "page": 24
+    },
+    "notes": "KZN establishment reference; this source also describes later bearing at higher elevations. Not a promise for all cultivars or every SA site."
   },
   "yearsToFullBearing": {
     "value": [
@@ -66,6 +74,7 @@
     "nda.agric.za/DALRRD macadamia cultivation info-paks (two URL variants found via search) both failed: one returned HTTP 503 via WebFetch, the other failed at the network/proxy level via curl ('tunnel to the egress proxy closed').",
     "No South African source was found giving both a mature-orchard yield and a matching planting density in the SAME document, so yieldKgPerTreeMature could not be honestly converted and was left null.",
     "No explicit chill-unit or 'no chill requirement' statement found for macadamia in any SA source fetched; only frost-sensitivity commentary.",
-    "Editor review 2026-09-28: pollination changed from needs-cross-pollinator to partly-self-fertile to match the quoted outcrossing and yield figures."
+    "Editor review 2026-09-28: pollination changed from needs-cross-pollinator to partly-self-fertile to match the quoted outcrossing and yield figures.",
+    "2026-10-04: First-bearing reference recovered from the retrieved KZN DARD guide. Earlier full-bearing references use differing maturity definitions; no uniform age/yield forecast is claimed."
   ]
 }

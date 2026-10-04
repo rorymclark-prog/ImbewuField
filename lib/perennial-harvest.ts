@@ -126,7 +126,7 @@ export function formatRange([min, max]: [number, number]): string {
  *
  * A farmer can place "Mango Tree" straight from the element palette without opening the species
  * picker, and that tree carries no speciesId. Only elements whose name leaves no doubt are listed:
- * "Citrus Tree", "Orange Tree", "Plum Tree" and "Banana Circle" could each be several things (or,
+ * "Citrus Tree", "Orange Tree" and "Plum Tree" could each be several things (or,
  * for oranges, a species this table does not hold yet), so they are not guessed at.
  */
 export const ELEMENT_SPECIES: Readonly<Record<string, string>> = {
@@ -147,6 +147,7 @@ export const ELEMENT_SPECIES: Readonly<Record<string, string>> = {
   tree_pomegranate: 'punica-granatum',
   tree_moringa: 'moringa-oleifera',
   banana_clump: 'musa-acuminata-aaa-group',
+  banana_circle: 'musa-acuminata-aaa-group',
 };
 
 export interface PlacedPlant {
@@ -159,6 +160,11 @@ export interface PlacedPlant {
 export function speciesIdForPlaced(item: PlacedPlant): string | null {
   if (item.speciesId) return canonicalSpeciesId(item.speciesId);
   return ELEMENT_SPECIES[item.defId] ?? null;
+}
+
+/** The three-plant circle assumption belongs to inventory, never saved geometry. */
+export function bananaCirclesIn(items: readonly PlacedPlant[]): number {
+  return items.filter(item => item.defId === 'banana_circle' && speciesIdForPlaced(item) === 'musa-acuminata-aaa-group').length;
 }
 
 export interface PlacedTreeGroup {
@@ -232,7 +238,10 @@ export function placedTreeGroups(items: readonly PlacedPlant[]): PlacedTreeGroup
     const harvest = harvestForMappedFoodSpecies(speciesIdForPlaced(item));
     if (!harvest) continue;
     const group = bySpecies.get(harvest.speciesId) ?? { harvest, ...(!perennialHarvestFor(harvest.speciesId) ? { referenceMissing: true as const } : {}), existing: 0, proposed: 0 };
-    if (item.status === 'proposed') group.proposed++; else group.existing++;
+    // Rory defines each circle as three planted bananas. This is an inventory assumption,
+    // not a geometry edit or a count of the mat's later replacement followers.
+    const plants = item.defId === 'banana_circle' && harvest.speciesId === 'musa-acuminata-aaa-group' ? 3 : 1;
+    if (item.status === 'proposed') group.proposed += plants; else group.existing += plants;
     bySpecies.set(harvest.speciesId, group);
   }
   return [...bySpecies.values()].sort((a, b) => a.harvest.name.localeCompare(b.harvest.name, 'en-ZA'));
