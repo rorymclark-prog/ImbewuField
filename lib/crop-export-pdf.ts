@@ -51,6 +51,7 @@ import {
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
 import { treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
 import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
+import type { ExpectedSeason } from '@/lib/production-product-guidance';
 import type { PoultryGuidance } from '@/lib/animal-enterprises';
 
 export interface CropPlanPdfMeta {
@@ -147,6 +148,8 @@ export interface CropPlanPdfInput {
 export interface AvailabilityEntry {
   iconKey: string;
   label: string;
+  /** A source reference is drawn differently and never enters food totals or picking jobs. */
+  planning?: ExpectedSeason;
 }
 
 /** The app chart's first twelve slots, starting at the plan's "now" month. */
@@ -156,6 +159,8 @@ export interface CropPlanAvailability {
   veg?: FoodAvailabilityItem[][];
   /** Food-forest kinds in their sourced season. Omit when the orchard is switched out. */
   forest?: AvailabilityEntry[][];
+  /** Separate from confirmed forest slots, even when shown in the same picture calendar. */
+  forestPlanning?: AvailabilityEntry[][];
   /** One entry per animal enterprise giving a product that month. Omit when animals are out. */
   animals?: AvailabilityEntry[][];
   /** Preserve an explicit chart switch-off as a visible explanation, rather than a missing section. */
@@ -1068,6 +1073,7 @@ interface AvailabilityBand {
   /** The app tray's colour; the print uses it as a pale fill and a mid border. */
   rgb: readonly number[];
   cells: AvailabilityCell[][];
+  planningCells?: AvailabilityCell[][];
   undated?: AvailabilityCell[];
   emptyNote?: string;
 }
@@ -1126,6 +1132,7 @@ export function resolveAvailability(input: CropPlanPdfInput, nowMonth: number): 
     { key: 'stored', title: 'Stored veg', sub: 'kept under named conditions', rgb: [212, 160, 23], cells: vegCells('stored') },
     { key: 'forest', title: 'Food forest - fruit, nuts & berries', sub: 'confirmed local picking months', rgb: [46, 107, 58],
       cells: entryCells(given?.includeTrees === false ? undefined : given?.forest),
+      planningCells: entryCells(given?.includeTrees === false ? undefined : given?.forestPlanning),
       undated: given?.includeTrees === false ? [] : undated('forest'),
       emptyNote: given?.includeTrees === false
         ? 'Hidden for this print. Show fruit, nuts and berries in the app to include them.'
@@ -1152,7 +1159,7 @@ export function availabilityIconKeys(input: CropPlanPdfInput): string[] {
   const { bands } = resolveAvailability(input, nowMonth);
   return [...new Set([
     ...buildOccupancyCalendar(input.plantings, input.beds, nowMonth).flatMap((row) => row.cells.flat().map((entry) => `crop:${entry.cropKey}`)),
-    ...bands.flatMap((b) => b.cells.flat().map((e) => e.iconKey)),
+    ...bands.flatMap((b) => [...b.cells.flat(), ...(b.planningCells?.flat() ?? [])].map((e) => e.iconKey)),
     ...includedUndatedSources(input.availability).map((e) => e.iconKey),
   ])];
 }
@@ -1189,7 +1196,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     masthead(s, 'Picture calendar');
     pageTitle(s, input.meta.planTitle,
       dated ? `${monthShort(nowMonth)} ${now.getFullYear()} - ${monthShort(last.month)} ${last.year}` : 'Repeat-year template',
-      dated ? 'What to pick or use each month. Pictures show a picking window, not how much food you will get.'
+      dated ? 'Picking and planning seasons. Solid marks: confirmed locally. Outlined marks: references when established, not food promised this year.'
         : 'This repeats the annual planting cycle. It is not a forecast for this first year.');
     s.paragraph(`${input.meta.locationLine || input.meta.siteLine} - ${input.meta.climateLine || 'Climate not set'}`, { size: 10, ink: INK.green, gap: 8 });
   };
@@ -1220,6 +1227,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   for (const band of resolved.bands) {
     const entries = new Map<string, AvailabilityCell>();
     for (const cell of band.cells) for (const e of cell) entries.set(e.iconKey, e);
+    for (const cell of band.planningCells ?? []) for (const e of cell) if (!entries.has(e.iconKey)) entries.set(e.iconKey, e);
     for (const e of band.undated ?? []) if (!entries.has(e.iconKey)) entries.set(e.iconKey, e);
     const rows = [...entries.values()].sort((a, b) => a.label.localeCompare(b.label));
     if (!rows.length) {
@@ -1235,18 +1243,28 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     s.font(10, true);
     const firstLines = s.doc.splitTextToSize(pdfSafe(rows[0].label), labelW - 39) as string[];
     const firstUnknown = !band.cells.some((cell) => cell.some((entry) => entry.iconKey === rows[0].iconKey));
-    if (!s.fits(24 + Math.max(29, firstLines.length * 12 + (firstUnknown ? 24 : 10)))) { s.page('portrait'); heading(); monthHead(); }
+    s.font(8);
+    const firstPlanLines = rows[0].planning ? (s.doc.splitTextToSize(pdfSafe(rows[0].planning.label.replace('Assumed variety:', 'Plan:').replace('Regional reference:', 'Ref:')), labelW - 39) as string[]).length : 0;
+    if (!s.fits(24 + Math.max(29, firstLines.length * 12 + (firstPlanLines ? firstPlanLines * 10 + 20 : firstUnknown ? 24 : 10)))) { s.page('portrait'); heading(); monthHead(); }
     bandHead(band);
     for (const e of rows) {
       const monthsUnknown = !band.cells.some((cell) => cell.some((entry) => entry.iconKey === e.iconKey));
       s.font(10, true);
       const label = s.doc.splitTextToSize(pdfSafe(e.label), labelW - 39) as string[];
-      const rowH = Math.max(29, label.length * 12 + (monthsUnknown ? 24 : 10));
+      const planLabel = e.planning ? e.planning.label.replace('Assumed variety:', 'Plan:').replace('Regional reference:', 'Ref:') : '';
+      s.font(8);
+      const planLines = planLabel ? s.doc.splitTextToSize(pdfSafe(planLabel), labelW - 39) as string[] : [];
+      const rowH = Math.max(29, label.length * 12 + (e.planning ? planLines.length * 10 + 20 : monthsUnknown ? 24 : 10));
       if (!s.fits(rowH)) { s.page('portrait'); heading(); monthHead(); bandHead(band, true); }
       drawIconOrCode(s, e, s.margin + 5, s.y + (rowH - 24) / 2, 24, input.icons);
       s.font(10, true); s.ink(INK.text);
       s.doc.text(label, s.margin + 34, s.y + 17, { lineHeightFactor: 1.2 });
-      if (monthsUnknown) {
+      if (e.planning) {
+        s.font(8); s.ink(INK.brown);
+        s.doc.text(planLines, s.margin + 34, s.y + label.length * 12 + 16, { lineHeightFactor: 1.25 });
+        s.font(7.5); s.ink(INK.muted);
+        s.doc.text('When established', s.margin + 34, s.y + label.length * 12 + planLines.length * 10 + 16);
+      } else if (monthsUnknown) {
         s.font(8.5); s.ink(INK.muted);
         s.doc.text('Months to confirm', s.margin + 34, s.y + label.length * 12 + 18);
       }
@@ -1255,6 +1273,12 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
         if (band.cells[i].some((entry) => entry.iconKey === e.iconKey)) {
           s.fill(mixWithWhite(band.rgb, 0.2));
           s.doc.roundedRect(x + 2, s.y + 3, colW - 4, rowH - 6, 3, 3, 'F');
+          drawIconOrCode(s, e, x + (colW - icon) / 2, s.y + (rowH - icon) / 2, icon, input.icons);
+        } else if (band.planningCells?.[i]?.some((entry) => entry.iconKey === e.iconKey)) {
+          s.fill(INK.panelCream); s.stroke(INK.gold); s.doc.setLineWidth(0.8);
+          s.doc.setLineDashPattern([2, 2], 0);
+          s.doc.roundedRect(x + 2, s.y + 3, colW - 4, rowH - 6, 3, 3, 'FD');
+          s.doc.setLineDashPattern([], 0);
           drawIconOrCode(s, e, x + (colW - icon) / 2, s.y + (rowH - icon) / 2, icon, input.icons);
         } else {
           s.font(9); s.ink(INK.faint);
@@ -1269,7 +1293,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     }
     s.y += 8;
   }
-  const calendarNote = 'A dash means no picking window is marked. For months to confirm, check Food sources to check and record local months in the app. Red space figures mean the plan needs more growing space than is mapped.';
+  const calendarNote = 'Outlined marks are sourced planning references when established; they do not enter food totals or picking jobs. A dash means no picking window is marked. For months to confirm, check Food sources to check and record local months in the app. Red space figures mean the plan needs more growing space than is mapped.';
   s.font(10);
   const calendarNoteLines = s.doc.splitTextToSize(pdfSafe(calendarNote), s.contentWidth) as string[];
   if (!s.fits(56 + calendarNoteLines.length * 14 + 8)) { s.page('portrait'); heading(); monthHead(); }
@@ -1303,6 +1327,20 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
       s.font(12, true); s.ink(INK.green); s.doc.text(pdfSafe(e.label), s.margin + 52, s.y + 20);
       s.font(10.5); s.ink(INK.text); s.doc.text(lines, s.margin + 52, s.y + 38, { lineHeightFactor: 1.33 });
       s.y += h + 10;
+    }
+  }
+  const refs = [...new Map((input.availability?.includeTrees === false ? [] : input.availability?.forestPlanning?.flat() ?? []).filter(e => e.planning).map(e => [e.iconKey, e])).values()];
+  if (refs.length) {
+    s.page('portrait'); masthead(s, 'Season references');
+    pageTitle(s, input.meta.planTitle, 'Why these months are marked', 'References describe established plants. Confirm local dates; new plants need time to produce.');
+    for (const entry of refs) {
+      const lines = [`${entry.label} - ${entry.planning!.label}`, entry.planning!.basis, ...(entry.planning!.source ? [`Source: ${entry.planning!.source.label}`] : [])];
+      s.font(9);
+      const height = lines.reduce((total, line) => total + (s.doc.splitTextToSize(pdfSafe(line), s.contentWidth) as string[]).length * 13 + 5, 0);
+      if (s.need(height + 12)) { masthead(s, 'Season references'); pageTitle(s, input.meta.planTitle, 'Season references (continued)'); }
+      for (const [index, line] of lines.entries()) s.paragraph(line, { size: 9, bold: index === 0, ink: index === 2 ? INK.teal : INK.text, gap: 5 });
+      if (entry.planning!.source) s.doc.link(s.margin, s.y - 18, s.contentWidth, 16, { url: entry.planning!.source.url });
+      s.y += 10;
     }
   }
   const pending = settleOnceRows(input.plantings, now.getFullYear(), nowMonth)

@@ -38,6 +38,7 @@ import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEn
 import TreeSeasonsCard from '@/components/crops/TreeSeasonsCard';
 import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
 import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
+import { planningTreeSeasons, type ExpectedSeason } from '@/lib/production-product-guidance';
 import { printableAvailability } from '@/lib/crop-export-availability';
 import { animalArtUrl } from '@/lib/animal-art';
 import { speciesFruitArtworkUrl } from '@/lib/species-art';
@@ -1481,9 +1482,10 @@ function FacilitatorCropsPageInner() {
   );
   // The bed calendar's own food-forest and animal rows: the whole design, proposed kept apart
   // (lib/calendar-produce.ts), over the same rolling columns as the beds above them.
+  const planningTrees = useMemo(() => planningTreeSeasons(canvasTrees, growingZones, siteSurvey?.productionConditions, treeSeasons), [canvasTrees, growingZones, siteSurvey, treeSeasons]);
   const calendarProduce = useMemo(
-    () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons),
-    [canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons],
+    () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees),
+    [canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees],
   );
   // Plants on the map whose harvest record has no sourced picking month yet: named under the row,
   // so a pawpaw that never appears is explained rather than silently missing.
@@ -1551,7 +1553,8 @@ function FacilitatorCropsPageInner() {
     yearMode: 'fromToday', veg: buildFoodAvailability(plantings, beds, currentMonth, 12), utilization: buildFieldUtilizationByMonth(plantings, beds, currentMonth, 12),
     trees: buildTreeAvailability(canvasTrees, monthOrder, true, treeSeasons), animals: buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, true, animalSeasons), includeTrees, includeAnimals,
     treeGroups: canvasTrees, unidentifiedPlants, treeSeasons, animalGroups: canvasAnimals, animalChoices, animalSeasons,
-  }), [plantings, beds, currentMonth, monthOrder, canvasTrees, treeSeasons, canvasAnimals, animalChoices, animalSeasons, includeTrees, includeAnimals, unidentifiedPlants]);
+    planning: { months: monthOrder, trees: planningTrees },
+  }), [plantings, beds, currentMonth, monthOrder, canvasTrees, treeSeasons, canvasAnimals, animalChoices, animalSeasons, includeTrees, includeAnimals, unidentifiedPlants, planningTrees]);
 
   // Cover-page facts for the printed plan and the calendar's name. Built from
   // the same values the header and the bed-check strip already show, so the
@@ -3961,12 +3964,12 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
     return () => { window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close); };
   }, [open]);
 
-  const lanes: { key: string; name: string; text: string; standing: number; runs: { start: number; end: number }[]; art: ReactNode }[] =
+  const lanes: { key: string; name: string; text: string; standing: number; planning?: ExpectedSeason; runs: { start: number; end: number }[]; art: ReactNode }[] =
     kind === 'trees'
       ? (produceLanes(months, 'trees') as ProduceLane<CalendarTreeLine>[]).map(({ key, line, runs }) => {
         const src = speciesFruitArtworkUrl(line.speciesId);
         return {
-          key, runs, name: line.name, text: treeLineText(line), standing: line.standing,
+          key, runs, name: line.name, text: treeLineText(line), standing: line.standing, planning: line.planning,
           art: src
             // eslint-disable-next-line @next/next/no-img-element -- 18px sprite
             ? <img src={src} alt="" width={PRODUCE_ICON} height={PRODUCE_ICON} style={{ width: PRODUCE_ICON, height: PRODUCE_ICON, flexShrink: 0 }} />
@@ -4008,6 +4011,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
         </div>
       </div>
       <div style={{ flex: '1 1 auto', minWidth: 0, position: 'relative' }}>
+        {kind === 'trees' && lanes.some(lane => lane.planning) && <p className="font-sans" style={{ padding: '8px 12px 2px', fontSize: 11, color: 'var(--text-secondary)', position: 'sticky', left: BED_LABEL_WIDTH, width: `min(560px, calc(100vw - ${BED_LABEL_WIDTH + 40}px))` }}>Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.</p>}
         {lanes.length > 0 ? (
           <div style={{ position: 'relative', padding: '6px 0' }}>
             <div style={{ ...MONTH_COLUMNS, position: 'absolute', inset: 0, pointerEvents: 'none' }}>
@@ -4028,7 +4032,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
                 {lane.runs.map((run, r) => {
                   const id = `${lane.key}@${r}`;
                   // Proposed plants are faded, as the month list did; year two is quieter, as a bed's is.
-                  const opacity = lane.standing === 0 ? (run.start >= 12 ? 0.35 : 0.45) : run.start >= 12 ? 0.55 : 1;
+                  const opacity = lane.planning ? (run.start >= 12 ? 0.85 : 1) : lane.standing === 0 ? (run.start >= 12 ? 0.35 : 0.45) : run.start >= 12 ? 0.55 : 1;
                   return (
                     <button
                       key={id}
@@ -4047,7 +4051,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
                       }}
                       style={{
                         position: 'absolute', left: `${leftPct(run.start)}%`, width: `${(run.end - run.start + 1) * COL_PCT}%`, top: 2, bottom: 2,
-                        background: PRODUCE_FILL[kind], color: '#fff', border: 'none', borderRadius: 6, opacity,
+                        background: lane.planning ? 'var(--bg-2)' : PRODUCE_FILL[kind], color: lane.planning ? 'var(--text-primary)' : '#fff', border: lane.planning ? '1.5px dashed var(--gold-dim)' : 'none', borderRadius: 6, opacity,
                         fontSize: 11, fontWeight: 600, textAlign: 'left', padding: '0 4px 0 5px', cursor: 'pointer',
                         // clip-path, not overflow: an overflow-hidden button would become the scroll
                         // box and stop the name below from sticking.
@@ -4064,7 +4068,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
                         </span>
                       ) : lane.art}
                       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {lane.name}{lane.standing === 0 ? ' (proposed)' : ''}
+                        {lane.name}{lane.planning ? ' · reference' : ''}{lane.standing === 0 ? ' (proposed)' : ''}
                       </span>
                       </span>
                     </button>
@@ -4097,14 +4101,14 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
         >
           <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.1vw, 16px)', marginBottom: 2 }}>{span(openRun)}</div>
           <div style={{ fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 6 }}>
-            {kind === 'trees' ? 'In season from your food forest' : 'From your animals'}
+            {openLane.planning ? 'Planning reference - when established' : kind === 'trees' ? 'In season from your food forest' : 'From your animals'}
           </div>
           <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.35, color: openLane.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
             <span style={{ color: kind === 'trees' ? 'var(--emerald)' : 'var(--gold-dim)', display: 'inline-flex' }}>{openLane.art}</span>
             <span>{openLane.text}</span>
           </div>
           <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 7, lineHeight: 1.35 }}>
-            Locally confirmed months for this farm. No monthly quantities are assumed.
+            {openLane.planning ? 'Confirm local picking dates. This reference is excluded from food totals and scheduled picking jobs.' : 'Locally confirmed months for this farm. No monthly quantities are assumed.'}
           </div>
         </div>
       )}

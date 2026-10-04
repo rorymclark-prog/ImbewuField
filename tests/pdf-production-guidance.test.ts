@@ -109,3 +109,16 @@ test('the paper shows the same assumed cultivar season with twelve months and a 
   assert.match(text, /Animal products and care/);
   assert.match(pdf, /\/URI \(https:\/\/www.avocadosource.com/);
 });
+
+
+test('the picture calendar distinguishes regional references and never turns them into picking jobs', async () => {
+  const planning = { label: 'Assumed variety: Hass', months: [6, 7, 8, 9, 10], basis: 'Warm source reference when established; confirm local dates.', source: { label: 'Fixture primary reference', url: 'https://www.arc.agric.za/' } };
+  const slots = Array.from({ length: 12 }, (_, i) => planning.months.includes(((9 + i) % 12) + 1) ? [{ iconKey: 'tree:persea-americana', label: 'Avocado', planning }] : []);
+  const raw = await rawPdf({ sections: ['availability', 'fieldsheets'], availability: { forestPlanning: slots } });
+  const text = visibleText(raw);
+  for (const phrase of ['Outlined marks', 'Plan: Hass', 'When established', 'Why these months are marked', 'Fixture primary reference']) assert.ok(text.includes(phrase), phrase);
+  assert.ok(raw.includes('/URI (https://www.arc.agric.za/)'));
+  assert.ok(!text.includes('Pick Avocado'), 'reference windows must not instruct a farmer to harvest an unconfirmed crop');
+  const hidden = await rawPdf({ sections: ['availability'], availability: { forestPlanning: slots, includeTrees: false } });
+  assert.ok(!visibleText(hidden).includes('Avocado'));
+});

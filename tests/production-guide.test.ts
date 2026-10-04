@@ -203,7 +203,7 @@ test('unknown or unobserved frost does not infer a frost-free guarantee or a pla
   }
 });
 
-import { assumedProductSeason, buildProductGuidance, productContextFromItems, productPurchasingMarkdown, PRODUCT_PROFILES } from '@/lib/production-product-guidance';
+import { assumedProductSeason, planningTreeSeasons, buildProductGuidance, productContextFromItems, productPurchasingMarkdown, PRODUCT_PROFILES } from '@/lib/production-product-guidance';
 import { placedTreeGroups, buildTreeAvailability } from '@/lib/perennial-harvest';
 import { SPECIES } from '@/lib/species-catalog';
 import { GROWING_ZONE_IDS } from '@/lib/growing-zones';
@@ -295,4 +295,35 @@ test('all profiles refer to existing identities, and every area and animal enter
     assert.match(guide.animalProducts[0].lines.join(' '), /No animal head count or output is assumed/);
     if (enterprise.product === 'wool') assert.match(guide.animalProducts[0].lines.join(' '), /non-food/);
   }
+});
+
+
+test('regional planning covers fruit, nuts and berries without flattening lemon climates or berry systems', () => {
+  const groups = placedTreeGroups(['citrus-limon', 'macadamia-integrifolia', 'carica-papaya', 'litchi-chinensis', 'fragaria-x-ananassa', 'vaccinium-corymbosum', 'rubus-idaeus', 'carya-illinoinensis'].map(speciesId => ({ defId: 'tree_other', speciesId, status: 'proposed' })));
+  const season = (id: string, zones: Parameters<typeof assumedProductSeason>[1], conditions?: Parameters<typeof assumedProductSeason>[2]) => assumedProductSeason(groups.find(g => g.harvest.speciesId === id)!, zones, conditions);
+  assert.deepEqual(season('citrus-limon', ['subtropical-coast'])?.months, [2, 3]);
+  assert.deepEqual(season('citrus-limon', ['midlands-mistbelt'])?.months, [5, 6, 7]);
+  assert.deepEqual(season('fragaria-x-ananassa', ['western-cape'])?.months, [9, 10, 11, 12]);
+  assert.deepEqual(season('fragaria-x-ananassa', ['subtropical-coast'], { frost: 'no' })?.months, [5, 6, 7, 8]);
+  assert.equal(season('fragaria-x-ananassa', ['highveld']), undefined, 'a tunnel window cannot become an outdoor Highveld season');
+  assert.deepEqual(season('vaccinium-corymbosum', ['western-cape'])?.months, [8, 9, 10, 11]);
+  assert.equal(season('vaccinium-corymbosum', ['subtropical-coast']), undefined, 'national blueberry supply cannot fill a warm farm calendar');
+  assert.match(season('rubus-idaeus', ['midlands-mistbelt'])?.basis ?? '', /Spring-bearing.*not use.*autumn-bearing/);
+  assert.equal(season('carya-illinoinensis', ['karoo-arid']), undefined, 'a mapped pecan does not prove irrigation');
+  assert.deepEqual(season('carya-illinoinensis', ['karoo-arid'], { drySeasonWater: 'reliable' })?.months, [3, 4, 5, 6]);
+  assert.deepEqual(season('litchi-chinensis', ['lowveld-bushveld'])?.months, [11, 12, 1]);
+  assert.match(season('litchi-chinensis', ['lowveld-bushveld'])?.label ?? '', /Mauritius/);
+  assert.ok(!season('litchi-chinensis', ['lowveld-bushveld'])?.months.includes(2), 'later Wai Chee cannot extend the assumed Mauritius season');
+  for (const zone of GROWING_ZONE_IDS) {
+    const rows = planningTreeSeasons(groups, [zone], { drySeasonWater: 'reliable' });
+    for (const row of rows) {
+      assert.ok(row.season.source?.url);
+      assert.ok(row.season.months.length && row.season.months.every(month => month >= 1 && month <= 12));
+      assert.match(row.season.basis, /when established.*confirm local/i);
+    }
+    if (zone === 'high-mountain') assert.deepEqual(rows, []);
+  }
+  assert.deepEqual(planningTreeSeasons(groups, []), []);
+  const avocado = placedTreeGroups([{ defId: 'tree_avocado', status: 'existing' }]);
+  assert.equal(planningTreeSeasons(avocado, ['subtropical-coast'], undefined, { 'persea-americana': { bearing: true, months: [7] } }).length, 0, 'confirmed July replaces the entire reference; no invented June/October extension');
 });
