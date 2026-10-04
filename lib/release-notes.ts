@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: 'b347c1d9', changes: [
+    'Regional assignment cards add fuller bed-care and mapping exercise drafts.',
+    'Seven silent cards refresh beside English; uncertain terms stay in English.',
+  ], tour: [
+    { title: 'Review the assignment drafts',
+      where: 'Study → Vegetables 17 or Introduction 20–22',
+      detail: 'Compare the unreviewed drafts with English and save the silent slides.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: 'be3228bf', changes: [
     'Vegetables Field Action adds fuller regional steps and observation drafts.',
     'Three silent cards refresh beside English; difficult terms stay in English.',
