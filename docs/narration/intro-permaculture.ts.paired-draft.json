@@ -1095,19 +1095,9 @@
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Then draw arrows in from outside for ",
-                "status": "draft",
-                "text": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela "
-              },
-              {
-                "sourceEnglish": "sun, wind, fire and water.",
-                "status": "english-hold"
-              }
-            ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "status": "draft",
+            "text": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela dyambu, moya, ndzilo na mati.",
+            "provenance": "Unreviewed source-bound machine draft; facilitator review open."
           },
           {
             "status": "draft",
@@ -1216,11 +1206,16 @@
                 "text": "Famba ehandle u "
               },
               {
-                "sourceEnglish": "check your sketch against the ground.",
+                "sourceEnglish": "check your sketch",
+                "status": "draft",
+                "text": "kambela sketch ya wena"
+              },
+              {
+                "sourceEnglish": " against the ground.",
                 "status": "english-hold"
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "Unreviewed source-bound machine draft; facilitator review open."
           },
           {
             "status": "mixed",

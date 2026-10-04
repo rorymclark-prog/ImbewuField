@@ -1078,19 +1078,9 @@
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Then draw arrows in from outside for ",
-                "status": "draft",
-                "text": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza "
-              },
-              {
-                "sourceEnglish": "sun, wind, fire and water.",
-                "status": "english-hold"
-              }
-            ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "status": "draft",
+            "text": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza ḓuvha, muya, mulilo na maḓi.",
+            "provenance": "Unreviewed source-bound machine draft; facilitator review open."
           },
           {
             "status": "draft",
@@ -1172,7 +1162,9 @@
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzhiani photo ya sketch.",
+            "provenance": "Unreviewed machine draft; exact English source remains paired; facilitator review open."
           }
         ]
       }
