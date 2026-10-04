@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'b93c0f56', changes: [
+    'Reading lessons add fuller unreviewed regional drafts beside exact English.',
+    'Four silent cards keep technical English inline for easier reading.',
+  ], tour: [
+    { title: 'Review the Reading drafts',
+      where: 'Study → Reading Landscape lessons 1–4',
+      detail: 'Compare drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: '2343737d', changes: [
     'Introduction adds unreviewed Xitsonga image descriptions and assessment wording.',
     'Market answer drafts keep technical terms and the same correct answers.',
