@@ -842,16 +842,20 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vhege ino, shumisani bed nthihi kha production."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshithihi. Swayani bed na paths."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mbili. Ṱavhani, ni tshi tevhedza spacing yaṋu na sowing rhythm yaṋu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Raru. Vhuyani nga murahu ha maḓuvha a fumi, ni na foto."
           },
           {
             "status": "draft",
@@ -894,13 +898,46 @@
                 "text": "Khalaṅwaha iṅwe na iṅwe,"
               },
               {
-                "sourceEnglish": " your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+                "sourceEnglish": " your garden ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "becomes less dependent on guesswork",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " — and more on ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "what you've actually seen happen",
+                "status": "draft",
+                "text": "zwe na zwi vhona zwa vhukuma zwi tshi itea"
+              },
+              {
+                "sourceEnglish": " on your own ground.",
                 "status": "english-hold"
               }
             ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use your record ",
+                "status": "draft",
+                "text": "Shumisani rekhodo yaṋu "
+              },
+              {
+                "sourceEnglish": "with reliable local advice",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " when making the next decision.",
+                "status": "draft",
+                "text": " musi ni tshi dzhia tsheo i tevhelaho."
+              }
+            ]
           }
         ]
       }

@@ -887,6 +887,112 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
   }
 });
 
+test('Vegetables Field Action pairs the week, ordered steps, observed comparison and advice with their exact sources', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
+  const expected: Record<'st' | 've' | 'ts', Record<number, string>> = {
+    st: {
+      0: 'Bekeng ena, kenya bed e le nngwe tlhahisong.',
+      1: 'Nngwe. Tshwaya bed le paths.',
+      2: 'Pedi. Jala ka spacing ya hao le sowing rhythm ya hao.',
+      3: 'Tharo. Kgutla ka mora matsatsi a leshome, o tshotse foto.',
+      6: 'Sehla ka seng, serapa sa hao becomes less dependent on guesswork — mme haholo ka seo o hlileng o se boneng se etsahala on your own ground.',
+      7: 'Sebedisa rekoto ya hao with reliable local advice ha o etsa qeto e latelang.',
+    },
+    ve: {
+      0: 'Vhege ino, shumisani bed nthihi kha production.',
+      1: 'Tshithihi. Swayani bed na paths.',
+      2: 'Mbili. Ṱavhani, ni tshi tevhedza spacing yaṋu na sowing rhythm yaṋu.',
+      3: 'Raru. Vhuyani nga murahu ha maḓuvha a fumi, ni na foto.',
+      6: 'Khalaṅwaha iṅwe na iṅwe, your garden becomes less dependent on guesswork — and more on zwe na zwi vhona zwa vhukuma zwi tshi itea on your own ground.',
+      7: 'Shumisani rekhodo yaṋu with reliable local advice musi ni tshi dzhia tsheo i tevhelaho.',
+    },
+    ts: {
+      0: 'Vhiki leri, nghenisa bed yin’we eka production.',
+      1: 'Xin’we. Maka bed na paths.',
+      2: 'Mbirhi. Byala hi spacing ya wena ni sowing rhythm ya wena.',
+      3: 'Nharhu. Vuya endzhaku ka masiku ya khume, u ri na foto.',
+      6: 'Nguva yin’wana ni yin’wana, ntanga wa wena becomes less dependent on guesswork — naswona wu titshega ngopfu hi leswi u swi voneke swi humelela hakunene on your own ground.',
+      7: 'Tirhisa rhekhodo ya wena with reliable local advice loko u endla xiboho lexi landzelaka.',
+    },
+  };
+  const sources = [
+    'This week, put one bed into production.',
+    'One. Mark the bed and the paths.',
+    'Two. Plant, with your spacing and your sowing rhythm.',
+    'Three. Return after ten days, with a photo.',
+    'Season by season, your garden becomes less dependent on guesswork — and more on what you\'ve actually seen happen on your own ground.',
+    'Use your record with reliable local advice when making the next decision.',
+  ];
+  const indexes = [0, 1, 2, 3, 6, 7];
+  const originalRecordFields = {
+    st: { status: 'mixed', segments: [
+      { sourceEnglish: 'Record the sowing date.', status: 'draft', text: 'Ngola letsatsi la sowing.' },
+      { sourceEnglish: ' The rain.', status: 'draft', text: ' Pula.' },
+      { sourceEnglish: ' What germinated.', status: 'english-hold' },
+      { sourceEnglish: ' Pest pressure.', status: 'english-hold' },
+      { sourceEnglish: ' What you harvested.', status: 'draft', text: ' Seo o se kotutseng.' },
+    ], provenance: 'new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open' },
+    ve: { status: 'mixed', segments: [
+      { sourceEnglish: 'Record the sowing date.', status: 'draft', text: 'Ṅwalani datumu ya sowing.' },
+      { sourceEnglish: ' The rain.', status: 'draft', text: ' Mvula.' },
+      { sourceEnglish: ' What germinated.', status: 'english-hold' },
+      { sourceEnglish: ' Pest pressure.', status: 'english-hold' },
+      { sourceEnglish: ' What you harvested.', status: 'english-hold' },
+    ], provenance: 'new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open' },
+    ts: { status: 'mixed', segments: [
+      { sourceEnglish: 'Record the sowing date.', status: 'draft', text: 'Tsala siku ra sowing.' },
+      { sourceEnglish: ' The rain.', status: 'draft', text: ' Mpfula.' },
+      { sourceEnglish: ' What germinated.', status: 'english-hold' },
+      { sourceEnglish: ' Pest pressure.', status: 'english-hold' },
+      { sourceEnglish: ' What you harvested.', status: 'draft', text: ' Leswi u tshoveleke.' },
+    ], provenance: 'new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open' },
+  };
+
+  for (const language of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/vegetables-staples.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, language);
+    const field = slides[17];
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    for (const [offset, bodyIndex] of indexes.entries()) {
+      assert.equal(field.english.body[bodyIndex], sources[offset], `${language} body ${bodyIndex}: exact English source remains paired`);
+      const target = field.target.body[bodyIndex];
+      const actual = target.status === 'draft' ? target.text : target.segments.map((segment: any) =>
+        segment.status === 'draft' ? segment.text : segment.sourceEnglish).join('');
+      assert.equal(actual, expected[language][bodyIndex], `${language} body ${bodyIndex}: accepted unreviewed wording`);
+      assert.ok(['draft', 'mixed'].includes(target.status));
+    }
+
+    assert.equal(field.target.body[4].text,
+      language === 'st' ? 'Ebe o sheba. O fetole. Mme o ngole fatshe.' :
+      language === 've' ? 'Nga murahu ni sedze. Ni lulamise. Ni ṅwale fhasi.' :
+      'Kutani languta. Lulamisa. Tsala leswi ehansi.',
+      `${language}: the unlisted observe/adjust/write action remains unchanged`);
+    assert.deepEqual(field.target.body[5], originalRecordFields[language],
+      `${language}: preserve every original record item, hold, and unreviewed provenance`);
+
+    const week = field.target.body[0];
+    assert.match(week.text, /bed/);
+    assert.match(field.target.body[1].text, /bed.*paths/);
+    assert.match(field.target.body[2].text, /spacing.*sowing rhythm/);
+    assert.match(field.target.body[3].text, /(?:ten days|matsatsi a leshome|maḓuvha a fumi|masiku ya khume)/);
+    assert.match(field.target.body[3].text, /photo|foto/);
+    const comparison = field.target.body[6];
+    assert.equal(comparison.status, 'mixed');
+    assert.ok(comparison.segments.some((segment: any) => segment.status === 'english-hold' && segment.sourceEnglish === 'becomes less dependent on guesswork'));
+    assert.ok(comparison.segments.some((segment: any) => segment.status === 'draft' && /actually seen|hlileng o se boneng|vhukuma|hakunene/.test(segment.text ?? '')),
+      `${language}: the positive comparison stays tied to what was actually observed`);
+    const advice = field.target.body[7];
+    assert.equal(advice.status, 'mixed');
+    assert.ok(advice.segments.some((segment: any) => segment.status === 'english-hold' && segment.sourceEnglish === 'with reliable local advice'));
+    assert.equal(advice.segments.at(-1)?.sourceEnglish, ' when making the next decision.');
+  }
+
+  const stale = JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8'));
+  stale.slides[17].english.body[2] = 'Two. Plant with any spacing you like.';
+  assert.throws(() => validatePairedDraft(stale, source, 'ts'), /slide 18: English body differs/,
+    'a deck cannot keep regional wording after its planting instruction changes');
+});
+
 test('Sesotho Market records slides retain six learner draft sentences as the deck grows', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/market-community.st.paired-draft.json', 'utf8'));
@@ -1100,8 +1206,13 @@ test('Vegetables field assignment drafts keep measurements, paths, checkpoints a
     ];
     for (let index = 0; index < requiredActions.length; index++) {
       assert.equal(action.english.body[index], requiredActions[index], `${lang}: retain the numbered source action`);
-      assert.deepEqual(action.target.body[index], { status: 'english-hold' },
-        `${lang}: keep week/production, bed marking, spacing/sowing rhythm and ten-day photo conditions exact`);
+      const step = action.target.body[index];
+      assert.ok(['draft', 'mixed'].includes(step.status),
+        `${lang}: the authorized unreviewed ordinary Field Action text is visibly drafted`);
+      const stepText = step.status === 'draft' ? step.text : step.segments.map((segment: any) =>
+        segment.status === 'draft' ? segment.text : segment.sourceEnglish).join('');
+      assert.ok(stepText && stepText.trim().length > 0,
+        `${lang}: each action has visible target text while its exact English stays paired`);
     }
     assert.equal(action.english.body[4], 'Then observe. Adjust. And write it down.');
     assert.equal(action.target.body[4].status, 'draft', `${lang}: ordinary observe-adjust-record framing is drafted`);
@@ -1158,21 +1269,32 @@ test('Vegetables field assignment drafts keep measurements, paths, checkpoints a
       const seasonEvidence = action.target.body[6];
       assert.equal(action.english.body[6], "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.");
       assert.equal(seasonEvidence.status, 'mixed');
+      assert.equal(seasonEvidence.segments.map((segment: any) => segment.sourceEnglish).join(''), action.english.body[6],
+        'all translated and held clauses remain attached to the season-by-season source');
       assert.deepEqual(seasonEvidence.segments.map((segment: any) => ({
         sourceEnglish: segment.sourceEnglish,
         status: segment.status,
         ...(segment.text === undefined ? {} : { text: segment.text }),
       })), [
         { sourceEnglish: 'Season by season, ', status: 'draft', text: 'Sehla ka seng, ' },
-        {
-          sourceEnglish: "your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
-          status: 'english-hold',
-        },
-      ], 'Sesotho keeps the season framing localized while holding the full comparative and observed-evidence claim');
+        { sourceEnglish: 'your garden ', status: 'draft', text: 'serapa sa hao ' },
+        { sourceEnglish: 'becomes less dependent on guesswork', status: 'english-hold' },
+        { sourceEnglish: ' — and more on ', status: 'draft', text: ' — mme haholo ka ' },
+        { sourceEnglish: "what you've actually seen happen", status: 'draft', text: 'seo o hlileng o se boneng se etsahala' },
+        { sourceEnglish: ' on your own ground.', status: 'english-hold' },
+      ], 'Sesotho keeps the less-versus-more comparison and own-ground scope anchored in exact source clauses');
     }
     assert.equal(action.english.body[7], 'Use your record with reliable local advice when making the next decision.');
-    assert.deepEqual(action.target.body[7], { status: 'english-hold' },
-      `${lang}: retain the reliable-local-advice condition on the next decision`);
+    assert.equal(action.target.body[7].status, 'mixed',
+      `${lang}: draft only record-use framing around the reliable-advice condition`);
+    assert.deepEqual(action.target.body[7].segments.map((segment: any) => ({
+      sourceEnglish: segment.sourceEnglish,
+      status: segment.status,
+    })), [
+      { sourceEnglish: 'Use your record ', status: 'draft' },
+      { sourceEnglish: 'with reliable local advice', status: 'english-hold' },
+      { sourceEnglish: ' when making the next decision.', status: 'draft' },
+    ], `${lang}: preserve reliable local advice and the when-making-next-decision condition`);
 
     const changed = structuredClone(packet);
     changed.slides[16].english.body[0] += ' Changed source.';
