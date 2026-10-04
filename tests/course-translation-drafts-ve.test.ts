@@ -125,7 +125,10 @@ test('Tshivenda Soil L1 assessments preserve diagnostic caveats and answer index
   assert.ok(source);
   assert.ok(draft);
   assert.equal(draft.title.reviewStatus, 'machine-draft');
-  assert.equal(draft.infographicAlt?.reviewStatus, 'hold');
+  assert.equal(draft.infographicAlt?.reviewStatus, 'machine-draft', 'the visual alt is now a paired unreviewed draft; the diagnostic caveats and answer indexes remain checked below');
+  assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
+  assert.match(draft.infographicAlt!.tshivendaDraft, /worms mbili/);
+  assert.match(draft.infographicAlt!.tshivendaDraft, /three layers — sand, silt na clay/);
   assert.equal(draft.body.sourceEnglish, source.body, 'assessment wiring leaves the current body source pair intact');
   assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
   assert.deepEqual(draft.keyPoints.map(point => point.reviewStatus), [
@@ -678,19 +681,18 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
     assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} changed` }, 've').status, 'english-fallback');
   }
   const l2 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!.body.tshivendaDraft.split('\n\n');
-  assert.match(l2[1], /^Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma\. Nga murahu sow a small amount of it, hafhu na hafhu\.$/, 'L2 p1 preserves actual household use and repeats sowing while holding the difficult sow/quantity phrase English');
+  assert.match(l2[1], /^Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma\. Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu\.$/, 'L2 p1 preserves frequent household use, a small amount, and repeated sowing in a checked unreviewed draft');
   assert.match(l2[2], /every two to three weeks/);
-  assert.equal(l2[3], 'Less waste during a glut. Fresh food for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi.', 'preserve the pre-existing mixed-language paragraph at index 3 byte for byte');
-  assert.match(l2[3], /^Less waste during a glut\. Fresh food for longer\./);
-  assert.match(l2[4], /They do not guarantee a harvest if difficult conditions continue/);
-  assert.match(l2[8], /will not always be ready by the fourth sowing/);
-  assert.match(l2[9], /Heat may speed things up, or cause a failure/);
+  assert.match(l2[3], /^U xelelwa nga zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi\. Zwiḽiwa zwiswa zwi a wanala for longer\./, 'the updated paragraph keeps less waste, the for-longer comparison anchor, and the existing season-long labour point');
+  assert.match(l2[4], /A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa/, 'repeated sowings are not framed as a harvest guarantee under continuing difficult conditions');
+  assert.match(l2[8], /A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa/, 'suitable timing allows possible overlap without promising the first batch is ready by sowing four');
+  assert.match(l2[9], /Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe/, 'heat still carries both possible faster timing and failure');
   assert.match(l2[12], /Indigenous farming traditions in the Americas/);
-  assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi stored maize yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho when water limits the garden\.$/, 'L2 p19 retains each possible hungry-gap timing and the exact water-limits condition');
-  assert.equal(l2[8], 'Arali crop timing yo tea, harvests dzi nga thoma u overlap. The first batch will not always be ready by the fourth sowing.', 'suitable timing and possible overlap are localized while the first-batch/fourth-sowing caveat stays exact');
+  assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho when water limits the garden\.$/, 'L2 p19 retains all three possible gap timings and the exact water-limits condition');
+  assert.match(l2[8], /^Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap\. A si tshifhinga tshoṱhe.*lwa vhuṋa\.$/, 'possible overlap remains qualified by crop timing and the first-batch caveat stays intact');
   assert.match(l2[14], /and store as protein/);
   assert.match(l2[15], /^Pumpkin spreads across the ground/);
-  assert.match(l2[16], /Establish the maize first, so it's strong enough to carry the beans when they start to climb/);
+  assert.match(l2[16], /Tshifhinga tshi a vha tsha ndeme\. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya\./, 'maize is established first and is strong enough before beans start climbing');
   assert.match(l2[17], /do not assume they immediately feed the maize/);
   assert.match(l2[17], /nutrients in residues are released during decomposition/);
   const sourceL4 = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.split('\n\n');

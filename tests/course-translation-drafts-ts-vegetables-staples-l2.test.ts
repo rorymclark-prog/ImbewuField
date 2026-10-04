@@ -30,23 +30,22 @@ test('Vegetables & Staple Crops L2 exposes its source-paired body and bounded as
   assert.equal(localizedParagraphs.length, sourceParagraphs.length);
   assert.deepEqual([0, 3].map(index => sourceParagraphs[index]), sourceParagraphsSelected);
   assert.deepEqual([0, 3].map(index => localizedParagraphs[index]), draftParagraphsSelected);
-  for (const index of [12, 14]) {
-    assert.equal(localizedParagraphs[index], sourceParagraphs[index], `body paragraph ${index} keeps its Indigenous attribution or named crop claim exact English`);
-  }
+  assert.equal(localizedParagraphs[12], sourceParagraphs[12], 'The Three Sisters example and its Indigenous attribution remain exact English');
+  assert.match(localizedParagraphs[14], /^Beans ti khandziya maize, and store as protein\.$/, 'the climbing action is drafted while the ambiguous protein-storage claim stays exact English');
   assert.ok(localizedParagraphs[1].includes('Hlawula swakudya') && localizedParagraphs[1].includes('xitsongo'));
-  assert.ok(localizedParagraphs[2].includes('short row') && localizedParagraphs[2].includes('two to three weeks'));
-  assert.ok(localizedParagraphs[4].startsWith('Separate sowings swi nga hunguta risk'));
-  assert.ok(localizedParagraphs[4].endsWith('They do not guarantee a harvest if difficult conditions continue.'));
-  assert.ok(localizedParagraphs[5].includes('fast crop') && localizedParagraphs[5].includes('small batches'));
-  assert.ok(localizedParagraphs[7].includes('Then two to three weeks later') && localizedParagraphs[7].includes('xa vumune'));
-  assert.ok(localizedParagraphs[8].startsWith('Loko crop timing yi lulamile, harvests can begin to overlap.'));
-  assert.ok(localizedParagraphs[8].endsWith('The first batch will not always be ready by the fourth sowing.'));
-  assert.ok(localizedParagraphs[9].startsWith('Two to three weeks i starting rhythm, a hi nawu.'));
+  assert.ok(localizedParagraphs[2].includes('ntila wo koma') && localizedParagraphs[2].includes('two to three weeks'), 'the short-row instruction and its two-to-three-week timing remain together');
+  assert.ok(localizedParagraphs[4].startsWith('Ku byala hi minkarhi leyi hambaneke'));
+  assert.ok(localizedParagraphs[4].includes('A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni.'), 'the draft keeps the no-guarantee condition tied to continuing difficult conditions');
+  assert.ok(localizedParagraphs[5].includes('fast crop') && /small batches|swiphemu leswitsongo/.test(localizedParagraphs[5]));
+  assert.ok(localizedParagraphs[7].includes('Endzhaku ka two to three weeks') && localizedParagraphs[7].includes('xa vumune'));
+  assert.ok(localizedParagraphs[8].startsWith('Loko nkarhi wa crop wu lulamile, minkarhi ya ntshovelo yi nga sungula ku overlap.'), 'the condition and possibility that harvest timing can overlap remain explicit');
+  assert.ok(localizedParagraphs[8].includes('A hi minkarhi hinkwako') && localizedParagraphs[8].endsWith('ku byariwa ka vumune ku endliwa.'), 'the first batch is not promised ready by sowing four');
+  assert.ok(localizedParagraphs[9].startsWith('Mavhiki mambirhi ku ya eka manharhu i maitele ya u sungula, a hi nawu.'), 'the interval is framed as a starting rhythm rather than a law');
   assert.ok(localizedParagraphs[11].startsWith('Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we.'), 'the definition is localized while retaining exact technical anchors for intercropping and crowding');
   assert.equal(localizedParagraphs[13], 'Maize yi nyika ku leha ni structure.', 'retain Maize and the structural role; do not narrow structure to shape/form');
   assert.equal(localizedParagraphs[21], 'Ti tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo.', 'preserve the crop choice, sowing date and purpose of filling the previously named food gap');
-  assert.ok(localizedParagraphs[16].startsWith('Timing i ya nkoka.'));
-  assert.ok(localizedParagraphs[17].startsWith('Swibyariwa swi nga ha phikizana. Nyika swibyariwa suitable space, water and light.'), 'the instruction is localized without narrowing light to sunlight or dropping suitable');
+  assert.ok(localizedParagraphs[16].startsWith('Nkarhi wu ni nkoka.'));
+  assert.ok(localizedParagraphs[17].startsWith('Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala.'), 'the draft keeps suitable space, water and light together before the unchanged nitrogen/residue conditions');
   assert.ok(localizedParagraphs[17].includes('Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.'));
   assert.ok(localizedParagraphs[18].startsWith('Ndyangu wu nga va na hungry gap:'));
   assert.ok(localizedParagraphs[20].includes('U nga tekeleli calendar') && localizedParagraphs[20].includes("tin'hweti ta wena"));
@@ -112,37 +111,38 @@ test('Vegetables L2 drafts garden observation and seasonal possibilities while h
   const draftParagraphs = XITSONGA_VEGETABLES_STAPLES_L2_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length,
     'the learner paragraph order and count must stay aligned to the English source');
-  for (const index of [12, 14]) {
-    assert.equal(draftParagraphs[index], sourceParagraphs[index]);
-  }
+  assert.equal(draftParagraphs[12], sourceParagraphs[12], 'the named Three Sisters example and Indigenous attribution remain exact English');
+  assert.match(draftParagraphs[14], /^Beans ti khandziya maize, and store as protein\.$/, 'only the ambiguous protein-storage clause stays English; the climbing action is localized');
   assert.ok(draftParagraphs[10].startsWith("Languta leswi humelelaka ensin'wini ya wena, u lulamisa interval."));
   assert.ok(draftParagraphs[10].endsWith('Ku xiyisisa leswi hi swona vutshila.'),
     'the observation skill is still explicit after translating the instruction');
   assert.ok(draftParagraphs[15].startsWith('Pumpkin yi hangalaka'));
   assert.ok(draftParagraphs[15].includes('misava') && draftParagraphs[15].includes('ndzhuti') && draftParagraphs[15].includes('hlayisa moisture'),
     'the draft keeps the soil-shading and moisture-holding effects without adding a soil-moisture location claim');
-  assert.ok(draftParagraphs[19].startsWith('Hungry gap ya wena yi nga fika endzhaku ka loko stored maize yi herile.'));
+  assert.ok(draftParagraphs[19].startsWith('Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile.'));
   assert.ok(draftParagraphs[19].includes('winter greens ti nga si lulama'));
   assert.ok(draftParagraphs[19].endsWith('Yi nga fika hi nkarhi wo oma loko water limits the garden.'),
     'all three possible gap timings and the water-limiting condition remain present');
   assert.ok(draftParagraphs[2].includes('two to three weeks'));
-  assert.ok(draftParagraphs[7].includes('Then two to three weeks later'));
+  assert.ok(draftParagraphs[7].includes('Endzhaku ka two to three weeks'));
   assert.ok(draftParagraphs[12].includes('Indigenous farming traditions in the Americas'));
   assert.ok(draftParagraphs[17].includes('Beans fix nitrogen'));
+  assert.match(draftParagraphs[14], /and store as protein/);
 });
 
-test('Vegetables & Staple Crops L2 keeps sowing-risk and harvest uncertainty exact English', () => {
+test('Vegetables & Staple Crops L2 keeps sowing-risk and harvest uncertainty source-paired', () => {
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const localizedParagraphs = XITSONGA_VEGETABLES_STAPLES_L2_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
   assert.match(sourceParagraphs[4], /Separate sowings may reduce the risk/);
   assert.match(sourceParagraphs[4], /They do not guarantee a harvest if difficult conditions continue/);
-  assert.match(localizedParagraphs[4], /^Separate sowings swi nga hunguta risk/);
-  assert.match(localizedParagraphs[4], /They do not guarantee a harvest if difficult conditions continue\.$/);
-  assert.match(localizedParagraphs[8], /can begin to overlap/);
-  assert.match(localizedParagraphs[8], /will not always be ready by the fourth sowing/);
-  assert.match(localizedParagraphs[9], /starting rhythm, a hi nawu/);
+  assert.match(localizedParagraphs[4], /^Ku byala hi minkarhi leyi hambaneke/);
+  assert.match(localizedParagraphs[4], /A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni\.$/, 'the no-guarantee and continuing-difficult-conditions qualification remain together in the localized paragraph');
+  assert.match(localizedParagraphs[8], /yi nga sungula ku overlap/);
+  assert.match(localizedParagraphs[8], /A hi minkarhi hinkwako/);
+  assert.match(localizedParagraphs[8], /ku byariwa ka vumune/);
+  assert.match(localizedParagraphs[9], /i maitele ya u sungula, a hi nawu/);
   assert.match(localizedParagraphs[9], /may hold longer/);
-  assert.match(localizedParagraphs[9], /may speed things up, or cause a failure/);
+  assert.match(localizedParagraphs[9], /Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka/);
   assert.match(localizedParagraphs[17], /Beans fix nitrogen with root bacteria/);
   assert.match(localizedParagraphs[17], /do not assume they immediately feed the maize/);
   assert.match(localizedParagraphs[17], /released during decomposition/);

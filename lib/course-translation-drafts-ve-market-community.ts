@@ -23,11 +23,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
   lessons: [
     {
       "id": "market-community-l1",
-      "infographicAlt": {
-        "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
-        "tshivendaDraft": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
-        "reviewStatus": "hold"
-      },
+      "infographicAlt": { sourceEnglish: "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.", tshivendaDraft: "Muthu u fara pencil nga nṱha ha record grid i si na tshithu kha notebook yo vuleaho, tsini na basket na loose vegetables.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
         "tshivendaDraft": "Record-Keeping: U Ḓivha Zwine Bulasi Yaṋu Ya Bveledza Zwa Vhukuma",
@@ -115,16 +111,8 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       "id": "market-community-l3",
-      "infographicAlt": {
-        "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
-        "tshivendaDraft": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
-        "reviewStatus": "hold"
-      },
-      "title": {
-        "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
-        "tshivendaDraft": "Building Community Food Networks: Strength in Numbers",
-        "reviewStatus": "hold"
-      },
+      "infographicAlt": { sourceEnglish: "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.", tshivendaDraft: "Mibedo miṱuku miṱanu yo ṱavhiwaho i na misevhe i tshi livha kha crate ya produce i re vhukati; hand trowel na jar ya seeds zwi re nga fhasi.", reviewStatus: 'machine-draft' },
+      "title": { sourceEnglish: "Building Community Food Networks: Strength in Numbers", tshivendaDraft: "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers", reviewStatus: 'machine-draft' },
       "body": {
         "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
         "tshivendaDraft": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.\n\nMukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.\n\nVhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions and result so others can judge whether it may suit their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
@@ -227,10 +215,8 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       id: 'market-community-l2',
-      infographicAlt: hold(
-        'Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.',
-      ),
-      title: hold('Selling Surplus: Where to Sell and How to Price'),
+      infographicAlt: { sourceEnglish: "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.", tshivendaDraft: "Nḓila tharu dza u rengisa zwi tshi bva kha farm nthihi: roadside stall, u isa produce shop nga tshigwada, na box i yaho nga ho livhaho muṱani.", reviewStatus: 'machine-draft' },
+      title: { sourceEnglish: "Selling Surplus: Where to Sell and How to Price", tshivendaDraft: "U rengisa surplus: Hune wa nga rengisa hone na uri wa vhea mutengo hani", reviewStatus: 'machine-draft' },
       body: pair(
         [
           "Ask what the customer needs: product, quantity, quality, delivery and payment date.",

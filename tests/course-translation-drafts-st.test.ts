@@ -367,8 +367,9 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
   assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft');
   assert.equal(lesson.infographicAlt?.sesothoDraft,
     'Mekgwa e meraro ya ho rekisa ho tswa polasing e le nngwe: setala se pela tsela, thomelo ya sehlopha lebenkeleng, le lebokose le yang ka kotloloho lapeng.');
-  assert.equal(lesson.title.reviewStatus, 'hold');
+  assert.equal(lesson.title.reviewStatus, 'machine-draft', 'ordinary where-to-sell/how-to-price title wording is now paired as an unreviewed draft');
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
+  assert.equal(lesson.title.sesothoDraft, 'Ho rekisa surplus: moo o ka rekisang le kamoo o ka behang theko.');
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.ok(lesson.keyPoints.every(point => point.reviewStatus === 'machine-draft'), 'ordinary key-point wording remains visibly unreviewed');
   assert.ok(lesson.keyPoints[2].sesothoDraft.includes('supply') && lesson.keyPoints[2].sesothoDraft.includes('customer'), 'the supply and customer agreement safeguard remains explicit');

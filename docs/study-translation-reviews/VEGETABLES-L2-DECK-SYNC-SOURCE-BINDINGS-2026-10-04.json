@@ -1,0 +1,443 @@
+{
+  "title": "Vegetables L2 paired-deck paragraph impact audit",
+  "createdDate": "2026-10-04",
+  "branchBase": "4c10484c02db2c429c660981b92d2f98ae562e26",
+  "learnerBodyPacket": "/tmp/imbewu-ve-ts-vegetables-l2-ordinary-root-ready-20261004.json",
+  "liveResolverProof": "/tmp/imbewu-ve-ts-l2-live-proof.json",
+  "scope": "Read-only audit of existing paired full-source-paragraph mappings affected by the two approved learner-body updates. No deck or media changes made.",
+  "counts": {
+    "changedSourceClauses": 30,
+    "uniqueDeckBodyFields": 23,
+    "veFields": 12,
+    "tsFields": 11,
+    "slides": [
+      8,
+      9,
+      10,
+      11
+    ]
+  },
+  "sourceBindings": [
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 8,
+      "deckBodyIndex": 2,
+      "canonicalBodyIndex": 2,
+      "exactEnglishSource": "Plant a short row every two to three weeks.",
+      "currentLearnerParagraph": "Byala short row every two to three weeks.",
+      "proposedLearnerParagraph": "Byala ntila wo koma every two to three weeks.",
+      "changedSourceClauses": [
+        "Plant a short row every two to three weeks."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Byala short row every two to three weeks."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 8,
+      "deckBodyIndex": 4,
+      "canonicalBodyIndex": 4,
+      "exactEnglishSource": "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+      "currentLearnerParagraph": "Separate sowings swi nga hunguta risk ya ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we. They do not guarantee a harvest if difficult conditions continue.",
+      "proposedLearnerParagraph": "Ku byala hi minkarhi leyi hambaneke swi nga hunguta khombo ra ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we. A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni.",
+      "changedSourceClauses": [
+        "Separate sowings may reduce the risk of losing everything at once.",
+        "They do not guarantee a harvest if difficult conditions continue."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Separate sowings swi nga hunguta risk ya ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we. They do not guarantee a harvest if difficult conditions continue."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 8,
+      "deckBodyIndex": 5,
+      "canonicalBodyIndex": 5,
+      "exactEnglishSource": "Which fast crop could you sow in small batches? Decide on one, and start it this week.",
+      "currentLearnerParagraph": "Hi xihi fast crop lexi u nga xi byalaka hi small batches? Hlawula xin'we, u sungula hi vhege leyi.",
+      "proposedLearnerParagraph": "Hi xihi fast crop lexi u nga xi sow hi swiphemu leswitsongo? Hlawula xin'we, u sungula hi vhege leyi.",
+      "changedSourceClauses": [
+        "Which fast crop could you sow in small batches?"
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Hi xihi fast crop lexi u nga xi byalaka hi small batches? Hlawula xin'we, u sungula hi vhege leyi."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 9,
+      "deckBodyIndex": 1,
+      "canonicalBodyIndex": 7,
+      "exactEnglishSource": "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+      "currentLearnerParagraph": "Byala xin'we. Then two to three weeks later, byala xa vumbirhi. Kutani byala xa vunharhu. Kutani byala xa vumune.",
+      "proposedLearnerParagraph": "Sow xo sungula. Endzhaku ka two to three weeks, sow xa vumbirhi. Kutani sow xa vunharhu. Kutani sow xa vumune.",
+      "changedSourceClauses": [
+        "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Byala xin'we. Then two to three weeks later, byala xa vumbirhi. Kutani byala xa vunharhu. Kutani byala xa vumune."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 9,
+      "deckBodyIndex": 2,
+      "canonicalBodyIndex": 8,
+      "exactEnglishSource": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "currentLearnerParagraph": "Loko crop timing yi lulamile, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "proposedLearnerParagraph": "Loko nkarhi wa crop wu lulamile, minkarhi ya ntshovelo yi nga sungula ku overlap. A hi minkarhi hinkwako laha ntlawa wo sungula wu nga vaka wu lunghekele ku tshoveriwa loko ku byariwa ka vumune ku endliwa.",
+      "changedSourceClauses": [
+        "With suitable crop timing, harvests can begin to overlap.",
+        "The first batch will not always be ready by the fourth sowing."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Loko crop timing yi lulamile, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 9,
+      "deckBodyIndex": 3,
+      "canonicalBodyIndex": 9,
+      "exactEnglishSource": "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "currentLearnerParagraph": "Two to three weeks i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "proposedLearnerParagraph": "Mavhiki mambirhi ku ya eka manharhu i maitele ya u sungula, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka.",
+      "changedSourceClauses": [
+        "Two to three weeks is a starting rhythm, not a law.",
+        "Heat may speed things up, or cause a failure."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Two to three weeks i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 10,
+      "deckBodyIndex": 3,
+      "canonicalBodyIndex": 14,
+      "exactEnglishSource": "Beans climb the maize, and store as protein.",
+      "currentLearnerParagraph": "Beans climb the maize, and store as protein.",
+      "proposedLearnerParagraph": "Beans ti khandziya maize, and store as protein.",
+      "changedSourceClauses": [
+        "Beans climb the maize, and store as protein."
+      ],
+      "pairedDeckTarget": {
+        "status": "english-hold"
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 10,
+      "deckBodyIndex": 5,
+      "canonicalBodyIndex": 16,
+      "exactEnglishSource": "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+      "currentLearnerParagraph": "Timing i ya nkoka. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+      "proposedLearnerParagraph": "Nkarhi wu ni nkoka. Sungulani hi ku byala maize yi rhanga, leswaku yi tiya ku ringana ku rhwala beans loko ti sungula ku khandziya.",
+      "changedSourceClauses": [
+        "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Timing i ya nkoka. Establish the maize first, so it's strong enough to carry the beans when they start to climb."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 10,
+      "deckBodyIndex": 6,
+      "canonicalBodyIndex": 17,
+      "exactEnglishSource": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "currentLearnerParagraph": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "proposedLearnerParagraph": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "changedSourceClauses": [
+        "Give them suitable space, water and light."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 11,
+      "deckBodyIndex": 0,
+      "canonicalBodyIndex": 18,
+      "exactEnglishSource": "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+      "currentLearnerParagraph": "Ndyangu wu nga va na hungry gap: weeks when stored food runs low before the next harvest is ready.",
+      "proposedLearnerParagraph": "Ndyangu wu nga va na hungry gap: mavhiki lawa swakudya leswi hlayisiweke swi nga va switsongo ku nga si lungheka ntshovelo lowu landzelaka.",
+      "changedSourceClauses": [
+        "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Ndyangu wu nga va na hungry gap: weeks when stored food runs low before the next harvest is ready."
+      }
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 11,
+      "deckBodyIndex": 1,
+      "canonicalBodyIndex": 19,
+      "exactEnglishSource": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "currentLearnerParagraph": "Hungry gap ya wena yi nga fika endzhaku ka loko stored maize yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden.",
+      "proposedLearnerParagraph": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden.",
+      "changedSourceClauses": [
+        "Yours might come after stored maize runs out."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Hungry gap ya wena yi nga fika endzhaku ka loko stored maize yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 8,
+      "deckBodyIndex": 1,
+      "canonicalBodyIndex": 1,
+      "exactEnglishSource": "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+      "currentLearnerParagraph": "Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu sow a small amount of it, hafhu na hafhu.",
+      "proposedLearnerParagraph": "Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu.",
+      "changedSourceClauses": [
+        "Then sow a small amount of it, again and again."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu sow a small amount of it, hafhu na hafhu."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 8,
+      "deckBodyIndex": 3,
+      "canonicalBodyIndex": 3,
+      "exactEnglishSource": "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+      "currentLearnerParagraph": "Less waste during a glut. Fresh food for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi.",
+      "proposedLearnerParagraph": "U xelelwa nga zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi.",
+      "changedSourceClauses": [
+        "Less waste during a glut.",
+        "Fresh food for longer."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Less waste during a glut. Fresh food for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 8,
+      "deckBodyIndex": 4,
+      "canonicalBodyIndex": 4,
+      "exactEnglishSource": "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+      "currentLearnerParagraph": "Separate sowings dzi nga fhungudza risk ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. They do not guarantee a harvest if difficult conditions continue.",
+      "proposedLearnerParagraph": "U ṱavha nga zwifhinga zwo fhambanaho hu nga fhungudza khombo ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa.",
+      "changedSourceClauses": [
+        "Separate sowings may reduce the risk of losing everything at once.",
+        "They do not guarantee a harvest if difficult conditions continue."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Separate sowings dzi nga fhungudza risk ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. They do not guarantee a harvest if difficult conditions continue."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 8,
+      "deckBodyIndex": 5,
+      "canonicalBodyIndex": 5,
+      "exactEnglishSource": "Which fast crop could you sow in small batches? Decide on one, and start it this week.",
+      "currentLearnerParagraph": "Which fast crop could you sow in small batches? Nangani tshithihi, ni tshi thome ino vhege.",
+      "proposedLearnerParagraph": "Ndi fast crop ifhio ine na nga sow nga zwipiḓa zwiṱuku? Nangani tshithihi, ni tshi thome ino vhege.",
+      "changedSourceClauses": [
+        "Which fast crop could you sow in small batches?"
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Which fast crop could you sow in small batches? Nangani tshithihi, ni tshi thome ino vhege."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 9,
+      "deckBodyIndex": 1,
+      "canonicalBodyIndex": 7,
+      "exactEnglishSource": "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+      "currentLearnerParagraph": "Sow one. Nga murahu ha two to three weeks, sow two. Nga murahu, sow three. Nga murahu, sow four.",
+      "proposedLearnerParagraph": "Sow tsha u thoma. Nga murahu ha two to three weeks, sow tsha vhuvhili. Nga murahu, sow tsha vhuraru. Nga murahu, sow tsha vhuṋa.",
+      "changedSourceClauses": [
+        "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Sow one. Nga murahu ha two to three weeks, sow two. Nga murahu, sow three. Nga murahu, sow four."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 9,
+      "deckBodyIndex": 2,
+      "canonicalBodyIndex": 8,
+      "exactEnglishSource": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "currentLearnerParagraph": "Arali crop timing yo tea, harvests dzi nga thoma u overlap. The first batch will not always be ready by the fourth sowing.",
+      "proposedLearnerParagraph": "Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap. A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa.",
+      "changedSourceClauses": [
+        "With suitable crop timing, harvests can begin to overlap.",
+        "The first batch will not always be ready by the fourth sowing."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Arali crop timing yo tea, harvests dzi nga thoma u overlap. The first batch will not always be ready by the fourth sowing."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 9,
+      "deckBodyIndex": 3,
+      "canonicalBodyIndex": 9,
+      "exactEnglishSource": "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "currentLearnerParagraph": "Two to three weeks ndi starting rhythm, hu si law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "proposedLearnerParagraph": "Vhege mbili u swika kha tharu ndi maitele a u thoma, hu si mulayo. A cool-season leaf crop may hold longer. Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe.",
+      "changedSourceClauses": [
+        "Two to three weeks is a starting rhythm, not a law.",
+        "Heat may speed things up, or cause a failure."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Two to three weeks ndi starting rhythm, hu si law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 10,
+      "deckBodyIndex": 2,
+      "canonicalBodyIndex": 13,
+      "exactEnglishSource": "Maize gives height and structure.",
+      "currentLearnerParagraph": "Maize i fha height and structure.",
+      "proposedLearnerParagraph": "Maize i ṋea vhulapfu na tshivhumbeo.",
+      "changedSourceClauses": [
+        "Maize gives height and structure."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Maize i fha height and structure."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 10,
+      "deckBodyIndex": 5,
+      "canonicalBodyIndex": 16,
+      "exactEnglishSource": "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+      "currentLearnerParagraph": "Timing ndi ya ndeme. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+      "proposedLearnerParagraph": "Tshifhinga tshi a vha tsha ndeme. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya.",
+      "changedSourceClauses": [
+        "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Timing ndi ya ndeme. Establish the maize first, so it's strong enough to carry the beans when they start to climb."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 10,
+      "deckBodyIndex": 6,
+      "canonicalBodyIndex": 17,
+      "exactEnglishSource": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "currentLearnerParagraph": "The plants can still compete. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "proposedLearnerParagraph": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "changedSourceClauses": [
+        "The plants can still compete."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "The plants can still compete. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 11,
+      "deckBodyIndex": 0,
+      "canonicalBodyIndex": 18,
+      "exactEnglishSource": "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+      "currentLearnerParagraph": "Muṱa u nga vha na hungry gap: weeks when stored food runs low before the next harvest is ready.",
+      "proposedLearnerParagraph": "Muṱa u nga vha na hungry gap: vhege dzine zwiḽiwa zwo vhulungwaho zwa vha zwi tshi khou fhungudzea phanḓa ha musi khaṋo i tevhelaho i tshi luga.",
+      "changedSourceClauses": [
+        "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Muṱa u nga vha na hungry gap: weeks when stored food runs low before the next harvest is ready."
+      }
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "slide": 11,
+      "deckBodyIndex": 1,
+      "canonicalBodyIndex": 19,
+      "exactEnglishSource": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "currentLearnerParagraph": "Hungry gap yaṋu i nga ḓa nga murahu ha musi stored maize yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden.",
+      "proposedLearnerParagraph": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden.",
+      "changedSourceClauses": [
+        "Yours might come after stored maize runs out."
+      ],
+      "pairedDeckTarget": {
+        "status": "draft",
+        "text": "Hungry gap yaṋu i nga ḓa nga murahu ha musi stored maize yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden."
+      }
+    }
+  ],
+  "decisionNeeded": "Root to determine whether to coordinate complete source-bound VE/TS slide fields and frame rendering; keep the full-source-paragraph resolver test intact."
+}

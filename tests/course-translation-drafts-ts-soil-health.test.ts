@@ -31,7 +31,10 @@ test('Soil Health L1 keeps all twelve source paragraphs paired while filling the
   assert.equal(draft.title.xitsongaDraft, 'Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo');
   assert.equal(draft.title.reviewStatus, 'machine-draft', 'the checked foundation metaphor is published as an unreviewed title draft');
   assert.equal(draft.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
-  assert.equal(draft.infographicAlt?.xitsongaDraft, sourceLesson.infographicAlt);
+  assert.equal(draft.infographicAlt?.reviewStatus, 'machine-draft');
+  assert.equal(draft.infographicAlt?.xitsongaDraft, 'Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.');
+  assert.match(draft.infographicAlt!.xitsongaDraft, /worms timbirhi/);
+  assert.match(draft.infographicAlt!.xitsongaDraft, /three layers — sand, silt na clay/);
   assert.equal(draft.body.sourceEnglish, sourceLesson.body);
   assert.equal(draft.body.reviewStatus, 'machine-draft');
 
@@ -69,7 +72,8 @@ test('Soil Health L1 Xitsonga assessments preserve diagnostic limits and answer 
   assert.ok(draft);
   assert.equal(draft.title.xitsongaDraft, 'Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo');
   assert.equal(draft.title.reviewStatus, 'machine-draft', 'the title candidate does not alter diagnostic limits or assessment wiring');
-  assert.equal(draft.infographicAlt?.reviewStatus, 'hold');
+  assert.equal(draft.infographicAlt?.reviewStatus, 'machine-draft', 'the picture description is now an unreviewed source pair; the diagnostic limits below still guard the assessment');
+  assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
   assert.equal(draft.body.sourceEnglish, source.body, 'assessment wiring leaves the existing body pairing intact');
   assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), source.keyPoints);
   assert.deepEqual(draft.keyPoints.map(point => point.reviewStatus), Array(4).fill('machine-draft'));

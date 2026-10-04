@@ -22,11 +22,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
   "lessons": [
     {
       "id": "soil-health-l1",
-      "infographicAlt": {
-        "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
-        "tshivendaDraft": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
-        "reviewStatus": "hold"
-      },
+      "infographicAlt": { sourceEnglish: "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.", tshivendaDraft: "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, the soil in the jar settles into three layers — sand, silt na clay.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Understanding Your Soil: The Foundation of Everything",
         "tshivendaDraft": "U Pfesesa Mavu Aṋu: Mutheo wa Zwoṱhe",
@@ -134,11 +130,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       "id": "soil-health-l2",
-      "infographicAlt": {
-        "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
-        "tshivendaDraft": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
-        "reviewStatus": "hold"
-      },
+      "infographicAlt": { sourceEnglish: "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.", tshivendaDraft: "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; an arrow shows the heap being turned.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Making and Using Compost",
         "tshivendaDraft": "U Ita na U Shumisa Khomposo (Compost)",
@@ -246,11 +238,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       "id": "soil-health-l3",
-      "infographicAlt": {
-        "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
-        "tshivendaDraft": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
-        "reviewStatus": "hold"
-      },
+      "infographicAlt": { sourceEnglish: "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.", tshivendaDraft: "Zwipiḓa zwivhili zwa soil nga fhasi ha ḓuvha ḽithihi: bare ground, cracked and dry; mulched ground i kha ḓi vha dark nahone i na moisture.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
         "tshivendaDraft": "Mulching and Cover Crops: U tsireledza mavu na Building Soil",

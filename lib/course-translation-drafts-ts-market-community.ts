@@ -22,11 +22,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
   "lessons": [
     {
       "id": "market-community-l1",
-      "infographicAlt": {
-        "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
-        "xitsongaDraft": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
-        "reviewStatus": "hold"
-      },
+      "infographicAlt": { sourceEnglish: "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.", xitsongaDraft: "Munhu u khome pencil e henhla ka record grid leyi nga tsariwangiki eka notebook leyi pfulekeke, ekusuhi ni basket ni loose vegetables.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
         "xitsongaDraft": "Record-Keeping: Ku tiva leswi purasi ra wena ri swi humesaka hakunene",
@@ -134,16 +130,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
     },
     {
       "id": "market-community-l2",
-      "infographicAlt": {
-        "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
-        "xitsongaDraft": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
-        "reviewStatus": "hold"
-      },
-      "title": {
-        "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
-        "xitsongaDraft": "Selling Surplus: Where to Sell and How to Price",
-        "reviewStatus": "hold"
-      },
+      "infographicAlt": { sourceEnglish: "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.", xitsongaDraft: "Tindlela tinharhu to xavisa ku suka eka farm rin’we: roadside stall, ku yisa produce eka shop hi ntlawa, ni box leri kongomaka eka ndyangu.", reviewStatus: 'machine-draft' },
+      "title": { sourceEnglish: "Selling Surplus: Where to Sell and How to Price", xitsongaDraft: "Ku xavisa surplus: laha u nga xaviselaka kona ni ndlela yo veka nxavo.", reviewStatus: 'machine-draft' },
       "body": {
         "sourceEnglish": [
           "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
@@ -272,16 +260,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
     },
     {
       "id": "market-community-l3",
-      "infographicAlt": {
-        "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
-        "xitsongaDraft": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
-        "reviewStatus": "hold"
-      },
-      "title": {
-        "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
-        "xitsongaDraft": "Building Community Food Networks: Strength in Numbers",
-        "reviewStatus": "hold"
-      },
+      "infographicAlt": { sourceEnglish: "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.", xitsongaDraft: "Five small planted beds, with miseve leyi kombetelaka eka crate ya produce leyi nga exikarhini; hand trowel ni jar ya mbewu swi le hansi ka yona.", reviewStatus: 'machine-draft' },
+      "title": { sourceEnglish: "Building Community Food Networks: Strength in Numbers", xitsongaDraft: "Ku aka network ya swakudya swa muganga: Strength in Numbers", reviewStatus: 'machine-draft' },
       "body": {
         "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
         "xitsongaDraft": "Vaakelani va nga avelana different varieties and the work of saving seed.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce gently, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.\n\nPimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions na result so others can judge whether it may suit their land.\n\nLavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",

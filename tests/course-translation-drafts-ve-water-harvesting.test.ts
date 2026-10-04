@@ -470,6 +470,9 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     ['lessons[0].quiz[1].options[3]', 'Litshani u lingedza ngauri mavu a nga si khwinifhadzee'],
     ['lessons[0].quiz[1].rationale', 'U sedza zwithu zwo vhalaho zwi thusa u wana thaidzo. Worm activity i a shanduka u ya nga conditions, ngauralo worms dzi si gathi fhedzi a dzi khwaṱhisedzi uri thaidzo yo vhangwa nga mini.'],
     ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
+    ['lessons[0].infographicAlt', 'Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, the soil in the jar settles into three layers — sand, silt na clay.'],
+    ['lessons[1].infographicAlt', 'Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; an arrow shows the heap being turned.'],
+    ['lessons[2].infographicAlt', 'Zwipiḓa zwivhili zwa soil nga fhasi ha ḓuvha ḽithihi: bare ground, cracked and dry; mulched ground i kha ḓi vha dark nahone i na moisture.'],
     ['lessons[2].title', 'Mulching and Cover Crops: U tsireledza mavu na Building Soil'],
     ['lessons[1].keyPoints[0]', 'Linganyisani browns, greens, moisture na air.'],
     ['lessons[1].keyPoints[1]', 'Vhukati ho fhisaho a vhu sumbedzi uri heap yoṱhe yo sanitised.'],
@@ -526,7 +529,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     const paired = draft.lessons[index];
     const path = `lessons[${index}]`;
     assert.equal(paired.id, lesson.id);
-    if (lesson.infographicAlt) checkPair(paired.infographicAlt!, lesson.infographicAlt, `${path}.infographicAlt`);
+    if (lesson.infographicAlt) checkPair(paired.infographicAlt!, lesson.infographicAlt, `${path}.infographicAlt`, translated.has(`${path}.infographicAlt`));
     else assert.equal(paired.infographicAlt, undefined);
     checkPair(paired.title, lesson.title, `${path}.title`, index < 2);
     if (index === 0) {
@@ -592,7 +595,7 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }
   }
 
-  assert.equal(heldFields, 4, 'L1, L2 and L3 assessment drafts replace superseded holds; the module summary and three image descriptions remain exact-English holds while the L3 purpose title is a source-bound draft');
+  assert.equal(heldFields, 1, 'the module summary remains held; the three image descriptions now use exact-source machine drafts while compost diagnostics and the L3 purpose title keep their existing checks');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');
@@ -620,8 +623,8 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }));
     assert.deepEqual(presentation.content.quiz, expectedQuiz,
       `${lesson.id}: show only the source-paired quiz drafts and keep the original answer mapping`);
-    assert.equal(presentation.content.infographicAlt, lesson.infographicAlt,
-      `${lesson.id}: image descriptions stay exact English holds`);
+    assert.equal(presentation.content.infographicAlt, translated.get(`lessons[${index}].infographicAlt`) ?? lesson.infographicAlt,
+      `${lesson.id}: show only exact-source infographic drafts; unchanged descriptions remain English`);
 
     assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
       'english-fallback', `${lesson.id}: changed source withdraws the whole paired draft`);
