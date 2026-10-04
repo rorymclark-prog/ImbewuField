@@ -287,8 +287,11 @@ test('Reading Landscape Xitsonga body candidates preserve paragraph order and bo
   assert.match(l1Paragraphs[2], /^A ku na placement rule yin’we ya slope yin’wana ni yin’wana\. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona\./);
   for (const exact of [
     'Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.',
-    'Choose any water works for the site and plan a safe route for excess water.',
+    'any water works for the site',
+    'a safe route for excess water.',
   ]) assert.ok(l1Paragraphs[2].includes(exact), `L1 paragraph 3 must preserve ${exact}`);
+  assert.ok(l1Paragraphs[2].includes('Hlawula any water works for the site, u pulana a safe route for excess water.'),
+    'localize only choose/plan framing while retaining any-site scope and the complete safe-overflow requirement');
 
   const l2Source = readingSource.lessons.find(lesson => lesson.id === 'reading-landscape-l2')!;
   const l2 = readingDraft.lessons.find(lesson => lesson.id === l2Source.id)!;
@@ -328,9 +331,63 @@ test('Reading Landscape Xitsonga source drift falls back to the complete current
   }, 'stale translations must not leak through when the canonical body changes');
 });
 
-test('Reading Landscape safety and terminology holds remain exact in their paired fields', () => {
+test('Reading Landscape held anchors remain exact while approved ordinary clauses join mixed drafts', () => {
   assert.ok(readingDraft.holds.length > 0);
   const lessons = new Map(readingDraft.lessons.map(lesson => [lesson.id, lesson]));
+  const supersededBodyHolds = [
+    {
+      lessonId: 'reading-landscape-l1', paragraphIndex: 2,
+      sourceText: 'Choose any water works for the site and plan a safe route for excess water.',
+      retained: ['any water works for the site', 'a safe route for excess water.'],
+      reason: 'the selected verbs are localized while both the “any” scope and safe-route requirement stay exact',
+    },
+    {
+      lessonId: 'reading-landscape-l3', paragraphIndex: 1,
+      sourceText: 'across cold nights',
+      retained: ['eka vusiku byo titimelaka', 'local agriculture adviser', 'permanent home for tender seedlings'],
+      reason: 'the observation phrase is localized while cold-night timing and adviser-before-placement anchors remain',
+    },
+    {
+      lessonId: 'reading-landscape-l3', paragraphIndex: 1,
+      sourceText: 'can be colder than nearby slopes.',
+      retained: ['ti nga va colder than nearby slopes.'],
+      reason: 'the subject and can-modality are localized while the exact colder-than and nearby-slope comparison remains English',
+    },
+    {
+      lessonId: 'reading-landscape-l3', paragraphIndex: 1,
+      sourceText: 'local minimum-temperature records where available',
+      retained: ['local minimum-temperature records loko ti kumeka.'],
+      reason: 'the measurement evidence stays exact while the where-available condition is localized',
+    },
+    {
+      lessonId: 'reading-landscape-l3', paragraphIndex: 2,
+      sourceText: 'Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.',
+      retained: ['Frost i ice that forms on a cold surface.', 'Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice.'],
+      reason: 'ordinary definition and negative framing are localized while the physical definition and both limits remain exact',
+    },
+    {
+      lessonId: 'reading-landscape-l3', paragraphIndex: 2,
+      sourceText: 'where cold or damage lasts longest.',
+      retained: ['laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu'],
+      reason: 'the ordinary marking instruction is localized while longest-lasting cold or damage remains the criterion',
+    },
+    {
+      lessonId: 'reading-landscape-l4', paragraphIndex: 1,
+      sourceText: 'These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.',
+      retained: ['Swimilani leswi swi nga kula eka disturbed places', 'but their presence alone does not show whether soil is compacted.'],
+      reason: 'only the ordinary subject and connector are drafted; the disturbed-place term and diagnostic limit stay exact',
+    },
+  ];
+  for (const refinement of supersededBodyHolds) {
+    const lesson = lessons.get(refinement.lessonId)!;
+    const sourceParagraph = lesson.body.sourceEnglish.split('\n\n')[refinement.paragraphIndex];
+    const targetParagraph = lesson.body.xitsongaDraft.split('\n\n')[refinement.paragraphIndex];
+    assert.ok(sourceParagraph.includes(refinement.sourceText), `${refinement.lessonId}: prior hold matches source`);
+    assert.ok(!targetParagraph.includes(refinement.sourceText), `${refinement.lessonId}: approved ordinary clause is no longer wholly held`);
+    for (const anchor of refinement.retained) {
+      assert.ok(targetParagraph.includes(anchor), `${refinement.lessonId}: ${refinement.reason}; retain ${anchor}`);
+    }
+  }
   for (const hold of readingDraft.holds) {
     const lesson = lessons.get(hold.lessonId);
     assert.ok(lesson, `hold points to unknown lesson ${hold.lessonId}`);
@@ -350,6 +407,12 @@ test('Reading Landscape safety and terminology holds remain exact in their paire
     // Assessment fields now mix checked ordinary prose with exact technical clauses, like bodies.
     // A hold must belong to the actual source and remain verbatim; whole-field holds stay labelled hold.
     assert.ok(pair.sourceEnglish.includes(hold.sourceText), `${hold.field} hold must belong to its exact source`);
+    if (bodyField && !pair.xitsongaDraft.includes(hold.sourceText)) {
+      const updated = supersededBodyHolds.find(item => item.lessonId === hold.lessonId && item.sourceText === hold.sourceText);
+      assert.ok(updated, `${hold.lessonId} ${hold.field}: any superseded whole-sentence hold needs a checked scoped replacement`);
+      assert.equal(pair.reviewStatus, 'machine-draft', `${hold.lessonId}: refined body remains visibly unreviewed`);
+      continue;
+    }
     assert.ok(pair.xitsongaDraft.includes(hold.sourceText), `${hold.field} must retain its exact held text`);
     if (pair.sourceEnglish === hold.sourceText) {
       assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} whole-field hold must stay exact English`);
@@ -401,7 +464,9 @@ test('Reading Landscape L4 translates observation framing while retaining the co
   assert.ok(draftParagraphs[1].includes('nkarhi wo leha ngopfu'));
   assert.ok(draftParagraphs[1].includes("misava yi nun'hwaka yi tsakama hi tin'hweti leti omeke"));
   assert.ok(draftParagraphs[1].includes('khakibos kumbe blackjack'));
-  assert.ok(draftParagraphs[1].includes('These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.'));
+  assert.ok(draftParagraphs[1].includes('Swimilani leswi swi nga kula eka disturbed places,'));
+  assert.ok(draftParagraphs[1].includes('but their presence alone does not show whether soil is compacted.'),
+    'translate the ordinary plant subject while preserving the full limitation against diagnosing compaction from presence alone');
   assert.ok(draftParagraphs[1].includes('Kambela misava u nga si teka xiboho'));
   assert.equal(draftParagraphs[2], "Veka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
     'preserve the neighboring localized sketch-value paragraph exactly');
@@ -432,22 +497,24 @@ test('Reading Landscape L3 drafts ordinary body guidance while keeping precise c
   assert.ok(draftParagraphs[0].includes('Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho'));
 
   assert.ok(draftParagraphs[1].startsWith('On a clear, still night, cold air can flow downhill and collect in low places.'));
-  assert.ok(draftParagraphs[1].includes('can be colder than nearby slopes.'),
-    'keep the colder-than comparison and its can-modality after translating the subject');
+  assert.ok(draftParagraphs[1].includes('Tindhawu leti ti nga va colder than nearby slopes.'),
+    'translate the subject and can-modality while retaining the colder-than comparison and its nearby-slope referent');
   assert.ok(draftParagraphs[1].includes('Frost patterns na tona ti ya hi site.'),
     'preserve the site-dependence qualifier while localizing its ordinary framing');
   assert.ok(draftParagraphs[1].includes('Pimanisa candidate places through the local frost season.'));
-  assert.ok(draftParagraphs[1].includes('Kambela local minimum-temperature records where available.'));
+  assert.ok(draftParagraphs[1].includes('Kambela local minimum-temperature records loko ti kumeka.'),
+    'keep the measure and evidence type exact while preserving the where-available condition');
   assert.ok(draftParagraphs[1].includes('Loko records ti nga ri kona'));
-  assert.ok(draftParagraphs[1].includes('across cold nights'));
+  assert.ok(draftParagraphs[1].includes('eka vusiku byo titimelaka'),
+    'localize the cold-night observation while preserving its timing condition');
   assert.ok(draftParagraphs[1].includes('local agriculture adviser'));
   assert.ok(draftParagraphs[1].includes('u nga si hlawula permanent home for tender seedlings'));
 
-  assert.ok(draftParagraphs[2].startsWith('Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.'));
+  assert.ok(draftParagraphs[2].startsWith('Frost i ice that forms on a cold surface. Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice.'));
   assert.ok(draftParagraphs[2].includes('low ground na slopes'));
   assert.ok(draftParagraphs[2].includes('minimum temperatures laha swi kotekaka'));
-  assert.ok(draftParagraphs[2].includes('Fungha tindhawu where cold or damage lasts longest.'),
-    'translate only the marking action and retain the exact longest-duration criterion');
+  assert.ok(draftParagraphs[2].includes('Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu.'),
+    'localize the marking sentence while retaining longest duration as the criterion');
   assert.ok(draftParagraphs[2].includes('cold pockets leti u ti vonaka'));
 
   assert.ok(draftParagraphs[3].startsWith('Eka matamatisi'));
@@ -459,7 +526,31 @@ test('Reading Landscape L3 drafts ordinary body guidance while keeping precise c
   assert.ok(bodyHolds.length > 0);
   assert.ok(!bodyHolds.some(hold => sourceParagraphs.includes(hold.sourceText)),
     'metadata must identify exact held clauses instead of claiming a whole body paragraph is held');
-  for (const hold of bodyHolds) assert.ok(lesson.body.xitsongaDraft.includes(hold.sourceText), `held clause remains exact: ${hold.sourceText}`);
+  const scopedReplacementAnchors = new Map<string, { paragraphIndex: number; retained: string[]; reason: string }>([
+    ['can be colder than nearby slopes.', { paragraphIndex: 1, retained: ['Tindhawu leti ti nga va colder than nearby slopes.'], reason: 'localized subject/modal with the exact colder-than comparison retained' }],
+    ['local minimum-temperature records where available', { paragraphIndex: 1, retained: ['local minimum-temperature records loko ti kumeka.'], reason: 'localized availability while preserving the exact measurement evidence' }],
+    ['Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.', { paragraphIndex: 2, retained: ['Frost i ice that forms on a cold surface.', 'Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice.'], reason: 'localized ordinary definition framing while keeping the physical definition and negative qualifications' }],
+    ['where cold or damage lasts longest.', { paragraphIndex: 2, retained: ['laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu'], reason: 'localized marking instruction while retaining the longest-duration criterion' }],
+  ]);
+  for (const hold of bodyHolds) {
+    if (hold.sourceText === 'across cold nights') {
+      assert.ok(sourceParagraphs[1].includes(hold.sourceText), 'the prior held timing phrase belongs to this canonical paragraph');
+      assert.ok(draftParagraphs[1].includes('eka vusiku byo titimelaka'),
+        'the approved refinement localizes cold-night observation without dropping its timing condition');
+      continue;
+    }
+    const scoped = scopedReplacementAnchors.get(hold.sourceText);
+    if (scoped) {
+      assert.ok(sourceParagraphs[scoped.paragraphIndex].includes(hold.sourceText),
+        `${hold.sourceText}: retained as source-bound provenance for the narrower updated draft`);
+      for (const anchor of scoped.retained) {
+        assert.ok(draftParagraphs[scoped.paragraphIndex].includes(anchor),
+          `${scoped.reason}: preserve ${anchor}`);
+      }
+      continue;
+    }
+    assert.ok(lesson.body.xitsongaDraft.includes(hold.sourceText), `remaining held clause stays exact: ${hold.sourceText}`);
+  }
 
   const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
   const changedSource = { ...sourceLesson, body: `${sourceLesson.body} A source condition changed.` };
@@ -581,17 +672,22 @@ test('Reading Landscape ordinary drafts keep frost instructions, suitability lim
     const draftParagraphs = draftText.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length,
       `${language}: preserve the complete paragraph sequence`);
-    assert.ok(draftParagraphs[2].includes('Pawpaw and young citrus are sensitive to frost.'),
-      `${language}: preserve the named plants and frost sensitivity`);
+    if (language === 'st') {
+      assert.ok(draftParagraphs[2].startsWith('Pawpaw and young citrus di ameha habonolo ke serame (frost).'),
+        'ST: keep both exact crop names while translating the ordinary frost-sensitivity statement');
+      assert.ok(draftParagraphs[2].includes('known low frost pockets.') &&
+        draftParagraphs[2].endsWith('Hlokomela serame sa lehae pele o jala.'),
+        'ST: retain the exact low-pocket restriction and observe-local-frost-before-planting instruction');
+    } else {
+      assert.ok(draftParagraphs[2].includes('Pawpaw and young citrus are sensitive to frost.'),
+        `${language}: preserve the exact plant names and sensitivity clause`);
+    }
     if (language === 've') {
       assert.ok(draftParagraphs[2].includes('Ni songo vhea tender plants kha known low frost pockets.'),
         'VE: retain the prohibition and the exact known-pocket anchor');
     } else if (language === 'ts') {
       assert.ok(draftParagraphs[2].includes('Hlayisa tender plants swi nga ri eka known low frost pockets.'),
         'TS: retain the keep-out direction and the exact known-pocket anchor');
-    } else {
-      assert.ok(draftParagraphs[2].includes('Keep tender plants out of known low frost pockets.'),
-        'ST: keep the full safety instruction exact');
     }
 
     const changedSource = { ...sourceLesson, body: `${sourceLesson.body} New source condition.` };

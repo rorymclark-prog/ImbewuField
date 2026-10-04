@@ -252,6 +252,7 @@ writeFileSync(
   jsonPath,
   JSON.stringify({
     slides: payload,
+    repoRoot: process.cwd(),
     outDir,
     moduleId,
     lang,
@@ -275,10 +276,12 @@ writeFileSync(
 
 // ── Rendering happens in python/Pillow: no npm dependency added, and Pillow is already here.
 const PY = String.raw`
-import json, os, sys, unicodedata
+import json, os, sys
 from PIL import Image, ImageDraw, ImageFont
 
 cfg = json.load(open(sys.argv[1]))
+sys.path.insert(0, os.path.join(cfg['repoRoot'], 'scripts'))
+from paired_text_flow import body_pitches, layout_mixed_segments
 PAIRED = cfg.get('pairedSlides')
 PAIRED_LANGUAGE = cfg.get('pairedLanguageLabel') or 'TARGET LANGUAGE'
 PAIRED_NATIVE_SOURCE = cfg.get('pairedNativeSource', False)
@@ -379,15 +382,6 @@ def paired_lines(draw, text, fnt, maxw, slide_n):
         raise ValueError('slide %d has a word wider than its paired panel' % slide_n)
     return lines
 
-# Tshivenda's under-marked letters (ḓ ḽ ṋ ṱ) hang their mark into the gap below the line. At the 66px
-# phone pitch that mark lands on the next line, where it reads as a circumflex on the wrong letter.
-# Inside a paragraph, a line carrying an under-mark gets the 12px clearance a paragraph break already has.
-def has_under_mark(line):
-    return any(unicodedata.combining(c) == 220 for c in unicodedata.normalize('NFD', line))
-
-def body_pitches(lines):
-    return [66 + (12 if index < len(lines) - 1 and has_under_mark(line) else 0) for index, line in enumerate(lines)]
-
 if PAIRED:
     F_PAIR_TITLE = font(SERIF_B, 76)
     F_PAIR_BODY = font(SANS, 58)
@@ -416,6 +410,14 @@ if PAIRED:
         y = top + 120 + len(heading_lines) * 92 + 22
         paragraphs = []
         for para in body:
+            if isinstance(para, list):
+                lines, _ = layout_mixed_segments(
+                    para, lambda text: draw.textlength(text, font=F_PAIR_BODY), width, n)
+                visible_lines = [''.join(run['text'] for run in line) for line in lines]
+                pitches = body_pitches(visible_lines)
+                paragraphs.append({'mixedRuns': lines, 'pitches': pitches})
+                y += sum(pitches) + 8
+                continue
             segments = para if isinstance(para, list) else [para]
             segment_plans = []
             for segment in segments:
@@ -476,6 +478,16 @@ if PAIRED:
         y += 22
         for index, segment_plans in enumerate(paragraphs):
             part = target['body'][index] if target else None
+            if part and part['status'] == 'mixed':
+                for line, pitch in zip(segment_plans['mixedRuns'], segment_plans['pitches']):
+                    x = 96
+                    for run in line:
+                        color = RUST if run['status'] == 'english-hold' else INK
+                        draw.text((x, y), run['text'], font=F_PAIR_BODY, fill=color)
+                        x += draw.textlength(run['text'], font=F_PAIR_BODY)
+                    y += pitch
+                y += 8
+                continue
             for segment_index, segment_plan in enumerate(segment_plans):
                 if part and part['status'] == 'mixed':
                     status = part['segments'][segment_index]['status']

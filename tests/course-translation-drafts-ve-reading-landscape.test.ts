@@ -201,20 +201,21 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
         `${path}.body: localize ordinary wind/crop framing and retain smallholding as an English anchor`);
       assert.ok(draftParagraphs[0].includes("your site's ridges and gaps"),
         `${path}.body: preserve the exact difficult site-landform phrase`);
-      assert.ok(draftParagraphs[0].includes('Check local weather records') &&
+      assert.ok(draftParagraphs[0].includes('Sedzani local weather records') &&
         draftParagraphs[0].includes('musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone'),
-        `${path}.body: retain local-records anchor and before-deciding-shelter scope`);
+        `${path}.body: localize the checking verb while retaining local records and the before-deciding-shelter condition`);
       assert.ok(draftParagraphs[1].startsWith(
         'Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.'),
         `${path}.body: preserve the clear/still-night condition and can-be-colder comparison`);
       assert.ok(draftParagraphs[1].includes('Frost patterns zwi dovha zwa ya nga site.') &&
         draftParagraphs[1].includes('Vhambedzani candidate places through the local frost season.') &&
-        draftParagraphs[1].includes('Sedzani local minimum-temperature records where available.') &&
-        draftParagraphs[1].includes('If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.'),
-        `${path}.body: retain the full-season comparison, record availability, no-record fallback, observations and adviser-before-placement condition`);
+        draftParagraphs[1].includes('Ṱolani local minimum-temperature records hune dzi wanala hone.') &&
+        draftParagraphs[1].includes('Arali records dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho') &&
+        draftParagraphs[1].includes('a local agriculture adviser ni sa athu nanga a permanent home for tender seedlings.'),
+        `${path}.body: retain the full-season comparison, no-record fallback, cold-night observation and adviser-before-permanent-placement condition`);
       assert.ok(draftParagraphs[2].startsWith(
-        'Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.'),
-        `${path}.body: retain the frost definition, mist limitation and possibility of damage without visible ice exactly`);
+        'Frost ndi ice that forms on a cold surface. Mist fhedzi a i sumbedzi uri ice has formed, nahone frost damage can happen without visible ice.'),
+        `${path}.body: localize ordinary definition/negative framing while retaining the physical definition, mist limitation and no-visible-ice damage condition`);
       assert.ok(draftParagraphs[2].includes('Ṱolani ice na u tshinyala ha zwimela'));
       assert.ok(draftParagraphs[2].includes('fhethu hu re fhasi na u sendama ha mavu'),
         `${path}.body: translate the low-ground versus slope comparison without reversing it`);
@@ -222,8 +223,8 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
         `${path}.body: preserve the minimum-temperature check and where-possible condition`);
       assert.ok(draftParagraphs[2].includes('tshilapfusesa'),
         `${path}.body: the field comparison still marks where cold or damage lasts longest`);
-      assert.ok(draftParagraphs[2].endsWith('Keep sensitive plants away from the cold pockets you observe.'),
-        `${path}.body: retain the exact sensitive-plant protection instruction`);
+      assert.ok(draftParagraphs[2].endsWith('Keep sensitive plants away from the cold pockets dzine na dzi vhona.'),
+        `${path}.body: retain the exact keep-away instruction and localize only the observed-pocket qualifier`);
       assert.ok(draftParagraphs[0].startsWith('Muya u nga tshinyadza zwimela kha smallholding.'), `${path}.body: preserve the neighboring wind paragraph`);
       assert.ok(draftParagraphs[3].startsWith('For tomatoes troubled by late blight,'), `${path}.body: preserve the neighboring late-blight paragraph`);
       assert.ok(draftParagraphs[3].startsWith('For tomatoes troubled by late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome.'),
@@ -382,6 +383,8 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
 test('Tshivenda Reading soil notes keep the checked compaction limit and exact patch sentence', () => {
   const proof = JSON.parse(readFileSync(
     new URL('../docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', import.meta.url), 'utf8'));
+  const fuller = JSON.parse(readFileSync(
+    new URL('../docs/study-translation-reviews/READING-BODY-FULLER-ROOT-READY-2026-10-04.json', import.meta.url), 'utf8'));
   const canonical = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
   const source = canonical.lessons.find(lesson => lesson.id === 'reading-landscape-l4')!;
   const lesson = TSHIVENDA_READING_LANDSCAPE_DRAFT.lessons.find(item => item.id === source.id)!;
@@ -399,18 +402,21 @@ test('Tshivenda Reading soil notes keep the checked compaction limit and exact p
   assert.equal(targetParagraphs.length, sourceParagraphs.length, 'the lesson keeps its original paragraph breaks');
   assert.equal(targetParagraphs[0], repair.previousBody.split('\n\n')[0]);
   assert.equal(targetParagraphs[2], repair.previousBody.split('\n\n')[2]);
-  assert.equal(targetParagraphs[1], repair.currentTarget,
-    'retain the checked first sentence and hold only the ambiguous patch decision sentence');
-  assert.ok(targetParagraphs[1].includes('These plants '),
-    'keep the exact source subject rather than adding an unsupported “Now” time cue');
+  const fullerRow = fuller.fields.find((row: { language: string; lessonId: string; paragraphIndex: number }) =>
+    row.language === 've' && row.lessonId === 'reading-landscape-l4' && row.paragraphIndex === repair.paragraphIndex);
+  assert.ok(fullerRow, 'the separately checked fuller body target must be recorded');
+  assert.equal(targetParagraphs[1], fullerRow.currentTargetParagraph,
+    'the later ordinary-prose draft changes only the two accepted clauses in this paragraph');
+  assert.equal(targetParagraphs[1].split('. ')[0], repair.previousBody.split('\n\n')[1].split('. ')[0],
+    'retain the already checked frost/damp/species observation sentence exactly');
+  assert.ok(targetParagraphs[1].includes('Zwimela izwi zwi nga mela'),
+    'translate “These plants” without adding a time cue');
   assert.doesNotMatch(targetParagraphs[1], /Zwino zwimela/,
     'do not turn the source subject into “Now these plants”');
-  assert.ok(targetParagraphs[1].includes(repair.retainedFirstSentence.slice('These plants '.length)),
-    'the checked compaction-limitation predicate stays unchanged');
-  assert.ok(targetParagraphs[1].includes('arali mavu o tsitsikana (compacted)'),
-    'the translated first sentence preserves the source’s “whether soil is compacted” uncertainty');
-  assert.ok(targetParagraphs[1].endsWith('Check the soil before deciding what the patch means for your design.'),
-    'the second sentence is the exact learner registry source, with “patch” intact');
+  assert.ok(targetParagraphs[1].includes('fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted).'),
+    'the presence of these plants remains insufficient to diagnose compacted soil');
+  assert.ok(targetParagraphs[1].endsWith('Ṱolani mavu ni sa athu dzhia tsheo ya zwine patch ya amba kha design yaṋu.'),
+    'translate checking before interpreting the patch while preserving its exact area term and decision order');
   assert.doesNotMatch(targetParagraphs[1], /tsinde/i,
     'the Tshivenda word for stem/trunk cannot stand in for “patch”');
   assert.deepEqual({ title: lesson.title, infographicAlt: lesson.infographicAlt, keyPoints: lesson.keyPoints, quiz: lesson.quiz },

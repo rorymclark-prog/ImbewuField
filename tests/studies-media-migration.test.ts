@@ -1871,7 +1871,7 @@ test('a saved Reading Landscape pack retires only the seventeen changed regional
   const body = source.match(/async function migrateReadingLandscapeDraftStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'the older Reading invalidation remains before later batches and the new paired reuse step');
 
   const origin = 'https://field.test';
@@ -1940,7 +1940,7 @@ test('a saved Reading Landscape pack retires only the next twelve regional still
   const body = source.match(/async function migrateReadingLandscapeOrdinaryStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'the new paired reuse invalidation follows the Intro step and all earlier Reading invalidations');
 
   const origin = 'https://field.test';
@@ -2002,7 +2002,7 @@ test('Intro cache migration retires only the 42 revised VE and TS stills once', 
   const body = source.match(/async function migrateIntroRegionalSubstantiveStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'Intro invalidation runs after earlier course cache migrations during worker activation');
 
   const origin = 'https://field.test';
@@ -2069,7 +2069,7 @@ test('Reading paired-draft refresh retires only six revised regional frames once
   const body = source.match(/async function migrateReadingLandscapePairedReuseStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'the six-frame cache cleanup participates in service-worker activation after prior migrations');
 
   const origin = 'https://field.test';
@@ -2127,7 +2127,7 @@ test('Reading observation release retires only slides 18–20 in three regional 
   const body = source.match(/async function migrateReadingLandscapeObservationStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'the observation refresh runs after prior Reading cache migrations during activation');
   const origin = 'https://field.test';
   const changed = ['st', 've', 'ts'].flatMap(language => [18, 19, 20].map(slide =>
@@ -2181,7 +2181,7 @@ test('record, Intro, and map refresh retires only eight changed regional stills 
   const body = source.match(/async function migrateRegionalRecordIntroReadingStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'the eight-frame cleanup runs in the activation migration chain');
 
   const origin = 'https://field.test';
@@ -2254,7 +2254,7 @@ test('Vegetables Field Action refresh retires only three slide 18 regional still
   const body = source.match(/async function migrateVegetablesFieldActionStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'the slide refresh participates in the existing activation migration chain');
 
   const origin = 'https://field.test';
@@ -2311,7 +2311,7 @@ test('regional assignment exercise refresh retires only seven changed stills onc
   const body = source.match(/async function migrateRegionalAssignmentExerciseStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'the assignment refresh runs after the prior Field Action migration in worker activation');
 
   const origin = 'https://field.test';
@@ -2385,7 +2385,7 @@ test('Vegetables L2 pairing refresh retires only eight VE and TS frames once', a
   const body = source.match(/async function migrateVegetablesL2OrdinaryPairedStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(function \(\)/,
+    /then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
     'the L2 still refresh runs in the existing activation migration chain');
 
   const origin = 'https://field.test';
@@ -2438,4 +2438,68 @@ test('Vegetables L2 pairing refresh retires only eight VE and TS frames once', a
   for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
   assert.equal(puts, 1, 'later activation leaves learner-selected replacement bytes intact');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'cache activation never downloads replacement stills');
+});
+
+test('Reading frost wording refresh retires only the four changed regional frames once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateReadingLandscapeFrostBodySyncStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source,
+    /then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
+    'the four-frame refresh runs in the service-worker activation chain');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation does not download replacement frames');
+
+  const origin = 'https://field.test';
+  const changed = [
+    '/course-decks/reading-landscape/st/slide-11.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-18.webp',
+  ];
+  assert.equal(changed.length, 4);
+  const staleUrls = changed.flatMap(path => [
+    new URL(path, origin).href,
+    new URL(path + '?saved=old', origin).href,
+    new URL(path + '?width=small', origin).href,
+  ]);
+  const preserved = [
+    '/course-decks/reading-landscape/st/slide-10.webp',
+    '/course-decks/reading-landscape/st/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-13.webp',
+    '/course-decks/reading-landscape/ve/slide-19.webp',
+    '/course-decks/reading-landscape/ts/slide-13.webp',
+    '/course-decks/reading-landscape/ts/slide-18.webp',
+    '/course-decks/reading-landscape/en/slide-14.jpg',
+    '/course-decks/reading-landscape/zu/slide-14.jpg',
+    ...['st', 've', 'ts', 'en', 'zu'].map(language => `/course-audio/reading-landscape/${language}/full.mp3`),
+    '/course-animations/reading-landscape/flow-a-frame.mp4',
+    '/course-decks/vegetables-staples/ve/slide-14.webp',
+  ];
+  const preservedUrls = preserved.map(path => new URL(path + '?keep=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...staleUrls.map(url => [url, new Response('previous Reading frost still')] as const),
+    ...preservedUrls.map(url => [url, new Response('preserve unrelated deck, audio, and animation')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  for (const url of staleUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/reading-landscape/.frost-body-sync-stills-20261005';
+  assert.equal(rows.has(marker), true);
+  assert.equal(rows.size - preservedUrls.length, 1, 'only the one-time marker remains beside preserved media');
+  assert.equal(puts, 1, 'first activation records the migration marker');
+
+  const laterDownload = new URL(changed[0], origin).href;
+  rows.set(laterDownload, new Response('replacement chosen by the learner after activation'));
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  assert.equal(await rows.get(laterDownload)!.text(), 'replacement chosen by the learner after activation');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'later activations leave the selected replacement untouched');
 });

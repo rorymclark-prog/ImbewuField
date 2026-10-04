@@ -496,18 +496,86 @@
                 "status": "english-hold"
               },
               {
-                "sourceEnglish": " These places can be colder than nearby slopes.",
+                "sourceEnglish": " These places can be",
+                "status": "draft",
+                "text": " Tindhawu leti ti nga va"
+              },
+              {
+                "sourceEnglish": " colder than nearby slopes.",
                 "status": "english-hold"
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Frost",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is ",
+                "status": "draft",
+                "text": " i "
+              },
+              {
+                "sourceEnglish": "ice that forms on a cold surface.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Mist",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " alone",
+                "status": "draft",
+                "text": " ntsena"
+              },
+              {
+                "sourceEnglish": " does not show that ",
+                "status": "draft",
+                "text": " a yi kombisi leswaku "
+              },
+              {
+                "sourceEnglish": "ice has formed",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and",
+                "status": "draft",
+                "text": ", naswona"
+              },
+              {
+                "sourceEnglish": " frost damage can happen without visible ice.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
           },
           {
-            "status": "draft",
-            "text": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. ",
+                "status": "draft",
+                "text": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. "
+              },
+              {
+                "sourceEnglish": "Mark places where cold or damage lasts longest.",
+                "status": "draft",
+                "text": "Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu."
+              },
+              {
+                "sourceEnglish": " Keep sensitive plants away from the cold pockets you observe.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
           },
           {
             "status": "english-hold"
