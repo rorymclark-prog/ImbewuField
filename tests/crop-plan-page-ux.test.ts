@@ -709,12 +709,14 @@ test('both years are named on the grid axis, not only in the caption below it', 
     'the year-two band must span the remainder of the window, not a fixed 12');
 });
 
-test('the year-band names match how the grid actually repeats', () => {
-  // The grid holds ONE annual cycle and redraws it (recurringPlanPlantings),
-  // so "every year after" is a description of the data model, not a promise.
+test('the year bands distinguish recurring crops from perennial plants whose ages keep advancing', () => {
+  // The old assertion pinned "every year after" when the grid contained annual crops.
+  // It now also carries dated tree-age projections, so that blanket claim is no longer true.
   assert.match(IDEAL_PLAN_COPY.yearOneBand, /year one/i);
   assert.match(IDEAL_PLAN_COPY.yearTwoBand, /year two/i);
-  assert.match(IDEAL_PLAN_COPY.yearTwoBand, /every year after/i);
+  assert.match(IDEAL_PLAN_COPY.yearTwoBand, /repeat crops/i);
+  assert.match(IDEAL_PLAN_COPY.yearTwoBand, /plant ages/i);
+  assert.doesNotMatch(IDEAL_PLAN_COPY.yearTwoBand, /every year after/i);
   for (const band of [IDEAL_PLAN_COPY.yearOneBand, IDEAL_PLAN_COPY.yearTwoBand]) {
     assert.ok(band.length <= 52, `a band label sits over 12 columns: ${band}`);
   }

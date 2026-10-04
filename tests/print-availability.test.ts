@@ -159,7 +159,7 @@ test('local harvest confirmations survive a reload without crossing farms or sig
   Object.defineProperty(globalThis, 'window', { configurable: true, value: { localStorage: { getItem: (key: string) => rows.get(key) ?? null, setItem: (key: string, value: string) => rows.set(key, value) }, sessionStorage: { getItem: () => null } } });
   try {
     bindMountedAccountLocalStorageUid('farmer-a');
-    const trees = { 'persea-americana': { months: [8, 9], bearing: true } };
+    const trees = { 'persea-americana': { months: [8, 9], bearing: true, production: [{ status: 'existing' as const, plants: 1, planted: '2016-10', yields: [{ age: 10, kg: 4 }] }] } };
     const animals = { chicken: { enterpriseId: 'chicken-indigenous', months: [10] } };
     saveTreeSeasonChoices('farm-one', trees);
     saveAnimalSeasonChoices('farm-one', animals);
@@ -195,4 +195,16 @@ test('printed planning references follow the rolling months but stay out of conf
   assert.match(printed.forestPlanning?.[0][0].planning?.label ?? '', /Hass/);
   assert.match(printed.undated?.[0].detail ?? '', /0 existing; 1 proposed/);
   assert.equal(printableAvailability({ ...options, includeTrees: false }).forestPlanning, undefined);
+});
+
+test('age and picking edits report an unavailable device store instead of silently claiming a save', () => {
+  const oldWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: { localStorage: { getItem: () => null, setItem: () => { throw new Error('device storage full'); } }, sessionStorage: { getItem: () => null } } });
+  try {
+    assert.equal(saveTreeSeasonChoices('fixture-farm', { 'persea-americana': { months: [9], bearing: true } }), false);
+  } finally {
+    if (oldWindow) Object.defineProperty(globalThis, 'window', oldWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+    bindMountedAccountLocalStorageUid(null);
+  }
 });

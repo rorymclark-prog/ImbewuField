@@ -133,7 +133,9 @@ export const IDEAL_PLAN_COPY = {
   // was which — a ↻ glyph and a fade, both explained in small print below the
   // grid, were the whole signal. Named on the axis instead.
   yearOneBand: 'Year one — from this month',
-  yearTwoBand: 'Year two — the full year, and every year after',
+  // The production grid also carries perennial plants: their ages and yields change rather
+  // than repeating year two forever. Only the saved annual sowings are recurring.
+  yearTwoBand: 'Year two — repeat crops; check plant ages',
   twoYearHeading: 'Your first year, and the year it settles into',
   twoYearLine:
     'This plan covers two years. The first fills your beds from today, so some months in it are still thin while crops get into the ground. The second is the full repeating year — that is the one to work towards.',
