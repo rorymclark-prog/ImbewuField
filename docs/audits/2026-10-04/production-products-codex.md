@@ -31,7 +31,7 @@ Retrieval limits: some SANBI pages and PubHort's full Biloxi page blocked direct
 
 Synthetic fixtures explicitly identify themselves; they are not Rory's saved Ubhejane farm. Warm, cool and unknown PDF exports were rendered: 7, 5 and 5 pages respectively, with zero characters outside page boundaries. The first visual pass exposed an orphan animal heading and verbose research calculations; these were corrected and re-rendered. App testing covered warm/cool/high-mountain changes, native PDF download and a 390-pixel mobile viewport. The viewport override was reset. A public Ubhejane sample was also opened through ordinary app navigation; it lacks the private farm's banana/hive/coop placements.
 
-Final required checks are recorded in the publication ledger on issue #35. Regression coverage checks every climate group, all animal enterprises, compatible choices, immutability, banana aggregation, actual-versus-assumed dates, indigenous edible parts, printed month/source wiring and report identity preservation.
+Final local checks: TypeScript clean; 4,556 tests, 4,555 passed, zero failures/skips and one pre-existing shape-sync TODO (57.59 seconds); whitespace check clean. Code revision `8272b3b9`. Publication confirmation is recorded on issue #35. Regression coverage checks every climate group, all animal enterprises, compatible choices, immutability, banana aggregation, actual-versus-assumed dates, indigenous edible parts, printed month/source wiring and report identity preservation.
 
 This changes the picture. `PLAN_VERSION` remains unchanged. Temporary QA route, downloaded source PDFs and test logs are excluded from the commit.
 

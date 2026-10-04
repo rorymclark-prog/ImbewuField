@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: '8272b3b9', changes: [
+    'Production plans show individual fruit, indigenous foods and animal product guidance.',
+    'Month bars label the assumed variety; site reports explain what stock to buy.',
+    'Banana circles count as three bananas in the same product row.',
+  ], tour: [
+    { title: 'Check your production choices',
+      where: 'Production plan → Farm conditions and product guidance',
+      detail: 'Read the variety assumption, open care and buying advice, and download the printed plan.',
+      href: '/facilitator/crops' },
+  ] },
   { when: '4 October 2026', sha: 'fb9cbb01', changes: [
     'Vegetables and Market lessons add fuller regional drafts beside English.',
     'Eight silent slides match the lesson text; Study headings show more regional wording.',
