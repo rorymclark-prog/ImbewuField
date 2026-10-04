@@ -1,0 +1,224 @@
+{
+  "title": "Reading Landscape accepted seasonal observation and map comparison follow-up",
+  "baseHead": "d2918a7f07bf680923b72b24ff854d9100c504ed",
+  "candidatePacket": "/tmp/imbewu-reading-season-map-fuller-fresh-candidates-20261004.json",
+  "followupReview": "/tmp/imbewu-reading-season-map-pronoun-perfect-map-followup-20261004.json",
+  "independentCheck": "/tmp/imbewu-reading-season-map-fuller-independent-check-20261004.json",
+  "bindingHashes": {
+    "reading-landscape.en.md": {
+      "sha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "matchesPacket": true
+    },
+    "reading-landscape.st.paired-draft.json": {
+      "sha256": "33055517c34aecf45cbcaf96a1029869ac41192c1a1877b690d6d99a21779fa9",
+      "matchesPacket": true
+    },
+    "reading-landscape.ve.paired-draft.json": {
+      "sha256": "15bdf3d5e08d06d8edc0d56c8b43bed964ae114a403da08851304b7e3be0483d",
+      "matchesPacket": true
+    },
+    "reading-landscape.ts.paired-draft.json": {
+      "sha256": "1d6ee5be42ffbf33c707752b62b96e31ad793499063edd7761d1d217cb266305",
+      "matchesPacket": true
+    }
+  },
+  "fields": [
+    {
+      "language": "ts",
+      "module": "reading-landscape",
+      "slide": 18,
+      "bodyIndex": 0,
+      "source": "Look for places where frost sits longest and where the ground smells damp during dry months.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Languta tindhawu where frost sits longest and where the ground smells damp during dry months."
+      },
+      "segments": [
+        {
+          "status": "draft",
+          "sourceEnglish": "Look for places ",
+          "text": "Languta tindhawu "
+        },
+        {
+          "status": "english-hold",
+          "sourceEnglish": "where frost sits longest"
+        },
+        {
+          "status": "draft",
+          "sourceEnglish": " and ",
+          "text": " ni "
+        },
+        {
+          "status": "english-hold",
+          "sourceEnglish": "where the ground smells damp"
+        },
+        {
+          "status": "draft",
+          "sourceEnglish": " during dry months.",
+          "text": " hi tin’hweti leti omeke."
+        }
+      ],
+      "status": "mixed",
+      "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open",
+      "reason": "The English holds preserve the duration of frost and the smell-based damp-ground cue exactly. “during dry months” is localized without broadening it to generic cold or wet ground; unreviewed language remains a facilitator draft.",
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Look for places ",
+            "text": "Languta tindhawu "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "where frost sits longest"
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " and ",
+            "text": " ni "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "where the ground smells damp"
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " during dry months.",
+            "text": " hi tin’hweti leti omeke."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "sourceSha256": "1c8148f8e55c26909425c85aaaba936c674cbbaf29f9419af51fc7a1e3976f1c",
+      "pairedFile": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairedFileSha256After": "7135b35f10a7bc8621214447c9eea334402d57b4d706957ab8297874a71bd635"
+    },
+    {
+      "language": "ve",
+      "module": "reading-landscape",
+      "slide": 19,
+      "bodyIndex": 2,
+      "source": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Update the sketch season by season. ",
+            "status": "draft",
+            "text": "I vusuluseni khalaṅwaha nga khalaṅwaha. "
+          },
+          {
+            "sourceEnglish": "A pencil map you actually use is worth more than a perfect map drawn once.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Update the sketch season by season. ",
+          "status": "draft",
+          "text": "I vusuluseni khalaṅwaha nga khalaṅwaha. "
+        },
+        {
+          "sourceEnglish": "A pencil map you actually use is worth more than ",
+          "status": "draft",
+          "text": "Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira "
+        },
+        {
+          "sourceEnglish": "a perfect map drawn once.",
+          "status": "english-hold"
+        }
+      ],
+      "status": "mixed",
+      "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open",
+      "reason": "Keeps the existing season-by-season update exactly. Localizes actual-use and comparative-value framing in Tshivenda, and holds the exact English complement “a perfect map drawn once.”",
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Update the sketch season by season. ",
+            "status": "draft",
+            "text": "I vusuluseni khalaṅwaha nga khalaṅwaha. "
+          },
+          {
+            "sourceEnglish": "A pencil map you actually use is worth more than ",
+            "status": "draft",
+            "text": "Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira "
+          },
+          {
+            "sourceEnglish": "a perfect map drawn once.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "sourceSha256": "45422ea8ee49c1be1dda59c5716db1e356160790349cb13ba3d03358a0347288",
+      "pairedFile": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairedFileSha256After": "a748a2179d8ed74a6c9b60296e7eab3dbf1630eb63e8269cee32476244ef941b"
+    },
+    {
+      "language": "ts",
+      "module": "reading-landscape",
+      "slide": 19,
+      "bodyIndex": 2,
+      "source": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. A pencil map you actually use is worth more than a perfect map drawn once."
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Update the sketch season by season. ",
+          "status": "draft",
+          "text": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. "
+        },
+        {
+          "sourceEnglish": "A pencil map you actually use is worth more than ",
+          "status": "draft",
+          "text": "Pencil map leyi u yi tirhisaka hakunene yi na nkoka ku tlula "
+        },
+        {
+          "sourceEnglish": "a perfect map drawn once.",
+          "status": "english-hold"
+        }
+      ],
+      "status": "mixed",
+      "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open",
+      "reason": "Keeps the existing season-by-season update exactly. Localizes actual-use and comparative-value framing, retains the verified Xitsonga comparative token from the accepted candidate, and holds the exact English complement “a perfect map drawn once.”",
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Update the sketch season by season. ",
+            "status": "draft",
+            "text": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. "
+          },
+          {
+            "sourceEnglish": "A pencil map you actually use is worth more than ",
+            "status": "draft",
+            "text": "Pencil map leyi u yi tirhisaka hakunene yi na nkoka ku tlula "
+          },
+          {
+            "sourceEnglish": "a perfect map drawn once.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "sourceSha256": "45422ea8ee49c1be1dda59c5716db1e356160790349cb13ba3d03358a0347288",
+      "pairedFile": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairedFileSha256After": "ec5a4e6becc4180a725477dd50a4d481451f302ccf95413b0a743e79e1dec3c7"
+    }
+  ],
+  "scope": "Only Reading TS slide18 body0 and VE/TS slide19 body2. First localized season sentence preserved exactly. The English ‘a perfect map drawn once.’ tail is an exact hold. No wind clause, same-map clause, ST representation, canonical source, audio, or unrelated paired field changed. Machine drafts remain unreviewed; no fluent approval.",
+  "renderProof": "docs/study-translation-reviews/REGIONAL-RECORD-INTRO-READING-RENDER-PROOF-2026-10-04.json",
+  "tsComparativeCodepoints": [
+    116,
+    108,
+    117,
+    108,
+    97
+  ],
+  "tsComparativeExtractedFrom": "fresh candidate segment before map leyi hetisekeke; never retyped"
+}

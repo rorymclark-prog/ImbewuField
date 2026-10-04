@@ -719,10 +719,16 @@
                 "text": "I vusuluseni khalaṅwaha nga khalaṅwaha. "
               },
               {
-                "sourceEnglish": "A pencil map you actually use is worth more than a perfect map drawn once.",
+                "sourceEnglish": "A pencil map you actually use is worth more than ",
+                "status": "draft",
+                "text": "Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira "
+              },
+              {
+                "sourceEnglish": "a perfect map drawn once.",
                 "status": "english-hold"
               }
-            ]
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }

@@ -858,7 +858,32 @@
             "text": "Nga murahu ni sedze. Ni lulamise. Ni ṅwale fhasi."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Record the sowing date.",
+                "status": "draft",
+                "text": "Ṅwalani datumu ya sowing."
+              },
+              {
+                "sourceEnglish": " The rain.",
+                "status": "draft",
+                "text": " Mvula."
+              },
+              {
+                "sourceEnglish": " What germinated.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Pest pressure.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " What you harvested.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "mixed",

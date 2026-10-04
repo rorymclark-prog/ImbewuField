@@ -874,7 +874,33 @@
             "text": "Ebe o sheba. O fetole. Mme o ngole fatshe."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Record the sowing date.",
+                "status": "draft",
+                "text": "Ngola letsatsi la sowing."
+              },
+              {
+                "sourceEnglish": " The rain.",
+                "status": "draft",
+                "text": " Pula."
+              },
+              {
+                "sourceEnglish": " What germinated.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Pest pressure.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " What you harvested.",
+                "status": "draft",
+                "text": " Seo o se kotutseng."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "mixed",
