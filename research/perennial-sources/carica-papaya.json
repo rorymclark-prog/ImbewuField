@@ -28,16 +28,16 @@
   ],
   "yearsToFirstCrop": {
     "value": [
-      0.75,
-      0.83
+      1.5,
+      1.5
     ],
     "evidence": {
-      "quote": "Commercial pawpaws are normally harvested 9 to 10 months after being transplanted from nurseries.",
-      "url": "https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_Pawpaw__Papaya_.pdf",
-      "doc": "FAO, 'Pawpaw (Papaya): Post-harvest Operations' (Post-Harvest Compendium)",
-      "page": 21
+      "quote": "first crop is generally produced about 18 months later",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Bearing age",
+      "page": 18
     },
-    "notes": "9-10 months converted to years: 9/12=0.75, 10/12≈0.83. This is a general (non-South-Africa-specific) commercial figure from FAO's global compendium, not a South African source; South African government (nda.gov.za) papaya production guideline PDFs were found via search but returned HTTP 503 on every fetch attempt during this pass (see gaps)."
+    "notes": "KZN typical first crop after planting, about 18 months. The same paragraph reports 9–11 months under favourable Makhathini Flats conditions. This replaces the faster generic international commercial figure; it is a typical regional reference, not a minimum or guarantee."
   },
   "yearsToFullBearing": {
     "value": null,
@@ -66,6 +66,7 @@
     "No South Africa-specific yield-per-plant or yield-per-hectare figure, nor a matching planting density, was found; all yield figures located were for other countries (Mexico, unspecified 48.6 t/ha reference).",
     "No SA-specific years-to-full-bearing or productive-lifespan figure was independently verified verbatim (an unverified AI search summary claimed '3 to 5 years' productive life, not used as evidence).",
     "agribook.co.za's general fruit chapter mentions papaya is grown 'mainly in Mpumalanga and Limpopo' but its dedicated subtropical-fruit page (referenced but not linked) was not located/fetched.",
-    "Editor review 2026-09-28: pollination withdrawn — the FAO quote says papaya plants are male, female or perfect; which applies depends on the cultivar and the plant, so no single value is stated by the source."
+    "Editor review 2026-09-28: pollination withdrawn — the FAO quote says papaya plants are male, female or perfect; which applies depends on the cultivar and the plant, so no single value is stated by the source.",
+    "2026-10-04: First-crop reference updated after retrieving and inspecting the KZN DARD PDF; regional conditions retained in the note."
   ]
 }

@@ -1661,10 +1661,12 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
     }
     s.y += opts.gap ?? 3;
   };
-  const heading = (title: string) => {
+  const heading = (title: string, first?: ProductionGuideItem) => {
     item = '';
-    if (!s.fits(40)) group = '';
-    ensure(40);
+    // Keep a section name with its first card, including its month bar and sources.
+    const height = first ? Math.min(entryHeight(first) + 20, s.bottom - s.margin - 170) : 40;
+    if (!s.fits(height)) group = '';
+    ensure(height);
     group = title;
     s.text(title, s.margin, { size: 12, bold: true, ink: INK.green });
     s.y += 20;
@@ -1681,19 +1683,37 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
     }
     s.y += 4;
   };
-  const guideItem = (entry: ProductionGuideItem) => {
-    item = '';
+  const entryHeight = (entry: ProductionGuideItem): number => {
     s.font(10.5, true);
     const titleHeight = (s.doc.splitTextToSize(pdfSafe(entry.title), s.contentWidth) as string[]).length * 14.7 + 1;
     s.font(9.5);
     const bodyHeight = entry.lines.reduce((height, line) => height + (s.doc.splitTextToSize(pdfSafe(line), s.contentWidth) as string[]).length * 13.3 + 3, 0);
     s.font(8);
     const sourcesHeight = (entry.sources ?? []).reduce((height, source) => height + (s.doc.splitTextToSize(pdfSafe(`Source: ${source.label}`), s.contentWidth) as string[]).length * 11.2 + 4, 0);
+    return titleHeight + bodyHeight + sourcesHeight + (entry.expectedSeason ? 50 : 0) + 10;
+  };
+  const guideItem = (entry: ProductionGuideItem) => {
+    item = '';
     // An ordinary crop or breed card moves as a whole, so its source cannot become a
     // nearly empty last page. An exceptionally long farmer note still splits safely.
-    ensure(Math.min(titleHeight + bodyHeight + sourcesHeight + 10, s.bottom - s.margin - 170));
+    ensure(Math.min(entryHeight(entry), s.bottom - s.margin - 170));
     item = entry.title;
     paragraph(entry.title, { size: 10.5, bold: true, gap: 1 });
+    if (entry.expectedSeason) {
+      ensure(50);
+      paragraph(`${entry.expectedSeason.label} - expected when established`, { size: 9, bold: true });
+      const cell = s.contentWidth / 12;
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      months.forEach((month, i) => {
+        const fill = entry.expectedSeason!.months.includes(i + 1) ? INK.green : INK.panelGrey;
+        s.doc.setFillColor(fill[0], fill[1], fill[2]);
+        s.doc.rect(s.margin + i * cell, s.y, cell - 2, 19, 'F');
+        s.font(8);
+        s.ink(entry.expectedSeason!.months.includes(i + 1) ? INK.white : INK.muted);
+        s.doc.text(month, s.margin + i * cell + 4, s.y + 12);
+      });
+      s.y += 27;
+    }
     for (const line of entry.lines) paragraph(line);
     for (const source of entry.sources ?? []) sourceLine(source.label, source.url);
     s.y += 6;
@@ -1712,6 +1732,14 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
       heading('Reporting-year records - not a forecast');
       paragraph('Past reporting-year totals and months describe what was reported. They do not promise food in the coming plan.', { ink: INK.muted, gap: 8 });
       for (const entry of guide.recordedProduction) guideItem(entry);
+    }
+    if (guide.foodForest?.length) {
+      heading('Fruit, nuts and indigenous foods', guide.foodForest[0]);
+      for (const entry of guide.foodForest) guideItem(entry);
+    }
+    if (guide.animalProducts?.length) {
+      heading('Animal products and care', guide.animalProducts[0]);
+      for (const entry of guide.animalProducts) guideItem(entry);
     }
     if (guide.cropChoices.length) {
       heading('Crop varieties to check locally');

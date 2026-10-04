@@ -149,13 +149,18 @@ test('an avocado reference never extends a locally confirmed season, and unprodu
   assert.ok(buildTreeAvailability(groups, months, true, { 'persea-americana': { months: [8, 9], bearing: false } }).every((m) => m.length === 0));
 });
 
-test('banana clumps retain their sourced identity and an untyped Banana Circle remains an explicit map item', () => {
-  const items = [{ defId: 'banana_clump', status: 'existing' as const }, { defId: 'banana_circle', status: 'proposed' as const }];
+test('each banana circle contributes three planted bananas without changing the design or inventing seasons', () => {
+  const items = [{ defId: 'banana_clump', status: 'existing' as const, x: 10, y: 20 }, { defId: 'banana_circle', status: 'proposed' as const, x: 33, y: 44, widthM: 7, rotation: 23 }];
+  const before = structuredClone(items);
   const groups = placedTreeGroups(items);
+  assert.deepEqual(items, before, 'count assumption must not alter saved geometry');
+  assert.equal(groups[0].existing, 1);
+  assert.equal(groups[0].proposed, 3);
+  assert.equal(groups.length, 1, 'circles and individual bananas share one product');
   assert.equal(groups[0].harvest.speciesId, 'musa-acuminata-aaa-group');
   assert.equal(sourcedSeasonMonths(groups[0].harvest).length, 0, 'do not invent an all-year banana season');
-  assert.equal(speciesIdForPlaced(items[1]), null, 'the circle is a layout, not a guessed species');
-  assert.deepEqual(unidentifiedPlantGroups(items), [{ defId: 'banana_circle', label: 'Banana Circle', existing: 0, proposed: 1 }]);
+  assert.equal(speciesIdForPlaced(items[1]), 'musa-acuminata-aaa-group', 'Rory explicitly defines a circle as three bananas');
+  assert.deepEqual(unidentifiedPlantGroups(items), []);
   assert.deepEqual(unidentifiedPlantGroups([{ defId: 'banana_circle', speciesId: 'musa-acuminata-aaa-group' }]), []);
   assert.equal(unidentifiedPlantGroups([{ defId: 'banana_circle', speciesId: 'unsupported-id' }]).length, 1, 'an unavailable harvest record must not erase the design layout');
 });

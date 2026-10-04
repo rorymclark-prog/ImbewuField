@@ -33,16 +33,16 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
     ],
     "yearsToFirstCrop": {
       "value": [
-        0.75,
-        0.83
+        1.5,
+        1.5
       ],
       "source": {
-        "quote": "Commercial pawpaws are normally harvested 9 to 10 months after being transplanted from nurseries.",
-        "url": "https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_Pawpaw__Papaya_.pdf",
-        "doc": "FAO, 'Pawpaw (Papaya): Post-harvest Operations' (Post-Harvest Compendium)",
-        "page": 21
+        "quote": "first crop is generally produced about 18 months later",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KZN DARD, Fruit and Nut Production in KZN, Bearing age",
+        "page": 18
       },
-      "note": "9-10 months converted to years: 9/12=0.75, 10/12≈0.83. This is a general (non-South-Africa-specific) commercial figure from FAO's global compendium, not a South African source; South African government (nda.gov.za) papaya production guideline PDFs were found via search but returned HTTP 503 on every fetch attempt during this pass (see gaps)."
+      "note": "KZN typical first crop after planting, about 18 months. The same paragraph reports 9–11 months under favourable Makhathini Flats conditions. This replaces the faster generic international commercial figure; it is a typical regional reference, not a minimum or guarantee."
     },
     "yearsToFullBearing": null,
     "yieldKgPerTree": null,
@@ -562,7 +562,19 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
         }
       }
     ],
-    "yearsToFirstCrop": null,
+    "yearsToFirstCrop": {
+      "value": [
+        4,
+        5
+      ],
+      "source": {
+        "quote": "4 or 5 years",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KZN DARD, Fruit and Nut Production in KZN, Macadamia bearing age",
+        "page": 24
+      },
+      "note": "KZN establishment reference; this source also describes later bearing at higher elevations. Not a promise for all cultivars or every SA site."
+    },
     "yearsToFullBearing": {
       "value": [
         7,
@@ -688,7 +700,19 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
     "name": "Banana",
     "product": "fruit (bunch of bananas)",
     "windows": [],
-    "yearsToFirstCrop": null,
+    "yearsToFirstCrop": {
+      "value": [
+        1.0833333333333333,
+        1.6666666666666667
+      ],
+      "source": {
+        "quote": "time ranges from 13 to 20 months",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KZN DARD, Fruit and Nut Production in KZN, Bearing age",
+        "page": 8
+      },
+      "note": "KZN DARD explicitly states the planting-to-harvest and harvest-to-harvest range. Converted months to years (13/12 to 20/12). This is not a dated forecast or an annual all-month harvest window."
+    },
     "yearsToFullBearing": null,
     "yieldKgPerTree": {
       "value": [

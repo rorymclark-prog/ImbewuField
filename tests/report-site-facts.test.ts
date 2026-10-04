@@ -488,3 +488,18 @@ test('report calendar does not roll past or beyond-window dated sowings into a d
   const row = reportSowingCalendar(s).rows[0];
   assert.equal(row.cells[2].sow, true); assert.equal(row.cells[3].transplant, true);
 });
+
+test('production purchase facts preserve species choices and late map items without carrying geometry or invented animal counts', () => {
+  const raw = {
+    productionItems: [...Array.from({ length: 45 }, () => ({ defId: 'tree_other', speciesId: 'grewia-occidentalis', status: 'proposed' })), { defId: 'banana_circle', x: 99, y: 55, width: 7 }, { defId: 'beehive' }, null, { defId: '' }],
+    productionEnterpriseChoices: { bee: 'bees', chicken: 'bees', made_up: 'chicken-layer' },
+  };
+  const before = structuredClone(raw);
+  const facts = normaliseReportSiteFacts(raw)!;
+  assert.equal(facts.productionItems?.length, 47, 'the general report table limit must not truncate the production map');
+  assert.deepEqual(facts.productionItems?.at(-2), { defId: 'banana_circle' });
+  assert.deepEqual(facts.productionItems?.at(-1), { defId: 'beehive' });
+  assert.deepEqual(facts.productionEnterpriseChoices, { bee: 'bees' });
+  assert.deepEqual(raw, before);
+  assert.doesNotMatch(JSON.stringify(facts), /"x"|"width"|layingHens|animalCount/);
+});
