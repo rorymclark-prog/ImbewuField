@@ -4,6 +4,12 @@ import { buildCropPlanPdf, FARMER_SECTIONS, ALL_SECTIONS, type CropPlanPdfInput 
 import { poultryGuidance } from '@/lib/animal-enterprises';
 import type { ProductionGuide } from '@/lib/crop-export-schedule';
 
+test('the picture calendar scopes local-date confirmation to fruit rather than claiming modelled vegetables were observed', async () => {
+  const text = visibleText(await rawPdf({ sections: ['availability'], availability: { yearMode: 'fromToday', veg: [], forest: [], animals: [] } }));
+  assert.ok(text.includes('Fruit, nuts and berries: solid marks are local dates.'));
+  assert.ok(!text.includes('Solid marks: confirmed locally.'));
+});
+
 const guide: ProductionGuide = {
   area: 'Research fixture climate',
   siteObservations: [{ title: 'Observed frost', lines: ['Farmer reports frost in June.'] }],

@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: 'bdf97c28', changes: [
+    'Printed calendar labels separate local fruit dates from vegetable planning dates.',
+  ] },
   { when: '4 October 2026', sha: 'b12b7cd1', changes: [
     'Fruit, nuts and berries show outlined planning seasons where sources support them.',
     'Printed plans use fruit pictures and explain the sources behind the marked months.',
