@@ -97,7 +97,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
-            "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+            "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -407,8 +407,20 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "intro-permaculture-l1",
       "field": "quiz[0].q",
-      "sourceText": "keeps nothing for composting or seed saving.",
-      "reason": "Retain the exact negative and both purposes while their compact Xitsonga wording remains uncertain."
+      "sourceText": "composting",
+      "reason": "Retain the named soil-input practice exact within the unreviewed negative clause."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "seed saving",
+      "reason": "Retain the named seed practice exact within the unreviewed negative clause."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "ethic",
+      "reason": "Retain the formal ethics-category term exact in the final question."
     },
   ]
 };
@@ -487,8 +499,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Whether a swale is safe to build on this slope",
-              "xitsongaDraft": "Whether a swale is safe to build on this slope",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Xana a swale yi hlayisekile ku akiwa eka slope leyi",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "How much stormwater the soil can absorb",
@@ -497,8 +509,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Where a dam spillway should be built",
-              "xitsongaDraft": "Where a dam spillway should be built",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Laha a dam spillway yi faneleke ku akiwa kona",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 0,
@@ -728,7 +740,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-            "xitsongaDraft": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Kambela local minimum-temperature records kumbe u vutisa a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+            "xitsongaDraft": "Cold air can settle in low places on clear, still nights. Pimanisa candidate nursery sites through the local frost season. Kambela local minimum-temperature records kumbe u vutisa a local agriculture adviser u nga si endla permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -886,9 +898,12 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     {"lessonId": "reading-landscape-l2", "field": "quiz[0].rationale", "sourceText": "local frost observations must guide the final position.", "reason": "Retain the final-position rule exactly after localizing the surrounding risk statement."},
     {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "Winter sun is lower and farther north.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
     {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "the hours of sun on a bed.", "reason": "Retain the sun-duration effect phrase exactly after localizing the surrounding shade sentence."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Cold air can settle in low places on clear, still nights.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Compare candidate nursery sites through the local frost season.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Cold air can settle in low places on clear, still nights.", "reason": "Keep the full clear/still weather sentence exact; the surrounding assessment framing is a mixed machine draft."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "candidate nursery sites through the local frost season", "reason": "Keep the nursery-site scope and complete local-frost-season duration exact inside the mixed rationale."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "local minimum-temperature records", "reason": "Keep the evidence type and measure exact inside the mixed rationale."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "a local agriculture adviser", "reason": "Keep the adviser qualification exact inside the mixed rationale."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "permanent choice", "reason": "Keep the permanence and decision scope exact inside the mixed rationale."},
+    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.", "reason": "Keep both diagnostic and no-guarantee safeguards exact inside the mixed rationale."},
     {"lessonId": "reading-landscape-l3", "field": "quiz[1].q", "sourceText": "repeatedly develop late blight during cool, damp spells.", "reason": "Retain the repeated late-blight and cool, damp weather condition exactly after translating only the KZN farmer and tomatoes subject."},
     {"lessonId": "reading-landscape-l3", "field": "quiz[1].rationale", "sourceText": "Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
     {"lessonId": "reading-landscape-l4", "field": "quiz[0].rationale", "sourceText": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
@@ -1042,18 +1057,6 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     },
 
 
-    {
-      "lessonId": "reading-landscape-l1",
-      "field": "quiz[0].options[1]",
-      "sourceText": "Whether a swale is safe to build on this slope",
-      "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it."
-    },
-    {
-      "lessonId": "reading-landscape-l1",
-      "field": "quiz[0].options[3]",
-      "sourceText": "Where a dam spillway should be built",
-      "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it."
-    },
     {
       "lessonId": "reading-landscape-l2",
       "field": "body",

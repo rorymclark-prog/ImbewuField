@@ -129,13 +129,92 @@
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Two. ",
+                "status": "draft",
+                "text": "Tsha vhuvhili. "
+              },
+              {
+                "sourceEnglish": "Keep ",
+                "status": "draft",
+                "text": "Itani uri "
+              },
+              {
+                "sourceEnglish": "harvests",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " moving, using ",
+                "status": "draft",
+                "text": " dzi bvele phanḓa, ni tshi shumisa "
+              },
+              {
+                "sourceEnglish": "succession planting",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na "
+              },
+              {
+                "sourceEnglish": "intercropping.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Three. ",
+                "status": "draft",
+                "text": "Tsha vhuraru. "
+              },
+              {
+                "sourceEnglish": "Choose ",
+                "status": "draft",
+                "text": "Nangani "
+              },
+              {
+                "sourceEnglish": "staples",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that protect you ",
+                "status": "draft",
+                "text": " dzi ni tsireledzaho "
+              },
+              {
+                "sourceEnglish": "when one crop fails.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Four. ",
+                "status": "draft",
+                "text": "Tsha vhuṋa. "
+              },
+              {
+                "sourceEnglish": "Read a pest problem",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " before you ",
+                "status": "draft",
+                "text": " ni sa athu u "
+              },
+              {
+                "sourceEnglish": "treat it.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "mixed",

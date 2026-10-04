@@ -1,0 +1,287 @@
+{
+  "title": "Reading Landscape assessment metadata: four source-bound machine drafts",
+  "date": "2026-10-05",
+  "status": "Applied in shared working tree; pending root diff review",
+  "baseCommit": "a5fd76db64e70fd69d6c5e449cc6b8ce4dda7a0b",
+  "sourcePacket": "/tmp/imbewu-reading-assessment-metadata-residual-candidates-20261005.json",
+  "sourcePacketSha256": "da2af5999222c39d7e978e0cf5885180296df22d58fe624fa1e2d20186d126b8",
+  "independentCheck": "/tmp/imbewu-reading-assessment-metadata-independent-20261005.json",
+  "independentCheckSha256": "307334fdd6773d144c7b7db21941ca18ba22f810bf35fc237057ae1b8360572d",
+  "verifiedBaseAuthorityHashes": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-localization.ts": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+    "lib/course-translation-drafts-ve-reading-landscape.ts": "126c85da4cc6263b9f5a25a8d98ff9a4766b80f7d967b8bc1a8520d0bfca4b48",
+    "lib/course-translation-drafts-ts.ts": "ef38b5b71127d98ae51dbad1cdf1334a916f3f1116f2da0fb0377a813a6b4bf0"
+  },
+  "implementationScope": "Only VE Reading Landscape L3 quiz[0].rationale and TS Reading Landscape L3 quiz[0].rationale plus L1 quiz[0].options[1] and [3]. Canonical English, option order, and correct-answer indexes are unchanged. All outputs remain machine-draft/unreviewed.",
+  "candidateFields": [
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentReviewStatus": "hold",
+      "proposedReviewStatus": "machine-draft",
+      "proposedTarget": "Cold air can settle in low places kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani candidate nursery sites through the local frost season. Ṱolani local minimum-temperature records kana ni vhudzise a local agriculture adviser ni sa athu dzhia a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "segments": [
+        {
+          "source": "Cold air can settle in low places",
+          "target": "Cold air can settle in low places",
+          "status": "english-hold",
+          "reason": "Keep the exact cold-air settling and low-place relationship."
+        },
+        {
+          "source": " on clear, still nights. ",
+          "target": " kha vhusiku vhu sa na makole, hu si na muya. ",
+          "status": "draft",
+          "reason": "Reuse the checked Tshivenda clear/still-night wording from this lesson body while keeping its weather timing."
+        },
+        {
+          "source": "Compare ",
+          "target": "Vhambedzani ",
+          "status": "draft",
+          "reason": "Use the checked Tshivenda comparison verb already used in this lesson."
+        },
+        {
+          "source": "candidate nursery sites through the local frost season. ",
+          "target": "candidate nursery sites through the local frost season. ",
+          "status": "english-hold",
+          "reason": "Keep nursery-site scope and the complete local-frost-season duration exact."
+        },
+        {
+          "source": "Check ",
+          "target": "Ṱolani ",
+          "status": "draft",
+          "reason": "Use the checked Tshivenda records-check verb already used in this lesson."
+        },
+        {
+          "source": "local minimum-temperature records",
+          "target": "local minimum-temperature records",
+          "status": "english-hold",
+          "reason": "Keep the evidence type and measure exact."
+        },
+        {
+          "source": " or ask ",
+          "target": " kana ni vhudzise ",
+          "status": "draft",
+          "reason": "Reuse checked Tshivenda “ask” framing while preserving the source OR alternative."
+        },
+        {
+          "source": "a local agriculture adviser",
+          "target": "a local agriculture adviser",
+          "status": "english-hold",
+          "reason": "Keep the adviser qualification exact."
+        },
+        {
+          "source": " before making ",
+          "target": " ni sa athu dzhia ",
+          "status": "draft",
+          "reason": "Reuse checked Tshivenda before-decision framing already used in this lesson."
+        },
+        {
+          "source": "a permanent choice. ",
+          "target": "a permanent choice. ",
+          "status": "english-hold",
+          "reason": "Keep the permanence and decision scope exact."
+        },
+        {
+          "source": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+          "target": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+          "status": "english-hold",
+          "reason": "Keep both the not-only qualification and no-guarantee condition exact."
+        }
+      ],
+      "sourceConcatenationVerified": true,
+      "targetConcatenationVerified": true,
+      "sourceCorrectIndex": null,
+      "reason": "Draft the two ordinary comparison/check verbs while retaining the technical evidence, the seasonal period, the alternative adviser route, and the diagnostic/no-guarantee safeguards."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Kambela local minimum-temperature records kumbe u vutisa a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentReviewStatus": "machine-draft",
+      "proposedReviewStatus": "machine-draft",
+      "proposedTarget": "Cold air can settle in low places on clear, still nights. Pimanisa candidate nursery sites through the local frost season. Kambela local minimum-temperature records kumbe u vutisa a local agriculture adviser u nga si endla permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "segments": [
+        {
+          "source": "Cold air can settle in low places on clear, still nights. ",
+          "target": "Cold air can settle in low places on clear, still nights. ",
+          "status": "english-hold",
+          "reason": "Keep the full weather/timing sentence exact: an earlier independent check rejected mapping still to quiet."
+        },
+        {
+          "source": "Compare ",
+          "target": "Pimanisa ",
+          "status": "draft",
+          "reason": "Use the checked Xitsonga comparison verb used in the learner body."
+        },
+        {
+          "source": "candidate nursery sites through the local frost season. ",
+          "target": "candidate nursery sites through the local frost season. ",
+          "status": "english-hold",
+          "reason": "Keep nursery-site scope and the complete local-frost-season duration exact."
+        },
+        {
+          "source": "Check ",
+          "target": "Kambela ",
+          "status": "draft",
+          "reason": "Use the checked Xitsonga records-check verb already used in the lesson."
+        },
+        {
+          "source": "local minimum-temperature records",
+          "target": "local minimum-temperature records",
+          "status": "english-hold",
+          "reason": "Keep evidence type and measure exact."
+        },
+        {
+          "source": " or ask ",
+          "target": " kumbe u vutisa ",
+          "status": "draft",
+          "reason": "Localize the OR and ask framing without changing the alternative."
+        },
+        {
+          "source": "a local agriculture adviser",
+          "target": "a local agriculture adviser",
+          "status": "english-hold",
+          "reason": "Keep adviser qualification exact."
+        },
+        {
+          "source": " before making a ",
+          "target": " u nga si endla ",
+          "status": "draft",
+          "reason": "Localize the before-action relationship."
+        },
+        {
+          "source": "permanent choice.",
+          "target": "permanent choice.",
+          "status": "english-hold",
+          "reason": "Keep the permanent-choice scope exact."
+        },
+        {
+          "source": " Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+          "target": " Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+          "status": "english-hold",
+          "reason": "Keep both the not-only qualification and no-guarantee condition exact."
+        }
+      ],
+      "sourceConcatenationVerified": true,
+      "targetConcatenationVerified": true,
+      "sourceCorrectIndex": null,
+      "reason": "Localize the compare/check/OR/before-choice framing while retaining exact frost-season and evidence anchors. Keep the clear/still weather sentence and the diagnostic/no-guarantee sentence exact."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Whether a swale is safe to build on this slope",
+      "currentTarget": "Whether a swale is safe to build on this slope",
+      "currentReviewStatus": "hold",
+      "proposedReviewStatus": "machine-draft",
+      "proposedTarget": "Xana a swale yi hlayisekile ku akiwa eka slope leyi",
+      "segments": [
+        {
+          "source": "Whether ",
+          "target": "Xana ",
+          "status": "draft",
+          "reason": "Use the existing Xitsonga yes/no question marker so this stays a whether/safety question, not an if/when condition or recommendation."
+        },
+        {
+          "source": "a swale",
+          "target": "a swale",
+          "status": "english-hold",
+          "reason": "Keep the technical structure name exact."
+        },
+        {
+          "source": " is safe to build on ",
+          "target": " yi hlayisekile ku akiwa eka ",
+          "status": "draft",
+          "reason": "Translate the safety/build relationship."
+        },
+        {
+          "source": "this slope",
+          "target": "slope leyi",
+          "status": "draft",
+          "reason": "Preserve the exact demonstrative site scope and retain “slope” as the technical landform anchor."
+        }
+      ],
+      "sourceConcatenationVerified": true,
+      "targetConcatenationVerified": true,
+      "sourceCorrectIndex": 0,
+      "optionOrder": [
+        "Points at the same height along a contour",
+        "Whether a swale is safe to build on this slope",
+        "How much stormwater the soil can absorb",
+        "Where a dam spillway should be built"
+      ],
+      "currentOptionOrder": [
+        "Tindhawu leti nga eka ku leha loku fanaka eka khanthura",
+        "Whether a swale is safe to build on this slope",
+        "Mpimo wa mati ya xidzedze lawa misava yi nga ma nwaka",
+        "Where a dam spillway should be built"
+      ],
+      "reason": "The selected option remains an exact translation of the original conditional answer choice, with the structure and slope terms held English."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Where a dam spillway should be built",
+      "currentTarget": "Where a dam spillway should be built",
+      "currentReviewStatus": "hold",
+      "proposedReviewStatus": "machine-draft",
+      "proposedTarget": "Laha a dam spillway yi faneleke ku akiwa kona",
+      "segments": [
+        {
+          "source": "Where ",
+          "target": "Laha ",
+          "status": "draft",
+          "reason": "Translate the location framing."
+        },
+        {
+          "source": "a dam spillway",
+          "target": "a dam spillway",
+          "status": "english-hold",
+          "reason": "Keep the specific water-control structure exact."
+        },
+        {
+          "source": " should be built",
+          "target": " yi faneleke ku akiwa kona",
+          "status": "draft",
+          "reason": "Translate the should/build framing without changing the modal."
+        }
+      ],
+      "sourceConcatenationVerified": true,
+      "targetConcatenationVerified": true,
+      "sourceCorrectIndex": 0,
+      "optionOrder": [
+        "Points at the same height along a contour",
+        "Whether a swale is safe to build on this slope",
+        "How much stormwater the soil can absorb",
+        "Where a dam spillway should be built"
+      ],
+      "currentOptionOrder": [
+        "Tindhawu leti nga eka ku leha loku fanaka eka khanthura",
+        "Whether a swale is safe to build on this slope",
+        "Mpimo wa mati ya xidzedze lawa misava yi nga ma nwaka",
+        "Where a dam spillway should be built"
+      ],
+      "reason": "Translate the ordinary where/should/build framing while keeping the exact structure name and answer-option order."
+    }
+  ],
+  "focusedChecks": [
+    {
+      "test": "tests/course-translation-drafts-ts.test.ts",
+      "coverage": "Reading L1 and L3 assessment tests bind source paths, preserve the two distractor targets, answer index and existing localized options, and verify source drift withdraws the changed rationale and each translated option."
+    },
+    {
+      "test": "tests/course-translation-drafts-ve-reading-landscape.test.ts",
+      "coverage": "Reading assessment test checks the VE rationale source/status, both no-cloud and no-wind conditions, complete seasonal/evidence/adviser sequence and exact final safeguards; source drift falls back to English. The expected whole-field hold list no longer calls this mixed rationale a hold."
+    }
+  ],
+  "focusedTestResult": "node --import ./tests/register-alias.mjs --test tests/course-translation-drafts-ts.test.ts tests/course-translation-drafts-ve-reading-landscape.test.ts — 22 passed, 0 failed on the final focused run before consolidating these checks; rerun below for the current test edits.",
+  "limitations": "These are unreviewed drafts. This record is not fluent approval and does not close the wider Reading or Study translation findings."
+}
