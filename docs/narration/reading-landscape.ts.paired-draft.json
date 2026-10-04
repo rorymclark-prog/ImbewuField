@@ -657,12 +657,34 @@
             "text": "Languta tindhawu where frost sits longest and where the ground smells damp during dry months."
           },
           {
-            "status": "draft",
-            "text": "Xiya existing vegetation. Mark where khakibos or blackjack grows thick."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Notice existing vegetation. ",
+                "status": "draft",
+                "text": "Xiya swimilani leswi se swi nga kona. "
+              },
+              {
+                "sourceEnglish": "Mark where khakibos or blackjack grows thick.",
+                "status": "draft",
+                "text": "Fungha laha khakibos kumbe blackjack yi kulaka yi tele."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Kambela soil before deciding what the patch means for your design."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. ",
+                "status": "draft",
+                "text": "Swimilani leswi swi nga mila etindhawini leti kavanyetiweke (disturbed places), kambe ku va kona ka swona ntsena a swi kombisi loko misava yi tshikelekile (compacted). "
+              },
+              {
+                "sourceEnglish": "Check the soil before deciding what the patch means for your design.",
+                "status": "draft",
+                "text": "Kambela misava u nga si teka xiboho hi leswi ndhawu leyi yi vulaka swona eka design ya wena."
+              }
+            ]
           }
         ]
       }
@@ -685,12 +707,32 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Fungha summer na winter wind hi ku hambana. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Mark summer and winter wind separately. ",
+                "status": "draft",
+                "text": "Fungha moya wa ximumu na vuxika hi ku hambana. "
+              },
+              {
+                "sourceEnglish": "They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Vekela your zones and sectors on the same base map."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Overlay your zones and sectors ",
+                "status": "draft",
+                "text": "Veka ti-zone na ti-sector ta wena "
+              },
+              {
+                "sourceEnglish": "on the same base map.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "draft",
@@ -722,12 +764,52 @@
             "text": "When it is safe after heavy rain, walk your land. Fungha rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away."
           },
           {
-            "status": "draft",
-            "text": "Vuya hi dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Return at ",
+                "status": "draft",
+                "text": "Vuya hi "
+              },
+              {
+                "sourceEnglish": "dawn on a cold June morning. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Mark ",
+                "status": "draft",
+                "text": "Fungha "
+              },
+              {
+                "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
           },
           {
-            "status": "draft",
-            "text": "Ephepheni, dirowa your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "On paper, draw ",
+                "status": "draft",
+                "text": "Ephepheni, dirowa "
+              },
+              {
+                "sourceEnglish": "your boundary, ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "mark north, ",
+                "status": "draft",
+                "text": "Fungha n'walungu, "
+              },
+              {
+                "sourceEnglish": "and add the house, water, roads, fences, slopes, and existing vegetation.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
           }
         ]
       }

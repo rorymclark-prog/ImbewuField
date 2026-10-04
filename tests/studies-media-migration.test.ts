@@ -1871,7 +1871,7 @@ test('a saved Reading Landscape pack retires only the seventeen changed regional
   const body = source.match(/async function migrateReadingLandscapeDraftStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(function \(\)/,
+    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(function \(\)/,
     'the older Reading invalidation remains before later batches and the new paired reuse step');
 
   const origin = 'https://field.test';
@@ -1940,7 +1940,7 @@ test('a saved Reading Landscape pack retires only the next twelve regional still
   const body = source.match(/async function migrateReadingLandscapeOrdinaryStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(function \(\)/,
+    /then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(function \(\)/,
     'the new paired reuse invalidation follows the Intro step and all earlier Reading invalidations');
 
   const origin = 'https://field.test';
@@ -2002,7 +2002,7 @@ test('Intro cache migration retires only the 42 revised VE and TS stills once', 
   const body = source.match(/async function migrateIntroRegionalSubstantiveStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(function \(\)/,
+    /then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(function \(\)/,
     'Intro invalidation runs after earlier course cache migrations during worker activation');
 
   const origin = 'https://field.test';
@@ -2069,7 +2069,7 @@ test('Reading paired-draft refresh retires only six revised regional frames once
   const body = source.match(/async function migrateReadingLandscapePairedReuseStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(function \(\)/,
+    /then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(function \(\)/,
     'the six-frame cache cleanup participates in service-worker activation after prior migrations');
 
   const origin = 'https://field.test';
@@ -2120,4 +2120,58 @@ test('Reading paired-draft refresh retires only six revised regional frames once
   for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
   assert.equal(puts, 1, 'the marker makes later activations leave replacement bytes alone');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'cache activation does not download replacement frames');
+});
+
+test('Reading observation release retires only slides 18–20 in three regional languages once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateReadingLandscapeObservationStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source,
+    /then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(function \(\)/,
+    'the observation refresh runs after prior Reading cache migrations during activation');
+  const origin = 'https://field.test';
+  const changed = ['st', 've', 'ts'].flatMap(language => [18, 19, 20].map(slide =>
+    `/course-decks/reading-landscape/${language}/slide-${String(slide).padStart(2, '0')}.webp`));
+  assert.equal(changed.length, 9);
+  const obsoleteUrls = changed.flatMap(path => [
+    new URL(path, origin).href,
+    new URL(path + '?saved=old', origin).href,
+    new URL(path + '?width=small', origin).href,
+  ]);
+  const preserved = [
+    ...['st', 've', 'ts'].flatMap(language => [1, 17, 21].map(slide =>
+      `/course-decks/reading-landscape/${language}/slide-${String(slide).padStart(2, '0')}.webp`)),
+    ...['en', 'zu'].flatMap(language => [18, 19, 20].map(slide =>
+      `/course-decks/reading-landscape/${language}/slide-${String(slide).padStart(2, '0')}.jpg`)),
+    ...['st', 've', 'ts', 'en', 'zu'].map(language => `/course-audio/reading-landscape/${language}/full.mp3`),
+    '/course-animations/reading-landscape/flow-a-frame.mp4',
+    '/course-decks/vegetables-staples/st/slide-18.webp',
+  ];
+  const preservedUrls = preserved.map(path => new URL(path + '?saved=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...obsoleteUrls.map(url => [url, new Response('superseded Reading observation frame')] as const),
+    ...preservedUrls.map(url => [url, new Response('keep unrelated course media')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const url of obsoleteUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/reading-landscape/.regional-observation-stills-20261004';
+  assert.equal(rows.has(marker), true);
+  assert.equal(rows.size - preservedUrls.length, 1, 'only the one-time migration marker remains');
+  assert.equal(puts, 1);
+  const laterDownload = new URL(changed[0], origin).href;
+  rows.set(laterDownload, new Response('replacement downloaded later by the learner'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(laterDownload)!.text(), 'replacement downloaded later by the learner');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'later activations leave replacement bytes intact');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation removes stale bytes without fetching replacements');
 });

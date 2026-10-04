@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import type { Lesson } from '../lib/course-modules.ts';
@@ -370,6 +371,51 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
   assert.equal(winterPoint.reviewStatus, 'machine-draft');
   assert.ok(winterPoint.tshivendaDraft.includes('ḽi fhasi') && winterPoint.tshivendaDraft.includes('kule devhula'),
     'winter sun must remain lower and farther north, never reversed');
+});
+
+test('Tshivenda Reading soil notes keep the checked compaction limit and exact patch sentence', () => {
+  const proof = JSON.parse(readFileSync(
+    new URL('../docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', import.meta.url), 'utf8'));
+  const canonical = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
+  const source = canonical.lessons.find(lesson => lesson.id === 'reading-landscape-l4')!;
+  const lesson = TSHIVENDA_READING_LANDSCAPE_DRAFT.lessons.find(item => item.id === source.id)!;
+  const repair = proof.veLearnerRepair;
+  const sourceParagraphs = source.body.split('\n\n');
+  const targetParagraphs = lesson.body.tshivendaDraft.split('\n\n');
+
+  assert.equal(sourceParagraphs[repair.paragraphIndex], repair.sourceEnglish,
+    'the learner source keeps its registry wording, including “whether soil”');
+  assert.match(sourceParagraphs[repair.paragraphIndex], /whether soil is compacted/);
+  assert.doesNotMatch(sourceParagraphs[repair.paragraphIndex], /whether the soil is compacted/,
+    'do not silently substitute slide narration for the learner registry source');
+  assert.equal(lesson.body.sourceEnglish, source.body, 'the exact English learner source remains bound');
+  assert.equal(lesson.body.reviewStatus, 'machine-draft', 'facilitator review remains pending');
+  assert.equal(targetParagraphs.length, sourceParagraphs.length, 'the lesson keeps its original paragraph breaks');
+  assert.equal(targetParagraphs[0], repair.previousBody.split('\n\n')[0]);
+  assert.equal(targetParagraphs[2], repair.previousBody.split('\n\n')[2]);
+  assert.equal(targetParagraphs[1], repair.currentTarget,
+    'retain the checked first sentence and hold only the ambiguous patch decision sentence');
+  assert.ok(targetParagraphs[1].includes('These plants '),
+    'keep the exact source subject rather than adding an unsupported “Now” time cue');
+  assert.doesNotMatch(targetParagraphs[1], /Zwino zwimela/,
+    'do not turn the source subject into “Now these plants”');
+  assert.ok(targetParagraphs[1].includes(repair.retainedFirstSentence.slice('These plants '.length)),
+    'the checked compaction-limitation predicate stays unchanged');
+  assert.ok(targetParagraphs[1].includes('arali mavu o tsitsikana (compacted)'),
+    'the translated first sentence preserves the source’s “whether soil is compacted” uncertainty');
+  assert.ok(targetParagraphs[1].endsWith('Check the soil before deciding what the patch means for your design.'),
+    'the second sentence is the exact learner registry source, with “patch” intact');
+  assert.doesNotMatch(targetParagraphs[1], /tsinde/i,
+    'the Tshivenda word for stem/trunk cannot stand in for “patch”');
+  assert.deepEqual({ title: lesson.title, infographicAlt: lesson.infographicAlt, keyPoints: lesson.keyPoints, quiz: lesson.quiz },
+    repair.otherFieldsBefore, 'the repair changes no title, infographic, key point or quiz field');
+
+  const shown = resolveLearnerLessonPresentation(source, 've');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.body, lesson.body.tshivendaDraft);
+  const drifted = { ...source, body: source.body.replace('whether soil is compacted', 'whether soil stays compacted') };
+  assert.equal(resolveLearnerLessonPresentation(drifted, 've').status, 'english-fallback',
+    'a changed source withdraws the learner draft instead of showing a stale soil claim');
 });
 
 test('Tshivenda Small Livestock drafts the module card and every lesson, with animal names checked separately', () => {

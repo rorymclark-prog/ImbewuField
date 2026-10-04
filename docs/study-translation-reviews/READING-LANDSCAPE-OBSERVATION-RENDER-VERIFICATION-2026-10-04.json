@@ -1,0 +1,95 @@
+{
+  "title": "Reading Landscape observation frames 18–20 render verification",
+  "status": "rendered locally; pending root pixel review",
+  "baseHead": "4f8d11cdaa5f938b4fdc12ab2799d52f0c73eb54",
+  "changedFrames": [
+    {
+      "language": "st",
+      "slide": 18,
+      "path": "/public/course-decks/reading-landscape/st/slide-18.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 582284,
+      "sha256": "43a387e6005986962c03b8c06ee4607d0d381d39c4882e462f962634ef4e9882"
+    },
+    {
+      "language": "st",
+      "slide": 19,
+      "path": "/public/course-decks/reading-landscape/st/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 288004,
+      "sha256": "3bd14763db8058ab56c629c1591dfece54d8a68c866b69b219ee8a2e643b3c2d"
+    },
+    {
+      "language": "st",
+      "slide": 20,
+      "path": "/public/course-decks/reading-landscape/st/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 671158,
+      "sha256": "a99893b9dcebf72841dac439453f4c56240252ddbbb78e83bf70576de4ed7892"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "path": "/public/course-decks/reading-landscape/ve/slide-18.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 590054,
+      "sha256": "941899300ccbeef9d253089135d338ef70f02a23cf7ef39d570f236074de235c"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "path": "/public/course-decks/reading-landscape/ve/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 276572,
+      "sha256": "095bbf8b2610e2e5ae17ec6b42a115d0b6b385650c73fa1a0de9bf1124c24c43"
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "path": "/public/course-decks/reading-landscape/ve/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 674974,
+      "sha256": "01e1c0023bf007d18a1c2fc743c03f46484b94305efe10d81c1dd30f5ae4260c"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "path": "/public/course-decks/reading-landscape/ts/slide-18.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 583858,
+      "sha256": "fdb082c52c2154e87d6f81555a6512cf13e22d2e940ff9df17cce46edb8a1214"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "path": "/public/course-decks/reading-landscape/ts/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 273760,
+      "sha256": "91d35065301be7bde21ab55e56bbda33e7ab77bce1e7bce3590ab0796ac637be"
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "path": "/public/course-decks/reading-landscape/ts/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 668046,
+      "sha256": "b361c54755c0026fc8a962958d14e52c97f8e189b29ce41790d63e86a7520003"
+    }
+  ],
+  "renderSource": "current English narration with source-paired regional target JSON",
+  "format": "WebP quality 88 method 6",
+  "tempOutputs": {
+    "st": "/tmp/reading-observation-st",
+    "ve": "/tmp/reading-observation-ve",
+    "ts": "/tmp/reading-observation-ts"
+  }
+}

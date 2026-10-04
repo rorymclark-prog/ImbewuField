@@ -1327,9 +1327,11 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
     'docs/study-translation-reviews/READING-LANDSCAPE-NEXT15-IMPLEMENTATION-PRESERVATION-2026-10-04.json', 'utf8'));
   const pairedReuseProof = JSON.parse(readFileSync(
     'docs/study-translation-reviews/READING-LANDSCAPE-PAIRED-REUSE-CANDIDATES-2026-10-04.json', 'utf8'));
+  const observationProof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', 'utf8'));
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
-    // Reconstruct the earlier 20-field snapshot across both later authorized batches.
+    // Reconstruct the earlier 20-field snapshot across later authorized batches.
     // Their separate tests assert the new target text; this keeps the original preservation proof meaningful.
     for (const change of next15Proof.changedTargets.filter((item: any) => item.language === language)) {
       packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
@@ -1338,6 +1340,9 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
       const target = packet.slides[change.slide - 1].target;
       if (change.bodyIndex === undefined) target.heading = change.previousTarget;
       else target.body[change.bodyIndex] = change.previousTarget;
+    }
+    for (const change of observationProof.pairedTargetChanges.filter((item: any) => item.language === language)) {
+      packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
     }
     const slides = validatePairedDraft(packet, readingSource, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
@@ -1437,12 +1442,103 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
   assert.equal(changed.size, 20, 'all 20 accepted target fields remain represented once');
 });
 
+test('Reading observation drafts preserve exact sources, unlisted fields and seasonal conditions', () => {
+  const readingSource = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const proof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', 'utf8'));
+  assert.equal(proof.scope.pairedTargetFieldsChanged, 21);
+  assert.equal(proof.scope.learnerRegistryParagraphRepairs, 1);
+  assert.match(proof.scope.excludedTsSlide19Body2, /Pronoun antecedent/);
+
+  const expectedChangedFields = new Set<string>();
+  for (const language of ['st', 've', 'ts'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, readingSource, language);
+    const fields = proof.pairedTargetChanges.filter((field: any) => field.language === language);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    assert.equal(fields.length, language === 've' ? 8 : language === 'st' ? 7 : 6);
+
+    for (const field of fields) {
+      const key = `${language}:${field.slide}:${field.bodyIndex}`;
+      expectedChangedFields.add(key);
+      assert.equal(readingSource[field.slide - 1].body[field.bodyIndex], field.sourceEnglish,
+        `${key}: canonical narration remains unchanged`);
+      assert.equal(slides[field.slide - 1].english.body[field.bodyIndex], field.sourceEnglish,
+        `${key}: target remains paired to its exact source`);
+      const target = slides[field.slide - 1].target.body[field.bodyIndex];
+      assert.deepEqual(target, field.currentTarget, `${key}: preserve the recorded unreviewed proposal`);
+      if (target.status === 'mixed') {
+        assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), field.sourceEnglish,
+          `${key}: every source clause remains in its original order`);
+        for (const segment of target.segments) {
+          if (segment.status === 'english-hold') {
+            assert.equal(segment.text, undefined, `${key}: held wording displays the exact English source`);
+          } else {
+            assert.ok(segment.text.trim(), `${key}: each localized clause is present`);
+          }
+        }
+      } else {
+        assert.equal(target.status, 'draft');
+        assert.notEqual(target.text, field.sourceEnglish, `${key}: a full draft is not an English copy`);
+      }
+    }
+
+    for (const snapshot of proof.preservedTargets[language]) {
+      const slide = packet.slides[snapshot.slide - 1];
+      const current = snapshot.field === 'heading' ? slide.target.heading : slide.target.body[snapshot.bodyIndex];
+      assert.deepEqual(current, snapshot.target,
+        `${language} slide ${snapshot.slide}: all unlisted target paragraphs and headings are unchanged`);
+    }
+    assert.deepEqual(packet.slides.map((slide: any) => ({ n: slide.n, english: slide.english })),
+      proof.sourceSnapshots.englishSlides[language], `${language}: no source narration changed`);
+
+    const wind = slides[18].target.body[0];
+    const windText = targetVisibleText(wind);
+    const seasonalWindAnchor = { st: 'moya wa lehlabula', ve: 'muya wa tshilimo', ts: 'moya wa ximumu' } as const;
+    assert.ok(windText.includes(seasonalWindAnchor[language]),
+      `${language}: retain distinct summer and winter wind wording`);
+    assert.ok(windText.includes('different directions') && windText.includes('may be wrong'),
+      `${language}: different directions and the conditional consequence remain exact English`);
+    const map = slides[18].target.body[1];
+    assert.ok(targetVisibleText(map).includes('on the same base map.'),
+      `${language}: retain the exact same-base-map relation until supported terminology is checked`);
+    const dawn = slides[19].target.body[1];
+    const dawnHolds = dawn.segments.filter((segment: any) => segment.status === 'english-hold')
+      .map((segment: any) => segment.sourceEnglish).join('');
+    assert.equal(dawn.status, 'mixed');
+    assert.ok(dawnHolds.includes('dawn on a cold June morning.'), `${language}: keep the exact seasonal timing`);
+    assert.deepEqual(dawn.segments.slice(0, 2).map((segment: any) => [segment.sourceEnglish, segment.status]), [
+      ['Return at ', 'draft'], ['dawn on a cold June morning. ', 'english-hold'],
+    ], `${language}: keep the translated return action joined to “at” so the held dawn clause does not duplicate the preposition`);
+    assert.ok(dawnHolds.includes('mist, frozen dew, and the places frost lasts longest.'), `${language}: keep every observation exact`);
+    const assignmentMap = slides[19].target.body[2];
+    assert.equal(assignmentMap.status, 'mixed');
+    assert.ok(assignmentMap.segments.some((segment: any) => segment.status === 'english-hold' && segment.sourceEnglish === 'your boundary, '),
+      `${language}: retain ownership of the boundary`);
+    assert.ok(assignmentMap.segments.at(-1).sourceEnglish === 'and add the house, water, roads, fences, slopes, and existing vegetation.',
+      `${language}: retain the complete ordered site-object list`);
+
+    const stale = structuredClone(packet);
+    stale.slides[17].english.body[2] += ' Changed soil guidance.';
+    assert.throws(() => validatePairedDraft(stale, readingSource, language), /slide 18: English body differs/,
+      `${language}: changed canonical source invalidates the observation draft`);
+  }
+  assert.equal(expectedChangedFields.size, 21, 'all 21 authorized fields appear exactly once');
+
+  const canonical = COURSE_MODULES.find((module) => module.id === 'reading-landscape')!;
+  assert.deepEqual(canonical.lessons.map((lesson) => ({ id: lesson.id, body: lesson.body })),
+    proof.sourceSnapshots.canonicalReadingLandscapeLessonBodies,
+    'all four canonical lesson bodies stay unchanged');
+});
+
 test('Reading Landscape next15 drafts keep frost limits, observation times and A-frame parts source-bound', () => {
   const readingSource = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync(
     'docs/study-translation-reviews/READING-LANDSCAPE-NEXT15-ROOT-ACCEPTED-CANDIDATES-2026-10-04.json', 'utf8'));
   const proof = JSON.parse(readFileSync(
     'docs/study-translation-reviews/READING-LANDSCAPE-NEXT15-IMPLEMENTATION-PRESERVATION-2026-10-04.json', 'utf8'));
+  const observationProof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', 'utf8'));
   const excluded = new Set<string>(packet.excludedFields.map((field: any) =>
     `${field.language}:${field.slide}:${field.bodyIndex}`));
   const acceptedFields = packet.candidateFields.filter((field: any) =>
@@ -1532,6 +1628,11 @@ test('Reading Landscape next15 drafts keep frost limits, observation times and A
   assert.equal(expected.size, 15, 'the 15 accepted language/body bindings appear exactly once');
   for (const field of proof.excludedUnchangedTargets) {
     const pair = JSON.parse(readFileSync(`docs/narration/reading-landscape.${field.language}.paired-draft.json`, 'utf8'));
+    // Rebuild the prior next15 snapshot before checking excluded fields; the later
+    // observation batch has its own test for those target changes.
+    for (const change of observationProof.pairedTargetChanges.filter((item: any) => item.language === field.language)) {
+      pair.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
+    }
     const current = pair.slides[field.slide - 1].target.body[field.bodyIndex];
     assert.deepEqual(current, field.currentTarget,
       `${field.language} slide ${field.slide} body ${field.bodyIndex}: do not count an unchanged target as translation progress`);
