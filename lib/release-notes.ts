@@ -42,9 +42,10 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '4 October 2026', sha: '83494d4a', changes: [
+  { when: '4 October 2026', sha: 'cdb2adb9', changes: [
     'Seven Market slides reuse checked regional lesson drafts beside English.',
     'Reading lessons add regional wording for assessment before digging.',
+    'Regional seed-sharing slides show the paired text instead of a film poster.',
   ], tour: [
     { title: 'Review the regional Market slides',
       where: 'Study → Market Gardening → Slides 8, 15 and 18',
