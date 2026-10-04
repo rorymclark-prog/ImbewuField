@@ -537,12 +537,12 @@
           },
           {
             "status": "draft",
-            "text": "Tsala muxaka wa swimilana, muxaka wa mbewu, laha yi humaka kona ni siku leri yi hlengeletiweke ha rona. Plan suitable isolation, selection, drying and storage for each crop.",
+            "text": "Tsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Ku avelana a ku engeteli diversity kumbe ku antswisa quality hi koxe. Check identity and germination before relying on shared seed.",
+            "text": "Ku avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
@@ -652,7 +652,7 @@
           },
           {
             "status": "draft",
-            "text": "Seek qualified advice for unfamiliar disease or technical problems. Vutivi byo avelana ni mpfuneto wa mutivi swi nga tirha swin’we.",
+            "text": "Lavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]

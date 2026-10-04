@@ -321,8 +321,8 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     'the A-frame action must mark equal-height points and trace a contour');
   assert.ok(l1DraftParagraphs[1].includes('Its marks are an observation, not a design or approval for earthworks.'),
     'A-frame marks remain observation, not earthworks design or approval');
-  assert.ok(l1DraftParagraphs[1].includes('Before digging a swale, dam, or other structure, have the site assessed.'),
-    'assessment must precede digging any listed or other structure');
+  assert.ok(l1DraftParagraphs[1].includes('Ni sa athu u bwa a swale, dam, kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe.'),
+    'assessment remains a condition before digging the named or other structure');
   assert.ok(l1DraftParagraphs[1].includes('Soil, slope, drainage, storm flow na safe overflow route zwoṱhe ndi zwa ndeme.') &&
     l1DraftParagraphs[1].includes('Vhudzisani a trained local adviser.'),
   'keep all site factors, safe overflow, and trained local adviser in the instruction');

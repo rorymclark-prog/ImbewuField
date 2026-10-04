@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1882 files, 694.4 MB total.
+// 1882 files, 694.7 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -854,10 +854,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/market-community/st/slide-12.webp': 225434,
   '/course-decks/market-community/st/slide-13.webp': 258964,
   '/course-decks/market-community/st/slide-14.webp': 221786,
-  '/course-decks/market-community/st/slide-15.webp': 529666,
+  '/course-decks/market-community/st/slide-15.webp': 582144,
   '/course-decks/market-community/st/slide-16.webp': 509110,
   '/course-decks/market-community/st/slide-17.webp': 289632,
-  '/course-decks/market-community/st/slide-18.webp': 526988,
+  '/course-decks/market-community/st/slide-18.webp': 577078,
   '/course-decks/market-community/st/slide-19.webp': 277076,
   '/course-decks/market-community/st/slide-20.webp': 356740,
   '/course-decks/market-community/ts/slide-01.webp': 322864,
@@ -874,10 +874,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/market-community/ts/slide-12.webp': 244516,
   '/course-decks/market-community/ts/slide-13.webp': 273682,
   '/course-decks/market-community/ts/slide-14.webp': 229082,
-  '/course-decks/market-community/ts/slide-15.webp': 542366,
+  '/course-decks/market-community/ts/slide-15.webp': 588366,
   '/course-decks/market-community/ts/slide-16.webp': 510410,
   '/course-decks/market-community/ts/slide-17.webp': 290268,
-  '/course-decks/market-community/ts/slide-18.webp': 534410,
+  '/course-decks/market-community/ts/slide-18.webp': 581786,
   '/course-decks/market-community/ts/slide-19.webp': 281174,
   '/course-decks/market-community/ts/slide-20.webp': 354248,
   '/course-decks/market-community/ve/slide-01.webp': 314976,
@@ -887,17 +887,17 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/market-community/ve/slide-05.webp': 383468,
   '/course-decks/market-community/ve/slide-06.webp': 258770,
   '/course-decks/market-community/ve/slide-07.webp': 541536,
-  '/course-decks/market-community/ve/slide-08.webp': 253504,
+  '/course-decks/market-community/ve/slide-08.webp': 276932,
   '/course-decks/market-community/ve/slide-09.webp': 191924,
   '/course-decks/market-community/ve/slide-10.webp': 507188,
   '/course-decks/market-community/ve/slide-11.webp': 269142,
   '/course-decks/market-community/ve/slide-12.webp': 237628,
   '/course-decks/market-community/ve/slide-13.webp': 251968,
   '/course-decks/market-community/ve/slide-14.webp': 224036,
-  '/course-decks/market-community/ve/slide-15.webp': 531356,
+  '/course-decks/market-community/ve/slide-15.webp': 584918,
   '/course-decks/market-community/ve/slide-16.webp': 505140,
   '/course-decks/market-community/ve/slide-17.webp': 284012,
-  '/course-decks/market-community/ve/slide-18.webp': 523992,
+  '/course-decks/market-community/ve/slide-18.webp': 572706,
   '/course-decks/market-community/ve/slide-19.webp': 287854,
   '/course-decks/market-community/ve/slide-20.webp': 359694,
   '/course-decks/market-community/zu/slide-01.jpg': 231014,

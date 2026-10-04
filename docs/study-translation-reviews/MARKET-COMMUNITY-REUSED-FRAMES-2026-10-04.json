@@ -1,0 +1,71 @@
+{
+  "baseMain": "3c134599985e9ccf46272914ad9d5af270309ce7",
+  "reviewStatus": "unreviewed",
+  "englishSourcesUnchanged": true,
+  "frames": [
+    {
+      "path": "public/course-decks/market-community/st/slide-15.webp",
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "bytes": 582144,
+      "sha256": "9c2bff99f1187ad6a26a67b2b4e9374950e8b32743460216ee4e742a01346908"
+    },
+    {
+      "path": "public/course-decks/market-community/st/slide-18.webp",
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "bytes": 577078,
+      "sha256": "fc2946c35a7990b0b7b45284a3fa632e0541203b5ace8d787c2d923c23cfe35d"
+    },
+    {
+      "path": "public/course-decks/market-community/ve/slide-08.webp",
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "bytes": 276932,
+      "sha256": "4da60b89376d5acbeae1941b771a127e799c7d9ee1f745d5e774a3847853aceb"
+    },
+    {
+      "path": "public/course-decks/market-community/ve/slide-15.webp",
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "bytes": 584918,
+      "sha256": "0d1d0deaf7e6f7f86128e09b51b88b34fd7a62f8fa0235a89c604f869e589ca1"
+    },
+    {
+      "path": "public/course-decks/market-community/ve/slide-18.webp",
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "bytes": 572706,
+      "sha256": "ce3e81192503aa59315b477734d451aa01b3128e9066ff314b4cbbbc6358852e"
+    },
+    {
+      "path": "public/course-decks/market-community/ts/slide-15.webp",
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "bytes": 588366,
+      "sha256": "cf654f4ac8a21649f0b5e54259c1e56989fa132abb4f5c2efce747dadcab5f8b"
+    },
+    {
+      "path": "public/course-decks/market-community/ts/slide-18.webp",
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "bytes": 581786,
+      "sha256": "9b8e69c8d58cf441bd637b1dd20c227c39c65ab7d0dce7a8b0b0c7f37152e556"
+    }
+  ],
+  "encoding": "WebP quality 90, method 6; rendered dimensions retained"
+}
