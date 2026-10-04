@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: '2343737d', changes: [
+    'Introduction adds unreviewed Xitsonga image descriptions and assessment wording.',
+    'Market answer drafts keep technical terms and the same correct answers.',
+  ], tour: [
+    { title: 'Review the remaining learner drafts',
+      where: 'Study → Introduction 1–3 and Market 1–2',
+      detail: 'Compare each unreviewed draft with English; difficult terms stay in English.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: 'e1d7de32', changes: [
     'Tshivenda and Xitsonga vegetable lessons add fuller unreviewed drafts.',
     'Eight cards match the lessons; Soil and Market add draft titles and image descriptions.',
