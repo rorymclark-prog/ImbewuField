@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: '34f4d0d3', changes: [
+    'Introduction slides add fuller Tshivenda and Xitsonga drafts beside English.',
+    'Difficult clauses stay in English; the regional decks remain silent for review.',
+  ], tour: [
+    { title: 'Review the regional Introduction slides',
+      where: 'Study → Introduction to Permaculture → Slides',
+      detail: 'Compare unreviewed drafts with English and save slides without narration.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: '68626572', changes: [
     'Reading Landscape slides 8, 10, 15 and 21 show fuller regional drafts beside English.',
     'Frost limits, disease cautions and observation times remain visible for review.',
