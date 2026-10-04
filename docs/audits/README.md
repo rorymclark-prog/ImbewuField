@@ -16,7 +16,9 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest: [Individual products, purchasing choices and variety assumptions — 4 October 2026](2026-10-04/production-products-codex.md).
+Latest: [Regional production picture calendars and eight climate examples — 4 October 2026](2026-10-04/regional-production-calendar-codex.md).
+
+Previous: [Individual products, purchasing choices and variety assumptions — 4 October 2026](2026-10-04/production-products-codex.md).
 
 Previous: [Food forest and animal visibility in printed calendars — 3 October 2026](2026-10-03/production-empty-sections-codex.md).
 
@@ -62,6 +64,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-04 | [Regional production picture calendars — Codex](2026-10-04/regional-production-calendar-codex.md) |
 | 2026-10-04 | [Individual production products and variety assumptions — Codex](2026-10-04/production-products-codex.md) |
 | 2026-10-03 | [Production-plan section visibility — Codex](2026-10-03/production-empty-sections-codex.md) |
 | 2026-10-02 | [Production timing narrative: dated food and scoped crop comparisons](2026-10-02/production-timing-narrative-codex.md) |

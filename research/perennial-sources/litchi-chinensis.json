@@ -18,6 +18,49 @@
         "page": null
       },
       "notes": "Consistent with an independent industry summary found (not directly fetched/quoted so not used as primary evidence here) that the SA litchi season 'begins around mid-October in the early areas of Malelane and Komatipoort in Mpumalanga, peaks in December and ends around the end of February' in Nelspruit/Tzaneen/Louis Trichardt — i.e. slightly earlier-starting in the hottest lowveld pockets than the Nov-Feb figure used here."
+    },
+    {
+      "region": "South Africa - Fay Zee Siu cultivar (SALGA / ARC reference)",
+      "months": [
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "Season: mid-November to mid-December",
+        "url": "https://litchisa.co.za/cultivars-2/",
+        "doc": "SALGA: Litchi Cultivars, Fay Zee Siu; information supplied by ARC-ITSC, Nelspruit",
+        "page": null
+      },
+      "notes": "Checked 4 October 2026. Each month touched by the stated partial-month interval is included. These are cultivar reference seasons, not locally confirmed picking dates or quantities."
+    },
+    {
+      "region": "South Africa - Mauritius cultivar (SALGA / ARC reference)",
+      "months": [
+        11,
+        12,
+        1
+      ],
+      "evidence": {
+        "quote": "Season: mid-November to early-January",
+        "url": "https://litchisa.co.za/cultivars-2/",
+        "doc": "SALGA: Litchi Cultivars, Mauritius; information supplied by ARC-ITSC, Nelspruit",
+        "page": null
+      },
+      "notes": "Checked 4 October 2026. Each month touched by the stated partial-month interval is included. These are cultivar reference seasons, not locally confirmed picking dates or quantities."
+    },
+    {
+      "region": "South Africa - Wai Chee cultivar (SALGA / ARC reference)",
+      "months": [
+        1,
+        2
+      ],
+      "evidence": {
+        "quote": "Season: end-January to end-February",
+        "url": "https://litchisa.co.za/cultivars-2/",
+        "doc": "SALGA: Litchi Cultivars, Wai Chee; information supplied by ARC-ITSC, Nelspruit",
+        "page": null
+      },
+      "notes": "Checked 4 October 2026. Each month touched by the stated partial-month interval is included. These are cultivar reference seasons, not locally confirmed picking dates or quantities."
     }
   ],
   "yearsToFirstCrop": {
@@ -49,8 +92,8 @@
   "gaps": [
     "Full text of ISHS/Acta Horticulturae articles ('THE SOUTH AFRICAN LITCHI INDUSTRY - AN OVERVIEW', 'IRRIGATION OF LITCHIS IN SOUTH AFRICA - AN OVERVIEW') is paywalled; only abstracts were accessible, so years-to-bearing, yield/tree and chilling data likely contained in these could not be extracted.",
     "arc.agric.za/arc-itsc/Pages/Litchi.aspx (ARC-ITSC's own litchi page) returned HTTP 503 Service Unavailable when fetched.",
-    "SALGA's own site (litchisa.co.za) was found in search results but not fetched directly for a production guideline; worth trying in a follow-up pass.",
     "No SA-specific, verifiable number found for years to first crop, years to full bearing, yield per mature tree, or a litchi chill-unit/chill-day requirement despite multiple searches; all left null per instructions rather than guessed.",
-    "Editor review 2026-09-28: pollination withdrawn — the flower-visitor table does not support a self-fertility claim."
+    "Editor review 2026-09-28: pollination withdrawn — the flower-visitor table does not support a self-fertility claim.",
+    "4 October 2026: SALGA cultivar page directly retrieved; cultivar seasons added. First-bearing age, yield and chilling gaps remain unresolved."
   ]
 }

@@ -1,8 +1,8 @@
 // Pictures for the printed food-availability page (lib/crop-export-pdf.ts).
 //
-// The page prints the same crop, tree and animal art the app's availability chart shows. The art is
-// 256px PNGs (~70 KB each); embedding a year's worth at full size would add megabytes to a PDF a
-// farmer shares over WhatsApp. So each picture is drawn once onto a small canvas and embedded as a
+// The page prints the same crop, fruit and animal art the app's calendars show. Plant pictures are
+// a fallback for species without product art. Embedding full-size pictures repeatedly would add
+// megabytes to a PDF a farmer shares over WhatsApp. Each is drawn onto a small canvas and embedded as a
 // PNG data URL at print size. jsPDF then reuses it by alias wherever that crop appears again.
 //
 // Keys are 'crop:<cropKey>', 'tree:<speciesId>' and 'animal:<enterpriseId>', the same keys the PDF
@@ -10,7 +10,7 @@
 // that item's short code instead. A missing picture never stops the export.
 
 import { getCropArt } from '@/lib/crop-art';
-import { speciesPickerArtworkUrl } from '@/lib/species-art';
+import { speciesPickerArtworkUrl, speciesFruitArtworkUrl } from '@/lib/species-art';
 import { animalArtUrl } from '@/lib/animal-art';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
@@ -23,7 +23,7 @@ export function pdfIconUrl(iconKey: string): string | null {
   const kind = iconKey.slice(0, split);
   const id = iconKey.slice(split + 1);
   if (kind === 'crop') return getCropArt(id) ?? null;
-  if (kind === 'tree') return speciesPickerArtworkUrl(id);
+  if (kind === 'tree') return speciesFruitArtworkUrl(id) ?? speciesPickerArtworkUrl(id);
   if (kind === 'animal') return animalArtUrl(id);
   if (kind === 'element') return ELEMENTS_BY_ID[id]?.art ?? null;
   return null;
@@ -35,7 +35,16 @@ export const PDF_ICON_PX = 128;
 async function downscale(url: string, px: number): Promise<string | null> {
   const response = await fetch(url);
   if (!response.ok) return null;
-  const bitmap = await createImageBitmap(await response.blob());
+  const blob = await response.blob();
+  // Berry art is SVG. Decode it as an image because createImageBitmap does not
+  // consistently accept SVG across the browsers farmers use to export a plan.
+  const objectUrl = blob.type.includes('svg') ? URL.createObjectURL(blob) : null;
+  const bitmap = objectUrl ? await new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error('Product art did not load')); };
+    img.src = objectUrl;
+  }) : await createImageBitmap(blob);
   const canvas = document.createElement('canvas');
   canvas.width = px;
   canvas.height = px;
@@ -45,7 +54,8 @@ async function downscale(url: string, px: number): Promise<string | null> {
   const w = bitmap.width * scale;
   const h = bitmap.height * scale;
   ctx.drawImage(bitmap, (px - w) / 2, (px - h) / 2, w, h);
-  bitmap.close?.();
+  if ('close' in bitmap) bitmap.close();
+  if (objectUrl) URL.revokeObjectURL(objectUrl);
   return canvas.toDataURL('image/png');
 }
 

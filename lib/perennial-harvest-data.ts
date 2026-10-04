@@ -532,6 +532,46 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
           "doc": "Menzel, C., 'Lychee Growing and Marketing in South Africa', The Archives of the Rare Fruit Council Australia, July 1995 (production regions cited: Eastern Transvaal Lowveld, Northern/North-Eastern Transvaal, North and South Coast of Natal)",
           "page": null
         }
+      },
+      {
+        "region": "South Africa - Fay Zee Siu cultivar (SALGA / ARC reference)",
+        "months": [
+          11,
+          12
+        ],
+        "source": {
+          "quote": "Season: mid-November to mid-December",
+          "url": "https://litchisa.co.za/cultivars-2/",
+          "doc": "SALGA: Litchi Cultivars, Fay Zee Siu; information supplied by ARC-ITSC, Nelspruit",
+          "page": null
+        }
+      },
+      {
+        "region": "South Africa - Mauritius cultivar (SALGA / ARC reference)",
+        "months": [
+          11,
+          12,
+          1
+        ],
+        "source": {
+          "quote": "Season: mid-November to early-January",
+          "url": "https://litchisa.co.za/cultivars-2/",
+          "doc": "SALGA: Litchi Cultivars, Mauritius; information supplied by ARC-ITSC, Nelspruit",
+          "page": null
+        }
+      },
+      {
+        "region": "South Africa - Wai Chee cultivar (SALGA / ARC reference)",
+        "months": [
+          1,
+          2
+        ],
+        "source": {
+          "quote": "Season: end-January to end-February",
+          "url": "https://litchisa.co.za/cultivars-2/",
+          "doc": "SALGA: Litchi Cultivars, Wai Chee; information supplied by ARC-ITSC, Nelspruit",
+          "page": null
+        }
       }
     ],
     "yearsToFirstCrop": null,

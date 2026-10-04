@@ -7,15 +7,18 @@
 // The rows reuse the chart's own builders (buildTreeAvailability, buildAnimalAvailability), run
 // once for what is standing and once for the whole design, so a tree or coop drawn as PROPOSED is
 // still shown — it is part of the plan — but kept apart and never passed off as cropping. The
-// months are the sourced ones only; nothing here invents a season or a quantity.
+// confirmed rows keep their local dates. Optional outlined planning rows carry a separate
+// source reference; nothing here supplies quantities or updates the confirmed food builder.
 
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, HOUSING_ANIMALS, HOUSING_LABEL, PRODUCT_LABEL, buildAnimalAvailability, confirmedAnimalMonths, isFoodProduct, type AnimalKind, type AnimalProduct, type AnimalSeasonChoices, type FlowRecord, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
+import type { ExpectedSeason, PlanningTreeSeason } from './production-product-guidance';
 import type { HarvestCitation } from './perennial-harvest';
-import { PERENNIAL_HARVEST, buildTreeAvailability, formatRange, type PlacedTreeGroup, type TreeSeasonChoices } from './perennial-harvest';
+import { PERENNIAL_HARVEST, buildTreeAvailability, confirmedTreeMonths, formatRange, type PlacedTreeGroup, type TreeSeasonChoices } from './perennial-harvest';
 
 export interface CalendarTreeLine {
   speciesId: string;
   name: string;
+  planning?: ExpectedSeason;
   /** What is picked, from the harvest record: "fruit", "nut in shell", "leaves and pods"… A
    * trailing parenthetical note (marula's "(also the nut/kernel … is eaten …)") is dropped here:
    * it belongs on the tree's own card, not in a one-line month list. */
@@ -48,13 +51,14 @@ export function calendarProduceByMonth(
   months: readonly number[],
   treeSeasons: TreeSeasonChoices = {},
   animalSeasons: AnimalSeasonChoices = {},
+  planning: readonly PlanningTreeSeason[] = [],
 ): CalendarProduceMonth[] {
   const treesAll = buildTreeAvailability(treeGroups, months, false, treeSeasons);
   const treesStanding = buildTreeAvailability(treeGroups, months, true, treeSeasons);
   const animalsAll = buildAnimalAvailability(animalGroups, choices, months, false, animalSeasons);
   const animalsStanding = buildAnimalAvailability(animalGroups, choices, months, true, animalSeasons);
   return months.map((_, i) => ({
-    trees: treesAll[i].map((t) => {
+    trees: [...treesAll[i].map((t) => {
       const standing = treesStanding[i].find((s) => s.speciesId === t.speciesId)?.trees ?? 0;
       const record = PERENNIAL_HARVEST[t.speciesId];
       return {
@@ -65,7 +69,7 @@ export function calendarProduceByMonth(
         proposed: t.trees - standing,
         yearsToFirstCrop: record?.yearsToFirstCrop?.value ?? null,
       };
-    }),
+    }), ...planning.filter(tree => tree.season.months.includes(months[i]) && PERENNIAL_HARVEST[tree.speciesId] && !confirmedTreeMonths(PERENNIAL_HARVEST[tree.speciesId], treeSeasons).length).map(tree => ({ speciesId: tree.speciesId, name: tree.name, product: PERENNIAL_HARVEST[tree.speciesId]?.product ?? 'fruit', standing: tree.existing, proposed: tree.proposed, yearsToFirstCrop: PERENNIAL_HARVEST[tree.speciesId]?.yearsToFirstCrop?.value ?? null, planning: tree.season }))],
     animals: animalsAll[i].map((a) => {
       const standing = animalsStanding[i].find((s) => s.enterpriseId === a.enterpriseId)?.structures ?? 0;
       return {
@@ -134,7 +138,7 @@ export function treeLineText(line: CalendarTreeLine): string {
       ? ` · proposed, not cropping yet${wait}`
       : ` · ${line.proposed} of them proposed${wait}`;
   }
-  return `${line.name} — ${line.product} · ${count} on your map${tail}`;
+  return `${line.name} — ${line.product} · ${count} on your map${tail}${line.planning ? ` · ${line.planning.label}. ${line.planning.basis}` : ''}`;
 }
 
 // The same nouns as the "Animals on your map" card, by animal. Goats, cattle and sheep can live in

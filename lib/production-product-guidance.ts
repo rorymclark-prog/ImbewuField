@@ -1,6 +1,6 @@
 // The buying shortlist and the calendar assumption answer different questions. A mixed
 // early/middle/late orchard can extend supply, but its union is not one tree's season.
-import { bananaCirclesIn, formatMonthSpan, formatRange, placedTreeGroups, type PlacedPlant, type PlacedTreeGroup } from './perennial-harvest';
+import { bananaCirclesIn, formatMonthSpan, formatRange, placedTreeGroups, type PlacedPlant, type PlacedTreeGroup, type TreeSeasonChoices, confirmedTreeMonths, type HarvestWindow } from './perennial-harvest';
 import { enterprisesForHousing, HOUSING_LABEL, placedAnimalGroups, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
 import type { GrowingZoneId } from './growing-zones';
 import type { SiteProductionConditions } from './site-survey';
@@ -53,8 +53,8 @@ export const PRODUCT_PROFILES: Readonly<Record<string, Profile>> = {
   },
   'litchi-chinensis': {
     care: ['Match warm summers with cool, frost-free winter conditions for flowering; protect from wind and keep young plants watered.'],
-    purchase: ['KZN reference choices: Mauritius, McLean’s Red, Fay Zee Siu, Wai Chee. Confirm local harvest order before using early/late labels.'],
-    sources: [kzn('16–17')],
+    purchase: ['KZN candidates: earlier Fay Zee Siu (mid-November–mid-December), middle Mauritius (mid-November–early-January), later Wai Chee (end-January–end-February), using SALGA/ARC cultivar references. Confirm local dates, nursery stock and flowering conditions.'],
+    sources: [kzn('16–17'), { label: 'SALGA / ARC-ITSC: Litchi Cultivars', url: 'https://litchisa.co.za/cultivars-2/' }],
   },
   'passiflora-edulis': {
     care: ['Provide trellising and pruning; avoid waterlogging and inspect for root rot and virus problems.'],
@@ -140,27 +140,84 @@ export interface ExpectedSeason {
   label: string;
   months: number[];
   basis: string;
+  source?: Reference;
 }
 const WARM: GrowingZoneId[] = ['lowveld-bushveld', 'subtropical-coast'];
 const COOL: GrowingZoneId[] = ['highveld', 'midlands-mistbelt', 'western-cape', 'southern-cape', 'high-mountain', 'karoo-arid'];
 
-/** A source's cultivar window, never the union of windows or a predicted yield. */
+/** Only one applicable source window: never the union of all varieties/regions. */
 export function assumedProductSeason(group: PlacedTreeGroup, zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions): ExpectedSeason | undefined {
-  if (conditions?.drainage === 'stays-wet' || conditions?.sunlight === 'mostly-shade') return undefined;
-  if (conditions?.frost === 'yes' && ['persea-americana', 'carica-papaya', 'musa-acuminata-aaa-group'].includes(group.harvest.speciesId)) return undefined;
-  const warm = zones.some(z => WARM.includes(z));
-  const cool = zones.some(z => COOL.includes(z));
-  if (warm === cool || zones.includes('high-mountain') || (cool && !zones.some(z => ['midlands-mistbelt', 'western-cape', 'southern-cape'].includes(z)))) return undefined;
-  if (group.harvest.speciesId === 'persea-americana') {
-    const window = group.harvest.windows.find(w => w.region.toLowerCase().includes(warm ? 'warm' : 'cool') && w.region.includes('Hass'));
-    if (window) return { label: 'Assumed variety: Hass', months: [...window.months], basis: `${window.region}. Expected when established; not a confirmed crop this year.` };
+  const id = group.harvest.speciesId;
+  const frostSensitive = ['persea-americana', 'carica-papaya', 'musa-acuminata-aaa-group', 'macadamia-integrifolia', 'mangifera-indica', 'litchi-chinensis', 'sclerocarya-birrea-subsp-caffra'];
+  if (!zones.length || zones.includes('high-mountain') || conditions?.sunlight === 'mostly-shade' || conditions?.drainage === 'stays-wet' || (conditions?.frost === 'yes' && frostSensitive.includes(id))) return undefined;
+  const allIn = (allowed: readonly GrowingZoneId[]) => zones.every(zone => allowed.includes(zone));
+  const warm = allIn(WARM);
+  const result = (window: HarvestWindow | undefined, label: string, note = '', months?: number[]): ExpectedSeason | undefined => window ? {
+    label, months: [...(months ?? window.months)],
+    basis: `${window.region}. ${note ? `${note} ` : ''}Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.`,
+    source: { label: `${window.source.doc}${window.source.page ? `, p. ${window.source.page}` : ''}`, url: window.source.url },
+  } : undefined;
+  const windows = group.harvest.windows;
+  if (id === 'persea-americana') {
+    const cool = allIn(COOL) && zones.some(z => ['midlands-mistbelt', 'western-cape', 'southern-cape'].includes(z));
+    if (!warm && !cool) return undefined;
+    return result(windows.find(w => w.region.toLowerCase().includes(warm ? 'warm' : 'cool') && w.region.includes('Hass')), 'Assumed variety: Hass');
   }
-  if (zones.length === 1 && zones[0] === 'western-cape' && group.harvest.speciesId === 'prunus-persica') {
-    const window = group.harvest.windows.find(w => w.region.includes('Earligold'));
-    if (window) return { label: 'Assumed variety: Earligold (chilling needs checking)', months: [...window.months], basis: 'Western Cape reference first pick, not the whole harvest duration. Expected when established; confirm site chilling and frost.' };
+  if (id === 'citrus-limon' && (warm || allIn(['midlands-mistbelt']))) return result(windows.find(w => w.region.startsWith('KZN')), 'Regional reference: lemon main crop', 'Hot and cool main crops remain separate; smaller additional crops are not marked.', warm ? [2, 3] : [5, 6, 7]);
+  if (id === 'litchi-chinensis' && warm) return result(windows.find(w => w.region.includes('Mauritius cultivar')), 'Assumed variety: Mauritius');
+  if (id === 'prunus-persica' && allIn(['western-cape'])) return result(windows.find(w => w.region.includes('Earligold')), 'Assumed variety: Earligold (chilling needs checking)', 'Reference first pick, not the whole harvest duration.');
+  if (id === 'prunus-salicina' && allIn(['western-cape'])) return result(windows[0], 'Assumed variety: African Delight', 'Reference first pick; confirm chilling and compatible pollinator.');
+  if (id === 'fragaria-x-ananassa') {
+    if (allIn(['western-cape'])) return result(windows.find(w => w.region === 'Western Cape'), 'Regional reference: outdoor strawberry');
+    if (warm && conditions?.frost !== 'yes') return result(windows.find(w => w.region.includes('frost-free areas')), 'Regional reference: frost-free strawberry', 'KZN outdoor reference, not the Transvaal tunnel season.');
+    if (allIn(['midlands-mistbelt']) && conditions?.frost === 'yes') return result(windows.find(w => w.region.includes('light frosts')), 'Regional reference: light-frost strawberry', 'Assumes light frost; check severity locally.');
+    return undefined;
   }
-  // A province-specific papaya reference cannot be claimed from a climate zone alone.
-  return undefined;
+  if (id === 'carya-illinoinensis' && allIn(['karoo-arid', 'highveld']) && conditions?.drySeasonWater === 'reliable') return result(windows[0], 'Regional reference: pecan nuts', 'Irrigated production reference; confirm cultivar, pollination, summer heat and water capacity.');
+  const rules: Record<string, { zones: GrowingZoneId[]; match?: string; note?: string }> = {
+    'carica-papaya': { zones: WARM, note: 'KZN regional reference; cultivar-specific local timing remains unknown.' },
+    'macadamia-integrifolia': { zones: WARM, note: 'Regional nut-in-shell season; individual cultivar maturity still needs checking.' },
+    'mangifera-indica': { zones: WARM, note: 'Regional industry season, not a Tommy Atkins-only harvest window.' },
+    'passiflora-edulis': { zones: ['midlands-mistbelt'], note: 'Cool subtropical KZN reference; heavier and secondary crops only.' },
+    'rubus-idaeus': { zones: ['midlands-mistbelt'], note: 'Spring-bearing system only; do not use this for autumn-bearing Heritage or Autumn Bliss.' },
+    'vaccinium-corymbosum': { zones: ['western-cape'], match: 'Western Cape', note: 'Hex River/Wolseley trial reference; confirm cultivar, chilling and acidic soil.' },
+    'ficus-carica': { zones: ['western-cape'], note: 'Breede River main-crop reference; cultivar and local dates still need checking.' },
+    'citrus-reticulata': { zones: ['western-cape', 'southern-cape'], match: 'Satsuma', note: 'Satsuma group reference; other soft-citrus varieties have different seasons.' },
+    'punica-granatum': { zones: ['western-cape'], note: 'SA industry reference, not a Wonderful-only window.' },
+    'englerophytum-magalismontanum': { zones: ['highveld', 'midlands-mistbelt', ...WARM] },
+    'grewia-occidentalis': { zones: [...WARM, 'highveld', 'midlands-mistbelt', 'western-cape', 'southern-cape', 'karoo-arid'] },
+    'harpephyllum-caffrum': { zones: [...WARM, 'southern-cape'], note: 'Frost-free forest reference; confirm a fruiting female and pollen source.' },
+    'mimusops-zeyheri': { zones: [...WARM, 'midlands-mistbelt'], note: 'Summer-rain reference; check frost protection of young plants.' },
+    'pappea-capensis': { zones: [...WARM, 'highveld', 'midlands-mistbelt', 'western-cape', 'southern-cape', 'karoo-arid'], note: 'Broad SANBI fruiting reference; local season may be shorter.' },
+    'phoenix-reclinata': { zones: [...WARM, 'southern-cape'], match: 'South Africa', note: 'Fruit, not flowering; check moisture and fruiting female stock.' },
+    'rhoicissus-tomentosa': { zones: ['subtropical-coast', 'southern-cape'], note: 'Ripe fruit only; tuberous roots are poisonous.' },
+    'sclerocarya-birrea-subsp-caffra': { zones: WARM, note: 'Fruit reference, not a separate kernel season; check fruiting female stock.' },
+    'strychnos-spinosa': { zones: WARM, note: 'Ripe pulp only; seeds and unripe fruit are toxic.' },
+    'syzygium-cordatum': { zones: [...WARM, 'southern-cape'], note: 'Moist-position reference; fruit dates are not honey-flow dates.' },
+    'vangueria-infausta': { zones: [...WARM, 'highveld', 'midlands-mistbelt'] },
+    'vitis-vinifera': { zones: ['lowveld-bushveld'], match: 'Northern Province', note: 'Northern production-region reference, not the national November–May union.' },
+  };
+  const rule = rules[id];
+  if (!rule || !allIn(rule.zones)) return undefined;
+  if (zones.includes('karoo-arid') && conditions?.drySeasonWater !== 'reliable') return undefined;
+  return result(rule.match ? windows.find(w => w.region.includes(rule.match!)) : windows[0], `Regional reference: ${group.harvest.name}`, rule.note);
+}
+
+export interface PlanningTreeSeason {
+  speciesId: string;
+  name: string;
+  existing: number;
+  proposed: number;
+  season: ExpectedSeason;
+}
+
+/** Confirmed months replace the reference entirely; extra reference months cannot leak in. */
+export function planningTreeSeasons(groups: readonly PlacedTreeGroup[], zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions, confirmed: TreeSeasonChoices = {}): PlanningTreeSeason[] {
+  return groups.flatMap(group => {
+    if (confirmedTreeMonths(group.harvest, confirmed).length) return [];
+    const season = assumedProductSeason(group, zones, conditions);
+    return season ? [{ speciesId: group.harvest.speciesId, name: group.harvest.name, existing: group.existing, proposed: group.proposed, season }] : [];
+  });
 }
 
 function links(group: PlacedTreeGroup, profile?: Profile): Reference[] {
@@ -179,7 +236,7 @@ export function buildProductGuidance(context: ProductGuideContext, zones: readon
       h.yearsToFirstCrop ? `First crop reference: ${h.speciesId === 'musa-acuminata-aaa-group' ? `${formatRange([h.yearsToFirstCrop.value[0] * 12, h.yearsToFirstCrop.value[1] * 12])} months` : h.speciesId === 'carica-papaya' ? `about ${formatRange([h.yearsToFirstCrop.value[0] * 12, h.yearsToFirstCrop.value[1] * 12])} months in KZN; 9–11 months under favourable Makhathini Flats conditions` : `${formatRange(h.yearsToFirstCrop.value)} years (source conditions)`}. Actual timing depends on starting stock, variety and site care.` : 'Time to first crop: not sourced; do not rely on newly planted stock for immediate food.',
       ...(profile?.care ?? []),
       ...(!zones.some(z => WARM.includes(z)) && zones.some(z => ['highveld', 'high-mountain', 'karoo-arid'].includes(z)) && ['musa-acuminata-aaa-group', 'carica-papaya', 'mangifera-indica', 'persea-americana'].includes(h.speciesId) ? ['Cold-area check: these subtropical references do not establish suitability here. Confirm a frost-protected position before buying.'] : []),
-      ...(zones.some(z => WARM.includes(z)) && !zones.some(z => COOL.includes(z)) && conditions?.frost !== 'yes' ? h.speciesId === 'musa-acuminata-aaa-group' ? ['Assumed planting variety: Grand Nain for a warm site; use the wind/cold alternatives in the buying advice if those conditions apply. Local picking months remain unconfirmed.'] : h.speciesId === 'carica-papaya' ? ['Assumed planting variety: Sunrise Solo, subject to a frost-free, drained growing position. Its local picking months need confirmation.'] : h.speciesId === 'mangifera-indica' ? ['Assumed planting variety: Tommy Atkins, subject to local flowering and frost checks. Its local picking months need confirmation.'] : [] : []),
+      ...(zones.some(z => WARM.includes(z)) && !zones.some(z => COOL.includes(z)) && conditions?.frost !== 'yes' ? h.speciesId === 'musa-acuminata-aaa-group' ? ['Assumed planting variety: Grand Nain for a warm site; use the wind/cold alternatives in the buying advice if those conditions apply. Local picking months remain unconfirmed.'] : h.speciesId === 'carica-papaya' ? ['Assumed planting variety: Sunrise Solo, subject to a frost-free, drained growing position. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.'] : h.speciesId === 'mangifera-indica' ? ['Assumed planting variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.'] : [] : []),
       ...(profile?.purchase.map(text => `Buying advice: ${text}`) ?? ['Buying advice: a named variety for this area is not sourced. Confirm cultivar, pollination and local suitability before purchasing.']),
       ...(h.pollination ? [h.speciesId === 'musa-acuminata-aaa-group' ? 'Edible bananas set fruit without pollination.' : `Pollination: ${h.pollination.value.replaceAll('-', ' ')}. Check the chosen cultivar's requirements with the nursery.`] : []),
       ...(season ? [`${season.label}. ${season.basis}`] : [h.windows.length ? 'Expected picking season: no single local cultivar window established. Reference seasons below are not a forecast.' : 'Expected picking season: no fixed regional months sourced. Record planting and picking dates locally.']),
