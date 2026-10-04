@@ -1,0 +1,373 @@
+{
+  "title": "Market Gardening & Community L3 accepted source-paired subset",
+  "date": "2026-10-04",
+  "baseHead": "beec49d41db081017a83acbe641a56e025530bb1",
+  "canonicalCourseModule": "market-community",
+  "canonicalLesson": "market-community-l3",
+  "sourceFileSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "priorCandidatePacket": "/tmp/imbewu-market-remaining-substantive-candidates-20261004.json",
+  "independentCheck": "/tmp/imbewu-market-remaining-substantive-independent-check-20261004.json",
+  "provenance": "Applied only independently accepted body paragraph targets and assessment targets from the source-bound check. The exact English canonical lesson remains unchanged. Drafts are visibly unreviewed; this record does not assert fluency approval.",
+  "counts": {
+    "bodyParagraphs": 10,
+    "assessmentFields": 5,
+    "totalFields": 15,
+    "bodyByLanguage": {
+      "st": 3,
+      "ve": 3,
+      "ts": 4
+    }
+  },
+  "bodyFields": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "sourceEnglish": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "previousTarget": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "candidateTarget": "Ngola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Record the crop, variety, source and collection date.",
+          "targetText": "Ngola crop, variety, source le collection date.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Plan suitable isolation, selection, drying and storage for each crop.",
+          "targetText": " Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.",
+          "segmentStatus": "machine-draft"
+        }
+      ],
+      "independentDisposition": "accept",
+      "independentRationale": "Record, plan, collection date, and every crop-specific seed handling operation remain represented. Suitable remains explicit; isolation, selection, drying, storage, crop, variety and source stay as exact technical anchors."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[2]",
+      "paragraphIndex": 2,
+      "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "previousTarget": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "candidateTarget": "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality.",
+          "targetText": "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Check identity and germination before relying on shared seed.",
+          "targetText": " Hlahloba identity le germination pele o itshetleha ka shared seed.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "targetText": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "segmentStatus": "hold"
+        }
+      ],
+      "independentDisposition": "accept_with_legal_clause_exact_english",
+      "independentRationale": "The first two sentences preserve the non-automatic diversity/quality claim and identity/germination checks before reliance. The complete protected-variety/permission-before-exchange sentence remains exact English."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[11]",
+      "paragraphIndex": 11,
+      "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "previousTarget": "Seek qualified advice for unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "candidateTarget": "Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems.",
+          "targetText": "Batla keletso ya specialist bakeng sa unfamiliar disease or technical problems.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Shared experience and specialist help can work together.",
+          "targetText": " Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+          "segmentStatus": "machine-draft"
+        }
+      ],
+      "independentDisposition": "repair_and_accept_with_qualified_preserved",
+      "independentRationale": "“Seek” is localized, while qualified remains an explicit source anchor. The disease/technical problem terms stay exact; the following shared-experience/specialist-help clause remains unchanged and preserves can/may possibility."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "sourceEnglish": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "previousTarget": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "candidateTarget": "Ṅwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Record the crop, variety, source and collection date.",
+          "targetText": "Ṅwalani crop, variety, source na datumu ya u kuvhanganya.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Plan suitable isolation, selection, drying and storage for each crop.",
+          "targetText": " Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.",
+          "segmentStatus": "machine-draft"
+        }
+      ],
+      "independentDisposition": "accept",
+      "independentRationale": "Record, plan, collection date, and every crop-specific seed handling operation remain represented. Suitable remains explicit; isolation, selection, drying, storage, crop, variety and source stay as exact technical anchors."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[11]",
+      "paragraphIndex": 11,
+      "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "previousTarget": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "candidateTarget": "Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems.",
+          "targetText": "Ṱoḓani nyeletshedzo ya specialist nga ha unfamiliar disease or technical problems.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Shared experience and specialist help can work together.",
+          "targetText": " Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+          "segmentStatus": "machine-draft"
+        }
+      ],
+      "independentDisposition": "repair_and_accept_with_qualified_preserved",
+      "independentRationale": "“Seek” is localized, while qualified remains an explicit source anchor. The disease/technical problem terms stay exact; the following shared-experience/specialist-help clause remains unchanged and preserves can/may possibility."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "sourceEnglish": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "previousTarget": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "candidateTarget": "Tsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Record the crop, variety, source and collection date.",
+          "targetText": "Tsala crop, variety, source ni siku ra ku hlengeleta.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Plan suitable isolation, selection, drying and storage for each crop.",
+          "targetText": " Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.",
+          "segmentStatus": "machine-draft"
+        }
+      ],
+      "independentDisposition": "accept",
+      "independentRationale": "Record, plan, collection date, and every crop-specific seed handling operation remain represented. Suitable remains explicit; isolation, selection, drying, storage, crop, variety and source stay as exact technical anchors."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[2]",
+      "paragraphIndex": 2,
+      "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "previousTarget": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "candidateTarget": "Ku avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality.",
+          "targetText": "Ku avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Check identity and germination before relying on shared seed.",
+          "targetText": " Kambisisa identity ni germination u nga si titshega hi shared seed.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "targetText": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "segmentStatus": "hold"
+        }
+      ],
+      "independentDisposition": "accept_with_legal_clause_exact_english",
+      "independentRationale": "The first two sentences preserve the non-automatic diversity/quality claim and identity/germination checks before reliance. The complete protected-variety/permission-before-exchange sentence remains exact English."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[11]",
+      "paragraphIndex": 11,
+      "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "previousTarget": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "candidateTarget": "Lavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems.",
+          "targetText": "Lavani xitsundzuxo xa specialist eka unfamiliar disease or technical problems.",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": " Shared experience and specialist help can work together.",
+          "targetText": " Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+          "segmentStatus": "machine-draft"
+        }
+      ],
+      "independentDisposition": "repair_and_accept_with_qualified_preserved",
+      "independentRationale": "“Seek” is localized, while qualified remains an explicit source anchor. The disease/technical problem terms stay exact; the following shared-experience/specialist-help clause remains unchanged and preserves can/may possibility."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[2]",
+      "paragraphIndex": 2,
+      "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "previousTarget": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "candidateTarget": "U kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality.",
+          "targetText": "U kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically.",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " Check identity and germination before relying on shared seed.",
+          "targetText": " Ṱolani identity na germination ni sa athu ḓitika nga shared seed.",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "targetText": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "status": "english-hold"
+        }
+      ],
+      "independentDisposition": "targeted_repair_applied",
+      "independentRationale": "Keeps automatically explicit rather than the possibly self-giving idiom. Preserves the negative claim that sharing does not automatically multiply diversity or improve quality. Identity/germination checks precede reliance, and protected-variety/permission-before-exchange remains exact."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "field": "body.paragraph[6]",
+      "paragraphIndex": 6,
+      "sourceEnglish": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "previousTarget": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "candidateTarget": "Khoma produce gently, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.",
+      "reviewStatus": "machine-draft",
+      "retainedEnglish": [
+        {
+          "sourceEnglish": "Handle produce gently",
+          "targetText": "Khoma produce gently,",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " and keep suitable shade, packaging and storage through delivery.",
+          "targetText": " u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.",
+          "status": "draft"
+        }
+      ],
+      "independentDisposition": "targeted_repair_applied",
+      "independentRationale": "Gently is retained exact English so the handling instruction stays explicit. Suitable shade, packaging and storage through delivery remain represented."
+    }
+  ],
+  "assessmentFields": [
+    {
+      "language": "st",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "previousTarget": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "candidateTarget": "Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": 1,
+      "independentDisposition": "accept_technical_clause_plus_exact_permission_hold",
+      "independentRationale": "Candidate localizes only the opening claim that seed quality depends on the stated technical checks; the full protected-variety permission-rights clause remains exact English. Quiz options/index are unchanged. No safety or permission guarantee is implied."
+    },
+    {
+      "language": "ve",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "previousTarget": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "candidateTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": 1,
+      "independentDisposition": "accept_technical_clause_plus_exact_permission_hold",
+      "independentRationale": "Candidate localizes only the opening claim that seed quality depends on the stated technical checks; the full protected-variety permission-rights clause remains exact English. Quiz options/index are unchanged. No safety or permission guarantee is implied."
+    },
+    {
+      "language": "ts",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "previousTarget": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "candidateTarget": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": 1,
+      "independentDisposition": "accept_technical_clause_plus_exact_permission_hold",
+      "independentRationale": "Candidate localizes only the opening claim that seed quality depends on the stated technical checks; the full protected-variety permission-rights clause remains exact English. Quiz options/index are unchanged. No safety or permission guarantee is implied."
+    },
+    {
+      "language": "ve",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+      "previousTarget": "Agree care, booking and repair responsibilities for shared tools",
+      "candidateTarget": "Tendelani nga vhuḓifhinduleli ha u ṱhogomela zwishumiswa zwine zwa kovhekanywa, booking yazwo, na u zwi lugisa.",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": null,
+      "independentDisposition": "accept",
+      "independentRationale": "Care, booking, and repair duties all remain assigned to shared-tool users; booking stays as an English anchor. No additional cost, access guarantee, or safety claim is added."
+    },
+    {
+      "language": "ts",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+      "previousTarget": "Agree care, booking and repair responsibilities for shared tools",
+      "candidateTarget": "Pfumelelanani hi vutihlamuleri byo hlayisa switirhisiwa leswi avelaniwaka, booking ya swona ni ku swi lunghisa.",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": null,
+      "independentDisposition": "accept",
+      "independentRationale": "Care, booking, and repair duties all remain assigned to shared-tool users; booking stays as an English anchor. No additional cost, access guarantee, or safety claim is added."
+    }
+  ],
+  "pendingUnchanged": [],
+  "invariants": [
+    "Each field source matches current canonical source and paragraph/quiz binding.",
+    "Body paragraph order and total count are unchanged.",
+    "Protected-variety permission paragraph remains exact English wherever accepted review specified a full hold.",
+    "No question, option order, correct-answer index, or canonical source text changes.",
+    "Previously localized unselected paragraphs are preserved.",
+    "All written fields remain machine-draft."
+  ],
+  "implementationVerification": {
+    "canonicalSourceUnchanged": true,
+    "resolverObservedStatusByLanguage": {
+      "st": "draft",
+      "ve": "draft",
+      "ts": "draft"
+    },
+    "resolverMatchedAll13ParagraphsInOrder": true,
+    "unselectedParagraphsComparedToPriorCurrentTargets": true,
+    "quizQuestionOptionOrderAndCorrectIndicesPreserved": true,
+    "filesAfterApplySha256": {
+      "lib/course-translation-drafts-st-market-community.ts": "4b97656a2584264a5e061fbdecc119e781b26ddd9fd94fb29e402b65864948e5",
+      "lib/course-translation-drafts-ve-market-community.ts": "a32726787acb097c0dbdc986f24273dfd9df6f8b53316d9e1ab89c885d69b94e",
+      "lib/course-translation-drafts-ts-market-community.ts": "4aac6d74452ff242d0ce4c27c901fb8f21056a9114f59dc33669f118f10d3be7"
+    },
+    "resolverVerificationCommand": "node --experimental-strip-types import COURSE_MODULES, resolveLearnerLessonPresentation, and the ST/VE/TS Market draft registries; assert all paragraph bindings, source order, retained pending English fields, assessment source pairs and answer keys.",
+    "focusedTest": "tests/course-translation-drafts-st-market-community-l3.test.ts: 7 passed, 0 failed after targeted repairs",
+    "resolverMatchedAll10ChangedParagraphsInOrder": true,
+    "remainingPendingParagraphs": [],
+    "targetedPendingFieldsApplied": [
+      "ve body paragraph[2]",
+      "ts body paragraph[6]"
+    ],
+    "allTenChangedParagraphsMatchAcceptedAndTargetedRepairTargets": true
+  },
+  "targetedMeaningRepairReport": {
+    "path": "docs/study-translation-reviews/MARKET-COMMUNITY-L3-TARGETED-MEANING-REPAIRS-2026-10-04.json",
+    "status": "Applied after targeted source-bound recheck; machine-draft, not fluency approval."
+  }
+}

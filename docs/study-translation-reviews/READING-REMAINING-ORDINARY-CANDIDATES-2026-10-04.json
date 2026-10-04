@@ -1,0 +1,323 @@
+{
+  "title": "Reading Landscape remaining ordinary body clause candidates",
+  "date": "2026-10-04",
+  "repositoryHead": "beec49d41db081017a83acbe641a56e025530bb1",
+  "moduleId": "reading-landscape",
+  "canonicalCourseModulesSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "registryFiles": {
+    "st": {
+      "path": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "sha256": "c715838def50a0cea744281255f7a5c93cf7812d6e306aae86d63f1ba1ef0360"
+    },
+    "ve": {
+      "path": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "sha256": "5d7087f834eb2586557b133b40d826d2e0819f0bd67ae59cc09f822704c80b67"
+    },
+    "ts": {
+      "path": "lib/course-translation-drafts-ts.ts",
+      "sha256": "4da845821ec081cd9d19ae94c67540fe2a4a9da34d84f9e544a51efc0b00a021"
+    }
+  },
+  "resolver": "resolveLearnerLessonPresentation from lib/course-localization.ts",
+  "provenance": "Read-only audit of current canonical bodies and actual ST/VE/TS learner resolver at the listed head. The candidate edits only the same byte-exact English sentence in VE and TS L1 paragraph 1; all other localized target spans are copied unchanged. Draft proposals are unreviewed, for facilitator feedback after publication, and not claimed fluent.",
+  "scope": {
+    "lessons": [
+      "reading-landscape-l1",
+      "reading-landscape-l2",
+      "reading-landscape-l3",
+      "reading-landscape-l4"
+    ],
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "candidateClauseOccurrences": 2,
+    "fields": 2,
+    "remainingExactEnglishSentenceOccurrencesAfterCandidates": 21,
+    "heldOccurrenceCountByLanguage": {
+      "st": 2,
+      "ve": 9,
+      "ts": 10
+    }
+  },
+  "bindingChecks": {
+    "candidateSourceSentenceOccursExactlyOnceInParagraph": true,
+    "candidateSegmentsRecomposeExactSourceSentence": true,
+    "candidateSegmentsRecomposeExactTargetSentence": true,
+    "fullBodyParagraphOrderAndCountPreserved": true,
+    "allUnselectedBodyTextPreservedByteForByte": true,
+    "noDuplicateAlreadyLocalizedTarget": true
+  },
+  "candidateFields": [
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l1",
+      "field": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "canonicalSourceBody": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "canonicalSourceParagraph": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "currentTargetBody": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.\n\nAn A-frame level i nga ni thusa u mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow na safe overflow route zwoṱhe ndi zwa ndeme. Vhudzisani a trained local adviser.\n\nA hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Nangani water works u ya nga tshitentsi nahone ni pulane nḓila yo tsireledzeaho ya maḓi a re manzhisa.",
+      "currentTargetParagraph": "An A-frame level i nga ni thusa u mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow na safe overflow route zwoṱhe ndi zwa ndeme. Vhudzisani a trained local adviser.",
+      "targetedSourceSentence": "Before digging a swale, dam, or other structure, have the site assessed.",
+      "proposedSentence": "Ni sa athu u bwa a swale, dam, kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe.",
+      "proposedTargetBody": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.\n\nAn A-frame level i nga ni thusa u mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Ni sa athu u bwa a swale, dam, kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Soil, slope, drainage, storm flow na safe overflow route zwoṱhe ndi zwa ndeme. Vhudzisani a trained local adviser.\n\nA hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Nangani water works u ya nga tshitentsi nahone ni pulane nḓila yo tsireledzeaho ya maḓi a re manzhisa.",
+      "segments": [
+        {
+          "sourceEnglish": "Before digging ",
+          "targetText": "Ni sa athu u bwa ",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "a swale",
+          "targetText": "a swale",
+          "segmentStatus": "english-hold"
+        },
+        {
+          "sourceEnglish": ", ",
+          "targetText": ", ",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "dam",
+          "targetText": "dam",
+          "segmentStatus": "english-hold"
+        },
+        {
+          "sourceEnglish": ", or other structure, ",
+          "targetText": ", kana tshiṅwe tshivhumbeo, ",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "have the site assessed.",
+          "targetText": "itani uri fhethu hu ṱolwe.",
+          "segmentStatus": "machine-draft"
+        }
+      ],
+      "sourceSegmentsConcatenateExactly": true,
+      "targetSegmentsConcatenateExactly": true,
+      "retainedTechnicalEnglish": [
+        "a swale",
+        "dam"
+      ],
+      "preservedTargetTextOutsideSentence": true,
+      "reviewStatus": "machine-draft",
+      "reason": "Localizes the ordinary before-digging/site-assessment instruction while retaining the two named water structures in exact English. The condition to assess the site before digging remains explicit; no structure, method, measurement, adviser, or guaranteed outcome is added. Independent language review is still needed; this is not fluency approval."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l1",
+      "field": "body.paragraph[1]",
+      "paragraphIndex": 1,
+      "canonicalSourceBody": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "canonicalSourceParagraph": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "currentTargetBody": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nAn A-frame level yi nga ku pfuna ku mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Vutisa a trained local adviser.\n\nA ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTargetParagraph": "An A-frame level yi nga ku pfuna ku mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Vutisa a trained local adviser.",
+      "targetedSourceSentence": "Before digging a swale, dam, or other structure, have the site assessed.",
+      "proposedSentence": "U nga se cela a swale, dam, kumbe xivumbeko xin'wana, tiyisisa leswaku ndhawu yi kambisisiwa.",
+      "proposedTargetBody": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nAn A-frame level yi nga ku pfuna ku mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. U nga se cela a swale, dam, kumbe xivumbeko xin'wana, tiyisisa leswaku ndhawu yi kambisisiwa. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Vutisa a trained local adviser.\n\nA ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "segments": [
+        {
+          "sourceEnglish": "Before ",
+          "targetText": "U nga se ",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "digging ",
+          "targetText": "cela ",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "a swale",
+          "targetText": "a swale",
+          "segmentStatus": "english-hold"
+        },
+        {
+          "sourceEnglish": ", ",
+          "targetText": ", ",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "dam",
+          "targetText": "dam",
+          "segmentStatus": "english-hold"
+        },
+        {
+          "sourceEnglish": ", or other structure, ",
+          "targetText": ", kumbe xivumbeko xin'wana, ",
+          "segmentStatus": "machine-draft"
+        },
+        {
+          "sourceEnglish": "have the site assessed.",
+          "targetText": "tiyisisa leswaku ndhawu yi kambisisiwa.",
+          "segmentStatus": "machine-draft"
+        }
+      ],
+      "sourceSegmentsConcatenateExactly": true,
+      "targetSegmentsConcatenateExactly": true,
+      "retainedTechnicalEnglish": [
+        "a swale",
+        "dam"
+      ],
+      "preservedTargetTextOutsideSentence": true,
+      "reviewStatus": "machine-draft",
+      "reason": "Localizes the ordinary before-digging/site-assessment instruction while retaining the two named water structures in exact English. The condition to assess the site before digging remains explicit; no structure, method, measurement, adviser, or guaranteed outcome is added. Independent language review is still needed; this is not fluency approval."
+    }
+  ],
+  "remainingEnglishHolds": [
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l1",
+      "paragraphIndex": 1,
+      "exactEnglishClause": "Its marks are an observation, not a design or approval for earthworks.",
+      "reason": "Retain exact because it states site, soil, slope, contour, drainage, water-flow or earthworks conditions; changing a term or relationship could alter design/safety guidance."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l1",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "reason": "Retain exact because it states site, soil, slope, contour, drainage, water-flow or earthworks conditions; changing a term or relationship could alter design/safety guidance."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l1",
+      "paragraphIndex": 1,
+      "exactEnglishClause": "Its marks are an observation, not a design or approval for earthworks.",
+      "reason": "Retain exact because it states site, soil, slope, contour, drainage, water-flow or earthworks conditions; changing a term or relationship could alter design/safety guidance."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l1",
+      "paragraphIndex": 1,
+      "exactEnglishClause": "Soil, slope, drainage, storm flow, and a safe overflow route all matter.",
+      "reason": "Retain exact because it states site, soil, slope, contour, drainage, water-flow or earthworks conditions; changing a term or relationship could alter design/safety guidance."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l1",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "reason": "Retain exact because it states site, soil, slope, contour, drainage, water-flow or earthworks conditions; changing a term or relationship could alter design/safety guidance."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l1",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Choose any water works for the site and plan a safe route for excess water.",
+      "reason": "Retain exact because it states site, soil, slope, contour, drainage, water-flow or earthworks conditions; changing a term or relationship could alter design/safety guidance."
+    },
+    {
+      "language": "st",
+      "lessonId": "reading-landscape-l2",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Pawpaw and young citrus are sensitive to frost.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "st",
+      "lessonId": "reading-landscape-l2",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Keep tender plants out of known low frost pockets.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l2",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Pawpaw and young citrus are sensitive to frost.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l2",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Pawpaw and young citrus are sensitive to frost.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 1,
+      "exactEnglishClause": "If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "reason": "Retain exact because it sets an observation, data-availability, qualified-advice, assessment, or before-permanent-placement condition."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Frost is ice that forms on a cold surface.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Keep sensitive plants away from the cold pockets you observe.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 3,
+      "exactEnglishClause": "Late blight can still spread during prolonged cool, damp weather.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 3,
+      "exactEnglishClause": "Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "reason": "Retain exact pending a source-specific phrase review; it is embedded in a mixed paragraph and no independently checked ordinary replacement is available in this scope."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 1,
+      "exactEnglishClause": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Frost is ice that forms on a cold surface.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "exactEnglishClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 3,
+      "exactEnglishClause": "Late blight can still spread during prolonged cool, damp weather.",
+      "reason": "Retain exact because it carries crop identity, frost/cold-air direction, disease behavior, or a plant-protection condition."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l4",
+      "paragraphIndex": 1,
+      "exactEnglishClause": "These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.",
+      "reason": "Retain exact because it states site, soil, slope, contour, drainage, water-flow or earthworks conditions; changing a term or relationship could alter design/safety guidance."
+    }
+  ],
+  "excluded": {
+    "canonicalEnglishChanged": false,
+    "learnerRegistriesEdited": false,
+    "mediaOrNarrationEdited": false,
+    "commitOrPush": false,
+    "fluencyApprovalClaimed": false
+  }
+}

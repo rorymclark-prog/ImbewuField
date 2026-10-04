@@ -7,7 +7,7 @@ import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-draf
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
-test('Sesotho Market L3 drafts neighbor, produce and selling framing while keeping seed procedures exact English', () => {
+test('Sesotho Market L3 drafts seed-record and advice framing while retaining crop-operation and permission anchors', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(sourceModule);
   const source = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l3');
@@ -27,10 +27,17 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
   const sourceParagraphs = source.body.split('\n\n');
   const draftParagraphs = draft.body.sesothoDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  for (const index of [1, 2]) {
-    assert.equal(draftParagraphs[index], sourceParagraphs[index],
-      `paragraph ${index + 1}: crop-specific seed procedures and permission checks stay exact English`);
-  }
+  assert.notEqual(draftParagraphs[1], sourceParagraphs[1],
+    'ordinary record-and-plan instructions are drafted while seed-operation terms remain exact English anchors');
+  assert.match(draftParagraphs[1], /crop, variety, source.*collection date/i);
+  assert.match(draftParagraphs[1], /suitable isolation, selection, drying.*storage/i,
+    'suitability and every crop-specific seed-handling step remain represented');
+  assert.ok(draftParagraphs[2].startsWith('Ho arolelana ha ho bolele hore diversity e tla eketseha'),
+    'the caution against assuming sharing improves diversity or quality remains explicit');
+  assert.ok(draftParagraphs[2].includes('Hlahloba identity le germination pele'),
+    'identity and germination are checked before relying on shared seed');
+  assert.ok(draftParagraphs[2].endsWith('Before exchanging seed, check whether the variety is protected and whether permission is needed.'),
+    'the complete protected-variety permission condition remains exact English');
   for (const index of [0, 6, 7, 8, 9, 10]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
       `paragraph ${index + 1}: checked ordinary neighbor, produce or selling framing is drafted`);
@@ -40,8 +47,8 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
     'Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.',
     'Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.',
   ], 'the previously reviewed tool-sharing paragraphs remain byte-for-byte unchanged');
-  assert.ok(draftParagraphs[11].startsWith('Seek qualified advice for unfamiliar disease or technical problems.'),
-    'the qualified-advice requirement remains an exact English sentence');
+  assert.ok(draftParagraphs[11].startsWith('Batla qualified advice bakeng sa unfamiliar disease or technical problems.'),
+    'ordinary seek framing is localized while qualified advice and technical scope stay explicit');
   assert.ok(draftParagraphs[11].includes('di ka sebetsa mmoho'),
     'the shared-experience sentence keeps the source can-work-together modality');
 
@@ -66,8 +73,11 @@ test('Sesotho Market L3 drafts neighbor, produce and selling framing while keepi
     assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, original.options[original.correct]);
     assert.equal(question.rationale.sourceEnglish, original.rationale);
     if (questionIndex === 0) {
-      assert.equal(question.rationale.sesothoDraft, original.rationale);
-      assert.equal(question.rationale.reviewStatus, 'hold', 'protected-variety rights and crop-specific seed checks remain exact');
+      assert.ok(question.rationale.sesothoDraft.startsWith('Boleng ba peo bo itshetlehile'),
+        'the quality-depends-on-checks claim is drafted');
+      assert.ok(question.rationale.sesothoDraft.endsWith('Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.'),
+        'technical procedure context does not imply permission; the complete rights condition remains exact');
+      assert.equal(question.rationale.reviewStatus, 'machine-draft');
     } else {
       assert.equal(question.rationale.reviewStatus, 'machine-draft');
       assert.match(question.rationale.sesothoDraft, /actual returns le losses/);
@@ -117,8 +127,16 @@ test('regional Market L3 drafts ordinary sharing and produce framing while keepi
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
     if (language === 've') {
       assert.notEqual(draftParagraphs[0], sourceParagraphs[0], 'ordinary neighbor seed-sharing framing is drafted');
-      assert.equal(draftParagraphs[1], sourceParagraphs[1], 'crop-specific seed procedures remain exact English');
-      assert.equal(draftParagraphs[2], sourceParagraphs[2], 'seed quality and permission safeguards remain exact English');
+      assert.notEqual(draftParagraphs[1], sourceParagraphs[1], 'ordinary record-and-plan instructions are drafted');
+      assert.match(draftParagraphs[1], /crop, variety, source.*datumu ya u kuvhanganya/i);
+      assert.match(draftParagraphs[1], /suitable isolation, selection, drying and storage/i,
+        'crop-specific seed handling stays explicit with technical terms retained');
+      assert.ok(draftParagraphs[2].startsWith('U kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically.'),
+        'the non-automatic diversity and quality caution remains explicit');
+      assert.ok(draftParagraphs[2].includes('Ṱolani identity na germination ni sa athu ḓitika nga shared seed'),
+        'identity and germination checks still precede reliance on shared seed');
+      assert.ok(draftParagraphs[2].endsWith('Before exchanging seed, check whether the variety is protected and whether permission is needed.'),
+        'protected-variety permission remains a complete exact-English condition');
       assert.deepEqual(draftParagraphs.slice(3, 6), [
         'U kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.',
         'Phampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.',
@@ -129,27 +147,42 @@ test('regional Market L3 drafts ordinary sharing and produce framing while keepi
       assert.equal(draftParagraphs[8], 'Vhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.');
       assert.equal(draftParagraphs[9], 'Vhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.', 'existing localized neighbor-skills paragraph remains unchanged');
       assert.equal(draftParagraphs[10], 'Ṅwalani method, conditions and result so others can judge whether it may suit their land.');
-      assert.equal(draftParagraphs[11], sourceParagraphs[11], 'qualified advice and specialist-help wording remains exact English');
+      assert.ok(draftParagraphs[11].startsWith('Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems.'),
+        'ordinary advice-seeking framing is drafted while scope and qualification remain explicit');
+      assert.ok(draftParagraphs[11].includes('Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi'),
+        'shared experience and specialist help can still work together');
       const stale = resolveLearnerLessonPresentation({ ...source, body: `${source.body}\n\nNew market condition.` }, 've');
       assert.equal(stale.status, 'english-fallback', 'source-body drift withdraws the full stale Tshivenda lesson');
       assert.equal(stale.content.body, `${source.body}\n\nNew market condition.`);
     } else {
       assert.equal(draftParagraphs[0], 'Vaakelani va nga avelana different varieties and the work of saving seed.',
         'ordinary neighbor-sharing frame is localized while variety and seed-saving terms remain exact');
-      assert.equal(draftParagraphs[1], sourceParagraphs[1], 'crop-specific seed procedures remain exact English');
-      assert.equal(draftParagraphs[2], sourceParagraphs[2], 'seed quality and permission safeguards remain exact English');
+      assert.notEqual(draftParagraphs[1], sourceParagraphs[1], 'ordinary record-and-plan instructions are drafted');
+      assert.match(draftParagraphs[1], /crop, variety, source.*siku ra ku hlengeleta/i);
+      assert.match(draftParagraphs[1], /suitable isolation, selection, drying and storage/i,
+        'crop-specific seed handling stays explicit with technical terms retained');
+      assert.ok(draftParagraphs[2].startsWith('Ku avelana a swi vuli leswaku diversity yi ta engeteleka'),
+        'sharing is not stated to automatically improve diversity or quality');
+      assert.ok(draftParagraphs[2].includes('Kambisisa identity ni germination u nga si titshega hi shared seed'),
+        'identity and germination remain checks before relying on shared seed');
+      assert.ok(draftParagraphs[2].endsWith('Before exchanging seed, check whether the variety is protected and whether permission is needed.'),
+        'the complete protected-variety permission condition remains exact English');
       assert.deepEqual(draftParagraphs.slice(3, 6), [
         'Ku avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.',
         'Pompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.',
         'Ku tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.',
       ], 'previously localized shared-tool paragraphs remain unchanged');
-      assert.equal(draftParagraphs[6], sourceParagraphs[6], 'gentle produce handling and delivery preservation remain exact English');
+      assert.equal(draftParagraphs[6], 'Khoma produce gently, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.',
+        'gentle handling and suitable shade, packaging and storage through delivery are represented');
       assert.equal(draftParagraphs[7], 'Muxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.');
       assert.equal(draftParagraphs[8], 'Pimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.');
       assert.equal(draftParagraphs[9], 'Vaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.',
         'existing localized neighbor-skills paragraph remains unchanged');
       assert.equal(draftParagraphs[10], 'Tsala method, conditions na result so others can judge whether it may suit their land.');
-      assert.equal(draftParagraphs[11], sourceParagraphs[11], 'qualified advice and specialist-help guidance remains exact English');
+      assert.ok(draftParagraphs[11].startsWith('Lavani qualified advice eka unfamiliar disease or technical problems.'),
+        'ordinary advice-seeking framing is drafted while scope and qualification remain explicit');
+      assert.ok(draftParagraphs[11].includes('Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we'),
+        'shared experience and specialist help can still work together');
       const stale = resolveLearnerLessonPresentation({ ...source, body: `${source.body}\n\nNew market condition.` }, 'ts');
       assert.equal(stale.status, 'english-fallback', 'source-body drift withdraws the full stale Xitsonga lesson');
       assert.equal(stale.content.body, `${source.body}\n\nNew market condition.`);
@@ -216,14 +249,23 @@ test('regional community assessments keep permission, business comparisons and a
       assert.deepEqual(question.options.map(pair => pair.sourceEnglish), source.quiz[index].options);
       assert.equal(question.rationale.sourceEnglish, source.quiz[index].rationale);
     });
-    assert.equal(regionalText(draft.quiz[0].rationale), source.quiz[0].rationale, 'seed checks do not establish protected-variety permission');
-    assert.equal(draft.quiz[0].rationale.reviewStatus, 'hold');
+    assert.ok(regionalText(draft.quiz[0].rationale).endsWith('Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.'),
+      'the complete legal-permission condition stays exact after localized context');
+    assert.equal(draft.quiz[0].rationale.reviewStatus, 'machine-draft');
     assert.match(regionalText(draft.quiz[0].options[1]), /seed-quality checks/);
     assert.match(regionalText(draft.quiz[0].options[1]), /permission/);
     for (const term of ['fees', 'transport', 'unsold produce', 'losses']) {
       assert.ok(regionalText(draft.quiz[1].options[2]).includes(term), `${language}: all cost and loss components survive`);
     }
     assert.match(regionalText(draft.keyPoints[3]), /qualified help/);
+    if (language === 've' || language === 'ts') {
+      assert.equal(draft.keyPoints[1].sourceEnglish, source.keyPoints[1]);
+      assert.notEqual(regionalText(draft.keyPoints[1]), source.keyPoints[1],
+        `${language}: ordinary tool-care, booking and repair duties are drafted`);
+      assert.match(regionalText(draft.keyPoints[1]), /booking/);
+      assert.match(regionalText(draft.keyPoints[1]), /lugisa|lunghisa/,
+        `${language}: repair responsibility remains present`);
+    }
     const changedQuestion = { ...source, quiz: source.quiz.map((question, index) => index ? question : { ...question, q: `${question.q} Changed condition.` }) };
     assert.equal(resolveLearnerLessonPresentation(changedQuestion, language).status, 'english-fallback', 'source question edits withdraw stale drafts');
     const changedKey = { ...source, quiz: source.quiz.map((question, index) => index ? question : { ...question, correct: 0 }) };

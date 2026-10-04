@@ -8,7 +8,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { COURSE_MODULES, LESSON_INDEX } from '../lib/course-modules.ts';
+import { COURSE_MODULES, LESSON_INDEX, type CourseModule } from '../lib/course-modules.ts';
 import { COURSE_IMAGE_BRIEFS } from '../lib/course-image-briefs.ts';
 import { courseTranslationReviewState, isCourseTranslationLearnerReady, learnerLessonForLanguage, resolveLearnerLessonPresentation, type CourseTranslationRecord } from '../lib/course-localization.ts';
 import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
@@ -19,6 +19,12 @@ import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-draft
 import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
 import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
+import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
+import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
+import { XITSONGA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
+import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
+import { XITSONGA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ts-soil-health.ts';
+import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
 
 test('Sesotho and Xitsonga Introduction appear as labelled drafts only while their exact source and answers match', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!;
@@ -64,6 +70,59 @@ test('Sesotho and Xitsonga Introduction appear as labelled drafts only while the
     assert.equal(resolveCourseModulePresentation(landscape, language).status,
       'draft', `${language}: module card follows its source-paired draft`);
   }
+});
+
+
+test('regional ordinary metadata drafts stay source-bound and appear on the intended Study cards', () => {
+  const vegetables = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!;
+  for (const [language, draft, title, description] of [
+    ['ve', TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, 'Miroho na Staple Crops', 'Bed prep, succession planting, staple crops and pest management — mushumo wa ḓuvha ḽiṅwe na ḽiṅwe wa u lima zwiḽiwa.'],
+    ['ts', XITSONGA_VEGETABLES_STAPLES_DRAFT, 'Matsavu na Staple Crops', 'Bed prep, succession planting, staple crops and pest management — ntirho wa siku ni siku wa ku rima swakudya.'],
+  ] as const) {
+    assert.equal(draft.title.sourceEnglish, vegetables.title, `${language}: frozen canonical module title`);
+    assert.equal(draft.description.sourceEnglish, vegetables.description, `${language}: frozen canonical module description`);
+    assert.equal(draft.title.reviewStatus, 'machine-draft', `${language}: title remains visibly unreviewed`);
+    assert.equal(draft.description.reviewStatus, 'machine-draft', `${language}: description remains visibly unreviewed`);
+    const card = resolveCourseModulePresentation(vegetables, language);
+    assert.deepEqual(card, { title, description, status: 'draft' }, `${language}: the paired metadata appears on the card`);
+    const changedModules: CourseModule[] = [
+      { ...vegetables, title: `${vegetables.title} changed` },
+      { ...vegetables, description: `${vegetables.description} changed` },
+      { ...vegetables, durationMins: vegetables.durationMins + 1 },
+      { ...vegetables, category: vegetables.category === 'plants' ? 'design' : 'plants' },
+    ];
+    for (const changed of changedModules) {
+      assert.equal(resolveCourseModulePresentation(changed, language).status, 'english-fallback',
+        `${language}: changed canonical card fields withdraw the stale metadata draft`);
+    }
+  }
+
+  const titleRows = [
+    { language: 've' as const, lessonId: 'water-harvesting-l3', lessonDraft: TSHIVENDA_WATER_HARVESTING_DRAFT.lessons.find(item => item.id === 'water-harvesting-l3')!, target: 'Rainwater Tanks and Roof Catchment: U kuvhanganya na u tsireledza maḓi' },
+    { language: 'ts' as const, lessonId: 'water-harvesting-l3', lessonDraft: XITSONGA_WATER_HARVESTING_DRAFT.lessons.find(item => item.id === 'water-harvesting-l3')!, target: 'Rainwater Tanks and Roof Catchment: Ku hlengeleta ni ku sirhelela mati' },
+    { language: 'ts' as const, lessonId: 'soil-health-l1', lessonDraft: XITSONGA_SOIL_HEALTH_DRAFT.lessons.find(item => item.id === 'soil-health-l1')!, target: 'Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo' },
+    { language: 've' as const, lessonId: 'soil-health-l3', lessonDraft: TSHIVENDA_SOIL_HEALTH_DRAFT.lessons.find(item => item.id === 'soil-health-l3')!, target: 'Mulching and Cover Crops: U tsireledza mavu na Building Soil' },
+    { language: 'ts' as const, lessonId: 'vegetables-staples-l4', lessonDraft: XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons.find(item => item.id === 'vegetables-staples-l4')!, target: 'Xiyisisa ni ku lawula Pests na Disease' },
+  ];
+  for (const row of titleRows) {
+    const moduleId = row.lessonId.startsWith('water-') ? 'water-harvesting'
+      : row.lessonId.startsWith('soil-') ? 'soil-health' : 'vegetables-staples';
+    const lesson = COURSE_MODULES.find(module => module.id === moduleId)!.lessons.find(item => item.id === row.lessonId)!;
+    const pair = row.lessonDraft.title;
+    assert.equal(pair.sourceEnglish, lesson.title, `${row.language}/${row.lessonId}: frozen canonical title`);
+    const title = 'tshivendaDraft' in pair ? pair.tshivendaDraft : pair.xitsongaDraft;
+    assert.equal(title, row.target,
+      `${row.language}/${row.lessonId}: approved source-bound card title`);
+    assert.equal(pair.reviewStatus, 'machine-draft', `${row.language}/${row.lessonId}: title stays visibly unreviewed`);
+    const shown = resolveLearnerLessonPresentation(lesson, row.language);
+    assert.equal(shown.status, 'draft', `${row.language}/${row.lessonId}: title draft is reachable`);
+    assert.equal(shown.content.title, row.target);
+    assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, row.language).status,
+      'english-fallback', `${row.language}/${row.lessonId}: changed canonical title withdraws the stale title draft`);
+  }
+  assert.equal(XITSONGA_SOIL_HEALTH_DRAFT.lessons.find(item => item.id === 'soil-health-l3')!.title.xitsongaDraft,
+    'Ku Tirhisa Mulch na Cover Crops: Ku Sirhelela Misava na Building Soil',
+    'uncertain Xitsonga Building Soil wording remains exact English');
 });
 
 test('each regional Reading the Landscape lesson keeps its exact English source and held claims', () => {
@@ -199,8 +258,8 @@ test('Sesotho Vegetables and Staple Crops keeps held crop and pest wording in En
       }
     }
   }
-  assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'english-fallback',
-    'paused Xitsonga remains English for this module');
+  assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'draft',
+    'the source-paired Xitsonga card metadata is now available while lesson checks remain source-bound');
 });
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);

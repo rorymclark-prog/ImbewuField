@@ -600,9 +600,9 @@ test('Vegetables L3 preserves crop conditions and exact technical clauses while 
   assert.equal(learnerVegetablesDraft.sourceMetadata.durationMins, module.durationMins);
   assert.equal(learnerVegetablesDraft.sourceMetadata.category, module.category);
   const card = resolveCourseModulePresentation(module, 've');
-  assert.equal(card.status, 'english-fallback');
-  assert.equal(card.title, module.title);
-  assert.equal(card.description, module.description);
+  assert.equal(card.status, 'draft', 'the reviewed module metadata candidate is now routed to the Tshivenda Study card');
+  assert.equal(card.title, learnerVegetablesDraft.title.tshivendaDraft);
+  assert.equal(card.description, learnerVegetablesDraft.description.tshivendaDraft);
   assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} changed` }, 've').status, 'english-fallback');
   assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} changed` }, 've').status, 'english-fallback');
   const { readFileSync } = await import('node:fs');
@@ -707,18 +707,27 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   assert.ok(l4[4].includes('water') && l4[4].includes('nutrition') && l4[4].includes('root damage'));
   assert.ok(l4[4].endsWith('Wanani uri ndi zwifhio ni sa athu dzhia vhukando.'),
     'the cause list still asks the grower to find which cause before acting');
-  assert.ok(l4[6].startsWith('Tsha u thoma. Sedzani. '));
+  assert.equal(l4[6].startsWith('Tsha u thoma. Sedzani. Sedzani '), true,
+    'the localized checklist keeps both source commands: One/Observe and Look');
   for (const target of ['damage pattern', 'the underside of the leaf', 'the stem', 'the plants nearby']) {
-    assert.ok(l4[6].includes(target), `the source observation checklist keeps ${target} exact`);
+    assert.ok(l4[6].includes(target), `the source observation checklist keeps ${target} exact because the earlier leaf-underneath wording risked changing leaf anatomy`);
   }
   for (const target of ['Soil moisture', 'midzi', 'spacing', 'nutrition', 'drainage']) assert.ok(l4[7].includes(target));
   assert.ok(l4[8].includes('Beneficial insects') && l4[8].includes('mushumo'),
     'the translated protection sentence still says beneficial insects do useful work');
   assert.match(l4[9], /^Tsha vhuṋa\. Ndi hone fhedzi ni tshi dzhia vhukando —/);
   assert.ok(l4[9].includes('start with the lightest thing that works.'));
-  assert.ok(l4[9].endsWith('Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.'));
+  assert.ok(l4[9].endsWith('Physical removal, barriers or changes in crop care may help. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.'), 'translate the fit and continuing-monitor check without changing the sequence or its qualified methods');
   assert.equal(l4[10], sourceL4[10],
     'registration for the crop and pest, label directions, harvest waiting instructions, and the ban on improvised or stronger doses stay exact');
+  const sourceL4Lesson = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
+  const changedChecklistSource = {
+    ...sourceL4Lesson,
+    body: sourceL4Lesson.body.replace('the plants nearby', 'the plants in a nearby row'),
+  };
+  assert.notEqual(changedChecklistSource.body, sourceL4Lesson.body);
+  assert.equal(resolveLearnerLessonPresentation(changedChecklistSource, 've').status, 'english-fallback',
+    'changing one of the four inspection locations withdraws this source-bound checklist rather than serving a stale instruction');
 });
 
 

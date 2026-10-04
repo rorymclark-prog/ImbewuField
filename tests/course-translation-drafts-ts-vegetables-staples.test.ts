@@ -171,7 +171,8 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
   assert.ok(paragraphs[0].includes('Roots slow down.'));
   assert.ok(paragraphs[1].endsWith('Permanent paths, and a bed narrow enough to reach into from both sides.'));
   assert.ok(paragraphs[11].endsWith("They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."));
-  assert.ok(paragraphs[13].includes('crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.'));
+  assert.equal(paragraphs[13], 'Landzelela spacing guidance for the crop, variety and local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.', 'translate ordinary packet and local-grower advice while keeping the spacing, crop, variety, conditions and crowding anchor source-bound');
+  assert.equal(paragraphs[3], "Sweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana.", 'the access test explicitly asks whether the grower can reach the middle without stepping inside');
   assert.ok(paragraphs[16].endsWith('Mark the rectangle, and mark both access paths.'));
   assert.equal(draft.title.sourceEnglish, source.title);
   assert.equal(draft.title.xitsongaDraft, 'Ku Lulamisa ni ku Byala Mabedhe ya Wena.');
@@ -238,8 +239,8 @@ test('Pest framing retains four-step order and exact treatment safeguards beside
   assert.ok(paragraphs[3].startsWith('Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”?'));
   assert.ok(paragraphs[3].includes('predators se ti ku pfuna hi ku tirha eka xiphiqo lexi'),
     'the diagnostic question still asks whether predators are already helping');
-  assert.equal(paragraphs[4].startsWith('A yellow leaf is not automatically an insect.'), true,
-    'the diagnostic negative and yellow-leaf subject remain exact before the cause list');
+  assert.match(paragraphs[4], /^A yellow leaf a swi vuli automatically leswaku ku ni insect\./,
+    'the now-localized diagnostic still names a yellow leaf, keeps the negative meaning and automatically qualifier, and does not claim an insect is present');
   assert.ok(paragraphs[4].includes('mati') && paragraphs[4].includes('nutrition') && paragraphs[4].includes('timitsu'));
   assert.ok(paragraphs[4].endsWith('Kuma leswaku i yini u nga si teka goza.'),
     'the grower must identify which cause before acting');
@@ -247,14 +248,22 @@ test('Pest framing retains four-step order and exact treatment safeguards beside
   assert.ok(paragraphs[7].startsWith('Vumbirhi. Kambela stress.') && /timitsu/.test(paragraphs[7]) && /nutrition/.test(paragraphs[7]) && /drainage/.test(paragraphs[7]));
   assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
   assert.ok(paragraphs[9].includes('and start with the lightest thing that works.'));
-  assert.ok(paragraphs[9].endsWith('Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.'));
+  assert.ok(paragraphs[9].endsWith('Physical removal, barriers or changes in crop care may help. Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result.'), 'only the action-fit check is localized; uncertain ongoing-monitor wording stays exact English');
   assert.equal(paragraphs[10], english[10],
     'registration for the crop and pest, label directions, harvest waiting instructions, and the ban on improvised or stronger doses stay exact');
+  const changedDiagnosticSource = {
+    ...source,
+    body: source.body.replace('A yellow leaf is not automatically an insect.', 'A yellow leaf is not always an insect.'),
+  };
+  assert.notEqual(changedDiagnosticSource.body, source.body);
+  assert.equal(resolveLearnerLessonPresentation(changedDiagnosticSource, 'ts').status, 'english-fallback',
+    'changing the diagnostic qualifier withdraws this source-bound draft instead of serving a stale translated caution');
   for (const index of [0, 2, 5, 8, 9, 11]) assert.notEqual(paragraphs[index], english[index]);
   assert.equal(paragraphs[5], 'Tirha hi magoza ya mune, hi ku landzelelana.');
   assert.ok(paragraphs[8].includes('Beneficial insects') && paragraphs[8].includes('ntirho'));
   assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
-  assert.ok(paragraphs[9].endsWith(english[9].slice(english[9].indexOf('—') + 2)));
+  assert.ok(paragraphs[9].includes('and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help.'), 'the action still comes only after the earlier checks and keeps its qualified method choices');
+  assert.ok(paragraphs[9].endsWith('Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result.'), 'the problem-fit check is localized and uncertain monitoring wording stays exact English');
   assert.ok(paragraphs[11].startsWith("Tshembeka eka wena n'winyi"));
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
   const shown = resolveLearnerLessonPresentation(source, 'ts');

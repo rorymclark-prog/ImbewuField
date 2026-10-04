@@ -75,9 +75,11 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
     const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
-    // Reviewed Market L1 destinations/months/price framing join the prior drafts; technical holds stay exact.
+    // Reviewed L1 and L3 market framing joins the drafts; untranslated technical holds stay exact.
     const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]
-      : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] : [0, 3, 4, 5, 7, 8, 9, 10];
+      : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        : draftLesson.id === 'market-community-l3' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+          : [0, 3, 4, 5, 7, 8, 9, 10];
     for (const [index, paragraph] of sourceParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(draftParagraphs[index], paragraph);
       else assert.equal(draftParagraphs[index], paragraph);
@@ -318,8 +320,13 @@ test('Water Harvesting held wording remains exact where dam, water-law and reuse
       assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} must remain exact English`);
       assert.equal(pair.reviewStatus, 'hold');
     } else {
-      assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} must remain exact English`);
-      assert.equal(pair.reviewStatus, 'hold');
+      if (hold.lessonId === 'water-harvesting-l3' && hold.field === 'title') {
+        assert.equal(pair.xitsongaDraft, 'Rainwater Tanks and Roof Catchment: Ku hlengeleta ni ku sirhelela mati');
+        assert.equal(pair.reviewStatus, 'machine-draft', 'the approved ordinary title phrase replaces its superseded hold');
+      } else {
+        assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} must remain exact English`);
+        assert.equal(pair.reviewStatus, 'hold');
+      }
     }
     assert.ok(hold.reason.length > 0);
   }

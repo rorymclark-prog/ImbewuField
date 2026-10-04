@@ -68,7 +68,7 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
     {
       id: 'soil-health-l1',
       infographicAlt: hold('A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.'),
-      title: hold('Understanding Your Soil: The Foundation of Everything'),
+      title: pair('Understanding Your Soil: The Foundation of Everything', 'Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo'),
       body: pair(sourceBody, draftParagraphs.join('\n\n')),
       keyPoints: [
         pair('Use several clues to assess soil condition', 'Tirhisa swikombiso swo hlayanyana ku kambela xiyimo xa misava.'),

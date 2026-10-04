@@ -2,6 +2,44 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
+test('updated Vegetables lesson frames retire stale saved wording without deleting narration or other decks', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateVegetablesOrdinaryLessonStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then/);
+  const origin = 'https://field.test';
+  const changed = ['st/16', 've/16', 'ts/04', 'ts/06', 'ts/10', 'ts/11', 'ts/15', 'ts/16']
+    .map(part => { const [language, slide] = part.split('/'); return `/course-decks/vegetables-staples/${language}/slide-${slide}.webp`; });
+  const old = changed.flatMap(path => [path, `${path}?saved=old`, `${path}?width=small`]).map(path => origin + path);
+  const keep = [
+    '/course-decks/vegetables-staples/ts/slide-05.webp?cached=1',
+    '/course-decks/vegetables-staples/ve/slide-04.webp',
+    '/course-decks/vegetables-staples/en/slide-16.jpg',
+    '/course-decks/vegetables-staples/zu/slide-16.jpg',
+    '/course-audio/vegetables-staples/en/slide-16.mp3',
+    '/course-audio/intro-permaculture/st/slide-16.mp3',
+    '/course-decks/market-community/ts/slide-16.webp',
+  ].map(path => origin + path);
+  const rows = new Map([...old, ...keep].map(url => [url, new Response(url)]));
+  let writes = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { writes++; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const url of old) assert.equal(rows.has(url), false, url);
+  for (const url of keep) assert.equal(await rows.get(url)!.text(), url, url);
+  const replacement = origin + changed[0];
+  rows.set(replacement, new Response('learner-selected replacement'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'learner-selected replacement');
+  assert.equal(writes, 1, 'later activation keeps replacement downloads');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'refresh does not spend learner data on media');
+});
+
 test('a saved Market record gets its clearer still without discarding other downloaded lessons', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateMarketRecordStill\(\) \{([\s\S]*?)\n\}/)?.[1];
@@ -1833,7 +1871,7 @@ test('a saved Reading Landscape pack retires only the seventeen changed regional
   const body = source.match(/async function migrateReadingLandscapeDraftStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(function \(\)/,
+    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(function \(\)/,
     'the older Reading invalidation stays before the next batch in activation order');
 
   const origin = 'https://field.test';
@@ -1902,7 +1940,7 @@ test('a saved Reading Landscape pack retires only the next twelve regional still
   const body = source.match(/async function migrateReadingLandscapeOrdinaryStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(function \(\)/,
+    /then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(function \(\)/,
     'the Intro cache step follows both Reading invalidations before activation claims existing tabs');
 
   const origin = 'https://field.test';
@@ -1964,7 +2002,7 @@ test('Intro cache migration retires only the 42 revised VE and TS stills once', 
   const body = source.match(/async function migrateIntroRegionalSubstantiveStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   assert.match(source,
-    /then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(function \(\)/,
+    /then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(function \(\)/,
     'Intro invalidation runs after earlier course cache migrations during worker activation');
 
   const origin = 'https://field.test';
