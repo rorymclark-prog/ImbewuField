@@ -43,9 +43,9 @@ export interface UpdateTourStop {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '4 October 2026', sha: 'b12b7cd1', changes: [
-    'Production calendars show outlined planning seasons for fruit, nuts and berries where regional references are available.',
+    'Fruit, nuts and berries show outlined planning seasons where sources support them.',
     'Printed plans use fruit pictures and explain the sources behind the marked months.',
-    'Your confirmed picking months replace the references; only confirmed food counts in totals.',
+    'Your confirmed picking months replace the references and count in food totals.',
   ], tour: [
     { title: 'See your production seasons',
       where: 'Production plan → Fruit, nuts & berries',
