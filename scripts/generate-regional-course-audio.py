@@ -71,7 +71,34 @@ def plan(module: str, lang: str) -> list[dict]:
                 if not text or text == original:
                     raise ValueError(f"Slide {n} has an empty or false translated draft")
             elif status == "english-hold":
+                if "text" in candidate:
+                    raise ValueError(f"Slide {n} has competing text for an English hold")
                 text = original
+            elif status == "mixed":
+                segments = candidate.get("segments")
+                if "text" in candidate or not isinstance(segments, list) or len(segments) < 2:
+                    raise ValueError(f"Slide {n} has invalid mixed paragraph segments")
+                source_parts = []
+                spoken_parts = []
+                for segment in segments:
+                    if not isinstance(segment, dict) or segment.get("status") not in {"draft", "english-hold"}:
+                        raise ValueError(f"Slide {n} has an invalid mixed segment status")
+                    source_text = segment.get("sourceEnglish")
+                    if not isinstance(source_text, str) or not source_text.strip():
+                        raise ValueError(f"Slide {n} has an empty mixed English source segment")
+                    source_parts.append(source_text)
+                    if segment["status"] == "draft":
+                        translated = segment.get("text")
+                        if not isinstance(translated, str) or not translated.strip() or translated.strip() == source_text.strip():
+                            raise ValueError(f"Slide {n} has an empty or false mixed draft segment")
+                        spoken_parts.append(translated)
+                    else:
+                        if "text" in segment:
+                            raise ValueError(f"Slide {n} has competing text for a mixed English hold")
+                        spoken_parts.append(source_text)
+                if "".join(source_parts) != original:
+                    raise ValueError(f"Slide {n} mixed segments do not preserve the exact English source")
+                text = "".join(spoken_parts)
             else:
                 raise ValueError(f"Slide {n} has unknown review status {status!r}")
             spoken.append(text)
@@ -84,6 +111,7 @@ def plan(module: str, lang: str) -> list[dict]:
             "statuses": statuses,
             "draftParagraphs": statuses.count("draft"),
             "englishHolds": statuses.count("english-hold"),
+            "mixedParagraphs": statuses.count("mixed"),
             "sourceSha256": hashlib.sha256(english[n].encode()).hexdigest(),
             "spokenSha256": hashlib.sha256(narration.encode()).hexdigest(),
         })
@@ -160,9 +188,11 @@ def main() -> None:
     parser.add_argument("--replace-stale", action="store_true", help="Regenerate only clips whose source-pair hashes changed")
     args = parser.parse_args()
     slides = plan(args.module, args.lang)
+    mixed_count = sum(x["mixedParagraphs"] for x in slides)
+    mixed_summary = f", {mixed_count} mixed paragraphs" if mixed_count else ""
     print(f"{args.module}/{args.lang}: {len(slides)} source-matched slides, "
           f"{sum(x['draftParagraphs'] for x in slides)} draft paragraphs, "
-          f"{sum(x['englishHolds'] for x in slides)} exact-English holds")
+          f"{sum(x['englishHolds'] for x in slides)} exact-English holds{mixed_summary}")
     if not args.generate:
         return
     key = os.environ.get("GEMINI_API_KEY")
@@ -214,7 +244,8 @@ def main() -> None:
         verification["slides"] = [verified[n] for n in sorted(verified)]
         record_path.write_text(json.dumps(verification, ensure_ascii=False, indent=2) + "\n")
         print(f"slide {slide['slide']:02d}: {slide['seconds']}s, "
-              f"{slide['draftParagraphs']} draft / {slide['englishHolds']} English holds", flush=True)
+              f"{slide['draftParagraphs']} draft / {slide['englishHolds']} English holds" +
+              (f" / {slide['mixedParagraphs']} mixed" if slide["mixedParagraphs"] else ""), flush=True)
     if len(selected) == len(slides):
         verification["fullNarration"] = join_full_narration(output, len(slides))
     record_path.write_text(json.dumps(verification, ensure_ascii=False, indent=2) + "\n")

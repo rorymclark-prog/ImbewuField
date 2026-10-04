@@ -1,0 +1,71 @@
+{
+  "title": "Independent check of two Tshivenda concord repairs",
+  "date": "2026-10-04",
+  "scope": "Two row-specific repair proposals only; no repository edits. The recommendations preserve English where the borrowed-noun agreement is not defensible from available evidence.",
+  "rows": [
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 4,
+      "canonicalEnglishSource": "What does your land get back from you each season?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "rootCandidate": "Land yaṋu a wana mini kha inwi kha khalaṅwaha iṅwe na iṅwe?",
+      "proposedMinimalRepair": "Land yaṋu i wana mini kha inwi kha khalaṅwaha iṅwe na iṅwe?",
+      "decision": "accept-with-fluent-concord-note",
+      "finding": "The meaning is preserved: asks what the learner’s land receives in return, each season. Changing a→i is a defensible minimal concord repair if English “land” is treated as an N-Dzi/class 9 noun: available grammar references give i-/y- as class 9 subject concord. The reference does not verify local adaptation of this exact borrowed noun, so record for fluent confirmation rather than claim approval.",
+      "sourceBindingMatches": true,
+      "evidence": {
+        "tshivendaConcordReference": [
+          {
+            "title": "Noun-Verb Asymmetry in Tshivenda Vowel Hiatus Resolution, University of the Witwatersrand repository",
+            "url": "https://wiredspace.wits.ac.za/server/api/core/bitstreams/8b9741ca-1003-4e67-abbc-e1ea51255473/content",
+            "relevance": "Concord table identifies class 9 subject concord i-/y- and possessive ya-."
+          },
+          {
+            "title": "Tshivenda Basic Grammar — Noun Classes and Concords",
+            "url": "https://docs.verbix.com/assets/images/media/tshivenda.pdf",
+            "relevance": "Explains N-Dzi as a catch-all for nouns without an obvious class and shows i concord."
+          }
+        ],
+        "limit": "These references support a conservative grammar hypothesis; they do not establish fluent idiom for this exact learner sentence."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 1,
+      "canonicalEnglishSource": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "rootCandidate": "Maka Zone 0 and Zone 1 u thome, ni bvele nga nnḓa u swika hune land yaṋu a ya hone.",
+      "proposedMinimalRepair": "Maka Zone 0 and Zone 1 u thome, ni bvele nga nnḓa, as far as your land goes.",
+      "decision": "accept-source-bound-English-remainder",
+      "finding": "The localized part preserves marking Zones 0 and 1 first, then moving outward. The remaining source phrase is exact English, retaining “as far as your land goes” without changing it to a property-boundary claim. This is preferable to guessing relative concord for a borrowed English noun.",
+      "sourceBindingMatches": true,
+      "evidence": {
+        "tshivendaConcordReference": [
+          {
+            "title": "Noun-Verb Asymmetry in Tshivenda Vowel Hiatus Resolution, University of the Witwatersrand repository",
+            "url": "https://wiredspace.wits.ac.za/server/api/core/bitstreams/8b9741ca-1003-4e67-abbc-e1ea51255473/content",
+            "relevance": "Concord table identifies class 9 subject concord i-/y- and possessive ya-."
+          },
+          {
+            "title": "Tshivenda Basic Grammar — Noun Classes and Concords",
+            "url": "https://docs.verbix.com/assets/images/media/tshivenda.pdf",
+            "relevance": "Explains N-Dzi as a catch-all for nouns without an obvious class and shows i concord."
+          }
+        ],
+        "limit": "These references support a conservative grammar hypothesis; they do not establish fluent idiom for this exact learner sentence."
+      }
+    }
+  ],
+  "integrity": {
+    "vePairedSourceSHA256": "a502d5f11e8302d2fd5d5fa182feff7883f495b5066fa784f31908c45307e2f1",
+    "candidateSourceBindingsMatch": true,
+    "repositoryFilesChanged": false
+  },
+  "conclusion": "VE6b4 supports the minimal subject-concord change to i as a reasonable class 9/N-Dzi analysis, still pending fluent confirmation. VE21b1 should retain the exact English extent clause after the localized order and outward movement; do not assert the proposed ya guma clause as verified."
+}

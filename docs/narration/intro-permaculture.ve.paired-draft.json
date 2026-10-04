@@ -37,10 +37,24 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "This module is the foundation for everything else in the course.",
+                "status": "draft",
+                "text": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino."
+              },
+              {
+                "sourceEnglish": " Three ethics, a set of design principles, and one simple way to organise your land.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A zwi ṱoḓi tshelede. Zwoṱhe zwi shandula hune na vhea zwithu, na uri ni tshimbila vhukale vhu ngafhani ḓuvha ḽiṅwe na ḽiṅwe.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -69,7 +83,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Design yavhuḓi i fhungudza mushumo ni sa athu u fara spade.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -77,7 +93,9 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Permaculture ndi nḓila ya u dzhia tsheo ya hune zwithu zwa tea u vha hone, uri mavu a shume na inwi, hu si u ni thivhela.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -110,13 +128,49 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bulani the three ethics, ni dzi shumise u dzhia tsheo ine ya si vhe na phindulo i vhonalaho.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Name the ",
+                "status": "draft",
+                "text": "Bulani "
+              },
+              {
+                "sourceEnglish": "design principles",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that matter most on your land, and say why.",
+                "status": "draft",
+                "text": " dzi re dza ndeme nga maanḓa kha land yaṋu, ni bule na uri ndi ngani."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sketch ",
+                "status": "draft",
+                "text": "Olani "
+              },
+              {
+                "sourceEnglish": "your zones and your sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on one sheet of paper.",
+                "status": "draft",
+                "text": " kha bammbiri ḽithihi."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -150,10 +204,14 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwi amba u dzhia soil, water, plants and animals sa “living systems to protect, not resources to use up.”",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "System ine na shumisa na fhedza i a ima: “stops paying you.” System ine na tsireledza i bvela phanda: “keeps paying you.”",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -198,7 +256,9 @@
             "provenance": "unreviewed-ai-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bulasi ḽo itelwa u ṋea zwiḽiwa muṱa une wa ḽi shumisa.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -233,16 +293,34 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Take only what you need, and ",
+                "status": "draft",
+                "text": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone "
+              },
+              {
+                "sourceEnglish": "return the surplus to the system — seeds, food, water, knowledge.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mulimi ane a rengisa mielies dzawe dzoṱhe dza surplus, a si vhulunge na tshithu tsha compost kana seed, u khou pfuka uyu mulayo. A hu na tshithu tshi vhuyelelaho.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshitshavha tshi vhofhaho tsime ḽine ḽa shumiswa nga vhoṱhe nga fence tshi khou pfuka Fair Share na tshone.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Land yaṋu i wana mini kha inwi kha khalaṅwaha iṅwe na iṅwe?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -263,13 +341,49 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A borehole",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " serves your household.",
+                "status": "draft",
+                "text": " i shumela muṱa waṋu."
+              },
+              {
+                "sourceEnglish": " Neighbours ask for water too.",
+                "status": "draft",
+                "text": " Vhahura vha khou humbela maḓi na vhone."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "First find out if sharing is allowed.",
+                "text": "Thomani nga u wana arali u kovhelana ho tendelwa."
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Check whether the borehole can serve all users without taking too much."
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+                "text": " Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza water level. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza the source. U sedza water level fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi nnyi ane a nga ni thusa u sedza milayo na water supply?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -297,13 +411,39 @@
             "text": "Hezwi ndi zwone zwine milayo ya vhuḓifari ya itelwa zwone."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Nobody has written down the answer.",
+                "status": "draft",
+                "text": "A hu na muthu o ṅwalaho phindulo."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The ethics help you weigh the choices and explain your decision.",
+                "status": "draft",
+                "text": "Milayo ya vhuḓifari i ni thusa u pima khetho na u ṱalutshedza tsheo yaṋu."
+              },
+              {
+                "sourceEnglish": " Check the rules and ask permission where it is needed.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dzhiani ethics idzi tharu ni dzi ite tshipiḓa tsha nḓila ine na humbula ngayo, ni sa athu fhaṱa zwithu kha mavu.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -360,16 +500,34 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Watch your land",
+                "status": "draft",
+                "text": "Sedzani land yaṋu"
+              },
+              {
+                "sourceEnglish": " through a full season before you commit to major earthworks.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "One storm i sumbedza tshifhinga tshithihi. Full wet season i sumbedza pattern: hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Izwi zwi thusa uri ni pfesese site. Fhedzi izwi fhedzi a zwi sumbedzi uri swale yo tea kana yo safe u fhaṱiwa. Ni sa athu cela, sedzani soil, slope, drainage na safe overflow route ine ya sa ise kha erosion kana u rumela maḓi a tshinyadzaho kha vhahura. Humbelani trained local adviser uri a sedze site.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Maḓi a bva ngafhi kha land yaṋu? Ni a ḓivha zwa vhukuma, kana ni khou humbulela?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -393,16 +551,39 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Harvest rain, sun na biomass ni sa athu u zwi xedza kha property yaṋu.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zwoṱhe izwi zwi swika mahala, zwa dovha zwa ṱuwa mahala. Water i a tsela, leaves dzi a fhufha, sun i wela kha mavu a songo fukedzwaho.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Compare ",
+                "status": "draft",
+                "text": "Vhambedzani "
+              },
+              {
+                "sourceEnglish": "the cost and work with the benefit",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on your own farm.",
+                "status": "draft",
+                "text": " kha bulasi yaṋu."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Bulani tshithu tshithihi tshine tsha swika kha mavu aṋu mahala tsha dovha tsha ṱuwa tshi songo shumiswa.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -425,13 +606,43 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The edge",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is where two things meet",
+                "status": "draft",
+                "text": " ndi hune zwithu zwivhili zwa ṱangana"
+              },
+              {
+                "sourceEnglish": " — a fence line or the strip beside a path.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours.",
+                "status": "draft",
+                "text": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu."
+              },
+              {
+                "sourceEnglish": " That is the land telling you something.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ndi edge ifhio ya plot yaṋu ine zwa zwino ya si shume tshithu?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -454,13 +665,44 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Use and value diversity.",
+                "text": "Shumisani diversity ni i dzhiele nṱha."
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Hail injury to maize depends on the storm and the crop’s growth stage."
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " This principle does not promise that a crop will survive every event.",
+                "text": " Principle iyi a i fulufhedzisi uri crop i ḓo ponyoka kha event iṅwe na iṅwe."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Two others worth knowing:",
+                "status": "draft",
+                "text": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya:"
+              },
+              {
+                "sourceEnglish": " produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ḓuvha ḽithihi ḽivhi ḽi nga ni durisa mini zwino?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -489,13 +731,34 @@
             "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food.",
+                "text": "A garden, fruit trees na chicken run zwi nga dzudzanywa uri chickens dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela chickens dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe."
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Fresh manure can carry germs."
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+                "text": " Vhudzisani extension adviser uri bed i langulwe hani safely, edible crops dzi sa athu dovha u hula. Chickens dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha fixed pen."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Izwi zwithu zwiraru, zwo fhandekanywaho nga fence, zwi ita mushumo wa tshone tshithihi tshithihi fhedzi.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Khethani principles mbili kana tharu dzine dza amba na thaidzo yaṋu khulwane ni dzi shumise nga maanḓa. Dziṅwe dzi ḓo tou vha khagala musi ni tshi bvela phanḓa.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -517,16 +780,62 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " run from 0 to 5, and they are about your feet, not your fences.",
+                "status": "draft",
+                "text": " dzi bva kha 0 u ya kha 5, nahone ndi nga ha u tshimbila haṋu, hu si fences yaṋu."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zone 0",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is the house. In this example, ",
+                "status": "draft",
+                "text": " ndi nḓu. Kha hei tsumbo, "
+              },
+              {
+                "sourceEnglish": "Zone 1",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is near the house and holds ",
+                "status": "draft",
+                "text": " i tsini na nḓu nahone i na "
+              },
+              {
+                "sourceEnglish": "herbs and salad greens",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " picked often.",
+                "status": "draft",
+                "text": " zwine na zwi kaṋa lunzhi."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zone 2 ndi main garden na chicken run, ni zwi dalela once or twice a day. Zone 3 ndi main field, ni i dalela weekly.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zone 4 ndi semi-wild: fruit trees na fodder zwine zwa ṱoḓa attention from time to time. Zone 5 i sala i wild.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -548,10 +857,34 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Herbs",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " you pick often are easier to tend near the house.",
+                "status": "draft",
+                "text": " dzine na dzi kaṋa lunzhi dzi a leluwa u dzi ṱhogomela dzi tsini na nḓu."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. ",
+                "status": "draft",
+                "text": "Arali na dzi vhea kule, lwendo lulapfu lu nga ita uri ni kundelwe u dzi dalela. "
+              },
+              {
+                "sourceEnglish": "The herbs may be neglected.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -588,10 +921,24 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+                "status": "draft",
+                "text": " zwi thusa u dzudzanya fhethu u ya nga mushumo waṋu — u tshimbila, u hwala na u sedza zwine zwa ḓadza ḓuvha ḽa vhukuma."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tshithu tshi ni ṱoḓaho lunzhi tshi dzula tsini na inwi. Zwenezwo zwi nga fhungudza u tshimbila na mushumo kha khalaṅwaha.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -619,13 +966,38 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " come from inside your land. ",
+                "status": "draft",
+                "text": " dzi bva ngomu ha land yaṋu. "
+              },
+              {
+                "sourceEnglish": "Sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " come from outside it.",
+                "status": "draft",
+                "text": " dzi bva nnḓa ha yona."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sun, wind, rain, flood na fire zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani hune strong wind ya bva hone kha farm yaṋu. Nearby weather-station records dzi nga ni thusa u sedza wind direction. Sedzani hune rainwater ya dzhena hone na hune ya elela hone kha mavu aṋu.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -655,19 +1027,29 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sedzani uyu tsumbo. Wind i bva north-west.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Trees na shrubs dzi ima vhukati ha wind iyo na crops.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Muṅwe muya u fhira nga ngomu ha windbreak. Muṅwe u ya nṱha ha yone kana u mona na magumo ayo.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shelter i nga fhungudza wind speed nga murahu hayo. Design na u ṱhogomela windbreak ndi zwa ndeme.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kha site yaṋu, ṱhogomelani damaging winds ni sa athu khetha hune na ḓo lima hone. Tshifanyiso itshi a si planting plan.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -691,10 +1073,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Olani boundary yaṋu. Maka nnḓu. Olani rings dzi tshi ya nnḓa u ya nga uri ni dalela hani lunzhi.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then draw arrows in from outside for ",
+                "status": "draft",
+                "text": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza "
+              },
+              {
+                "sourceEnglish": "sun, wind, fire and water.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -727,13 +1123,53 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sketch your ",
+                "status": "draft",
+                "text": "Olani "
+              },
+              {
+                "sourceEnglish": "own zones and sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on one sheet of paper.",
+                "status": "draft",
+                "text": " kha bammbiri ḽithihi."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Mark ",
+                "status": "draft",
+                "text": "Maka "
+              },
+              {
+                "sourceEnglish": "Zone 0 and Zone 1",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " first, then work outward ",
+                "status": "draft",
+                "text": " u thome, ni bvele nga nnḓa "
+              },
+              {
+                "sourceEnglish": "as far as your land goes.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Engedzani arrow nthihi kha energy iṅwe na iṅwe ine ya swika i tshi bva nnḓa, ni ṅwale hune ya bva hone.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "english-hold"
@@ -760,16 +1196,88 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Walk out and ",
+                "status": "draft",
+                "text": "Ibani ni "
+              },
+              {
+                "sourceEnglish": "check your sketch against the ground.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Stand at the kitchen door and count what is really in ",
+                "status": "draft",
+                "text": "Imani munyangoni wa khishi ni vhale zwine zwa vha zwa vhukuma kha "
+              },
+              {
+                "sourceEnglish": "Zone 1",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " today.",
+                "status": "draft",
+                "text": " namusi."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Find one thing ",
+                "text": "Wanani tshithu tshithihi "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "planted further away than how often you use it, "
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": "and write down where it should move to.",
+                "text": "ni ṅwale hune tsha tea u pfuluselwa hone."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Then ask ",
+                "text": "Nga murahu ni humbele "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "one older neighbour"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " which direction the ",
+                "text": " uri a ni vhudze direction ine "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "worst wind"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " comes from, and compare their answer with your arrow.",
+                "text": " ya bva ngaḽo, ni vhambedze phindulo yawe na arrow yaṋu."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }

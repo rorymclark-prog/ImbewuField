@@ -180,9 +180,11 @@ def main() -> None:
         selected = slides[:args.limit] if args.limit else slides
         print(f"{args.module}/{args.lang}: voice {display_voice}; {len(selected)} of {len(slides)} source-matched slides")
         for slide in selected:
+            mixed_summary = f" / {slide['mixedParagraphs']} mixed" if slide["mixedParagraphs"] else ""
             print(f"slide {slide['slide']:02d}: source SHA-256 {slide['sourceSha256']}; "
                   f"spoken SHA-256 {slide['spokenSha256']}; "
-                  f"{slide['draftParagraphs']} translated draft / {slide['englishHolds']} English holds")
+                  f"{slide['draftParagraphs']} translated draft / {slide['englishHolds']} English holds"
+                  f"{mixed_summary}")
         if not args.generate:
             return
         key = os.environ.get("NARAKEET_API_KEY")

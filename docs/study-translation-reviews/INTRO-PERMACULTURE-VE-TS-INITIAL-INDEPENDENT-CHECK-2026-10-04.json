@@ -1,0 +1,3475 @@
+{
+  "title": "Independent semantic backcheck — Tshivenda and Xitsonga introduction candidates",
+  "date": "2026-10-04",
+  "sourceCandidateFile": "/tmp/imbewu-introduction-deck-substantive-candidates-20261004.json",
+  "scope": "Read-only independent semantic backcheck of 61 VE/TS proposals. No repository edits, commits, pushes, or translated audio actions.",
+  "method": "For every candidate, compare sourceEnglish to the current matching slide/body in the paired VE or TS introduction JSON and to the canonical English narration. Backtranslate candidate clauses for meaning and flag omissions, shifts, directional errors, land/soil ambiguity, wrong-language carryover, numbers, conditions and causal chains. Keep machine review distinct from fluent-speaker approval.",
+  "aggregate": {
+    "ve": {
+      "rows": 30,
+      "accept": 18,
+      "repair": 10,
+      "hold": 2
+    },
+    "ts": {
+      "rows": 31,
+      "accept": 24,
+      "repair": 6,
+      "hold": 1
+    },
+    "total": {
+      "rows": 61,
+      "accept": 42,
+      "repair": 16,
+      "hold": 3
+    }
+  },
+  "integrity": {
+    "candidateRows": 61,
+    "candidateSourceBindingAllExact": true,
+    "currentFileHashes": {
+      "docs/narration/intro-permaculture.en.md": {
+        "expected": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+        "actual": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+        "matches": true
+      },
+      "docs/narration/intro-permaculture.st.paired-draft.json": {
+        "expected": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+        "actual": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+        "matches": true
+      },
+      "docs/narration/intro-permaculture.ve.paired-draft.json": {
+        "expected": "a502d5f11e8302d2fd5d5fa182feff7883f495b5066fa784f31908c45307e2f1",
+        "actual": "a502d5f11e8302d2fd5d5fa182feff7883f495b5066fa784f31908c45307e2f1",
+        "matches": true
+      },
+      "docs/narration/intro-permaculture.ts.paired-draft.json": {
+        "expected": "c169f8d0aeefeeef88071d6c44373875116554478bf04b03ba14fce3f1268f5d",
+        "actual": "c169f8d0aeefeeef88071d6c44373875116554478bf04b03ba14fce3f1268f5d",
+        "matches": true
+      },
+      "lib/course-transcripts.ts": {
+        "expected": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "actual": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "matches": true
+      },
+      "lib/course-audio.ts": {
+        "expected": "82e375452c4034588a526938e350234ed746dc14956adad1cb6d8d548b01ab12",
+        "actual": "82e375452c4034588a526938e350234ed746dc14956adad1cb6d8d548b01ab12",
+        "matches": true
+      },
+      "lib/course-translation-drafts-st.ts": {
+        "expected": "259c32040f8af912df4b87ef134d6c35cc29ee0c24bcd89f654a1d39706f51a8",
+        "actual": "259c32040f8af912df4b87ef134d6c35cc29ee0c24bcd89f654a1d39706f51a8",
+        "matches": true
+      },
+      "lib/course-translation-drafts-ve.ts": {
+        "expected": "748b93af41a1c8ac9b7b85131c31f0aa74e49a8723862b1aaf34c7761332b729",
+        "actual": "748b93af41a1c8ac9b7b85131c31f0aa74e49a8723862b1aaf34c7761332b729",
+        "matches": true
+      },
+      "lib/course-translation-drafts-ts.ts": {
+        "expected": "4da845821ec081cd9d19ae94c67540fe2a4a9da34d84f9e544a51efc0b00a021",
+        "actual": "4da845821ec081cd9d19ae94c67540fe2a4a9da34d84f9e544a51efc0b00a021",
+        "matches": true
+      },
+      "docs/narration-reviews/INTRO-PERMACULTURE-ST-AUDIO-2026-09-28.json": {
+        "expected": "af15028a91eec576917ec46f908aef39abb388c4ec42f7a8b4dbbe776dbb8ca8",
+        "actual": "af15028a91eec576917ec46f908aef39abb388c4ec42f7a8b4dbbe776dbb8ca8",
+        "matches": true
+      }
+    },
+    "stAudioTextBinding": {
+      "pairedSourceSHA256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+      "recordedSourcePairSHA256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+      "sourcePairHashMatches": true,
+      "slides": 22,
+      "all22SpokenTextsMatchCurrentPairedTargets": true,
+      "all22OwnClipHashesMatch": true,
+      "fullTrackHashMatches": true,
+      "perSlideChecks": [
+        {
+          "slide": 1,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 2,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 3,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 4,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 5,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 6,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 7,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 8,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 9,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 10,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 11,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 12,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 13,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 14,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 15,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 16,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 17,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 18,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 19,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 20,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 21,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        },
+        {
+          "slide": 22,
+          "spokenTextExactlyMatchesPairedTarget": true,
+          "clipHashMatches": true
+        }
+      ],
+      "conclusion": "No ST target, audio text, or audio asset was changed in this read-only backcheck; the recorded 22-clip and full-track bindings match current files."
+    },
+    "stPairedSourceHashActual": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+    "stPairedSourceHashMatchesAudioReport": false
+  },
+  "rows": [
+    {
+      "language": "ve",
+      "slide": 1,
+      "bodyIndex": 1,
+      "sourceEnglish": "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "This module is the foundation for everything else in the course.",
+          "status": "draft",
+          "text": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino."
+        },
+        {
+          "sourceEnglish": " Three ethics, a set of design principles, and one simple way to organise your land.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino. Three ethics, a set of design principles, and one simple way to organise your land.",
+      "reason": "Only the plain foundation sentence is localized; the three-ethics/design-principles/land-organization list stays verbatim to avoid reshaping named learning content.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 1,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " Three ethics, a set of design principles, and one simple way to organise your land."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The localized first sentence preserves the foundation claim. The remaining English is ordinary prose and should be translated under the authorized scope; retain only the named learning concepts if needed.",
+        "minimalRepair": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino. Three ethics, design principles, na nḓila nthihi i leluwaho ya u dzudzanya tsimu yaṋu."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 1,
+      "bodyIndex": 2,
+      "sourceEnglish": "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "None of it needs money.",
+          "status": "draft",
+          "text": "A zwi ṱoḓi tshelede."
+        },
+        {
+          "sourceEnglish": " All of it changes where you put things, and how far you walk every day.",
+          "status": "draft",
+          "text": " Zwoṱhe zwi shandula hune na vhea zwithu, na uri ni tshimbila vhukale vhu ngafhani ḓuvha ḽiṅwe na ḽiṅwe."
+        }
+      ],
+      "candidateText": "A zwi ṱoḓi tshelede. Zwoṱhe zwi shandula hune na vhea zwithu, na uri ni tshimbila vhukale vhu ngafhani ḓuvha ḽiṅwe na ḽiṅwe.",
+      "reason": "The “none” and “all” scopes remain explicit; the claim remains the source’s no-money statement and describes where things go and daily walking distance.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 1,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Both “none” and “all” are preserved; “vhukale vhu ngafhani” keeps the question of how far one walks."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 2,
+      "sourceEnglish": "Name the design principles that matter most on your land, and say why.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Name the ",
+          "status": "draft",
+          "text": "Bulani "
+        },
+        {
+          "sourceEnglish": "design principles",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " that matter most on your land, and say why.",
+          "status": "draft",
+          "text": " dzi re dza ndeme nga maanḓa kha mavu aṋu, ni bule na uri ndi ngani."
+        }
+      ],
+      "candidateText": "Bulani design principles dzi re dza ndeme nga maanḓa kha mavu aṋu, ni bule na uri ndi ngani.",
+      "reason": "The design-principles term remains English. “most on your land” and the request to say why are kept as source-bound qualifiers.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 3,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "design principles"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Name the design principles that matter most on your land, and say why.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Meaning is preserved, but “kha mavu” can read as soil rather than the learner’s land/holding. Keep the English technical label if necessary; use a farm/plot term for the site.",
+        "minimalRepair": "Bulani design principles dzi re dza ndeme nga maanḓa kha tsimu yaṋu, ni bule na uri ndi ngani."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 3,
+      "sourceEnglish": "Sketch your zones and your sectors on one sheet of paper.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Sketch your ",
+          "status": "draft",
+          "text": "Olani "
+        },
+        {
+          "sourceEnglish": "zones and your sectors",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " on one sheet of paper.",
+          "status": "draft",
+          "text": " kha bammbiri ḽithihi."
+        }
+      ],
+      "candidateText": "Olani zones and your sectors kha bammbiri ḽithihi.",
+      "reason": "Zones/sectors remain technical English. The single-sheet requirement remains singular and exact.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 3,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "zones and your sectors"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "hold",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Sketch your zones and your sectors on one sheet of paper.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "“Zones” and “sectors” are intentionally retained as technical labels. The possessive is uneven (“your” appears only with sectors); a fluent reviewer should confirm the Tshivenda phrasing before changing the paired draft."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "bodyIndex": 3,
+      "sourceEnglish": "The farm is meant to feed the household that runs it.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The farm is meant to feed the household that runs it.",
+          "status": "draft",
+          "text": "Bulasi ḽo itelwa u ṋea zwiḽiwa muṱa une wa ḽi shumisa."
+        }
+      ],
+      "candidateText": "Bulasi ḽo itelwa u ṋea zwiḽiwa muṱa une wa ḽi shumisa.",
+      "reason": "This translates intention (“meant to”), rather than turning it into an obligation. Household that operates the farm remains the object.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 5,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "The farm is meant to feed the household that runs it.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Preserves that the farm is intended to feed the household that operates it; no extra guarantee or timing is added."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Take only what you need, and ",
+          "status": "draft",
+          "text": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone "
+        },
+        {
+          "sourceEnglish": "return the surplus to the system — seeds, food, water, knowledge.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone return the surplus to the system — seeds, food, water, knowledge.",
+      "reason": "Only “take only what you need” is translated. The return-surplus obligation, destination, and exact list stay source English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 6,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "return the surplus to the system — seeds, food, water, knowledge."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Localized “take only what you need”; exact English surplus instruction/examples preserve full source meaning.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 4,
+      "sourceEnglish": "What does your land get back from you each season?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "What does your land get back from you each season?",
+          "status": "draft",
+          "text": "Mavu aṋu a wana mini kha inwi kha khalaṅwaha iṅwe na iṅwe?"
+        }
+      ],
+      "candidateText": "Mavu aṋu a wana mini kha inwi kha khalaṅwaha iṅwe na iṅwe?",
+      "reason": "The reflective question remains tied to each season and asks what the land receives back.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 6,
+        "pairedEnglishBodyIndex": 4,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "What does your land get back from you each season?",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Asks what the land receives back from the learner each season; seasonal recurrence and direction of benefit remain."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 0,
+      "sourceEnglish": "A borehole serves your household. Neighbours ask for water too.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "A borehole",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " serves your household.",
+          "status": "draft",
+          "text": " i shumela muṱa waṋu."
+        },
+        {
+          "sourceEnglish": " Neighbours ask for water too.",
+          "status": "draft",
+          "text": " Vhahura vha khou humbela maḓi na vhone."
+        }
+      ],
+      "candidateText": "A borehole i shumela muṱa waṋu. Vhahura vha khou humbela maḓi na vhone.",
+      "reason": "The borehole term stays exact English; service to the household and neighbours requesting water are retained, with no statement that water may be shared.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 7,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "A borehole"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "A borehole serves your household. Neighbours ask for water too.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The English borehole term is retained; household service and neighbors’ request for water are represented.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 1,
+      "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Nobody has written down the answer.",
+          "status": "draft",
+          "text": "A hu na muthu o ṅwalaho phindulo."
+        }
+      ],
+      "candidateText": "A neighbour asks to graze cattle after a drought. A flood damages your swales. A hu na muthu o ṅwalaho phindulo.",
+      "reason": "The drought/cattle/swale scenario remains exact. Only the ordinary statement that no answer is written down is proposed.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "A neighbour asks to graze cattle after a drought. A flood damages your swales. "
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Drought/cattle and flood/swale examples remain exact English; translated final clause preserves that nobody has written down an answer.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The ethics help you weigh the choices and explain your decision.",
+          "status": "draft",
+          "text": "Milayo ya vhuḓifari i ni thusa u pima khetho na u ṱalutshedza tsheo yaṋu."
+        },
+        {
+          "sourceEnglish": " Check the rules and ask permission where it is needed.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Milayo ya vhuḓifari i ni thusa u pima khetho na u ṱalutshedza tsheo yaṋu. Check the rules and ask permission where it is needed.",
+      "reason": "The choices/decision framing is localized. The rule-check and conditional permission instruction stays exact English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " Check the rules and ask permission where it is needed."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Ethics and decision clause are translated; exact English rules/permission condition preserves its full meaning and “where needed” condition.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 0,
+      "sourceEnglish": "Watch your land through a full season before you commit to major earthworks.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch your land",
+          "status": "draft",
+          "text": "Sedzani land yaṋu"
+        },
+        {
+          "sourceEnglish": " through a full season before you commit to major earthworks.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Sedzani land yaṋu through a full season before you commit to major earthworks.",
+      "reason": "Only “watch your land” is localized. The full-season-before-commit condition and “major earthworks” limit remain exact English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " through a full season before you commit to major earthworks."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Watch your land through a full season before you commit to major earthworks.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Exact English timing and commitment clauses preserve the full instruction alongside localized observation wording.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 3,
+      "sourceEnglish": "Where does water leave your land? Do you actually know, or are you guessing?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Where does water leave your land? Do you actually know, or are you guessing?",
+          "status": "draft",
+          "text": "Maḓi a bva ngafhi kha land yaṋu? Ni a ḓivha zwa vhukuma, kana ni khou humbulela?"
+        }
+      ],
+      "candidateText": "Maḓi a bva ngafhi kha land yaṋu? Ni a ḓivha zwa vhukuma, kana ni khou humbulela?",
+      "reason": "Preserves the question about where water exits and the explicit contrast between knowing and guessing.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Where does water leave your land? Do you actually know, or are you guessing?",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The question pair and uncertainty distinction are preserved. Replace ordinary “land” with the plot/holding term so it cannot be read as soil.",
+        "minimalRepair": "Maḓi a bva ngafhi kha tsimu yaṋu? Ni a ḓivha zwa vhukuma, kana ni khou humbulela?"
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 2,
+      "sourceEnglish": "Compare the cost and work with the benefit on your own farm.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Compare",
+          "status": "draft",
+          "text": "Khaṋedzanisani "
+        },
+        {
+          "sourceEnglish": " the cost and work with the benefit",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " on your own farm.",
+          "status": "draft",
+          "text": " kha bulasi yaṋu."
+        }
+      ],
+      "candidateText": "Khaṋedzanisani  the cost and work with the benefit kha bulasi yaṋu.",
+      "reason": "The cost, work, benefit comparison and “your own farm” boundary are retained without introducing a price or return figure.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 11,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " the cost and work with the benefit"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Compare the cost and work with the benefit on your own farm.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "“Khaṋedzanisani” is not a safe choice for “compare” in this context. Exact English preserves cost, work and benefit.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization.",
+        "minimalRepair": "Vhambedzani the cost and work with the benefit kha bulasi yaṋu."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "The edge is where two things meet — a fence line or the strip beside a path.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The edge",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " is where two things meet",
+          "status": "draft",
+          "text": " ndi hune zwithu zwivhili zwa ṱangana"
+        },
+        {
+          "sourceEnglish": " — a fence line or the strip beside a path.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "The edge ndi hune zwithu zwivhili zwa ṱangana — a fence line or the strip beside a path.",
+      "reason": "“edge” and both source examples remain exact English; only the general definition is localized.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "The edge",
+        " — a fence line or the strip beside a path."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "The edge is where two things meet — a fence line or the strip beside a path.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Explanation is partly localized and fence/path examples remain exact English, preserving both examples.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours.",
+          "status": "draft",
+          "text": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu."
+        },
+        {
+          "sourceEnglish": " That is the land telling you something.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. That is the land telling you something.",
+      "reason": "The observation instruction is localized. The metaphorical land-informs-you conclusion stays exact English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " That is the land telling you something."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The observation advice and existing growth are preserved. “That is the land telling you something” is ordinary metaphorical prose and should be translated rather than left as an unexplained English sentence.",
+        "minimalRepair": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. Tsimu yaṋu i khou ni vhudza zwiṅwe nga zwenezwo."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 2,
+      "sourceEnglish": "Which edge on your plot is doing nothing at the moment?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Which edge on your plot is doing nothing at the moment?",
+          "status": "draft",
+          "text": "Ndi edge ifhio ya plot yaṋu ine zwa zwino ya si shume tshithu?"
+        }
+      ],
+      "candidateText": "Ndi edge ifhio ya plot yaṋu ine zwa zwino ya si shume tshithu?",
+      "reason": "The “edge” term is retained; the underuse question is proposed without adding a recommended intervention.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Which edge on your plot is doing nothing at the moment?",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "“plot” remains English; preserve that site scope rather than broadening to a whole farm.",
+        "minimalRepair": "Ndi edge ifhio ya plot yaṋu ine zwa zwino ya si shume tshithu?"
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 1,
+      "sourceEnglish": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Two others worth knowing:",
+          "status": "draft",
+          "text": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya:"
+        },
+        {
+          "sourceEnglish": " produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+      "reason": "Only the non-prescriptive transition is localized. Both principle names/examples and bucket-irrigation claim stay exact English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 13,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Exact English retains both principles, compost-to-soil causal chain, and bucket/no-electricity irrigation example.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Zones run from 0 to 5, and they are about your feet, not your fences.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Zones",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " run from 0 to 5, and they are about your feet, not your fences.",
+          "status": "draft",
+          "text": " dzi bva kha 0 u ya kha 5, nahone ndi nga ha u tshimbila haṋu, hu si fences yaṋu."
+        }
+      ],
+      "candidateText": "Zones dzi bva kha 0 u ya kha 5, nahone ndi nga ha u tshimbila haṋu, hu si fences yaṋu.",
+      "reason": "The inclusive range 0–5 is copied exactly; walking/feet is the visit-frequency framing, while fences are expressly contrasted.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zones"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Zones run from 0 to 5, and they are about your feet, not your fences.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The numeric range 0–5 and the contrast with fences are retained. “Your feet” is more concrete than walking frequency, but the intended effort/walking meaning survives. Replace English “fences” with local wording after fluent review.",
+        "minimalRepair": "Zones dzi bva kha 0 u ya kha 5, nahone ndi nga ha u tshimbila haṋu, hu si miri ya mikano ya tsimu yaṋu."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 1,
+      "sourceEnglish": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Zone 0",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " is the house. In this example, ",
+          "status": "draft",
+          "text": " ndi nḓu. Kha hei tsumbo, "
+        },
+        {
+          "sourceEnglish": "Zone 1",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " is near the house and holds ",
+          "status": "draft",
+          "text": " i tsini na nḓu nahone i na "
+        },
+        {
+          "sourceEnglish": "herbs and salad greens",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " picked often.",
+          "status": "draft",
+          "text": " zwine na zwi kaṋa lunzhi."
+        }
+      ],
+      "candidateText": "Zone 0 ndi nḓu. Kha hei tsumbo, Zone 1 i tsini na nḓu nahone i na herbs and salad greens zwine na zwi kaṋa lunzhi.",
+      "reason": "Zone 0/Zone 1 labels stay exact; the “in this example” qualifier and “picked often” condition are retained.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zone 0",
+        "Zone 1",
+        "herbs and salad greens"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Zone numbers, example framing, proximity and frequency are represented; exact English crop-category names retain source meaning.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 0,
+      "sourceEnglish": "Herbs you pick often are easier to tend near the house.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Herbs",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " you pick often are easier to tend near the house.",
+          "status": "draft",
+          "text": " dzine na dzi kaṋa lunzhi dzi a leluwa u dzi ṱhogomela dzi tsini na nḓu."
+        }
+      ],
+      "candidateText": "Herbs dzine na dzi kaṋa lunzhi dzi a leluwa u dzi ṱhogomela dzi tsini na nḓu.",
+      "reason": "Herbs and “often” remain explicit; this is phrased as relative ease, not a guarantee.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 16,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Herbs"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Herbs you pick often are easier to tend near the house.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Meaning and near-house relation are preserved; “herbs” remains the exact source crop category.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 1,
+      "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The ",
+          "status": "draft",
+          "text": "Arali na dzi vhea kule, lwendo lulapfu lu nga ita uri ni kundelwe u dzi dalela. "
+        },
+        {
+          "sourceEnglish": "herbs",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " may be neglected.",
+          "status": "draft",
+          "text": " dzi nga siṱiwa dzi sa ṱhogomelwi."
+        }
+      ],
+      "candidateText": "Arali na dzi vhea kule, lwendo lulapfu lu nga ita uri ni kundelwe u dzi dalela. herbs dzi nga siṱiwa dzi sa ṱhogomelwi.",
+      "reason": "“may” is kept as a possibility for both the missed visit and neglect; no certainty or additional visit frequency is added.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 16,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "herbs"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The conditional distance→missed visit→neglect chain is preserved. The final word “siṱiwa” appears to mean neglected/overlooked only if read in context and may carry a different sense; prefer a clearer phrase for failing to tend.",
+        "minimalRepair": "Arali na dzi vhea kule, lwendo lulapfu lu nga ita uri ni kundelwe u dzi dalela. Ngauralo, ni nga si dzi ṱhogomele zwavhuḓi."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 1,
+      "sourceEnglish": "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Zones",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+          "status": "draft",
+          "text": " zwi thusa u dzudzanya fhethu u ya nga mushumo waṋu — u tshimbila, u hwala na u sedza zwine zwa ḓadza ḓuvha ḽa vhukuma."
+        }
+      ],
+      "candidateText": "Zones zwi thusa u dzudzanya fhethu u ya nga mushumo waṋu — u tshimbila, u hwala na u sedza zwine zwa ḓadza ḓuvha ḽa vhukuma.",
+      "reason": "Zones remain a technical term; the source list of walking/carrying/checking and real-day framing stays intact.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 17,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zones"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The walking, carrying and checking activities remain tied to organizing space around effort and a real day."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 2,
+      "sourceEnglish": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+          "status": "draft",
+          "text": "Tshithu tshi ni ṱoḓaho lunzhi tshi dzula tsini na inwi. Zwenezwo zwi nga fhungudza u tshimbila na mushumo kha khalaṅwaha."
+        }
+      ],
+      "candidateText": "Tshithu tshi ni ṱoḓaho lunzhi tshi dzula tsini na inwi. Zwenezwo zwi nga fhungudza u tshimbila na mushumo kha khalaṅwaha.",
+      "reason": "The relative “more often” relationship and “can save” possibility remain in the draft; no fixed distance or labour amount is added.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 17,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Preserves the more-often/closer relationship and the possibility of saving both walking and work over a season."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 0,
+      "sourceEnglish": "Zones come from inside your land. Sectors come from outside it.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Zones",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " come from inside your land. ",
+          "status": "draft",
+          "text": " dzi bva ngomu ha land yaṋu. "
+        },
+        {
+          "sourceEnglish": "Sectors",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " come from outside it.",
+          "status": "draft",
+          "text": " dzi bva nnḓa ha yona."
+        }
+      ],
+      "candidateText": "Zones dzi bva ngomu ha land yaṋu. Sectors dzi bva nnḓa ha yona.",
+      "reason": "Zones/Sectors remain technical terms and the inside/outside direction is preserved.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 18,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zones",
+        "Sectors"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Zones come from inside your land. Sectors come from outside it.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Inside/outside direction is preserved. Replace English “land” with the holding/plot term; “zones/sectors” may remain as technical labels.",
+        "minimalRepair": "Zones dzi bva ngomu ha tsimu yaṋu. Sectors dzi bva nnḓa ha yona."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "bodyIndex": 1,
+      "sourceEnglish": "Then draw arrows in from outside for sun, wind, fire and water.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Then draw arrows in from outside for ",
+          "status": "draft",
+          "text": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza "
+        },
+        {
+          "sourceEnglish": "sun, wind, fire and water.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza sun, wind, fire and water.",
+      "reason": "The arrows still point inward from outside; the four named energies stay exact source English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 20,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "sun, wind, fire and water."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Then draw arrows in from outside for sun, wind, fire and water.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Inward arrow direction and all four factors remain exact English, with none omitted or reversed.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Sketch your own zones and sectors on one sheet of paper.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Sketch your ",
+          "status": "draft",
+          "text": "Olani "
+        },
+        {
+          "sourceEnglish": "own zones and sectors",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " on one sheet of paper.",
+          "status": "draft",
+          "text": " kha bammbiri ḽithihi."
+        }
+      ],
+      "candidateText": "Olani own zones and sectors kha bammbiri ḽithihi.",
+      "reason": "Zone/sector terms and one-sheet instruction remain source exact.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "own zones and sectors"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Sketch your own zones and sectors on one sheet of paper.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The one-sheet sketch instruction and technical labels are present; “own” is a minor English carryover.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 1,
+      "sourceEnglish": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Mark ",
+          "status": "draft",
+          "text": "Maka "
+        },
+        {
+          "sourceEnglish": "Zone 0 and Zone 1",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " first, then work outward as far as your land goes.",
+          "status": "draft",
+          "text": " u thome, ni bvele nga nnḓa u swika hune mavu aṋu a ya hone."
+        }
+      ],
+      "candidateText": "Maka Zone 0 and Zone 1 u thome, ni bvele nga nnḓa u swika hune mavu aṋu a ya hone.",
+      "reason": "Zone numbers, order (first), outward direction and land-limit are retained. Labels remain source English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zone 0 and Zone 1"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Zone 0 and 1 first, then outward, is preserved. “Mavu” risks shifting land/property to soil; use the learner’s plot/holding term.",
+        "minimalRepair": "Maka Zone 0 and Zone 1 u thome, ni bvele nga nnḓa u swika hune tsimu yaṋu ya guma hone."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 3,
+      "sourceEnglish": "Photograph the sketch.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Photograph the sketch.",
+          "status": "draft",
+          "text": "Takedzani tshifanyiso tsha sketch yaṋu."
+        }
+      ],
+      "candidateText": "Takedzani tshifanyiso tsha sketch yaṋu.",
+      "reason": "Only the ordinary photo instruction is proposed; “sketch” remains English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "hold",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Photograph the sketch.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "“Takedzani” could be the intended photograph verb, but this text-only check cannot establish it confidently; keep draft pending fluent confirmation.",
+        "minimalRepair": "Takedzani tshifanyiso tsha sketch yaṋu."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 0,
+      "sourceEnglish": "Walk out and check your sketch against the ground.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Walk out and ",
+          "status": "draft",
+          "text": "Ibani ni "
+        },
+        {
+          "sourceEnglish": "check your sketch against the ground.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Ibani ni check your sketch against the ground.",
+      "reason": "The walk-out and compare sketch with real ground instruction is preserved; “sketch” remains English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 22,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "check your sketch against the ground."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Walk out and check your sketch against the ground.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Exact English ground-check clause preserves the verification action; localized outward walk is consistent.",
+        "minimalRepair": "Ibani ni sedze sketch yaṋu ni tshi i vhambedza na hune na vha hone.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 1,
+      "sourceEnglish": "Stand at the kitchen door and count what is really in Zone 1 today.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Stand at the kitchen door and count what is really in ",
+          "status": "draft",
+          "text": "Imani munyangoni wa khishi ni vhale zwine zwa vha zwa vhukuma kha "
+        },
+        {
+          "sourceEnglish": "Zone 1",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " today.",
+          "status": "draft",
+          "text": " namusi."
+        }
+      ],
+      "candidateText": "Imani munyangoni wa khishi ni vhale zwine zwa vha zwa vhukuma kha Zone 1 namusi.",
+      "reason": "The kitchen-door location, count action, Zone 1 label, “really” and “today” all remain explicit.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 22,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zone 1"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Stand at the kitchen door and count what is really in Zone 1 today.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Location at kitchen door, counting what is actually in Zone 1, and “today” are preserved."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 1,
+      "bodyIndex": 1,
+      "sourceEnglish": "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "This module is the foundation for everything else in the course.",
+          "status": "draft",
+          "text": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi."
+        },
+        {
+          "sourceEnglish": " Three ethics, a set of design principles, and one simple way to organise your land.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi. Three ethics, a set of design principles, and one simple way to organise your land.",
+      "reason": "Only the plain foundation sentence is localized; the three-ethics/design-principles/land-organization list stays verbatim to avoid reshaping named learning content.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 1,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " Three ethics, a set of design principles, and one simple way to organise your land."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The localized foundation sentence preserves the relation. The remainder is ordinary prose, not all difficult technical wording; translate the organizing-your-land clause and retain the named concepts if needed.",
+        "minimalRepair": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi. Three ethics, design principles, ni ndlela yin’we yo olova yo lulamisa misava ya wena."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 1,
+      "bodyIndex": 2,
+      "sourceEnglish": "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "None of it needs money.",
+          "status": "draft",
+          "text": "A swi lavi mali."
+        },
+        {
+          "sourceEnglish": " All of it changes where you put things, and how far you walk every day.",
+          "status": "draft",
+          "text": " Hinkwaswu swi cinca laha u vekaka swilo kona ni leswaku u famba mpfhuka wo fika kwihi siku rin’wana ni rin’wana."
+        }
+      ],
+      "candidateText": "A swi lavi mali. Hinkwaswu swi cinca laha u vekaka swilo kona ni leswaku u famba mpfhuka wo fika kwihi siku rin’wana ni rin’wana.",
+      "reason": "The “none” and “all” scopes remain explicit; the claim remains the source’s no-money statement and describes where things go and daily walking distance.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 1,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Preserves no money, all changes, where things are placed, and daily walking distance/frequency."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 2,
+      "sourceEnglish": "Name the design principles that matter most on your land, and say why.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Name the ",
+          "status": "draft",
+          "text": "Boxa "
+        },
+        {
+          "sourceEnglish": "design principles",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " that matter most on your land, and say why.",
+          "status": "draft",
+          "text": " ta nkoka ngopfu eka misava ya wena, u vula leswaku ha yini."
+        }
+      ],
+      "candidateText": "Boxa design principles ta nkoka ngopfu eka misava ya wena, u vula leswaku ha yini.",
+      "reason": "The design-principles term remains English. “most on your land” and the request to say why are kept as source-bound qualifiers.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 3,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "design principles"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Name the design principles that matter most on your land, and say why.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Preserves the instruction to name the most important design principles on the learner’s land and explain why."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 3,
+      "sourceEnglish": "Sketch your zones and your sectors on one sheet of paper.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Sketch your ",
+          "status": "draft",
+          "text": "Dirowa "
+        },
+        {
+          "sourceEnglish": "zones and your sectors",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " on one sheet of paper.",
+          "status": "draft",
+          "text": " eka phepha rin’we."
+        }
+      ],
+      "candidateText": "Dirowa zones and your sectors eka phepha rin’we.",
+      "reason": "Zones/sectors remain technical English. The single-sheet requirement remains singular and exact.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 3,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "zones and your sectors"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "hold",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Sketch your zones and your sectors on one sheet of paper.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The drawing task and one-sheet constraint are preserved. “Your zones” is partly English; sectors is a technical label. Needs naturalness review."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "bodyIndex": 3,
+      "sourceEnglish": "The farm is meant to feed the household that runs it.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The farm is meant to feed the household that runs it.",
+          "status": "draft",
+          "text": "Purasi ri endleriwe ku phamela swakudya ndyangu lowu wu ri fambisaka."
+        }
+      ],
+      "candidateText": "Purasi ri endleriwe ku phamela swakudya ndyangu lowu wu ri fambisaka.",
+      "reason": "This translates intention (“meant to”), rather than turning it into an obligation. Household that operates the farm remains the object.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 5,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "The farm is meant to feed the household that runs it.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Preserves intended purpose (feeding) and the household that operates/runs the farm."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Take only what you need, and ",
+          "status": "draft",
+          "text": "Teka ntsena leswi u swi lavaka, kutani "
+        },
+        {
+          "sourceEnglish": "return the surplus to the system — seeds, food, water, knowledge.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Teka ntsena leswi u swi lavaka, kutani return the surplus to the system — seeds, food, water, knowledge.",
+      "reason": "Only “take only what you need” is translated. The return-surplus obligation, destination, and exact list stay source English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 6,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "return the surplus to the system — seeds, food, water, knowledge."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Localized “take only what you need”; exact English surplus instruction/examples preserve full source meaning.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 4,
+      "sourceEnglish": "What does your land get back from you each season?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "What does your land get back from you each season?",
+          "status": "draft",
+          "text": "Misava ya wena yi kuma yini eka wena eka nguva yin’wana ni yin’wana?"
+        }
+      ],
+      "candidateText": "Misava ya wena yi kuma yini eka wena eka nguva yin’wana ni yin’wana?",
+      "reason": "The reflective question remains tied to each season and asks what the land receives back.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 6,
+        "pairedEnglishBodyIndex": 4,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "What does your land get back from you each season?",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Preserves the reciprocal question and each-season timing."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 0,
+      "sourceEnglish": "A borehole serves your household. Neighbours ask for water too.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "A borehole",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " serves your household.",
+          "status": "draft",
+          "text": " yi tirhela ndyangu wa wena."
+        },
+        {
+          "sourceEnglish": " Neighbours ask for water too.",
+          "status": "draft",
+          "text": " Vahakelani na vona va kombela mati."
+        }
+      ],
+      "candidateText": "A borehole yi tirhela ndyangu wa wena. Vahakelani na vona va kombela mati.",
+      "reason": "The borehole term stays exact English; service to the household and neighbours requesting water are retained, with no statement that water may be shared.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 7,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "A borehole"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "A borehole serves your household. Neighbours ask for water too.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Borehole remains an exact English infrastructure term; household service and neighbors’ water request are represented.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 1,
+      "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Nobody has written down the answer.",
+          "status": "draft",
+          "text": "A ku na munhu loyi a tsaleke nhlamulo."
+        }
+      ],
+      "candidateText": "A neighbour asks to graze cattle after a drought. A flood damages your swales. A ku na munhu loyi a tsaleke nhlamulo.",
+      "reason": "The drought/cattle/swale scenario remains exact. Only the ordinary statement that no answer is written down is proposed.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "A neighbour asks to graze cattle after a drought. A flood damages your swales. "
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Drought/cattle and flood/swale examples remain exact English; translated final clause preserves the negative “nobody wrote down the answer.”",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The ethics help you weigh the choices and explain your decision.",
+          "status": "draft",
+          "text": "Milawu ya mahanyelo yi ku pfuna ku pima swihlawuriwa ni ku hlamusela xiboho xa wena."
+        },
+        {
+          "sourceEnglish": " Check the rules and ask permission where it is needed.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Milawu ya mahanyelo yi ku pfuna ku pima swihlawuriwa ni ku hlamusela xiboho xa wena. Check the rules and ask permission where it is needed.",
+      "reason": "The choices/decision framing is localized. The rule-check and conditional permission instruction stays exact English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " Check the rules and ask permission where it is needed."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Ethics and decision weighing are translated; exact English rules/permission condition preserves “where needed.”",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 1,
+      "sourceEnglish": "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "You do not need all twelve to start. ",
+          "status": "draft",
+          "text": "A swi lavi ku sungula hi hinkwato ta 12. "
+        },
+        {
+          "sourceEnglish": "Three useful starting points for this lesson are: ",
+          "status": "draft",
+          "text": "Kha dyondzo leyi, ku na tindlela tinharhu leti pfunaka ku sungula: "
+        },
+        {
+          "sourceEnglish": "observe and interact, catch and store energy, and use edges and value the marginal.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "A swi lavi ku sungula hi hinkwato ta 12. Kha dyondzo leyi, ku na tindlela tinharhu leti pfunaka ku sungula: observe and interact, catch and store energy, and use edges and value the marginal.",
+      "reason": "Twelve and three remain exact values; the names of the three design principles stay source English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 9,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "observe and interact, catch and store energy, and use edges and value the marginal."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "“Not all twelve” start condition and exactly three starting points are translated; principle names remain exact technical labels.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 0,
+      "sourceEnglish": "Watch your land through a full season before you commit to major earthworks.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch your land",
+          "status": "draft",
+          "text": "Languta misava ya wena"
+        },
+        {
+          "sourceEnglish": " through a full season before you commit to major earthworks.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Languta misava ya wena through a full season before you commit to major earthworks.",
+      "reason": "Only “watch your land” is localized. The full-season-before-commit condition and “major earthworks” limit remain exact English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " through a full season before you commit to major earthworks."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Watch your land through a full season before you commit to major earthworks.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Full-season and before-commit timing clauses remain exact English, preserving the constraint.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 3,
+      "sourceEnglish": "Where does water leave your land? Do you actually know, or are you guessing?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Where does water leave your land? Do you actually know, or are you guessing?",
+          "status": "draft",
+          "text": "Xana mati ma huma hi kwihi eka misava ya wena? Xana wa swi tiva hakunene kumbe wa bvumbetela?"
+        }
+      ],
+      "candidateText": "Xana mati ma huma hi kwihi eka misava ya wena? Xana wa swi tiva hakunene kumbe wa bvumbetela?",
+      "reason": "Preserves the question about where water exits and the explicit contrast between knowing and guessing.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Where does water leave your land? Do you actually know, or are you guessing?",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Both questions, water leaving the site, actual knowledge and guessing are preserved."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 2,
+      "sourceEnglish": "Compare the cost and work with the benefit on your own farm.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Compare",
+          "status": "draft",
+          "text": "Pimanisa "
+        },
+        {
+          "sourceEnglish": " the cost and work with the benefit",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " on your own farm.",
+          "status": "draft",
+          "text": " epurasini ra wena."
+        }
+      ],
+      "candidateText": "Pimanisa  the cost and work with the benefit epurasini ra wena.",
+      "reason": "The cost, work, benefit comparison and “your own farm” boundary are retained without introducing a price or return figure.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 11,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " the cost and work with the benefit"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Compare the cost and work with the benefit on your own farm.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "English cost/work/benefit phrase preserves all comparison operands; a clearer localized verb is suggested.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "The edge is where two things meet — a fence line or the strip beside a path.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The edge",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " is where two things meet",
+          "status": "draft",
+          "text": " hi laha swilo swimbirhi swi hlanganaka kona"
+        },
+        {
+          "sourceEnglish": " — a fence line or the strip beside a path.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "The edge hi laha swilo swimbirhi swi hlanganaka kona — a fence line or the strip beside a path.",
+      "reason": "“edge” and both source examples remain exact English; only the general definition is localized.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "The edge",
+        " — a fence line or the strip beside a path."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "The edge is where two things meet — a fence line or the strip beside a path.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Edge explanation is partly localized; fence/path examples remain exact English and preserve source examples.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours.",
+          "status": "draft",
+          "text": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena."
+        },
+        {
+          "sourceEnglish": " That is the land telling you something.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. That is the land telling you something.",
+      "reason": "The observation instruction is localized. The metaphorical land-informs-you conclusion stays exact English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " That is the land telling you something."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Useful observation locations and existing growth are preserved. The final explanatory sentence is ordinary prose left in English; translate it.",
+        "minimalRepair": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. Misava ya wena yi ku komba mhaka yo karhi."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 2,
+      "sourceEnglish": "Which edge on your plot is doing nothing at the moment?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Which edge on your plot is doing nothing at the moment?",
+          "status": "draft",
+          "text": "Hi yihi edge epurasini ra wena leyi nga endli xin’wana sweswi?"
+        }
+      ],
+      "candidateText": "Hi yihi edge epurasini ra wena leyi nga endli xin’wana sweswi?",
+      "reason": "The “edge” term is retained; the underuse question is proposed without adding a recommended intervention.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Which edge on your plot is doing nothing at the moment?",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "“Epurasini ra wena” can broaden “your plot” to “your farm.” Keep smaller site scope; “edge” may remain technical English.",
+        "minimalRepair": "Hi yihi edge eka ndhawu ya wena leyi nga endli xin’wana sweswi?"
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 1,
+      "sourceEnglish": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Two others worth knowing:",
+          "status": "draft",
+          "text": "Ku na swin’wana swimbirhi leswi swi nga swinene ku swi tiva:"
+        },
+        {
+          "sourceEnglish": " produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Ku na swin’wana swimbirhi leswi swi nga swinene ku swi tiva: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+      "reason": "Only the non-prescriptive transition is localized. Both principle names/examples and bucket-irrigation claim stay exact English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 13,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        " produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Exact English retains the principles, compost-to-soil chain and bucket/no-electricity irrigation example.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Zones run from 0 to 5, and they are about your feet, not your fences.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Zones",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " run from 0 to 5, and they are about your feet, not your fences.",
+          "status": "draft",
+          "text": " ti suka eka 0 ku ya eka 5, naswona ti khumba ku famba ka wena, ku nga ri ti-fence ta wena."
+        }
+      ],
+      "candidateText": "Zones ti suka eka 0 ku ya eka 5, naswona ti khumba ku famba ka wena, ku nga ri ti-fence ta wena.",
+      "reason": "The inclusive range 0–5 is copied exactly; walking/feet is the visit-frequency framing, while fences are expressly contrasted.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zones"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Zones run from 0 to 5, and they are about your feet, not your fences.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Zone range 0–5 and the contrast between walking/effort and fences are preserved; no fence/zone direction is inverted."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 1,
+      "sourceEnglish": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Zone 0",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " is the house. In this example, ",
+          "status": "draft",
+          "text": " i yindlu. Eka xifaniso lexi, "
+        },
+        {
+          "sourceEnglish": "Zone 1",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " is near the house and holds ",
+          "status": "draft",
+          "text": " yi le kusuhi ni yindlu naswona yi na "
+        },
+        {
+          "sourceEnglish": "herbs and salad greens",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " picked often.",
+          "status": "draft",
+          "text": " leti u ti tshovelaka ngopfu."
+        }
+      ],
+      "candidateText": "Zone 0 i yindlu. Eka xifaniso lexi, Zone 1 yi le kusuhi ni yindlu naswona yi na herbs and salad greens leti u ti tshovelaka ngopfu.",
+      "reason": "Zone 0/Zone 1 labels stay exact; the “in this example” qualifier and “picked often” condition are retained.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zone 0",
+        "Zone 1",
+        "herbs and salad greens"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "“Ngopfu” can imply a large amount instead of the frequency “often.” Use recurring-time wording.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization.",
+        "minimalRepair": "Zone 0 i yindlu. Eka xifaniso lexi, Zone 1 yi le kusuhi ni yindlu naswona yi na herbs and salad greens leti u ti tshovelaka nkarhi ni nkarhi."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 0,
+      "sourceEnglish": "Herbs you pick often are easier to tend near the house.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Herbs",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " you pick often are easier to tend near the house.",
+          "status": "draft",
+          "text": " leti u ti tshovelaka ngopfu swa olova ku ti hlayisa loko ti ri ekusuhi ni yindlu."
+        }
+      ],
+      "candidateText": "Herbs leti u ti tshovelaka ngopfu swa olova ku ti hlayisa loko ti ri ekusuhi ni yindlu.",
+      "reason": "Herbs and “often” remain explicit; this is phrased as relative ease, not a guarantee.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 16,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Herbs"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Herbs you pick often are easier to tend near the house.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "“Ngopfu” may imply quantity rather than frequency; preserve often-picked meaning with recurring-time wording.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization.",
+        "minimalRepair": "Herbs leti u ti tshovelaka nkarhi ni nkarhi swa olova ku ti hlayisa loko ti ri ekusuhi ni yindlu."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 1,
+      "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The ",
+          "status": "draft",
+          "text": "Loko u ti veka ekule, riendzo ro leha ri nga endla leswaku u nga ti endzeli. "
+        },
+        {
+          "sourceEnglish": "herbs",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " may be neglected.",
+          "status": "draft",
+          "text": " ti nga siyiwa ti nga hlayisiwi."
+        }
+      ],
+      "candidateText": "Loko u ti veka ekule, riendzo ro leha ri nga endla leswaku u nga ti endzeli. herbs ti nga siyiwa ti nga hlayisiwi.",
+      "reason": "“may” is kept as a possibility for both the missed visit and neglect; no certainty or additional visit frequency is added.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 16,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "herbs"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The conditional chain is intact: putting them far away may cause missed visits, and herbs may be left untended."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 1,
+      "sourceEnglish": "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Zones",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+          "status": "draft",
+          "text": " ti pfuna ku lulamisa ndhawu hi ku ya hi matshalatshala ya wena — ku famba, ku rhwala ni ku kambela leswi tata siku ra xiviri."
+        }
+      ],
+      "candidateText": "Zones ti pfuna ku lulamisa ndhawu hi ku ya hi matshalatshala ya wena — ku famba, ku rhwala ni ku kambela leswi tata siku ra xiviri.",
+      "reason": "Zones remain a technical term; the source list of walking/carrying/checking and real-day framing stays intact.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 17,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zones"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Effort includes walking, carrying and checking; these activities are said to fill a real day, without adding a measurement."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 2,
+      "sourceEnglish": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+          "status": "draft",
+          "text": "Loko xin’wana xi ku lava nkarhi ni nkarhi, xi tshama ekusuhi na wena. Sweswo swi nga hunguta ku famba ni ku tirha eka nguva."
+        }
+      ],
+      "candidateText": "Loko xin’wana xi ku lava nkarhi ni nkarhi, xi tshama ekusuhi na wena. Sweswo swi nga hunguta ku famba ni ku tirha eka nguva.",
+      "reason": "The relative “more often” relationship and “can save” possibility remain in the draft; no fixed distance or labour amount is added.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 17,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Preserves how often an item needs the learner, proximity, and possible savings in walking/work over a season."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 0,
+      "sourceEnglish": "Zones come from inside your land. Sectors come from outside it.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Zones",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " come from inside your land. ",
+          "status": "draft",
+          "text": " ti huma endzeni ka misava ya wena. "
+        },
+        {
+          "sourceEnglish": "Sectors",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " come from outside it.",
+          "status": "draft",
+          "text": " ti huma ehandle ka yona."
+        }
+      ],
+      "candidateText": "Zones ti huma endzeni ka misava ya wena. Sectors ti huma ehandle ka yona.",
+      "reason": "Zones/Sectors remain technical terms and the inside/outside direction is preserved.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 18,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zones",
+        "Sectors"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Zones come from inside your land. Sectors come from outside it.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Inside versus outside is explicit and correctly assigned to zones versus sectors."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 1,
+      "sourceEnglish": "Then draw arrows in from outside for sun, wind, fire and water.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Then draw arrows in from outside for ",
+          "status": "draft",
+          "text": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela "
+        },
+        {
+          "sourceEnglish": "sun, wind, fire and water.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela sun, wind, fire and water.",
+      "reason": "The arrows still point inward from outside; the four named energies stay exact source English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 20,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "sun, wind, fire and water."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Then draw arrows in from outside for sun, wind, fire and water.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Inward arrow direction and all four factors remain exact English; none is omitted or reversed.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Sketch your own zones and sectors on one sheet of paper.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Sketch your ",
+          "status": "draft",
+          "text": "Dirowa "
+        },
+        {
+          "sourceEnglish": "own zones and sectors",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " on one sheet of paper.",
+          "status": "draft",
+          "text": " eka phepha rin’we."
+        }
+      ],
+      "candidateText": "Dirowa own zones and sectors eka phepha rin’we.",
+      "reason": "Zone/sector terms and one-sheet instruction remain source exact.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "own zones and sectors"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Sketch your own zones and sectors on one sheet of paper.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "One-sheet sketch instruction and exact technical labels are present; “own” is a minor English carryover.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 1,
+      "sourceEnglish": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Mark ",
+          "status": "draft",
+          "text": "Maka "
+        },
+        {
+          "sourceEnglish": "Zone 0 and Zone 1",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " first, then work outward as far as your land goes.",
+          "status": "draft",
+          "text": " ku sungula, kutani u ya ehandle ku fika laha misava ya wena yi helelaka kona."
+        }
+      ],
+      "candidateText": "Maka Zone 0 and Zone 1 ku sungula, kutani u ya ehandle ku fika laha misava ya wena yi helelaka kona.",
+      "reason": "Zone numbers, order (first), outward direction and land-limit are retained. Labels remain source English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zone 0 and Zone 1"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "repair",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "The order and outward direction are preserved. “Laha misava ya wena yi helelaka kona” means where the land ends; source says as far as the land goes, which could imply the extent of the property. Prefer an explicit site/plot extent term.",
+        "minimalRepair": "Maka Zone 0 and Zone 1 ku sungula, kutani u ya ehandle ku fika emakumu ka purasi ra wena."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 3,
+      "sourceEnglish": "Photograph the sketch.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Photograph the sketch.",
+          "status": "draft",
+          "text": "Tekela xifaniso xa sketch ya wena."
+        }
+      ],
+      "candidateText": "Tekela xifaniso xa sketch ya wena.",
+      "reason": "Only the ordinary photo instruction is proposed; “sketch” remains English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Photograph the sketch.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Imperative to take a photograph of the sketch is conveyed; review spelling/naturalness with a fluent speaker."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 0,
+      "sourceEnglish": "Walk out and check your sketch against the ground.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Walk out and ",
+          "status": "draft",
+          "text": "Famba ehandle u "
+        },
+        {
+          "sourceEnglish": "check your sketch against the ground.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Famba ehandle u check your sketch against the ground.",
+      "reason": "The walk-out and compare sketch with real ground instruction is preserved; “sketch” remains English.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 22,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "check your sketch against the ground."
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Walk out and check your sketch against the ground.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Exact English ground-check phrase preserves verification action alongside localized walk instruction.",
+        "englishRetention": "Exact source English remains visible in this mixed field. Accept means meaning is preserved; it does not mean fluent approval or complete localization."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 1,
+      "sourceEnglish": "Stand at the kitchen door and count what is really in Zone 1 today.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Stand at the kitchen door and count what is really in ",
+          "status": "draft",
+          "text": "Yima enyangweni ya khixi u hlayela leswi nga kona hakunene eka "
+        },
+        {
+          "sourceEnglish": "Zone 1",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " today.",
+          "status": "draft",
+          "text": " namuntlha."
+        }
+      ],
+      "candidateText": "Yima enyangweni ya khixi u hlayela leswi nga kona hakunene eka Zone 1 namuntlha.",
+      "reason": "The kitchen-door location, count action, Zone 1 label, “really” and “today” all remain explicit.",
+      "risks": [
+        "Machine candidate only. A fluent speaker should back-translate the complete mixed paragraph and check naturalness before learner use.",
+        "Check the retained condition/number/location words against the source; do not promote these words to a stronger instruction or guarantee."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 22,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      },
+      "provenance": {
+        "kind": "new-bounded-machine-proposal",
+        "exactLearnerReuseClaim": false,
+        "status": "unreviewed; facilitator and fluent review pending"
+      },
+      "technicalTermsHeld": [
+        "Zone 1"
+      ],
+      "canonicalNarrationChanged": false,
+      "independentSemanticReview": {
+        "decision": "accept",
+        "basis": "Independent text backcheck against the canonical English narration and current language-paired introduction JSON. This is a model semantic audit, not fluent-speaker approval.",
+        "canonicalEnglishSource": "Stand at the kitchen door and count what is really in Zone 1 today.",
+        "currentPairedTarget": {
+          "status": "english-hold"
+        },
+        "candidateMatchesCanonicalSource": true,
+        "currentTargetStatus": "english-hold",
+        "finding": "Kitchen door location, counting what is actually in Zone 1, and today are preserved."
+      }
+    }
+  ],
+  "limits": [
+    "This is not a fluent-speaker or facilitator approval.",
+    "A hold means the exact technical/action content should remain held pending fluent review; it does not authorize a change to paired learner text.",
+    "Suggested repairs are minimal semantic proposals, still unreviewed."
+  ]
+}
