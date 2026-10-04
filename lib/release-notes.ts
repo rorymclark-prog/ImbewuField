@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: '742084d6', changes: [
+    'Regional Study cards show paired draft text instead of covering it with film posters.',
+    'English and isiZulu films stay available; silent regional packs keep their slides.',
+  ], tour: [
+    { title: 'Read the regional paired slides',
+      where: 'Study → Reading, Soil, Vegetables, Food Forest or Plant Guilds → Slides',
+      detail: 'Open the source-paired card and compare the unreviewed draft with English.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: '36173657', changes: [
     'Record plant ages and see future harvest beside your vegetables.',
     'Printed plans show clearer season bands and production as plants grow.',

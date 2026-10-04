@@ -119,62 +119,72 @@ function slidesFromNarration(moduleId: string, animations: Record<number, DeckAn
 }
 
 // Approved guild clips each occupy one teaching slot; whole-plant thinning is slide 43.
+// The regional stills pair their unreviewed drafts with exact English. Keep these films for
+// English and isiZulu, but let ST/VE/TS learners read the paired frame instead of its poster.
 const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
   "15": {
     byLang: { zu: { src: "Imbewu-Guilds-03-Pigeon-pea-food", poster: "Imbewu-Guilds-03-Pigeon-pea-food-zu", bytes: 7277042, seconds: 8.0 } },
     "src": "Imbewu-Guilds-03-Pigeon-pea-food",
     "poster": "Imbewu-Guilds-03-Pigeon-pea-food",
     "bytes": 7277042,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "23": {
     byLang: { zu: { src: "Imbewu-Guilds-09-Labelled-zu", poster: "Imbewu-Guilds-09-Labelled-zu", bytes: 3639293, seconds: 8 } },
     "src": "Imbewu-Guilds-09-Labelled",
     "poster": "Imbewu-Guilds-09-Labelled",
     "bytes": 4174276,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "27": {
     byLang: { zu: { src: "Imbewu-Guilds-02-Pruning-trimmed", poster: "Imbewu-Guilds-02-Pruning-trimmed-zu", bytes: 3373640, seconds: 5.0 } },
     "src": "Imbewu-Guilds-02-Pruning-trimmed",
     "poster": "Imbewu-Guilds-02-Pruning-trimmed",
     "bytes": 3373640,
-    "seconds": 5.0
+    "seconds": 5.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "29": {
     byLang: { zu: { src: "Imbewu-Guilds-01-Mulch-ring", poster: "Imbewu-Guilds-01-Mulch-ring-zu", bytes: 3173759, seconds: 8.0 } },
     "src": "Imbewu-Guilds-01-Mulch-ring",
     "poster": "Imbewu-Guilds-01-Mulch-ring",
     "bytes": 3173759,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "33": {
     byLang: { zu: { src: "Imbewu-Guilds-04-Helpful-insects", poster: "Imbewu-Guilds-04-Helpful-insects-zu", bytes: 3933234, seconds: 5.5 } },
     "src": "Imbewu-Guilds-04-Helpful-insects",
     "poster": "Imbewu-Guilds-04-Helpful-insects",
     "bytes": 3933234,
-    "seconds": 5.5
+    "seconds": 5.5,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "37": {
     byLang: { zu: { src: "Imbewu-Guilds-05-Guild-overview", poster: "Imbewu-Guilds-05-Guild-overview-zu", bytes: 9200096, seconds: 8.0 } },
     "src": "Imbewu-Guilds-05-Guild-overview",
     "poster": "Imbewu-Guilds-05-Guild-overview",
     "bytes": 9200096,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "41": {
     byLang: { zu: { src: "Imbewu-Guilds-06-Succession-establish", poster: "Imbewu-Guilds-06-Succession-establish-zu", bytes: 3900208, seconds: 8.0 } },
     "src": "Imbewu-Guilds-06-Succession-establish",
     "poster": "Imbewu-Guilds-06-Succession-establish",
     "bytes": 3900208,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "45": {
     byLang: { zu: { src: "Imbewu-Guilds-08-Succession-carry-mulch", poster: "Imbewu-Guilds-08-Succession-carry-mulch-zu", bytes: 8354154, seconds: 8.0 } },
     "src": "Imbewu-Guilds-08-Succession-carry-mulch",
     "poster": "Imbewu-Guilds-08-Succession-carry-mulch",
     "bytes": 8354154,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   }
 };
 
@@ -193,32 +203,32 @@ const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
   4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
-// Locally drawn Reading the Landscape scenes stay out of the player pending visual clearance.
+// The regional A-frame cards retain their paired source text while English/isiZulu can play this clip.
 const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
-  6: { src: 'flow-a-frame', poster: 'flow-a-frame', bytes: 1808880, seconds: 6 },
+  6: { src: 'flow-a-frame', poster: 'flow-a-frame', bytes: 1808880, seconds: 6, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Keep the reviewed Flow compost actions; the remaining locally authored soil clips await review.
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   // The farmer visibly places dry leaves and straw over fresh green trimmings, then spreads them.
   // Moisture, decomposition and finished compost remain in the narration and later slides.
-  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true, unavailableLanguages: ['zu', 'st'] },
-  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8, unavailableLanguages: ['zu', 'st'] },
+  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true, unavailableLanguages: ['zu', 'st', 've', 'ts'] },
+  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8, unavailableLanguages: ['zu', 'st', 've', 'ts'] },
 };
 
 // Slide 6 keeps the direct-sowing-versus-transplanting still as its poster. The reviewed Flow
 // footage completes only the transplant action; the choice between methods stays in the
 // narration and still. The locally drawn diagrams remain held for Rory's visual clearance.
 const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
-  // The English poster would cover both the Sesotho draft panel and its exact English source.
-  6: { src: 'flow-transplant-root-plug', poster: 'flow-transplant-root-plug', bytes: 6707780, seconds: 8, playOnce: true, unavailableLanguages: ['st'] },
+  // The English poster would cover the regional draft panel and its exact English source.
+  6: { src: 'flow-transplant-root-plug', poster: 'flow-transplant-root-plug', bytes: 6707780, seconds: 8, playOnce: true, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Keep the reviewed Flow hand action; the three locally authored scenes await visual clearance.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
   // The close-up visibly moves mulch onto cardboard and holds the final layer order. The earlier
   // wide Flow film stopped before this action, and the authored composite awaits Rory's review.
-  16: { src: 'flow-sheet-mulching-closeup', poster: 'flow-sheet-mulching-closeup', bytes: 6248424, seconds: 8, playOnce: true, unavailableLanguages: ['st'] },
+  16: { src: 'flow-sheet-mulching-closeup', poster: 'flow-sheet-mulching-closeup', bytes: 6248424, seconds: 8, playOnce: true, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Keep the real footage and Flow results. The bee close-up shows one continuous move between two
