@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: '7b6b5a87', changes: [
+    'Study outcome cards add fuller unreviewed drafts beside exact English.',
+    'Reading and Introduction assessments keep the same correct answers.',
+  ], tour: [
+    { title: 'Review the refreshed Study drafts',
+      where: 'Study → Introduction 1, Reading 1/3 and regional slide cards',
+      detail: 'Compare drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'b93c0f56', changes: [
     'Reading lessons add fuller unreviewed regional drafts beside exact English.',
     'Four silent cards keep technical English inline for easier reading.',
