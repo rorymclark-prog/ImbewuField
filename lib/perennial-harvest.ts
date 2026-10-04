@@ -121,6 +121,9 @@ export function formatRange([min, max]: [number, number]): string {
   const f = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1).replace(/\.0$/, ''));
   return min === max ? f(min) : `${f(min)}–${f(max)}`;
 }
+export function firstCropAgeLabel(range: [number, number]): string {
+  return range[1] < 2 ? `${formatRange([Math.round(range[0] * 12), Math.round(range[1] * 12)])} months` : `${formatRange(range)} years`;
+}
 
 /**
  * Built-in design elements that ARE one catalogue species.
@@ -256,7 +259,15 @@ export interface TreeAvailabilityItem {
 }
 
 /** Farmer-confirmed months for this design, separate from regional source references. */
-export type TreeSeasonChoices = Partial<Record<string, { months: number[]; bearing: boolean }>>;
+export interface TreeAgeGroup {
+  status: 'existing' | 'proposed';
+  plants: number;
+  /** Month planted on this site, or the intended planting month. */
+  planted: string;
+  /** Farm/nursery assumptions, not a generic growth multiplier. Each value is kg/plant/year. */
+  yields: { age: number; kg: number }[];
+}
+export type TreeSeasonChoices = Partial<Record<string, { months: number[]; bearing: boolean; production?: TreeAgeGroup[] }>>;
 
 export function confirmedTreeMonths(h: PerennialHarvest, choices: TreeSeasonChoices): number[] {
   const choice = choices[h.speciesId];
@@ -273,8 +284,18 @@ export function cleanTreeSeasonChoices(raw: unknown): TreeSeasonChoices {
   for (const [id, value] of Object.entries(raw)) {
     const canonicalId = canonicalSpeciesId(id);
     if (!harvestForMappedFoodSpecies(canonicalId) || !value || typeof value !== 'object') continue;
-    const candidate = value as { months?: unknown; bearing?: unknown };
-    out[canonicalId] = { months: validMonths(candidate.months), bearing: candidate.bearing === true };
+    const candidate = value as { months?: unknown; bearing?: unknown; production?: unknown };
+    const production: TreeAgeGroup[] = [];
+    if (Array.isArray(candidate.production)) for (const raw of candidate.production.slice(0, 100)) {
+      if (!raw || typeof raw !== 'object') continue;
+      const g = raw as TreeAgeGroup;
+      if (g.status !== 'existing' && g.status !== 'proposed') continue;
+      if (!Number.isSafeInteger(g.plants) || g.plants < 1) continue;
+      const planted = typeof g.planted === 'string' && /^(19|20|21)\d{2}-(0[1-9]|1[0-2])$/.test(g.planted) ? g.planted : '';
+      const yields = Array.isArray(g.yields) ? g.yields.filter(p => p && Number.isFinite(p.age) && p.age >= 0 && p.age <= 150 && Number.isFinite(p.kg) && p.kg >= 0).map(p => ({ age: p.age, kg: p.kg })).sort((a, b) => a.age - b.age) : [];
+      production.push({ status: g.status, plants: g.plants, planted, yields });
+    }
+    out[canonicalId] = { months: validMonths(candidate.months), bearing: candidate.bearing === true, ...(production.length ? { production } : {}) };
   }
   return out;
 }
@@ -291,16 +312,17 @@ export function loadTreeSeasonChoices(siteId: string): TreeSeasonChoices {
   } catch { return {}; }
 }
 
-export function saveTreeSeasonChoices(siteId: string, choices: TreeSeasonChoices): void {
+export function saveTreeSeasonChoices(siteId: string, choices: TreeSeasonChoices): boolean {
   const clean = cleanTreeSeasonChoices(choices);
-  if (isSampleMode()) { sampleTreeSeasons = { ...sampleTreeSeasons, [siteId]: clean }; return; }
-  if (typeof window === 'undefined') return;
+  if (isSampleMode()) { sampleTreeSeasons = { ...sampleTreeSeasons, [siteId]: clean }; return true; }
+  if (typeof window === 'undefined') return false;
   try {
     const key = activeAccountLocalStorageKey(TREE_SEASONS_KEY);
     const raw = window.localStorage.getItem(key);
     const all = raw ? JSON.parse(raw) : {};
     window.localStorage.setItem(key, JSON.stringify({ ...(all && typeof all === 'object' ? all : {}), [siteId]: clean }));
-  } catch { /* An unavailable store must not change the saved design. */ }
+    return true;
+  } catch { return false; }
 }
 
 /**

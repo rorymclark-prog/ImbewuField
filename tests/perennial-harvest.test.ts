@@ -18,10 +18,127 @@ import {
   unidentifiedPlantGroups,
 } from '@/lib/perennial-harvest';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { ageReadyForSeason, buildProductionProjection, plantingMonthIndex, treeAgeCalendarNote, treeAgeProjection } from '@/lib/production-projection';
+import { estimatedYieldKgAdjusted, type PlanBed, type Planting } from '@/lib/crop-plan';
+import { calendarProduceByMonth } from '@/lib/calendar-produce';
+import { printableAvailability } from '@/lib/crop-export-availability';
+import { planningTreeSeasons } from '@/lib/production-product-guidance';
 import { harvestFromDossier, loadDossiers } from '../scripts/build-perennial-harvest.mjs';
 
 const speciesIds = new Set(SPECIES.map((s) => s.id));
 const records = Object.values(PERENNIAL_HARVEST);
+
+// The kg schedules below are deliberately synthetic farm entries, not agronomic recommendations.
+const projectionNow = new Date(2026, 9, 4);
+const projectionStart = 2026 * 12 + 9;
+const youngAvocado = { harvest: PERENNIAL_HARVEST['persea-americana'], existing: 0, proposed: 1 };
+
+test('a young tree has growing years before first crop and never inherits a mature research yield', () => {
+  const choices = { 'persea-americana': { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [] }] } };
+  const projection = buildProductionProjection({ plantings: [], beds: [], trees: [youngAvocado], choices, now: projectionNow });
+  assert.deepEqual(projection.years[0].trees[0].kg, [0, 0]);
+  assert.deepEqual(projection.years[1].trees[0].kg, [0, 0]);
+  assert.equal(projection.years[2].trees[0].kg, null, 'first-crop age is not a quantity');
+  assert.equal(projection.years[9].trees[0].kg, null, 'maturity does not authorise trial kg for this site');
+  assert.equal(projection.years[2].partial, true);
+});
+
+test('a first-crop transition within a projected year stays unknown instead of claiming zero for the whole year', () => {
+  const t = treeAgeProjection(youngAvocado, { months: [], bearing: false, production: [{ status: 'proposed', plants: 1, planted: '2026-04', yields: [] }] }, projectionStart + 12, projectionStart + 23);
+  assert.equal(t.kg, null);
+});
+
+test('older and younger plants keep their own ages and explicit farm yield schedules', () => {
+  const g = { ...youngAvocado, existing: 2, proposed: 1 };
+  const choices = { 'persea-americana': { months: [9], bearing: true, production: [
+    { status: 'existing' as const, plants: 2, planted: '2016-10', yields: [{ age: 10, kg: 4 }] },
+    { status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [{ age: 2, kg: 1 }, { age: 4, kg: 3 }] },
+  ] } };
+  const p = buildProductionProjection({ plantings: [], beds: [], trees: [g], choices, now: projectionNow });
+  assert.deepEqual(p.years[0].treeKg, [8, 8]);
+  assert.deepEqual(p.years[2].treeKg, [9, 9]);
+  assert.deepEqual(p.years[4].treeKg, [11, 11]);
+  assert.match(p.years[0].trees[0].ages, /10\.0/);
+  assert.match(p.years[0].trees[0].ages, /0\.0/);
+});
+
+test('a yield schedule changing inside a year produces a range without inventing a monthly picking curve', () => {
+  const choice = { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2022-04', yields: [{ age: 4, kg: 3 }, { age: 5, kg: 6 }] }] };
+  assert.deepEqual(treeAgeProjection(youngAvocado, choice, projectionStart, projectionStart + 11).kg, [3, 6]);
+});
+
+test('an unknown younger cohort does not discard the known production of older plants of the same species', () => {
+  const choice = { months: [], bearing: true, production: [
+    { status: 'existing' as const, plants: 1, planted: '2016-10', yields: [{ age: 10, kg: 4 }] },
+    { status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [] },
+  ] };
+  const g = { ...youngAvocado, existing: 1 };
+  const projection = buildProductionProjection({ plantings: [], beds: [], trees: [g], choices: { 'persea-americana': choice }, now: projectionNow });
+  assert.equal(projection.years[2].trees[0].kg, null);
+  assert.deepEqual(projection.years[2].treeKg, [4, 4]);
+  assert.equal(projection.years[2].partial, true);
+});
+
+test('missing dates, unassigned plants, over-counts and conflicting ages remain missing rather than zero', () => {
+  assert.equal(treeAgeProjection(youngAvocado, undefined, projectionStart, projectionStart + 11).kg, null);
+  for (const production of [
+    [{ status: 'proposed' as const, plants: 1, planted: '', yields: [] }],
+    [{ status: 'proposed' as const, plants: 2, planted: '2026-10', yields: [] }],
+    [{ status: 'proposed' as const, plants: NaN, planted: '2026-10', yields: [] }],
+    [{ status: 'proposed' as const, plants: 1, planted: '2020-10', yields: [{ age: 2, kg: 3 }, { age: 2, kg: 9 }] }],
+  ]) assert.equal(treeAgeProjection(youngAvocado, { months: [], bearing: false, production }, projectionStart, projectionStart + 11).kg, null);
+});
+
+test('age records survive season saving while invalid dates and kg cannot become forecasts', () => {
+  const clean = cleanTreeSeasonChoices({ 'persea-americana': { months: [9], bearing: false, production: [{ status: 'proposed', plants: 1, planted: '2026-10', yields: [{ age: 4, kg: 3 }, { age: -1, kg: 5 }, { age: 2, kg: NaN }] }] } });
+  assert.deepEqual(clean['persea-americana']?.production?.[0].yields, [{ age: 4, kg: 3 }]);
+  assert.equal(clean['persea-americana']?.production?.[0].planted, '2026-10');
+  assert.equal(plantingMonthIndex('2026-13'), null);
+  assert.equal(plantingMonthIndex('2026-10'), projectionStart);
+});
+
+test('one dated vegetable crop is forecast in its actual future year, while only recurring rows repeat', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', kind: 'bed', areaM2: 10 }];
+  const p: Planting = { id: 'dated', bedId: 'bed', cropKey: 'carrots', sowMonth: 10, once: '2028-10' };
+  const kg = estimatedYieldKgAdjusted(p, 10, [p]);
+  const future = buildProductionProjection({ plantings: [p], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(future.years[0].vegetableKg, 0);
+  assert.equal(future.years[1].vegetableKg, 0);
+  assert.equal(future.years[2].vegetableKg, kg);
+  assert.equal(future.years[3].vegetableKg, 0);
+  const recurring = { ...p, once: undefined };
+  const annual = buildProductionProjection({ plantings: [recurring], beds, trees: [], choices: {}, now: projectionNow });
+  assert.ok(annual.years.every(y => y.vegetableKg === kg));
+});
+
+test('double-booked vegetables cannot inflate the combined orchard and vegetable projection', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', kind: 'bed', areaM2: 10 }];
+  const p: Planting = { id: 'one', bedId: 'bed', cropKey: 'carrots', sowMonth: 10 };
+  const projection = buildProductionProjection({ plantings: [p, { ...p, id: 'two' }], beds, trees: [], choices: {}, now: projectionNow });
+  assert.ok(projection.years.every(y => y.vegetableKg === null && y.combinedKg === null && y.partial));
+});
+
+test('recorded young tree ages suppress premature seasonal references in both the app and the printed calendar', () => {
+  const choices = { 'persea-americana': { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [] }] } };
+  const dates = Array.from({ length: 36 }, (_, i) => ({ year: Math.floor((projectionStart + i) / 12), month: (projectionStart + i) % 12 + 1 }));
+  const months = dates.map(d => d.month);
+  const planning = planningTreeSeasons([youngAvocado], ['subtropical-coast']);
+  const app = calendarProduceByMonth([youngAvocado], [], {}, months, choices, {}, planning, dates);
+  assert.ok(app.slice(0, 24).every(m => !m.trees.length));
+  assert.ok(app.slice(24).some(m => m.trees.length));
+  const paper = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], treeGroups: [youngAvocado], treeSeasons: choices, planning: { months, trees: planning, dates } });
+  assert.ok(paper.forestPlanning!.every(m => m.length === 0));
+  assert.equal(paper.undated?.[0].label, 'Avocado', 'growing plants must remain in the map inventory');
+  assert.equal(ageReadyForSeason(youngAvocado, choices['persea-americana'], projectionStart + 23), false);
+  assert.equal(treeAgeCalendarNote(youngAvocado, choices['persea-americana'], projectionStart), 'Growing · first-crop ref 2028–2029');
+});
+
+test('a banana circle remains three plants in age-based production, never three mats plus followers', () => {
+  const g = placedTreeGroups([{ defId: 'banana_circle', status: 'proposed' }])[0];
+  const choice = { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 3, planted: '2024-10', yields: [{ age: 2, kg: 2 }] }] };
+  assert.equal(g.proposed, 3);
+  assert.deepEqual(treeAgeProjection(g, choice, projectionStart, projectionStart + 11).kg, [6, 6]);
+});
 
 test('the generated table is exactly what the dossiers say', () => {
   // lib/perennial-harvest-data.ts is generated; a hand edit there would put a value in the app

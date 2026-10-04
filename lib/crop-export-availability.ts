@@ -8,6 +8,7 @@
 import type { AvailabilityEntry, CropPlanAvailability } from '@/lib/crop-export-pdf';
 import type { PlanningTreeSeason } from '@/lib/production-product-guidance';
 import type { FoodAvailabilityItem } from '@/lib/crop-plan';
+import { ageReadyForSeason, treeAgeCalendarNote } from '@/lib/production-projection';
 import { confirmedTreeMonths, formatMonthSpan, type PlacedTreeGroup, type TreeAvailabilityItem, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { ANIMAL_ENTERPRISES, HOUSING_ANIMALS, PRODUCT_LABEL, confirmedAnimalMonths, type AnimalAvailabilityItem, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 
@@ -25,6 +26,7 @@ const mapCounts = (g: { existing: number; proposed: number }) => `${g.existing} 
 
 /** Never lose a placed food source just because it cannot honestly be assigned a harvest date. */
 export function undatedAvailability(opts: {
+  now?: Date;
   treeGroups?: readonly PlacedTreeGroup[];
   unidentifiedPlants?: readonly UnidentifiedPlantGroup[];
   treeSeasons?: TreeSeasonChoices;
@@ -39,7 +41,9 @@ export function undatedAvailability(opts: {
     for (const g of opts.treeGroups ?? []) {
       const season = confirmedTreeMonths(g.harvest, opts.treeSeasons ?? {});
       if (season.length > 0 && g.proposed === 0) continue;
-      entries.push({ iconKey: `tree:${g.harvest.speciesId}`, label: g.harvest.name, detail: `Plants on map: ${mapCounts(g)}. ${season.length ? `Local months: ${formatMonthSpan(season)}. Proposed plants are not a current harvest.` : 'Picking months and fruit-bearing plants need local confirmation.'}${g.referenceMissing ? ' No harvest reference is available in this plan; only local observations can supply picking months.' : ''}` });
+      const now = opts.now ?? new Date();
+      const ageNote = treeAgeCalendarNote(g, opts.treeSeasons?.[g.harvest.speciesId], now.getFullYear() * 12 + now.getMonth());
+      entries.push({ iconKey: `tree:${g.harvest.speciesId}`, label: g.harvest.name, ...(ageNote ? { ageNote } : {}), detail: `Plants on map: ${mapCounts(g)}. ${ageNote ? `${ageNote}. ` : ''}${season.length ? `Local months: ${formatMonthSpan(season)}. Proposed plants are not a current harvest.` : 'Picking months and fruit-bearing plants need local confirmation.'}${g.referenceMissing ? ' No harvest reference is available in this plan; only local observations can supply picking months.' : ''}` });
     }
     for (const g of opts.unidentifiedPlants ?? []) entries.push({
       iconKey: g.speciesId ? `tree:${g.speciesId}` : `element:${g.defId}`,
@@ -80,8 +84,9 @@ export function animalEntries(slots: readonly AnimalAvailabilityItem[][]): Avail
  * while their section explains that they are hidden.
  */
 export function printableAvailability(opts: {
+  now?: Date;
   yearMode: 'established' | 'fromToday';
-  planning?: { months: readonly number[]; trees: readonly PlanningTreeSeason[] };
+  planning?: { months: readonly number[]; trees: readonly PlanningTreeSeason[]; dates?: readonly { year: number; month: number }[] };
   veg: readonly FoodAvailabilityItem[][];
   utilization: readonly number[];
   trees?: readonly TreeAvailabilityItem[][];
@@ -102,7 +107,11 @@ export function printableAvailability(opts: {
     includeTrees: opts.includeTrees !== false,
     includeAnimals: opts.includeAnimals !== false,
     forest: opts.includeTrees !== false && opts.trees ? forestEntries(opts.trees.slice(0, 12)) : undefined,
-    forestPlanning: opts.includeTrees !== false && opts.planning ? opts.planning.months.slice(0, 12).map(month => opts.planning!.trees.filter(tree => tree.season.months.includes(month)).map(tree => ({ iconKey: `tree:${tree.speciesId}`, label: tree.name, planning: tree.season }))) : undefined,
+    forestPlanning: opts.includeTrees !== false && opts.planning ? opts.planning.months.slice(0, 12).map((month, i) => opts.planning!.trees.filter(tree => {
+      const date = opts.planning!.dates?.[i];
+      const group = opts.treeGroups?.find(g => g.harvest.speciesId === tree.speciesId);
+      return tree.season.months.includes(month) && (!date || !group || ageReadyForSeason(group, opts.treeSeasons?.[tree.speciesId], date.year * 12 + date.month - 1));
+    }).map(tree => ({ iconKey: `tree:${tree.speciesId}`, label: tree.name, planning: tree.season }))) : undefined,
     animals: opts.includeAnimals !== false && opts.animals ? animalEntries(opts.animals.slice(0, 12)) : undefined,
     undated: undatedAvailability(opts),
   };

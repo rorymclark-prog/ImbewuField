@@ -14,6 +14,7 @@ import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, HOUSING_ANIMALS, HOUSING_LABEL, PRODU
 import type { ExpectedSeason, PlanningTreeSeason } from './production-product-guidance';
 import type { HarvestCitation } from './perennial-harvest';
 import { PERENNIAL_HARVEST, buildTreeAvailability, confirmedTreeMonths, formatRange, type PlacedTreeGroup, type TreeSeasonChoices } from './perennial-harvest';
+import { ageReadyForSeason } from './production-projection';
 
 export interface CalendarTreeLine {
   speciesId: string;
@@ -52,11 +53,17 @@ export function calendarProduceByMonth(
   treeSeasons: TreeSeasonChoices = {},
   animalSeasons: AnimalSeasonChoices = {},
   planning: readonly PlanningTreeSeason[] = [],
+  dates?: readonly { year: number; month: number }[],
 ): CalendarProduceMonth[] {
   const treesAll = buildTreeAvailability(treeGroups, months, false, treeSeasons);
   const treesStanding = buildTreeAvailability(treeGroups, months, true, treeSeasons);
   const animalsAll = buildAnimalAvailability(animalGroups, choices, months, false, animalSeasons);
   const animalsStanding = buildAnimalAvailability(animalGroups, choices, months, true, animalSeasons);
+  const ageReady = (speciesId: string, index: number, status?: 'existing' | 'proposed') => {
+    const date = dates?.[index];
+    const group = treeGroups.find(g => g.harvest.speciesId === speciesId);
+    return !date || (!!group && ageReadyForSeason(group, treeSeasons[speciesId], date.year * 12 + date.month - 1, status));
+  };
   return months.map((_, i) => ({
     trees: [...treesAll[i].map((t) => {
       const standing = treesStanding[i].find((s) => s.speciesId === t.speciesId)?.trees ?? 0;
@@ -66,10 +73,10 @@ export function calendarProduceByMonth(
         name: t.name,
         product: (record?.product ?? 'fruit').replace(/\s*\(.*\)\s*$/, ''),
         standing,
-        proposed: t.trees - standing,
+        proposed: ageReady(t.speciesId, i, 'proposed') ? t.trees - standing : 0,
         yearsToFirstCrop: record?.yearsToFirstCrop?.value ?? null,
       };
-    }), ...planning.filter(tree => tree.season.months.includes(months[i]) && PERENNIAL_HARVEST[tree.speciesId] && !confirmedTreeMonths(PERENNIAL_HARVEST[tree.speciesId], treeSeasons).length).map(tree => ({ speciesId: tree.speciesId, name: tree.name, product: PERENNIAL_HARVEST[tree.speciesId]?.product ?? 'fruit', standing: tree.existing, proposed: tree.proposed, yearsToFirstCrop: PERENNIAL_HARVEST[tree.speciesId]?.yearsToFirstCrop?.value ?? null, planning: tree.season }))],
+    }).filter(t => t.standing + t.proposed > 0), ...planning.filter(tree => tree.season.months.includes(months[i]) && PERENNIAL_HARVEST[tree.speciesId] && !confirmedTreeMonths(PERENNIAL_HARVEST[tree.speciesId], treeSeasons).length && ageReady(tree.speciesId, i)).map(tree => ({ speciesId: tree.speciesId, name: tree.name, product: PERENNIAL_HARVEST[tree.speciesId]?.product ?? 'fruit', standing: tree.existing, proposed: tree.proposed, yearsToFirstCrop: PERENNIAL_HARVEST[tree.speciesId]?.yearsToFirstCrop?.value ?? null, planning: tree.season }))],
     animals: animalsAll[i].map((a) => {
       const standing = animalsStanding[i].find((s) => s.enterpriseId === a.enterpriseId)?.structures ?? 0;
       return {
