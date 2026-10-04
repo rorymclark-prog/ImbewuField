@@ -9,6 +9,133 @@ import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-draft
 const market = COURSE_MODULES.find(module => module.id === 'market-community')!;
 const sourceLesson = (id: string) => market.lessons.find(lesson => lesson.id === id)!;
 
+test('Market L1–L2 assessment drafts preserve answer order, false-claim polarity, and exact held anchors', () => {
+  const veL1Source = sourceLesson('market-community-l1');
+  const veL1 = TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === veL1Source.id)!;
+  const recordPoint = veL1.keyPoints[0];
+  assert.equal(recordPoint.sourceEnglish, 'Record harvest amounts and destinations separately from cash');
+  assert.equal(recordPoint.reviewStatus, 'machine-draft');
+  assert.equal(recordPoint.tshivendaDraft, 'Ṅwalani harvest amounts and destinations nga u fhambana na cash');
+  assert.ok(recordPoint.tshivendaDraft.includes('harvest amounts and destinations'),
+    'the recorded categories stay exact English while record/separate framing is drafted');
+  assert.ok(recordPoint.tshivendaDraft.endsWith('cash'), 'cash remains a separate accounting category');
+  assert.equal(resolveLearnerLessonPresentation(veL1Source, 've').content.keyPoints[0], recordPoint.tshivendaDraft);
+  const changedRecordSource = {
+    ...veL1Source,
+    keyPoints: veL1Source.keyPoints.map((point, index) => index === 0 ? `${point} Changed.` : point),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedRecordSource, 've').status, 'english-fallback',
+    'changing the record/cash source withdraws its paired key point');
+
+  const veGap = veL1.quiz[1];
+  assert.deepEqual(veGap.options.map(option => option.sourceEnglish), veL1Source.quiz[1].options,
+    'the translated food-gap answer keeps the canonical option order');
+  assert.equal(veGap.sourceCorrectIndex, 1);
+  assert.equal(veGap.options[1].reviewStatus, 'machine-draft');
+  assert.equal(veGap.options[1].tshivendaDraft,
+    'Pulani ni tshi humela murahu u bva kha food gap ni tshi shumisa suitable local crops na their harvest timing');
+  for (const anchor of ['food gap', 'suitable local crops', 'their harvest timing']) {
+    assert.ok(veGap.options[1].tshivendaDraft.includes(anchor), `the correct answer retains ${anchor}`);
+  }
+  assert.equal(resolveLearnerLessonPresentation(veL1Source, 've').content.quiz[1].correct, 1,
+    'localization does not move the keyed answer');
+
+  const taxSource = 'Box schemes avoid tax obligations';
+  const taxRows = [
+    {
+      language: 'st' as const,
+      source: sourceLesson('market-community-l2'),
+      draft: SESOTHO_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === 'market-community-l2')!,
+      option: SESOTHO_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === 'market-community-l2')!.quiz[1].options[3],
+      target: 'Box schemes di qoba tax obligations',
+      resolve: (source: typeof market.lessons[number]) => resolveLearnerLessonPresentation(source, 'st'),
+    },
+    {
+      language: 've' as const,
+      source: sourceLesson('market-community-l2'),
+      draft: TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === 'market-community-l2')!,
+      option: TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === 'market-community-l2')!.quiz[1].options[3],
+      target: 'Box schemes dzi iledza tax obligations',
+      resolve: (source: typeof market.lessons[number]) => resolveLearnerLessonPresentation(source, 've'),
+    },
+    {
+      language: 'ts' as const,
+      source: sourceLesson('market-community-l2'),
+      draft: XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === 'market-community-l2')!,
+      option: XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === 'market-community-l2')!.quiz[1].options[3],
+      target: 'Box schemes ti papalata tax obligations',
+      resolve: (source: typeof market.lessons[number]) => resolveLearnerLessonPresentation(source, 'ts'),
+    },
+  ];
+
+  for (const row of taxRows) {
+    const sourceQuestion = row.source.quiz[1];
+    assert.deepEqual(row.draft.quiz[1].options.map(option => option.sourceEnglish), sourceQuestion.options,
+      `${row.language}: the false tax claim stays in its original position`);
+    assert.equal(row.draft.quiz[1].sourceCorrectIndex, 2);
+    assert.equal(row.option.sourceEnglish, taxSource);
+    assert.equal(row.option.reviewStatus, 'machine-draft');
+    const target = 'sesothoDraft' in row.option ? row.option.sesothoDraft
+      : 'tshivendaDraft' in row.option ? row.option.tshivendaDraft : row.option.xitsongaDraft;
+    assert.equal(target, row.target);
+    assert.ok(target.startsWith('Box schemes ') && target.endsWith(' tax obligations'),
+      `${row.language}: the named arrangement and tax obligation remain exact English anchors`);
+    const resolvedQuestion = row.resolve(row.source).content.quiz[1];
+    assert.equal(resolvedQuestion.correct, 2,
+      `${row.language}: the false tax assertion remains a distractor`);
+    assert.equal(resolvedQuestion.options[3], row.target,
+      `${row.language}: the learner sees the reviewed source-paired false-tax wording`);
+  }
+  assert.ok(taxRows[0].target.includes('qoba') && taxRows[1].target.includes('iledza') && taxRows[2].target.includes('papalata'),
+    'each draft keeps the positive avoid direction instead of preventing, prohibiting, or negating the claim');
+
+  const tsL1Source = sourceLesson('market-community-l1');
+  const tsL1 = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === tsL1Source.id)!;
+  const soilClaim = tsL1.quiz[1].options[3];
+  assert.equal(tsL1.quiz[1].sourceCorrectIndex, 1);
+  assert.equal(soilClaim.sourceEnglish, 'The records show a soil fertility problem');
+  assert.equal(soilClaim.reviewStatus, 'machine-draft');
+  assert.equal(soilClaim.xitsongaDraft, 'Tirhekhodo ti komba leswaku ku na soil fertility problem');
+  assert.ok(soilClaim.xitsongaDraft.endsWith('soil fertility problem'),
+    'the false soil-diagnosis claim remains explicit while its exact technical anchor stays English');
+  assert.equal(resolveLearnerLessonPresentation(tsL1Source, 'ts').content.quiz[1].correct, 1,
+    'the false soil-fertility claim remains a distractor');
+
+  const tsL3 = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === 'market-community-l3')!;
+  const unchangedAssume = tsL3.quiz[0].options[2];
+  assert.equal(unchangedAssume.sourceEnglish, 'Assume sharing automatically improves every seed lot');
+  assert.equal(unchangedAssume.reviewStatus, 'hold',
+    'the uncertain “Assume” framing stays held rather than weakening it to “think”');
+  assert.equal(unchangedAssume.xitsongaDraft, unchangedAssume.sourceEnglish);
+
+  const changedVeGap = {
+    ...veL1Source,
+    quiz: veL1Source.quiz.map((question, questionIndex) => questionIndex === 1
+      ? { ...question, options: question.options.map((option, optionIndex) => optionIndex === 1 ? `${option} changed` : option) }
+      : question),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedVeGap, 've').status, 'english-fallback',
+    'changing the keyed food-gap source removes its paired draft');
+  for (const row of taxRows) {
+    const changedTaxSource = {
+      ...row.source,
+      quiz: row.source.quiz.map((question, questionIndex) => questionIndex === 1
+        ? { ...question, options: question.options.map((option, optionIndex) => optionIndex === 3 ? `${option} changed` : option) }
+        : question),
+    };
+    assert.equal(row.resolve(changedTaxSource).status, 'english-fallback',
+      `${row.language}: changing the false tax-claim source withdraws its paired quiz`);
+  }
+  const changedSoilSource = {
+    ...tsL1Source,
+    quiz: tsL1Source.quiz.map((question, questionIndex) => questionIndex === 1
+      ? { ...question, options: question.options.map((option, optionIndex) => optionIndex === 3 ? `${option} changed` : option) }
+      : question),
+  };
+  assert.equal(resolveLearnerLessonPresentation(changedSoilSource, 'ts').status, 'english-fallback',
+    'changing the diagnostic distractor source withdraws its paired quiz');
+});
+
 test('Tshivenda Market L1 body keeps record examples and sale limits paired to the source', () => {
   const source = sourceLesson('market-community-l1');
   const draft = TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === source.id)!;

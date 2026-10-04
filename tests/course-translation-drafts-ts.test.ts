@@ -26,6 +26,7 @@ test('the Xitsonga draft preserves all Introduction source pairs and quiz answer
     assert.ok(original);
     assert.equal(lesson.id, original.id);
     assert.equal(lesson.title.sourceEnglish, original.title);
+    assert.equal(lesson.infographicAlt?.sourceEnglish, original.infographicAlt);
     assert.equal(lesson.body.sourceEnglish, original.body);
     assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), original.keyPoints);
     assert.equal(lesson.quiz.length, original.quiz.length);
@@ -40,7 +41,7 @@ test('the Xitsonga draft preserves all Introduction source pairs and quiz answer
   }
 });
 
-test('held Xitsonga fields stay exact English until fluent review resolves them', () => {
+test('held Xitsonga anchors remain exact while mixed fields stay machine drafts', () => {
   assert.ok(draft.holds.length > 0);
   const lessons = new Map(draft.lessons.map(lesson => [lesson.id, lesson]));
 
@@ -60,11 +61,66 @@ test('held Xitsonga fields stay exact English until fluent review resolves them'
       else if (optionIndexText !== undefined) pair = quiz?.options[Number(optionIndexText)];
     }
     assert.ok(pair, `${hold.lessonId} ${hold.field} must resolve to a source pair`);
-    if (bodyField) assert.ok(pair.xitsongaDraft.includes(hold.sourceText), `${hold.field} must retain the exact held source phrase`);
-    else assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} must remain exactly as sourced`);
-    if (!bodyField) assert.equal(pair.reviewStatus, 'hold');
+    assert.ok(pair.sourceEnglish.includes(hold.sourceText), `${hold.field} hold must belong to the exact source`);
+    assert.ok(pair.xitsongaDraft.includes(hold.sourceText), `${hold.field} must retain the exact held source phrase`);
+    if (pair.sourceEnglish === hold.sourceText) {
+      assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} whole-field hold must remain exact English`);
+      assert.equal(pair.reviewStatus, 'hold');
+    } else {
+      assert.equal(pair.reviewStatus, 'machine-draft', `${hold.field} mixed text must remain visibly unreviewed`);
+    }
     assert.ok(hold.reason.length > 0);
   }
+});
+
+test('Introduction Xitsonga alt text and L1 framing resolve as source-bound machine drafts', () => {
+  const expectedAlt = new Map([
+    ['intro-permaculture-l1', 'Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.'],
+    ['intro-permaculture-l2', 'Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.'],
+    ['intro-permaculture-l3', 'Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni a wilder riverside area. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.'],
+  ]);
+
+  for (const [lessonId, expectedText] of expectedAlt) {
+    const original = source.lessons.find(lesson => lesson.id === lessonId)!;
+    const paired = draft.lessons.find(lesson => lesson.id === lessonId)!;
+    assert.ok(original.infographicAlt, `${lessonId} canonical alt text must exist`);
+    assert.deepEqual(paired.infographicAlt, {
+      sourceEnglish: original.infographicAlt,
+      xitsongaDraft: expectedText,
+      reviewStatus: 'machine-draft',
+    }, `${lessonId} alt pair must stay tied to its exact canonical description`);
+    const presentation = resolveLearnerLessonPresentation(original, 'ts');
+    assert.equal(presentation.status, 'draft');
+    assert.equal(presentation.content.infographicAlt, expectedText,
+      `${lessonId} should expose the unreviewed regional description with the learner draft`);
+
+    const changedAlt = { ...original, infographicAlt: `${original.infographicAlt} Source changed.` };
+    const fallback = resolveLearnerLessonPresentation(changedAlt, 'ts');
+    assert.equal(fallback.status, 'english-fallback', `${lessonId} stale alt text must not survive source drift`);
+    assert.equal(fallback.content.infographicAlt, changedAlt.infographicAlt);
+  }
+
+  const l1Source = source.lessons.find(lesson => lesson.id === 'intro-permaculture-l1')!;
+  const l1 = draft.lessons.find(lesson => lesson.id === l1Source.id)!;
+  assert.equal(l1.keyPoints[1].sourceEnglish, l1Source.keyPoints[1]);
+  assert.equal(l1.keyPoints[1].reviewStatus, 'machine-draft');
+  assert.equal(l1.keyPoints[1].xitsongaDraft, 'People Care: swilaveko swa ndyangu wa wena swi rhanga market production');
+  assert.ok(l1.keyPoints[1].xitsongaDraft.indexOf('swilaveko swa ndyangu wa wena') <
+    l1.keyPoints[1].xitsongaDraft.indexOf('market production'),
+  'family needs must remain ahead of market production');
+
+  assert.equal(l1.quiz[0].question.sourceEnglish, l1Source.quiz[0].q);
+  assert.equal(l1.quiz[0].question.reviewStatus, 'machine-draft');
+  assert.equal(l1.quiz[0].question.xitsongaDraft,
+    'Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?');
+  assert.equal(l1.quiz[0].sourceCorrectIndex, l1Source.quiz[0].correct);
+  assert.equal(l1.quiz[0].sourceCorrectIndex, 2, 'the Fair Share answer index must not move');
+  assert.deepEqual(l1.quiz[0].options.map(option => option.sourceEnglish), l1Source.quiz[0].options);
+  assert.equal(l1.quiz[0].rationale.sourceEnglish, l1Source.quiz[0].rationale);
+  const resolvedL1 = resolveLearnerLessonPresentation(l1Source, 'ts');
+  assert.equal(resolvedL1.status, 'draft');
+  assert.equal(resolvedL1.content.keyPoints[1], l1.keyPoints[1].xitsongaDraft);
+  assert.equal(resolvedL1.content.quiz[0].q, l1.quiz[0].question.xitsongaDraft);
 });
 
 test('the draft retains source digits and named authors in paired fields', () => {

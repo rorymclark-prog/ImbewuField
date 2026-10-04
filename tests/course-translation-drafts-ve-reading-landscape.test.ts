@@ -70,8 +70,8 @@ test('Tshivenda Market drafts keep exact sources, numeric premises and answer sa
     }
     if (lessonId === 'market-community-l1') {
       assert.deepEqual(draft.keyPoints.map(point => point.reviewStatus),
-        ['hold', 'machine-draft', 'machine-draft', 'machine-draft'],
-        'the existing record/cash hold is preserved while the checked cost and planning frames become drafts');
+        ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'],
+        'the record/cash wording is now drafted while its exact English categories remain embedded');
       const priceQuestion = draft.quiz[0];
       assert.equal(priceQuestion.sourceCorrectIndex, 2);
       assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
@@ -95,15 +95,21 @@ test('Tshivenda Market drafts keep exact sources, numeric premises and answer sa
         'the repeated June/July household shortage remains exact');
       assert.deepEqual(gapQuestion.options.map(option => option.sourceEnglish), gapSource.options,
         'the translated choices retain the exact source order');
-      assert.equal(gapQuestion.options[1].reviewStatus, 'hold');
-      assert.equal(gapQuestion.options[1].tshivendaDraft, gapSource.options[1],
-        'the keyed suitable-local-crops and harvest-timing option remains exact English');
+      assert.equal(gapQuestion.options[1].reviewStatus, 'machine-draft');
+      assert.ok(gapQuestion.options[1].tshivendaDraft.startsWith('Pulani ni tshi humela murahu u bva kha food gap'),
+        'the keyed answer still works backwards from the food gap');
+      for (const technicalAnchor of ['suitable local crops', 'their harvest timing']) {
+        assert.ok(gapQuestion.options[1].tshivendaDraft.includes(technicalAnchor),
+          `the keyed answer retains the source-bound ${technicalAnchor} condition`);
+      }
+      assert.equal(gapQuestion.sourceCorrectIndex, 1,
+        'the localized correct choice stays at its original answer index');
       assert.ok(gapQuestion.rationale.tshivendaDraft.includes('zwimela') &&
         gapQuestion.rationale.tshivendaDraft.includes('maḓuvha a u zwala') &&
         gapQuestion.rationale.tshivendaDraft.includes('maḓi') &&
         gapQuestion.rationale.tshivendaDraft.includes('tshifhinga tsho lavhelelwaho tsha u kaṋa'),
         'the rationale retains crop choice, sowing dates, water and expected harvest time');
-      assert.deepEqual(gapQuestion.options.map(option => option.reviewStatus), ['machine-draft', 'hold', 'machine-draft', 'machine-draft']);
+      assert.deepEqual(gapQuestion.options.map(option => option.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft']);
       const changedQuestion = { ...source, quiz: source.quiz.map((question, index) => index === 1
         ? { ...question, q: `${question.q} Changed timing.` }
         : question) };
@@ -498,9 +504,11 @@ test('Tshivenda Market L2 pairs customer and assessment drafts without weakening
     assert.ok(question.options.every(option => option.reviewStatus === 'machine-draft' ||
       (option.reviewStatus === 'hold' && option.tshivendaDraft === option.sourceEnglish)));
   }
-  assert.equal(lesson.quiz[1].options[3].reviewStatus, 'hold');
-  assert.equal(lesson.quiz[1].options[3].tshivendaDraft, 'Box schemes avoid tax obligations',
-    'negating this false distractor would create a second correct answer');
+  assert.equal(lesson.quiz[1].options[3].reviewStatus, 'machine-draft');
+  assert.equal(lesson.quiz[1].options[3].tshivendaDraft, 'Box schemes dzi iledza tax obligations',
+    'the false distractor still says box schemes avoid tax obligations, without turning the claim into a prohibition or negation');
+  assert.equal(lesson.quiz[1].sourceCorrectIndex, 2,
+    'the translated false tax claim stays at its original distractor position');
   assert.ok(lesson.quiz[0].question.tshivendaDraft.includes('Mulimi wa bulasi ḽiṱuku') &&
     lesson.quiz[0].question.tshivendaDraft.includes('production ine ya fhambana vhege nga vhege'),
   'the farm is small and weekly production varies; neither actor nor the supply condition may change');

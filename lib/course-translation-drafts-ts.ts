@@ -61,6 +61,11 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         "xitsongaDraft": "Mahanyelo Manharhu: Ku Hlayisa Misava, Ku Hlayisa Vanhu, Ku Avelana hi Ku Ringana",
         "reviewStatus": "machine-draft"
       },
+      "infographicAlt": {
+        "sourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+        "xitsongaDraft": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.",
+        "reviewStatus": "machine-draft"
+      },
       "body": {
         "sourceEnglish": "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
         "xitsongaDraft": "Permaculture yi seketeriwe eka mahanyelo manharhu. Ku Hlayisa Misava swi vula ku teka misava, mati, swimilana na swiharhi tanihi maendlelo lama hanyaka lama faneleke ku sirheleriwa, ku nga ri switirhisiwa swo hela hi ku tirhisiwa. Ku Hlayisa Vanhu swi vula leswaku swilaveko swa ndyangu wa wena swi rhanga emahlweni, kutani ku landzela swa vaaki va ka n'wina. Ku Avelana hi Ku Ringana swi vula ku teka ntsena leswi u swi lavaka kutani u vuyisela leswi saleke — mbewu, swakudya, mati, vutivi — endzeni ka maendlelo ya nsimu.\n\nLawa a hi mianakanyo ntsena leyi nga riki ya xiviri. Murimi loyi a xavisaka matandza hinkwawo na matsavu kambe a nga siyi nchumu etafuleni ra ndyangu u tlula Ku Hlayisa Vanhu. Vaaki lava biyelaka xihlovo lexi avelaneriwaka va tlula Ku Avelana hi Ku Ringana.\n\nMahanyelo i ya nkoka hikuva ma ku pfuna ku endla swiboho loko ku nga ri na buku ya milawu — muakelani loyi a kombelaka ku risa tihomu endzhaku ka dyandza, kumbe ndhambi leyi onhaka swisele (swales) swa wena. Aka mahanyelo lawa manharhu eka ndlela leyi u anakanyaka ha yona u nga si aka nchumu emisaveni.",
@@ -74,8 +79,8 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "People Care: your family's needs come before market production",
-          "xitsongaDraft": "People Care: your family's needs come before market production",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "People Care: swilaveko swa ndyangu wa wena swi rhanga market production",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Fair Share: return surplus to the system — seeds, water, food, knowledge",
@@ -92,8 +97,8 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
-            "xitsongaDraft": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+            "reviewStatus": "machine-draft"
           },
           "options": [
             {
@@ -166,6 +171,11 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       "title": {
         "sourceEnglish": "Twelve Principles: Designing with Nature",
         "xitsongaDraft": "Misinya ya Milawu ya Khume-Mbirhi: Ku Endla Pulani na Ntumbuluko",
+        "reviewStatus": "machine-draft"
+      },
+      "infographicAlt": {
+        "sourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+        "xitsongaDraft": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.",
         "reviewStatus": "machine-draft"
       },
       "body": {
@@ -275,6 +285,11 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         "xitsongaDraft": "Ti-Zone na Ti-Sector: Ku Hlela Purasi ra Wena hi Matimba",
         "reviewStatus": "machine-draft"
       },
+      "infographicAlt": {
+        "sourceEnglish": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+        "xitsongaDraft": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni a wilder riverside area. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+        "reviewStatus": "machine-draft"
+      },
       "body": {
         "sourceEnglish": "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
         "xitsongaDraft": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka example leyi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova.\n\nSectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, flood na fire. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.\n\nDirowa zones na sectors ephepheni kutani u va na motheo wa design ya wena.",
@@ -380,14 +395,20 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "intro-permaculture-l1",
       "field": "keyPoints[1]",
-      "sourceText": "People Care: your family's needs come before market production",
-      "reason": "Held in the exact English source pending fluent Xitsonga review because the current proposal may change this meaning."
+      "sourceText": "People Care",
+      "reason": "Retain the named permaculture ethic exactly while translating the family-needs-before-market-production priority around it."
     },
     {
       "lessonId": "intro-permaculture-l1",
       "field": "quiz[0].q",
-      "sourceText": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
-      "reason": "The maize term in this question is uncertain; keep the exact source until a fluent reviewer confirms it."
+      "sourceText": "all his surplus maize",
+      "reason": "Retain the exact crop, ownership, and all-of-surplus wording because Xitsonga concord for the English crop anchor is uncertain."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "keeps nothing for composting or seed saving.",
+      "reason": "Retain the exact negative and both purposes while their compact Xitsonga wording remains uncertain."
     },
   ]
 };

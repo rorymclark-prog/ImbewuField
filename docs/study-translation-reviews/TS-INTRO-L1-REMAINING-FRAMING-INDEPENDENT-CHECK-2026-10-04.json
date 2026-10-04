@@ -1,0 +1,62 @@
+{
+  "title": "Independent Xitsonga Introduction L1 framing candidate check",
+  "readOnly": true,
+  "packetReviewed": "/tmp/imbewu-ts-intro-l1-remaining-framing-candidates-20261004.json",
+  "packetSha256": "8097d3d57abaab38668b40eb05e7861fbdc45c17025e3d158aa18b43d74a3c22",
+  "actualCheckoutHead": "681f9973d9326ad57fc7a3b0b3ebbdbdd9d87b71",
+  "sourceBindingVerifiedAgainstLiveFiles": {
+    "canonicalPath": "lib/course-modules.ts",
+    "sha256": "ec64834836fcd239f88b51c5f903cb39510fd9d92805a8b8462e73e71a68cd83",
+    "matches": true,
+    "resolverPath": "lib/course-localization.ts",
+    "matchesResolver": true,
+    "registryPath": "lib/course-translation-drafts-ts.ts",
+    "matchesRegistry": true,
+    "lessonId": "intro-permaculture-l1",
+    "language": "ts"
+  },
+  "fieldChecks": [
+    {
+      "fieldPath": "keyPoints[1]",
+      "disposition": "accept as unreviewed mixed machine draft",
+      "semanticCheck": "Keeps the People Care label exact; localizes family needs as the subject and says they come first; retains market production exactly. Priority direction remains family needs before market production. No new rule or promise. Mixed English at both ends is a coherent framing draft; do not call it fluent-approved.",
+      "composition": {
+        "fieldPath": "keyPoints[1]",
+        "sourceReconstructsExactly": true,
+        "targetReconstructsExactly": true,
+        "sourceReconstructed": "People Care: your family's needs come before market production",
+        "targetReconstructed": "People Care: swilaveko swa ndyangu wa wena swi rhanga market production"
+      }
+    },
+    {
+      "fieldPath": "quiz[0].question",
+      "disposition": "accept as unreviewed mixed machine draft",
+      "semanticCheck": "Localizes farmer/sells, contrast, and the final most-failing-ethic question. The complete clauses “all his surplus maize” and “keeps nothing for composting or seed saving” remain verbatim English holds, preserving all/ownership/crop, negative, and both purposes without guessing maize concord. “ngopfu” carries the most emphasis. This does not change quiz indices, choices, rationale, or correct answer index 2.",
+      "composition": {
+        "fieldPath": "quiz[0].question",
+        "sourceReconstructsExactly": true,
+        "targetReconstructsExactly": true,
+        "sourceReconstructed": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+        "targetReconstructed": "Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?"
+      }
+    }
+  ],
+  "compositionChecks": [
+    {
+      "fieldPath": "keyPoints[1]",
+      "sourceReconstructsExactly": true,
+      "targetReconstructsExactly": true,
+      "sourceReconstructed": "People Care: your family's needs come before market production",
+      "targetReconstructed": "People Care: swilaveko swa ndyangu wa wena swi rhanga market production"
+    },
+    {
+      "fieldPath": "quiz[0].question",
+      "sourceReconstructsExactly": true,
+      "targetReconstructsExactly": true,
+      "sourceReconstructed": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+      "targetReconstructed": "Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?"
+    }
+  ],
+  "risks": "The TS framing and question wording have not been checked by a fluent speaker. Technical/economic phrase and maize/compost/seed-saving clauses stay exact English where lexical concord or idiom is uncertain. The English hold fragments make the quiz question mixed, but preserve the tested conditions exactly.",
+  "noRepoEdits": true
+}

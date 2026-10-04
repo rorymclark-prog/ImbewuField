@@ -1,0 +1,123 @@
+{
+  "title": "TS Introduction L1 framing and L1-L3 infographic alt implementation proof",
+  "date": "2026-10-04",
+  "reviewedBase": "432a99174819a303424404473ee54a08081ff2b4",
+  "branch": "codex/ts-intro-source-paired-gaps-20261004",
+  "status": "uncommitted for root review; drafts remain machine-draft and are not fluent-speaker approved",
+  "scope": {
+    "language": "ts",
+    "moduleId": "intro-permaculture",
+    "changedFields": [
+      {
+        "lessonId": "intro-permaculture-l1",
+        "fieldPath": "infographicAlt",
+        "sourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+        "targetText": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.",
+        "reviewStatus": "machine-draft"
+      },
+      {
+        "lessonId": "intro-permaculture-l2",
+        "fieldPath": "infographicAlt",
+        "sourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+        "targetText": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.",
+        "reviewStatus": "machine-draft"
+      },
+      {
+        "lessonId": "intro-permaculture-l3",
+        "fieldPath": "infographicAlt",
+        "sourceEnglish": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+        "targetText": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni a wilder riverside area. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+        "reviewStatus": "machine-draft"
+      },
+      {
+        "lessonId": "intro-permaculture-l1",
+        "fieldPath": "keyPoints[1]",
+        "sourceEnglish": "People Care: your family's needs come before market production",
+        "targetText": "People Care: swilaveko swa ndyangu wa wena swi rhanga market production",
+        "reviewStatus": "machine-draft"
+      },
+      {
+        "lessonId": "intro-permaculture-l1",
+        "fieldPath": "quiz[0].question",
+        "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+        "targetText": "Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+        "reviewStatus": "machine-draft",
+        "sourceCorrectIndex": 2
+      }
+    ]
+  },
+  "binding": {
+    "canonicalPath": "lib/course-modules.ts",
+    "canonicalBlobAtBase": "62bbbce287d9a0e07e19709f6ac98e49797e6f0d",
+    "resolverPath": "lib/course-localization.ts",
+    "resolverBlobAtBase": "f320d22c25e1462f78d38f95ed74e640b80bf70f",
+    "registryPath": "lib/course-translation-drafts-ts.ts",
+    "registryBlobAtBase": "d22c0939478f1502b569faab96c1aa77caa2bdf5",
+    "registryWorkingTreeSha256": "d705f2726d0fa204e6c4ef4ee231d6e333a406b89dd07cc7956e1ee5cba9305d",
+    "resolverSupportsInfographicAlt": true,
+    "resolverChangeNeeded": false,
+    "note": "Existing RegionalPair and Xitsonga pair types already include infographicAlt; existing source match/status handling resolves it and rejects stale sources. Implementation only adds paired data."
+  },
+  "sourceAndTargetChecks": {
+    "threeAltRowsMatchCanonicalSources": true,
+    "threeAltTargetsMatchRootReadyPacket": true,
+    "l1OrdinaryFieldsMatchAcceptedIndependentPacket": true,
+    "l1KeyPointPreservesPeopleCareLabelAndMarketProductionAnchor": true,
+    "familyNeedsRemainBeforeMarketProduction": true,
+    "quizRetainsExactEnglishAnchors": [
+      "all his surplus maize",
+      "keeps nothing for composting or seed saving."
+    ],
+    "quizQuestionFramingLocalized": true,
+    "quizIndex0Unchanged": true,
+    "sourceCorrectIndex": 2,
+    "sourceOptionsAndRationaleUnmodified": true,
+    "altSourceDriftFallsBackToCurrentEnglish": "covered by targeted resolver test for all three descriptions",
+    "missingAltPairFails": "covered by targeted exact-pair assertion for all three canonical fields"
+  },
+  "provenance": {
+    "rootReadyAltPacket": "docs/study-translation-reviews/TS-INTRO-MISSING-ALT-ROOT-READY-2026-10-04.json",
+    "framingCandidatePacket": "docs/study-translation-reviews/TS-INTRO-L1-REMAINING-FRAMING-CANDIDATES-2026-10-04.json",
+    "independentFramingCheck": "docs/study-translation-reviews/TS-INTRO-L1-REMAINING-FRAMING-INDEPENDENT-CHECK-2026-10-04.json",
+    "independentCheckAcceptedTwoFields": true,
+    "languageReview": "No fluent-speaker approval claimed."
+  },
+  "unchangedMedia": {
+    "introInfographicJpgSha256": {
+      "public/course-images/intro-permaculture/intro-permaculture-l1.jpg": "88f45d7e5aeaeaf7b1a0ae54388794de9e0a70180527f80676d25c2764826dfb",
+      "public/course-images/intro-permaculture/intro-permaculture-l2.jpg": "1d6c59707d2b5e971b8c65fe670acde04304483401b759cd9c7693a248d0328a",
+      "public/course-images/intro-permaculture/intro-permaculture-l3.jpg": "b8ecfd94cfd5ed47ce4af0d0b4d5c2a67b3f8f840e19378af6fa4d201b65d7ab"
+    },
+    "stIntroAudioOrNarrationFilesChanged": false,
+    "slidesOrPairedDraftFilesChanged": false,
+    "canonicalEnglishChanged": false,
+    "planVersionChanged": false
+  },
+  "verification": {
+    "typecheck": "passed: npx tsc --noEmit",
+    "fullSuite": "npm test exit 0; 4,598 pass, 0 fail, 1 existing TODO in tests/shape-sync-loss.test.ts documenting the known pushShapes loss issue",
+    "whitespace": "passed: git diff --check",
+    "screenInspection": "not run; text-only registry changes, no imagery or layout change"
+  },
+  "rootReview": {
+    "actualRegistryAndTestDiff": "accepted",
+    "preservationProof": "TS-INTRO-ROOT-PRESERVATION-PROOF-2026-10-04.json",
+    "typecheck": "pass",
+    "fullTests": {
+      "total": 4599,
+      "pass": 4598,
+      "fail": 0,
+      "existingTodo": 1
+    },
+    "whitespace": "pass",
+    "actualImages": "three canonical Introduction images inspected during source-bound drafting; unchanged",
+    "phonePreview": "pending",
+    "fluentApproval": false,
+    "combinedReleaseFullTests": {
+      "total": 4600,
+      "pass": 4599,
+      "fail": 0,
+      "existingTodo": 1
+    }
+  }
+}
