@@ -66,6 +66,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-04 | [Core Study learner translation residuals — Xitsonga Intro implementation follow-up](2026-10-04/study-learner-ts-intro-codex.md) |
 | 2026-10-04 | [Core Study learner translation residuals — Codex](2026-10-04/study-learner-residual-codex.md) |
 | 2026-10-04 | [Production by plant age and clearer graphics — Codex](2026-10-04/production-age-visuals-codex.md) |
 | 2026-10-04 | [Regional production picture calendars — Codex](2026-10-04/regional-production-calendar-codex.md) |

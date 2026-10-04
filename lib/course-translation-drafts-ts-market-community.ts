@@ -115,8 +115,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           },
             {
             "sourceEnglish": "The records show a soil fertility problem",
-            "xitsongaDraft": "The records show a soil fertility problem",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Tirhekhodo ti komba leswaku ku na soil fertility problem",
+            "reviewStatus": "machine-draft"
           }
           ],
           "sourceCorrectIndex": 1,
@@ -245,8 +245,8 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Box schemes avoid tax obligations",
-              "xitsongaDraft": "Box schemes avoid tax obligations",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Box schemes ti papalata tax obligations",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 2,

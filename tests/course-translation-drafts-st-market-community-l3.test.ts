@@ -390,8 +390,12 @@ test('New Xitsonga Market L1 prose keeps the simple-habit draft and assessment s
     'the recurring June/July shortage statement remains exact');
   assert.deepEqual(gapQuestion.options.map(item => item.sourceEnglish), gapSource.options,
     'the new wording stays paired with each answer in canonical order');
-  assert.equal(gapQuestion.options[3].xitsongaDraft, gapSource.options[3]);
-  assert.equal(gapQuestion.options[3].reviewStatus, 'hold', 'the soil-fertility distractor remains exact English');
+  assert.equal(gapQuestion.options[3].reviewStatus, 'machine-draft',
+    'the records framing is drafted while the soil-fertility diagnosis stays an exact English anchor');
+  assert.equal(gapQuestion.options[3].xitsongaDraft, 'Tirhekhodo ti komba leswaku ku na soil fertility problem');
+  assert.equal(gapQuestion.options[3].xitsongaDraft.endsWith('soil fertility problem'), true);
+  assert.equal(gapQuestion.sourceCorrectIndex, 1,
+    'the false diagnosis remains at its original distractor position');
   assert.ok(gapQuestion.options[1].xitsongaDraft.includes('swibyariwa leswi lulameleke ndhawu ya wena') &&
     gapQuestion.options[1].xitsongaDraft.includes('nkarhi wa swona wa ntshovelo'),
     'the keyed action retains locally suitable crops and harvest timing');
@@ -400,7 +404,7 @@ test('New Xitsonga Market L1 prose keeps the simple-habit draft and assessment s
     gapQuestion.rationale.xitsongaDraft.includes('mati') &&
     gapQuestion.rationale.xitsongaDraft.includes('nkarhi lowu languteriweke wa ntshovelo'),
     'the rationale retains the gap, local climate, water and expected harvest-time conditions');
-  assert.deepEqual(gapQuestion.options.map(item => item.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'hold']);
+  assert.deepEqual(gapQuestion.options.map(item => item.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft']);
 
   const shown = resolveLearnerLessonPresentation(source, 'ts');
   assert.equal(shown.status, 'draft');

@@ -1,0 +1,172 @@
+{
+  "title": "Source-bound Xitsonga Intro L1 ordinary-framing candidates with three checked alt-text rows",
+  "reviewedHead": "4c10484c02db2c429c660981b92d2f98ae562e26",
+  "originMain": "4c10484c02db2c429c660981b92d2f98ae562e26",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "readOnly": true,
+  "language": "ts",
+  "moduleId": "intro-permaculture",
+  "lessonId": "intro-permaculture-l1",
+  "sourceBinding": {
+    "canonicalPath": "lib/course-modules.ts",
+    "canonicalSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "resolverPath": "lib/course-localization.ts",
+    "resolverSha256": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+    "registryPath": "lib/course-translation-drafts-ts.ts",
+    "registryExport": "XITSONGA_INTRO_PERMACULTURE_DRAFT",
+    "registrySha256": "ec64834836fcd239f88b51c5f903cb39510fd9d92805a8b8462e73e71a68cd83",
+    "reviewedBase": "4c10484c02db2c429c660981b92d2f98ae562e26",
+    "canonicalHashMatches": true,
+    "resolverHashMatches": true,
+    "registryHashMatches": true
+  },
+  "currentResolverStatus": "draft",
+  "currentAssessmentFields": [
+    {
+      "fieldPath": "keyPoints[1]",
+      "index": 1,
+      "sourceEnglish": "People Care: your family's needs come before market production",
+      "currentTargetText": "People Care: your family's needs come before market production",
+      "currentReviewStatus": "hold",
+      "resolverText": "People Care: your family's needs come before market production",
+      "correctAnswerIndexUnchanged": null,
+      "proposedTargetText": "People Care: swilaveko swa ndyangu wa wena swi rhanga market production",
+      "proposedStatus": "machine-draft",
+      "segments": [
+        {
+          "source": "People Care: ",
+          "target": "People Care: ",
+          "status": "english-hold",
+          "reason": "Ethics label retained verbatim for consistency."
+        },
+        {
+          "source": "your family's needs come before ",
+          "target": "swilaveko swa ndyangu wa wena swi rhanga ",
+          "status": "draft",
+          "reason": "Localizes the ordinary family-needs priority framing."
+        },
+        {
+          "source": "market production",
+          "target": "market production",
+          "status": "english-hold",
+          "reason": "Retained as the source’s specific economic activity phrase."
+        }
+      ],
+      "meaningGuards": {
+        "PeopleCareLabelExact": "People Care",
+        "familyNeedsExact": true,
+        "priorityBeforeMarketProduction": true,
+        "marketProductionExactEnglish": true,
+        "noAddedRuleOrPromise": true
+      }
+    },
+    {
+      "fieldPath": "quiz[0].question",
+      "quizIndex": 0,
+      "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+      "currentTargetText": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+      "currentReviewStatus": "hold",
+      "resolverText": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+      "correctAnswerIndex": 2,
+      "optionCount": 4,
+      "proposedTargetText": "Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+      "proposedStatus": "machine-draft",
+      "segments": [
+        {
+          "source": "A farmer sells ",
+          "target": "Murimi u xavisa ",
+          "status": "draft",
+          "reason": "Localizes the farmer and selling action."
+        },
+        {
+          "source": "all his surplus maize",
+          "target": "all his surplus maize",
+          "status": "english-hold",
+          "reason": "Preserves all/ownership/crop wording without assigning class concord to English maize."
+        },
+        {
+          "source": " but ",
+          "target": " kambe ",
+          "status": "draft",
+          "reason": "Localizes the contrast."
+        },
+        {
+          "source": "keeps nothing for composting or seed saving.",
+          "target": "keeps nothing for composting or seed saving.",
+          "status": "english-hold",
+          "reason": "Preserves the exact negative and two technical purposes while concord/idiom remains uncertain."
+        },
+        {
+          "source": " Which ethic is he most failing?",
+          "target": " Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+          "status": "draft",
+          "reason": "Localizes the question and failure-to-follow-most framing; ethic remains a technical concept anchor."
+        }
+      ],
+      "meaningGuards": {
+        "farmer": true,
+        "sells": true,
+        "allHisSurplusMaizeHeldExactly": true,
+        "keepsNothingHeldExactly": true,
+        "compostingHeldExactly": true,
+        "seedSavingHeldExactly": true,
+        "questionTranslated": true,
+        "ethicAnchorExact": true,
+        "mostEmphasis": "ngopfu",
+        "quizIndexUnchanged": 0,
+        "correctAnswerIndexUnchanged": 2,
+        "optionsAndRationaleUntouched": true,
+        "noNewSpeciesNumberOrClaim": true
+      }
+    }
+  ],
+  "priorCheckedMissingAltRows": {
+    "packetPath": "/tmp/imbewu-ts-intro-missing-alt-root-ready-20261004.json",
+    "independentCheckPath": "/tmp/imbewu-ts-intro-missing-alt-independent-check-20261004.json",
+    "count": 3,
+    "fields": [
+      {
+        "lessonId": "intro-permaculture-l1",
+        "fieldPath": "infographicAlt",
+        "language": "ts",
+        "sourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+        "rootReadyTargetText": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.",
+        "reviewStatus": "machine-draft",
+        "currentRegistryPairPresent": false,
+        "priorIndependentDisposition": "accept with minor lexical note",
+        "rootReadyTextVerified": true,
+        "canonicalAltExact": true
+      },
+      {
+        "lessonId": "intro-permaculture-l2",
+        "fieldPath": "infographicAlt",
+        "language": "ts",
+        "sourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+        "rootReadyTargetText": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.",
+        "reviewStatus": "machine-draft",
+        "currentRegistryPairPresent": false,
+        "priorIndependentDisposition": "accept",
+        "rootReadyTextVerified": true,
+        "canonicalAltExact": true
+      },
+      {
+        "lessonId": "intro-permaculture-l3",
+        "fieldPath": "infographicAlt",
+        "language": "ts",
+        "sourceEnglish": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+        "rootReadyTargetText": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni a wilder riverside area. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+        "reviewStatus": "machine-draft",
+        "currentRegistryPairPresent": false,
+        "priorIndependentDisposition": "accept with localized meaning note",
+        "rootReadyTextVerified": true,
+        "canonicalAltExact": true
+      }
+    ],
+    "decisionNote": "These three root-ready descriptions were independently checked and are included only as the already reviewed companion fields. L3 keeps the exact English habitat phrase “a wilder riverside area”."
+  },
+  "limitations": [
+    "Candidates are unreviewed machine drafts; no fluent-speaker approval is claimed.",
+    "The quiz first sentence retains its exact source English while translating safe framing to avoid uncertain concord for English maize.",
+    "No repository files or resolver registrations changed."
+  ]
+}

@@ -170,7 +170,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
             machineDraft('Box customers always pay more per kilogram', 'Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.'),
             machineDraft('Box schemes let you charge extra for packaging', 'Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.'),
             machineDraft('Committed subscription income lets you plan production around real demand instead of growing speculatively', 'Committed subscription income e o dumella ho rera production ho potoloha real demand ho e-na le ho lema ka ho hakanya.'),
-            hold('Box schemes avoid tax obligations'),
+            machineDraft('Box schemes avoid tax obligations', 'Box schemes di qoba tax obligations'),
           ],
           sourceCorrectIndex: 2,
           rationale: machineDraft('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.', 'Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, payment le costs tsa ho di phethahatsa.'),

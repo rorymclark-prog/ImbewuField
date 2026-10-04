@@ -184,8 +184,12 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
         gapQuestion.rationale.xitsongaDraft.includes('mati') &&
         gapQuestion.rationale.xitsongaDraft.includes('nkarhi lowu languteriweke wa ntshovelo'),
         'the rationale retains local climate, water and expected harvest-time conditions');
-      assert.equal(gapQuestion.options[3].xitsongaDraft, gapSource.options[3]);
-      assert.equal(gapQuestion.options[3].reviewStatus, 'hold', 'the soil-fertility distractor stays exact English');
+      assert.equal(gapQuestion.options[3].reviewStatus, 'machine-draft',
+        'ordinary records framing is drafted while the soil-fertility diagnosis stays an exact English anchor');
+      assert.equal(gapQuestion.options[3].xitsongaDraft, 'Tirhekhodo ti komba leswaku ku na soil fertility problem');
+      assert.ok(gapQuestion.options[3].xitsongaDraft.endsWith('soil fertility problem'));
+      assert.equal(gapQuestion.sourceCorrectIndex, 1,
+        'the soil-fertility statement remains the same false distractor');
 
       const changedQuestion = { ...sourceLesson, quiz: sourceLesson.quiz.map((question, index) => index === 1
         ? { ...question, q: `${question.q} Changed timing.` }
@@ -204,9 +208,11 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
       }
       assert.ok(draftLesson.quiz[0].question.xitsongaDraft.endsWith('Hi yihi channel leyi n’wi fanelaka best?'),
         'the best-channel comparison must not become merely a suitable-channel question');
-      assert.equal(draftLesson.quiz[1].options[3].reviewStatus, 'hold');
-      assert.equal(draftLesson.quiz[1].options[3].xitsongaDraft, 'Box schemes avoid tax obligations',
-        'negating this false distractor would create a second correct answer');
+      assert.equal(draftLesson.quiz[1].options[3].reviewStatus, 'machine-draft');
+      assert.equal(draftLesson.quiz[1].options[3].xitsongaDraft, 'Box schemes ti papalata tax obligations',
+        'the false distractor keeps the positive avoid claim without changing it into a tax exemption or negation');
+      assert.equal(draftLesson.quiz[1].sourceCorrectIndex, 2,
+        'the translated false tax claim stays at its original distractor position');
       assert.ok(draftLesson.quiz[1].options[1].xitsongaDraft.includes('ku charge extra for packaging'),
         'the distractor describes charging a customer, not the grower paying');
     }

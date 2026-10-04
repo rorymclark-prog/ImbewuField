@@ -37,8 +37,8 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Record harvest amounts and destinations separately from cash",
-          "tshivendaDraft": "Record harvest amounts and destinations separately from cash",
-          "reviewStatus": "hold"
+          "tshivendaDraft": "Ṅwalani harvest amounts and destinations nga u fhambana na cash",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Include production and selling costs when assessing a price",
@@ -98,8 +98,8 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
             pair("Buy vegetables at market each June and July", "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe."),
             {
               "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
-              "tshivendaDraft": "Work backwards from the food gap using suitable local crops and their harvest timing",
-              "reviewStatus": "hold"
+              "tshivendaDraft": "Pulani ni tshi humela murahu u bva kha food gap ni tshi shumisa suitable local crops na their harvest timing",
+              "reviewStatus": "machine-draft"
             },
             pair("Accept her farm can't produce in winter", "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria."),
             pair("The records show a soil fertility problem", "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.")
@@ -274,7 +274,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
             pair('Box customers always pay more per kilogram', 'Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.'),
             pair('Box schemes let you charge extra for packaging', 'Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.'),
             pair('Committed subscription income lets you plan production around real demand instead of growing speculatively', 'Committed subscription income i ni thusa u pulana production u tevhela real demand, nṱhani ha u alusa nga speculation.'),
-            hold('Box schemes avoid tax obligations'),
+            pair('Box schemes avoid tax obligations', 'Box schemes dzi iledza tax obligations'),
           ],
           sourceCorrectIndex: 2,
           rationale: pair('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.', 'Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, payment na costs dza u dzi swikisa.'),
