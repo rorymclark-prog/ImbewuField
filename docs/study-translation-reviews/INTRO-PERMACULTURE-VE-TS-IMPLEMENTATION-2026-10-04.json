@@ -1,0 +1,1450 @@
+{
+  "title": "Introduction VE/TS source-paired implementation record",
+  "date": "2026-10-04",
+  "status": "unreviewed proposals applied and source-paired for facilitator feedback; fluent review remains open",
+  "scope": "60 exact source-bound VE/TS body fields only. Headings, other body fields, Sesotho and audio unchanged.",
+  "candidatePacket": "INTRO-PERMACULTURE-VE-TS-ROOT-60-FINAL-CANDIDATES-2026-10-04.json",
+  "independentCheck": "INTRO-PERMACULTURE-VE-TS-ROOT-60-INDEPENDENT-CHECK-2026-10-04.json",
+  "concordCheck": "INTRO-PERMACULTURE-VE-CONCORD-TWO-REPAIR-CHECK-2026-10-04.json",
+  "changes": {
+    "ve": {
+      "pairedPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "sha256After": "0909f825959051bdf84cffad22ee946e8af244d10ca9e93cea59a15d67045afc",
+      "appliedCount": 29,
+      "appliedFields": [
+        {
+          "slide": 1,
+          "bodyIndex": 1,
+          "sourceEnglish": "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+          "targetText": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino. Three ethics, a set of design principles, and one simple way to organise your land.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "This module is the foundation for everything else in the course.",
+              "status": "draft",
+              "text": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino."
+            },
+            {
+              "sourceEnglish": " Three ethics, a set of design principles, and one simple way to organise your land.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 1,
+          "bodyIndex": 2,
+          "sourceEnglish": "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+          "targetText": "A zwi ṱoḓi tshelede. Zwoṱhe zwi shandula hune na vhea zwithu, na uri ni tshimbila vhukale vhu ngafhani ḓuvha ḽiṅwe na ḽiṅwe.",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 3,
+          "bodyIndex": 2,
+          "sourceEnglish": "Name the design principles that matter most on your land, and say why.",
+          "targetText": "Bulani design principles dzi re dza ndeme nga maanḓa kha land yaṋu, ni bule na uri ndi ngani.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Name the ",
+              "status": "draft",
+              "text": "Bulani "
+            },
+            {
+              "sourceEnglish": "design principles",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that matter most on your land, and say why.",
+              "status": "draft",
+              "text": " dzi re dza ndeme nga maanḓa kha land yaṋu, ni bule na uri ndi ngani."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 3,
+          "bodyIndex": 3,
+          "sourceEnglish": "Sketch your zones and your sectors on one sheet of paper.",
+          "targetText": "Olani your zones and your sectors kha bammbiri ḽithihi.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Sketch ",
+              "status": "draft",
+              "text": "Olani "
+            },
+            {
+              "sourceEnglish": "your zones and your sectors",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " on one sheet of paper.",
+              "status": "draft",
+              "text": " kha bammbiri ḽithihi."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 5,
+          "bodyIndex": 3,
+          "sourceEnglish": "The farm is meant to feed the household that runs it.",
+          "targetText": "Bulasi ḽo itelwa u ṋea zwiḽiwa muṱa une wa ḽi shumisa.",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 6,
+          "bodyIndex": 1,
+          "sourceEnglish": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+          "targetText": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone return the surplus to the system — seeds, food, water, knowledge.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Take only what you need, and ",
+              "status": "draft",
+              "text": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone "
+            },
+            {
+              "sourceEnglish": "return the surplus to the system — seeds, food, water, knowledge.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 6,
+          "bodyIndex": 4,
+          "sourceEnglish": "What does your land get back from you each season?",
+          "targetText": "Land yaṋu i wana mini kha inwi kha khalaṅwaha iṅwe na iṅwe?",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 7,
+          "bodyIndex": 0,
+          "sourceEnglish": "A borehole serves your household. Neighbours ask for water too.",
+          "targetText": "A borehole i shumela muṱa waṋu. Vhahura vha khou humbela maḓi na vhone.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "A borehole",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " serves your household.",
+              "status": "draft",
+              "text": " i shumela muṱa waṋu."
+            },
+            {
+              "sourceEnglish": " Neighbours ask for water too.",
+              "status": "draft",
+              "text": " Vhahura vha khou humbela maḓi na vhone."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 8,
+          "bodyIndex": 1,
+          "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+          "targetText": "A neighbour asks to graze cattle after a drought. A flood damages your swales. A hu na muthu o ṅwalaho phindulo.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. ",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": "Nobody has written down the answer.",
+              "status": "draft",
+              "text": "A hu na muthu o ṅwalaho phindulo."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 8,
+          "bodyIndex": 2,
+          "sourceEnglish": "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+          "targetText": "Milayo ya vhuḓifari i ni thusa u pima khetho na u ṱalutshedza tsheo yaṋu. Check the rules and ask permission where it is needed.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "The ethics help you weigh the choices and explain your decision.",
+              "status": "draft",
+              "text": "Milayo ya vhuḓifari i ni thusa u pima khetho na u ṱalutshedza tsheo yaṋu."
+            },
+            {
+              "sourceEnglish": " Check the rules and ask permission where it is needed.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 10,
+          "bodyIndex": 0,
+          "sourceEnglish": "Watch your land through a full season before you commit to major earthworks.",
+          "targetText": "Sedzani land yaṋu through a full season before you commit to major earthworks.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Watch your land",
+              "status": "draft",
+              "text": "Sedzani land yaṋu"
+            },
+            {
+              "sourceEnglish": " through a full season before you commit to major earthworks.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 10,
+          "bodyIndex": 3,
+          "sourceEnglish": "Where does water leave your land? Do you actually know, or are you guessing?",
+          "targetText": "Maḓi a bva ngafhi kha land yaṋu? Ni a ḓivha zwa vhukuma, kana ni khou humbulela?",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 11,
+          "bodyIndex": 2,
+          "sourceEnglish": "Compare the cost and work with the benefit on your own farm.",
+          "targetText": "Vhambedzani the cost and work with the benefit kha bulasi yaṋu.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Compare ",
+              "status": "draft",
+              "text": "Vhambedzani "
+            },
+            {
+              "sourceEnglish": "the cost and work with the benefit",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " on your own farm.",
+              "status": "draft",
+              "text": " kha bulasi yaṋu."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 12,
+          "bodyIndex": 0,
+          "sourceEnglish": "The edge is where two things meet — a fence line or the strip beside a path.",
+          "targetText": "The edge ndi hune zwithu zwivhili zwa ṱangana — a fence line or the strip beside a path.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "The edge",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is where two things meet",
+              "status": "draft",
+              "text": " ndi hune zwithu zwivhili zwa ṱangana"
+            },
+            {
+              "sourceEnglish": " — a fence line or the strip beside a path.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 12,
+          "bodyIndex": 1,
+          "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+          "targetText": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. That is the land telling you something.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours.",
+              "status": "draft",
+              "text": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu."
+            },
+            {
+              "sourceEnglish": " That is the land telling you something.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 12,
+          "bodyIndex": 2,
+          "sourceEnglish": "Which edge on your plot is doing nothing at the moment?",
+          "targetText": "Ndi edge ifhio ya plot yaṋu ine zwa zwino ya si shume tshithu?",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 13,
+          "bodyIndex": 1,
+          "sourceEnglish": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "targetText": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Two others worth knowing:",
+              "status": "draft",
+              "text": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya:"
+            },
+            {
+              "sourceEnglish": " produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 15,
+          "bodyIndex": 0,
+          "sourceEnglish": "Zones run from 0 to 5, and they are about your feet, not your fences.",
+          "targetText": "Zones dzi bva kha 0 u ya kha 5, nahone ndi nga ha u tshimbila haṋu, hu si fences yaṋu.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Zones",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " run from 0 to 5, and they are about your feet, not your fences.",
+              "status": "draft",
+              "text": " dzi bva kha 0 u ya kha 5, nahone ndi nga ha u tshimbila haṋu, hu si fences yaṋu."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 15,
+          "bodyIndex": 1,
+          "sourceEnglish": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+          "targetText": "Zone 0 ndi nḓu. Kha hei tsumbo, Zone 1 i tsini na nḓu nahone i na herbs and salad greens zwine na zwi kaṋa lunzhi.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Zone 0",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is the house. In this example, ",
+              "status": "draft",
+              "text": " ndi nḓu. Kha hei tsumbo, "
+            },
+            {
+              "sourceEnglish": "Zone 1",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is near the house and holds ",
+              "status": "draft",
+              "text": " i tsini na nḓu nahone i na "
+            },
+            {
+              "sourceEnglish": "herbs and salad greens",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " picked often.",
+              "status": "draft",
+              "text": " zwine na zwi kaṋa lunzhi."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 16,
+          "bodyIndex": 0,
+          "sourceEnglish": "Herbs you pick often are easier to tend near the house.",
+          "targetText": "Herbs dzine na dzi kaṋa lunzhi dzi a leluwa u dzi ṱhogomela dzi tsini na nḓu.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Herbs",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " you pick often are easier to tend near the house.",
+              "status": "draft",
+              "text": " dzine na dzi kaṋa lunzhi dzi a leluwa u dzi ṱhogomela dzi tsini na nḓu."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 16,
+          "bodyIndex": 1,
+          "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+          "targetText": "Arali na dzi vhea kule, lwendo lulapfu lu nga ita uri ni kundelwe u dzi dalela. The herbs may be neglected.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. ",
+              "status": "draft",
+              "text": "Arali na dzi vhea kule, lwendo lulapfu lu nga ita uri ni kundelwe u dzi dalela. "
+            },
+            {
+              "sourceEnglish": "The herbs may be neglected.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 17,
+          "bodyIndex": 1,
+          "sourceEnglish": "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+          "targetText": "Zones zwi thusa u dzudzanya fhethu u ya nga mushumo waṋu — u tshimbila, u hwala na u sedza zwine zwa ḓadza ḓuvha ḽa vhukuma.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Zones",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+              "status": "draft",
+              "text": " zwi thusa u dzudzanya fhethu u ya nga mushumo waṋu — u tshimbila, u hwala na u sedza zwine zwa ḓadza ḓuvha ḽa vhukuma."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 17,
+          "bodyIndex": 2,
+          "sourceEnglish": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+          "targetText": "Tshithu tshi ni ṱoḓaho lunzhi tshi dzula tsini na inwi. Zwenezwo zwi nga fhungudza u tshimbila na mushumo kha khalaṅwaha.",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 18,
+          "bodyIndex": 0,
+          "sourceEnglish": "Zones come from inside your land. Sectors come from outside it.",
+          "targetText": "Zones dzi bva ngomu ha land yaṋu. Sectors dzi bva nnḓa ha yona.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Zones",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " come from inside your land. ",
+              "status": "draft",
+              "text": " dzi bva ngomu ha land yaṋu. "
+            },
+            {
+              "sourceEnglish": "Sectors",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " come from outside it.",
+              "status": "draft",
+              "text": " dzi bva nnḓa ha yona."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 20,
+          "bodyIndex": 1,
+          "sourceEnglish": "Then draw arrows in from outside for sun, wind, fire and water.",
+          "targetText": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza sun, wind, fire and water.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Then draw arrows in from outside for ",
+              "status": "draft",
+              "text": "Nga murahu olani arrows dzi tshi dzhena dzi tshi bva nnḓa u sumbedza "
+            },
+            {
+              "sourceEnglish": "sun, wind, fire and water.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 21,
+          "bodyIndex": 0,
+          "sourceEnglish": "Sketch your own zones and sectors on one sheet of paper.",
+          "targetText": "Olani own zones and sectors kha bammbiri ḽithihi.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Sketch your ",
+              "status": "draft",
+              "text": "Olani "
+            },
+            {
+              "sourceEnglish": "own zones and sectors",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " on one sheet of paper.",
+              "status": "draft",
+              "text": " kha bammbiri ḽithihi."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 21,
+          "bodyIndex": 1,
+          "sourceEnglish": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+          "targetText": "Maka Zone 0 and Zone 1 u thome, ni bvele nga nnḓa as far as your land goes.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Mark ",
+              "status": "draft",
+              "text": "Maka "
+            },
+            {
+              "sourceEnglish": "Zone 0 and Zone 1",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " first, then work outward ",
+              "status": "draft",
+              "text": " u thome, ni bvele nga nnḓa "
+            },
+            {
+              "sourceEnglish": "as far as your land goes.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 22,
+          "bodyIndex": 0,
+          "sourceEnglish": "Walk out and check your sketch against the ground.",
+          "targetText": "Ibani ni check your sketch against the ground.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Walk out and ",
+              "status": "draft",
+              "text": "Ibani ni "
+            },
+            {
+              "sourceEnglish": "check your sketch against the ground.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 22,
+          "bodyIndex": 1,
+          "sourceEnglish": "Stand at the kitchen door and count what is really in Zone 1 today.",
+          "targetText": "Imani munyangoni wa khishi ni vhale zwine zwa vha zwa vhukuma kha Zone 1 namusi.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Stand at the kitchen door and count what is really in ",
+              "status": "draft",
+              "text": "Imani munyangoni wa khishi ni vhale zwine zwa vha zwa vhukuma kha "
+            },
+            {
+              "sourceEnglish": "Zone 1",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " today.",
+              "status": "draft",
+              "text": " namusi."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        }
+      ],
+      "unlistedTargetAndHeadingBeforeSHA256": "0ccfe5b3614e2d48ef601b04a1d718555e9e9f9d2829d1c04a477a0bbb4677cd",
+      "unlistedBodyFieldCount": 59,
+      "headingCount": 22,
+      "storedStatusCounts": {
+        "mixed": 23,
+        "draft": 6
+      }
+    },
+    "ts": {
+      "pairedPath": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "sha256After": "a0faa59ce4ea2c64b76d03d01ddcdd02dd2be1812ce8b810534a46cb17891de4",
+      "appliedCount": 31,
+      "appliedFields": [
+        {
+          "slide": 1,
+          "bodyIndex": 1,
+          "sourceEnglish": "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+          "targetText": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi. Three ethics, a set of design principles, and one simple way to organise your land.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "This module is the foundation for everything else in the course.",
+              "status": "draft",
+              "text": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi."
+            },
+            {
+              "sourceEnglish": " Three ethics, a set of design principles, and one simple way to organise your land.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 1,
+          "bodyIndex": 2,
+          "sourceEnglish": "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+          "targetText": "A swi lavi mali. Hinkwaswu swi cinca laha u vekaka swilo kona ni leswaku u famba mpfhuka wo fika kwihi siku rin’wana ni rin’wana.",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 3,
+          "bodyIndex": 2,
+          "sourceEnglish": "Name the design principles that matter most on your land, and say why.",
+          "targetText": "Boxa design principles ta nkoka ngopfu eka land ya wena, u vula leswaku ha yini.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Name the ",
+              "status": "draft",
+              "text": "Boxa "
+            },
+            {
+              "sourceEnglish": "design principles",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that matter most on your land, and say why.",
+              "status": "draft",
+              "text": " ta nkoka ngopfu eka land ya wena, u vula leswaku ha yini."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 3,
+          "bodyIndex": 3,
+          "sourceEnglish": "Sketch your zones and your sectors on one sheet of paper.",
+          "targetText": "Dirowa your zones and your sectors eka phepha rin’we.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Sketch ",
+              "status": "draft",
+              "text": "Dirowa "
+            },
+            {
+              "sourceEnglish": "your zones and your sectors",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " on one sheet of paper.",
+              "status": "draft",
+              "text": " eka phepha rin’we."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 5,
+          "bodyIndex": 3,
+          "sourceEnglish": "The farm is meant to feed the household that runs it.",
+          "targetText": "Purasi ri endleriwe ku phamela swakudya ndyangu lowu wu ri fambisaka.",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 6,
+          "bodyIndex": 1,
+          "sourceEnglish": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+          "targetText": "Teka ntsena leswi u swi lavaka, kutani return the surplus to the system — seeds, food, water, knowledge.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Take only what you need, and ",
+              "status": "draft",
+              "text": "Teka ntsena leswi u swi lavaka, kutani "
+            },
+            {
+              "sourceEnglish": "return the surplus to the system — seeds, food, water, knowledge.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 6,
+          "bodyIndex": 4,
+          "sourceEnglish": "What does your land get back from you each season?",
+          "targetText": "Land ya wena yi kuma yini eka wena eka nguva yin’wana ni yin’wana?",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 7,
+          "bodyIndex": 0,
+          "sourceEnglish": "A borehole serves your household. Neighbours ask for water too.",
+          "targetText": "A borehole yi tirhela ndyangu wa wena. Vahakelani na vona va kombela mati.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "A borehole",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " serves your household.",
+              "status": "draft",
+              "text": " yi tirhela ndyangu wa wena."
+            },
+            {
+              "sourceEnglish": " Neighbours ask for water too.",
+              "status": "draft",
+              "text": " Vahakelani na vona va kombela mati."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 8,
+          "bodyIndex": 1,
+          "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+          "targetText": "A neighbour asks to graze cattle after a drought. A flood damages your swales. A ku na munhu loyi a tsaleke nhlamulo.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. ",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": "Nobody has written down the answer.",
+              "status": "draft",
+              "text": "A ku na munhu loyi a tsaleke nhlamulo."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 8,
+          "bodyIndex": 2,
+          "sourceEnglish": "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+          "targetText": "Milawu ya mahanyelo yi ku pfuna ku pima swihlawuriwa ni ku hlamusela xiboho xa wena. Check the rules and ask permission where it is needed.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "The ethics help you weigh the choices and explain your decision.",
+              "status": "draft",
+              "text": "Milawu ya mahanyelo yi ku pfuna ku pima swihlawuriwa ni ku hlamusela xiboho xa wena."
+            },
+            {
+              "sourceEnglish": " Check the rules and ask permission where it is needed.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 9,
+          "bodyIndex": 1,
+          "sourceEnglish": "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+          "targetText": "A swi lavi ku sungula hi hinkwato ta 12. Kha dyondzo leyi, ku na tindlela tinharhu leti pfunaka ku sungula: observe and interact, catch and store energy, and use edges and value the marginal.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "You do not need all twelve to start. ",
+              "status": "draft",
+              "text": "A swi lavi ku sungula hi hinkwato ta 12. "
+            },
+            {
+              "sourceEnglish": "Three useful starting points for this lesson are: ",
+              "status": "draft",
+              "text": "Kha dyondzo leyi, ku na tindlela tinharhu leti pfunaka ku sungula: "
+            },
+            {
+              "sourceEnglish": "observe and interact, catch and store energy, and use edges and value the marginal.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 10,
+          "bodyIndex": 0,
+          "sourceEnglish": "Watch your land through a full season before you commit to major earthworks.",
+          "targetText": "Languta land ya wena through a full season before you commit to major earthworks.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Watch your land",
+              "status": "draft",
+              "text": "Languta land ya wena"
+            },
+            {
+              "sourceEnglish": " through a full season before you commit to major earthworks.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 10,
+          "bodyIndex": 3,
+          "sourceEnglish": "Where does water leave your land? Do you actually know, or are you guessing?",
+          "targetText": "Xana mati ma huma hi kwihi eka land ya wena? Xana wa swi tiva hakunene kumbe wa bvumbetela?",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 11,
+          "bodyIndex": 2,
+          "sourceEnglish": "Compare the cost and work with the benefit on your own farm.",
+          "targetText": "Pimanisa  the cost and work with the benefit epurasini ra wena.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Compare",
+              "status": "draft",
+              "text": "Pimanisa "
+            },
+            {
+              "sourceEnglish": " the cost and work with the benefit",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " on your own farm.",
+              "status": "draft",
+              "text": " epurasini ra wena."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 12,
+          "bodyIndex": 0,
+          "sourceEnglish": "The edge is where two things meet — a fence line or the strip beside a path.",
+          "targetText": "The edge hi laha swilo swimbirhi swi hlanganaka kona — a fence line or the strip beside a path.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "The edge",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is where two things meet",
+              "status": "draft",
+              "text": " hi laha swilo swimbirhi swi hlanganaka kona"
+            },
+            {
+              "sourceEnglish": " — a fence line or the strip beside a path.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 12,
+          "bodyIndex": 1,
+          "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+          "targetText": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. That is the land telling you something.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours.",
+              "status": "draft",
+              "text": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena."
+            },
+            {
+              "sourceEnglish": " That is the land telling you something.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 12,
+          "bodyIndex": 2,
+          "sourceEnglish": "Which edge on your plot is doing nothing at the moment?",
+          "targetText": "Hi yihi edge eka plot ya wena leyi nga endli xin’wana sweswi?",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Which ",
+              "status": "draft",
+              "text": "Hi yihi "
+            },
+            {
+              "sourceEnglish": "edge",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " on your plot is doing nothing at the moment?",
+              "status": "draft",
+              "text": " eka plot ya wena leyi nga endli xin’wana sweswi?"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 13,
+          "bodyIndex": 1,
+          "sourceEnglish": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "targetText": "Ku na swin’wana swimbirhi leswi swi nga swinene ku swi tiva: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Two others worth knowing:",
+              "status": "draft",
+              "text": "Ku na swin’wana swimbirhi leswi swi nga swinene ku swi tiva:"
+            },
+            {
+              "sourceEnglish": " produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 15,
+          "bodyIndex": 0,
+          "sourceEnglish": "Zones run from 0 to 5, and they are about your feet, not your fences.",
+          "targetText": "Zones ti suka eka 0 ku ya eka 5, naswona ti khumba ku famba ka wena, ku nga ri ti-fence ta wena.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Zones",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " run from 0 to 5, and they are about your feet, not your fences.",
+              "status": "draft",
+              "text": " ti suka eka 0 ku ya eka 5, naswona ti khumba ku famba ka wena, ku nga ri ti-fence ta wena."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 15,
+          "bodyIndex": 1,
+          "sourceEnglish": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+          "targetText": "Zone 0 i yindlu. Eka xifaniso lexi, Zone 1 yi le kusuhi ni yindlu naswona yi na herbs and salad greens leti u ti tshovelaka nkarhi ni nkarhi.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Zone 0",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is the house. In this example, ",
+              "status": "draft",
+              "text": " i yindlu. Eka xifaniso lexi, "
+            },
+            {
+              "sourceEnglish": "Zone 1",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is near the house and holds ",
+              "status": "draft",
+              "text": " yi le kusuhi ni yindlu naswona yi na "
+            },
+            {
+              "sourceEnglish": "herbs and salad greens",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " picked often.",
+              "status": "draft",
+              "text": " leti u ti tshovelaka nkarhi ni nkarhi."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 16,
+          "bodyIndex": 0,
+          "sourceEnglish": "Herbs you pick often are easier to tend near the house.",
+          "targetText": "Herbs leti u ti tshovelaka nkarhi ni nkarhi swa olova ku ti hlayisa loko ti ri ekusuhi ni yindlu.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Herbs",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " you pick often are easier to tend near the house.",
+              "status": "draft",
+              "text": " leti u ti tshovelaka nkarhi ni nkarhi swa olova ku ti hlayisa loko ti ri ekusuhi ni yindlu."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 16,
+          "bodyIndex": 1,
+          "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+          "targetText": "Loko u ti veka ekule, riendzo ro leha ri nga endla leswaku u nga ti endzeli. herbs ti nga siyiwa ti nga hlayisiwi.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The ",
+              "status": "draft",
+              "text": "Loko u ti veka ekule, riendzo ro leha ri nga endla leswaku u nga ti endzeli. "
+            },
+            {
+              "sourceEnglish": "herbs",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " may be neglected.",
+              "status": "draft",
+              "text": " ti nga siyiwa ti nga hlayisiwi."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 17,
+          "bodyIndex": 1,
+          "sourceEnglish": "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+          "targetText": "Zones ti pfuna ku lulamisa ndhawu hi ku ya hi matshalatshala ya wena — ku famba, ku rhwala ni ku kambela leswi tata siku ra xiviri.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Zones",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+              "status": "draft",
+              "text": " ti pfuna ku lulamisa ndhawu hi ku ya hi matshalatshala ya wena — ku famba, ku rhwala ni ku kambela leswi tata siku ra xiviri."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 17,
+          "bodyIndex": 2,
+          "sourceEnglish": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+          "targetText": "Loko xin’wana xi ku lava nkarhi ni nkarhi, xi tshama ekusuhi na wena. Sweswo swi nga hunguta ku famba ni ku tirha eka nguva.",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 18,
+          "bodyIndex": 0,
+          "sourceEnglish": "Zones come from inside your land. Sectors come from outside it.",
+          "targetText": "Zones ti huma endzeni ka land ya wena. Sectors ti huma ehandle ka yona.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Zones",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " come from inside your land. ",
+              "status": "draft",
+              "text": " ti huma endzeni ka land ya wena. "
+            },
+            {
+              "sourceEnglish": "Sectors",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " come from outside it.",
+              "status": "draft",
+              "text": " ti huma ehandle ka yona."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 20,
+          "bodyIndex": 1,
+          "sourceEnglish": "Then draw arrows in from outside for sun, wind, fire and water.",
+          "targetText": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela sun, wind, fire and water.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Then draw arrows in from outside for ",
+              "status": "draft",
+              "text": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela "
+            },
+            {
+              "sourceEnglish": "sun, wind, fire and water.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 21,
+          "bodyIndex": 0,
+          "sourceEnglish": "Sketch your own zones and sectors on one sheet of paper.",
+          "targetText": "Dirowa own zones and sectors eka phepha rin’we.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Sketch your ",
+              "status": "draft",
+              "text": "Dirowa "
+            },
+            {
+              "sourceEnglish": "own zones and sectors",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " on one sheet of paper.",
+              "status": "draft",
+              "text": " eka phepha rin’we."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 21,
+          "bodyIndex": 1,
+          "sourceEnglish": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+          "targetText": "Maka Zone 0 and Zone 1 ku sungula, kutani u ya ehandle ku fika laha land ya wena yi helelaka kona.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Mark ",
+              "status": "draft",
+              "text": "Maka "
+            },
+            {
+              "sourceEnglish": "Zone 0 and Zone 1",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " first, then work outward as far as your land goes.",
+              "status": "draft",
+              "text": " ku sungula, kutani u ya ehandle ku fika laha land ya wena yi helelaka kona."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 21,
+          "bodyIndex": 3,
+          "sourceEnglish": "Photograph the sketch.",
+          "targetText": "Tekela xifaniso xa sketch ya wena.",
+          "candidateStatus": "draft",
+          "candidateSegments": null,
+          "storedTargetStatus": "draft",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 22,
+          "bodyIndex": 0,
+          "sourceEnglish": "Walk out and check your sketch against the ground.",
+          "targetText": "Famba ehandle u check your sketch against the ground.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Walk out and ",
+              "status": "draft",
+              "text": "Famba ehandle u "
+            },
+            {
+              "sourceEnglish": "check your sketch against the ground.",
+              "status": "english-hold"
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        },
+        {
+          "slide": 22,
+          "bodyIndex": 1,
+          "sourceEnglish": "Stand at the kitchen door and count what is really in Zone 1 today.",
+          "targetText": "Yima enyangweni ya khixi u hlayela leswi nga kona hakunene eka Zone 1 namuntlha.",
+          "candidateStatus": "mixed",
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Stand at the kitchen door and count what is really in ",
+              "status": "draft",
+              "text": "Yima enyangweni ya khixi u hlayela leswi nga kona hakunene eka "
+            },
+            {
+              "sourceEnglish": "Zone 1",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " today.",
+              "status": "draft",
+              "text": " namuntlha."
+            }
+          ],
+          "storedTargetStatus": "mixed",
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        }
+      ],
+      "unlistedTargetAndHeadingBeforeSHA256": "96383f6ea32d4ef2960e797f989b6ea1f898c6c74ea7001bdcff93545d7b5e68",
+      "unlistedBodyFieldCount": 57,
+      "headingCount": 22,
+      "storedStatusCounts": {
+        "mixed": 25,
+        "draft": 6
+      },
+      "sha256AfterInitial65Batch": "742e7e715ee1020ee0e2d5829ef4165305627ecf1289a0a2cd32889af21933cf"
+    }
+  },
+  "stAudioBinding": {
+    "sourcePairHashMatchesRecorded": true,
+    "all22SpokenTextsMatchCurrentPairedTarget": true,
+    "slideChecks": [
+      {
+        "slide": 1,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 2,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 3,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 4,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 5,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 6,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 7,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 8,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 9,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 10,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 11,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 12,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 13,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 14,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 15,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 16,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 17,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 18,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 19,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 20,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 21,
+        "spokenTextMatchesCurrentPair": true
+      },
+      {
+        "slide": 22,
+        "spokenTextMatchesCurrentPair": true
+      }
+    ]
+  },
+  "excluded": [
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 3,
+      "sourceEnglish": "Photograph the sketch.",
+      "status": "left exact English because the imperative could not be confidently established"
+    }
+  ],
+  "testProtection": {
+    "unlistedTargetAndHeadingDigests": "SHA256 of canonical JSON encoding before implementation; tests compare current fields after removing the 60 authorized body locations.",
+    "ve": {
+      "sha256": "0ccfe5b3614e2d48ef601b04a1d718555e9e9f9d2829d1c04a477a0bbb4677cd",
+      "unlistedBodyFields": 59,
+      "headings": 22
+    },
+    "ts": {
+      "sha256": "96383f6ea32d4ef2960e797f989b6ea1f898c6c74ea7001bdcff93545d7b5e68",
+      "unlistedBodyFields": 57,
+      "headings": 22
+    }
+  },
+  "limitations": [
+    "Tshivenda and Xitsonga text remains unreviewed.",
+    "No deck rendering has been done."
+  ],
+  "verification": {
+    "npxTscNoEmit": "passed",
+    "focusedPairedDraftTest": {
+      "tests": 40,
+      "passed": 40,
+      "failed": 0
+    },
+    "gitDiffCheck": "passed",
+    "rendered": false,
+    "committedOrPushed": false,
+    "previousFlattenedFullSuite": {
+      "superseded": true,
+      "note": "Full suite result from before the root diff review; not a verification of the corrected mixed storage. Full suite deferred until parent completes the coordinated 65-field batch."
+    },
+    "currentFocusedPairedDraftTest": {
+      "tests": 40,
+      "passed": 40,
+      "failed": 0
+    }
+  },
+  "storageModel": "Store candidateStatus as authored: mixed fields retain candidateSegments with draft text only on localized clauses and exact-source english-hold clauses; 12 full drafts store candidateText. Every proposal remains visibly unreviewed.",
+  "finalOverrides": [
+    {
+      "title": "Root accepted TS slide 19 windbreak airflow geometry hold",
+      "date": "2026-10-04",
+      "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "originalNormalized65Packet": "docs/study-translation-reviews/INTRO-PERMACULTURE-VE-TS-ROOT-65-NORMALIZED-CANDIDATES-2026-10-04.json",
+      "independentActualFileReview": "/tmp/imbewu-ts-intro-slide19-windbreak-targeted-review-20261004.json",
+      "scope": {
+        "language": "ts",
+        "slide": 19,
+        "bodyIndex": 2
+      },
+      "sourceEnglish": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+      "finalTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Some air passes through the windbreak.",
+            "text": "Air yin’wana yi hundza hi le ka windbreak."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Other air moves over it or around its ends."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "sourceConcatenationExact": true,
+      "preservedSeparateParagraph": {
+        "bodyIndex": 3,
+        "text": "Shelter yi nga hunguta wind speed endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+        "sourceEnglish": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter."
+      },
+      "reason": "“ematlhelo ya yona” may mean around its sides; the exact source sentence about moving around the windbreak ends is held. Through-flow remains localized. The separate paragraph preserves “can”, behind direction, and design/care.",
+      "fluentReviewStatus": "still open; publication is for facilitator feedback, not fluent approval"
+    }
+  ]
+}

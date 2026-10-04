@@ -315,7 +315,7 @@ test('Sesotho Introduction review slides keep uncertain field steps paired in En
     'ground checking, counting, crop relocation and wind direction stay exact English after semantic backcheck');
 });
 
-test('silent Xitsonga Introduction stills expose only source-paired, directionally checked drafts', () => {
+test('regional Introduction proposals preserve source-paired meaning beside technical English', () => {
   const ts = validatePairedDraft(
     JSON.parse(readFileSync('docs/narration/intro-permaculture.ts.paired-draft.json', 'utf8')),
     source, 'ts');
@@ -327,17 +327,206 @@ test('silent Xitsonga Introduction stills expose only source-paired, directional
   assert.match(ts[2].target.body[1].text, /yinharhu/);
   assert.equal(ts[6].target.body[2].status, 'draft', 'help-seeking question is a marked Xitsonga draft');
   assert.match(ts[6].target.body[2].text, /milawu ni mphakelo wa mati/, 'question retains rules and water supply');
-  assert.ok(ts[6].target.body.slice(0, 2).every((part: any) => part.status === 'english-hold'),
-    'borehole access and supply instructions stay exact English');
-  assert.ok(ts[5].target.body.slice(1, 4).every((part: any) => part.status === 'english-hold'),
-    'uncertain Xitsonga Fair Share wording cannot reverse the teaching point');
+  assert.equal(ts[6].target.body[0].status, 'mixed',
+    'the borehole example is visible as an unreviewed mixed-language draft');
+  assert.match(targetVisibleText(ts[6].target.body[0]), /borehole/);
+  assert.match(targetVisibleText(ts[6].target.body[0]), /vahakelani/i,
+    'the neighbors’ water request remains in the paired sentence');
+  assert.equal(ts[5].target.body[1].status, 'mixed',
+    'the localized Fair Share opening remains source-paired');
+  assert.match(targetVisibleText(ts[5].target.body[1]), /return the surplus to the system/,
+    'the held technical clause stays exact English');
+  assert.equal(ts[5].target.body[4].status, 'draft',
+    'the reciprocal seasonal question is exposed as an unreviewed draft');
   assert.equal(ts[7].target.body[0].status, 'draft', 'ethics purpose is a marked Xitsonga orientation draft');
-  assert.ok(ts[7].target.body.slice(1).every((part: any) => part.status === 'english-hold'),
-    'grazing, swales, permission and building guidance stay exact English');
+  assert.equal(ts[7].target.body[1].status, 'mixed');
+  assert.match(targetVisibleText(ts[7].target.body[1]), /A neighbour asks to graze cattle after a drought/,
+    'the exact scenario remains visible in the mixed draft');
+  assert.equal(ts[7].target.body[2].status, 'mixed');
+  assert.match(targetVisibleText(ts[7].target.body[2]), /ask permission where it is needed/,
+    'the conditional permission instruction remains exact');
   assert.equal(ve[2].target.body[4].status, 'draft', 'the later-plan sketch metaphor is a marked Tshivenda draft');
-  assert.ok(ve[2].target.body.slice(1, 4).every((part: any) => part.status === 'english-hold'),
-    'technical learning goals stay exact English');
+  assert.equal(ve[2].target.body[2].status, 'mixed');
+  assert.equal(ve[2].target.body[3].status, 'mixed');
+  assert.match(targetVisibleText(ve[2].target.body[3]), /your zones and your sectors/,
+    'technical labels and the one-sheet task stay visible');
 });
+
+test('regional Introduction proposals bind all 60 fields, keep every unlisted target, and preserve Sesotho audio', () => {
+  const candidatePacket = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/INTRO-PERMACULTURE-VE-TS-ROOT-60-FINAL-CANDIDATES-2026-10-04.json', 'utf8'));
+  const normalizedPacket = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/INTRO-PERMACULTURE-VE-TS-ROOT-65-NORMALIZED-CANDIDATES-2026-10-04.json', 'utf8'));
+  const implementation = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/INTRO-PERMACULTURE-VE-TS-IMPLEMENTATION-2026-10-04.json', 'utf8'));
+  const airflowRepair = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/INTRO-PERMACULTURE-ROOT-TS19-AIRFLOW-REPAIR-2026-10-04.json', 'utf8'));
+  const audioReport = JSON.parse(readFileSync(
+    'docs/narration-reviews/INTRO-PERMACULTURE-ST-AUDIO-2026-09-28.json', 'utf8'));
+  const changed = new Set<string>();
+  assert.equal(candidatePacket.candidateFields.length, 60);
+
+  for (const lang of ['ve', 'ts'] as const) {
+    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    const validated = validatePairedDraft(deck, source, lang);
+    const records = candidatePacket.candidateFields.filter((field: any) => field.language === lang);
+    assert.equal(records.length, lang === 've' ? 29 : 31);
+    assert.deepEqual(records.reduce((counts: Record<string, number>, field: any) => {
+      counts[field.candidateStatus] = (counts[field.candidateStatus] ?? 0) + 1;
+      return counts;
+    }, {}), lang === 've' ? { mixed: 23, draft: 6 } : { mixed: 25, draft: 6 },
+    `${lang}: retain the packet's distinction between mixed and fully drafted fields`);
+    const allowed = new Set(records.map((field: any) => `${field.slide}:${field.bodyIndex}`));
+
+    for (const field of records) {
+      const key = `${lang}:${field.slide}:${field.bodyIndex}`;
+      changed.add(key);
+      assert.equal(field.sourceBinding.exactSourceMatchesPairedRecord, true);
+      assert.equal(field.sourceEnglish, source[field.slide - 1].body[field.bodyIndex],
+        `${key}: candidate remains bound to canonical English`);
+      const segments = field.candidateSegments.map((segment: any) =>
+        segment.status === 'draft' ? segment.text : segment.sourceEnglish);
+      assert.equal(segments.join(''), field.candidateText, `${key}: segments reconstruct the complete candidate`);
+      for (const segment of field.candidateSegments) {
+        if (segment.status === 'english-hold') {
+          assert.ok(segment.sourceEnglish.trim());
+          assert.ok(field.sourceEnglish.includes(segment.sourceEnglish.trim()),
+            `${key}: retained English must be an exact source fragment`);
+        }
+      }
+      assert.equal(field.currentTarget.status, 'english-hold', `${key}: source target was held before this batch`);
+      const target = validated[field.slide - 1].target.body[field.bodyIndex];
+      const finalOverride = implementation.finalOverrides?.find((item: any) =>
+        item.scope.language === lang && item.scope.slide === field.slide && item.scope.bodyIndex === field.bodyIndex);
+      assert.equal(target.status, finalOverride?.finalTarget.status ?? field.candidateStatus,
+        `${key}: keep the candidate's draft or mixed state visible`);
+      assert.match(target.provenance ?? '', /unreviewed/);
+      if (finalOverride) {
+        assert.deepEqual(target, finalOverride.finalTarget, `${key}: preserve the separately reviewed source-bound repair`);
+        assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), field.sourceEnglish,
+          `${key}: the repair covers the exact source in order`);
+      } else if (field.candidateStatus === 'mixed') {
+        assert.deepEqual(target.segments, field.candidateSegments, `${key}: keep exact source-bound segment statuses and boundaries`);
+        assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), field.sourceEnglish,
+          `${key}: the translated and exact-English segments cover the complete source in order`);
+        for (const segment of target.segments) {
+          if (segment.status === 'english-hold') {
+            assert.equal(segment.text, undefined, `${key}: retained English has no competing target text`);
+            assert.ok(field.sourceEnglish.includes(segment.sourceEnglish), `${key}: retained clause is exact English source`);
+          } else {
+            assert.ok(segment.text?.trim(), `${key}: each localized clause has visible target text`);
+          }
+        }
+      } else {
+        assert.deepEqual(target, {
+          status: 'draft',
+          text: field.candidateText,
+          provenance: 'new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open',
+        }, `${key}: full draft remains visibly unreviewed`);
+      }
+    }
+
+    const fields = implementation.changes[lang];
+    const restoredBefore65 = structuredClone(deck);
+    for (const field of normalizedPacket.candidateFields.filter((item: any) => item.language === lang)) {
+      restoredBefore65.slides[field.slide - 1].target.body[field.bodyIndex] = field.currentTarget;
+    }
+    const preserved = [];
+    for (let slideIndex = 0; slideIndex < restoredBefore65.slides.length; slideIndex += 1) {
+      preserved.push({ slide: slideIndex + 1, heading: restoredBefore65.slides[slideIndex].target.heading });
+      for (let bodyIndex = 0; bodyIndex < restoredBefore65.slides[slideIndex].target.body.length; bodyIndex += 1) {
+        if (!allowed.has(`${slideIndex + 1}:${bodyIndex}`)) {
+          preserved.push({ slide: slideIndex + 1, bodyIndex, field: restoredBefore65.slides[slideIndex].target.body[bodyIndex] });
+        }
+      }
+    }
+    // The fixture digest uses stable object-key order and records every unlisted target plus all headings.
+    const stable = (value: any): any => Array.isArray(value) ? value.map(stable) :
+      value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])])) : value;
+    const stableDigest = createHash('sha256').update(JSON.stringify(stable(preserved)), 'utf8').digest('hex');
+    assert.equal(stableDigest, fields.unlistedTargetAndHeadingBeforeSHA256,
+      `${lang}: headings and every body field outside the 60 authorized locations stay unchanged`);
+  }
+
+  assert.equal(changed.size, 60, 'only the 60 exact source-bound body fields are changed');
+  assert.ok(!changed.has('ve:21:3'), 'the uncertain photograph imperative remains exact English');
+
+  assert.equal(airflowRepair.scope.language, 'ts');
+  assert.equal(airflowRepair.scope.slide, 19);
+  assert.equal(airflowRepair.scope.bodyIndex, 2);
+  const tsAirflow = JSON.parse(readFileSync('docs/narration/intro-permaculture.ts.paired-draft.json', 'utf8'))
+    .slides[18].target.body[2];
+  assert.deepEqual(tsAirflow, airflowRepair.finalTarget,
+    'the doubtful “around its ends” airflow geometry is kept in exact English while through-flow stays drafted');
+  assert.deepEqual(tsAirflow.segments.map((segment: any) => [segment.sourceEnglish, segment.status]), [
+    ['Some air passes through the windbreak.', 'draft'],
+    [' Other air moves over it or around its ends.', 'english-hold'],
+  ]);
+  assert.equal(tsAirflow.segments.map((segment: any) => segment.sourceEnglish).join(''),
+    airflowRepair.sourceEnglish, 'the held ends clause remains exact and source-complete');
+  assert.ok(!targetVisibleText(tsAirflow).includes('around its sides'),
+    'the target no longer adds a sides interpretation to the airflow diagram');
+
+  assert.equal(validatedDirection('ve'), true,
+    'Tshivenda marks Zone 0 and 1 first, then moves outward');
+  assert.equal(validatedDirection('ts'), true,
+    'itsonga marks Zone 0 and 1 first, then moves outward');
+  for (const lang of ['ve', 'ts'] as const) {
+    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    const text = (slide: number, bodyIndex: number) => targetVisibleText(deck.slides[slide - 1].target.body[bodyIndex]);
+    assert.ok(targetVisibleText(deck.slides[14].target.body[0]).includes('0') &&
+      targetVisibleText(deck.slides[14].target.body[0]).includes('5'), `${lang}: zone range retains 0 and 5`);
+    assert.ok(targetVisibleText(deck.slides[19].target.body[1]).includes('sun') &&
+      targetVisibleText(deck.slides[19].target.body[1]).includes('wind') &&
+      targetVisibleText(deck.slides[19].target.body[1]).includes('fire') &&
+      targetVisibleText(deck.slides[19].target.body[1]).includes('water'), `${lang}: all inward sector factors remain`);
+    const permission = deck.slides[7].target.body[2];
+    assert.ok(permission.segments.some((segment: any) => segment.status === 'english-hold' &&
+      segment.sourceEnglish.includes('ask permission where it is needed')), `${lang}: permission condition remains exact`);
+    const timing = deck.slides[9].target.body[0];
+    assert.ok(timing.segments.some((segment: any) => segment.status === 'english-hold' &&
+      segment.sourceEnglish.includes('before you commit to major earthworks')),
+    `${lang}: adviser timing/commitment condition remains exact`);
+    assert.match(text(16, 1), /may be neglected|nga siyiwa/, `${lang}: possible neglect remains qualified`);
+    const incoming = text(20, 1);
+    assert.ok(lang === 've' ? /dzi tshi dzhena.*bva nnḓa/.test(incoming) : /nghenaka.*ehandle/.test(incoming),
+      `${lang}: sector arrows come inward from outside`);
+  }
+
+  const stPath = 'docs/narration/intro-permaculture.st.paired-draft.json';
+  const stDeck = JSON.parse(readFileSync(stPath, 'utf8'));
+  assert.equal(createHash('sha256').update(readFileSync(stPath)).digest('hex'),
+    audioReport.sourcePairSha256, 'the 22-slide Sesotho pair retains its recorded audio source hash');
+  assert.equal(stDeck.slides.length, 22);
+  for (const audioSlide of audioReport.slides) {
+    const pairedSlide = stDeck.slides[audioSlide.slide - 1];
+    const spoken = pairedSlide.target.body.map((field: any, index: number) =>
+      field.status === 'draft' ? field.text : pairedSlide.english.body[index]).join('\n\n');
+    assert.equal(spoken, audioSlide.spokenText, `Sesotho slide ${audioSlide.slide} audio stays bound to paired spoken text`);
+  }
+
+  const drifted = JSON.parse(JSON.stringify(JSON.parse(readFileSync('docs/narration/intro-permaculture.ve.paired-draft.json', 'utf8'))));
+  drifted.slides[0].english.body[1] += ' Changed.';
+  assert.throws(() => validatePairedDraft(drifted, source, 've'), /English body differs/,
+    'source drift withdraws the entire paired regional draft');
+});
+
+function validatedDirection(language: 've' | 'ts'): boolean {
+  const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${language}.paired-draft.json`, 'utf8'));
+  const marking = targetVisibleText(deck.slides[20].target.body[1]);
+  const outward = targetVisibleText(deck.slides[20].target.body[1]);
+  const firstZone = marking.indexOf('Zone 0');
+  const secondZone = marking.indexOf('Zone 1');
+  const ordered = firstZone >= 0 && secondZone > firstZone && /u thome|ku sungula/.test(outward);
+  const proceedsOutward = language === 've' ? /ni bvele nga nnḓa/.test(outward) : /u ya ehandle/.test(outward);
+  return ordered && proceedsOutward;
+}
+
+function targetVisibleText(part: any): string {
+  if (part.status !== 'mixed') return part.text ?? '';
+  return part.segments.map((segment: any) =>
+    segment.status === 'draft' ? segment.text : segment.sourceEnglish).join('');
+}
 
 test('standard written Xitsonga uses the same exact source and paragraph pairing as Sesotho', () => {
   const draft = completeHold('ts');
@@ -459,106 +648,23 @@ function checkForestGuildDeck(module: 'food-forest' | 'plant-guilds', lang: 'st'
   return slides;
 }
 
-// Rewritten 2 October 2026: the Xitsonga deck no longer drafts only its four orientation slides. Every heading and
-// paragraph on all 20 slides, including the species, site, water and legal guidance that was held in English, is
-// now a back-translated unreviewed draft beside its exact English, with the closing follow-up checks drafted too.
-test('Food Forest Xitsonga slides draft every passage, including the species, site and legal guidance once held in English', () => {
-  const slides = checkForestGuildDeck('food-forest', 'ts');
-  assertKeepsTerms(slides[16].target.body[2].text, ['support plants', 'thinning', 'mulch'],
-    'ts slide 17: prune or thin support plants and return clean cuttings as mulch');
-  assertKeepsTerms(slides[15].target.body[1].text, ['cardboard', 'mulch'], 'ts slide 16: plain cardboard under mulch');
-});
-
-test('regional Introduction drafts stay source-paired while uncertain farming, safety and permission advice stays English', () => {
-  for (const lang of ['ve', 'ts']) {
+// Rewritten 4 October 2026: the authorized VE/TS introduction batch replaces 60 exact held fields with visibly
+// unreviewed, source-paired drafts. The implementation test below binds each field and hashes every untouched
+// target and heading, so this test keeps only the independent deck validation and the pre-existing checked examples.
+test('regional Introduction drafts remain paired to all current English slides', () => {
+  for (const lang of ['ve', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
     assert.equal(packet.reviewStatus, 'unreviewed');
-    const drafted = slides.flatMap((slide: any) => slide.target.body
-      .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
-      .filter(Boolean));
-    // A fixed complete draft list became stale whenever a safely checked reflection
-    // was translated. Verify the new source-paired slots and keep the consequential
-    // English holds below; the validator checks every other slot's structure.
-    for (const slot of lang === 've' ? ['8:1', '17:4', '20:3'] : ['2:3', '11:4', '17:4']) {
-      assert.ok(drafted.includes(slot), `${lang} slide paragraph ${slot} remains a visible draft`);
-    }
-    assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
-      .map((slide: any) => slide.n), lang === 've'
-      ? [2, 4, 5, 6, 8, 9, 11, 12, 13, 14, 18, 19, 20, 21, 22]
-      : [1, 2, 3, 4, 5, 6]);
-    if (lang === 'ts') {
-      assert.equal(slides[0].target.heading.text, 'Masungulo ya Permaculture');
-      assert.equal(slides[0].english.heading, 'Introduction to Permaculture');
-      assert.ok(slides.slice(6).every((slide: any) => slide.target.heading.status === 'english-hold'),
-        'slides 7–22 keep every title in exact English until its terms and register receive fluent review');
-      for (const n of [7, 8, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22]) {
-        assert.ok(slides[n - 1].target.body.every((part: any, index: number) =>
-          part.status === 'english-hold' ||
-          (n === 7 && index === 2) ||
-          (n === 8 && index === 0) ||
-          (n === 11 && index === 3) ||
-          (n === 17 && [0, 3].includes(index)) ||
-          (n === 20 && index === 3)),
-          `slide ${n}: ethics, technical, farming, safety or field-action text stays in exact English`);
+    assert.equal(slides.length, 22);
+    assert.ok(slides.every((slide: any) => slide.english.body.length === slide.target.body.length),
+      `${lang}: every draft and hold remains paired to the complete source slide`);
+    for (const slide of slides) {
+      for (const [index, paragraph] of slide.target.body.entries()) {
+        if (paragraph.status === 'draft') {
+          assert.ok(paragraph.text?.trim(), `${lang} slide ${slide.n} paragraph ${index + 1} has visible draft text`);
+        }
       }
-      assert.ok(slides[8].target.body.slice(0, 2).every((part: any) => part.status === 'english-hold'));
-      assert.ok(slides[15].target.body.slice(0, 2).every((part: any) => part.status === 'english-hold'));
-      assert.equal(slides[8].target.body[2].status, 'draft');
-      assert.deepEqual(slides[15].target.body.slice(2).map((part: any) => part.status), ['draft', 'draft']);
-    }
-    assert.equal(slides[1].target.body[0].status, lang === 'ts' ? 'draft' : 'english-hold',
-      `slide 2 ${lang}: only the independently checked work-before-digging draft may replace the spade image`);
-    if (lang === 've') assert.equal(slides[1].target.body[2].status, 'english-hold',
-      'Tshivenda slide 2 land-work contrast remains an English hold');
-    for (const [index, part] of slides[2].target.body.entries()) {
-      if (index === 0) continue;
-      const checkedDraft = (lang === 'ts' && [1, 4].includes(index)) || (lang === 've' && index === 4);
-      assert.equal(part.status, checkedDraft ? 'draft' : 'english-hold',
-        `slide 3 ${lang}: only checked ethics and sketch reflections may replace English holds`);
-    }
-    for (const n of [4, 5, 6]) {
-      assert.ok(slides[n - 1].target.body.slice(1).every((part: any, index: number) =>
-        part.status === 'english-hold' || (n === 4 && index === 2) || (n === 5 && [0, 1, 3].includes(index))),
-        `slide ${n} ${lang}: examples and care advice stay held apart from the ordinary reflections and People Care example`);
-    }
-    assert.match(slides[4].target.body[2].text, /People Care/,
-      `slide 5 ${lang}: keep the named ethic visible in English`);
-    assert.notEqual(slides[4].target.body[2].text, slides[4].english.body[2],
-      `slide 5 ${lang}: a draft label cannot disguise unchanged English as a translation`);
-    assert.equal(slides[4].target.body[1].status, 'draft',
-      `slide 5 ${lang}: the family-priority sentence is a marked, source-paired draft`);
-    assert.equal(slides[4].target.body[4].status, 'draft',
-      `slide 5 ${lang}: the closing household-food reflection is a marked, source-paired draft`);
-    assert.equal(slides[4].target.body[3].status, 'english-hold',
-      `slide 5 ${lang}: keep the farm-purpose sentence held until its wording is checked`);
-    for (const index of [1, 4]) {
-      assert.ok(slides[4].target.body[index].text?.trim(),
-        `slide 5 ${lang}: each new draft needs visible target text`);
-      assert.notEqual(slides[4].target.body[index].text, slides[4].english.body[index],
-        `slide 5 ${lang}: a draft label cannot disguise unchanged English as a translation`);
-    }
-    for (const index of [1, 2]) assert.equal(slides[5].target.body[index].status, 'english-hold',
-      `slide 6 ${lang}: keep the uncertain surplus/mielies example paired in English`);
-    assert.ok(slides[6].target.body.every((part: any, index: number) =>
-      part.status === 'english-hold' || (lang === 'ts' && index === 2 && part.status === 'draft')),
-    `slide 7 ${lang}: water access and work claims stay English; only the checked Xitsonga help question may be drafted`);
-    assert.ok(slides[7].target.body.every((part: any, index: number) =>
-      part.status === 'english-hold' || (index === 0 && part.status === 'draft')),
-    `slide 8 ${lang}: only the checked ethics orientation may replace an English hold`);
-    if (lang === 've') {
-      const permittedReflectiveDrafts: Record<number, number[]> = { 16: [2, 3], 17: [0, 3], 18: [3], 20: [2, 3] };
-      for (const n of [10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22]) {
-        assert.ok(slides[n - 1].target.body.every((part: any, index: number) =>
-          part.status === 'english-hold' || (permittedReflectiveDrafts[n] ?? []).includes(index)),
-          `slide ${n}: farming, safety, ecological, zone/sector and field instructions need a fluent review`);
-      }
-      for (const n of [15, 16, 17]) assert.equal(slides[n - 1].target.heading.status, 'english-hold',
-        `slide ${n}: rejected or unreviewed heading stays in English`);
-      assert.equal(slides[9].target.heading.status, 'english-hold',
-        'slide 10 keeps Observe and Interact in English because the candidate changed the object of interaction');
-      assert.ok(slides[13].target.body.slice(1).every((part: any) => part.status === 'english-hold'),
-        'slide 14 keeps manure, food-safety and further integration wording in English');
     }
   }
 });

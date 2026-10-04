@@ -41,10 +41,24 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "This module is the foundation for everything else in the course.",
+                "status": "draft",
+                "text": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi."
+              },
+              {
+                "sourceEnglish": " Three ethics, a set of design principles, and one simple way to organise your land.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A swi lavi mali. Hinkwaswu swi cinca laha u vekaka swilo kona ni leswaku u famba mpfhuka wo fika kwihi siku rin’wana ni rin’wana.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -124,10 +138,44 @@
             "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Name the ",
+                "status": "draft",
+                "text": "Boxa "
+              },
+              {
+                "sourceEnglish": "design principles",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that matter most on your land, and say why.",
+                "status": "draft",
+                "text": " ta nkoka ngopfu eka land ya wena, u vula leswaku ha yini."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sketch ",
+                "status": "draft",
+                "text": "Dirowa "
+              },
+              {
+                "sourceEnglish": "your zones and your sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on one sheet of paper.",
+                "status": "draft",
+                "text": " eka phepha rin’we."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -161,10 +209,14 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swi vula ku teka soil, water, plants na animals tani hi “living systems to protect, not resources to use up.”",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "System leyi u yi tirhisaka yi hela, kutani “stops paying you.” System leyi u yi sirhelelaka ya ya mahlweni, kutani “keeps paying you.”",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -209,7 +261,9 @@
             "provenance": "unreviewed-ai-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Purasi ri endleriwe ku phamela swakudya ndyangu lowu wu ri fambisaka.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -244,16 +298,34 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Take only what you need, and ",
+                "status": "draft",
+                "text": "Teka ntsena leswi u swi lavaka, kutani "
+              },
+              {
+                "sourceEnglish": "return the surplus to the system — seeds, food, water, knowledge.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Murimi loyi a xaviselaka mielies ya yena leyi saleke yi hundzaka leswi a swi lavaka hinkwaro, a nga hlayisi ni xin’we xa compost kumbe seed, u tshova nawu lowu. A ku na lexi tlheleleke.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vaaki lava va pfangaka xihlovo lexi va xi tirhisaka swin’we hi fence na vona va tshova Fair Share.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Land ya wena yi kuma yini eka wena eka nguva yin’wana ni yin’wana?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -274,10 +346,29 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A borehole",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " serves your household.",
+                "status": "draft",
+                "text": " yi tirhela ndyangu wa wena."
+              },
+              {
+                "sourceEnglish": " Neighbours ask for water too.",
+                "status": "draft",
+                "text": " Vahakelani na vona va kombela mati."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta water level. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela the source. Ku languta water level ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va safe kumbe swi pfumeleriwa.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -309,13 +400,39 @@
             "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Nobody has written down the answer.",
+                "status": "draft",
+                "text": "A ku na munhu loyi a tsaleke nhlamulo."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The ethics help you weigh the choices and explain your decision.",
+                "status": "draft",
+                "text": "Milawu ya mahanyelo yi ku pfuna ku pima swihlawuriwa ni ku hlamusela xiboho xa wena."
+              },
+              {
+                "sourceEnglish": " Check the rules and ask permission where it is needed.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Veka ethics leti tinharhu eka ndlela leyi u ehleketaka ha yona u nga si sungula ku aka ehandle.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -336,10 +453,29 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "David Holmgren u hlamusele twelve design principles eka Essence of Permaculture. Bill Mollison na David Holmgren va sungula permaculture concept swin’we.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "You do not need all twelve to start. ",
+                "status": "draft",
+                "text": "A swi lavi ku sungula hi hinkwato ta 12. "
+              },
+              {
+                "sourceEnglish": "Three useful starting points for this lesson are: ",
+                "status": "draft",
+                "text": "Kha dyondzo leyi, ku na tindlela tinharhu leti pfunaka ku sungula: "
+              },
+              {
+                "sourceEnglish": "observe and interact, catch and store energy, and use edges and value the marginal.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -366,16 +502,34 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Watch your land",
+                "status": "draft",
+                "text": "Languta land ya wena"
+              },
+              {
+                "sourceEnglish": " through a full season before you commit to major earthworks.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Storm yin’we yi ku komba nkarhi wun’we. Full wet season yi ku komba pattern: laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Leswi swi ku pfuna ku twisisa ndhawu. Kambe leswi ntsena a swi kombisi loko swale yi faneleka kumbe yi safe ku akiwa. U nga si cela, kambela soil, slope, drainage na safe overflow route leyi nga ta ka yi nga vangisi erosion kumbe ku rhumela mati lama onhaka eka vaakelani. Kombela trained local adviser a kambela ndhawu.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xana mati ma huma hi kwihi eka land ya wena? Xana wa swi tiva hakunene kumbe wa bvumbetela?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -397,13 +551,34 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Harvest rain, sun na biomass u nga si swi lahla swi huma eka property ya wena.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hinkwato swi fika mahala swi tlhela swi famba mahala. Water yi khuluka yi huma, leaves ti haha ti ya, sun yi wela eka bare ground.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Compare",
+                "status": "draft",
+                "text": "Pimanisa "
+              },
+              {
+                "sourceEnglish": " the cost and work with the benefit",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on your own farm.",
+                "status": "draft",
+                "text": " epurasini ra wena."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -428,13 +603,58 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The edge",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is where two things meet",
+                "status": "draft",
+                "text": " hi laha swilo swimbirhi swi hlanganaka kona"
+              },
+              {
+                "sourceEnglish": " — a fence line or the strip beside a path.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours.",
+                "status": "draft",
+                "text": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena."
+              },
+              {
+                "sourceEnglish": " That is the land telling you something.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Which ",
+                "status": "draft",
+                "text": "Hi yihi "
+              },
+              {
+                "sourceEnglish": "edge",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on your plot is doing nothing at the moment?",
+                "status": "draft",
+                "text": " eka plot ya wena leyi nga endli xin’wana sweswi?"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -455,13 +675,44 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Use and value diversity.",
+                "text": "Tirhisa diversity u tlhela u yi teka yi ri ya nkoka."
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Hail injury to maize depends on the storm and the crop’s growth stage."
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " This principle does not promise that a crop will survive every event.",
+                "text": " Principle leyi a yi tiyisisi leswaku crop yi ta pona eka event yin’wana ni yin’wana."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Two others worth knowing:",
+                "status": "draft",
+                "text": "Ku na swin’wana swimbirhi leswi swi nga swinene ku swi tiva:"
+              },
+              {
+                "sourceEnglish": " produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xana siku rin’we ro biha ri nga ku durhela yini sweswi?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -483,16 +734,39 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Veka element yin’wana ni yin’wana laha yi tirhaka kona na leswi nga ekusuhi na yona.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food.",
+                "text": "Garden, fruit trees na chicken run swi nga veketeriwa leswaku chickens ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli chickens ti tshinela eka crops leti ku tshoveriwaka swakudya."
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Fresh manure can carry germs."
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+                "text": " Kombela extension adviser a ku hlamusela ndlela yo hlayisa bed yi ri safe loko edible crops ti nga si tlhela ti byariwa. Chickens ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka fixed pen."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swilo leswi swinharhu, loko swi pfariwe hi fence swi hambanisiwile, xin’wana ni xin’wana xi endla ntirho wa xona ntsena.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula principles timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa swinene. Letin’wana ti ta vonaka kahle loko u ya mahlweni.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -514,16 +788,62 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " run from 0 to 5, and they are about your feet, not your fences.",
+                "status": "draft",
+                "text": " ti suka eka 0 ku ya eka 5, naswona ti khumba ku famba ka wena, ku nga ri ti-fence ta wena."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zone 0",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is the house. In this example, ",
+                "status": "draft",
+                "text": " i yindlu. Eka xifaniso lexi, "
+              },
+              {
+                "sourceEnglish": "Zone 1",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is near the house and holds ",
+                "status": "draft",
+                "text": " yi le kusuhi ni yindlu naswona yi na "
+              },
+              {
+                "sourceEnglish": "herbs and salad greens",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " picked often.",
+                "status": "draft",
+                "text": " leti u ti tshovelaka nkarhi ni nkarhi."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zone 2 i main garden ni chicken run, u ya eka swona once or twice a day. Zone 3 i main field, u ya kona weekly.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Zone 4 i semi-wild: fruit trees na fodder leswi lavaka attention nkarhi wun’wana ni wun’wana. Zone 5 yi tshikiwa yi ri wild.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -545,10 +865,39 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Herbs",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " you pick often are easier to tend near the house.",
+                "status": "draft",
+                "text": " leti u ti tshovelaka nkarhi ni nkarhi swa olova ku ti hlayisa loko ti ri ekusuhi ni yindlu."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The ",
+                "status": "draft",
+                "text": "Loko u ti veka ekule, riendzo ro leha ri nga endla leswaku u nga ti endzeli. "
+              },
+              {
+                "sourceEnglish": "herbs",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " may be neglected.",
+                "status": "draft",
+                "text": " ti nga siyiwa ti nga hlayisiwi."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -585,10 +934,24 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+                "status": "draft",
+                "text": " ti pfuna ku lulamisa ndhawu hi ku ya hi matshalatshala ya wena — ku famba, ku rhwala ni ku kambela leswi tata siku ra xiviri."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko xin’wana xi ku lava nkarhi ni nkarhi, xi tshama ekusuhi na wena. Sweswo swi nga hunguta ku famba ni ku tirha eka nguva.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -614,16 +977,43 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " come from inside your land. ",
+                "status": "draft",
+                "text": " ti huma endzeni ka land ya wena. "
+              },
+              {
+                "sourceEnglish": "Sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " come from outside it.",
+                "status": "draft",
+                "text": " ti huma ehandle ka yona."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sun, wind, rain, flood na fire swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta laha strong wind yi humaka kona epurasini ra wena. Nearby weather-station records ti nga ku pfuna ku kambela wind direction. Languta laha rainwater yi nghenaka kona ni ndlela leyi yi khulukaka ha yona eka misava ya wena.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xana weather leyi ku onhaka yi huma hi tlhelo rihi?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -646,19 +1036,39 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta example leyi. Wind yi huma hi north-west.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Trees na shrubs swi yima exikarhi ka wind yoleyo ni crops.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Some air passes through the windbreak.",
+                "text": "Air yin’wana yi hundza hi le ka windbreak."
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": " Other air moves over it or around its ends."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Shelter yi nga hunguta wind speed endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Eka site ya wena, languta damaging winds u nga si hlawula laha u nga ta byala kona. Picture leyi a hi planting plan.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -680,13 +1090,29 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dirowa boundary ya wena. Maka yindlu. Dirowa rings u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then draw arrows in from outside for ",
+                "status": "draft",
+                "text": "Kutani dirowa arrows leti nghenaka ti huma ehandle ku yimela "
+              },
+              {
+                "sourceEnglish": "sun, wind, fire and water.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Phepha leri ri khoma skeleton ya design ya wena. Hinkwaswo swin’wana eka khoso leyi swi titshege hi rona.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "draft",
@@ -713,16 +1139,54 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sketch your ",
+                "status": "draft",
+                "text": "Dirowa "
+              },
+              {
+                "sourceEnglish": "own zones and sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on one sheet of paper.",
+                "status": "draft",
+                "text": " eka phepha rin’we."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Mark ",
+                "status": "draft",
+                "text": "Maka "
+              },
+              {
+                "sourceEnglish": "Zone 0 and Zone 1",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " first, then work outward as far as your land goes.",
+                "status": "draft",
+                "text": " ku sungula, kutani u ya ehandle ku fika laha land ya wena yi helelaka kona."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Engetela arrow yin’we eka energy yin’wana ni yin’wana leyi fikaka yi huma ehandle, u tsala laha yi humaka kona.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tekela xifaniso xa sketch ya wena.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
@@ -744,16 +1208,64 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Walk out and ",
+                "status": "draft",
+                "text": "Famba ehandle u "
+              },
+              {
+                "sourceEnglish": "check your sketch against the ground.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Stand at the kitchen door and count what is really in ",
+                "status": "draft",
+                "text": "Yima enyangweni ya khixi u hlayela leswi nga kona hakunene eka "
+              },
+              {
+                "sourceEnglish": "Zone 1",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " today.",
+                "status": "draft",
+                "text": " namuntlha."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Find one thing ",
+                "text": "Kuma xilo xin’we lexi "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "planted further away than how often you use it, "
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": "and write down where it should move to.",
+                "text": "u tsala laha xi faneleke ku rhurhiseriwa kona."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Endzhaku kombela one older neighbour a ku hlamusela direction leyi worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni arrow ya wena.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
