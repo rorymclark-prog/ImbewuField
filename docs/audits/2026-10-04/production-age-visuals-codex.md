@@ -24,7 +24,7 @@ Plant ages and schedules remain in the same account/site-local device store as p
 
 ## Verification
 
-- TypeScript clean, then full suite: **4,574 tests, 4,573 passes, zero failures/cancellations/skips, one pre-existing shape-sync TODO**; 60.22 seconds. Whitespace clean. Final-head CI also required before merge.
+- TypeScript clean, then full suite: **4,579 tests, 4,578 passes, zero failures/cancellations/skips, one pre-existing shape-sync TODO**; 57.40 seconds. Whitespace clean. Final-head CI also required before merge.
 - Meaningful regressions cover immature/mature/mixed cohorts, checkpoint transitions, missing dates, malformed counts/rates, persistence isolation/failure, dated one-off crops, recurring crops, space conflicts, known older subtotal and app/paper age qualification. The old test asserting an annual-only 'every year after' heading was rewritten to protect repeated crops plus advancing plant ages; it still rejects an indefinite blanket claim.
 - Actual public sample browser: selecting Oct 2026 for avocado removed premature reference bars; entering artificial age 0 = 0 kg and age 3 = 2 kg changed Oct 2029 to 49 vegetable kg + 2 test tree kg = 51 kg known subtotal. Native farmer PDF downloaded successfully with identical figures. Artificial kg are test inputs, not agricultural advice.
 - Desktop and **390 × 844 phone** graph/age details visually checked; temporary viewport reset. No private save/reopen or physical device check.
