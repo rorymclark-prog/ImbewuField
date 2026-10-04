@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: '36173657', changes: [
+    'Record plant ages and see future harvest beside your vegetables.',
+    'Printed plans show clearer season bands and production as plants grow.',
+    'Young plants stay out of early picking references when ages are recorded.',
+  ], tour: [
+    { title: 'Plan production as plants grow',
+      where: 'Production plan → Plant ages & future harvest',
+      detail: 'Add planting dates and locally checked yields, then compare the next ten years and download the plan.',
+      href: '/facilitator/crops' },
+  ] },
   { when: '4 October 2026', sha: '7f357eee', changes: [
     'Seven Market slides reuse checked regional lesson drafts beside English.',
     'Reading lessons add regional wording for assessment before digging.',
