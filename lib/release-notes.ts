@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: '08fbf216', changes: [
+    'Regional slides add clearer record lists, integration nouns and map-use drafts.',
+    'Eight silent cards refresh beside English; uncertain terms stay in English.',
+  ], tour: [
+    { title: 'Review the refreshed draft cards',
+      where: 'Study → Vegetables 18, Introduction 14 or Reading 18–19',
+      detail: 'Compare the unreviewed draft with English and save the silent slides.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: 'bb45fac9', changes: [
     'Reading slides add fuller regional soil, wind and field-observation drafts.',
     'Nine silent cards refresh beside English; uncertain site terms stay in English.',

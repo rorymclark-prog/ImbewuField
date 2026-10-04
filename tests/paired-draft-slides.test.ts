@@ -1117,8 +1117,43 @@ test('Vegetables field assignment drafts keep measurements, paths, checkpoints a
       previous = index;
     }
     assert.equal(action.english.body[5], 'Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.');
-    assert.deepEqual(action.target.body[5], { status: 'english-hold' },
-      `${lang}: preserve the complete record checklist, including pest pressure and harvest`);
+    const record = action.target.body[5];
+    assert.equal(record.status, 'mixed', `${lang}: ordinary record framing is drafted beside held technical items`);
+    assert.deepEqual(record.segments.map((segment: any) => segment.sourceEnglish), [
+      'Record the sowing date.',
+      ' The rain.',
+      ' What germinated.',
+      ' Pest pressure.',
+      ' What you harvested.',
+    ], `${lang}: preserve all five record items in their original order and exact source wording`);
+    assert.equal(record.segments.map((segment: any) => segment.sourceEnglish).join(''), action.english.body[5],
+      `${lang}: changed source wording must not be hidden by a partial list`);
+    for (const index of [2, 3]) {
+      assert.deepEqual(record.segments[index], {
+        sourceEnglish: index === 2 ? ' What germinated.' : ' Pest pressure.',
+        status: 'english-hold',
+      }, `${lang}: retain uncertain crop-observation terms as exact English holds`);
+    }
+    const expectedRecordDrafts = {
+      st: ['Ngola letsatsi la sowing.', ' Pula.', ' Seo o se kotutseng.'],
+      ve: ['Ṅwalani datumu ya sowing.', ' Mvula.'],
+      ts: ['Tsala siku ra sowing.', ' Mpfula.', ' Leswi u tshoveleke.'],
+    } as const;
+    const expectedDraftSegments = lang === 've' ? [0, 1] : [0, 1, 4];
+    assert.deepEqual(expectedDraftSegments.map((index) => record.segments[index].text), expectedRecordDrafts[lang],
+      `${lang}: retain only the accepted ordinary record wording, with VE harvest timing held`);
+    for (const index of expectedDraftSegments) {
+      assert.equal(record.segments[index].text.startsWith(' '), record.segments[index].sourceEnglish.startsWith(' '),
+        `${lang}: retain separator spacing so adjoining record items do not run together`);
+    }
+    if (lang === 've') {
+      assert.deepEqual(record.segments[4], { sourceEnglish: ' What you harvested.', status: 'english-hold' },
+        'Tshivenda keeps the past-harvest list item held rather than risking a tense shift');
+    }
+    const changedRecordSource = structuredClone(packet);
+    changedRecordSource.slides[17].english.body[5] += ' Changed source.';
+    assert.throws(() => validatePairedDraft(changedRecordSource, source, lang), /slide 18: English body differs/,
+      `${lang}: a changed record item withdraws the complete paired list draft`);
     if (lang === 'st') {
       const seasonEvidence = action.target.body[6];
       assert.equal(action.english.body[6], "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.");
@@ -1143,6 +1178,66 @@ test('Vegetables field assignment drafts keep measurements, paths, checkpoints a
     changed.slides[16].english.body[0] += ' Changed source.';
     assert.throws(() => validatePairedDraft(changed, source, lang), /slide 17: English body differs/,
       `${lang}: a changed canonical source still blocks these paired field drafts`);
+  }
+});
+
+test('Intro integration noun updates preserve paired conditions and leave Sesotho audio-bound text untouched', () => {
+  const introSource = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
+  const sourceText = introSource[13].body[1];
+  assert.equal(sourceText,
+    'A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.');
+
+  const stDeck = JSON.parse(readFileSync('docs/narration/intro-permaculture.st.paired-draft.json', 'utf8'));
+  const stSlides = validatePairedDraft(stDeck, introSource, 'st');
+  assert.deepEqual(stSlides[13].target.body[1], { status: 'english-hold' },
+    'the whole Sesotho source pair stays English because the spoken text is bound to the existing narration');
+
+  const expected = {
+    ve: {
+      first: 'A garden, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe.',
+      second: ' Vhudzisani extension adviser uri bed i langulwe hani safely, edible crops dzi sa athu dovha u hula. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha fixed pen.',
+      nouns: ['miri ya mitshelo', 'khuhu'],
+    },
+    ts: {
+      first: 'Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya.',
+      second: ' Kombela extension adviser a ku hlamusela ndlela yo hlayisa bed yi ri safe loko edible crops ti nga si tlhela ti byariwa. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka fixed pen.',
+      nouns: ['Ntanga', 'mirhi ya mihandzu', 'tihuku'],
+    },
+  } as const;
+
+  for (const lang of ['ve', 'ts'] as const) {
+    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(deck, introSource, lang);
+    const field = slides[13].target.body[1];
+    assert.equal(slides[13].english.body[1], sourceText);
+    assert.equal(field.status, 'mixed');
+    assert.equal(field.provenance, 'new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open');
+    assert.equal(field.segments.length, 3, `${lang}: preserve the pre-existing mixed segment structure`);
+    assert.deepEqual(field.segments.map((segment: any) => ({
+      sourceEnglish: segment.sourceEnglish,
+      status: segment.status,
+    })), [
+      { sourceEnglish: sourceText.split(' Fresh manure can carry germs.')[0], status: 'draft' },
+      { sourceEnglish: ' Fresh manure can carry germs.', status: 'english-hold' },
+      { sourceEnglish: sourceText.slice(sourceText.indexOf(' Ask an extension adviser')), status: 'draft' },
+    ], `${lang}: preserve every previous source boundary and the exact manure safety hold`);
+    assert.equal(field.segments.map((segment: any) => segment.sourceEnglish).join(''), sourceText,
+      `${lang}: the full source still binds in order`);
+    assert.equal(field.segments[0].text, expected[lang].first,
+      `${lang}: only the approved garden, fruit-tree and chicken nouns change in the existing first draft segment`);
+    assert.equal(field.segments[1].text, undefined, `${lang}: held manure risk has no competing draft text`);
+    assert.equal(field.segments[2].text, expected[lang].second,
+      `${lang}: preserve the existing adviser, crop-return, pest and fertility wording`);
+    for (const noun of expected[lang].nouns) assert.ok(targetVisibleText(field).includes(noun), `${lang}: expected noun ${noun} remains visible`);
+    for (const condition of ['Keep chickens away from crops being harvested for food.', 'Fresh manure can carry germs.', 'Ask an extension adviser', 'before edible crops return.']) {
+      assert.ok(field.segments.some((segment: any) => segment.sourceEnglish.includes(condition)),
+        `${lang}: source keeps safety or advice condition “${condition}” attached`);
+    }
+
+    const drifted = structuredClone(deck);
+    drifted.slides[13].english.body[1] += ' Changed source.';
+    assert.throws(() => validatePairedDraft(drifted, introSource, lang), /slide 14: English body differs/,
+      `${lang}: changing canonical source withdraws these noun-only draft refinements`);
   }
 });
 
@@ -1329,11 +1424,17 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
     'docs/study-translation-reviews/READING-LANDSCAPE-PAIRED-REUSE-CANDIDATES-2026-10-04.json', 'utf8'));
   const observationProof = JSON.parse(readFileSync(
     'docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', 'utf8'));
+  const seasonalMapFollowup = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-SEASONAL-OBSERVATION-MAP-COMPARISON-IMPLEMENTATION-2026-10-04.json', 'utf8'));
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
     // Reconstruct the earlier 20-field snapshot across later authorized batches.
     // Their separate tests assert the new target text; this keeps the original preservation proof meaningful.
-    for (const change of next15Proof.changedTargets.filter((item: any) => item.language === language)) {
+    // Restore this newest follow-up first; older batches below then restore their own earlier snapshots.
+    for (const change of seasonalMapFollowup.fields.filter((item: any) => item.language === language)) {
+      packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.currentTarget;
+    }
+    for (const change of observationProof.pairedTargetChanges.filter((item: any) => item.language === language)) {
       packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
     }
     for (const change of pairedReuseProof.targetFieldChanges.filter((item: any) => item.language === language)) {
@@ -1341,7 +1442,7 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
       if (change.bodyIndex === undefined) target.heading = change.previousTarget;
       else target.body[change.bodyIndex] = change.previousTarget;
     }
-    for (const change of observationProof.pairedTargetChanges.filter((item: any) => item.language === language)) {
+    for (const change of next15Proof.changedTargets.filter((item: any) => item.language === language)) {
       packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
     }
     const slides = validatePairedDraft(packet, readingSource, language);
@@ -1376,7 +1477,7 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
         ? slide.target.heading
         : slide.target.body[snapshot.bodyIndex];
       assert.deepEqual(current, snapshot.target,
-        `${language} slide ${snapshot.slide}: after restoring the two documented later batches, every earlier heading and non-target body keeps its wording and review state`);
+        `${language} slide ${snapshot.slide}: after restoring later accepted batches, every earlier heading and non-target body keeps its wording and review state`);
     }
 
     // The field walk remains conditional on safety: heavy-rain observation and the full feature/property checklist stay exact.
@@ -1444,6 +1545,8 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
 
 test('Reading observation drafts preserve exact sources, unlisted fields and seasonal conditions', () => {
   const readingSource = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const followup = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-SEASONAL-OBSERVATION-MAP-COMPARISON-IMPLEMENTATION-2026-10-04.json', 'utf8'));
   const proof = JSON.parse(readFileSync(
     'docs/study-translation-reviews/READING-LANDSCAPE-OBSERVATION-NEXT-2026-10-04.json', 'utf8'));
   assert.equal(proof.scope.pairedTargetFieldsChanged, 21);
@@ -1453,6 +1556,9 @@ test('Reading observation drafts preserve exact sources, unlisted fields and sea
   const expectedChangedFields = new Set<string>();
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    for (const addition of followup.fields.filter((field: any) => field.language === language)) {
+      packet.slides[addition.slide - 1].target.body[addition.bodyIndex] = addition.currentTarget;
+    }
     const slides = validatePairedDraft(packet, readingSource, language);
     const fields = proof.pairedTargetChanges.filter((field: any) => field.language === language);
     assert.equal(packet.reviewStatus, 'unreviewed');
@@ -1529,6 +1635,76 @@ test('Reading observation drafts preserve exact sources, unlisted fields and sea
   assert.deepEqual(canonical.lessons.map((lesson) => ({ id: lesson.id, body: lesson.body })),
     proof.sourceSnapshots.canonicalReadingLandscapeLessonBodies,
     'all four canonical lesson bodies stay unchanged');
+});
+
+test('Reading season map updates keep field indicators and perfect-map comparison source-bound', () => {
+  const readingSource = englishSlideRecords(readFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const proof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-SEASONAL-OBSERVATION-MAP-COMPARISON-IMPLEMENTATION-2026-10-04.json', 'utf8'));
+  const expectedSources: Record<'ts' | 've', Partial<Record<18 | 19, string>>> = {
+    ts: {
+      18: 'Look for places where frost sits longest and where the ground smells damp during dry months.',
+      19: 'Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.',
+    },
+    ve: {
+      19: 'Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.',
+    },
+  } as const;
+
+  for (const field of proof.fields) {
+    const language = field.language as 've' | 'ts';
+    const slide = field.slide as 18 | 19;
+    const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, readingSource, language);
+    const expectedSource = expectedSources[language][slide];
+    assert.equal(field.source, expectedSource, `${language} slide ${slide}: source is the reviewed field`);
+    assert.equal(slides[slide - 1].english.body[field.bodyIndex], field.source,
+      `${language} slide ${slide}: canonical English remains paired`);
+    const target = slides[slide - 1].target.body[field.bodyIndex];
+    assert.deepEqual(target, field.appliedTarget, `${language} slide ${slide}: preserve the checked machine draft`);
+    assert.equal(target.status, 'mixed');
+    assert.match(target.provenance, /unreviewed/);
+    assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), field.source,
+      `${language} slide ${slide}: every source fragment remains in order`);
+    assert.equal(targetVisibleText(target), target.segments.map((segment: any) =>
+      segment.status === 'draft' ? segment.text : segment.sourceEnglish).join(''));
+
+    if (language === 'ts' && slide === 18) {
+      assert.deepEqual(target.segments.map((segment: any) => [segment.sourceEnglish, segment.status]), [
+        ['Look for places ', 'draft'],
+        ['where frost sits longest', 'english-hold'],
+        [' and ', 'draft'],
+        ['where the ground smells damp', 'english-hold'],
+        [' during dry months.', 'draft'],
+      ], 'duration and smell-based field indicators stay exact while only the search framing and dry-month timing are localized');
+      assert.equal(target.segments[0].text, 'Languta tindhawu ');
+      assert.equal(target.segments[2].text, ' ni ');
+      assert.equal(target.segments[4].text, ' hi tin’hweti leti omeke.');
+    } else {
+      assert.deepEqual(target.segments.at(-1), {
+        sourceEnglish: 'a perfect map drawn once.',
+        status: 'english-hold',
+      }, `${language}: retain the exact comparison tail rather than risk changing “perfect” or “once”`);
+      assert.ok(target.segments[0].text.endsWith('. '), `${language}: preserve the current season-by-season sentence and separator`);
+      assert.equal(target.segments[1].sourceEnglish, 'A pencil map you actually use is worth more than ');
+      assert.equal(target.segments[1].status, 'draft');
+      assert.ok(target.segments[1].text.endsWith(' '), `${language}: separate the localized comparative lead from the held tail`);
+      assert.ok(target.segments[1].text.includes('Pencil map'), `${language}: keep the map-medium phrase visible`);
+      if (language === 'ts') {
+        const comparativeWord = target.segments[1].text.trimEnd().split(/\s+/).at(-1)!;
+        assert.deepEqual([...comparativeWord].map((character) => character.codePointAt(0)), [116, 108, 117, 108, 97],
+          'the independently checked Xitsonga comparative keeps its exact source-candidate spelling');
+      }
+    }
+
+    const changed = structuredClone(packet);
+    changed.slides[slide - 1].english.body[field.bodyIndex] += ' Changed source.';
+    assert.throws(() => validatePairedDraft(changed, readingSource, language),
+      new RegExp(`slide ${slide}: English body differs`),
+      `${language} slide ${slide}: source edits must withdraw this paired draft`);
+  }
+  assert.deepEqual(proof.fields.map((field: any) => `${field.language}:${field.slide}:${field.bodyIndex}`).sort(),
+    ['ts:18:0', 'ts:19:2', 've:19:2'], 'only the three approved Reading fields are added');
 });
 
 test('Reading Landscape next15 drafts keep frost limits, observation times and A-frame parts source-bound', () => {

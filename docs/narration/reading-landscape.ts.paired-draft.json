@@ -653,8 +653,33 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Languta tindhawu where frost sits longest and where the ground smells damp during dry months."
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Look for places ",
+                "text": "Languta tindhawu "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "where frost sits longest"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " and ",
+                "text": " ni "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "where the ground smells damp"
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": " during dry months.",
+                "text": " hi tin’hweti leti omeke."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
             "status": "mixed",
@@ -735,8 +760,24 @@
             ]
           },
           {
-            "status": "draft",
-            "text": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. A pencil map you actually use is worth more than a perfect map drawn once."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Update the sketch season by season. ",
+                "status": "draft",
+                "text": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. "
+              },
+              {
+                "sourceEnglish": "A pencil map you actually use is worth more than ",
+                "status": "draft",
+                "text": "Pencil map leyi u yi tirhisaka hakunene yi na nkoka ku tlula "
+              },
+              {
+                "sourceEnglish": "a perfect map drawn once.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           }
         ]
       }
