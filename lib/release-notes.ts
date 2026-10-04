@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: 'e1d7de32', changes: [
+    'Tshivenda and Xitsonga vegetable lessons add fuller unreviewed drafts.',
+    'Eight cards match the lessons; Soil and Market add draft titles and image descriptions.',
+  ], tour: [
+    { title: 'Review the fuller regional drafts',
+      where: 'Study → Vegetables lesson 2, Soil or Market',
+      detail: 'Compare the drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: 'b347c1d9', changes: [
     'Regional assignment cards add fuller bed-care and mapping exercise drafts.',
     'Seven silent cards refresh beside English; uncertain terms stay in English.',
