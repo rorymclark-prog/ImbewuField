@@ -535,12 +535,12 @@
           },
           {
             "status": "draft",
-            "text": "Rekota sejalo, mofuta, mohlodi le letsatsi la pokello. Plan suitable isolation, selection, drying and storage for each crop.",
+            "text": "Ngola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Ho arolelana ha ho atise mefuta-futa kapa ho ntlafatsa boleng ka bohona. Check identity and germination before relying on shared seed.",
+            "text": "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
@@ -651,7 +651,7 @@
           },
           {
             "status": "draft",
-            "text": "Seek qualified advice for unfamiliar disease or technical problems. Phihlelo e arolelanoang le thuso ya ditsebi di ka sebetsa mmoho.",
+            "text": "Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]

@@ -233,7 +233,9 @@ const LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // Keep the Flow seed-sharing film; locally drawn market diagrams await visual clearance.
 const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
-  15: { src: 'flow-seed-sharing', poster: 'flow-seed-sharing', bytes: 3024675, seconds: 8 },
+  // Phone review found the film poster replaced both regional text panels, even in image zoom.
+  // The silent review deck must show its paired still; English/isiZulu keep the film.
+  15: { src: 'flow-seed-sharing', poster: 'flow-seed-sharing', bytes: 3024675, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {

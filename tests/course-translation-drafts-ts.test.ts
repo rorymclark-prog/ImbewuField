@@ -221,10 +221,11 @@ test('Reading Landscape Xitsonga body candidates preserve paragraph order and bo
     'mark points',
     'trace a contour line',
     'Its marks are an observation, not a design or approval for earthworks.',
-    'Before digging a swale, dam, or other structure, have the site assessed.',
     'Soil, slope, drainage, storm flow, and a safe overflow route all matter.',
     'a trained local adviser',
   ]) assert.ok(l1Paragraphs[1].includes(exact), `L1 paragraph 2 must preserve ${exact}`);
+  assert.ok(l1Paragraphs[1].includes("U nga se cela a swale, dam, kumbe xivumbeko xin'wana, tiyisisa leswaku ndhawu yi kambisisiwa."),
+    'assessment remains a condition before digging the named or other structure');
   assert.match(l1Paragraphs[1], /Vutisa a trained local adviser\.$/);
 
   assert.match(l1Paragraphs[2], /^A ku na placement rule yin’we ya slope yin’wana ni yin’wana\. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona\./);

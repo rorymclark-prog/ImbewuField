@@ -919,8 +919,11 @@ test('Xitsonga Market media retains two established learner concepts beside exac
   }
   const specialistAdvice = slides[17].target.body[2];
   assert.equal(specialistAdvice.status, 'draft');
-  assert.ok(specialistAdvice.text.startsWith('Seek qualified advice for unfamiliar disease or technical problems.'),
-    'the unresolved specialist advice remains exact English inside the visibly unreviewed draft');
+  // The ordinary request now reuses the checked learner paragraph; specialist terms stay exact.
+  assert.equal(specialistAdvice.text,
+    XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === 'market-community-l3')!.body.xitsongaDraft.split('\n\n')[11]);
+  assert.ok(specialistAdvice.text.startsWith('Lavani qualified advice eka unfamiliar disease or technical problems.'),
+    'the request still seeks qualified advice for unfamiliar disease or technical problems');
   assert.equal(slides[17].english.body[2], source[17].body[2]);
 });
 
@@ -1560,9 +1563,6 @@ test('regional Market slides preserve exact price and seed holds plus conditions
     assert.equal(beforeBoxes.status, 'draft');
     assert.ok(beforeBoxes.text.includes(safetyAnchors[lang].beforeBoxes), `${lang} keeps the condition before promising boxes`);
     for (const [slideNumber, paragraphIndex, exactClause] of [
-      [15, 1, 'Plan suitable isolation, selection, drying and storage for each crop.'],
-      [15, 2, 'Check identity and germination before relying on shared seed.'],
-      [18, 2, 'Seek qualified advice for unfamiliar disease or technical problems.'],
       [20, 2, 'Before a seed swap, check whether the variety is protected and whether permission is needed.'],
     ] as const) {
       const slide = slides[slideNumber - 1];
@@ -1571,6 +1571,101 @@ test('regional Market slides preserve exact price and seed holds plus conditions
       assert.ok(draft.text.includes(exactClause), `${lang} preserves the difficult source clause in English`);
       assert.ok(draft.provenance?.includes('unreviewed'));
     }
+  }
+});
+
+test('Market backup and shared-seed deck paragraphs map only their exact source sentences', () => {
+  const module = COURSE_MODULES.find(({ id }) => id === 'market-community')!;
+  const sentences = (text: string) => text.match(/[^.!?]+[.!?](?:\s|$)/g)?.map((part) => part.trim()) ?? [];
+
+  // The deck body is two sentences. Keep the existing localized first sentence, then reuse only
+  // the resolver's second sentence so the backup instruction does not fall back to English.
+  {
+    const packet = JSON.parse(readFileSync('docs/narration/market-community.ve.paired-draft.json', 'utf8'));
+    const slides = validatePairedDraft(packet, marketSource, 've');
+    const lesson = module.lessons.find(({ id }) => id === 'market-community-l1')!;
+    const sourceParagraph = lesson.body.split('\n\n')[16];
+    const learnerParagraph = resolveLearnerLessonPresentation(lesson, 've').content.body.split('\n\n')[16];
+    const slide = slides[7];
+    const sourceSentences = sentences(slide.english.body[2]);
+    const target = slide.target.body[2];
+    const targetSentences = sentences(target.text);
+    assert.equal(slide.english.body[2], sourceParagraph, 'VE slide 8 keeps the exact two-sentence canonical source');
+    assert.equal(target.status, 'draft');
+    assert.equal(sourceSentences.length, 2);
+    assert.equal(targetSentences.length, 2);
+    assert.notEqual(targetSentences[0], sourceSentences[0], 'retain the existing localized may-not clause');
+    assert.ok(targetSentences[0].includes('nga sa shuma'), 'keep the condition that another farm’s date may not work here');
+    assert.equal(targetSentences[1], sentences(learnerParagraph).at(-1), 'reuse the exact learner backup sentence');
+    for (const condition of ['backup plan', 'mvula', 'maḓi', 'zwimela']) assert.ok(target.text.includes(condition));
+    assert.ok(!target.text.includes('Before exchanging seed'), 'do not add unrelated source content');
+    const changedSource = structuredClone(marketSource);
+    changedSource[7].body[2] += ' Source wording changed.';
+    assert.throws(() => validatePairedDraft(packet, changedSource, 've'), /English body differs/);
+  }
+
+  // The learner registry paragraph also includes a third protected-variety/permission sentence.
+  // Remove only that exact suffix because it is absent from this deck body; slide 20 still keeps it.
+  const permissionSuffix = ' Before exchanging seed, check whether the variety is protected and whether permission is needed.';
+  for (const language of ['st', 'ts', 've'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, marketSource, language);
+    const lesson = module.lessons.find(({ id }) => id === 'market-community-l3')!;
+    const canonicalParagraph = lesson.body.split('\n\n')[2];
+    const learnerParagraph = resolveLearnerLessonPresentation(lesson, language).content.body.split('\n\n')[2];
+    const sourceParagraph = slides[14].english.body[2];
+    const target = slides[14].target.body[2];
+    assert.ok(canonicalParagraph.endsWith(permissionSuffix), `${language}: known protected-variety suffix remains exact in the lesson source`);
+    assert.equal(canonicalParagraph.slice(0, -permissionSuffix.length).trim(), sourceParagraph,
+      `${language}: deck source is exactly the first two canonical sentences`);
+    assert.ok(learnerParagraph.endsWith(permissionSuffix), `${language}: learner resolver retains the exact suffix`);
+    const reusableLearnerPrefix = learnerParagraph.slice(0, -permissionSuffix.length).trim();
+    assert.equal(target.status, 'draft');
+    assert.equal(target.text, reusableLearnerPrefix, `${language}: reuse only the exact two-sentence learner prefix`);
+    assert.equal(sentences(sourceParagraph).length, 2);
+    assert.equal(sentences(target.text).length, 2);
+    assert.ok(!target.text.includes('Before exchanging seed'), `${language}: do not add the absent permission sentence to slide 15`);
+    assert.ok(target.text.includes('identity') && target.text.includes('germination') && target.text.includes('shared seed'),
+      `${language}: keep the identity and germination check before relying on shared seed`);
+    const slide20 = slides[19];
+    assert.ok(slide20.target.body[2].text.includes('Before a seed swap, check whether the variety is protected and whether permission is needed.'),
+      `${language}: retain the separate protected-variety/permission instruction on slide 20`);
+    const changedSource = structuredClone(marketSource);
+    changedSource[14].body[2] += ' Source wording changed.';
+    assert.throws(() => validatePairedDraft(packet, changedSource, language), /English body differs/,
+      `${language}: source drift invalidates the two-sentence reuse`);
+  }
+});
+
+test('Market seed record and advice slides reuse only exact whole learner paragraphs', () => {
+  const module = COURSE_MODULES.find(({ id }) => id === 'market-community')!;
+  const reuse = [
+    { lang: 'st', slide: 15, body: 1, lessonId: 'market-community-l3', lessonParagraph: 1 },
+    { lang: 'st', slide: 18, body: 2, lessonId: 'market-community-l3', lessonParagraph: 11 },
+    { lang: 've', slide: 15, body: 1, lessonId: 'market-community-l3', lessonParagraph: 1 },
+    { lang: 've', slide: 18, body: 2, lessonId: 'market-community-l3', lessonParagraph: 11 },
+    { lang: 'ts', slide: 15, body: 1, lessonId: 'market-community-l3', lessonParagraph: 1 },
+    { lang: 'ts', slide: 18, body: 2, lessonId: 'market-community-l3', lessonParagraph: 11 },
+  ] as const;
+
+  for (const item of reuse) {
+    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${item.lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, marketSource, item.lang);
+    const slide = slides[item.slide - 1];
+    const lesson = module.lessons.find(({ id }) => id === item.lessonId)!;
+    const sourceParagraphs = lesson.body.split('\n\n');
+    const learnerParagraphs = resolveLearnerLessonPresentation(lesson, item.lang).content.body.split('\n\n');
+    assert.equal(slide.english.body[item.body], sourceParagraphs[item.lessonParagraph],
+      `${item.lang} slide ${item.slide}: the entire deck paragraph must bind to the canonical source paragraph`);
+    assert.equal(slide.target.body[item.body].status, 'draft');
+    assert.equal(slide.target.body[item.body].text, learnerParagraphs[item.lessonParagraph],
+      `${item.lang} slide ${item.slide}: reuse the learner resolver paragraph verbatim`);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+
+    const changedSource = structuredClone(marketSource);
+    changedSource[item.slide - 1].body[item.body] += ' Source wording changed.';
+    assert.throws(() => validatePairedDraft(packet, changedSource, item.lang), /English body differs/,
+      `${item.lang} slide ${item.slide}: a source edit invalidates this reuse mapping`);
   }
 });
 

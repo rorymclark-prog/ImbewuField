@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '4 October 2026', sha: '7f357eee', changes: [
+    'Seven Market slides reuse checked regional lesson drafts beside English.',
+    'Reading lessons add regional wording for assessment before digging.',
+    'Regional seed-sharing slides show the paired text instead of a film poster.',
+  ], tour: [
+    { title: 'Review the regional Market slides',
+      where: 'Study → Market Gardening → Slides 8, 15 and 18',
+      detail: 'Compare unreviewed drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
   { when: '4 October 2026', sha: 'bdf97c28', changes: [
     'Printed calendar labels separate local fruit dates from vegetable planning dates.',
   ] },

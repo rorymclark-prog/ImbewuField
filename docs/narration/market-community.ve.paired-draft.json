@@ -295,7 +295,7 @@
           },
           {
             "status": "draft",
-            "text": "Datumu ine ya shuma kha ḽiṅwe bulasi i nga sa shuma hafha. Include a backup plan when rain, water or crops fail.",
+            "text": "Datumu ine ya shuma kha ḽiṅwe bulasi i nga sa shuma hafha. Engedzani a backup plan musi mvula, maḓi kana zwimela zwi tshi kundelwa.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
@@ -537,12 +537,12 @@
           },
           {
             "status": "draft",
-            "text": "Rekhodani crop, variety, source na collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+            "text": "Ṅwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "U kovhekana a zwi engedzi diversity kana u khwinisa quality nga zwone zwine zwa ḓitika. Check identity and germination before relying on shared seed.",
+            "text": "U kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically. Ṱolani identity na germination ni sa athu ḓitika nga shared seed.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
@@ -653,7 +653,7 @@
           },
           {
             "status": "draft",
-            "text": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience na specialist help zwi nga shuma zwoṱhe.",
+            "text": "Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
