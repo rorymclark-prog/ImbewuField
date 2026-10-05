@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { existsSync, statSync, readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
 import { createElement } from 'react';
-import { act, create, type ReactTestRenderer } from 'react-test-renderer';
+import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import ts from 'typescript';
 import test from 'node:test';
 
@@ -763,13 +763,16 @@ test('Water playback respects language gaps, download choice and the whole clear
       createNodeMock: element => element.type === 'video' ? videoDevice : element.type === 'audio' ? audioDevice : null,
     }); });
     try {
+      // Since 2026-10-05 the separate image dialog also renders a source heading while closed.
+      // Playback-title assertions belong to the lesson player dialog, which owns slide changes.
+      const playerHeading = () => view.root.findAllByType('dialog')[0].findByType('h3');
       assert.match(view.root.findByType('audio').props.src, /water-harvesting\/zu\/slide-01.mp3$/);
       const messages = view.root.findAllByType('p').map(p => p.children.join('')).join(' ');
       assert.match(messages, /isiZulu narration is awaiting review by a fluent speaker/);
       assert.doesNotMatch(messages, /Narration is in English/);
       assert.doesNotMatch(messages, /isiZulu narration is not available/);
       for (let i = 0; i < 13; i++) act(() => view.root.findAllByType('button').find(b => b.children.join('') === 'Next ›')!.props.onClick());
-      assert.equal(view.root.findByType('h3').children.join(''), 'Uphahla Lwakho Lungavuna Amanzi');
+      assert.equal(playerHeading().children.join(''), 'Uphahla Lwakho Lungavuna Amanzi');
       assert.equal(view.root.findAllByType('video').length, 0, 'opening a Watch slide must not download video');
       const watch = view.root.findAllByType('button').find(b => b.findAllByType('span').some(s => s.children.join('').startsWith('Watch · ')))!;
       assert.ok(watch);
@@ -780,14 +783,14 @@ test('Water playback respects language gaps, download choice and the whole clear
       // manifest's ratio so a future portrait clip is not forced into this video's frame.
       assert.equal(clip.parent!.props.style.aspectRatio, animationUrls('water-harvesting', 14)?.aspectRatio ?? 16 / 9);
       assert.equal(clip.props.loop, false, 'a selected animation must be able to finish under play-through');
-      const title = view.root.findByType('h3').children.join('');
+      const title = playerHeading().children.join('');
       if (videoFirst) {
         videoDevice.ended = true;
         act(() => clip.props.onEnded());
       } else {
         act(() => view.root.findByType('audio').props.onEnded());
       }
-      assert.equal(view.root.findByType('h3').children.join(''), title, 'wait for both teaching streams');
+      assert.equal(playerHeading().children.join(''), title, 'wait for both teaching streams');
       if (videoFirst) act(() => view.root.findByType('audio').props.onEnded());
       else { videoDevice.ended = true; act(() => clip.props.onEnded()); }
       assert.match(view.root.findByType('audio').props.src, /slide-15.mp3$/, 'advance exactly one slide once both finish');
@@ -1300,6 +1303,8 @@ test('a timed tour follows the voice after late loading, pause and seeking, then
 // instruction error must stop narration rather than masquerade as a missing file.
 test('isiZulu deck source remains visible with English voice and withheld recordings stay silent', async () => {
   const slide11Draft = resolveRegisteredSilentDeckDraft('seeds-sovereignty', 11);
+  const slide01Pair = ISIZULU_DECK_SOURCE_BINDINGS.find(row => row.moduleId === 'seeds-sovereignty' && row.slide === 1);
+  assert.ok(slide01Pair, 'slide 1 has an exact registered source pair');
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
@@ -1316,13 +1321,33 @@ test('isiZulu deck source remains visible with English voice and withheld record
     createNodeMock: element => element.type === 'audio' ? audioDevice : null,
   }); });
   try {
-    assert.equal(view.root.findAllByProps({ 'aria-label': 'Exact English source' }).length, 1);
-    assert.equal(view.root.findAllByProps({ 'aria-label': 'Unreviewed isiZulu draft' }).length, 1);
+    // The player and mounted (closed) image dialog are distinct source-reading surfaces.
+    // Since 2026-10-05 both intentionally render the exact same current-slide pair.
+    const dialogs = () => view.root.findAllByType('dialog');
+    const player = () => dialogs()[0];
+    const imageViewer = () => dialogs()[1];
+    const assertPairText = (surface: ReactTestInstance, targetLabel: string,
+      targetTitle: string, targetParagraphs: readonly string[], sourceTitle: string,
+      sourceParagraphs: readonly string[]) => {
+      const target = surface.findByProps({ 'aria-label': targetLabel });
+      const source = surface.findByProps({ 'aria-label': 'Exact English source' });
+      assert.equal(target.findByType('h5').children.join(''), targetTitle);
+      assert.deepEqual(target.findAllByType('p').map(paragraph => paragraph.children.join('')), targetParagraphs);
+      assert.equal(source.findByType('h5').children.join(''), sourceTitle);
+      assert.deepEqual(source.findAllByType('p').map(paragraph => paragraph.children.join('')), sourceParagraphs);
+    };
+    assertPairText(player(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
+      slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
+    assertPairText(imageViewer(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
+      slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
     const picture = () => view.root.findAllByType('img')[0];
     const voices = () => view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
     act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
     assert.match(picture().props.src, /seeds-sovereignty\/zu\/slide-01.jpg$/);
-    assert.equal(view.root.findAllByProps({ 'aria-label': 'Unreviewed isiZulu draft' }).length, 1);
+    assertPairText(player(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
+      slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
+    assertPairText(imageViewer(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
+      slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
     assert.match(view.root.findByType('audio').props.src, /seeds-sovereignty\/en\/slide-01.mp3$/);
     act(() => voices().find(button => button.children.join('') === 'isiZulu')!.props.onClick());
     for (let index = 0; index < 10; index++) {
@@ -1331,14 +1356,21 @@ test('isiZulu deck source remains visible with English voice and withheld record
     assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.jpg');
     assert.equal(view.root.findAllByType('audio').length, 0, 'boil-versus-ferment recording cannot play');
     assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
-    assert.equal(view.root.findAllByProps({ 'aria-label': 'Unreviewed corrected isiZulu slide draft' }).length,
-      slide11Draft ? 1 : 0);
-    assert.equal(view.root.findAllByProps({ 'aria-label': 'Exact English source' }).length, 1);
+    assert.ok(isiZuluDeckReviewHold('seeds-sovereignty', 11), 'the incorrect recorded instruction stays held');
+    assert.ok(slide11Draft, 'the held slide has a corrected silent draft registered');
+    for (const surface of [player(), imageViewer()]) {
+      assertPairText(surface, 'Unreviewed corrected isiZulu slide draft', slide11Draft.correctedTitle,
+        slide11Draft.correctedTarget, slide11Draft.sourceHeading, slide11Draft.sourceEnglish);
+    }
     const notice = view.root.findAllByType('p').map(p => p.children.join('')).join(' ');
-    assert.match(notice, slide11Draft ? /previous isiZulu recording remains unavailable/ : /recording need revision/);
+    assert.match(notice, /previous isiZulu recording remains unavailable/);
     act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
     assert.match(view.root.findByType('audio').props.src, /seeds-sovereignty\/en\/slide-11.mp3$/);
     assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.jpg',
       'explicit English audio does not replace the corrected isiZulu silent card');
+    for (const surface of [player(), imageViewer()]) {
+      assertPairText(surface, 'Unreviewed corrected isiZulu slide draft', slide11Draft.correctedTitle,
+        slide11Draft.correctedTarget, slide11Draft.sourceHeading, slide11Draft.sourceEnglish);
+    }
   } finally { act(() => view.unmount()); }
 });

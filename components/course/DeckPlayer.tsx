@@ -67,6 +67,39 @@ const langName = (code: string, uiLang: string) => uiLang === 'zu' && code === '
   ? 'isiNgisi'
   : LANG_NAME[code] ?? code;
 
+type IsiZuluSourcePairContentProps = {
+  draft: NonNullable<ReturnType<typeof resolveIsiZuluSilentDeckDraft>> | null;
+  pair: NonNullable<ReturnType<typeof resolveIsiZuluDeckSourcePair>> | null;
+  hold: ReturnType<typeof isiZuluDeckReviewHold>;
+  source: readonly string[] | null | undefined;
+  fallbackHeading: string;
+};
+
+function IsiZuluSourcePairContent({ draft, pair, hold, source, fallbackHeading }: IsiZuluSourcePairContentProps) {
+  return (
+    <>
+      {draft ? (
+        <section lang="zu" aria-label="Unreviewed corrected isiZulu slide draft">
+          <h4>isiZulu · unreviewed machine draft</h4>
+          <h5>{draft.correctedTitle}</h5>
+          {draft.correctedTarget.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+        </section>
+      ) : pair && !hold ? (
+        <section lang="zu" aria-label="Unreviewed isiZulu draft">
+          <h4>isiZulu · unreviewed machine draft</h4>
+          <h5>{pair.registeredZuluTitle}</h5>
+          {pair.recordedTarget.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+        </section>
+      ) : null}
+      <section lang="en" aria-label="Exact English source">
+        <h4>Exact English source</h4>
+        <h5>{draft?.sourceHeading ?? pair?.sourceHeading ?? fallbackHeading}</h5>
+        {(draft?.sourceEnglish ?? pair?.source ?? source ?? []).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+      </section>
+    </>
+  );
+}
+
 // Match the short points on the published slide images. The full narration remains available
 // below the inline player; a full-screen slide shows the slide, not a second reading mode.
 function slidePoints(paragraphs: string[]): string[] {
@@ -456,6 +489,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   ) : null;
   const zuluHold = slideChoice === 'zu' ? isiZuluDeckReviewHold(moduleId, current.slide) : null;
   const zuluSource = slideChoice === 'zu' ? COURSE_TRANSCRIPTS[moduleId]?.en?.[current.slide] : null;
+  const showZuluSourcePair = slideChoice === 'zu' && !!(zuluSource || zuluSilentDraft);
+  const zuluPairLabel = zuluSilentDraft
+    ? 'Read slide · unreviewed isiZulu draft / exact English slide source'
+    : zuluHold || !zuluPair
+      ? 'Read slide · English source / isiZulu revision pending'
+      : 'Read slide · unreviewed isiZulu draft / exact English source';
   const heading = zuluSilentDraft?.correctedTitle ?? (slideChoice === 'zu' && (zuluHold || !zuluPair)
     ? track ? trackTitle(track, 'en') : current.title
     : track ? trackTitle(track, slideChoice) : current.title);
@@ -822,33 +861,18 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </button>
       </div>
 
-      {slideChoice === 'zu' && (zuluSource || zuluSilentDraft) && (
+      {showZuluSourcePair && (
         <details className={`${styles.transcript} ${styles.sourcePair}`} style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
           <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
-            {zuluSilentDraft
-              ? 'Read slide · unreviewed isiZulu draft / exact English slide source'
-              : zuluHold || !zuluPair
-              ? 'Read slide · English source / isiZulu revision pending'
-              : 'Read slide · unreviewed isiZulu draft / exact English source'}
+            {zuluPairLabel}
           </summary>
-          {zuluSilentDraft ? (
-            <section lang="zu" aria-label="Unreviewed corrected isiZulu slide draft">
-              <h4>isiZulu · unreviewed machine draft</h4>
-              <h5>{zuluSilentDraft.correctedTitle}</h5>
-              {zuluSilentDraft.correctedTarget.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
-            </section>
-          ) : zuluPair && !zuluHold ? (
-            <section lang="zu" aria-label="Unreviewed isiZulu draft">
-              <h4>isiZulu · unreviewed machine draft</h4>
-              <h5>{zuluPair.registeredZuluTitle}</h5>
-              {zuluPair.recordedTarget.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
-            </section>
-          ) : null}
-          <section lang="en" aria-label="Exact English source">
-            <h4>Exact English source</h4>
-            <h5>{zuluSilentDraft?.sourceHeading ?? zuluPair?.sourceHeading ?? heading}</h5>
-            {(zuluSilentDraft?.sourceEnglish ?? zuluPair?.source ?? zuluSource ?? []).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
-          </section>
+          <IsiZuluSourcePairContent
+            draft={zuluSilentDraft}
+            pair={zuluPair}
+            hold={zuluHold}
+            source={zuluSource}
+            fallbackHeading={heading}
+          />
         </details>
       )}
       {transcript && slideChoice !== 'zu' && (
@@ -865,7 +889,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       {fullSizeImageUrl && (
         <dialog
           ref={imageViewerRef}
-          className={styles.imageViewer}
+          className={`${styles.imageViewer} ${showZuluSourcePair ? styles.imageViewerWithSourcePair : ''}`}
           aria-label={t('courseDeckOpenImageAria').replace('{title}', heading)}
           onKeyDown={(event) => event.stopPropagation()}
           onClose={() => { setChromeVisible(true); imageButtonRef.current?.focus(); }}
@@ -890,6 +914,18 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={fullSizeImageUrl} alt={heading} style={{ width: `${imageZoom * 100}%`, maxHeight: imageZoom === 1 && slideRatio >= 1 ? '100%' : undefined }} />
           </div>
+          {showZuluSourcePair && (
+            <section className={`${styles.sourcePair} ${styles.imageViewerSourcePair}`} aria-label={zuluPairLabel}>
+              <h3>{zuluPairLabel}</h3>
+              <IsiZuluSourcePairContent
+                draft={zuluSilentDraft}
+                pair={zuluPair}
+                hold={zuluHold}
+                source={zuluSource}
+                fallbackHeading={heading}
+              />
+            </section>
+          )}
         </dialog>
       )}
     </>
