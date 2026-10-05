@@ -1,0 +1,10 @@
+{
+  "session": "506346db-458d-4dff-94ac-77812af35616",
+  "status": "unreviewed machine draft; root exact-source capability repair",
+  "field": "reading-landscape-l1:keyPoints[1]",
+  "source": "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
+  "before": "A-frame i nga thusa u swaya points at the same height, fhedzi",
+  "after": "A-frame i nga swaya points at the same height, fhedzi",
+  "reason": "Remove an added help qualifier from can mark; preserve exact vertical geometry, negation and suitability limit. Rationale source can help mark unchanged. Other grammar/site/quantity proposals remain unverified and were not applied.",
+  "fluentApproval": false
+}

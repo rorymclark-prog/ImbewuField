@@ -90,8 +90,8 @@ test('Reading the Landscape Sesotho draft stays paired to every exact source fie
   assert.ok(l4Source && l4Draft, 'the site-map lesson and its key-point draft must remain paired');
   const l4Point = l4Draft.keyPoints[2];
   assert.equal(l4Point.sourceEnglish, l4Source.keyPoints[2], 'retain the exact canonical growth/compaction source');
-  assert.ok(l4Point.sesothoDraft.includes('thick khakibos or blackjack growth'),
-    'retain density and both alternative species without implying abundant growth proves compaction');
+  assert.ok(l4Point.sesothoDraft.includes('khakibos kapa blackjack di melang di le ngata'),
+    'retain the marked growth and both alternative species without changing the abundance qualifier');
   assert.equal(l4Point.reviewStatus, 'machine-draft', 'label the source-paired candidate as unreviewed');
   for (const species of ['khakibos', 'blackjack']) {
     assert.ok(l4Point.sesothoDraft.includes(species), `preserve source species name ${species}`);
@@ -99,7 +99,7 @@ test('Reading the Landscape Sesotho draft stays paired to every exact source fie
   }
   assert.ok(l4Point.sesothoDraft.includes('Tshwaya') && l4Point.sesothoDraft.includes('hlahloba mobu ka hloko'),
     'candidate says to mark the growth and check the soil closely without naming a test or treatment');
-  assert.ok(l4Point.sesothoDraft.endsWith('it does not prove compaction.'),
+  assert.ok(l4Point.sesothoDraft.endsWith('sena ha se pake hore mobu o kitlane.'),
     'plant growth is not turned into a soil-compaction diagnosis');
 
   const changedL4Source = {

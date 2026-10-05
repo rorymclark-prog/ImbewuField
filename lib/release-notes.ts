@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'fb9eb3cc', changes: [
+    'Reading lessons and slides have fuller Sesotho, Tshivenda and Xitsonga draft wording.',
+    'Exact English stays beside unreviewed drafts; difficult technical terms stay in English.',
+    'Offline slide packs refresh the changed cards without adding narration.',
+  ], tour: [
+    { title: 'Compare Reading drafts',
+      where: 'Study → Reading the Landscape',
+      detail: 'Read regional drafts beside English in lessons, answers and silent slides.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: '977b2348', changes: [
     'Reading Landscape has more regional draft text beside exact English.',
     'Water and contour phrases that need local review remain in English.',

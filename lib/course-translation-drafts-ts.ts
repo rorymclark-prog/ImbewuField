@@ -459,8 +459,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
-        "xitsongaDraft": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nAn A-frame level yi nga ku pfuna ku mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. U nga se cela a swale, dam, kumbe xivumbeko xin'wana, tiyisisa leswaku ndhawu yi kambisisiwa. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Vutisa a trained local adviser.\n\nA ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Hlawula any water works for the site, u pulana a safe route for excess water.",
-        "reviewStatus": "machine-draft"
+        "xitsongaDraft": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nA-frame level yi nga ku pfuna ku fungha points at the same height ni ku landzelela contour line. Its marks are an observation; a hi design kumbe mpfumelelo wa earthworks. U nga se cela swale, dam, kumbe xivumbeko xin’wana, tiyisisa leswaku ndhawu yi kamberiwile. Soil, slope, drainage, storm flow, na ndlela leyi hlayisekeke yo khulukisa mati lama taleke i swa nkoka. Vutisa trained local adviser.\n\nA ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula any water works for the site, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+              "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
@@ -470,8 +470,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
-          "xitsongaDraft": "A-frame yi nga fungha tindhawu leti nga eka ku leha loku fanaka, kambe a yi kombisi loko ku cela misava ku fanerile",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "A-frame yi nga fungha points at the same height, kambe a yi kombisi loko earthworks ti fanerile",
+              "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Water works and safe overflow routes need a site assessment",
@@ -494,8 +494,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "Points at the same height along a contour",
-              "xitsongaDraft": "Tindhawu leti nga eka ku leha loku fanaka eka khanthura",
-              "reviewStatus": "machine-draft"
+              "xitsongaDraft": "Points at the same height along a contour",
+              "reviewStatus": "hold"
             },
             {
               "sourceEnglish": "Whether a swale is safe to build on this slope",
@@ -516,8 +516,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 0,
           "rationale": {
             "sourceEnglish": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
-            "xitsongaDraft": "A-frame yi nga ku pfuna ku mark points at the same height. A-frame a yi assess soil, drainage, storm flow, or whether earthworks are suitable.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "A-frame yi nga ku pfuna ku fungha points at the same height. A yi kambeli misava, drainage, storm flow, kumbe loko earthworks ti fanerile.",
+              "reviewStatus": "machine-draft"
           }
         },
         {
@@ -529,12 +529,12 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "Put it as high on the slope as possible",
-              "xitsongaDraft": "Xi veke ehenhla ngopfu hi laha swi kotekaka kona eka ku rhelela",
+              "xitsongaDraft": "Xi veke ehenhla ngopfu hi laha swi kotekaka kona eka slope",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Check the soil, slope, drainage and storm flow, and plan a safe overflow with a trained local adviser",
-              "xitsongaDraft": "Kambela soil, slope, drainage and storm flow, kutani u plan a safe overflow with a trained local adviser.",
+              "xitsongaDraft": "Kambela misava, ndhawu leyi rhelelaka, ku humesa mati na storm flow, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke u ri ni mutsundzuxi wa swa vurimi wa laha kaya loyi a leteriweke.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -551,8 +551,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
-            "xitsongaDraft": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Nawu wa ndhawu a wu kombisi loko xivumbeko xi fanele ndhawu yoleyo. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona mati yo tala ma lava ndlela leyi hlayisekeke yo huma.",
+              "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -571,8 +571,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
-        "xitsongaDraft": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Hlayisa tender plants swi nga ri eka known low frost pockets. Xiya local frost u nga se byala.",
-        "reviewStatus": "machine-draft"
+        "xitsongaDraft": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw na young citrus swi khumbeka hi frost. Hlayisa swimilana leswi tsaneke swi ri ekule ni tindhawu ta le hansi leti tiviwaka hi ku hlengeleta frost. Xiya frost ya laha kaya u nga se byala.",
+              "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
@@ -592,16 +592,16 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Check local frost before placing tender pawpaw or young citrus",
-          "xitsongaDraft": "Kambela xirhami xa laha kaya u nga se veka pawpaw leyi tsaneke kumbe citrus leyitsongo",
-          "reviewStatus": "machine-draft"
+          "xitsongaDraft": "Kambela xirhami xa laha kaya u nga se veka pawpaw leyi tsaneke kumbe young citrus",
+              "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "Where should a farmer first look for a frost-tender young pawpaw on a Highveld smallholding?",
-            "xitsongaDraft": "Hi kwihi laha murimi a faneleke ku rhanga a languta kona pawpaw leyitsongo leyi tsaneke eka xirhami eka purasi leritsongo ra Highveld?",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Hi kwihi laha murimi a faneleke ku rhanga a languta kona young pawpaw leyi tsaneke eka xirhami eka purasi leritsongo ra Highveld?",
+              "reviewStatus": "machine-draft"
           },
           "options": [
             {
@@ -628,8 +628,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
-            "xitsongaDraft": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. Ndhawu leyi nga na dyambu swinene ehandle ka known frost pocket swi nga ha hunguta risk; kambe local frost observations must guide the final position.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi. Ndhawu leyi nga na dyambu swinene ehandle ka frost pocket leyi tiviwaka yi nga ha hunguta khombo; kambe leswi u swi vonaka hi frost ya ndhawu swi fanele ku kongomisa ndhawu yo hetelela.",
+              "reviewStatus": "machine-draft"
           }
         },
         {
@@ -663,8 +663,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 0,
           "rationale": {
             "sourceEnglish": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
-            "xitsongaDraft": "Winter sun is lower and farther north. Shade cloth yi nga cinca the hours of sun on a bed. Kambela ndzhuti wa xiviri at 8am, midday, and 4pm u nga se yi tiyisa endhawini.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Dyambu ra vuxika ri le hansi naswona ri ya en’walungwini swinene. Shade cloth yi nga cinca tiawara leti dyambu ri voningaka mubhedhi ha tona. Kambela ndzhuti wa xiviri hi 8am, nhlikanhi, na 4pm u nga se yi tiyisa endhawini.",
+              "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -683,8 +683,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
-        "xitsongaDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti ti nga va colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records loko ti kumeka. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimelaka, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost i ice that forms on a cold surface. Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
-        "reviewStatus": "machine-draft"
+        "xitsongaDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona ni leswi wu swi khumbaka. Kambela matsalwa ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nEka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.\n\nFrost i ice leyi vumbekaka ehenhla ka surface leyi titimelaka. Mist ntsena a yi kombisi leswaku ice yi vumbekile, naswona frost damage yi nga endleka handle ka ice leyi vonakaka. Languta ice ni ku onhaka ka swimilana, pimanisa misava ya le hansi ni tindhawu to rhelela, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilana leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lama karhatiwaka hi late blight, ku famba ka moya ni dyambu ra nimixo swi nga pfuna leswaku matluka ma oma. Late blight yi nga ya mahlweni yi hangalaka loko ku titimela ni ku tsakama swi teka nkarhi wo leha. Ku rhurhisa mubhedhi ntsena a swi nge yi lawuli; tlhela u lava xitsundzuxo xa rihanyo ra swimilana xa laha kaya.",
+              "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
@@ -723,7 +723,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "An exposed ridgeline without checking the wind",
-              "xitsongaDraft": "Laha nhlonge yi pfulekeke kona handle ko kambela moya",
+              "xitsongaDraft": "An exposed ridgeline handle ko kambela moya",
               "reviewStatus": "machine-draft"
             },
             {
@@ -740,21 +740,21 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-            "xitsongaDraft": "Cold air can settle in low places on clear, still nights. Pimanisa candidate nursery sites through the local frost season. Kambela local minimum-temperature records kumbe u vutisa a local agriculture adviser u nga si endla permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+              "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
-            "xitsongaDraft": "Matamatisi ya murimi wa KZN repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Matamatisi ya murimi wa KZN ma khomiwa hi late blight hi ku phindha-phindha loko ku titimela ni ku tsakama. Hi yihi ndhawu ya mubedhi leyi nga pfunaka matluka ku oma, swin’we ni xitsundzuxo xa rihanyo ra swimilana xa laha kaya?",
+              "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "A sealed, unventilated tunnel",
-              "xitsongaDraft": "A sealed, unventilated tunnel",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Tunnel leyi pfariweke, leyi nga riki na ndlela yo nghenisa ni ku humesa moya",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "A place with good airflow and morning sun",
@@ -775,8 +775,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
-            "xitsongaDraft": "Airflow and morning sun swi nga pfuna leswaku matluka ma oma. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Ku famba ka moya ni dyambu ra nimixo swi nga pfuna leswaku matluka ma oma. Late blight yi tsakela ku titimela loku tekaka nkarhi wo leha ni ku tsakama, naswona ku rhurhisa mubedhi ntsena a hi kungu leri heleleke ro lawula vuvabyi.",
+              "reviewStatus": "machine-draft"
           }
         }
       ]
@@ -795,8 +795,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
-        "xitsongaDraft": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, mitsheto. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.\n\nTsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun'hwaka yi tsakama hi tin'hweti leti omeke, na laha ku nga na ku mila ko tlhuma ka khakibos kumbe blackjack. Swimilani leswi swi nga kula eka disturbed places, but their presence alone does not show whether soil is compacted. Kambela misava u nga si teka xiboho hi leswi ndhawu leyi yi vulaka swona eka design ya wena.\n\nVeka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
-        "reviewStatus": "machine-draft"
+        "xitsongaDraft": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, fences. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.\n\nTsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun’hwaka yi tsakama hi tin’hweti leti omeke, ni laha khakibos kumbe blackjack yi milaka yi talile. Swimilana leswi swi nga kula etindhawini leti kavanyetiweke, kambe ku va kona ka swona ntsena a ku kombisi leswaku misava yi tsindziyerile. Kambela misava u nga se teka xiboho xa leswi ndhawu leyi yi vulaka swona eka design ya wena.\n\nVeka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+              "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
@@ -852,8 +852,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
-            "xitsongaDraft": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Xiya u tlhela u kambela misava u nga se teka xiboho hi leswi ndhawu yoleyo yi vulaka swona eka design ya wena.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Blackjack yi nga kula etindhawini leti kavanyetiweke, kambe ku va kona ka yona ntsena a ku kombisi compaction. Xiya u tlhela u kambela misava u nga se teka xiboho xa leswi ndhawu yoleyo yi vulaka swona eka design ya wena.",
+              "reviewStatus": "machine-draft"
           }
         },
         {
@@ -870,7 +870,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "They can come from different directions, changing where windbreaks and tender crops should go",
-              "xitsongaDraft": "Yi nga huma eka matlhelo yo hambana, leswi cincaka laha swisivela-moya na swimilana leswi tsaneke swi faneleke ku ya kona",
+              "xitsongaDraft": "Ti nga huma eka matlhelo yo hambana, leswi cincaka laha windbreaks ni swimilana leswi tsaneke swi faneleke ku ya kona",
               "reviewStatus": "machine-draft"
             },
             {
@@ -887,70 +887,32 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately.",
-            "xitsongaDraft": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — kutani fungha moya wa ximumu na wa vuxika hi ku hambana.",
-            "reviewStatus": "machine-draft"
+            "xitsongaDraft": "Ku cinca ka moya hi nguva swi vula leswaku windbreak kumbe ndhawu yo byala leyi tirhaka eka nguva yin’we yi nga va yi nga ri kahle eka nguva yin’wana. Hikolaho fungha tlhelo ra moya wa ximumu ni ra vuxika hi ku hambana.",
+              "reviewStatus": "machine-draft"
           }
         }
       ]
     }
   ],
   "holds": [
-    {"lessonId": "reading-landscape-l2", "field": "quiz[0].rationale", "sourceText": "local frost observations must guide the final position.", "reason": "Retain the final-position rule exactly after localizing the surrounding risk statement."},
-    {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "Winter sun is lower and farther north.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
-    {"lessonId": "reading-landscape-l2", "field": "quiz[1].rationale", "sourceText": "the hours of sun on a bed.", "reason": "Retain the sun-duration effect phrase exactly after localizing the surrounding shade sentence."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Cold air can settle in low places on clear, still nights.", "reason": "Keep the full clear/still weather sentence exact; the surrounding assessment framing is a mixed machine draft."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "candidate nursery sites through the local frost season", "reason": "Keep the nursery-site scope and complete local-frost-season duration exact inside the mixed rationale."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "local minimum-temperature records", "reason": "Keep the evidence type and measure exact inside the mixed rationale."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "a local agriculture adviser", "reason": "Keep the adviser qualification exact inside the mixed rationale."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "permanent choice", "reason": "Keep the permanence and decision scope exact inside the mixed rationale."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[0].rationale", "sourceText": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.", "reason": "Keep both diagnostic and no-guarantee safeguards exact inside the mixed rationale."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[1].q", "sourceText": "repeatedly develop late blight during cool, damp spells.", "reason": "Retain the repeated late-blight and cool, damp weather condition exactly after translating only the KZN farmer and tomatoes subject."},
-    {"lessonId": "reading-landscape-l3", "field": "quiz[1].rationale", "sourceText": "Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
-    {"lessonId": "reading-landscape-l4", "field": "quiz[0].rationale", "sourceText": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction.", "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."},
     {
-      "lessonId": "reading-landscape-l1",
+      "lessonId": "reading-landscape-l3",
       "field": "body",
-      "sourceText": "Its marks are an observation, not a design or approval for earthworks.",
-      "reason": "Keep the explicit limit on what an A-frame can establish exact while the surrounding ordinary prose is drafted."
+      "sourceText": "through the local frost season",
+      "reason": "Preserve the full observation-season duration; during-season wording is insufficient."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "through the local frost season",
+      "reason": "Preserve the full observation-season duration; during-season wording is insufficient."
     },
     {
       "lessonId": "reading-landscape-l1",
       "field": "body",
-      "sourceText": "Soil, slope, drainage, storm flow, and a safe overflow route all matter.",
-      "reason": "Keep every named site assessment factor and the safe-overflow-route condition exact."
-    },
-    {
-      "lessonId": "reading-landscape-l1",
-      "field": "body",
-      "sourceText": "a trained local adviser",
+      "sourceText": "trained local adviser",
       "reason": "Keep the required adviser qualification exact."
     },
-    {
-      "lessonId": "reading-landscape-l1",
-      "field": "body",
-      "sourceText": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
-      "reason": "Keep the erosion and slow-infiltration conditions exact while drafting the surrounding observation prose."
-    },
-    {
-      "lessonId": "reading-landscape-l1",
-      "field": "body",
-      "sourceText": "Choose any water works for the site and plan a safe route for excess water.",
-      "reason": "Keep the site-specific waterworks and safe-excess-water requirement exact."
-    },
-    {
-      "lessonId": "reading-landscape-l1",
-      "field": "quiz[1].rationale",
-      "sourceText": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
-      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
-    },
-    {
-      "lessonId": "reading-landscape-l2",
-      "field": "body",
-      "sourceText": "Pawpaw and young citrus are sensitive to frost.",
-      "reason": "Keep the plant names and frost sensitivity exact; the adjacent known-pocket instruction now has a mixed unreviewed draft."
-    },
-
-
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
@@ -960,113 +922,13 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
-      "sourceText": "On a clear, still night, cold air can flow downhill and collect in low places.",
-      "reason": "Keep the conditional cold-air movement and accumulation statement exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "can be colder than nearby slopes.",
-      "reason": "Keep the relative-temperature comparison and can-modality exact while the subject is localized."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "Frost patterns",
-      "reason": "Keep the frost-pattern technical term exact while localizing the site-dependence framing."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "the local frost season",
-      "reason": "Keep the local-season condition exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "local minimum-temperature records where available",
-      "reason": "Keep the record type and availability condition exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "across cold nights",
-      "reason": "Keep the observation condition exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "local agriculture adviser",
-      "reason": "Keep the adviser role exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "permanent home for tender seedlings",
-      "reason": "Keep permanence and tender-seedling scope exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
-      "reason": "Retain the frost definition and mist/visible-ice distinction exactly until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "low ground",
-      "reason": "Keep low-ground site terminology exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "slopes",
-      "reason": "Keep slope terminology exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
       "sourceText": "minimum temperatures",
       "reason": "Keep minimum-temperature terminology exact until reviewed."
     },
     {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "where cold or damage lasts longest.",
-      "reason": "Keep the cold-or-damage criterion and longest-duration comparison exact after translating only the ordinary instruction to mark places."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "Late blight can still spread during prolonged cool, damp weather.",
-      "reason": "Keep the disease-spread condition exact until reviewed."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "seek local crop-health guidance too.",
-      "reason": "Keep the local crop-health guidance instruction exact until reviewed."
-    },
-
-
-    {
-      "lessonId": "reading-landscape-l4",
-      "field": "body",
-      "sourceText": "These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.",
-      "reason": "Keep the diagnostic limit exact while the ordinary frost, damp-ground, species-observation and check-before-deciding instructions use a machine draft."
-    },
-
-
-    {
       "lessonId": "reading-landscape-l2",
       "field": "body",
       "sourceText": "shade cloth",
-      "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "quiz[1].options[0]",
-      "sourceText": "A sealed, unventilated tunnel",
       "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it."
     },
     {
@@ -1075,6 +937,275 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       "sourceText": "not to scale",
       "reason": "Keep the standard scale warning exact on a field map until reviewed."
     },
-
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "points at the same height",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "A-frame level",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "contour line",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "earthworks",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "swale",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "dam",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Soil, slope, drainage, storm flow",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "erosion",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "design",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "keyPoints[1]",
+      "sourceText": "points at the same height",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "keyPoints[1]",
+      "sourceText": "A-frame",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "keyPoints[1]",
+      "sourceText": "earthworks",
+      "reason": "Retain broad earthworks scope; digging soil alone narrows the source suitability warning. Independent semantic review accepted this technical English repair, not fluent approval."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "drainage",
+      "reason": "Retain the specific site-drainage assessment condition rather than general water movement. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "storm flow",
+      "reason": "Storm flow must not be narrowed to water during hailstorms. Independent semantic review accepted this technical English repair, not fluent approval."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "points at the same height",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "A-frame",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "earthworks",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].options[0]",
+      "sourceText": "Points at the same height along a contour",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[1].rationale",
+      "sourceText": "erosion",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[1].options[0]",
+      "sourceText": "slope",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[1].options[1]",
+      "sourceText": "storm flow",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "body",
+      "sourceText": "young citrus",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "body",
+      "sourceText": "frost",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "keyPoints[3]",
+      "sourceText": "young citrus",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].q",
+      "sourceText": "young pawpaw",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].rationale",
+      "sourceText": "frost pocket",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "tender seedlings",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "cold pockets",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "frost damage",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Frost",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "ice",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "surface",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Mist",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "late blight",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "frost damage",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].q",
+      "sourceText": "late blight",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body",
+      "sourceText": "frost",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body",
+      "sourceText": "design",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body",
+      "sourceText": "fences",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[0].rationale",
+      "sourceText": "compaction",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[0].rationale",
+      "sourceText": "design",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[1].rationale",
+      "sourceText": "windbreak",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[1].options[1]",
+      "sourceText": "windbreaks",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Its marks are an observation",
+      "reason": "Narrow exact English retained to preserve the observation-versus-design distinction or any-waterworks scope; ordinary surrounding text remains an unreviewed machine draft."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "any water works for the site",
+      "reason": "Narrow exact English retained to preserve the observation-versus-design distinction or any-waterworks scope; ordinary surrounding text remains an unreviewed machine draft."
+    }
   ]
 };

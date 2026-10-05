@@ -159,20 +159,39 @@
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "Watch from a safe place during heavy rain. ",
+                "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for ",
+                "text": "Shebella u le sebakeng se sireletsehileng nakong ea pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "rills",
                 "status": "english-hold"
               },
               {
-                "sourceEnglish": "When it is safe afterward, walk your land. ",
-                "status": "draft",
-                "text": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+                "sourceEnglish": ", places where water fans out, ",
+                "text": ", dibaka tseo metsi a hasanang ho tsona, ",
+                "status": "draft"
               },
               {
-                "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+                "sourceEnglish": "ponds",
                 "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and ",
+                "text": ", le ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "where water leaves your property",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "text": ".",
+                "status": "draft"
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "draft",
@@ -300,7 +319,83 @@
             "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "An A-frame",
+                "status": "draft",
+                "text": "A-frame"
+              },
+              {
+                "sourceEnglish": " can help you ",
+                "text": " e ka u thusa ho ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "mark points at the same height and trace a contour line",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". ",
+                "text": ". ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "Its marks are an observation",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", not a design or approval for ",
+                "text": "; ha se moralo kapa tumello ya ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "earthworks",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Before digging, have the site assessed. Soil, ",
+                "text": ". Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "slope",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", ",
+                "text": ", ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "drainage",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", ",
+                "text": ", ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "storm flow",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and a ",
+                "text": " le ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "safe overflow route",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " all matter. Ask a trained local adviser.",
+                "text": " kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -323,7 +418,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Water picks up speed and ",
+                "text": "Metsi a fumana lebelo le ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "erosive force",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " as it runs downhill.",
+                "text": " ha a ntse a theohela tlase.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "draft",
@@ -331,7 +443,24 @@
             "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose ",
+                "text": "Contours tse sa etswang hantle di ka eketsa erosion, mme mobu o monyang metsi butle o ka tshwara metsi a mangata haholo. Kgetha ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "any water works for the site",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and plan a safe route for excess water.",
+                "text": ", mme o rere tsela e sireletsehileng bakeng sa metsi a mangata.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -369,7 +498,24 @@
             "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. ",
+                "text": "Matsoapo a shebileng leboea hangata a fumana letsatsi le lengata, ’me a ka futhumala le ho oma ho feta. Matsoapo a shebileng boroa hangata a pholile ebile a mongobo ho feta. ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "Frost",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " can collect in low hollows where cold air settles.",
+                "text": " e ka bokellana mekoting e tlase moo moya o batang o dulang teng.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "mixed",
@@ -429,7 +575,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Letsatsi la mariha le ba tlase mme le hole ka leboya ho feta letsatsi la lehlabula.",
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "draft",
@@ -547,23 +695,50 @@
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+                "sourceEnglish": "The direction and strength of damaging wind change with region, season and ",
+                "text": "Tataiso le matla a moya o senyang di a fetoha ho ya ka sebaka, sehla, ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "your site's ridges and gaps",
                 "status": "english-hold"
               },
               {
-                "sourceEnglish": "Walk the land on windy days. ",
-                "status": "draft",
-                "text": "Tsamaya lefatsheng matsatsing a nang le moya. "
+                "sourceEnglish": ". Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a ",
+                "text": ". Tsamaya lefatsheng matsatsing a nang le moya. Ngola moo moya o senyang o tswang teng le hore na o ama eng. Sheba direkoto tsa maemo a lehodimo tsa sebakeng seo pele o beha ",
+                "status": "draft"
               },
               {
-                "sourceEnglish": "Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+                "sourceEnglish": "windbreak",
                 "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "text": ".",
+                "status": "draft"
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Wind, cold air and ",
+                "text": "Moya, moya o batang le ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "slope",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " all matter when choosing places for crops and shelter.",
+                "text": " kaofela di bohlokwa ha o kgetha dibaka tsa dijalo le tshireletso.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -584,7 +759,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A place sheltered from wind can still collect cold air. Check wind shelter and ",
+                "text": "Sebaka se sireleditsweng moyeng se ntse se ka bokella moya o batang. Hlahloba tshireletso moyeng le kotsi ya ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "frost",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " risk separately.",
+                "text": " ka thoko.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -603,7 +795,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Moya o batang o theohela tlase.",
+          "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
         },
         "body": [
           {
@@ -627,14 +821,70 @@
             "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Frost",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is ice that forms on a cold surface. Mist alone does not show that ice has formed, and ",
+                "text": " ke leqhwa le bopehang hodima ntho e batang. Mohodi feela ha o bolele hore leqhwa le se le bopehile, mme tshenyo ya ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "frost",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " damage can happen without visible ice.",
+                "text": " e ka etsahala leha ho se leqhwa le bonahalang.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "draft",
             "text": "Sheba ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Compare candidate ",
+                "text": "Bapisa dibaka tseo o ka thehang ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "nursery",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " sites through the local ",
+                "text": " ho tsona nakong yohle ya ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "frost",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " season. Check ",
+                "text": " ya sebakeng seo. Sheba ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "local minimum-temperature records",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " or ask a local agriculture adviser before choosing a permanent position.",
+                "text": " kapa o botse moeletsi wa temo wa sebakeng seo pele o kgetha sebaka sa ka mehla.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -732,7 +982,8 @@
           },
           {
             "status": "draft",
-            "text": "Joale taka the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+            "text": "Joale taka the patterns you have observed. ’Mapa oa hao e ba motheo oa moralo oa polasi eohle e nyenyane.",
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -834,29 +1085,59 @@
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "Mark summer and winter wind separately. ",
-                "status": "draft",
-                "text": "Tshwaya moya wa lehlabula le wa mariha ka thoko. "
+                "sourceEnglish": "Mark summer and winter wind separately. They can come from different directions, so a ",
+                "text": "Tshwaya moya wa lehlabula le wa mariha ka thoko. Di ka tswa mahlakoreng a fapaneng, kahoo ",
+                "status": "draft"
               },
               {
-                "sourceEnglish": "They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+                "sourceEnglish": "windbreak",
                 "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " or crop position that works in one season may be wrong in the other.",
+                "text": " kapa sebaka sa dijalo se loketseng sehla se seng se ka se lokele sehla se seng.",
+                "status": "draft"
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "Overlay your zones and sectors ",
-                "status": "draft",
-                "text": "Beha dibaka tsa hao (zones) le makala (sectors) "
+                "sourceEnglish": "Overlay your ",
+                "text": "Beha dibaka tsa hao (",
+                "status": "draft"
               },
               {
-                "sourceEnglish": "on the same base map.",
+                "sourceEnglish": "zones",
                 "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "text": ") le makala (",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on the ",
+                "text": ") hodima ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "same base map",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "text": ".",
+                "status": "draft"
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "draft",
@@ -884,8 +1165,42 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "When it is safe after heavy rain, walk your land. Tšoaea rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "When it is safe after heavy rain, walk your land. Mark ",
+                "text": "Ha ho se ho sireletsehile kamora pula e matla, tsamaya lefatsheng la hao. Tšoaea ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "rills",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", spreading water, ",
+                "text": ", spreading water, ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "ponds",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and ",
+                "text": ", and ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "where water leaves your property",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Note where excess water may need a safe route away.",
+                "text": ". Hlokomela moo metsi a mangata a ka hlokang tsela e sireletsehileng ea ho tsoa.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "mixed",
@@ -915,25 +1230,30 @@
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "On paper, draw ",
-                "status": "draft",
-                "text": "Pampiring, taka "
+                "sourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, ",
+                "text": "Pampiring, taka moedi wa hao, Tshwaya leboya, mme o kenye ntlo, metsi, ditsela, ",
+                "status": "draft"
               },
               {
-                "sourceEnglish": "your boundary, ",
+                "sourceEnglish": "fences",
                 "status": "english-hold"
               },
               {
-                "sourceEnglish": "mark north, ",
-                "status": "draft",
-                "text": "Tshwaya leboya, "
+                "sourceEnglish": ", ",
+                "text": ", ",
+                "status": "draft"
               },
               {
-                "sourceEnglish": "and add the house, water, roads, fences, slopes, and existing vegetation.",
+                "sourceEnglish": "slopes",
                 "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and existing vegetation.",
+                "text": " le dimela tse seng di le teng.",
+                "status": "draft"
               }
             ],
-            "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -962,12 +1282,80 @@
             "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
           },
           {
-            "status": "draft",
-            "text": "E sebelise ho mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use it to ",
+                "text": "E sebelise ho ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "mark points at the same height and trace a contour line",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". ",
+                "text": ". ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "This is an observation",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", not a design for ",
+                "text": ", eseng moralo wa ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "earthworks",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+                "text": ". Pele o cheka, kopa moeletsi wa sebakeng seo ya kwetlisitsweng hore a lekole sebaka mme a rere tsela e sireletsehileng ya metsi a mangata.",
+                "status": "draft"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
-            "status": "draft",
-            "text": "Eketsa summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your ",
+                "text": "Eketsa metsu ya moya wa lehlabula le wa mariha, dintlha tsa moriti tsa 8am, motsheare le 4pm, le ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "text": " le ",
+                "status": "draft"
+              },
+              {
+                "sourceEnglish": "sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Keep the map and ",
+                "status": "draft",
+                "text": " tsa hao. Boloka ’mapa ’me "
+              },
+              {
+                "sourceEnglish": "update it",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": "."
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
