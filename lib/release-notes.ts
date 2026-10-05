@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: '45f4181b', changes: [
+    'Twenty-three isiZulu slides now show corrected unreviewed drafts beside exact English.',
+    'These corrected cards stay silent; you can choose English narration explicitly.',
+    'Offline packs save the corrected cards without adding the withheld recordings.',
+  ], tour: [
+    { title: 'Read corrected isiZulu cards',
+      where: 'Study → isiZulu slides',
+      detail: 'Open Read slide for exact English; revised cards keep the old recordings withheld.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: '9098ba34', changes: [
     'isiZulu slides now offer exact English beside visibly unreviewed draft wording.',
     'Slides with wording errors show English and pause their isiZulu recordings.',
