@@ -13,7 +13,7 @@ import {
   slideImageFor,
   timedAnimationSync,
 } from '@/lib/course-deck';
-import { resolveNarrationLang, trackTitle } from '@/lib/course-audio';
+import { requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { resolveIsiZuluDeckSourcePair } from '@/lib/course-deck-source-bindings';
@@ -128,9 +128,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // change back. It defaults to the app's language and is only offered when the module actually
   // has more than one recording.
   const regionalSlidesSelected = ['st', 've', 'ts'].includes(appLang);
-  const needsSourceNarrationChoice = regionalSlidesSelected &&
-    !!narration?.languages.includes('en') && !narration.languages.includes(appLang);
-  const defaultNarrationChoice = needsSourceNarrationChoice ? NO_NARRATION : appLang;
+  const needsExplicitChoice = requiresExplicitNarrationChoice(moduleId, appLang);
+  const needsSourceNarrationChoice = needsExplicitChoice && !!narration?.languages.includes('en');
+  const defaultNarrationChoice = needsExplicitChoice ? NO_NARRATION : appLang;
   const [slideChoice, setSlideChoice] = useState(appLang);
   const [narrationChoice, setNarrationChoice] = useState<string | null>(
     defaultNarrationChoice,

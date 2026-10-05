@@ -785,6 +785,13 @@ export function resolveNarrationLang(moduleId: string, appLang: string): Resolve
   return { lang: n.languages[0], exact: false };
 }
 
+/** Regional readers must choose a voice when their own recording is absent.
+ * The resolver still describes available fallback audio for explicit choices. */
+export function requiresExplicitNarrationChoice(moduleId: string, appLang: string): boolean {
+  return ['st', 've', 'ts'].includes(appLang) &&
+    !COURSE_NARRATION[moduleId]?.languages.includes(appLang);
+}
+
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
 function base(n: ModuleNarration, moduleId: string, lang: string): string {
