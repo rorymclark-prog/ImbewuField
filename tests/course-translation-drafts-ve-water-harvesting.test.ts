@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
-import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
+// Preserve earlier Soil clause coverage against dated text; live accepted targets are checked before rewind.
+import { historicalVE as TSHIVENDA_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveHistoricalPresentation as resolveLearnerLessonPresentation } from './soil-learner-reviewed-history.ts';
 import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveDeckLang } from '../lib/course-deck.ts';
 import { resolveNarrationLang } from '../lib/course-audio.ts';

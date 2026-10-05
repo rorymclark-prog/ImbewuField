@@ -1,0 +1,3055 @@
+{
+  "date": "2026-10-05",
+  "baselineHead": "7a64e5cd4b61710b18f1fc89e059e5fb022be7d5",
+  "mappingSha256": "6e8ef29223fc34dfa24afc90ef1142747f61198635b2f46f2f147890931e60fe",
+  "learnerPacketSha256": "38d5cc52ba57f5e1b7da2461010af86ddfb9697a76963ec23d64e78580867016",
+  "learnerPacket": "docs/study-translation-reviews/soil-learner-fuller-2026-10-05/soil-learner-final-accepted-candidates.json",
+  "pairedInputs": [
+    {
+      "language": "st",
+      "path": "docs/narration/soil-health.st.paired-draft.json",
+      "sha256": "4611fd5e1876a2ceda7bba00024baad6fe283bd5200a3e3d3dd5d3b0a999142a",
+      "slidesSha256": "d0095ee4a01ea85039ecd2cc0f9a49b8c5fb7adfa234ed8ec7fa225588d19f8e"
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/soil-health.ve.paired-draft.json",
+      "sha256": "770173d8147f2df96961d66b1d09d69e2569480ea94049b82e62a96cdd8d2a20",
+      "slidesSha256": "d663df9c8871697ec724891c07be2d891e67f8e7683009033d23061b698e70be"
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/soil-health.ts.paired-draft.json",
+      "sha256": "e2bd0575a69082cbc812ea20b3a88d1c44b3797068f79e2c1b3a37e261aa0035",
+      "slidesSha256": "b38a3766bc489882019772f7b8bea04a4bb88853a4d06076f26c9b6d18fc4c3f"
+    }
+  ],
+  "targetFieldChanges": [
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Kenya mobu le metsi ka clear jar, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Kenya mobu le metsi ka jar e bonaletsang, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l1/body/paragraph[3]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 3,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 126,
+          "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+          "currentTarget": "Kenya mobu le metsi ka clear jar, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.",
+          "proposedTarget": "Kenya mobu le metsi ka jar e bonaletsang, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Ena ke rough learning exercise feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ena ke boikwetliso ba ho ithuta ba kakanyo feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l1/body/paragraph[5]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 5,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 132,
+          "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+          "currentTarget": "Ena ke rough learning exercise feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.",
+          "proposedTarget": "Ena ke boikwetliso ba ho ithuta ba kakanyo feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Bapisa likarolo tse lutseng, ’me u utloe mobu tšimong.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Bapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l1/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 58,
+          "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+          "currentTarget": "Bapisa likarolo tse lutseng, ’me u utloe mobu tšimong.",
+          "proposedTarget": "Bapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, metsi a phallang le kholo ea limela pele u khetha tharollo.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l1/body/paragraph[11]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 11,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 113,
+          "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+          "currentTarget": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, metsi a phallang le kholo ea limela pele u khetha tharollo.",
+          "proposedTarget": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "bodyIndex": 2,
+      "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Nako ya hore compost e lokele ho sebediswa e fapana ho ya ka materials, mongobo, moya le thempereitjha. Lebitso la province kapa palo e behilweng ya dibeke ha se readiness test.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Nako ya hore compost e lokele ho sebediswa e fapana ho ya ka dintho tse sebediswang, mongobo, moya le thempereitjha. Lebitso la profinse kapa palo e behilweng ya dibeke ha se readiness test.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l2/body/paragraph[2]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 2,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 139,
+          "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+          "currentTarget": "Nako ya hore compost e lokele ho sebediswa e fapana ho ya ka materials, mongobo, moya le thempereitjha. Lebitso la province kapa palo e behilweng ya dibeke ha se readiness test.",
+          "proposedTarget": "Nako ya hore compost e lokele ho sebediswa e fapana ho ya ka dintho tse sebediswang, mongobo, moya le thempereitjha. Lebitso la profinse kapa palo e behilweng ya dibeke ha se readiness test.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Hlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; recipe e le nngwe ha e tshwanele motswako o mong le o mong wa materials.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; mokgwa o le mong wa ho kopanya ha o tshwanele motswako o mong le o mong wa dintho tse sebediswang.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l2/body/paragraph[5]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 5,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 92,
+          "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+          "currentTarget": "Hlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; recipe e le nngwe ha e tshwanele motswako o mong le o mong wa materials.",
+          "proposedTarget": "Hlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; mokgwa o le mong wa ho kopanya ha o tshwanele motswako o mong le o mong wa dintho tse sebediswang.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Karolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le management kaofela di bohlokwa.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Karolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le tsamaiso ya yona kaofela di bohlokwa.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l2/body/paragraph[6]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 6,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 116,
+          "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+          "currentTarget": "Karolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le management kaofela di bohlokwa.",
+          "proposedTarget": "Karolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le tsamaiso ya yona kaofela di bohlokwa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Boloka meat, dairy, diseased plants, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Boloka nama, dairy, dimela tse kulang, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l2/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 108,
+          "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+          "currentTarget": "Boloka meat, dairy, diseased plants, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.",
+          "proposedTarget": "Boloka nama, dairy, dimela tse kulang, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "bodyIndex": 1,
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sebedisa materials tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sebedisa dintho tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l2/body/paragraph[10]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 10,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 123,
+          "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+          "currentTarget": "Sebedisa materials tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.",
+          "proposedTarget": "Sebedisa dintho tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, dry grass kapa wood chips.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, jwang bo ommeng kapa wood chips.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l3/body/paragraph[0]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 0,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 82,
+          "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+          "currentTarget": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, dry grass kapa wood chips.",
+          "proposedTarget": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, jwang bo ommeng kapa wood chips.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer ha ho hlokahala; mulch e ngata ha e dule e le betere.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l3/body/paragraph[2]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 2,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+          "currentTarget": "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer ha ho hlokahala; mulch e ngata ha e dule e le betere.",
+          "proposedTarget": "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Cover crops di ka sireletsa mobu pakeng tsa main crops. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le next planting.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Cover crops di ka sireletsa mobu pakeng tsa dijalo tse ka sehloohong. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le ho lema ho latelang.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l3/body/paragraph[3]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 3,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+          "currentTarget": "Cover crops di ka sireletsa mobu pakeng tsa main crops. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le next planting.",
+          "proposedTarget": "Cover crops di ka sireletsa mobu pakeng tsa dijalo tse ka sehloohong. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le ho lema ho latelang.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 0,
+      "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Worm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba bin ho e-na le ho lebella letsatsi le behilweng la kotulo.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Worm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba setshelo ho e-na le ho lebella letsatsi le behilweng la kotulo.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l3/body/paragraph[6]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 6,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 125,
+          "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+          "currentTarget": "Worm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba bin ho e-na le ho lebella letsatsi le behilweng la kotulo.",
+          "proposedTarget": "Worm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba setshelo ho e-na le ho lebella letsatsi le behilweng la kotulo.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 1,
+      "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Liquid that drains naturally from a worm bin e bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l3/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+          "currentTarget": "Liquid that drains naturally from a worm bin e bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+          "proposedTarget": "Mokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "spellingRepairReason": "Existing South African spelling gate requires Mokedikedi (matching current heading); only the first word changes."
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 2,
+      "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Leachate e ka ba le harmful organisms kapa substances. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Leachate e ka ba le harmful organisms kapa dintho tse kotsi. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l3/body/paragraph[8]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 8,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 123,
+          "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+          "currentTarget": "Leachate e ka ba le harmful organisms kapa substances. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.",
+          "proposedTarget": "Leachate e ka ba le harmful organisms kapa dintho tse kotsi. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Vheani soil na water kha clear jar, ni engedze little suitable dispersing detergent. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Vheani mavu na maḓi kha jar ine na kona u vhona zwa nga ngomu hayo, ni engedze suitable dispersing detergent ṱhukhu. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l1/body/paragraph[3]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 3,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 126,
+          "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+          "currentTarget": "Vheani soil na water kha clear jar, ni engedze little suitable dispersing detergent. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.",
+          "proposedTarget": "Vheani mavu na maḓi kha jar ine na kona u vhona zwa nga ngomu hayo, ni engedze suitable dispersing detergent ṱhukhu. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sand i settles pele. Silt i settles nga murahu, ngeno clay i tshi nga sala i suspended much longer.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sand i dzula fhasi u thoma. Silt i dzula fhasi nga murahu, ngeno clay i tshi nga sala i suspended lwa tshifhinga tshilapfu vhukuma.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l1/body/paragraph[4]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 4,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 83,
+          "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+          "currentTarget": "Sand i settles pele. Silt i settles nga murahu, ngeno clay i tshi nga sala i suspended much longer.",
+          "proposedTarget": "Sand i dzula fhasi u thoma. Silt i dzula fhasi nga murahu, ngeno clay i tshi nga sala i suspended lwa tshifhinga tshilapfu vhukuma.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Hezwi ndi rough learning exercise. Clumps na clay i sa athu settled zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hezwi ndi nyito ya u guda ya u anganyela. Clumps na clay i sa athu u dzula fhasi zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l1/body/paragraph[5]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 5,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 132,
+          "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+          "currentTarget": "Hezwi ndi rough learning exercise. Clumps na clay i sa athu settled zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.",
+          "proposedTarget": "Hezwi ndi nyito ya u guda ya u anganyela. Clumps na clay i sa athu u dzula fhasi zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Vhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l1/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 58,
+          "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+          "currentTarget": "Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+          "proposedTarget": "Vhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Compaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compaction, poor drainage na u xela ha organic matter zwi nga limit midzi na soil life.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l1/body/paragraph[9]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 9,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 83,
+          "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+          "currentTarget": "Compaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.",
+          "proposedTarget": "Compaction, poor drainage na u xela ha organic matter zwi nga limit midzi na soil life.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 1,
+      "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Pale colour kana few worms a zwi prove uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga moisture na season.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Pale colour kana worms dzi si gathi a zwi khwaṱhisedzi uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga vhunyunyu na khalaṅwaha.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l1/body/paragraph[10]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 10,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 122,
+          "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+          "currentTarget": "Pale colour kana few worms a zwi prove uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga moisture na season.",
+          "proposedTarget": "Pale colour kana worms dzi si gathi a zwi khwaṱhisedzi uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga vhunyunyu na khalaṅwaha.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sedzani patterns tsimuni. Sedzani management history, drainage na u aluwa ha plants ni sa athu khetha remedy.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sedzani patterns tsimuni yoṱhe. Sedzani management history, drainage na u aluwa ha zwimela ni sa athu khetha remedy.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l1/body/paragraph[11]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 11,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 113,
+          "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+          "currentTarget": "Sedzani patterns tsimuni. Sedzani management history, drainage na u aluwa ha plants ni sa athu khetha remedy.",
+          "proposedTarget": "Sedzani patterns tsimuni yoṱhe. Sedzani management history, drainage na u aluwa ha zwimela ni sa athu khetha remedy.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Compost ndi organic matter yo broken down nga fhasi ha managed conditions.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost ndi organic matter yo broken down nga fhasi ha zwiimo zwi langulwaho.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[0]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 0,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 63,
+          "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+          "currentTarget": "Compost ndi organic matter yo broken down nga fhasi ha managed conditions.",
+          "proposedTarget": "Compost ndi organic matter yo broken down nga fhasi ha zwiimo zwi langulwaho.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "bodyIndex": 1,
+      "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Compost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u contribute nutrients.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u engedza nutrients.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[1]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 1,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 69,
+          "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+          "currentTarget": "Compost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u contribute nutrients.",
+          "proposedTarget": "Compost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u engedza nutrients.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Tanganyani dry browns na fresh greens. Avoid thick, wet layers that keep air out.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tanganyani dry browns na fresh greens. Iledzani thick, wet layers dzi thivhelaho muya u dzhena.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[3]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 3,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 76,
+          "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+          "currentTarget": "Tanganyani dry browns na fresh greens. Avoid thick, wet layers that keep air out.",
+          "proposedTarget": "Tanganyani dry browns na fresh greens. Iledzani thick, wet layers dzi thivhelaho muya u dzhena.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; recipe nthihi a i lulameli mutanganyo muṅwe na muṅwe wa materials.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; nḓila nthihi ya u ṱanganya a i lulameli muṱanganyo muṅwe na muṅwe wa zwishumiswa.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[5]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 5,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 92,
+          "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+          "currentTarget": "Sedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; recipe nthihi a i lulameli mutanganyo muṅwe na muṅwe wa materials.",
+          "proposedTarget": "Sedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; nḓila nthihi ya u ṱanganya a i lulameli muṱanganyo muṅwe na muṅwe wa zwishumiswa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Hot centre a i khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Time, temperature na management zwoṱhe zwi na ndeme.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Vhukati ho fhisaho a vhu khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Tshifhinga, temperature na ndangulo zwoṱhe zwi na ndeme.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[6]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 6,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 116,
+          "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+          "currentTarget": "Hot centre a i khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Time, temperature na management zwoṱhe zwi na ndeme.",
+          "proposedTarget": "Vhukati ho fhisaho a vhu khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Tshifhinga, temperature na ndangulo zwoṱhe zwi na ndeme.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Iledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi simple household system.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Iledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi nḓila i leluwaho ya muṱani.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 108,
+          "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+          "currentTarget": "Iledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi simple household system.",
+          "proposedTarget": "Iledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi nḓila i leluwaho ya muṱani.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Iledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. An ordinary heap may not make every seed non-viable.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Iledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. Thulwi yo ḓoweleaho i nga kha ḓi sa ita uri mbeu iṅwe na iṅwe i vhe non-viable.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[9]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 9,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 99,
+          "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+          "currentTarget": "Iledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. An ordinary heap may not make every seed non-viable.",
+          "proposedTarget": "Iledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. Thulwi yo ḓoweleaho i nga kha ḓi sa ita uri mbeu iṅwe na iṅwe i vhe non-viable.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 1,
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Shumisani fhedzi clean, untreated materials. Bark breaks down slowly; dzina layo fhedzi a si proof ya uri a i na contamination.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Shumisani zwishumiswa zwo kunaho, zwi songo treated fhedzi. Bark i a sina nga u ongowa; dzina layo fhedzi a si vhuṱanzi ha uri a i na contamination.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[10]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 10,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 123,
+          "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+          "currentTarget": "Shumisani fhedzi clean, untreated materials. Bark breaks down slowly; dzina layo fhedzi a si proof ya uri a i na contamination.",
+          "proposedTarget": "Shumisani zwishumiswa zwo kunaho, zwi songo treated fhedzi. Bark i a sina nga u ongowa; dzina layo fhedzi a si vhuṱanzi ha uri a i na contamination.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. Keep it moist, hu si waterlogged.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. I vhulungeni i na vhunyunyu, hu si waterlogged.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l2/body/paragraph[11]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 11,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 96,
+          "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+          "currentTarget": "Sedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. Keep it moist, hu si waterlogged.",
+          "proposedTarget": "Sedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. I vhulungeni i na vhunyunyu, hu si waterlogged.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Keep it clear of trunks and stems. Sedzani moisture nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "I vhetseni kule na trunks and stems. Sedzani vhunyunyu nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l3/body/paragraph[2]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 2,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+          "currentTarget": "Keep it clear of trunks and stems. Sedzani moisture nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.",
+          "proposedTarget": "I vhetseni kule na trunks and stems. Sedzani vhunyunyu nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Cover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na next planting.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Cover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na u zwala hu tevhelaho.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l3/body/paragraph[3]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 3,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+          "currentTarget": "Cover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na next planting.",
+          "proposedTarget": "Cover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na u zwala hu tevhelaho.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 1,
+      "sourceEnglish": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Tsumbo dza course dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tsumbo dza ngudo dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l3/body/paragraph[4]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 4,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 102,
+          "sourceEnglish": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+          "currentTarget": "Tsumbo dza course dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.",
+          "proposedTarget": "Tsumbo dza ngudo dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 2,
+      "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Legumes dzi ṱoḓa bacteria dzo teaho na growth conditions dzo teaho u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Legumes dzi ṱoḓa bacteria dzo teaho na zwiimo zwo teaho zwa u mela u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l3/body/paragraph[5]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 5,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 143,
+          "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+          "currentTarget": "Legumes dzi ṱoḓa bacteria dzo teaho na growth conditions dzo teaho u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.",
+          "proposedTarget": "Legumes dzi ṱoḓa bacteria dzo teaho na zwiimo zwo teaho zwa u mela u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 0,
+      "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Worm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani bin, ni songo lavhelela fixed harvest date.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Worm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani tshifaredzi, ni songo lavhelela ḓuvha ḽo vhewaho ḽa u kaṋa.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l3/body/paragraph[6]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 6,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 125,
+          "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+          "currentTarget": "Worm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani bin, ni songo lavhelela fixed harvest date.",
+          "proposedTarget": "Worm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani tshifaredzi, ni songo lavhelela ḓuvha ḽo vhewaho ḽa u kaṋa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 1,
+      "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Liquid that drains naturally from a worm bin i vhidzwa leachate. A si tshithu tshithihi na prepared worm-casting tea.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Liquid i elelaho nga mvelo i tshi bva kha worm bin i vhidzwa leachate. A si tshithu tshithihi na worm-casting tea yo lugiswaho.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l3/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+          "currentTarget": "Liquid that drains naturally from a worm bin i vhidzwa leachate. A si tshithu tshithihi na prepared worm-casting tea.",
+          "proposedTarget": "Liquid i elelaho nga mvelo i tshi bva kha worm bin i vhidzwa leachate. A si tshithu tshithihi na worm-casting tea yo lugiswaho.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 2,
+      "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Leachate i nga vha na harmful organisms kana substances. Do not use it on edible plants or assume that dilution makes it safe.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Leachate i nga vha na harmful organisms kana zwithu zwi re na khombo. Ni songo i shumisa kha edible plants kana u humbula uri dilution i ita uri i vhe yo tsireledzeaho.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l3/body/paragraph[8]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 8,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 123,
+          "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+          "currentTarget": "Leachate i nga vha na harmful organisms kana substances. Do not use it on edible plants or assume that dilution makes it safe.",
+          "proposedTarget": "Leachate i nga vha na harmful organisms kana zwithu zwi re na khombo. Ni songo i shumisa kha edible plants kana u humbula uri dilution i ita uri i vhe yo tsireledzeaho.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 2,
+      "sourceEnglish": "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Storm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha field, a nga hwala loosened soil a a bvisa.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Storm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha tsimu, a nga hwala loosened soil a a bvisa.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l3/body/paragraph[11]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 11,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 152,
+          "sourceEnglish": "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+          "currentTarget": "Storm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha field, a nga hwala loosened soil a a bvisa.",
+          "proposedTarget": "Storm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha tsimu, a nga hwala loosened soil a a bvisa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Chela misava na mati eka clear jar, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Chela misava na mati eka jar leyi u vonaka leswi nga endzeni ka yona, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l1/body/paragraph[3]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 3,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 126,
+          "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+          "currentTarget": "Chela misava na mati eka clear jar, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.",
+          "proposedTarget": "Chela misava na mati eka jar leyi u vonaka leswi nga endzeni ka yona, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 1,
+      "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Sand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended much longer.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended nkarhi wo leha swinene.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l1/body/paragraph[4]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 4,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 83,
+          "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+          "currentTarget": "Sand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended much longer.",
+          "proposedTarget": "Sand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended nkarhi wo leha swinene.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Lowu i rough learning exercise. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka accurate soil texture.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Lowu i ntoloveto wo dyondza wo ringanyeta. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka soil texture leyi pimiweke kahle.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l1/body/paragraph[5]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 5,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 132,
+          "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+          "currentTarget": "Lowu i rough learning exercise. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka accurate soil texture.",
+          "proposedTarget": "Lowu i ntoloveto wo dyondza wo ringanyeta. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka soil texture leyi pimiweke kahle.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Fananisa settled layers, kutani u twa misava ensin'wini.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l1/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 58,
+          "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+          "currentTarget": "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.",
+          "proposedTarget": "Fananisa settled layers, kutani u twa misava ensin'wini.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Compaction, poor drainage na ku lahleka ka organic matter can limit timitsu ni soil life.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compaction, poor drainage na ku lahleka ka organic matter swi nga limit timitsu ni soil life.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l1/body/paragraph[9]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 9,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 83,
+          "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+          "currentTarget": "Compaction, poor drainage na ku lahleka ka organic matter can limit timitsu ni soil life.",
+          "proposedTarget": "Compaction, poor drainage na ku lahleka ka organic matter swi nga limit timitsu ni soil life.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 1,
+      "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Muhlovo lowu nga vonakaka wa pale kumbe few worms a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi moisture na season.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Muhlovo lowu nga vonakaka wa pale kumbe worms ti nga ri tingani a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi ku tsakama na nguva.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l1/body/paragraph[10]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 10,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 122,
+          "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+          "currentTarget": "Muhlovo lowu nga vonakaka wa pale kumbe few worms a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi moisture na season.",
+          "proposedTarget": "Muhlovo lowu nga vonakaka wa pale kumbe worms ti nga ri tingani a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi ku tsakama na nguva.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula remedy.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l1/body/paragraph[11]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 11,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 113,
+          "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+          "currentTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula remedy.",
+          "proposedTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Compost i organic matter leyi broken down ehansi ka managed conditions.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost i organic matter leyi broken down ehansi ka swiyimo leswi lawuriwaka.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[0]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 0,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 63,
+          "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+          "currentTarget": "Compost i organic matter leyi broken down ehansi ka managed conditions.",
+          "proposedTarget": "Compost i organic matter leyi broken down ehansi ka swiyimo leswi lawuriwaka.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 1,
+      "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Finished compost yi nga antswisa xivumbeko xa misava ni ku contribute nutrients.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost leyi lunghekeke yi nga antswisa xivumbeko xa misava ni ku engetela nutrients.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[1]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 1,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 69,
+          "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+          "currentTarget": "Finished compost yi nga antswisa xivumbeko xa misava ni ku contribute nutrients.",
+          "proposedTarget": "Compost leyi lunghekeke yi nga antswisa xivumbeko xa misava ni ku engetela nutrients.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 2,
+      "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Nkarhi wo lungheka wa hambana hi materials, moisture, air na temperature. Vito ra province kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Nkarhi wo lungheka wa hambana hi swilo leswi tirhisiweke, ku tsakama, moya na temperature. Vito ra xifundzankulu kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[2]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 2,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 139,
+          "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+          "currentTarget": "Nkarhi wo lungheka wa hambana hi materials, moisture, air na temperature. Vito ra province kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.",
+          "proposedTarget": "Nkarhi wo lungheka wa hambana hi swilo leswi tirhisiweke, ku tsakama, moya na temperature. Vito ra xifundzankulu kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Hlanganisa dry browns na fresh greens. Papalata thick, wet layers leti sivelaka air ku nghena.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlanganisa dry browns na fresh greens. Papalata thick layers leti tsakamaka leti sivelaka moya ku nghena.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[3]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 3,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 76,
+          "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+          "currentTarget": "Hlanganisa dry browns na fresh greens. Papalata thick, wet layers leti sivelaka air ku nghena.",
+          "proposedTarget": "Hlanganisa dry browns na fresh greens. Papalata thick layers leti tsakamaka leti sivelaka moya ku nghena.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 1,
+      "sourceEnglish": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Loko heap yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi turn.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Loko nhulu yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi hundzuluxa.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[4]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 4,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 84,
+          "sourceEnglish": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+          "currentTarget": "Loko heap yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi turn.",
+          "proposedTarget": "Loko nhulu yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi hundzuluxa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Kambela moisture na air loko heap yi ri karhi yi cinca; recipe yin'we a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa materials.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Kambela ku tsakama na moya loko nhulu yi ri karhi yi cinca; ndlela yin'we yo hlanganisa a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa swilo leswi tirhisiweke.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[5]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 5,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 92,
+          "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+          "currentTarget": "Kambela moisture na air loko heap yi ri karhi yi cinca; recipe yin'we a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa materials.",
+          "proposedTarget": "Kambela ku tsakama na moya loko nhulu yi ri karhi yi cinca; ndlela yin'we yo hlanganisa a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa swilo leswi tirhisiweke.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Hot centre ya heap a yi tiyisisi leswaku every part ya heap yi treated. Time, temperature and management all matter.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Xiphemu xa le xikarhini xa nhulu lexi hisaka a xi tiyisisi leswaku xiphemu xin’wana ni xin’wana xa nhulu xi treated. Nkarhi, temperature ni ndlela yo yi lawula hinkwato swi na nkoka.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[6]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 6,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 116,
+          "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+          "currentTarget": "Hot centre ya heap a yi tiyisisi leswaku every part ya heap yi treated. Time, temperature and management all matter.",
+          "proposedTarget": "Xiphemu xa le xikarhini xa nhulu lexi hisaka a xi tiyisisi leswaku xiphemu xin’wana ni xin’wana xa nhulu xi treated. Nkarhi, temperature ni ndlela yo yi lawula hinkwato swi na nkoka.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Hlayisani meat, dairy, diseased plants, pet waste na contaminated materials swi ri ehandle ka simple household system.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlayisani nyama, dairy, swimilani leswi vabyaka, pet waste na contaminated materials swi ri ehandle ka ndlela leyi olovaka ya ndyangu.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 108,
+          "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+          "currentTarget": "Hlayisani meat, dairy, diseased plants, pet waste na contaminated materials swi ri ehandle ka simple household system.",
+          "proposedTarget": "Hlayisani nyama, dairy, swimilani leswi vabyaka, pet waste na contaminated materials swi ri ehandle ka ndlela leyi olovaka ya ndyangu.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Hlayisani wattle seed pods ehandle ka compost heap. An ordinary heap may not make every seed non-viable.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Hlayisani wattle seed pods ehandle ka nhulu ya compost. Nhulu leyi tolovelekeke yi nga ha ka yi nga endli mbewu yin’wana ni yin’wana yi va non-viable.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[9]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 9,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 99,
+          "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+          "currentTarget": "Hlayisani wattle seed pods ehandle ka compost heap. An ordinary heap may not make every seed non-viable.",
+          "proposedTarget": "Hlayisani wattle seed pods ehandle ka nhulu ya compost. Nhulu leyi tolovelekeke yi nga ha ka yi nga endli mbewu yin’wana ni yin’wana yi va non-viable.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 1,
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Tirhisa clean, untreated materials ntsena. Bark breaks down slowly; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tirhisa clean, untreated materials ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[10]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 10,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 123,
+          "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+          "currentTarget": "Tirhisa clean, untreated materials ntsena. Bark breaks down slowly; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+          "proposedTarget": "Tirhisa clean, untreated materials ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Kambela heap kutani u yi turn loko yi lava air yo tala kumbe mixing. Yi hlayise yi ri moist, ku nga ri waterlogged.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Kambela nhulu kutani u yi hundzuluxa loko yi lava moya wo tala kumbe ku hlanganisiwa. Yi hlayise yi tsakamile, ku nga ri waterlogged.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l2/body/paragraph[11]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 11,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 96,
+          "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+          "currentTarget": "Kambela heap kutani u yi turn loko yi lava air yo tala kumbe mixing. Yi hlayise yi ri moist, ku nga ri waterlogged.",
+          "proposedTarget": "Kambela nhulu kutani u yi hundzuluxa loko yi lava moya wo tala kumbe ku hlanganisiwa. Yi hlayise yi tsakamile, ku nga ri waterlogged.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Funengetani misava leyi nga hava cover hi mulch leyi basekile, leyi faneleke, yo fana na straw, byanyi byo oma kumbe wood chips.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Funengetani misava leyi nga funengetiwangiki hi mulch leyi basekile, leyi faneleke, yo fana na straw, byanyi byo oma kumbe wood chips.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l3/body/paragraph[0]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 0,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 82,
+          "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+          "currentTarget": "Funengetani misava leyi nga hava cover hi mulch leyi basekile, leyi faneleke, yo fana na straw, byanyi byo oma kumbe wood chips.",
+          "proposedTarget": "Funengetani misava leyi nga funengetiwangiki hi mulch leyi basekile, leyi faneleke, yo fana na straw, byanyi byo oma kumbe wood chips.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Keep it clear of trunks and stems. Kambelani moisture ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Yi hlayiseni ekule na trunks and stems. Kambelani ku tsakama ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l3/body/paragraph[2]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 2,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+          "currentTarget": "Keep it clear of trunks and stems. Kambelani moisture ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.",
+          "proposedTarget": "Yi hlayiseni ekule na trunks and stems. Kambelani ku tsakama ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 0,
+      "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Cover crops ti nga sirhelela misava leyi nga kona between main crops. Ti hlawuleni hi ku ya hi weather ya laha, mati lama kumekaka ni next planting.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Cover crops ti nga sirhelela misava leyi nga kona exikari ka main crops. Ti hlawuleni hi ku ya hi maxelo ya laha, mati lama kumekaka ni ku byala loku landzelaka.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l3/body/paragraph[3]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 3,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+          "currentTarget": "Cover crops ti nga sirhelela misava leyi nga kona between main crops. Ti hlawuleni hi ku ya hi weather ya laha, mati lama kumekaka ni next planting.",
+          "proposedTarget": "Cover crops ti nga sirhelela misava leyi nga kona exikari ka main crops. Ti hlawuleni hi ku ya hi maxelo ya laha, mati lama kumekaka ni ku byala loku landzelaka.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 1,
+      "sourceEnglish": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Swikombiso swa course swi katsa oats, lupins, sunn hemp na cowpea. Kambelani loko swi fanele ndhawu ya kwalaho mi nga si swi byala.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Swikombiso swa dyondzo swi katsa oats, lupins, sunn hemp na cowpea. Kambelani loko swi fanele ndhawu ya kwalaho mi nga si swi byala.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l3/body/paragraph[4]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 4,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 102,
+          "sourceEnglish": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+          "currentTarget": "Swikombiso swa course swi katsa oats, lupins, sunn hemp na cowpea. Kambelani loko swi fanele ndhawu ya kwalaho mi nga si swi byala.",
+          "proposedTarget": "Swikombiso swa dyondzo swi katsa oats, lupins, sunn hemp na cowpea. Kambelani loko swi fanele ndhawu ya kwalaho mi nga si swi byala.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 2,
+      "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Legumes ti lava bacteria leti faneleke ni suitable growing conditions leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Legumes ti lava bacteria leti faneleke ni swiyimo leswi faneleke swa ku kula leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l3/body/paragraph[5]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 5,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 143,
+          "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+          "currentTarget": "Legumes ti lava bacteria leti faneleke ni suitable growing conditions leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.",
+          "proposedTarget": "Legumes ti lava bacteria leti faneleke ni swiyimo leswi faneleke swa ku kula leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 0,
+      "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Worm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani bin ematshan'weni yo langutela fixed harvest date.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Worm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani xibye ematshan'weni yo langutela siku ra ntshovelo leri vekiweke.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l3/body/paragraph[6]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 6,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 125,
+          "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+          "currentTarget": "Worm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani bin ematshan'weni yo langutela fixed harvest date.",
+          "proposedTarget": "Worm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani xibye ematshan'weni yo langutela siku ra ntshovelo leri vekiweke.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 1,
+      "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Liquid that drains naturally from a worm bin yi vuriwa leachate. A yi fani na prepared worm-casting tea.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Liquid leyi khulukaka hi ntumbuluko yi huma eka worm bin yi vuriwa leachate. A yi fani na worm-casting tea leyi lunghisiweke.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l3/body/paragraph[7]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 7,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 115,
+          "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+          "currentTarget": "Liquid that drains naturally from a worm bin yi vuriwa leachate. A yi fani na prepared worm-casting tea.",
+          "proposedTarget": "Liquid leyi khulukaka hi ntumbuluko yi huma eka worm bin yi vuriwa leachate. A yi fani na worm-casting tea leyi lunghisiweke.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 2,
+      "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Leachate yi nga va na harmful organisms kumbe substances. Do not use it on edible plants or assume that dilution makes it safe.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l3/body/paragraph[8]",
+      "learnerLessonId": "soil-health-l3",
+      "learnerField": "body",
+      "learnerParagraphIndex": 8,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 123,
+          "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+          "currentTarget": "Leachate yi nga va na harmful organisms kumbe substances. Do not use it on edible plants or assume that dilution makes it safe.",
+          "proposedTarget": "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review and decomposition precision repair, 5 October 2026); independently semantically checked machine draft, exact decomposition English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l1/body/paragraph[0]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 0,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 116,
+          "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "currentTarget": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+          "proposedTarget": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "repairReason": "Restore exact decomposition predicate; avoid fragmentation-only interpretation."
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "bodyIndex": 0,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Compost ke organic matter e broken down ka tsela e laolwang.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review and decomposition precision repair, 5 October 2026); independently semantically checked machine draft, exact decomposition English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/st/soil-health-l2/body/paragraph[0]",
+      "learnerLessonId": "soil-health-l2",
+      "learnerField": "body",
+      "learnerParagraphIndex": 0,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 63,
+          "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+          "currentTarget": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+          "proposedTarget": "Compost ke organic matter e broken down ka tsela e laolwang.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "repairReason": "Restore exact decomposition predicate; avoid fragmentation-only interpretation."
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review and decomposition precision repair, 5 October 2026); independently semantically checked machine draft, exact decomposition English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ve/soil-health-l1/body/paragraph[0]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 0,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 116,
+          "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "currentTarget": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.",
+          "proposedTarget": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "repairReason": "Restore exact decomposition predicate; avoid fragmentation-only interpretation."
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "previousTarget": {
+        "status": "draft",
+        "text": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.",
+        "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+      },
+      "currentTarget": {
+        "status": "draft",
+        "text": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.",
+        "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review and decomposition precision repair, 5 October 2026); independently semantically checked machine draft, exact decomposition English retained. Unreviewed; no fluent or local farming approval."
+      },
+      "learnerUnitId": "soil-health/ts/soil-health-l1/body/paragraph[0]",
+      "learnerLessonId": "soil-health-l1",
+      "learnerField": "body",
+      "learnerParagraphIndex": 0,
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 116,
+          "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "currentTarget": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.",
+          "proposedTarget": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "repairReason": "Restore exact decomposition predicate; avoid fragmentation-only interpretation."
+    }
+  ],
+  "independentDeckPreservation": [
+    {
+      "language": "st",
+      "deckFile": "docs/narration/soil-health.st.paired-draft.json",
+      "slide": 15,
+      "field": "body",
+      "bodyIndex": 1,
+      "fieldPath": "slides[14].target.body[1]",
+      "sourceEnglish": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+      "currentTarget": "Mulch e ka fokotsa ho fetoha mouwane ha metsi, ya fokotsa matla ao pula e otlang mobu ka wona, hape ya fokotsa mefoka.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Mulch e ka fokotsa ho fetoha mouwane ha metsi, ya fokotsa matla ao pula e otlang mobu ka wona, hape ya fokotsa mefoka.",
+        "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/st/soil-health-l3/body/paragraph[1]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 1,
+          "parentFieldIndex": 34,
+          "sourceBindingExact": true,
+          "currentTarget": "Mulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.",
+          "finalTarget": "Mulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 1,
+      "learnerProposedTarget": "Mulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.",
+      "proposedTarget": "Mulch e ka fokotsa ho fetoha mouwane ha metsi, ya fokotsa matla ao pula e otlang mobu ka wona, hape ya fokotsa mefoka.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 75,
+          "sourceEnglish": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+          "currentTarget": "Mulch e ka fokotsa ho fetoha mouwane ha metsi, ya fokotsa matla ao pula e otlang mobu ka wona, hape ya fokotsa mefoka.",
+          "proposedTarget": "Mulch e ka fokotsa ho fetoha mouwane ha metsi, ya fokotsa matla ao pula e otlang mobu ka wona, hape ya fokotsa mefoka.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "Mulch",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "evaporation",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "st",
+      "deckFile": "docs/narration/soil-health.st.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 0,
+      "fieldPath": "slides[17].target.body[0]",
+      "sourceEnglish": "A Highveld field left bare after the maize harvest faces two main risks.",
+      "currentTarget": "Tshimo ya Highveld e siilweng e sa kwahelwa ka mora kotulo ya poone (maize) e tobana le dikotsi tse pedi tse ka sehloohong.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Tshimo ya Highveld e siilweng e sa kwahelwa ka mora kotulo ya poone (maize) e tobana le dikotsi tse pedi tse ka sehloohong.",
+        "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/st/soil-health-l3/body/paragraph[9]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 9,
+          "parentFieldIndex": 34,
+          "sourceBindingExact": true,
+          "currentTarget": "Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.",
+          "finalTarget": "Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 9,
+      "learnerProposedTarget": "Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.",
+      "proposedTarget": "Tshimo ya Highveld e siilweng e sa kwahelwa ka mora kotulo ya poone (maize) e tobana le dikotsi tse pedi tse ka sehloohong.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 72,
+          "sourceEnglish": "A Highveld field left bare after the maize harvest faces two main risks.",
+          "currentTarget": "Tshimo ya Highveld e siilweng e sa kwahelwa ka mora kotulo ya poone (maize) e tobana le dikotsi tse pedi tse ka sehloohong.",
+          "proposedTarget": "Tshimo ya Highveld e siilweng e sa kwahelwa ka mora kotulo ya poone (maize) e tobana le dikotsi tse pedi tse ka sehloohong.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "Highveld",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "maize",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "st",
+      "deckFile": "docs/narration/soil-health.st.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 1,
+      "fieldPath": "slides[17].target.body[1]",
+      "sourceEnglish": "Winter wind can carry away dry topsoil.",
+      "currentTarget": "Moya wa mariha o ka fefola topsoil e ommeng wa e tlosa.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Moya wa mariha o ka fefola topsoil e ommeng wa e tlosa."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/st/soil-health-l3/body/paragraph[10]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 10,
+          "parentFieldIndex": 34,
+          "sourceBindingExact": true,
+          "currentTarget": "Moea oa mariha o ka nka mobu o ommeng o ka holimo.",
+          "finalTarget": "Moea oa mariha o ka nka mobu o ommeng o ka holimo."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 10,
+      "learnerProposedTarget": "Moea oa mariha o ka nka mobu o ommeng o ka holimo.",
+      "proposedTarget": "Moya wa mariha o ka fefola topsoil e ommeng wa e tlosa.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 39,
+          "sourceEnglish": "Winter wind can carry away dry topsoil.",
+          "currentTarget": "Moya wa mariha o ka fefola topsoil e ommeng wa e tlosa.",
+          "proposedTarget": "Moya wa mariha o ka fefola topsoil e ommeng wa e tlosa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "st",
+      "deckFile": "docs/narration/soil-health.st.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 2,
+      "fieldPath": "slides[17].target.body[2]",
+      "sourceEnglish": "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+      "currentTarget": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa kwahelwang, sa senya bokahodimo le sebopeho sa wona. Ha metsi a phalla a feta tshimong, a ka nka mobu o hlephileng a o tlosa.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa kwahelwang, sa senya bokahodimo le sebopeho sa wona. Ha metsi a phalla a feta tshimong, a ka nka mobu o hlephileng a o tlosa."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/st/soil-health-l3/body/paragraph[11]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 11,
+          "parentFieldIndex": 34,
+          "sourceBindingExact": true,
+          "currentTarget": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.",
+          "finalTarget": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 11,
+      "learnerProposedTarget": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.",
+      "proposedTarget": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa kwahelwang, sa senya bokahodimo le sebopeho sa wona. Ha metsi a phalla a feta tshimong, a ka nka mobu o hlephileng a o tlosa.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 152,
+          "sourceEnglish": "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+          "currentTarget": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa kwahelwang, sa senya bokahodimo le sebopeho sa wona. Ha metsi a phalla a feta tshimong, a ka nka mobu o hlephileng a o tlosa.",
+          "proposedTarget": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa kwahelwang, sa senya bokahodimo le sebopeho sa wona. Ha metsi a phalla a feta tshimong, a ka nka mobu o hlephileng a o tlosa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ve",
+      "deckFile": "docs/narration/soil-health.ve.paired-draft.json",
+      "slide": 15,
+      "field": "body",
+      "bodyIndex": 1,
+      "fieldPath": "slides[14].target.body[1]",
+      "sourceEnglish": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+      "currentTarget": "Mulch i nga fhungudza u ṱuwa ha maḓi a tshi ya nga muyani, ya fhungudza maanḓa a mvula, ya fhungudza u mela ha zwimela zwi sa ṱoḓei.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Mulch i nga fhungudza u ṱuwa ha maḓi a tshi ya nga muyani, ya fhungudza maanḓa a mvula, ya fhungudza u mela ha zwimela zwi sa ṱoḓei.",
+        "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ve/soil-health-l3/body/paragraph[1]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 1,
+          "parentFieldIndex": 85,
+          "sourceBindingExact": true,
+          "currentTarget": "Mulch i nga fhungudza evaporation; i nga soften the impact of rain; i nga suppress weeds.",
+          "finalTarget": "Mulch i nga fhungudza evaporation; i nga fhungudza u rwa ha mvula; i nga thivhela weeds."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 1,
+      "learnerProposedTarget": "Mulch i nga fhungudza evaporation; i nga fhungudza u rwa ha mvula; i nga thivhela weeds.",
+      "proposedTarget": "Mulch i nga fhungudza u ṱuwa ha maḓi a tshi ya nga muyani, ya fhungudza maanḓa a mvula, ya fhungudza u mela ha zwimela zwi sa ṱoḓei.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 75,
+          "sourceEnglish": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+          "currentTarget": "Mulch i nga fhungudza u ṱuwa ha maḓi a tshi ya nga muyani, ya fhungudza maanḓa a mvula, ya fhungudza u mela ha zwimela zwi sa ṱoḓei.",
+          "proposedTarget": "Mulch i nga fhungudza u ṱuwa ha maḓi a tshi ya nga muyani, ya fhungudza maanḓa a mvula, ya fhungudza u mela ha zwimela zwi sa ṱoḓei.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "Mulch",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "evaporation",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "weeds",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ve",
+      "deckFile": "docs/narration/soil-health.ve.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 0,
+      "fieldPath": "slides[17].target.body[0]",
+      "sourceEnglish": "A Highveld field left bare after the maize harvest faces two main risks.",
+      "currentTarget": "Tsimu ya Highveld yo siwaho i si na tshifukedzi nga murahu ha u kaṋa mavhele (maize) i sedzana na khombo mbili khulwane.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Tsimu ya Highveld yo siwaho i si na tshifukedzi nga murahu ha u kaṋa mavhele (maize) i sedzana na khombo mbili khulwane.",
+        "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ve/soil-health-l3/body/paragraph[9]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 9,
+          "parentFieldIndex": 85,
+          "sourceBindingExact": true,
+          "currentTarget": "Field ya Highveld yo salaho i songo fukedzwa nga murahu ha harvest ya maize i sedzana na risks mbili khulwane.",
+          "finalTarget": "Tsimu ya Highveld yo salaho i songo fukedzwa nga murahu ha u kaṋa maize i sedzana na khombo mbili khulwane."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 9,
+      "learnerProposedTarget": "Tsimu ya Highveld yo salaho i songo fukedzwa nga murahu ha u kaṋa maize i sedzana na khombo mbili khulwane.",
+      "proposedTarget": "Tsimu ya Highveld yo siwaho i si na tshifukedzi nga murahu ha u kaṋa mavhele (maize) i sedzana na khombo mbili khulwane.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 72,
+          "sourceEnglish": "A Highveld field left bare after the maize harvest faces two main risks.",
+          "currentTarget": "Tsimu ya Highveld yo siwaho i si na tshifukedzi nga murahu ha u kaṋa mavhele (maize) i sedzana na khombo mbili khulwane.",
+          "proposedTarget": "Tsimu ya Highveld yo siwaho i si na tshifukedzi nga murahu ha u kaṋa mavhele (maize) i sedzana na khombo mbili khulwane.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "Highveld",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "maize",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ve",
+      "deckFile": "docs/narration/soil-health.ve.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 1,
+      "fieldPath": "slides[17].target.body[1]",
+      "sourceEnglish": "Winter wind can carry away dry topsoil.",
+      "currentTarget": "Muya wa vhuria u nga hwala topsoil yo omaho wa i bvisa.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Muya wa vhuria u nga hwala topsoil yo omaho wa i bvisa."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ve/soil-health-l3/body/paragraph[10]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 10,
+          "parentFieldIndex": 85,
+          "sourceBindingExact": true,
+          "currentTarget": "Mhepo ya winter i nga hwala topsoil yo omaho ya i bvisa.",
+          "finalTarget": "Mhepo ya vhuria i nga hwala topsoil yo omaho ya i bvisa."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 10,
+      "learnerProposedTarget": "Mhepo ya vhuria i nga hwala topsoil yo omaho ya i bvisa.",
+      "proposedTarget": "Muya wa vhuria u nga hwala topsoil yo omaho wa i bvisa.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 39,
+          "sourceEnglish": "Winter wind can carry away dry topsoil.",
+          "currentTarget": "Muya wa vhuria u nga hwala topsoil yo omaho wa i bvisa.",
+          "proposedTarget": "Muya wa vhuria u nga hwala topsoil yo omaho wa i bvisa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "topsoil",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ve",
+      "deckFile": "docs/narration/soil-health.ve.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 3,
+      "fieldPath": "slides[17].target.body[3]",
+      "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+      "currentTarget": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu haho na u thusa uri a dzule a tshi tshila.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu haho na u thusa uri a dzule a tshi tshila."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ve/soil-health-l3/body/paragraph[12]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 12,
+          "parentFieldIndex": 85,
+          "sourceBindingExact": true,
+          "currentTarget": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu hayo na u thusa uri a dzule a tshi khou tshila.",
+          "finalTarget": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu hayo na u thusa uri a dzule a tshi khou tshila."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 12,
+      "learnerProposedTarget": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu hayo na u thusa uri a dzule a tshi khou tshila.",
+      "proposedTarget": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu haho na u thusa uri a dzule a tshi tshila.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 90,
+          "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+          "currentTarget": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu haho na u thusa uri a dzule a tshi tshila.",
+          "proposedTarget": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu haho na u thusa uri a dzule a tshi tshila.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "organic matter",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "mulch",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "Cover crops",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ts",
+      "deckFile": "docs/narration/soil-health.ts.paired-draft.json",
+      "slide": 15,
+      "field": "body",
+      "bodyIndex": 1,
+      "fieldPath": "slides[14].target.body[1]",
+      "sourceEnglish": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+      "currentTarget": "Mulch yi nga hunguta ku suka ka mati emisaveni ma ya emoyeni, yi nga olovisa ku ba ka mpfula naswona yi nga hunguta ku mila ka swimilani leswi nga laviwiki.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Mulch yi nga hunguta ku suka ka mati emisaveni ma ya emoyeni, yi nga olovisa ku ba ka mpfula naswona yi nga hunguta ku mila ka swimilani leswi nga laviwiki.",
+        "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ts/soil-health-l3/body/paragraph[1]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 1,
+          "parentFieldIndex": 136,
+          "sourceBindingExact": true,
+          "currentTarget": "Mulch yi nga hunguta evaporation; yi nga olovisa ku ba ka mpfula naswona yi nga suppress weeds.",
+          "finalTarget": "Mulch yi nga hunguta evaporation; yi nga olovisa ku ba ka mpfula naswona yi nga sivela nhova."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 1,
+      "learnerProposedTarget": "Mulch yi nga hunguta evaporation; yi nga olovisa ku ba ka mpfula naswona yi nga sivela nhova.",
+      "proposedTarget": "Mulch yi nga hunguta ku suka ka mati emisaveni ma ya emoyeni, yi nga olovisa ku ba ka mpfula naswona yi nga hunguta ku mila ka swimilani leswi nga laviwiki.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 75,
+          "sourceEnglish": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+          "currentTarget": "Mulch yi nga hunguta ku suka ka mati emisaveni ma ya emoyeni, yi nga olovisa ku ba ka mpfula naswona yi nga hunguta ku mila ka swimilani leswi nga laviwiki.",
+          "proposedTarget": "Mulch yi nga hunguta ku suka ka mati emisaveni ma ya emoyeni, yi nga olovisa ku ba ka mpfula naswona yi nga hunguta ku mila ka swimilani leswi nga laviwiki.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "Mulch",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "evaporation",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ts",
+      "deckFile": "docs/narration/soil-health.ts.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 0,
+      "fieldPath": "slides[17].target.body[0]",
+      "sourceEnglish": "A Highveld field left bare after the maize harvest faces two main risks.",
+      "currentTarget": "Nsimu ya le Highveld leyi siyiweke yi nga funengetiwangi endzhaku ka ntshovelo wa mavele (maize) yi langutane ni makhombo mambirhi lamakulu.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Nsimu ya le Highveld leyi siyiweke yi nga funengetiwangi endzhaku ka ntshovelo wa mavele (maize) yi langutane ni makhombo mambirhi lamakulu.",
+        "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ts/soil-health-l3/body/paragraph[9]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 9,
+          "parentFieldIndex": 136,
+          "sourceBindingExact": true,
+          "currentTarget": "Nsimu ya Highveld leyi tshikiweke yi nga funengetiwangi endzhaku ka ntshovelo wa maize yi langutana ni makhombo mambirhi lamakulu.",
+          "finalTarget": "Nsimu ya Highveld leyi tshikiweke yi nga funengetiwangi endzhaku ka ntshovelo wa maize yi langutana ni makhombo mambirhi lamakulu."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 9,
+      "learnerProposedTarget": "Nsimu ya Highveld leyi tshikiweke yi nga funengetiwangi endzhaku ka ntshovelo wa maize yi langutana ni makhombo mambirhi lamakulu.",
+      "proposedTarget": "Nsimu ya le Highveld leyi siyiweke yi nga funengetiwangi endzhaku ka ntshovelo wa mavele (maize) yi langutane ni makhombo mambirhi lamakulu.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 72,
+          "sourceEnglish": "A Highveld field left bare after the maize harvest faces two main risks.",
+          "currentTarget": "Nsimu ya le Highveld leyi siyiweke yi nga funengetiwangi endzhaku ka ntshovelo wa mavele (maize) yi langutane ni makhombo mambirhi lamakulu.",
+          "proposedTarget": "Nsimu ya le Highveld leyi siyiweke yi nga funengetiwangi endzhaku ka ntshovelo wa mavele (maize) yi langutane ni makhombo mambirhi lamakulu.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "Highveld",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "maize",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ts",
+      "deckFile": "docs/narration/soil-health.ts.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 1,
+      "fieldPath": "slides[17].target.body[1]",
+      "sourceEnglish": "Winter wind can carry away dry topsoil.",
+      "currentTarget": "Moya wa xixika wu nga rhwala topsoil leyi omeke wu yi susa.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Moya wa xixika wu nga rhwala topsoil leyi omeke wu yi susa."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ts/soil-health-l3/body/paragraph[10]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 10,
+          "parentFieldIndex": 136,
+          "sourceBindingExact": true,
+          "currentTarget": "Mheho wa xixika wu nga susa misava ya le henhla leyi omeke.",
+          "finalTarget": "Mheho wa xixika wu nga susa misava ya le henhla leyi omeke."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 10,
+      "learnerProposedTarget": "Mheho wa xixika wu nga susa misava ya le henhla leyi omeke.",
+      "proposedTarget": "Moya wa xixika wu nga rhwala topsoil leyi omeke wu yi susa.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 39,
+          "sourceEnglish": "Winter wind can carry away dry topsoil.",
+          "currentTarget": "Moya wa xixika wu nga rhwala topsoil leyi omeke wu yi susa.",
+          "proposedTarget": "Moya wa xixika wu nga rhwala topsoil leyi omeke wu yi susa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ts",
+      "deckFile": "docs/narration/soil-health.ts.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 2,
+      "fieldPath": "slides[17].target.body[2]",
+      "sourceEnglish": "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+      "currentTarget": "Mpfula yo sungula ya matimba ya ximun’wana yi nga ba misava leyi nga funengetiwangiki, yi onha xiphemu xa yona xa le henhla ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga rhwala misava leyi ntshunxekeke ma yi susa.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Mpfula yo sungula ya matimba ya ximun’wana yi nga ba misava leyi nga funengetiwangiki, yi onha xiphemu xa yona xa le henhla ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga rhwala misava leyi ntshunxekeke ma yi susa.",
+        "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ts/soil-health-l3/body/paragraph[11]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 11,
+          "parentFieldIndex": 136,
+          "sourceBindingExact": true,
+          "currentTarget": "Xidzedze xo sungula xo tika xa ximun’wana xi nga hlasela misava leyi nga funengetiwangi, xi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma famba na yona.",
+          "finalTarget": "Xidzedze xo sungula xo tika xa ximun’wana xi nga hlasela misava leyi nga funengetiwangi, xi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma famba na yona."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 11,
+      "learnerProposedTarget": "Xidzedze xo sungula xo tika xa ximun’wana xi nga hlasela misava leyi nga funengetiwangi, xi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma famba na yona.",
+      "proposedTarget": "Mpfula yo sungula ya matimba ya ximun’wana yi nga ba misava leyi nga funengetiwangiki, yi onha xiphemu xa yona xa le henhla ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga rhwala misava leyi ntshunxekeke ma yi susa.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 152,
+          "sourceEnglish": "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+          "currentTarget": "Mpfula yo sungula ya matimba ya ximun’wana yi nga ba misava leyi nga funengetiwangiki, yi onha xiphemu xa yona xa le henhla ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga rhwala misava leyi ntshunxekeke ma yi susa.",
+          "proposedTarget": "Mpfula yo sungula ya matimba ya ximun’wana yi nga ba misava leyi nga funengetiwangiki, yi onha xiphemu xa yona xa le henhla ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga rhwala misava leyi ntshunxekeke ma yi susa.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    },
+    {
+      "language": "ts",
+      "deckFile": "docs/narration/soil-health.ts.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "bodyIndex": 3,
+      "fieldPath": "slides[17].target.body[3]",
+      "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+      "currentTarget": "Cover crops, mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Cover crops, mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya."
+      },
+      "sourceExact": true,
+      "learnerMatches": [
+        {
+          "id": "soil-health/ts/soil-health-l3/body/paragraph[12]",
+          "lessonId": "soil-health-l3",
+          "fieldPath": "body",
+          "paragraphIndex": 12,
+          "parentFieldIndex": 136,
+          "sourceBindingExact": true,
+          "currentTarget": "Cover crops, mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+          "finalTarget": "Cover crops, mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya."
+        }
+      ],
+      "learnerField": "body",
+      "learnerLessonId": "soil-health-l3",
+      "learnerParagraphIndex": 12,
+      "learnerProposedTarget": "Cover crops, mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+      "proposedTarget": "Cover crops, mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya.",
+      "changed": false,
+      "decision": "preserve-independent-deck-draft",
+      "segments": [
+        {
+          "sourceStart": 0,
+          "sourceEnd": 90,
+          "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+          "currentTarget": "Cover crops, mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya.",
+          "proposedTarget": "Cover crops, mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya.",
+          "sourceComposition": "one complete byte-exact source unit; no sentence slicing, punctuation normalization or inferred reconstruction"
+        }
+      ],
+      "technicalEnglishHolds": [
+        {
+          "text": "organic matter",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "mulch",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        },
+        {
+          "text": "Cover crops",
+          "classification": "technical-English-term-hold",
+          "reason": "Exact source technical/agronomic label or example retained while surrounding ordinary framing is translated; terminology remains unreviewed."
+        }
+      ],
+      "remainingLearnerInventoryGapSpans": [],
+      "reason": "Current paired deck already has independently drafted complete ordinary framing. Preserve its wording; no material semantic defect established in this mapping pass.",
+      "reviewStatusProposed": "draft",
+      "fluentApproval": false
+    }
+  ],
+  "scope": {
+    "deckLanguages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "slidesPerLanguage": 20,
+    "allDeckHeadingBodySlots": 246,
+    "sourceExactReuses": 111,
+    "sourceExactBodyReuses": 111,
+    "sourceExactNonbodyReuses": 0,
+    "sourceExactHeadingReuses": 0,
+    "learnerChangedExactReuses": 73,
+    "proposedDeckChangedSlots": 69,
+    "proposedChangedFrames": 34,
+    "changedFrames": [
+      {
+        "language": "st",
+        "slide": 4
+      },
+      {
+        "language": "st",
+        "slide": 6
+      },
+      {
+        "language": "st",
+        "slide": 7
+      },
+      {
+        "language": "st",
+        "slide": 8
+      },
+      {
+        "language": "st",
+        "slide": 9
+      },
+      {
+        "language": "st",
+        "slide": 11
+      },
+      {
+        "language": "st",
+        "slide": 12
+      },
+      {
+        "language": "st",
+        "slide": 13
+      },
+      {
+        "language": "st",
+        "slide": 15
+      },
+      {
+        "language": "st",
+        "slide": 16
+      },
+      {
+        "language": "st",
+        "slide": 17
+      },
+      {
+        "language": "ts",
+        "slide": 4
+      },
+      {
+        "language": "ts",
+        "slide": 6
+      },
+      {
+        "language": "ts",
+        "slide": 7
+      },
+      {
+        "language": "ts",
+        "slide": 8
+      },
+      {
+        "language": "ts",
+        "slide": 9
+      },
+      {
+        "language": "ts",
+        "slide": 11
+      },
+      {
+        "language": "ts",
+        "slide": 12
+      },
+      {
+        "language": "ts",
+        "slide": 13
+      },
+      {
+        "language": "ts",
+        "slide": 15
+      },
+      {
+        "language": "ts",
+        "slide": 16
+      },
+      {
+        "language": "ts",
+        "slide": 17
+      },
+      {
+        "language": "ve",
+        "slide": 4
+      },
+      {
+        "language": "ve",
+        "slide": 6
+      },
+      {
+        "language": "ve",
+        "slide": 7
+      },
+      {
+        "language": "ve",
+        "slide": 8
+      },
+      {
+        "language": "ve",
+        "slide": 9
+      },
+      {
+        "language": "ve",
+        "slide": 11
+      },
+      {
+        "language": "ve",
+        "slide": 12
+      },
+      {
+        "language": "ve",
+        "slide": 13
+      },
+      {
+        "language": "ve",
+        "slide": 15
+      },
+      {
+        "language": "ve",
+        "slide": 16
+      },
+      {
+        "language": "ve",
+        "slide": 17
+      },
+      {
+        "language": "ve",
+        "slide": 18
+      }
+    ],
+    "independentDeckDraftsPreserved": 13,
+    "independentlyFullerDeckDraftsPreservedDespiteChangedLearner": 4,
+    "unmatchedDeckSlotsAudited": 135,
+    "partialSourceOverlaps": 0,
+    "unmatchedInheritedFullOrdinaryEnglishClauses": 0
+  },
+  "fluentApproval": false,
+  "pixelReview": {
+    "agentContactsViewed": [
+      "st-selected-contact.jpg",
+      "ve-selected-contact.jpg",
+      "ts-selected-contact.jpg"
+    ],
+    "agentLargeCompressedFramesViewed": [
+      "public/course-decks/soil-health/st/slide-06.webp",
+      "public/course-decks/soil-health/ve/slide-18.webp",
+      "public/course-decks/soil-health/ts/slide-17.webp"
+    ],
+    "finding": "Initial31-frame composition contacts and large ST06/VE18/TS17 samples inspected. After four decomposition repairs and ST17 firstword spelling repair, five incremental compressed frames inspected in contact and finalST17 large; no visible clipping. OriginalST09/ST17 contact pixels superseded by extensioncontact; exact final34 asset hashes recorded. No claim of actual phone UI or fluent approval.",
+    "rootReview": "Root confirmed all31 original contacts, large actual TS17 and allfive incremental compressed-frame contact panels inspected; targets/exact source visible with no clipping seen.",
+    "fluentApproval": false,
+    "rootInitial31ContactsReviewed": true,
+    "rootIncrementalReview": "confirmed by root on2026-10-05",
+    "agentIncrementalContactsViewed": "decomposition-spelling-extension-contact.jpg",
+    "agentLargeFinalSpellingFrameViewed": "public/course-decks/soil-health/st/slide-17.webp",
+    "phoneQA": "pending exact-preview phone QA; contact/media inspection does not prove learner UI"
+  },
+  "decompositionExtension": {
+    "acceptedRepairs": 4,
+    "additionalFrames": 3,
+    "rerenderedExistingFrame": "st/slide-09.webp",
+    "originalLearnerPacket": "docs/study-translation-reviews/soil-learner-fuller-2026-10-05/soil-learner-ordinary-full-repaired-candidates.json",
+    "originalLearnerPacketSha256": "5728a9b2899c4e18562e3b716bdea53e9dabaf5524509c382910457aa911a84f",
+    "finalLearnerPacketBinding": {
+      "path": "docs/study-translation-reviews/soil-learner-fuller-2026-10-05/soil-learner-final-accepted-candidates.json",
+      "sha256": "38d5cc52ba57f5e1b7da2461010af86ddfb9697a76963ec23d64e78580867016",
+      "changedFields": 77,
+      "changedUnits": 141
+    },
+    "additionalSpellingRepair": "st/slide17/body1; Mokelikeli→Mokedikedi"
+  },
+  "initial65MappingSha256": "4f063895e863f8add6e3c38bee8437ee5b41faaa75320c19f5db12f699710c1a",
+  "finalMappingPath": "/tmp/soil-deck-fuller-learner-reuse-candidates.json"
+}

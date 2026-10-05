@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import type { Lesson } from '../lib/course-modules.ts';
-import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { historicalST as SESOTHO_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
+// Earlier clause checks retain their dated wording; the helper verifies live accepted text before rewinding it.
+import { resolveHistoricalPresentation as resolveLearnerLessonPresentation } from './soil-learner-reviewed-history.ts';
 
 test('Soil Health Sesotho draft preserves exact sources, safety holds, plant names and quiz indexes', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health');
@@ -399,4 +400,108 @@ test('Soil L2 body and scoped assessment drafts preserve compost caveats and ans
   const changedSource = { ...source, body: source.body.replace('fresh greens', 'fresh material') };
   assert.equal(resolveLearnerLessonPresentation(changedSource, 'st').status, 'english-fallback',
     'any changed English compost instruction must invalidate the paired body draft');
+});
+
+// Ordinary-prose completion supersedes dated target wording, while canonical
+// fields, quiz mapping and every unlisted native property stay protected.
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { SESOTHO_SOIL_HEALTH_DRAFT as liveST } from '../lib/course-translation-drafts-st-soil-health.ts';
+import { TSHIVENDA_SOIL_HEALTH_DRAFT as liveVE } from '../lib/course-translation-drafts-ve-soil-health.ts';
+import { XITSONGA_SOIL_HEALTH_DRAFT as liveTS } from '../lib/course-translation-drafts-ts-soil-health.ts';
+import { resolveLearnerLessonPresentation as liveResolve } from '../lib/course-localization.ts';
+import { soilPacket, soilBefore, fieldAt } from './soil-learner-reviewed-history.ts';
+
+const liveSoil = { st: liveST, ve: liveVE, ts: liveTS };
+const targetKeys = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' };
+
+test('Soil ordinary completion binds all 153 fields to canonical source and preserves every unlisted native property', () => {
+  const bytes = readFileSync(new URL('../docs/study-translation-reviews/soil-learner-fuller-2026-10-05/soil-learner-final-accepted-candidates.json', import.meta.url));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), '38d5cc52ba57f5e1b7da2461010af86ddfb9697a76963ec23d64e78580867016');
+  // The later independently checked decomposition layer supersedes four terms,
+  // and SA spelling supersedes one word; retain the original audit binding.
+  const historicalBytes = readFileSync(new URL('../docs/study-translation-reviews/soil-learner-fuller-2026-10-05/soil-learner-ordinary-full-repaired-candidates.json', import.meta.url));
+  assert.equal(createHash('sha256').update(historicalBytes).digest('hex'), '5728a9b2899c4e18562e3b716bdea53e9dabaf5524509c382910457aa911a84f');
+  assert.equal(soilPacket.fields.length, 153);
+  assert.equal(soilPacket.fields.filter((f: any) => f.changed).length, 77);
+  const source = COURSE_MODULES.find(m => m.id === 'soil-health')!;
+  for (const language of ['st', 've', 'ts'] as const) {
+    const draft = liveSoil[language];
+    const rewind = structuredClone(draft);
+    for (const field of soilPacket.fields.filter((f: any) => f.language === language)) {
+      const index = draft.lessons.findIndex(l => l.id === field.lessonId);
+      const native = fieldAt(draft.lessons[index], field.fieldPath);
+      const canonicalPath = field.fieldPath.replace(/\.question$/, '.q');
+      assert.equal(fieldAt(source.lessons[index], canonicalPath), field.sourceEnglish);
+      assert.equal(native.sourceEnglish, field.sourceEnglish);
+      assert.equal(native[targetKeys[language]], field.proposedTarget);
+      assert.equal(native.reviewStatus, field.reviewStatusProposed);
+      assert.deepEqual(native[targetKeys[language]].match(/\d+(?:[.,]\d+)?/g) ?? [], field.sourceEnglish.match(/\d+(?:[.,]\d+)?/g) ?? [], 'source quantities remain exact');
+      for (const species of ['oats', 'lupins', 'sunn hemp', 'cowpea', 'wattle']) {
+        if (field.sourceEnglish.includes(species)) assert.ok(native[targetKeys[language]].includes(species), `retain canonical species: ${species}`);
+      }
+      const shown = liveResolve(source.lessons[index], language);
+      assert.equal(shown.status, 'draft');
+      assert.equal(fieldAt(shown.content, canonicalPath), field.proposedTarget);
+      const changedSource = structuredClone(source.lessons[index]);
+      const parts = canonicalPath.replaceAll('[', '.').replaceAll(']', '').split('.');
+      const last = parts.pop()!;
+      const parent: any = parts.reduce((v: any, k: string) => v[k], changedSource);
+      parent[last] += ' Source changed.';
+      assert.equal(liveResolve(changedSource, language).status, 'english-fallback', `${language}/${field.lessonId}/${canonicalPath}: source drift withdraws draft`);
+      const oldPair = fieldAt(rewind.lessons[index], field.fieldPath);
+      oldPair[targetKeys[language]] = field.currentTarget;
+      oldPair.reviewStatus = field.reviewStatus;
+    }
+    assert.deepEqual(rewind, soilBefore[language], `${language}: titles, holds, metadata, all unlisted pairs and answer indices stay unchanged`);
+  }
+});
+
+test('Soil repaired diagnostic and sanitation clauses retain their independent checked scope', () => {
+  const st = liveST.lessons, ts = liveTS.lessons, ve = liveVE.lessons;
+  assert.match(st[0].body.sesothoDraft.split('\n\n')[7], /layers tse lutseng fatshe/);
+  assert.match(ve[0].body.tshivendaDraft.split('\n\n')[7], /layers dze dza dzula fhasi/);
+  assert.match(ts[0].body.xitsongaDraft.split('\n\n')[7], /settled layers/);
+  assert.match(st[0].body.sesothoDraft.split('\n\n')[11], /drainage.*kholo ea limela.*pele/);
+  assert.match(st[0].quiz[1].rationale.sesothoDraft, /ha di tiise sesosa sa bothata/);
+  assert.match(st[1].keyPoints[2].sesothoDraft, /seed pods.*contaminated materials.*kantle/);
+  assert.match(st[2].keyPoints[1].sesothoDraft, /hole le trunks le stems/);
+  assert.match(st[2].quiz[0].options[0].sesothoDraft, /waterlogging.*puleng/);
+  assert.match(ve[0].quiz[1].options[1].tshivendaDraft, /ni songo ṱola/);
+  assert.match(ve[1].quiz[0].options[1].tshivendaDraft, /dry carbon material yo engedzeaho/);
+  assert.match(ve[2].quiz[1].options[1].tshivendaDraft, /harmful organisms.*zwithu zwi re na khombo.*a si safety guarantee/);
+  assert.match(ts[0].quiz[1].question.xitsongaDraft, /goza/);
+  assert.doesNotMatch(JSON.stringify(liveTS), /\bmohato\b/i, 'Sesotho step wording must not pollute the Xitsonga draft');
+  const warning = ts[2].body.xitsongaDraft.split('\n\n')[8];
+  const safe = (text: string) => /harmful organisms kumbe substances leswi nga ni khombo\. U nga yi tirhisi eka edible plants\. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka\./.test(text);
+  assert.ok(safe(warning));
+  assert.equal(safe(warning.replace('U nga yi tirhisi', 'Yi tirhisi')), false, 'removing the edible-plant prohibition must fail the safety check');
+  assert.equal(safe(warning.replace('U nga ehleketi', 'Ehleketi')), false, 'removing the dilution prohibition must fail the safety check');
+  assert.match(ts[2].quiz[1].options[1].xitsongaDraft, /harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee/);
+});
+
+test('Soil decomposition clauses retain exact English process and completed-state anchors after the four-flag audit', () => {
+  const st0 = liveST.lessons[0].body.sesothoDraft.split('\n\n')[0];
+  const stCompost = liveST.lessons[1].body.sesothoDraft.split('\n\n')[0];
+  const ve0 = liveVE.lessons[0].body.tshivendaDraft.split('\n\n')[0];
+  const ts0 = liveTS.lessons[0].body.xitsongaDraft.split('\n\n')[0];
+  assert.match(st0, /di thusa ho break down organic matter/);
+  assert.doesNotMatch(st0, /qhaqha/);
+  assert.match(stCompost, /organic matter e broken down ka tsela e laolwang/);
+  assert.doesNotMatch(stCompost, /qhaqhollwang/);
+  assert.match(ve0, /dzi thusa u break down organic matter/);
+  assert.doesNotMatch(ve0, /kwashekanya/);
+  assert.match(ts0, /swi pfuna ku break down organic matter/);
+  assert.doesNotMatch(ts0, /fayelela/);
+});
+
+import { checkSouthAfricanSesotho } from './regional-full-draft-checks.ts';
+test('Soil natural worm-bin liquid keeps its meaning while using South African Sesotho spelling', () => {
+  const english = liveST.lessons[2].body.sourceEnglish.split('\n\n')[7];
+  const shown = liveST.lessons[2].body.sesothoDraft.split('\n\n')[7];
+  assert.ok(shown.startsWith('Mokedikedi o itshollang ka tlhaho'));
+  assert.doesNotMatch(shown, /Mokelikeli/);
+  assert.match(shown, /worm bin.*leachate.*Ha o tshwane le worm-casting tea/);
+  checkSouthAfricanSesotho([[english, shown]], 'Soil ST L3 paragraph 7');
+  assert.throws(() => checkSouthAfricanSesotho([[english, shown.replace('Mokedikedi', 'Mokelikeli')]], 'bad spelling'), /Lesotho/);
 });

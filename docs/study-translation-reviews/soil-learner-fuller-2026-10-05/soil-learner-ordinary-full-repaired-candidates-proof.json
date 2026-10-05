@@ -1,0 +1,1472 @@
+{
+  "title": "Soil learner final bounded repair provenance — data only",
+  "base": "bde761b33dc4f587746d60b5fe77d881f29b80ca",
+  "inputs": {
+    "/tmp/soil-learner-ordinary-full-candidates.json": "293d75581b0047c69c583857902a2510eb7e08cf6ce926d2929eab7b51e47b77",
+    "/tmp/soil-learner-ordinary-full-independent-review.json": "fc4e94c801b905b58d522db766a73225cd25280813587ec073fc36f6796126c2",
+    "/tmp/soil-learner-fourteen-repairs-second-check.json": "eed35ac0789310c21d4303788a8a71a637fe97681b21870c73fe7686b1ec6836"
+  },
+  "repairUnits": [
+    {
+      "id": "soil-health/st/soil-health-l1/body/paragraph[7]",
+      "parentFieldIndex": 0,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "currentTarget": "Bapisa likarolo tse lutseng, ’me u utloe mobu tšimong.",
+      "originalProposedTarget": "Bapisa likarolo tse lutseng, ’me u utloe mobu tšimong.",
+      "independentRepairCandidate": "Bapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.",
+      "finalProposedTarget": "Bapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.",
+      "reason": "Settled layers was rendered as settled parts, losing the named strata.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": [
+        "layers"
+      ]
+    },
+    {
+      "id": "soil-health/st/soil-health-l1/body/paragraph[11]",
+      "parentFieldIndex": 0,
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "currentTarget": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, metsi a phallang le kholo ea limela pele u khetha tharollo.",
+      "originalProposedTarget": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, metsi a phallang le kholo ea limela pele u khetha tharollo.",
+      "independentRepairCandidate": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+      "finalProposedTarget": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+      "reason": "Flowing water does not retain drainage as a site condition; keep precise source technical noun.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": [
+        "drainage"
+      ]
+    },
+    {
+      "id": "soil-health/st/soil-health-l1/quiz[1].rationale",
+      "parentFieldIndex": 16,
+      "sourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
+      "currentTarget": "Diteko le ditekolo tse mmalwa di thusa ho fumana bothata. Mosebetsi wa diboko o fapana le maemo, kahoo diboko tse mmalwa feela ha di tiise sesosa sa tsona.",
+      "originalProposedTarget": "Diteko le ditekolo tse mmalwa di thusa ho fumana bothata. Mosebetsi wa diboko o fapana le maemo, kahoo diboko tse mmalwa feela ha di tiise sesosa sa tsona.",
+      "independentRepairCandidate": "Ditekolo tse mmalwa di thusa ho fumana bothata. Mosebetsi wa diboko o fapana le maemo, kahoo diboko tse mmalwa feela ha di tiise sesosa sa bothata.",
+      "finalProposedTarget": "Ditekolo tse mmalwa di thusa ho fumana bothata. Mosebetsi wa diboko o fapana le maemo, kahoo diboko tse mmalwa feela ha di tiise sesosa sa bothata.",
+      "reason": "Source observations are not necessarily tests; the final pronoun currently points to worms rather than the problem.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": []
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/keyPoints[2]",
+      "parentFieldIndex": 20,
+      "sourceEnglish": "Keep seed pods and contaminated materials out",
+      "currentTarget": "Boloka makgapha a dipeo le disebediswa tse nang le ditshila kantle",
+      "originalProposedTarget": "Boloka makgapha a dipeo le disebediswa tse nang le ditshila kantle",
+      "independentRepairCandidate": "Boloka seed pods le contaminated materials kantle.",
+      "finalProposedTarget": "Boloka seed pods le contaminated materials kantle.",
+      "reason": "Dirty materials is narrower/less precise than contaminated materials; seed husks is not reliably pods. Exact technical categories retained.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": [
+        "seed pods",
+        "contaminated materials"
+      ]
+    },
+    {
+      "id": "soil-health/st/soil-health-l3/keyPoints[1]",
+      "parentFieldIndex": 36,
+      "sourceEnglish": "Keep mulch away from trunks and stems",
+      "currentTarget": "Boloka mulch hole le dithito le makala a dimela",
+      "originalProposedTarget": "Boloka mulch hole le dithito le makala a dimela",
+      "independentRepairCandidate": "Boloka mulch hole le trunks le stems.",
+      "finalProposedTarget": "Boloka mulch hole le trunks le stems.",
+      "reason": "Makala means branches and does not retain stems. Hold both exact anatomical labels.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": [
+        "trunks",
+        "stems"
+      ]
+    },
+    {
+      "id": "soil-health/st/soil-health-l3/quiz[0].options[0]",
+      "parentFieldIndex": 40,
+      "sourceEnglish": "Overheating in winter sun and waterlogging from rain",
+      "currentTarget": "Ho tjhesa ho tlola tekanyo letsatsing la mariha le ho kopa metsi ho tswa puleng",
+      "originalProposedTarget": "Ho tjhesa ho tlola tekanyo letsatsing la mariha le ho kopa metsi ho tswa puleng",
+      "independentRepairCandidate": "Ho tjhesa ho tlola tekanyo letsatsing la mariha le waterlogging ho tswa puleng",
+      "finalProposedTarget": "Ho tjhesa ho tlola tekanyo letsatsing la mariha le waterlogging ho tswa puleng",
+      "reason": "Ho kopa metsi reads asking for water, losing waterlogging even in a distractor.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": [
+        "waterlogging"
+      ]
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[7]",
+      "parentFieldIndex": 51,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "currentTarget": "Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+      "originalProposedTarget": "Vhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+      "independentRepairCandidate": "Vhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+      "finalProposedTarget": "Vhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+      "reason": "Zwipiḓa means parts; explicit layer category is lost.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": [
+        "layers"
+      ]
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/quiz[1].options[1]",
+      "parentFieldIndex": 64,
+      "sourceEnglish": "Add a treatment without checking the site",
+      "currentTarget": "Engedzani treatment ni sa athu ṱola site",
+      "originalProposedTarget": "Engedzani treatment ni sa athu ṱola fhethu",
+      "independentRepairCandidate": "Engedzani treatment ni songo ṱola fhethu.",
+      "finalProposedTarget": "Engedzani treatment ni songo ṱola fhethu.",
+      "reason": "Before checking the location could entail checking later; source distractor says without checking. Negative instruction retained explicitly.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": []
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[0].options[1]",
+      "parentFieldIndex": 75,
+      "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+      "currentTarget": "Engedzani dry carbon material i ngaho straw nahone ni i rembuluse.",
+      "originalProposedTarget": "Engedzani dry carbon material i ngaho straw nahone ni i rembuluse.",
+      "independentRepairCandidate": "Engedzani dry carbon material yo engedzeaho i ngaho straw nahone ni i rembuluse.",
+      "finalProposedTarget": "Engedzani dry carbon material yo engedzeaho i ngaho straw nahone ni i rembuluse.",
+      "reason": "More in the source is not explicit in this existing option; preserve comparative quantity.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": []
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[1].options[1]",
+      "parentFieldIndex": 98,
+      "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+      "currentTarget": "I nga vha na harmful organisms kana substances; dilution a si safety guarantee",
+      "originalProposedTarget": "I nga vha na harmful organisms kana substances; dilution a si safety guarantee",
+      "independentRepairCandidate": "I nga vha na harmful organisms kana zwithu zwi re na khombo; dilution a si safety guarantee",
+      "finalProposedTarget": "I nga vha na harmful organisms kana zwithu zwi re na khombo; dilution a si safety guarantee",
+      "reason": "The bare substances term loses an explicit harmful qualifier; reuse the exact dangerous-things wording already proposed in VE body[8].",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": []
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[7]",
+      "parentFieldIndex": 102,
+      "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "currentTarget": "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.",
+      "originalProposedTarget": "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.",
+      "independentRepairCandidate": "Fananisa layers leti tshamaka ehansi, kutani u twa misava ensin'wini.",
+      "finalProposedTarget": "Fananisa settled layers, kutani u twa misava ensin'wini.",
+      "reason": "Swiyenge means portions/sections; exact layer noun kept to preserve strata.",
+      "secondCheckDisposition": "repair",
+      "newExactEnglishPrecisionAnchors": [
+        "settled layers"
+      ]
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/quiz[1].question",
+      "parentFieldIndex": 113,
+      "sourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
+      "currentTarget": "Murimi u kuma misava leyi compacted ni worms ti nga ri tingani. Hi wihi mohato lowu landzelaka wu nga pfunaka?",
+      "originalProposedTarget": "Murimi u kuma misava leyi compacted ni worms ti nga ri tingani. Hi wihi mohato lowu landzelaka wu nga pfunaka?",
+      "independentRepairCandidate": "Murimi u kuma misava leyi compacted ni worms ti nga ri tingani. Hi rihi goza leri landzelaka leri nga pfunaka?",
+      "finalProposedTarget": "Murimi u kuma misava leyi compacted ni worms ti nga ri tingani. Hi rihi goza leri landzelaka leri nga pfunaka?",
+      "reason": "Mohato is Sesotho contamination in the Xitsonga field. Goza candidate remains unreviewed.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": []
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[8]",
+      "parentFieldIndex": 136,
+      "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "currentTarget": "Leachate yi nga va na harmful organisms kumbe substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "originalProposedTarget": "Leachate yi nga va na harmful organisms kumbe substances. U nga yi tirhisi eka edible plants kumbe u ehleketa leswaku dilution yi endla leswaku yi hlayiseka.",
+      "independentRepairCandidate": "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.",
+      "finalProposedTarget": "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.",
+      "reason": "Make both independent prohibitions explicitly negative and retain harmful qualifier for substances.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": []
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[1].options[1]",
+      "parentFieldIndex": 149,
+      "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+      "currentTarget": "Yi nga va na harmful organisms kumbe substances; dilution a hi safety guarantee",
+      "originalProposedTarget": "Yi nga va na harmful organisms kumbe substances; dilution a hi safety guarantee",
+      "independentRepairCandidate": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+      "finalProposedTarget": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+      "reason": "Keep harmful qualification explicit for the substances as well as organisms.",
+      "secondCheckDisposition": "accept",
+      "newExactEnglishPrecisionAnchors": []
+    }
+  ],
+  "noRepositoryEdits": true,
+  "noCommitPushOrPublication": true,
+  "approvalLimits": [
+    "Machine semantic screening only; no fluent/facilitator/local farming/Shangani approval.",
+    "Second check reviews the fourteen repairs, not a new whole-packet semantic scan.",
+    "Retained English terms and precision anchors do not establish full ordinary-prose completion."
+  ],
+  "nativeQuizIndices": {
+    "soil-health-l1": [
+      1,
+      2
+    ],
+    "soil-health-l2": [
+      1,
+      1
+    ],
+    "soil-health-l3": [
+      2,
+      1
+    ]
+  },
+  "outputPath": "/tmp/soil-learner-ordinary-full-repaired-candidates.json",
+  "outputSha256": "5728a9b2899c4e18562e3b716bdea53e9dabaf5524509c382910457aa911a84f",
+  "repairedUnitCount": 14,
+  "repairedParentFieldIndices": [
+    0,
+    16,
+    20,
+    36,
+    40,
+    51,
+    64,
+    75,
+    98,
+    102,
+    113,
+    136,
+    149
+  ],
+  "repairedParentFieldCount": 13,
+  "finalScope": {
+    "module": "soil-health",
+    "lessons": [
+      "soil-health-l1",
+      "soil-health-l2",
+      "soil-health-l3"
+    ],
+    "fieldSlots": 153,
+    "bodyCompositions": 9,
+    "bodyParagraphs": 111,
+    "candidateChangedFields": 77,
+    "candidateChangedUnits": 137,
+    "ordinaryGapUnitsInInventory": 132,
+    "allFieldSlotsReviewed": true,
+    "remainingInventoryGapUnitCount": 36,
+    "retainedEntireEnglishFieldCount": 0,
+    "unchangedReviewedFieldCount": 76
+  },
+  "preservation": {
+    "all153CanonicalCurrentSourceTuplesExactAndUnchanged": true,
+    "all111ParagraphOrderAndCountsPreserved": true,
+    "all241UnlistedCandidateUnitsByteEquivalentAsJson": true,
+    "all140UnlistedCandidateFieldsByteEquivalentAsJson": true,
+    "nativeHashesUnchanged": true,
+    "quizSourcePathsAndNativeAnswerIndicesUnchanged": true,
+    "allNineBodiesMatchSecondCheck": true,
+    "nativeSourceHashesIndependentlyRereadFromGitBase": true
+  },
+  "remainingOrdinaryHoldReviewUnitsHistorical": [
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[3]",
+      "terms": [
+        "layers"
+      ],
+      "reasons": {
+        "layers": "Layer/stratum must not become undifferentiated parts. Exact noun retained pending a reliable layer noun."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[6]",
+      "terms": [
+        "treated"
+      ],
+      "reasons": {
+        "treated": "Treatment label does not promise sanitation or merely heat. Precise term remains technical hold."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[7]",
+      "terms": [
+        "dairy",
+        "pet waste"
+      ],
+      "reasons": {
+        "dairy": "All dairy products, not just milk. Hold exact exclusion category pending broad category translation.",
+        "pet waste": "Pet waste, not farm manure generally. Hold exact exclusion category pending precise scope."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[10]",
+      "terms": [
+        "Bark"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/quiz[0].rationale",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l3/body/paragraph[2]",
+      "terms": [
+        "trunks and stems",
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks and stems": "Distinct plant organs, not branches/roots. Exact pair retained pending reliable anatomical terms.",
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l3/quiz[0].options[2]",
+      "terms": [
+        "structure",
+        "spring"
+      ],
+      "reasons": {
+        "structure": "Soil structure, not merely shape or entire soil. Exact term retained; current soil structure translations remain unreviewed.",
+        "spring": "Season name retained to avoid confusing season with a month; this is ordinary pending terminology."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[9]",
+      "terms": [
+        "limit"
+      ],
+      "reasons": {
+        "limit": "Precise restriction predicate is uncertain; a replacement meaning prevent would strengthen the claim. Retain this verb only pending a defensible restriction verb."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[10]",
+      "terms": [
+        "worms",
+        "Pale colour",
+        "chemicals"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term.",
+        "Pale colour": "Faint/pale colour does not mean white. Exact descriptor retained to avoid introducing a diagnostic hue.",
+        "chemicals": "Chemical category must not narrow to fertiliser or pesticide. Exact category retained pending certain broad term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[11]",
+      "terms": [
+        "patterns",
+        "remedy"
+      ],
+      "reasons": {
+        "patterns": "Must retain a pattern across a field without requiring repetition over time or translating it as a physical shape. Current term can be held explicitly.",
+        "remedy": "Must retain site management remedy rather than medicine-only or guaranteed cure. Exact noun retained pending precise neutral remedy term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/keyPoints[3]",
+      "terms": [
+        "remedy"
+      ],
+      "reasons": {
+        "remedy": "Must retain site management remedy rather than medicine-only or guaranteed cure. Exact noun retained pending precise neutral remedy term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/quiz[1].question",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/quiz[1].rationale",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[0]",
+      "terms": [
+        "broken down"
+      ],
+      "reasons": {
+        "broken down": "Here breakdown refers biological decomposition; breaking/crushing would teach a different process. Retain predicate pending a decomposition translation."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[3]",
+      "terms": [
+        "thick",
+        "layers"
+      ],
+      "reasons": {
+        "thick": "Thickness must not become hardness or depth. Exact descriptor retained; adjective completion pending.",
+        "layers": "Layer/stratum must not become undifferentiated parts. Exact noun retained pending a reliable layer noun."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[6]",
+      "terms": [
+        "treated"
+      ],
+      "reasons": {
+        "treated": "Treatment label does not promise sanitation or merely heat. Precise term remains technical hold."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[7]",
+      "terms": [
+        "dairy",
+        "pet waste"
+      ],
+      "reasons": {
+        "dairy": "All dairy products, not just milk. Hold exact exclusion category pending broad category translation.",
+        "pet waste": "Pet waste, not farm manure generally. Hold exact exclusion category pending precise scope."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[10]",
+      "terms": [
+        "Bark",
+        "treated"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun.",
+        "treated": "Treatment label does not promise sanitation or merely heat. Precise term remains technical hold."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/keyPoints[3]",
+      "terms": [
+        "regional timetable"
+      ],
+      "reasons": {
+        "regional timetable": "A schedule for a region, not one date or a province-wide requirement. Exact noun phrase retained."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[0].options[0]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[0].options[1]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[0].rationale",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[1].options[0]",
+      "terms": [
+        "Bark"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[1].options[1]",
+      "terms": [
+        "seeds"
+      ],
+      "reasons": {
+        "seeds": "Seed rather than fruit or pod. VE has existing mbeu elsewhere; bounded single-noun candidate mbeu with agreement review."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[1].options[3]",
+      "terms": [
+        "gas"
+      ],
+      "reasons": {
+        "gas": "Gas rather than air. Ordinary loan candidate TS gasi; no assertion that emission is a true claim (this is a distractor)."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/body/paragraph[2]",
+      "terms": [
+        "trunks and stems",
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks and stems": "Distinct plant organs, not branches/roots. Exact pair retained pending reliable anatomical terms.",
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/body/paragraph[3]",
+      "terms": [
+        "main crops"
+      ],
+      "reasons": {
+        "main crops": "Primary/principal cropping role, not physically large crops. Exact term retained; no sufficiently certain local term offered."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/body/paragraph[5]",
+      "terms": [
+        "material",
+        "decompose"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels.",
+        "decompose": "Biological decomposition rather than physical breaking. Exact verb retained pending reliable process translation."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/body/paragraph[11]",
+      "terms": [
+        "loosened soil",
+        "surface",
+        "structure",
+        "spring",
+        "Storm"
+      ],
+      "reasons": {
+        "loosened soil": "Soil made loose, not all soil and not necessarily tilled soil. Exact term retained to avoid introducing tillage.",
+        "surface": "Soil outer surface, not whole topsoil layer. Exact term retained pending precise surface noun.",
+        "structure": "Soil structure, not merely shape or entire soil. Exact term retained; current soil structure translations remain unreviewed.",
+        "spring": "Season name retained to avoid confusing season with a month; this is ordinary pending terminology.",
+        "Storm": "Severe storm rather than any rain; exact noun retained pending precise severity term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/keyPoints[1]",
+      "terms": [
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[0].question",
+      "terms": [
+        "April"
+      ],
+      "reasons": {
+        "April": "Month identity must stay April; ordinary calendar name remains pending localized month or accepted loan review."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[0].options[2]",
+      "terms": [
+        "structure",
+        "spring"
+      ],
+      "reasons": {
+        "structure": "Soil structure, not merely shape or entire soil. Exact term retained; current soil structure translations remain unreviewed.",
+        "spring": "Season name retained to avoid confusing season with a month; this is ordinary pending terminology."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[0].rationale",
+      "terms": [
+        "loosened soil",
+        "surface"
+      ],
+      "reasons": {
+        "loosened soil": "Soil made loose, not all soil and not necessarily tilled soil. Exact term retained to avoid introducing tillage.",
+        "surface": "Soil outer surface, not whole topsoil layer. Exact term retained pending precise surface noun."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[1].options[0]",
+      "terms": [
+        "salad leaves"
+      ],
+      "reasons": {
+        "salad leaves": "Leaf scope must stay distinct from all vegetables. Bounded candidates: VE maṱari a saladi; TS matluka ya saladi. No fluent approval."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[1].options[1]",
+      "terms": [
+        "substances"
+      ],
+      "reasons": {
+        "substances": "Harmful material/substance category cannot narrow to organisms. Keep exact noun with explicit harmful qualification; bounded TS swilo leswi nga ni khombo can be considered with scope review."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[9]",
+      "terms": [
+        "limit"
+      ],
+      "reasons": {
+        "limit": "Precise restriction predicate is uncertain; a replacement meaning prevent would strengthen the claim. Retain this verb only pending a defensible restriction verb."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[10]",
+      "terms": [
+        "worms",
+        "pale",
+        "chemicals"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term.",
+        "pale": "Faint/pale colour does not mean white. Exact descriptor retained to avoid introducing a diagnostic hue.",
+        "chemicals": "Chemical category must not narrow to fertiliser or pesticide. Exact category retained pending certain broad term."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[11]",
+      "terms": [
+        "patterns"
+      ],
+      "reasons": {
+        "patterns": "Must retain a pattern across a field without requiring repetition over time or translating it as a physical shape. Current term can be held explicitly."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/keyPoints[1]",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/quiz[1].question",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/quiz[1].rationale",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[0]",
+      "terms": [
+        "broken down"
+      ],
+      "reasons": {
+        "broken down": "Here breakdown refers biological decomposition; breaking/crushing would teach a different process. Retain predicate pending a decomposition translation."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[3]",
+      "terms": [
+        "thick",
+        "layers"
+      ],
+      "reasons": {
+        "thick": "Thickness must not become hardness or depth. Exact descriptor retained; adjective completion pending.",
+        "layers": "Layer/stratum must not become undifferentiated parts. Exact noun retained pending a reliable layer noun."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[6]",
+      "terms": [
+        "treated"
+      ],
+      "reasons": {
+        "treated": "Treatment label does not promise sanitation or merely heat. Precise term remains technical hold."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[7]",
+      "terms": [
+        "dairy",
+        "pet waste"
+      ],
+      "reasons": {
+        "dairy": "All dairy products, not just milk. Hold exact exclusion category pending broad category translation.",
+        "pet waste": "Pet waste, not farm manure generally. Hold exact exclusion category pending precise scope."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[10]",
+      "terms": [
+        "Bark",
+        "clean, untreated materials"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun.",
+        "clean, untreated materials": "Both cleanliness and absence of treatment must remain; ambiguous relative negatives risk exclusion reversal."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/keyPoints[3]",
+      "terms": [
+        "regional timetable"
+      ],
+      "reasons": {
+        "regional timetable": "A schedule for a region, not one date or a province-wide requirement. Exact noun phrase retained."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[0].options[0]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[0].options[1]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[0].rationale",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[1].options[0]",
+      "terms": [
+        "Bark"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[1].options[3]",
+      "terms": [
+        "gas"
+      ],
+      "reasons": {
+        "gas": "Gas rather than air. Ordinary loan candidate TS gasi; no assertion that emission is a true claim (this is a distractor)."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[2]",
+      "terms": [
+        "trunks and stems",
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks and stems": "Distinct plant organs, not branches/roots. Exact pair retained pending reliable anatomical terms.",
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[3]",
+      "terms": [
+        "main crops"
+      ],
+      "reasons": {
+        "main crops": "Primary/principal cropping role, not physically large crops. Exact term retained; no sufficiently certain local term offered."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[5]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[8]",
+      "terms": [
+        "substances"
+      ],
+      "reasons": {
+        "substances": "Harmful material/substance category cannot narrow to organisms. Keep exact noun with explicit harmful qualification; bounded TS swilo leswi nga ni khombo can be considered with scope review."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/keyPoints[1]",
+      "terms": [
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[0].question",
+      "terms": [
+        "April"
+      ],
+      "reasons": {
+        "April": "Month identity must stay April; ordinary calendar name remains pending localized month or accepted loan review."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[0].options[2]",
+      "terms": [
+        "structure",
+        "spring"
+      ],
+      "reasons": {
+        "structure": "Soil structure, not merely shape or entire soil. Exact term retained; current soil structure translations remain unreviewed.",
+        "spring": "Season name retained to avoid confusing season with a month; this is ordinary pending terminology."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[1].options[0]",
+      "terms": [
+        "salad leaves"
+      ],
+      "reasons": {
+        "salad leaves": "Leaf scope must stay distinct from all vegetables. Bounded candidates: VE maṱari a saladi; TS matluka ya saladi. No fluent approval."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[1].options[1]",
+      "terms": [
+        "substances"
+      ],
+      "reasons": {
+        "substances": "Harmful material/substance category cannot narrow to organisms. Keep exact noun with explicit harmful qualification; bounded TS swilo leswi nga ni khombo can be considered with scope review."
+      }
+    }
+  ],
+  "finalOrdinaryEnglishHoldsFromIndependentReview": [
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[3]",
+      "terms": [
+        "layers"
+      ],
+      "reasons": {
+        "layers": "Layer/stratum must not become undifferentiated parts. Exact noun retained pending a reliable layer noun."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[6]",
+      "terms": [
+        "treated"
+      ],
+      "reasons": {
+        "treated": "Treatment label does not promise sanitation or merely heat. Precise term remains technical hold."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[7]",
+      "terms": [
+        "dairy",
+        "pet waste"
+      ],
+      "reasons": {
+        "dairy": "All dairy products, not just milk. Hold exact exclusion category pending broad category translation.",
+        "pet waste": "Pet waste, not farm manure generally. Hold exact exclusion category pending precise scope."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[10]",
+      "terms": [
+        "Bark"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/quiz[0].rationale",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l3/body/paragraph[2]",
+      "terms": [
+        "trunks and stems",
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks and stems": "Distinct plant organs, not branches/roots. Exact pair retained pending reliable anatomical terms.",
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/st/soil-health-l3/quiz[0].options[2]",
+      "terms": [
+        "structure",
+        "spring"
+      ],
+      "reasons": {
+        "structure": "Soil structure, not merely shape or entire soil. Exact term retained; current soil structure translations remain unreviewed.",
+        "spring": "Season name retained to avoid confusing season with a month; this is ordinary pending terminology."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[9]",
+      "terms": [
+        "limit"
+      ],
+      "reasons": {
+        "limit": "Precise restriction predicate is uncertain; a replacement meaning prevent would strengthen the claim. Retain this verb only pending a defensible restriction verb."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[10]",
+      "terms": [
+        "worms",
+        "Pale colour",
+        "chemicals"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term.",
+        "Pale colour": "Faint/pale colour does not mean white. Exact descriptor retained to avoid introducing a diagnostic hue.",
+        "chemicals": "Chemical category must not narrow to fertiliser or pesticide. Exact category retained pending certain broad term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[11]",
+      "terms": [
+        "patterns",
+        "remedy"
+      ],
+      "reasons": {
+        "patterns": "Must retain a pattern across a field without requiring repetition over time or translating it as a physical shape. Current term can be held explicitly.",
+        "remedy": "Must retain site management remedy rather than medicine-only or guaranteed cure. Exact noun retained pending precise neutral remedy term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/keyPoints[3]",
+      "terms": [
+        "remedy"
+      ],
+      "reasons": {
+        "remedy": "Must retain site management remedy rather than medicine-only or guaranteed cure. Exact noun retained pending precise neutral remedy term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/quiz[1].question",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/quiz[1].rationale",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[0]",
+      "terms": [
+        "broken down"
+      ],
+      "reasons": {
+        "broken down": "Here breakdown refers biological decomposition; breaking/crushing would teach a different process. Retain predicate pending a decomposition translation."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[3]",
+      "terms": [
+        "thick",
+        "layers"
+      ],
+      "reasons": {
+        "thick": "Thickness must not become hardness or depth. Exact descriptor retained; adjective completion pending.",
+        "layers": "Layer/stratum must not become undifferentiated parts. Exact noun retained pending a reliable layer noun."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[6]",
+      "terms": [
+        "treated"
+      ],
+      "reasons": {
+        "treated": "Treatment label does not promise sanitation or merely heat. Precise term remains technical hold."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[7]",
+      "terms": [
+        "dairy",
+        "pet waste"
+      ],
+      "reasons": {
+        "dairy": "All dairy products, not just milk. Hold exact exclusion category pending broad category translation.",
+        "pet waste": "Pet waste, not farm manure generally. Hold exact exclusion category pending precise scope."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/body/paragraph[10]",
+      "terms": [
+        "Bark",
+        "treated"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun.",
+        "treated": "Treatment label does not promise sanitation or merely heat. Precise term remains technical hold."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/keyPoints[3]",
+      "terms": [
+        "regional timetable"
+      ],
+      "reasons": {
+        "regional timetable": "A schedule for a region, not one date or a province-wide requirement. Exact noun phrase retained."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[0].options[0]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[0].options[1]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[0].rationale",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[1].options[0]",
+      "terms": [
+        "Bark"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[1].options[1]",
+      "terms": [
+        "seeds"
+      ],
+      "reasons": {
+        "seeds": "Seed rather than fruit or pod. VE has existing mbeu elsewhere; bounded single-noun candidate mbeu with agreement review."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l2/quiz[1].options[3]",
+      "terms": [
+        "gas"
+      ],
+      "reasons": {
+        "gas": "Gas rather than air. Ordinary loan candidate TS gasi; no assertion that emission is a true claim (this is a distractor)."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/body/paragraph[2]",
+      "terms": [
+        "trunks and stems",
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks and stems": "Distinct plant organs, not branches/roots. Exact pair retained pending reliable anatomical terms.",
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/body/paragraph[3]",
+      "terms": [
+        "main crops"
+      ],
+      "reasons": {
+        "main crops": "Primary/principal cropping role, not physically large crops. Exact term retained; no sufficiently certain local term offered."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/body/paragraph[5]",
+      "terms": [
+        "material",
+        "decompose"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels.",
+        "decompose": "Biological decomposition rather than physical breaking. Exact verb retained pending reliable process translation."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/body/paragraph[11]",
+      "terms": [
+        "loosened soil",
+        "surface",
+        "structure",
+        "spring",
+        "Storm"
+      ],
+      "reasons": {
+        "loosened soil": "Soil made loose, not all soil and not necessarily tilled soil. Exact term retained to avoid introducing tillage.",
+        "surface": "Soil outer surface, not whole topsoil layer. Exact term retained pending precise surface noun.",
+        "structure": "Soil structure, not merely shape or entire soil. Exact term retained; current soil structure translations remain unreviewed.",
+        "spring": "Season name retained to avoid confusing season with a month; this is ordinary pending terminology.",
+        "Storm": "Severe storm rather than any rain; exact noun retained pending precise severity term."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/keyPoints[1]",
+      "terms": [
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[0].question",
+      "terms": [
+        "April"
+      ],
+      "reasons": {
+        "April": "Month identity must stay April; ordinary calendar name remains pending localized month or accepted loan review."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[0].options[2]",
+      "terms": [
+        "structure",
+        "spring"
+      ],
+      "reasons": {
+        "structure": "Soil structure, not merely shape or entire soil. Exact term retained; current soil structure translations remain unreviewed.",
+        "spring": "Season name retained to avoid confusing season with a month; this is ordinary pending terminology."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[0].rationale",
+      "terms": [
+        "loosened soil",
+        "surface"
+      ],
+      "reasons": {
+        "loosened soil": "Soil made loose, not all soil and not necessarily tilled soil. Exact term retained to avoid introducing tillage.",
+        "surface": "Soil outer surface, not whole topsoil layer. Exact term retained pending precise surface noun."
+      }
+    },
+    {
+      "id": "soil-health/ve/soil-health-l3/quiz[1].options[0]",
+      "terms": [
+        "salad leaves"
+      ],
+      "reasons": {
+        "salad leaves": "Leaf scope must stay distinct from all vegetables. Bounded candidates: VE maṱari a saladi; TS matluka ya saladi. No fluent approval."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[9]",
+      "terms": [
+        "limit"
+      ],
+      "reasons": {
+        "limit": "Precise restriction predicate is uncertain; a replacement meaning prevent would strengthen the claim. Retain this verb only pending a defensible restriction verb."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[10]",
+      "terms": [
+        "worms",
+        "pale",
+        "chemicals"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term.",
+        "pale": "Faint/pale colour does not mean white. Exact descriptor retained to avoid introducing a diagnostic hue.",
+        "chemicals": "Chemical category must not narrow to fertiliser or pesticide. Exact category retained pending certain broad term."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[11]",
+      "terms": [
+        "patterns"
+      ],
+      "reasons": {
+        "patterns": "Must retain a pattern across a field without requiring repetition over time or translating it as a physical shape. Current term can be held explicitly."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/keyPoints[1]",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/quiz[1].question",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/quiz[1].rationale",
+      "terms": [
+        "worms"
+      ],
+      "reasons": {
+        "worms": "Earthworm category must not broaden to insects/larvae. Retain exact organism pending certain learner term."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[0]",
+      "terms": [
+        "broken down"
+      ],
+      "reasons": {
+        "broken down": "Here breakdown refers biological decomposition; breaking/crushing would teach a different process. Retain predicate pending a decomposition translation."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[3]",
+      "terms": [
+        "thick",
+        "layers"
+      ],
+      "reasons": {
+        "thick": "Thickness must not become hardness or depth. Exact descriptor retained; adjective completion pending.",
+        "layers": "Layer/stratum must not become undifferentiated parts. Exact noun retained pending a reliable layer noun."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[6]",
+      "terms": [
+        "treated"
+      ],
+      "reasons": {
+        "treated": "Treatment label does not promise sanitation or merely heat. Precise term remains technical hold."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[7]",
+      "terms": [
+        "dairy",
+        "pet waste"
+      ],
+      "reasons": {
+        "dairy": "All dairy products, not just milk. Hold exact exclusion category pending broad category translation.",
+        "pet waste": "Pet waste, not farm manure generally. Hold exact exclusion category pending precise scope."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/body/paragraph[10]",
+      "terms": [
+        "Bark",
+        "clean, untreated materials"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun.",
+        "clean, untreated materials": "Both cleanliness and absence of treatment must remain; ambiguous relative negatives risk exclusion reversal."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/keyPoints[3]",
+      "terms": [
+        "regional timetable"
+      ],
+      "reasons": {
+        "regional timetable": "A schedule for a region, not one date or a province-wide requirement. Exact noun phrase retained."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[0].options[0]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[0].options[1]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[0].rationale",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[1].options[0]",
+      "terms": [
+        "Bark"
+      ],
+      "reasons": {
+        "Bark": "Tree bark, not pods or generic peel. Existing ST makgapetla a difate could be reused in ST; VE/TS hold pending exact noun."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l2/quiz[1].options[3]",
+      "terms": [
+        "gas"
+      ],
+      "reasons": {
+        "gas": "Gas rather than air. Ordinary loan candidate TS gasi; no assertion that emission is a true claim (this is a distractor)."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[2]",
+      "terms": [
+        "trunks and stems",
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks and stems": "Distinct plant organs, not branches/roots. Exact pair retained pending reliable anatomical terms.",
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[3]",
+      "terms": [
+        "main crops"
+      ],
+      "reasons": {
+        "main crops": "Primary/principal cropping role, not physically large crops. Exact term retained; no sufficiently certain local term offered."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[5]",
+      "terms": [
+        "material"
+      ],
+      "reasons": {
+        "material": "Materials here are compost/residue inputs, not tools. Bounded TS swilo for a generic input; avoid blind replacement inside nitrogen-rich/carbon labels."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[8]",
+      "terms": [
+        "substances"
+      ],
+      "reasons": {
+        "substances": "Harmful material/substance category cannot narrow to organisms. Keep exact noun with explicit harmful qualification; bounded TS swilo leswi nga ni khombo can be considered with scope review."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/keyPoints[1]",
+      "terms": [
+        "trunks",
+        "stems"
+      ],
+      "reasons": {
+        "trunks": "Distinct plant trunk organ; do not collapse to all branches or roots.",
+        "stems": "Distinct plant stem organ; do not collapse to branches or trunks."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[0].question",
+      "terms": [
+        "April"
+      ],
+      "reasons": {
+        "April": "Month identity must stay April; ordinary calendar name remains pending localized month or accepted loan review."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[0].options[2]",
+      "terms": [
+        "structure",
+        "spring"
+      ],
+      "reasons": {
+        "structure": "Soil structure, not merely shape or entire soil. Exact term retained; current soil structure translations remain unreviewed.",
+        "spring": "Season name retained to avoid confusing season with a month; this is ordinary pending terminology."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[1].options[0]",
+      "terms": [
+        "salad leaves"
+      ],
+      "reasons": {
+        "salad leaves": "Leaf scope must stay distinct from all vegetables. Bounded candidates: VE maṱari a saladi; TS matluka ya saladi. No fluent approval."
+      }
+    },
+    {
+      "id": "soil-health/ts/soil-health-l3/quiz[1].options[1]",
+      "terms": [
+        "substances"
+      ],
+      "reasons": {
+        "substances": "Harmful material/substance category cannot narrow to organisms. Keep exact noun with explicit harmful qualification; bounded TS swilo leswi nga ni khombo can be considered with scope review."
+      }
+    }
+  ]
+}

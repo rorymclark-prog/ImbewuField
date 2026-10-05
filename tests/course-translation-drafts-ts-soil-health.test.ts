@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
-import { XITSONGA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ts-soil-health.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { historicalTS as XITSONGA_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
+// Earlier clause checks retain their dated wording; the helper verifies live accepted text before rewinding it.
+import { resolveHistoricalPresentation as resolveLearnerLessonPresentation } from './soil-learner-reviewed-history.ts';
 
 const sourceModule = COURSE_MODULES.find(module => module.id === 'soil-health')!;
 const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'soil-health-l1')!;
