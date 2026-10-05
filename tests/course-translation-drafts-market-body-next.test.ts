@@ -2,10 +2,19 @@ import { marketAcceptedTarget, checkMarketTeachingExample } from './market-l1-co
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
-import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
-import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
-import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
+import { resolveLearnerLessonPresentation as nativeResolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { SESOTHO_MARKET_COMMUNITY_DRAFT as NATIVE_SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
+import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as NATIVE_TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
+import { XITSONGA_MARKET_COMMUNITY_DRAFT as NATIVE_XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
+
+import { reconstructMarketBeforeL2L3Completion, reconstructMarketPresentationBeforeCompletion } from './market-l2-l3-completion-checks.ts';
+
+const resolveLearnerLessonPresentation = reconstructMarketPresentationBeforeCompletion;
+// 2026-10-05: keep this historical batch's claims; source-bound reconstruction
+// validates accepted final targets before reversing only the later 36 field changes.
+const SESOTHO_MARKET_COMMUNITY_DRAFT = reconstructMarketBeforeL2L3Completion(NATIVE_SESOTHO_MARKET_COMMUNITY_DRAFT, 'st');
+const TSHIVENDA_MARKET_COMMUNITY_DRAFT = reconstructMarketBeforeL2L3Completion(NATIVE_TSHIVENDA_MARKET_COMMUNITY_DRAFT, 've');
+const XITSONGA_MARKET_COMMUNITY_DRAFT = reconstructMarketBeforeL2L3Completion(NATIVE_XITSONGA_MARKET_COMMUNITY_DRAFT, 'ts');
 
 const market = COURSE_MODULES.find(module => module.id === 'market-community')!;
 const sourceLesson = (id: string) => market.lessons.find(lesson => lesson.id === id)!;

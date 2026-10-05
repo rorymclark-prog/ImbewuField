@@ -3,9 +3,18 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveCourseModulePresentation, regionalModuleDraftBadge } from '../lib/course-module-translation-drafts.ts';
-import { SESOTHO_MARKET_COMMUNITY_DRAFT as st } from '../lib/course-translation-drafts-st-market-community.ts';
-import { XITSONGA_MARKET_COMMUNITY_DRAFT as ts } from '../lib/course-translation-drafts-ts-market-community.ts';
-import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as ve } from '../lib/course-translation-drafts-ve-market-community.ts';
+import { SESOTHO_MARKET_COMMUNITY_DRAFT as native_st } from '../lib/course-translation-drafts-st-market-community.ts';
+import { XITSONGA_MARKET_COMMUNITY_DRAFT as native_ts } from '../lib/course-translation-drafts-ts-market-community.ts';
+import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as native_ve } from '../lib/course-translation-drafts-ve-market-community.ts';
+
+import { reconstructMarketBeforeL2L3Completion } from './market-l2-l3-completion-checks.ts';
+
+// 2026-10-05: keep this historical batch's claims; source-bound reconstruction
+// validates accepted final targets before reversing only the later 36 field changes.
+
+const st = reconstructMarketBeforeL2L3Completion(native_st, 'st');
+const ve = reconstructMarketBeforeL2L3Completion(native_ve, 've');
+const ts = reconstructMarketBeforeL2L3Completion(native_ts, 'ts');
 
 type Pair = { sourceEnglish: string; reviewStatus: string; [key: string]: unknown };
 const accepted = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/MARKET-L1-ORDINARY-COMPLETION-ACCEPTED-2026-10-05.json', import.meta.url), 'utf8'));

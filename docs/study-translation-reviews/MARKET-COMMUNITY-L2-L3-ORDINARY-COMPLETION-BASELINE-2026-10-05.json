@@ -1,0 +1,771 @@
+{
+  "title": "Market Community L2/L3 learner baseline",
+  "date": "2026-10-05",
+  "base": "bde761b33dc4f587746d60b5fe77d881f29b80ca",
+  "branch": "codex/regional-market-learner-completion-20261005",
+  "canonicalSource": {
+    "moduleMetadata": {
+      "id": "market-community",
+      "title": "Market Gardening & Community",
+      "description": "Record-keeping, selling surplus and building local food networks.",
+      "durationMins": 20,
+      "category": "business"
+    },
+    "lessons": [
+      {
+        "id": "market-community-l2",
+        "infographicUrl": "/course-images/market-community/market-community-l2.jpg",
+        "infographicAlt": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+        "title": "Selling Surplus: Where to Sell and How to Price",
+        "body": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+        "keyPoints": [
+          "Agree product, quantity, quality, delivery and payment",
+          "Compare costs and losses as well as selling price",
+          "Promise regular boxes only when supply and customer terms support them",
+          "Check market rules and describe growing practices honestly"
+        ],
+        "quiz": [
+          {
+            "q": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+            "options": [
+              "A formal market stall needing consistent weekly supply",
+              "A box scheme needing the same produce weekly",
+              "An informal market or neighbour sales with no fixed commitment",
+              "A daily-delivery school contract"
+            ],
+            "correct": 2,
+            "rationale": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has."
+          },
+          {
+            "q": "How can agreed regular orders help a grower plan?",
+            "options": [
+              "Box customers always pay more per kilogram",
+              "Box schemes let you charge extra for packaging",
+              "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+              "Box schemes avoid tax obligations"
+            ],
+            "correct": 2,
+            "rationale": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them."
+          }
+        ]
+      },
+      {
+        "id": "market-community-l3",
+        "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
+        "infographicAlt": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+        "title": "Building Community Food Networks: Strength in Numbers",
+        "body": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "keyPoints": [
+          "Record seed identity, source and quality, and check if permission is needed before sharing",
+          "Agree care, booking and repair responsibilities for shared tools",
+          "Measure losses and net returns for each selling route",
+          "Combine shared experience with qualified help when needed"
+        ],
+        "quiz": [
+          {
+            "q": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+            "options": [
+              "Mix all varieties without labels",
+              "Agree seed-quality checks and check whether permission is needed to share the variety",
+              "Assume sharing automatically improves every seed lot",
+              "Rely only on the size of the group"
+            ],
+            "correct": 1,
+            "rationale": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing."
+          },
+          {
+            "q": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+            "options": [
+              "Always choose the highest headline price",
+              "Always choose the shortest journey",
+              "Compare money received after fees, transport, unsold produce and losses",
+              "Assume joining a group removes all costs"
+            ],
+            "correct": 2,
+            "rationale": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options."
+          }
+        ]
+      }
+    ]
+  },
+  "regionalDrafts": {
+    "st": [
+      {
+        "id": "market-community-l2",
+        "infographicAlt": {
+          "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+          "sesothoDraft": "Mekgwa e meraro ya ho rekisa ho tswa polasing e le nngwe: setala se pela tsela, thomelo ya sehlopha lebenkeleng, le lebokose le yang ka kotloloho lapeng.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+          "sesothoDraft": "Ho rekisa surplus: moo o ka rekisang le kamoo o ka behang theko.",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+          "sesothoDraft": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.\n\nBapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.\n\nHlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.\n\nDirect selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.\n\nMokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.\n\nDumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nQala ka what you can reliably supply le seo bareki ba se batlang.\n\nSheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.\n\nGarden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.\n\nHa tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.\n\nFana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.\n\nHlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+            "sesothoDraft": "Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Compare costs and losses as well as selling price",
+            "sesothoDraft": "Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+            "sesothoDraft": "Tshepisa regular boxes feela ha supply le customer terms di di tshehetsa.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Check market rules and describe growing practices honestly",
+            "sesothoDraft": "Hlahloba market rules mme o hlalose growing practices tsa hao ka botshepehi.",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+              "sesothoDraft": "Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke channel efe e mo loketseng ka ho fetisisa?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                "sesothoDraft": "Formal market stall e hlokang consistent weekly supply.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A box scheme needing the same produce weekly",
+                "sesothoDraft": "Box scheme e hlokang produce e tshwanang beke le beke.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                "sesothoDraft": "Informal market kapa thekiso ho baahisani ntle le fixed commitment.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A daily-delivery school contract",
+                "sesothoDraft": "Konteraka ya sekolo e hlokang ho tlisa letsatsi le letsatsi.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+              "sesothoDraft": "Ena ke yona feela channel e sa mo hlokeng ho tshepisa fixed amount beke le beke — o rekisa seo a nang le sona ka nnete.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "How can agreed regular orders help a grower plan?",
+              "sesothoDraft": "Ditaelo tsa kamehla tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Box customers always pay more per kilogram",
+                "sesothoDraft": "Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Box schemes let you charge extra for packaging",
+                "sesothoDraft": "Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                "sesothoDraft": "Committed subscription income e o dumella ho rera production ho potoloha real demand ho e-na le ho lema ka ho hakanya.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Box schemes avoid tax obligations",
+                "sesothoDraft": "Box schemes di qoba tax obligations",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+              "sesothoDraft": "Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, payment le costs tsa ho di phethahatsa.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "market-community-l3",
+        "infographicAlt": {
+          "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "sesothoDraft": "Dibethe tse hlano tse nyane tse jetsweng, tse nang le metsu e lebang lebokoseng la bohareng le tletseng dihlahiswa; kharafu e nyane ya letsoho le nkgo ya dipeo di behilwe ka tlase.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+          "sesothoDraft": "Ho Aha Marang-rang a Dijo tsa Setjhaba: Matla a Kopanelo",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+          "sesothoDraft": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nNgola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.\n\nHo arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgolang method, conditions le result so others can judge whether it may suit their land.\n\nBatla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+            "sesothoDraft": "Ngola seed identity, source and quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+            "sesothoDraft": "Dumellanang ka boikarabelo ba tlhokomelo, ho behela nako le ho lokisa disebediswa tse arolelwanwang",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Measure losses and net returns for each selling route",
+            "sesothoDraft": "Lekanya losses le net returns bakeng sa selling route ka nngwe.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Combine shared experience with qualified help when needed",
+            "sesothoDraft": "Kopanya shared experience le qualified help ha ho hlokahala.",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+              "sesothoDraft": "Baahelani ba batla ho arolelana dipeo tseo ba di bolokileng. Ke eng e thusang hore peo e arolelwanwang e be molemo?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Mix all varieties without labels",
+                "sesothoDraft": "Kopanya mefuta yohle ntle le labels.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+                "sesothoDraft": "Lumellanang ka seed-quality checks, mme le hlahlobe hore na permission e a hlokahala ho arolelana variety.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Assume sharing automatically improves every seed lot",
+                "sesothoDraft": "Nka hore sharing e ntlafatsa seed lot e nngwe le e nngwe ka boyona.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Rely only on the size of the group",
+                "sesothoDraft": "Itshetlehe feela ka size ya group.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+              "sesothoDraft": "Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+              "sesothoDraft": "Molemi o bapisa mmaraka o hole le bareki ba haufi. Ke eng e lokelang ho tataisa qeto?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Always choose the highest headline price",
+                "sesothoDraft": "Khetha kamehla highest headline price.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Always choose the shortest journey",
+                "sesothoDraft": "Khetha kamehla shortest journey.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+                "sesothoDraft": "Bapisa money received ka mora fees, transport, unsold produce le losses.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Assume joining a group removes all costs",
+                "sesothoDraft": "Nka hore ho kena group ho tlosa costs tsohle.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+              "sesothoDraft": "Distance e ama costs, empa ha se yona feela factor. Sebedisa actual returns le losses ho bapisa options.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      }
+    ],
+    "ve": [
+      {
+        "id": "market-community-l3",
+        "infographicAlt": {
+          "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "tshivendaDraft": "Mibedo miṱuku miṱanu yo ṱavhiwaho i na misevhe i tshi livha kha crate ya produce i re vhukati; hand trowel na jar ya seeds zwi re nga fhasi.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+          "tshivendaDraft": "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+          "tshivendaDraft": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.\n\nMukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.\n\nVhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions and result so others can judge whether it may suit their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+            "tshivendaDraft": "Ṅwalani seed identity, source and quality, nahone ni sedze arali permission i tshi ṱoḓea musi ni sa athu u kovhelana.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+            "tshivendaDraft": "Tendelani nga vhuḓifhinduleli ha u ṱhogomela zwishumiswa zwine zwa kovhekanywa, booking yazwo, na u zwi lugisa.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Measure losses and net returns for each selling route",
+            "tshivendaDraft": "Measure losses and net returns kha selling route iṅwe na iṅwe.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Combine shared experience with qualified help when needed",
+            "tshivendaDraft": "Ṱanganyisani shared experience na qualified help musi zwi tshi ṱoḓea.",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+              "tshivendaDraft": "Vhahura vha ṱoḓa u kovhelana saved seed. What helps make the shared seed useful?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Mix all varieties without labels",
+                "tshivendaDraft": "Ṱanganyisani mifuda yoṱhe ni songo i ṅwala labels.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+                "tshivendaDraft": "Thendelanani nga seed-quality checks nahone ni sedze arali permission i tshi ṱoḓea u kovhelana variety.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Assume sharing automatically improves every seed lot",
+                "tshivendaDraft": "Humbulani uri sharing automatically improves every seed lot.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Rely only on the size of the group",
+                "tshivendaDraft": "Fulufhelani fhedzi kha size ya group.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+              "tshivendaDraft": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+              "tshivendaDraft": "Mulimi u khou vhambedza distant market na nearby customers. Ndi mini tshine tsha tea u livhisa phetho?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Always choose the highest headline price",
+                "tshivendaDraft": "Khethani tshifhinga tshoṱhe highest headline price.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Always choose the shortest journey",
+                "tshivendaDraft": "Khethani tshifhinga tshoṱhe shortest journey.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+                "tshivendaDraft": "Vhambedzani money received after fees, transport, unsold produce and losses.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Assume joining a group removes all costs",
+                "tshivendaDraft": "Humbulani uri u dzhena kha group zwi fhelisa costs dzoṱhe.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+              "tshivendaDraft": "Distance affects costs, but it is not the only factor. Shumisani actual returns and losses u vhambedza options.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "market-community-l2",
+        "infographicAlt": {
+          "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+          "tshivendaDraft": "Nḓila tharu dza u rengisa zwi tshi bva kha farm nthihi: roadside stall, u isa produce shop nga tshigwada, na box i yaho nga ho livhaho muṱani.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+          "tshivendaDraft": "U rengisa surplus: Hune wa nga rengisa hone na uri wa vhea mutengo hani",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+          "tshivendaDraft": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.\n\nVhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.\n\nSedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.\n\nDirect selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.\n\nBox scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.\n\nTendelani nga contents, price, payment, na uri hu itea mini when crops are short. Regular orders a thusa u pulana only when customers and growers can keep the agreement.\n\nThomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.\n\nṰolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.\n\nTshikalo tsha ngade kana tshivhalo tsha vharengi, zwone fhedzi, a zwi anganyeli income. Ringetani arrangement ine na nga kona u i langula, ni ṅwale results.\n\nArali production i tshi shanduka vhege nga vhege, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and tendelanani nga clear terms na vharengi.\n\nṰalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+            "tshivendaDraft": "Tendelani nga ha tshibveledzwa, tshivhalo, quality, delivery na payment.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Compare costs and losses as well as selling price",
+            "tshivendaDraft": "Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+            "tshivendaDraft": "Fulufhedzisani regular boxes fhedzi musi supply na customer terms zwi tshi zwi tendela.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Check market rules and describe growing practices honestly",
+            "tshivendaDraft": "Sedzani market rules, nahone ni ṱaluse growing practices dzaṋu nga u fulufhedzea.",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+              "tshivendaDraft": "Mulimi wa bulasi ḽiṱuku u na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                "tshivendaDraft": "Formal market stall ine ya ṱoḓa consistent weekly supply.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A box scheme needing the same produce weekly",
+                "tshivendaDraft": "Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                "tshivendaDraft": "Informal market kana u rengisa kha vhahura hu si na fixed commitment.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A daily-delivery school contract",
+                "tshivendaDraft": "Thendelano ya tshikolo ine ya ṱoḓa u isa zwithu ḓuvha ḽiṅwe na ḽiṅwe.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+              "tshivendaDraft": "Iyi ndi yone channel nthihi ine ya si ṱoḓe uri a fulufhedzise fixed amount vhege iṅwe na iṅwe — u rengisa zwe a vha nazwo zwa vhukuma.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "How can agreed regular orders help a grower plan?",
+              "tshivendaDraft": "Agreed regular orders zwi nga thusa hani mulimi u pulana?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Box customers always pay more per kilogram",
+                "tshivendaDraft": "Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Box schemes let you charge extra for packaging",
+                "tshivendaDraft": "Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                "tshivendaDraft": "Committed subscription income i ni thusa u pulana production u tevhela real demand, nṱhani ha u alusa nga speculation.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Box schemes avoid tax obligations",
+                "tshivendaDraft": "Box schemes dzi iledza tax obligations",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+              "tshivendaDraft": "Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, payment na costs dza u dzi swikisa.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      }
+    ],
+    "ts": [
+      {
+        "id": "market-community-l2",
+        "infographicAlt": {
+          "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+          "xitsongaDraft": "Tindlela tinharhu to xavisa ku suka eka farm rin’we: roadside stall, ku yisa produce eka shop hi ntlawa, ni box leri kongomaka eka ndyangu.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+          "xitsongaDraft": "Ku xavisa surplus: laha u nga xaviselaka kona ni ndlela yo veka nxavo.",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+          "xitsongaDraft": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.\n\nPimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.\n\nKambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.\n\nDirect selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.\n\nBox scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.\n\nPfumelelanani hi contents, price, payment na leswi humelelaka loko crops are short. Tioda ta nkarhi na nkarhi ti pfuna ku pulana only when customers and growers can keep the agreement.\n\nSungula hi what you can reliably supply na leswi vaxavi va swi lavaka.\n\nKambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.\n\nVukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta arrangement leyi u nga kotaka ku yi lawula, kutani u tsala results.\n\nLoko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.\n\nOffer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.\n\nHlamusela maendlelo ya wena ya ku byala hi vutshembeki. Loko u nga se tirhisa label, kambisisa any certification or claim the buyer requires.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+            "xitsongaDraft": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Compare costs and losses as well as selling price",
+            "xitsongaDraft": "Pimanisa costs ni losses xikan’we ni selling price.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+            "xitsongaDraft": "Tshembisa regular boxes ntsena loko supply ni customer terms swi swi seketela.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Check market rules and describe growing practices honestly",
+            "xitsongaDraft": "Kambisisa market rules kutani u hlamusela growing practices ta wena hi ku vula ntiyiso.",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+              "xitsongaDraft": "Murimi wa purasi leritsongo u ni production leyi nga faniki vhiki ni vhiki — surplus hi mavhiki man’wana, yi va yitsongo hi man’wana. Hi yihi channel leyi n’wi fanelaka best?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                "xitsongaDraft": "Formal market stall leyi lavaka consistent weekly supply.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A box scheme needing the same produce weekly",
+                "xitsongaDraft": "Box scheme leyi lavaka produce leyi fanaka vhiki ni vhiki.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                "xitsongaDraft": "Informal market kumbe ku xavisa eka vaakelani ku nga ri na fixed commitment.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A daily-delivery school contract",
+                "xitsongaDraft": "Kontraka ya xikolo leyi lavaka ku yisa siku ni siku.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+              "xitsongaDraft": "Leyi hi yona channel yin’we ntsena leyi nga laviki leswaku a tshembisa fixed amount vhiki ni vhiki — u xavisa leswi a nga na swona hakunene.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "How can agreed regular orders help a grower plan?",
+              "xitsongaDraft": "Tioda ta nkarhi na nkarhi leti ku pfumelelaneke ti nga n’wi pfuna njani murimi ku pulana?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Box customers always pay more per kilogram",
+                "xitsongaDraft": "Vaxavi va box va hakela mali yo tala hi kilogram minkarhi hinkwato.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Box schemes let you charge extra for packaging",
+                "xitsongaDraft": "Box schemes ti ku pfumelela ku charge extra for packaging.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                "xitsongaDraft": "Committed subscription income yi ku pfuna ku pulana production hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Box schemes avoid tax obligations",
+                "xitsongaDraft": "Box schemes ti papalata tax obligations",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+              "xitsongaDraft": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, payment ni costs ta ku ti hetisisa.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "market-community-l3",
+        "infographicAlt": {
+          "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "xitsongaDraft": "Five small planted beds, with miseve leyi kombetelaka eka crate ya produce leyi nga exikarhini; hand trowel ni jar ya mbewu swi le hansi ka yona.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+          "xitsongaDraft": "Ku aka network ya swakudya swa muganga: Strength in Numbers",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+          "xitsongaDraft": "Vaakelani va nga avelana different varieties and the work of saving seed.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce gently, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.\n\nPimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions na result so others can judge whether it may suit their land.\n\nLavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+            "xitsongaDraft": "Tsala seed identity, source and quality, kutani check if permission is needed before sharing.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+            "xitsongaDraft": "Pfumelelanani hi vutihlamuleri byo hlayisa switirhisiwa leswi avelaniwaka, booking ya swona ni ku swi lunghisa.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Measure losses and net returns for each selling route",
+            "xitsongaDraft": "Pima losses and net returns for each selling route.",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Combine shared experience with qualified help when needed",
+            "xitsongaDraft": "Hlanganisa shared experience with qualified help when needed.",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+              "xitsongaDraft": "Vaakelani va lava ku avelana saved seed. Xana i yini lexi pfunaka leswaku shared seed yi va useful?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Mix all varieties without labels",
+                "xitsongaDraft": "Hlanganisa all varieties without labels.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+                "xitsongaDraft": "Pfumelelana hi seed-quality checks naswona check whether permission is needed to share the variety.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Assume sharing automatically improves every seed lot",
+                "xitsongaDraft": "Assume sharing automatically improves every seed lot",
+                "reviewStatus": "hold"
+              },
+              {
+                "sourceEnglish": "Rely only on the size of the group",
+                "xitsongaDraft": "Tshemba ntsena eka size of the group.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+              "xitsongaDraft": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+              "xitsongaDraft": "Murimi u pimanisa distant market na nearby customers. Xana i yini lexi faneleke ku kongomisa xiboho?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Always choose the highest headline price",
+                "xitsongaDraft": "Always hlawula the highest headline price.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Always choose the shortest journey",
+                "xitsongaDraft": "Always hlawula the shortest journey.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+                "xitsongaDraft": "Pimanisa money received after fees, transport, unsold produce and losses.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Assume joining a group removes all costs",
+                "xitsongaDraft": "Assume leswaku joining a group removes all costs.",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+              "xitsongaDraft": "Distance affects costs, kambe it is not the only factor. Tirhisa actual returns and losses to compare the options.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

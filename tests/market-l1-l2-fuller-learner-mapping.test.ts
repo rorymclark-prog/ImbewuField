@@ -28,6 +28,8 @@ const mapping = JSON.parse(readFileSync(
   'utf8',
 )) as AppliedMapping;
 
+const marketL2L3 = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/MARKET-COMMUNITY-L2-L3-ORDINARY-COMPLETION-APPLIED-2026-10-05.json', import.meta.url), 'utf8'));
+
 const drafts = {
   st: SESOTHO_MARKET_COMMUNITY_DRAFT,
   ve: TSHIVENDA_MARKET_COMMUNITY_DRAFT,
@@ -79,6 +81,15 @@ test('Market L1/L2 regional wording changes only approved source-paired paragrap
           assert.equal(sourceParagraphs[index], row.sourceEnglish, 'Completion is bound to the same ordered canonical paragraph');
           expectedParagraphs[index] = row.repairedTarget;
         }
+      }
+      // 2026-10-05: L2 completion supersedes the former partial body. Reconstruct
+      // the old batch first, then require the exact prior/source edge before applying it.
+      if (lessonId === 'market-community-l2') {
+        const completion = marketL2L3.fields.find((row: any) => row.language === language && row.lessonId === lessonId && row.fieldPath === 'body');
+        assert.ok(completion, `${language}: accepted L2 completion exists`);
+        assert.equal(expectedParagraphs.join('\n\n'), completion.currentTarget, 'L2 completion starts from the historical reconstruction');
+        assert.equal(sourceLesson.body, completion.sourceEnglish, 'L2 completion retains the complete canonical source');
+        expectedParagraphs.splice(0, expectedParagraphs.length, ...completion.appliedTarget.split('\n\n'));
       }
       assert.deepEqual(actualParagraphs, expectedParagraphs,
         `${language}/${lessonId}: only approved replacements change; all unselected paragraphs remain exact`);
@@ -132,6 +143,6 @@ test('Market learner wording keeps quantities, sale risks, crop meaning and plan
   const xitsongaL2 = draftBody('ts', 'market-community-l2').split('\n\n');
   assert.match(xitsongaL2[1], /ku paka.*nxavo wo xavisa/,
     'itsonga distinguishes packing from the selling price');
-  assert.match(xitsongaL2[2], /milawu ya makete.*local trading and food requirements.*a ku na milawu kumbe costs/,
+  assert.match(xitsongaL2[2], /milawu ya makete.*swilaveko swa ndhawu swa ku xavisa ni swakudya.*a ku na milawu kumbe costs/,
     'itsonga retains market rules and the no-rules/no-costs warning');
 });

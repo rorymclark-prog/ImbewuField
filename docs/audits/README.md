@@ -66,6 +66,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-05 | [Market L2/L3 ordinary learner completion — Codex](2026-10-05/study-market-l2-l3-ordinary-codex.md) |
 | 2026-10-05 | [Soil and Water regional draft integration — Codex](2026-10-05/study-soil-water-material-integration-codex.md) |
 | 2026-10-05 | [isiZulu source text in image zoom — Codex](2026-10-05/study-isizulu-source-zoom-codex.md) |
 | 2026-10-05 | [Core Study isiZulu image descriptions — Codex](2026-10-05/study-isizulu-image-descriptions-codex.md) · [Vegetables L2 fuller regional drafts — Codex](2026-10-05/study-vegetables-l2-fuller-codex.md) · [Vegetables L4 ordinary regional drafts — Codex](2026-10-05/study-vegetables-l4-ordinary-codex.md) |
