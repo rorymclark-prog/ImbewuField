@@ -1048,16 +1048,101 @@
             "text": "Pest pressure i anzela u engedzea nga tshiitisi."
           },
           {
-            "status": "draft",
-            "text": "Zwimela zwi re na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Plants under ",
+                "status": "draft",
+                "text": "Zwimela zwi re na "
+              },
+              {
+                "sourceEnglish": "stress.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " One crop dominating the ground.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Or ",
+                "status": "draft",
+                "text": " Kana "
+              },
+              {
+                "sourceEnglish": "broad chemical use",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that has already removed the ",
+                "status": "draft",
+                "text": " yo no bvisa "
+              },
+              {
+                "sourceEnglish": "predators",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that were helping you.",
+                "status": "draft",
+                "text": " dze dza vha dzi tshi ni thusa."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "So before you treat anything, sedzani system yoṱhe."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "So ",
+                "status": "draft",
+                "text": "Ngazwenezwo, "
+              },
+              {
+                "sourceEnglish": "before you treat anything, ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "look at the whole system.",
+                "status": "draft",
+                "text": "sedzani system yoṱhe."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”? Are predators already working on the problem for you?"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Is the plant short of water?",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Is the soil ",
+                "status": "draft",
+                "text": " Soil yo "
+              },
+              {
+                "sourceEnglish": "compacted",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", or ",
+                "status": "draft",
+                "text": " kana yo “"
+              },
+              {
+                "sourceEnglish": "hungry",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "?",
+                "status": "draft",
+                "text": "”?"
+              },
+              {
+                "sourceEnglish": " Are predators already working on the problem for you?",
+                "status": "draft",
+                "text": " Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+              }
+            ]
           },
           {
             "status": "draft",
@@ -1092,8 +1177,23 @@
             "text": "Tevhelani vhukando vhuṋa nga u tevhekana."
           },
           {
-            "status": "draft",
-            "text": "Tsha u thoma. Sedzani. Sedzani the damage pattern, the underside of the leaf, the stem, and the plants nearby."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "One. Observe. Look at the ",
+                "status": "draft",
+                "text": "Tsha u thoma. Sedzani. Sedzani "
+              },
+              {
+                "sourceEnglish": "damage pattern",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", the underside of the leaf, the stem, and the plants nearby.",
+                "status": "draft",
+                "text": ", tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini."
+              }
+            ]
           },
           {
             "status": "draft",
@@ -1104,11 +1204,109 @@
             "text": "Tsha vhuraru. Tsireledzani zwine zwa khou ni thusa. Beneficial insects (zwikhokhonono zwine zwa thusa) zwi khou ni itela mushumo une na inwi na vha ni tshi ḓo u ita."
           },
           {
-            "status": "draft",
-            "text": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Four.",
+                "status": "draft",
+                "text": "Tsha vhuṋa."
+              },
+              {
+                "sourceEnglish": " Only then, act — and start with ",
+                "status": "draft",
+                "text": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga "
+              },
+              {
+                "sourceEnglish": "the lightest thing that works.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Physical removal",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", barriers",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " or changes in ",
+                "status": "draft",
+                "text": " kana tshanduko kha "
+              },
+              {
+                "sourceEnglish": "crop care",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " may help.",
+                "status": "draft",
+                "text": " zwi nga thusa."
+              },
+              {
+                "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+                "status": "draft",
+                "text": " Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "If a ",
+                "status": "draft",
+                "text": "Arali "
+              },
+              {
+                "sourceEnglish": "treatment",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is needed, use a ",
+                "status": "draft",
+                "text": " i tshi ṱoḓea, shumisani "
+              },
+              {
+                "sourceEnglish": "product registered for that crop and pest",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and follow its ",
+                "status": "draft",
+                "text": ", nahone ni tevhele "
+              },
+              {
+                "sourceEnglish": "label",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": " yayo."
+              },
+              {
+                "sourceEnglish": " This includes ",
+                "status": "draft",
+                "text": " Hezwi zwi katela "
+              },
+              {
+                "sourceEnglish": "neem products.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Check ",
+                "status": "draft",
+                "text": " Ṱolani "
+              },
+              {
+                "sourceEnglish": "protection and harvest waiting instructions.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "draft",

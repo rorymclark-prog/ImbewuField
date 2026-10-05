@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/vegetables-staples.ve.paired-draft.json",
-  "pairedSourceSha256": "9f46d625ceeaa14c0f13dd8ca08bf84aa86279a5cea63bcd269b5ee912dcdb81",
+  "pairedSourceSha256": "57510bb175bb06a0d74bcce90ca874adfaeac5ba9e750921652a0afc0903685d",
   "englishSource": "docs/narration/vegetables-staples.en.md",
   "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
   "slides": [
@@ -112,15 +112,15 @@
       "slide": 15,
       "path": "public/course-decks/vegetables-staples/ve/slide-15.webp",
       "pixels": "1440x5400",
-      "bytes": 573678,
-      "sha256": "d12fa01f8b4efeda6c7e6ae72804b1cd6dd33363728bd167519a81ae22dc87a8"
+      "bytes": 573668,
+      "sha256": "9d92e2e01a824f3b310e5bf2b78e1b1eed890c9c4f7be86babf4feefc35c81a0"
     },
     {
       "slide": 16,
       "path": "public/course-decks/vegetables-staples/ve/slide-16.webp",
       "pixels": "1440x5400",
-      "bytes": 557040,
-      "sha256": "dcbd62e0f66aeab62980381e88fbf46045927d06a983221352bd618f4f31575d"
+      "bytes": 584900,
+      "sha256": "2f889abfff062922f33d80c74e5af7d0c39433ee68646af17448f36ceeef5e4e"
     },
     {
       "slide": 17,
@@ -176,5 +176,5 @@
       "sha256": "f9aeb8dd8827a8712081e8180458ec9b5c9d2a5cb0a4fb2207f8867e274c7d18"
     }
   ],
-  "note": "The opening six frames now show source-paired unreviewed framing drafts and exact-source reuses; frames 7\u201318 remain unchanged. No regional narration, fluent review, or local farming approval is claimed."
+  "note": "The opening six frames now show source-paired unreviewed framing drafts and exact-source reuses; frames 7–18 remain unchanged. No regional narration, fluent review, or local farming approval is claimed."
 }

@@ -6,7 +6,16 @@ test('Vegetables L1 fuller paired stills retire only their stale cached variants
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL1FullerOrdinaryPairedStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source, /then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateVegetablesL1FullerOrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)/);
+  // 2026-10-05: L4 adds a selective migration between L1 and Reading. Protect
+  // activation and relative order without forbidding subsequent scoped updates.
+  const activation = source.slice(source.indexOf("self.addEventListener('activate'"));
+  const migrations = [...activation.matchAll(/\.then\((migrate\w+)\)/g)].map(match => match[1]);
+  const preceding = migrations.indexOf('migrateVegetablesL2OrdinaryPairedStills');
+  const current = migrations.indexOf('migrateVegetablesL1FullerOrdinaryPairedStills');
+  const following = migrations.indexOf('migrateReadingLandscapeFrostBodySyncStills');
+  assert.equal(migrations.filter(name => name === 'migrateVegetablesL1FullerOrdinaryPairedStills').length, 1);
+  assert.ok(preceding >= 0 && current > preceding && following > current,
+    'L1 refresh runs once after L2 and before the later Reading refresh');
 
   const origin = 'https://field.test';
   const changed = ['st', 've', 'ts'].flatMap(language => [4, 5, 6, 7].map(slide =>

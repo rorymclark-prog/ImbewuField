@@ -447,7 +447,14 @@ test('Sesotho pest step framing preserves diagnosis before action and treatment 
   assert.ok(paragraphs[9].includes('Netefatsa hore ketso e loketse bothata') &&
     paragraphs[9].includes('behe leihlo sephethong'),
   'the action-fit and result-monitoring clauses are localized without changing the preceding treatment safeguards');
-  assert.equal(paragraphs[10], source.body.split('\n\n')[10]);
+  // 5 October 2026: ordinary linking prose is now drafted in this paragraph; keep every
+  // crop/pest, label, protection and harvest restriction plus the exact no-improvised-dose ban.
+  for (const safeguard of ['product registered for that crop and pest', 'label ya yona', 'neem products',
+    'protection and harvest waiting instructions', 'Do not improvise mixtures or stronger doses']) {
+    assert.ok(paragraphs[10].includes(safeguard), `treatment safeguard remains visible: ${safeguard}`);
+  }
+  assert.equal(draft.body.sourceEnglish.split('\n\n')[10], source.body.split('\n\n')[10],
+    'the translated paragraph remains bound to its exact English safety source');
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
   assert.equal(resolveLearnerLessonPresentation(source, 'st').content.body, draft.body.sesothoDraft);
   assert.equal(resolveLearnerLessonPresentation({ ...source, body: source.body + ' Changed treatment condition.' }, 'st').status, 'english-fallback');

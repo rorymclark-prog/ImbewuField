@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'c4d5c68c', changes: [
+    'Vegetables pest lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
+    'Exact English stays beside unreviewed drafts and difficult treatment terms.',
+    'Six silent cards match the lessons and refresh in saved slide packs.',
+  ], tour: [
+    { title: 'Compare pest lesson drafts',
+      where: 'Study → Vegetables → Pest Management',
+      detail: 'Read lesson and answer drafts beside English; compare silent cards 15–16.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'ecf7e73c', changes: [
     'Vegetables bed lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
     'Silent cards match the lessons; exact English stays beside unreviewed drafts.',
