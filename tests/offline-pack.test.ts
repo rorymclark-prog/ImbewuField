@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import { appGuideOfflinePack, offlinePack, downloadableModules, wholeCourseBytes, formatPackSize, defaultOfflinePackVariant, regionalPackNeedsNarrationChoice } from '@/lib/offline-pack';
 import { APP_GUIDES, appGuideNarrationSections } from '@/lib/course-app-guides';
-import { COURSE_DECKS, animationUrls, slideImageFor } from '@/lib/course-deck';
+import { COURSE_DECKS, animationUrls, slideAudioUrl, slideImageFor } from '@/lib/course-deck';
 import { COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { FINANCE_PATHWAY_MEDIA_URLS, STUDIES_PATHWAY_PACKS, STUDIES_PATHWAY_PAGES } from '@/lib/studies-pathway-pack';
@@ -29,6 +29,40 @@ test('silent regional downloads default to slides while Sesotho Introduction kee
   const intro = offlinePack('intro-permaculture', 'st', 'standard', 'full');
   assert.equal(intro.entries.filter(entry => entry.kind === 'audio' && entry.url.includes('/st/')).length, 22);
   assert.ok(!intro.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/en/')));
+});
+
+test('the nine updated regional slides resolve to the exact still in a silent offline pack', () => {
+  const changed = [
+    ['intro-permaculture', 've', 22], ['intro-permaculture', 'ts', 22],
+    ['vegetables-staples', 'st', 3], ['vegetables-staples', 've', 3], ['vegetables-staples', 'ts', 3],
+    ['market-community', 'st', 15], ['market-community', 'ts', 15],
+    ['reading-landscape', 've', 14], ['reading-landscape', 'ts', 14],
+  ] as const;
+  for (const [moduleId, language, slide] of changed) {
+    const image = slideImageFor(moduleId, language, slide);
+    const expected = `/course-decks/${moduleId}/${language}/slide-${String(slide).padStart(2, '0')}.webp`;
+    assert.ok(image?.exact, `${language} ${moduleId} slide ${slide} must use its source-paired still`);
+    assert.equal(image.url, expected);
+    assert.equal(animationUrls(moduleId, slide, language), null,
+      `${language} slide ${slide} must not put an English film poster over its unreviewed source pair`);
+    assert.equal(slideAudioUrl(moduleId, language, slide), null,
+      `${language} slide ${slide} has no regional recording and must remain silent by default`);
+    assert.equal(defaultOfflinePackVariant([moduleId], language), 'slides');
+    const pack = offlinePack(moduleId, language, 'standard', 'slides');
+    assert.deepEqual(pack.missing, [], `${language} ${moduleId} slide ${slide} must be available offline`);
+    const entry = pack.entries.find(item => item.url === expected);
+    assert.ok(entry, `${expected} must be included in the learner-selected slides-only pack`);
+    assert.equal(entry.kind, 'slide');
+    assert.equal(entry.bytes, statSync(join(PUBLIC, expected)).size);
+    assert.ok(pack.entries.every(item => item.kind !== 'audio' && item.kind !== 'animation'),
+      `${language} ${moduleId} default pack must not add audio or animation`);
+  }
+  for (const language of ['en', 'zu'] as const) {
+    assert.ok(animationUrls('market-community', 15, language),
+      `${language} Market lesson retains its existing source-language film`);
+  }
+  assert.equal(slideAudioUrl('intro-permaculture', 'st', 22)?.includes('/st/'), true,
+    'the existing Sesotho Introduction recording remains available');
 });
 
 test('public teaching-preview packs name every static reading route and the finance materials it links', () => {

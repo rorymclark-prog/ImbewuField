@@ -112,7 +112,17 @@ test('Introduction Xitsonga alt text and L1 framing resolve as source-bound mach
   assert.equal(l1.quiz[0].question.sourceEnglish, l1Source.quiz[0].q);
   assert.equal(l1.quiz[0].question.reviewStatus, 'machine-draft');
   assert.equal(l1.quiz[0].question.xitsongaDraft,
-    'Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?');
+    'Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?');
+  assert.ok(l1.quiz[0].question.xitsongaDraft.includes('all his surplus maize'),
+    'the crop, ownership and complete surplus remain exact English anchors');
+  assert.match(l1.quiz[0].question.xitsongaDraft, /kambe a nga hlayisi xilo xa composting kumbe seed saving\./,
+    'the draft retains the negative, both purposes and their OR relationship');
+  assert.ok(l1.quiz[0].question.xitsongaDraft.endsWith('Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?'),
+    'the existing question framing and “most failing” meaning remain present');
+  for (const retainedClause of ['all his surplus maize', 'composting', 'seed saving', 'ethic']) {
+    assert.ok(draft.holds.some(hold => hold.lessonId === l1Source.id && hold.field === 'quiz[0].q'
+      && hold.sourceText === retainedClause), `${retainedClause} stays an explicit exact-English hold`);
+  }
   assert.equal(l1.quiz[0].sourceCorrectIndex, l1Source.quiz[0].correct);
   assert.equal(l1.quiz[0].sourceCorrectIndex, 2, 'the Fair Share answer index must not move');
   assert.deepEqual(l1.quiz[0].options.map(option => option.sourceEnglish), l1Source.quiz[0].options);
@@ -121,6 +131,13 @@ test('Introduction Xitsonga alt text and L1 framing resolve as source-bound mach
   assert.equal(resolvedL1.status, 'draft');
   assert.equal(resolvedL1.content.keyPoints[1], l1.keyPoints[1].xitsongaDraft);
   assert.equal(resolvedL1.content.quiz[0].q, l1.quiz[0].question.xitsongaDraft);
+  const changedQuestion = l1Source.quiz.map((item, index) => index === 0
+    ? { ...item, q: `${item.q} A new source condition.` }
+    : item);
+  const questionFallback = resolveLearnerLessonPresentation({ ...l1Source, quiz: changedQuestion }, 'ts');
+  assert.equal(questionFallback.status, 'english-fallback');
+  assert.equal(questionFallback.content.quiz[0].q, changedQuestion[0].q,
+    'source drift withdraws the paired machine draft instead of serving stale question wording');
 });
 
 test('the draft retains source digits and named authors in paired fields', () => {
@@ -570,6 +587,15 @@ test('Reading Landscape L1 assessment drafts keep the A-frame limit and safe-ove
   assert.deepEqual(lesson.quiz.map(item => item.sourceCorrectIndex), [0, 1]);
   assert.deepEqual(q0.options.map(option => option.sourceEnglish), sourceQ0.options);
   assert.deepEqual(q1.options.map(option => option.sourceEnglish), sourceQ1.options);
+  assert.deepEqual(q0.options.map(option => option.xitsongaDraft), [
+    'Tindhawu leti nga eka ku leha loku fanaka eka khanthura',
+    'Xana a swale yi hlayisekile ku akiwa eka slope leyi',
+    'Mpimo wa mati ya xidzedze lawa misava yi nga ma nwaka',
+    'Laha a dam spillway yi faneleke ku akiwa kona',
+  ], 'only the two selected distractors change; existing localized options retain their exact text and order');
+  assert.equal(q0.options[1].reviewStatus, 'machine-draft');
+  assert.equal(q0.options[3].reviewStatus, 'machine-draft');
+  assert.equal(q0.sourceCorrectIndex, 0, 'translating the distractors does not move the correct answer');
   assert.equal(q0.rationale.sourceEnglish, sourceQ0.rationale);
   assert.equal(q1.options[1].sourceEnglish, sourceQ1.options[1]);
   assert.equal(q0.rationale.reviewStatus, 'machine-draft');
@@ -584,11 +610,9 @@ test('Reading Landscape L1 assessment drafts keep the A-frame limit and safe-ove
   assert.equal(q1.rationale.xitsongaDraft, sourceQ1.rationale,
     'the uncertainty over “cannot show” remains an exact English hold');
   assert.equal(q1.rationale.reviewStatus, 'hold');
-  assert.ok(q0.options[1].xitsongaDraft === sourceQ0.options[1]);
-  assert.ok(q0.options[3].xitsongaDraft === sourceQ0.options[3]);
   for (const field of ['quiz[0].rationale', 'quiz[1].options[1]']) {
     assert.ok(!readingDraft.holds.some(hold => hold.lessonId === sourceLesson.id && hold.field === field),
-      `${field} must not remain listed as an exact-English hold`);
+      `${field} is fully drafted and must not remain listed as an exact-English hold`);
   }
   assert.ok(readingDraft.holds.some(hold => hold.lessonId === sourceLesson.id && hold.field === 'quiz[1].rationale'
     && hold.sourceText === sourceQ1.rationale));
@@ -600,6 +624,17 @@ test('Reading Landscape L1 assessment drafts keep the A-frame limit and safe-ove
   assert.equal(fallback.status, 'english-fallback');
   assert.equal(fallback.content.quiz[0].rationale, changedQuiz[0].rationale,
     'changed canonical assessment wording must not serve a stale translated rationale');
+  for (const changedOptionIndex of [1, 3]) {
+    const driftedOptions = sourceLesson.quiz.map((item, index) => index === 0
+      ? { ...item, options: item.options.map((option, optionIndex) => optionIndex === changedOptionIndex
+        ? `${option} Changed source.`
+        : option) }
+      : item);
+    const optionFallback = resolveLearnerLessonPresentation({ ...sourceLesson, quiz: driftedOptions }, 'ts');
+    assert.equal(optionFallback.status, 'english-fallback',
+      `changed option ${changedOptionIndex} withdraws the stale paired distractor`);
+    assert.equal(optionFallback.content.quiz[0].options[changedOptionIndex], driftedOptions[0].options[changedOptionIndex]);
+  }
 });
 
 test('Reading module assessment drafts preserve frost uncertainty, seasonal checks and incomplete disease control', async () => {
@@ -618,8 +653,20 @@ test('Reading module assessment drafts preserve frost uncertainty, seasonal chec
   assert.ok(l2.quiz[1].rationale.xitsongaDraft.includes('at 8am, midday, and 4pm') &&
     l2.quiz[1].rationale.xitsongaDraft.includes('u nga se yi tiyisa endhawini'),
   'preserve all three observation times and the before-fixing condition');
-  assert.ok(l3.quiz[0].rationale.xitsongaDraft.includes('kumbe u vutisa a local agriculture adviser before making a permanent choice.'));
+  assert.ok(l3.quiz[0].rationale.xitsongaDraft.startsWith('Cold air can settle in low places on clear, still nights. Pimanisa candidate nursery sites through the local frost season.'));
+  assert.ok(l3.quiz[0].rationale.xitsongaDraft.includes('Kambela local minimum-temperature records kumbe u vutisa a local agriculture adviser u nga si endla permanent choice.'));
   assert.ok(l3.quiz[0].rationale.xitsongaDraft.includes('Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.'));
+  for (const retainedClause of [
+    'Cold air can settle in low places on clear, still nights.',
+    'candidate nursery sites through the local frost season',
+    'local minimum-temperature records',
+    'a local agriculture adviser',
+    'permanent choice',
+    'Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.',
+  ]) {
+    assert.ok(readingDraft.holds.some(hold => hold.lessonId === l3.id && hold.field === 'quiz[0].rationale' && hold.sourceText === retainedClause),
+      `the exact retained clause “${retainedClause}” stays identified in hold metadata`);
+  }
   assert.equal(l3.quiz[1].question.sourceEnglish,
     sourceModule.lessons.find(lesson => lesson.id === 'reading-landscape-l3')!.quiz[1].q,
     'the localized crop scenario must remain paired to quiz 1, where its source actually appears');

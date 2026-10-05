@@ -1241,17 +1241,22 @@
             "status": "mixed",
             "segments": [
               {
-                "status": "draft",
                 "sourceEnglish": "Find one thing ",
+                "status": "draft",
                 "text": "Kuma xilo xin’we lexi "
               },
               {
-                "status": "english-hold",
-                "sourceEnglish": "planted further away than how often you use it, "
+                "sourceEnglish": "planted ",
+                "status": "draft",
+                "text": "byariweke "
               },
               {
-                "status": "draft",
+                "sourceEnglish": "further away than how often you use it, ",
+                "status": "english-hold"
+              },
+              {
                 "sourceEnglish": "and write down where it should move to.",
+                "status": "draft",
                 "text": "u tsala laha xi faneleke ku rhurhiseriwa kona."
               }
             ],

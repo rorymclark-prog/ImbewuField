@@ -546,7 +546,18 @@
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Before exchanging seed, ",
+                "status": "draft",
+                "text": "Loko u nga si cincana hi mbewu, "
+              },
+              {
+                "sourceEnglish": "check whether the variety is protected and whether permission is needed.",
+                "status": "english-hold"
+              }
+            ]
           }
         ]
       }

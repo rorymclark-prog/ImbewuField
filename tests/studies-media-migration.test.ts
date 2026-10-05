@@ -2,6 +2,73 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
+function assertActivationOrder(source: string, previous: string, migration: string, reason: string) {
+  const activation = source.slice(source.indexOf("self.addEventListener('activate'"));
+  assert.match(activation, new RegExp(`\\.then\\(${previous}\\)\\.then\\(${migration}\\)`), reason);
+}
+
+test('the nine updated Study stills refresh once without evicting other slides or narration', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateStudyOutcomesResidualStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(migrateStudyOutcomesResidualStills\)\.then/);
+
+  const origin = 'https://field.test';
+  const changed = [
+    '/course-decks/intro-permaculture/ve/slide-22.webp',
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+    '/course-decks/vegetables-staples/st/slide-03.webp',
+    '/course-decks/vegetables-staples/ve/slide-03.webp',
+    '/course-decks/vegetables-staples/ts/slide-03.webp',
+    '/course-decks/market-community/st/slide-15.webp',
+    '/course-decks/market-community/ts/slide-15.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+  ];
+  const stale = changed.flatMap(path => [path, `${path}?saved=old`, `${path}?width=small`]);
+  const preserve = [
+    '/course-decks/intro-permaculture/st/slide-22.webp',
+    '/course-decks/intro-permaculture/en/slide-22.jpg',
+    '/course-decks/intro-permaculture/zu/slide-22.jpg',
+    '/course-audio/intro-permaculture/st/slide-22.mp3',
+    '/course-audio/intro-permaculture/en/slide-22.mp3',
+    '/course-animations/market-community/market-morning.mp4',
+    '/course-decks/reading-landscape/ts/slide-13.webp',
+    '/course-decks/vegetables-staples/en/slide-03.jpg',
+  ];
+  const rows = new Map<string, Response>([
+    ...stale.map(path => [new URL(path, origin).href, new Response(`stale:${path}`)] as const),
+    ...preserve.map(path => [new URL(`${path}?saved=1`, origin).href, new Response(`preserve:${path}`)] as const),
+  ]);
+  let deleteCount = 0;
+  let writeCount = 0;
+  const cache = {
+    match: async (key: string) => rows.get(new URL(key, origin).href),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => { deleteCount++; return rows.delete(request.url); },
+    put: async (key: string, response: Response) => { writeCount++; rows.set(new URL(key, origin).href, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of stale) assert.equal(rows.has(new URL(path, origin).href), false, path);
+  for (const path of preserve) {
+    assert.equal(await rows.get(new URL(`${path}?saved=1`, origin).href)!.text(), `preserve:${path}`, path);
+  }
+  assert.equal(deleteCount, stale.length, 'only variants of the nine changed stills are retired');
+  const marker = '/course-decks/.study-outcomes-residual-stills-20261005';
+  assert.equal(rows.has(new URL(marker, origin).href), true);
+  assert.equal(writeCount, 1, 'one marker records the once-only refresh');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'the refresh does not fetch media or spend learner airtime');
+
+  const replacement = new URL(`${changed[0]}?saved=new`, origin).href;
+  rows.set(replacement, new Response('learner-selected replacement'));
+  const deletesAfterFirstRun = deleteCount;
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'learner-selected replacement');
+  assert.equal(deleteCount, deletesAfterFirstRun, 'later activations preserve the learner-selected replacement');
+  assert.equal(writeCount, 1);
+});
+
 test('updated Vegetables lesson frames retire stale saved wording without deleting narration or other decks', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesOrdinaryLessonStills\(\) \{([\s\S]*?)\n\}/)?.[1];
@@ -1870,9 +1937,8 @@ test('a saved Reading Landscape pack retires only the seventeen changed regional
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateReadingLandscapeDraftStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateSoilRegionalDraftStills\)\.then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'the older Reading invalidation remains before later batches and the new paired reuse step');
+  assertActivationOrder(source, 'migrateSoilRegionalDraftStills', 'migrateReadingLandscapeDraftStills',
+    'the saved-pack invalidation remains wired after the Soil still migration');
 
   const origin = 'https://field.test';
   const slideNumbers = {
@@ -1939,9 +2005,8 @@ test('a saved Reading Landscape pack retires only the next twelve regional still
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateReadingLandscapeOrdinaryStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateReadingLandscapeDraftStills\)\.then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'the new paired reuse invalidation follows the Intro step and all earlier Reading invalidations');
+  assertActivationOrder(source, 'migrateReadingLandscapeDraftStills', 'migrateReadingLandscapeOrdinaryStills',
+    'the ordinary Reading still invalidation follows the earlier Reading draft migration');
 
   const origin = 'https://field.test';
   const changed = (['st', 've', 'ts'] as const).flatMap(language => [8, 10, 15, 21].map(slide =>
@@ -2001,9 +2066,8 @@ test('Intro cache migration retires only the 42 revised VE and TS stills once', 
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateIntroRegionalSubstantiveStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateReadingLandscapeOrdinaryStills\)\.then\(migrateIntroRegionalSubstantiveStills\)\.then\(migrateVegetablesOrdinaryLessonStills\)\.then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'Intro invalidation runs after earlier course cache migrations during worker activation');
+  assertActivationOrder(source, 'migrateReadingLandscapeOrdinaryStills', 'migrateIntroRegionalSubstantiveStills',
+    'Intro invalidation runs after the earlier Reading still migrations during worker activation');
 
   const origin = 'https://field.test';
   const changedByLanguage = {
@@ -2068,9 +2132,8 @@ test('Reading paired-draft refresh retires only six revised regional frames once
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateReadingLandscapePairedReuseStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateMarketLearnerReuseStills\)\.then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'the six-frame cache cleanup participates in service-worker activation after prior migrations');
+  assertActivationOrder(source, 'migrateMarketLearnerReuseStills', 'migrateReadingLandscapePairedReuseStills',
+    'the paired Reading still cleanup participates in service-worker activation after the Market migration');
 
   const origin = 'https://field.test';
   const changedByLanguage = { st: [1, 3, 16, 17], ve: [16], ts: [16] };
@@ -2126,9 +2189,8 @@ test('Reading observation release retires only slides 18–20 in three regional 
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateReadingLandscapeObservationStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateReadingLandscapePairedReuseStills\)\.then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'the observation refresh runs after prior Reading cache migrations during activation');
+  assertActivationOrder(source, 'migrateReadingLandscapePairedReuseStills', 'migrateReadingLandscapeObservationStills',
+    'the observation refresh runs after the paired Reading cleanup during activation');
   const origin = 'https://field.test';
   const changed = ['st', 've', 'ts'].flatMap(language => [18, 19, 20].map(slide =>
     `/course-decks/reading-landscape/${language}/slide-${String(slide).padStart(2, '0')}.webp`));
@@ -2180,9 +2242,8 @@ test('record, Intro, and map refresh retires only eight changed regional stills 
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateRegionalRecordIntroReadingStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateReadingLandscapeObservationStills\)\.then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'the eight-frame cleanup runs in the activation migration chain');
+  assertActivationOrder(source, 'migrateReadingLandscapeObservationStills', 'migrateRegionalRecordIntroReadingStills',
+    'the regional record/Intro/map cleanup remains in the activation chain after Reading observation cleanup');
 
   const origin = 'https://field.test';
   const changed = [
@@ -2253,9 +2314,8 @@ test('Vegetables Field Action refresh retires only three slide 18 regional still
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesFieldActionStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateRegionalRecordIntroReadingStills\)\.then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'the slide refresh participates in the existing activation migration chain');
+  assertActivationOrder(source, 'migrateRegionalRecordIntroReadingStills', 'migrateVegetablesFieldActionStills',
+    'the Field Action refresh participates in the activation chain after its earlier related cleanup');
 
   const origin = 'https://field.test';
   const changed = ['st', 've', 'ts'].map(language =>
@@ -2310,8 +2370,7 @@ test('regional assignment exercise refresh retires only seven changed stills onc
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateRegionalAssignmentExerciseStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateVegetablesFieldActionStills\)\.then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
+  assertActivationOrder(source, 'migrateVegetablesFieldActionStills', 'migrateRegionalAssignmentExerciseStills',
     'the assignment refresh runs after the prior Field Action migration in worker activation');
 
   const origin = 'https://field.test';
@@ -2384,9 +2443,8 @@ test('Vegetables L2 pairing refresh retires only eight VE and TS frames once', a
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL2OrdinaryPairedStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateRegionalAssignmentExerciseStills\)\.then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'the L2 still refresh runs in the existing activation migration chain');
+  assertActivationOrder(source, 'migrateRegionalAssignmentExerciseStills', 'migrateVegetablesL2OrdinaryPairedStills',
+    'the L2 still refresh runs after the earlier assignment media migration');
 
   const origin = 'https://field.test';
   const changed = ['ve', 'ts'].flatMap(language => [8, 9, 10, 11].map(slide =>
@@ -2444,9 +2502,8 @@ test('Reading frost wording refresh retires only the four changed regional frame
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateReadingLandscapeFrostBodySyncStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source,
-    /then\(migrateVegetablesL2OrdinaryPairedStills\)\.then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(function \(\)/,
-    'the four-frame refresh runs in the service-worker activation chain');
+  assertActivationOrder(source, 'migrateVegetablesL2OrdinaryPairedStills', 'migrateReadingLandscapeFrostBodySyncStills',
+    'the frost-wording refresh runs after the earlier Vegetables still migration');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation does not download replacement frames');
 
   const origin = 'https://field.test';

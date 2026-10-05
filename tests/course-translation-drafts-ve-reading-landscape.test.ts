@@ -265,7 +265,6 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     'lessons[0] reading-landscape-l1.quiz[0].options[0]',
     'lessons[0] reading-landscape-l1.quiz[0].options[2]',
     'lessons[2] reading-landscape-l3.keyPoints[1]',
-    'lessons[2] reading-landscape-l3.quiz[0].rationale',
   ], 'remaining whole-field technical holds remain exact English; new drafts remain unreviewed');
 
   const aFrameSuitability = draft.lessons[0].keyPoints[1];
@@ -547,6 +546,28 @@ test('Reading assessment drafts retain before-building shade, conditional drying
   assert.equal(l3.quiz[1].rationale.reviewStatus, 'machine-draft');
   assert.ok(l3.quiz[1].rationale.tshivendaDraft.includes('zwi nga thusa'));
   assert.ok(l3.quiz[1].rationale.tshivendaDraft.includes('Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.'));
+  const frostRationale = l3.quiz[0].rationale;
+  const frostSource = sourceModule.lessons.find(lesson => lesson.id === l3.id)!.quiz[0].rationale;
+  assert.equal(frostRationale.sourceEnglish, frostSource);
+  assert.equal(frostRationale.reviewStatus, 'machine-draft');
+  assert.ok(frostRationale.tshivendaDraft.includes('vhu sa na makole') && frostRationale.tshivendaDraft.includes('hu si na muya'),
+    'clear, still nights retain both no-cloud and no-wind conditions');
+  assert.ok(frostRationale.tshivendaDraft.includes('candidate nursery sites through the local frost season'));
+  assert.ok(frostRationale.tshivendaDraft.includes('local minimum-temperature records kana ni vhudzise a local agriculture adviser'));
+  assert.ok(frostRationale.tshivendaDraft.includes('ni sa athu dzhia a permanent choice'));
+  assert.ok(frostRationale.tshivendaDraft.includes('Visible frost is not the only sign of frost damage'));
+  assert.ok(frostRationale.tshivendaDraft.endsWith('no hillside position guarantees freedom from frost.'));
+  const changedL3Rationale = {
+    ...sourceModule.lessons.find(lesson => lesson.id === l3.id)!,
+    quiz: sourceModule.lessons.find(lesson => lesson.id === l3.id)!.quiz.map((question, index) => index === 0
+      ? { ...question, rationale: `${question.rationale} Changed source.` }
+      : question),
+  };
+  const rationaleFallback = resolveLearnerLessonPresentation(changedL3Rationale, 've');
+  assert.equal(rationaleFallback.status, 'english-fallback');
+  assert.equal(rationaleFallback.content.quiz[0].rationale, changedL3Rationale.quiz[0].rationale,
+    'a changed frost assessment source withdraws the mixed rationale');
+
   assert.equal(l4.keyPoints[2].reviewStatus, 'machine-draft');
   assert.ok(l4.keyPoints[2].tshivendaDraft.includes('khakibos kana blackjack'));
   assert.ok(l4.keyPoints[2].tshivendaDraft.includes('zwa mela zwo tsitsikana'));

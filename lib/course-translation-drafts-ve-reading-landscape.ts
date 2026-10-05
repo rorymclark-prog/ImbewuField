@@ -267,9 +267,10 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
             ),
           ],
           sourceCorrectIndex: 2,
-          rationale: hold(
-"Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-      ),
+          rationale: pair(
+            "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+            "Cold air can settle in low places kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani candidate nursery sites through the local frost season. Ṱolani local minimum-temperature records kana ni vhudzise a local agriculture adviser ni sa athu dzhia a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+          ),
         },
         {
           question: pair(

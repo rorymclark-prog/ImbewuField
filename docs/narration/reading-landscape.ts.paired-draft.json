@@ -563,7 +563,7 @@
               {
                 "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. ",
                 "status": "draft",
-                "text": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. "
+                "text": "Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. "
               },
               {
                 "sourceEnglish": "Mark places where cold or damage lasts longest.",
@@ -572,7 +572,8 @@
               },
               {
                 "sourceEnglish": " Keep sensitive plants away from the cold pockets you observe.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka."
               }
             ],
             "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."

@@ -525,8 +525,28 @@
             "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
           },
           {
-            "status": "draft",
-            "text": "Sedzani ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. ",
+                "status": "draft",
+                "text": "Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. "
+              },
+              {
+                "sourceEnglish": "Mark places where cold or damage lasts longest.",
+                "status": "draft",
+                "text": "Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa."
+              },
+              {
+                "sourceEnglish": " Keep sensitive plants away from the cold pockets ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "you observe.",
+                "status": "draft",
+                "text": "dzine na dzi vhona."
+              }
+            ]
           },
           {
             "status": "english-hold"

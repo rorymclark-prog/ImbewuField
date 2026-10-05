@@ -1193,10 +1193,20 @@
               {
                 "sourceEnglish": "Walk out and ",
                 "status": "draft",
-                "text": "Ibani ni "
+                "text": "Tshimbilani ni "
               },
               {
-                "sourceEnglish": "check your sketch against the ground.",
+                "sourceEnglish": "check ",
+                "status": "draft",
+                "text": "sedzani "
+              },
+              {
+                "sourceEnglish": "your sketch",
+                "status": "draft",
+                "text": "nyolo yaṋu"
+              },
+              {
+                "sourceEnglish": " against the ground.",
                 "status": "english-hold"
               }
             ],
@@ -1226,17 +1236,22 @@
             "status": "mixed",
             "segments": [
               {
-                "status": "draft",
                 "sourceEnglish": "Find one thing ",
+                "status": "draft",
                 "text": "Wanani tshithu tshithihi "
               },
               {
-                "status": "english-hold",
-                "sourceEnglish": "planted further away than how often you use it, "
+                "sourceEnglish": "planted ",
+                "status": "draft",
+                "text": "tsho ṱavhiwaho "
               },
               {
-                "status": "draft",
+                "sourceEnglish": "further away than how often you use it, ",
+                "status": "english-hold"
+              },
+              {
                 "sourceEnglish": "and write down where it should move to.",
+                "status": "draft",
                 "text": "ni ṅwale hune tsha tea u pfuluselwa hone."
               }
             ],
