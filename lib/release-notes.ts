@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'b3020088', changes: [
+    'Regional lessons start without narration when their own recording is unavailable.',
+    'Choose English source narration to listen, or keep reading silently.',
+  ], tour: [
+    { title: 'Choose a lesson voice',
+      where: 'Study → Soil Health or Market Gardening → Open a lesson',
+      detail: 'Start silently, or choose English source narration before pressing Play.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'b22c1f84', changes: [
     'Soil lessons and silent slides add fuller unreviewed regional drafts.',
     'Exact English stays visible; uncertain technical terms stay precise.',
