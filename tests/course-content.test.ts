@@ -1,3 +1,4 @@
+import { vegetablesFullerTarget } from './vegetables-l1-fuller-checks.ts';
 // Guards over the optional visual-asset fields on Lesson (infographicUrl/Alt, videoUrl,
 // relatedLessonIds) — see lib/course-modules.ts and docs/COURSE-VISUAL-ASSETS.md.
 //
@@ -75,9 +76,10 @@ test('Sesotho and Xitsonga Introduction appear as labelled drafts only while the
 
 test('regional ordinary metadata drafts stay source-bound and appear on the intended Study cards', () => {
   const vegetables = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!;
+  // 5 October: checked ordinary card framing is localized; exact source and drift gates remain.
   for (const [language, draft, title, description] of [
-    ['ve', TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, 'Miroho na Staple Crops', 'Bed prep, succession planting, staple crops and pest management — mushumo wa ḓuvha ḽiṅwe na ḽiṅwe wa u lima zwiḽiwa.'],
-    ['ts', XITSONGA_VEGETABLES_STAPLES_DRAFT, 'Matsavu na Staple Crops', 'Bed prep, succession planting, staple crops and pest management — ntirho wa siku ni siku wa ku rima swakudya.'],
+    ['ve', TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, 'Miroho na Staple Crops', vegetablesFullerTarget('ve', 'module.description')],
+    ['ts', XITSONGA_VEGETABLES_STAPLES_DRAFT, 'Matsavu na Staple Crops', vegetablesFullerTarget('ts', 'module.description')],
   ] as const) {
     assert.equal(draft.title.sourceEnglish, vegetables.title, `${language}: frozen canonical module title`);
     assert.equal(draft.description.sourceEnglish, vegetables.description, `${language}: frozen canonical module description`);

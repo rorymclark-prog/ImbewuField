@@ -56,7 +56,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
   reviewStatus: 'machine-draft',
   sourceMetadata: { durationMins: 30, category: 'plants' },
   title: pair("Vegetables and Staple Crops", "Matsavu na Staple Crops"),
-  description: pair("Bed prep, succession planting, staple crops and pest management — the daily work of growing food.", "Bed prep, succession planting, staple crops and pest management — ntirho wa siku ni siku wa ku rima swakudya."),
+  description: pair("Bed prep, succession planting, staple crops and pest management — the daily work of growing food.", "Ku lulamisa beds, succession planting, staple crops na pest management — ntirho wa siku ni siku wa ku rima swakudya."),
   lessons: [
     {
       id: sourceLesson.id,
@@ -89,36 +89,36 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
-        "xitsongaDraft": "Compacted soil loses its air spaces. Roots slow down. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.\n\nNsirhelelo wu olova. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nSweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana.\n\nA ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato.\n\nSungula hi least disturbance that solves your problem.\n\nNo-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla.\n\nU nga keli wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona.\n\nSunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka.\n\nEndzhaku ka heavy rain, kambisisa. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSwibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.\n\nLandzelela spacing guidance for the crop, variety and local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.\n\nLoko u nga si byala, mark the bed out.\n\nOne point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta.\n\nTirhisa pegs and string. Mark the rectangle, and mark both access paths.\n\nKutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u dig deeper ntsena loko misava ya wena hakunene yi swi lava.\n\nNtila wa ntambhu wu hundzula miehleketo wu va xiboho. Loko tindlela ti ri kona, ti hlayise. Loko ndhawu yo byala yi ri kona, yi sirhelele.\n\nBed yoleyo yi ya olova ku antswisa eka nguva yin'wana ni yin'wana, hikuva u tshike ku famba ehenhla ka yona.",
+        "xitsongaDraft": "Compacted soil yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.\n\nNsirhelelo wu olova. Permanent paths, ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi.\n\nOne metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi growing area nikatsongo.\n\nSweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana.\n\nA ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato.\n\nSungula hi least disturbance leyi lulamisaka xiphiqo xa wena.\n\nNo-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla.\n\nU nga keli wet clay. Loko compaction kumbe poor drainage swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula deeper cultivation.\n\nRaised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona.\n\nSunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka.\n\nEndzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni soil and drainage advice u nga si hlawula bed.\n\nSwibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona. Beans, carrots na maize swi wela eka ntlawa wolowo.\n\nSwin'wana do better loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.\n\nLandzelela spacing guidance ya crop, variety na local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.\n\nLoko u nga si byala, fungha bed.\n\nOne point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta.\n\nTirhisa pegs na string. Fungha rectangle, kutani u fungha tindlela hatimbirhi to nghena.\n\nKutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u cela ku enta ntsena loko misava ya wena hakunene yi swi lava.\n\nNtila wa ntambhu wu hundzula miehleketo wu va xiboho. Loko tindlela ti ri kona, ti hlayise. Loko ndhawu yo byala yi ri kona, yi sirhelele.\n\nBed yoleyo yi ya olova ku antswisa eka nguva yin'wana ni yin'wana, hikuva u tshike ku famba ehenhla ka yona.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
-          "xitsongaDraft": "Keep beds 1-1.2m wide so you never need to step on the growing area",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Hlayisa beds ti ri 1-1.2m hi ku anama leswaku u nga boheki ku kandziya growing area nikatsongo",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
-          "xitsongaDraft": "Assess compaction na drainage u nga si hlawula deeper cultivation; do not work wet clay.",
+          "xitsongaDraft": "Assess compaction na drainage u nga si hlawula deeper cultivation; u nga tirhi wet clay.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
-          "xitsongaDraft": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Transplant swibyariwa leswi lavaka head start; direct-seed swibyariwa leswi nga tsakeliki root disturbance",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Crowded plants underperform — space generously for your local climate",
-          "xitsongaDraft": "Crowded plants underperform — space generously for your local climate",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Swibyariwa leswi manyaneke underperform — space generously hi ku ya hi local climate ya wena",
+          "reviewStatus": "machine-draft"
         }
       ],
       "quiz": [
         {
           "question": {
             "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
-            "xitsongaDraft": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m wide ku ri na ku yi endla yi anama ku tlurisa?",
+            "xitsongaDraft": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m hi ku anama ku ri na ku yi endla yi anama ku tlurisa?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -129,13 +129,13 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
-              "xitsongaDraft": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "U nga fika exikarhini ku suka eka tlhelo rin'wana ni rin'wana ra lamambirhi handle ko kandziya growing area, u papalata compaction",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Narrow beds drain better in all conditions",
-              "xitsongaDraft": "Narrow beds drain better in all conditions",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Narrow beds drain better eka swiyimo hinkwato",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It's a fixed rule with no practical reason",
@@ -159,30 +159,30 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "Tomatoes, which need an early start",
-              "xitsongaDraft": "Tomatoes, which need an early start",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Tomatoes, leti lavaka early start",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Brassicas, which need protection while small",
-              "xitsongaDraft": "Brassicas, which need protection while small",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Brassicas, leti lavaka nsirhelelo loko ta ha ri titsongo",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Beans, which resent root disturbance",
-              "xitsongaDraft": "Beans, which resent root disturbance",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Beans, leti nga tsakeliki root disturbance",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Peppers, which are slow to germinate",
-              "xitsongaDraft": "Peppers, which are slow to germinate",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Peppers, leti hlwelaka ku mila",
+              "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
-            "xitsongaDraft": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
-            "reviewStatus": "hold"
+            "xitsongaDraft": "Beans and other quick, sensitive-rooted crops establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma eka bed ku papalata setback yoleyo hi ku helela.",
+            "reviewStatus": "machine-draft"
           }
         }
       ]

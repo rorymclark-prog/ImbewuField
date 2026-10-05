@@ -302,12 +302,46 @@
             "text": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng."
           },
           {
-            "status": "draft",
-            "text": "Tshireletso e bonolo. Permanent paths, and a bed narrow enough to reach into from both sides."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The protection is simple. ",
+                "status": "draft",
+                "text": "Tshireletso e bonolo. "
+              },
+              {
+                "sourceEnglish": "Permanent paths",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                "status": "draft",
+                "text": ", le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "One metre to one point two metres wide. Ke yona working number. At that width you can reach the centre from either path, and your feet never touch the growing area."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "One metre to one point two metres wide.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " That's the ",
+                "status": "draft",
+                "text": " Ke yona "
+              },
+              {
+                "sourceEnglish": "working number",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". At that width you can reach the centre from either path, and your feet never touch the growing area.",
+                "status": "draft",
+                "text": ". Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla."
+              }
+            ]
           },
           {
             "status": "draft",
@@ -341,24 +375,138 @@
             "text": "Ha ho sebopeho se le seng sa bethe se loketseng dibaka tsohle."
           },
           {
-            "status": "draft",
-            "text": "Qala ka least disturbance that solves your problem."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Start with the ",
+                "status": "draft",
+                "text": "Qala ka "
+              },
+              {
+                "sourceEnglish": "least disturbance",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that solves your problem.",
+                "status": "draft",
+                "text": " e rarollang bothata ba hao."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "No-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme build fertility on top."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "No-dig",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " suits most garden soils. Leave the structure alone and build fertility on top.",
+                "status": "draft",
+                "text": " e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "U se ke ua cheka wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Do not dig ",
+                "status": "draft",
+                "text": "U se ke ua cheka "
+              },
+              {
+                "sourceEnglish": "wet clay",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". If ",
+                "status": "draft",
+                "text": ". Ha "
+              },
+              {
+                "sourceEnglish": "compaction",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " or ",
+                "status": "draft",
+                "text": " kapa "
+              },
+              {
+                "sourceEnglish": "poor drainage",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+                "status": "draft",
+                "text": " e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha "
+              },
+              {
+                "sourceEnglish": "deeper cultivation",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": "."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Raised beds di loketse wet ground, moo water needs somewhere to drain away to."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Raised beds",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " suit ",
+                "status": "draft",
+                "text": " di loketse "
+              },
+              {
+                "sourceEnglish": "wet ground",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", where water needs ",
+                "status": "draft",
+                "text": ", moo metsi a hlokang "
+              },
+              {
+                "sourceEnglish": "somewhere to drain away to",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": "."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Sunken beds di loketse dry ground, moo you want to catch and hold what rain you get."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sunken beds",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " suit ",
+                "status": "draft",
+                "text": " di loketse "
+              },
+              {
+                "sourceEnglish": "dry ground",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", where you want to catch and hold what rain you get.",
+                "status": "draft",
+                "text": ", moo o batlang ho tshwara le ho boloka pula eo o e fumanang."
+              }
+            ]
           },
           {
             "status": "draft",
@@ -384,16 +532,133 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                "status": "draft",
+                "text": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. "
+              },
+              {
+                "sourceEnglish": "They do better",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " sown straight where they'll grow. ",
+                "status": "draft",
+                "text": " ha di jalwa ka kotloloho moo di tla hola teng. "
+              },
+              {
+                "sourceEnglish": "Beans, carrots",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " le "
+              },
+              {
+                "sourceEnglish": "maize",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " belong in that group.",
+                "status": "draft",
+                "text": " ke tsa sehlopha seo."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Others do better with a protected start in a nursery, then transplanting. Tomatoes le brassicas ke tsa sehlopha seo."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Others ",
+                "status": "draft",
+                "text": "Tse ding "
+              },
+              {
+                "sourceEnglish": "do better",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " with a protected start in a ",
+                "status": "draft",
+                "text": " ka qalo e sireletsehileng ho "
+              },
+              {
+                "sourceEnglish": "nursery",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", then ",
+                "status": "draft",
+                "text": ", ebe "
+              },
+              {
+                "sourceEnglish": "transplanting. Tomatoes",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " le "
+              },
+              {
+                "sourceEnglish": "brassicas",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " belong there.",
+                "status": "draft",
+                "text": " ke tsa sehlopha seo."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Sebedisa spacing guidance for the crop, variety and local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use ",
+                "status": "draft",
+                "text": "Sebedisa "
+              },
+              {
+                "sourceEnglish": "spacing guidance",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " for the ",
+                "status": "draft",
+                "text": " bakeng sa "
+              },
+              {
+                "sourceEnglish": "crop, variety",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " le "
+              },
+              {
+                "sourceEnglish": "local conditions",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Check the packet and ",
+                "status": "draft",
+                "text": ". Hlahloba packet le "
+              },
+              {
+                "sourceEnglish": "local grower advice",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Watch for crowding as plants develop.",
+                "status": "draft",
+                "text": ". Sheba crowding ha plants di ntse di hola."
+              }
+            ]
           }
         ]
       }
@@ -420,19 +685,49 @@
         "body": [
           {
             "status": "draft",
-            "text": "Pele o lema, mark the bed out."
+            "text": "Pele o lema, tshwaya bethe."
           },
           {
             "status": "draft",
             "text": "Bophara ba One point two metres. Bolelele ba Three metres. Bethe e le nngwe ya boikwetliso."
           },
           {
-            "status": "draft",
-            "text": "Sebedisa pegs le string. Tshwaya rectangle, le mark both access paths."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use pegs and string. Mark the ",
+                "status": "draft",
+                "text": "Sebedisa pegs le string. Tshwaya "
+              },
+              {
+                "sourceEnglish": "rectangle",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and mark both access paths.",
+                "status": "draft",
+                "text": ", le ho tshwaya ditsela ka bobedi tsa ho kena."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Jwale lokisetsa ho ya ka mobu wa hao — no-dig first, and dig deeper only if your ground genuinely needs it."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then prepare for your own soil — ",
+                "status": "draft",
+                "text": "Jwale lokisetsa ho ya ka mobu wa hao — qala ka "
+              },
+              {
+                "sourceEnglish": "no-dig",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
+                "status": "draft",
+                "text": ", mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka."
+              }
+            ]
           },
           {
             "status": "draft",

@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-05",
+  "reviewer": "Antigravity desktop Gemini 3.7 Flash High",
+  "session": "d916745d-2e39-4b0b-a05f-0c6709c967c9",
+  "responseObserved": true,
+  "items": 8,
+  "scope": "Image-description candidate subset; not final exhaustive whole-Study scan",
+  "fluentApproval": false,
+  "sourceCandidateRecords": [
+    {
+      "id": "reading-landscape|zu|reading-landscape-l3|lesson.imageDescription",
+      "sourceEnglish": "A farm from above with arrows showing wind direction, cold air draining downhill into a frost hollow, and the direction of the slope.",
+      "candidateTarget": "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, cold air draining downhill into a frost hollow, nendlela yomthambeka."
+    },
+    {
+      "id": "soil-health|zu|soil-health-l1|lesson.imageDescription",
+      "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "candidateTarget": "Umfanekiso osika inhlabathi ubonisa ungqimba olumnyama olungaphezulu (topsoil) ngaphezu kongqimba oluphaphathekile olungaphansi (subsoil), with two worms. Eceleni kwayo, imbiza yenhlabathi ihleli yaba izingqimba ezintathu — isihlabathi, i-silt nobumba."
+    },
+    {
+      "id": "vegetables-staples|zu|vegetables-staples-l3|lesson.imageDescription",
+      "sourceEnglish": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+      "candidateTarget": "Izitshalo ezintathu zokudla okuyisisekelo zihlangene: uhlanga olude lokusanhlamvu, umvini okhuphuka esigxotsheni, nesitshalo sempande esiboniswe half below the ground."
+    },
+    {
+      "id": "seeds-sovereignty|zu|seeds-sovereignty-l1|lesson.imageDescription",
+      "sourceEnglish": "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
+      "candidateTarget": "Amaphakethe embewu amabili ngaphezu kokuqhathanisa okulula: izitshalo ezinhlanu ezibukeka zifana ngakwesobunxele, nezitshalo ezinhlanu ezihlukahlukene ngakwesokudla. Actual offspring depend on variety and pollination."
+    },
+    {
+      "id": "seeds-sovereignty|zu|seeds-sovereignty-l3|lesson.imageDescription",
+      "sourceEnglish": "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
+      "candidateTarget": "Amaphakethe embewu agcinwe esitsheni esivaliwe, endaweni epholile, emnyama neyomile. Eceleni kunezinhlamvu eziyishumi on a damp cloth — ezinye sezihlumile, ezinye azikahlumi — njengokuhlola ukuhluma."
+    },
+    {
+      "id": "food-forest|zu|food-forest-l2|lesson.imageDescription",
+      "sourceEnglish": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
+      "candidateTarget": "Umumo olula waseNingizimu Afrika ohlukaniswe waba izindawo ezintathu zokutshala ngombala womhlabathi nesimo sendawo kuphela: ithafa eliphakeme eliphaphathekile elinamagquma phakathi nezwe, a green humid coastal strip, nendawo ephansi eshisayo ebomvu ngokunsundu. Kume izihlahla ezinomumo ohlukene kulezi zindawo."
+    },
+    {
+      "id": "food-forest|zu|food-forest-l3|lesson.imageDescription",
+      "sourceEnglish": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+      "candidateTarget": "Isiqephu esifanayo somhlaba siboniswe ngezigaba ezine ukusuka kwesobunxele kuya kwesokudla: i-mulch exegayo isatshalaliswa phezu kwekhadibhodi emhlabathini; kulandelwe izitshalo zokuqala eziphansi nezikhula masinyane; bese kuba young canopy trees nezinye izendlalelo ezingaphansi ezigcwalisayo; kugcine sekuyindawo yokutshala enezendlalelo ezizinzile."
+    },
+    {
+      "id": "small-livestock|zu|small-livestock-l3|lesson.imageDescription",
+      "sourceEnglish": "Bought feed enters the farm. Animals produce manure, some nutrients return to the growing area through fully composted manure, and food and other products leave the farm.",
+      "candidateTarget": "Ukudla kwezilwane okuthengiwe kungena epulazini. Izilwane zikhiqiza umquba; ezinye izakhamzimba zibuyela endaweni yokutshala ngomquba osuvundiswe ngokuphelele nge-compost. Ukudla neminye imikhiqizo kuphuma epulazini."
+    }
+  ],
+  "rootDisposition": {
+    "intentionalEnglishHolds": "Agy described untranslated terms as dropped meaning; original meaning remains visible and these are intentional uncertainty holds. Fuller candidates require independent check.",
+    "rejectedHalfProposal": "ingxenye describes part/portion and does not independently prove exact half.",
+    "rejectedDampProposal": "endwangwini emanzi reintroduces wet versus damp uncertainty.",
+    "materialCompostFinding": "ngomquba osuvundiswe ngokuphelele nge-compost may say manure treated by means of compost, rather than manure itself fully composted; narrow independent repair check pending.",
+    "boundedFullerCandidates": "seed offspring qualifier, young canopy modifier, downhill cold air require exact technical meaning checks before acceptance."
+  },
+  "repositoryWired": false
+}

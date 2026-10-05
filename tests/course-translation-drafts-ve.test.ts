@@ -1,3 +1,4 @@
+import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -625,7 +626,8 @@ test('Vegetables L3 preserves crop conditions and exact technical clauses while 
 
 test('Tshivenda bed preparation preserves reachability, soil conditions and crop establishment while translating ordinary prose', () => {
   const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
-  const draft = learnerVegetablesDraft.lessons.find(lesson => lesson.id === source.id)!;
+  // 5 October: current67 source/target edges and full preservation are checked before retaining this historical baseline coverage.
+  const draft = vegetablesBeforeFuller('ve', learnerVegetablesDraft).lessons.find(lesson => lesson.id === source.id)!;
   assert.equal(draft.body.sourceEnglish, source.body);
   const english = source.body.split('\n\n');
   const paragraphs = draft.body.tshivendaDraft.split('\n\n');
@@ -751,7 +753,8 @@ test('Tshivenda Vegetables assessments keep source answers and withdraw after qu
     assert.equal(resolveLearnerLessonPresentation({ ...source, quiz: changedQuiz }, 've').status, 'english-fallback');
     assert.equal(resolveLearnerLessonPresentation({ ...source, keyPoints: [`${source.keyPoints[0]} changed`, ...source.keyPoints.slice(1)] }, 've').status, 'english-fallback');
   }
-  const l1 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
+  // 5 October: old exact holds record the before-state; current language/source composition is validated first.
+  const l1 = vegetablesBeforeFuller('ve', learnerVegetablesDraft).lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
   assert.match(l1.keyPoints[0].tshivendaDraft, /1-1.2m wide so you never need to step on the growing area/);
   assert.doesNotMatch(l1.keyPoints[0].tshivendaDraft, /masia oṱhe/);
   assert.match(l1.quiz[0].options[1].tshivendaDraft, /either side without stepping on the growing area, avoiding compaction/);

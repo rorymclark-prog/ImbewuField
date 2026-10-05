@@ -2503,8 +2503,17 @@ test('Reading frost wording refresh retires only the four changed regional frame
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateReadingLandscapeFrostBodySyncStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assertActivationOrder(source, 'migrateVegetablesL2OrdinaryPairedStills', 'migrateReadingLandscapeFrostBodySyncStills',
-    'the frost-wording refresh runs after the earlier Vegetables still migration');
+  // 5 October 2026 inserted a bounded L1 still migration between these existing migrations.
+  // Keep their relative order while allowing later migrations to be added between them.
+  const activation = source.slice(source.indexOf("self.addEventListener('activate'"));
+  const l2Index = activation.indexOf('.then(migrateVegetablesL2OrdinaryPairedStills)');
+  const frostIndex = activation.indexOf('.then(migrateReadingLandscapeFrostBodySyncStills)');
+  assert.ok(l2Index >= 0, 'the Vegetables L2 still migration remains in activation');
+  assert.ok(frostIndex >= 0, 'the frost wording migration remains in activation');
+  assert.ok(l2Index < frostIndex,
+  'the frost-wording refresh remains after the earlier Vegetables L2 still migration');
+  assert.ok(activation.includes('.then(migrateVegetablesL1FullerOrdinaryPairedStills)'),
+    'the new Vegetables L1 still migration is present in the activation chain');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation does not download replacement frames');
 
   const origin = 'https://field.test';

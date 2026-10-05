@@ -290,16 +290,60 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Compacted soil loses its air spaces. Roots slow down. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Compacted soil",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+                "status": "draft",
+                "text": " yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Nsirhelelo wu olova. Permanent paths, and a bed narrow enough to reach into from both sides."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The protection is simple. ",
+                "status": "draft",
+                "text": "Nsirhelelo wu olova. "
+              },
+              {
+                "sourceEnglish": "Permanent paths",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                "status": "draft",
+                "text": ", ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "One metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. At that width you can reach the centre from either path, and your feet never touch the growing area."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "One metre to one point two metres",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
+                "status": "draft",
+                "text": " hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi "
+              },
+              {
+                "sourceEnglish": "growing area",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": " nikatsongo."
+              }
+            ]
           },
           {
             "status": "draft",
@@ -333,16 +377,73 @@
             "text": "A ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato."
           },
           {
-            "status": "draft",
-            "text": "Sungula hi least disturbance that solves your problem."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Start with the ",
+                "status": "draft",
+                "text": "Sungula hi "
+              },
+              {
+                "sourceEnglish": "least disturbance",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that solves your problem.",
+                "status": "draft",
+                "text": " leyi lulamisaka xiphiqo xa wena."
+              }
+            ]
           },
           {
             "status": "draft",
             "text": "No-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla."
           },
           {
-            "status": "draft",
-            "text": "U nga keli wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Do not dig ",
+                "status": "draft",
+                "text": "U nga keli "
+              },
+              {
+                "sourceEnglish": "wet clay",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". If ",
+                "status": "draft",
+                "text": ". Loko "
+              },
+              {
+                "sourceEnglish": "compaction",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " or ",
+                "status": "draft",
+                "text": " kumbe "
+              },
+              {
+                "sourceEnglish": "poor drainage",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+                "status": "draft",
+                "text": " swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula "
+              },
+              {
+                "sourceEnglish": "deeper cultivation",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": "."
+              }
+            ]
           },
           {
             "status": "draft",
@@ -353,8 +454,32 @@
             "text": "Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka."
           },
           {
-            "status": "draft",
-            "text": "Endzhaku ka heavy rain, kambisisa. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Look after ",
+                "status": "draft",
+                "text": "Endzhaku ka "
+              },
+              {
+                "sourceEnglish": "heavy rain",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+                "status": "draft",
+                "text": ", kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni "
+              },
+              {
+                "sourceEnglish": "soil and drainage advice",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " before choosing the bed.",
+                "status": "draft",
+                "text": " u nga si hlawula bed."
+              }
+            ]
           }
         ]
       }
@@ -376,16 +501,124 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                "status": "draft",
+                "text": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. "
+              },
+              {
+                "sourceEnglish": "They do better",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " sown straight where they'll grow. ",
+                "status": "draft",
+                "text": " loko swi byariwa hi ku kongoma laha swi nga ta kula kona. "
+              },
+              {
+                "sourceEnglish": "Beans, carrots",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na "
+              },
+              {
+                "sourceEnglish": "maize",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " belong in that group.",
+                "status": "draft",
+                "text": " swi wela eka ntlawa wolowo."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Others ",
+                "status": "draft",
+                "text": "Swin'wana "
+              },
+              {
+                "sourceEnglish": "do better",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " with a protected start in a ",
+                "status": "draft",
+                "text": " loko swi sungula swi sirhelelekile eka "
+              },
+              {
+                "sourceEnglish": "nursery",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", then ",
+                "status": "draft",
+                "text": ", kutani "
+              },
+              {
+                "sourceEnglish": "transplanting. Tomatoes",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na "
+              },
+              {
+                "sourceEnglish": "brassicas",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " belong there.",
+                "status": "draft",
+                "text": " swi wela eka ntlawa wolowo."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Landzelela spacing guidance for the crop, variety and local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use ",
+                "status": "draft",
+                "text": "Landzelela "
+              },
+              {
+                "sourceEnglish": "spacing guidance",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " for the ",
+                "status": "draft",
+                "text": " ya "
+              },
+              {
+                "sourceEnglish": "crop, variety",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na "
+              },
+              {
+                "sourceEnglish": "local conditions",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Check the packet and local grower advice. Watch for crowding as plants develop.",
+                "status": "draft",
+                "text": ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
+              }
+            ]
           }
         ]
       }
@@ -412,19 +645,49 @@
         "body": [
           {
             "status": "draft",
-            "text": "Loko u nga si byala, mark the bed out."
+            "text": "Loko u nga si byala, fungha bed."
           },
           {
             "status": "draft",
             "text": "One point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta."
           },
           {
-            "status": "draft",
-            "text": "Tirhisa pegs and string. Mark the rectangle, and mark both access paths."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use pegs and string. Mark the ",
+                "status": "draft",
+                "text": "Tirhisa pegs na string. Fungha "
+              },
+              {
+                "sourceEnglish": "rectangle",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and mark both access paths.",
+                "status": "draft",
+                "text": ", kutani u fungha tindlela hatimbirhi to nghena."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u dig deeper ntsena loko misava ya wena hakunene yi swi lava."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then prepare for your own soil — ",
+                "status": "draft",
+                "text": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi "
+              },
+              {
+                "sourceEnglish": "no-dig",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
+                "status": "draft",
+                "text": ", kutani u cela ku enta ntsena loko misava ya wena hakunene yi swi lava."
+              }
+            ]
           },
           {
             "status": "draft",

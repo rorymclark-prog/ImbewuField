@@ -1,0 +1,1058 @@
+{
+  "title": "Independent semantic and composition check — Vegetable L1 ordinary prose candidates",
+  "date": "2026-10-05",
+  "reviewMode": "read-only; English-source blind backcheck; no native-speaker/fluent approval claimed",
+  "inputPacket": "/tmp/imbewu-vegetables-l1-fuller-ordinary-candidates-20261005.json",
+  "nativeCurrentDump": "/tmp/imbewu-vegetables-l1-native-current-20261005.json",
+  "counts": {
+    "fields": 68,
+    "accept": 61,
+    "repair": 7,
+    "hold": 0,
+    "sourceMismatch": 0,
+    "bindingMismatch": 0
+  },
+  "compositionFinding": "Tshivenda body.paragraphs.12 candidate does not explicitly preserve the source comparative “do better” in the translated clause and has an uncertain hybrid subject/verb construction. Bounded fallback uses the exact English source sentence and preserves the existing localized second sentence. The comparative remains explicit in the direct-sowing candidate sentences and in the drain-better distractors; those are not held merely for retaining English. For the VE and TS all-conditions false distractors, suggested bounded repairs retain the exact English phrase “Narrow beds drain better” and use the candidate’s locally drafted all-conditions tail because bed-class concord is uncertain. The VE best-suited quiz question gets localized ordinary question framing with the exact English comparative/technical tail. Additional source-bound repairs: ST body paragraph 8 removes the candidate-added “from the bed”; VE key point 1 preserves “Assess” because the candidate verb may mean only look/observe; VE quiz question 0 preserves the current target’s exact English “wider” anchor because the localized candidate may say merely expanded.",
+  "limitations": [
+    "No new farming recommendation, number, crop name, or source claim is proposed.",
+    "Blind English backtranslations indicate source meaning; language uncertainties are listed on the affected fields."
+  ],
+  "fields": [
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.1",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "currentTarget": "Tshireletso e bonolo. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "candidateTarget": "Tshireletso e bonolo. Permanent paths, le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both-side/either-path reachability and never stepping on growing area"
+      ],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.2",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "currentTarget": "One metre to one point two metres wide. Ke yona working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateTarget": "One metre to one point two metres wide. Ke yona working number. Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both-side/either-path reachability and never stepping on growing area"
+      ],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.5",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "currentTarget": "Qala ka least disturbance that solves your problem.",
+      "candidateTarget": "Qala ka least disturbance e rarollang bothata ba hao.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.6",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "currentTarget": "No-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme build fertility on top.",
+      "candidateTarget": "No-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.7",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentTarget": "U se ke ua cheka wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateTarget": "U se ke ua cheka wet clay. Ha compaction kapa poor drainage e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha deeper cultivation.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "protected negation/severity/local-advice/before condition"
+      ],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.8",
+      "decision": "repair",
+      "reason": "Backtranslation: “Raised beds suit wet ground, where water needs a place to flow away from the bed.” Candidate adds a specific origin (“from the bed”) that is not stated in the source. Remove that location while preserving the drainage-away meaning.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "currentTarget": "Raised beds di loketse wet ground, moo water needs somewhere to drain away to.",
+      "candidateTarget": "Raised beds di loketse wet ground, moo metsi a hlokang sebaka seo a ka phallang ho sona a tloha betheng.",
+      "blindBacktranslation": "Raised beds suit wet ground, where water needs a place to flow away from the bed.",
+      "compositionFlags": [
+        "preserve wet-ground condition and drainage-away meaning",
+        "remove added “from the bed” location"
+      ],
+      "repair": "Raised beds di loketse wet ground, moo metsi a hlokang sebaka seo a ka phallang ho sona."
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.9",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "currentTarget": "Sunken beds di loketse dry ground, moo you want to catch and hold what rain you get.",
+      "candidateTarget": "Sunken beds di loketse dry ground, moo o batlang ho tshwara le ho boloka pula eo o e fumanang.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.11",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "currentTarget": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "candidateTarget": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better ha di jalwa ka kotloloho moo di tla hola teng. Beans, carrots le maize ke tsa sehlopha seo.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "comparative must remain explicit; preserve intentionally false all-conditions distractor where applicable",
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.12",
+      "decision": "accept",
+      "reason": "Backtranslation: “Now prepare according to your own soil — start with no-dig, and dig deeper only when your soil truly needs it.” The only-if limit and genuine-need condition are retained.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentTarget": "Others do better with a protected start in a nursery, then transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "candidateTarget": "Tse ding do better ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "blindBacktranslation": "Now prepare according to your own soil — start with no-dig, and dig deeper only when your soil truly needs it.",
+      "compositionFlags": [
+        "preserve only-if limitation"
+      ],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.13",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "currentTarget": "Sebedisa spacing guidance for the crop, variety and local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola.",
+      "candidateTarget": "Sebedisa spacing guidance bakeng sa crop, variety le local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.14",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Before you plant, mark the bed out.",
+      "currentTarget": "Pele o lema, mark the bed out.",
+      "candidateTarget": "Pele o lema, tshwaya bethe.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.16",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "currentTarget": "Sebedisa pegs le string. Tshwaya rectangle, le mark both access paths.",
+      "candidateTarget": "Sebedisa pegs le string. Tshwaya rectangle, le ho tshwaya ditsela ka bobedi tsa ho kena.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both access paths"
+      ],
+      "repair": null
+    },
+    {
+      "language": "st",
+      "fieldPath": "body.paragraphs.17",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentTarget": "Jwale lokisetsa ho ya ka mobu wa hao — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateTarget": "Jwale lokisetsa ho ya ka mobu wa hao — qala ka no-dig, mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "preserve only-if limitation"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.1",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "currentTarget": "Tsireledzo ndi yo leluwaho. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "candidateTarget": "Tsireledzo ndi yo leluwaho. Permanent paths, na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both-side/either-path reachability and never stepping on growing area"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.2",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "currentTarget": "One metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateTarget": "One metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami growing area na luthihi.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both-side/either-path reachability and never stepping on growing area"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.3",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "currentTarget": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati without stepping inside? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.",
+      "candidateTarget": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.5",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "currentTarget": "Thomani nga least disturbance that solves your problem.",
+      "candidateTarget": "Thomani nga least disturbance ine ya tandulula thaidzo yaṋu.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.6",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "currentTarget": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility on top.",
+      "candidateTarget": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.7",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentTarget": "Ni songo bwa wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateTarget": "Ni songo bwa wet clay. Arali compaction kana poor drainage zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha deeper cultivation.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "protected negation/severity/local-advice/before condition"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.8",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "currentTarget": "Raised beds suit wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.",
+      "candidateTarget": "Raised beds dzi tea wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.9",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "currentTarget": "Sunken beds suit dry ground, hune na ṱoḓa u catch and hold mvula ine na i wana.",
+      "candidateTarget": "Sunken beds dzi tea dry ground, hune na ṱoḓa u fara na u vhulunga mvula ine na i wana.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.10",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentTarget": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a run off ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice u sa athu khetha bed.",
+      "candidateTarget": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice ni sa athu khetha bed.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.11",
+      "decision": "accept",
+      "reason": "Backtranslation: “Some crops do not like their roots being disturbed. They do better when sown directly where they will grow. Beans, carrots and maize belong to that group.” The English comparative is explicit and the crop list/order is retained.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "currentTarget": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better sown straight where they'll grow. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "candidateTarget": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "blindBacktranslation": "Some crops do not like their roots being disturbed. They do better when sown directly where they will grow. Beans, carrots and maize belong to that group.",
+      "compositionFlags": [
+        "comparative is explicit in English; verify local clause concord only if a language concern is raised",
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.12",
+      "decision": "repair",
+      "reason": "Candidate backtranslation: “Other plants do well if they start protected in a nursery, then transplanting.” It can lose the source comparative “do better”; mixed Venda framing also leaves subject/verb concord uncertain. Conservative fallback keeps the exact source sentence and preserves the existing localized crop sentence.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentTarget": "Zwimela zwiṅwe zwi ita zwavhuḓi arali zwi thoma zwi tshi tsireledzwa nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "candidateTarget": "Zwimela zwiṅwe zwi ita zwavhuḓi arali zwi thoma zwi tshi tsireledzwa nursery, ha tevhela transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "blindBacktranslation": "Other plants do well if they start protected in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "compositionFlags": [
+        "comparative “do better” retained verbatim in conservative fallback",
+        "preserve current localized second sentence and crop labels"
+      ],
+      "repair": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas zwi wela henefho."
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.13",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "currentTarget": "Shumisani spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.",
+      "candidateTarget": "Shumisani spacing guidance ya crop, variety na local conditions. Sedzani packet na local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.16",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "currentTarget": "Shumisani zwipiki na thambo. Swayani rectangle, and mark both access paths.",
+      "candidateTarget": "Shumisani zwipiki na thambo. Swayani rectangle, nahone ni swaye paths dzoṱhe mbili dza u swikelela bed.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both access paths"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body.paragraphs.17",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentTarget": "Nga murahu ni lugiselele u ya nga mavu aṋu — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateTarget": "Nga murahu ni lugiselele u ya nga mavu aṋu — thomani nga no-dig, nahone ni bwe u tsa fhedzi arali mavu aṋu a tshi zwi ṱoḓa vhukuma.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "preserve only-if limitation"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "keyPoints.0",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+      "currentTarget": "Beds dzaṋu dzi vhe 1-1.2m wide so you never need to step on the growing area.",
+      "candidateTarget": "Beds dzaṋu dzi vhe 1-1.2m wide uri ni sa vhuye na tea u kanda growing area.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "keyPoints.1",
+      "decision": "repair",
+      "reason": "Backtranslation: “Look at compaction and drainage before choosing deeper cultivation; do not work wet clay.” “Sedzani” may mean look at/observe rather than assess. Retain the exact source verb in English if the distinction cannot be established; the wet-clay prohibition and before condition are retained.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "currentTarget": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "candidateTarget": "Sedzani compaction na drainage ni sa athu khetha deeper cultivation; ni songo shuma wet clay",
+      "blindBacktranslation": "Look at compaction and drainage before choosing deeper cultivation; do not work wet clay.",
+      "compositionFlags": [
+        "retain “Assess” verb pending lexical certainty",
+        "preserve before condition and wet-clay prohibition"
+      ],
+      "repair": "Assess compaction na drainage ni sa athu khetha deeper cultivation; ni songo shuma wet clay"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "keyPoints.2",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "currentTarget": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "candidateTarget": "Transplant zwimela zwine zwa ṱoḓa head start; direct-seed zwimela zwine zwa si takalele root disturbance",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "keyPoints.3",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Crowded plants underperform — space generously for your local climate",
+      "currentTarget": "Crowded plants underperform — space generously for your local climate",
+      "candidateTarget": "Zwimela zwo tsitsikanaho underperform — space generously u ya nga local climate yaṋu",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.0.q",
+      "decision": "repair",
+      "reason": "Backtranslation: “Why keep the vegetable bed 1–1.2m wide, instead of making it broadened/expanded?” It may preserve the wider comparison, but the lexical distinction is uncertain. Use the current target unchanged, which retains the exact English “wider” anchor.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+      "currentTarget": "Ndi ngani ni tshi vhulunga vegetable bed i tshi vha 1-1.2m wide, nṱhani ha u i ita wider?",
+      "candidateTarget": "Ndi ngani ni tshi vhulunga vegetable bed i tshi vha 1-1.2m wide, nṱhani ha u i ita yo ṱanḓavhuwaho?",
+      "blindBacktranslation": "Why keep a vegetable bed 1–1.2m wide, rather than make it expanded/wider?",
+      "compositionFlags": [
+        "current wording keeps the exact “wider” comparison"
+      ],
+      "repair": "Ndi ngani ni tshi vhulunga vegetable bed i tshi vha 1-1.2m wide, nṱhani ha u i ita wider?"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.0.options.0",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Wider beds get too much sun",
+      "currentTarget": "Wider beds get too much sun",
+      "candidateTarget": "Beds dzo ṱanḓavhuwaho dzi wana ḓuvha ḽinzhi nga maanḓa",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.0.options.1",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "currentTarget": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "candidateTarget": "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande growing area, na thivhela compaction",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.0.options.2",
+      "decision": "repair",
+      "reason": "Candidate backtranslation: “Beds that are not very wide drain better in all conditions.” The intentionally false universal remains, but local bed-class concord is uncertain. Keep the exact English comparative subject phrase and retain a locally drafted all-conditions tail.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Narrow beds drain better in all conditions",
+      "currentTarget": "Narrow beds drain better in all conditions",
+      "candidateTarget": "Beds dzi songo ṱanḓavhuwaho drain better kha nyimele dzoṱhe",
+      "blindBacktranslation": "Beds that are not very wide drain better in all conditions.",
+      "compositionFlags": [
+        "intentionally false all-conditions distractor remains false",
+        "English phrase preserves the exact comparative; local “in all conditions” tail retained"
+      ],
+      "repair": "Narrow beds drain better kha nyimele dzoṱhe"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.0.rationale",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "currentTarget": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "candidateTarget": "U kanda growing soil zwi ita compaction na u tshinyadza midzi — bed ine na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili i amba uri ni nga si vhuye na tea u kanda growing soil.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.1.q",
+      "decision": "repair",
+      "reason": "Candidate backtranslation: “Which crop is suitable best direct-seeding instead of transplanting?” This has a hybrid comparative construction. Keep the localized question frame and preserve the exact English comparative/technical tail.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "currentTarget": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "candidateTarget": "Ndi tshimela tshifhio tshine tsha tea best direct-seeding nṱhani ha transplanting?",
+      "blindBacktranslation": "Which crop is suitable best for direct-seeding rather than transplanting?",
+      "compositionFlags": [
+        "exact comparative and technical distinction retained",
+        "localized question frame; hybrid wording remains a machine draft"
+      ],
+      "repair": "Ndi tshimela tshifhio tshine tsha vha best suited to direct-seeding rather than transplanting?"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.1.options.0",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Tomatoes, which need an early start",
+      "currentTarget": "Tomatoes, which need an early start",
+      "candidateTarget": "Tomatoes, dzine dza ṱoḓa early start",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.1.options.1",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Brassicas, which need protection while small",
+      "currentTarget": "Brassicas, which need protection while small",
+      "candidateTarget": "Brassicas, dzine dza ṱoḓa tsireledzo musi dzi tshee ṱhukhu",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.1.options.2",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Beans, which resent root disturbance",
+      "currentTarget": "Beans, which resent root disturbance",
+      "candidateTarget": "Beans, dzine dza si takalele root disturbance",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.1.options.3",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Peppers, which are slow to germinate",
+      "currentTarget": "Peppers, which are slow to germinate",
+      "candidateTarget": "Peppers, dzine dza ongolowa u mela",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "quiz.1.rationale",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "currentTarget": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "candidateTarget": "Beans and other quick, sensitive-rooted crops establish poorly nga murahu ha transplant shock — u zwi zwala nga ho livhaho kha bed zwi thivhela setback yeneyo nga hoṱhe.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.0",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "currentTarget": "Compacted soil loses its air spaces. Roots slow down. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.",
+      "candidateTarget": "Compacted soil yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.1",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "currentTarget": "Nsirhelelo wu olova. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "candidateTarget": "Nsirhelelo wu olova. Permanent paths, ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both-side/either-path reachability and never stepping on growing area"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.2",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "currentTarget": "One metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateTarget": "One metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi growing area nikatsongo.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both-side/either-path reachability and never stepping on growing area"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.5",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "currentTarget": "Sungula hi least disturbance that solves your problem.",
+      "candidateTarget": "Sungula hi least disturbance leyi lulamisaka xiphiqo xa wena.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.7",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentTarget": "U nga keli wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateTarget": "U nga keli wet clay. Loko compaction kumbe poor drainage swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula deeper cultivation.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "protected negation/severity/local-advice/before condition"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.10",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentTarget": "Endzhaku ka heavy rain, kambisisa. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "candidateTarget": "Endzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni soil and drainage advice u nga si hlawula bed.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.11",
+      "decision": "accept",
+      "reason": "Backtranslation: “Some crops do not like their roots being disturbed. They do better when planted directly where they will grow. Beans, carrots and maize belong to that group.” Explicit English comparative and crop list are retained.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "currentTarget": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "candidateTarget": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona. Beans, carrots na maize swi wela eka ntlawa wolowo.",
+      "blindBacktranslation": "Some crops do not like their roots being disturbed. They do better when planted directly where they will grow. Beans, carrots and maize belong to that group.",
+      "compositionFlags": [
+        "comparative is explicit in English",
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.12",
+      "decision": "accept",
+      "reason": "Backtranslation: “Others do better if they start protected in a nursery, then transplanting. Tomatoes and brassicas belong to that group.” Explicit English comparative and sequence are retained; local subject/concord is not independently established as wrong.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentTarget": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "candidateTarget": "Swin'wana do better loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "blindBacktranslation": "Others do better if they start protected in a nursery, then transplanting. Tomatoes and brassicas belong to that group.",
+      "compositionFlags": [
+        "comparative is explicit in English",
+        "preserve nursery-start then transplanting sequence",
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.13",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "currentTarget": "Landzelela spacing guidance for the crop, variety and local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.",
+      "candidateTarget": "Landzelela spacing guidance ya crop, variety na local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.14",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Before you plant, mark the bed out.",
+      "currentTarget": "Loko u nga si byala, mark the bed out.",
+      "candidateTarget": "Loko u nga si byala, fungha bed.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.16",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "currentTarget": "Tirhisa pegs and string. Mark the rectangle, and mark both access paths.",
+      "candidateTarget": "Tirhisa pegs na string. Fungha rectangle, kutani u fungha tindlela hatimbirhi to nghena.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "check both access paths"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body.paragraphs.17",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentTarget": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u dig deeper ntsena loko misava ya wena hakunene yi swi lava.",
+      "candidateTarget": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u cela ku enta ntsena loko misava ya wena hakunene yi swi lava.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "preserve only-if limitation"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "keyPoints.0",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+      "currentTarget": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+      "candidateTarget": "Hlayisa beds ti ri 1-1.2m hi ku anama leswaku u nga boheki ku kandziya growing area nikatsongo",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "keyPoints.1",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "currentTarget": "Assess compaction na drainage u nga si hlawula deeper cultivation; do not work wet clay.",
+      "candidateTarget": "Assess compaction na drainage u nga si hlawula deeper cultivation; u nga tirhi wet clay.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "protected negation/severity/local-advice/before condition"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "keyPoints.2",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "currentTarget": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "candidateTarget": "Transplant swibyariwa leswi lavaka head start; direct-seed swibyariwa leswi nga tsakeliki root disturbance",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "keyPoints.3",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Crowded plants underperform — space generously for your local climate",
+      "currentTarget": "Crowded plants underperform — space generously for your local climate",
+      "candidateTarget": "Swibyariwa leswi manyaneke underperform — space generously hi ku ya hi local climate ya wena",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.0.q",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+      "currentTarget": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m wide ku ri na ku yi endla yi anama ku tlurisa?",
+      "candidateTarget": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m hi ku anama ku ri na ku yi endla yi anama ku tlurisa?",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.0.options.1",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "currentTarget": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "candidateTarget": "U nga fika exikarhini ku suka eka tlhelo rin'wana ni rin'wana ra lamambirhi handle ko kandziya growing area, u papalata compaction",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.0.options.2",
+      "decision": "repair",
+      "reason": "Candidate backtranslation: “Beds that are not very wide drain better in all conditions.” The intentionally false universal remains, but local bed-class concord is uncertain. Keep the exact English comparative subject phrase and retain a locally drafted all-conditions tail.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Narrow beds drain better in all conditions",
+      "currentTarget": "Narrow beds drain better in all conditions",
+      "candidateTarget": "Beds leti nga anamangiki ngopfu drain better eka swiyimo hinkwato",
+      "blindBacktranslation": "Beds that are not very wide drain better in all conditions.",
+      "compositionFlags": [
+        "intentionally false all-conditions distractor remains false",
+        "English phrase preserves exact comparative; local “in all conditions” tail retained"
+      ],
+      "repair": "Narrow beds drain better eka swiyimo hinkwato"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.1.options.0",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Tomatoes, which need an early start",
+      "currentTarget": "Tomatoes, which need an early start",
+      "candidateTarget": "Tomatoes, leti lavaka early start",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.1.options.1",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Brassicas, which need protection while small",
+      "currentTarget": "Brassicas, which need protection while small",
+      "candidateTarget": "Brassicas, leti lavaka nsirhelelo loko ta ha ri titsongo",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.1.options.2",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Beans, which resent root disturbance",
+      "currentTarget": "Beans, which resent root disturbance",
+      "candidateTarget": "Beans, leti nga tsakeliki root disturbance",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.1.options.3",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Peppers, which are slow to germinate",
+      "currentTarget": "Peppers, which are slow to germinate",
+      "candidateTarget": "Peppers, leti hlwelaka ku mila",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.1.rationale",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "currentTarget": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "candidateTarget": "Beans and other quick, sensitive-rooted crops establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma eka bed ku papalata setback yoleyo hi ku helela.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [
+        "species/crop labels must remain exactly unchanged"
+      ],
+      "repair": null
+    },
+    {
+      "language": "ts",
+      "fieldPath": "module.description",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
+      "currentTarget": "Bed prep, succession planting, staple crops and pest management — ntirho wa siku ni siku wa ku rima swakudya.",
+      "candidateTarget": "Ku lulamisa beds, succession planting, staple crops na pest management — ntirho wa siku ni siku wa ku rima swakudya.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    },
+    {
+      "language": "ve",
+      "fieldPath": "module.description",
+      "decision": "accept",
+      "reason": "No source-level change to the action, condition, scope, sequence, named crop, or number was detected in this review.",
+      "exactSource": true,
+      "exactCurrentBinding": "PASS",
+      "sourceEnglish": "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
+      "currentTarget": "Bed prep, succession planting, staple crops and pest management — mushumo wa ḓuvha ḽiṅwe na ḽiṅwe wa u lima zwiḽiwa.",
+      "candidateTarget": "U lugisa beds, succession planting, staple crops na pest management — mushumo wa ḓuvha ḽiṅwe na ḽiṅwe wa u lima zwiḽiwa.",
+      "blindBacktranslation": "Blind English backcheck: candidate appears to preserve the source proposition and ordering; technical terms intentionally retained in English. This is not a fluent-language endorsement.",
+      "compositionFlags": [],
+      "repair": null
+    }
+  ],
+  "nativeBindingNote": "Parent confirmed the source and current strings are unchanged on fresh main commit 439557a0. This report independently matched all 68 packet source strings and current strings against the supplied native-current dump; candidate targets remain proposed only."
+}

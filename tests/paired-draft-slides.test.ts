@@ -1026,7 +1026,10 @@ test('Vegetables paired drafts keep the one-crop limit and source-bound seasonal
     'the Xitsonga wording keeps the continued-food benefit tied to multiple staples');
 });
 
-test('Vegetables opening frames retain exact source holds and reuse L1 wording only at matching passages', () => {
+// 5 October 2026: the fuller L1 batch adds explicit English anchors inside some approved
+// learner targets. A mixed row is reusable only when its visible composition equals the
+// resolver text and its segments still cover the complete canonical paragraph in order.
+test('Vegetables opening frames retain exact source holds and reuse complete L1 learner compositions', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const lesson = COURSE_MODULES.find(({ id }) => id === 'vegetables-staples')!.lessons
     .find(({ id }) => id === 'vegetables-staples-l1')!;
@@ -1069,8 +1072,13 @@ test('Vegetables opening frames retain exact source holds and reuse L1 wording o
       const part = slides[slideNumber - 1].target.body[bodyIndex];
       assert.equal(slides[slideNumber - 1].english.body[bodyIndex], canonicalBody[index],
         `${lang} slide ${slideNumber}: the whole lesson passage is the exact reuse source`);
-      assert.equal(part.status, 'draft');
-      assert.equal(part.text, learnerBody[index],
+      assert.ok(part.status === 'draft' || part.status === 'mixed',
+        `${lang} slide ${slideNumber} body ${bodyIndex}: source-matched learner wording stays visibly a draft`);
+      if (part.status === 'mixed') {
+        assert.equal(part.segments.map((segment: any) => segment.sourceEnglish).join(''), canonicalBody[index],
+          `${lang} slide ${slideNumber} body ${bodyIndex}: mixed segments cover the complete canonical paragraph`);
+      }
+      assert.equal(targetVisibleText(part), learnerBody[index],
         `${lang} slide ${slideNumber}: reuse only the resolver's current source-bound learner passage`);
     }
   }
@@ -1106,14 +1114,21 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
         const part = slides[slideIndex].target.body[bodyIndex];
         const key = `${lang}:${slideIndex + 1}:${bodyIndex + 1}`;
 
-        if (part.status === 'draft') {
+        if (part.status === 'draft' || part.status === 'mixed') {
           reusedDrafts++;
           assert.notEqual(learnerBody[paragraphIndex], exactSource,
             `${key}: an unchanged English paragraph must remain an explicit hold`);
-          assert.equal(part.text, learnerBody[paragraphIndex],
+          assert.equal(targetVisibleText(part), learnerBody[paragraphIndex],
             `${key}: deck prose must exactly match the current learner resolver for its complete source paragraph`);
+          if (part.status === 'mixed') {
+            assert.equal(part.segments.map((segment: any) => segment.sourceEnglish).join(''), exactSource,
+              `${key}: mixed draft segments must preserve complete canonical source coverage`);
+            assert.ok(part.segments.some((segment: any) => segment.status === 'draft'),
+              `${key}: mixed status includes actual localized learner prose`);
+          }
         } else {
           assert.equal(part.status, 'english-hold', `${key}: a source match cannot be silently dropped or relabelled`);
+          assert.equal('text' in part, false, `${key}: an English hold has no detached replacement copy`);
           actualHolds.add(key);
         }
       }
@@ -1122,7 +1137,7 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
 
   assert.equal(sourceMatches, 171, 'slides 7–16 contain 171 complete source-matched paragraphs across the three languages');
   assert.deepEqual(actualHolds, expectedHolds,
-    'the Indigenous farming example and crop-treatment safeguards remain whole-field holds; the newly paired Maize and Beans passages use current learner wording');
+    'the Indigenous farming example and crop-treatment safeguards remain whole-field holds; all translated and mixed rows use current learner wording');
   assert.equal(reusedDrafts, sourceMatches - expectedHolds.size,
     'every other whole source-matched lesson paragraph uses its current learner draft in the deck');
 
