@@ -53,8 +53,9 @@ with one absent description; this is a translation gap, not a translated-alt cla
 - Root checked all 33 stored source projections against canonical English and the
   repaired body paragraph alignment. Focused source-binding tests exercise actual
   source edits and same-length reorders, not just counts.
-- Full ordered local gates, exact-head CI, preview phone review and production
-  verification remain pending at the time this record is written.
+- Ordered root typecheck, full suite (4,613 passed, zero failed, one existing TODO)
+  and whitespace check passed for content commit `aa5271b1`. Exact-head CI,
+  preview phone review and production verification remain pending.
 - No narration playback, complete deck audit, cold-start offline or full-course
   offline claim is made. Existing narration/media hashes must remain unchanged.
 - This changes learner presentation. `PLAN_VERSION` and saved geometry remain unchanged.
