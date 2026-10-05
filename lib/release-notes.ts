@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'b22c1f84', changes: [
+    'Soil lessons and silent slides add fuller unreviewed regional drafts.',
+    'Exact English stays visible; uncertain technical terms stay precise.',
+  ], tour: [
+    { title: 'Compare Soil lesson and slide drafts',
+      where: 'Study → Soil Health → Open a lesson or slides',
+      detail: 'Read the draft beside English, or save its slide-only pack.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'bffe9a18', changes: [
     'Market lessons add fuller Sesotho, Tshivenda and Xitsonga unreviewed drafts.',
     'English sources stay visible; seed rights, income and pricing terms stay precise.',
