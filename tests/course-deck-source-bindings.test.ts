@@ -11,10 +11,80 @@ import {
   type DeckTranscriptRegistry,
 } from '../lib/course-deck-source-bindings.ts';
 import { COURSE_TRANSCRIPTS } from '../lib/course-transcripts.ts';
+import { ISIZULU_SILENT_DECK_DRAFT_ROWS } from '../lib/course-deck-silent-drafts-data.ts';
+import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
+import { englishSlideRecords } from '../scripts/paired-draft-slides.mjs';
+import {
+  createIsiZuluSilentDeckDraftRegistry,
+  resolveIsiZuluSilentDeckDraft as resolveSilentDraftFromRegistry,
+  type IsiZuluSilentDeckDraftInput,
+} from '../lib/course-deck-silent-drafts.ts';
+import { resolveIsiZuluSilentDeckDraft as resolveRegisteredSilentDraft } from '../lib/course-deck-silent-drafts-registry.ts';
 
 const publicRoot = new URL('../public/', import.meta.url);
 const sha256 = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const assetSha256 = (url: string) => sha256(readFileSync(new URL(url.replace(/^\//, ''), publicRoot)));
+
+// Read the encoded pixels' dimensions, rather than accepting a reviewer JSON's size claim.
+function webpDimensions(bytes: Buffer): { width: number; height: number } {
+  assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
+  assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
+  for (let offset = 12; offset + 8 <= bytes.length;) {
+    const kind = bytes.toString('ascii', offset, offset + 4);
+    const size = bytes.readUInt32LE(offset + 4);
+    const data = offset + 8;
+    assert.ok(data + size <= bytes.length, 'WebP chunk is complete');
+    if (kind === 'VP8 ') {
+      assert.equal(bytes.subarray(data + 3, data + 6).toString('hex'), '9d012a');
+      return { width: bytes.readUInt16LE(data + 6) & 0x3fff,
+        height: bytes.readUInt16LE(data + 8) & 0x3fff };
+    }
+    if (kind === 'VP8X') return { width: 1 + bytes.readUIntLE(data + 4, 3),
+      height: 1 + bytes.readUIntLE(data + 7, 3) };
+    offset = data + size + (size % 2);
+  }
+  throw new Error('No supported encoded WebP dimensions');
+}
+
+test('every corrected silent ZU card carries the checked full source, target and actual image without releasing its old voice', () => {
+  const packet = JSON.parse(readFileSync(new URL(
+    '../docs/study-translation-reviews/ISIZULU-SILENT-HELD-SLIDE-CANDIDATES-2026-10-05.json', import.meta.url), 'utf8'));
+  const expected = packet.rows.filter((row: any) => row.currentHold);
+  const keys = (rows: readonly { moduleId: string; slide: number }[]) => rows.map(row =>
+    `${row.moduleId}:${row.slide}`).sort();
+  assert.deepEqual(keys(ISIZULU_SILENT_DECK_DRAFT_ROWS), keys(expected),
+    'no approved card is silently omitted, duplicated, or replaced by a temporary English-only input');
+  assert.deepEqual(keys(ISIZULU_SILENT_DECK_DRAFT_ROWS), keys(isiZuluDeckReviewHoldEntries()));
+  for (const row of ISIZULU_SILENT_DECK_DRAFT_ROWS) {
+    const checked = expected.find((candidate: any) => candidate.moduleId === row.moduleId && candidate.slide === row.slide);
+    assert.deepEqual(row.sourceEnglish, checked.sourceEnglish);
+    assert.deepEqual(row.correctedTarget, checked.proposedSilentTarget);
+    assert.equal(row.correctedTitle, checked.proposedSilentZuluTitle);
+    assert.equal(row.targetHash, sha256(Buffer.from(JSON.stringify({
+      heading: row.correctedTitle, body: row.correctedTarget,
+    }))));
+    assert.equal(row.sourceHash, sha256(Buffer.from(JSON.stringify(row.sourceEnglish))));
+    const authored = englishSlideRecords(readFileSync(new URL(
+      `../docs/narration/${row.moduleId}.en.md`, import.meta.url), 'utf8')).find((slide: any) => slide.n === row.slide);
+    assert.ok(authored);
+    assert.equal(row.sourceHeading, authored.heading);
+    assert.deepEqual(row.sourceEnglish, authored.body, 'exact authored source, including later paragraphs');
+    const bytes = readFileSync(new URL(row.imageUrl.slice(1), publicRoot));
+    assert.equal(sha256(bytes), row.imageSha256);
+    assert.equal(bytes.length, row.imageBytes);
+    assert.equal(COURSE_ASSET_SIZES[row.imageUrl], bytes.length);
+    assert.deepEqual(webpDimensions(bytes), { width: row.width, height: row.height });
+    assert.ok(resolveRegisteredSilentDraft(row.moduleId, row.slide));
+    assert.deepEqual(slideImageFor(row.moduleId, 'zu', row.slide), {
+      url: row.imageUrl, lang: 'zu', exact: true, aspectRatio: row.width / row.height,
+    });
+    assert.equal(trackUrl(row.moduleId, 'zu', row.slide), null,
+      'corrected visual wording is not a binding to the older recorded words');
+    assert.equal(animationUrls(row.moduleId, row.slide, 'zu'), null);
+    assert.equal(row.audioBinding, 'none');
+    assert.equal(row.reviewStatus, 'unreviewed');
+  }
+});
 
 test('all 240 isiZulu deck pairs resolve to the exact registered source and recorded words', () => {
   assert.equal(ISIZULU_DECK_SOURCE_BINDINGS.length, 240);
@@ -60,6 +130,131 @@ test('all 240 isiZulu deck pairs resolve to the exact registered source and reco
   }
 });
 
+type MutableSilentDraft = {
+  -readonly [Key in keyof IsiZuluSilentDeckDraftInput]:
+    Key extends 'sourceEnglish' | 'correctedTarget' ? string[] : IsiZuluSilentDeckDraftInput[Key]
+};
+const silentDraftFixture = (): MutableSilentDraft => {
+  const binding = ISIZULU_DECK_SOURCE_BINDINGS[0];
+  return {
+    moduleId: binding.moduleId,
+    slide: binding.slide,
+    sourceHeading: binding.sourceHeading,
+    sourceEnglish: [...binding.source],
+    correctedTitle: 'Isihloko esingabuyekezwanga',
+    correctedTarget: ['Umbhalo olungisiwe ongakabuyekezwa.'],
+    sourceHash: binding.sourceHash,
+    targetHash: '1'.repeat(64),
+    imageUrl: `/course-decks/${binding.moduleId}/zu-silent/slide-${String(binding.slide).padStart(2, '0')}.webp`,
+    imageSha256: '2'.repeat(64),
+    imageBytes: 12345,
+    width: 1440,
+    height: 5400,
+    reviewStatus: 'unreviewed',
+    audioBinding: 'none',
+  };
+};
+
+test('silent ZU registry checks immutable source/title and requires a silent unreviewed card', () => {
+  const binding = ISIZULU_DECK_SOURCE_BINDINGS[0];
+  const candidate = silentDraftFixture();
+  const registry = createIsiZuluSilentDeckDraftRegistry([candidate]);
+  assert.equal(resolveSilentDraftFromRegistry(registry, binding.moduleId, binding.slide)?.correctedTitle,
+    candidate.correctedTitle);
+
+  const reordered = silentDraftFixture();
+  reordered.sourceEnglish = [...reordered.sourceEnglish].reverse();
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([reordered]), /source text or order differs/);
+
+  const changedTitle = silentDraftFixture();
+  changedTitle.sourceHeading = 'Changed English heading';
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([changedTitle]), /Source heading differs/);
+
+  const staleManifestTitle = silentDraftFixture();
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([staleManifestTitle], COURSE_TRANSCRIPTS,
+    () => ({ en: 'Changed title', zu: binding.registeredZuluTitle })), /source or title drifted/);
+
+  const changedSource = silentDraftFixture();
+  changedSource.sourceEnglish[0] += ' New instruction.';
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([changedSource]), /source text or order differs/);
+
+  const wrongSnapshotHash = silentDraftFixture();
+  wrongSnapshotHash.sourceHash = '3'.repeat(64);
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([wrongSnapshotHash]), /Source hash differs/);
+
+  const wrongAudioBinding = silentDraftFixture();
+  wrongAudioBinding.audioBinding = 'legacy-recording' as 'none';
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([wrongAudioBinding]), /no audio binding/);
+});
+
+test('silent ZU registry freezes copies and stops resolving after live source drift', () => {
+  const binding = ISIZULU_DECK_SOURCE_BINDINGS[0];
+  const candidate = silentDraftFixture();
+  const originalSource = [...candidate.sourceEnglish];
+  const originalTarget = [...candidate.correctedTarget];
+  const registry = createIsiZuluSilentDeckDraftRegistry([candidate]);
+  const row = resolveSilentDraftFromRegistry(registry, binding.moduleId, binding.slide);
+  assert.ok(row);
+  assert.ok(Object.isFrozen(registry));
+  assert.ok(Object.isFrozen(row));
+  assert.ok(Object.isFrozen(row.sourceEnglish));
+  assert.ok(Object.isFrozen(row.correctedTarget));
+
+  candidate.sourceEnglish[0] = 'Caller mutation after registration.';
+  candidate.correctedTarget[0] = 'Caller mutation after registration.';
+  assert.deepEqual(row.sourceEnglish, originalSource);
+  assert.deepEqual(row.correctedTarget, originalTarget);
+  assert.equal(resolveSilentDraftFromRegistry(registry, binding.moduleId, binding.slide), row);
+
+  const driftedTranscripts = structuredClone(COURSE_TRANSCRIPTS) as typeof COURSE_TRANSCRIPTS;
+  (driftedTranscripts as any)[binding.moduleId].en[binding.slide][0] += ' Drift.';
+  assert.equal(resolveSilentDraftFromRegistry(registry, binding.moduleId, binding.slide, driftedTranscripts), null,
+    'a checked card stops resolving if its live English source changes');
+});
+
+test('silent ZU registry rejects duplicate identities and invalid image/hash metadata', () => {
+  const binding = ISIZULU_DECK_SOURCE_BINDINGS[0];
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([silentDraftFixture(), silentDraftFixture()]), /Duplicate.*identity/);
+
+  const badUrl = silentDraftFixture();
+  badUrl.imageUrl = `/course-decks/${binding.moduleId}/zu/slide-01.webp`;
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([badUrl]), /isiZulu WebP slide path/);
+
+  const badImageHash = silentDraftFixture();
+  badImageHash.imageSha256 = 'xyz';
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([badImageHash]), /Invalid image hash or byte size/);
+
+  const badTargetHash = silentDraftFixture();
+  badTargetHash.targetHash = 'abcd';
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([badTargetHash]), /Invalid target SHA-256/);
+
+  const badBytes = silentDraftFixture();
+  badBytes.imageBytes = 0;
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([badBytes]), /Invalid image hash or byte size/);
+
+  const badWidth = silentDraftFixture();
+  badWidth.width = 1439;
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([badWidth]), /dimensions must be 1440x5400 or taller/);
+
+  const badHeight = silentDraftFixture();
+  badHeight.height = 5399;
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([badHeight]), /dimensions must be 1440x5400 or taller/);
+
+  const reviewed = silentDraftFixture();
+  reviewed.reviewStatus = 'reviewed' as 'unreviewed';
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([reviewed]), /must remain unreviewed/);
+
+  const forgedRow = Object.freeze({
+    ...silentDraftFixture(),
+    sourceEnglish: Object.freeze([...binding.source]),
+    correctedTarget: Object.freeze(['Forged row']),
+  });
+  const forgedRegistry = Object.freeze({ [`${binding.moduleId}:${binding.slide}`]: forgedRow });
+  assert.equal(resolveSilentDraftFromRegistry(forgedRegistry, binding.moduleId, binding.slide), null,
+    'freezing caller-created objects does not turn them into factory-checked registry authority');
+  assert.deepEqual(Object.keys(createIsiZuluSilentDeckDraftRegistry([])), []);
+});
+
 test('the source snapshot covers exact deck/audio assets without changing the ST Introduction recordings', () => {
   for (const binding of ISIZULU_DECK_SOURCE_BINDINGS) {
     assert.equal(slideImageUrl(binding.moduleId, 'zu', binding.slide), binding.imageUrl,
@@ -74,11 +269,21 @@ test('the source snapshot covers exact deck/audio assets without changing the ST
       `${binding.moduleId} slide ${binding.slide}: raw recording is retained, while only held ZU URLs are suppressed`);
     const shown = slideImageFor(binding.moduleId, 'zu', binding.slide);
     if (holdReason) {
-      assert.deepEqual(shown, {
-        url: slideImageUrl(binding.moduleId, 'en', binding.slide),
-        lang: 'en',
-        exact: false,
-      }, `${binding.moduleId} slide ${binding.slide}: flagged wording is paired with the English still`);
+      const silentDraft = resolveRegisteredSilentDraft(binding.moduleId, binding.slide);
+      if (silentDraft) {
+        assert.deepEqual(shown, {
+          url: silentDraft.imageUrl,
+          lang: 'zu',
+          exact: true,
+          aspectRatio: silentDraft.width / silentDraft.height,
+        }, `${binding.moduleId} slide ${binding.slide}: reviewed correction can provide a silent still while the old track stays held`);
+      } else {
+        assert.deepEqual(shown, {
+          url: slideImageUrl(binding.moduleId, 'en', binding.slide),
+          lang: 'en',
+          exact: false,
+        }, `${binding.moduleId} slide ${binding.slide}: flagged wording uses English until a corrected still is registered`);
+      }
     } else {
       assert.deepEqual(shown, { url: binding.imageUrl, lang: 'zu', exact: true },
         `${binding.moduleId} slide ${binding.slide}: an unflagged exact pair keeps its ZU still`);

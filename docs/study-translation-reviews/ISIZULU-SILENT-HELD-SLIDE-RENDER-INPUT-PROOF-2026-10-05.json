@@ -1,0 +1,480 @@
+{
+  "baseHead": "38eacf4d646416e1d98738ab8274990545338a69",
+  "packetPath": "/tmp/imbewu-zu-held-slide-correction-candidates-final-20261005.json",
+  "packetSha256": "9e2ecc50c59706b2c3d8cf359a28e2741557d04cec82e001ef7edd6f96fc9a06",
+  "modules": {
+    "intro-permaculture": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/intro-permaculture.zu.paired-draft.json",
+      "slideCount": 22,
+      "currentHoldSlideCandidateCount": 1,
+      "candidateCardsUsed": [
+        22
+      ],
+      "candidateCardsTemporarilyHeld": [
+        {
+          "slide": 1,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 4,
+          "targetCount": 2
+        },
+        {
+          "slide": 2,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 4,
+          "targetCount": 2
+        },
+        {
+          "slide": 3,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 5,
+          "targetCount": 2
+        },
+        {
+          "slide": 4,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 4,
+          "targetCount": 2
+        },
+        {
+          "slide": 5,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 5,
+          "targetCount": 2
+        },
+        {
+          "slide": 6,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 5,
+          "targetCount": 2
+        },
+        {
+          "slide": 7,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 3,
+          "targetCount": 2
+        },
+        {
+          "slide": 8,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 4,
+          "targetCount": 2
+        },
+        {
+          "slide": 11,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 4,
+          "targetCount": 5
+        },
+        {
+          "slide": 14,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 4,
+          "targetCount": 5
+        }
+      ],
+      "recordedZuluCardsReused": [
+        9,
+        10,
+        12,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "exactEnglishHoldFields": 0,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    },
+    "market-community": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/market-community.zu.paired-draft.json",
+      "slideCount": 20,
+      "currentHoldSlideCandidateCount": 1,
+      "candidateCardsUsed": [
+        14
+      ],
+      "candidateCardsTemporarilyHeld": [],
+      "recordedZuluCardsReused": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "exactEnglishHoldFields": 0,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    },
+    "plant-guilds": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/plant-guilds.zu.paired-draft.json",
+      "slideCount": 51,
+      "currentHoldSlideCandidateCount": 3,
+      "candidateCardsUsed": [
+        22,
+        28,
+        40
+      ],
+      "candidateCardsTemporarilyHeld": [],
+      "recordedZuluCardsReused": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "exactEnglishHoldFields": 2,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    },
+    "reading-landscape": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/reading-landscape.zu.paired-draft.json",
+      "slideCount": 21,
+      "currentHoldSlideCandidateCount": 3,
+      "candidateCardsUsed": [
+        5,
+        15,
+        16
+      ],
+      "candidateCardsTemporarilyHeld": [
+        {
+          "slide": 1,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 3,
+          "targetCount": 1
+        },
+        {
+          "slide": 2,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 3,
+          "targetCount": 1
+        },
+        {
+          "slide": 3,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 4,
+          "targetCount": 1
+        },
+        {
+          "slide": 4,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 3,
+          "targetCount": 1
+        },
+        {
+          "slide": 6,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 3,
+          "targetCount": 1
+        },
+        {
+          "slide": 7,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 3,
+          "targetCount": 1
+        },
+        {
+          "slide": 12,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 3,
+          "targetCount": 1
+        },
+        {
+          "slide": 14,
+          "reason": "recorded/candidate target paragraph count differs from exact English source; this temporary English-only card is not a release candidate",
+          "sourceCount": 4,
+          "targetCount": 2
+        }
+      ],
+      "recordedZuluCardsReused": [
+        8,
+        9,
+        10,
+        11,
+        13,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "exactEnglishHoldFields": 2,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    },
+    "seeds-sovereignty": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/seeds-sovereignty.zu.paired-draft.json",
+      "slideCount": 24,
+      "currentHoldSlideCandidateCount": 7,
+      "candidateCardsUsed": [
+        6,
+        11,
+        12,
+        14,
+        15,
+        20,
+        24
+      ],
+      "candidateCardsTemporarilyHeld": [],
+      "recordedZuluCardsReused": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        13,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        23
+      ],
+      "exactEnglishHoldFields": 6,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    },
+    "small-livestock": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/small-livestock.zu.paired-draft.json",
+      "slideCount": 20,
+      "currentHoldSlideCandidateCount": 4,
+      "candidateCardsUsed": [
+        2,
+        3,
+        8,
+        11
+      ],
+      "candidateCardsTemporarilyHeld": [],
+      "recordedZuluCardsReused": [
+        1,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "exactEnglishHoldFields": 3,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    },
+    "soil-health": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/soil-health.zu.paired-draft.json",
+      "slideCount": 20,
+      "currentHoldSlideCandidateCount": 1,
+      "candidateCardsUsed": [
+        1
+      ],
+      "candidateCardsTemporarilyHeld": [],
+      "recordedZuluCardsReused": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "exactEnglishHoldFields": 0,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    },
+    "vegetables-staples": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/vegetables-staples.zu.paired-draft.json",
+      "slideCount": 18,
+      "currentHoldSlideCandidateCount": 2,
+      "candidateCardsUsed": [
+        16,
+        18
+      ],
+      "candidateCardsTemporarilyHeld": [],
+      "recordedZuluCardsReused": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17
+      ],
+      "exactEnglishHoldFields": 3,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    },
+    "water-harvesting": {
+      "inputPath": "/tmp/imbewu-zu-held-paired-inputs-20261005/water-harvesting.zu.paired-draft.json",
+      "slideCount": 24,
+      "currentHoldSlideCandidateCount": 1,
+      "candidateCardsUsed": [
+        10
+      ],
+      "candidateCardsTemporarilyHeld": [],
+      "recordedZuluCardsReused": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "exactEnglishHoldFields": 1,
+      "notForReleaseUntilRendererAndIndependentReview": true
+    }
+  },
+  "globalChecks": {
+    "bindingCount": 240,
+    "currentHeldRows": 23,
+    "soil13Excluded": true,
+    "rendererExecuted": false,
+    "inputFileCount": 9,
+    "slideCount": 220,
+    "candidateCardsUsed": 23,
+    "candidateCardsTemporarilyHeld": 18,
+    "allEnglishMatchesImmutableSnapshot": true,
+    "allEnglishHoldsUseExactSourceStrings": true,
+    "temporaryFallbackNotReleaseText": true,
+    "candidateKeys": [
+      "intro-permaculture:22",
+      "reading-landscape:5",
+      "reading-landscape:15",
+      "reading-landscape:16",
+      "soil-health:1",
+      "water-harvesting:10",
+      "vegetables-staples:16",
+      "vegetables-staples:18",
+      "market-community:14",
+      "plant-guilds:22",
+      "plant-guilds:28",
+      "plant-guilds:40",
+      "seeds-sovereignty:6",
+      "seeds-sovereignty:11",
+      "seeds-sovereignty:12",
+      "seeds-sovereignty:14",
+      "seeds-sovereignty:15",
+      "seeds-sovereignty:20",
+      "seeds-sovereignty:24",
+      "small-livestock:2",
+      "small-livestock:3",
+      "small-livestock:8",
+      "small-livestock:11"
+    ],
+    "excludedFalseHoldRows": [
+      {
+        "key": "soil-health:13",
+        "reason": "source heading and wattle-containing body match; prior hold was a title/body comparison error"
+      }
+    ],
+    "sourceTargetCountDiscrepancies": [
+      {
+        "key": "vegetables-staples:18",
+        "sourceEntries": 8,
+        "recordedTargetEntries": 7,
+        "candidateTargetEntries": 8,
+        "resolution": "preserve production action with exact-English hold and split the combined final recorded target at the source boundary"
+      }
+    ]
+  }
+}

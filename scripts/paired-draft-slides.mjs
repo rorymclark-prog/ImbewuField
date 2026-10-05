@@ -24,6 +24,7 @@ export const PAIRED_DRAFT_LANGUAGE_LABELS = Object.freeze({
   st: 'SESOTHO',
   ts: 'XITSONGA',
   ve: 'TSHIVENḒA',
+  zu: 'ISIZULU',
 });
 
 export function pairedDraftLanguageLabel(language) {
@@ -102,4 +103,32 @@ export function validatePairedDraft(draft, source, language = 'st') {
     target.body.forEach((part, paragraph) => checkPart(part, `paragraph ${paragraph + 1}`, original.body[paragraph]));
     return { n: original.n, english: original, target };
   });
+}
+
+/** Parse an explicit subset without changing the source packet's slide numbering. */
+export function pairedSlideSelection(value, total) {
+  if (value === undefined || value === null) return null;
+  if (typeof value !== 'string' || !value.trim()) {
+    throw new Error('--slides needs a comma-separated list of slide numbers');
+  }
+  const parts = value.split(',').map((part) => part.trim());
+  if (parts.some((part) => !/^[1-9]\d*$/.test(part))) {
+    throw new Error('--slides accepts positive slide numbers separated by commas');
+  }
+  const slides = parts.map(Number);
+  if (new Set(slides).size !== slides.length) {
+    throw new Error('--slides cannot contain duplicate slide numbers');
+  }
+  const outside = slides.find((slide) => slide > total);
+  if (outside !== undefined) {
+    throw new Error(`--slides contains ${outside}, but the source has only ${total} slides`);
+  }
+  return slides;
+}
+
+/** Select already-validated records by original slide number, preserving requested order. */
+export function selectPairedSlides(slides, selection) {
+  if (selection === null) return slides;
+  const byNumber = new Map(slides.map((slide) => [slide.n, slide]));
+  return selection.map((number) => byNumber.get(number));
 }
