@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'e009d8ee', changes: [
+    'Market records have fuller Sesotho, Tshivenda and Xitsonga draft lessons and silent cards.',
+    'Teaching prices stay labelled examples; exact English remains beside unreviewed drafts.',
+    'Offline packs refresh the changed cards without adding narration.',
+  ], tour: [
+    { title: 'Compare Market record drafts',
+      where: 'Study → Market Gardening → Record-Keeping',
+      detail: 'Read lesson and quiz drafts beside English; compare the silent cards.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'fb9eb3cc', changes: [
     'Reading lessons and slides have fuller Sesotho, Tshivenda and Xitsonga draft wording.',
     'Exact English stays beside unreviewed drafts; difficult technical terms stay in English.',
