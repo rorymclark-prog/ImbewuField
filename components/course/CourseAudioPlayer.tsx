@@ -23,6 +23,7 @@ import {
 } from '@/lib/course-audio';
 import { useLanguage } from '@/lib/i18n-context';
 import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
+import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
@@ -67,6 +68,33 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
   const [duration, setDuration] = useState(0);
   const [failedSlide, setFailedSlide] = useState<number | null>(null);
 
+  const reviewUnavailable = useCallback((slide: number): string | null => {
+    if (lang !== 'zu') return null;
+    const reason = isiZuluDeckReviewHold(moduleId, slide);
+    if (reason) return reason;
+    if (trackUrl(moduleId, lang, slide) === null) {
+      return 'Source comparison changed; recording unavailable until checked.';
+    }
+    return null;
+  }, [lang, moduleId]);
+
+  // App-language changes or source edits can make a previously selected row unavailable. Stop
+  // and clear its old src immediately so a stale button or ended event cannot resume it.
+  useEffect(() => {
+    if (currentSlide === null || !reviewUnavailable(currentSlide)) return;
+    const el = audioRef.current;
+    if (el) {
+      el.pause();
+      el.removeAttribute('src');
+      el.load();
+    }
+    setPlaying(false);
+    setCurrentSlide(null);
+    setElapsed(0);
+    setDuration(0);
+    setFailedSlide(null);
+  }, [currentSlide, reviewUnavailable]);
+
   const stop = useCallback(() => {
     const el = audioRef.current;
     if (el) { el.pause(); }
@@ -94,6 +122,11 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
 
   const playSlide = useCallback((slide: number) => {
     if (!lang) return;
+    if (reviewUnavailable(slide)) {
+      stop();
+      setCurrentSlide(null);
+      return;
+    }
     const url = trackUrl(moduleId, lang, slide);
     const el = audioRef.current;
     if (!url || !el) { setFailedSlide(slide); return; }
@@ -110,9 +143,10 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
       setPlaying(false);
       setFailedSlide(slide);
     });
-  }, [lang, moduleId]);
+  }, [lang, moduleId, reviewUnavailable, stop]);
 
   function toggle(slide: number) {
+    if (reviewUnavailable(slide)) return;
     const el = audioRef.current;
     if (!el) return;
     if (currentSlide === slide && playing) { el.pause(); setPlaying(false); return; }
@@ -125,9 +159,13 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
 
   function handleEnded() {
     setPlaying(false);
+    if (currentSlide !== null && reviewUnavailable(currentSlide)) {
+      setCurrentSlide(null);
+      return;
+    }
     const i = tracks.findIndex((t) => t.slide === currentSlide);
     const next = i >= 0 ? tracks[i + 1] : undefined;
-    if (next) playSlide(next.slide);      // roll on through the lesson
+    if (next && !reviewUnavailable(next.slide)) playSlide(next.slide); // stop before a review-held or stale-source row
     else setCurrentSlide(null);           // end of the list — stop, never loop
   }
 
@@ -210,6 +248,8 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
           const isCurrent = currentSlide === track.slide;
           const isPlaying = isCurrent && playing;
           const failed = failedSlide === track.slide;
+          const reviewHold = reviewUnavailable(track.slide);
+          const documentedHold = lang === 'zu' ? isiZuluDeckReviewHold(moduleId, track.slide) : null;
           const title = trackTitle(track, lang);
           return (
             <li key={track.slide}>
@@ -217,11 +257,14 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                 type="button"
                 onClick={() => toggle(track.slide)}
                 aria-label={t(isPlaying ? 'courseAudioPauseTrack' : 'courseAudioPlayTrack').replace('{title}', title)}
+                aria-describedby={reviewHold ? `${moduleId}-slide-${track.slide}-review-hold` : undefined}
+                disabled={Boolean(reviewHold)}
                 className="w-full flex items-center gap-2.5 px-1.5 py-2 rounded-lg text-left"
                 style={{
                   background: isCurrent ? 'rgba(31,77,43,0.06)' : 'transparent',
                   border: 'none',
-                  cursor: 'pointer',
+                  cursor: reviewHold ? 'not-allowed' : 'pointer',
+                  opacity: reviewHold ? 0.72 : 1,
                   minHeight: 40,
                 }}
               >
@@ -241,6 +284,13 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                   <span className="block font-sans text-sm leading-snug truncate" style={{ color: '#3A3020' }}>
                     {title}
                   </span>
+                  {reviewHold && (
+                    <span id={`${moduleId}-slide-${track.slide}-review-hold`} className="block font-sans text-xs leading-relaxed" style={{ color: MUTED }}>
+                      {documentedHold
+                        ? 'isiZulu recording needs revision; choose English narration explicitly.'
+                        : reviewHold}
+                    </span>
+                  )}
                   {isCurrent && duration > 0 && (
                     <span className="flex items-center gap-2 mt-1">
                       <span className="flex-1 rounded-full overflow-hidden" style={{ height: 3, background: 'rgba(32,25,15,0.10)' }}>

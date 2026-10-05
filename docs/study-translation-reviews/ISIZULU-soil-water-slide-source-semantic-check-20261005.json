@@ -1,0 +1,773 @@
+{
+  "title": "IsiZulu Soil Health and Water Harvesting narration semantic check",
+  "date": "2026-10-05",
+  "reviewType": "independent semantic backcheck; not fluent approval",
+  "binding": {
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "head": "58dddd8e064387a4eddb9adb521fedae7e5a1c83",
+    "registeredTranscript": "lib/course-transcripts.ts",
+    "sourceAndRegistrySha256": {
+      "soil_en": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+      "soil_zu": "edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51",
+      "water_en": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+      "water_zu": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+      "transcript_registry": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08"
+    },
+    "registeredCounts": {
+      "Soil Health": 20,
+      "Water Harvesting": 24
+    },
+    "method": "Compared each exact registered English and isiZulu transcript block with the current source files; reviewed qualifiers, geometry, conditions, safety, source scope, species and numbers. No narration, audio or media changed."
+  },
+  "summary": {
+    "totalBlocks": 44,
+    "accepted": 42,
+    "repair": 1,
+    "uncertain": 1,
+    "overall": "The 44 blocks largely preserve the source conditions and technical safeguards, including level contour versus controlled grade, adviser-before-digging, safe overflow/downstream receiving, pond-bank/spillway care, potable-water checks, and sanitation exclusions. One safety modifier is omitted in Soil 1 (“safe compost”); Water 10’s “watercourse” is rendered as “river,” with possible scope narrowing."
+  },
+  "blocks": [
+    {
+      "module": "Soil Health",
+      "slide": 1,
+      "sourceEnglish": [
+        "Soil is more than the ground under your feet.",
+        "It is a living place that feeds crops, holds water, and carries your harvest.",
+        "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms."
+      ],
+      "registeredIsiZulu": [
+        "Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.",
+        "Uyindawo ephilayo esiza izitshalo zikhule, ebamba amanzi, futhi esekela isivuno sakho.",
+        "Kule modyuli, funda ukubheka nokufunda umhlabathi, ukwenza i-compost, ukuvikela umhlabathi ongenalutho, nokusebenzisa izitshalo zokumboza umhlabathi nama-worm farm."
+      ],
+      "disposition": "repair",
+      "issues": [
+        {
+          "issue": "The English module overview specifically says “make safe compost”; the registered ZU says only “making compost,” omitting the safety qualifier. The later slides carry detailed contamination and sanitation restrictions, but this overview does not preserve the exact modifier.",
+          "recommendation": "Retain “safe compost” in English in this clause, or use a checked ZU equivalent that preserves safe/managed compost. Do not imply that any compost process is safe."
+        }
+      ],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 2,
+      "sourceEnglish": [
+        "Soil condition affects roots, water and the harvest.",
+        "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+        "Observe your soil, then choose ways to protect and improve it."
+      ],
+      "registeredIsiZulu": [
+        "Isimo somhlabathi sithinta izimpande, amanzi nesivuno.",
+        "Ukushiya umhlabathi ungenalutho ngokuphindaphindiwe, ukuwucinanisa nokuncipha kwezinto eziphilayo kungawulimaza. Umbala wodwa awuchazi konke.",
+        "Bheka umhlabathi wakho, bese ukhetha izindlela zokuwuvikela nokuwuthuthukisa."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 3,
+      "sourceEnglish": [
+        "Look for several clues about soil condition.",
+        "Use a jar to explore soil texture, while recognising its limits.",
+        "Care for a compost heap, protect bare ground, and distinguish worm castings from liquid drainage."
+      ],
+      "registeredIsiZulu": [
+        "Bheka izimpawu eziningana zesimo somhlabathi.",
+        "Sebenzisa ibhodlela ukuze uhlole ukuthungwa komhlabathi, kodwa uqaphele imingcele yalolu vivinyo.",
+        "Nakekela inqwaba ye-compost, vikela umhlabathi ongenalutho, futhi uhlukanise ama-worm castings noketshezi oluphuma emgqonyeni wezikelemu."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 4,
+      "sourceEnglish": [
+        "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+        "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+        "Look at roots, soil structure and water movement as well as visible soil life."
+      ],
+      "registeredIsiZulu": [
+        "Umhlabathi unezinhlobo eziningi zezinto eziphilayo. Amagciwane nesikhunta kusiza ukubolisa izinto eziphilayo nokujikeleza kwezakhamzimba.",
+        "Ezinye izinhlobo zesikhunta zisiza izimpande zimunce izakhamzimba. Imigudu yezibungu ingasiza amanzi nomoya kungene emhlabathini.",
+        "Bheka izimpande, ukwakheka komhlabathi nokuhamba kwamanzi, kanye nezinto eziphilayo ozibonayo emhlabathini."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 5,
+      "sourceEnglish": [
+        "Look closely at these two soil examples.",
+        "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+        "Look at the roots and the spaces around them.",
+        "Look at the surface cover. Loose mulch covers one example.",
+        "Use several clues together. Colour alone cannot tell you soil health. Check moisture, plant growth and how water enters the ground."
+      ],
+      "registeredIsiZulu": [
+        "Bhekisisa lezi zibonelo ezimbili zomhlabathi.",
+        "Okokuqala, bheka ukwakheka kwawo. Ensimini, thinta ucezu olunomswakama ubone ukuthi luphuka kanjani.",
+        "Bheka izimpande nezikhala ezizizungezile.",
+        "Bheka okumboze umhlabathi phezulu. Esinye isibonelo simbozwe nge-mulch exegayo.",
+        "Sebenzisa izimpawu eziningana ndawonye. Umbala wodwa awukutsheli impilo yomhlabathi. Hlola umswakama, ukukhula kwezitshalo nokungena kwamanzi emhlabathini."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 6,
+      "sourceEnglish": [
+        "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+        "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+        "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed."
+      ],
+      "registeredIsiZulu": [
+        "Faka umhlabathi namanzi embizeni yengilazi ecacile, ufake nenani elincane le-detergent efanele yokuhlakaza izinhlayiya zomhlabathi. Yivale uyinyakazise, bese uyishiya inganyakazi.",
+        "Isihlabathi sihlala phansi kuqala. I-silt ilandela; ubumba lungahlala luntanta isikhathi eside.",
+        "Lolu wuvivinyo lokufunda olulinganiselwe. Izigaxa nobumba olungakahlali phansi kungakudukisa. Uma kudingeka ukwazi ukuthungwa komhlabathi ngokunembile, sebenzisa ilabhorethri yomhlabathi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 7,
+      "sourceEnglish": [
+        "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+        "Compare the settled layers and feel the soil in the field.",
+        "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone."
+      ],
+      "registeredIsiZulu": [
+        "Ungqimba olujiyile lwesihlabathi ngaphansi kwamanzi afiphele alukakutsheli izilinganiso zokugcina. Ezinye izinhlayiya ezincane kungenzeka zisantanta.",
+        "Qhathanisa izingqimba esezihlale phansi, futhi uzwe nokuthungwa komhlabathi osensimini.",
+        "Bhala lokho okubonayo nalokho okungakaqinisekiswa. Ungancomi indlela yokunisela noma yokwelapha umhlabathi ngebhodlela elilodwa kuphela."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 8,
+      "sourceEnglish": [
+        "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+        "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+        "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy."
+      ],
+      "registeredIsiZulu": [
+        "Ukucinana komhlabathi, ukungaphumi kahle kwamanzi nokuncipha kwezinto eziphilayo kunganciphisa ukukhula kwezimpande nokuphila komhlabathi.",
+        "Umbala ophaphathekile noma izibungu ezimbalwa akufakazeli ukuthi amakhemikhali abulale umhlabathi. Umsebenzi wezibungu nawo uyashintsha kuye ngomswakama nenkathi yonyaka.",
+        "Bheka amaphethini ezindaweni ezahlukene zensimu. Hlola umlando wokunakekela, ukuphuma kwamanzi nokukhula kwezitshalo ngaphambi kokukhetha ikhambi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 9,
+      "sourceEnglish": [
+        "Compost is organic matter broken down under managed conditions.",
+        "Finished compost can improve soil structure and contribute nutrients.",
+        "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test."
+      ],
+      "registeredIsiZulu": [
+        "I-compost yizinto eziphilayo ezibolile ngaphansi kwezimo ezilawulwayo.",
+        "I-compost esilungile ingathuthukisa ukwakheka komhlabathi futhi ifake izakhamzimba kuwo.",
+        "Isikhathi sokuthi i-compost ilunge siyashintsha kuye ngezinto ezifakiwe, umswakama, umoya nokushisa. Igama lesifundazwe noma inani elinqunyiwe lamasonto akusho ukuthi i-compost isilungile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 10,
+      "sourceEnglish": [
+        "Build the heap with dry browns and fresh greens.",
+        "Keep the layers moist, not wet, so air and decomposers can work."
+      ],
+      "registeredIsiZulu": [
+        "Yakha inqwaba ngama-browns omile nama-greens amasha.",
+        "Gcina izingqimba zimanzi kodwa zingacwili, ukuze kungene umoya futhi izinto ezibolisa inqwaba zisebenze."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 11,
+      "sourceEnglish": [
+        "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+        "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+        "Check moisture and air as the heap changes; one recipe does not suit every mix of materials."
+      ],
+      "registeredIsiZulu": [
+        "Hlanganisa ama-browns omile nama-greens amasha. Gwema izingqimba eziwugqinsi nezimanzi ezivimba umoya.",
+        "Uma inqwaba iba bushelelezi ngokushelela noma inuka kakhulu i-ammonia, faka ama-browns omile bese uyiphendula.",
+        "Hlola umswakama nomoya njengoba inqwaba ishintsha; iresiphi eyodwa ayifaneli zonke izingxube zezinto."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 12,
+      "sourceEnglish": [
+        "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+        "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+        "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required."
+      ],
+      "registeredIsiZulu": [
+        "Ukuthi indawo emaphakathi nenqwaba iyashisa akufakazeli ukuthi yonke ingxenye yayo ithole ukwelashwa. Isikhathi, izinga lokushisa nendlela yokuphatha konke kubalulekile.",
+        "Ungafaki inyama, ubisi nemikhiqizo yobisi, izitshalo ezigulayo, indle yezilwane ezifuywayo noma izinto ezingcolile kule ndlela elula yasekhaya.",
+        "Ungacabangi ukuthi ukwenza i-compost ekhaya kuqeda yonke imbewu yokhula noma zonke izinto eziphilayo ezibangela izifo. Uma kudingeka ukuhlanzwa kwe-compost, sebenzisa inqubo eyamukelekile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 13,
+      "sourceEnglish": [
+        "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+        "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+        "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged."
+      ],
+      "registeredIsiZulu": [
+        "Gcina ama-pod embewu ye-wattle ngaphandle kwenqwaba ye-compost. Inqwaba evamile ingase ingayenzi yonke imbewu ingasakwazi ukuhluma.",
+        "Sebenzisa izinto ezihlanzekile kuphela, ezingakaze zelashwe. Amagxolo abola kancane; igama lawo lodwa aliqinisekisi ukuthi awangcolisiwe.",
+        "Hlola inqwaba, uyiphendule lapho idinga umoya owengeziwe noma ukuxutshwa. Yigcine inomswakama, ingagcwali amanzi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 14,
+      "sourceEnglish": [
+        "Compare bare soil with mulched soil.",
+        "When rain hits mulch instead of bare soil, much of the raindrop energy is dissipated. This diagram shows that surface-impact idea only; it does not predict how water will move at a particular site."
+      ],
+      "registeredIsiZulu": [
+        "Qhathanisa umhlabathi ongenalutho nomhlabathi ombozwe nge-mulch.",
+        "Uma imvula ishaya i-mulch esikhundleni sokushaya umhlabathi ongenalutho, ingxenye enkulu yamandla amaconsi emvula ingadamba. Lo mdwebo ukhombisa lo mbono wokushaya kwemvula kuphela; awusho ukuthi amanzi azongena, azogeleza noma azogcinwa kanjani endaweni ethile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 15,
+      "sourceEnglish": [
+        "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+        "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+        "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better."
+      ],
+      "registeredIsiZulu": [
+        "Mboza umhlabathi ongenalutho nge-mulch ehlanzekile nefanele, njenge-straw, utshani obomile noma ama-wood chips.",
+        "I-mulch inganciphisa ukuhwamuka, ithambise ukushaya kwemvula futhi icindezele ukhula.",
+        "Yigcine ingathinti iziqu zezihlahla nezitshalo. Hlola umswakama ngaphansi kwayo bese ulungisa ungqimba. I-mulch eningi ayihlali ingcono."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 16,
+      "sourceEnglish": [
+        "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+        "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+        "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes."
+      ],
+      "registeredIsiZulu": [
+        "Izitshalo zokumboza umhlabathi zingawuvikela phakathi kwezilimo eziyinhloko. Khetha ngokwesimo sezulu sendawo, amanzi atholakalayo nesitshalo esizolandela.",
+        "Izibonelo ezikulesi sifundo zifaka ama-oats, ama-lupins, i-sunn hemp ne-cowpea. Hlola ukuthi zifanele yini indawo yakho ngaphambi kokuzihlwanyela.",
+        "Izitshalo zomndeni wama-legume zidinga amagciwane afanele nezimo zokukhula ezifanele ukuze zibophe i-nitrogen. Izakhamzimba ezinsaleleni zazo zitholakala njengoba lezo zinsalela zibola."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 17,
+      "sourceEnglish": [
+        "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+        "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+        "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe."
+      ],
+      "registeredIsiZulu": [
+        "Amapulazi ezikelemu angaguqula izinsalela zokudla ezifanele nezinto zokulala kwezikelemu zibe ama-castings. Hlola umgqomo; ungalindeli usuku oluqondile lokuvuna.",
+        "Uketshezi oluphuma ngokwemvelo emgqonyeni wezikelemu lubizwa nge-leachate. Alufani netiye lezikelemu elilungiswe ngendlela ethile.",
+        "I-leachate ingaba nezinto eziphilayo noma ezinye izinto eziyingozi. Ungayisebenzisi ezitshalweni ezidliwayo futhi ungacabangi ukuthi ukuyixuba namanzi kuyenza iphephe."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 18,
+      "sourceEnglish": [
+        "A Highveld field left bare after the maize harvest faces two main risks.",
+        "Winter wind can carry away dry topsoil.",
+        "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+        "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive."
+      ],
+      "registeredIsiZulu": [
+        "Insimu yase-Highveld eshiywe ingenalutho ngemva kokuvuna ummbila ibhekana nezingozi ezimbili ezinkulu.",
+        "Umoya wasebusika ungathwala umhlabathi ongaphezulu owomile uwususe.",
+        "Isiphepho sokuqala esinamandla sentwasahlobo singashaya umhlabathi ongenalutho silimaze ingaphezulu lawo nokwakheka kwawo. Uma amanzi egeleza phezu kwensimu, angathwala umhlabathi osuxegisiwe awususe.",
+        "Izitshalo zokumboza umhlabathi, i-mulch nezinto zemvelo zingasiza ukubamba umhlabathi endaweni yawo futhi ziwusize uhlale uphila."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 19,
+      "sourceEnglish": [
+        "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+        "Compare another spot and note recent weather and management.",
+        "Try the jar exercise. Write what it suggests, what is uncertain, and whether a laboratory test or local adviser could help."
+      ],
+      "registeredIsiZulu": [
+        "Hlola umhlabathi endaweni osebenza kuyo. Bhala umbala, ukwakheka, izimpande, umswakama nanoma yimiphi imigudu yezibungu.",
+        "Qhathanisa nenye indawo, ubhale ngesimo sezulu sakamuva nangendlela indawo ebiphethwe ngayo.",
+        "Zama ukuhlola ngebhodlela. Bhala ukuthi yini okubonakala sengathi iyavela, yini engakaqinisekiswa, nokuthi ukuhlolwa kwelabhorethri noma iseluleko somuntu wendawo onguchwepheshe kungasiza yini."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Soil Health",
+      "slide": 20,
+      "sourceEnglish": [
+        "Start one soil-building action from this module.",
+        "Cover bare ground with mulch, begin a balanced compost heap, sow a suitable cover crop, or prepare a worm farm.",
+        "If your compost smells of ammonia and feels slimy, add dry carbon such as straw and turn it.",
+        "Build soil life step by step."
+      ],
+      "registeredIsiZulu": [
+        "Qala isenzo esisodwa sokwakha umhlabathi esikule modyuli.",
+        "Mboza umhlabathi ongenalutho nge-mulch, qala inqwaba ye-compost elinganiselayo, hlwanyela isitshalo sokumboza esifanele, noma lungisa i-worm farm.",
+        "Uma i-compost yakho inuka i-ammonia futhi ishelela, faka izinto ezomile ezine-carbon njenge-straw bese uphendula inqwaba.",
+        "Yakha impilo yomhlabathi kancane kancane."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 1,
+      "sourceEnglish": [
+        "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop."
+      ],
+      "registeredIsiZulu": [
+        "Ama-swale, ama-berm, amadamu, amathangi amanzi emvula kanye namanzi asetshenzisiwe asekhaya — nciphisa ukugeleza, usakaze amanzi, futhi uwavumele angene lapho umhlabathi nendawo kukufanele."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 2,
+      "sourceEnglish": [
+        "Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.",
+        "Explain why dams need a designed spillway and a site assessment.",
+        "Explain what a first-flush diverter does and why tank water still needs a safety check.",
+        "Keep greywater away from people, food and drinking-water pipes."
+      ],
+      "registeredIsiZulu": [
+        "Chaza ukuthi i-swale elandela umugqa olinganayo ingabambezela futhi isabalalise kanjani amanzi agelezayo ukuze angene emhlabathini ofanele.",
+        "Chaza ukuthi kungani idamu lidinga i-spillway eklanyiwe nokuhlolwa kwendawo.",
+        "Chaza umsebenzi wesiphambukisi samanzi okuqala nokuthi kungani amanzi ethangi esadinga ukuhlolwa kokuphepha.",
+        "Gcina amanzi asetshenzisiwe kude nabantu, nokudla, namapayipi amanzi okuphuza."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 3,
+      "sourceEnglish": [
+        "A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.",
+        "Some swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging."
+      ],
+      "registeredIsiZulu": [
+        "I-swale elandela umugqa olinganayo we-contour ingenye indlela yokubambezela amanzi agelezayo. Umsele wayo ulandela umugqa olinganayo ukuze amanzi asabalale futhi angene emhlabathini ofanele.",
+        "Amanye ama-swale aklanywa abe nomthambeka omncane olawulwayo, nendawo yokuphuma ephephile eklanyiwe. Umhlabathi, umthambeka, ukugeleza kwamanzi nokugeleza kwamanzi eziphepho kunquma ukuthi iyiphi indlela efanele. Cela umeluleki wendawo oqeqeshiwe ahlole indawo ngaphambi kokumba."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 4,
+      "sourceEnglish": [
+        "This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.",
+        "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building."
+      ],
+      "registeredIsiZulu": [
+        "Lesi sithombe sibonisa i-swale elinganayo ku-contour njengomqondo. Amanzi angasabalala emseleni futhi angene emhlabathini lapho umhlabathi ukuvumela khona.",
+        "Isithombe asibonisi ukuthi umswakama uzofika ujule kangakanani emhlabeni wakho. Hlola umhlabathi, umthambeka nendlela yokuchichima ngaphambi kokwakha."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 5,
+      "sourceEnglish": [
+        "The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.",
+        "Trees may draw on moisture stored in nearby soil after rain; the result varies by site."
+      ],
+      "registeredIsiZulu": [
+        "Umhlabathi ombiwe wakha i-berm ohlangothini olungaphansi komthambeka. Izihlahla zingatshalwa lapho uma uhlelo lwendawo lufanele.",
+        "Izihlahla zingasebenzisa umswakama ogcinwe emhlabathini oseduze ngemva kwemvula; umphumela uyashiyana kuye ngendawo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 6,
+      "sourceEnglish": [
+        "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+        "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+        "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design."
+      ],
+      "registeredIsiZulu": [
+        "Imvula enkulu ingagcwalisa i-swale ngokushesha kunokuba amanzi angene emhlabathini. Hlela indlela ephephile yokuchichima ngaphambi kokumba.",
+        "Indlela akufanele igugule umthambeka noma ithumele amanzi alimazayo komakhelwane. I-swale noma idamu elingezansi kufanele likwazi ukwamukela la manzi ngokuphepha.",
+        "Cela umeluleki wendawo oqeqeshiwe ahlole umhlabathi, umthambeka nokugeleza kwamanzi eziphepho. Isithombe asiwona umklamo wokwakha."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 7,
+      "sourceEnglish": [
+        "A swale needs a planned overflow route for heavy rain. Check it before digging.",
+        "Water may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage."
+      ],
+      "registeredIsiZulu": [
+        "I-swale idinga indlela yokuchichima ehleliwe uma kunemvula enkulu. Yihlole ngaphambi kokumba.",
+        "Amanzi angaya kwenye i-swale noma edamini kuphela uma ukuhlolwa kwendawo kukhombisa ukuthi indlela, indawo yokuphuma nendawo ezowamukela kungawamukela amanzi ngaphandle komonakalo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 8,
+      "sourceEnglish": [
+        "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+        "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site."
+      ],
+      "registeredIsiZulu": [
+        "Umthambeka wodwa awusho ukuthi i-swale iyayifanelekela yini indawo. Umhlabathi, ukugeleza kwamanzi, umhlaba ongazinzile namanzi afika evela phezulu komthambeka kubalulekile.",
+        "Gcina umhlabathi umbozekile. Thola ukuhlolwa kwendawo ngaphambi kokumba endaweni ewummango, emanzi noma engazinzile. Imigoqo yotshani nama-terrace nakho kudinga ukwakhelwa indawo efanele."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 9,
+      "sourceEnglish": [
+        "Roots help hold soil along a planted contour line.",
+        "Choose erosion controls with local advice; steep land needs a site assessment."
+      ],
+      "registeredIsiZulu": [
+        "Izimpande zisiza ukubamba umhlabathi emgqeni otshaliwe we-contour.",
+        "Khetha izindlela zokulawula ukuguguleka komhlabathi ngosizo lwendawo; umhlaba omqansa udinga ukuhlolwa kwendawo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 10,
+      "sourceEnglish": [
+        "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+        "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+        "Before changing a watercourse or building storage works, check the required authorisation with the water authority."
+      ],
+      "registeredIsiZulu": [
+        "Idamu noma ichibi lingagcina amanzi agelezayo, kodwa inani lamanzi atholakalayo lincike emvuleni yasendaweni, endaweni eqoqa amanzi, emanzini alahleka endleleni nasekutheni usebenzisa amanzi angakanani.",
+        "Izinkathi zemvula ziyahlukahluka eNingizimu Afrika. Sebenzisa amarekhodi endawo, uhlele nezikhathi ezomile; akuqinisekisiwe ukuthi idamu liyohlala ligcwele.",
+        "Ngaphambi kokushintsha umfula noma ukwakha indawo yokugcina amanzi, hlola nesiphathimandla samanzi ukuthi iyiphi imvume edingekayo."
+      ],
+      "disposition": "uncertain",
+      "issues": [
+        {
+          "issue": "The authorization clause refers to changing a “watercourse”; the ZU target says “umfula” (river). That may narrow the legal/site scope compared with a watercourse, which can include smaller streams or channels. Other authorization and pre-build conditions are intact.",
+          "recommendation": "Retain “watercourse” in English unless a broader checked equivalent is available; keep the water-authority authorization check and storage-works clause unchanged."
+        }
+      ],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 11,
+      "sourceEnglish": [
+        "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+        "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+        "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction."
+      ],
+      "registeredIsiZulu": [
+        "Idamu lidinga ukuhlolwa kwendawo nokuklanywa ngumuntu oneziqu nolwazi olufanele. Amanzi agelezayo aya edamini, umhlabathi, izisekelo, ingozi engase yehlele ezindaweni ezingezansi, kanye ne-spillway ephephile konke kubalulekile.",
+        "Ungacabangi ukuthi imvula yonyaka ikutshela ubukhulu besikhukhula noma inani lamanzi ozowagcina.",
+        "Amanzi aphuma ngaphandle kokulawulwa angagugula futhi abhidlize udonga. Hlela indlela ephephile yokuphuma kwamanzi amaningi ngaphambi kokwakha."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 12,
+      "sourceEnglish": [
+        "Design the spillway before the wall — an overtopped wall can breach catastrophically.",
+        "Catchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction."
+      ],
+      "registeredIsiZulu": [
+        "Klama i-spillway ngaphambi kodonga — udonga oluchichimelwe lungabhodloka ngendlela eyinhlekelele.",
+        "Ukugeleza kwamanzi avela endaweni eqoqela amanzi kuyisici esisodwa. Umuntu oneziqu nolwazi olufanele kufanele ahlole indawo, idamu nomklamo we-spillway ngaphambi kokwakha."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 13,
+      "sourceEnglish": [
+        "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+        "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+        "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe."
+      ],
+      "registeredIsiZulu": [
+        "Amanzi angalahleka ngokuhwamuka noma ngokungena emhlabathini. Hlola izinga lamanzi, ubheke ukuvuza nokuguguleka.",
+        "Gcina i-spillway ingenamfucumfucu futhi unakekele izitshalo ezimboze ibhange ngendlela eshiwo emklamweni. Ungatshali izihlahla odongeni lwedamu lomhlabathi.",
+        "Izilwane zingalimaza amabhange zifake nobulongwe emanzini. Ukuba khona kwazo akusho ukuthi amanzi ahlanzekile noma aphephile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 14,
+      "sourceEnglish": [
+        "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+        "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
+        "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+        "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan."
+      ],
+      "registeredIsiZulu": [
+        "Uphahla lwakho lungaqoqa amanzi emvula. Inani lincike endaweni yophahla, emvuleni nasekulahlekeni kwamanzi.",
+        "Hlola ukuthi uphahla lwakho lufanele yini ukuqoqa amanzi emvula ngaphambi kokuxhuma ithangi.",
+        "Sebenzisa indawo yophahla oyibona uma ulubuka phezulu kanye namarekhodi emvula endawo. Bese ubala amanzi angangeni emseleni wamanzi, aphambukiswayo noma achichima ethangini eligcwele.",
+        "Ingqikithi yonyaka ayisho ukuthi uzoba namanzi angakanani ngesikhathi esomile. Qhathanisa amanzi ongawaqoqa nalokho ohlela ukuwasebenzisa."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 15,
+      "sourceEnglish": [
+        "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+        "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+        "A diverter does not make the remaining water safe to drink."
+      ],
+      "registeredIsiZulu": [
+        "Amanzi ageleza ophahleni angathwala uthuli, ubulongwe bezinyoni nokunye ukungcola. Isiphambukisi samanzi okuqala sigcina amanye ala manzi okuqala engangeni ethangini.",
+        "Inani okufanele liphambukiswe lincike ophahleni nasohlelweni lwakho. Landela imiyalelo yomthengisi yokulinganisa nokunakekela; alikho inani elilodwa elifanele lonke uphahla.",
+        "Isiphambukisi asiqinisekisi ukuthi amanzi asele aphephile ukuphuzwa."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 16,
+      "sourceEnglish": [
+        "A first-flush diverter keeps early roof runoff out of the tank.",
+        "Size and maintain it for your roof; later runoff still needs a safety check."
+      ],
+      "registeredIsiZulu": [
+        "Isiphambukisi samanzi okuqala sigcina amanye amanzi okuqala ageleza ophahleni engangeni ethangini.",
+        "Silungiselele futhi usinakekele ngokophahla lwakho; amanzi alandelayo nawo asadinga ukuhlolwa kokuphepha."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 17,
+      "sourceEnglish": [
+        "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+        "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+        "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need."
+      ],
+      "registeredIsiZulu": [
+        "Usayizi wethangi uncike esidingweni samanzi, emvuleni, endaweni yophahla nasekutheni izikhathi ezomile zinde kangakanani.",
+        "Bhala ukuthi uzowasebenzisela ini amanzi, bese ulinganisela isidingo ngerekhodi lakho. Qhathanisa nalokho ongakuqoqa ngezinkathi zonyaka.",
+        "Hlela ozokwenza uma amanzi agciniwe esephela. Igama lesifundazwe lodwa alikwazi ukukutshela usayizi wethangi oludingayo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 18,
+      "sourceEnglish": [
+        "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+        "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+        "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment."
+      ],
+      "registeredIsiZulu": [
+        "Gcina ithangi limboziwe, faka izisefo ezivimbela izinambuzane emigodini, futhi unakekele uphahla, imisele yesiphepho nesiphambukisi. Gcina la manzi ehlukile emapayipini amanzi okuphuza.",
+        "Amanzi abonakala ecacile asengaba namagciwane noma amakhemikhali. Buza abezempilo bendawo ngokuhlolwa nokwelashwa okufanele ukusetshenziswa okuhlosiwe.",
+        "Isihlungi esilula sodwa asiqinisekisi ukuthi amanzi aphephile ukuphuzwa. Amanzi asetshenziswa ezitshalweni zokudla nawo adinga ukuhlolwa kokuphepha."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 19,
+      "sourceEnglish": [
+        "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way.",
+        "South African guidance differs on kitchen water and laundry water. Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals."
+      ],
+      "registeredIsiZulu": [
+        "Amanzi asetshenzisiwe asekhaya angaqukatha amagciwane, usawoti, imikhiqizo yokuhlanza nezinye izinto. Imihlahlandlela ayichazi yonke imithombo ngendlela efanayo.",
+        "Imihlahlandlela yaseNingizimu Afrika iyahluka ngamanzi asekhishini nangawelondolo. Ungafaki emgomweni wokuphinda usebenzise amanzi asendlini yangasese, avela kumanabukeni, ekugezeni umuntu ogulayo noma ukugeza izilwane. Ungawasebenzisi amanzi anamakhemikhali ayingozi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 20,
+      "sourceEnglish": [
+        "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site.",
+        "If this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater."
+      ],
+      "registeredIsiZulu": [
+        "Ngaphambi kokuphinda usebenzise noma yimaphi amanzi, cela umasipala nomeluleki oqeqeshiwe wokukhucululwa kwendle bahlole umthombo oqondile, izinsiza zamanzi nezokukhucululwa kwendle zasekhaya, ukusetshenziswa okuhlosiwe nendawo.",
+        "Uma lesi seluleko singatholakali noma singacacile, ungawasebenzisi kabusha amanzi. Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 21,
+      "sourceEnglish": [
+        "This generic picture is not a tested or approved farm design. It does not prove that the source, route or destination is safe.",
+        "Check with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater."
+      ],
+      "registeredIsiZulu": [
+        "Lesi sithombe esijwayelekile asiwona umklamo wepulazi ohloliwe noma ogunyaziwe. Asifakazeli ukuthi umthombo, indlela noma indawo yokugcina amanzi iphephile.",
+        "Thola iseluleko kubeluleki bendawo abaqeqeshiwe ngaphambi kokuphinda usebenzise amanzi. Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 22,
+      "sourceEnglish": [
+        "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+        "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice."
+      ],
+      "registeredIsiZulu": [
+        "Vimbela abantu nezilwane ukuthi zingathintani namanzi. Ungawaxhumi emapayipini amanzi okuphuza, ungawafafazi, ungawavumeli ukuthi aqoqane abe yichibi, futhi ungawavumeli agelezele emgwaqweni, emseleni noma emfuleni ngaphandle kwendawo yakho.",
+        "Uma uhlelo lokuphinda lusebenzise amanzi selusebenza kodwa amanzi enuka kabi, eqoqana noma elimaza izitshalo, yeka ukuwasebenzisa bese ucela iseluleko sendawo esiqeqeshiwe."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 23,
+      "sourceEnglish": [
+        "Build an A-frame level from three poles and a weighted string.",
+        "Use it to find one level line across your slope.",
+        "Photograph the A-frame and the line you marked."
+      ],
+      "registeredIsiZulu": [
+        "Yakha ileveli ye-A-frame ngezigxobo ezintathu nentambo enesisindo.",
+        "Yisebenzise ukuthola umugqa owodwa olinganayo onqamula umthambeka wakho.",
+        "Thatha isithombe se-A-frame kanye nomugqa owumakile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Water Harvesting",
+      "slide": 24,
+      "sourceEnglish": [
+        "My A-frame is built and I have tested it.",
+        "Turn it around — it should read the same.",
+        "I have marked at least three points at the same height across my slope.",
+        "My marked line runs across the slope, not down it.",
+        "Realistic minimum time for the real work: 5 days."
+      ],
+      "registeredIsiZulu": [
+        "I-A-frame yami yakhiwe futhi ngiyihlolile.",
+        "Yiphendule ngakolunye uhlangothi — kufanele ikhombise okufanayo.",
+        "Ngimake okungenani amaphuzu amathathu asezingeni elifanayo anqamula umthambeka wami.",
+        "Umugqa engiwumakile unqamula umthambeka, awehli nawo.",
+        "Isikhathi esincane esingokoqobo somsebenzi wangempela: izinsuku ezi-5."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    }
+  ]
+}

@@ -15,6 +15,10 @@
 //
 // PURE MODULE — no react, no firebase, no fetch. Just the manifest and lookups over it.
 
+import { COURSE_TRANSCRIPTS } from './course-transcripts';
+import { resolveIsiZuluDeckSourcePair, ISIZULU_DECK_SOURCE_BINDINGS } from './course-deck-source-bindings';
+import { isiZuluDeckReviewHold } from './course-deck-review-holds';
+
 export interface NarrationTrack {
   /** Slide number in the facilitator deck. Also the filename: slide-07.mp3. */
   slide: number;
@@ -792,7 +796,15 @@ function base(n: ModuleNarration, moduleId: string, lang: string): string {
 export function trackUrl(moduleId: string, lang: string, slide: number): string | null {
   const n = COURSE_NARRATION[moduleId];
   if (!n || !n.languages.includes(lang)) return null;
-  if (!n.tracks.some((t) => t.slide === slide)) return null;
+  const track = n.tracks.find((t) => t.slide === slide);
+  if (!track) return null;
+  if (lang === 'zu' && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId)) {
+    if (isiZuluDeckReviewHold(moduleId, slide)) return null;
+    if (!resolveIsiZuluDeckSourcePair(moduleId, slide, COURSE_TRANSCRIPTS, {
+      en: trackTitle(track, 'en'),
+      zu: trackTitle(track, 'zu'),
+    })) return null;
+  }
   return `${base(n, moduleId, lang)}/slide-${pad2(slide)}.mp3`;
 }
 
@@ -800,6 +812,15 @@ export function trackUrl(moduleId: string, lang: string, slide: number): string 
 export function fullNarrationUrl(moduleId: string, lang: string): string | null {
   const n = COURSE_NARRATION[moduleId];
   if (!n || !n.languages.includes(lang)) return null;
+  if (lang === 'zu' && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId)) {
+    for (const track of n.tracks) {
+      if (isiZuluDeckReviewHold(moduleId, track.slide)) return null;
+      if (!resolveIsiZuluDeckSourcePair(moduleId, track.slide, COURSE_TRANSCRIPTS, {
+        en: trackTitle(track, 'en'),
+        zu: trackTitle(track, 'zu'),
+      })) return null;
+    }
+  }
   return `${base(n, moduleId, lang)}/full.mp3`;
 }
 

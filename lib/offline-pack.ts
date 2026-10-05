@@ -12,9 +12,9 @@
 // without a browser; lib/offline-cache.ts does the actual fetching.
 
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, resolveNarrationLang } from '@/lib/course-audio';
+import { APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
 import { APP_GUIDES } from '@/lib/course-app-guides';
-import { COURSE_DECKS, slideImageUrl, animationUrls } from '@/lib/course-deck';
+import { COURSE_DECKS, slideImageFor, animationUrls } from '@/lib/course-deck';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
 export interface PackEntry {
@@ -116,11 +116,11 @@ export function offlinePack(
   const deck = COURSE_DECKS[moduleId];
   if (deck) {
     for (const slide of deck.slides) {
-      // Per slide, not per deck. The player falls back to English when a localized image is
-      // absent, so the pack must include that fallback too or the module has a gap offline.
-      const own = slideImageUrl(moduleId, lang, slide.slide);
-      const url = own ?? slideImageUrl(moduleId, 'en', slide.slide);
-      if (url) push(at(url, 'slide'));
+      // Per slide, not per deck. This uses the same source-review-aware resolver as the player:
+      // a held isiZulu row is visibly paired with its English still, and that exact displayed
+      // still must be in the pack for offline use.
+      const image = slideImageFor(moduleId, lang, slide.slide);
+      if (image) push(at(image.url, 'slide'));
 
       const animation = animationUrls(moduleId, slide.slide, lang);
       if (animation) {
@@ -136,7 +136,10 @@ export function offlinePack(
   const spokenLang = resolveNarrationLang(moduleId, lang);
   if (variant === 'full' && narration && spokenLang) {
     for (const track of narration.tracks) {
-      push(at(`/course-audio/${moduleId}/${spokenLang.lang}/slide-${String(track.slide).padStart(2, '0')}.mp3`, 'audio'));
+      // A held isiZulu clip is intentionally unavailable, not a missing file. trackUrl owns
+      // that decision and never substitutes English audio for the held row.
+      const url = trackUrl(moduleId, spokenLang.lang, track.slide);
+      if (url) push(at(url, 'audio'));
     }
   }
 

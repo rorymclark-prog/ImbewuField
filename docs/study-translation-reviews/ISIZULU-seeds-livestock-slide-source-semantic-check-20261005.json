@@ -1,0 +1,1273 @@
+{
+  "title": "isiZulu Seeds and Small Livestock registered narration semantic backcheck",
+  "date": "2026-10-05",
+  "reviewType": "independent semantic backcheck; not fluent approval",
+  "binding": {
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "branch": "codex/isizulu-deck-source-pairing-20261005",
+    "head": "d9ec7c77b8591ba675f7672ef4af69fb3790a749",
+    "comparedWithHead": "58dddd8e064387a4eddb9adb521fedae7e5a1c83",
+    "scopeFilesSha256": {
+      "docs/narration/seeds-sovereignty.en.md": "0f93ad6a9584bdf63b0a5280acb1fe181f5f1645b806527dbdb5a8520d5f2278",
+      "docs/narration/seeds-sovereignty.zu.md": "633d795d58be391bd2cb72b17f0795d8b5391990ed0344d94b36e1ad5486c59a",
+      "docs/narration/small-livestock.en.md": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+      "docs/narration/small-livestock.zu.md": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+      "lib/course-transcripts.ts": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+      "lib/course-audio.ts": "82e375452c4034588a526938e350234ed746dc14956adad1cb6d8d548b01ab12",
+      "scripts/gen-course-transcripts.mjs": "d554ba43e293a180fb57bc582942d043cb60895d1b5f3065bae08033d7bbdac9"
+    },
+    "scopeFilesUnchangedSinceComparedHead": true,
+    "sourceParsing": "parseScriptBlocks (same parser used by the transcript generator)",
+    "generatedTranscript": "lib/course-transcripts.ts; each English and isiZulu slide block compared exactly to its current .md source after the generator's pause/separator cleanup",
+    "modules": {
+      "seeds-sovereignty": {
+        "sourceEnglishFile": "docs/narration/seeds-sovereignty.en.md",
+        "currentZuluScriptFile": "docs/narration/seeds-sovereignty.zu.md",
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "manifestPath": "lib/course-audio.ts",
+        "sourceCount": 24,
+        "targetScriptCount": 24,
+        "registeredEnglishSlideCount": 24,
+        "registeredZuluSlideCount": 24,
+        "audioManifestSlideNumbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "slides": [
+          {
+            "slide": 1,
+            "manifestTitle": "Seeds and Seed Sovereignty",
+            "sourceEnglish": [
+              "Seed is where the next season begins.",
+              "When your household can save, store and share good seed, it carries more than a crop forward. It also carries the freedom to choose.",
+              "In this lesson, you will follow seed from the parent plant to the packet, the germination test and a neighbour’s hand.",
+              "Think about the crops in your area. Which ones do you already save seed from? Which seed do you buy? Which seed do you exchange?",
+              "Try to name at least one crop whose seed is already being saved in your area."
+            ],
+            "currentIsiZulu": [
+              "Imbewu yilapho kuqala khona isizini elandelayo.",
+              "Uma ikhaya lakho likwazi ukulondoloza, ukugcina nokwabelana ngembewu enhle, alidluliseli isivuno kuphela. Liphinde lidlulisele inkululeko yokukhetha.",
+              "Kulesi sifundo uzolandela imbewu kusukela esitshalweni esingumzali iye ephaketheni, ekuhlolweni kokuhluma nasezandleni zikamakhelwane.",
+              "Cabanga ngezitshalo zasendaweni yakho. Yiziphi osuvele ulondoloza imbewu yazo? Yiziphi ozithengayo? Yiziphi enishintshisana ngazo?",
+              "Zama ukusho okungenani isitshalo esisodwa imbewu yaso esivele ilondolozwa endaweni yakho."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 2,
+            "manifestTitle": "Why Saving Seed Matters",
+            "sourceEnglish": [
+              "Saving seed does not mean rejecting all bought seed. It means building practical choices.",
+              "Each crop you learn to save well removes one repeated purchase. It also begins a local record of what performs well in your soil and your season.",
+              "Think about the seed you buy again and again. Which repeated seed purchase costs your household the most each year?",
+              "Choose one crop from your planting list. Make it your practical starting point for seed saving. Do not try to save everything at once."
+            ],
+            "currentIsiZulu": [
+              "Ukulondoloza imbewu akusho ukwenqaba yonke imbewu ethengwayo. Kusho ukwakha ukukhetha okusebenzayo.",
+              "Isitshalo ngasinye okwazi ukusilondoloza kahle sisusa ukuthenga okukodwa okuphindaphindwayo. Siphinde siqale umlando wendawo wokuthi yini eyenza kahle emhlabathini nangesizini yakho.",
+              "Cabanga ngembewu oyithenga futhi njalo. Yikuphi ukuthenga okubiza kakhulu ekhaya lakho ngonyaka?",
+              "Khetha isitshalo esisodwa ohlwini lwakho lokutshala. Senze isiqalo sakho esingokoqobo sokulondoloza imbewu. Ungazami ukulondoloza yonke into ngesikhathi esisodwa."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 3,
+            "manifestTitle": "Learning Outcomes",
+            "sourceEnglish": [
+              "This lesson ends with a working seed store, not a list of facts.",
+              "You will make four decisions.",
+              "What will you save?",
+              "How will you process it?",
+              "How will you protect it?",
+              "And how will you know it is still alive before you depend on it?",
+              "Which of these four decisions is least familiar to you?",
+              "Say them again in your own words: select, process, protect and verify."
+            ],
+            "currentIsiZulu": [
+              "Lesi sifundo siphetha ngendawo yokugcina imbewu esebenzayo, hhayi ngohlu lwamaqiniso.",
+              "Uzokwenza izinqumo ezine.",
+              "Yini ozoyilondoloza?",
+              "Uzoyilungisa kanjani?",
+              "Uzoyivikela kanjani?",
+              "Futhi uzokwazi kanjani ukuthi isaphila ngaphambi kokuyethemba?",
+              "Yisiphi kulezi zinqumo ezine ongakajwayelani kakhulu naso?",
+              "Zisho futhi ngamazwi akho: khetha, lungisa, vikela, bese uqinisekisa."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 4,
+            "manifestTitle": "Open-Pollinated Seed and F1 Seed",
+            "sourceEnglish": [
+              "Open-pollinated seed is not magic.",
+              "A stable variety can produce similar generations when it is properly isolated or self-pollinated.",
+              "F1 seed usually remains alive. But the next generation separates into different combinations of the parent traits.",
+              "The problem is unpredictability, not failure to germinate.",
+              "Think about one small bed on your own plot. Why could unpredictable plants be a risk when space is limited?",
+              "If you have seed packets, check whether they are marked open-pollinated or F1. Which would you choose for saving dependable seed?",
+              "Remember: the next F1 generation varies. It does not automatically die."
+            ],
+            "currentIsiZulu": [
+              "Imbewu evulekele impova ayenzi umlingo.",
+              "Uhlobo oluzinzile lungaveza izizukulwane ezifanayo uma luhlukaniswe kahle noma luzithuthela impova.",
+              "Imbewu ye-F1 ivamise ukuhlala iphila. Kodwa isizukulwane esilandelayo sihlukana sibe izinhlanganisela ezahlukene zezimpawu zabazali.",
+              "Inkinga ukungabikezeleki, hhayi ukungahlumi.",
+              "Cabanga ngombhede owodwa omncane ekhaya lakho. Kungani izitshalo ezingabikezeleki zingaba yingozi lapho indawo incane?",
+              "Uma unamaphakethe embewu, bheka ukuthi abhalwe ukuthi avulekele impova noma i-F1. Yikuphi ongakhetha kukho ukuze ulondoloze imbewu ethembekile?",
+              "Khumbula: izizukulwane ze-F1 ziyahlukahluka. Azifi ngokuzenzakalelayo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 5,
+            "manifestTitle": "Watch: Open-Pollinated Seed and F1 Seed",
+            "sourceEnglish": [
+              "Watch both sides.",
+              "Both kinds of seed germinate.",
+              "Open-pollinated seed produces similar plants when the variety is stable and pollination is properly managed.",
+              "Seed saved from an F1 plant also germinates. But its next generation varies. Some plants may be tall. Others may be short. Their vigour and yield may differ.",
+              "Ask yourself what this means when choosing seed to save.",
+              "If you understand the difference, you can explain it in one sentence: both germinate, but the next F1 generation is unpredictable."
+            ],
+            "currentIsiZulu": [
+              "Qaphela izinhlangothi zombili.",
+              "Zombili izinhlobo zembewu ziyahluma.",
+              "Imbewu evulekele impova ikhiqiza izitshalo ezifanayo uma uhlobo luzinzile futhi impova ilawulwa kahle.",
+              "Imbewu egcinwe esitshalweni se-F1 nayo iyahluma. Kodwa isizukulwane esilandelayo siyahlukahluka. Ezinye izitshalo zingaba zinde. Ezinye zibe zimfushane. Amandla nesivuno kungahluka.",
+              "Zibuze ukuthi lokhu kusho ukuthini lapho ukhetha imbewu ozoyilondoloza.",
+              "Uma ukuqonda kahle, ungachaza lo mehluko ngomusho owodwa: zombili ziyahluma, kodwa isizukulwane se-F1 asibikezeleki."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 6,
+            "manifestTitle": "Seed Sovereignty",
+            "sourceEnglish": [
+              "Seed sovereignty does not live in a slogan.",
+              "It lives in a dry packet, a written record and knowledge of how the seed behaves.",
+              "Your household begins it. Neighbours extend it. The seasons make the local seed collection more useful.",
+              "Which seed does your household already save best?",
+              "Draw a small map of the homes near you. Beside each home, write one crop that household could bring to a seed exchange.",
+              "Sovereignty needs three things: usable seed, written information and exchange."
+            ],
+            "currentIsiZulu": [
+              "Ubukhosi bembewu abuhlali esiqubulweni.",
+              "Buhlala ephaketheni elomile, emlandweni obhaliwe nasolwazini lokuthi imbewu iziphatha kanjani.",
+              "Ikhaya lakho liyakuqala. Omakhelwane bayakunweba. Izizini zenza uhlu lwembewu yendawo lube usizo kakhulu.",
+              "Iyiphi imbewu ikhaya lakho eliyilondoloza kahle kakhulu?",
+              "Dweba imephu encane yemizi eseduze nawe. Eduze komuzi ngamunye, bhala isitshalo lowo muzi ongasiletha ekushintshaneni ngembewu.",
+              "Ubukhosi budinga izinto ezintathu: imbewu esebenzisekayo, ulwazi olubhaliwe nokushintshisana."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "The source means a collection of saved local seed. `uhlu lwembewu yendawo` reads as a list of seed; it can shift the seasonal value from saved seed stock to a written list."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Retain the exact English technical noun phrase `local seed collection` until a precise, independently checked isiZulu term is available. Keep the family, neighbour, and season clauses localized."
+          },
+          {
+            "slide": 7,
+            "manifestTitle": "Watch: Household Seed Network",
+            "sourceEnglish": [
+              "Well-saved seed becomes more powerful when it is known and shared.",
+              "Watch one household begin by saving seed well from one crop. Dry seed goes into clean packets. Some packets move to neighbouring homes. The neighbours share different seed in return.",
+              "By the end, each household holds more varieties than it had before.",
+              "Think about which seed you could share and which seed you might receive from a neighbour. Seed moves. Knowledge and trust must move with it."
+            ],
+            "currentIsiZulu": [
+              "Imbewu egcinwe kahle iba namandla uma yaziwa futhi kwabelwana ngayo.",
+              "Buka ikhaya elilodwa liqala ngokulondoloza imbewu yesitshalo esisodwa kahle. Imbewu eyomile ingena emaphaketheni ahlanzekile. Amanye amaphakethe aya komakhelwane. Omakhelwane nabo babelana ngembewu ehlukile.",
+              "Ekugcineni, ikhaya ngalinye selinezinhlobo eziningi kunakuqala.",
+              "Cabanga ukuthi iyiphi imbewu ongabelana ngayo nokuthi iyiphi ongayithola komakhelwane. Imbewu iyasabalala. Ulwazi nokwethembana kufanele kusabalale nayo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 8,
+            "manifestTitle": "Select Several Parent Plants",
+            "sourceEnglish": [
+              "The largest fruit is not always the best seed parent.",
+              "Look at the whole plant.",
+              "Was it healthy?",
+              "Did it mature at the right time?",
+              "Was it true to type?",
+              "Save from several good plants, especially in cross-pollinated crops. This prevents the next generation from coming from only one parent.",
+              "What would make you reject a seed plant even if its fruit were large?",
+              "Go to your own plot. Point out the plants you would select and the plants you would reject. Choose several healthy, true-to-type plants. Reject diseased plants and those that are not true to type."
+            ],
+            "currentIsiZulu": [
+              "Isithelo esikhulu kunazo zonke asihlali siyisizali sembewu esingcono kakhulu.",
+              "Bheka isitshalo sonke.",
+              "Besinempilo yini?",
+              "Sivuthwe ngesikhathi esifanele yini?",
+              "Siyahambisana yini nohlobo?",
+              "Londoloza ezitshalweni eziningana ezinhle, ikakhulukazi ezitshalweni ezixubana ngempova. Lokhu kuvimbela isizukulwane esilandelayo ukuba sivele kumzali oyedwa kuphela.",
+              "Yini engenza wenqabe isitshalo sembewu noma isithelo saso sikhulu?",
+              "Phuma uye engadini yakho. Khomba izitshalo ongakhetha kuzo nezitshalo ongazenqaba. Khetha eziningana ezinempilo nezihambisana nohlobo. Yenqaba ezigulayo noma ezingahambisani nohlobo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 9,
+            "manifestTitle": "Control Pollination",
+            "sourceEnglish": [
+              "Some crops mostly self-pollinate. A small garden can therefore keep the variety similar.",
+              "Crops pollinated by wind or insects can cross over long distances.",
+              "The distance needed depends on the crop, the place and the purpose of the seed. Do not promise varietal purity until you have checked the crop.",
+              "How can you separate two varieties without using distance?",
+              "You can plant them at different times so they do not flower together. You can also control pollination by hand or with covers.",
+              "Remember the three tools: distance, flowering time or controlled pollination."
+            ],
+            "currentIsiZulu": [
+              "Ezinye izitshalo zivame ukuzithuthela impova. Ngakho ingadi encane ingagcina uhlobo lufana.",
+              "Izitshalo ezithuthelwa impova ngumoya noma izinambuzane zingaxubana ngamabanga amade.",
+              "Ibanga elidingekayo lincike esitshalweni, endaweni nasenhlosweni yembewu. Ungathembisi ukuhlanzeka kohlobo ungakasihloli isitshalo.",
+              "Ungazihlukanisa kanjani izinhlobo ezimbili ngaphandle kwebanga?",
+              "Ungazitshala ngezikhathi ezahlukene ukuze zingaqhakazi ndawonye. Ungaphinde ulawule impova ngesandla noma ngokumboza.",
+              "Khumbula amathuluzi amathathu: ibanga, isikhathi sokuqhakaza, noma impova elawulwayo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 10,
+            "manifestTitle": "Watch: Self-Pollination and Crossing",
+            "sourceEnglish": [
+              "Follow the path of the pollen.",
+              "In self-pollination, pollen moves within one flower from the part that produces it to the part that receives it. This often helps the variety remain similar.",
+              "In a maize field, wind carries pollen from the tassels to the silks. If two varieties are close together and flower at the same time, they can cross.",
+              "Think about how distance or different flowering times could prevent that on your own plot."
+            ],
+            "currentIsiZulu": [
+              "Landela indlela impova ehamba ngayo.",
+              "Lapho impova ihamba ngaphakathi kwembali eyodwa, isuka esithweni esiyikhiqizayo iye lapho yamukelwa khona. Lokhu kuvame ukusiza uhlobo luhlale lufana.",
+              "Emasimini ommbila, umoya uthwala impova isuka ezihlokweni iye ezinweleni zesikhwebu. Uma izinhlobo zisondelene futhi ziqhakaza ngesikhathi esifanayo, zingaxubana.",
+              "Cabanga ukuthi ibanga noma izikhathi ezahlukene zokuqhakaza kungakuvimba kanjani lokho engadini yakho."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 11,
+            "manifestTitle": "Dry and Wet Processing",
+            "sourceEnglish": [
+              "There are two broad ways to process seed.",
+              "Dry seed matures in a pod, head or cob. It is collected when fully mature.",
+              "Seed inside a fleshy fruit must first be separated from the flesh.",
+              "Brief fermentation is especially useful for tomato seed. It is not a rule for every wet-seeded crop.",
+              "Think about the crops in your area. Which fit the dry method? Which fit the wet method?",
+              "If you have seed or fruit nearby, sort the examples into these two types. Explain the difference by describing what the seed is like at harvest."
+            ],
+            "currentIsiZulu": [
+              "Kunezindlela ezimbili ezibanzi zokulungisa imbewu.",
+              "Imbewu eyomile ivuthwa emgodleni, ekhanda noma esikhwebini. Iqoqwa lapho isivuthwe ngokuphelele.",
+              "Imbewu engaphakathi kwesithelo esinenyama kufanele iqale ihlukaniswe nenyama.",
+              "Ukubilisa kancane kusiza kakhulu embewini katamatisi. Akuwona umthetho wazo zonke izitshalo ezinembewu emanzi.",
+              "Cabanga ngezitshalo zasendaweni yakho. Yiziphi ezihambisana nendlela eyomile? Yiziphi ezihambisana nendlela emanzi?",
+              "Uma unembewu noma izithelo eziseduze, zihlukanise zibe yilezi zinhlobo ezimbili. Chaza umehluko ngokuthi imbewu injani ngesikhathi sokuvuna."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "`Ukubilisa kancane` means boiling a little, while the source describes brief fermentation. This changes the seed-processing method."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Use `Ukuvutshelisa isikhashana` for brief fermentation, as proposed in the existing Seeds L2 comparison draft; this remains a machine-draft candidate pending fluent listening review.",
+            "replacementCheck_Ukubilisa kancane": {
+              "occurrences": 1,
+              "replacementApplied": true
+            },
+            "proposedIsiZulu": [
+              "Kunezindlela ezimbili ezibanzi zokulungisa imbewu.",
+              "Imbewu eyomile ivuthwa emgodleni, ekhanda noma esikhwebini. Iqoqwa lapho isivuthwe ngokuphelele.",
+              "Imbewu engaphakathi kwesithelo esinenyama kufanele iqale ihlukaniswe nenyama.",
+              "Ukuvutshelisa isikhashana kusiza kakhulu embewini katamatisi. Akuwona umthetho wazo zonke izitshalo ezinembewu emanzi.",
+              "Cabanga ngezitshalo zasendaweni yakho. Yiziphi ezihambisana nendlela eyomile? Yiziphi ezihambisana nendlela emanzi?",
+              "Uma unembewu noma izithelo eziseduze, zihlukanise zibe yilezi zinhlobo ezimbili. Chaza umehluko ngokuthi imbewu injani ngesikhathi sokuvuna."
+            ]
+          },
+          {
+            "slide": 12,
+            "manifestTitle": "Process Dry Seed",
+            "sourceEnglish": [
+              "Leave dry-seeded crops on the plant until the seed is fully mature.",
+              "Collect it before weather, birds or bursting pods take the harvest.",
+              "Remove chaff and damaged seed.",
+              "Then spread the clean seed in a single layer in moving air and shade.",
+              "What tells you that dry seed is mature enough to collect?",
+              "If you have a dry pod or seed head, handle it. Listen for the seed. Compare green, flexible plant material with brown, brittle material.",
+              "Wait for maturity. For final drying, use shade and airflow."
+            ],
+            "currentIsiZulu": [
+              "Shiya izitshalo ezinembewu eyomile kuze imbewu ivuthwe ngokuphelele.",
+              "Qoqa ngaphambi kokuba isimo sezulu, izinyoni noma ukuqhuma kwemigodla kuthathe isivuno.",
+              "Susa amakhoba nembewu eyonakele.",
+              "Bese wendlala imbewu ehlanzekile ibe ungqimba olulodwa emthunzini lapho kuhamba umoya.",
+              "Yini ekutshela ukuthi imbewu eyomile isivuthwe ngokwanele ukuthi iqoqwe?",
+              "Uma unomgodla noma ikhanda lembewu elomile, libambe. Lalela umsindo wembewu. Qhathanisa inyama eluhlaza egobekayo neyinsundu ephukayo.",
+              "Linda ukuvuthwa. Ekomiseni kokugcina, sebenzisa umthunzi nokuhamba komoya."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "The source says green, flexible plant material; the target says `inyama eluhlaza` (green flesh/meat), changing the comparison material."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Keep only the comparison clause in exact English until the plant-material wording is independently checked; retain the surrounding localized activity.",
+            "replacementCheck_Qhathanisa inyama eluhlaza egobekayo neyinsundu ephukayo.": {
+              "occurrences": 1,
+              "replacementApplied": true
+            },
+            "proposedIsiZulu": [
+              "Shiya izitshalo ezinembewu eyomile kuze imbewu ivuthwe ngokuphelele.",
+              "Qoqa ngaphambi kokuba isimo sezulu, izinyoni noma ukuqhuma kwemigodla kuthathe isivuno.",
+              "Susa amakhoba nembewu eyonakele.",
+              "Bese wendlala imbewu ehlanzekile ibe ungqimba olulodwa emthunzini lapho kuhamba umoya.",
+              "Yini ekutshela ukuthi imbewu eyomile isivuthwe ngokwanele ukuthi iqoqwe?",
+              "Uma unomgodla noma ikhanda lembewu elomile, libambe. Lalela umsindo wembewu. Compare green, flexible plant material with brown, brittle material.",
+              "Linda ukuvuthwa. Ekomiseni kokugcina, sebenzisa umthunzi nokuhamba komoya."
+            ]
+          },
+          {
+            "slide": 13,
+            "manifestTitle": "Watch: Dry Processing",
+            "sourceEnglish": [
+              "Allow the seed to mature on the plant before collecting it.",
+              "Watch how it is collected once mature. Chaff and debris are removed. Damaged seed is taken out.",
+              "The clean seed is then spread in a single layer in moving air and shade.",
+              "Follow the steps in order: mature, collect, clean, dry.",
+              "Think about where you could carry out each part of this process."
+            ],
+            "currentIsiZulu": [
+              "Vumela imbewu ivuthwe esitshalweni ngaphambi kokuyiqoqa.",
+              "Buka ukuthi iqoqwa kanjani lapho isivuthiwe. Amakhoba nodoti kuyasuswa. Imbewu eyonakele iyakhishwa.",
+              "Imbewu ehlanzekile ibe isendlalwa ibe ungqimba olulodwa emthunzini lapho kuhamba umoya.",
+              "Zilandelele ngokulandelana lezi zinyathelo: vuthwa, qoqa, hlanza, yomisa.",
+              "Cabanga ukuthi iyiphi ingxenye yale nqubo ongayenza endaweni yakho."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 14,
+            "manifestTitle": "Wet Processing for Tomato Seed",
+            "sourceEnglish": [
+              "Scoop tomato seed and flesh into a clean jar with a little water.",
+              "Leave it open or loosely covered. Keep it out of direct sun.",
+              "After two to three days, a light film and a sour smell may appear.",
+              "Rinse promptly. Remove debris. Then spread the clean seed thinly to dry.",
+              "Do not seal an actively fermenting jar.",
+              "Think about the signs that tell you the process has begun. Also think about signs that would make you discard the batch.",
+              "Find a jar, a sieve and a drying plate. When you are ready, start a small batch. Remember the order: scoop, ferment briefly, rinse and dry completely."
+            ],
+            "currentIsiZulu": [
+              "Kha imbewu katamatisi nenyama uyifake embizeni ehlanzekile namanzi amancane.",
+              "Yishiye ivulekile noma imbozwe ngokuxega. Ingabi selangeni eliqondile.",
+              "Emva kwezinsuku ezimbili kuya kwezintathu kungavela ulwelwesi oluncane nephunga elimuncu.",
+              "Hlambulula ngokushesha. Susa udoti. Bese wendlala imbewu ehlanzekile ibe mncane ukuze yome.",
+              "Ungavali imbiza esabilayo.",
+              "Cabanga ngezimpawu ezikutshela ukuthi inqubo isiqalile. Cabanga nangezimpawu ezingenza ulahle iqoqo.",
+              "Thola imbiza, isisefo nepuleti lokomisa. Uma usukulungele, qala iqoqo elincane. Khumbula ukulandelana: kha, bilisa kancane, hlambulula, bese womisa ngokuphelele."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "The active-fermentation warning is rendered as an actively boiling jar (`imbiza esabilayo`), which changes what the learner is told not to seal. The action list also says boil instead of ferment."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Use the existing Seeds L2 review draft's `Ukuvutshelisa` terminology; candidate replacements below preserve the open/loosely covered condition, two-to-three-day observation window, may, prompt rinse, and no-sealing instruction.",
+            "replacementCheck_Ungavali imbiza esabilayo.": {
+              "occurrences": 1,
+              "replacementApplied": true
+            },
+            "replacementCheck_bilisa kancane": {
+              "occurrences": 1,
+              "replacementApplied": true
+            },
+            "proposedIsiZulu": [
+              "Kha imbewu katamatisi nenyama uyifake embizeni ehlanzekile namanzi amancane.",
+              "Yishiye ivulekile noma imbozwe ngokuxega. Ingabi selangeni eliqondile.",
+              "Emva kwezinsuku ezimbili kuya kwezintathu kungavela ulwelwesi oluncane nephunga elimuncu.",
+              "Hlambulula ngokushesha. Susa udoti. Bese wendlala imbewu ehlanzekile ibe mncane ukuze yome.",
+              "Ungayivali imbiza esavutshelayo.",
+              "Cabanga ngezimpawu ezikutshela ukuthi inqubo isiqalile. Cabanga nangezimpawu ezingenza ulahle iqoqo.",
+              "Thola imbiza, isisefo nepuleti lokomisa. Uma usukulungele, qala iqoqo elincane. Khumbula ukulandelana: kha, vutshelisa isikhashana, hlambulula, bese womisa ngokuphelele."
+            ]
+          },
+          {
+            "slide": 15,
+            "manifestTitle": "Watch: Wet Processing for Tomato Seed",
+            "sourceEnglish": [
+              "Watch the whole process in order.",
+              "A ripe tomato is opened. The seed and gel are scooped into a clean jar. Only a little water is added.",
+              "The jar is left open or loosely covered for two to three days.",
+              "When a light film and sour smell appear, the contents are poured through a sieve. The seed is rinsed until it is clean.",
+              "Finally, the seed is spread in a single layer in the shade until completely dry.",
+              "Repeat the steps to yourself: scoop, ferment briefly, rinse, dry completely."
+            ],
+            "currentIsiZulu": [
+              "Buka yonke inqubo ngokulandelana.",
+              "Utamatisi ovuthiwe uyavulwa. Imbewu nejeli kukhelwa embizeni ehlanzekile. Kufakwa amanzi amancane kuphela.",
+              "Imbiza ishiywa ivulekile noma imbozwe ngokuxega izinsuku ezimbili kuya kwezintathu.",
+              "Lapho kuvela ulwelwesi oluncane nephunga elimuncu, okuqukethwe kuthelwa ngesisefo. Imbewu iyahlanzwa kuze kusale ehlanzekile.",
+              "Ekugcineni, imbewu yendlalwa ibe ungqimba olulodwa emthunzini ukuze yome ngokuphelele.",
+              "Phinda izinyathelo kuwe: kha, bilisa kancane, hlambulula, yomisa ngokuphelele."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "The demonstration repeats `bilisa kancane` for the fermentation step, so it again instructs boiling rather than fermenting."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Replace only that step with `vutshelisa isikhashana`; preserve ripe tomato, little water, open/loose cover, two-to-three days, film-and-sour-smell cue, sieve/rinse, shade, and full drying.",
+            "replacementCheck_bilisa kancane": {
+              "occurrences": 1,
+              "replacementApplied": true
+            },
+            "proposedIsiZulu": [
+              "Buka yonke inqubo ngokulandelana.",
+              "Utamatisi ovuthiwe uyavulwa. Imbewu nejeli kukhelwa embizeni ehlanzekile. Kufakwa amanzi amancane kuphela.",
+              "Imbiza ishiywa ivulekile noma imbozwe ngokuxega izinsuku ezimbili kuya kwezintathu.",
+              "Lapho kuvela ulwelwesi oluncane nephunga elimuncu, okuqukethwe kuthelwa ngesisefo. Imbewu iyahlanzwa kuze kusale ehlanzekile.",
+              "Ekugcineni, imbewu yendlalwa ibe ungqimba olulodwa emthunzini ukuze yome ngokuphelele.",
+              "Phinda izinyathelo kuwe: kha, vutshelisa isikhashana, hlambulula, yomisa ngokuphelele."
+            ]
+          },
+          {
+            "slide": 16,
+            "manifestTitle": "Practical Activity",
+            "sourceEnglish": [
+              "This is where the lesson leaves the screen and reaches your hands.",
+              "Start one real batch of wet-processed seed.",
+              "Use one ripe, healthy fruit, a clean jar, a spoon, a little water, a sieve and a drying plate.",
+              "Put the seed, flesh and a little water into the jar. Add a label with the date.",
+              "You will look after this jar after the lesson. Decide now when you will inspect it, when you will rinse it and when you will dry the seed.",
+              "Your jar needs a date and a return plan. Write down the date when you will inspect it after two days."
+            ],
+            "currentIsiZulu": [
+              "Yilapho isifundo siphuma khona esikrinini siye ezandleni zakho.",
+              "Qala iqoqo elilodwa langempela lembewu emanzi.",
+              "Sebenzisa isithelo esivuthiwe nesinempilo, imbiza ehlanzekile, isipuni, amanzi amancane, isisefo nepuleti lokomisa.",
+              "Faka imbewu, inyama namanzi amancane embizeni. Beka ilebula enosuku.",
+              "Nguwe ozobhekana nale mbiza emva kwalesi sifundo. Khetha manje ukuthi uzoyibheka nini, uyihlambulule nini futhi uyomise nini imbewu.",
+              "Imbiza yakho kufanele ibe nosuku nohlelo lokubuya. Bhala usuku ozoyibheka ngalo emva kwezinsuku ezimbili."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 17,
+            "manifestTitle": "Dry First, Seal Later",
+            "sourceEnglish": [
+              "Drying is not a decorative final step.",
+              "Moist seed keeps breathing. It can heat, rot or die in storage.",
+              "Use shade, moving air and time.",
+              "Seal seed only when you are sure it is dry.",
+              "Which place in your home has shade and airflow, but is protected from rain and cooking steam?",
+              "Choose one safe drying place. Then identify one unsafe place.",
+              "Repeat this to check your understanding: dry first, seal later."
+            ],
+            "currentIsiZulu": [
+              "Ukomisa akusona isinyathelo sokuhlobisa ekugcineni.",
+              "Imbewu emanzi iyaqhubeka nokuphefumula. Ingashisa, ibole noma ife lapho igcinwe.",
+              "Sebenzisa umthunzi, umoya ohambayo nesikhathi.",
+              "Vala imbewu kuphela uma uqinisekile ukuthi yomile.",
+              "Iyiphi indawo ekhaya lakho enomthunzi nokuhamba komoya, kodwa engenayo imvula noma isitimu sokupheka?",
+              "Khetha indawo eyodwa ephephile yokomisa. Bese ukhomba indawo eyodwa engaphephile.",
+              "Phinda lokhu ukuze uzihlole: yomisa kuqala, vala kamuva."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 18,
+            "manifestTitle": "Protect Seed from Heat, Light and Moisture",
+            "sourceEnglish": [
+              "Paper packets breathe and organise seed. But they are not enough in a humid climate.",
+              "Once the seed is completely dry, place the labelled packets inside a sealed, moisture-proof container. If available, include a food-safe desiccant.",
+              "Keep the container as cool and dark as possible in your home.",
+              "Which room or cupboard in your home stays coolest and driest?",
+              "Compare a paper envelope on its own with an envelope inside a sealed container.",
+              "Safe storage has two layers: a labelled paper packet inside a dry, sealed container."
+            ],
+            "currentIsiZulu": [
+              "Amaphakethe ephepha ayaphefumula futhi ahlele imbewu. Kodwa awanele esimweni sezulu esinomswakama.",
+              "Uma imbewu seyome ngokuphelele, faka amaphakethe anamalebula esitsheni esivaliwe esingangenwa umswakama. Uma unakho, sebenzisa isomisi esiphephile ekudleni.",
+              "Gcina isitsha sipholile futhi sisemnyama ngangokunokwenzeka ekhaya.",
+              "Iliphi igumbi noma ikhabethe ekhaya lakho elihlala lipholile futhi lome kakhulu?",
+              "Qhathanisa imvilophu yephepha yodwa nemvilophu engaphakathi kwesitsha esivaliwe.",
+              "Indlela ephephile inezingqimba ezimbili: iphakethe lephepha elinelebula ngaphakathi kwesitsha esomile esivaliwe."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 19,
+            "manifestTitle": "Label Every Packet",
+            "sourceEnglish": [
+              "Storage protects the seed physically. Written information protects its meaning.",
+              "The packet must tell the next person what crop it is.",
+              "It must give the variety or local name.",
+              "It must say when the seed was saved and where it came from.",
+              "Which local names could be lost if you write only the crop name?",
+              "Take a blank packet. Practise writing the four pieces of information: crop, variety or local name, date and source.",
+              "Check again that all four are present."
+            ],
+            "currentIsiZulu": [
+              "Ukugcina kuvikela imbewu ngokomzimba. Ulwazi olubhaliwe luvikela incazelo yayo.",
+              "Iphakethe kufanele litshele umuntu ozotshala ukuthi yisiphi isitshalo.",
+              "Kufanele lisho uhlobo noma igama lendawo.",
+              "Kufanele lisho ukuthi imbewu yalondolozwa nini nokuthi yavela kuphi.",
+              "Yimaphi amagama endawo angalahleka uma ubhala igama lesitshalo kuphela?",
+              "Thatha iphakethe elingenalutho. Zijwayeze ukubhala izingxenye ezine zolwazi: isitshalo, uhlobo noma igama lendawo, usuku nomthombo.",
+              "Bheka futhi ukuthi zonke izingxenye ezine zikhona."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 20,
+            "manifestTitle": "Ten-Seed Germination Test",
+            "sourceEnglish": [
+              "A seed packet can look perfect even when the seed is losing life.",
+              "Ten seeds make the calculation easy.",
+              "Keep them warm and moist. Do not submerge them in water.",
+              "Then count the normal seedlings.",
+              "Six out of ten is about sixty percent. That tells you to sow more heavily, use the seed only as a trial, or replace it.",
+              "If eight seeds out of ten germinate, what percentage is that?",
+              "The answer is eighty percent.",
+              "Start a ten-seed test with an old packet. Write down the date and the day when you will count."
+            ],
+            "currentIsiZulu": [
+              "Iphakethe lembewu lingabukeka liphelele, kodwa imbewu ibe ilahlekelwa ukuphila.",
+              "Imbewu eyishumi yenza ukubala kube lula.",
+              "Yigcine ifudumele futhi imanzi. Ungayicwilisi emanzini.",
+              "Bese ubala amahlumela ajwayelekile.",
+              "Okuyisithupha kokuyishumi cishe kungamaphesenti angamashumi ayisithupha. Lokho kukutshela ukuthi utshale kakhulu, usebenzise imbewu njengokuhlola kuphela, noma uyishintshe.",
+              "Uma imbewu eyisishiyagalombili kokuyishumi ihluma, singamaphesenti amangaki?",
+              "Impendulo ingamaphesenti angamashumi ayisishiyagalombili.",
+              "Qala ukuhlolwa kwembewu eyishumi ngephakethe elidala. Bhala usuku nangesikhathi ozobala ngaso."
+            ],
+            "disposition": "uncertain",
+            "issues": [
+              "`utshale kakhulu` may mean plant a lot, while the source specifically says sow more heavily as an adjustment after the roughly 60% result. The final instruction renders “the day when you will count” as `isikhathi` (time), which may imply time of day rather than the day/date."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Keep the complete source sentence `That tells you to sow more heavily, use the seed only as a trial, or replace it.` and the final sentence `Write down the date and the day when you will count.` in exact English until those actions are checked. Preserve all numeric claims exactly."
+          },
+          {
+            "slide": 21,
+            "manifestTitle": "Watch: Ten-Seed Germination Test",
+            "sourceEnglish": [
+              "Count exactly ten seeds.",
+              "Place them in two rows of five.",
+              "Keep them on moist paper or cloth. Do not submerge them in water.",
+              "After some time, count again.",
+              "Here, six have germinated. Four have not. The total is still ten.",
+              "The germination rate is therefore sixty percent.",
+              "Check yourself. Did you count ten at the start, six germinated seeds and four ungerminated seeds at the end?"
+            ],
+            "currentIsiZulu": [
+              "Bala imbewu eyishumi ngokuqondile.",
+              "Yibeke emigqeni emibili enezinhlamvu ezinhlanu.",
+              "Yigcine ephepheni noma endwangwini emanzi. Ungayicwilisi emanzini.",
+              "Emva kwesikhathi, bala futhi.",
+              "Lapha kuhlume eziyisithupha. Ezine azihlumi. Ingqikithi iseyishumi.",
+              "Ngakho izinga lokuhluma lingamaphesenti angamashumi ayisithupha.",
+              "Zihlole. Ingabe ubale eziyishumi ekuqaleni, eziyisithupha ezihlumile nezine ezingahlumile ekugcineni?"
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 22,
+            "manifestTitle": "Share Seed with Its Information",
+            "sourceEnglish": [
+              "A seed exchange is not a table of unknown packets.",
+              "A good exchange moves information with the seed.",
+              "It tells you what the seed is. Where it came from. When it was saved. And whether it has been tested.",
+              "This honesty strengthens the whole network.",
+              "What information would help you trust seed from another household?",
+              "Take one of your packets. Practise describing it before sharing it. Give the seed and its basic history together."
+            ],
+            "currentIsiZulu": [
+              "Ukushintshisana ngembewu akulona itafula lamaphakethe angaziwa.",
+              "Ukushintshisana okuhle kuhambisa ulwazi kanye nembewu.",
+              "Kusho ukuthi imbewu iyini. Ivela kuphi. Yalondolozwa nini. Nokuthi isihloliwe yini.",
+              "Lobu buqotho buqinisa yonke inethiwekhi.",
+              "Yiluphi ulwazi olungakwenza wethembe imbewu evela kwelinye ikhaya?",
+              "Thatha elinye lamaphakethe akho. Zijwayeze ukulichaza ngaphambi kokwabelana ngalo. Yisho imbewu nomlando wayo oyisisekelo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 23,
+            "manifestTitle": "Field Assignment",
+            "sourceEnglish": [
+              "This task is small enough to finish. It is important enough to matter.",
+              "Build one working seed-storage container.",
+              "Put labelled paper packets inside a dry, sealed container.",
+              "Take a photograph of it.",
+              "Then name the crop whose seed you will save this season.",
+              "The photograph is evidence. The packet is a beginning.",
+              "What do you still need to finish this at home?",
+              "Write a short materials list. Choose a completion date.",
+              "Before sealing the container, check your work: the seed is completely dry; every packet has the crop, variety and date; the container is cool, dark and protected from moisture; and you selected several healthy parent plants."
+            ],
+            "currentIsiZulu": [
+              "Lo msebenzi mncane ngokwanele ukuthi uqedwe. Futhi ubalulekile ngokwanele ukuthi ube nomthelela.",
+              "Yakha isitsha esisodwa sokugcina imbewu esisebenzayo.",
+              "Faka amaphakethe ephepha anamalebula ngaphakathi kwesitsha esomile esivaliwe.",
+              "Sithathe isithombe.",
+              "Bese usho isitshalo ozolondoloza imbewu yaso kule sizini.",
+              "Isithombe siwubufakazi. Iphakethe liyisiqalo.",
+              "Yini osayidinga ukuze uqede lokhu ekhaya?",
+              "Bhala uhlu olufushane lwezinto. Khetha usuku lokuqeda.",
+              "Ngaphambi kokuvala isitsha, zihlole: imbewu yome ngokuphelele; iphakethe linegama, uhlobo nosuku; isitsha sipholile, simnyama futhi sivikelekile kumswakama; futhi ukhethe izitshalo zabazali eziningana ezinempilo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 24,
+            "manifestTitle": "Field Action",
+            "sourceEnglish": [
+              "Select.",
+              "Process.",
+              "Protect.",
+              "Verify.",
+              "Those four actions carry a seed collection from this field into the next season.",
+              "Begin with one crop and do it well.",
+              "Which crop will you begin with?",
+              "Say it aloud. Then choose one action you will take next.",
+              "The next season is already inside the seed you choose today."
+            ],
+            "currentIsiZulu": [
+              "Khetha.",
+              "Lungisa.",
+              "Vikela.",
+              "Qinisekisa.",
+              "Lezo zenzo ezine zithwala uhlu lwembewu kusukela kule nsimu ziye kwisizini elandelayo.",
+              "Qala ngesitshalo esisodwa futhi ukwenze kahle.",
+              "Yisiphi isitshalo ozoqala ngaso?",
+              "Sisho ngokuzwakalayo. Bese ukhetha isenzo esisodwa ozosenza ngokulandelayo.",
+              "Isizini elandelayo isivele ingaphakathi kwembewu oyikhetha namuhla."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "`uhlu lwembewu` means a list of seed; the source’s “seed collection” means the collected seed resource carried into the next season."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Retain the technical noun `seed collection` in English in this sentence until an exact local term is checked; keep all four action verbs and the rest of the sentence localized.",
+            "replacementCheck_uhlu lwembewu": {
+              "occurrences": 1,
+              "replacementApplied": true
+            },
+            "proposedIsiZulu": [
+              "Khetha.",
+              "Lungisa.",
+              "Vikela.",
+              "Qinisekisa.",
+              "Lezo zenzo ezine zithwala seed collection kusukela kule nsimu ziye kwisizini elandelayo.",
+              "Qala ngesitshalo esisodwa futhi ukwenze kahle.",
+              "Yisiphi isitshalo ozoqala ngaso?",
+              "Sisho ngokuzwakalayo. Bese ukhetha isenzo esisodwa ozosenza ngokulandelayo.",
+              "Isizini elandelayo isivele ingaphakathi kwembewu oyikhetha namuhla."
+            ]
+          }
+        ]
+      },
+      "small-livestock": {
+        "sourceEnglishFile": "docs/narration/small-livestock.en.md",
+        "currentZuluScriptFile": "docs/narration/small-livestock.zu.md",
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "manifestPath": "lib/course-audio.ts",
+        "sourceCount": 20,
+        "targetScriptCount": 20,
+        "registeredEnglishSlideCount": 20,
+        "registeredZuluSlideCount": 20,
+        "audioManifestSlideNumbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "slides": [
+          {
+            "slide": 1,
+            "manifestTitle": "Small Livestock Integration",
+            "sourceEnglish": [
+              "Small livestock integration turns chickens, ducks, and bees into working parts of the farm.",
+              "Learn how animals can control pests, build fertility, support pollination, and return value to the soil.",
+              "Use the system you already have: food, manure, flowers, grazing, and careful movement across the land."
+            ],
+            "currentIsiZulu": [
+              "Ukuhlanganisa imfuyo encane kwenza izinkukhu, amadada, nezinyosi kube izingxenye ezisebenzayo zepulazi.",
+              "Funda ukuthi izilwane zingalawula izinambuzane, zakhe ukuvunda, zisize ukuthuthwa kwempova, futhi zibuyisele inani enhlabathini.",
+              "Sebenzisa uhlelo osunalo: ukudla, umquba, izimbali, amadlelo, nokuhamba ngokucophelela kuyo yonke indawo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 2,
+            "manifestTitle": "Why This Matters",
+            "sourceEnglish": [
+              "Small livestock can do work beyond producing meat, eggs, or honey.",
+              "Chickens eat some insects and weed seeds. Their manure can become compost.",
+              "Ducks scratch less than chickens, but can still damage plants.",
+              "Bees and other pollinators help many crops. Each animal still needs suitable food, water, shelter and care."
+            ],
+            "currentIsiZulu": [
+              "Imfuyo encane ingenza okunye ngaphandle kokukhiqiza inyama, amaqanda noma uju.",
+              "Izinkukhu zidla ezinye izinambuzane nembewu yokhula. Umquba wazo ungenziwa i-compost.",
+              "Amadada awaklwebhi njengezinkukhu, kodwa nawo angalimaza izitshalo.",
+              "Izinyosi nezinye izinambuzane ezithutha impova zisiza izitshalo eziningi. Isilwane ngasinye sisadinga ukudla okufanele, amanzi, indawo yokukhosela nokunakekelwa."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "“Ducks scratch less than chickens” is rendered as `Amadada awaklwebhi njengezinkukhu` (“ducks do not scratch like chickens”), which does not clearly preserve the comparative less."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Use an explicit comparative: `Amadada aklwebha kancane kunezinkukhu, kodwa nawo angalimaza izitshalo.`",
+            "replacementCheck_Amadada awaklwebhi njengezinkukhu, kodwa nawo angalimaza izitshalo.": {
+              "occurrences": 1,
+              "replacementApplied": true
+            },
+            "proposedIsiZulu": [
+              "Imfuyo encane ingenza okunye ngaphandle kokukhiqiza inyama, amaqanda noma uju.",
+              "Izinkukhu zidla ezinye izinambuzane nembewu yokhula. Umquba wazo ungenziwa i-compost.",
+              "Amadada aklwebha kancane kunezinkukhu, kodwa nawo angalimaza izitshalo.",
+              "Izinyosi nezinye izinambuzane ezithutha impova zisiza izitshalo eziningi. Isilwane ngasinye sisadinga ukudla okufanele, amanzi, indawo yokukhosela nokunakekelwa."
+            ]
+          },
+          {
+            "slide": 3,
+            "manifestTitle": "Learning Outcomes",
+            "sourceEnglish": [
+              "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
+              "You will know when chickens help a bed, and when their scratching can cause damage.",
+              "You will understand pollination, hive placement, and how livestock move nutrients around a farm."
+            ],
+            "currentIsiZulu": [
+              "Ekupheleni kwalesi sifundo, uzokwazi ukuthi izinkukhu, amadada, izinyosi, ne-guinea fowl zingena kanjani ohlelweni olusebenzayo.",
+              "Uzokwazi ukuthi izinkukhu zisiza nini umbhede, nokuthi ukuklwebha kwazo kungadala nini umonakalo.",
+              "Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokubaluleka kokuvala imijikelezo yezakhamzimba."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "The source says learners will understand how livestock move nutrients around a farm. The target changes this to the broader conclusion “the importance of closing nutrient cycles.”"
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Restore the described farm process: `Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokuthi imfuyo ihambisa kanjani izakhamzimba epulazini.`",
+            "replacementCheck_Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokubaluleka kokuvala imijikelezo yezakhamzimba.": {
+              "occurrences": 1,
+              "replacementApplied": true
+            },
+            "proposedIsiZulu": [
+              "Ekupheleni kwalesi sifundo, uzokwazi ukuthi izinkukhu, amadada, izinyosi, ne-guinea fowl zingena kanjani ohlelweni olusebenzayo.",
+              "Uzokwazi ukuthi izinkukhu zisiza nini umbhede, nokuthi ukuklwebha kwazo kungadala nini umonakalo.",
+              "Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokuthi imfuyo ihambisa kanjani izakhamzimba epulazini."
+            ]
+          },
+          {
+            "slide": 4,
+            "manifestTitle": "Watch: Hens Foraging After Harvest",
+            "sourceEnglish": [
+              "Watch the hens peck at the ground among dry plant remains.",
+              "Chickens may eat some insects and weed seeds. They still need balanced feed, clean water and shelter.",
+              "Keep them away from seedlings and food ready to harvest."
+            ],
+            "currentIsiZulu": [
+              "Buka izinkukhu zicosha ukudla phansi phakathi kwezinsalela ezomile zezitshalo.",
+              "Izinkukhu zingadla ezinye izinambuzane nembewu yokhula. Zisadinga ukudla okunomsoco, amanzi ahlanzekile nendawo yokukhosela.",
+              "Zigcine zikude nezithombo nokudla okulungele ukuvunwa."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 5,
+            "manifestTitle": "Chickens Turn Scratching Into Useful Work",
+            "sourceEnglish": [
+              "Chickens can help an empty bed after harvest.",
+              "They scratch through plant remains and eat some insects and weed seeds.",
+              "Their manure and bedding can be composted and returned to the soil.",
+              "Foraging does not replace a balanced diet, clean water, shelter or daily care."
+            ],
+            "currentIsiZulu": [
+              "Izinkukhu zingasiza embhedeni ongenalutho ngemva kokuvuna.",
+              "Ziklwebha izinsalela zezitshalo futhi zidle ezinye izinambuzane nembewu yokhula.",
+              "Umquba wazo nezinto ezibekwa phansi ehhokweni kungenziwa i-compost ebuyiselwa enhlabathini.",
+              "Ukuzifunela ukudla akuthathi indawo yokudla okunomsoco ofanele, amanzi ahlanzekile, indawo yokukhosela nokunakekelwa nsuku zonke."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 6,
+            "manifestTitle": "Use Chickens at the Right Time",
+            "sourceEnglish": [
+              "Use chickens in an empty bed after harvest.",
+              "Keep them away from seedlings and crops being harvested for food.",
+              "Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop.",
+              "Move the birds before they damage the ground."
+            ],
+            "currentIsiZulu": [
+              "Sebenzisa izinkukhu embhedeni ongenalutho ngemva kokuvuna.",
+              "Zigcine zikude nezithombo nezitshalo ezivunelwa ukudliwa.",
+              "Umquba omusha ungaba namagciwane. Buza umeluleki wezolimo ukuthi ungawusebenzisa kanjani ngokuphepha ngaphambi kwesivuno esilandelayo.",
+              "Hambisa izinkukhu ngaphambi kokuba zilimaze umhlabathi."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 7,
+            "manifestTitle": "Ducks Suit Established Understorey",
+            "sourceEnglish": [
+              "Ducks eat slugs and snails without the heavy scratching of chickens.",
+              "They may suit an established food forest understorey.",
+              "They can still eat or trample plants and make wet ground muddy. Watch the birds and move them when needed.",
+              "Provide clean water and suitable feed; foraging alone may not be enough."
+            ],
+            "currentIsiZulu": [
+              "Amadada adla ama-slug neminenke ngaphandle kokuklwebha kakhulu njengezinkukhu.",
+              "Angafaneleka phakathi kwezitshalo esezimile ngaphansi kwezihlahla ehlathini lokudla.",
+              "Nawo angadla noma anyathele izitshalo, enze indawo emanzi ibe nodaka. Wabheke, uwahambise uma kudingeka.",
+              "Wanike amanzi ahlanzekile nokudla okufanele. Ukuzifunela ukudla kuphela kungase kunganeli."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 8,
+            "manifestTitle": "Rotate the Tractor Across the Plot",
+            "sourceEnglish": [
+              "A chicken tractor is a moveable, floorless pen.",
+              "Move it before the ground becomes bare, muddy or heavily covered with manure.",
+              "The right time depends on the birds, soil and weather. Let the ground recover between visits.",
+              "There is no single number of chickens that guarantees enough fertility for every plot."
+            ],
+            "currentIsiZulu": [
+              "I-chicken tractor iyihhoko elihambayo elingenaphansi.",
+              "Lihambise ngaphambi kokuba umhlabathi ube yize, ube nodaka noma ugcwale umquba kakhulu.",
+              "Isikhathi esifanele sincike ezinkukhwini, enhlabathini nasesimweni sezulu. Vumela umhlabathi ululame ngaphambi kokubuyisa izinkukhu.",
+              "Alikho inani elilodwa lezinkukhu eliqinisekisa ukuvunda okwanele kuzo zonke izingadi."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 9,
+            "manifestTitle": "Watch: A Bee Moves Between Two Blossoms",
+            "sourceEnglish": [
+              "Watch one bee move from one blossom to another.",
+              "Bees can carry pollen as they visit flowers."
+            ],
+            "currentIsiZulu": [
+              "Buka inyosi eyodwa isuka kwenye imbali iye kwenye.",
+              "Izinyosi zingathwala impova lapho zivakashela izimbali."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 10,
+            "manifestTitle": "Bees Help Pollinate Many Crops",
+            "sourceEnglish": [
+              "Honeybees and other insects carry pollen between flowers.",
+              "This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs.",
+              "A hive does not guarantee higher yields everywhere. Weather, water, plant health and other pollinators also matter."
+            ],
+            "currentIsiZulu": [
+              "Izinyosi zoju nezinye izinambuzane zithwala impova phakathi kwezimbali.",
+              "Lokhu kusiza izitshalo eziningi zezithelo nemifino, kuhlanganise nokwatapheya. Izitshalo nezinhlobo zazo zinezidingo ezingafani zokuthuthwa kwempova.",
+              "Ukuba ne-hive akuqinisekisi ukuthi isivuno sizokwanda yonke indawo. Isimo sezulu, amanzi, impilo yezitshalo nezinye izinambuzane ezithutha impova nakho kunendima."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 11,
+            "manifestTitle": "South Africa’s Native Honeybees",
+            "sourceEnglish": [
+              "South Africa has two native honeybee subspecies.",
+              "The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.",
+              "These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current rules before moving bees or hives."
+            ],
+            "currentIsiZulu": [
+              "INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.",
+              "Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika.",
+              "Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi."
+            ],
+            "disposition": "repair",
+            "issues": [
+              "“Not a guide for moving bees” is weakened/changed to “not boundaries for where bees may be moved,” which can imply movement permission. The final target also adds advice to check with a local beekeeper; the source only says to check current rules before moving bees or hives."
+            ],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true,
+            "recommendedAction": "Keep the exact movement-rule sentences in English pending precise terminology. Preserve the already-localized Department-demarcation sentence. Remove the added beekeeper as a source of current movement rules.",
+            "proposedAffectedParagraph": "These broad natural ranges are not a guide for moving bees. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Check current rules before moving bees or hives."
+          },
+          {
+            "slide": 12,
+            "manifestTitle": "Place the Hive With Care",
+            "sourceEnglish": [
+              "Learn from an experienced local beekeeper before getting a hive.",
+              "Keep hives away from busy paths, homes and places where children play.",
+              "Morning sun can help, but a safe location comes first.",
+              "Plan how people and animals will move around the site."
+            ],
+            "currentIsiZulu": [
+              "Ngaphambi kokuthola i-hive, funda kumfuyi wezinyosi wendawo onolwazi.",
+              "Beka ama-hive kude nezindlela ezihanjwa abantu abaningi, amakhaya nezindawo ezidlalwa kuzo izingane.",
+              "Ilanga lasekuseni lingasiza, kodwa indawo ephephile iza kuqala.",
+              "Hlela indlela abantu nezilwane abazohamba ngayo kule ndawo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 13,
+            "manifestTitle": "Strong Colonies Need Care and Flowers",
+            "sourceEnglish": [
+              "Provide flowering plants through the seasons and avoid exposing bees to pesticides.",
+              "Active bees do not prove that the farm is free of chemicals or disease.",
+              "Registration is required for activities defined by the national honey-bee control measures. These include keeping managed hives for bee products, queen rearing, commercial pollination, and removing, eradicating or relocating colonies. Check with the Department if you are unsure whether your activity is covered.",
+              "If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis."
+            ],
+            "currentIsiZulu": [
+              "Hlinzeka ngezitshalo eziqhakaza ngezikhathi ezahlukene zonyaka, futhi ugweme ukubeka izinyosi engozini yezibulala-zinambuzane.",
+              "Ukubona izinyosi zisebenza akufakazeli ukuthi ipulazi alinawo amakhemikhali noma izifo.",
+              "Imithetho kazwelonke yokulawula izinyosi zoju idinga ukubhalisa emisebenzini ethile yokufuya izinyosi. Lokhu kuhlanganisa ukugcina ama-hive aphethwe ukuze kukhiqizwe imikhiqizo yezinyosi, ukukhulisa izindlovukazi, ukuhambisa impova ngokohwebo, nokususa, ukuqeda noma ukuhambisa ikoloni lezinyosi. Uma ungaqiniseki ukuthi umsebenzi wakho uyathinteka yini, buza uMnyango.",
+              "Uma ikoloni liphuma ngamaqoqo kaningi, cela umfuyi wezinyosi oqeqeshiwe alihlole. Ukuminyana kungenye yezimbangela ezingaba khona; akusikho ukuxilongwa."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 14,
+            "manifestTitle": "Nutrients Moving Through the Farm",
+            "sourceEnglish": [
+              "Some nutrients move from plants to animals. Bought feed also brings nutrients into the farm. Some nutrients may return to the growing area through compost made from manure. Food and other products carry nutrients away."
+            ],
+            "currentIsiZulu": [
+              "Ezinye izakhamzimba zisuka ezitshalweni ziye ezilwaneni. Ukudla kwezilwane okuthengwayo nakho kuletha izakhamzimba epulazini. Ezinye zingabuyela endaweni yokutshala nge-compost eyenziwe ngomquba. Ukudla neminye imikhiqizo kuthwala izakhamzimba kuziphume epulazini."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 15,
+            "manifestTitle": "Some Nutrients Return; Others Enter and Leave",
+            "sourceEnglish": [
+              "Animals can return some nutrients through compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops.",
+              "Chickens eat suitable farm produce and insects.",
+              "Bought feed brings nutrients into the farm. Food sold or taken home and other products carry nutrients away. Keep track of feed bought in and food sold or taken home.",
+              "Scraps alone may not meet the animals’ needs."
+            ],
+            "currentIsiZulu": [
+              "Izilwane zingabuyisela ezinye izakhamzimba nge-compost eyenziwe ngomquba. Umquba omusha ungaba namagciwane ayingozi. Vumela umquba uvundiswe ngokuphelele ngaphambi kokuwusebenzisa ezitshalweni zokudla.",
+              "Izinkukhu zidla ukudla okufanele okuvela epulazini nezinambuzane.",
+              "Ukudla kwezilwane okuthengwayo kuletha izakhamzimba epulazini. Ukudla okuthengiswayo noma okuyiswa ekhaya neminye imikhiqizo kuthwala izakhamzimba kuziphume. Bhala phansi ukudla kwezilwane okuthengwayo nokudla okuthengiswayo noma okuyiswa ekhaya.",
+              "Izinsalela zokudla kuphela zingase zinganelisi izidingo zezilwane."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 16,
+            "manifestTitle": "Guinea Fowl Forage, but Health Checks Still Matter",
+            "sourceEnglish": [
+              "Guinea fowl forage for insects and may eat ticks.",
+              "Do not rely on them to protect people or livestock from ticks or tick-borne disease.",
+              "Keep checking animals and follow a local animal-health plan.",
+              "Foraging birds are one part of the farm, not a replacement for health care."
+            ],
+            "currentIsiZulu": [
+              "Ama-guinea fowl azifunela izinambuzane futhi angadla imikhaza.",
+              "Ungathembeli kuwo ukuvikela abantu noma imfuyo emikhazeni noma ezifweni ezithwalwa yimikhaza.",
+              "Qhubeka uhlola izilwane, ulandele uhlelo lwezempilo yezilwane olufanele indawo yakini.",
+              "Izinyoni ezizifunela ukudla ziyingxenye yepulazi, azithathi indawo yokunakekelwa kwezempilo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 17,
+            "manifestTitle": "Ask Three Questions for Every Animal",
+            "sourceEnglish": [
+              "For each animal, ask what it can eat here.",
+              "Ask what useful things it produces.",
+              "Then ask what else it needs. Include water, suitable feed, shelter, fencing and daily care.",
+              "Some needs may require bought inputs. Plan for them before bringing animals onto the land."
+            ],
+            "currentIsiZulu": [
+              "Ngesilwane ngasinye, buza ukuthi singadlani lapha.",
+              "Buza ukuthi sikhiqiza ziphi izinto eziwusizo.",
+              "Bese ubuza ukuthi sidingani okunye. Faka amanzi, ukudla okufanele, indawo yokukhosela, ucingo nokunakekelwa nsuku zonke.",
+              "Ezinye izidingo zingadinga izinto ezithengwayo. Zihlele ngaphambi kokuletha izilwane endaweni."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 18,
+            "manifestTitle": "Grazing and Goat Worm Control",
+            "sourceEnglish": [
+              "Chickens following goats are not a proven replacement for goat worm control.",
+              "Grazing management can help, but goats still need health checks.",
+              "Work with a veterinary or animal-health adviser on a parasite plan for your herd.",
+              "Do not stop treatment because chickens have visited the grazing camp."
+            ],
+            "currentIsiZulu": [
+              "Ukulandela kwezinkukhu ngemva kwezimbuzi akufakazeli ukuthi sezithatha indawo yokulawulwa kwezikelemu ezimbuzini.",
+              "Ukuphatha amadlelo kungasiza, kodwa izimbuzi zisadinga ukuhlolwa kwezempilo.",
+              "Sebenzisana nodokotela wezilwane noma umeluleki wezempilo yezilwane ukuhlela ukulawulwa kwezikelemu emhlambini wakho.",
+              "Ungayeki ukwelapha ngenxa yokuthi izinkukhu bezikade zisekamu ledlelo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 19,
+            "manifestTitle": "Field Assignment: Draw Where Resources Go",
+            "sourceEnglish": [
+              "Walk your smallholding and choose an area where livestock could support another part of the system.",
+              "Record what food, scraps, pests, surplus produce, manure, or flowering resources are already present.",
+              "Then note what each animal could produce, and what it would need from the farm.",
+              "Draw one useful link between livestock and the rest of your farm. Show what comes in and what leaves."
+            ],
+            "currentIsiZulu": [
+              "Hamba epulazini lakho elincane, ukhethe indawo lapho imfuyo ingase isekele enye ingxenye yohlelo.",
+              "Bhala phansi ukudla, izinsalela, izinambuzane, umkhiqizo oweqile, umquba noma izimbali ezikhona kakade.",
+              "Bese ubhala ukuthi isilwane ngasinye singakhiqizani, nokuthi sidingani epulazini.",
+              "Dweba ukuxhumana okukodwa okuwusizo phakathi kwemfuyo nayo yonke ipulazi lakho. Bonisa okungenayo nokuphumayo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          },
+          {
+            "slide": 20,
+            "manifestTitle": "Field Action: Put One Link to Work",
+            "sourceEnglish": [
+              "Choose one safe action from this module.",
+              "Plan how chickens could use an empty bed after harvest, ask a beekeeper about a safe hive position, or check your animals’ daily needs.",
+              "Record the food, water, shelter and care that the action requires.",
+              "Start with the resources and help you can reliably provide."
+            ],
+            "currentIsiZulu": [
+              "Khetha isenzo esisodwa esiphephile kulesi sifundo.",
+              "Hlela ukuthi izinkukhu zingawusebenzisa kanjani umbhede ongenalutho ngemva kokuvuna, buza umfuyi wezinyosi ngendawo ephephile ye-hive, noma hlola izidingo zansuku zonke zezilwane zakho.",
+              "Bhala ukudla, amanzi, indawo yokukhosela nokunakekelwa okudingekayo.",
+              "Qala ngezinto nosizo ongakwazi ukukuhlinzeka njalo."
+            ],
+            "disposition": "accepted",
+            "issues": [],
+            "reviewScope": "Independent semantic comparison of the current registered text against the exact English source; not fluent-speaker, local-farmer, beekeeper, legal, or human-listening approval.",
+            "englishSourceMatchesGeneratedRegistry": true,
+            "isiZuluMatchesGeneratedRegistry": true
+          }
+        ]
+      }
+    }
+  },
+  "summary": {
+    "totalSlides": 44,
+    "accepted": 34,
+    "repair": 9,
+    "uncertain": 1,
+    "sourceOrGeneratedTranscriptBindingsFailed": 0,
+    "allEnglishAndZuluRegistryBindingsMatch": true,
+    "overall": "All slide numbers and English/isiZulu transcript arrays bind to the current source files and audio manifest. Most instructions and quantities are retained. The listed repairs address specific process/comparison/meaning shifts; the two uncertain Seeds sentences should retain exact English until checked. No fluent-speaker, farming, beekeeping, legal, or listening approval is claimed."
+  },
+  "protectedConditions": {
+    "seeds": [
+      "F1 seed remains alive; next generation varies and does not automatically die.",
+      "Varietal crossing risk depends on crop, place and seed purpose; no numeric isolation distance is invented; do not promise purity before crop checks.",
+      "Tomatoes mostly self-pollinate but can cross; maize wind-pollination/crossing remains explicit.",
+      "Dry seed is fully mature before collection; chaff/damaged seed removed; shade and airflow drying retained.",
+      "Tomato jar quantity remains a little water; open or loosely covered, out of direct sun; two-to-three days; film and sour smell may appear; prompt rinse; no sealing during active fermentation; thorough drying.",
+      "Germination test remains warm and moist, not submerged; exact 10-seed count, two rows of five, 6 germinated + 4 not = 10, about 60%; 8/10 = 80%.",
+      "Storage remains labelled paper packets within a dry sealed moisture-proof container; food-safe desiccant only if available; cool/dark as possible."
+    ],
+    "livestock": [
+      "Chicken foraging remains only some insects/weed seeds and does not replace balanced feed, clean water, shelter or daily care.",
+      "Keep chickens away from seedlings and food being harvested; fresh manure germs and adviser-before-next-crop instruction retained.",
+      "Chicken-tractor action retains empty bed after harvest, move before bare/muddy/heavily manured ground, recovery between visits; no guaranteed chicken count/fertility number.",
+      "Duck suitability remains conditional on established understorey; plant trampling/eating, muddy ground, move when needed, clean water/feed and may-not-be-enough caveat retained.",
+      "Honeybee yields not guaranteed; crop/variety pollination differences retained.",
+      "Honeybee subspecies/range and movement warning, Department demarcation, and current-rule check are specifically flagged for repair to avoid implying movement permission.",
+      "All registration activity examples and uncertainty referral to the Department retained in target.",
+      "Repeated swarming: trained beekeeper inspection; crowding is only one possible cause, not diagnosis.",
+      "Guinea fowl are not relied on to protect people/livestock from ticks/tick-borne disease; continue animal checks/local health plan.",
+      "Goat worm control is not replaced; grazing may help but health checks/adviser plan and do-not-stop-treatment warning retained."
+    ]
+  },
+  "limitations": [
+    "This check evaluates text against the checked English sources; it does not verify factual/legal accuracy of the underlying English.",
+    "No audio was listened to and no audio/assets were changed.",
+    "All corrections are proposals for facilitator/fluent review, not approvals."
+  ]
+}

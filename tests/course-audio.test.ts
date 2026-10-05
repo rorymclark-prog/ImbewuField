@@ -2,6 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { registerHooks } from 'node:module';
+import { createElement } from 'react';
+import { act, create, type ReactTestRenderer } from 'react-test-renderer';
+import ts from 'typescript';
 import { APP_GUIDES, appGuideNarrationSections } from '../lib/course-app-guides.ts';
 import { join } from 'node:path';
 
@@ -77,13 +81,59 @@ test('language resolution prefers the app language, then English, and reports th
   assert.deepEqual(resolveNarrationLang('seeds-sovereignty', 'st'), { lang: 'en', exact: false });
 });
 
-test('urls are only produced for a language and slide that actually exist', () => {
+test('URLs exist for current exact clips, while held ZU words cannot bypass the per-slide review gate', () => {
   assert.equal(trackUrl('seeds-sovereignty', 'zu', 7), '/course-audio/seeds-sovereignty/zu/slide-07.mp3');
   assert.equal(trackUrl('seeds-sovereignty', 'en', 1), '/course-audio/seeds-sovereignty/en/slide-01.mp3');
-  assert.equal(fullNarrationUrl('seeds-sovereignty', 'zu'), '/course-audio/seeds-sovereignty/zu/full.mp3');
+  assert.equal(trackUrl('seeds-sovereignty', 'zu', 11), null,
+    'a clip containing the independently flagged boiling/fermentation mismatch is not offered');
+  assert.equal(fullNarrationUrl('seeds-sovereignty', 'zu'), null,
+    'the continuous isiZulu track would bypass multiple held slide boundaries');
+  assert.equal(fullNarrationUrl('seeds-sovereignty', 'en'), '/course-audio/seeds-sovereignty/en/full.mp3');
+  assert.equal(existsSync(join(PUBLIC_AUDIO, 'seeds-sovereignty', 'zu', 'full.mp3')), true,
+    'the review gate withholds the URL without deleting or rewriting the recorded file');
   assert.equal(trackUrl('seeds-sovereignty', 'st', 1), null, 'unrecorded language must not produce a url');
   assert.equal(trackUrl('seeds-sovereignty', 'zu', 99), null, 'unknown slide must not produce a url');
   assert.equal(trackUrl('no-such-module', 'zu', 1), null);
+});
+
+// Exercise the player instead of pinning its source spelling: a green regex
+// could leave autoplay speaking the withheld recording despite a disabled row.
+test('the audio player stops before held isiZulu rows and English remains an explicit choice', async () => {
+  const componentUrl = new URL('../components/course/CourseAudioPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'CourseAudioPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    return nextLoad(url, context);
+  } });
+  const { default: CourseAudioPlayer } = await import('../components/course/CourseAudioPlayer.tsx');
+  hooks.deregister();
+  let plays = 0;
+  const device = { src: '', paused: true, currentTime: 0, pause() { this.paused = true; }, play() { plays++; this.paused = false; return Promise.resolve(); }, load() {}, removeAttribute() { this.src = ''; } };
+  const tracks = COURSE_NARRATION['seeds-sovereignty'].tracks.filter(track => [10, 11, 12].includes(track.slide));
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(CourseAudioPlayer, { moduleId: 'seeds-sovereignty', appLang: 'zu', tracks }), {
+    createNodeMock: element => element.type === 'audio' ? device : null,
+  }); });
+  try {
+    const rows = () => view.root.findAllByType('li').map(row => row.findByType('button'));
+    assert.equal(rows()[0].props.disabled, false);
+    assert.equal(rows()[1].props.disabled, true);
+    assert.equal(rows()[2].props.disabled, true);
+    act(() => rows()[0].props.onClick());
+    assert.match(device.src, /zu\/slide-10.mp3$/);
+    assert.equal(plays, 1);
+    act(() => view.root.findByType('audio').props.onEnded());
+    assert.equal(plays, 1, 'autoplay cannot speak held slide 11 or skip it to another instruction');
+    act(() => rows()[1].props.onClick());
+    assert.equal(plays, 1, 'even a stale click handler cannot play the held row');
+    const voices = view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
+    act(() => voices.find(button => button.children.join('') === 'isiNgisi')!.props.onClick());
+    assert.equal(rows()[1].props.disabled, false);
+    act(() => rows()[1].props.onClick());
+    assert.match(device.src, /en\/slide-11.mp3$/);
+    assert.equal(plays, 2, 'English only starts after the learner explicitly selects and plays it');
+  } finally { act(() => view.unmount()); }
 });
 
 test('track titles fall back to English when a language has no translated title', () => {

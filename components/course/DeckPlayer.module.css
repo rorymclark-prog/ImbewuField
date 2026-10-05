@@ -450,3 +450,25 @@
   }
   .expanded .presentationSlide footer { grid-column: 1 / -1; }
 }
+
+/* Source comparison stays readable in the expanded player without covering its controls. */
+.sourcePair { color: #20190F; font-size: 16px; line-height: 1.65; }
+.expanded .sourcePair {
+  display: block;
+  position: absolute;
+  z-index: 5;
+  inset: auto 12px 110px;
+  max-height: min(55dvh, calc(100dvh - 230px));
+  overflow: auto;
+  padding: 12px;
+  border-radius: 12px;
+  background: #FFFEFA;
+}
+
+/* Wrapped voice choices must not sit beneath the image zoom tools. */
+.expanded .zoomBar,
+.expanded .zoomLink {
+  top: calc(max(8px, env(safe-area-inset-top)) + var(--deck-header-height, 150px) + 8px);
+}
+.expanded:has(.sourcePair[open]) .zoomBar,
+.expanded:has(.sourcePair[open]) .zoomLink { display: none; }
