@@ -76,19 +76,22 @@ test('Simple shows the Design/Finance companion previews as two plain links', ()
   );
 });
 
-test('regional Study infographic machine drafts show their English source beside the image', () => {
+test('source-paired Study infographic machine drafts show their English source beside the image', () => {
   const start = STUDENT_SOURCE.indexOf('{hasInfographic && (');
   const end = STUDENT_SOURCE.indexOf('{/* Body */}', start);
   assert.ok(start >= 0 && end > start, 'the infographic block must remain present before the lesson body');
   const infographic = STUDENT_SOURCE.slice(start, end);
 
+  // isiZulu now uses the same source panels; retaining a regional-only gate would hide its source.
+  assert.match(STUDENT_SOURCE, /const sourcePairedDraft = regionalDraft \|\| isiZuluDraft;/,
+    'the source gate preserves the other regional drafts and includes isiZulu');
   assert.match(STUDENT_SOURCE,
-    /const infographicAltDraft = regionalDraft && lessonContent\.infographicAlt &&\s+lessonContent\.infographicAlt !== lesson\.infographicAlt/,
-    'only a regional draft that differs from the exact source needs a visible caption');
+    /const infographicAltDraft = sourcePairedDraft && lessonContent\.infographicAlt &&\s+lessonContent\.infographicAlt !== lesson\.infographicAlt/,
+    'only a source-paired draft that differs from exact English needs a translated caption');
   assert.match(infographic,
     /LessonInfographic url=\{lesson\.infographicUrl!\} alt=\{lessonContent\.infographicAlt \?\? lesson\.infographicAlt!\}/,
     'the translated description must remain the image alt text');
-  assert.match(infographic, /Machine draft · \{lang === 'st' \? 'Sesotho' : lang === 'ts' \? 'X[^']*' : 'Tshivenda'\} image description/,
+  assert.match(infographic, /Machine draft · \{lang === 'st' \? 'Sesotho' : lang === 'ts' \? 'X[^']*' : lang === 'zu' \? 'isiZulu' : 'Tshivenda'\} image description/,
     'the visible caption must identify the unreviewed language draft');
   assert.match(infographic, /<p lang=\{lang\} className="text-sm">\{infographicAltDraft\}<\/p>/,
     'the translated description must also be visible to sighted learners');

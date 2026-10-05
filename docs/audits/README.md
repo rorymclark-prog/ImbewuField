@@ -66,7 +66,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
-| 2026-10-05 | [Core Study residual translation follow-up — Codex](2026-10-05/study-outcomes-residual-codex.md) · [Core Study isiZulu source-pairing audit — Codex](2026-10-05/study-isizulu-source-pairing-codex.md) |
+| 2026-10-05 | [Core Study isiZulu learner source follow-up — Codex](2026-10-05/study-isizulu-learner-source-followup-codex.md) · [Core Study residual translation follow-up — Codex](2026-10-05/study-outcomes-residual-codex.md) · [Core Study isiZulu source-pairing audit — Codex](2026-10-05/study-isizulu-source-pairing-codex.md) |
 | 2026-10-04 | [Core Study Reading body and paired-deck follow-up — Codex](2026-10-04/study-reading-body-fuller-codex.md) |
 | 2026-10-04 | [Core Study learner translation residuals — Xitsonga Intro implementation follow-up](2026-10-04/study-learner-ts-intro-codex.md) |
 | 2026-10-04 | [Core Study learner translation residuals — Codex](2026-10-04/study-learner-residual-codex.md) |

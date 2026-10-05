@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'aa5271b1', changes: [
+    'Study isiZulu drafts now show exact English for lessons, key points and answers.',
+    'Checked sources and terminology repairs keep the same answers and existing audio.',
+  ], tour: [
+    { title: 'Compare the isiZulu drafts',
+      where: 'Study → isiZulu lessons',
+      detail: 'Review unreviewed wording beside English; difficult technical terms stay in English.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: '7b6b5a87', changes: [
     'Study outcome cards add fuller unreviewed drafts beside exact English.',
     'Reading and Introduction assessments keep the same correct answers.',

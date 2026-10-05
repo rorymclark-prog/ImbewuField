@@ -216,6 +216,8 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const presentation = resolveLearnerLessonPresentation(lesson, lang);
   const lessonContent = presentation.content;
   const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'draft';
+  const isiZuluDraft = lang === 'zu' && presentation.status === 'draft';
+  const sourcePairedDraft = regionalDraft || isiZuluDraft;
   const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
   const regionalDeck = resolveDeckLang(moduleId, lang);
   const regionalNarration = resolveNarrationLang(moduleId, lang);
@@ -226,7 +228,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
     : regionalNarration?.lang === 'en'
       ? 'English narration is an optional choice.'
       : 'No narration is available.'}`;
-  const infographicAltDraft = regionalDraft && lessonContent.infographicAlt &&
+  const infographicAltDraft = sourcePairedDraft && lessonContent.infographicAlt &&
     lessonContent.infographicAlt !== lesson.infographicAlt
     ? lessonContent.infographicAlt
     : undefined;
@@ -279,12 +281,14 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
         <div className={`px-4 pb-5 space-y-5 ${styles.lessonContent}`} style={{ borderTop: `1px solid ${color}18` }}>
           {lang === 'zu' && presentation.status === 'draft' && (
             <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>
-              {t('studentZuluLessonDraftNotice')}
+              <p>{t('studentZuluLessonDraftNotice')}</p>
+              <p lang="en" className="mt-1 text-xs">Exact English source is shown alongside the lesson and answers. The isiZulu draft has not received fluent-speaker or local-farming approval.</p>
             </div>
           )}
           {lang === 'zu' && presentation.status === 'english-fallback' && (
             <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>
-              {t('studentZuluLessonEnglishFallbackNotice')}
+              <p>{t('studentZuluLessonEnglishFallbackNotice')}</p>
+              <p lang="en" className="mt-1 text-xs">English is shown because the isiZulu draft is unavailable or its checked English source no longer matches the current lesson. IsiZulu audio, if available, does not mean the lesson text or questions have been reviewed.</p>
             </div>
           )}
           {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
@@ -335,7 +339,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
               {infographicAltDraft && (
                 <div className="mt-2 rounded-lg px-3 py-2.5 space-y-1.5 font-sans leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#3A3020' }}>
-                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : 'Tshivenda'} image description</p>
+                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : lang === 'zu' ? 'isiZulu' : 'Tshivenda'} image description</p>
                   <p lang={lang} className="text-sm">{infographicAltDraft}</p>
                   <p lang="en" className="text-xs" style={{ color: '#5C5040' }}><span className="font-semibold">Exact English source:</span> {lesson.infographicAlt}</p>
                 </div>
@@ -345,7 +349,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
 
           {/* Body */}
           <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
-            {regionalDraft && lessonContent.body === lesson.body ? (
+            {sourcePairedDraft && lessonContent.body === lesson.body ? (
               <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}>
                 <p className="font-semibold">Exact English source</p>
                 <p><span className="font-semibold">Title:</span> {lesson.title}</p>
@@ -353,13 +357,13 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               </div>
             ) : (
               <>
-                {regionalDraft && <p lang="en" className="font-sans text-xs font-semibold leading-relaxed" style={{ color: '#5C5040' }}>English source title: {lesson.title}</p>}
+                {sourcePairedDraft && <p lang="en" className="font-sans text-xs font-semibold leading-relaxed" style={{ color: '#5C5040' }}>English source title: {lesson.title}</p>}
                 {lessonContent.body.split('\n\n').map((para, i) => (
                   <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
                     {para}
                   </p>
                 ))}
-                {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
+                {sourcePairedDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
               </>
             )}
           </div>
@@ -371,7 +375,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
-                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && kp !== lesson.keyPoints[i] && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
+                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{sourcePairedDraft && kp !== lesson.keyPoints[i] && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
                 </li>
               ))}
             </ul>
@@ -401,7 +405,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {t('studentCheckUnderstanding')}
             </p>
             {lessonContent.quiz.map((q, i) => (
-              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} englishSource={regionalDraft ? lesson.quiz[i] : undefined} />
+              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} englishSource={sourcePairedDraft ? lesson.quiz[i] : undefined} />
             ))}
           </div>
 

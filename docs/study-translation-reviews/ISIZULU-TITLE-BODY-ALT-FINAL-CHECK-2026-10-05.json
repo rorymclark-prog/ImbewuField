@@ -1,0 +1,285 @@
+{
+  "title": "isiZulu title, body, and infographic-alt residual semantic check",
+  "date": "2026-10-05",
+  "readOnly": true,
+  "repository": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "worktreeHead": "ee4afe0d05acdb4f22ea0de046cb1e63d47fd79a",
+  "inputHashesSha256": {
+    "/tmp/imbewu-zu-seven-core-semantic-audit-20261005.json": "e6581843fcacbafea70bb3ce4d5ea9c2c8d7acc6a857ed05ed70c30efd7500c0",
+    "/tmp/imbewu-zu-intro-reading-livestock-semantic-audit-20261005.json": "5860cebcf263ad9e434a9e639e51697ea9f5d130f5272815c3f1e75cfb5964bd",
+    "/tmp/imbewu-zu-seven-core-assessment-semantic-supplement-20261005.json": "31e0b7c369e1e048b08e1e882c7e91c4b0932c511b474208759f0a53677d9038",
+    "/tmp/imbewu-zu-current-resolved-data.json": "152c23e6af62c02d53abdff2d69b71a4bc06bdc0e775c380469bc7615cb1b377",
+    "/tmp/imbewu-zu-current-source-draft-all33-20261005.json": "867fc3c2422106d110cc21c70f5f9e1bbda083b611d601e3885b248fee5f7034",
+    "/tmp/imbewu-zu-live-fields-20261005.jsonl": "2dc5ad5d1c66dbf6cdf693680d7a76484a9a6371bacfb736528a1134adb42886",
+    "/tmp/imbewu-zu-conservative-learner-repair-candidates-20261005.json": "16df79dda636337418245ee8f840875ab505936776788cbb026ead3c894106af",
+    "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-localization.ts": "abeff92ca2aa9f7749ba0fd6b25492f5684f371962708d525a23ec949f8ef98d",
+    "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-translation-draft-sources-zu.ts": "d0946c4596182378a42bf7c6fd582bef538c56d1f0d5acb9d66c62cf301d82c9",
+    "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-translation-drafts.ts": "bdaa26537f5f43d8ca10357491b1ac2d1c93ac09549d86d1b8b05b95ac2ee9cb"
+  },
+  "method": {
+    "basis": "Compared canonical English fields and resolved isiZulu strings in supplied source-bound reports and current worktree source/resolver. Verified the water/soil fields against recorded exact source/target pairs and checked the fallback path for infographic alt. This is semantic backchecking, not fluent-speaker approval.",
+    "statusPolicy": "Accept safe semantic alignment where observed; retain narrow exact English technical wording when local term ambiguity could change farmer action or source scope. No blanket safety/legal/number hold."
+  },
+  "scope": {
+    "sevenCoreModules": [
+      "water-harvesting",
+      "soil-health",
+      "vegetables-staples",
+      "seeds-sovereignty",
+      "plant-guilds",
+      "food-forest",
+      "market-community"
+    ],
+    "introReadingLivestock": true,
+    "titlesReviewed": 23,
+    "infographicAltSourceCount": 32,
+    "infographicAltNullCount": 1,
+    "currentZuluDraftInfographicAltCount": 0
+  },
+  "titleDisposition": {
+    "findings": [
+      {
+        "lessonId": "water-harvesting-l1",
+        "source": "Swales and Berms: Slowing Water on the Slope",
+        "currentTarget": "Ama-swale Nama-berm: Ukubambezela Amanzi Agelezayo Emthambekeni",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "water-harvesting-l2",
+        "source": "Farm Dams and Ponds: Storing Water for the Dry Season",
+        "currentTarget": "Amadamu Namachibi Epulazini: Ukugcina Amanzi Esikhathi Esomile",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "water-harvesting-l3",
+        "source": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+        "currentTarget": "Amathangi Amanzi Emvula Nokuwabamba Ophahleni: Ukuqoqa Nokuvikela Amanzi",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "water-harvesting-l4",
+        "source": "Greywater: Check Before Reuse",
+        "currentTarget": "Amanzi Asetshenzisiwe Asekhaya: Hlola Ngaphambi Kokuphinda Uwasebenzise",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "soil-health-l1",
+        "source": "Understanding Your Soil: The Foundation of Everything",
+        "currentTarget": "Ukuqonda Umhlabathi Wakho: Isisekelo Sako Konke",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "soil-health-l2",
+        "source": "Making and Using Compost",
+        "currentTarget": "Ukwenza Nokusebenzisa I-compost",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "soil-health-l3",
+        "source": "Mulching and Cover Crops: Protecting and Building Soil",
+        "currentTarget": "I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Nokwakha Umhlabathi",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "vegetables-staples-l1",
+        "source": "Preparing and Planting Your Beds",
+        "currentTarget": "Ukulungisa Nokutshala Emibhedeni Yakho",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "vegetables-staples-l2",
+        "source": "Succession Planting and Intercropping",
+        "currentTarget": "Ukutshala Ngokulandelana Nokuxuba Izitshalo",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "vegetables-staples-l3",
+        "source": "Staple Crops: Maize, Beans, and Root Vegetables",
+        "currentTarget": "Izitshalo Eziyinhloko Zokudla: Ummbila, Ubhontshisi Nezitshalo Zezimpande",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "vegetables-staples-l4",
+        "source": "Observe and Manage Pests and Disease",
+        "currentTarget": "Qaphela Futhi Ulawule Izinambuzane Nezifo",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "seeds-sovereignty-l1",
+        "source": "Why Seed Saving Matters",
+        "currentTarget": "Kungani Ukulondoloza Imbewu Kubalulekile",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "seeds-sovereignty-l2",
+        "source": "How to Save Seed: Dry and Wet Methods",
+        "currentTarget": "Indlela Yokulondoloza Imbewu: Izindlela Ezomile Nezimanzi",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "seeds-sovereignty-l3",
+        "source": "Drying, Storing, and Sharing Seed",
+        "currentTarget": "Ukomisa, Ukugcina Nokwabelana Ngembewu",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "plant-guilds-l1",
+        "source": "Nitrogen Fixers: Choose and Manage Support Plants",
+        "currentTarget": "Izitshalo Ezibopha I-nitrogen: Khetha Futhi Uphathe Izitshalo Ezisekelayo",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "plant-guilds-l2",
+        "source": "Mulch Plants and Helpful Insects",
+        "currentTarget": "Izitshalo Ze-mulch Nezinambuzane Eziwusizo",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "plant-guilds-l3",
+        "source": "Build a Guild and Adjust It as It Grows",
+        "currentTarget": "Hlela I-guild Bese Uyilungisa Njengoba Ikhula",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "food-forest-l1",
+        "source": "The Seven Layers: How a Forest Feeds Itself",
+        "currentTarget": "Izingqimba Eziyisikhombisa: Indlela Ihlathi Elizondla Ngayo",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "food-forest-l2",
+        "source": "Species Selection for South African Food Forests",
+        "currentTarget": "Ukukhetha Izinhlobo Zezitshalo Zama-food forest ENingizimu Afrika",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "food-forest-l3",
+        "source": "Establishing a Food Forest: Observe and Adjust",
+        "currentTarget": "Ukusungula I-food forest: Bheka Bese Ulungisa",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "market-community-l1",
+        "source": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
+        "currentTarget": "Ukugcina Amarekhodi: Ukwazi Lokho Okukhiqizwa Yipulazi Lakho Ngempela",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "market-community-l2",
+        "source": "Selling Surplus: Where to Sell and How to Price",
+        "currentTarget": "Ukuthengisa Umkhiqizo Osele: Lapho Ungathengisa Khona Nendlela Yokubeka Intengo",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      },
+      {
+        "lessonId": "market-community-l3",
+        "source": "Building Community Food Networks: Strength in Numbers",
+        "currentTarget": "Ukwakha Amanethiwekhi Okudla Omphakathi: Amandla Ngokubambisana",
+        "auditDisposition": "uncertain",
+        "independentNote": "Title is target-language draft; legacy audit marked lexical status unreviewed. Spot review found no separate actionable scope drift except technical Building Soil phrase; not fluent approval."
+      }
+    ],
+    "specificRisk": "soil-health-l3 title phrase “Ukwakha Umhlabathi” is a possible physical-building reading; suggested exact anchor is “Building Soil”. Intro L3 scope issue is already captured by the existing 15-field repair packet. Other inspected title targets preserve recognizable scope; generic “uncertain” in the older audit means not individually lexical-cleared, not a demonstrated mismatch."
+  },
+  "bodyAndTitleFindings": [
+    {
+      "id": "water-harvesting-l1-body-0-flow-factor-distinction",
+      "status": "repair-or-retain-English-term",
+      "source": "Which approach fits your land depends on the soil, slope, drainage and storm flow.",
+      "currentTarget": "Ukuthi iyiphi indlela efanele umhlaba wakho kuncike emhlabathini, emthambekeni, ekugelezeni kwamanzi nasekugelezeni kwamanzi ezikhukhula zemvula.",
+      "issue": "Target expresses drainage and storm flow with potentially overlapping “water flow” phrases. The source treats them as separate site factors.",
+      "minimalSafeguard": "Retain the exact technical anchors “drainage” and “storm flow” in that sentence until a Zulu term pair can be checked; retain all surrounding soil/slope/adviser/line/overflow/receiving-point instructions unchanged.",
+      "candidateIn15": false
+    },
+    {
+      "id": "water-harvesting-l2-body-7-dam-bank",
+      "status": "repair-or-retain-English-term",
+      "source": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "currentTarget": "Gcina i-spillway ingenamfucumfucu, futhi unakekele izitshalo ezimboze ibhange ngendlela eshiwo emklamweni. Ungatshali izihlahla odongeni lwedamu lomhlabathi.",
+      "issue": "“ibhange” can read as a financial bank. The target’s later earth-dam-wall prohibition is intact, but does not make the bank-cover noun unambiguous.",
+      "minimalSafeguard": "Keep “bank cover” exact English while preserving the clear-spillway instruction, design qualifier, and no-trees-on-wall prohibition.",
+      "candidateIn15": false
+    },
+    {
+      "id": "small-livestock-l2-subspecies-term",
+      "status": "retain-English-technical-anchor",
+      "source": "South Africa has two native honeybee subspecies.",
+      "currentTarget": "INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.",
+      "issue": "Current phrase says two native honeybee types beneath one species; plausible concept, but subspecies is technical taxonomy and exact rank should not be inferred from this wording alone.",
+      "minimalSafeguard": "Use “subspecies” in English in this sentence; leave native status, count two, and honeybee identity intact. Do not broaden range/movement permissions.",
+      "candidateIn15": false
+    },
+    {
+      "id": "soil-health-l3-title-building-soil",
+      "status": "retain-English-technical-anchor-pending-lexical-check",
+      "source": "Mulching and Cover Crops: Protecting and Building Soil",
+      "currentTarget": "I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Nokwakha Umhlabathi",
+      "issue": "The literal “building soil” rendering may be read as physically constructing soil rather than improving soil health. The body’s source-bound ecology content does not remove that title ambiguity.",
+      "minimalSafeguard": "Keep “Building Soil” in English in the title while retaining localized “Mulching and Cover Crops” and “Protecting”; this is a narrow title safeguard, not a fluency judgment.",
+      "candidateIn15": false
+    },
+    {
+      "id": "intro-permaculture-l3-title-scope",
+      "status": "repair-required-known-and-already-in-15",
+      "source": "Zones and Sectors: Organising Your Farm by Energy",
+      "currentTarget": "Ama-Zone Nama-Sector: Ukuhlela Ipulazi Ngokuthi Uhamba Kangaki",
+      "issue": "Title names visit frequency (zones) but omits the energy/sector dimension. Lesson body carries both; title still narrows the frame.",
+      "minimalSafeguard": "Preserve “energy” as an exact English title anchor until localized wording can express both zones and incoming sectors/energies.",
+      "candidateIn15": true
+    },
+    {
+      "id": "water-harvesting-l1-assessment-current-residual",
+      "status": "out-of-scope-caveat",
+      "source": "Which approach fits your land depends on the soil, slope, drainage and storm flow.",
+      "currentTarget": "See full body source/target at water-harvesting-l1.body[0].",
+      "issue": "Supplement correctly identifies that drainage and storm flow are separate factors, but assessment-term uncertainty remains. Do not treat structural assessment as semantic approval.",
+      "minimalSafeguard": "Same as water-harvesting-l1 body item above. Assessment questions/options/rationales were not re-audited here."
+    }
+  ],
+  "infographicAlt": {
+    "disposition": "safe-English-fallback; localization gap",
+    "evidence": "32 of 33 lessons have a canonical alt description; the ZU source roster preserves the canonical English alt string, and all 33 resolved ZU draft records lack a translated infographicAlt. The learner resolver/UI falls back to canonical alt (`lessonContent.infographicAlt ?? lesson.infographicAlt`). No mismatched translated alt was found. Exact English fallback retains counts, direction, object relations and caveats; do not replace with a guessed alt translation.",
+    "action": "No semantic repair required for fallback. Translation can be added later as source-paired, visibly draft alt text; retain English technical geometry and example-not-boundary caveats where needed."
+  },
+  "knownFindingsOverlappingSeparate15RepairPacket": {
+    "count": 15,
+    "packet": "/tmp/imbewu-zu-conservative-learner-repair-candidates-20261005.json",
+    "note": "Those candidate repairs are separately checked and are not re-proposed here. Includes Soil L3 extra raindrop-energy explanation, Market L1 added “food ran out” cause, Intro L2 intensity, Intro L3 title scope, Reading L3 disease-weather causality, Small L1 timing, and Small L2 cross-field route sentence. Keep changes narrowly source-bound; narration remains unchanged."
+  },
+  "assessmentSupplement": {
+    "status": "not_reaudited",
+    "outstandingCaveats": [
+      "Water L1: suitable site versus suitable soil and the distinct drainage/storm-flow factors need local term confirmation.",
+      "Water L2: physical dam-bank term needs local terminology confirmation.",
+      "Water L4: service-status wording needs confirmation against intended wastewater-service meaning."
+    ],
+    "note": "The separate semantic supplement supersedes the earlier blanket assessment uncertainty; this pass does not extend the quiz/question/options audit."
+  },
+  "limitations": [
+    "Older full field audit is stamped at source head a5fd76db64e70fd69d6c5e449cc6b8ce4dda7a0b while the worktree is ee4afe0d05acdb4f22ea0de046cb1e63d47fd79a. Current targeted source/resolved records were cross-checked where present; historic generic uncertainties are not upgrades to fluent approval.",
+    "Infographic alt descriptions were checked for exact English fallback/source correspondence, not translated into isiZulu.",
+    "No edits were made to the repository, learner registry, canonical English, or media."
+  ]
+}
