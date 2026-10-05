@@ -700,30 +700,31 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   const sourceL4 = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.split('\n\n');
   const l4 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.tshivendaDraft.split('\n\n');
   assert.ok(l4[1].startsWith('Zwimela zwi re na stress. '));
-  assert.ok(l4[1].endsWith('One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.'),
-    'the exact remaining causes preserve chemical removal of predators as an already-happened condition');
-  assert.match(l4[2], /^So before you treat anything,/,
+  assert.ok(l4[1].endsWith('One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.'),
+    'the translated clause preserves broad chemical use as an already-happened removal of helpful predators');
+  assert.match(l4[2], /^Ngazwenezwo, before you treat anything,/,
     'whole-system observation remains explicitly before treatment');
-  assert.ok(l4[3].startsWith('Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”?'));
-  assert.equal(l4[3].slice(l4[3].lastIndexOf('Are predators')), sourceL4[3].slice(sourceL4[3].lastIndexOf('Are predators')),
-    'the final diagnostic question retains already-working predators and “for you” exactly');
+  assert.equal(l4[3], 'Is the plant short of water? Soil yo compacted kana yo “hungry”? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?',
+    'the diagnostic keeps water shortage distinct from compacted or hungry soil and asks whether predators already help');
   assert.ok(l4[4].startsWith('Yellow leaf a i ambi automatically uri ndi insect.'));
   assert.ok(l4[4].includes('water') && l4[4].includes('nutrition') && l4[4].includes('root damage'));
   assert.ok(l4[4].endsWith('Wanani uri ndi zwifhio ni sa athu dzhia vhukando.'),
     'the cause list still asks the grower to find which cause before acting');
   assert.equal(l4[6].startsWith('Tsha u thoma. Sedzani. Sedzani '), true,
     'the localized checklist keeps both source commands: One/Observe and Look');
-  for (const target of ['damage pattern', 'the underside of the leaf', 'the stem', 'the plants nearby']) {
-    assert.ok(l4[6].includes(target), `the source observation checklist keeps ${target} exact because the earlier leaf-underneath wording risked changing leaf anatomy`);
+  for (const target of ['damage pattern', 'tlhelo ḽa fhasi ḽa ḽiṱari', 'tsinde', 'zwimela zwi re tsini']) {
+    assert.ok(l4[6].includes(target), `the translated source checklist keeps ${target}`);
   }
   for (const target of ['Soil moisture', 'midzi', 'spacing', 'nutrition', 'drainage']) assert.ok(l4[7].includes(target));
   assert.ok(l4[8].includes('Beneficial insects') && l4[8].includes('mushumo'),
     'the translated protection sentence still says beneficial insects do useful work');
   assert.match(l4[9], /^Tsha vhuṋa\. Ndi hone fhedzi ni tshi dzhia vhukando —/);
-  assert.ok(l4[9].includes('start with the lightest thing that works.'));
-  assert.ok(l4[9].endsWith('Physical removal, barriers or changes in crop care may help. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.'), 'translate the fit and continuing-monitor check without changing the sequence or its qualified methods');
-  assert.equal(l4[10], sourceL4[10],
-    'registration for the crop and pest, label directions, harvest waiting instructions, and the ban on improvised or stronger doses stay exact');
+  assert.ok(l4[9].includes('thomani nga the lightest thing that works.'));
+  assert.ok(l4[9].includes('Physical removal, barriers kana tshanduko kha crop care zwi nga thusa.'));
+  assert.ok(l4[9].endsWith('Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.'), 'the action-fit and outcome checks stay in the ordered final step');
+  for (const safeguard of ['registered for that crop and pest', 'label yayo', 'neem products', 'protection and harvest waiting instructions', 'Do not improvise mixtures or stronger doses']) {
+    assert.ok(l4[10].includes(safeguard), `the treatment safeguard remains explicit: ${safeguard}`);
+  }
   const sourceL4Lesson = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
   const changedChecklistSource = {
     ...sourceL4Lesson,
@@ -769,9 +770,9 @@ test('Tshivenda Vegetables assessments keep source answers and withdraw after qu
   assert.match(l2.quiz[0].question.tshivendaDraft, /every 2-3 weeks/);
   assert.match(l2.quiz[1].rationale.tshivendaDraft, /does not guarantee immediate feeding/);
   const l4 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
-  assert.match(l4.keyPoints[3].tshivendaDraft, /use a registered product for the crop and pest and follow the label/);
+  assert.equal(l4.keyPoints[3].tshivendaDraft, 'Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.');
   assert.match(l4.quiz[0].rationale.tshivendaDraft, /dose, protection and harvest waiting instructions/);
-  assert.match(l4.quiz[0].rationale.tshivendaDraft, /does not make an improvised treatment safe or suitable/);
-  assert.equal(l4.quiz[1].options[3].tshivendaDraft, l4.quiz[1].options[3].sourceEnglish);
-  assert.equal(l4.quiz[1].options[3].reviewStatus, 'hold');
+  assert.match(l4.quiz[0].rationale.tshivendaDraft, /a i iti uri improvised treatment i vhe safe or suitable/);
+  assert.equal(l4.quiz[1].options[3].tshivendaDraft, 'Arali hu aphids specifically');
+  assert.equal(l4.quiz[1].options[3].reviewStatus, 'machine-draft');
 });

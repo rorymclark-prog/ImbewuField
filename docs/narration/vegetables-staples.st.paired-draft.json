@@ -1095,8 +1095,45 @@
             "text": "Pest pressure hangata e a eketseha ka lebaka le itseng."
           },
           {
-            "status": "draft",
-            "text": "Dimela tse nang le stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Plants under ",
+                "status": "draft",
+                "text": "Dimela tse nang le "
+              },
+              {
+                "sourceEnglish": "stress.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " One crop dominating the ground.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Or ",
+                "status": "draft",
+                "text": " Kapa "
+              },
+              {
+                "sourceEnglish": "broad chemical use",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that has already removed the ",
+                "status": "draft",
+                "text": " e seng e tlositse "
+              },
+              {
+                "sourceEnglish": "predators",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that were helping you.",
+                "status": "draft",
+                "text": " tse neng di o thusa."
+              }
+            ]
           },
           {
             "status": "draft",
@@ -1151,11 +1188,109 @@
             "text": "Ntlha ya boraro: Sireletsa se o thusang. Beneficial insects (likokoanyana tse molemo) li etsa mosebetsi oo u neng u tla o etsa ka bouena."
           },
           {
-            "status": "draft",
-            "text": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Four.",
+                "status": "draft",
+                "text": "Ntlha ya bone."
+              },
+              {
+                "sourceEnglish": " Only then, act — and start with ",
+                "status": "draft",
+                "text": " Ke ka morao feela moo o nkang kgato — qala ka "
+              },
+              {
+                "sourceEnglish": "the lightest thing that works.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Physical removal",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", barriers",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " or changes in ",
+                "status": "draft",
+                "text": " kapa diphetoho ho "
+              },
+              {
+                "sourceEnglish": "crop care",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " may help.",
+                "status": "draft",
+                "text": " di ka thusa."
+              },
+              {
+                "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+                "status": "draft",
+                "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+              }
+            ]
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "If a ",
+                "status": "draft",
+                "text": "Ha "
+              },
+              {
+                "sourceEnglish": "treatment",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is needed, use a ",
+                "status": "draft",
+                "text": " e hlokahala, sebedisa "
+              },
+              {
+                "sourceEnglish": "product registered for that crop and pest",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and follow its ",
+                "status": "draft",
+                "text": ", mme o latele "
+              },
+              {
+                "sourceEnglish": "label",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": " ya yona."
+              },
+              {
+                "sourceEnglish": " This includes ",
+                "status": "draft",
+                "text": " Sena se kenyeletsa "
+              },
+              {
+                "sourceEnglish": "neem products.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Check ",
+                "status": "draft",
+                "text": " Hlahloba "
+              },
+              {
+                "sourceEnglish": "protection and harvest waiting instructions.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+                "status": "english-hold"
+              }
+            ]
           },
           {
             "status": "draft",

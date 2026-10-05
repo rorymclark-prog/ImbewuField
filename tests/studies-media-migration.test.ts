@@ -2571,6 +2571,63 @@ test('Reading frost wording refresh retires only the four changed regional frame
   assert.equal(puts, 1, 'later activations leave the selected replacement untouched');
 });
 
+test('Vegetables L4 ordinary pairing retires only slides 15 and 16 across three languages once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateVegetablesL4OrdinaryPairedStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assertActivationOrder(source, 'migrateVegetablesL1FullerOrdinaryPairedStills', 'migrateVegetablesL4OrdinaryPairedStills',
+    'the L4 refresh follows the prior paired-deck migration');
+  assertActivationOrder(source, 'migrateVegetablesL4OrdinaryPairedStills', 'migrateReadingLandscapeFrostBodySyncStills',
+    'the L4 refresh remains ahead of the existing Reading refresh');
+
+  const origin = 'https://field.test';
+  const changed = ['st', 've', 'ts'].flatMap(language => [15, 16].map(slide =>
+    `/course-decks/vegetables-staples/${language}/slide-${String(slide).padStart(2, '0')}.webp`));
+  const staleUrls = changed.flatMap(path => [path, `${path}?saved=old`, `${path}?width=small`])
+    .map(path => new URL(path, origin).href);
+  const preservedPaths = [
+    '/course-decks/vegetables-staples/st/slide-14.webp',
+    '/course-decks/vegetables-staples/ve/slide-14.webp',
+    '/course-decks/vegetables-staples/ts/slide-14.webp',
+    '/course-decks/vegetables-staples/ts/slide-17.webp',
+    '/course-decks/vegetables-staples/en/slide-15.jpg',
+    '/course-decks/vegetables-staples/zu/slide-15.jpg',
+    ...['st', 've', 'ts', 'en', 'zu'].map(language => `/course-audio/vegetables-staples/${language}/full.mp3`),
+    '/course-animations/vegetables-staples/flow-seed-or-seedling.mp4',
+    '/course-decks/market-community/ts/slide-15.webp',
+  ];
+  const preservedUrls = preservedPaths.map(path => new URL(`${path}?keep=1`, origin).href);
+  const rows = new Map<string, Response>([
+    ...staleUrls.map(url => [url, new Response(`stale:${url}`)] as const),
+    ...preservedUrls.map(url => [url, new Response(`preserved:${url}`)] as const),
+  ]);
+  let puts = 0;
+  let deletes = 0;
+  const cache = {
+    match: async (key: string) => rows.get(new URL(key, origin).href),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => { deletes += 1; return rows.delete(request.url); },
+    put: async (key: string, response: Response) => { puts += 1; rows.set(new URL(key, origin).href, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  for (const url of staleUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = new URL('/course-decks/vegetables-staples/.l4-ordinary-paired-stills-20261005', origin).href;
+  assert.equal(rows.has(marker), true, 'the marker records the completed once-only refresh');
+  assert.equal(deletes, staleUrls.length, 'only the six changed stills and their URL variants are retired');
+  assert.equal(puts, 1);
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation does not download replacement images');
+
+  const laterDownload = new URL(changed[0], origin).href;
+  rows.set(laterDownload, new Response('replacement chosen and saved by the learner later'));
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  assert.equal(await rows.get(laterDownload)!.text(), 'replacement chosen and saved by the learner later');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(deletes, staleUrls.length, 'later activations leave learner-selected replacement bytes intact');
+  assert.equal(puts, 1);
+});
+
 test('Reading first observations retire only the eight refreshed frames and all cached URL variants once', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateReadingLandscapeFirstObservationStills\(\) \{([\s\S]*?)\n\}/)?.[1];

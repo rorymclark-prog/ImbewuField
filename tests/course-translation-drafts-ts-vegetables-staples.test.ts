@@ -226,7 +226,7 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
 });
 
 
-test('Pest framing retains four-step order and exact treatment safeguards beside unchanged English', () => {
+test('Pest framing keeps the diagnostic order and treatment safeguards in the source-bound draft', () => {
   const source = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
   const matches = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons.filter(lesson => lesson.id === source.id);
   assert.equal(matches.length, 1);
@@ -237,8 +237,8 @@ test('Pest framing retains four-step order and exact treatment safeguards beside
   const paragraphs = draft.body.xitsongaDraft.split('\n\n');
   assert.equal(paragraphs.length, 12);
   assert.ok(paragraphs[1].startsWith('Swibyariwa leswi nga na stress. '));
-  assert.ok(paragraphs[1].endsWith('One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.'),
-    'the localized stress cue does not erase the exact single-crop and already-removed-predators causes');
+  assert.ok(paragraphs[1].endsWith('One crop dominating the ground. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.'),
+    'the draft preserves crop dominance and the already-removed-predators cause while localizing the remaining framing');
   assert.ok(paragraphs[3].startsWith('Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”?'));
   assert.ok(paragraphs[3].includes('predators se ti ku pfuna hi ku tirha eka xiphiqo lexi'),
     'the diagnostic question still asks whether predators are already helping');
@@ -250,10 +250,14 @@ test('Pest framing retains four-step order and exact treatment safeguards beside
   assert.ok(paragraphs[6].startsWith('Xo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi.'));
   assert.ok(paragraphs[7].startsWith('Vumbirhi. Kambela stress.') && /timitsu/.test(paragraphs[7]) && /nutrition/.test(paragraphs[7]) && /drainage/.test(paragraphs[7]));
   assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
-  assert.ok(paragraphs[9].includes('and start with the lightest thing that works.'));
-  assert.ok(paragraphs[9].endsWith('Physical removal, barriers or changes in crop care may help. Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result.'), 'only the action-fit check is localized; uncertain ongoing-monitor wording stays exact English');
-  assert.equal(paragraphs[10], english[10],
-    'registration for the crop and pest, label directions, harvest waiting instructions, and the ban on improvised or stronger doses stay exact');
+  assert.ok(paragraphs[9].includes('sungula hi the lightest thing that works.'));
+  assert.ok(paragraphs[9].includes('Physical removal, barriers kumbe ku cinca crop care swi nga pfuna.'));
+  assert.ok(paragraphs[9].endsWith('Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.'),
+    'the step still comes only after diagnosis, begins with the lightest effective option, and checks fit and result');
+  assert.notEqual(paragraphs[10], english[10]);
+  for (const safeguard of ['registered for that crop and pest', 'label ya yona', 'neem products', 'protection and harvest waiting instructions', 'Do not improvise mixtures or stronger doses']) {
+    assert.ok(paragraphs[10].includes(safeguard), `the treatment safeguard remains explicit: ${safeguard}`);
+  }
   const changedDiagnosticSource = {
     ...source,
     body: source.body.replace('A yellow leaf is not automatically an insect.', 'A yellow leaf is not always an insect.'),
@@ -261,19 +265,21 @@ test('Pest framing retains four-step order and exact treatment safeguards beside
   assert.notEqual(changedDiagnosticSource.body, source.body);
   assert.equal(resolveLearnerLessonPresentation(changedDiagnosticSource, 'ts').status, 'english-fallback',
     'changing the diagnostic qualifier withdraws this source-bound draft instead of serving a stale translated caution');
-  for (const index of [0, 2, 5, 8, 9, 11]) assert.notEqual(paragraphs[index], english[index]);
+  for (const index of [0, 1, 2, 5, 8, 9, 10, 11]) assert.notEqual(paragraphs[index], english[index]);
   assert.equal(paragraphs[5], 'Tirha hi magoza ya mune, hi ku landzelelana.');
   assert.ok(paragraphs[8].includes('Beneficial insects') && paragraphs[8].includes('ntirho'));
   assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
-  assert.ok(paragraphs[9].includes('and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help.'), 'the action still comes only after the earlier checks and keeps its qualified method choices');
-  assert.ok(paragraphs[9].endsWith('Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result.'), 'the problem-fit check is localized and uncertain monitoring wording stays exact English');
+  assert.ok(paragraphs[9].includes('sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca crop care swi nga pfuna.'), 'the action still comes only after the earlier checks and keeps its qualified method choices');
+  assert.ok(paragraphs[9].endsWith('Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.'), 'the draft retains the problem-fit and outcome-monitoring checks');
   assert.ok(paragraphs[11].startsWith("Tshembeka eka wena n'winyi"));
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
   const shown = resolveLearnerLessonPresentation(source, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
-  assert.deepEqual(shown.content.quiz, source.quiz);
-  assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+  assert.deepEqual(shown.content.quiz.map(q => q.correct), source.quiz.map(q => q.correct));
+  assert.deepEqual(shown.content.quiz.map(q => q.q), draft.quiz.map(q => q.question.xitsongaDraft));
+  assert.deepEqual(shown.content.quiz[0].options, draft.quiz[0].options.map(option => option.xitsongaDraft));
+  assert.deepEqual(shown.content.keyPoints, draft.keyPoints.map(point => point.xitsongaDraft));
 });
 
 

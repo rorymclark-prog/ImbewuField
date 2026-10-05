@@ -1,0 +1,207 @@
+{
+  "title": "Vegetables Staples L4 paired slides 15–16 asset update proof",
+  "date": "2026-10-05",
+  "baseHead": "4fd25b1025ba474bc4a5825aef36b306dd8e171c",
+  "renderCommand": "node scripts/make-lesson-slides.mjs vegetables-staples {st|ve|ts} OUT --paired-draft docs/narration/vegetables-staples.{lang}.paired-draft.json --slides 15,16",
+  "rendererOutputDirectories": {
+    "st": "/tmp/imbewu-vegetables-l4-st-20261005",
+    "ve": "/tmp/imbewu-vegetables-l4-ve-20261005",
+    "ts": "/tmp/imbewu-vegetables-l4-ts-20261005"
+  },
+  "conversion": {
+    "format": "WebP",
+    "width": 1440,
+    "height": 5400,
+    "quality": 88,
+    "method": 6,
+    "resize": "Lanczos vertical resize only when renderer extension makes source taller than required output"
+  },
+  "acceptedPacket": "docs/study-translation-reviews/VEGETABLES-L4-ORDINARY-2026-10-05-DECK-ACCEPTED.json",
+  "acceptedPacketSha256": "193044263467a6a62a127dacbd32d546a3378c70dd997c7aa838616cedb2bb0a",
+  "acceptedExactSourceJoins": 12,
+  "frameContactSheet": "/tmp/imbewu-vegetables-l4-fuller-contact-20261005.jpg",
+  "frames": [
+    {
+      "language": "st",
+      "slide": 15,
+      "asset": "public/course-decks/vegetables-staples/st/slide-15.webp",
+      "renderedPng": "/tmp/imbewu-vegetables-l4-st-20261005/slide-15.png",
+      "renderedPngPixels": "1440x5400",
+      "renderedPngSha256": "685ef41068fbaaa911368e49456c8489c05ca00b5f424bb44d51211024a40270",
+      "conversionResizeToRequiredPixels": false,
+      "beforeSha256": "e6d29c62652c9f657380206b44b317729190279603bd5cee47806f8d9bf1fe81",
+      "beforeBytes": 464216,
+      "afterSha256": "670f14dfa82d0b83cf9419078c2743e8b0e141808746c6e85d301cd19f52535f",
+      "afterBytes": 575028,
+      "pixels": "1440x5400",
+      "pairedSource": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "pairedSourceSha256": "22f89fd204ed890b355527cfcc4302e1a29f7b406419003ce57193386eea7df3",
+      "acceptedRows": [
+        {
+          "lessonField": "body.paragraphs.1",
+          "englishBodyIndexZeroBased": 1,
+          "exactEnglishSource": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+          "acceptedTarget": "Dimela tse nang le stress. One crop dominating the ground. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa."
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "asset": "public/course-decks/vegetables-staples/st/slide-16.webp",
+      "renderedPng": "/tmp/imbewu-vegetables-l4-st-20261005/slide-16.png",
+      "renderedPngPixels": "1440x5576",
+      "renderedPngSha256": "2e41d251917fc7c62118ec132c1288f3b426ed2e0302469facf1767b9f514b97",
+      "conversionResizeToRequiredPixels": true,
+      "beforeSha256": "d63e02333e7b1b875574ec222947cc1704bfb0818c000a99bed965ac15fb2fc1",
+      "beforeBytes": 560812,
+      "afterSha256": "c89ab72824ebd249081dc2fa3f7756f51c779bc1aa24a6d110ce69e3e1f07246",
+      "afterBytes": 589838,
+      "pixels": "1440x5400",
+      "pairedSource": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "pairedSourceSha256": "22f89fd204ed890b355527cfcc4302e1a29f7b406419003ce57193386eea7df3",
+      "acceptedRows": [
+        {
+          "lessonField": "body.paragraphs.9",
+          "englishBodyIndexZeroBased": 4,
+          "exactEnglishSource": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+          "acceptedTarget": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho ho crop care di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+        },
+        {
+          "lessonField": "body.paragraphs.10",
+          "englishBodyIndexZeroBased": 5,
+          "exactEnglishSource": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+          "acceptedTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses."
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "asset": "public/course-decks/vegetables-staples/ve/slide-15.webp",
+      "renderedPng": "/tmp/imbewu-vegetables-l4-ve-20261005/slide-15.png",
+      "renderedPngPixels": "1440x5400",
+      "renderedPngSha256": "97f5ff02920edbec234a9ffe3dd5df901f0ccbd35845ea97c9949a619439f209",
+      "conversionResizeToRequiredPixels": false,
+      "beforeSha256": "9a2075ef0429bf7ae4b1b17f524cc06efdc7d2c833137d3d5f68798a8e29a422",
+      "beforeBytes": 457382,
+      "afterSha256": "9d92e2e01a824f3b310e5bf2b78e1b1eed890c9c4f7be86babf4feefc35c81a0",
+      "afterBytes": 573668,
+      "pixels": "1440x5400",
+      "pairedSource": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "pairedSourceSha256": "57510bb175bb06a0d74bcce90ca874adfaeac5ba9e750921652a0afc0903685d",
+      "acceptedRows": [
+        {
+          "lessonField": "body.paragraphs.1",
+          "englishBodyIndexZeroBased": 1,
+          "exactEnglishSource": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+          "acceptedTarget": "Zwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa."
+        },
+        {
+          "lessonField": "body.paragraphs.2",
+          "englishBodyIndexZeroBased": 2,
+          "exactEnglishSource": "So before you treat anything, look at the whole system.",
+          "acceptedTarget": "Ngazwenezwo, before you treat anything, sedzani system yoṱhe."
+        },
+        {
+          "lessonField": "body.paragraphs.3",
+          "englishBodyIndexZeroBased": 3,
+          "exactEnglishSource": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+          "acceptedTarget": "Is the plant short of water? Soil yo compacted kana yo “hungry”? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "asset": "public/course-decks/vegetables-staples/ve/slide-16.webp",
+      "renderedPng": "/tmp/imbewu-vegetables-l4-ve-20261005/slide-16.png",
+      "renderedPngPixels": "1440x5656",
+      "renderedPngSha256": "84f751a2289fd780b48a0f5ac8c747411eabd83e13a99716b643adb89763526f",
+      "conversionResizeToRequiredPixels": true,
+      "beforeSha256": "3d2aaeac2b6174df27ec1f791cf9f9818c784fb80fa27143bad351fc3684e4f3",
+      "beforeBytes": 555608,
+      "afterSha256": "2f889abfff062922f33d80c74e5af7d0c39433ee68646af17448f36ceeef5e4e",
+      "afterBytes": 584900,
+      "pixels": "1440x5400",
+      "pairedSource": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "pairedSourceSha256": "57510bb175bb06a0d74bcce90ca874adfaeac5ba9e750921652a0afc0903685d",
+      "acceptedRows": [
+        {
+          "lessonField": "body.paragraphs.6",
+          "englishBodyIndexZeroBased": 1,
+          "exactEnglishSource": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+          "acceptedTarget": "Tsha u thoma. Sedzani. Sedzani damage pattern, tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini."
+        },
+        {
+          "lessonField": "body.paragraphs.9",
+          "englishBodyIndexZeroBased": 4,
+          "exactEnglishSource": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+          "acceptedTarget": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha crop care zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+        },
+        {
+          "lessonField": "body.paragraphs.10",
+          "englishBodyIndexZeroBased": 5,
+          "exactEnglishSource": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+          "acceptedTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses."
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "asset": "public/course-decks/vegetables-staples/ts/slide-15.webp",
+      "renderedPng": "/tmp/imbewu-vegetables-l4-ts-20261005/slide-15.png",
+      "renderedPngPixels": "1440x5400",
+      "renderedPngSha256": "f6a5343e64719eae090c6de1f6e2af20289e1dcf4756f5b86c131c31cf02140e",
+      "conversionResizeToRequiredPixels": false,
+      "beforeSha256": "c419746fef00bf2e0c16cf9e4825deb65ed80e45a9ec31faa4d04bcbcd6b64d7",
+      "beforeBytes": 574266,
+      "afterSha256": "d8c573bc284aa1a4cb4229ba293914381c11b4571c65dc4d18c7d8398649a6f3",
+      "afterBytes": 575324,
+      "pixels": "1440x5400",
+      "pairedSource": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "pairedSourceSha256": "88bbf719458ab026b06b0a86ef924fc0da15b0502f04bcd4b97a7175bfc37083",
+      "acceptedRows": [
+        {
+          "lessonField": "body.paragraphs.1",
+          "englishBodyIndexZeroBased": 1,
+          "exactEnglishSource": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+          "acceptedTarget": "Swibyariwa leswi nga na stress. One crop dominating the ground. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna."
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "asset": "public/course-decks/vegetables-staples/ts/slide-16.webp",
+      "renderedPng": "/tmp/imbewu-vegetables-l4-ts-20261005/slide-16.png",
+      "renderedPngPixels": "1440x5576",
+      "renderedPngSha256": "7239bf8fddc8f6243e1ea9d58c4aefffb2b55f9939ea87e0686f5268e2d3e441",
+      "conversionResizeToRequiredPixels": true,
+      "beforeSha256": "448a08a0787bfcb6de22282bebf80feab0d3926380fcd4a2bebd067e1ecb2aa7",
+      "beforeBytes": 548518,
+      "afterSha256": "782ecf5228cd6722320b809688e466b0077b8b0c4736d043ca72df4970f3d5f0",
+      "afterBytes": 578128,
+      "pixels": "1440x5400",
+      "pairedSource": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "pairedSourceSha256": "88bbf719458ab026b06b0a86ef924fc0da15b0502f04bcd4b97a7175bfc37083",
+      "acceptedRows": [
+        {
+          "lessonField": "body.paragraphs.9",
+          "englishBodyIndexZeroBased": 4,
+          "exactEnglishSource": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+          "acceptedTarget": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca crop care swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+        },
+        {
+          "lessonField": "body.paragraphs.10",
+          "englishBodyIndexZeroBased": 5,
+          "exactEnglishSource": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+          "acceptedTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses."
+        }
+      ]
+    }
+  ],
+  "humanLanguageReview": false,
+  "localFarmingReview": false
+}

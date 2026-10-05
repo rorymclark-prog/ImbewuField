@@ -11,14 +11,15 @@ import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-trans
 const evidence = (suffix: string) => JSON.parse(readFileSync(new URL(`../docs/study-translation-reviews/VEGETABLES-L1-FULLER-ORDINARY-2026-10-05-${suffix}.json`, import.meta.url), 'utf8'));
 const baseline = evidence('BASELINE');
 const applied = evidence('APPLIED');
+const l4Applied = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-L4-ORDINARY-2026-10-05-APPLIED.json', import.meta.url), 'utf8'));
 const drafts = { st, ts, ve };
 type Language = keyof typeof drafts;
 const keys = { st: 'sesothoDraft', ts: 'xitsongaDraft', ve: 'tshivendaDraft' } as const;
 const canonical = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!;
 const lesson = canonical.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
-function pairAt(draft: any, field: string): any {
+function pairAt(draft: any, field: string, lessonId = 'vegetables-staples-l1'): any {
   const parts = field.split('.');
-  const target = draft.lessons.find((lesson: any) => lesson.id === 'vegetables-staples-l1');
+  const target = draft.lessons.find((lesson: any) => lesson.id === lessonId);
   if (parts[0] === 'module') return draft[parts[1]];
   if (parts[0] === 'body') return target.body;
   if (parts[0] === 'keyPoints') return target.keyPoints[Number(parts[1])];
@@ -51,6 +52,25 @@ test('Vegetables ordinary drafts retain every canonical instruction and all unre
         pair[keys[language]] = row.appliedTarget;
       }
       pair.reviewStatus = 'machine-draft';
+    }
+    // 5 October 2026: the earlier full-module L1 snapshot predates this later source-bound L4 batch.
+    // Layer its exact approved changes onto the reconstructed module so the historical test keeps
+    // checking every unlisted field against one coherent current result.
+    for (const row of l4Applied.fields.filter((row: any) => row.language === language && row.changedFromCurrent)) {
+      const pair = pairAt(expected, row.fieldPath, row.lessonId);
+      if (row.fieldPath.startsWith('body.')) {
+        const paragraphs = pair[keys[language]].split('\n\n');
+        const index = Number(row.fieldPath.split('.')[2]);
+        assert.equal(paragraphs[index], row.currentTarget, `${language}/${row.fieldPath}: historical L4 value is current before applying the accepted target`);
+        assert.equal(pair.sourceEnglish.split('\n\n')[index], row.sourceEnglish);
+        paragraphs[index] = row.appliedTarget;
+        pair[keys[language]] = paragraphs.join('\n\n');
+      } else {
+        assert.equal(pair[keys[language]], row.currentTarget, `${language}/${row.fieldPath}: historical L4 value is current before applying the accepted target`);
+        assert.equal(pair.sourceEnglish, row.sourceEnglish);
+        pair[keys[language]] = row.appliedTarget;
+      }
+      pair.reviewStatus = row.appliedReviewStatus;
     }
     assert.deepEqual(drafts[language], expected, `${language}: only reviewed source-bound fields may change`);
   }

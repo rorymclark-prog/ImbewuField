@@ -1088,7 +1088,7 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const module = COURSE_MODULES.find(({ id }) => id === 'vegetables-staples')!;
   const expectedHolds = new Set([
-    'st:16:6', 've:16:6', 'ts:10:2', 'ts:16:6',
+    'ts:10:2',
   ]);
   let sourceMatches = 0;
   let reusedDrafts = 0;
@@ -1137,7 +1137,7 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
 
   assert.equal(sourceMatches, 171, 'slides 7–16 contain 171 complete source-matched paragraphs across the three languages');
   assert.deepEqual(actualHolds, expectedHolds,
-    'the Indigenous farming example and crop-treatment safeguards remain whole-field holds; all translated and mixed rows use current learner wording');
+    'the Indigenous farming example remains held; the accepted L4 draft now wraps ordinary treatment framing around exact held safety clauses, so only unrelated English holds remain');
   assert.equal(reusedDrafts, sourceMatches - expectedHolds.size,
     'every other whole source-matched lesson paragraph uses its current learner draft in the deck');
 
@@ -1175,8 +1175,21 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
     );
     const treatment = slides[15].target.body[5];
     assert.equal(slides[15].english.body[5], treatmentSource, `${lang}: preserve the exact registered-product source`);
-    assert.deepEqual(treatment, { status: 'english-hold' },
-      `${lang}: crop/pest registration, label, neem, harvest waiting, and no-mixture/no-stronger-dose safeguards stay together`);
+    assert.equal(treatment.status, 'mixed',
+      `${lang}: the root-accepted full-field draft may translate ordinary wording around exact safety anchors`);
+    assert.equal(treatment.segments.map((segment: any) => segment.sourceEnglish).join(''), treatmentSource,
+      `${lang}: all treatment clauses remain in source order with complete coverage`);
+    const safetyAnchors = [
+      'product registered for that crop and pest', 'label', 'neem products.',
+      'protection and harvest waiting instructions.', 'Do not improvise mixtures or stronger doses.',
+    ];
+    const heldSource = treatment.segments.filter((segment: any) => segment.status === 'english-hold')
+      .map((segment: any) => segment.sourceEnglish).join('');
+    for (const anchor of safetyAnchors) assert.ok(heldSource.includes(anchor), `${lang}: exact English safety anchor remains held: ${anchor}`);
+    const learnerLesson = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
+    const learnerTreatment = resolveLearnerLessonPresentation(learnerLesson, lang).content.body.split('\n\n')[10];
+    assert.equal(targetVisibleText(treatment), learnerTreatment,
+      `${lang}: the mixed deck composition exactly matches the current source-bound learner field`);
   }
 });
 
