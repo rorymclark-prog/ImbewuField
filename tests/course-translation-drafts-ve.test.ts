@@ -597,9 +597,16 @@ test('Vegetables L3 preserves crop conditions and exact technical clauses while 
   assert.equal(translated[8].split('. ').at(-1), paragraphs[8].split('. ').at(-1),
     'the young-leaf food claim remains the exact source clause, never a broader leaf claim');
   assert.equal(shown.content.title, lesson.title);
-  assert.equal(shown.content.infographicAlt, lesson.infographicAlt);
-  assert.deepEqual(shown.content.keyPoints, lesson.keyPoints);
-  assert.deepEqual(shown.content.quiz, lesson.quiz, 'quiz wording, order, rationales and correct indexes stay exact English');
+  // 6 October: approved source-paired L3 assessment leaves replace the old hold-only claim.
+  // Exact source/current edges, B,B and all unlisted fields are covered by the completion checks.
+  assert.equal(shown.content.infographicAlt, draftLesson.infographicAlt!.tshivendaDraft);
+  assert.deepEqual(shown.content.keyPoints, draftLesson.keyPoints.map(point => point.tshivendaDraft));
+  assert.deepEqual(shown.content.quiz, lesson.quiz.map((question, index) => ({
+    ...question,
+    q: draftLesson.quiz[index].question.tshivendaDraft,
+    options: draftLesson.quiz[index].options.map(option => option.tshivendaDraft),
+    rationale: draftLesson.quiz[index].rationale.tshivendaDraft,
+  })), 'source-bound draft wording and unchanged order, rationales and correct indexes remain paired');
   assert.equal(learnerVegetablesDraft.title.sourceEnglish, module.title);
   assert.equal(learnerVegetablesDraft.description.sourceEnglish, module.description);
   assert.equal(learnerVegetablesDraft.sourceMetadata.durationMins, module.durationMins);

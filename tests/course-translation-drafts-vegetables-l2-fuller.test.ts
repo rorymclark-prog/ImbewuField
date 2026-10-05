@@ -1,3 +1,4 @@
+import { vegetablesWithL3Completion } from './vegetables-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -79,7 +80,8 @@ test('Vegetables L2 fuller drafts retain the 27 final source-bound fields and ex
         `${language}/${row.fieldPath}: target status is retained as an unreviewed draft`);
       setTarget(pairAt(expected, row.fieldPath), language, row);
     }
-    assert.deepEqual(drafts[language], expected,
+    // 6 October: preserve whole-module coverage while adding the exact reviewed L3 leaf/status layer.
+    assert.deepEqual(drafts[language], vegetablesWithL3Completion(language, expected),
       `${language}: every unlisted lesson, paragraph, key point, assessment, and status remains unchanged`);
 
     const presentation = resolveLearnerLessonPresentation(canonicalLesson, language);

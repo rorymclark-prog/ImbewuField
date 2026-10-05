@@ -1,0 +1,411 @@
+{
+  "title": "Vegetables L3 accepted field application proof",
+  "baseHead": "3f90e94905ccc45de6b1d740591c8f9984e1df49",
+  "packetSHA256": "d02929530d7797935e0da7dadb98716851ea17131aa0fe6def4984905823e51a",
+  "nativeBeforeSHA256": "19fcde0af940f9213c5275c13d16be7cb1ffcebd1ab3bd78212ba2866cbd709b",
+  "checks": [
+    {
+      "language": "st",
+      "fields": [
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::st::keyPoints[2]",
+          "fieldPath": "keyPoints[2]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        }
+      ],
+      "expectedModuleSHA256": "d6cf8cb054c1fcb10b775f9d1b88e860dac0d4fafe0e0f1e5f98b2f6cf39d0b2",
+      "actualModuleSHA256": "d6cf8cb054c1fcb10b775f9d1b88e860dac0d4fafe0e0f1e5f98b2f6cf39d0b2",
+      "wholeModuleProjectionAndRewindExact": true,
+      "completeBodyPairUnchanged": true,
+      "correctIndices": [
+        1,
+        1
+      ]
+    },
+    {
+      "language": "ve",
+      "fields": [
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::title",
+          "fieldPath": "title",
+          "changed": false,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "hold",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::infographicAlt",
+          "fieldPath": "infographicAlt",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[0]",
+          "fieldPath": "keyPoints[0]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[1]",
+          "fieldPath": "keyPoints[1]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[2]",
+          "fieldPath": "keyPoints[2]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[3]",
+          "fieldPath": "keyPoints[3]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].question",
+          "fieldPath": "quiz[0].question",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].rationale",
+          "fieldPath": "quiz[0].rationale",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[0]",
+          "fieldPath": "quiz[0].options[0]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[1]",
+          "fieldPath": "quiz[0].options[1]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[2]",
+          "fieldPath": "quiz[0].options[2]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[3]",
+          "fieldPath": "quiz[0].options[3]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].question",
+          "fieldPath": "quiz[1].question",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].rationale",
+          "fieldPath": "quiz[1].rationale",
+          "changed": false,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "hold",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[0]",
+          "fieldPath": "quiz[1].options[0]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[1]",
+          "fieldPath": "quiz[1].options[1]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[2]",
+          "fieldPath": "quiz[1].options[2]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[3]",
+          "fieldPath": "quiz[1].options[3]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        }
+      ],
+      "expectedModuleSHA256": "d98ed9767455e40b22336a44cce629cb045b16bb300f617293ff6bdf30fddf37",
+      "actualModuleSHA256": "d98ed9767455e40b22336a44cce629cb045b16bb300f617293ff6bdf30fddf37",
+      "wholeModuleProjectionAndRewindExact": true,
+      "completeBodyPairUnchanged": true,
+      "correctIndices": [
+        1,
+        1
+      ]
+    },
+    {
+      "language": "ts",
+      "fields": [
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::infographicAlt",
+          "fieldPath": "infographicAlt",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[0]",
+          "fieldPath": "keyPoints[0]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[1]",
+          "fieldPath": "keyPoints[1]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[2]",
+          "fieldPath": "keyPoints[2]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[3]",
+          "fieldPath": "keyPoints[3]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].rationale",
+          "fieldPath": "quiz[0].rationale",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[0]",
+          "fieldPath": "quiz[0].options[0]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[1]",
+          "fieldPath": "quiz[0].options[1]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[2]",
+          "fieldPath": "quiz[0].options[2]",
+          "changed": false,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "hold",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[3]",
+          "fieldPath": "quiz[0].options[3]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].rationale",
+          "fieldPath": "quiz[1].rationale",
+          "changed": false,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "hold",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[0]",
+          "fieldPath": "quiz[1].options[0]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[1]",
+          "fieldPath": "quiz[1].options[1]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[2]",
+          "fieldPath": "quiz[1].options[2]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        },
+        {
+          "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[3]",
+          "fieldPath": "quiz[1].options[3]",
+          "changed": true,
+          "currentReviewStatus": "hold",
+          "appliedReviewStatus": "machine-draft",
+          "sourceExact": true,
+          "targetExact": true,
+          "resolverExact": true
+        }
+      ],
+      "expectedModuleSHA256": "952b57864aaf3722383c22d574fcd048cff0cf2646de4d1f9fcd471b3e83d609",
+      "actualModuleSHA256": "952b57864aaf3722383c22d574fcd048cff0cf2646de4d1f9fcd471b3e83d609",
+      "wholeModuleProjectionAndRewindExact": true,
+      "completeBodyPairUnchanged": true,
+      "correctIndices": [
+        1,
+        1
+      ]
+    }
+  ],
+  "counts": {
+    "fields": 34,
+    "changedTargetsAndFieldLocalStatuses": 30,
+    "EnglishHolds": 4,
+    "bodyChanges": 0,
+    "deckChanges": 0,
+    "mediaChanges": 0,
+    "audioChanges": 0,
+    "SWChanges": 0
+  },
+  "canonicalVegetablesModuleSHA256": "9fd080d812296501f013bee0116199dc71581cd83246c6c315d00e32bf7ccaec",
+  "protectedFilesAbsentFromDiff": true,
+  "verification": {
+    "typecheck": "pass",
+    "focusedTests": {
+      "tests": 38,
+      "pass": 38,
+      "fail": 0
+    },
+    "whitespace": "pass",
+    "fullSuite": "root gate pending",
+    "phonePreview": "not performed for this batch",
+    "diagram": "existing unchanged native illustration reviewed by root before authorization"
+  }
+}

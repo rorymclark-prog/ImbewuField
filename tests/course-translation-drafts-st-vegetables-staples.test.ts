@@ -1,3 +1,4 @@
+import { registerVegetablesL3CompletionTests } from './vegetables-l3-completion-checks.ts';
 import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -217,3 +218,6 @@ test('Sesotho assessment drafts stay source-bound and fail closed when exact Eng
   assert.equal(shown.content.quiz[1].q, changedL4.quiz[1].q);
   assert.match(l4q.question.sesothoDraft, /pele a nahana hore ke disenyi/);
 });
+
+// 6 October: checked L3 assessment completion adds current rules while preserving the historical safeguards above.
+registerVegetablesL3CompletionTests();

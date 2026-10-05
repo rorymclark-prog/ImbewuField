@@ -274,8 +274,8 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
-          "sesothoDraft": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
-          "reviewStatus": "hold"
+          "sesothoDraft": "Sweet potato e ba le drought tolerance e itseng ka mora hore storage roots di bopehe, empa e hloka metsi qalong; young leaves tsa yona di a jeha",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
