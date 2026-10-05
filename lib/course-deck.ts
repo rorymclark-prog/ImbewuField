@@ -13,6 +13,8 @@
 
 import { COURSE_NARRATION, trackUrl, type NarrationTrack } from '@/lib/course-audio';
 import { ISIZULU_DECK_SOURCE_BINDINGS } from '@/lib/course-deck-source-bindings';
+import { resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
+import type { IsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts';
 
 export interface DeckAnimation {
   /** Silent clip — narration plays over it. Some clips contain labels in the deck language. */
@@ -403,6 +405,23 @@ export function slideImageUrl(moduleId: string, lang: string, slide: number): st
   return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.${format}`;
 }
 
+/** Image projection is independent of the narration hold; this is a silent visual draft only. */
+export function silentDraftSlideImageFor(
+  moduleId: string,
+  lang: string,
+  slide: number,
+  resolveDraft: (moduleId: string, slide: number) => IsiZuluSilentDeckDraft | null = resolveIsiZuluSilentDeckDraft,
+): { url: string; lang: 'zu'; exact: true; aspectRatio: number } | null {
+  if (lang !== 'zu') return null;
+  const draft = resolveDraft(moduleId, slide);
+  return draft ? {
+    url: draft.imageUrl,
+    lang: 'zu',
+    exact: true,
+    aspectRatio: draft.width / draft.height,
+  } : null;
+}
+
 /**
  * The image to show for one slide, and whether it is in the language asked for.
  *
@@ -414,7 +433,9 @@ export function slideImageFor(
   moduleId: string,
   lang: string,
   slide: number,
-): { url: string; lang: string; exact: boolean } | null {
+): { url: string; lang: string; exact: boolean; aspectRatio?: number } | null {
+  const silentImage = silentDraftSlideImageFor(moduleId, lang, slide);
+  if (silentImage) return silentImage;
   const hasIsiZuluSnapshot = lang === 'zu'
     && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId);
   const isiZuluPairUnavailable = hasIsiZuluSnapshot && trackUrl(moduleId, 'zu', slide) === null;

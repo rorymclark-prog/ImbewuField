@@ -11,6 +11,7 @@ import { COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-a
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { FINANCE_PATHWAY_MEDIA_URLS, STUDIES_PATHWAY_PACKS, STUDIES_PATHWAY_PAGES } from '@/lib/studies-pathway-pack';
 import { isiZuluDeckReviewHoldEntries } from '@/lib/course-deck-review-holds';
+import { resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
 
 const PUBLIC = join(process.cwd(), 'public');
 
@@ -205,14 +206,18 @@ test('offline packs include every available narration track and omit only source
   }
 });
 
-test('full isiZulu packs pair held narration rows with the displayed English still and no implicit English audio', () => {
+test('full isiZulu packs include each displayed held-row still without adding implicit narration', () => {
   const holds = isiZuluDeckReviewHoldEntries();
   assert.ok(holds.length > 0, 'the review ledger supplies the held source rows');
   for (const { moduleId, slide } of holds) {
     const shown = slideImageFor(moduleId, 'zu', slide);
     assert.ok(shown, `${moduleId}/${slide} still has an image`);
-    assert.equal(shown.lang, 'en', `${moduleId}/${slide} uses English while its isiZulu narration is held`);
-    assert.equal(shown.exact, false, `${moduleId}/${slide} clearly reports the fallback`);
+    const silentDraft = resolveIsiZuluSilentDeckDraft(moduleId, slide);
+    assert.equal(shown.lang, silentDraft ? 'zu' : 'en',
+      `${moduleId}/${slide} uses its checked silent correction when present, otherwise English while ZU narration is held`);
+    assert.equal(shown.exact, Boolean(silentDraft),
+      `${moduleId}/${slide} accurately reports whether its corrected isiZulu still is available`);
+    if (silentDraft) assert.equal(shown.url, silentDraft.imageUrl);
     assert.equal(trackUrl(moduleId, 'zu', slide), null, `${moduleId}/${slide} held isiZulu audio has no URL`);
     assert.equal(trackUrl(moduleId, 'en', slide), `/course-audio/${moduleId}/en/slide-${String(slide).padStart(2, '0')}.mp3`,
       `${moduleId}/${slide} English audio remains an explicit language choice`);
@@ -474,9 +479,9 @@ test('whole-course regional slide-only totals include every saved still without 
   }
 });
 
-test('Seeds displays English only for held isiZulu narration rows and keeps all other authored slides', () => {
-  // A held narration row must not pair its disputed isiZulu wording with an isiZulu frame. The
-  // remaining source-paired frames stay exact, so a single review hold does not switch the deck.
+test('Seeds shows a checked silent ZU still or English fallback while held ZU narration stays unavailable', () => {
+  // Corrected silent cards have their own reviewed-source binding and do not release the legacy
+  // voice hold. Rows without a corrected still continue to use the English source frame.
   const deck = COURSE_DECKS['seeds-sovereignty'];
   for (const lang of deck.slideLanguages) {
     for (const slide of deck.slides) {
@@ -484,8 +489,16 @@ test('Seeds displays English only for held isiZulu narration rows and keeps all 
       assert.ok(shown, `${lang} slide ${slide.slide} has no image at all`);
       const held = lang === 'zu' && Boolean(isiZuluDeckReviewHoldEntries()
         .some(row => row.moduleId === 'seeds-sovereignty' && row.slide === slide.slide));
-      assert.equal(shown!.exact, !held, `${lang} slide ${slide.slide} resolution must match its source-review state`);
-      assert.equal(shown!.lang, held ? 'en' : lang);
+      const corrected = held && Boolean(resolveIsiZuluSilentDeckDraft('seeds-sovereignty', slide.slide));
+      assert.equal(shown!.exact, !held || corrected,
+        `${lang} slide ${slide.slide} must use its exact reviewed pair or source fallback`);
+      assert.equal(shown!.lang, held && !corrected ? 'en' : lang);
+      if (held) {
+        assert.equal(trackUrl('seeds-sovereignty', 'zu', slide.slide), null,
+          `slide ${slide.slide} stays silent until its held ZU voice is reviewed`);
+        assert.equal(animationUrls('seeds-sovereignty', slide.slide, 'zu'), null,
+          `slide ${slide.slide} must not cover its source-paired still with an animation`);
+      }
     }
   }
 });

@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { englishSlideRecords, pairedDraftLanguageLabel, pairedTargetHasEnglishHolds, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { englishSlideRecords, pairedDraftLanguageLabel, pairedSlideSelection, pairedTargetHasEnglishHolds, selectPairedSlides, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
 import { XITSONGA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ts-food-forest.ts';
@@ -2469,7 +2469,7 @@ test('the CLI preflights all supported paired languages and rejects unsupported 
         '--paired-draft', json, '--validate-only'],
       { cwd: process.cwd(), encoding: 'utf8' });
     assert.notEqual(unsupported.status, 0);
-    assert.match(unsupported.stderr, /supports st, ts and ve/);
+    assert.match(unsupported.stderr, /supports st, ts, ve and zu/);
     assert.equal(existsSync(output), false);
   } finally {
     rmSync(temp, { recursive: true, force: true });
@@ -2500,6 +2500,112 @@ test('Seeds native-source proof is explicit, exact-size, and does not relax the 
       { cwd: process.cwd(), encoding: 'utf8' });
     assert.notEqual(wrongModule.status, 0);
     assert.match(wrongModule.stderr, /currently limited to Seeds and Seed Sovereignty/);
+    assert.equal(existsSync(output), false);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('isiZulu silent paired cards validate exact authored source and select original slide numbers only', () => {
+  const zuluSource = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
+  const packet: any = {
+    language: 'zu',
+    sourceLanguage: 'en',
+    reviewStatus: 'unreviewed',
+    slides: zuluSource.map((english) => ({
+      n: english.n,
+      english: structuredClone(english),
+      target: {
+        heading: { status: 'english-hold' },
+        body: english.body.map((sourceEnglish: string) => ({ status: 'english-hold' })),
+      },
+    })),
+  };
+  packet.slides[1].target.heading = { status: 'draft', text: 'Kungani kubalulekile' };
+  const firstBodySource = packet.slides[1].english.body[0];
+  packet.slides[1].target.body[0] = {
+    status: 'mixed',
+    segments: [
+      { sourceEnglish: 'A good design ', status: 'draft', text: 'Ukuhlela okuhle ' },
+      { sourceEnglish: 'saves work before you pick up a spade.', status: 'english-hold' },
+    ],
+  };
+
+  assert.equal(pairedDraftLanguageLabel('zu'), 'ISIZULU');
+  const validated = validatePairedDraft(packet, zuluSource, 'zu');
+  assert.deepEqual(validated[1].target.body[0].segments.map((segment: any) => segment.sourceEnglish).join(''), firstBodySource);
+  assert.equal(pairedTargetHasEnglishHolds(validated[0].target), true);
+
+  const selection = pairedSlideSelection('2,5', validated.length);
+  const selected = selectPairedSlides(validated, selection);
+  assert.deepEqual(selected.map((slide: any) => slide.n), [2, 5]);
+  assert.equal(selected.length, 2);
+  assert.equal(selected.some((slide: any) => slide.n === 1 || slide.n === 3 || slide.n === 4), false,
+    'unselected English-hold cards remain in the fully validated packet but are not handed to rendering');
+
+  const stalePacket = structuredClone(packet);
+  stalePacket.slides[3].english.body[0] += ' Changed source.';
+  assert.throws(() => validatePairedDraft(stalePacket, zuluSource, 'zu'), /slide 4: English body differs/,
+    'selection must never let an unselected stale source bypass full-packet validation');
+});
+
+test('paired slide subset parsing rejects empty, duplicate, malformed, and out-of-range indices', () => {
+  assert.equal(pairedSlideSelection(undefined, 22), null);
+  assert.throws(() => pairedSlideSelection('', 22), /needs a comma-separated list/);
+  assert.throws(() => pairedSlideSelection('1,1', 22), /duplicate slide numbers/);
+  assert.throws(() => pairedSlideSelection('0,2', 22), /positive slide numbers/);
+  assert.throws(() => pairedSlideSelection('2, 1.5', 22), /positive slide numbers/);
+  assert.throws(() => pairedSlideSelection('23', 22), /only 22 slides/);
+});
+
+test('paired CLI validates the whole isiZulu packet but reports only selected original slide numbers', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'imbewu-paired-zulu-selection-'));
+  try {
+    const english = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
+    const packet: any = {
+      language: 'zu', sourceLanguage: 'en', reviewStatus: 'unreviewed',
+      slides: english.map((record) => ({
+        n: record.n,
+        english: record,
+        target: { heading: { status: 'english-hold' }, body: record.body.map(() => ({ status: 'english-hold' })) },
+      })),
+    };
+    const json = join(temp, 'draft.json');
+    const output = join(temp, 'slides');
+    writeFileSync(json, JSON.stringify(packet));
+    const selected = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'zu', output,
+        '--paired-draft', json, '--slides', '2,5', '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.equal(selected.status, 0, selected.stderr);
+    assert.match(selected.stdout, /validated 2 source-paired slides; no images written/);
+    assert.equal(existsSync(output), false);
+
+    const staleUnselected = structuredClone(packet);
+    staleUnselected.slides[3].english.body[0] += ' Changed source.';
+    writeFileSync(json, JSON.stringify(staleUnselected));
+    const stale = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'zu', output,
+        '--paired-draft', json, '--slides', '2,5', '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.notEqual(stale.status, 0);
+    assert.match(stale.stderr, /slide 4: English body differs/);
+    assert.equal(existsSync(output), false,
+      'a stale unselected record must block the selected output before any directory is created');
+
+    const nonPaired = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'zu', output, '--slides', '2'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.notEqual(nonPaired.status, 0);
+    assert.match(nonPaired.stderr, /--slides requires --paired-draft/);
+    assert.equal(existsSync(output), false);
+
+    const repeatedSelection = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'zu', output,
+        '--paired-draft', json, '--slides', '2', '--slides', '5', '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.notEqual(repeatedSelection.status, 0);
+    assert.match(repeatedSelection.stderr, /--slides may be specified only once/);
     assert.equal(existsSync(output), false);
   } finally {
     rmSync(temp, { recursive: true, force: true });

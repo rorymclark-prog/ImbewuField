@@ -8,13 +8,16 @@ import test from 'node:test';
 
 import {
   COURSE_DECKS, animationUrls, deckAnimationBytes, deckFor, deckSlideCount, formatBytes,
-  hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl,
+  hasDeck, resolveDeckLang, silentDraftSlideImageFor, slideAudioUrl, slideImageFor, slideImageUrl,
 } from '@/lib/course-deck';
 import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
+import { ISIZULU_DECK_SOURCE_BINDINGS } from '@/lib/course-deck-source-bindings';
+import { createIsiZuluSilentDeckDraftRegistry, resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts';
+import { resolveIsiZuluSilentDeckDraft as resolveRegisteredSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
 import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
 const PUBLIC = new URL('../public/', import.meta.url);
@@ -502,10 +505,14 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
       .map((s) => ({ n: s.slide, r: slideImageFor('seeds-sovereignty', 'zu', s.slide) }))
       .filter((x) => x.r && !x.r.exact)
       .map((x) => x.n);
-    // Independently flagged wording now also falls back; a synthetic gap must add
-    // only its own slide to that set, without withdrawing any other accepted draft.
-    const held = deck.slides.filter(s => isiZuluDeckReviewHold('seeds-sovereignty', s.slide)).map(s => s.slide);
-    assert.deepEqual(inexact, [...held, 13].sort((a, b) => a - b), 'only held slides and the declared gap fall back');
+    // A checked silent correction may display its own new still while narration stays held;
+    // other held rows and the synthetic gap still use English until a correction is registered.
+    const heldWithoutSilentDraft = deck.slides
+      .filter(s => isiZuluDeckReviewHold('seeds-sovereignty', s.slide) &&
+        !resolveRegisteredSilentDeckDraft('seeds-sovereignty', s.slide))
+      .map(s => s.slide);
+    assert.deepEqual(inexact, [...heldWithoutSilentDraft, 13].sort((a, b) => a - b),
+      'only held rows without a checked still and the declared gap fall back');
   } finally {
     deck.missingSlides = saved;
   }
@@ -514,8 +521,12 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
   const stillInexact = deck.slides
     .filter(s => !slideImageFor('seeds-sovereignty', 'zu', s.slide)?.exact)
     .map(s => s.slide);
-  assert.deepEqual(stillInexact, deck.slides.filter(s => isiZuluDeckReviewHold('seeds-sovereignty', s.slide)).map(s => s.slide),
-    'without a synthetic gap, only independently flagged wording is withheld');
+  const heldWithoutSilentDraft = deck.slides
+    .filter(s => isiZuluDeckReviewHold('seeds-sovereignty', s.slide) &&
+      !resolveRegisteredSilentDeckDraft('seeds-sovereignty', s.slide))
+    .map(s => s.slide);
+  assert.deepEqual(stillInexact, heldWithoutSilentDraft,
+    'without a synthetic gap, only held rows lacking their own checked visual correction fall back');
 
   // The new regional files are source-paired review frames, so selection must not fall back to
   // a bare English picture or let an animation poster obscure their comparison panels.
@@ -532,6 +543,41 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
 
   // The narration is isiZulu on every slide, including the one whose picture is English.
   assert.equal(slideAudioUrl('seeds-sovereignty', 'zu', 13), '/course-audio/seeds-sovereignty/zu/slide-13.mp3');
+});
+
+test('a checked silent draft can supply a held isiZulu still while voice and animation stay unavailable', () => {
+  const binding = ISIZULU_DECK_SOURCE_BINDINGS.find((row) => isiZuluDeckReviewHold(row.moduleId, row.slide));
+  assert.ok(binding, 'fixture uses an actually audio-held isiZulu row');
+  const registry = createIsiZuluSilentDeckDraftRegistry([{
+    moduleId: binding.moduleId,
+    slide: binding.slide,
+    sourceHeading: binding.sourceHeading,
+    sourceEnglish: [...binding.source],
+    correctedTitle: 'Umbhalo ongakabuyekezwa',
+    correctedTarget: ['Umusho olungisiwe ongakabuyekezwa.'],
+    sourceHash: binding.sourceHash,
+    targetHash: '1'.repeat(64),
+    imageUrl: `/course-decks/${binding.moduleId}/zu-silent/slide-${String(binding.slide).padStart(2, '0')}.webp`,
+    imageSha256: '2'.repeat(64),
+    imageBytes: 12345,
+    width: 1440,
+    height: 5400,
+    reviewStatus: 'unreviewed',
+    audioBinding: 'none',
+  }]);
+  const draft = resolveIsiZuluSilentDeckDraft(registry, binding.moduleId, binding.slide);
+  assert.ok(draft);
+  assert.deepEqual(silentDraftSlideImageFor(binding.moduleId, 'zu', binding.slide,
+    (moduleId, slide) => resolveIsiZuluSilentDeckDraft(registry, moduleId, slide)), {
+    url: draft.imageUrl,
+    lang: 'zu',
+    exact: true,
+    aspectRatio: 1440 / 5400,
+  });
+  assert.equal(slideAudioUrl(binding.moduleId, 'zu', binding.slide), null,
+    'a replacement still does not make the superseded recording playable');
+  assert.equal(animationUrls(binding.moduleId, binding.slide, 'zu'), null,
+    'a poster or clip cannot hide the silent source-paired card');
 });
 
 test('unknown modules and slides produce no url rather than a broken one', () => {
@@ -1188,6 +1234,7 @@ test('a timed tour follows the voice after late loading, pause and seeking, then
 // A voice selection must not hide the language draft being compared; a known
 // instruction error must stop narration rather than masquerade as a missing file.
 test('isiZulu deck source remains visible with English voice and withheld recordings stay silent', async () => {
+  const slide11Draft = resolveRegisteredSilentDeckDraft('seeds-sovereignty', 11);
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
@@ -1216,13 +1263,17 @@ test('isiZulu deck source remains visible with English voice and withheld record
     for (let index = 0; index < 10; index++) {
       act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
     }
-    assert.match(picture().props.src, /seeds-sovereignty\/en\/slide-11.jpg$/);
+    assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.jpg');
     assert.equal(view.root.findAllByType('audio').length, 0, 'boil-versus-ferment recording cannot play');
     assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
-    assert.equal(view.root.findAllByProps({ 'aria-label': 'Unreviewed isiZulu draft' }).length, 0);
+    assert.equal(view.root.findAllByProps({ 'aria-label': 'Unreviewed corrected isiZulu slide draft' }).length,
+      slide11Draft ? 1 : 0);
     assert.equal(view.root.findAllByProps({ 'aria-label': 'Exact English source' }).length, 1);
-    assert.match(view.root.findAllByType('p').map(p => p.children.join('')).join(' '), /recording need revision/);
+    const notice = view.root.findAllByType('p').map(p => p.children.join('')).join(' ');
+    assert.match(notice, slide11Draft ? /previous isiZulu recording remains unavailable/ : /recording need revision/);
     act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
     assert.match(view.root.findByType('audio').props.src, /seeds-sovereignty\/en\/slide-11.mp3$/);
+    assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.jpg',
+      'explicit English audio does not replace the corrected isiZulu silent card');
   } finally { act(() => view.unmount()); }
 });

@@ -1,0 +1,2357 @@
+{
+  "title": "IsiZulu held-slide silent-reading correction candidates — final independently checked draft",
+  "date": "2026-10-05",
+  "base": {
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "head": "38eacf4d646416e1d98738ab8274990545338a69"
+  },
+  "provenance": {
+    "rootBaseHead": "38eacf4d646416e1d98738ab8274990545338a69",
+    "priorCandidatePath": "/tmp/imbewu-zu-held-slide-correction-candidates-20261005.json",
+    "priorCandidateSha256": "45d1285e921d66e0a59c484f926a03eb2eb124cc7a6e24736c2abfe5ba330c7d",
+    "independentCheckPath": "/tmp/imbewu-zu-held-silent-corrections-independent-20261005.json",
+    "independentCheckSha256": "ed59b047d4664f0cab71ede059e4437c98ec3dc974177d0469fab84859ca40ce",
+    "correctionBasis": "Root review repaired comparator/scope/time anchors, identified exact source-fragment corrections, and corrected the independent Livestock slide 11 report against the actual three-sentence source paragraph. Soil Health 13 is excluded as a false hold after the title/body comparison correction.",
+    "audioAndRecordedTranscript": "unchanged; proposed copy is silent reading only and is not transcript or narration text",
+    "reviewStatus": "unreviewed silent reading draft; old transcripts and audio remain unchanged",
+    "finalIndependentCheckPath": "/tmp/imbewu-zu-held-silent-corrections-final-check-20261005.json",
+    "finalIndependentCheckSha256": "e6876f95a91b69ce73b314e77b157598eb8f27e9a651d57c6e6a34c8ea23be6a",
+    "finalRepairs": "Seeds 12 comparison held exactly; Plant Guilds 28 question repaired to tree/existential framing; exact punctuation and mixed-field statuses aligned; Small Livestock 11 Department segment consistently marked recorded-unreviewed."
+  },
+  "scope": {
+    "rowCount": 24,
+    "modules": [
+      "intro-permaculture",
+      "reading-landscape",
+      "soil-health",
+      "water-harvesting",
+      "vegetables-staples",
+      "market-community",
+      "plant-guilds",
+      "seeds-sovereignty",
+      "small-livestock"
+    ],
+    "silentReadingOnly": true,
+    "oldTranscriptAndAudioUnchanged": true,
+    "status": "unreviewed machine drafts; independent/root review pending",
+    "liveHoldCount": 23,
+    "packetRowCount": 24,
+    "excludedFalseHoldRows": [
+      "soil-health:13"
+    ],
+    "note": "The packet retains one historical false-hold row for correction provenance; 23 rows correspond to current live holds."
+  },
+  "notes": [
+    "Each sourceEnglish and recordedTarget is copied from the live resolver and the committed immutable source-binding snapshot; both exact arrays are checked before packet generation.",
+    "Unchanged source-target paragraphs are copied byte-for-byte. Changes are limited to the indicated title or exact transcript fragments.",
+    "An English hold is exact source wording and is not presented as translation. A draft/mixed segment is a silent-display candidate and does not claim to match the existing recording.",
+    "No new species, measurements, durations, quantities, safety advice or farming conditions are added."
+  ],
+  "rows": [
+    {
+      "moduleId": "intro-permaculture",
+      "slide": 22,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Field Action",
+      "recordedZuluTitle": "Isenzo Sasensimini",
+      "proposedSilentZuluTitle": "Isenzo Sasensimini",
+      "sourceEnglish": [
+        "Walk out and check your sketch against the ground.",
+        "Stand at the kitchen door and count what is really in Zone 1 today.",
+        "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
+      ],
+      "recordedTarget": [
+        "Hamba uyohlola umdwebo wakho emhlabeni wangempela.",
+        "Yima emnyango wasekhishini ubale okukhona ngempela ku-Zone 1 namuhla.",
+        "Thola into eyodwa etshalwe kude uma uqhathanisa nokuthi uyisebenzisa\nkaningi kangakanani. Bhala ukuthi ingabekwa kuphi.",
+        "Bese ubuza umakhelwane osekhulile ukuthi umoya olimazayo uvela\nngakuphi. Qhathanisa impendulo yakhe nomcibisholo wakho."
+      ],
+      "proposedSilentTarget": [
+        "Hamba uyohlola umdwebo wakho emhlabeni wangempela.",
+        "Yima emnyango wasekhishini ubale okukhona ngempela ku-Zone 1 namuhla.",
+        "Thola into eyodwa etshalwe kude uma uqhathanisa nokuthi uyisebenzisa\nkaningi kangakanani. Bhala ukuthi kufanele ihanjiswe kuphi.",
+        "Bese ubuza umakhelwane osekhulile ukuthi umoya omubi kakhulu uvela\nngakuphi. Qhathanisa impendulo yakhe nomcibisholo wakho."
+      ],
+      "sourceHash": "a4590f5821c4e5578ce0cc946bda0e9b94cb8e1da17ec1f9609c862374b4dcce",
+      "recordedTargetHash": "b5e4868d0a0b70751aaa159dae1e9ef39452c461d4a1cf8b7001c382651a2ed8",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The narration omits the source superlative “worst” in “worst wind” and asks where an item can be placed instead of where it should move; retain both exact English clauses until checked equivalents preserve those meanings.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "where it should move to",
+          "previousRecordedFragment": "Bhala ukuthi ingabekwa kuphi.",
+          "proposedFragment": "Bhala ukuthi kufanele ihanjiswe kuphi.",
+          "segmentStatus": "draft",
+          "reason": "Restores the source obligation and destination rather than a place where the item can be put."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 3,
+          "sourceClause": "the worst wind",
+          "previousRecordedFragment": "umoya olimazayo",
+          "proposedFragment": "umoya omubi kakhulu",
+          "segmentStatus": "draft",
+          "reason": "Restores a superlative while retaining a local wind phrase."
+        }
+      ],
+      "exactEnglishHolds": [],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1
+      ],
+      "changedRecordedParagraphIndexes": [
+        2,
+        3
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "a4590f5821c4e5578ce0cc946bda0e9b94cb8e1da17ec1f9609c862374b4dcce",
+        "recordedTargetHash": "b5e4868d0a0b70751aaa159dae1e9ef39452c461d4a1cf8b7001c382651a2ed8",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 4,
+        "recordedTargetEntryCount": 4,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 0
+    },
+    {
+      "moduleId": "reading-landscape",
+      "slide": 5,
+      "fieldKind": "registered-title",
+      "sourceHeading": "Watch: Water Slows, Sinks, and Leaves",
+      "recordedZuluTitle": "Buka: Amanzi Ayancipha, Angene, Aphume",
+      "proposedSilentZuluTitle": "Buka: Amanzi ahamba kancane, Sinks, Aphume",
+      "sourceEnglish": [
+        "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land."
+      ],
+      "recordedTarget": [
+        "Isithombe sibonisa imvula yehla ngomthambeka. Bheka lapho amanzi egeleza khona ngesivinini esikhulu, esabalala khona, ecwila emhlabathini khona, eqoqana khona nalapho ephuma khona emhlabeni."
+      ],
+      "proposedSilentTarget": [
+        "Isithombe sibonisa imvula yehla ngomthambeka. Bheka lapho amanzi egeleza khona ngesivinini esikhulu, esabalala khona, ecwila emhlabathini khona, eqoqana khona nalapho ephuma khona emhlabeni."
+      ],
+      "sourceHash": "155153089b8b638506f91e13a0d0627f1e85609144df93a996a0160667a918ae",
+      "recordedTargetHash": "b7ae46a8370e3edb9e57723b7698446f531da20a5eb7584e91a624442a92a04e",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The slide heading changes slower water flow into water decreasing; retain “slows” until the flow-speed comparison is preserved.",
+      "changes": [
+        {
+          "field": "title",
+          "sourceClause": "Watch: Water Slows, Sinks, and Leaves",
+          "previousRecordedFragment": "Buka: Amanzi Ayancipha, Angene, Aphume",
+          "proposedFragment": "Buka: Amanzi ahamba kancane, Sinks, Aphume",
+          "segmentStatus": "mixed-draft",
+          "reason": "Uses the exact heading as authority; localizes Watch/slows/leaves and holds the exact source word Sinks because the earlier ZU verb meant enters."
+        }
+      ],
+      "exactEnglishHolds": [
+        "Sinks"
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0
+      ],
+      "changedRecordedParagraphIndexes": [],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "sourceClauseCorrection": "The exact source clause is the registered heading “Watch: Water Slows, Sinks, and Leaves”; the earlier metadata incorrectly prefixed the candidate’s “Buka” to the source clause.",
+      "sourceBoundSegments": {
+        "title": [
+          {
+            "sourceFragment": "Watch: Water Slows, ",
+            "proposedFragment": "Buka: Amanzi ahamba kancane, ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "Sinks",
+            "proposedFragment": "Sinks",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": ", and Leaves",
+            "proposedFragment": ", Aphume",
+            "status": "draft"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "title",
+          "paragraphIndex": null,
+          "exactSourceFragment": "Watch: Water Slows, Sinks, and Leaves",
+          "sourceFieldIndexesContainingFragment": [
+            0
+          ],
+          "verified": true,
+          "segmentStatus": "mixed-draft",
+          "proposedFragment": "Buka: Amanzi ahamba kancane, Sinks, Aphume"
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "155153089b8b638506f91e13a0d0627f1e85609144df93a996a0160667a918ae",
+        "recordedTargetHash": "b7ae46a8370e3edb9e57723b7698446f531da20a5eb7584e91a624442a92a04e",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 1,
+        "recordedTargetEntryCount": 1,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 1
+    },
+    {
+      "moduleId": "reading-landscape",
+      "slide": 15,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Choose Airflow and Warmth",
+      "recordedZuluTitle": "Khetha Ukuhamba Komoya Nokufudumala",
+      "proposedSilentZuluTitle": "Khetha Ukuhamba Komoya Nokufudumala",
+      "sourceEnglish": [
+        "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+        "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too."
+      ],
+      "recordedTarget": [
+        "Beka inkulisa yezithombo ezizwela isithwathwa ngaphandle kwezindawo ezibandayo ozibonile. Qhathanisa izindawo ezingakhethwa kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo ngaphambi kokukhetha indawo ehlala njalo. Hlola nelanga nomoya olimazayo. Ayikho indawo esentabeni eqinisekisa ukuthi ngeke ibe nesithwathwa.",
+        "Kumatamatisi ahlaselwe yi-late blight, ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Isimo sezulu esibandayo nesinomswakama esiqhubeka isikhathi eside sisengasivumela lesi sifo ukuba sisabalale. Ukususa umbhede uwuyise kwenye indawo kukodwa ngeke kusilawule i-late blight. Funa neseluleko sendawo ngempilo yezitshalo."
+      ],
+      "proposedSilentTarget": [
+        "Beka inkulisa yezithombo ezizwela isithwathwa ngaphandle kwezindawo ezibandayo ozibonile. Qhathanisa izindawo ezingakhethwa kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo ngaphambi kokukhetha indawo ehlala njalo. Hlola nelanga nomoya olimazayo. Ayikho indawo esentabeni eqinisekisa ukuthi ngeke ibe nesithwathwa.",
+        "Kumatamatisi ahlaselwe yi-late blight, ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Prolonged cool, damp weather can still favour the disease. Ukususa umbhede uwuyise kwenye indawo kukodwa ngeke kusilawule i-late blight. Funa neseluleko sendawo ngempilo yezitshalo."
+      ],
+      "sourceHash": "d34b318bbdf18fec09f6bef6d49666debcc188ff6b77572ee9e52e81e69719ea",
+      "recordedTargetHash": "94a9ae28a6c39416c671fd8fa5ea0c8a8e83a55ddc479e68b0d3f3d73cfcfc59",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The narration says cool, damp weather may favour disease, but the ZU wording says it may allow disease to spread; retain the conditional favouring clause.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 1,
+          "sourceClause": "Prolonged cool, damp weather can still favour the disease.",
+          "previousRecordedFragment": "Isimo sezulu esibandayo nesinomswakama esiqhubeka isikhathi eside sisengasivumela lesi sifo ukuba sisabalale.",
+          "proposedFragment": "Prolonged cool, damp weather can still favour the disease.",
+          "segmentStatus": "english-hold",
+          "reason": "Retains the conditional favouring relation without asserting spread."
+        }
+      ],
+      "exactEnglishHolds": [
+        "Prolonged cool, damp weather can still favour the disease."
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0
+      ],
+      "changedRecordedParagraphIndexes": [
+        1
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "d34b318bbdf18fec09f6bef6d49666debcc188ff6b77572ee9e52e81e69719ea",
+        "recordedTargetHash": "94a9ae28a6c39416c671fd8fa5ea0c8a8e83a55ddc479e68b0d3f3d73cfcfc59",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 2,
+        "recordedTargetEntryCount": 2,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 2
+    },
+    {
+      "moduleId": "reading-landscape",
+      "slide": 16,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Lesson 4: Start Your Site Map",
+      "recordedZuluTitle": "Isifundo 4: Qala Imephu Yendawo Yakho",
+      "proposedSilentZuluTitle": "Isifundo 4: Qala Imephu Yendawo Yakho",
+      "sourceEnglish": [
+        "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+        "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+        "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+      ],
+      "recordedTarget": [
+        "Ukuze wenze i-site map, udinga iphepha, i-tape measure, i-compass nesikhathi sokuhamba emhlabeni wakho.",
+        "Hamba emngceleni wenze umdwebo wokuqala. Maka ukuthi awukabi ngesikali kuze kube usuwahlolile amabanga. Maka inyakatho. Faka indlu, izihlahla, amanzi, imigwaqo nezicingo.",
+        "Bese udweba amaphethini owabonile. Imephu yakho iba uhlaka lomklamo wesiqeshana sakho sonke somhlaba."
+      ],
+      "proposedSilentTarget": [
+        "Ukuze wenze i-site map, udinga iphepha, i-tape measure, i-compass nesikhathi sokuhamba emhlabeni wakho.",
+        "Hamba emngceleni wenze umdwebo wokuqala. Maka ukuthi awukabi ngesikali kuze kube usuwahlolile amabanga. Maka inyakatho. Faka indlu, izihlahla, amanzi, imigwaqo nezicingo.",
+        "Bese udweba amaphethini owabonile. Imephu yakho iba uhlaka lomklamo for the whole smallholding."
+      ],
+      "sourceHash": "d9654911ad3bcc6ea700d3da0a2fdf8aa9dedb7620d4119223d779bc93cfe445",
+      "recordedTargetHash": "3ee78e0485599253a14165f40b37db17e7b10a7706e91b72c556a315648337a4",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target may narrow “your whole smallholding” to a piece or plot of land; retain “smallholding” until the property scope is clear.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "for the whole smallholding",
+          "previousRecordedFragment": "we-smallholding yakho yonke",
+          "proposedFragment": "for the whole smallholding",
+          "segmentStatus": "english-hold",
+          "reason": "Retains the whole-property scope in the English anchor while leaving the rest of the design-skeleton sentence localized."
+        }
+      ],
+      "exactEnglishHolds": [
+        "for the whole smallholding"
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1
+      ],
+      "changedRecordedParagraphIndexes": [
+        2
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "sourceBoundSegments": {
+        "2": [
+          {
+            "sourceFragment": "Then draw the patterns you have observed. Your map becomes the design skeleton ",
+            "proposedFragment": "Bese udweba amaphethini owabonile. Imephu yakho iba uhlaka lomklamo ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "for the whole smallholding.",
+            "proposedFragment": "for the whole smallholding.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "exactSourceFragment": "for the whole smallholding",
+          "sourceFieldIndexesContainingFragment": [
+            2
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "for the whole smallholding"
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "d9654911ad3bcc6ea700d3da0a2fdf8aa9dedb7620d4119223d779bc93cfe445",
+        "recordedTargetHash": "3ee78e0485599253a14165f40b37db17e7b10a7706e91b72c556a315648337a4",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 3,
+        "recordedTargetEntryCount": 3,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 3
+    },
+    {
+      "moduleId": "soil-health",
+      "slide": 1,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Soil Health & Composting",
+      "recordedZuluTitle": "Impilo Yomhlabathi Ne-Compost",
+      "proposedSilentZuluTitle": "Impilo Yomhlabathi Ne-Compost",
+      "sourceEnglish": [
+        "Soil is more than the ground under your feet.",
+        "It is a living place that feeds crops, holds water, and carries your harvest.",
+        "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms."
+      ],
+      "recordedTarget": [
+        "Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.",
+        "Uyindawo ephilayo esiza izitshalo zikhule, ebamba amanzi, futhi esekela isivuno sakho.",
+        "Kule modyuli, funda ukubheka nokufunda umhlabathi, ukwenza i-compost, ukuvikela umhlabathi ongenalutho, nokusebenzisa izitshalo zokumboza umhlabathi nama-worm farm."
+      ],
+      "proposedSilentTarget": [
+        "Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.",
+        "Uyindawo ephilayo esiza izitshalo zikhule, ebamba amanzi, futhi esekela isivuno sakho.",
+        "Kule modyuli, funda ukubheka nokufunda umhlabathi, ukwenza safe compost, ukuvikela umhlabathi ongenalutho, nokusebenzisa izitshalo zokumboza umhlabathi nama-worm farm."
+      ],
+      "sourceHash": "740b5850d834cd6136058d3c13227f285b9f36542a08e636e5aa8416e04cc926",
+      "recordedTargetHash": "c1b4421d3f1cb7de72b47df1fe53fd87f2d4b7fffe9dedd35f7c0cd1bb35703e",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The source specifies making safe compost, while the target says only making compost; retain the safety qualifier so the overview does not imply every compost process is safe.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "safe compost",
+          "previousRecordedFragment": "ukwenza i-compost",
+          "proposedFragment": "ukwenza safe compost",
+          "segmentStatus": "mixed-draft",
+          "reason": "Restores the safety qualifier without implying every compost process is safe."
+        }
+      ],
+      "exactEnglishHolds": [],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1
+      ],
+      "changedRecordedParagraphIndexes": [
+        2
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "740b5850d834cd6136058d3c13227f285b9f36542a08e636e5aa8416e04cc926",
+        "recordedTargetHash": "c1b4421d3f1cb7de72b47df1fe53fd87f2d4b7fffe9dedd35f7c0cd1bb35703e",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 3,
+        "recordedTargetEntryCount": 3,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 4
+    },
+    {
+      "moduleId": "soil-health",
+      "slide": 13,
+      "fieldKind": "registered-title",
+      "sourceHeading": "Keep Seed Pods and Contaminants Out",
+      "recordedZuluTitle": "Gcina Ama-Pod Embewu Nezinto Ezingcolile Ngaphandle",
+      "proposedSilentZuluTitle": "Gcina Ama-Pod Embewu Nezinto Ezingcolile Ngaphandle",
+      "sourceEnglish": [
+        "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+        "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+        "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged."
+      ],
+      "recordedTarget": [
+        "Gcina ama-pod embewu ye-wattle ngaphandle kwenqwaba ye-compost. Inqwaba evamile ingase ingayenzi yonke imbewu ingasakwazi ukuhluma.",
+        "Sebenzisa izinto ezihlanzekile kuphela, ezingakaze zelashwe. Amagxolo abola kancane; igama lawo lodwa aliqinisekisi ukuthi awangcolisiwe.",
+        "Hlola inqwaba, uyiphendule lapho idinga umoya owengeziwe noma ukuxutshwa. Yigcine inomswakama, ingagcwali amanzi."
+      ],
+      "proposedSilentTarget": [
+        "Gcina ama-pod embewu ye-wattle ngaphandle kwenqwaba ye-compost. Inqwaba evamile ingase ingayenzi yonke imbewu ingasakwazi ukuhluma.",
+        "Sebenzisa izinto ezihlanzekile kuphela, ezingakaze zelashwe. Amagxolo abola kancane; igama lawo lodwa aliqinisekisi ukuthi awangcolisiwe.",
+        "Hlola inqwaba, uyiphendule lapho idinga umoya owengeziwe noma ukuxutshwa. Yigcine inomswakama, ingagcwali amanzi."
+      ],
+      "sourceHash": "0bbcaaa053b19a9360490ad4a0918c7401e4715a9e55632992f962b25ff97e37",
+      "recordedTargetHash": "7e0e70e37163f7f3d54de357f0233ead235447f9922cc4e263c60a22bf881cef",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": null,
+      "changes": [],
+      "exactEnglishHolds": [],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2
+      ],
+      "changedRecordedParagraphIndexes": [],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "titleReview": "No correction: the registered title accurately translates the English heading “Keep Seed Pods and Contaminants Out.” The separate body’s mention of wattle does not change the title source scope.",
+      "titleChanged": false,
+      "bodyUnchanged": true,
+      "currentHold": false,
+      "independentDisposition": "exclude_false_hold",
+      "reviewerCorrection": "No correction is proposed. The source title is generic and the body correctly includes wattle; title/body specificity is not a source mismatch.",
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "0bbcaaa053b19a9360490ad4a0918c7401e4715a9e55632992f962b25ff97e37",
+        "recordedTargetHash": "7e0e70e37163f7f3d54de357f0233ead235447f9922cc4e263c60a22bf881cef",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 3,
+        "recordedTargetEntryCount": 3,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "exclude-historical-false-hold",
+      "finalCheckPacketRow": 5
+    },
+    {
+      "moduleId": "water-harvesting",
+      "slide": 10,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Store Rain for the Dry Season",
+      "recordedZuluTitle": "Gcina Amanzi Emvula Esikhathi Esomile",
+      "proposedSilentZuluTitle": "Gcina Amanzi Emvula Esikhathi Esomile",
+      "sourceEnglish": [
+        "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+        "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+        "Before changing a watercourse or building storage works, check the required authorisation with the water authority."
+      ],
+      "recordedTarget": [
+        "Idamu noma ichibi lingagcina amanzi agelezayo, kodwa inani lamanzi atholakalayo lincike emvuleni yasendaweni, endaweni eqoqa amanzi, emanzini alahleka endleleni nasekutheni usebenzisa amanzi angakanani.",
+        "Izinkathi zemvula ziyahlukahluka eNingizimu Afrika. Sebenzisa amarekhodi endawo, uhlele nezikhathi ezomile; akuqinisekisiwe ukuthi idamu liyohlala ligcwele.",
+        "Ngaphambi kokushintsha umfula noma ukwakha indawo yokugcina amanzi, hlola nesiphathimandla samanzi ukuthi iyiphi imvume edingekayo."
+      ],
+      "proposedSilentTarget": [
+        "Idamu noma ichibi lingagcina amanzi agelezayo, kodwa inani lamanzi atholakalayo lincike emvuleni yasendaweni, endaweni eqoqa amanzi, emanzini alahleka endleleni nasekutheni usebenzisa amanzi angakanani.",
+        "Izinkathi zemvula ziyahlukahluka eNingizimu Afrika. Sebenzisa amarekhodi endawo, uhlele nezikhathi ezomile; akuqinisekisiwe ukuthi idamu liyohlala ligcwele.",
+        "Ngaphambi kokushintsha watercourse noma ukwakha indawo yokugcina amanzi, hlola nesiphathimandla samanzi ukuthi iyiphi imvume edingekayo."
+      ],
+      "sourceHash": "7862e934cb1cc4862424647ed44538096a3a860867a6f904f0cca61d66754e10",
+      "recordedTargetHash": "ea477113e2d3fbb728645ddbb62677d7988665f3f12c1b7e826c539e6d3be38e",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The source says changing a watercourse, while the target says river, which may exclude smaller streams or channels; retain “watercourse” and the authorization condition.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "watercourse",
+          "previousRecordedFragment": "umfula",
+          "proposedFragment": "watercourse",
+          "segmentStatus": "english-hold",
+          "reason": "Avoids narrowing a watercourse to a river; keeps the authorization condition."
+        }
+      ],
+      "exactEnglishHolds": [
+        "watercourse"
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1
+      ],
+      "changedRecordedParagraphIndexes": [
+        2
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "7862e934cb1cc4862424647ed44538096a3a860867a6f904f0cca61d66754e10",
+        "recordedTargetHash": "ea477113e2d3fbb728645ddbb62677d7988665f3f12c1b7e826c539e6d3be38e",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 3,
+        "recordedTargetEntryCount": 3,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 6
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "slide": 16,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Treat the Cause Before the Insect",
+      "recordedZuluTitle": "Bheka Imbangela Ngaphambi Kwesinambuzane",
+      "proposedSilentZuluTitle": "Bheka Imbangela Ngaphambi Kwesinambuzane",
+      "sourceEnglish": [
+        "Work through four steps, in order.",
+        "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+        "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+        "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+        "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+        "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "Be honest with yourself about which step you usually skip."
+      ],
+      "recordedTarget": [
+        "Landela izinyathelo ezine ngokulandelana.",
+        "Okokuqala. Bheka. Bheka iphethini yokulimala, ngaphansi kweqabunga, isiqu nezitshalo eziseduze.",
+        "Okwesibili. Hlola ukucindezeleka kwesitshalo. Hlola umswakama womhlabathi, izimpande, isikhala phakathi kwezitshalo, izakhamzimba nokuphuma kwamanzi.",
+        "Okwesithathu. Vikela okusizayo. Izinambuzane ezizuzisayo zenza umsebenzi obungase uwenze wena.",
+        "Okwesine. Yilapho kuphela osuthatha khona isinyathelo; qala ngesenzo esilula kunazo zonke esifanele. Ukususa izinambuzane ngesandla, ukubeka izithiyo noma ukushintsha indlela yokunakekela izitshalo kungasiza. Hlola ukuthi isenzo siyayifanele yini inkinga, bese ubheka umphumela.",
+        "Uma kudingeka ukwelapha ngomkhiqizo, sebenzisa umkhiqizo obhaliswe ukuthi usetshenziswe kuleso sitshalo nakuleso sinambuzane, bese ulandela yonke imiyalelo eselebulini lawo. Lokhu kuhlanganisa nemikhiqizo ye-neem. Hlola imiyalelo yokuzivikela kanye nesikhathi sokulinda ngaphambi kokuvuna. Ungazenzeli izingxube noma usebenzise imithamo enamandla kunaleyo eselebulini.",
+        "Zitshele iqiniso ngokuthi yisiphi isinyathelo ovame ukusishiya."
+      ],
+      "proposedSilentTarget": [
+        "Landela izinyathelo ezine ngokulandelana.",
+        "Okokuqala. Bheka. Bheka iphethini yokulimala, ngaphansi kweqabunga, isiqu nezitshalo eziseduze.",
+        "Okwesibili. Hlola ukucindezeleka kwesitshalo. Hlola umswakama womhlabathi, izimpande, isikhala phakathi kwezitshalo, izakhamzimba nokuphuma kwamanzi.",
+        "Okwesithathu. Vikela okusizayo. Izinambuzane ezizuzisayo zenza umsebenzi obungase uwenze wena.",
+        "Okwesine. Yilapho kuphela osuthatha khona isinyathelo; start with the lightest thing that works. Ukususa izinambuzane ngesandla, ukubeka izithiyo noma ukushintsha indlela yokunakekela izitshalo kungasiza. Hlola ukuthi isenzo siyayifanele yini inkinga, bese ubheka umphumela.",
+        "Uma kudingeka ukwelapha ngomkhiqizo, sebenzisa umkhiqizo obhaliswe ukuthi usetshenziswe kuleso sitshalo nakuleso sinambuzane, bese ulandela yonke imiyalelo eselebulini lawo. Lokhu kuhlanganisa nemikhiqizo ye-neem. Hlola imiyalelo yokuzivikela kanye nesikhathi sokulinda ngaphambi kokuvuna. Ungazenzeli izingxube noma usebenzise imithamo enamandla kunaleyo eselebulini.",
+        "Zitshele iqiniso ngokuthi yisiphi isinyathelo ovame ukusishiya."
+      ],
+      "sourceHash": "ee59fde47d13321ca77613468c3c17e77d373cfc693ef186f62480d93825684c",
+      "recordedTargetHash": "d0498946fce3d69a339971d0976a20ab2f034619bba94585a01a325a565bf210",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The source requires starting with the lightest intervention that works; the target preserves suitability but loses the least-intensive effective-action threshold.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 4,
+          "sourceClause": "start with the lightest thing that works.",
+          "previousRecordedFragment": "qala ngesenzo esidinga okuncane kodwa sisasebenza.",
+          "proposedFragment": "start with the lightest thing that works.",
+          "segmentStatus": "english-hold",
+          "reason": "Preserves the exact least-intensive effective option and its superlative; surrounding order, suitability check and monitoring remain unchanged."
+        }
+      ],
+      "exactEnglishHolds": [
+        "start with the lightest thing that works."
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "changedRecordedParagraphIndexes": [
+        4
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "sourceBoundSegments": {
+        "4": [
+          {
+            "sourceFragment": "Four. Only then, act — and ",
+            "proposedFragment": "Okwesine. Yilapho kuphela osuthatha khona isinyathelo; ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "start with the lightest thing that works.",
+            "proposedFragment": "start with the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": " Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+            "proposedFragment": " Ukususa izinambuzane ngesandla, ukubeka izithiyo noma ukushintsha indlela yokunakekela izitshalo kungasiza. Hlola ukuthi isenzo siyayifanele yini inkinga, bese ubheka umphumela.",
+            "status": "draft"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "body",
+          "paragraphIndex": 4,
+          "exactSourceFragment": "start with the lightest thing that works",
+          "sourceFieldIndexesContainingFragment": [
+            4
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "start with the lightest thing that works."
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "ee59fde47d13321ca77613468c3c17e77d373cfc693ef186f62480d93825684c",
+        "recordedTargetHash": "d0498946fce3d69a339971d0976a20ab2f034619bba94585a01a325a565bf210",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 7,
+        "recordedTargetEntryCount": 7,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept-with-metadata-corrections",
+      "finalCheckPacketRow": 7,
+      "exactEnglishHoldProof": {
+        "fragment": "start with the lightest thing that works.",
+        "sourceEntryIndex": 4,
+        "exactSubstringCountAcrossSource": 1,
+        "byteExact": true
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "slide": 18,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Field Action",
+      "recordedZuluTitle": "Isenzo SaseNsimini",
+      "proposedSilentZuluTitle": "Isenzo SaseNsimini",
+      "sourceEnglish": [
+        "This week, put one bed into production.",
+        "One. Mark the bed and the paths.",
+        "Two. Plant, with your spacing and your sowing rhythm.",
+        "Three. Return after ten days, with a photo.",
+        "Then observe. Adjust. And write it down.",
+        "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+        "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+        "Use your record with reliable local advice when making the next decision."
+      ],
+      "recordedTarget": [
+        "Kuleli sonto, sebenzisa umbhede owodwa.",
+        "Okokuqala. Maka umbhede nezindlela.",
+        "Okwesibili. Tshala, usebenzise isikhala nesigqi sakho sokuhlwanyela.",
+        "Okwesithathu. Buya ngemva kwezinsuku eziyishumi nesithombe.",
+        "Bese ubheka, ulungise, ubhale phansi.",
+        "Bhala usuku lokuhlwanyela, imvula, okumilile, ukwanda kwezinambuzane, nokuvunile.",
+        "Inkathi ngayinye, ingadi yakho ingancika kancane ekuqageleni futhi incike kakhulu kulokho okubonile kwenzeka emhlabeni wakho. Sebenzisa amarekhodi akho kanye neseluleko esithembekile sendawo lapho uthatha isinqumo esilandelayo."
+      ],
+      "proposedSilentTarget": [
+        "Kuleli sonto, put one bed into production.",
+        "Okokuqala. Maka umbhede nezindlela.",
+        "Okwesibili. Tshala, usebenzise isikhala nesigqi sakho sokuhlwanyela.",
+        "Okwesithathu. Buya ngemva kwezinsuku eziyishumi nesithombe.",
+        "Bese ubheka, ulungise, ubhale phansi.",
+        "Bhala usuku lokuhlwanyela, imvula, okumilile, Pest pressure, nokuvunile.",
+        "Inkathi ngayinye, ingadi yakho ingancika kancane ekuqageleni futhi incike kakhulu kulokho okubonile kwenzeka emhlabeni wakho.",
+        "Sebenzisa amarekhodi akho kanye neseluleko esithembekile sendawo lapho uthatha isinqumo esilandelayo."
+      ],
+      "sourceHash": "9c107e2877c52cc428576a5abff1cb9dc5a6c9939f99a23d7b99a33b983b758b",
+      "recordedTargetHash": "8571b7a56b8692a40b42d9fb8a2a0964657e988afa54faeeac286654aac87cd9",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The source uses eight entries while the recorded ZU target combines its final two. The first entry also omits the production action, and the pest-record label should not assert an increase.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 0,
+          "sourceClause": "This week, put one bed into production.",
+          "previousRecordedFragment": "Kuleli sonto, sebenzisa umbhede owodwa.",
+          "proposedFragment": "Kuleli sonto, put one bed into production.",
+          "segmentStatus": "mixed",
+          "reason": "Keeps the existing “This week” and one-bed wording while retaining the source’s production action as an exact English technical anchor."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 6,
+          "sourceClause": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+          "previousRecordedFragment": "Inkathi ngayinye, ingadi yakho ingancika kancane ekuqageleni futhi incike kakhulu kulokho okubonile kwenzeka emhlabeni wakho.",
+          "proposedFragment": "Inkathi ngayinye, ingadi yakho ingancika kancane ekuqageleni futhi incike kakhulu kulokho okubonile kwenzeka emhlabeni wakho.",
+          "segmentStatus": "draft",
+          "reason": "Restores the source-aligned season-by-season paragraph boundary while preserving its existing wording."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 7,
+          "sourceClause": "Use your record with reliable local advice when making the next decision.",
+          "previousRecordedFragment": "Sebenzisa amarekhodi akho kanye neseluleko esithembekile sendawo lapho uthatha isinqumo esilandelayo.",
+          "proposedFragment": "Sebenzisa amarekhodi akho kanye neseluleko esithembekile sendawo lapho uthatha isinqumo esilandelayo.",
+          "segmentStatus": "draft",
+          "reason": "Separates the existing next-decision advice into its matching source paragraph without changing its wording."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 5,
+          "sourceClause": "Pest pressure",
+          "previousRecordedFragment": "ukwanda kwezinambuzane",
+          "proposedFragment": "Pest pressure",
+          "segmentStatus": "mixed",
+          "reason": "Keeps the source’s neutral record label without claiming pest numbers increased; surrounding list wording remains an unreviewed draft."
+        }
+      ],
+      "exactEnglishHolds": [
+        "Pest pressure"
+      ],
+      "preservedRecordedParagraphIndexes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "changedRecordedParagraphIndexes": [
+        0,
+        5,
+        6,
+        7
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "9c107e2877c52cc428576a5abff1cb9dc5a6c9939f99a23d7b99a33b983b758b",
+        "recordedTargetHash": "8571b7a56b8692a40b42d9fb8a2a0964657e988afa54faeeac286654aac87cd9",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 8,
+        "recordedTargetEntryCount": 7,
+        "paragraphCountNote": "Exact live source has eight entries and the recorded target has seven; the final two target sentences are combined. The silent candidate restores an 8:8 boundary without changing their wording.",
+        "candidateTargetEntryCount": 8,
+        "candidateTargetMatchesSourceEntryCount": true
+      },
+      "finalIndependentReview": "source-bound repair requested; candidate preserves the production action and restores source paragraph alignment, pending root and independent review",
+      "finalCheckPacketRow": 8,
+      "sourceBoundSegments": {
+        "0": [
+          {
+            "sourceFragment": "This week, ",
+            "proposedFragment": "Kuleli sonto, ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "put one bed into production.",
+            "proposedFragment": "put one bed into production.",
+            "status": "english-hold"
+          }
+        ],
+        "5": [
+          {
+            "sourceFragment": "Record the sowing date. The rain. What germinated. ",
+            "proposedFragment": "Bhala usuku lokuhlwanyela, imvula, okumilile, ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "Pest pressure",
+            "proposedFragment": "Pest pressure",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": ". What you harvested.",
+            "proposedFragment": ", nokuvunile.",
+            "status": "draft"
+          }
+        ]
+      },
+      "independentFinalDisposition": "Preserve This week/one bed, keep “put one bed into production” as an exact English hold, and split the combined final target entry at the source boundary; do not treat 8:7 as aligned.",
+      "pestPressureSourceCompositionProof": {
+        "sourceEntryIndex": 5,
+        "sourceFragment": "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+        "candidateTarget": "Bhala usuku lokuhlwanyela, imvula, okumilile, Pest pressure, nokuvunile.",
+        "segments": [
+          {
+            "sourceFragment": "Record the sowing date. The rain. What germinated. ",
+            "proposedFragment": "Bhala usuku lokuhlwanyela, imvula, okumilile, ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "Pest pressure",
+            "proposedFragment": "Pest pressure",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": ". What you harvested.",
+            "proposedFragment": ", nokuvunile.",
+            "status": "draft"
+          }
+        ],
+        "sourceCompositionExact": true,
+        "targetCompositionExact": true,
+        "neutralRecordLabelPreserved": true
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "slide": 14,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Watch: How Neighbours Strengthen a Harvest",
+      "recordedZuluTitle": "Buka: Ukubambisana Komakhelwane",
+      "proposedSilentZuluTitle": "Buka: Ukubambisana Komakhelwane",
+      "sourceEnglish": [
+        "One farm can produce food.",
+        "A group can share seed, tools, skills, and transport.",
+        "Separate growers become a stronger local food network, with each household contributing what it can."
+      ],
+      "recordedTarget": [
+        "Ipulazi elilodwa lingakhiqiza ukudla.",
+        "Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha.",
+        "Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla."
+      ],
+      "proposedSilentTarget": [
+        "Ipulazi elilodwa lingakhiqiza ukudla.",
+        "Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha.",
+        "Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla, futhi ikhaya ngalinye linikela ngalokho elingakwenza."
+      ],
+      "sourceHash": "3d88d7a0786112ccf413e3d8aea3e05ac97f9c76265cea4e0a4184aeb767405e",
+      "recordedTargetHash": "927127ffa09359eba0fad1bbcda4caeca1e73acd0ef608da84ee19d19a894a93",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The narration omits the source condition that each household contributes what it can; keep the per-household capacity qualifier visible.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "with each household contributing what it can",
+          "previousRecordedFragment": "Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla.",
+          "proposedFragment": "Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla, futhi ikhaya ngalinye linikela ngalokho elingakwenza.",
+          "segmentStatus": "draft",
+          "reason": "Restores the per-household contribution and ability qualifier."
+        }
+      ],
+      "exactEnglishHolds": [],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1
+      ],
+      "changedRecordedParagraphIndexes": [
+        2
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "3d88d7a0786112ccf413e3d8aea3e05ac97f9c76265cea4e0a4184aeb767405e",
+        "recordedTargetHash": "927127ffa09359eba0fad1bbcda4caeca1e73acd0ef608da84ee19d19a894a93",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 3,
+        "recordedTargetEntryCount": 3,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 9
+    },
+    {
+      "moduleId": "plant-guilds",
+      "slide": 22,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Leave Room Around the Tree",
+      "recordedZuluTitle": "Shiya Indawo Ezungeze Umuthi",
+      "proposedSilentZuluTitle": "Shiya Indawo Ezungeze Umuthi",
+      "sourceEnglish": [
+        "Keep an open establishment basin and access to the fruit tree. Place temporary support plants where their size and water use can be managed.  Put leafy cuttings where mulch is needed. Neighbouring fruit trees can share support strips between them. Can you reach both plants as they grow?"
+      ],
+      "recordedTarget": [
+        "Shiya indawo ezungeze isiqu ingenazitshalo, kanye nendlela yokunakekela umuthi. Beka izitshalo ezisekelayo lapho ukukhula nokusebenzisa kwazo amanzi kungalawuleka khona.  Beka amaqabunga asikiwe lapho kudingeka khona i-mulch. Izihlahla zezithelo zingasebenzisa izitshalo ezisekelayo eziphakathi kwazo. Uzokwazi ukufinyelela kuzo zombili izitshalo njengoba zikhula?"
+      ],
+      "proposedSilentTarget": [
+        "Gcina i-open establishment basin ivulekile, kanye nendlela yokunakekela umuthi. Beka izitshalo ezisekelayo lapho ukukhula nokusebenzisa kwazo amanzi kungalawuleka khona.  Beka amaqabunga asikiwe lapho kudingeka khona i-mulch. Izihlahla zezithelo zingasebenzisa izitshalo ezisekelayo eziphakathi kwazo. Uzokwazi ukufinyelela kuzo zombili izitshalo njengoba zikhula?"
+      ],
+      "sourceHash": "33d6a7c8fed217d2b0a61b457d7673ae9cb637e8bae9196c4112af7f46e0f179",
+      "recordedTargetHash": "ff22056fc380ee570c7cc767d9978388d967299513b1e22c1e967efa64f51090",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target leaves the area around the trunk unplanted but does not clearly preserve an open establishment basin as a water-management feature.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 0,
+          "sourceClause": "Keep an open establishment basin",
+          "previousRecordedFragment": "Shiya indawo ezungeze isiqu ingenazitshalo",
+          "proposedFragment": "Gcina i-open establishment basin ivulekile",
+          "segmentStatus": "mixed-draft",
+          "reason": "Keeps the basin as a water-management feature and leaves the access instruction unchanged."
+        }
+      ],
+      "exactEnglishHolds": [],
+      "preservedRecordedParagraphIndexes": [],
+      "changedRecordedParagraphIndexes": [
+        0
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "33d6a7c8fed217d2b0a61b457d7673ae9cb637e8bae9196c4112af7f46e0f179",
+        "recordedTargetHash": "ff22056fc380ee570c7cc767d9978388d967299513b1e22c1e967efa64f51090",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 1,
+        "recordedTargetEntryCount": 1,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 10
+    },
+    {
+      "moduleId": "plant-guilds",
+      "slide": 28,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Chop-and-Drop for Light and Mulch",
+      "recordedZuluTitle": "Thena Ukuze Kukhanye",
+      "proposedSilentZuluTitle": "Thena Ukuze Kukhanye",
+      "sourceEnglish": [
+        "Prune a support tree and return suitable leafy cuttings to the soil. The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.  Match cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas. Which plant needs a cut—and how much?"
+      ],
+      "recordedTarget": [
+        "Buyisela amagatsha anamaqabunga afanele emhlabathini njenge-mulch. Kule vidiyo kusikwa igatsha; umuthi osekelayo uyasala umile. Shiya amaqabunga anempilo anele ukuze ululame.  Thena ngokohlobo lwesitshalo. Gwema ukuthena kakhulu i-pigeon pea njalo, ikakhulukazi uma ufuna ukuvuna izinhlamvu. Yisiphi isitshalo esidinga ukuthenwa?"
+      ],
+      "proposedSilentTarget": [
+        "Thena umuthi osekelayo bese ubuyisela amagatsha anamaqabunga afanele emhlabathini njenge-mulch. Kule vidiyo kusikwa igatsha; umuthi osekelayo uyasala umile. Shiya amaqabunga anempilo anele ukuze isitshalo silulame.  Thena ngokohlobo lwesitshalo. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas. Yisiphi isitshalo esidinga ukuthenwa, futhi sidinga ukuthenwa okungakanani?"
+      ],
+      "sourceHash": "9b2f9313aaabb9a862b479efa0bef30af91f8b47487519a66a9aefd21ada6925",
+      "recordedTargetHash": "6dea76a96732732a8ae74c78cadbfee5badc1ed07f42a7f5b36059edfbbeff8d",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The current recording may change peas into seeds/grains in the cutting condition; exact English is retained for that sentence.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 0,
+          "sourceClause": "Leave enough healthy foliage for the plant to recover.",
+          "previousRecordedFragment": "ukuze ululame.",
+          "proposedFragment": "Shiya amaqabunga anempilo anele ukuze isitshalo silulame.",
+          "segmentStatus": "draft",
+          "reason": "Uses the independently checked plant subject and recovery concord."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 0,
+          "sourceClause": "Avoid frequent severe cuts on pigeon pea, especially when growing it for peas.",
+          "previousRecordedFragment": "Gwema ukuthena kakhulu i-pigeon pea njalo, ikakhulukazi uma ufuna ukuvuna izinhlamvu.",
+          "proposedFragment": "Avoid frequent severe cuts on pigeon pea, especially when growing it for peas.",
+          "segmentStatus": "english-hold",
+          "reason": "Keeps the full crop-use warning in English because the recorded target may say seeds/grains rather than peas."
+        }
+      ],
+      "exactEnglishHolds": [
+        "Avoid frequent severe cuts on pigeon pea, especially when growing it for peas."
+      ],
+      "preservedRecordedParagraphIndexes": [],
+      "changedRecordedParagraphIndexes": [
+        0
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "9b2f9313aaabb9a862b479efa0bef30af91f8b47487519a66a9aefd21ada6925",
+        "recordedTargetHash": "6dea76a96732732a8ae74c78cadbfee5badc1ed07f42a7f5b36059edfbbeff8d",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 1,
+        "recordedTargetEntryCount": 1,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "sourceBoundSegments": {
+        "0": [
+          {
+            "sourceFragment": "Prune a support tree and return suitable leafy cuttings to the soil. The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.  Match cutting to the species. ",
+            "proposedFragment": "Thena umuthi osekelayo bese ubuyisela amagatsha anamaqabunga afanele emhlabathini njenge-mulch. Kule vidiyo kusikwa igatsha; umuthi osekelayo uyasala umile. Shiya amaqabunga anempilo anele ukuze isitshalo silulame.  Thena ngokohlobo lwesitshalo. ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "Avoid frequent severe cuts on pigeon pea, especially when growing it for peas.",
+            "proposedFragment": "Avoid frequent severe cuts on pigeon pea, especially when growing it for peas.",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": " Which plant needs a cut—and how much?",
+            "proposedFragment": " Yisiphi isitshalo esidinga ukuthenwa, futhi sidinga ukuthenwa okungakanani?",
+            "status": "draft"
+          }
+        ]
+      },
+      "independentFinalDisposition": "Keep the plant recovery target, exact prune-support-tree action, amount question, and exact source pigeon-pea condition.",
+      "finalIndependentReview": "repair-required",
+      "finalCheckPacketRow": 11,
+      "plantRecoveryCompositionProof": {
+        "sourceFragment": "Leave enough healthy foliage for the plant to recover.",
+        "candidateTarget": "Shiya amaqabunga anempilo anele ukuze isitshalo silulame.",
+        "sourceCompositionExact": true,
+        "candidateCompositionExact": true,
+        "meaningCheck": "Independent checker confirmed the generic plant concord and recovery subject."
+      },
+      "independentFinalReview": "accepted plant recovery localization; retain pigeon-pea cutting condition as exact English to avoid the peas-versus-seeds distinction"
+    },
+    {
+      "moduleId": "plant-guilds",
+      "slide": 40,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Food Cover Also Competes",
+      "recordedZuluTitle": "Ubhatata Nawo Uyancintisana",
+      "proposedSilentZuluTitle": "Ubhatata Nawo Uyancintisana",
+      "sourceEnglish": [
+        "Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.  Where resources are tight, compare living cover with an ordinary mulch basin. Is this cover helping the tree establish?"
+      ],
+      "recordedTarget": [
+        "Gcina iziqu ezinabayo zobhatata kude nomuthi omncane wezithelo, ushiye nendlela yokuwunakekela. Izimpande zawo nazo zisebenzisa amanzi nezakhamzimba.  Lapho lezi zidingo zinganele, qhathanisa izitshalo eziphilayo ezimboza umhlabathi nesitsha sokunisela esimbozwe nge-mulch evamile. Lokhu okumbozayo kuyawusiza umuthi ukuthi umile kahle?"
+      ],
+      "proposedSilentTarget": [
+        "Gcina iziqu ezinabayo zobhatata kude nomuthi omncane wezithelo, ushiye nendlela yokuwunakekela. Izimpande zawo nazo zisebenzisa amanzi nezakhamzimba.  Lapho lezi zidingo zinganele, qhathanisa izitshalo eziphilayo ezimboza umhlabathi with an ordinary mulch basin. Lokhu okumbozayo kuyawusiza umuthi ukuthi umile kahle?"
+      ],
+      "sourceHash": "6962753386e4424417c03febef51ae7452ef69f35554985cd371681959af6a7d",
+      "recordedTargetHash": "a2b0da2ab10cf0331de50edaef04b66e37838c20430974547cd824b6bd859ac9",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target may describe an ordinary mulch basin as a watering container; retain the basin term until the around-plant practice is clear.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 0,
+          "sourceClause": "with an ordinary mulch basin",
+          "previousRecordedFragment": "ne ordinary mulch basin",
+          "proposedFragment": "with an ordinary mulch basin",
+          "segmentStatus": "mixed-draft",
+          "reason": "Keeps the exact around-plant comparison term instead of describing a watering container; the surrounding comparison question remains localized."
+        }
+      ],
+      "exactEnglishHolds": [
+        "with an ordinary mulch basin"
+      ],
+      "preservedRecordedParagraphIndexes": [],
+      "changedRecordedParagraphIndexes": [
+        0
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "sourceBoundSegments": {
+        "0": [
+          {
+            "sourceFragment": "Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.  Where resources are tight, compare living cover ",
+            "proposedFragment": "Gcina iziqu ezinabayo zobhatata kude nomuthi omncane wezithelo, ushiye nendlela yokuwunakekela. Izimpande zawo nazo zisebenzisa amanzi nezakhamzimba.  Lapho lezi zidingo zinganele, qhathanisa izitshalo eziphilayo ezimboza umhlabathi ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "with an ordinary mulch basin.",
+            "proposedFragment": "with an ordinary mulch basin.",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": " Is this cover helping the tree establish?",
+            "proposedFragment": " Lokhu okumbozayo kuyawusiza umuthi ukuthi umile kahle?",
+            "status": "draft"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "body",
+          "paragraphIndex": 0,
+          "exactSourceFragment": "with an ordinary mulch basin",
+          "sourceFieldIndexesContainingFragment": [
+            0
+          ],
+          "verified": true,
+          "segmentStatus": "mixed-draft",
+          "proposedFragment": "with an ordinary mulch basin"
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "6962753386e4424417c03febef51ae7452ef69f35554985cd371681959af6a7d",
+        "recordedTargetHash": "a2b0da2ab10cf0331de50edaef04b66e37838c20430974547cd824b6bd859ac9",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 1,
+        "recordedTargetEntryCount": 1,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 12
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 6,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Seed Sovereignty",
+      "recordedZuluTitle": "Ubukhosi Bembewu",
+      "proposedSilentZuluTitle": "Ubukhosi Bembewu",
+      "sourceEnglish": [
+        "Seed sovereignty does not live in a slogan.",
+        "It lives in a dry packet, a written record and knowledge of how the seed behaves.",
+        "Your household begins it. Neighbours extend it. The seasons make the local seed collection more useful.",
+        "Which seed does your household already save best?",
+        "Draw a small map of the homes near you. Beside each home, write one crop that household could bring to a seed exchange.",
+        "Sovereignty needs three things: usable seed, written information and exchange."
+      ],
+      "recordedTarget": [
+        "Ubukhosi bembewu abuhlali esiqubulweni.",
+        "Buhlala ephaketheni elomile, emlandweni obhaliwe nasolwazini lokuthi imbewu iziphatha kanjani.",
+        "Ikhaya lakho liyakuqala. Omakhelwane bayakunweba. Izizini zenza uhlu lwembewu yendawo lube usizo kakhulu.",
+        "Iyiphi imbewu ikhaya lakho eliyilondoloza kahle kakhulu?",
+        "Dweba imephu encane yemizi eseduze nawe. Eduze komuzi ngamunye, bhala isitshalo lowo muzi ongasiletha ekushintshaneni ngembewu.",
+        "Ubukhosi budinga izinto ezintathu: imbewu esebenzisekayo, ulwazi olubhaliwe nokushintshisana."
+      ],
+      "proposedSilentTarget": [
+        "Ubukhosi bembewu abuhlali esiqubulweni.",
+        "Buhlala ephaketheni elomile, emlandweni obhaliwe nasolwazini lokuthi imbewu iziphatha kanjani.",
+        "Ikhaya lakho liyakuqala. Omakhelwane bayakunweba. Izizini zenza the local seed collection lube usizo kakhulu.",
+        "Iyiphi imbewu ikhaya lakho eliyilondoloza kahle kakhulu?",
+        "Dweba imephu encane yemizi eseduze nawe. Eduze komuzi ngamunye, bhala isitshalo lowo muzi ongasiletha ekushintshaneni ngembewu.",
+        "Ubukhosi budinga izinto ezintathu: imbewu esebenzisekayo, ulwazi olubhaliwe nokushintshisana."
+      ],
+      "sourceHash": "f719285275d71c775d4c39b39d268b0b1a132f7fee09e86ab4388197f4651dde",
+      "recordedTargetHash": "b223dc390c6cab585252dc83dca613313f594adb2712f781eec93f3cf3fde511",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target uses a seed list where the source means the local seed collection or saved seed resource carried into the next season.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "the local seed collection",
+          "previousRecordedFragment": "iqoqo lembewu yendawo",
+          "proposedFragment": "the local seed collection",
+          "segmentStatus": "english-hold",
+          "reason": "Keeps the source noun collection rather than changing it to a list; household, neighbour and seasonal usefulness clauses stay as recorded."
+        }
+      ],
+      "exactEnglishHolds": [
+        "the local seed collection"
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ],
+      "changedRecordedParagraphIndexes": [
+        2
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "sourceBoundSegments": {
+        "2": [
+          {
+            "sourceFragment": "Your household begins it. Neighbours extend it. The seasons make ",
+            "proposedFragment": "Ikhaya lakho liyakuqala. Omakhelwane bayakunweba. Izizini zenza ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "the local seed collection",
+            "proposedFragment": "the local seed collection",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": " more useful.",
+            "proposedFragment": " lube usizo kakhulu.",
+            "status": "draft"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "exactSourceFragment": "the local seed collection",
+          "sourceFieldIndexesContainingFragment": [
+            2
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "the local seed collection"
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "f719285275d71c775d4c39b39d268b0b1a132f7fee09e86ab4388197f4651dde",
+        "recordedTargetHash": "b223dc390c6cab585252dc83dca613313f594adb2712f781eec93f3cf3fde511",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 6,
+        "recordedTargetEntryCount": 6,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 13
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 11,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Dry and Wet Processing",
+      "recordedZuluTitle": "Indlela Eyomile Nendlela Emanzi",
+      "proposedSilentZuluTitle": "Indlela Eyomile Nendlela Emanzi",
+      "sourceEnglish": [
+        "There are two broad ways to process seed.",
+        "Dry seed matures in a pod, head or cob. It is collected when fully mature.",
+        "Seed inside a fleshy fruit must first be separated from the flesh.",
+        "Brief fermentation is especially useful for tomato seed. It is not a rule for every wet-seeded crop.",
+        "Think about the crops in your area. Which fit the dry method? Which fit the wet method?",
+        "If you have seed or fruit nearby, sort the examples into these two types. Explain the difference by describing what the seed is like at harvest."
+      ],
+      "recordedTarget": [
+        "Kunezindlela ezimbili ezibanzi zokulungisa imbewu.",
+        "Imbewu eyomile ivuthwa emgodleni, ekhanda noma esikhwebini. Iqoqwa lapho isivuthwe ngokuphelele.",
+        "Imbewu engaphakathi kwesithelo esinenyama kufanele iqale ihlukaniswe nenyama.",
+        "Ukubilisa kancane kusiza kakhulu embewini katamatisi. Akuwona umthetho wazo zonke izitshalo ezinembewu emanzi.",
+        "Cabanga ngezitshalo zasendaweni yakho. Yiziphi ezihambisana nendlela eyomile? Yiziphi ezihambisana nendlela emanzi?",
+        "Uma unembewu noma izithelo eziseduze, zihlukanise zibe yilezi zinhlobo ezimbili. Chaza umehluko ngokuthi imbewu injani ngesikhathi sokuvuna."
+      ],
+      "proposedSilentTarget": [
+        "Kunezindlela ezimbili ezibanzi zokulungisa imbewu.",
+        "Imbewu eyomile ivuthwa emgodleni, ekhanda noma esikhwebini. Iqoqwa lapho isivuthwe ngokuphelele.",
+        "Imbewu engaphakathi kwesithelo esinenyama kufanele iqale ihlukaniswe nenyama.",
+        "Ukuvutshelisa isikhashana kusiza kakhulu embewini katamatisi. Akuwona umthetho wazo zonke izitshalo ezinembewu emanzi.",
+        "Cabanga ngezitshalo zasendaweni yakho. Yiziphi ezihambisana nendlela eyomile? Yiziphi ezihambisana nendlela emanzi?",
+        "Uma unembewu noma izithelo eziseduze, zihlukanise zibe yilezi zinhlobo ezimbili. Chaza umehluko ngokuthi imbewu injani ngesikhathi sokuvuna."
+      ],
+      "sourceHash": "98ae47ac8c5dc58466f00ff9b1faf0bed9ef59baff4914190ebb240971fc5f83",
+      "recordedTargetHash": "614640021e4c43af3ecb77a8b7a75662a3dda7a28867f336dc536d2a6ef58f93",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target says boiling where the source says brief fermentation; this changes the seed-processing method.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 3,
+          "sourceClause": "Brief fermentation is especially useful for tomato seed.",
+          "previousRecordedFragment": "Ukubilisa kancane kusiza kakhulu embewini katamatisi.",
+          "proposedFragment": "Ukuvutshelisa isikhashana kusiza kakhulu embewini katamatisi.",
+          "segmentStatus": "draft",
+          "reason": "Uses the independently proposed minimal fermentation wording; the “not a rule for every wet-seeded crop” sentence remains byte-identical."
+        }
+      ],
+      "exactEnglishHolds": [],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "changedRecordedParagraphIndexes": [
+        3
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "98ae47ac8c5dc58466f00ff9b1faf0bed9ef59baff4914190ebb240971fc5f83",
+        "recordedTargetHash": "614640021e4c43af3ecb77a8b7a75662a3dda7a28867f336dc536d2a6ef58f93",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 6,
+        "recordedTargetEntryCount": 6,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 14
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 12,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Process Dry Seed",
+      "recordedZuluTitle": "Lungisa Imbewu Eyomile",
+      "proposedSilentZuluTitle": "Lungisa Imbewu Eyomile",
+      "sourceEnglish": [
+        "Leave dry-seeded crops on the plant until the seed is fully mature.",
+        "Collect it before weather, birds or bursting pods take the harvest.",
+        "Remove chaff and damaged seed.",
+        "Then spread the clean seed in a single layer in moving air and shade.",
+        "What tells you that dry seed is mature enough to collect?",
+        "If you have a dry pod or seed head, handle it. Listen for the seed. Compare green, flexible plant material with brown, brittle material.",
+        "Wait for maturity. For final drying, use shade and airflow."
+      ],
+      "recordedTarget": [
+        "Shiya izitshalo ezinembewu eyomile kuze imbewu ivuthwe ngokuphelele.",
+        "Qoqa ngaphambi kokuba isimo sezulu, izinyoni noma ukuqhuma kwemigodla kuthathe isivuno.",
+        "Susa amakhoba nembewu eyonakele.",
+        "Bese wendlala imbewu ehlanzekile ibe ungqimba olulodwa emthunzini lapho kuhamba umoya.",
+        "Yini ekutshela ukuthi imbewu eyomile isivuthwe ngokwanele ukuthi iqoqwe?",
+        "Uma unomgodla noma ikhanda lembewu elomile, libambe. Lalela umsindo wembewu. Qhathanisa inyama eluhlaza egobekayo neyinsundu ephukayo.",
+        "Linda ukuvuthwa. Ekomiseni kokugcina, sebenzisa umthunzi nokuhamba komoya."
+      ],
+      "proposedSilentTarget": [
+        "Shiya izitshalo ezinembewu eyomile kuze imbewu ivuthwe ngokuphelele.",
+        "Qoqa ngaphambi kokuba isimo sezulu, izinyoni noma ukuqhuma kwemigodla kuthathe isivuno.",
+        "Susa amakhoba nembewu eyonakele.",
+        "Bese wendlala imbewu ehlanzekile ibe ungqimba olulodwa emthunzini lapho kuhamba umoya.",
+        "Yini ekutshela ukuthi imbewu eyomile isivuthwe ngokwanele ukuthi iqoqwe?",
+        "Uma unomgodla noma ikhanda lembewu elomile, libambe. Lalela umsindo wembewu. Compare green, flexible plant material with brown, brittle material.",
+        "Linda ukuvuthwa. Ekomiseni kokugcina, sebenzisa umthunzi nokuhamba komoya."
+      ],
+      "sourceHash": "b572d42c74895d6168cd31499146fc479d1505878d5c13b1d7e669c066009978",
+      "recordedTargetHash": "e0cabb252cb5a8d5749292e349285863f5d3f0fbdfffe49dad07c0015affa4ec",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target renders green flexible plant material as green flesh; retain the comparison clause until the material is identified correctly.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 5,
+          "sourceClause": "Compare green, flexible plant material with brown, brittle material.",
+          "previousRecordedFragment": "Qhathanisa izinto zezitshalo eziluhlaza neziguquguqukayo neyinsundu ephukayo.",
+          "proposedFragment": "Compare green, flexible plant material with brown, brittle material.",
+          "segmentStatus": "english-hold",
+          "reason": "Keeps the complete parallel material comparison exact while preserving the preceding localized handling/listening instructions."
+        }
+      ],
+      "exactEnglishHolds": [
+        "Compare green, flexible plant material with brown, brittle material."
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "changedRecordedParagraphIndexes": [
+        5
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "b572d42c74895d6168cd31499146fc479d1505878d5c13b1d7e669c066009978",
+        "recordedTargetHash": "e0cabb252cb5a8d5749292e349285863f5d3f0fbdfffe49dad07c0015affa4ec",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 7,
+        "recordedTargetEntryCount": 7,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "sourceBoundSegments": {
+        "5": [
+          {
+            "sourceFragment": "If you have a dry pod or seed head, handle it. Listen for the seed. ",
+            "proposedFragment": "Uma unomgodla noma ikhanda lembewu elomile, libambe. Lalela umsindo wembewu. ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "Compare green, flexible plant material with brown, brittle material.",
+            "proposedFragment": "Compare green, flexible plant material with brown, brittle material.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "independentFinalDisposition": "repair-required applied as an exact English comparison hold",
+      "finalIndependentReview": "repair-required",
+      "finalCheckPacketRow": 15
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 14,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Wet Processing for Tomato Seed",
+      "recordedZuluTitle": "Indlela Emanzi Katamatisi",
+      "proposedSilentZuluTitle": "Indlela Emanzi Katamatisi",
+      "sourceEnglish": [
+        "Scoop tomato seed and flesh into a clean jar with a little water.",
+        "Leave it open or loosely covered. Keep it out of direct sun.",
+        "After two to three days, a light film and a sour smell may appear.",
+        "Rinse promptly. Remove debris. Then spread the clean seed thinly to dry.",
+        "Do not seal an actively fermenting jar.",
+        "Think about the signs that tell you the process has begun. Also think about signs that would make you discard the batch.",
+        "Find a jar, a sieve and a drying plate. When you are ready, start a small batch. Remember the order: scoop, ferment briefly, rinse and dry completely."
+      ],
+      "recordedTarget": [
+        "Kha imbewu katamatisi nenyama uyifake embizeni ehlanzekile namanzi amancane.",
+        "Yishiye ivulekile noma imbozwe ngokuxega. Ingabi selangeni eliqondile.",
+        "Emva kwezinsuku ezimbili kuya kwezintathu kungavela ulwelwesi oluncane nephunga elimuncu.",
+        "Hlambulula ngokushesha. Susa udoti. Bese wendlala imbewu ehlanzekile ibe mncane ukuze yome.",
+        "Ungavali imbiza esabilayo.",
+        "Cabanga ngezimpawu ezikutshela ukuthi inqubo isiqalile. Cabanga nangezimpawu ezingenza ulahle iqoqo.",
+        "Thola imbiza, isisefo nepuleti lokomisa. Uma usukulungele, qala iqoqo elincane. Khumbula ukulandelana: kha, bilisa kancane, hlambulula, bese womisa ngokuphelele."
+      ],
+      "proposedSilentTarget": [
+        "Kha imbewu katamatisi nenyama uyifake embizeni ehlanzekile namanzi amancane.",
+        "Yishiye ivulekile noma imbozwe ngokuxega. Ingabi selangeni eliqondile.",
+        "Emva kwezinsuku ezimbili kuya kwezintathu kungavela ulwelwesi oluncane nephunga elimuncu.",
+        "Hlambulula ngokushesha. Susa udoti. Bese wendlala imbewu ehlanzekile ibe mncane ukuze yome.",
+        "Do not seal an actively fermenting jar.",
+        "Cabanga ngezimpawu ezikutshela ukuthi inqubo isiqalile. Cabanga nangezimpawu ezingenza ulahle iqoqo.",
+        "Thola imbiza, isisefo nepuleti lokomisa. Uma usukulungele, qala iqoqo elincane. Khumbula ukulandelana: kha, vutshelisa isikhashana, hlambulula, bese womisa ngokuphelele."
+      ],
+      "sourceHash": "1ab161426c4a5eaed6ed015c13040711de7b99ad99b4b3fabdb763415b5b3afb",
+      "recordedTargetHash": "b9c1b106f4b3d559fe51ae445b96cfadba4e24bf70e7fa73f4750691d7bb3680",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The jar warning says boiling where the source says active fermentation; retain the exact warning and its open-cover, timing, rinse, and discard conditions.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 4,
+          "sourceClause": "Do not seal an actively fermenting jar.",
+          "previousRecordedFragment": "Ungavali imbiza esabilayo.",
+          "proposedFragment": "Do not seal an actively fermenting jar.",
+          "segmentStatus": "english-hold",
+          "reason": "Prevents the boiling/fermentation reversal in the jar warning."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 6,
+          "sourceClause": "ferment briefly",
+          "previousRecordedFragment": "bilisa kancane",
+          "proposedFragment": "vutshelisa isikhashana",
+          "segmentStatus": "draft",
+          "reason": "Restores the fermentation step in the ordered recap."
+        }
+      ],
+      "exactEnglishHolds": [
+        "Do not seal an actively fermenting jar."
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ],
+      "changedRecordedParagraphIndexes": [
+        4,
+        6
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "1ab161426c4a5eaed6ed015c13040711de7b99ad99b4b3fabdb763415b5b3afb",
+        "recordedTargetHash": "b9c1b106f4b3d559fe51ae445b96cfadba4e24bf70e7fa73f4750691d7bb3680",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 7,
+        "recordedTargetEntryCount": 7,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 16
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 15,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Watch: Wet Processing for Tomato Seed",
+      "recordedZuluTitle": "Buka: Indlela Emanzi Katamatisi",
+      "proposedSilentZuluTitle": "Buka: Indlela Emanzi Katamatisi",
+      "sourceEnglish": [
+        "Watch the whole process in order.",
+        "A ripe tomato is opened. The seed and gel are scooped into a clean jar. Only a little water is added.",
+        "The jar is left open or loosely covered for two to three days.",
+        "When a light film and sour smell appear, the contents are poured through a sieve. The seed is rinsed until it is clean.",
+        "Finally, the seed is spread in a single layer in the shade until completely dry.",
+        "Repeat the steps to yourself: scoop, ferment briefly, rinse, dry completely."
+      ],
+      "recordedTarget": [
+        "Buka yonke inqubo ngokulandelana.",
+        "Utamatisi ovuthiwe uyavulwa. Imbewu nejeli kukhelwa embizeni ehlanzekile. Kufakwa amanzi amancane kuphela.",
+        "Imbiza ishiywa ivulekile noma imbozwe ngokuxega izinsuku ezimbili kuya kwezintathu.",
+        "Lapho kuvela ulwelwesi oluncane nephunga elimuncu, okuqukethwe kuthelwa ngesisefo. Imbewu iyahlanzwa kuze kusale ehlanzekile.",
+        "Ekugcineni, imbewu yendlalwa ibe ungqimba olulodwa emthunzini ukuze yome ngokuphelele.",
+        "Phinda izinyathelo kuwe: kha, bilisa kancane, hlambulula, yomisa ngokuphelele."
+      ],
+      "proposedSilentTarget": [
+        "Buka yonke inqubo ngokulandelana.",
+        "Utamatisi ovuthiwe uyavulwa. Imbewu nejeli kukhelwa embizeni ehlanzekile. Kufakwa amanzi amancane kuphela.",
+        "Imbiza ishiywa ivulekile noma imbozwe ngokuxega izinsuku ezimbili kuya kwezintathu.",
+        "Lapho kuvela ulwelwesi oluncane nephunga elimuncu, okuqukethwe kuthelwa ngesisefo. Imbewu iyahlanzwa kuze kusale ehlanzekile.",
+        "Ekugcineni, imbewu yendlalwa ibe ungqimba olulodwa emthunzini ukuze yome ngokuphelele.",
+        "Phinda izinyathelo kuwe: kha, vutshelisa isikhashana, hlambulula, yomisa ngokuphelele."
+      ],
+      "sourceHash": "d757560c01f0b09446ae5dce280c611bbd3b84dd706c01a0d3fea538d675303f",
+      "recordedTargetHash": "006a65624469eb322341f8d837a4b959a72e6d2341480ad49c82bed6c6a49921",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The recap repeats the boiling-versus-brief-fermentation error; retain the fermentation step until checked wording preserves the process.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 5,
+          "sourceClause": "ferment briefly",
+          "previousRecordedFragment": "bilisa kancane",
+          "proposedFragment": "vutshelisa isikhashana",
+          "segmentStatus": "draft",
+          "reason": "Corrects the recap process verb and preserves step order."
+        }
+      ],
+      "exactEnglishHolds": [],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "changedRecordedParagraphIndexes": [
+        5
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "d757560c01f0b09446ae5dce280c611bbd3b84dd706c01a0d3fea538d675303f",
+        "recordedTargetHash": "006a65624469eb322341f8d837a4b959a72e6d2341480ad49c82bed6c6a49921",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 6,
+        "recordedTargetEntryCount": 6,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 17
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 20,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Ten-Seed Germination Test",
+      "recordedZuluTitle": "Hlola Ukuhluma Kwembewu Eyishumi",
+      "proposedSilentZuluTitle": "Hlola Ukuhluma Kwembewu Eyishumi",
+      "sourceEnglish": [
+        "A seed packet can look perfect even when the seed is losing life.",
+        "Ten seeds make the calculation easy.",
+        "Keep them warm and moist. Do not submerge them in water.",
+        "Then count the normal seedlings.",
+        "Six out of ten is about sixty percent. That tells you to sow more heavily, use the seed only as a trial, or replace it.",
+        "If eight seeds out of ten germinate, what percentage is that?",
+        "The answer is eighty percent.",
+        "Start a ten-seed test with an old packet. Write down the date and the day when you will count."
+      ],
+      "recordedTarget": [
+        "Iphakethe lembewu lingabukeka liphelele, kodwa imbewu ibe ilahlekelwa ukuphila.",
+        "Imbewu eyishumi yenza ukubala kube lula.",
+        "Yigcine ifudumele futhi imanzi. Ungayicwilisi emanzini.",
+        "Bese ubala amahlumela ajwayelekile.",
+        "Okuyisithupha kokuyishumi cishe kungamaphesenti angamashumi ayisithupha. Lokho kukutshela ukuthi utshale kakhulu, usebenzise imbewu njengokuhlola kuphela, noma uyishintshe.",
+        "Uma imbewu eyisishiyagalombili kokuyishumi ihluma, singamaphesenti amangaki?",
+        "Impendulo ingamaphesenti angamashumi ayisishiyagalombili.",
+        "Qala ukuhlolwa kwembewu eyishumi ngephakethe elidala. Bhala usuku nangesikhathi ozobala ngaso."
+      ],
+      "proposedSilentTarget": [
+        "Iphakethe lembewu lingabukeka liphelele, kodwa imbewu ibe ilahlekelwa ukuphila.",
+        "Imbewu eyishumi yenza ukubala kube lula.",
+        "Yigcine ifudumele futhi imanzi. Ungayicwilisi emanzini.",
+        "Bese ubala amahlumela ajwayelekile.",
+        "Okuyisithupha kokuyishumi cishe kungamaphesenti angamashumi ayisithupha. Lokho kukutshela ukuthi sow more heavily, usebenzise imbewu njengokuhlola kuphela, noma uyishintshe.",
+        "Uma imbewu eyisishiyagalombili kokuyishumi ihluma, singamaphesenti amangaki?",
+        "Impendulo ingamaphesenti angamashumi ayisishiyagalombili.",
+        "Qala ukuhlolwa kwembewu eyishumi ngephakethe elidala. Bhala the date and the day when you will count."
+      ],
+      "sourceHash": "be9f39f4c5a8ce21f99b65308949ce103d52e6d4eefeb34cb4d0462b8dc6dd2c",
+      "recordedTargetHash": "2449a1248a0480a73cd7db8358e90501a11cfd9940ec58dcae5c989d91b1d172",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The source clauses “sow more heavily” and “day when you will count” have uncertain action and timing readings; retain these exact clauses with the 10-seed and percentage figures.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 4,
+          "sourceClause": "sow more heavily",
+          "previousRecordedFragment": "utshale kakhulu",
+          "proposedFragment": "sow more heavily",
+          "segmentStatus": "english-hold",
+          "reason": "Retains the sowing-density recommendation rather than general planting intensity."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 7,
+          "sourceClause": "Write down the date and the day when you will count.",
+          "previousRecordedFragment": "Bhala usuku nangesikhathi ozobala ngaso.",
+          "proposedFragment": "Bhala the date and the day when you will count.",
+          "segmentStatus": "mixed-draft",
+          "reason": "The localized “Bhala” instruction is followed by an exact English hold for both distinct time references, including punctuation."
+        }
+      ],
+      "exactEnglishHolds": [
+        "sow more heavily",
+        "the date and the day when you will count."
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "changedRecordedParagraphIndexes": [
+        4,
+        7
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "sourceBoundSegments": {
+        "7": [
+          {
+            "sourceFragment": "Start a ten-seed test with an old packet. Write down ",
+            "proposedFragment": "Qala ukuhlolwa kwembewu eyishumi ngephakethe elidala. Bhala ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "the date and the day when you will count.",
+            "proposedFragment": "the date and the day when you will count.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "body",
+          "paragraphIndex": 4,
+          "exactSourceFragment": "sow more heavily",
+          "sourceFieldIndexesContainingFragment": [
+            4
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "sow more heavily"
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 7,
+          "exactSourceFragment": "the date and the day when you will count",
+          "sourceFieldIndexesContainingFragment": [
+            7
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "Bhala the date and the day when you will count."
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "be9f39f4c5a8ce21f99b65308949ce103d52e6d4eefeb34cb4d0462b8dc6dd2c",
+        "recordedTargetHash": "2449a1248a0480a73cd7db8358e90501a11cfd9940ec58dcae5c989d91b1d172",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 8,
+        "recordedTargetEntryCount": 8,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept-with-metadata-corrections",
+      "finalCheckPacketRow": 18
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 24,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Field Action",
+      "recordedZuluTitle": "Isenzo Sasensimini",
+      "proposedSilentZuluTitle": "Isenzo Sasensimini",
+      "sourceEnglish": [
+        "Select.",
+        "Process.",
+        "Protect.",
+        "Verify.",
+        "Those four actions carry a seed collection from this field into the next season.",
+        "Begin with one crop and do it well.",
+        "Which crop will you begin with?",
+        "Say it aloud. Then choose one action you will take next.",
+        "The next season is already inside the seed you choose today."
+      ],
+      "recordedTarget": [
+        "Khetha.",
+        "Lungisa.",
+        "Vikela.",
+        "Qinisekisa.",
+        "Lezo zenzo ezine zithwala uhlu lwembewu kusukela kule nsimu ziye kwisizini elandelayo.",
+        "Qala ngesitshalo esisodwa futhi ukwenze kahle.",
+        "Yisiphi isitshalo ozoqala ngaso?",
+        "Sisho ngokuzwakalayo. Bese ukhetha isenzo esisodwa ozosenza ngokulandelayo.",
+        "Isizini elandelayo isivele ingaphakathi kwembewu oyikhetha namuhla."
+      ],
+      "proposedSilentTarget": [
+        "Khetha.",
+        "Lungisa.",
+        "Vikela.",
+        "Qinisekisa.",
+        "Lezo zenzo ezine zithwala a seed collection kusukela kule nsimu ziye kwisizini elandelayo.",
+        "Qala ngesitshalo esisodwa futhi ukwenze kahle.",
+        "Yisiphi isitshalo ozoqala ngaso?",
+        "Sisho ngokuzwakalayo. Bese ukhetha isenzo esisodwa ozosenza ngokulandelayo.",
+        "Isizini elandelayo isivele ingaphakathi kwembewu oyikhetha namuhla."
+      ],
+      "sourceHash": "847fbfdd47b41e461021fbb6490f4ff362d3c570ef81bcf6ba5d39b2abe46594",
+      "recordedTargetHash": "d73e599ecbe870ccccce2ec7c4942ed6809b96f24baea822e5b8b3b7a966939a",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target uses a seed list where the source means the seed collection or resource carried into the next season.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 4,
+          "sourceClause": "a seed collection",
+          "previousRecordedFragment": "iqoqo lembewu",
+          "proposedFragment": "a seed collection",
+          "segmentStatus": "english-hold",
+          "reason": "Keeps the source resource noun collection, while the field-to-next-season direction and four actions stay unchanged."
+        }
+      ],
+      "exactEnglishHolds": [
+        "a seed collection"
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "changedRecordedParagraphIndexes": [
+        4
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "sourceBoundSegments": {
+        "4": [
+          {
+            "sourceFragment": "Those four actions carry ",
+            "proposedFragment": "Lezo zenzo ezine zithwala ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "a seed collection",
+            "proposedFragment": "a seed collection",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": " from this field into the next season.",
+            "proposedFragment": " kusukela kule nsimu ziye kwisizini elandelayo.",
+            "status": "draft"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "body",
+          "paragraphIndex": 4,
+          "exactSourceFragment": "a seed collection",
+          "sourceFieldIndexesContainingFragment": [
+            4
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "a seed collection"
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "847fbfdd47b41e461021fbb6490f4ff362d3c570ef81bcf6ba5d39b2abe46594",
+        "recordedTargetHash": "d73e599ecbe870ccccce2ec7c4942ed6809b96f24baea822e5b8b3b7a966939a",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 9,
+        "recordedTargetEntryCount": 9,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 19
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 2,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Why This Matters",
+      "recordedZuluTitle": "Kungani Lokhu Kubalulekile",
+      "proposedSilentZuluTitle": "Kungani Lokhu Kubalulekile",
+      "sourceEnglish": [
+        "Small livestock can do work beyond producing meat, eggs, or honey.",
+        "Chickens eat some insects and weed seeds. Their manure can become compost.",
+        "Ducks scratch less than chickens, but can still damage plants.",
+        "Bees and other pollinators help many crops. Each animal still needs suitable food, water, shelter and care."
+      ],
+      "recordedTarget": [
+        "Imfuyo encane ingenza okunye ngaphandle kokukhiqiza inyama, amaqanda noma uju.",
+        "Izinkukhu zidla ezinye izinambuzane nembewu yokhula. Umquba wazo ungenziwa i-compost.",
+        "Amadada awaklwebhi njengezinkukhu, kodwa nawo angalimaza izitshalo.",
+        "Izinyosi nezinye izinambuzane ezithutha impova zisiza izitshalo eziningi. Isilwane ngasinye sisadinga ukudla okufanele, amanzi, indawo yokukhosela nokunakekelwa."
+      ],
+      "proposedSilentTarget": [
+        "Imfuyo encane ingenza okunye ngaphandle kokukhiqiza inyama, amaqanda noma uju.",
+        "Izinkukhu zidla ezinye izinambuzane nembewu yokhula. Umquba wazo ungenziwa i-compost.",
+        "Amadada aklwebha kancane kunezinkukhu, kodwa nawo angalimaza izitshalo.",
+        "Izinyosi nezinye izinambuzane ezithutha impova zisiza izitshalo eziningi. Isilwane ngasinye sisadinga ukudla okufanele, amanzi, indawo yokukhosela nokunakekelwa."
+      ],
+      "sourceHash": "5ed5beb5748edec81c4df35db948d52734b7814c91a597d3c0fa2ec4bcb7299e",
+      "recordedTargetHash": "d2801b0d9bf4e2ec3501aed3a6b6f651d818501675adabe059ead23bc4725654",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target says ducks do not scratch like chickens rather than scratching less, losing the comparison; it also needs to retain that ducks can still damage plants.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "Ducks scratch less than chickens, but can still damage plants.",
+          "previousRecordedFragment": "Amadada awaklwebhi njengezinkukhu, kodwa nawo angalimaza izitshalo.",
+          "proposedFragment": "Amadada aklwebha kancane kunezinkukhu, kodwa nawo angalimaza izitshalo.",
+          "segmentStatus": "draft",
+          "reason": "Uses the independently checked comparative and keeps the plant-damage qualification."
+        }
+      ],
+      "exactEnglishHolds": [],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        3
+      ],
+      "changedRecordedParagraphIndexes": [
+        2
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "currentHold": true,
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "5ed5beb5748edec81c4df35db948d52734b7814c91a597d3c0fa2ec4bcb7299e",
+        "recordedTargetHash": "d2801b0d9bf4e2ec3501aed3a6b6f651d818501675adabe059ead23bc4725654",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 4,
+        "recordedTargetEntryCount": 4,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 20
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 3,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "Learning Outcomes",
+      "recordedZuluTitle": "Imiphumela Yokufunda",
+      "proposedSilentZuluTitle": "Imiphumela Yokufunda",
+      "sourceEnglish": [
+        "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
+        "You will know when chickens help a bed, and when their scratching can cause damage.",
+        "You will understand pollination, hive placement, and how livestock move nutrients around a farm."
+      ],
+      "recordedTarget": [
+        "Ekupheleni kwalesi sifundo, uzokwazi ukuthi izinkukhu, amadada, izinyosi, ne-guinea fowl zingena kanjani ohlelweni olusebenzayo.",
+        "Uzokwazi ukuthi izinkukhu zisiza nini umbhede, nokuthi ukuklwebha kwazo kungadala nini umonakalo.",
+        "Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokubaluleka kokuvala imijikelezo yezakhamzimba."
+      ],
+      "proposedSilentTarget": [
+        "Ekupheleni kwalesi sifundo, uzokwazi ukuthi izinkukhu, amadada, izinyosi, ne-guinea fowl zingena kanjani ohlelweni olusebenzayo.",
+        "Uzokwazi ukuthi izinkukhu zisiza nini umbhede, nokuthi ukuklwebha kwazo kungadala nini umonakalo.",
+        "Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, how livestock move nutrients around a farm."
+      ],
+      "sourceHash": "f63633666255c2362036e5eb7a10b30a73cf453e127b44dbe5af5cd9df993e91",
+      "recordedTargetHash": "4b214a6ae6d67dd1b3bb414ef75780651f12c0144ba593fd353cd96bf2138a62",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The source describes how livestock move nutrients around a farm; the target replaces that concrete process with the broader idea of closing nutrient cycles.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "how livestock move nutrients around a farm.",
+          "previousRecordedFragment": "nokuthi imfuyo ihambisa kanjani izakhamzimba epulazini.",
+          "proposedFragment": "how livestock move nutrients around a farm.",
+          "segmentStatus": "english-hold",
+          "reason": "Keeps the difficult movement process exact while retaining the localized learning-outcome frame."
+        }
+      ],
+      "exactEnglishHolds": [
+        "how livestock move nutrients around a farm."
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1
+      ],
+      "changedRecordedParagraphIndexes": [
+        2
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "sourceBoundSegments": {
+        "2": [
+          {
+            "sourceFragment": "You will understand pollination, hive placement, and ",
+            "proposedFragment": "Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, ",
+            "status": "draft"
+          },
+          {
+            "sourceFragment": "how livestock move nutrients around a farm.",
+            "proposedFragment": "how livestock move nutrients around a farm.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "exactSourceFragment": "how livestock move nutrients around a farm",
+          "sourceFieldIndexesContainingFragment": [
+            2
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "how livestock move nutrients around a farm."
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "f63633666255c2362036e5eb7a10b30a73cf453e127b44dbe5af5cd9df993e91",
+        "recordedTargetHash": "4b214a6ae6d67dd1b3bb414ef75780651f12c0144ba593fd353cd96bf2138a62",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 3,
+        "recordedTargetEntryCount": 3,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept-with-metadata-corrections",
+      "finalCheckPacketRow": 21
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 8,
+      "fieldKind": "registered-title",
+      "sourceHeading": "Rotate the Tractor Across the Plot",
+      "recordedZuluTitle": "Hambisa Ihhoko Endaweni",
+      "proposedSilentZuluTitle": "Rotate the Tractor Across the Plot",
+      "sourceEnglish": [
+        "A chicken tractor is a moveable, floorless pen.",
+        "Move it before the ground becomes bare, muddy or heavily covered with manure.",
+        "The right time depends on the birds, soil and weather. Let the ground recover between visits.",
+        "There is no single number of chickens that guarantees enough fertility for every plot."
+      ],
+      "recordedTarget": [
+        "I-chicken tractor iyihhoko elihambayo elingenaphansi.",
+        "Lihambise ngaphambi kokuba umhlabathi ube yize, ube nodaka noma ugcwale umquba kakhulu.",
+        "Isikhathi esifanele sincike ezinkukhwini, enhlabathini nasesimweni sezulu. Vumela umhlabathi ululame ngaphambi kokubuyisa izinkukhu.",
+        "Alikho inani elilodwa lezinkukhu eliqinisekisa ukuvunda okwanele kuzo zonke izingadi."
+      ],
+      "proposedSilentTarget": [
+        "I-chicken tractor iyihhoko elihambayo elingenaphansi.",
+        "Lihambise ngaphambi kokuba umhlabathi ube yize, ube nodaka noma ugcwale umquba kakhulu.",
+        "Isikhathi esifanele sincike ezinkukhwini, enhlabathini nasesimweni sezulu. Vumela umhlabathi ululame ngaphambi kokubuyisa izinkukhu.",
+        "Alikho inani elilodwa lezinkukhu eliqinisekisa ukuvunda okwanele kuzo zonke izingadi."
+      ],
+      "sourceHash": "8f66431746b839ff2f01f6fdd3c49aca8354d0df1fbb569f4de4b8b5dd9fcaa5",
+      "recordedTargetHash": "5187bb4a059895c2c6a10a2e8bc32cc6479767e51e664f5093526f7939cd9d2f",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The title omits rotation of the chicken tractor across the plot, which is the source practice rather than merely moving a coop to a place.",
+      "changes": [
+        {
+          "field": "title",
+          "sourceClause": "Rotate the Tractor Across the Plot",
+          "previousRecordedFragment": "Hambisa Ihhoko Endaweni",
+          "proposedFragment": "Rotate the Tractor Across the Plot",
+          "segmentStatus": "english-hold",
+          "reason": "The earlier ZU candidate could mean physically spin the tractor and could broaden plot to all cultivated land; retain the exact source title until a checked equivalent is available."
+        }
+      ],
+      "exactEnglishHolds": [
+        "Rotate the Tractor Across the Plot"
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "changedRecordedParagraphIndexes": [],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "reviewerCorrection": "Hold the complete title exactly; no candidate ZU title is offered.",
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "title",
+          "paragraphIndex": null,
+          "exactSourceFragment": "Rotate the Tractor Across the Plot",
+          "sourceFieldIndexesContainingFragment": [
+            0
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "Rotate the Tractor Across the Plot"
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "8f66431746b839ff2f01f6fdd3c49aca8354d0df1fbb569f4de4b8b5dd9fcaa5",
+        "recordedTargetHash": "5187bb4a059895c2c6a10a2e8bc32cc6479767e51e664f5093526f7939cd9d2f",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 4,
+        "recordedTargetEntryCount": 4,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept",
+      "finalCheckPacketRow": 22
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 11,
+      "fieldKind": "registered-narration",
+      "sourceHeading": "South Africa’s Native Honeybees",
+      "recordedZuluTitle": "Izinyosi Zoju Zomdabu ENingizimu Afrika",
+      "proposedSilentZuluTitle": "Izinyosi Zoju Zomdabu ENingizimu Afrika",
+      "sourceEnglish": [
+        "South Africa has two native honeybee subspecies.",
+        "The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.",
+        "These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current rules before moving bees or hives."
+      ],
+      "recordedTarget": [
+        "INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.",
+        "Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika.",
+        "Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi."
+      ],
+      "proposedSilentTarget": [
+        "INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.",
+        "Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika.",
+        "These broad natural ranges are not a guide for moving bees. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Check current rules before moving bees or hives."
+      ],
+      "sourceHash": "25ba00b9662e4842ec84316100c95d27d9067748725bd35cdd4ee87180eec827",
+      "recordedTargetHash": "d44cb0d6a4e74275946b8e506e581b091a95257c31fa10746d0b616663776194",
+      "matchesCurrentSourceSnapshot": true,
+      "matchesCurrentRecordedTargetSnapshot": true,
+      "reviewHoldReason": "The target changes “not a guide for moving bees” into a statement about movement boundaries and adds local-beekeeper advice; retain the exact source warning and current-rules condition.",
+      "changes": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "These broad natural ranges are not a guide for moving bees.",
+          "previousRecordedFragment": "Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi.",
+          "proposedFragment": "These broad natural ranges are not a guide for moving bees.",
+          "segmentStatus": "english-hold",
+          "reason": "The old paraphrase says ranges are not movement boundaries, which is not the source claim; retain the exact source sentence."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "The Department's control measures set a demarcation line for bee movement.",
+          "previousRecordedFragment": "Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi.",
+          "proposedFragment": "Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi.",
+          "segmentStatus": "recorded-unreviewed",
+          "reason": "This is a real second source sentence and the existing ZU clause preserves its order and content; do not remove it."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "sourceClause": "Check current rules before moving bees or hives.",
+          "previousRecordedFragment": "Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi.",
+          "proposedFragment": "Check current rules before moving bees or hives.",
+          "segmentStatus": "english-hold",
+          "reason": "Preserves the exact before/action/current-rules condition and removes unsupported extra advice."
+        }
+      ],
+      "exactEnglishHolds": [
+        "These broad natural ranges are not a guide for moving bees.",
+        "Check current rules before moving bees or hives."
+      ],
+      "preservedRecordedParagraphIndexes": [
+        0,
+        1
+      ],
+      "changedRecordedParagraphIndexes": [
+        2
+      ],
+      "recordedAudioRemainsUnchanged": true,
+      "proposedCopyStatus": "unreviewed-machine-draft-for-silent-reading-only",
+      "notNarrationText": true,
+      "semanticReview": "candidate only; no fluent-speaker or farming approval implied",
+      "reviewerCorrection": "The earlier independent note incorrectly said the Department sentence was absent from the source. The exact English source paragraph contains three ordered sentences; preserve its Department demarcation sentence, retain the exact first and third source sentences, remove the old paraphrase that changed “not a guide” to “not boundaries,” and remove added local-beekeeper advice.",
+      "sourceBoundSegments": {
+        "2": [
+          {
+            "sourceFragment": "These broad natural ranges are not a guide for moving bees.",
+            "proposedFragment": "These broad natural ranges are not a guide for moving bees.",
+            "status": "english-hold"
+          },
+          {
+            "sourceFragment": " The Department's control measures set a demarcation line for bee movement.",
+            "proposedFragment": " Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi.",
+            "status": "recorded-unreviewed"
+          },
+          {
+            "sourceFragment": " Check current rules before moving bees or hives.",
+            "proposedFragment": " Check current rules before moving bees or hives.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "currentHold": true,
+      "actualSourceFragmentProof": [
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "exactSourceFragment": "These broad natural ranges are not a guide for moving bees.",
+          "sourceFieldIndexesContainingFragment": [
+            2
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "These broad natural ranges are not a guide for moving bees."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "exactSourceFragment": "The Department's control measures set a demarcation line for bee movement.",
+          "sourceFieldIndexesContainingFragment": [
+            2
+          ],
+          "verified": true,
+          "segmentStatus": "preserved-recorded-target",
+          "proposedFragment": "Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi."
+        },
+        {
+          "field": "body",
+          "paragraphIndex": 2,
+          "exactSourceFragment": "Check current rules before moving bees or hives.",
+          "sourceFieldIndexesContainingFragment": [
+            2
+          ],
+          "verified": true,
+          "segmentStatus": "english-hold",
+          "proposedFragment": "Check current rules before moving bees or hives."
+        }
+      ],
+      "sourceAndRecordedTargetUnchanged": true,
+      "sourceTargetBindingProof": {
+        "sourceHash": "25ba00b9662e4842ec84316100c95d27d9067748725bd35cdd4ee87180eec827",
+        "recordedTargetHash": "d44cb0d6a4e74275946b8e506e581b091a95257c31fa10746d0b616663776194",
+        "matchesCurrentSourceSnapshot": true,
+        "matchesCurrentRecordedTargetSnapshot": true,
+        "sourceEntryCount": 3,
+        "recordedTargetEntryCount": 3,
+        "paragraphCountNote": "Source and recorded arrays have matching entry counts."
+      },
+      "finalIndependentReview": "accept-with-metadata-corrections",
+      "finalCheckPacketRow": 23
+    }
+  ],
+  "titleOnlyRecheck": {
+    "soil-health:13": {
+      "sourceHeading": "Keep Seed Pods and Contaminants Out",
+      "recordedZuluTitle": "Gcina Ama-Pod Embewu Nezinto Ezingcolile Ngaphandle",
+      "decision": "preserve current title; remove false wattle-specific title repair",
+      "reason": "The title source does not mention wattle. Wattle appears in body paragraph 1, which is unchanged and correctly source-paired. A title-to-body comparison had created a false hold."
+    }
+  },
+  "rootCorrections": [
+    {
+      "field": "vegetables-staples:16 body[4]",
+      "action": "hold exact “start with the lightest thing that works”",
+      "sourceProof": "exact source phrase; preserves superlative/effective threshold"
+    },
+    {
+      "field": "reading-landscape:16 body[2]",
+      "action": "hold exact “for the whole smallholding”",
+      "sourceProof": "exact source phrase; preserves whole-property scope"
+    },
+    {
+      "field": "seeds-sovereignty:6 body[2]",
+      "action": "hold exact “the local seed collection”",
+      "sourceProof": "exact source phrase; distinguishes collection from list"
+    },
+    {
+      "field": "seeds-sovereignty:24 body[4]",
+      "action": "hold exact “a seed collection”",
+      "sourceProof": "exact source phrase; preserves resource noun"
+    },
+    {
+      "field": "seeds-sovereignty:20 body[7]",
+      "action": "hold exact “the date and the day when you will count”",
+      "sourceProof": "exact source phrase; distinguishes both dates"
+    },
+    {
+      "field": "small-livestock:8 title",
+      "action": "hold the exact complete title",
+      "sourceProof": "exact registered source heading; avoids spin/all-plot readings"
+    },
+    {
+      "field": "plant-guilds:40 body[0]",
+      "action": "hold exact “with an ordinary mulch basin”",
+      "sourceProof": "exact source phrase; no paraphrase as watering container"
+    },
+    {
+      "field": "small-livestock:11 body[2]",
+      "action": "preserve the current Department ZU sentence in source order; hold exact first and third English sentences",
+      "sourceProof": "all three sentences verified against current source; old duplicate/claim and added local adviser advice removed"
+    },
+    {
+      "field": "reading-landscape:5 title",
+      "action": "sourceClause corrected to the exact heading; hold exact “Sinks” in mixed candidate",
+      "sourceProof": "source heading is Watch: Water Slows, Sinks, and Leaves"
+    },
+    {
+      "field": "vegetables-staples:16",
+      "correction": "Added byte-exact source substring proof for the complete sentence “start with the lightest thing that works.”",
+      "reason": "Ensures the held source anchor includes its actual sentence punctuation and scope."
+    },
+    {
+      "field": "plant-guilds:28",
+      "correction": "Confirmed source and candidate retain the prune-support-tree action and exact “Which plant needs a cut—and how much?” scope.",
+      "reason": "Rejects the independent report’s unsupported tree/existential paraphrase."
+    },
+    {
+      "field": "vegetables-staples:18",
+      "correction": "Preserves “This week”/one bed and exact-holds “put one bed into production”; restores 8:8 source/target entries; keeps neutral “Pest pressure” as an exact English hold in its full list sentence.",
+      "reason": "The source has eight entries while the recorded target has seven, and the previous candidate still said pests increased. The revised candidate aligns the source entries and preserves the neutral record label."
+    },
+    {
+      "field": "plant-guilds:28:body0",
+      "correction": "Replaced the target clause `ukuze ululame.` with the exact English hold `for the plant to recover.` after the checked localized prefix `Shiya amaqabunga anempilo anele `.",
+      "reason": "The previous wording changes the recovery subject to “you”; the checked mixed span retains the plant as subject and avoids unsupported terminology."
+    },
+    {
+      "field": "plant-guilds:28:body0",
+      "correction": "Used independently checked localized plant-recovery wording `Shiya amaqabunga anempilo anele ukuze isitshalo silulame.`",
+      "reason": "It preserves the plant as recovery subject and avoids the recorded target’s second-person reading."
+    },
+    {
+      "field": "plant-guilds:28:body0",
+      "correction": "Retained the full pigeon-pea severe-cut/pea-growing condition as exact English.",
+      "reason": "Avoids the recorded ZU wording’s possible seeds/grains meaning shift while keeping the other checked actions and questions."
+    }
+  ],
+  "decisionCounts": {
+    "currentHoldRows": 23,
+    "excludedFalseHoldRows": 1,
+    "currentHoldKeys": [
+      "intro-permaculture:22",
+      "reading-landscape:5",
+      "reading-landscape:15",
+      "reading-landscape:16",
+      "soil-health:1",
+      "water-harvesting:10",
+      "vegetables-staples:16",
+      "vegetables-staples:18",
+      "market-community:14",
+      "plant-guilds:22",
+      "plant-guilds:28",
+      "plant-guilds:40",
+      "seeds-sovereignty:6",
+      "seeds-sovereignty:11",
+      "seeds-sovereignty:12",
+      "seeds-sovereignty:14",
+      "seeds-sovereignty:15",
+      "seeds-sovereignty:20",
+      "seeds-sovereignty:24",
+      "small-livestock:2",
+      "small-livestock:3",
+      "small-livestock:8",
+      "small-livestock:11"
+    ]
+  }
+}

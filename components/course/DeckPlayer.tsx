@@ -17,6 +17,7 @@ import { resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { resolveIsiZuluDeckSourcePair } from '@/lib/course-deck-source-bindings';
+import { resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
 import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 import COURSE_DECK_ART from '@/docs/course-deck-art.json' with { type: 'json' };
@@ -446,26 +447,30 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const anim = animationUrls(moduleId, current.slide, slideChoice);
   const audio = audioForCurrent;
   const track = narration?.tracks.find((t) => t.slide === current.slide);
+  const zuluSilentDraft = slideChoice === 'zu'
+    ? resolveIsiZuluSilentDeckDraft(moduleId, current.slide)
+    : null;
   const zuluPair = slideChoice === 'zu' ? resolveIsiZuluDeckSourcePair(
     moduleId, current.slide, undefined,
     track ? { en: trackTitle(track, 'en'), zu: trackTitle(track, 'zu') } : undefined,
   ) : null;
   const zuluHold = slideChoice === 'zu' ? isiZuluDeckReviewHold(moduleId, current.slide) : null;
   const zuluSource = slideChoice === 'zu' ? COURSE_TRANSCRIPTS[moduleId]?.en?.[current.slide] : null;
-  const heading = slideChoice === 'zu' && (zuluHold || !zuluPair)
+  const heading = zuluSilentDraft?.correctedTitle ?? (slideChoice === 'zu' && (zuluHold || !zuluPair)
     ? track ? trackTitle(track, 'en') : current.title
-    : track ? trackTitle(track, slideChoice) : current.title;
+    : track ? trackTitle(track, slideChoice) : current.title);
   const isPlaying = playing.has(current.slide);
 
-  const slideRatio = anim?.aspectRatio ?? deck.slideAspectRatioByLanguage?.[img?.lang ?? slideLang.lang] ?? 16 / 9;
+  const slideRatio = anim?.aspectRatio ?? img?.aspectRatio ?? deck.slideAspectRatioByLanguage?.[img?.lang ?? slideLang.lang] ?? 16 / 9;
   const artModule = (COURSE_DECK_ART as Record<string, Record<string, { layout: string }>>)[moduleId];
   const art = artModule?.[current.slide];
   // The reading follows the selected deck, independently of an optional English voice.
   const visibleTranscript = slideChoice === 'zu'
-    ? zuluHold || !zuluPair ? zuluSource : [...zuluPair.recordedTarget]
+    ? zuluSilentDraft ? [...zuluSilentDraft.correctedTarget]
+      : zuluHold || !zuluPair ? zuluSource : [...zuluPair.recordedTarget]
     : transcript;
   const presentationPoints = visibleTranscript ? slidePoints([...visibleTranscript]) : [];
-  const showReflowedSlide = expanded && !!artModule && !art && !anim && current.slide !== 1 && presentationPoints.length > 0;
+  const showReflowedSlide = expanded && !zuluSilentDraft && !!artModule && !art && !anim && current.slide !== 1 && presentationPoints.length > 0;
   const fittedWidth = expanded && viewportSize.width && viewportSize.height
     ? Math.min(viewportSize.width, viewportSize.height * slideRatio) : 0;
   const fullSizeImageUrl = anim?.poster ?? img?.url;
@@ -710,7 +715,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
       {slideChoice === 'zu' && (
         <p role="status" style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: MUTED }}>
-          {zuluHold
+          {zuluSilentDraft
+            ? 'Unreviewed isiZulu machine draft. The exact authored English slide source is below. The previous isiZulu recording remains unavailable while its wording is reviewed. Choose English narration explicitly if wanted.'
+            : zuluHold
             ? `English source shown. This isiZulu slide and recording need revision: ${zuluHold} Choose English narration explicitly if wanted.`
             : !zuluPair
               ? 'English source shown. The isiZulu source comparison has changed; its recording is unavailable until checked.'
@@ -815,24 +822,32 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </button>
       </div>
 
-      {slideChoice === 'zu' && zuluSource && (
+      {slideChoice === 'zu' && (zuluSource || zuluSilentDraft) && (
         <details className={`${styles.transcript} ${styles.sourcePair}`} style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
           <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
-            {zuluHold || !zuluPair
+            {zuluSilentDraft
+              ? 'Read slide · unreviewed isiZulu draft / exact English slide source'
+              : zuluHold || !zuluPair
               ? 'Read slide · English source / isiZulu revision pending'
               : 'Read slide · unreviewed isiZulu draft / exact English source'}
           </summary>
-          {zuluPair && !zuluHold && (
+          {zuluSilentDraft ? (
+            <section lang="zu" aria-label="Unreviewed corrected isiZulu slide draft">
+              <h4>isiZulu · unreviewed machine draft</h4>
+              <h5>{zuluSilentDraft.correctedTitle}</h5>
+              {zuluSilentDraft.correctedTarget.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+            </section>
+          ) : zuluPair && !zuluHold ? (
             <section lang="zu" aria-label="Unreviewed isiZulu draft">
               <h4>isiZulu · unreviewed machine draft</h4>
               <h5>{zuluPair.registeredZuluTitle}</h5>
               {zuluPair.recordedTarget.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
             </section>
-          )}
+          ) : null}
           <section lang="en" aria-label="Exact English source">
             <h4>Exact English source</h4>
-            <h5>{zuluPair?.sourceHeading ?? heading}</h5>
-            {(zuluPair?.source ?? zuluSource).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+            <h5>{zuluSilentDraft?.sourceHeading ?? zuluPair?.sourceHeading ?? heading}</h5>
+            {(zuluSilentDraft?.sourceEnglish ?? zuluPair?.source ?? zuluSource ?? []).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
           </section>
         </details>
       )}

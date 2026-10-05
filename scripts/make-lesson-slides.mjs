@@ -15,14 +15,18 @@
 //   node scripts/make-lesson-slides.mjs seeds-sovereignty zu
 //   node scripts/make-lesson-slides.mjs intro-permaculture ts OUT --paired-draft draft.json --validate-only
 //   node scripts/make-lesson-slides.mjs intro-permaculture ts OUT --paired-draft draft.json --paired-art art.json
+//   node scripts/make-lesson-slides.mjs seeds-sovereignty zu OUT --paired-draft draft.json --slides 6,11,14
 //   art.json: {"10":"docs/media/studies-illustrated-release/art/reading-landscape/landscape-walk.jpg"}
 //   draft.json: {"language":"ts","sourceLanguage":"en","reviewStatus":"unreviewed",
 //     "slides":[{"n":1,"english":{"heading":"...","body":["..."]},
 //       "target":{"heading":{"status":"draft","text":"..."},
 //                 "body":[{"status":"draft","text":"..."}]}}]}
 //   Each target heading/paragraph can instead be {"status":"english-hold"}.
+//   --slides selects original source slide numbers after the complete packet is validated.
 //
-// Then assemble the video with the narration already in the repo:
+// Paired-draft output is a silent review card. Never assemble a corrected draft with the legacy
+// recording; the old recording remains bound only to its original transcript snapshot.
+// The video command is for unchanged recorded-transcript slide sets only:
 //   node scripts/build-lesson-video.mjs seeds-sovereignty zu ~/Downloads/seeds-sovereignty-zu-slides
 //
 // Requires python3 with Pillow (already present on this machine).
@@ -33,7 +37,7 @@ import { homedir, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { englishSlideRecords, pairedDraftLanguageLabel, pairedTargetHasEnglishHolds, validatePairedDraft } from './paired-draft-slides.mjs';
+import { englishSlideRecords, pairedDraftLanguageLabel, pairedSlideSelection, pairedTargetHasEnglishHolds, selectPairedSlides, validatePairedDraft } from './paired-draft-slides.mjs';
 
 const argv = process.argv.slice(2);
 const imgFlag = argv.indexOf('--images');
@@ -44,6 +48,7 @@ const sourceFlag = argv.indexOf('--source');
 const pairedFlag = argv.indexOf('--paired-draft');
 const pairedArtFlag = argv.indexOf('--paired-art');
 const pairedNativeFlag = argv.indexOf('--paired-native-source');
+const slidesFlag = argv.indexOf('--slides');
 const validateOnly = argv.includes('--validate-only');
 const overridesPath = overrideFlag >= 0 ? resolve(argv[overrideFlag + 1]) : null;
 const brandingPath = brandingFlag >= 0 ? resolve(argv[brandingFlag + 1]) : null;
@@ -53,8 +58,11 @@ const pairedArtPath = pairedArtFlag >= 0 && argv[pairedArtFlag + 1] ? resolve(ar
 if (pairedFlag >= 0 && !pairedPath) throw new Error('--paired-draft requires a JSON file');
 if (pairedArtFlag >= 0 && !pairedArtPath) throw new Error('--paired-art requires a JSON file');
 if (pairedNativeFlag >= 0 && !pairedPath) throw new Error('--paired-native-source requires --paired-draft');
-const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--paired-art', '--paired-native-source', '--validate-only']);
-const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag, pairedFlag, pairedArtFlag].filter((i) => i >= 0).map((i) => i + 1));
+if (argv.filter((arg) => arg === '--slides').length > 1) throw new Error('--slides may be specified only once');
+if (slidesFlag >= 0 && !pairedPath) throw new Error('--slides requires --paired-draft');
+if (slidesFlag >= 0 && !argv[slidesFlag + 1]) throw new Error('--slides needs a comma-separated list of slide numbers');
+const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--paired-art', '--paired-native-source', '--slides', '--validate-only']);
+const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag, pairedFlag, pairedArtFlag, slidesFlag].filter((i) => i >= 0).map((i) => i + 1));
 const positional = argv.filter((a, i) => !skipped.has(a) && !valueFlags.has(i));
 const [moduleId, lang, outRaw] = positional;
 if (!moduleId || !lang) {
@@ -63,7 +71,7 @@ if (!moduleId || !lang) {
 }
 
 if (pairedPath && (!pairedDraftLanguageLabel(lang) || sourcePath || brandingPath || overridesPath || imagesDir)) {
-  throw new Error('--paired-draft supports st, ts and ve with the authored English source only, without art or branding overrides');
+  throw new Error('--paired-draft supports st, ts, ve and zu with the authored English source only, without art or branding overrides');
 }
 if (pairedArtPath && !pairedPath) throw new Error('--paired-art requires --paired-draft');
 if (validateOnly && !pairedPath) throw new Error('--validate-only requires --paired-draft');
@@ -77,15 +85,21 @@ if (!existsSync(scriptPath)) {
 }
 
 const raw = readFileSync(scriptPath, 'utf8');
-const pairedSlides = pairedPath
+const validatedPairedSlides = pairedPath
   ? validatePairedDraft(JSON.parse(readFileSync(pairedPath, 'utf8')), englishSlideRecords(raw), lang)
+  : null;
+const selectedSlideNumbers = pairedPath
+  ? pairedSlideSelection(slidesFlag >= 0 ? argv[slidesFlag + 1] : undefined, validatedPairedSlides.length)
+  : null;
+const pairedSlides = validatedPairedSlides
+  ? selectPairedSlides(validatedPairedSlides, selectedSlideNumbers)
   : null;
 const pairedArt = pairedArtPath ? JSON.parse(readFileSync(pairedArtPath, 'utf8')) : {};
 if (!pairedArt || typeof pairedArt !== 'object' || Array.isArray(pairedArt)) {
   throw new Error('--paired-art must be a slide-number-to-image-path object');
 }
 for (const [slide, path] of Object.entries(pairedArt)) {
-  if (!/^[1-9]\d*$/.test(slide) || Number(slide) > (pairedSlides?.length ?? 0) ||
+  if (!/^[1-9]\d*$/.test(slide) || Number(slide) > (validatedPairedSlides?.length ?? 0) ||
       typeof path !== 'string' || !path.trim()) {
     throw new Error(`--paired-art has an invalid slide or path: ${slide}`);
   }
@@ -265,6 +279,8 @@ writeFileSync(
       hasEnglishHolds: pairedTargetHasEnglishHolds(pair.target),
     })) ?? null,
     pairedLanguageLabel: pairedPath ? pairedDraftLanguageLabel(lang) : null,
+    pairedTotalSlides: validatedPairedSlides?.length ?? null,
+    pairedSelectedSlides: selectedSlideNumbers,
     pairedSourceSlides,
     pairedNativeSource: pairedNativeFlag >= 0,
     pairedArtSlides: Object.keys(pairedArt).map(Number),
@@ -537,7 +553,7 @@ if PAIRED:
         draw_panel(draw, 'ENGLISH SOURCE · EXACT TEXT', pair['english']['heading'],
                    pair['english']['body'], PAIRED_SOURCE_TOP + target_extra,
                    PAIRED_SOURCE_BOTTOM + target_extra, source_plan)
-        draw.text((96, PAIRED_FOOTER_Y + target_extra), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
+        draw.text((96, PAIRED_FOOTER_Y + target_extra), '%d / %d' % (pair['n'], cfg.get('pairedTotalSlides') or len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
         draw.text((W - 96, PAIRED_FOOTER_Y + target_extra), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
         image.save(os.path.join(cfg['outDir'], 'slide-%02d.png' % pair['n']), 'PNG')
         print('  %2d  %s' % (pair['n'], pair['english']['heading'][:58]))
