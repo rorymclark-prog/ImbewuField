@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'cc503f9a', changes: [
+    'Water lessons have fuller Sesotho, Tshivenda and Xitsonga unreviewed drafts.',
+    'Exact English stays beside drafts; difficult water and sanitation terms remain English.',
+  ], tour: [
+    { title: 'Compare Water lesson drafts',
+      where: 'Study → Water Harvesting → Open a lesson',
+      detail: 'Read the draft and answer feedback beside the exact English source.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: '69a51ffa', changes: [
     'isiZulu slide image zoom now includes the unreviewed draft and exact English.',
     'Source text stays at reading size while you zoom the image.',
