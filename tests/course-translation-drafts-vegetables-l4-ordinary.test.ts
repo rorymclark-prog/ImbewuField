@@ -1,3 +1,4 @@
+import { vegetablesWithL3Completion } from './vegetables-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -115,7 +116,8 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
       assert.equal(paragraphs[index], row.restoredTarget,
         `${language}/${row.fieldPath}: reconciliation preserves the frozen localized wording`);
     }
-    assert.deepEqual(current, expected, `${language}: every unlisted learner field and status remains byte-for-byte equivalent as parsed data`);
+    // 6 October: preserve whole-module coverage while adding the exact reviewed L3 leaf/status layer.
+    assert.deepEqual(current, vegetablesWithL3Completion(language, expected), `${language}: every unlisted learner field and status remains exact after the separately checked 6 October L3 layer`);
     const lessonDraft = current.lessons.find(item => item.id === 'vegetables-staples-l4')!;
     assert.deepEqual(lessonDraft.quiz.map((question: any) => question.sourceCorrectIndex), [1, 0],
       `${language}: correct-answer positions remain unchanged`);

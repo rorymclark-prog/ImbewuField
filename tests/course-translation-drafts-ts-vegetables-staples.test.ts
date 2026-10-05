@@ -1,3 +1,4 @@
+import { vegetablesL3BeforeCompletion, vegetablesL3PresentationBeforeCompletion } from './vegetables-l3-completion-checks.ts';
 import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
@@ -46,7 +47,8 @@ const checkedL3DraftParagraphs = [
 ];
 
 test('Vegetables & Staple Crops L3 keeps source-bound framing and crop conditions while leaving technical clauses exact', () => {
-  const draft = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0];
+  // 6 October: the hold-only assessment assertions below are the checked historical layer.
+  const draft = vegetablesL3BeforeCompletion('ts', XITSONGA_VEGETABLES_STAPLES_DRAFT).lessons[0];
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.id, sourceModule.id);
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.language, 'ts');
   assert.equal(XITSONGA_VEGETABLES_STAPLES_DRAFT.reviewStatus, 'machine-draft');
@@ -107,7 +109,7 @@ test('Vegetables & Staple Crops L3 keeps source-bound framing and crop condition
     assert.equal(question.rationale.xitsongaDraft, source.rationale);
   }
 
-  const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
+  const shown = vegetablesL3PresentationBeforeCompletion(sourceLesson, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
   assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);

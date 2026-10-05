@@ -1,3 +1,4 @@
+import { vegetablesWithL3Completion } from './vegetables-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -94,7 +95,8 @@ test('Vegetables ordinary drafts retain every canonical instruction and all unre
       }
       pair.reviewStatus = row.appliedReviewStatus;
     }
-    assert.deepEqual(drafts[language], expected, `${language}: only reviewed source-bound fields may change`);
+    // 6 October: preserve whole-module coverage while adding the exact reviewed L3 leaf/status layer.
+    assert.deepEqual(drafts[language], vegetablesWithL3Completion(language, expected), `${language}: only reviewed source-bound fields may change, including the separately checked 6 October L3 layer`);
   }
 });
 

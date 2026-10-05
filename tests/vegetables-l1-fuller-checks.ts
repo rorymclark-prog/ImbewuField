@@ -1,3 +1,4 @@
+import { vegetablesL3BeforeCompletion } from './vegetables-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -27,7 +28,8 @@ export function vegetablesFullerTarget(language: Language, field: string): strin
 // historical assertions still check the frozen pre-L1 registry; current targets are
 // verified before inversion and no unlisted field is rewritten.
 export function vegetablesBeforeFuller<T>(language: Language, actual: T): T {
-  const reconstructed: any = structuredClone(actual);
+  // 6 October: verify and invert only the accepted L3 assessment leaves before older whole-module snapshots.
+  const reconstructed: any = vegetablesL3BeforeCompletion(language, actual);
   const key = keys[language];
   // 5 October 2026: the final L2 batch was applied after the L1/L4 snapshots.
   // Validate its exact targets, then invert only those source-bound fields before

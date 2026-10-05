@@ -60,20 +60,41 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
   lessons: [
     {
       id: sourceLesson.id,
-      infographicAlt: hold(sourceLesson.infographicAlt!),
+      infographicAlt: pair("Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.", "Swirimiwa swinharhu swa staple swi ri swin’we: stalk yo leha ya grain, vine leyi khandziyaka eka nsika, ni xirimilwa xa timitsu lexi kombisiweke hafu ya xona yi ri ehansi ka misava."),
       title: pair("Staple Crops: Maize, Beans, and Root Vegetables", "Staple Crops: Maize, Beans, na Root Vegetables"),
       body: pair(vegetablesL3CheckedSourceEnglish, draftParagraphs.join('\n\n')),
-      keyPoints: sourceLesson.keyPoints.map(hold),
-      quiz: sourceLesson.quiz.map((question, index) => ({
-        question: index === 0
-          ? pair("Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?", "Hikokwalaho ka yini u hlawula open-pollinated maize ematshan'weni ya hybrid variety loko u kunguhata ku hlayisa mbewu ya wena?")
-          : index === 1
-            ? pair("Why is amadumbe (taro) a good staple choice for parts of KZN?", "Hikokwalaho ka yini amadumbe (taro) yi ri nhlawulo lowunene wa staple eka swiphemu swa KZN?")
-            : hold(question.q),
-        options: question.options.map(hold),
-        sourceCorrectIndex: question.correct,
-        rationale: hold(question.rationale),
-      })),
+      // The reviewed seed comparisons must withdraw after source or answer-key drift;
+      // deriving these pairs from future canonical text would hide that change.
+      keyPoints: [
+        pair("Open-pollinated maize lets you save seed; hybrid seed won't breed true next season", "Open-pollinated maize yi ku pfumelela ku hlayisa mbewu; mbewu ya hybrid a yi nge breed true eka nguva leyi taka"),
+        pair("Beans are the key protein crop — productive, storable, and nitrogen-fixing", "Beans i xirimilwa xa nkoka xa protein — xi humesa ntshovelo kahle, xi hlayiseka, naswona i nitrogen-fixing"),
+        pair("Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible", "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ti vumbekile, kambe yi lava mati eku sunguleni; young leaves ya yona ya dyiwa"),
+        pair("Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground", "Amadumbe (taro) i staple ya ndhavuko leyi nga tirhisiwiki hi ndlela leyi eneleke, leyi fambisanaka ni misava ya KZN leyi tsakamaka ku hundza ni misava ya le kusuhi ni lwandle."),
+      ],
+      quiz: [
+        {
+          question: pair("Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?", "Hikokwalaho ka yini u hlawula open-pollinated maize ematshan'weni ya hybrid variety loko u kunguhata ku hlayisa mbewu ya wena?"),
+          options: [
+            pair("Open-pollinated varieties yield more", "Mixaka ya open-pollinated yi humesa ntshovelo wo tala ku hundza"),
+            pair("Hybrid seed won't breed true — the next generation won't match the parent plant", "Mbewu ya hybrid a yi nge breed true — swimilana swa xitukulwana lexi landzelaka a swi nge fani ni ximilana xa mutswari"),
+            hold("Open-pollinated maize is always more drought-tolerant"),
+            pair("Hybrids can't be planted in South Africa", "Hybrids a ti koti ku byariwa eAfrika-Dzonga"),
+          ],
+          sourceCorrectIndex: 1,
+          rationale: pair("Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.", "Mbewu leyi hlayisiweke eka F1 hybrid yi nga mela, kambe swimilana swa xitukulwana lexi landzelaka swi nga hambana. Mbuyelo ya muxaka wa open-pollinated lowu nga stable lowu pollination ya wona yi lawuriwaka yi olova ku bvumba ku hundza, loko u hlayisa mbewu."),
+        },
+        {
+          question: pair("Why is amadumbe (taro) a good staple choice for parts of KZN?", "Hikokwalaho ka yini amadumbe (taro) yi ri nhlawulo lowunene wa staple eka swiphemu swa KZN?"),
+          options: [
+            pair("It thrives on very dry, sandy soil", "Yi kula kahle eka misava leyi omeke swinene ya sava"),
+            pair("It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions", "Yi tiyisela misava leyi tsakamaka ku hundza leyi maize yi yi tiyiselaka, yi fambisana ni misava ya le kusuhi ni lwandle ni swiyimo swa mpfula yo tala."),
+            pair("It requires no cultivation at all", "A yi lavi cultivation nikatsongo"),
+            pair("It's the only staple that stores for multiple years", "Hi yona ntsena staple leyi hlayisekaka ku ringana nkarhi wa ku hundza lembe rin’we"),
+          ],
+          sourceCorrectIndex: 1,
+          rationale: hold("Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well."),
+        },
+      ],
     },
     {
       "id": "vegetables-staples-l1",
