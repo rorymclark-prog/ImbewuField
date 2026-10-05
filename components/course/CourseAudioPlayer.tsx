@@ -18,7 +18,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, AlertCircle } from 'lucide-react';
 import {
-  formatClock, narrationFor, resolveNarrationLang, trackTitle, trackUrl,
+  formatClock, narrationFor, requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle, trackUrl,
   type NarrationTrack,
 } from '@/lib/course-audio';
 import { useLanguage } from '@/lib/i18n-context';
@@ -59,14 +59,36 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
 
   // Chosen language is state so the learner can override the resolved default. Re-resolves if
   // the app language changes underneath us.
-  const [lang, setLang] = useState<string | null>(resolved?.lang ?? null);
-  useEffect(() => { setLang(resolveNarrationLang(moduleId, appLang)?.lang ?? null); }, [moduleId, appLang]);
+  const needsExplicitChoice = requiresExplicitNarrationChoice(moduleId, appLang);
+  const defaultLang = needsExplicitChoice ? null : resolved?.lang ?? null;
+  const [lang, setLang] = useState<string | null>(defaultLang);
+  const selectionRef = useRef({ moduleId, lang: defaultLang });
+  const playbackGeneration = useRef(0);
+  const currentSlideRef = useRef<number | null>(null);
 
   const [currentSlide, setCurrentSlide] = useState<number | null>(null);
   const [playing, setPlaying] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [duration, setDuration] = useState(0);
   const [failedSlide, setFailedSlide] = useState<number | null>(null);
+
+  // A previous play promise or ended handler may arrive after a language change.
+  // Invalidate that work and remove its URL before offering another voice.
+  const resetPlayback = useCallback((next: string | null) => {
+    playbackGeneration.current += 1;
+    selectionRef.current = { moduleId, lang: next };
+    currentSlideRef.current = null;
+    const el = audioRef.current;
+    if (el) { el.pause(); el.removeAttribute('src'); el.load(); }
+    setLang(next);
+    setPlaying(false);
+    setCurrentSlide(null);
+    setElapsed(0);
+    setDuration(0);
+    setFailedSlide(null);
+  }, [moduleId]);
+  useEffect(() => { resetPlayback(defaultLang); }, [moduleId, appLang, defaultLang, resetPlayback]);
+  const renderedGeneration = playbackGeneration.current;
 
   const reviewUnavailable = useCallback((slide: number): string | null => {
     if (lang !== 'zu') return null;
@@ -82,27 +104,21 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
   // and clear its old src immediately so a stale button or ended event cannot resume it.
   useEffect(() => {
     if (currentSlide === null || !reviewUnavailable(currentSlide)) return;
-    const el = audioRef.current;
-    if (el) {
-      el.pause();
-      el.removeAttribute('src');
-      el.load();
-    }
-    setPlaying(false);
-    setCurrentSlide(null);
-    setElapsed(0);
-    setDuration(0);
-    setFailedSlide(null);
-  }, [currentSlide, reviewUnavailable]);
+    resetPlayback(selectionRef.current.lang);
+  }, [currentSlide, reviewUnavailable, resetPlayback]);
 
   const stop = useCallback(() => {
+    playbackGeneration.current += 1;
     const el = audioRef.current;
     if (el) { el.pause(); }
     setPlaying(false);
   }, []);
 
   // Never leave audio running after the panel closes or the page changes.
-  useEffect(() => () => { audioRef.current?.pause(); }, []);
+  useEffect(() => {
+    const el = audioRef.current;
+    return () => { playbackGeneration.current += 1; el?.pause(); };
+  }, []);
 
   // The deck's silent Watch clip is still a lesson scene. Stop this playlist when
   // it starts, or its next narrated slide can speak over the picture.
@@ -113,7 +129,9 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
       if (audio && event.target !== audio &&
         (event.target instanceof HTMLAudioElement || event.target instanceof HTMLVideoElement) &&
         !audio.paused) {
+        playbackGeneration.current += 1;
         audio.pause();
+        setPlaying(false);
       }
     };
     document.addEventListener('play', pauseForOtherMedia, true);
@@ -121,9 +139,10 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
   }, []);
 
   const playSlide = useCallback((slide: number) => {
-    if (!lang) return;
+    if (!lang || selectionRef.current.moduleId !== moduleId || selectionRef.current.lang !== lang) return;
     if (reviewUnavailable(slide)) {
       stop();
+      currentSlideRef.current = null;
       setCurrentSlide(null);
       return;
     }
@@ -132,12 +151,17 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
     if (!url || !el) { setFailedSlide(slide); return; }
 
     setFailedSlide(null);
+    currentSlideRef.current = slide;
     setCurrentSlide(slide);
     setElapsed(0);
     setDuration(0);
     // Assigning src is what triggers the download — nothing is fetched before this point.
+    const generation = ++playbackGeneration.current;
     el.src = url;
-    void el.play().then(() => setPlaying(true)).catch(() => {
+    void el.play().then(() => {
+      if (generation === playbackGeneration.current) setPlaying(true);
+    }).catch(() => {
+      if (generation !== playbackGeneration.current) return;
       // Autoplay policy or a missing file. Both are "it did not play"; say so rather than
       // leaving a Pause button showing over silence.
       setPlaying(false);
@@ -146,18 +170,28 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
   }, [lang, moduleId, reviewUnavailable, stop]);
 
   function toggle(slide: number) {
-    if (reviewUnavailable(slide)) return;
+    if (!lang || selectionRef.current.moduleId !== moduleId || selectionRef.current.lang !== lang || reviewUnavailable(slide)) return;
     const el = audioRef.current;
     if (!el) return;
-    if (currentSlide === slide && playing) { el.pause(); setPlaying(false); return; }
+    if (currentSlide === slide && playing) { stop(); return; }
     if (currentSlide === slide && !playing && el.src) {
-      void el.play().then(() => setPlaying(true)).catch(() => setFailedSlide(slide));
+      const generation = ++playbackGeneration.current;
+      void el.play().then(() => {
+        if (generation === playbackGeneration.current) setPlaying(true);
+      }).catch(() => { if (generation === playbackGeneration.current) setFailedSlide(slide); });
       return;
     }
     playSlide(slide);
   }
 
+  function playbackIsCurrent() {
+    return lang !== null && renderedGeneration === playbackGeneration.current &&
+      selectionRef.current.moduleId === moduleId && selectionRef.current.lang === lang &&
+      currentSlide !== null && currentSlideRef.current === currentSlide;
+  }
+
   function handleEnded() {
+    if (!playbackIsCurrent()) return;
     setPlaying(false);
     if (currentSlide !== null && reviewUnavailable(currentSlide)) {
       setCurrentSlide(null);
@@ -169,18 +203,14 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
     else setCurrentSlide(null);           // end of the list — stop, never loop
   }
 
-  function switchLang(next: string) {
-    stop();
-    setLang(next);
-    setCurrentSlide(null);
-    setElapsed(0);
-    setDuration(0);
-    setFailedSlide(null);
+  function switchLang(next: string | null) {
+    resetPlayback(next);
   }
 
-  if (!narration || tracks.length === 0 || !lang) return null;
+  if (!narration || tracks.length === 0) return null;
 
-  const mismatch = resolved ? !resolved.exact : false;
+  const mismatch = lang !== null && lang !== appLang;
+
   const progressPct = duration > 0 ? Math.min(100, (elapsed / duration) * 100) : 0;
 
   return (
@@ -191,7 +221,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
           {label ?? t('courseAudioListen')}
         </span>
         <div className="flex-1 min-w-0" />
-        {narration.languages.length > 1 && (
+        {(narration.languages.length > 1 || needsExplicitChoice) && (
           <div className="ml-auto flex w-full flex-wrap items-center justify-end gap-1 sm:w-auto" role="group" aria-label={t('courseNarrationLanguage')}>
             {narration.languages.map((code) => {
               const on = code === lang;
@@ -210,21 +240,33 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                     minHeight: 28,
                   }}
                 >
-                  {regionalNarrationDraft(moduleId, code)
+                  {needsExplicitChoice && code === 'en'
+                    ? 'English source narration'
+                    : regionalNarrationDraft(moduleId, code)
                     ? `${langName(code, appLang)} AI draft + English`
                     : langName(code, appLang)}
                 </button>
               );
             })}
+            {needsExplicitChoice && <button type="button" onClick={() => switchLang(null)}
+              aria-pressed={lang === null} className="font-sans text-xs px-2 py-1 rounded-full shrink-0"
+              style={{ border: `1px solid ${HAIRLINE}`, color: lang === null ? GREEN : MUTED, minHeight: 28 }}>
+              {t('courseDeckNoNarration')}
+            </button>}
           </div>
         )}
       </div>
 
-      {mismatch && (
+      {needsExplicitChoice && lang === null && <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
+        No {langName(appLang, appLang)} narration is available. Choose English source narration explicitly to listen.
+      </p>}
+
+      {mismatch && lang && (
         <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
-          {t('courseAudioLanguageMissing')
+          {playing ? t('courseAudioLanguageMissing')
             .replace('{appLanguage}', langName(appLang, appLang))
-            .replace('{playingLanguage}', langName(lang, appLang))}
+            .replace('{playingLanguage}', langName(lang, appLang))
+            : `${needsExplicitChoice && lang === 'en' ? 'English source narration' : langName(lang, appLang) + ' narration'} selected. Press Play to listen.`}
         </p>
       )}
 
@@ -236,7 +278,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
         </p>
       )}
 
-      {regionalNarrationDraft(moduleId, lang) && (
+      {lang && regionalNarrationDraft(moduleId, lang) && (
         <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
           Unreviewed machine {langName(lang, appLang)} narration with exact English passages.
           Fluent-speaker, local-farming and listening review are pending.
@@ -250,7 +292,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
           const failed = failedSlide === track.slide;
           const reviewHold = reviewUnavailable(track.slide);
           const documentedHold = lang === 'zu' ? isiZuluDeckReviewHold(moduleId, track.slide) : null;
-          const title = trackTitle(track, lang);
+          const title = trackTitle(track, lang ?? 'en');
           return (
             <li key={track.slide}>
               <button
@@ -258,13 +300,13 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                 onClick={() => toggle(track.slide)}
                 aria-label={t(isPlaying ? 'courseAudioPauseTrack' : 'courseAudioPlayTrack').replace('{title}', title)}
                 aria-describedby={reviewHold ? `${moduleId}-slide-${track.slide}-review-hold` : undefined}
-                disabled={Boolean(reviewHold)}
+                disabled={!lang || Boolean(reviewHold)}
                 className="w-full flex items-center gap-2.5 px-1.5 py-2 rounded-lg text-left"
                 style={{
                   background: isCurrent ? 'rgba(31,77,43,0.06)' : 'transparent',
                   border: 'none',
-                  cursor: reviewHold ? 'not-allowed' : 'pointer',
-                  opacity: reviewHold ? 0.72 : 1,
+                  cursor: !lang || reviewHold ? 'not-allowed' : 'pointer',
+                  opacity: !lang || reviewHold ? 0.72 : 1,
                   minHeight: 40,
                 }}
               >
@@ -320,12 +362,15 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
       <audio
         ref={audioRef}
         preload="none"
-        onTimeUpdate={(e) => setElapsed(e.currentTarget.currentTime)}
-        onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
-        onPlay={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
+        onTimeUpdate={(e) => { if (playbackIsCurrent()) setElapsed(e.currentTarget.currentTime); }}
+        onLoadedMetadata={(e) => { if (playbackIsCurrent()) setDuration(e.currentTarget.duration); }}
+        onPlay={() => {
+          if (playbackIsCurrent()) setPlaying(true);
+          else if (selectionRef.current.lang === null || currentSlideRef.current === null) audioRef.current?.pause();
+        }}
+        onPause={() => { if (playbackIsCurrent()) setPlaying(false); }}
         onEnded={handleEnded}
-        onError={() => { setPlaying(false); setFailedSlide(currentSlide); }}
+        onError={() => { if (playbackIsCurrent()) { setPlaying(false); setFailedSlide(currentSlide); } }}
       />
     </div>
   );
