@@ -38,6 +38,19 @@ const completeHold = (language = 'st') => ({
 });
 const studyOutcomesProof = JSON.parse(readFileSync(
   'docs/study-translation-reviews/STUDY-OUTCOMES-RESIDUAL-PAIRED-FIELDS-2026-10-05.json', 'utf8'));
+const firstObservationImplementationProof = JSON.parse(readFileSync(
+  'docs/study-translation-reviews/READING-FIRST-OBSERVATIONS-IMPLEMENTATION-2026-10-05.json', 'utf8'));
+const firstObservationFields = firstObservationImplementationProof.pairedFieldsApplied;
+const firstObservationField = (language: string, slide: number, bodyIndex: number) =>
+  firstObservationFields.find((field: any) => field.language === language && field.slide === slide && field.index === bodyIndex);
+const assertCurrentFirstObservation = (target: any, field: any, label: string) => {
+  assert.ok(field, `${label}: the later first-observations batch records this exact field`);
+  assert.equal(target.status, 'mixed', `${label}: ordinary prose and retained English anchors remain visibly mixed`);
+  assert.deepEqual(target.segments, field.segments, `${label}: retain the independently checked source segmentation`);
+  assert.equal(targetVisibleText(target), field.target, `${label}: keep the approved composition visible`);
+  assert.equal(target.segments.map((segment: any) => segment.sourceEnglish).join(''), field.sourceEnglish,
+    `${label}: segments stay bound to the exact canonical field`);
+};
 const studyOutcomeFields = studyOutcomesProof.changedFiles.flatMap((file: any) => file.changedBodyFields);
 const approvedStudyOutcome = (moduleId: string, language: string, slide: number, bodyIndex: number) =>
   studyOutcomeFields.find((field: any) => field.moduleId === moduleId && field.language === language
@@ -1751,6 +1764,10 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
     for (const change of next15Proof.changedTargets.filter((item: any) => item.language === language)) {
       packet.slides[change.slide - 1].target.body[change.bodyIndex] = change.previousTarget;
     }
+    // The first-observations batch is newer than these historical snapshots; restore its exact recorded before-values.
+    for (const change of firstObservationFields.filter((item: any) => item.language === language)) {
+      packet.slides[change.slide - 1].target.body[change.index] = change.currentTargetRecord;
+    }
     const slides = validatePairedDraft(packet, readingSource, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
     for (const field of accepted.candidateFields.filter((item: any) => item.language === language)) {
@@ -1907,6 +1924,14 @@ test('Reading observation drafts preserve exact sources, unlisted fields and sea
     for (const snapshot of proof.preservedTargets[language]) {
       const slide = packet.slides[snapshot.slide - 1];
       const current = snapshot.field === 'heading' ? slide.target.heading : slide.target.body[snapshot.bodyIndex];
+      const laterObservation = snapshot.field === 'body'
+        ? firstObservationField(language, snapshot.slide, snapshot.bodyIndex)
+        : undefined;
+      if (laterObservation) {
+        assertCurrentFirstObservation(current, laterObservation,
+          `${language} slide ${snapshot.slide} body ${snapshot.bodyIndex}`);
+        continue;
+      }
       assert.deepEqual(current, snapshot.target,
         `${language} slide ${snapshot.slide}: all unlisted target paragraphs and headings are unchanged`);
     }
@@ -2855,6 +2880,12 @@ test('Reading frost wording sync matches its independent source-bound seven-fiel
         `${language} slide ${snapshot.n}: headings stay unchanged`);
       for (let index = 0; index < snapshot.target.body.length; index++) {
         if (!fields.some((field: any) => field.slide === snapshot.n && field.bodyIndex === index)) {
+          const laterObservation = firstObservationField(language, snapshot.n, index);
+          if (laterObservation) {
+            assertCurrentFirstObservation(live.target.body[index], laterObservation,
+              `${language} Reading slide ${snapshot.n} body ${index}`);
+            continue;
+          }
           const laterField = approvedStudyOutcome('reading-landscape', language, snapshot.n, index);
           if (laterField) {
             assertCurrentStudyOutcome(live.target.body[index], laterField,

@@ -174,7 +174,38 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The picture shows rain moving downhill.",
+                "status": "draft",
+                "text": "Tshifanyiso tshi sumbedza mvula i tshi khou tsela nga fhasi."
+              },
+              {
+                "sourceEnglish": " Follow where it ",
+                "status": "draft",
+                "text": " Tevhelani hune ya "
+              },
+              {
+                "sourceEnglish": "speeds up, ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "spreads, ",
+                "status": "draft",
+                "text": "ya phaḓalala, "
+              },
+              {
+                "sourceEnglish": "sinks",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", gathers, and leaves the land.",
+                "status": "draft",
+                "text": ", ya kuvhangana, na hune ya bva hone kha land."
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -197,10 +228,47 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Build ",
+                "status": "draft",
+                "text": "Fhaṱani "
+              },
+              {
+                "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Walk it across the land to find ",
+                "status": "draft",
+                "text": "Tshimbidzani nayo kha land u wana "
+              },
+              {
+                "sourceEnglish": "points at the same height.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Join ",
+                "status": "draft",
+                "text": " Ṱanganyisani "
+              },
+              {
+                "sourceEnglish": "these points",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " to trace a contour line.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "english-hold"

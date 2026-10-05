@@ -1,0 +1,582 @@
+{
+  "schemaVersion": 1,
+  "title": "Reading Landscape first-observation prose candidates",
+  "created": "2026-10-05",
+  "mode": "read-only source-bound candidate packet; no repository edits",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "head": "6d17ce7918694c6e78c0a39e0478ed36e005e71a",
+  "branch": "codex/isizulu-held-reading-corrections-20261005",
+  "scope": {
+    "moduleId": "reading-landscape",
+    "slides": [
+      2,
+      5,
+      6
+    ],
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "fieldCount": 12
+  },
+  "rows": [
+    {
+      "moduleId": "reading-landscape",
+      "language": "st",
+      "slide": 2,
+      "field": "body",
+      "index": 1,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.st.paired-draft.json",
+      "pairedFileSha256": "9f5697d64ea1d17d65e6d01836c228ecc8ffaa1718dc44bbf943ea189fef3f8a",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Rain already follows lines across the land.",
+          "status": "draft",
+          "text": "Pula e se e latela mela ho pholletsa le land."
+        },
+        {
+          "sourceEnglish": " The sun already warms some places more than others.",
+          "status": "draft",
+          "text": " Letsatsi le se le futhumatsa libaka tse ling ho feta tse ling."
+        },
+        {
+          "sourceEnglish": " Wind already finds ",
+          "status": "draft",
+          "text": " Moya o se o fumana "
+        },
+        {
+          "sourceEnglish": "gaps and ridges.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Cold air already settles in ",
+          "status": "draft",
+          "text": " Moya o batang o se o bokellana ka "
+        },
+        {
+          "sourceEnglish": "hollows.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "Pula e se e latela mela ho pholletsa le land. Letsatsi le se le futhumatsa libaka tse ling ho feta tse ling. Moya o se o fumana gaps and ridges. Moya o batang o se o bokellana ka hollows.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval.",
+      "repairNotes": [
+        "Changed only the wind/cold-air noun spelling from Moea to Moya for the requested lexical correction; aspect/concord remains flagged for review."
+      ]
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "st",
+      "slide": 5,
+      "field": "body",
+      "index": 0,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.st.paired-draft.json",
+      "pairedFileSha256": "9f5697d64ea1d17d65e6d01836c228ecc8ffaa1718dc44bbf943ea189fef3f8a",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "The picture shows rain",
+          "status": "draft",
+          "text": "Setšoantšo se bontša pula"
+        },
+        {
+          "sourceEnglish": " moving downhill.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Follow where it ",
+          "status": "draft",
+          "text": " Latela moo e "
+        },
+        {
+          "sourceEnglish": "speeds up, ",
+          "status": "draft",
+          "text": "potlakang, "
+        },
+        {
+          "sourceEnglish": "spreads, ",
+          "status": "draft",
+          "text": "hasanang, "
+        },
+        {
+          "sourceEnglish": "sinks",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": ", gathers, and leaves the land.",
+          "status": "draft",
+          "text": ", bokellanang, le moo e tlohang land."
+        }
+      ],
+      "proposedDisplayedTarget": "Setšoantšo se bontša pula moving downhill. Latela moo e potlakang, hasanang, sinks, bokellanang, le moo e tlohang land.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval.",
+      "repairNotes": [
+        "Repaired the prior phuleng wording because it added a valley destination; only the downhill phrase is held exact in English."
+      ]
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "st",
+      "slide": 6,
+      "field": "body",
+      "index": 0,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.st.paired-draft.json",
+      "pairedFileSha256": "9f5697d64ea1d17d65e6d01836c228ecc8ffaa1718dc44bbf943ea189fef3f8a",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Build an A-frame level from three poles and a weighted string.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Build ",
+          "status": "draft",
+          "text": "Haha "
+        },
+        {
+          "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "Haha an A-frame level from three poles and a weighted string.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "st",
+      "slide": 6,
+      "field": "body",
+      "index": 1,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.st.paired-draft.json",
+      "pairedFileSha256": "9f5697d64ea1d17d65e6d01836c228ecc8ffaa1718dc44bbf943ea189fef3f8a",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Walk it across the land to find ",
+          "status": "draft",
+          "text": "E tsamaiseng ho pholletsa le land ho fumana "
+        },
+        {
+          "sourceEnglish": "points at the same height.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Join these points",
+          "status": "draft",
+          "text": " Kopanya lintlha tsena"
+        },
+        {
+          "sourceEnglish": " to trace a contour line.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "E tsamaiseng ho pholletsa le land ho fumana points at the same height. Kopanya lintlha tsena to trace a contour line.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ve",
+      "slide": 2,
+      "field": "body",
+      "index": 1,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairedFileSha256": "9e1fcdc7e176acc66ecc923a3a51791eecad0d3e26508b265a10259ee387dcf3",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Rain already follows lines across the land.",
+          "status": "draft",
+          "text": "Mvula i tevhela mitalo kha land."
+        },
+        {
+          "sourceEnglish": " The sun already warms some places more than others.",
+          "status": "draft",
+          "text": " Ḓuvha ḽi se ḽi futhumadza fhethu huṅwe u fhira huṅwe."
+        },
+        {
+          "sourceEnglish": " Wind already finds ",
+          "status": "draft",
+          "text": " Moya u no wana "
+        },
+        {
+          "sourceEnglish": "gaps and ridges.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Cold air already settles in ",
+          "status": "draft",
+          "text": " Moya u rotholelaho u kuvhangana kha "
+        },
+        {
+          "sourceEnglish": "hollows.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "Mvula i tevhela mitalo kha land. Ḓuvha ḽi se ḽi futhumadza fhethu huṅwe u fhira huṅwe. Moya u no wana gaps and ridges. Moya u rotholelaho u kuvhangana kha hollows.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ve",
+      "slide": 5,
+      "field": "body",
+      "index": 0,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairedFileSha256": "9e1fcdc7e176acc66ecc923a3a51791eecad0d3e26508b265a10259ee387dcf3",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "The picture shows rain moving downhill.",
+          "status": "draft",
+          "text": "Tshifanyiso tshi sumbedza mvula i tshi khou tsela nga fhasi."
+        },
+        {
+          "sourceEnglish": " Follow where it ",
+          "status": "draft",
+          "text": " Tevhelani hune ya "
+        },
+        {
+          "sourceEnglish": "speeds up, ",
+          "status": "draft",
+          "text": "ya ya nga luvhilo, "
+        },
+        {
+          "sourceEnglish": "spreads, ",
+          "status": "draft",
+          "text": "ya phaḓalala, "
+        },
+        {
+          "sourceEnglish": "sinks",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": ", gathers, and leaves the land.",
+          "status": "draft",
+          "text": ", ya kuvhangana, na hune ya bva hone kha land."
+        }
+      ],
+      "proposedDisplayedTarget": "Tshifanyiso tshi sumbedza mvula i tshi khou tsela nga fhasi. Tevhelani hune ya ya ya nga luvhilo, ya phaḓalala, sinks, ya kuvhangana, na hune ya bva hone kha land.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ve",
+      "slide": 6,
+      "field": "body",
+      "index": 0,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairedFileSha256": "9e1fcdc7e176acc66ecc923a3a51791eecad0d3e26508b265a10259ee387dcf3",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Build an A-frame level from three poles and a weighted string.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Build ",
+          "status": "draft",
+          "text": "Fhaṱani "
+        },
+        {
+          "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "Fhaṱani an A-frame level from three poles and a weighted string.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ve",
+      "slide": 6,
+      "field": "body",
+      "index": 1,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairedFileSha256": "9e1fcdc7e176acc66ecc923a3a51791eecad0d3e26508b265a10259ee387dcf3",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Walk it across the land to find ",
+          "status": "draft",
+          "text": "Tshimbidzani nayo kha land u wana "
+        },
+        {
+          "sourceEnglish": "points at the same height.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Join these points",
+          "status": "draft",
+          "text": " Ṱanganyisani points idzi"
+        },
+        {
+          "sourceEnglish": " to trace a contour line.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "Tshimbidzani nayo kha land u wana points at the same height. Ṱanganyisani points idzi to trace a contour line.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ts",
+      "slide": 2,
+      "field": "body",
+      "index": 1,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairedFileSha256": "21772676299309bb51e8a6f99332674ba0dc8b539893b66d4df07fb265a99b82",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Rain already follows lines across the land.",
+          "status": "draft",
+          "text": "Mpfula yi landzelela milayeni ehenhla ka land."
+        },
+        {
+          "sourceEnglish": " The sun already warms some places more than others.",
+          "status": "draft",
+          "text": " Dyambu se ri kufumeta tindhawu tin’wana ku tlula tin’wana."
+        },
+        {
+          "sourceEnglish": " Wind already finds ",
+          "status": "draft",
+          "text": " Moya se wu kuma "
+        },
+        {
+          "sourceEnglish": "gaps and ridges.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Cold air already settles in ",
+          "status": "draft",
+          "text": " Moya wo titimela wu hlengeletana eka "
+        },
+        {
+          "sourceEnglish": "hollows.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "Mpfula yi landzelela milayeni ehenhla ka land. Dyambu se ri kufumeta tindhawu tin’wana ku tlula tin’wana. Moya se wu kuma gaps and ridges. Moya wo titimela wu hlengeletana eka hollows.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ts",
+      "slide": 5,
+      "field": "body",
+      "index": 0,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairedFileSha256": "21772676299309bb51e8a6f99332674ba0dc8b539893b66d4df07fb265a99b82",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "The picture shows rain moving downhill.",
+          "status": "draft",
+          "text": "Xifaniso xi komba mpfula yi ri karhi yi rhelela yi ya ehansi."
+        },
+        {
+          "sourceEnglish": " Follow where it ",
+          "status": "draft",
+          "text": " Landzelela laha yi "
+        },
+        {
+          "sourceEnglish": "speeds up, ",
+          "status": "draft",
+          "text": "hatlisaka, "
+        },
+        {
+          "sourceEnglish": "spreads, ",
+          "status": "draft",
+          "text": "hangalaka, "
+        },
+        {
+          "sourceEnglish": "sinks",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": ", gathers, and leaves the land.",
+          "status": "draft",
+          "text": ", yi hlengeletanaka, naswona yi suka ehenhla ka land."
+        }
+      ],
+      "proposedDisplayedTarget": "Xifaniso xi komba mpfula yi ri karhi yi rhelela yi ya ehansi. Landzelela laha yi hatlisaka, hangalaka, sinks, yi hlengeletanaka, naswona yi suka ehenhla ka land.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ts",
+      "slide": 6,
+      "field": "body",
+      "index": 0,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairedFileSha256": "21772676299309bb51e8a6f99332674ba0dc8b539893b66d4df07fb265a99b82",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Build an A-frame level from three poles and a weighted string.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Build ",
+          "status": "draft",
+          "text": "Aka "
+        },
+        {
+          "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "Aka an A-frame level from three poles and a weighted string.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ts",
+      "slide": 6,
+      "field": "body",
+      "index": 1,
+      "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairedFileSha256": "21772676299309bb51e8a6f99332674ba0dc8b539893b66d4df07fb265a99b82",
+      "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+      "canonicalEnglishFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "canonicalMarkdownContainsExactSource": true,
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "currentDisplayedTarget": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "candidateStatus": "mixed",
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Walk it across the land to find ",
+          "status": "draft",
+          "text": "Famba nayo ehenhla ka land leswaku u kuma "
+        },
+        {
+          "sourceEnglish": "points at the same height.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Join these points",
+          "status": "draft",
+          "text": " Hlanganisa tipoyinti leti"
+        },
+        {
+          "sourceEnglish": " to trace a contour line.",
+          "status": "english-hold"
+        }
+      ],
+      "proposedDisplayedTarget": "Famba nayo ehenhla ka land leswaku u kuma points at the same height. Hlanganisa tipoyinti leti to trace a contour line.",
+      "provenance": "Unreviewed machine candidate; exact current paired source and target binding; facilitator feedback only; no fluent approval."
+    }
+  ],
+  "excludedSourceField": {
+    "slide": 6,
+    "field": "body",
+    "index": 2,
+    "sourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+    "disposition": "Preserve the current exact English hold. This separate field carries assessment, approval, soil/slope/drainage/storm-flow/overflow, and trained-adviser requirements."
+  },
+  "semanticAmbiguitiesForIndependentBackcheck": [
+    "Check ST, VE and TS concord, aspect, and ordinary imperative phrasing; this is not fluent approval.",
+    "Slide 2 first sentence retains English land as a property-scope anchor. Confirm the local phrase does not turn land into soil or only a field.",
+    "Slide 2 keeps exact English “gaps and ridges” and “hollows” as landform anchors; confirm the localized wind and cold-air predicates do not add direction or permanence.",
+    "Slide 5 draft preserves the ordered motion sequence speeds up, spreads, sinks, gathers, leaves. The source term “sinks” remains exact English because it may denote infiltration; verify the translated clauses do not say rainfall decreases or imply a designed water work.",
+    "Slide 5 target uses directional words for moving downhill. Check these do not add a hill, property boundary, or a fixed drainage route.",
+    "Slide 6 holds exact “A-frame level from three poles and a weighted string”; no additional dimensions or parts are proposed.",
+    "Slide 6 first sentence localizes walking across the land to find points, while holding “points at the same height”; check “across” and “it” retain their references without narrowing to a single plot or implying a constructed feature.",
+    "Slide 6 second sentence localizes joining points and holds exact “to trace a contour line”; check that the local verb means join/connect, not compare or mark separate points."
+  ],
+  "candidateSummary": "Across all three languages, these 12 rows use the same four exact source-bound fields. Mixed target segments localize ordinary observation and action framing while retaining uncertain hydrology, landform, A-frame and contour terms. The separate slide 6 safety/adviser field remains excluded and source-exact.",
+  "checks": {
+    "allSourceSegmentsConcatenateExactly": true,
+    "allCanonicalEnglishSourcesMatch": true,
+    "allCurrentTargetRecordsWereExactEnglishHolds": true
+  },
+  "repairSummary": {
+    "sourcePacketSha256": "4bccb314065323995bd41e922db86afc822bf5d99a2955cf99a395eb632f60e7",
+    "changes": [
+      "ST Reading 5 body[0]: localized picture/rain framing; exact English hold for “ moving downhill.”, removing unsupported valley destination.",
+      "ST Reading 2 body[1]: replace “Moea” spellings with “Moya” for wind and cold air."
+    ],
+    "unchangedFlag": "VE Reading 2 body[1] phrase “Ḓuvha ḽi se ḽi” remains unmodified and flagged for independent aspect/language review; no guessed repair."
+  }
+}

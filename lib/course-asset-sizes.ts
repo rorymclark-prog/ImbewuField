@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1905 files, 702.6 MB total.
+// 1905 files, 702.5 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -1202,11 +1202,11 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/en/slide-20.jpg': 1136835,
   '/course-decks/reading-landscape/en/slide-21.jpg': 114448,
   '/course-decks/reading-landscape/st/slide-01.webp': 268360,
-  '/course-decks/reading-landscape/st/slide-02.webp': 268538,
+  '/course-decks/reading-landscape/st/slide-02.webp': 260674,
   '/course-decks/reading-landscape/st/slide-03.webp': 247468,
   '/course-decks/reading-landscape/st/slide-04.webp': 265468,
-  '/course-decks/reading-landscape/st/slide-05.webp': 190652,
-  '/course-decks/reading-landscape/st/slide-06.webp': 619272,
+  '/course-decks/reading-landscape/st/slide-05.webp': 187146,
+  '/course-decks/reading-landscape/st/slide-06.webp': 619528,
   '/course-decks/reading-landscape/st/slide-07.webp': 284374,
   '/course-decks/reading-landscape/st/slide-08.webp': 336802,
   '/course-decks/reading-landscape/st/slide-09.webp': 180360,
@@ -1223,11 +1223,11 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/st/slide-20.webp': 671158,
   '/course-decks/reading-landscape/st/slide-21.webp': 274740,
   '/course-decks/reading-landscape/ts/slide-01.webp': 286698,
-  '/course-decks/reading-landscape/ts/slide-02.webp': 285602,
+  '/course-decks/reading-landscape/ts/slide-02.webp': 279626,
   '/course-decks/reading-landscape/ts/slide-03.webp': 253374,
   '/course-decks/reading-landscape/ts/slide-04.webp': 271866,
-  '/course-decks/reading-landscape/ts/slide-05.webp': 191110,
-  '/course-decks/reading-landscape/ts/slide-06.webp': 619812,
+  '/course-decks/reading-landscape/ts/slide-05.webp': 193612,
+  '/course-decks/reading-landscape/ts/slide-06.webp': 619198,
   '/course-decks/reading-landscape/ts/slide-07.webp': 283518,
   '/course-decks/reading-landscape/ts/slide-08.webp': 345290,
   '/course-decks/reading-landscape/ts/slide-09.webp': 188928,
@@ -1247,8 +1247,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/ve/slide-02.webp': 280608,
   '/course-decks/reading-landscape/ve/slide-03.webp': 253608,
   '/course-decks/reading-landscape/ve/slide-04.webp': 253432,
-  '/course-decks/reading-landscape/ve/slide-05.webp': 192088,
-  '/course-decks/reading-landscape/ve/slide-06.webp': 620268,
+  '/course-decks/reading-landscape/ve/slide-05.webp': 194744,
+  '/course-decks/reading-landscape/ve/slide-06.webp': 621500,
   '/course-decks/reading-landscape/ve/slide-07.webp': 287414,
   '/course-decks/reading-landscape/ve/slide-08.webp': 343954,
   '/course-decks/reading-landscape/ve/slide-09.webp': 190212,

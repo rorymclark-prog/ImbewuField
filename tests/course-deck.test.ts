@@ -318,8 +318,8 @@ test('regional paired frames stay visible while English and isiZulu keep their r
           n: number;
           english: { n?: number; heading: string; body: string[] };
           target: {
-            heading: { status: string; text?: string };
-            body: Array<{ status: string; text?: string }>;
+            heading: { status: string; text?: string; segments?: Array<{ sourceEnglish: string; status: string; text?: string }> };
+            body: Array<{ status: string; text?: string; segments?: Array<{ sourceEnglish: string; status: string; text?: string }> }>;
           };
         }>;
       };
@@ -333,10 +333,22 @@ test('regional paired frames stay visible while English and isiZulu keep their r
       assert.ok(sourcePair.english.body.length > 0 && sourcePair.english.body.every((line) => line.trim()));
       assert.equal(sourcePair.target.body.length, sourcePair.english.body.length,
         'the displayed draft/hold lines stay aligned with the complete English source');
-      for (const part of [sourcePair.target.heading, ...sourcePair.target.body]) {
-        assert.ok(['draft', 'english-hold'].includes(part.status),
+      for (const [partIndex, part] of [sourcePair.target.heading, ...sourcePair.target.body].entries()) {
+        assert.ok(['draft', 'english-hold', 'mixed'].includes(part.status),
           'regional text keeps its visible unreviewed draft or English-hold status');
         if (part.status === 'draft') assert.ok(part.text?.trim(), 'draft text must be present');
+        if (part.status === 'mixed') {
+          assert.ok(partIndex > 0, 'a heading cannot contain mixed body segments');
+          const sourceText: string = sourcePair.english.body[partIndex - 1];
+          assert.ok(part.segments && part.segments.length > 1, 'mixed text retains draft/hold boundaries');
+          assert.equal(part.segments.map(segment => segment.sourceEnglish).join(''), sourceText,
+            'mixed draft and holds still cover the exact displayed source in order');
+          for (const segment of part.segments) {
+            assert.ok(['draft', 'english-hold'].includes(segment.status));
+            if (segment.status === 'draft') assert.ok(segment.text?.trim());
+            else assert.equal(segment.text, undefined, 'held wording renders directly from its English source');
+          }
+        }
       }
     }
 

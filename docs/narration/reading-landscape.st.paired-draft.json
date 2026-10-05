@@ -57,7 +57,38 @@
             "text": "Polasi e ’ngoe le e ’ngoe e na le mekhoa e seng e sebetsa pele re eketsa letho."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Rain already follows lines across the land.",
+                "status": "draft",
+                "text": "Pula e se e latela mela ho pholletsa le land."
+              },
+              {
+                "sourceEnglish": " The sun already warms some places more than others.",
+                "status": "draft",
+                "text": " Letsatsi le se le futhumatsa libaka tse ling ho feta tse ling."
+              },
+              {
+                "sourceEnglish": " Wind already finds ",
+                "status": "draft",
+                "text": " Moya o se o fumana "
+              },
+              {
+                "sourceEnglish": "gaps and ridges.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Cold air already settles in ",
+                "status": "draft",
+                "text": " Moya o batang o se o bokellana ka "
+              },
+              {
+                "sourceEnglish": "hollows.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "draft",
@@ -167,7 +198,43 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The picture shows rain",
+                "status": "draft",
+                "text": "Setšoantšo se bontša pula"
+              },
+              {
+                "sourceEnglish": " moving downhill.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Follow where it ",
+                "status": "draft",
+                "text": " Latela moo e "
+              },
+              {
+                "sourceEnglish": "speeds up, ",
+                "status": "draft",
+                "text": "potlakang, "
+              },
+              {
+                "sourceEnglish": "spreads, ",
+                "status": "draft",
+                "text": "hasanang, "
+              },
+              {
+                "sourceEnglish": "sinks",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", gathers, and leaves the land.",
+                "status": "draft",
+                "text": ", bokellanang, le moo e tlohang land."
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -190,10 +257,47 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Build ",
+                "status": "draft",
+                "text": "Haha "
+              },
+              {
+                "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Walk it across the land to find ",
+                "status": "draft",
+                "text": "E tsamaiseng ho pholletsa le land ho fumana "
+              },
+              {
+                "sourceEnglish": "points at the same height.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Join ",
+                "status": "draft",
+                "text": " Kopanya "
+              },
+              {
+                "sourceEnglish": "these points",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " to trace a contour line.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "english-hold"
