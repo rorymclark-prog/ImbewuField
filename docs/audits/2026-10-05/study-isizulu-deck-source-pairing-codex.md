@@ -27,7 +27,7 @@ rejected on second check; its full isiZulu clause retains major digging work.
 | STUDY-ZU-001 | Learner drafts lacked source binding. | Previously production verified | Retain #940's source protections. |
 | STUDY-ZU-003 | Decks lack simultaneous exact English comparison. | Implemented; needs verification | 240 immutable pairs with live source/target/title checks; player keeps comparison independent of chosen voice. Test actual phone and offline panels. |
 | STUDY-ZU-004 | Existing artwork inconsistently labels draft status. | Implemented; needs verification | Persistent player notice and source panel mark unreviewed status. Artwork is unchanged; expanded layout needs actual phone inspection. |
-| STUDY-ZU-006 | Registered recordings/artwork contain independently identified wording errors. | Playback withheld; corrections remain open | 24 scoped review holds use English still/source and omit the affected isiZulu voice. Whole continuous narration is withheld where it contains a held clip. English voice requires explicit selection. Files remain intact. Source drift also withdraws the paired ZU presentation. |
+| STUDY-ZU-006 | Registered recordings/artwork contain independently identified wording errors. | Playback withheld; corrections remain open | 23 scoped review holds use English still/source and omit the affected isiZulu voice. Whole continuous narration is withheld where it contains a held clip. English voice requires explicit selection. Files remain intact. Source drift also withdraws the paired ZU presentation. |
 | STUDY-ZU-007 | Offline downloads could include the faulty voice or a different still from the displayed fallback. | Implemented; needs verification | Packs follow resolved images and central voice URLs. No automatic English audio, asset eviction or fetching. Verify changed pack selection and cached bytes on phone. |
 
 | STUDY-ZU-008 | Expanded image zoom controls covered the wrapped No narration choice on a 390px phone. | Implemented; needs final preview verification | Root observed on 897e741. Measured header height moves zoom controls below voice choices; source reading hides image-only zoom tools. |
@@ -50,3 +50,15 @@ Finish local gates and durable evidence, push one coherent preview batch, verify
 exact-head CI/build-info and actual phone/source/audio/offline behavior before
 publication. Independently repair the flagged ordinary isiZulu clauses while
 retaining difficult English terms; do not bind new text to an old recording.
+
+## Review correction — Soil Health slide 13
+
+The first hold inventory counted 24 rows and included Soil Health slide 13. That
+flag compared the slide title with a detail in the body: the English heading is
+“Keep Seed Pods and Contaminants Out,” while the body correctly names wattle
+seed pods. The recorded isiZulu title accurately follows the generic heading,
+and its body preserves the wattle instruction. The title/body difference is not
+a source mismatch, so slide 13 is removed from the hold set. Its existing ZU
+still and recording remain available; no transcript, source, or media bytes were
+changed. The independent hold count is now 23. Earlier semantic reports remain
+as historical evidence; this correction records why their initial count changed.

@@ -124,11 +124,11 @@ test('the source snapshot covers exact deck/audio assets without changing the ST
   }, 'ST Introduction remains on its own existing slide pair');
 });
 
-test('the 24 independent isiZulu meaning flags suppress only their exact slides and affected full tracks', () => {
+test('the 23 independent isiZulu meaning flags suppress only their exact slides and affected full tracks', () => {
   const expected = [
     'intro-permaculture:22',
     'reading-landscape:5', 'reading-landscape:15', 'reading-landscape:16',
-    'soil-health:1', 'soil-health:13',
+    'soil-health:1',
     'water-harvesting:10',
     'vegetables-staples:16', 'vegetables-staples:18',
     'market-community:14',
@@ -140,6 +140,22 @@ test('the 24 independent isiZulu meaning flags suppress only their exact slides 
   const entries = isiZuluDeckReviewHoldEntries();
   assert.deepEqual(entries.map(({ moduleId, slide }) => `${moduleId}:${slide}`).sort(), [...expected].sort());
   assert.ok(entries.every(({ reason }) => reason.trim().length > 40), 'every hold names its specific source risk');
+  const soilSlide13 = ISIZULU_DECK_SOURCE_BINDINGS.find(({ moduleId, slide }) => moduleId === 'soil-health' && slide === 13);
+  assert.ok(soilSlide13, 'Soil Health slide 13 has an immutable English/recorded ZU pair');
+  assert.equal(soilSlide13.sourceHeading, 'Keep Seed Pods and Contaminants Out',
+    'the heading is generic and does not add the body’s wattle detail');
+  assert.ok(soilSlide13.recordedTarget[0].includes('wattle'),
+    'the unchanged recorded body preserves the source-specific wattle instruction');
+  const soilSlide13Pair = resolveIsiZuluDeckSourcePair('soil-health', 13);
+  assert.deepEqual(soilSlide13Pair?.source, soilSlide13.source);
+  assert.deepEqual(soilSlide13Pair?.recordedTarget, soilSlide13.recordedTarget);
+  assert.equal(isiZuluDeckReviewHold('soil-health', 13), null,
+    'a generic title may accompany a more specific, correctly paired body without creating a false hold');
+  assert.equal(trackUrl('soil-health', 'zu', 13), soilSlide13.audioUrl,
+    'the existing ZU recording remains playable because its body still matches its exact source snapshot');
+  assert.deepEqual(slideImageFor('soil-health', 'zu', 13), {
+    url: soilSlide13.imageUrl, lang: 'zu', exact: true,
+  }, 'the existing ZU slide remains visible beside that recorded body');
   assert.equal(isiZuluDeckReviewHold('intro-permaculture', 10), null,
     'the second check rejected the earlier Introduction slide 10 flag');
   assert.equal(trackUrl('intro-permaculture', 'zu', 10), '/course-audio/intro-permaculture/zu/slide-10.mp3');

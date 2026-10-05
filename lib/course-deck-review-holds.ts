@@ -14,7 +14,6 @@ const ISIZULU_DECK_REVIEW_HOLDS: Readonly<Record<string, Readonly<Record<number,
   }),
   'soil-health': Object.freeze({
     1: 'The source specifies making safe compost, while the target says only making compost; retain the safety qualifier so the overview does not imply every compost process is safe.',
-    13: 'The source names wattle seed pods, while the target generalizes this to seed pods; retain the crop name until the scope matches.',
   }),
   'water-harvesting': Object.freeze({
     10: 'The source says changing a watercourse, while the target says river, which may exclude smaller streams or channels; retain “watercourse” and the authorization condition.',
