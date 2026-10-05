@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: '6aef53f3', changes: [
+    'Reading Landscape slides 2, 5 and 6 now show unreviewed Sesotho, Tshivenda and Xitsonga drafts beside exact English.',
+    'Water and contour phrases that need local review remain in English.',
+    'No Sesotho, Tshivenda or Xitsonga narration was added.',
+  ], tour: [
+    { title: 'Compare Reading Landscape drafts',
+      where: 'Study → Reading the Landscape → Slides 2, 5 and 6',
+      detail: 'Choose a regional language and open Read slide to compare its unreviewed text with exact English. Slide 6 keeps the digging and trained-adviser guidance visible.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: '45f4181b', changes: [
     'Twenty-three isiZulu slides now show corrected unreviewed drafts beside exact English.',
     'These corrected cards stay silent; you can choose English narration explicitly.',
